@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a1a5801c",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Categorification of Entropy\n\nThe file `FunctorialEntropy.lean` develops the information loss of a functor as the\nconditional entropy of the domain object given its image, for fun",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 13,
-      "timestamp": "2026-07-10T16:36:47",
-      "title": "Categorification of Entropy: The Information Loss of Functors"
-    },
-    {
       "cycle_id": "5125e235",
       "domain": "Computation",
       "key_insight": "# Future Directions — Cancellation structure of spectral heat-kernel expansions\n\nThis cycle sharpened the leading-order cancellation theory in two directions:\na **moment-spectrum** characterisation (`",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-11T09:58:05",
       "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
+    },
+    {
+      "cycle_id": "f9466ee5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Finiteness of representations of ramified fundamental groups\n\nThis cycle isolated the group-theoretic engine behind the finiteness of\nsemisimple geometric representations of a ra",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-11T10:14:37",
+      "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f498d6bb",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The Bestiary of Arithmetic Monsters\n\nFive self-contained, falsifiable conjectures growing out of the study of vampire\nnumbers and their kin. A *vampire number* is a composite numb",
-      "quality_score": 0.6591141074626865,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-03T12:55:58",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
     {
       "cycle_id": "6d0ee8e6",
       "domain": "Shared",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-11T09:58:05",
       "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
+    },
+    {
+      "cycle_id": "f9466ee5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Finiteness of representations of ramified fundamental groups\n\nThis cycle isolated the group-theoretic engine behind the finiteness of\nsemisimple geometric representations of a ra",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-11T10:14:37",
+      "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental "
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-11T09:58:05",
+  "last_updated": "2026-07-11T10:14:37",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "39ced9f7",
-        "quality": 0.72,
-        "theorems": 15,
-        "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
-      },
-      {
         "cycle_id": "46d2d021",
         "quality": 0.82,
         "theorems": 23,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 15,
         "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
+      },
+      {
+        "cycle_id": "f9466ee5",
+        "quality": 0.82,
+        "theorems": 11,
+        "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's r"
       }
     ],
     "Bridges": [

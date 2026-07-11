@@ -354,6 +354,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f9466ee5 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For a normal geometrically connected variety X over a finite field k, a compactification \\(\\overline{X}\\), an effective Cartier divisor D with support in \\(Z = \\overline{X} \\setminus X\\), and an algebraically closed field F of characteristic p with discrete topology, the set of isomorphism classes o",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_f9466ee5_3e8ea653",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "f9466ee5",
+    "status": "available",
+    "timestamp": "2026-07-11T10:14:37.765703+00:00",
+    "title": "Deepening: Finiteness conjecture for semisimple geometric representations of Hiranouchi's r"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f9bf2df0 (Q=0.820), which proved 16 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture fo",
     "domains": [
       "NumberTheory"
@@ -635,6 +649,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T01:28:27.691105+00:00",
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1017",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T10:14:12.172691+00:00",
+    "title": "The Fractal Dimension of Mathematical Truth"
   },
   {
     "consumed_by_exp_id": "",
@@ -1296,21 +1325,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-02T13:14:19.130414+00:00",
     "title": "Non-Central Symmetric 7-D Polytope"
-  },
-  {
-    "consumed_by_exp_id": "f9466ee5",
-    "description": "For a normal geometrically connected variety X over a finite field k, a compactification \\(\\overline{X}\\), an effective Cartier divisor D with support in \\(Z = \\overline{X} \\setminus X\\), and an algebraically closed field F of characteristic p with discrete topology, the set of isomorphism classes of continuous semisimple geometric representations \\(\\rho : \\pi_1(X,D) \\to \\GL_n(F)\\) is finite (up to conjugacy in \\(\\GL_n(F)\\)).",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0067",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31341v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T13:33:35.154740+00:00",
-    "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental group"
   },
   {
     "consumed_by_exp_id": "",
@@ -7148,6 +7162,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T09:58:00.134256+00:00",
     "title": "The results just established fix the exact description-length law for graded"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Finiteness of representations of ramified fundamental groups\n\nThis cycle isolated the group-theoretic engine behind the finiteness of\nsemisimple geometric representations of a ramified fundamental group: a finitely\ngenerated source together with finitely many admissible *finite* images forces\nfinitely many representations, even up to conjugacy. The following conjectures\npush the boundary that this separation of concerns exposes.\n\n## 1. Conductor-uniform bound on the number of isomorphism classes\n\n**Conjecture.** For a fixed variety `X` over a finite field and a fixed rank\n`n`, the number of isomorphism classes of semisimple geometric rank-`n`\nrepresentations whose ramification is bounded by an effective divisor `D` grows\nat most polynomially in the degree of `D`.\n\n*The key insight is* that each unit increase of the conductor enlarges the\nadmissible image family by a controlled, subgroup-lattice-bounded amount, so the\nrepresentation count inherits the polynomial growth of the ray class number\nrather than the exponential growth one might fear from the non-abelian tower.\n\n*Why now?* The engine reduces the count to a finite union over admissible finite\nsubgroups; making the union quantitative is the natural next step, and recent\nprogress on counting \u00e9tale covers of bounded degree supplies the missing input.\n\n## 2. Rank-independence of the finite-image locus\n\n**Conjecture.** The finite set of admissible images that appears for rank `n`\ndetermines the one for every rank `m \u2264 n`: the rank-`m` representations are\nexactly the sub-representations obtained by restricting the rank-`n` admissible\nimages to `m`-dimensional invariant subspaces.\n\n*The key insight is* that semisimplicity turns the representation space into a\nlattice of isotypic pieces, so the admissible-image data is monotone in the rank\nand does not have to be recomputed from scratch at each level.\n\n*Why now?* Once finiteness is known to be governed by a single finite family of\nsubgroups, comparing families across ranks becomes a concrete lattice question\nrather than an open-ended geometric one.\n\n## 3. Failure of finiteness without the geometric hypotheses is sharp\n\n**Conjecture.** If either finite generation of the source or finiteness of the\nadmissible images is dropped, the isomorphism classes become not merely infinite\nbut of the cardinality of the continuum; there is no intermediate \"countably\ninfinite\" regime.\n\n*The key insight is* that a single infinite abelian quotient already produces a\ncontinuum of characters, so the finiteness phenomenon is a strict dichotomy\ncontrolled entirely by the two hypotheses, with nothing in between.\n\n*Why now?* The boundary example in this cycle exhibits infinitely many\nrepresentations from a `\u2124`-generated source; upgrading \"infinite\" to \"continuum\"\nis a tractable cardinality refinement that would pin down the exact threshold.\n\n## 4. A Langlands-type reciprocity for the abelian layer\n\n**Conjecture.** The finite group of rank-one bounded-ramification\nrepresentations is naturally isomorphic to the character group of a ray class\ngroup with modulus `D`, compatibly with the finiteness count of Conjecture 1.\n\n*The key insight is* that in the abelian layer the admissible-image family is\ngenerated by the roots of unity available in the residue fields, which is\nexactly the local data assembled by class field theory into the ray class group.\n\n*Why now?* The character specialization proved in this cycle already matches the\nclass-field-theoretic shape; identifying the two groups canonically is the\nnatural bridge to the automorphic side.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1018",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f9466ee5",
+    "status": "available",
+    "timestamp": "2026-07-11T10:14:32.399162+00:00",
+    "title": "This cycle isolated the group-theoretic engine behind the finiteness of"
   },
   {
     "consumed_by_exp_id": "",
