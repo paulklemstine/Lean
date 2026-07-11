@@ -755,7 +755,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "47a54792",
     "description": "Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map from SO(4) that has no fixed point? Conjecture: every closed 3-manifold embeds in R^4.",
     "domains": [
       "Novelty",
@@ -765,7 +765,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T20:34:25.702785+00:00",
     "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
   },
