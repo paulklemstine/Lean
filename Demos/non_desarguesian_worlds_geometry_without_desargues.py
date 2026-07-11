@@ -1,263 +1,302 @@
-#!/usr/bin/env python3
 """
-Demo: Non-Desarguesian Worlds — The Hall Quasifield of Order 9
+Non-Desarguesian Worlds: The Dickson Nearfield of Order 9 and its Plane
+=======================================================================
 
-Computes and displays the nucleus spectrum, associator statistics,
-and defect profile of the smallest non-Desarguesian projective plane.
+Self-contained numerical demonstration of the results:
+
+  * GF(9) = GF(3)[alpha] with alpha^2 = -1 = 2, realized on Z/3 x Z/3.
+  * The Frobenius automorphism sigma(a + b*alpha) = a - b*alpha (= x^3).
+  * The Dickson product `dmul`, which twists the left factor by Frobenius
+    exactly when the right factor is a non-square.
+  * Verification, by exhaustive finite computation, that the Dickson product
+    is a quasifield (two-sided unit, right distributivity, unique two-sided
+    division, planar/Veblen axiom) and a NEARFIELD (associative), yet is
+    NEITHER commutative NOR left-distributive -- hence not a division ring.
+  * Construction of the coordinatized affine plane of order 9 (81 points,
+    90 lines) and verification of its incidence axioms.
+
+Run:  python3 demo.py
 """
 
-import itertools
+from __future__ import annotations
 
-# GF(3) arithmetic
-def gf3_add(a, b): return (a + b) % 3
-def gf3_sub(a, b): return (a - b) % 3
-def gf3_mul(a, b): return (a * b) % 3
+from itertools import product
+from typing import Dict, List, Optional, Tuple
 
-# GF(9) = GF(3)[α]/(α²+1), represented as pairs (a, b) = a + bα
-GF9 = [(a, b) for a in range(3) for b in range(3)]
+# An element of GF(9) is a pair (a, b) meaning a + b*alpha, with a, b in Z/3.
+Elem = Tuple[int, int]
 
-def gf9_add(x, y):
-    return (gf3_add(x[0], y[0]), gf3_add(x[1], y[1]))
-
-def gf9_sub(x, y):
-    return (gf3_sub(x[0], y[0]), gf3_sub(x[1], y[1]))
-
-# Hall multiplication: x ○ y
-# If y ∈ GF(3) (y[1] == 0): standard scalar multiplication
-# If y ∉ GF(3) (y[1] != 0): apply Frobenius to x, then field multiply
-def hall_mul(x, y):
-    if y[1] == 0:
-        return (gf3_mul(x[0], y[0]), gf3_mul(x[1], y[0]))
-    else:
-        return (
-            gf3_add(gf3_mul(x[0], y[0]), gf3_mul(x[1], y[1])),
-            gf3_add(gf3_mul(x[0], y[1]), gf3_mul(2, gf3_mul(x[1], y[0])))
-        )
-
-# Associator [a, b, c] = (a○b)○c - a○(b○c)
-def associator(a, b, c):
-    lhs = hall_mul(hall_mul(a, b), c)
-    rhs = hall_mul(a, hall_mul(b, c))
-    return gf9_sub(lhs, rhs)
-
-# Commutator [a, b] = a○b - b○a
-def commutator(a, b):
-    return gf9_sub(hall_mul(a, b), hall_mul(b, a))
+ELEMENTS: List[Elem] = [(a, b) for a in range(3) for b in range(3)]
+ZERO: Elem = (0, 0)
+ONE: Elem = (1, 0)
+ALPHA: Elem = (0, 1)
 
 
-def main():
-    print("=" * 70)
-    print("  NON-DESARGUESIAN WORLDS: The Hall Quasifield of Order 9")
-    print("=" * 70)
+# ---------------------------------------------------------------------------
+# The field GF(9)
+# ---------------------------------------------------------------------------
+def add(x: Elem, y: Elem) -> Elem:
+    """Additive group of GF(9): componentwise addition mod 3."""
+    return ((x[0] + y[0]) % 3, (x[1] + y[1]) % 3)
 
-    # 1. Compute nuclei
-    print("\n--- NUCLEUS COMPUTATION ---")
-    left_nuc = []
-    mid_nuc = []
-    right_nuc = []
 
-    for x in GF9:
-        in_left = all(
-            hall_mul(x, hall_mul(b, c)) == hall_mul(hall_mul(x, b), c)
-            for b in GF9 for c in GF9
-        )
-        in_mid = all(
-            hall_mul(a, hall_mul(x, c)) == hall_mul(hall_mul(a, x), c)
-            for a in GF9 for c in GF9
-        )
-        in_right = all(
-            hall_mul(a, hall_mul(b, x)) == hall_mul(hall_mul(a, b), x)
-            for a in GF9 for b in GF9
-        )
-        if in_left: left_nuc.append(x)
-        if in_mid: mid_nuc.append(x)
-        if in_right: right_nuc.append(x)
+def neg(x: Elem) -> Elem:
+    """Additive inverse mod 3."""
+    return ((-x[0]) % 3, (-x[1]) % 3)
 
-    print(f"Left nucleus:   {left_nuc}  (size {len(left_nuc)})")
-    print(f"Middle nucleus: {mid_nuc}  (size {len(mid_nuc)})")
-    print(f"Right nucleus:  {right_nuc}  (size {len(right_nuc)})")
-    print(f"\n★ NUCLEUS SPECTRUM: ({len(left_nuc)}, {len(mid_nuc)}, {len(right_nuc)})")
-    print(f"  All three nuclei = base field GF(3) = {{(0,0), (1,0), (2,0)}}")
 
-    # 2. Associator statistics
-    print("\n--- ASSOCIATOR STATISTICS ---")
-    non_assoc_triples = []
-    assoc_values = set()
-    for a, b, c in itertools.product(GF9, repeat=3):
-        val = associator(a, b, c)
-        assoc_values.add(val)
-        if val != (0, 0):
-            non_assoc_triples.append((a, b, c))
+def sub(x: Elem, y: Elem) -> Elem:
+    return add(x, neg(y))
 
-    total = len(GF9) ** 3
-    non_assoc = len(non_assoc_triples)
-    print(f"Total triples:         {total}")
-    print(f"Non-associating:       {non_assoc}")
-    print(f"Associating:           {total - non_assoc}")
-    print(f"Non-assoc density:     {non_assoc}/{total} = {non_assoc // 9}/{total // 9} = {non_assoc * 81 // total}/{81}")
-    print(f"  = ((q-1)/q)⁴ = (2/3)⁴ = 16/81 ✓")
-    print(f"\nAssociator image size: {len(assoc_values)} out of {len(GF9)}")
-    missing = [x for x in GF9 if x not in assoc_values]
-    print(f"Missing from image:    {missing}")
-    print(f"  → Pure imaginary elements {missing} never appear as associators!")
 
-    # 3. Defect profile
-    print("\n--- DEFECT PROFILE ---")
-    print("Element    | In Nucleus? | Non-assoc pairs | Status")
-    print("-" * 60)
-    for a in GF9:
-        count = sum(1 for b, c in itertools.product(GF9, repeat=2)
-                    if associator(a, b, c) != (0, 0))
-        in_nuc = a[1] == 0
-        status = "NUCLEUS" if in_nuc else "NON-NUCLEUS"
-        print(f"  {a}     | {'YES':>11s} | {count:>15d} | {status}" if in_nuc else
-              f"  {a}     | {'NO':>11s} | {count:>15d} | {status}")
-    print("\n★ ALL non-nucleus elements have exactly 24 non-associating pairs")
-    print("  → Non-associativity is UNIFORMLY distributed!")
+def gf9_mul(x: Elem, y: Elem) -> Elem:
+    """Field multiplication: (a+b.alpha)(c+d.alpha) = (ac+2bd) + (ad+bc).alpha."""
+    a, b = x
+    c, d = y
+    return ((a * c + 2 * b * d) % 3, (a * d + b * c) % 3)
 
-    # 4. Commutator statistics
-    print("\n--- COMMUTATOR STATISTICS ---")
-    non_comm = sum(1 for a, b in itertools.product(GF9, repeat=2)
-                   if commutator(a, b) != (0, 0))
-    print(f"Non-commuting pairs: {non_comm} out of {len(GF9)**2}")
-    print(f"Commutativity density: {len(GF9)**2 - non_comm}/{len(GF9)**2}")
 
-    # 5. Left distributivity check
-    print("\n--- LEFT DISTRIBUTIVITY CHECK ---")
-    left_dist_fails = sum(
-        1 for a, b, c in itertools.product(GF9, repeat=3)
-        if hall_mul(a, gf9_add(b, c)) != gf9_add(hall_mul(a, b), hall_mul(a, c))
+def frobenius(x: Elem) -> Elem:
+    """Frobenius sigma(a + b*alpha) = a - b*alpha = a + 2b*alpha  (= x^3)."""
+    a, b = x
+    return (a, (2 * b) % 3)
+
+
+# ---------------------------------------------------------------------------
+# Squares / non-squares and the Dickson product
+# ---------------------------------------------------------------------------
+def is_nonzero_square(b: Elem) -> bool:
+    """True iff b = c*c for some nonzero c in GF(9)."""
+    return any(c != ZERO and gf9_mul(c, c) == b for c in ELEMENTS)
+
+
+def dmul(a: Elem, b: Elem) -> Elem:
+    """Dickson nearfield product.
+
+    Multiply as in the field when the right factor `b` is zero or a nonzero
+    square; otherwise pre-apply Frobenius to the left factor `a`.
+    """
+    if b == ZERO or is_nonzero_square(b):
+        return gf9_mul(a, b)
+    return gf9_mul(frobenius(a), b)
+
+
+def fmt(x: Elem) -> str:
+    """Pretty-print a + b*alpha."""
+    a, b = x
+    if b == 0:
+        return str(a)
+    if a == 0:
+        return ("" if b == 1 else str(b)) + "a"
+    return f"{a}+{'' if b == 1 else b}a"
+
+
+# ---------------------------------------------------------------------------
+# Verification of the quasifield / nearfield axioms
+# ---------------------------------------------------------------------------
+def check_unit() -> bool:
+    return all(dmul(x, ONE) == x and dmul(ONE, x) == x for x in ELEMENTS)
+
+
+def check_zero() -> bool:
+    return all(dmul(x, ZERO) == ZERO and dmul(ZERO, x) == ZERO for x in ELEMENTS)
+
+
+def check_right_distrib() -> bool:
+    return all(
+        dmul(add(a, b), c) == add(dmul(a, c), dmul(b, c))
+        for a in ELEMENTS
+        for b in ELEMENTS
+        for c in ELEMENTS
     )
-    print(f"Left distributivity failures: {left_dist_fails} out of {total}")
-    print(f"  → Hall quasifield is NOT a semifield" if left_dist_fails > 0
-          else "  → Hall quasifield IS a semifield")
 
-    # 6. Symmetry loss
-    print("\n--- SYMMETRY LOSS ---")
-    for q in range(3, 8):
-        pgl = (q**2)**3 * ((q**2)**3 - 1) * ((q**2)**2 - 1)
-        hall_coll = q**2 * (q**2 - 1) * q * (q - 1)
-        ratio = pgl / hall_coll if hall_coll > 0 else float('inf')
-        print(f"q={q}: |PGL(3,q²)| / |Hall_coll| = {pgl:>20,d} / {hall_coll:>12,d} = {ratio:>12.1f}")
-    print("  → Symmetry loss grows as ~q⁴")
 
-    print("\n" + "=" * 70)
-    print("  SUMMARY: The Nucleus Spectrum (3, 3, 3)")
-    print("=" * 70)
-    print("""
-  The Hall quasifield of order 9 — the smallest non-Desarguesian plane —
-  has a balanced nucleus spectrum (3, 3, 3), meaning all three nuclei
-  (left, middle, right) coincide with the base field GF(3).
+def check_unique_left_division() -> bool:
+    """For a != 0, x |-> a*x is a bijection."""
+    for a in ELEMENTS:
+        if a == ZERO:
+            continue
+        images = [dmul(a, x) for x in ELEMENTS]
+        if sorted(set(images)) != sorted(ELEMENTS):
+            return False
+    return True
 
-  Key discoveries:
-  • Non-associativity density = 16/81 = ((q-1)/q)⁴ for q=3
-  • Defect profile is UNIFORM: every non-nucleus element participates
-    in exactly 24 non-associating pairs
-  • The associator map misses exactly the "pure imaginary" elements
-  • Center = Nucleus = Base Field (all three coincide)
-  • The quasifield is NOT a semifield (left distributivity fails)
-  """)
+
+def check_unique_right_division() -> bool:
+    """For a != 0, x |-> x*a is a bijection."""
+    for a in ELEMENTS:
+        if a == ZERO:
+            continue
+        images = [dmul(x, a) for x in ELEMENTS]
+        if sorted(set(images)) != sorted(ELEMENTS):
+            return False
+    return True
+
+
+def check_planar() -> bool:
+    """For a != b, x |-> x*a - x*b is a bijection (Veblen axiom)."""
+    for a in ELEMENTS:
+        for b in ELEMENTS:
+            if a == b:
+                continue
+            images = [sub(dmul(x, a), dmul(x, b)) for x in ELEMENTS]
+            if sorted(set(images)) != sorted(ELEMENTS):
+                return False
+    return True
+
+
+def check_associative() -> bool:
+    return all(
+        dmul(dmul(a, b), c) == dmul(a, dmul(b, c))
+        for a in ELEMENTS
+        for b in ELEMENTS
+        for c in ELEMENTS
+    )
+
+
+def left_distrib_failures() -> List[Tuple[Elem, Elem, Elem]]:
+    return [
+        (a, b, c)
+        for a in ELEMENTS
+        for b in ELEMENTS
+        for c in ELEMENTS
+        if dmul(a, add(b, c)) != add(dmul(a, b), dmul(a, c))
+    ]
+
+
+def commutativity_failures() -> List[Tuple[Elem, Elem]]:
+    return [(a, b) for a in ELEMENTS for b in ELEMENTS if dmul(a, b) != dmul(b, a)]
+
+
+# ---------------------------------------------------------------------------
+# The coordinatized affine plane of order 9
+# ---------------------------------------------------------------------------
+Point = Tuple[Elem, Elem]
+# A line is ("ord", m, b) meaning y = x*m + b, or ("ver", c) meaning x = c.
+Line = Tuple
+
+POINTS: List[Point] = [(x, y) for x in ELEMENTS for y in ELEMENTS]
+
+
+def all_lines() -> List[Line]:
+    lines: List[Line] = [("ord", m, b) for m in ELEMENTS for b in ELEMENTS]
+    lines += [("ver", c) for c in ELEMENTS]
+    return lines
+
+
+def on_line(p: Point, L: Line) -> bool:
+    x, y = p
+    if L[0] == "ord":
+        _, m, b = L
+        return y == add(dmul(x, m), b)
+    _, c = L
+    return x == c
+
+
+def line_through(p: Point, q: Point) -> Optional[Line]:
+    """The unique line through two distinct points, found by search."""
+    for L in all_lines():
+        if on_line(p, L) and on_line(q, L):
+            return L
+    return None
+
+
+def check_two_points_unique_line() -> bool:
+    lines = all_lines()
+    for i, p in enumerate(POINTS):
+        for q in POINTS[i + 1:]:
+            common = [L for L in lines if on_line(p, L) and on_line(q, L)]
+            if len(common) != 1:
+                return False
+    return True
+
+
+def check_playfair() -> bool:
+    """Through any point there is a unique parallel to any given line."""
+    def parallel(L1: Line, L2: Line) -> bool:
+        if L1[0] == "ord" and L2[0] == "ord":
+            return L1[1] == L2[1]  # same slope
+        if L1[0] == "ver" and L2[0] == "ver":
+            return True
+        return False
+
+    lines = all_lines()
+    for L in lines:
+        for p in POINTS:
+            through = [M for M in lines if on_line(p, M) and parallel(L, M)]
+            if len(through) != 1:
+                return False
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Main driver
+# ---------------------------------------------------------------------------
+def main() -> None:
+    line = "=" * 70
+    print(line)
+    print("  THE DICKSON NEARFIELD OF ORDER 9 AND ITS NON-DESARGUESIAN PLANE")
+    print(line)
+
+    squares = [b for b in ELEMENTS if b != ZERO and is_nonzero_square(b)]
+    nonsquares = [b for b in ELEMENTS if b != ZERO and not is_nonzero_square(b)]
+    print("\nNonzero squares of GF(9):    ", ", ".join(fmt(s) for s in squares))
+    print("Non-squares of GF(9):        ", ", ".join(fmt(s) for s in nonsquares))
+
+    print("\n--- Quasifield / nearfield axioms (exhaustive checks) ---")
+    checks = [
+        ("two-sided unit                 ", check_unit()),
+        ("absorbing zero                 ", check_zero()),
+        ("right distributivity           ", check_right_distrib()),
+        ("unique left division           ", check_unique_left_division()),
+        ("unique right division          ", check_unique_right_division()),
+        ("planar (Veblen) axiom          ", check_planar()),
+        ("ASSOCIATIVITY (=> nearfield)   ", check_associative()),
+    ]
+    for name, ok in checks:
+        print(f"  [{'PASS' if ok else 'FAIL'}] {name}")
+
+    print("\n--- The obstructions to being a division ring ---")
+    ld = left_distrib_failures()
+    nc = commutativity_failures()
+    print(f"  left distributivity holds : {len(ld) == 0}  "
+          f"({len(ld)} failing triples)")
+    a, b, c = ld[0]
+    lhs = dmul(a, add(b, c))
+    rhs = add(dmul(a, b), dmul(a, c))
+    print(f"    witness: a={fmt(a)}, b={fmt(b)}, c={fmt(c)}")
+    print(f"      a*(b+c)      = {fmt(lhs)}")
+    print(f"      a*b + a*c    = {fmt(rhs)}   -> differ, so NOT left-distributive")
+    print(f"  commutativity holds       : {len(nc) == 0}  "
+          f"({len(nc)} failing pairs)")
+    a2, b2 = nc[0]
+    print(f"    witness: ({fmt(a2)})*({fmt(b2)}) = {fmt(dmul(a2, b2))}  vs  "
+          f"({fmt(b2)})*({fmt(a2)}) = {fmt(dmul(b2, a2))}")
+
+    print("\n--- The coordinatized affine plane of order 9 ---")
+    print(f"  number of points : {len(POINTS)}   (expected 81 = 9^2)")
+    print(f"  number of lines  : {len(all_lines())}   (expected 90 = 9^2 + 9)")
+    print(f"  [{'PASS' if check_two_points_unique_line() else 'FAIL'}] "
+          "any two distinct points lie on a unique line")
+    print(f"  [{'PASS' if check_playfair() else 'FAIL'}] "
+          "Playfair's parallel axiom")
+
+    # points-per-line and lines-per-point
+    L0 = ("ord", ALPHA, ONE)
+    pts_on_L0 = [p for p in POINTS if on_line(p, L0)]
+    lines_through_origin = [L for L in all_lines() if on_line((ZERO, ZERO), L)]
+    print(f"  points on a sample line   : {len(pts_on_L0)}   (expected 9)")
+    print(f"  lines through the origin   : {len(lines_through_origin)}   "
+          "(expected 10)")
+
+    print("\n" + line)
+    print("  CONCLUSION: the Dickson product is an associative, right-")
+    print("  distributive quasifield with two-sided division -- a nearfield --")
+    print("  but it is NOT left-distributive and NOT commutative, hence NOT a")
+    print("  division ring. Its affine plane of order 9 (81 points, 90 lines)")
+    print("  is therefore NON-DESARGUESIAN, the smallest such plane.")
+    print(line)
 
 
 if __name__ == "__main__":
     main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Nucleus Spectrum and Associator Structure
-of the Hall Quasifield of Order 9
-"""
-
-import itertools
-
-# --- GF(3) and Hall multiplication (inlined) ---
-def hall_mul(x, y):
-    p = 3
-    if y[1] == 0:
-        return ((x[0] * y[0]) % p, (x[1] * y[0]) % p)
-    else:
-        return (
-            (x[0] * y[0] + x[1] * y[1]) % p,
-            (x[0] * y[1] + 2 * x[1] * y[0]) % p
-        )
-
-def gf9_sub(x, y):
-    return ((x[0] - y[0]) % 3, (x[1] - y[1]) % 3)
-
-GF9 = [(a, b) for a in range(3) for b in range(3)]
-
-def associator(a, b, c):
-    lhs = hall_mul(hall_mul(a, b), c)
-    rhs = hall_mul(a, hall_mul(b, c))
-    return gf9_sub(lhs, rhs)
-
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    import matplotlib.patches as mpatches
-    import numpy as np
-
-    # --- Figure 1: Defect Profile Heatmap ---
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-    # 1a: Defect profile per element
-    defects = []
-    for a in GF9:
-        count = sum(1 for b, c in itertools.product(GF9, repeat=2)
-                    if associator(a, b, c) != (0, 0))
-        defects.append(count)
-
-    labels = [f"({a},{b})" for a, b in GF9]
-    colors = ['#2ecc71' if GF9[i][1] == 0 else '#e74c3c' for i in range(9)]
-
-    axes[0].bar(range(9), defects, color=colors)
-    axes[0].set_xticks(range(9))
-    axes[0].set_xticklabels(labels, rotation=45)
-    axes[0].set_ylabel('Non-associating pairs')
-    axes[0].set_title('Defect Profile per Element')
-    nuc_patch = mpatches.Patch(color='#2ecc71', label='Nucleus (GF(3))')
-    non_nuc_patch = mpatches.Patch(color='#e74c3c', label='Non-nucleus')
-    axes[0].legend(handles=[nuc_patch, non_nuc_patch])
-
-    # 1b: Associator value heatmap (first argument vs pairs)
-    # For each element a, show distribution of associator values
-    assoc_matrix = np.zeros((9, 9))
-    for i, a in enumerate(GF9):
-        for b, c in itertools.product(GF9, repeat=2):
-            val = associator(a, b, c)
-            j = GF9.index(val)
-            assoc_matrix[i][j] += 1
-
-    im = axes[1].imshow(assoc_matrix, cmap='YlOrRd', aspect='auto')
-    axes[1].set_xticks(range(9))
-    axes[1].set_xticklabels(labels, rotation=45)
-    axes[1].set_yticks(range(9))
-    axes[1].set_yticklabels(labels)
-    axes[1].set_xlabel('Associator value')
-    axes[1].set_ylabel('First argument a')
-    axes[1].set_title('Associator Value Distribution')
-    plt.colorbar(im, ax=axes[1], label='Count')
-
-    # 1c: Symmetry loss curve
-    qs = list(range(3, 12))
-    pgl_orders = [(q**2)**3 * ((q**2)**3 - 1) * ((q**2)**2 - 1) for q in qs]
-    hall_orders = [q**2 * (q**2 - 1) * q * (q - 1) for q in qs]
-    ratios = [p / h for p, h in zip(pgl_orders, hall_orders)]
-    q4_vals = [q**4 for q in qs]
-
-    axes[2].semilogy(qs, ratios, 'ro-', label='|PGL|/|Hall coll.|', linewidth=2)
-    axes[2].semilogy(qs, q4_vals, 'b--', label='q⁴ (lower bound)', linewidth=1)
-    axes[2].set_xlabel('q (base field order)')
-    axes[2].set_ylabel('Symmetry loss ratio')
-    axes[2].set_title('Symmetry Loss: Desarguesian vs Hall')
-    axes[2].legend()
-    axes[2].grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('nucleus_spectrum_analysis.png', dpi=150, bbox_inches='tight')
-    print("Saved: nucleus_spectrum_analysis.png")
-
-except ImportError:
-    print("matplotlib not available; skipping visualization")
