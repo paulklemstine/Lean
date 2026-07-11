@@ -7072,7 +7072,7 @@
       "negative_type_metric_spaces",
       "Schoenberg_embedding"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a547c760",
     "description": "For any finite subset X of ℝⁿ equipped with the Euclidean metric, the microscopic weighting μ exists and satisfies: μ(x) > 0 if and only if x is a vertex (extreme point) of conv(X), and μ(x) ≤ 0 for every non-extreme point of X. This formalizes the heuristic that the microscopic weighting emphasizes boundary points and assigns greater weight to outlying regions.",
     "domain_bridges": [
       "convex_geometry_extreme_points",
@@ -7088,7 +7088,7 @@
     "proof_strategy": "First formalize the magnitude weighting w(t) as the solution to the linear system ∑_{y∈X} e^{-td(x,y)} w(y,t) = 1, then define the microscopic weighting as the limit μ(x) = lim_{t→∞} w(x,t). Use the Schoenberg embedding characterization for spaces of strictly negative type, and the energy integral optimization formulation. The sign characterization likely requires analyzing the variational problem: show that minimizing the energy forces positive mass onto extreme points (which are maximally spread) and non-positive mass onto interior points (which are redundant for energy minimization). For the converse direction (non-extreme points get non-positive weight), use the convex combination structure of interior points and the strict negativity of the kernel.",
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T21:33:24.349961+00:00",
     "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
   },

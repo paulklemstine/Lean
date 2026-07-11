@@ -325,21 +325,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
   },
   {
-    "consumed_by_exp_id": "2ace1a06",
-    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0952",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T22:30:11.227768+00:00",
-    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
     "domains": [
@@ -4029,7 +4014,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Superlinear distance multiplicity in Minkowski grids"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a547c760",
     "description": "For any finite subset X of \u211d\u207f equipped with the Euclidean metric, the microscopic weighting \u03bc exists and satisfies: \u03bc(x) > 0 if and only if x is a vertex (extreme point) of conv(X), and \u03bc(x) \u2264 0 for every non-extreme point of X. This formalizes the heuristic that the microscopic weighting emphasizes boundary points and assigns greater weight to outlying regions.",
     "domains": [
       "Bridges"
@@ -4038,7 +4023,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05349v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T21:33:24.349961+00:00",
     "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
   },
@@ -6614,6 +6599,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T01:12:21.487929+00:00",
     "title": "This cycle replaced the folklore \"gap vs. clue count\" picture with a structural "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Mind, Machine, and the Diagonal Principle\n\nThis cycle established that the logical (G\u00f6del/Lucas\u2013Penrose) and information-theoretic\n(Chaitin/Berry) limitation theorems are two projections of a single fixed-point principle,\nand that the \"mind versus machine\" gap is exactly the gap between a semantic truth valuation\nand a syntactic provability predicate that a sound system necessarily leaves open. The\nfollowing conjectures push that unification further.\n\n## 1. A quantitative Lucas\u2013Penrose gap\n\n**Conjecture.** For every sound, self-referential system there is a *strictly increasing*\nhierarchy of independent truths: adjoining the G\u00f6del sentence as a new axiom produces a\nlarger sound system with its own fresh G\u00f6del sentence, and the ordinal length of this tower\nis a genuine invariant of the system, not of any single sentence.\n\nThe key insight is that the mind/machine gap is not a single sentence but a *well-ordered\nreflection process*: each act of \"seeing\" the current G\u00f6del truth is itself a mechanical\nstep, so the mind's advantage is measured by how far the reflection ordinal outruns any\nfixed machine's proof-theoretic ordinal.\n\nWhy now? The abstract `FormalSystem` interface isolates exactly the data (soundness plus one\nfixed point) needed to iterate the construction, so the tower can be built uniformly rather\nthan re-derived for each concrete theory.\n\n## 2. Complexity-graded incompleteness\n\n**Conjecture.** In any sound system that can express its own descriptive-complexity bounds,\nthe largest provable lower bound \"K(x) > c\" is bounded by a constant determined by the\nsystem's own description length \u2014 and this constant is *computable from* the system's G\u00f6del\nsentence.\n\nThe key insight is that Chaitin's incompressibility and G\u00f6del's unprovable sentence are the\nsame obstruction viewed through two coordinates: the incompressible number *is* an\nundecidable statement about complexity, and its incompressibility threshold is the numerical\nshadow of the proof-theoretic strength that produced the G\u00f6del sentence.\n\nWhy now? The counting kernel `chaitin_incompressible` and the logical kernel\n`FormalSystem.godel_true` are now available in a common setting, making it possible to state\nand test the exact correspondence between \"incompressibility threshold\" and \"reflection\nstrength\" rather than treating them as separate folklore.\n\n## 3. Berry paradox as a resource lower bound\n\n**Conjecture.** The finite Berry pigeonhole \u2014 no injective code compresses `2^n + 1` objects\ninto `n` bits \u2014 sharpens to a *smooth* trade-off: any encoding that keeps the average code\nlength below `n - k` must fail injectivity on a set of size at least `2^k`, with the constant\ntight.\n\nThe key insight is that the Berry paradox is not merely an existence statement about one\nincompressible number but a *density* statement: incompressible objects are cofinite, so\ncompression failure is generic, and its rate is governed by a clean exponential law.\n\nWhy now? The infinitude result `chaitin_incompressible_infinite` upgrades the paradox from\n\"there exists\" to \"almost all\", which is precisely the regime where a quantitative trade-off\nlaw becomes meaningful and falsifiable.\n\n## 4. Point-surjectivity as a uniform impossibility engine\n\n**Conjecture.** Every classical self-reference impossibility \u2014 Cantor, Russell, Tarski,\nTuring halting, G\u00f6del, Rice's theorem \u2014 is provably equivalent, over a weak base, to a single\nstatement: \"no type point-surjects onto its own Boolean function space.\" The equivalences are\nnot merely analogies but two-way derivations.\n\nThe key insight is that Lawvere's fixed-point theorem is not one tool among many but the\n*complete* characterisation of self-referential impossibility: a limitation theorem holds\nexactly when the relevant self-map lacks a fixed point.\n\nWhy now? With `lawvere_fixedpoint`, `cantor_no_pointSurjective`, and the catalog's\n`diagonal_no_decider` already derived from one another, the remaining classical theorems can\nbe slotted into the same frame, turning a scattered folklore into a single equivalence class.\n\n## 5. The unsoundness escape hatch\n\n**Conjecture.** Every complete self-referential system is unsound in a *measurable* way: the\nset of provable-but-false sentences has positive density under any reasonable enumeration, and\nthis density is bounded below by a function of how much completeness the system claims.\n\nThe key insight is that `not_complete` shows soundness and completeness are incompatible for\nself-referential systems, but the incompatibility is quantitative \u2014 buying completeness costs\na definite amount of falsehood, and the exchange rate is an invariant worth computing.\n\nWhy now? The explicit sound-but-incomplete witness `weakArithmetic` provides the boundary\ncase; perturbing it toward completeness is the natural experiment for measuring the price of\neach false theorem admitted.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0969",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2ace1a06",
+    "status": "available",
+    "timestamp": "2026-07-11T01:12:27.443621+00:00",
+    "title": "That the logical (G\u00f6del/Lucas\u2013Penrose) and information-th"
   },
   {
     "consumed_by_exp_id": "",
