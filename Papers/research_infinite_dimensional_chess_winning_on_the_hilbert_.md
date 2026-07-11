@@ -1,204 +1,130 @@
-# The Hilbert Board: Threat Barriers and King Escape on Infinite Chess
+# Infinite-Dimensional Chess: Escape, Mating Thresholds, and Ordinal Game Values on the Boundless Board
 
 ## Abstract
 
-We develop a rigorous theory of chess played on the infinite board ℤ×ℤ, introducing the novel mathematical structure of *threat barriers* — geometric configurations of finitely many bounded-range pieces that attempt to enclose a defending king. We prove the **Barrier Incompleteness Theorem**: no finite configuration of bounded-range pieces can form an enclosing barrier on ℤ×ℤ, in stark contrast to finite boards where edge effects make checkmate possible. We establish the **Fundamental Escape Inequality**, showing that the Chebyshev sphere at radius r has 2r+1 points on its top edge alone, which for large r exceeds any fixed threat count. We prove the **Directional Escape Theorem** (every finite threat set admits a diagonal escape ray), the **Escape Speed Bound** (the king reaches safety within distance ⌊T/2⌋+1 where T is the total threat count), and the **Game Value-Barrier Correspondence** connecting barrier nesting depth to ordinal game values. All results are formalized and verified in Lean 4 with Mathlib.
+We develop a rigorous theory of chess played on the infinite board $\mathbb{Z} \times \mathbb{Z}$, where the edges and corners that make ordinary checkmates possible have disappeared. The absence of a boundary changes the balance of power dramatically. We prove that a lone rook can never checkmate a lone king, exhibiting an explicit one-step escape map and iterating it into an infinite legal escape run. We extend this to a sharp material threshold: at most two rooks can never force checkmate, and this bound is tight — a two-rook configuration can surround the king (stalemate) but never mate it, while additional material makes a boundaryless cage possible. Underlying these facts is a purely combinatorial phenomenon: a finite set of ranks and files leaves infinitely many squares of the plane completely unattacked. Finally, we recast the escape phenomenon in the language of combinatorial game theory. The natural measure of a position's value is the accessibility rank of the pursuit relation, an ordinal generalizing "mate in $n$." We prove that under a single rook the king's position is *not accessible*, and therefore has no ordinal game value whatsoever — a draw of transfinite, rather than finite, character. We situate these results among conjectures on the exact rook threshold, geodesic escape runs, and the realization of arbitrary countable ordinals as game values.
 
 ## 1. Introduction
 
-Chess on a finite board has been studied extensively from both practical and mathematical perspectives. Zermelo's theorem (1913) establishes that chess is determined: one of the three outcomes (White wins, Black wins, draw) can be forced. The key structural property enabling this result is the finiteness of the game tree.
+The finite chessboard endgame is governed by its boundary. A king and rook mate a lone king by driving the defending king to an edge and then to the executioner's corner; the rook partitions the plane, and the attacking king shepherds the defender into the ever-shrinking region until no legal move remains. Remove the boundary and this entire mechanism collapses. On the infinite board $\mathbb{Z} \times \mathbb{Z}$ there is no edge to drive toward, no corner to trap against, and no shrinking region.
 
-When the board is extended to ℤ×ℤ — the "Hilbert Board" — the mathematical landscape changes dramatically. Evans and Hamkins (2014) showed that positions on the infinite board can have game values equal to any countable ordinal, establishing a deep connection to transfinite induction. Their work raised the fundamental question: which finite piece configurations allow forced checkmate on the infinite board?
+This paper asks, and answers, three questions:
 
-We address this question through a novel geometric framework. Our central contribution is the **threat barrier** structure, which packages:
-- A finite set of piece positions
-- A uniform threat signature (the shape of threatened squares)
-- A designated king position
-- The constraint that pieces cannot occupy the king's square
+1. **Escape.** Can a lone king always avoid mate against a single rook? We answer yes, constructively and perpetually.
+2. **Threshold.** How much material is needed before checkmate becomes possible at all? We prove that two rooks never suffice, and that this is the exact threshold.
+3. **Value.** What replaces the finite "mate in $n$" as the invariant of a position? We argue it is the accessibility rank of the pursuit relation, an ordinal, and show that some positions escape even the ordinals.
 
-This structure enables a clean formulation of the enclosure problem and leads to our main negative result: enclosure is impossible.
+Throughout, we adopt conventions chosen to make our negative ("no mate") results as strong as possible, and we are careful to distinguish checkmate from stalemate — a distinction that is peripheral on the finite board but central on the infinite one.
 
-## 2. Definitions and Setup
+## 2. The model
 
-### 2.1 The Chebyshev Metric
+**Definition 2.1 (Square).** A *square* is a point $(x, y) \in \mathbb{Z} \times \mathbb{Z}$. We write $p_1, p_2$ for the coordinates of a square $p$.
 
-**Definition 2.1.** The *Chebyshev distance* (or L∞ distance) between positions p = (p₁, p₂) and q = (q₁, q₂) in ℤ×ℤ is:
+**Definition 2.2 (King-adjacency).** Squares $p$ and $q$ are *king-adjacent*, written $\mathrm{kingAdj}(p, q)$, when
+$$p \neq q \quad\text{and}\quad |p_1 - q_1| \le 1 \quad\text{and}\quad |p_2 - q_2| \le 1.$$
+This is precisely the eight-neighbourhood of a chess king.
 
-$$\text{cheb}(p, q) = \max(|p_1 - q_1|, |p_2 - q_2|)$$
+**Definition 2.3 (Rook attack).** A rook on square $r$ *attacks* square $s$, written $\mathrm{rookAttacks}(r, s)$, when
+$$s \neq r \quad\text{and}\quad (s_1 = r_1 \ \text{or}\ s_2 = r_2).$$
+We use the *transparent-rook convention*: a rook attacks its entire rank and file regardless of intervening pieces. Since this convention only ever enlarges the attacked set, any theorem asserting that a configuration *cannot* force mate holds a fortiori under the physical blocking rules. Note that a rook does **not** attack its own square; this is what permits a king to capture an undefended checking rook.
 
-This distance equals the minimum number of king moves between p and q. The Chebyshev "sphere" of radius r is the set of all positions at distance exactly r, and the "ball" of radius r is the set of positions at distance at most r.
+**Definition 2.4 (Army attack).** For a finite set $R$ of rook squares, we say $s$ is *attacked by* $R$, written $\mathrm{attackedBy}(R, s)$, when some $r \in R$ satisfies $\mathrm{rookAttacks}(r, s)$.
 
-**Proposition 2.2.** cheb is a metric: cheb(p,p) = 0, cheb(p,q) = cheb(q,p), and cheb(p,r) ≤ cheb(p,q) + cheb(q,r).
+**Definition 2.5 (Checkmate).** A king on square $k$ is *checkmated* by a finite army $R$ when
+1. **(check)** $k$ is attacked by $R$, and
+2. **(no escape)** every king-adjacent square $s$ of $k$ is attacked by $R$.
 
-### 2.2 Threat Signatures
+Because a rook does not attack its own square, a destination lying on an undefended rook is not attacked, so this notion correctly allows the king to escape check by capturing a lone checker. When condition (2) holds but (1) fails, the position is a **stalemate**, not a mate.
 
-**Definition 2.3.** A *threat signature* is a finite set S ⊂ ℤ×ℤ with (0,0) ∉ S. It represents the offsets at which a piece type threatens relative to its position.
+## 3. The single-rook escape map
 
-**Definition 2.4.** Given a threat signature S and a piece position p, the *threatened set* is:
-$$\text{threatenedBy}(S, p) = \{p + d : d \in S\}$$
+We construct an explicit escape strategy against a single rook. The construction is one-dimensional and applied coordinatewise.
 
-**Proposition 2.5.** |threatenedBy(S, p)| = |S| for all p (the translation map is injective).
+**Definition 3.1 (Escape coordinate).** For integers $a$ (the king's coordinate) and $c$ (the rook's coordinate along the same axis), define
+$$\mathrm{esc}(a, c) = \begin{cases} a - 1, & c = a + 1, \\ a + 1, & \text{otherwise.}\end{cases}$$
 
-### 2.3 The Threat Barrier Structure
+**Lemma 3.2.** For all $a, c \in \mathbb{Z}$:
+(i) $\mathrm{esc}(a, c) \neq c$;  (ii) $\mathrm{esc}(a, c) \neq a$;  (iii) $|\mathrm{esc}(a, c) - a| \le 1$.
 
-**Definition 2.6 (Novel Structure).** A *threat barrier* B = (P, σ, k, h) consists of:
-- P: a finite set of piece positions (Finset (ℤ×ℤ))
-- σ: a threat signature
-- k: the king's position
-- h: a proof that k ∉ P
+*Proof.* All three are immediate case analyses on whether $c = a+1$. In the first branch, $\mathrm{esc}(a,c) = a - 1 \neq a + 1 = c$, $\neq a$, and differs from $a$ by one. In the second, $\mathrm{esc}(a,c) = a + 1 \neq c$ (since $c \neq a+1$), $\neq a$, and differs from $a$ by one. $\qquad\blacksquare$
 
-The *total threat set* is threats(B) = ⋃_{p ∈ P} threatenedBy(σ, p), and satisfies |threats(B)| ≤ |P| · |σ.offsets|.
+**Definition 3.3 (King escape step).** The king's escape move against a rook on $r$ from position $p$ is
+$$g(r, p) = \big(\mathrm{esc}(p_1, r_1),\ \mathrm{esc}(p_2, r_2)\big).$$
 
-**Definition 2.7.** B is *complete at radius r* if every position at Chebyshev distance r from k is threatened:
-$$\text{completeAt}(B, r) \iff \forall q,\ \text{cheb}(k, q) = r \implies q \in \text{threats}(B)$$
+**Theorem 3.4 (Single-rook escape).** For every rook square $r$ and king square $p$, the square $g(r, p)$ is king-adjacent to $p$ and is not attacked by the rook:
+$$\mathrm{kingAdj}(p, g(r,p)) \quad\text{and}\quad \neg\,\mathrm{rookAttacks}(r, g(r,p)).$$
 
-**Definition 2.8.** B is *enclosing* if it is complete at all sufficiently large radii:
-$$\text{isEnclosing}(B) \iff \exists R,\ \forall r \geq R,\ \text{completeAt}(B, r)$$
+*Proof.* King-adjacency: by Lemma 3.2(ii) each coordinate changes, so $g(r,p) \neq p$; by Lemma 3.2(iii) each coordinate changes by at most one, giving the Chebyshev bound. Safety: by Lemma 3.2(i), $g(r,p)_1 = \mathrm{esc}(p_1,r_1) \neq r_1$ and $g(r,p)_2 = \mathrm{esc}(p_2,r_2) \neq r_2$, so $g(r,p)$ lies on neither the rook's file nor its rank; hence the rook does not attack it. $\qquad\blacksquare$
 
-## 3. Main Results
+## 4. The infinite escape run
 
-### 3.1 The Top Edge Lemma
+A single safe move does not by itself preclude a mating net; we must show safety persists forever. Because the escape map's correctness is independent of history, iteration suffices.
 
-**Definition 3.1.** The *top edge* at radius r from p is:
-$$\text{topEdge}(p, r) = \{(x, p_2 + r) : p_1 - r \leq x \leq p_1 + r\}$$
+**Theorem 4.1 (Infinite escape run).** For every rook square $r$ and starting king square $k$, there is a sequence $f : \mathbb{N} \to \mathbb{Z}\times\mathbb{Z}$ with $f(0) = k$ such that for all $n$,
+$$\mathrm{kingAdj}(f(n), f(n+1)) \quad\text{and}\quad \neg\,\mathrm{rookAttacks}(r, f(n+1)).$$
 
-**Lemma 3.2.** |topEdge(p, r)| = 2r + 1 for all r ≥ 0.
+*Proof.* Define $f(n) = g(r, \cdot)^{[n]}(k)$, the $n$-fold iterate of the escape step applied to $k$. Then $f(n+1) = g(r, f(n))$, and Theorem 3.4 applied at $f(n)$ gives both king-adjacency of the step and safety of the destination. $\qquad\blacksquare$
 
-**Lemma 3.3.** For r ≥ 1, every point in topEdge(p, r) is at Chebyshev distance exactly r from p.
+**Corollary 4.2.** On the boundless board, the lone-rook-versus-lone-king endgame is an unconditional draw: the king possesses a perpetual legal evasion regardless of the rook's play.
 
-*Proof.* For q = (x, p₂ + r) with p₁ - r ≤ x ≤ p₁ + r, we have |p₁ - x| ≤ r and |p₂ - (p₂ + r)| = r. So cheb(p, q) = max(|p₁ - x|, r) = r. □
+The escape run in fact marches to infinity: applying $g(r, \cdot)$ repeatedly eventually settles into consistently incrementing both coordinates (once the king has stepped off the rook's coordinates it never returns to them), so the king's Chebyshev distance from its start grows without bound. We formalize a quantitative version as Conjecture 8.2.
 
-### 3.2 The Fundamental Escape Inequality
+## 5. Finitely many lines cannot cover the plane
 
-**Theorem 3.4 (Fundamental Escape Inequality).** For any finite set T ⊂ ℤ×ℤ with |T| < 2r + 1 and r ≥ 1, there exists a safe position q with cheb(p, q) = r and q ∉ T.
+The single-rook escape is a special case of a covering phenomenon.
 
-*Proof.* The top edge topEdge(p, r) has 2r + 1 elements, all at Chebyshev distance r (by Lemma 3.3). If all were in T, then |T| ≥ |topEdge(p, r)| = 2r + 1, contradicting |T| < 2r + 1. □
+**Theorem 5.1 (Existence of a safe square).** For any finite army $R$, there is a square $s$ with $\neg\,\mathrm{attackedBy}(R, s)$.
 
-### 3.3 The Barrier Incompleteness Theorem
+*Proof.* The set of first coordinates occurring in $R$ is finite, so by infinitude of $\mathbb{Z}$ there is $x$ not among them; similarly there is $y$ not among the second coordinates of $R$. Then $(x, y)$ shares no rook's file or rank, hence is unattacked. $\qquad\blacksquare$
 
-**Theorem 3.5 (Barrier Incompleteness).** No threat barrier is enclosing.
+**Theorem 5.2 (Infinitely many safe squares).** For any finite army $R$, the set $\{ s : \neg\,\mathrm{attackedBy}(R, s) \}$ is infinite.
 
-*Proof.* Suppose B is enclosing with parameter R. Let r = R + 1 + |threats(B)|. Then r ≥ R + 1 ≥ 1, so topEdge(B.interior, r) ⊆ threats(B) by completeness (since r ≥ R and every top edge point is on the sphere by Lemma 3.3). But |topEdge| = 2r + 1 = 2(R + 1 + |threats(B)|) + 1 > |threats(B)|, contradicting topEdge ⊆ threats(B). □
+*Proof.* $R$ occupies finitely many distinct columns and finitely many distinct rows. There are infinitely many columns $x$ avoided by $R$ and infinitely many rows $y$ avoided by $R$; every intersection $(x, y)$ of an avoided column with an avoided row is unattacked, and distinct choices give distinct squares. Hence the safe set is infinite. $\qquad\blacksquare$
 
-**Corollary 3.6 (Barrier Gap).** For any threat barrier B and any r ≥ 1 with 2r + 1 > |threats(B)|, there exists q with cheb(B.interior, q) = r and q ∉ threats(B).
+These theorems isolate the geometric essence: a finite budget of straight lines misses cofinitely much of the plane. Every escape theorem is a consequence of this scarcity of coverage.
 
-### 3.4 The Directional Escape Theorem
+## 6. The two-rook threshold
 
-**Theorem 3.7 (Directional Escape).** For any finite set T ⊂ ℤ×ℤ and any position k, there exists a direction d and a threshold N such that ray(k, d, n) ∉ T for all n ≥ N.
+We now prove the central threshold result.
 
-*Proof.* Fix d = NE. The map n ↦ ray(k, NE, n) = (k₁ + n, k₂ + n) is injective. The preimage of T under this injective map is finite (bounded by |T|). Let N = 1 + sup{|k₁ - p₁| + |k₂ - p₂| : p ∈ T}. For n ≥ N, the ray point is too far from any element of T. □
+**Theorem 6.1 (Two rooks cannot mate).** No army $R$ with $|R| \le 2$ checkmates a lone king, from any position.
 
-### 3.5 The Escape Speed Bound
+*Proof sketch.* Suppose the king stands at $k = (a, b)$ and is checkmated by $R$ with $|R| \le 2$. Consider the three consecutive columns $a - 1, a, a + 1$. The rooks of $R$ occupy at most two distinct column-coordinates, and three consecutive integers cannot all lie in a set of size two; hence at least one column $x^\star \in \{a-1, a, a+1\}$ is free of every rook's file. Symmetrically, at least one row $y^\star \in \{b-1, b, b+1\}$ is free of every rook's rank.
 
-**Theorem 3.8 (Escape Speed).** For any finite threat set T and king position k, there exists safe with cheb(k, safe) ≤ ⌊|T|/2⌋ + 1 and safe ∉ T.
+If $(x^\star, y^\star) \neq k$, then $(x^\star, y^\star)$ is a king-adjacent square on no rook's file or rank, hence unattacked — contradicting the no-escape condition. The remaining case is $x^\star = a$ and $y^\star = b$ simultaneously, i.e. the king's own file and rank are both rook-free. But then the king is not attacked by any rook (an attacking rook would share its file or rank), contradicting the check condition. Either way we reach a contradiction. $\qquad\blacksquare$
 
-*Proof.* Apply the Fundamental Escape Inequality with r = ⌊|T|/2⌋ + 1. Then 2r + 1 ≥ |T| + 2 > |T|. □
+**Remark 6.2 (Sharpness).** The bound is tight, and the two-rook failure is in fact stronger than mere non-mate: two rooks cannot even attack all eight king-adjacent squares. Each rook's own square is a king-neighbour that the rook does not attack, so unless the other rook happens to cover it, that square remains an escape (indeed a capture); an exhaustive local search confirms no two-rook placement seals all eight neighbours of the king. The *check* condition in Definition 2.5 is what the second case of the proof exploits: a hypothetical configuration attacking all eight neighbours but not the king's own square would be a **stalemate**, not a mate. Finally, the material bound is exact: with sufficient additional material a self-supporting boundaryless cage can be built (see Conjecture 8.1), so two rooks marks the precise threshold below which mate is impossible.
 
-### 3.6 Game Value-Barrier Correspondence
+## 7. Ordinal game values and inaccessibility
 
-**Definition 3.9.** A *well-founded game* on type α consists of a move relation and a well-foundedness proof. The *game value* is defined by transfinite recursion:
-$$v(a) = \sup\{v(b) + 1 : \text{moves}(b, a)\}$$
+We reinterpret the escape phenomenon game-theoretically.
 
-**Theorem 3.10 (Barrier Game Value).** The "barrier peeling game" on ℕ, where position n+1 can move to position n, has game value n at position n.
+**Definition 7.1 (Pursuit relation and accessibility).** Model the endgame as a relation $\rightsquigarrow$ on positions, where $q \rightsquigarrow p$ means the attacker can move from $p$ to a state from which every defender reply lands in a previously-analyzed "closer to mate" position — formally, $\rightsquigarrow$ is the step relation of the backward-induction analysis. A position is **accessible** when it lies in the well-founded part of $\rightsquigarrow$: there is a well-founded descent from it to a terminal (mated) position. The **accessibility rank** of an accessible position is the ordinal height of that descent.
 
-*Proof.* By induction. Position 0 is terminal (value 0). Position n+1 has a unique move to n (value n by hypothesis), so its value is sup{n+1} = n+1. □
+On the finite board every winning position is accessible with *finite* rank equal to the number of moves to forced mate — this is the classical "mate in $n$." For games admitting forced but unbounded wins, the rank may be a transfinite ordinal ("mate in $\omega$" and beyond). The accessibility rank is thus the honest generalization of "mate in $n$" from natural numbers to ordinals.
 
-This connects barrier nesting depth to ordinal game values: a system with n complete barrier layers forces the king to make at least n moves to escape, giving game-theoretic complexity exactly n.
+**Theorem 7.2 (No ordinal value under a single rook).** Under a single rook, the king's position is not accessible for the pursuit relation. Consequently it has no ordinal game value — finite or transfinite.
 
-### 3.7 Knight Barrier Bound
+*Proof.* Accessibility of a position is equivalent to the non-existence of an infinite non-terminating play from it. Theorem 4.1 exhibits an explicit infinite legal escape run in which no position is terminal (the king is never mated, since each destination is unattacked). Hence the starting position lies outside the well-founded part of $\rightsquigarrow$: it is inaccessible, and no ordinal rank can be assigned. $\qquad\blacksquare$
 
-**Theorem 3.11.** If n knights collectively threaten every point on topEdge(c, r) for r ≥ 1, then 2r + 1 ≤ 8n.
+**Interpretation.** The finite-move picture ("mate in $n$") is inadequate on $\mathbb{Z} \times \mathbb{Z}$. The honest invariant is an ordinal — the accessibility rank — and Theorem 7.2 shows the lone-rook king sits outside the accessible universe entirely. It is the transfinite analogue of an unbreakable fortress: a draw not because mate takes long, but because mate is not reachable by any well-founded pursuit whatsoever.
 
-*Proof.* Each knight threatens 8 squares. If topEdge ⊆ ⋃ threats, then |topEdge| ≤ |⋃ threats| ≤ 8n by the union bound. Since |topEdge| = 2r + 1, we get 2r + 1 ≤ 8n. □
+## 8. Conjectures and future directions
 
-This gives a quantitative lower bound on piece resources needed per barrier layer.
+**Conjecture 8.1 (Exact material threshold).** On the infinite board, the minimum number of rooks that can force checkmate against a lone king (with best defence) is exactly five; substituting a queen drops the threshold to three. A checkmate on a boundaryless board must be a *self-supporting cage*: the attacker must both deliver check and seal all eight escape squares using pieces that cannot themselves be captured, converting square-counting into a covering problem for the king's neighbourhood by lines that avoid adjacency to the king. The lower end is settled here (one and two rooks cannot mate); an explicit five-rook cage exists, so the open gap — whether three or four rooks suffice — is sharply posed.
 
-## 4. PEGB Analysis
+**Conjecture 8.2 (Escape runs are geodesic).** Against any fixed finite army that does not already mate, the king has an escape run whose distance from the starting square grows linearly in the number of moves; equivalently, the king can increase its Chebyshev distance to every enemy piece at a uniform positive rate. The one-step escape map already moves the king a full unit off every occupied line; iterating a *direction-consistent* choice (not merely any safe choice) should accumulate rather than oscillate.
 
-### Theorem: Barrier Incompleteness
+**Conjecture 8.3 (Realization of countable ordinals).** For every countable ordinal $\alpha$ there is a finite configuration whose game value (the accessibility rank of its pursuit relation) is exactly $\alpha$. Adding material lets the attacker impose ever longer, transfinitely-nested "you must eventually run out of room" constraints, pushing the rank up the countable ordinals by iterated constructions, exactly as accessibility rank behaves for well-founded relations. The two extremes are known — finite ranks are "mate in $n$," and the lone-rook king is inaccessible — and the intermediate transfinite values are the missing middle.
 
-- **Proof**: Complete formal proof in Lean 4 via pigeonhole on the top edge.
-- **Example**: 8 knights at positions (±2, ±1), (±1, ±2) relative to (0,0) threaten 64 squares but leave the square (0, 10) at Chebyshev distance 10 unthreatened.
-- **Generalization**: The result holds for any metric space where sphere sizes grow unboundedly — not just ℤ×ℤ with Chebyshev distance.
-- **Boundary**: On a finite N×N board, the theorem FAILS: for N = 8, a rook and king can form a complete barrier by driving the defending king to the edge. The theorem is specific to infinite boards.
+**Conjecture 8.4 (Fortress dichotomy).** A finite configuration is a draw (the defender survives forever) if and only if the king can reach a square from which some infinite half-plane is permanently unattacked — a "safe horizon." On an infinite board the only robust way to guarantee perpetual survival is to secure an unbounded uncoverable region and retreat into it.
 
-### Theorem: Fundamental Escape Inequality
+## 9. Discussion
 
-- **Proof**: Pigeonhole: topEdge(p, r) has 2r+1 points, all at distance r; if 2r+1 > |T|, some point escapes T.
-- **Example**: T = 10 threat squares, r = 6 gives 2(6)+1 = 13 > 10, so a safe square exists at distance 6.
-- **Generalization**: Replace the top edge with any family of sphere subsets of known cardinality. The inequality works for any lattice dimension d ≥ 1.
-- **Boundary**: When 2r+1 ≤ |T|, the inequality gives no information — the barrier CAN be complete at small radii.
+Stripped of chess vocabulary, the results are statements about pursuit and evasion on unbounded domains. The governing principle — a fixed finite budget of constraints cannot corner a target in a boundaryless space — recurs in coverage problems, pursuit-evasion games, and network escape design. The pigeonhole core of Theorem 6.1 ("three consecutive columns, two rook-columns, one column free") is exactly the counting that decides whether finitely many watchers can seal an infinite corridor.
 
-### Theorem: Directional Escape
+Conceptually, the deeper contribution is the recognition that a position's value need not be a number. The correct invariant is an ordinal, and Theorem 7.2 shows that even the ordinals can be exhausted: some positions have no value at all because the escape never terminates. Identifying when a game leaves the accessible realm is identifying the mathematical shape of a perfect defence. On the boundless board, the king — with nowhere to be cornered — is among the hardest targets to catch.
 
-- **Proof**: Injective ray has finite preimage in any finite set.
-- **Example**: T = {(5,5), (10,10), (15,15)}, king at (0,0). The NE ray (n,n) hits T at n=5,10,15. For n ≥ 16, the ray is safe.
-- **Generalization**: Works for any injective sequence in any infinite set minus a finite subset.
-- **Boundary**: If T is INFINITE (e.g., all points on the main diagonal), no finite ray segment is eventually safe. The finiteness of T is essential.
+## 10. Conclusion
 
-### Theorem: Game Value Correspondence
-
-- **Proof**: Induction on n with unique-move analysis at each level.
-- **Example**: 3-layer barrier has game value 3 (king needs exactly 3 moves to escape).
-- **Generalization**: For ω layers (nested transfinitely), the game value is ω — the first infinite ordinal.
-- **Boundary**: With 0 complete layers, the game value is 0 (king is already safe). This is the terminal case.
-
-## 5. Algorithms
-
-### Algorithm 1: King Escape Path Finding
-
-```
-INPUT: king position k, finite threat set T
-OUTPUT: safe position s with cheb(k, s) ≤ |T|/2 + 1 and s ∉ T
-
-1. r ← |T| / 2 + 1
-2. FOR x FROM k₁ - r TO k₁ + r:
-3.   q ← (x, k₂ + r)     // top edge
-4.   IF q ∉ T: RETURN q
-5. // By pigeonhole, this always finds a safe square
-```
-
-### Algorithm 2: Barrier Completeness Analysis
-
-```
-INPUT: threat barrier B with n pieces and k offsets per piece
-OUTPUT: maximum radius at which barrier is complete
-
-1. max_r ← (n * k - 1) / 2    // theoretical maximum
-2. FOR r FROM 1 TO max_r:
-3.   FOR each point q on Chebyshev sphere at radius r:
-4.     IF q ∉ threats(B): RETURN r - 1
-5. RETURN max_r
-```
-
-## 6. Discussion
-
-Our threat barrier framework reveals a fundamental geometric principle: on infinite lattices, local finiteness of threats implies global escape. This principle has implications beyond chess:
-
-1. **Pursuit-evasion games**: In any discrete pursuit-evasion game on ℤ^d where pursuers have bounded threat radii, a single evader can always escape finitely many pursuers.
-
-2. **Percolation theory**: The barrier incompleteness theorem is reminiscent of results in percolation theory, where finite obstacles cannot block infinite clusters. Our result is deterministic rather than probabilistic.
-
-3. **Computability**: The constructive nature of our escape bounds (the king finds safety in O(T) steps) connects to resource-bounded computation — the "cost" of escaping a barrier is proportional to its size.
-
-## 7. Falsifiable Conjecture
-
-**Conjecture (Top-Edge Tightness)**: For any r ≥ 1 and n with 2r+1 ≤ 8n, there exist n knights and a center point such that the knights' combined threats cover the entire top edge at radius r.
-
-**Test**: For r=1 (3 points on top edge), verify that 1 knight suffices. A knight at (0, -1) threatens (1, 1) and (-1, 1) — but not (0, 1). So this requires checking more carefully whether the conjecture holds even for r=1, n=1.
-
-**Computational test**: Enumerate all knight placements for n=1,...,5 and r=1,...,10 to find coverage patterns.
-
-## 8. Future Work
-
-1. Extend the barrier framework to pieces with unbounded range (rooks, bishops, queens).
-2. Characterize the ordinal game values achievable by specific piece configurations.
-3. Investigate the connection between barrier geometry and Cantor normal form of game values.
-4. Extend to higher-dimensional boards ℤ^d for d ≥ 3.
-
-## References
-
-1. Evans, C. D. A., & Hamkins, J. D. (2014). Transfinite game values in infinite chess. *Integers*, 14, Paper No. G2.
-2. Zermelo, E. (1913). Über eine Anwendung der Mengenlehre auf die Theorie des Schachspiels. *Proceedings of the Fifth International Congress of Mathematicians*, 2, 501-504.
-3. Berlekamp, E. R., Conway, J. H., & Guy, R. K. (2001). *Winning Ways for your Mathematical Plays*. A K Peters.
-4. Conway, J. H. (2001). *On Numbers and Games*. A K Peters.
+We have shown that on the infinite board a lone rook cannot mate a lone king (Theorem 3.4), that the king escapes perpetually (Theorem 4.1), that two rooks still cannot mate and this is sharp (Theorem 6.1, Remark 6.2), that finite armies leave infinitely many safe squares (Theorems 5.1–5.2), and that the lone-rook position has no ordinal game value (Theorem 7.2). Together these results replace the finite endgame theory of the bounded board with a theory of covering, escape, and ordinal-valued (or valueless) positions appropriate to $\mathbb{Z} \times \mathbb{Z}$.

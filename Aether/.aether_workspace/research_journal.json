@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4936bb72",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Number Theory on Networks\n\nThis cycle established the spectral–arithmetic dictionary for the Ihara zeta function of a\n`(q+1)`-regular graph: the local factor `1 − λu + qu²` obeys",
-      "quality_score": 0.85,
-      "sorry_count": 3,
-      "theorem_count": 11,
-      "timestamp": "2026-07-10T07:49:49",
-      "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
-    },
-    {
       "cycle_id": "9696343b",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThis project formalises the *algebraic skeleton* of the \"topology of Bach\"\nmission: pitch-class space as `ℤ/12ℤ`, harmonic cycles as cyclic subgroups, and\nthe circle of fifths as",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-11T00:23:26",
       "title": "Transfinite Game Theory: Games That Last Forever"
+    },
+    {
+      "cycle_id": "0981cb8f",
+      "domain": "Probability",
+      "key_insight": "# Future Directions: Self-Reference, Fixed Points, and Strange Loops\n\nEach conjecture below is bold, falsifiable, and derived from the findings of this\ncycle — the observation that existence (Lawvere)",
+      "quality_score": 0.83,
+      "sorry_count": 6,
+      "theorem_count": 20,
+      "timestamp": "2026-07-11T00:40:03",
+      "title": "Consciousness as Emergent Fixed Point"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8b6fc6d0",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns — one leg is a multiple",
-      "quality_score": 0.7859200000000002,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-02T05:18:37",
-      "title": "unnamed_concept"
-    },
     {
       "cycle_id": "89d6c3ef",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-11T00:23:26",
       "title": "Transfinite Game Theory: Games That Last Forever"
+    },
+    {
+      "cycle_id": "0981cb8f",
+      "domain": "Probability",
+      "key_insight": "# Future Directions: Self-Reference, Fixed Points, and Strange Loops\n\nEach conjecture below is bold, falsifiable, and derived from the findings of this\ncycle — the observation that existence (Lawvere)",
+      "quality_score": 0.83,
+      "sorry_count": 6,
+      "theorem_count": 20,
+      "timestamp": "2026-07-11T00:40:03",
+      "title": "Consciousness as Emergent Fixed Point"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f5358691",
-      "domain": "Computation",
-      "name": "exists_survivor_of_pos",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "cd5a9d7d",
-      "domain": "Pythagorean",
-      "name": "asserts",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "cd5a9d7d",
-      "domain": "Pythagorean",
-      "name": "produces",
-      "quality": 0.82
-    },
     {
       "cycle_id": "cd5a9d7d",
       "domain": "Pythagorean",
@@ -2803,17 +2785,28 @@
       "domain": "MachineLearning",
       "name": "W_not_terminal",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "0981cb8f",
+      "domain": "Probability",
+      "name": "for",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "0981cb8f",
+      "domain": "Probability",
+      "name": "for",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "0981cb8f",
+      "domain": "Probability",
+      "name": "for",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T00:23:26",
+  "last_updated": "2026-07-11T00:40:03",
   "open_questions": [
-    {
-      "context": "the still-open Aharoni–Korman conjecture and is left as `sorry`.; sorry -- FALSE: refuted by `obstruction_direction_false`; is the genuinely open content (a form of the Aharoni–Korman conjecture), lef",
-      "cycle_id": "2058237b",
-      "domain": "Logic",
-      "sorry_count": 4,
-      "timestamp": "2026-07-06T11:04:35"
-    },
     {
       "context": "witnesses, not `sorry`ed placeholders, so the abstract hypotheses are demonstrably; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun",
       "cycle_id": "048b9775",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-10T23:50:39"
+    },
+    {
+      "context": "+work-in-progress `sorry` below; every other declaration in this file is complete.; sorry; **Analysis.**  What survived: all seven theorems, sorry-free.  The unifying",
+      "cycle_id": "0981cb8f",
+      "domain": "Probability",
+      "sorry_count": 6,
+      "timestamp": "2026-07-11T00:40:03"
     }
   ],
   "research_threads": {
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "3131feed",
-        "quality": 0.41286596521739133,
-        "theorems": 8,
-        "title": "Goldbach Verification Framework"
-      },
-      {
         "cycle_id": "e3b2c2b9",
         "quality": 0.5254,
         "theorems": 14,
@@ -3823,6 +3817,12 @@
         "quality": 0.72,
         "theorems": 20,
         "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
+      },
+      {
+        "cycle_id": "0981cb8f",
+        "quality": 0.83,
+        "theorems": 20,
+        "title": "Consciousness as Emergent Fixed Point"
       }
     ],
     "Pythagorean": [

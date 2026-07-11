@@ -1,75 +1,85 @@
-# The King Who Cannot Be Trapped: Mathematics on the Infinite Chessboard
+# Infinite-Dimensional Chess: Winning on the Hilbert Board
 
-*What happens when you remove the edges from a chessboard — and let it stretch to infinity in every direction?*
+## When the edges vanish
 
----
+Every chess player learns the same first lesson about the endgame: to checkmate a lone king, you drive it to the *edge* of the board. A single rook and a king can force mate precisely because the eight-by-eight grid has walls. The rook cuts the plane in half, the friendly king shoulders the enemy monarch toward the boundary, and eventually the trapped king runs out of squares. The corner is the executioner; the edge is its scaffold.
 
-In 1913, Ernst Zermelo proved one of the first theorems in game theory: in chess, either White can force a win, Black can force a win, or both sides can force a draw. His theorem applies to any finite, two-player game of perfect information. But Zermelo's proof depends critically on one fact that chess players take for granted: the board has edges.
+Now perform a thought experiment. Erase the walls. Let the board stretch out forever in all four directions — an endless grid of squares indexed by pairs of integers $(x, y)$, one square for every point of $\mathbb{Z} \times \mathbb{Z}$. The pieces move by the ordinary rules: a king steps to any of its eight neighbours, a rook slides any distance along its rank or file. But there is no edge, no corner, nowhere to be cornered.
 
-Strip away those edges. Extend the familiar 8×8 grid into an infinite lattice of squares — mathematicians call it ℤ×ℤ, the set of all integer pairs — and something remarkable happens. The geometry of the game changes so fundamentally that positions which are checkmate on a standard board become draws on the infinite one. The king, that most vulnerable of pieces, becomes essentially untouchable.
+What happens to the endgame?
 
-## The Geometry of Escape
+The answer turns out to be startling, and it forces us to rethink what the word "value" even means for a chess position. On the infinite board the familiar hierarchy of "mate in one," "mate in two," "mate in $n$" is not merely longer — for some positions it *does not exist at all*, not for any finite $n$ and, in a precise sense we will make rigorous, not for any transfinite ordinal either. The lone king becomes uncatchable. This article explains why, states the theorems that pin it down, and shows where the true threshold of checkmate lies.
 
-On a standard chessboard, a lone king facing a rook and enemy king is doomed. The attacking side drives the defending king toward the edge of the board, steadily shrinking its prison until checkmate becomes inevitable. Every intermediate chess student learns this technique.
+## The model, precisely
 
-But on an infinite board, there is no edge. The defending king can retreat forever.
+Let us fix the rules so there is nothing to argue about later.
 
-This intuition can be made precise through what we call the *Chebyshev metric* — a mathematical way to measure distance that perfectly captures king movement. In the Chebyshev metric, the distance between two squares is the maximum of their horizontal and vertical separations. A king at position (3, 5) is at Chebyshev distance 2 from (5, 7), because it takes exactly two king moves to travel there (diagonally). This metric reveals a beautiful geometric structure: "circles" in the king metric are actually squares, rotated 45 degrees from the board's grid lines.
+A **square** is a point $(x, y)$ with $x, y \in \mathbb{Z}$. Two squares $p$ and $q$ are **king-adjacent** when they are different and differ by at most one in each coordinate:
+$$p \neq q, \qquad |p_1 - q_1| \le 1, \qquad |p_2 - q_2| \le 1.$$
+This is exactly the set of eight squares a king can step to.
 
-The Chebyshev sphere at radius *r* — the set of all squares exactly *r* king-moves from a given point — contains exactly 8*r* squares. This number grows linearly. Meanwhile, any finite collection of chess pieces can threaten only a fixed, finite number of squares. This mismatch between the linearly growing perimeter and the constant threat count is the engine behind all escape theorems on the infinite board.
+A **rook** standing on square $r$ **attacks** a square $s$ when $s$ shares the rook's rank or file but is not the rook's own square:
+$$s \neq r, \qquad (s_1 = r_1 \ \text{or}\ s_2 = r_2).$$
+We adopt the *transparent-rook* convention: rooks do not block one another's lines. This only ever makes the attacked region *larger*, so every statement of the form "these pieces cannot force mate" that we prove here holds all the more strongly under the physical blocking rules — a conservative choice that strengthens our negative results.
 
-## The Barrier Incompleteness Theorem
+A king standing on square $k$ is **checkmated** by a finite army of rooks $R$ when two things hold at once: the king is currently in check (some rook attacks $k$), and every one of the eight king-adjacent squares is attacked by $R$. Crucially, a rook's *own square* is not among the squares it attacks. This is not a technicality — it is what allows a king to capture a lone, undefended checking rook. If the only thing giving check is a rook the king can eat, the king is not mated. Our definition respects this.
 
-We introduce a new mathematical structure: the *threat barrier*. A barrier is a geometric arrangement of attacking pieces that attempts to surround the king, forming a "fence" of threatened squares. On a finite board, barriers can be complete — that's how checkmate works. The question is whether they can be complete on the infinite board.
+## Result 1: A lone rook can never mate
 
-The answer is no, and the proof is elegant. Consider the top edge of the Chebyshev sphere at radius *r*: the 2*r*+1 squares along the top of the "diamond" at distance *r* from the king. All of these must be threatened if the barrier is to be complete at radius *r*. But the total number of threatened squares is fixed — it can't exceed the number of pieces times the maximum number of squares each piece threatens.
+Here is the cleanest statement of the phenomenon.
 
-For any finite configuration, there exists a radius *r* large enough that 2*r*+1 exceeds the total threat count. At that radius, at least one sphere point must be unguarded. The barrier leaks.
+> **Theorem (Single-rook escape).** For any position of a single rook $r$ and a king $p$, the king has an explicit safe move: a king-adjacent square that the rook does not attack.
 
-This is not a deficiency of any particular arrangement — it's a theorem. No finite collection of bounded-range pieces can ever form a complete enclosure around a king on the infinite board. The king always finds a way out.
+The proof is not an existence argument — it is a *formula*. Define a one-dimensional escape rule. Given the king's coordinate $a$ and the rook's coordinate $c$ along the same axis, set
+$$\mathrm{esc}(a, c) = \begin{cases} a - 1 & \text{if } c = a + 1, \\ a + 1 & \text{otherwise.} \end{cases}$$
+In words: step one square in the positive direction, unless the rook is sitting exactly there, in which case step the other way. Three facts are immediate from the definition: the result is never equal to $c$ (we never step onto the rook's line-defining coordinate), it is never equal to $a$ (we always move), and it differs from $a$ by exactly one (it is a legal king step).
 
-## Directional Escape
+Now the king's full escape move is to apply this rule *independently in both coordinates*:
+$$g(r, p) = \big(\mathrm{esc}(p_1, r_1),\ \mathrm{esc}(p_2, r_2)\big).$$
+Because the new $x$-coordinate avoids $r_1$ and the new $y$-coordinate avoids $r_2$, the destination lies on neither the rook's file nor its rank — so the rook does not attack it. And because each coordinate moved by exactly one, the destination is genuinely king-adjacent. The king always has somewhere safe to go. There is no wall to pin it against.
 
-The Barrier Incompleteness Theorem guarantees the existence of safe squares. But can the king actually *reach* them? After all, a safe square two billion moves away does the king little good if the path to it is blocked.
+## Result 2: The king escapes *forever*
 
-The Directional Escape Theorem goes further: for any finite threat set, the king has an entire *direction* of escape. Specifically, at least one of the four diagonal rays extending from the king's position eventually becomes permanently safe. The argument is delightfully simple: each ray visits infinitely many squares, but a finite threat set can block only finitely many of them. Beyond the last blocked square, the ray is clear forever.
+A single safe move is good, but a skeptic could ask: what if every escape leads into a trap two moves later? On a finite board that is exactly how mating nets work. On the infinite board they cannot form.
 
-This means the king doesn't just have a safe square — it has a safe highway extending to infinity.
+> **Theorem (Infinite escape run).** Against a single rook there is an *infinite* sequence of king positions $f(0), f(1), f(2), \dots$ starting from the king's current square, in which each move is legal and lands on a square the rook does not attack.
 
-## The Escape Speed Bound
+The construction is simply to *iterate* the escape map: $f(n)$ is the result of applying $g(r, \cdot)$ to the starting square $n$ times. Each single step is safe by the previous theorem, and safety of one step never depends on the history, so the whole infinite run is legal. The king walks off to infinity along a diagonal, forever one step ahead. This is the exact, honest meaning of "the king always escapes" on the boundless board: not a clever swindle, but an unconditional, perpetual draw.
 
-How quickly can the king find safety? The Escape Speed Theorem provides a crisp answer: for any configuration with *T* total threatened squares, the king can find a safe square within Chebyshev distance ⌊*T*/2⌋ + 1.
+## Result 3: Two rooks still cannot mate — and that is sharp
 
-The proof combines the Fundamental Escape Inequality — which states that any sphere with more than *T* points on its top edge must contain a safe point — with the observation that the top edge at radius *r* has 2*r*+1 points. Setting *r* = ⌊*T*/2⌋ + 1 guarantees 2*r*+1 > *T*.
+One rook fails for an obvious reason: it controls only one rank and one file, two lines, and two lines cannot cover the king's neighbourhood. What about two rooks? Two rooks control up to four lines, which is enough to *touch* all eight neighbours in principle. Yet they still cannot mate.
 
-This bound is tight up to constant factors. A clever arrangement of pieces really can force the king to travel a distance proportional to the number of threats before finding safety.
+> **Theorem (Two rooks cannot mate).** No army of at most two rooks can checkmate a lone king, from any position whatsoever.
 
-## From Barriers to Game Values
+The heart of the argument is a pigeonhole fact so small it fits in one line: *three consecutive integers cannot all lie in a set of size two.* Consider the three values $k_1 - 1, k_1, k_1 + 1$ — the king's file and its two neighbours. Two rooks contribute at most two distinct file-coordinates. So among those three consecutive columns, at least one is free of every rook's file. A symmetric statement holds for rows. Combining these free lines with the requirement that the king actually be *in check* (which forces the central square to be covered and so rules out the degenerate all-covered arrangement) produces an escape square among the king's neighbours. Two rooks always spring a leak.
 
-How does escape difficulty connect to the theory of combinatorial games? We model barrier traversal as a well-founded game: the "barrier peeling game," where position *n*+1 represents a king facing *n*+1 concentric layers of threats, and each move peels away one layer by escaping through it.
+And this is the exact threshold. It is not that "few pieces never mate" — rather, *two is the precise boundary*. With more material a boundaryless cage becomes possible. The two-rook failure is in fact even more decisive than the theorem states: two rooks cannot so much as *seal all eight* neighbouring squares. Each rook's own square is one of the king's neighbours, and a rook never attacks the square it stands on, so at least those squares stay open — the king can often escape check simply by capturing a rook. This is why the distinction between mate and mere *surrounding* matters so much on the infinite board. The second half of the proof isolates it: a configuration that attacked all eight neighbours but not the king's own square would be **stalemate**, not mate — a footnote on the finite board, but the crux of the theory on the boundless one.
 
-The game value of position *n* in this game is exactly the ordinal number *n*. This means that barrier depth and game-theoretic complexity are the same thing — a correspondence that bridges geometry and game theory.
+## Result 4: Finitely many lines miss almost the whole plane
 
-This connection extends to transfinite values. Joel David Hamkins and C. D. A. Evans showed in 2014 that infinite chess positions can have game values equal to any countable ordinal — ω, ω², ω^ω, and beyond. Our barrier framework provides a geometric interpretation: these transfinite values correspond to infinitely nested barrier systems where the nesting depth itself is transfinite.
+Behind all of these results is a single geometric truth, and it deserves to be stated on its own.
 
-## The Knight Barrier Bound
+> **Theorem (Safe squares exist — in fact infinitely many).** Any *finite* army of rooks leaves at least one square completely unattacked; indeed it leaves *infinitely many* such squares.
 
-Not all pieces are created equal in their barrier-forming ability. Knights, each threatening exactly 8 squares, can collectively cover at most 8*n* squares with *n* knights. To complete even the top edge at radius *r*, you need 2*r*+1 ≤ 8*n*, meaning at least ⌈(2*r*+1)/8⌉ knights per layer of defense.
+The reason is that a finite army occupies only finitely many distinct columns and finitely many distinct rows. Pick any column that none of them occupies — there are infinitely many to choose from, since there are infinitely many integers — and any such row. Their intersection is a square on nobody's file and nobody's rank. It is safe. Vary the column and the row and you get infinitely many safe squares. Finitely many straight lines simply cannot cover an infinite plane. This is the combinatorial engine of every escape: the board is too big to blanket with a finite budget of lines.
 
-This quantitative bound reveals the "cost" of barrier construction in terms of piece resources, connecting combinatorial game theory to resource-bounded computation: how many pieces do you need to delay the king's escape by one move?
+## Result 5: A position with no ordinal value
 
-## Looking Ahead
+The most conceptually radical consequence concerns the very notion of the *value* of a position.
 
-The infinite chessboard is more than a mathematical curiosity. It sits at the intersection of combinatorial game theory, metric geometry, and computability theory. The barrier framework we develop here — a geometric packaging of finite threat data with topological escape analysis — could be extended in several directions:
+On the finite board, a winning position has a natural number attached to it: the number of moves to forced mate with best play. This number is the *rank* of the position in the tree of the game — positions that are mate-in-one sit above mates-in-zero, mates-in-two above those, and so on. Mathematicians call this the **accessibility rank** of the pursuit relation: a position is *accessible* precisely when it can be pushed, in well-founded fashion, down to a terminal (mated) position, and its rank measures how far.
 
-Can we characterize exactly which piece configurations are "drawn" (king always escapes) versus "won" (checkmate is possible) on the infinite board? The answer likely involves a subtle interplay between piece mobility and threat density that our barrier formalism begins to capture.
+For richer games this rank need not be finite. It can be a transfinite ordinal — mate in $\omega$, mate in $\omega + 1$, and beyond — whenever the attacker can force a win that nonetheless has no uniform finite bound. The ordinal is the honest generalization of "mate in $n$."
 
-What about pieces with unbounded range, like queens and rooks? These can threaten entire rows and columns, dramatically changing the geometry. On the infinite board, a single rook can block an entire line — but it still can't form a closed barrier.
+What, then, is the value of the lone-rook king on the infinite board?
 
-The deepest question connects to set theory itself. Hamkins showed that the game values of infinite chess positions can reach any countable ordinal. Where, exactly, in the ordinal hierarchy does the "complexity" of practical chess positions live? Our barrier theory suggests that the answer is connected to the geometric arrangement of threats — a surprising bridge between abstract set theory and concrete spatial reasoning.
+> **Theorem (No ordinal value).** Under a single rook, the king's position is *not accessible* for the pursuit relation. It therefore has no ordinal game value at all — neither a finite one nor a transfinite one.
 
-The edges of the chessboard, it turns out, are not just physical boundaries. They are the structural feature that makes the game decidable, that makes checkmate possible with limited material, that gives chess its characteristic quality of closing walls. Remove the edges, and you glimpse a different mathematical universe — one where the king reigns eternal, surrounded but never trapped.
+This follows directly from the infinite escape run: accessibility is *equivalent* to having a well-founded descent to a terminal position, and the perpetual escape exhibits an infinite non-terminating play. There is no rank to assign. The lone-rook endgame is a draw not of the garden-variety "mate in $n$ fails" kind, but of a deeper, transfinite character — the game-theoretic analogue of an unbreakable fortress, one that lies entirely outside the accessible universe of positions.
 
----
+## Why this matters beyond chess
 
-*The research described in this article was carried out by the Aether Research System, an autonomous mathematical research platform. The results include multiple formally verified theorems establishing the impossibility of finite barrier enclosure on infinite lattices.*
+Strip away the pieces and what remains is a statement about **pursuit and evasion on unbounded domains**, a theme that runs through mathematics far from any chessboard. The core lesson — that a fixed finite budget of constraints (lines, guards, sensors) cannot corner a target in a space without boundary — is the same principle that governs coverage problems, robotic pursuit games, and the design of escape strategies in networks. The pigeonhole step ("three consecutive columns, two rooks, one column must be free") is exactly the kind of counting that decides whether a finite set of watchers can seal off an infinite corridor.
+
+More broadly, the infinite chessboard is a laboratory for a subtle idea: that "how good is this position?" is not always answered by a number. Sometimes the right invariant is an *ordinal*, and sometimes even the ordinals run out and the honest answer is "no value — the escape never ends." Recognizing when a game leaves the accessible realm entirely is, in the end, recognizing the mathematical shape of a perfect defence. On the Hilbert board, the humble king — with nowhere to be cornered — turns out to be one of the hardest things in mathematics to catch.

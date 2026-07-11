@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_0981cb8f_d6e8e265",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "0981cb8f",
+    "status": "available",
+    "timestamp": "2026-07-11T00:40:03.135454+00:00",
+    "title": "Deepening: Consciousness as Emergent Fixed Point"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 207fb5b4 (Q=0.830), which proved 24 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every C",
     "domains": [
       "Applications"
@@ -370,6 +384,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0961",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T00:39:31.318499+00:00",
+    "title": "Self-Modifying Code That Cannot Be Stopped"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 298c68ef (Q=0.780), which proved 66 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domains": [
       "Applications"
@@ -524,21 +553,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
-    "consumed_by_exp_id": "0981cb8f",
-    "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0943",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T21:24:54.521992+00:00",
-    "title": "Consciousness as Emergent Fixed Point"
-  },
-  {
     "consumed_by_exp_id": "2ca6565f",
     "description": "Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domains": [
@@ -596,6 +610,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T20:52:48.400479+00:00",
     "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 0981cb8f (Q=0.830) proved 20 theorems in Probability but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian",
+    "domains": [
+      "Probability"
+    ],
+    "id": "sorry_fill_0981cb8f_5eeca554",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "0981cb8f",
+    "status": "available",
+    "timestamp": "2026-07-11T00:40:03.218809+00:00",
+    "title": "Close Proofs: Consciousness as Emergent Fixed Point"
   },
   {
     "consumed_by_exp_id": "",
@@ -738,6 +766,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T22:30:11.162948+00:00",
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0962",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T00:39:31.398181+00:00",
+    "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
     "consumed_by_exp_id": "",
@@ -6511,6 +6554,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T00:23:20.911643+00:00",
     "title": "`TransfiniteGames.lean` proves that every **well-founded** two-player game is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Self-Reference, Fixed Points, and Strange Loops\n\nEach conjecture below is bold, falsifiable, and derived from the findings of this\ncycle \u2014 the observation that existence (Lawvere), impossibility (Cantor), size\n(cardinality), constructive stability (Tarski), and representability (Yoneda) are\nall shadows of a single diagonal.\n\n## 1. A quantitative cardinal gap for approximate self-models\n\n**Conjecture.** For a finite system with state space of size `n` and observation\nalphabet of size `k \u2265 2`, the best possible *approximate* self-model \u2014 a map\n`A \u2192 (A \u2192 B)` whose image covers a maximal fraction of observations \u2014 covers at\nmost `n / k^n` of them, and this bound is attained. Consequently the \"self-\nmodeling deficit\" grows super-exponentially with system size.\n\nThe key insight is that incompleteness is not a binary obstruction but a\nmeasurable quantity: the ratio `n / k^n` is a fidelity coefficient for how well a\nfinite system can mirror itself, turning Cantor's qualitative \"impossible\" into a\nsharp rate.\n\nWhy now? The exact finite boundary `|B|^{|A|} > |A|` isolated in this cycle gives\nthe denominator explicitly, so the extremal covering problem is now a concrete,\nattackable optimisation rather than a vague impossibility.\n\n## 2. Partial self-models and the domain-theoretic completion\n\n**Conjecture.** Every finite system extends to a *partial* self-model on its ideal\ncompletion (a complete lattice of \"self-descriptions ordered by information\") that\nis complete in the Knaster\u2013Tarski sense, and the least fixed point of the induced\nmonotone operator is the unique minimal stable self-state.\n\nThe key insight is that the cardinal obstruction to finite self-reference\ndissolves under order completion: infinity enters not as raw set size but as the\nlimit of an information ordering, exactly where Tarski's theorem lives.\n\nWhy now? This cycle placed the finite impossibility and the lattice fixed-point\ntheorem side by side; the natural bridge \u2014 completing the finite state space to a\ndomain \u2014 is the obvious next construction and is entirely constructive.\n\n## 3. A strange-loop invariant distinguishing self-referential systems\n\n**Conjecture.** Assign to each self-modeling system the set of its diagonal loop\nstates `{ a : f a a = g (f a a) }` as `g` ranges over all transformations. Two\nsystems are isomorphic as self-models if and only if these loop-state families are\nnaturally isomorphic \u2014 a Yoneda-style reconstruction theorem for self-reference.\n\nThe key insight is that a system is determined by its loops: the totality of\nlevel-crossing fixed points plays the role that representable functors play in the\nYoneda lemma, so \"you are the family of your strange loops\".\n\nWhy now? Having both the explicit loop witness and the Yoneda self-determination\ntheorem in hand, the reconstruction statement is the precise fusion of the two\nand can be tested first on small finite and order-theoretic models.\n\n## 4. Fixed-point-free transformations as an obstruction spectrum\n\n**Conjecture.** For a fixed observation type `B`, the fixed-point-free self-maps\n`g : B \u2192 B` form a structured \"obstruction spectrum\" whose combinatorics exactly\nclassifies which state spaces `A` can admit complete self-models with values in\n`B`; in particular `B` admits *some* fixed-point-free map iff no `A` yields a\ncomplete self-model into `B`.\n\nThe key insight is that the barrier to self-reference is not a property of the\nsystem but of the observation alphabet: a single fixed-point-free transformation\nanywhere in `B` globally forbids completeness, so obstructions live entirely on\nthe value side.\n\nWhy now? The contrapositive proved this cycle\n(`no_complete_selfModel_of_fixedPointFree`) already turns one fixed-point-free map\ninto a global ban; cataloguing all such maps for structured `B` is the immediate,\nconcrete follow-up.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0963",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0981cb8f",
+    "status": "available",
+    "timestamp": "2026-07-11T00:39:56.506237+00:00",
+    "title": "Each conjecture below is bold, falsifiable, and derived from the findings of thi"
   },
   {
     "consumed_by_exp_id": "",
