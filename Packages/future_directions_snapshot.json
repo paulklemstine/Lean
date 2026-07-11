@@ -708,6 +708,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6e208619 (Q=0.780), which proved 27 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minimum sizes of r consecutive pieces, and define \\mu_r(a) = limsup_{n\\to\\infty} \\mu^r_n(a). For any fixe",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_6e208619_c801c829",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6e208619",
+    "status": "available",
+    "timestamp": "2026-07-11T06:39:37.464758+00:00",
+    "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 73d4b43b (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a s",
     "domain_bridges": [],
     "domains": [
@@ -1017,25 +1036,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "493ee817",
-    "description": "Cycle 4d0c820d (Q=0.820) proved 26 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize transreal arithmetic (Anderson's system: R ∪ {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive tr",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_4d0c820d_be5a9838",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "4d0c820d",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T04:13:20.774112+00:00",
-    "title": "Close Proofs: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle 7e60f6c2 (Q=0.830) proved 23 theorems in Bridges but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
     "domain_bridges": [],
@@ -1185,6 +1185,25 @@
     "status": "failed",
     "timestamp": "2026-07-10T04:08:16.263156+00:00",
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 6e208619 (Q=0.780) proved 27 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minim",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_6e208619_6e1c4cbe",
+    "lineage_refs": [],
+    "priority_score": 0.8300000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6e208619",
+    "status": "available",
+    "timestamp": "2026-07-11T06:39:37.539189+00:00",
+    "title": "Close Proofs: Upper bound conjecture for the cake balancing ratio sequence"
   },
   {
     "ambition_level": "extension",
@@ -3588,33 +3607,6 @@
     "status": "available",
     "timestamp": "2026-07-03T10:20:23.815272+00:00",
     "title": "Alexander's Conjecture for Infinite Simplicial Complexes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "De Bruijn and Erdős on cake cutting",
-      "Discrete geometry and discrepancy theory",
-      "Balancing sequences on circular partitions"
-    ],
-    "consumed_by_exp_id": "6e208619",
-    "description": "Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minimum sizes of r consecutive pieces, and define \\mu_r(a) = limsup_{n\\to\\infty} \\mu^r_n(a). For any fixed recipe \\sigma of length p, define \\mu_r^{\\sigma} as the value of \\mu_r for the sequence generated by that recipe. Conjecture: For any recipe \\sigma of length p and any r \\geq 1, we have \\mu_r^{\\sigma} \\leq 2r/p + 1.",
-    "domain_bridges": [
-      "Combinatorial optimization",
-      "Ratio bounds in discrete structures",
-      "Asymptotic analysis of discrete geometric processes"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0237",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Prove by induction on r using the self-similar structure of the recursive bisection process. The key insight is that each bisection step at most doubles the number of periods while preserving ratios. Use the periodic structure property from Proposition propLen to reduce analysis to a single phase with sufficiently many periods, then apply extremal combinatorial arguments on the distribution of piece sizes within each period.",
-    "research_mode": "team",
-    "source_exp_id": "2607.00775v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T11:19:24.185282+00:00",
-    "title": "Upper bound conjecture for the cake balancing ratio sequence"
   },
   {
     "ambition_level": "extension",
@@ -11859,6 +11851,46 @@
     "status": "available",
     "timestamp": "2026-07-11T06:06:38.533461+00:00",
     "title": "This cycle contributes `Catalog/Computation/SelfModifyingLawvereBridge.lean`, a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Balancing ratios of circular partitions\n\nThis cycle established two structural pillars for the balancing ratio sequence of\na cyclic partition: windowing never worsens balance (`μ^r ≤ μ^1`), and balance\nis *exactly perfect* at every multiple of the period (`μ^{kp} = 1`). Together\nthey explain why the balancing ratio must be measured as a `limsup` — the ratio\nsequence oscillates, resetting to `1` infinitely often. The following\nconjectures push toward the full `2r/p + 1` upper bound.\n\n## Conjecture 1 — The recipe upper bound\n\nFor every finite recipe of length `p` and every window length `r ≥ 1`, the\nbalancing ratio satisfies `μ_r ≤ 2r/p + 1`.\n\nThe key insight is that between two consecutive \"resets\" to perfect balance, a\nwindow can absorb at most a bounded surplus of oversized arcs, and that surplus\nscales like `r/p` because each full period contributes exactly the average. Why\nnow? With perfect-balance recurrence at multiples of the period already proved,\nthe problem reduces to controlling the *excursions between resets*, a finite and\ntractable per-period estimate rather than an asymptotic mystery.\n\n## Conjecture 2 — Sharpness of the window envelope\n\nFor every non-uniform partition there exists a window length `r` with\n`1 < μ^r < μ^1`; moreover the envelope `μ^r ≤ μ^1` is attained only at `r = 1`.\n\nThe key insight is that any strict inequality among arc lengths is smoothed, but\nnever fully erased, by partial-period windows, so the single-gap ratio is the\nunique maximizer of the window-ratio profile. Why now? The proved monotone\nenvelope and the exact period resets bracket the profile from above and below,\nleaving only the strictness to be quantified.\n\n## Conjecture 3 — Optimal recipes approach the lower envelope\n\nAmong all recipes of length `p`, the minimum achievable `limsup_r μ_r` decreases\nmonotonically to `1` as `p → ∞`, at rate `Θ(1/p)`.\n\nThe key insight is that longer recipes distribute the unavoidable imbalance over\nmore arcs, so the worst per-window surplus shrinks proportionally to the period.\nWhy now? The `k·period` reset identity gives an exact zero-error subsequence for\nevery recipe, turning the optimization into a clean rate question about the gaps\nbetween resets.\n\n## Conjecture 4 — Discrepancy bridge\n\nThe balancing ratio `μ_r` of a partition is controlled by the star-discrepancy\n`D_n` of the generating point sequence via `μ_r - 1 = Θ(r · D_n)` along the\nstages `n` realizing the `limsup`.\n\nThe key insight is that the maximum-versus-minimum window imbalance is precisely\na two-sided discrepancy of `r`-fold consecutive sums, linking cake balancing to\nclassical equidistribution theory. Why now? The window-sum framework developed\nhere expresses `μ^r_n` directly as a ratio of extremal partial sums, exactly the\nobject star-discrepancy bounds.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0994",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6e208619",
+    "status": "available",
+    "timestamp": "2026-07-11T06:39:30.452584+00:00",
+    "title": "Two structural pillars for the balancing ratio sequence o"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese conjectures grow directly out of the present cycle, in which the factorial\nnumber system was shown to be a single point in the parameterized family of\nmixed-radix positional systems, and its uniqueness theorem was re-derived from the\ngeneral mixed-radix uniqueness theorem through an explicit place-value and validity\ncorrespondence.\n\n## 1. A universal Ostrowski-type classification of positional systems\n\n**Conjecture.** Every positional numeral system whose place values form a strictly\nincreasing sequence of running products of positive integer bases admits a unique\nvalid representation for each natural number below the total product, and *only*\nsuch running-product systems have this exact one-to-one property; any system whose\nplace values are not a running product of integer bases either loses uniqueness or\nloses surjectivity on an initial segment.\n\nThe key insight is that uniqueness and existence in the mixed-radix world depend on\nnothing but the running product of the bases together with the local digit bound\n`c i < b i`; the specific base sequence is irrelevant, so the property is a purely\nstructural feature of running-product sequences rather than of any particular\nsystem.\n\nWhy now? The bridge established this cycle collapses the factorial system and the\nordinary base-`N` system into one theorem, making the running product — not the\nindividual base — the visibly load-bearing object; this reframing is exactly what a\nclassification statement needs as its hypothesis.\n\n## 2. Mixed-radix carry dynamics as a self-correcting code\n\n**Conjecture.** In the mixed-radix system with bases `b i = i + 2`, the digit-wise\ndistance between the representations of `n` and `n + 1` is bounded independently of\n`n`, and the expected number of digits that change under incrementing tends to a\nfinite constant as the length grows.\n\nThe key insight is that carrying in a running-product system terminates as soon as a\ndigit sits below its local base, and the local bases grow, so long carry chains\nbecome geometrically rare rather than merely bounded.\n\nWhy now? With the value/validity dictionary between factorial and general\nmixed-radix systems in hand, incrementing can be analyzed once in the general\nsystem and transported verbatim to every instance, including the factorial one.\n\n## 3. Primitive divisors across strong divisibility sequences\n\n**Conjecture.** For every strong divisibility sequence that grows at least\ngeometrically, all but finitely many terms possess a primitive prime divisor, and\nthe finite exceptional set is contained in the indices below an explicit bound\ndetermined solely by the growth rate.\n\nThe key insight is that a primitive prime divisor is exactly a prime surviving the\nremoval of every factor shared with an earlier term, and the multiplicative\n\"stripping\" of shared factors can be controlled by comparing the size of a term to\nthe product of the smaller terms it could share factors with.\n\nWhy now? The composite-index analysis of the Fibonacci sequence isolates the exact\nobstruction — bounding the shared-factor product against the term's own size — as a\nstatement about strong divisibility sequences in the abstract, decoupled from any\nFibonacci-specific identity.\n\n## 4. A gcd-transfer principle for primitive divisors\n\n**Conjecture.** For any strong divisibility sequence, an index has a primitive prime\ndivisor if and only if its \"primitive part\" — the term with all factors shared with\nproper-divisor indices stripped away — exceeds one, and this equivalence is stable\nunder passing to any subsequence indexed by an arithmetic progression.\n\nThe key insight is that the strong divisibility identity turns every shared prime\nbetween two terms into a shared prime at their gcd index, so primitivity at an index\nis governed entirely by the divisor lattice of that index.\n\nWhy now? The reduction of primitivity to a single scalar inequality on the\nprimitive part, together with the gcd-collapse argument for prime indices, exposes\nthe divisor lattice as the right carrier of the whole phenomenon and invites the\narithmetic-progression stability test.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0995",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "493ee817",
+    "status": "available",
+    "timestamp": "2026-07-11T06:39:40.433078+00:00",
+    "title": "These conjectures grow directly out of the present cycle, in which the factorial"
   },
   {
     "ambition_level": "extension",

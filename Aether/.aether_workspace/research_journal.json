@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2c002c80",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThis project formalizes the combinatorial-fixed-point core of the \"Sperner ⇒ Nash\"\nprogram in two files:\n\n* `Sperner1D.lean` — the one-dimensional Sperner lemma (parity form and o",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-10T12:23:22",
-      "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
-    },
-    {
       "cycle_id": "c22096e0",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThis project formalises the **deterministic core** of the vertex-Ramsey\nthreshold: for clique targets `s : κ → ℕ` with `sᵢ ≥ 1`,\n\n```\nKₙ  →_v  (K_{s i})_i      ⇔      ∑_i (s_i − 1",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-11T06:06:45",
       "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
+    },
+    {
+      "cycle_id": "6e208619",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Balancing ratios of circular partitions\n\nThis cycle established two structural pillars for the balancing ratio sequence of\na cyclic partition: windowing never worsens balance (`μ",
+      "quality_score": 0.78,
+      "sorry_count": 5,
+      "theorem_count": 27,
+      "timestamp": "2026-07-11T06:39:37",
+      "title": "Upper bound conjecture for the cake balancing ratio sequence"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7f2fc4f9",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nFive bold, testable conjectures arising from the study of `a^5 - a` and the\nquadratic-residue structure modulo `5`.\n\n## 1. A universal \"leg divisibility\" law for Pythagorean tripl",
-      "quality_score": 0.47561819905213276,
-      "sorry_count": 10,
-      "theorem_count": 422,
-      "timestamp": "2026-07-02T20:59:14",
-      "title": "Prove Fermats Little Theorem for p=5"
-    },
     {
       "cycle_id": "150736b0",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-11T06:06:45",
       "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
+    },
+    {
+      "cycle_id": "6e208619",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Balancing ratios of circular partitions\n\nThis cycle established two structural pillars for the balancing ratio sequence of\na cyclic partition: windowing never worsens balance (`μ",
+      "quality_score": 0.78,
+      "sorry_count": 5,
+      "theorem_count": 27,
+      "timestamp": "2026-07-11T06:39:37",
+      "title": "Upper bound conjecture for the cake balancing ratio sequence"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f9bf2df0",
-      "domain": "NumberTheory",
-      "name": "aut_unique_of_trans_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f9bf2df0",
-      "domain": "NumberTheory",
-      "name": "transport_addOrderOf",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c2b68f4a",
-      "domain": "Bridges",
-      "name": "shift_add",
-      "quality": 0.78
-    },
     {
       "cycle_id": "c2b68f4a",
       "domain": "Bridges",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "and",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "6e208619",
+      "domain": "Applications",
+      "name": "totalLength_pos",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "6e208619",
+      "domain": "Applications",
+      "name": "shift_sum",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "6e208619",
+      "domain": "Applications",
+      "name": "W_period",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-11T06:06:45",
+  "last_updated": "2026-07-11T06:39:37",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "c2c03fe8",
-      "domain": "Computation",
-      "sorry_count": 3,
-      "timestamp": "2026-07-09T21:05:47"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "643186e8",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-11T05:18:16"
+    },
+    {
+      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "6e208619",
+      "domain": "Applications",
+      "sorry_count": 5,
+      "timestamp": "2026-07-11T06:39:37"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "34e9f39c",
-        "quality": 0.82,
-        "theorems": 20,
-        "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
-      },
-      {
         "cycle_id": "823f5582",
         "quality": 0.82,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 23,
         "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
+      },
+      {
+        "cycle_id": "6e208619",
+        "quality": 0.78,
+        "theorems": 27,
+        "title": "Upper bound conjecture for the cake balancing ratio sequence"
       }
     ],
     "Bridges": [
