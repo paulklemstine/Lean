@@ -665,6 +665,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle de167401 (Q=0.780), which proved 11 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, t",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_de167401_10a70588",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "de167401",
+    "status": "available",
+    "timestamp": "2026-07-11T23:55:51.057432+00:00",
+    "title": "Deepening: Rucker: The Lifebox \u2014 Information-Theoretic Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domains": [
       "Novelty",
@@ -827,6 +841,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-11T23:04:45.612561+00:00",
     "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_1088",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T23:55:18.527910+00:00",
+    "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -1074,21 +1103,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
   },
   {
-    "consumed_by_exp_id": "de167401",
-    "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1073",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T21:56:42.357787+00:00",
-    "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some metric). Show: the 'copycat' analogy (Hofstadter's model) is a special case where A = B = the concept lattice. Conjecture: every creative mathematical insight can be decomposed into a sequence of analogy operations. Explore: can we formalize 'making a good analogy' as an optimization problem?",
     "domains": [
@@ -1104,7 +1118,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b34e974",
     "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts \u2014 enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
     "domains": [
       "Novelty",
@@ -1114,7 +1128,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T23:38:26.558598+00:00",
     "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
@@ -6570,6 +6584,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T23:38:51.082809+00:00",
     "title": "This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Lifebox: Information-Theoretic Identity\n\nThe file `LifeboxInformationIdentity.lean` formalizes and proves five claims around\nRudy Rucker's *Lifebox* thesis (identity = information, not substrate). Below: what was\nestablished, and where it can be pushed.\n\n## What was proved (all `sorry`-free, standard axioms only)\n\n1. **Person-equivalence is an equivalence relation** and coincides with function equality\n   (`personSetoid`, `personEquiv_iff_eq`).\n2. **Finite-state \u21d2 decidable.** For a finite stimulus space with decidable outputs,\n   person-equivalence is decidable via the distinguishing-stimulus set\n   (`decidablePersonEquiv`, `finiteState_decidable`).\n3. **Contrarian result (disproof of a naive claim).** Over an infinite input space, *no*\n   finite battery of tests certifies person-equivalence (`no_finite_test`). This shows the\n   finiteness hypothesis in (2) is necessary, not cosmetic.\n4. **Quantum obstruction = no-cloning.** There is no linear cloning map `k\u00b2 \u2192 k\u00b2 \u2297 k\u00b2`\n   (`no_cloning`) \u2014 the algebraic core of the \"quantum brains cannot be duplicated/tested\"\n   claim.\n5. **Kolmogorov bound is finite.** Identities in `b` bits number exactly `2^b`\n   (`card_identities`), specialized to Rucker's `~10^15`-bit figure (`lifebox_bound`).\n\n## Directions to extend\n\n- **Genuine automaton equivalence.** Upgrade (2) from \"finite stimulus space\" to full\n  Moore/Mealy machines over `List I`, proving language equivalence decidable via the\n  product-automaton reachability construction, with the Myhill\u2013Nerode distinguishing-string\n  bound `\u2264 |S\u2081|\u00b7|S\u2082|`.\n- **Quantitative no-cloning.** Strengthen (4) to fidelity bounds: an approximate cloner has\n  fidelity bounded away from 1, and generalize from `k\u00b2` to arbitrary `dim V \u2265 2` and to the\n  unitary/CPTP setting.\n- **Undecidability, formally.** Reduce the halting problem to equivalence of systems whose\n  behaviour encodes Turing machines, giving a true `\u00ac Decidable` statement (rather than the\n  \"no finite test\" surrogate) for the infinite/quantum regime.\n- **Kolmogorov complexity proper.** Replace the counting bound with a `K`-style shortest\n  description length over a fixed universal machine, and prove invariance and subadditivity\n  (cf. the EML Kolmogorov development in `Catalog/EML/KolmogorovComplexityBound.lean`).\n- **Substrate independence.** Formalize the Lifebox thesis directly: two systems on\n  different state spaces that are behaviourally equivalent (bisimilar) are \"the same person\",\n  i.e. person-identity factors through the behaviour quotient.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1089",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "de167401",
+    "status": "available",
+    "timestamp": "2026-07-11T23:55:41.687288+00:00",
+    "title": "The file `LifeboxInformationIdentity.lean` formalizes and proves five claims aro"
   },
   {
     "consumed_by_exp_id": "",
