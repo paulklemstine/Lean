@@ -742,6 +742,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map from SO(4) that has no fixed point? Conjecture: every closed 3-manifold embeds in R^4.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_1068",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T20:34:25.702785+00:00",
+    "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 0643b2b3 (Q=0.820) proved 11 theorems in Combinatorics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon",
     "domains": [
       "Combinatorics"
@@ -955,6 +970,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-11T19:27:07.217097+00:00",
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the concept of 'mind tools' \u2014 mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by G\u00f6del's incompleteness \u2014 there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1069",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T20:34:25.825368+00:00",
+    "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
   },
   {
     "consumed_by_exp_id": "",
