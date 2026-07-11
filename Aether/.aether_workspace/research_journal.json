@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "34a8cfea",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Emotional Chromatic Number of Social Networks\n\nThe emotional chromatic number `emoChrom G = min { k ≥ 3 : G is k-colorable }` is the smallest\nnumber of emotion categories (at lea",
-      "quality_score": 0.82,
-      "sorry_count": 6,
-      "theorem_count": 13,
-      "timestamp": "2026-07-10T07:33:38",
-      "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-    },
-    {
       "cycle_id": "956fff13",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent barcode of the prime\npoint cloud on the line is exactly the sequence of prime gaps, and th",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-10T23:50:39",
       "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "cycle_id": "478ae68b",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nThis file (`Catalog/Logic/StrangeLoops/Chain.lean`) builds a single dependency chain\nfrom the Liar paradox up to a non-vacuous Gödel incompleteness theorem and the\nprovability lat",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-11T00:07:03",
+      "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d80d981e",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Metric Rigidity of the Petersen Graph across Valued Cayley Geometries\n\nThis cycle established that the Petersen graph — and, more generally, any graph\ncarrying an odd closed walk",
-      "quality_score": 0.87056,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-02T03:51:06",
-      "title": "Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
-    },
     {
       "cycle_id": "6501d983",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-10T23:50:39",
       "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "cycle_id": "478ae68b",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nThis file (`Catalog/Logic/StrangeLoops/Chain.lean`) builds a single dependency chain\nfrom the Liar paradox up to a non-vacuous Gödel incompleteness theorem and the\nprovability lat",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-11T00:07:03",
+      "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bb33d4fa",
-      "domain": "NumberTheory",
-      "name": "rainbow_forest_inequality",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "8c745e9f",
-      "domain": "Novelty",
-      "name": "combined",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "8c745e9f",
-      "domain": "Novelty",
-      "name": "applied",
-      "quality": 0.82
-    },
     {
       "cycle_id": "8c745e9f",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "is",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "478ae68b",
+      "domain": "Probability",
+      "name": "is",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "478ae68b",
+      "domain": "Probability",
+      "name": "liar_paradox",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "478ae68b",
+      "domain": "Probability",
+      "name": "no_semantic_diagonal",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-10T23:50:39",
+  "last_updated": "2026-07-11T00:07:03",
   "open_questions": [
     {
       "context": "the still-open Aharoni–Korman conjecture and is left as `sorry`.; sorry -- FALSE: refuted by `obstruction_direction_false`; is the genuinely open content (a form of the Aharoni–Korman conjecture), lef",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "d5c197ae",
-        "quality": 0.4285765151515152,
-        "theorems": 7,
-        "title": "Birch and Swinnerton-Dyer Conjecture"
-      },
-      {
         "cycle_id": "3131feed",
         "quality": 0.41286596521739133,
         "theorems": 8,
@@ -3823,6 +3817,12 @@
         "quality": 0.83,
         "theorems": 751,
         "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+      },
+      {
+        "cycle_id": "478ae68b",
+        "quality": 0.72,
+        "theorems": 20,
+        "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
       }
     ],
     "Pythagorean": [

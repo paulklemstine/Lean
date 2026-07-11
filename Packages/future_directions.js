@@ -283,21 +283,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
   },
   {
-    "consumed_by_exp_id": "478ae68b",
-    "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize G\u00f6del's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0936",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T19:47:59.488401+00:00",
-    "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle a6f348ea (Q=0.800), which proved 20 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algeb",
     "domains": [
@@ -553,6 +538,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-10T21:24:54.521992+00:00",
     "title": "Consciousness as Emergent Fixed Point"
+  },
+  {
+    "consumed_by_exp_id": "2ca6565f",
+    "description": "Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0956",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T00:06:31.434712+00:00",
+    "title": "Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
     "consumed_by_exp_id": "",
@@ -856,6 +856,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T16:36:19.999072+00:00",
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0957",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T00:06:31.497939+00:00",
+    "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
     "consumed_by_exp_id": "",
@@ -6452,6 +6467,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T23:50:35.615689+00:00",
     "title": "This cycle established, over G\u00f6del\u2013L\u00f6b frames, that the semantic L\u00f6b principle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis file (`Catalog/Logic/StrangeLoops/Chain.lean`) builds a single dependency chain\nfrom the Liar paradox up to a non-vacuous G\u00f6del incompleteness theorem and the\nprovability lattice. Natural continuations:\n\n## 1. From semantic truth to genuine syntactic diagonalization\nThe `GodelSystem` currently *supplies* the G\u00f6del fixed point `G_fix` as data. The next\nstep is to *construct* it: build an arithmetized syntax (G\u00f6del numbering), a\nrepresentable provability predicate, and prove the **diagonal lemma** itself, so that\n`G` and `G_fix` are derived rather than assumed. Mathlib's\n`FirstOrder.Language`/`ModelTheory` provides a starting point.\n\n## 2. L\u00f6b's theorem and provability logic (GL)\n`loeb_consistency_unprovable` isolates the single derivability condition needed for a\nsecond-incompleteness corollary. A full treatment would formalize the three\nHilbert\u2013Bernays\u2013L\u00f6b conditions and prove L\u00f6b's theorem `\u25a1(\u25a1A \u2192 A) \u2192 \u25a1A`, connecting to\nthe modal logic **GL** (already present as `Logic.GLKripke` in this catalog).\n\n## 3. \u03c9-consistency vs. simple consistency\n`goedel_undecidable` gets both `\u00acProv G` and `\u00acProv (\u00acG)` from *soundness*. Rosser's\ntrick weakens this to simple consistency; formalizing Rosser sentences would strengthen\nthe undecidability result.\n\n## 4. Quantitative / probabilistic strange loops (the stated domain)\nThe mission domain is Probability. A promising bridge: study *randomized* provability\noperators on the theory lattice and the distribution of fixed points, or Chaitin's\n`\u03a9` (algorithmic randomness) as an incompleteness phenomenon \u2014 the measure-theoretic\nface of self-reference. `lfp_gfp_gap_incomplete` already frames incompleteness as a\nstrict order gap that such a quantitative theory could measure.\n\n## 5. Tangled hierarchies and consciousness\nHofstadter's speculative thesis (self-reference across levels giving rise to \"I\") could\nbe approached by formalizing multi-level `GodelSystem`s with cross-level provability and\nstudying when the hierarchy collapses to a single self-referential fixed point.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0958",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "478ae68b",
+    "status": "available",
+    "timestamp": "2026-07-11T00:06:56.581527+00:00",
+    "title": "This file (`Catalog/Logic/StrangeLoops/Chain.lean`) builds a single dependency c"
   },
   {
     "consumed_by_exp_id": "",
