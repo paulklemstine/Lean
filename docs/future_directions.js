@@ -396,7 +396,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1e86ff35",
     "description": "Building on cycle 1978e429 (Q=0.800), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle c99af430 (Q=0.830) proved 0 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems ",
     "domains": [
       "Novelty"
@@ -405,7 +405,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "1978e429",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T10:49:45.592025+00:00",
     "title": "Deepening: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
