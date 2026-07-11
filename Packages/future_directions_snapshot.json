@@ -1194,6 +1194,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensions.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0965",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T00:55:56.763664+00:00",
+    "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long — the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static — they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domain_bridges": [],
     "domains": [
@@ -10151,6 +10171,26 @@
     "status": "failed",
     "timestamp": "2026-07-10T14:48:26.572436+00:00",
     "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0966",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T00:55:56.825809+00:00",
+    "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
   },
   {
     "ambition_level": "extension",
