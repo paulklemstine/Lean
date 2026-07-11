@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f57636f1",
     "description": "Building on cycle 01e9ab7a (Q=0.830), which proved 35 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as develop",
     "domains": [
       "Novelty"
@@ -12,7 +12,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "01e9ab7a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T03:40:53.664436+00:00",
     "title": "Deepening: The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
   },
