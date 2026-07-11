@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 01e9ab7a (Q=0.830), which proved 35 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as develop",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_01e9ab7a_12f70646",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "01e9ab7a",
+    "status": "available",
+    "timestamp": "2026-07-11T03:40:53.664436+00:00",
+    "title": "Deepening: The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domains": [
       "Probability"
@@ -481,7 +495,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46d2d021",
     "description": "Building on cycle 75fb79ca (Q=0.780), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect",
     "domains": [
       "Novelty"
@@ -490,7 +504,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "75fb79ca",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T02:34:45.150096+00:00",
     "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
   },
@@ -5611,21 +5625,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
   },
   {
-    "consumed_by_exp_id": "01e9ab7a",
-    "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0966",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:55:56.825809+00:00",
-    "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
-  },
-  {
     "consumed_by_exp_id": "f4c4425a",
     "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
     "domains": [
@@ -6777,6 +6776,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T02:51:26.132427+00:00",
     "title": "`TransfiniteComputation.lean` establishes a machine-checked **bridge** between"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Impossible Objects\n\nThis project formalizes the mathematical core of **impossible figures** (Penrose\ntriangle, Escher staircase) as a cohomological obstruction, following R. Penrose's\ninsight that impossibility is a *global* holonomy class, not a local defect. Two\nself-contained Lean files were produced and fully proved (no `sorry`, no extra\naxioms beyond `propext`/`Classical.choice`/`Quot.sound`):\n\n* `Catalog/Novelty/ImpossibleFiguresCohomology.lean` \u2014 additive model over an\n  arbitrary abelian group `A`. Realizability \u21d4 vanishing holonomy; the Penrose\n  triangle and Escher staircase are impossible; orientation cocycles in `ZMod 2`\n  give the M\u00f6bius/Klein non-orientability; the holonomy is a complete `\u211d`-valued\n  invariant; and a contrarian pair shows impossibility is global not local.\n* `Catalog/Novelty/ImpossibleFiguresDevelopable.lean` \u2014 multiplicative model over\n  an arbitrary commutative group `G` (Penrose's original scaling-ambiguity\n  group). Developability \u21d4 trivial monodromy; monodromy packaged as a group\n  homomorphism whose kernel is exactly the developable figures; a scaling Penrose\n  triangle is non-developable; and a contrarian disproof of \"all local factors\n  nontrivial \u21d2 impossible\".\n\n## What was proved vs. disproved (contrarian mission)\n\n**Proved.**\n- `realizable_iff` / `mrealizable_iff`: the master equivalence (existence of a\n  global gauge \u21d4 trivial class) in both additive and multiplicative forms.\n- `penrose_triangle_impossible`, `escher_staircase_impossible`,\n  `klein_bottle_nonorientable`, `mobius_band_nonorientable`,\n  `penrose_scaling_triangle_not_developable`: concrete impossibility results.\n- `holonomy_add_coboundary`, `holonomy_surjective`, `monodromyHom`,\n  `realizable_iff_mem_ker`: the class is a well-defined, surjective, complete\n  invariant (`H\u00b9 \u2245 A`).\n\n**Disproved (bold conjectures refuted by explicit counterexample).**\n- *\"Uniform local data is always realizable\"* \u2014 FALSE (`impossible_uniform`: the\n  Penrose triangle is uniform yet impossible).\n- *\"Non-uniform local data is always impossible\"* \u2014 FALSE (`realizable_nonuniform`).\n- *\"If every overlap genuinely rescales the figure then it is impossible\"* \u2014\n  FALSE (`developable_with_nontrivial_scalings`).\n\n## Directions not yet formalized\n\n1. **True manifold statements.** The mission's framing (\"every non-orientable\n   3-manifold contains an embedded Penrose triangle as a smoothly immersed\n   surface\") requires Mathlib's smooth-manifold and singular/de Rham cohomology\n   machinery. The natural bridge is: our `holonomy` is the pairing of a `ZMod n`\n   cellular 1-cocycle with the fundamental class of the loop; formalizing it as an\n   element of `H\u00b9(S\u00b9; A)` and relating non-orientability to `w\u2081 \u2260 0` (first\n   Stiefel\u2013Whitney class) is the next milestone.\n\n2. **Higher figures / branched covers.** Replace the single loop by a general\n   finite CW-complex; impossibility becomes non-vanishing of a class in\n   `H\u00b9(X; A)`. The Penrose triangle is the `X = S\u00b9` case; the \"tribar\" lattices of\n   repeated impossible cubes are `X = ` a wedge / torus.\n\n3. **Continuous developable surfaces.** Connect the discrete monodromy to the\n   holonomy of a flat connection on a ruled surface, making\n   `developable_iff_trivial_monodromy` a genuine differential-geometric statement\n   (zero Gaussian curvature \u21d4 local isometry to the plane \u21d4 trivial holonomy of\n   the Levi-Civita connection along the loop).\n\n4. **Turning number / discrete Gauss\u2013Bonnet.** A separate obstruction to a\n   *planar* realization is the exterior-angle sum (`2\u03c0 \u00b7` turning number); pairing\n   this with the depth holonomy would classify which impossible figures are\n   drawable-but-not-buildable versus neither.\n\n5. **Quantitative impossibility.** For ordered groups (`A = \u211d`) the holonomy is a\n   real number measuring \"how impossible\" a figure is; studying its behaviour\n   under subdivision, connected sum, and perturbation is open.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0986",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "01e9ab7a",
+    "status": "available",
+    "timestamp": "2026-07-11T03:40:46.550671+00:00",
+    "title": "This project formalizes the mathematical core of **impossible figures** (Penrose"
   },
   {
     "consumed_by_exp_id": "",
