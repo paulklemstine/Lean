@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4055f798",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Combinatorics of the Universal Library\n\nThe universal library — the space of *all* strings of a fixed length over a\nfixed alphabet — is finite yet astronomically large. Our cycle",
-      "quality_score": 0.7906799999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-02T09:02:20",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
-    {
       "cycle_id": "7f18348a",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nDerived from the cycle establishing that `a^5 - a` is divisible by `5` (and, more\nstrongly, by `30`) for every integer `a`.\n\n## 1. Universal denominator of the power-difference po",
@@ -2501,6 +2491,16 @@
       "theorem_count": 21,
       "timestamp": "2026-07-11T01:28:57",
       "title": "Deepening: The L-Function Universe: A Cosmic Census of All L-Functions"
+    },
+    {
+      "cycle_id": "4d12c4e3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Memory Editing: When Forgetting Is a Mathematical Operation\n\nThis cycle established that a memory, modelled as a structure-preserving map from\nan experience-stream monoid to a bo",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-11T02:17:59",
+      "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T01:28:57",
+  "last_updated": "2026-07-11T02:17:59",
   "open_questions": [
     {
       "context": "witnesses, not `sorry`ed placeholders, so the abstract hypotheses are demonstrably; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9f734f3e",
-        "quality": 0.82,
-        "theorems": 7,
-        "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
-      },
-      {
         "cycle_id": "c22096e0",
         "quality": 0.7,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 21,
         "title": "Deepening: The L-Function Universe: A Cosmic Census of All L-Functions"
+      },
+      {
+        "cycle_id": "4d12c4e3",
+        "quality": 0.63,
+        "theorems": 14,
+        "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
       }
     ],
     "NumberTheory": [

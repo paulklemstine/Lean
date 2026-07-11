@@ -568,7 +568,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fec9de1f",
     "description": "Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadratic in synapse count.",
     "domains": [
       "Novelty",
@@ -578,7 +578,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:22:54.792080+00:00",
     "title": "Digital Immortality: Can a Mind Be Encoded?"
   },
@@ -943,21 +943,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T16:36:19.999072+00:00",
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-  },
-  {
-    "consumed_by_exp_id": "4d12c4e3",
-    "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0957",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:06:31.497939+00:00",
-    "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
     "consumed_by_exp_id": "",
@@ -6689,6 +6674,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T01:28:54.359847+00:00",
     "title": "This cycle deepens the earlier *combinatorial* L-function census (finite/periodi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Memory Editing: When Forgetting Is a Mathematical Operation\n\nThis cycle established that a memory, modelled as a structure-preserving map from\nan experience-stream monoid to a bounded representation monoid, must forget; that\nthe confusable pairs form a submonoid; and that targeted forgetting is exactly a\nquotient, with the quotient being the unique faithful compression. From these\nfindings we distil the following bold, falsifiable directions.\n\n## 1. A quantitative forgetting rate for free-monoid memories\n\n**Conjecture.** For a memory of streams over a finite alphabet of size `k` into a\nrepresentation space of size `n`, the number of length-`\u2264 \u2113` streams collapsed to a\ncommon representation grows like `k^\u2113 / n`, and the shortest pair of confused\nstreams has length at most `n`.\n\n*The key insight is* that the confusion congruence of a finite-image memory is a\nfinite-index congruence, so its classes tile the free monoid with a density fixed\nby the image size, forcing short collisions by a pumping/pigeonhole argument on\nthe transition structure.\n\n*Why now?* We have isolated the confusion relation as a genuine congruence and\nproved existence of collisions; the natural next step is to make the collision\nlength effective, which converts an existence theorem into a usable bound on how\nquickly a bounded agent must start confusing experiences.\n\n## 2. The lattice of forgetting policies\n\n**Conjecture.** The forgetting policies on a fixed stream monoid form a complete\nlattice under refinement in which \"remember everything\" (the trivial congruence)\nand \"remember nothing\" (the total congruence) are the extremes, and every memory\nwith finite image sits strictly below the top; moreover composing memories is\nmonotone, so iterated compression traces a monotone chain in this lattice.\n\n*The key insight is* that congruences on a monoid are closed under arbitrary\nmeets, so the collection of forgetting policies inherits a complete-lattice\nstructure in which our monotonicity result becomes a statement about ascending\nchains.\n\n*Why now?* We proved that post-composition can only coarsen a memory\n(`forgetting_monotone`); recognising this as movement inside a lattice opens the\ndoor to fixed-point and convergence questions about repeated forgetting.\n\n## 3. Reversible cores of irreversible memories\n\n**Conjecture.** Every finite-image memory of a free monoid contains a maximal\nsub-monoid of streams on which it is injective \u2014 a \"reversible core\" \u2014 and the\ncore is itself free of bounded rank determined by the representation size.\n\n*The key insight is* that faithfulness lives entirely in the quotient (all loss is\nat the projection step), so pulling a section back through the quotient isolates a\nsub-structure on which no two experiences are confused.\n\n*Why now?* Our first-isomorphism factorisation shows the quotient is faithful;\nthe next question \u2014 how much of the original stream structure survives losslessly \u2014\nis precisely the reversible-core problem.\n\n## 4. Order-faithful forgetting\n\n**Conjecture.** A memory both respects temporal precedence and reflects it (so\nthat `f a` divides `f b` implies `a` is a prefix of `b`) if and only if its\nconfusion congruence is trivial; hence any genuinely forgetful memory must confuse\nthe temporal order of some pair of experiences.\n\n*The key insight is* that our monotonicity bridge shows precedence is always\npreserved, so the only way order information can be lost is through the confusion\nrelation, tying an order-theoretic faithfulness property to the algebraic kernel.\n\n*Why now?* We have both the algebraic loss theorem and the order-preservation\nbridge in hand; combining them predicts an exact trade-off between compression and\nthe ability to reconstruct the order of events.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0976",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4d12c4e3",
+    "status": "available",
+    "timestamp": "2026-07-11T02:17:53.816703+00:00",
+    "title": "That a memory, modelled as a structure-preserving map fro"
   },
   {
     "consumed_by_exp_id": "",
