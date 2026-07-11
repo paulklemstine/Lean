@@ -157,7 +157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92cb9969",
     "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
     "domains": [
       "Novelty"
@@ -166,7 +166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "094010ae",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T14:11:15.793499+00:00",
     "title": "Deepening: Reflective Type Theory: Proving Things About Proving Things"
   },
