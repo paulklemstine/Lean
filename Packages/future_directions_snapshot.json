@@ -1351,6 +1351,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1073",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T21:56:42.357787+00:00",
+    "title": "Rucker: The Lifebox — Information-Theoretic Identity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 6e208619 (Q=0.780) proved 27 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minim",
     "domain_bridges": [],
     "domains": [
