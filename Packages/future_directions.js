@@ -255,20 +255,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: That the zero-dimensional persistent homology of the prim"
   },
   {
-    "consumed_by_exp_id": "3dc9cabc",
-    "description": "Building on cycle 4d0c820d (Q=0.820), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_4d0c820d_2a7be6c5",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "4d0c820d",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T04:13:20.698129+00:00",
-    "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
     "domains": [
@@ -1071,7 +1057,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "997ab258",
     "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
     "domains": [
       "Novelty",
@@ -1081,7 +1067,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T10:48:07.123829+00:00",
     "title": "Infinite Games Against Death: Immortality Strategies"
   },
@@ -7237,6 +7223,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T10:49:26.131107+00:00",
     "title": "Two self-contained Lean files (each importing only Mathlib) realize the mission"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Transreal Arithmetic (Deepening)\n\nThis cycle deepened the transreal formalization (`TReal = \u211d \u228e {+\u221e, -\u221e, \u03a6}`) in\n`Catalog/Novelty/TransrealArithmeticDeepening.lean`, a fully self-contained file.\nBuilding a chain of results on top of the reproduced core arithmetic, it adds:\n\n1. **Bundled surviving structure.** `AddCommMonoid TReal` and `CommMonoid TReal`\n   instances, so the full Mathlib commutative-monoid API now applies to the\n   transreals.\n2. **Negation as a homomorphism** of both structures: `neg_add`, `neg_mul`,\n   `mul_neg`, `neg_mul_neg`, valid even at `\u00b1\u221e`.\n3. **\u211d embeds** as `rlAddHom : \u211d \u2192+ TReal` and `rlMulHom : \u211d \u2192* TReal`.\n4. **Sharp reach of the reciprocal involution:**\n   `recip (recip x) = x \u2194 x \u2260 -\u221e` \u2014 the failure is pinned to the single point\n   `-\u221e`, refining the coarse \"not an involution\".\n5. **Reciprocal vs negation:** `recip (-x) = -(recip x)` off `0`, with an\n   explicit failure at `0` (`recip_neg_zero_fails`).\n6. **A non-linear partial order:** `PartialOrder TReal` with `-\u221e < \u211d < +\u221e` and\n   `\u03a6` incomparable; provably not total (`not_total`), with `\u211d` order-embedding\n   (`rlOrderEmbedding`) and \u2014 because `\u03a6` floats free \u2014 no greatest and no least\n   element (`no_greatest`, `no_least`), unlike the extended reals.\n\n## Natural next steps\n\n* **Order/algebra interaction.** Determine whether the surviving monoid + order\n  form an `OrderedAddCommMonoid` on the comparable part (`TReal \\ {\u03a6}`), and\n  characterize exactly which covariance laws `a \u2264 b \u2192 c + a \u2264 c + b` survive at\n  `\u00b1\u221e`. A promising target: quotient out `\u03a6` and study `[-\u221e,+\u221e]` as the induced\n  linear order.\n* **Continuity / analysis survival.** State transreal limits and ask which\n  classical theorems survive: e.g. IVT fails across `\u03a6`, but monotone-limit\n  statements may survive on the `\u03a6`-free part. Formalize `TReal`-valued\n  sequences and their limit behaviour near `\u00b1\u221e`.\n* **Comparison with wheels and the projective line.** Formalize the\n  single-point projective wheel `\u211d \u222a {\u221e, \u22a5}` and prove a precise\n  non-embedding/embedding relationship with `TReal`, making rigorous the slogan\n  \"transreals sit strictly below the wheel axioms\".\n* **Involution repair.** Investigate the largest sub-carrier on which `recip` is\n  an involution (everything but `-\u221e`) and whether it carries a group-like\n  reciprocal structure.\n* **Matrices / linear algebra over `TReal`.** Since `TReal` is only a pair of\n  monoids (no distributivity), study what a \"transreal matrix product\" can and\n  cannot satisfy.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1024",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3dc9cabc",
+    "status": "available",
+    "timestamp": "2026-07-11T10:49:54.743955+00:00",
+    "title": "This cycle deepened the transreal formalization (`TReal = \u211d \u228e {+\u221e, -\u221e, \u03a6}`) in"
   },
   {
     "consumed_by_exp_id": "",

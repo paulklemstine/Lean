@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "17fb4d11",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Automatic Sequences and Decidability\n\nThe file `AutomaticSequences.lean` establishes, for an arbitrary DFA `M` over a\nfinite alphabet with finitely many states:\n\n* `accepts_nonem",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-10T17:56:08",
-      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
-    },
-    {
       "cycle_id": "00abb0ac",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-11T10:49:45",
       "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+    },
+    {
+      "cycle_id": "3dc9cabc",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Transreal Arithmetic (Deepening)\n\nThis cycle deepened the transreal formalization (`TReal = ℝ ⊎ {+∞, -∞, Φ}`) in\n`Catalog/Novelty/TransrealArithmeticDeepening.lean`, a fully self",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-07-11T10:50:18",
+      "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6044c919",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's finding that the greedy \"anti-Fibonacci\" rule — start at 1 and always\ntake the smallest positive integer that is not a sum of two consecutive earlier ter",
-      "quality_score": 0.5680000000000001,
-      "sorry_count": 3,
-      "theorem_count": 16,
-      "timestamp": "2026-07-03T15:15:58",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
     {
       "cycle_id": "db78fb28",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-11T10:49:45",
       "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+    },
+    {
+      "cycle_id": "3dc9cabc",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Transreal Arithmetic (Deepening)\n\nThis cycle deepened the transreal formalization (`TReal = ℝ ⊎ {+∞, -∞, Φ}`) in\n`Catalog/Novelty/TransrealArithmeticDeepening.lean`, a fully self",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-07-11T10:50:18",
+      "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "75fb79ca",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "75fb79ca",
-      "domain": "Novelty",
-      "name": "lawvere_fixed_point",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "75fb79ca",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.78
-    },
     {
       "cycle_id": "3399a930",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "paradoxModel_degree_ge_three",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "3dc9cabc",
+      "domain": "Novelty",
+      "name": "add_def",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "3dc9cabc",
+      "domain": "Novelty",
+      "name": "mul_def",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "3dc9cabc",
+      "domain": "Novelty",
+      "name": "neg_def",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-11T10:49:45",
+  "last_updated": "2026-07-11T10:50:18",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ace29f66",
-        "quality": 0.82,
-        "theorems": 69,
-        "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-      },
-      {
         "cycle_id": "fec9de1f",
         "quality": 0.82,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 26,
         "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+      },
+      {
+        "cycle_id": "3dc9cabc",
+        "quality": 0.8,
+        "theorems": 44,
+        "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
       }
     ],
     "NumberTheory": [
