@@ -795,7 +795,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
   {
-    "consumed_by_exp_id": "b3fb99ba",
+    "consumed_by_exp_id": "dac5bc28",
     "description": "Cycle 094010ae (Q=0.820) proved 21 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that re",
     "domains": [
       "Novelty"
@@ -935,7 +935,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c67deafc",
     "description": "Cycle e480cbbd (Q=0.830) proved 64 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Novelty"
@@ -944,7 +944,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "e480cbbd",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T15:33:11.950891+00:00",
     "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
   },
