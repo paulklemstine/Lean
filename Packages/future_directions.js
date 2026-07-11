@@ -895,7 +895,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0b8bdfa",
     "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
     "domains": [
       "Novelty",
@@ -905,7 +905,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T09:41:21.629957+00:00",
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
