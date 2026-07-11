@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9696343b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalises the *algebraic skeleton* of the \"topology of Bach\"\nmission: pitch-class space as `ℤ/12ℤ`, harmonic cycles as cyclic subgroups, and\nthe circle of fifths as",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-10T08:05:57",
-      "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
-    },
-    {
       "cycle_id": "39669115",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain bridge**: Sudoku (a constraint satisfaction problem)\nis identified with proper vertex coloring (graph theory), and the shared structural i",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-11T00:40:03",
       "title": "Consciousness as Emergent Fixed Point"
+    },
+    {
+      "cycle_id": "0ba9c9ed",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Infinite-Dimensional Chess\n\nBold, falsifiable conjectures emerging from this cycle's study of chess on the\nboundless board `ℤ × ℤ`.\n\n## 1. The exact material threshold for mating",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-11T00:40:08",
+      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "89d6c3ef",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Exact Realizability and the Geometry of Learned Concepts\n\nThis cycle established that a single-neuron network with a polynomial read-out,\nbuilt on any *injective* feature map, is",
-      "quality_score": 0.6913,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-02T05:58:18",
-      "title": "ML-guided theorem discovery via adaptive proof distillation (NeuralProofMining)"
-    },
     {
       "cycle_id": "3ce1bfcd",
       "domain": "Geometry",
@@ -2501,15 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-11T00:40:03",
       "title": "Consciousness as Emergent Fixed Point"
+    },
+    {
+      "cycle_id": "0ba9c9ed",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Infinite-Dimensional Chess\n\nBold, falsifiable conjectures emerging from this cycle's study of chess on the\nboundless board `ℤ × ℤ`.\n\n## 1. The exact material threshold for mating",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-11T00:40:08",
+      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cd5a9d7d",
-      "domain": "Pythagorean",
-      "name": "rather",
-      "quality": 0.82
-    },
     {
       "cycle_id": "9d20b474",
       "domain": "Geometry",
@@ -2803,9 +2797,15 @@
       "domain": "Probability",
       "name": "for",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "0ba9c9ed",
+      "domain": "Probability",
+      "name": "proved",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T00:40:03",
+  "last_updated": "2026-07-11T00:40:08",
   "open_questions": [
     {
       "context": "witnesses, not `sorry`ed placeholders, so the abstract hypotheses are demonstrably; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "e3b2c2b9",
-        "quality": 0.5254,
-        "theorems": 14,
-        "title": "Prove Fermats Little Theorem for p=5"
-      },
-      {
         "cycle_id": "4b429121",
         "quality": 0.7118800000000001,
         "theorems": 12,
@@ -3823,6 +3817,12 @@
         "quality": 0.83,
         "theorems": 20,
         "title": "Consciousness as Emergent Fixed Point"
+      },
+      {
+        "cycle_id": "0ba9c9ed",
+        "quality": 0.82,
+        "theorems": 23,
+        "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
       }
     ],
     "Pythagorean": [
