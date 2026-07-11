@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e40b9050",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Algebraic Geometry of Neural Decision Boundaries\n\nThis cycle established that a rectified-linear classifier's decision boundary is\na *tropical hypersurface*, and that its algebrai",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-10T14:16:31",
-      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-    },
-    {
       "cycle_id": "34e9f39c",
       "domain": "Applications",
       "key_insight": "# Future Directions: Knots, Lattices, and Signed Enumeration\n\nThis cycle settled the naive \"Alexander polynomial = lattice-path count\"\nconjecture in the negative and isolated the correct signed object",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-11T07:46:01",
       "title": "The Unreasonable Effectiveness of Wrong Theories"
+    },
+    {
+      "cycle_id": "0250199a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.**",
+      "quality_score": 0.83,
+      "sorry_count": 5,
+      "theorem_count": 36,
+      "timestamp": "2026-07-11T08:02:43",
+      "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a5a22996",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n## 1. Construct the intertwining label map for all m\n\nFor every `m ≥ 1`, both the intervals of the greedy `m`-Tamari poset and the\nplanar `(m+1)`-constellations of size `n` are bu",
-      "quality_score": 0.5129090000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-03T05:51:17",
-      "title": "Isomorphism of generating trees for greedy m-Tamari intervals and planar (m+1)-constellations"
-    },
     {
       "cycle_id": "bb3ce4ee",
       "domain": "Computation",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-11T07:46:01",
       "title": "The Unreasonable Effectiveness of Wrong Theories"
+    },
+    {
+      "cycle_id": "0250199a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.**",
+      "quality_score": 0.83,
+      "sorry_count": 5,
+      "theorem_count": 36,
+      "timestamp": "2026-07-11T08:02:43",
+      "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-11T07:46:01",
+  "last_updated": "2026-07-11T08:02:43",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "7a9dcf2f",
-      "domain": "MachineLearning",
-      "sorry_count": 3,
-      "timestamp": "2026-07-10T02:59:14"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "73d4b43b",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-11T07:29:23"
+    },
+    {
+      "context": "-    sorry; +below appealed to a `sorry`ed general composite lemma; we therefore restrict the; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "0250199a",
+      "domain": "Applications",
+      "sorry_count": 5,
+      "timestamp": "2026-07-11T08:02:43"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "2ca6565f",
-        "quality": 0.82,
-        "theorems": 18,
-        "title": "Surveillance Networks: Information-Theoretic Undetectability"
-      },
-      {
         "cycle_id": "0bde247f",
         "quality": 0.72,
         "theorems": 29,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 48,
         "title": "Deepening: The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
+      },
+      {
+        "cycle_id": "0250199a",
+        "quality": 0.83,
+        "theorems": 36,
+        "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
       }
     ],
     "Bridges": [

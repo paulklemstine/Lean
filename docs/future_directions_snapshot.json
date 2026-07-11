@@ -1172,25 +1172,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0250199a",
-    "description": "Cycle fec9de1f (Q=0.820) proved 14 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_fec9de1f_11a4f4d3",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "fec9de1f",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T05:18:16.685270+00:00",
-    "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The Riemann zeta function zeta(s) has zeros at the non-trivial points s = 1/2 + i*gamma_n where gamma_n are the imaginary parts of the zeros. The Fourier transform of the zero counting function N(t) = #{gamma_n <= t} is related to the distribution of primes by the explicit formula. But what if we take the Fourier transform of zeta itself? Define Z(t) = zeta(1/2 + it) as a function of the real variable t. The Fourier transform Z_hat(w) = integral_{-inf}^{inf} Z(t) * e^{-2*pi*i*w*t} dt. Conjecture: Z_hat(w) has sharp peaks at w = log(p)/2*pi for each prime p. This is because the explicit formula expresses zeta(1/2+it) as a sum over primes: zeta(1/2+it) ~ sum_{p} p^{-1/2-it} = sum_{p} e^{-it*log(p)} / sqrt(p), which is a sum of complex exponentials with frequencies log(p). The Fourier transform of a sum of exponentials is a sum of delta functions at the frequencies log(p)/2*pi. So Z_hat(w) = sum_{p} delta(w - log(p)/2*pi) / sqrt(p) + (error from zeros and smooth terms). The peaks at w = log(p)/2*pi give a 'spectrogram' of the primes. Test: compute Z_hat(w) numerically for the first 10^6 zeros and verify the peaks at log(2)/2*pi, log(3)/2*pi, log(5)/2*pi, etc. Impact: you can HEAR the primes by playing the Fourier transform of the Riemann zeta function — each prime is a distinct note.",
     "domain_bridges": [],
@@ -1427,7 +1408,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fba297f5",
     "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
     "domain_bridges": [],
     "domains": [
@@ -1440,7 +1421,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T07:45:39.325963+00:00",
     "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
@@ -12033,6 +12014,26 @@
     "status": "available",
     "timestamp": "2026-07-11T07:45:54.430414+00:00",
     "title": "`WrongTheories.lean` formalizes theory-space as a real inner-product space `E`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem of the form\n   `slots · log₂ w` bits would generalize the Boolean bit-length bound and\n   quantify the cost of storing synaptic strengths, not just topology.\n\n2. **Average-case (entropy) bounds.** `few_small_codewords` / `most_incompressible`\n   give a worst-case pigeonhole statement. Formalizing Shannon entropy of a\n   uniform distribution over connectomes (`H = C(N,2)` bits) and proving that no\n   uniquely-decodable code beats it (Kraft–McMillan) would upgrade the argument\n   from \"some mind is incompressible\" to \"the average mind is incompressible\".\n\n3. **Directed + weighted composition.** Combine `directed_count_sq` with the\n   weighted count to obtain the full state space `w^(N(N-1))` of directed,\n   graded connectomes and its exact bit-length.\n\n4. **Sharper Bekenstein packing.** `neuron_count_sqrt_bound` gives\n   `N ≤ 1 + √(2·capacity)`. Plugging in concrete SI values for `ħ, c` and a\n   cortex-scale `R, E` would yield an explicit numeric neuron ceiling, provable\n   by `norm_num`/interval arithmetic.\n\n5. **Merging hierarchies.** `synapseSlots_add` is the two-brain case of a general\n   superadditivity `C(∑Nᵢ, 2) = ∑ C(Nᵢ,2) + ∑_{i<j} Nᵢ Nⱼ`, which would formalize\n   the combinatorial explosion of cross-connections when many minds are fused.\n\n## Completed auxiliary theory\n\n* **Mixed-radix / factorial bridge** (`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`).\n  The factorial number system is exhibited as the mixed-radix system with bases\n  `b i = i + 1`: `value_eq` (place values are factorials), `valid_iff` (the digit\n  bound `cᵢ ≤ i` is `cᵢ < i+1`), and `factorial_value_unique_via_mixed`, which\n  re-derives factoradic uniqueness as a corollary of the general\n  `MixedRadix.value_unique`.  All three are now fully proved.\n\n* **Carmichael primitive divisors for Fibonacci numbers** (`Catalog/Shared/CarmichaelProof.lean`,\n  `Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`,\n  `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`).  For every `n` with\n  `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.  The proof combines the\n  elementary prime case with a computationally certified composite case (the\n  `native_decide` checks `primPart_check` / `fib_coprime_part_pos_small`) fed\n  through the structural entry-point lemmas.\n\n## Open: the general Carmichael theorem\n\nThe headline Fibonacci results above are currently proved only on the certified\nrange `n ≤ 10000`.  The fully general statement — every `F(n)` with `n ∉ {1,2,6,12}`\nhas a primitive prime divisor — is *Carmichael's theorem*.  Removing the upper\nbound requires infrastructure not yet in Mathlib:\n\n* the primitive-part (cyclotomic) factorization `F(n) = ∏_{d∣n} Φ_d` of the\n  Fibonacci sequence, together with the fact that the `Φ_d` are the correct\n  \"primitive parts\";\n* a Zsygmondy-type growth bound showing `Φ_n` exceeds its only possible intrinsic\n  factor (the largest prime dividing `n`, appearing to the first power) once\n  `n > 12`.\n\nFormalizing these two ingredients would close the tail and upgrade\n`fib_primitive_divisor` to the unrestricted `n ≥ 13`.\n\n## Build & compilation status\n\nThe completed deliverables of this mission are collected under the `MindEncoding`\nlibrary target and build end-to-end with a plain `lake build`:\n\n* `Novelty.MindEncodingBounds`\n* `Novelty.MindEncodingRefined`\n* `Speculative.AutoResearch.MixedRadixFactorialBridge`\n* `Shared.CarmichaelHelper`, `Shared.CarmichaelProof`\n* `Speculative.AutoResearch.CarmichaelComposite`\n* `Speculative.CarmichaelPrimitiveDivisor`\n\nAll of them are `sorry`-free and their axiom audits show only the standard\naxioms (`propext`, `Classical.choice`, `Quot.sound`, plus\n`Lean.ofReduceBool`/`Lean.trustCompiler` for the `native_decide`-certified\nCarmichael range).\n\nThe project also ships a large shared `Catalog/` of files contributed by many\nunrelated cycles.  Every top-level directory is declared as its own `lean_lib`\n(so any individual module can be built by name), but the catalog as a whole is\n*not* buildable end-to-end: it contains numerous pre-existing dangling imports\n— references to source modules that were never included in the repository (for\nexample `Pythagorean.HOCriticalPairs`, `Physics.QuantumInfo.VonNeumannEntropy`,\n`Logic.LobFixedPoint`).  Repairing those would require recreating the missing\nsource files, which is outside the scope of this mission.  For that reason the\ndefault build target is the curated `MindEncoding` library rather than the full\ncatalog.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1006",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0250199a",
+    "status": "available",
+    "timestamp": "2026-07-11T08:02:37.643508+00:00",
+    "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
   },
   {
     "ambition_level": "extension",
