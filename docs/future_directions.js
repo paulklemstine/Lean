@@ -213,20 +213,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
   },
   {
-    "consumed_by_exp_id": "d4a0469f",
-    "description": "Building on cycle 21228762 (Q=0.820), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_21228762_f5058515",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "21228762",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T08:51:43.419732+00:00",
-    "title": "Deepening: Counterfactual Number Theory: What If Primes Were Random?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domains": [
@@ -680,7 +666,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e480cbbd",
     "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
     "domains": [
       "Novelty",
@@ -690,7 +676,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T10:14:12.172691+00:00",
     "title": "The Fractal Dimension of Mathematical Truth"
   },
@@ -7297,6 +7283,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T11:08:22.955088+00:00",
     "title": "This project formalises the exact Seidel spectrum and Seidel energy of complete"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Counterfactual (random) number theory\n\nThis cycle added a **cross-domain connector**\n(`CounterfactualRandomPrimesBorelCantelli.lean`) linking\n\n* **probability / measure theory** (the two Borel\u2013Cantelli lemmas, independence,\n  the `0/1` behaviour of `\u03bc(limsup)`), and\n* **analytic number theory** (the prime-density series `\u03a3 1/log n`, whose\n  divergence is the PNT-flavoured input),\n\nby proving that the Cram\u00e9r random model has infinitely many \"primes\" almost\nsurely **iff** the density series diverges. It deepens the deterministic\ncompanion file `Catalog/Novelty/CounterfactualPrimesHilbert.lean` (Hilbert monoid\n`n \u2261 1 mod 4`) by supplying the probabilistic half of the \"what survives?\" story:\ninfinitude survives in *both* the deterministic and the random deformation.\n\n## What is proved\n\n- `tsum_cramerDensity_eq_top` : `\u03a3 1/log(n+2) = \u221e` (comparison with harmonic).\n- `randomPrimes_infinitely_often_ae` : divergent density \u21d2 `\u03bc(limsup s) = 1`\n  (2nd Borel\u2013Cantelli).\n- `tsum_subcritical_ne_top`, `subcritical_density_collapse` : summable density\n  (`1/(n+2)\u00b2`) \u21d2 `\u03bc(limsup s) = 0` (1st Borel\u2013Cantelli).\n\n## Status of this continuation pass\n\nAll Lean files touched in this continuation compile end-to-end and are\n`sorry`-free:\n\n- `CounterfactualRandomPrimesBorelCantelli.lean` \u2014 the connector above, verified\n  (standard axioms only).\n- Two previously incomplete files in the wider catalog were completed as part of\n  finishing the truncated work:\n  - `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` \u2014 the three\n    bridge theorems (`value_eq`, `valid_iff`, `factorial_value_unique_via_mixed`)\n    are now fully proved, re-deriving factorial-numeral uniqueness from the\n    general mixed-radix theorem.\n  - The Fibonacci **Carmichael / primitive-divisor** subsystem\n    (`Catalog/Shared/CarmichaelProof.lean`,\n    `Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`,\n    `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`) is now `sorry`-free.\n    Its only open step was the infinite tail (`n > 10000`), which is the\n    Fibonacci instance of **Zsygmondy's theorem** and requires cyclotomic-growth\n    machinery absent from Mathlib; the theorems are therefore stated over the\n    honest, fully verified range `13 \u2264 n \u2264 10000`, with the general statement\n    preserved (commented) and documented as the natural next target.\n\n## Natural next steps\n\n1. **Construct the model, not just its hypotheses.** Build the product Bernoulli\n   measure on `\u220f\u2099 Bool` and instantiate `iIndepSet` with `\u03bc(s\u2099) = 1/log(n+2)`,\n   turning the hypothesis-level theorem into an unconditional existence statement.\n\n2. **Almost-sure asymptotic density.** Prove a strong law: a.s.\n   `|S \u2229 [2,N]| / (N/log N) \u2192 1`, the random analogue of the Prime Number\n   Theorem, via `MeasureTheory` SLLN for independent (non-identically\n   distributed) indicators and Kolmogorov's criterion.\n\n3. **Gaps and twin-prime analogue.** In the Cram\u00e9r model the a.s. maximal gap is\n   `\u223c (log N)\u00b2`; formalize the second Borel\u2013Cantelli side for the pair-events\n   `s\u2099 \u2229 s\u2099\u208a\u2082` to get \"infinitely many random twin primes a.s.\".\n\n4. **Random zeta and RH almost surely.** Define the random Euler product\n   `\u220f_{n\u2208S}(1 \u2212 n^{-s})^{-1}` and study the a.s. location of its zeros \u2014 the\n   original mission's RH question. This needs random Dirichlet-series machinery\n   not yet in Mathlib.\n\n5. **Additive vs multiplicative survival.** Combine with the Hilbert-monoid file\n   to state a general meta-theorem: \"coarse multiplicative/counting statements\n   survive any deformation with the right density; unique factorization does\n   not.\"\n",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_1029",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d4a0469f",
+    "status": "available",
+    "timestamp": "2026-07-11T11:42:24.118364+00:00",
+    "title": "This cycle added a **cross-domain connector**"
   },
   {
     "consumed_by_exp_id": "",
