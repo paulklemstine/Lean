@@ -193,6 +193,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0ba9c9ed (Q=0.820), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_0ba9c9ed_db8ddf0c",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0ba9c9ed",
+    "status": "available",
+    "timestamp": "2026-07-11T00:40:08.941885+00:00",
+    "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0faef071 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domain_bridges": [],
     "domains": [
@@ -517,7 +536,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75fb79ca",
     "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
     "domain_bridges": [],
     "domains": [
@@ -530,7 +549,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:39:31.318499+00:00",
     "title": "Self-Modifying Code That Cannot Be Stopped"
   },
@@ -10136,26 +10155,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0ba9c9ed",
-    "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0948",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T21:57:34.411164+00:00",
-    "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
     "domain_bridges": [],
@@ -11430,6 +11429,26 @@
     "status": "available",
     "timestamp": "2026-07-11T00:39:56.506237+00:00",
     "title": "Each conjecture below is bold, falsifiable, and derived from the findings of thi"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Infinite-Dimensional Chess\n\nBold, falsifiable conjectures emerging from this cycle's study of chess on the\nboundless board `ℤ × ℤ`.\n\n## 1. The exact material threshold for mating a lone king\n\n**Conjecture.** On the infinite board, the minimum number of rooks that can force\ncheckmate against a lone king (with best defence) is exactly five, and with a\nqueen substituted the threshold drops to three.\n\n*The key insight is* that on a boundaryless board a checkmate must be a\n*self-supporting cage*: the mating side has to both deliver check and seal all\neight escape squares using pieces that cannot themselves be captured, which\nconverts \"counting attacked squares\" into a covering problem for the king's\nneighbourhood by lines that avoid adjacency to the king.\n\n*Why now?* We have pinned the lower threshold precisely — one and two rooks\nprovably cannot mate — and exhibited an explicit five-rook cage, so the remaining\ngap (can three or four rooks mate?) is a sharply posed, checkable question rather\nthan an open-ended search.\n\n## 2. Escape runs are geodesic\n\n**Conjecture.** Against any fixed finite army that does not already mate, the king\nhas an escape run whose distance from the starting square grows linearly in the\nnumber of moves; equivalently, the king can always increase its Chebyshev\ndistance to every enemy piece at a uniform positive rate.\n\n*The key insight is* that the one-step escape map already moves the king a full\nunit off every occupied line, and iterating a *direction-consistent* choice (not\nmerely any safe choice) should accumulate rather than oscillate.\n\n*Why now?* The single-rook escape map is explicit and its iterate marches to\ninfinity along a diagonal; generalizing the \"always step outward\" rule to several\npieces is the natural next formal target.\n\n## 3. Ordinal game values realize every countable ordinal\n\n**Conjecture.** For every countable ordinal `α` there is a finite piece\nconfiguration on the infinite board whose game value (the accessibility rank of\nits pursuit relation) is exactly `α`.\n\n*The key insight is* that adding material lets the attacker impose ever longer,\ntransfinitely-nested \"you must eventually run out of room\" constraints, so the\nrank of the pursuit relation can be pushed up the countable ordinals by iterated\nconstructions, exactly as accessibility rank behaves for well-founded relations.\n\n*Why now?* We have shown the two extremes concretely — finite ranks correspond to\n\"mate in `n`\", and the lone-rook king is inaccessible (no ordinal value at all).\nThe intermediate transfinite values are the missing middle, and the\naccessibility-rank framework used here is precisely the tool to construct them.\n\n## 4. A fortress dichotomy\n\n**Conjecture.** A finite configuration is a draw (the defender survives forever)\nif and only if the king can reach a square from which some infinite half-plane is\npermanently unattacked — a \"safe horizon\".\n\n*The key insight is* that on an infinite board the only way to guarantee eternal\nsurvival is access to an unbounded safe region, so drawing fortresses are\ncharacterized topologically by the existence of an unattacked half-plane rather\nthan by local move-counting.\n\n*Why now?* We proved that finite armies always leave infinitely many safe\nsquares; upgrading \"infinitely many safe squares\" to \"a reachable safe horizon\"\nis the precise strengthening needed to turn a static covering fact into a dynamic\nsurvival criterion.\n\n\n# Future Directions — Infinite-Dimensional Chess\n\nBold, falsifiable conjectures emerging from this cycle's study of chess on the\nboundless board `ℤ × ℤ`.\n\n## 1. The exact material threshold for mating a lone king\n\n**Conjecture.** On the infinite board, the minimum number of rooks that can force\ncheckmate against a lone king (with best defence) is exactly five, and with a\nqueen substituted the threshold drops to three.\n\n*The key insight is* that on a boundaryless board a checkmate must be a\n*self-supporting cage*: the mating side has to both deliver check and seal all\neight escape squares using pieces that cannot themselves be captured, which\nconverts \"counting attacked squares\" into a covering problem for the king's\nneighbourhood by lines that avoid adjacency to the king.\n\n*Why now?* We have pinned the lower threshold precisely — one and two rooks\nprovably cannot mate — and exhibited an explicit five-rook cage, so the remaining\ngap (can three or four rooks mate?) is a sharply posed, checkable question rather\nthan an open-ended search.\n\n## 2. Escape runs are geodesic\n\n**Conjecture.** Against any fixed finite army that does not already mate, the king\nhas an escape run whose distance from the starting square grows linearly in the\nnumber of moves; equivalently, the king can always increase its Chebyshev\ndistance to every enemy piece at a uniform positive rate.\n\n*The key insight is* that the one-step escape map already moves the king a full\nunit off every occupied line, and iterating a *direction-consistent* choice (not\nmerely any safe choice) should accumulate rather than oscillate.\n\n*Why now?* The single-rook escape map is explicit and its iterate marches to\ninfinity along a diagonal; generalizing the \"always step outward\" rule to several\npieces is the natural next formal target.\n\n## 3. Ordinal game values realize every countable ordinal\n\n**Conjecture.** For every countable ordinal `α` there is a finite piece\nconfiguration on the infinite board whose game value (the accessibility rank of\nits pursuit relation) is exactly `α`.\n\n*The key insight is* that adding material lets the attacker impose ever longer,\ntransfinitely-nested \"you must eventually run out of room\" constraints, so the\nrank of the pursuit relation can be pushed up the countable ordinals by iterated\nconstructions, exactly as accessibility rank behaves for well-founded relations.\n\n*Why now?* We have shown the two extremes concretely — finite ranks correspond to\n\"mate in `n`\", and the lone-rook king is inaccessible (no ordinal value at all).\nThe intermediate transfinite values are the missing middle, and the\naccessibility-rank framework used here is precisely the tool to construct them.\n\n## 4. A fortress dichotomy\n\n**Conjecture.** A finite configuration is a draw (the defender survives forever)\nif and only if the king can reach a square from which some infinite half-plane is\npermanently unattacked — a \"safe horizon\".\n\n*The key insight is* that on an infinite board the only way to guarantee eternal\nsurvival is access to an unbounded safe region, so drawing fortresses are\ncharacterized topologically by the existence of an unattacked half-plane rather\nthan by local move-counting.\n\n*Why now?* We proved that finite armies always leave infinitely many safe\nsquares; upgrading \"infinitely many safe squares\" to \"a reachable safe horizon\"\nis the precise strengthening needed to turn a static covering fact into a dynamic\nsurvival criterion.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0964",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0ba9c9ed",
+    "status": "available",
+    "timestamp": "2026-07-11T00:40:06.011625+00:00",
+    "title": "Bold, falsifiable conjectures emerging from this cycle's study of chess on the"
   },
   {
     "ambition_level": "extension",
