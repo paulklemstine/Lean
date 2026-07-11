@@ -1,310 +1,161 @@
-#!/usr/bin/env python3
-"""
-The Mega-Sphere: Numerical Demonstrations
+"""The Mega-Sphere: numerical demonstrations.
 
-Demonstrates the key constructions and theorems:
-1. Sphere Euler characteristics and their parity pattern
-2. Bernoulli-sphere weights and odd vanishing
-3. Graded Sphere Algebra pairings
-4. Mega-Sphere filtration and Euler encoding
-5. Characteristic polynomials
+Self-contained Python demonstrations of the three strands developed in the
+accompanying paper:
+
+  1. Inverse limits of towers -- coherence, the collapse of the doubling tower,
+     and the nontrivial 2-adic tower.
+  2. The cohomological fingerprint of RP^infinity -- the dual Stiefel-Whitney
+     series inverting (1 + w) in the ring of formal power series over F_2.
+  3. Bernoulli numbers -- the recurrence, odd vanishing, and Faulhaber /
+     Nicomachus power-sum identities.
+
+Only the Python standard library is used (fractions for exact arithmetic).
 """
+
+from __future__ import annotations
 
 from fractions import Fraction
-from typing import List, Tuple
+from math import comb
+from typing import Callable, List, Sequence
 
 
-def euler_char(n: int) -> int:
-    """Euler characteristic of S^n: χ(S^n) = 1 + (-1)^n."""
-    return 1 + (-1) ** n
+# ---------------------------------------------------------------------------
+# 1. Inverse limits of towers
+# ---------------------------------------------------------------------------
+
+def is_coherent(seq: Sequence[int], pi: Callable[[int, int], int]) -> bool:
+    """Return True iff (x_0, ..., x_N) is a coherent sequence for the tower.
+
+    A sequence is coherent when pi(n, x_{n+1}) == x_n for every valid n, i.e.
+    it is an element of the inverse limit restricted to the first N+1 stages.
+    """
+    return all(pi(n, seq[n + 1]) == seq[n] for n in range(len(seq) - 1))
 
 
-def bernoulli_prime(n: int) -> Fraction:
-    """Compute B'_n (Bernoulli number, B'_1 = 1/2 convention) via recurrence."""
-    B = [Fraction(0)] * (n + 1)
-    B[0] = Fraction(1)
-    for m in range(1, n + 1):
-        s = Fraction(0)
-        for k in range(m):
-            # Binomial coefficient C(m+1, k)
-            binom = 1
-            for j in range(k):
-                binom = binom * (m + 1 - j) // (j + 1)
-            s += binom * B[k]
-        B[m] = -s / (m + 1)
-    # Convert from B_n to B'_n: B'_1 = 1/2 (positive)
-    if n == 1:
-        return Fraction(1, 2)
-    return B[n]
+def doubling_pi(_n: int, x: int) -> int:
+    """Connecting map of the doubling tower Z <--x2-- Z: multiplication by 2."""
+    return 2 * x
 
 
-def bernoulli_sphere_weight(n: int) -> Fraction:
-    """Bernoulli-sphere weight: B'_n * (1 + (-1)^n)."""
-    return bernoulli_prime(n) * (1 + (-1) ** n)
+def two_adic_pi(n: int, x: int) -> int:
+    """Reduction Z/2^(n+2) -> Z/2^(n+1) for the 2-adic tower."""
+    return x % (2 ** (n + 1))
 
 
-def graded_pairing(m: int, n: int) -> int:
-    """Graded Sphere Algebra pairing: P(m, n) = χ(S^m) * χ(S^n)."""
-    return euler_char(m) * euler_char(n)
+def demo_inverse_limits() -> None:
+    print("=" * 66)
+    print("1. INVERSE LIMITS OF TOWERS")
+    print("=" * 66)
+
+    # Doubling tower collapses: the only coherent sequence is all-zero.
+    # A nonzero start cannot be extended coherently far, because x_0 must be
+    # divisible by every power of 2.
+    print("\nDoubling tower  Z <--x2-- Z <--x2-- ...")
+    zero = [0, 0, 0, 0, 0]
+    print(f"  all-zero sequence coherent? {is_coherent(zero, doubling_pi)}")
+    attempt = [8, 4, 2, 1]  # 8 = 2*4, 4 = 2*2, 2 = 2*1 -- but 1 is not 2*(int)
+    print(f"  [8,4,2,1] coherent? {is_coherent(attempt, doubling_pi)}  "
+          "(1 cannot be halved in Z -> limit collapses to 0)")
+
+    # 2-adic tower thrives: the residues of any fixed integer are coherent.
+    print("\n2-adic tower  Z/2 <- Z/4 <- Z/8 <- ...")
+    for value in (1, 5, 13):
+        residues = [value % (2 ** (n + 1)) for n in range(6)]
+        print(f"  residues of {value:>2}: {residues}  coherent? "
+              f"{is_coherent(residues, two_adic_pi)}")
+    print("  -> nonzero coherent sequences exist: the limit is Z_2 (nontrivial).")
 
 
-def char_poly_eval(n: int, x: int) -> int:
-    """Evaluate characteristic polynomial p_n(X) = X^n + (-1)^n at x."""
-    return x ** n + (-1) ** n
+# ---------------------------------------------------------------------------
+# 2. Dual Stiefel-Whitney series in F_2[[w]]
+# ---------------------------------------------------------------------------
+
+def poly_mul_mod2(a: List[int], b: List[int], truncate: int) -> List[int]:
+    """Multiply two polynomials over F_2, truncated at degree < `truncate`."""
+    out = [0] * truncate
+    for i, ai in enumerate(a):
+        if ai % 2 == 0:
+            continue
+        for j, bj in enumerate(b):
+            if i + j < truncate and bj % 2:
+                out[i + j] ^= 1
+    return out
 
 
-def mega_sphere_project(seq: List[int], level: int) -> List[int]:
-    """Project an infinite sequence to truncation level n."""
-    return seq[: level + 1]
+def demo_dual_stiefel_whitney(truncate: int = 8) -> None:
+    print("\n" + "=" * 66)
+    print("2. DUAL STIEFEL-WHITNEY SERIES IN F_2[[w]]")
+    print("=" * 66)
+    total = [1, 1]                    # 1 + w
+    dual = [1] * truncate            # 1 + w + w^2 + ... (the geometric series)
+    product = poly_mul_mod2(total, dual, truncate)
+    print(f"\n  total class  (1 + w)")
+    print(f"  dual  class  (1 + w + w^2 + ... ) truncated to degree {truncate-1}")
+    print(f"  (1 + w) * dual  =  {product}")
+    print(f"  equals 1 in F_2[[w]]? {product == [1] + [0] * (truncate - 1)}")
 
 
-def main():
-    print("=" * 70)
-    print("THE MEGA-SPHERE: NUMERICAL DEMONSTRATIONS")
-    print("=" * 70)
+# ---------------------------------------------------------------------------
+# 3. Bernoulli numbers, Faulhaber, Nicomachus
+# ---------------------------------------------------------------------------
 
-    # Demo 1: Euler characteristics
-    print("\n--- Demo 1: Sphere Euler Characteristics ---")
-    print(f"{'n':>4} {'χ(S^n)':>8} {'Parity':>8}")
-    print("-" * 24)
-    for n in range(12):
-        chi = euler_char(n)
-        parity = "even" if n % 2 == 0 else "odd"
-        print(f"{n:>4} {chi:>8} {parity:>8}")
+def bernoulli_numbers(n_max: int) -> List[Fraction]:
+    """Return [B_0, ..., B_{n_max}] with the B_1 = -1/2 convention.
 
-    print("\nPattern: χ = 2 for even dimensions, χ = 0 for odd dimensions")
+    Uses the recurrence sum_{k=0}^{m} C(m+1, k) B_k = 0, solved for B_m.
+    """
+    b: List[Fraction] = []
+    for m in range(n_max + 1):
+        if m == 0:
+            b.append(Fraction(1))
+            continue
+        s = sum(Fraction(comb(m + 1, k)) * b[k] for k in range(m))
+        b.append(-s / Fraction(comb(m + 1, m)))
+    return b
 
-    # Demo 2: Recurrence verification
-    print("\n--- Demo 2: Recurrence χ(S^{n+1}) = 2 - χ(S^n) ---")
-    for n in range(8):
-        lhs = euler_char(n + 1)
-        rhs = 2 - euler_char(n)
-        assert lhs == rhs, f"Recurrence failed at n={n}"
-    print("✓ Verified for n = 0, 1, ..., 7")
 
-    # Demo 3: Multiplicativity
-    print("\n--- Demo 3: Multiplicativity χ(S^m × S^n) = χ(S^m) · χ(S^n) ---")
-    print(f"{'(m,n)':>8} {'χ(S^m)·χ(S^n)':>16} {'Product':>10}")
-    for m in range(5):
-        for n in range(5):
-            prod = euler_char(m) * euler_char(n)
-            if prod != 0:
-                print(f"({m},{n}):  {euler_char(m):>3} × {euler_char(n):>3} = {prod:>4}")
+def power_sum_faulhaber(p: int, n: int, bern: List[Fraction]) -> Fraction:
+    """Closed-form sum_{k=0}^{n-1} k^p via Bernoulli coefficients."""
+    total = Fraction(0)
+    for j in range(p + 1):
+        total += Fraction(comb(p + 1, j)) * bern[j] * Fraction(n) ** (p + 1 - j)
+    return total / Fraction(p + 1)
 
-    # Demo 4: Bernoulli-sphere weights
-    print("\n--- Demo 4: Bernoulli-Sphere Weights ---")
-    header_bn = "B'_n"
-    print(f"{'n':>4} {header_bn:>12} {'chi(S^n)':>8} {'w(n)':>12}")
-    print("-" * 40)
-    for n in range(11):
-        bn = bernoulli_prime(n)
-        chi = euler_char(n)
-        w = bernoulli_sphere_weight(n)
-        print(f"{n:>4} {str(bn):>12} {chi:>8} {str(w):>12}")
 
-    print("\n✓ All odd weights are zero (resonance verified)")
+def demo_bernoulli() -> None:
+    print("\n" + "=" * 66)
+    print("3. BERNOULLI NUMBERS, FAULHABER, NICOMACHUS")
+    print("=" * 66)
+    bern = bernoulli_numbers(10)
+    print("\n  Bernoulli numbers B_0 .. B_10:")
+    for i, bi in enumerate(bern):
+        print(f"    B_{i:>2} = {str(bi):>6}")
+    print(f"\n  B_2 == 1/6 ? {bern[2] == Fraction(1, 6)}")
+    print("  odd vanishing B_3=B_5=B_7=B_9=0 ? "
+          f"{all(bern[m] == 0 for m in (3, 5, 7, 9))}")
 
-    # Demo 5: Even concentration
-    print("\n--- Demo 5: Even Concentration w(2k) = 2·B'_{2k} ---")
-    for k in range(6):
-        w = bernoulli_sphere_weight(2 * k)
-        expected = 2 * bernoulli_prime(2 * k)
-        assert w == expected, f"Even concentration failed at k={k}"
-        print(f"  w({2*k:>2}) = {str(w):>12} = 2 · B'_{2*k} = 2 · {str(bernoulli_prime(2*k))}")
-    print("✓ Even concentration verified for k = 0, 1, ..., 5")
+    print("\n  Faulhaber closed forms vs direct summation:")
+    for p in (1, 2, 3):
+        for n in (5, 10, 20):
+            direct = sum(Fraction(k) ** p for k in range(n))
+            closed = power_sum_faulhaber(p, n, bern)
+            ok = direct == closed
+            print(f"    sum_{{k<{n:>2}}} k^{p} = {str(closed):>8}   matches? {ok}")
 
-    # Demo 6: Graded Sphere Algebra pairings
-    print("\n--- Demo 6: Graded Sphere Algebra Pairings ---")
-    print("Even × Even pairings (should all be 4):")
-    for j in range(4):
-        for k in range(4):
-            p = graded_pairing(2 * j, 2 * k)
-            assert p == 4, f"Pairing failed at ({2*j}, {2*k})"
-    print("  ✓ P(2j, 2k) = 4 for all j, k ∈ {0,1,2,3}")
+    print("\n  Nicomachus  sum k^3 == (sum k)^2 :")
+    for n in (5, 10, 25):
+        cubes = sum(k ** 3 for k in range(n))
+        squared = sum(k for k in range(n)) ** 2
+        print(f"    n={n:>2}:  {cubes} == {squared} ? {cubes == squared}")
 
-    print("Odd pairings (should all be 0):")
-    for j in range(4):
-        for n in range(8):
-            p = graded_pairing(2 * j + 1, n)
-            assert p == 0, f"Odd pairing failed at ({2*j+1}, {n})"
-    print("  ✓ P(2k+1, n) = 0 for all k, n")
 
-    # Demo 7: Characteristic polynomials
-    print("\n--- Demo 7: Characteristic Polynomials p_n(1) = χ(S^n) ---")
-    for n in range(8):
-        val = char_poly_eval(n, 1)
-        assert val == euler_char(n)
-    print("✓ p_n(1) = χ(S^n) verified for n = 0, ..., 7")
-
-    # Demo 8: Conjecture verification
-    print("\n--- Demo 8: Sphere-Bernoulli Duality Conjecture (N=2) ---")
-    lhs = bernoulli_prime(0) * 2 + bernoulli_prime(2) * 2 + bernoulli_prime(4) * 2
-    rhs = Fraction(2) + Fraction(1, 3) + Fraction(-1, 15)
-    print(f"  LHS = 2·B'_0 + 2·B'_2 + 2·B'_4 = {lhs}")
-    print(f"  RHS = 2 + 1/3 + (-1/15)          = {rhs}")
-    assert lhs == rhs
-    print(f"  ✓ Both equal {lhs} = {float(lhs):.10f}")
-
-    # Demo 9: Mega-Sphere Euler encoding
-    print("\n--- Demo 9: Mega-Sphere Euler Encoding ---")
-    euler_seq = [euler_char(n) for n in range(20)]
-    print(f"  Full sequence: {euler_seq}")
-    for level in [3, 5, 10]:
-        proj = mega_sphere_project(euler_seq, level)
-        print(f"  Projection to level {level:>2}: {proj}")
-
-    print("\n  Infinite support: the sequence [2,0,2,0,...] never terminates,")
-    print("  so the Euler encoding is NOT in any finite filtration level.")
-
-    # Demo 10: Alternating term identity
-    print("\n--- Demo 10: Alternating Term Identity ---")
-    print("  (-1)^i · χ(S^i) = (-1)^i + 1:")
-    for i in range(8):
-        lhs = (-1) ** i * euler_char(i)
-        rhs = (-1) ** i + 1
-        assert lhs == rhs
-        print(f"    i={i}: (-1)^{i} · {euler_char(i)} = {lhs} = {(-1)**i} + 1 = {rhs} ✓")
-
-    print("\n" + "=" * 70)
-    print("ALL DEMONSTRATIONS PASSED SUCCESSFULLY")
-    print("=" * 70)
+def main() -> None:
+    demo_inverse_limits()
+    demo_dual_stiefel_whitney()
+    demo_bernoulli()
+    print("\nAll demonstrations complete.")
 
 
 if __name__ == "__main__":
     main()
-
-
-#!/usr/bin/env python3
-"""Visualization: Bernoulli-Sphere Weight Resonance"""
-import matplotlib.pyplot as plt
-from fractions import Fraction
-from math import comb
-
-def bernoulli_prime_table(N):
-    B = [Fraction(0)] * (N + 1)
-    B[0] = Fraction(1)
-    for m in range(1, N + 1):
-        s = Fraction(0)
-        for k in range(m):
-            s += Fraction(comb(m + 1, k)) * B[k]
-        B[m] = -s / (m + 1)
-    if N >= 1:
-        B[1] = Fraction(1, 2)
-    return B
-
-def euler_char(n):
-    return 1 + (-1)**n
-
-N = 16
-B = bernoulli_prime_table(N)
-weights = [float(B[n] * (1 + (-1)**n)) for n in range(N + 1)]
-bernoulli_vals = [float(B[n]) for n in range(N + 1)]
-euler_vals = [euler_char(n) for n in range(N + 1)]
-
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-# Plot 1: Bernoulli numbers
-colors_b = ['#9C27B0' if n % 2 == 0 else '#BDBDBD' for n in range(N + 1)]
-axes[0].bar(range(N + 1), bernoulli_vals, color=colors_b, edgecolor='black', linewidth=0.5)
-axes[0].set_xlabel('n')
-axes[0].set_ylabel("B'_n")
-axes[0].set_title("Bernoulli Numbers B'_n")
-axes[0].axhline(y=0, color='black', linewidth=0.5)
-
-# Plot 2: Euler characteristics
-colors_e = ['#2196F3' if n % 2 == 0 else '#FF5722' for n in range(N + 1)]
-axes[1].bar(range(N + 1), euler_vals, color=colors_e, edgecolor='black', linewidth=0.5)
-axes[1].set_xlabel('n')
-axes[1].set_ylabel('χ(Sⁿ)')
-axes[1].set_title('Euler Characteristics χ(Sⁿ)')
-
-# Plot 3: Bernoulli-sphere weights (resonance)
-colors_w = ['#4CAF50' if w != 0 else '#EEEEEE' for w in weights]
-axes[2].bar(range(N + 1), weights, color=colors_w, edgecolor='black', linewidth=0.5)
-axes[2].set_xlabel('n')
-axes[2].set_ylabel('w(n)')
-axes[2].set_title('Bernoulli-Sphere Weight w(n) = B\'_n · χ(Sⁿ)')
-axes[2].axhline(y=0, color='black', linewidth=0.5)
-
-plt.suptitle('Bernoulli-Sphere Resonance: Odd Vanishing', fontsize=14, y=1.02)
-plt.tight_layout()
-plt.savefig('viz_bernoulli_weights.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved viz_bernoulli_weights.png")
-
-
-#!/usr/bin/env python3
-"""Visualization: Sphere Euler Characteristic Pattern"""
-import matplotlib.pyplot as plt
-import numpy as np
-
-def euler_char(n):
-    return 1 + (-1)**n
-
-N = 20
-dims = list(range(N))
-chis = [euler_char(n) for n in dims]
-colors = ['#2196F3' if n % 2 == 0 else '#FF5722' for n in dims]
-
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-# Plot 1: Bar chart of Euler characteristics
-ax1.bar(dims, chis, color=colors, edgecolor='black', linewidth=0.5)
-ax1.set_xlabel('Dimension n', fontsize=12)
-ax1.set_ylabel('χ(Sⁿ)', fontsize=12)
-ax1.set_title('Euler Characteristics of Spheres', fontsize=14)
-ax1.set_xticks(range(0, N, 2))
-ax1.axhline(y=0, color='black', linewidth=0.5)
-ax1.legend(['Even dim (χ=2)', 'Odd dim (χ=0)'], loc='upper right')
-
-# Plot 2: Cumulative sum
-cum_sums = np.cumsum(chis)
-ax2.plot(dims, cum_sums, 'ko-', markersize=4)
-ax2.fill_between(dims, cum_sums, alpha=0.3, color='#4CAF50')
-ax2.set_xlabel('N', fontsize=12)
-ax2.set_ylabel('Σᵢ₌₀ᴺ χ(Sⁱ)', fontsize=12)
-ax2.set_title('Cumulative Euler Characteristic Sum', fontsize=14)
-ax2.set_xticks(range(0, N, 2))
-
-plt.tight_layout()
-plt.savefig('viz_euler_pattern.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved viz_euler_pattern.png")
-
-
-#!/usr/bin/env python3
-"""Visualization: Graded Sphere Algebra Pairing Table"""
-import matplotlib.pyplot as plt
-import numpy as np
-
-def euler_char(n):
-    return 1 + (-1)**n
-
-N = 12
-pairing = np.array([[euler_char(m) * euler_char(n) for n in range(N)] for m in range(N)])
-
-fig, ax = plt.subplots(figsize=(8, 8))
-cmap = plt.cm.RdYlGn
-im = ax.imshow(pairing, cmap=cmap, vmin=-1, vmax=5)
-
-for i in range(N):
-    for j in range(N):
-        color = 'white' if pairing[i, j] == 4 else 'black'
-        ax.text(j, i, str(pairing[i, j]), ha='center', va='center',
-                fontsize=10, fontweight='bold', color=color)
-
-ax.set_xticks(range(N))
-ax.set_yticks(range(N))
-ax.set_xticklabels([f'S{n}' for n in range(N)])
-ax.set_yticklabels([f'S{m}' for m in range(N)])
-ax.set_xlabel('Dimension n', fontsize=12)
-ax.set_ylabel('Dimension m', fontsize=12)
-ax.set_title('Graded Sphere Algebra Pairing P(m,n) = χ(Sᵐ)·χ(Sⁿ)', fontsize=13)
-
-cbar = plt.colorbar(im, ax=ax, shrink=0.8)
-cbar.set_label('Pairing value', fontsize=11)
-
-plt.tight_layout()
-plt.savefig('viz_pairing_table.png', dpi=150, bbox_inches='tight')
-plt.close()
-print("Saved viz_pairing_table.png")
