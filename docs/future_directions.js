@@ -353,20 +353,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
   },
   {
-    "consumed_by_exp_id": "1c874912",
-    "description": "Building on cycle fec9de1f (Q=0.820), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadrati",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_fec9de1f_82b8c099",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "fec9de1f",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T05:18:16.612897+00:00",
-    "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
-  },
-  {
     "consumed_by_exp_id": "58600b08",
     "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
     "domains": [
@@ -7102,6 +7088,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T08:51:45.629490+00:00",
     "title": "This project isolates the *substrate-independent* core of computational"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Information Cost of Encoding a Mind\n\nThis cycle established that the wiring diagram of `n` neurons carries an intrinsic,\nquadratic, and unbeatable information cost of `C(n,2)` bits, attained exactly and stable\nunder variable-length compression. The following conjectures push that result toward a\nricher theory of when \u2014 and whether \u2014 a mind can be encoded.\n\n## 1. Weighted connectomes have a logarithmic overhead, not a quadratic one\n\n**Conjecture.** If each synapse carries a weight from an alphabet of `q` levels rather\nthan a single present/absent bit, the minimum lossless description length is exactly\n`C(n,2)\u00b7log\u2082 q` bits, and this bound remains sharp and unbeatable in the worst case.\n\n**The key insight is** that the quadratic factor `C(n,2)` counts *independent channels*\nwhile the weight resolution contributes only a per-channel logarithmic factor, so\nincreasing biological fidelity is exponentially cheaper than adding neurons.\n\n**Why now?** Connectomics datasets increasingly report graded synaptic strengths rather\nthan binary adjacency; a bound that separates the channel count from the per-channel\nprecision tells experimentalists exactly where storage budgets should be spent.\n\n## 2. Compressible minds are measure-zero\n\n**Conjecture.** For each budget `b < C(n,2)`, the fraction of connectomes on `n` neurons\nadmitting a lossless description of length `\u2264 b` tends to `0` as `n \u2192 \u221e`; in fact all but\na vanishing fraction are incompressible below `C(n,2) \u2212 o(C(n,2))` bits.\n\n**The key insight is** that incompressibility is generic: the counting argument that\nforbids a *universal* short code also forbids short codes for *almost every individual*\nconnectome, so typical minds are as hard to compress as the worst case.\n\n**Why now?** Claims that a specific brain might be \"mostly redundant\" and hence cheaply\nstorable can be tested against this genericity threshold; the conjecture predicts that\nredundancy exploitable for compression is the rare exception, not the rule.\n\n## 3. Bounded-degree connectomes escape the quadratic floor\n\n**Conjecture.** If every neuron has at most `d` synapses (a sparse connectome), the\nminimum lossless description length drops to `\u0398(n\u00b7d\u00b7log n)` bits \u2014 linear in `n` for\nfixed `d` \u2014 and this is sharp.\n\n**The key insight is** that biological wiring is sparse, and sparsity converts the\nquadratic pairwise-channel count into a near-linear cost dominated by *addressing* which\nfew partners each neuron connects to.\n\n**Why now?** Measured cortical connectomes have bounded average degree; establishing the\nsparse bound would reconcile the pessimistic dense quadratic floor with the empirical\nhope that realistic brains are far cheaper to encode than `n^2/2` bits suggests.\n\n## 4. A dynamic Bekenstein bound couples wiring to activity\n\n**Conjecture.** Faithfully encoding a mind's *trajectory* over time `T` \u2014 its evolving\nactivation state on top of its fixed connectome \u2014 requires at least `C(n,2) + n\u00b7T` bits,\nand any physical substrate of capacity `B` bits caps the jointly encodable `(neurons,\nduration)` pairs by `n(n-1)/2 + nT \u2264 B`.\n\n**The key insight is** that the static wiring cost and the dynamic activity cost add\nrather than amortize, because the connectome is incompressible and the activity stream is\nincompressible relative to it \u2014 mirroring the static/dynamic split proved this cycle.\n\n**Why now?** Uploading proposals implicitly assume that recording activity is cheap once\nthe wiring is known; the additive bound falsifies that assumption and gives a concrete\ncapacity budget for whole-trajectory preservation.\n\n## 5. Lossy encodings inherit a quadratic distortion-rate law\n\n**Conjecture.** For any tolerated Hamming distortion `\u03b4` on the synapse set, the minimum\ndescription length is `C(n,2)\u00b7(1 \u2212 H(\u03b4))` bits, where `H` is the binary entropy function;\nbelow this rate, two behaviourally distinct minds must collide.\n\n**The key insight is** that permitting a fixed fraction of synaptic errors buys only a\nconstant-factor saving on the quadratic term \u2014 you cannot escape `\u0398(n^2)` storage by\ntolerating a fixed error rate, only by tolerating a rate that grows with `n`.\n\n**Why now?** Every realistic uploading pipeline is lossy; a distortion-rate law converts\nthe vague promise of \"good enough\" reconstruction into a precise, testable trade-off\nbetween fidelity and storage.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1012",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1c874912",
+    "status": "available",
+    "timestamp": "2026-07-11T09:25:00.519189+00:00",
+    "title": "That the wiring diagram of `n` neurons carries an intrins"
   },
   {
     "consumed_by_exp_id": "",
