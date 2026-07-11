@@ -480,6 +480,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle dfaaa130 (Q=0.800), which proved 30 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_dfaaa130_32d1cbf6",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "dfaaa130",
+    "status": "available",
+    "timestamp": "2026-07-11T14:28:08.686661+00:00",
+    "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
+  },
+  {
     "consumed_by_exp_id": "feb5fd04",
     "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
     "domains": [
@@ -1111,21 +1125,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T09:41:21.700734+00:00",
     "title": "Fermat Near-Misses in the Twilight Zone"
-  },
-  {
-    "consumed_by_exp_id": "dfaaa130",
-    "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_1025",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T11:07:24.978165+00:00",
-    "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
     "consumed_by_exp_id": "",
@@ -7487,6 +7486,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T14:11:18.459426+00:00",
     "title": "The file `DreamtimeKinshipGL.lean` develops the group theory of Australian"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Mega-Sphere\n\nThis project formalizes the rigorous algebraic skeleton behind the \"mega-sphere\"\nfantasy \u2014 a single object recovering every finite stage of a tower at once \u2014 in\nthree self-contained Lean files:\n\n- `Catalog/Novelty/MegaSphereInverseLimit.lean` \u2014 inverse limits of towers\n  (universal property; collapse of the doubling tower; a nontrivial `2`-adic\n  limit).\n- `Catalog/Novelty/MegaSphereStiefelWhitney.lean` \u2014 the cohomology ring\n  `H*(\u211dP^\u221e;\ud835\udd3d\u2082) = \ud835\udd3d\u2082[w]`, the Whitney\u2013Frobenius identity, and the dual\n  Stiefel\u2013Whitney series that inverts the total class after completion.\n- `Catalog/Novelty/MegaSphereBernoulli.lean` \u2014 the Bernoulli recurrence, odd\n  vanishing, and the Bernoulli-driven Faulhaber power-sum formulas.\n\n## What is proved (honest scope)\n\nThe genuinely rigorous core is the **inverse limit** construction with its\n**universal property** (existence + uniqueness of the mediating map), together\nwith two concrete evaluations (`doublingTower` collapses to `0`; the `2`-adic\ntower is nontrivial). The Stiefel\u2013Whitney file proves real ring-theoretic\nincarnations of characteristic-class identities in `\ud835\udd3d\u2082[w]` and `\ud835\udd3d\u2082\u27e6w\u27e7`. The\nBernoulli file proves the classical recurrence, odd vanishing, and Faulhaber\nclosed forms.\n\nThe literal reading of the original prompt (\"homology groups encode the Bernoulli\nnumbers\", \"a single object whose projections give S\u2070,S\u00b9,S\u00b2,\u2026\") mixes several\ngenuine but distinct pieces of mathematics; the files above realize the pieces\nthat are both true and formalizable now, and are careful **not** to overclaim.\n\n## Concrete next steps\n\n1. **Ring inverse limit = completion.** Build the tower of truncated cohomologies\n   `\ud835\udd3d\u2082[w]/(w^{n+1})` with the reduction ring homs, and prove\n   `\ud835\udd3d\u2082\u27e6w\u27e7 \u2245 invLimitRing` of this tower via the universal property already\n   available in `MegaSphereInverseLimit.lean`. This makes \"the completed\n   cohomology ring *is* the inverse limit\" a theorem rather than a slogan.\n\n2. **Surjective projections (Mittag-Leffler).** For the `2`-adic tower, prove\n   every `projRing` is surjective, so the mega-object really does \"project onto\n   every stage\". Generalize to any tower with surjective connecting maps.\n\n3. **Higher Stiefel\u2013Whitney classes.** Move from `BO(1) = \u211dP^\u221e` to `BO(k)` and\n   `BO`, where `H*(BO;\ud835\udd3d\u2082) = \ud835\udd3d\u2082[w\u2081,w\u2082,\u2026]` is a polynomial ring on the full\n   family of Stiefel\u2013Whitney classes; formalize the Whitney product formula\n   `w(E\u2295F) = w(E)\u00b7w(F)` in this model.\n\n4. **Bernoulli \u2194 characteristic numbers.** The true bridge between Bernoulli\n   numbers and manifolds/spheres runs through the Hirzebruch `L`-genus and\n   `\u00c2`-genus and the image of the `J`-homomorphism (denominators of `B\u2082\u2096/4k`\n   give the orders of certain stable homotopy groups of spheres). Formalizing\n   even the `L`-genus of `\u2102P\u00b2\u207f` and the signature theorem would connect the\n   Bernoulli file to the geometry of spheres.\n\n5. **Genuine inverse limit in `Top`.** Replace the algebraic stand-ins by actual\n   spheres/CW complexes and inverse limits in `TopCat`, using Mathlib's\n   category-theoretic limits, and compare with the algebraic limit via a\n   (co)homology functor.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1045",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dfaaa130",
+    "status": "available",
+    "timestamp": "2026-07-11T14:28:02.441253+00:00",
+    "title": "This project formalizes the rigorous algebraic skeleton behind the \"mega-sphere\""
   },
   {
     "consumed_by_exp_id": "",
