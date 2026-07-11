@@ -636,7 +636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d01ef4b",
     "description": "Construct a rigorous model of hypercomputation that can solve the halting problem. Prove that any physical system implementing hypercomputation requires infinite energy density or infinite precision. Formalize the distinction between accidentally computable (physical oracles) and essentially computable (Turing machines).",
     "domains": [
       "Novelty",
@@ -646,7 +646,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T05:17:42.086276+00:00",
     "title": "Hypercomputation: Computing the Uncomputable"
   },
@@ -765,20 +765,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T05:35:47.121314+00:00",
     "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-  },
-  {
-    "consumed_by_exp_id": "493ee817",
-    "description": "Cycle 4d0c820d (Q=0.820) proved 26 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive tr",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_4d0c820d_be5a9838",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "4d0c820d",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T04:13:20.774112+00:00",
-    "title": "Close Proofs: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
     "consumed_by_exp_id": "",
@@ -6936,6 +6922,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T06:39:30.452584+00:00",
     "title": "Two structural pillars for the balancing ratio sequence o"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese conjectures grow directly out of the present cycle, in which the factorial\nnumber system was shown to be a single point in the parameterized family of\nmixed-radix positional systems, and its uniqueness theorem was re-derived from the\ngeneral mixed-radix uniqueness theorem through an explicit place-value and validity\ncorrespondence.\n\n## 1. A universal Ostrowski-type classification of positional systems\n\n**Conjecture.** Every positional numeral system whose place values form a strictly\nincreasing sequence of running products of positive integer bases admits a unique\nvalid representation for each natural number below the total product, and *only*\nsuch running-product systems have this exact one-to-one property; any system whose\nplace values are not a running product of integer bases either loses uniqueness or\nloses surjectivity on an initial segment.\n\nThe key insight is that uniqueness and existence in the mixed-radix world depend on\nnothing but the running product of the bases together with the local digit bound\n`c i < b i`; the specific base sequence is irrelevant, so the property is a purely\nstructural feature of running-product sequences rather than of any particular\nsystem.\n\nWhy now? The bridge established this cycle collapses the factorial system and the\nordinary base-`N` system into one theorem, making the running product \u2014 not the\nindividual base \u2014 the visibly load-bearing object; this reframing is exactly what a\nclassification statement needs as its hypothesis.\n\n## 2. Mixed-radix carry dynamics as a self-correcting code\n\n**Conjecture.** In the mixed-radix system with bases `b i = i + 2`, the digit-wise\ndistance between the representations of `n` and `n + 1` is bounded independently of\n`n`, and the expected number of digits that change under incrementing tends to a\nfinite constant as the length grows.\n\nThe key insight is that carrying in a running-product system terminates as soon as a\ndigit sits below its local base, and the local bases grow, so long carry chains\nbecome geometrically rare rather than merely bounded.\n\nWhy now? With the value/validity dictionary between factorial and general\nmixed-radix systems in hand, incrementing can be analyzed once in the general\nsystem and transported verbatim to every instance, including the factorial one.\n\n## 3. Primitive divisors across strong divisibility sequences\n\n**Conjecture.** For every strong divisibility sequence that grows at least\ngeometrically, all but finitely many terms possess a primitive prime divisor, and\nthe finite exceptional set is contained in the indices below an explicit bound\ndetermined solely by the growth rate.\n\nThe key insight is that a primitive prime divisor is exactly a prime surviving the\nremoval of every factor shared with an earlier term, and the multiplicative\n\"stripping\" of shared factors can be controlled by comparing the size of a term to\nthe product of the smaller terms it could share factors with.\n\nWhy now? The composite-index analysis of the Fibonacci sequence isolates the exact\nobstruction \u2014 bounding the shared-factor product against the term's own size \u2014 as a\nstatement about strong divisibility sequences in the abstract, decoupled from any\nFibonacci-specific identity.\n\n## 4. A gcd-transfer principle for primitive divisors\n\n**Conjecture.** For any strong divisibility sequence, an index has a primitive prime\ndivisor if and only if its \"primitive part\" \u2014 the term with all factors shared with\nproper-divisor indices stripped away \u2014 exceeds one, and this equivalence is stable\nunder passing to any subsequence indexed by an arithmetic progression.\n\nThe key insight is that the strong divisibility identity turns every shared prime\nbetween two terms into a shared prime at their gcd index, so primitivity at an index\nis governed entirely by the divisor lattice of that index.\n\nWhy now? The reduction of primitivity to a single scalar inequality on the\nprimitive part, together with the gcd-collapse argument for prime indices, exposes\nthe divisor lattice as the right carrier of the whole phenomenon and invites the\narithmetic-progression stability test.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0995",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "493ee817",
+    "status": "available",
+    "timestamp": "2026-07-11T06:39:40.433078+00:00",
+    "title": "These conjectures grow directly out of the present cycle, in which the factorial"
   },
   {
     "consumed_by_exp_id": "",

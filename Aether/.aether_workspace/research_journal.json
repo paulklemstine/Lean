@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c22096e0",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThis project formalises the **deterministic core** of the vertex-Ramsey\nthreshold: for clique targets `s : κ → ℕ` with `sᵢ ≥ 1`,\n\n```\nKₙ  →_v  (K_{s i})_i      ⇔      ∑_i (s_i − 1",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-10T12:23:29",
-      "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
-    },
-    {
       "cycle_id": "6528f137",
       "domain": "Applications",
       "key_insight": "# Future Directions: Stochastic Galois Theory over Finite Fields\n\nThis cycle sharpened the \"random polynomial behaves like a random permutation\"\ncorrespondence over finite fields. Over the rationals a",
@@ -499,19 +489,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-11T06:39:37",
       "title": "Upper bound conjecture for the cake balancing ratio sequence"
+    },
+    {
+      "cycle_id": "493ee817",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese conjectures grow directly out of the present cycle, in which the factorial\nnumber system was shown to be a single point in the parameterized family of\nmixed-radix positional",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 9,
+      "timestamp": "2026-07-11T06:39:50",
+      "title": "Close Proofs: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "150736b0",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Boundedness of Polynomial Diophantine Tuples\n\nThe cycle established three structural pillars: (i) sets of *constants* over an\nalgebraically closed field carry no size restriction",
-      "quality_score": 0.6976800000000001,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-03T01:37:00",
-      "title": "Conjecture on Absolute Boundedness of Polynomial Diophantine Tuples"
-    },
     {
       "cycle_id": "e4796c8c",
       "domain": "Probability",
@@ -2501,6 +2491,16 @@
       "theorem_count": 27,
       "timestamp": "2026-07-11T06:39:37",
       "title": "Upper bound conjecture for the cake balancing ratio sequence"
+    },
+    {
+      "cycle_id": "493ee817",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese conjectures grow directly out of the present cycle, in which the factorial\nnumber system was shown to be a single point in the parameterized family of\nmixed-radix positional",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 9,
+      "timestamp": "2026-07-11T06:39:50",
+      "title": "Close Proofs: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-11T06:39:37",
+  "last_updated": "2026-07-11T06:39:50",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "643186e8",
-      "domain": "Algebra",
-      "sorry_count": 4,
-      "timestamp": "2026-07-09T22:51:25"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "7e60f6c2",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 5,
       "timestamp": "2026-07-11T06:39:37"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "493ee817",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-11T06:39:50"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "823f5582",
-        "quality": 0.82,
-        "theorems": 16,
-        "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-      },
-      {
         "cycle_id": "0faef071",
         "quality": 0.82,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 27,
         "title": "Upper bound conjecture for the cake balancing ratio sequence"
+      },
+      {
+        "cycle_id": "493ee817",
+        "quality": 0.78,
+        "theorems": 9,
+        "title": "Close Proofs: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
       }
     ],
     "Bridges": [

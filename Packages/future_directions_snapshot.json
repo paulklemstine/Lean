@@ -860,7 +860,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d01ef4b",
     "description": "Construct a rigorous model of hypercomputation that can solve the halting problem. Prove that any physical system implementing hypercomputation requires infinite energy density or infinite precision. Formalize the distinction between accidentally computable (physical oracles) and essentially computable (Turing machines).",
     "domain_bridges": [],
     "domains": [
@@ -873,7 +873,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T05:17:42.086276+00:00",
     "title": "Hypercomputation: Computing the Uncomputable"
   },
