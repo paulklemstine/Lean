@@ -173,25 +173,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c37c01fa",
-    "description": "Building on cycle e480cbbd (Q=0.830), which proved 64 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncompu",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_e480cbbd_e538d018",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e480cbbd",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T15:33:11.863697+00:00",
-    "title": "Deepening: The Fractal Dimension of Mathematical Truth"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domain_bridges": [],
@@ -992,6 +973,26 @@
     "status": "failed",
     "timestamp": "2026-07-11T02:34:00.123116+00:00",
     "title": "Surreal Topology: Open Sets at Infinity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "8e111703",
+    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy ≥ 95% on number-theoretic statements of length ≤ 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Pythagorean"
+    ],
+    "id": "fd_1058",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T18:53:34.680666+00:00",
+    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },
   {
     "ambition_level": "extension",
@@ -12781,6 +12782,26 @@
     "status": "available",
     "timestamp": "2026-07-11T18:37:10.829819+00:00",
     "title": "`ReflectiveTypeTheory.lean` gives a self-contained Kripke semantics for a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThis cycle proved that the box-counting dimension of a periodic density theory\nequals the asymptotic density of its information-bearing coordinates, and hence\nthat **every rational number in `[0,1]` is realized as the fractal dimension of\nsome theory of truth**. The single value `1/2` from the base development is thus\nrevealed as one point of a full rational spectrum. The following conjectures push\nthat picture further.\n\n## 1. The dimension spectrum is the entire real interval `[0,1]`.\n\n**Conjecture.** For every real number `d ∈ [0,1]` there is a theory whose fractal\ndimension equals `d`; moreover `d` can be taken to be the natural (Dirichlet)\ndensity of the free-coordinate set whenever that density exists.\n\n*The key insight is* that the squeeze argument driving the periodic case never\nused the *arithmetic* of the period — only that the free-coordinate count grows\nlike `d·n + o(n)`. Any coordinate set of density `d` (for instance the set of\nindices whose leading binary digit pattern has frequency `d`) should therefore\nproduce dimension exactly `d`, filling the gaps between the rationals.\n\n*Why now?* The rational realizability is now established with an explicit,\nelementary counting law, so the remaining step is purely analytic — replacing an\nexact periodic count by an `o(n)` error term — rather than combinatorial.\n\n## 2. Dimension is a lattice homomorphism: a union law.\n\n**Conjecture.** For theories `S` and `T`, the dimension of their pointwise union\nsatisfies `dim (S ∪ T) = max (dim S, dim T)`, and the dimension of their\n\"independent product\" adds: `dim (S × T) = dim S + dim T` (capped at `1`).\n\n*The key insight is* that covering numbers of a union differ from the larger of\nthe two by at most a factor of two, and a factor of two costs only `1/n` in the\nlogarithmic dimension estimate, which vanishes in the limit; products multiply\ncovering numbers, so logarithms add.\n\n*Why now?* With the exact counting law `count = 2 ^ freeCount` in hand, both the\nunion bound and the product identity reduce to elementary inequalities on the\nfree-coordinate counts, making the limsup manipulation tractable.\n\n## 3. Sub-rational theories have measure-zero but positive-dimension truth.\n\n**Conjecture.** There is a theory of dimension `d ∈ (0,1)` whose accepted set,\nviewed in the Cantor space of infinite statements, has Hausdorff dimension equal\nto `d` yet Lebesgue measure zero — truth is genuinely fractal, not merely sparse.\n\n*The key insight is* that the periodic density construction, extended to infinite\nstrings, yields a self-similar Cantor-like set whose Hausdorff and box dimensions\ncoincide with the coordinate density, while the constraint on a positive density\nof coordinates forces measure zero.\n\n*Why now?* The box-counting side is fully settled here; matching it to Hausdorff\ndimension only requires a mass-distribution (Frostman) argument on the already\nexplicit self-similar set.\n\n## 4. The dimension of an effectively axiomatized truth set is left-computable.\n\n**Conjecture.** If a theory's accepted sets are uniformly decidable and its\nfree-coordinate density converges, then its fractal dimension is a\nleft-computable real — approachable from below by an increasing effective\nsequence, exactly like Chaitin's `Ω`.\n\n*The key insight is* that the finite-scale estimates `log₂(count)/n` are\ncomputable from the decision procedure, and monotone lower envelopes of a\nconvergent computable sequence give a left-computable limit.\n\n*Why now?* The base development already models `Ω` as the limit of an increasing\neffective sequence and identifies `1/2` with such a constant; the general\nstatement now only needs the density-convergence hypothesis isolated in this\ncycle.\n\n## 5. An uncomputable dimension exists.\n\n**Conjecture.** There is an effectively presented theory whose free-coordinate\ndensity oscillates in lockstep with the halting problem, so that its fractal\ndimension exists (as a limsup) but is not a computable real.\n\n*The key insight is* that one can encode the bits of a Chaitin-style constant\ninto the *density profile* of the free coordinates, transferring uncomputability\nfrom the constant to the dimension while keeping every finite level decidable.\n\n*Why now?* The rational realizability shows the dimension map from density\nprofiles onto `[0,1]` is surjective and continuous in the right sense; composing\nit with a known uncomputable density profile is the natural next construction.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1059",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c37c01fa",
+    "status": "available",
+    "timestamp": "2026-07-11T18:53:59.558633+00:00",
+    "title": "That the box-counting dimension of a periodic density theory"
   },
   {
     "ambition_level": "extension",
