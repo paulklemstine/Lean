@@ -74,6 +74,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4f5260f0 (Q=0.830), which proved 19 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formali",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_4f5260f0_690694e8",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "4f5260f0",
+    "status": "available",
+    "timestamp": "2026-07-11T22:48:17.286043+00:00",
+    "title": "Deepening: Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients \u220f_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
     "domains": [
       "MachineLearning"
@@ -708,21 +722,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T02:34:00.123116+00:00",
     "title": "Surreal Topology: Open Sets at Infinity"
-  },
-  {
-    "consumed_by_exp_id": "4f5260f0",
-    "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1065",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T19:40:15.547245+00:00",
-    "title": "Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
   },
   {
     "consumed_by_exp_id": "",
@@ -3736,7 +3735,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b4ccc3c5",
     "description": "The main theorem of the paper: Let N > 1 be a squarefree integer with an even number of prime factors, and let p be a prime divisor of N. The factorization formula for the norm of the p-adic cross-ratio infinite product of CM points on the Shimura curve X_N holds if the Atkin-Lehner quotient X_N / w_p has genus 0. This extends the original Giampietro-Darmon conjecture, which required the Shimura curve X_N itself to have genus 0 (a condition only satisfied for N in {6, 10, 22}).",
     "domains": [
       "Pythagorean",
@@ -3746,7 +3745,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T22:20:36.514194+00:00",
     "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
   },
@@ -6481,6 +6480,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T22:48:01.235566+00:00",
     "title": "This mission formalizes a finite model of theorem dependency graphs and proves t"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Rucker: Infinity and the Mind\n\nThis project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entirely\ninside ZFC as available in Mathlib, a coherent slice of Cantor's hierarchy of\ninfinities. Below we record what was proved, what was *disproved* (contrarian\nmode), and the natural next steps.\n\n## What was proved\n\n* **An explicit tower of infinities** (`cantorTower`, `cantorTower_strictMono`):\n  the truncated beth sequence `\u2135\u2080 < 2^\u2135\u2080 < 2^(2^\u2135\u2080) < \u22ef` is strictly increasing,\n  giving a concrete realization of Rucker's \"infinity as a place you can visit\".\n* **The power-set axiom guarantees strictly larger cardinals**\n  (`lt_powerset`, `exists_gt_cardinal`): Cantor's theorem `#s < #(\ud835\udcab s)`.\n* **The cardinals are a proper class** (`cardinals_unbounded`): no cardinal\n  bounds them all.\n* **Hartogs' theorem** (`hartogs`): for every type there is a well-orderable\n  ordinal whose cardinality strictly exceeds it \u2014 with no appeal to a power set.\n* **`\u2135\u2081` and CH** (`aleph0_lt_aleph1`, `aleph1_le_continuum`,\n  `continuumHypothesis_iff`, `continuumHypothesis_iff_pow`): `\u2135\u2080 < \u2135\u2081 \u2264 \ud835\udd20` is a\n  theorem, and CH is *exactly* the remaining inequality `\ud835\udd20 \u2264 \u2135\u2081`.\n* **K\u00f6nig's theorem in action** (`aleph0_lt_cof_continuum`): the continuum has\n  uncountable cofinality.\n* **`\u2135\u2080` as \"the first unreachable place\"**\n  (`aleph0_inaccessible_except_uncountable`): `\u2135\u2080` is regular and a strong limit;\n  it fails to be inaccessible *only* because inaccessibility demands\n  uncountability by fiat.\n\n## What was disproved (contrarian mode)\n\n* **`\ud835\udd20 \u2260 \u2135_\u03c9`** (`continuum_ne_aleph_omega`): the naive guess that the continuum\n  might equal `\u2135_\u03c9` is refuted outright in ZFC, because `cof(\u2135_\u03c9) = \u2135\u2080`\n  (`cof_aleph_omega`) while `cof(\ud835\udd20) > \u2135\u2080`. This is a genuine ZFC theorem that\n  constrains the value of the continuum without deciding CH.\n* **There is no largest cardinal** \u2014 the \"conjecture\" that some infinity is\n  maximal is false.\n\n## Natural next steps\n\n1. **The full beth function** over all ordinals (`beth : Ordinal \u2192 Cardinal`)\n   and the beth-fixed-point cardinals; Mathlib has `Cardinal.beth`, so\n   `cantorTower` could be shown to agree with `beth \u2218 (Nat.cast)` on `\u2115`.\n2. **More K\u00f6nig consequences**: `\ud835\udd20 \u2260 \u2135_{\u03c9_1}` fails to be provable, but the\n   general statement `cof(2^\u03ba) > \u03ba` and `\u03ba < \u03ba^{cof \u03ba}` can be packaged.\n3. **Independence of CH**. Mathlib does not currently contain forcing or inner\n   models, so neither `Con(ZFC) \u2192 Con(ZFC + CH)` (G\u00f6del's constructible\n   universe) nor `Con(ZFC) \u2192 Con(ZFC + \u00acCH)` (Cohen forcing) is available. A\n   long-term direction is to build (or import) a model theory of set theory\n   sufficient to state and prove these relative consistency results. Until then\n   `ContinuumHypothesis` is deliberately left as an undischarged `Prop`.\n4. **Large cardinals beyond inaccessibility**. Mathlib has\n   `Cardinal.IsInaccessible`; measurable, Ramsey, measurable-implies-inaccessible,\n   supercompact, and the consistency-strength hierarchy are not yet formalized.\n   A tractable first target is *weakly/strongly inaccessible* cardinals and the\n   theorem that a strongly inaccessible `\u03ba` gives a model `V_\u03ba \u22a8 ZFC`, which\n   already exhibits the \"you cannot reach it from below\" phenomenon exactly.\n5. **Measurable cardinals** could be approached via `Filter`/ultrafilter\n   machinery already in Mathlib (a `\u03ba`-complete non-principal ultrafilter on\n   `\u03ba`), connecting to the existing `Ultrafilter` API.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_1081",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4f5260f0",
+    "status": "available",
+    "timestamp": "2026-07-11T22:48:13.939441+00:00",
+    "title": "This project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entire"
   },
   {
     "consumed_by_exp_id": "",

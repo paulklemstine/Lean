@@ -525,7 +525,7 @@
         "Sidon sets",
         "convolution inequalities"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -571,7 +571,7 @@
         "Graph Product Theory",
         "Domination in Hypergraphs"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -802,7 +802,7 @@
         "graph theory (clique-width)",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -1371,7 +1371,7 @@
         "Algebraic geometry to combinatorics via geometric invariant theory",
         "Representation theory to geometric combinatorics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -2536,7 +2536,7 @@
         "nilperfect ring theory",
         "Dieudonné modules"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -2631,7 +2631,7 @@
         "the theory of matroids",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -3611,7 +3611,7 @@
         "probabilistic powerdomains",
         "Euclidean convex analysis"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -3909,7 +3909,7 @@
         "L₁ Space Analysis",
         "Functional Inequalities"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -4385,7 +4385,7 @@
         "Cartesian product of partial cubes",
         "harmonic-even partial cubes"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -4774,7 +4774,7 @@
       "depth_estimate": 3,
       "description": "The exponent α must equal 103/64 for the derived bound to hold universally regardless of κ.",
       "domain_bridges": "Interconnected with Dirichlet class formulations",
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -4960,7 +4960,7 @@
         "Set Theory",
         "Finite Combinatorics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -5335,7 +5335,7 @@
         "Parameterized Complexity",
         "Digraph Decomposition"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -6102,7 +6102,7 @@
         "Computational Number Theory (Rational Certificates)",
         "Hilbert Space Theory (Weighted Direct Sums)"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -6441,7 +6441,7 @@
         "harmonic_analysis",
         "algebraic_combinatorics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -7003,7 +7003,7 @@
       "domain_bridges": [
         "math.NT"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -7439,7 +7439,7 @@
         "topological graph theory",
         "graph coloring"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -7623,7 +7623,7 @@
         "analytic number theory",
         "real algebraic geometry"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -8163,7 +8163,7 @@
         "Combinatorics",
         "FiniteFieldTheory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -8353,7 +8353,7 @@
         "finite geometry",
         "coding theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -8979,7 +8979,7 @@
         "finite-binary-channel coding",
         "probabilistic chains"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -9171,7 +9171,7 @@
         "graph theory",
         "γ-positivity in polynomials"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -9751,7 +9751,7 @@
         "Graph Theory",
         "Discrete Mathematics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -9800,7 +9800,7 @@
         "graph_theory",
         "generating_functions"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -10038,7 +10038,7 @@
         "Graph_Theory",
         "Design_Theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -10085,7 +10085,7 @@
         "Polyhedral Geometry",
         "Polynomial Root Analysis"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -10182,7 +10182,7 @@
         "roots of unity",
         "Fibonacci and Lucas numbers"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -10320,7 +10320,7 @@
         "LinearAlgebra",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -11242,7 +11242,7 @@
         "Eulerian numbers",
         "Matrix products of combinatorial triangles"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -11290,7 +11290,7 @@
         "Combinatorics",
         "Graph Theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -11338,7 +11338,7 @@
         "Linear Algebra",
         "Real Analysis"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -11527,7 +11527,7 @@
         "cs.GT",
         "cs.DS"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -12015,7 +12015,7 @@
         "real analysis",
         "convex optimization"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -12649,7 +12649,7 @@
         "p_adic_galois_representations",
         "local_Langlands_correspondence"
       ],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -13051,7 +13051,7 @@
         "deformation_theory--representation_theory",
         "tannakian_categories--algebraic_groups"
       ],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -13284,7 +13284,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT",
         "Shimura curves",
@@ -13294,7 +13294,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b4ccc3c5",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13311,7 +13311,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0498",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-11T22:48:31.691647+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem beyond_giampietro_darmon\n  (N : ℕ) (hN : Squarefree N ∧ Even (N.primeFactors).length)\n  (p : ℕ) (hp : p ∣ N) (hp_prime : Prime p)\n  (h_genus : (ShimuraCurve.quoAtkinLehner N (AtkinLehner.involution p)).genus = 0) :\n  Norm (pAdicCrossRatioProduct (CMPoints N p)) = grossZagierFactorization N p := by\n  sorry",
       "lineage_refs": [],
@@ -13326,7 +13326,7 @@
       "source": "",
       "source_exp_id": "2607.02306v1",
       "source_path": "http://arxiv.org/abs/2607.02306v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-06T22:20:36.514194+00:00",
       "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
@@ -13448,7 +13448,7 @@
         "Linear_algebra",
         "Abstract_algebra"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -13495,7 +13495,7 @@
         "Discrete differential geometry",
         "Optimal transport"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -13592,7 +13592,7 @@
         "finite_model_theory",
         "minor_theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -13934,7 +13934,7 @@
         "harmonic_analysis_padic",
         "local_class_field_theory"
       ],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -14075,7 +14075,7 @@
         "Linear Algebra",
         "Complex Analysis"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -14320,7 +14320,7 @@
         "Sampling theory → Zero distribution of L-functions",
         "Functional equations → Reflected zero pairs"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -14417,7 +14417,7 @@
         "analytic_number_theory",
         "diophantine_approximation"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -14563,7 +14563,7 @@
         "infinite_words_substitutions",
         "cyclic_avoidability"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -14611,7 +14611,7 @@
         "combinatorial_topology",
         "commutative_algebra"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -14657,7 +14657,7 @@
         "Constant-amortized-time algorithms",
         "Combinatorial superset properties"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -15143,7 +15143,7 @@
         "Simplicial Complexes",
         "Combinatorial Algebra"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -16059,7 +16059,7 @@
         "Probability Theory",
         "Asymptotic Analysis"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -16155,7 +16155,7 @@
         "graph_theory",
         "logic_and_combinatorics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -16302,7 +16302,7 @@
         "analytic_number_theory",
         "computational_number_theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -16350,7 +16350,7 @@
         "Formal languages and inductive types",
         "Enumerative combinatorics ↔ algebraic involution theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -16986,7 +16986,7 @@
         "combinatorics",
         "binomial_coefficients"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -17086,7 +17086,7 @@
         "hadamard_matrices",
         "finite_group_theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -17136,7 +17136,7 @@
         "Diagonal harmonics and nabla operator theory",
         "Modified Hall-Littlewood polynomials"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -17283,7 +17283,7 @@
         "arithmetic_geometry_over_finite_fields",
         "symplectic_group_representations"
       ],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -18032,7 +18032,7 @@
         "Algebraic Combinatorics",
         "Spectral Graph Theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -18221,7 +18221,7 @@
         "Randomized algorithms",
         "Extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -19355,7 +19355,7 @@
         "Raney numbers",
         "Catalan combinatorics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -19600,7 +19600,7 @@
         "Token sliding reconfiguration ↔ optimization value realization",
         "Logical meta-theorems ↔ parameterized complexity classification"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -20089,7 +20089,7 @@
         "math.GR (Group Theory)",
         "math.HR (Dynamics)"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -20137,7 +20137,7 @@
         "extremal graph theory",
         "topological graph theory"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -20286,7 +20286,7 @@
         "Combinatorial designs over finite rings",
         "Algebraic number theory via embedding determinants"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -20482,7 +20482,7 @@
         "Poincaré polynomials → Quiver representations via perverse sheaves",
         "Rational smoothness → Geometric representation theory via Springer fibers"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Bridges",
         "Pythagorean"
@@ -20727,7 +20727,7 @@
         "combinatorial matrix theory",
         "algebraic geometry"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -21028,7 +21028,7 @@
         "formal verification",
         "algorithm verification"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -21164,7 +21164,7 @@
       "depth_estimate": 3,
       "description": "Bypassed",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -25222,7 +25222,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Isomorphisms of Meaning\n\nThis project formalizes the torsor structure of the set of isomorphisms between\ntwo isomorphic additive groups, the transport of all structural truth across an\nisomorphism, and the number-theoretic measurement of the residual ambiguity\n(\"meaning\") by Euler's totient.  Natural extensions:\n\n## 1. From automorphism groups to full torsors\n`autEquivIsoDom` / `isoEquivAutCod` are bijections of *sets*.  Upgrade them to an\nequivariant statement: `G ≃+ H` is a right torsor under `Aut(G)` and a left\ntorsor under `Aut(H)`, with the two actions commuting.  Then\n`Nat.card (G ≃+ H) = Nat.card (Aut G) = Nat.card (Aut H)` whenever `G ≃+ H` is\nnonempty, generalizing `card_iso_to_zmod` beyond cyclic groups.\n\n## 2. The totient bridge for general finite abelian groups\nBy the structure theorem, `Aut(⨁ ℤ/n_i)` is a product of general linear groups\nover residue rings.  A formal `card_aut_of_abelian` computing `|Aut(A)|` for\nfinite abelian `A` would let `card_iso` be stated for every such `A`, quantifying\n\"meaning ambiguity\" in complete generality.\n\n## 3. Multiplicative and ring-theoretic collisions\nMirror the additive development for `MulEquiv` and `RingEquiv`.  A striking\nnumber-theoretic collision to formalize: `(ZMod p)ˣ ≃* ZMod (p-1)` for prime `p`\n(a multiplicative structure among residues is secretly additive), sharpening the\nCRT example `crtCollision`.\n\n## 4. Categorical formulation\nRephrase transport (`structural_invariance`) as: any functor to `Prop` inverts\nisomorphisms.  The \"isomorphism of isomorphisms\" is then a statement about the\ncore groupoid; `Aut` is the automorphism group in the categorical sense and the\ntorsor is a `Aut`-principal homogeneous set.\n\n## 5. Logical / definability sharpening\n`structural_invariance` shows isomorphism-invariant predicates cannot separate\nisomorphic groups.  Connect this to a genuine definability statement: elements\nrelated by an automorphism satisfy the same first-order formulas with parameters\nfixed by that automorphism, making \"no formal system distinguishes them\" a\ntheorem of model theory rather than a schema over Lean predicates.\n\n## 6. Copycat / analogy quantification\nHofstadter's Copycat produces analogies \"map the role of `a` in `A` to its role\nin `B`\".  The formal counterpart here is: an analogy is an isomorphism, and the\nspace of equally valid analogies is the `Aut`-torsor.  A metric on this torsor\n(e.g. via a chosen generating set / Cayley graph of `Aut`) would formalize the\nnotion of \"conceptual slippage\" between competing analogies as graph distance.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Bridges"
@@ -25591,7 +25591,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Self-Reference, Fixed Points, and Strange Loops\n\nEach conjecture below is bold, falsifiable, and derived from the findings of this\ncycle — the observation that existence (Lawvere), impossibility (Cantor), size\n(cardinality), constructive stability (Tarski), and representability (Yoneda) are\nall shadows of a single diagonal.\n\n## 1. A quantitative cardinal gap for approximate self-models\n\n**Conjecture.** For a finite system with state space of size `n` and observation\nalphabet of size `k ≥ 2`, the best possible *approximate* self-model — a map\n`A → (A → B)` whose image covers a maximal fraction of observations — covers at\nmost `n / k^n` of them, and this bound is attained. Consequently the \"self-\nmodeling deficit\" grows super-exponentially with system size.\n\nThe key insight is that incompleteness is not a binary obstruction but a\nmeasurable quantity: the ratio `n / k^n` is a fidelity coefficient for how well a\nfinite system can mirror itself, turning Cantor's qualitative \"impossible\" into a\nsharp rate.\n\nWhy now? The exact finite boundary `|B|^{|A|} > |A|` isolated in this cycle gives\nthe denominator explicitly, so the extremal covering problem is now a concrete,\nattackable optimisation rather than a vague impossibility.\n\n## 2. Partial self-models and the domain-theoretic completion\n\n**Conjecture.** Every finite system extends to a *partial* self-model on its ideal\ncompletion (a complete lattice of \"self-descriptions ordered by information\") that\nis complete in the Knaster–Tarski sense, and the least fixed point of the induced\nmonotone operator is the unique minimal stable self-state.\n\nThe key insight is that the cardinal obstruction to finite self-reference\ndissolves under order completion: infinity enters not as raw set size but as the\nlimit of an information ordering, exactly where Tarski's theorem lives.\n\nWhy now? This cycle placed the finite impossibility and the lattice fixed-point\ntheorem side by side; the natural bridge — completing the finite state space to a\ndomain — is the obvious next construction and is entirely constructive.\n\n## 3. A strange-loop invariant distinguishing self-referential systems\n\n**Conjecture.** Assign to each self-modeling system the set of its diagonal loop\nstates `{ a : f a a = g (f a a) }` as `g` ranges over all transformations. Two\nsystems are isomorphic as self-models if and only if these loop-state families are\nnaturally isomorphic — a Yoneda-style reconstruction theorem for self-reference.\n\nThe key insight is that a system is determined by its loops: the totality of\nlevel-crossing fixed points plays the role that representable functors play in the\nYoneda lemma, so \"you are the family of your strange loops\".\n\nWhy now? Having both the explicit loop witness and the Yoneda self-determination\ntheorem in hand, the reconstruction statement is the precise fusion of the two\nand can be tested first on small finite and order-theoretic models.\n\n## 4. Fixed-point-free transformations as an obstruction spectrum\n\n**Conjecture.** For a fixed observation type `B`, the fixed-point-free self-maps\n`g : B → B` form a structured \"obstruction spectrum\" whose combinatorics exactly\nclassifies which state spaces `A` can admit complete self-models with values in\n`B`; in particular `B` admits *some* fixed-point-free map iff no `A` yields a\ncomplete self-model into `B`.\n\nThe key insight is that the barrier to self-reference is not a property of the\nsystem but of the observation alphabet: a single fixed-point-free transformation\nanywhere in `B` globally forbids completeness, so obstructions live entirely on\nthe value side.\n\nWhy now? The contrapositive proved this cycle\n(`no_complete_selfModel_of_fixedPointFree`) already turns one fixed-point-free map\ninto a global ban; cataloguing all such maps for structured `B` is the immediate,\nconcrete follow-up.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Bridges"
@@ -26247,7 +26247,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Self-Modifying Halting ⟷ Lawvere/Cantor Bridge\n\nThis cycle contributes `Catalog/Computation/SelfModifyingLawvereBridge.lean`, a\nself-contained cross-domain bridge connecting **fixed-point theory / set theory**\n(Lawvere's theorem, Cantor's theorem) with the **computability of\nself-modifying code** (halting problem, Kleene's recursion theorem).\n\n## What was proved\n\n* `lawvere_fixed_point` — Lawvere's fixed-point theorem (point-surjective form).\n* `no_point_surjection`, `cantor_bool`, `cantor_powerset` — Cantor's theorem in\n  Boolean and power-set form, as the fixed-point-free contrapositive of Lawvere.\n* `diagonal_no_decider` — the diagonalization engine, derived directly from\n  `cantor_bool` (halting-style diagonalization is a face of Cantor's theorem).\n* Self-modifying machine model (`SelfModMachine`, `run`, `halts`, `toStd`) plus\n  `selfmod_run_eq_std_run` and `selfmod_halts_iff_standard`: self-modification\n  adds no computational power over its fixed-program simulation.\n* `diagMachine`, `diag_run`, `diag_halts_iff`: an explicit self-modifying\n  machine whose halting predicate equals `Nat.Partrec.Code`'s halting problem.\n* `selfmod_halting_undecidable` and `selfmod_std_halting_undecidable` — a\n  **genuine, non-vacuous** proof that the self-modifying halting predicate is not\n  computable, by reduction to `ComputablePred.halting_problem`.\n* `selfmod_behavior_fixed_point` — Kleene's recursion theorem: no computable\n  self-modification rule can change the behavior of *every* program.\n* `lawvere_halting_bridge` — packages the set-theoretic and computational\n  impossibilities over one configuration space.\n\nA notable observation: the earlier cycle's `diagonal_no_decider`\n(`Catalog/Computation/SelfModifyingHalt.lean`) carries a `Surjective enum`\nhypothesis on `enum : α → (α → Bool)`, which Cantor's theorem makes\nunsatisfiable — so that statement is vacuously true. The new\n`selfmod_halting_undecidable` avoids this by reducing to Mathlib's honest\nhalting problem over `Nat.Partrec.Code`, giving a non-vacuous result.\n\n## Open directions\n\n1. **Strictly-modifying instances.** `diagMachine` never rewrites its program.\n   Build a self-modifying machine that provably changes its program infinitely\n   often yet still realizes the halting problem, quantifying \"self-modification\n   depth\" and relating it to the arithmetical hierarchy.\n\n2. **Turing degree of self-modifying halting.** Prove the self-modifying halting\n   set is `Σ⁰₁`-complete (many-one equivalent to `∅'`), formalizing that\n   self-modification is *equivalent* to, not strictly harder than, classical\n   halting.\n\n3. **Quantitative recursion theorem.** Strengthen `selfmod_behavior_fixed_point`\n   to a *uniform* fixed point (an index for the quine computable from the rule),\n   and connect to explicit quine constructions.\n\n4. **Lawvere in an internal category.** Re-derive the halting undecidability as\n   an instance of Lawvere's theorem in the category of computable maps, making\n   the bridge functorial rather than by parallel corollaries.\n\n5. **Topology of the halting set.** Equip `Code` with a topology and show the\n   halting configuration set is open (`Σ⁰₁`) but not closed, matching the\n   classical picture and adding a third area (point-set topology) to the bridge.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges",
         "Computation"
@@ -27149,7 +27149,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThis project formalises the exact Seidel spectrum and Seidel energy of complete\nbipartite graphs and their single-edge deletions, and settles the sharp threshold\nfor the energy increase.\n\n## What is proved (Lean, no `sorry`, standard axioms only)\n\n* `SeidelEnergyBipartite.lean`\n  * `seidelEnergy_Kmn` : `E(K_{m,n}) = 2(m+n−1)`, via the rank-one identity\n    `S = w wᵀ − I` and the matrix determinant lemma for `charpoly`.\n* `SeidelEnergyDeletion.lean`\n  * `Sddel_charpoly` : the deleted graph's characteristic polynomial,\n    `(X+1)^{m+n−3}(X−1)(X²−(m+n−4)X−(3(m+n)−7))`, via a rank-three factorisation\n    `Sddel + I = U K Uᵀ` and `charpoly_mul_comm_of_le`.\n  * `Sddel_energy` : `E(K_{m,n} − e) = (m+n−2) + √((m+n−2)(m+n+6))`.\n  * `seidel_energy_increase_iff` : **strict increase ⇔ `m+n ≥ 4`** (the sharp\n    threshold — not \"both parts `≥ 3`\").\n  * `conjecture_is_false` / `Ktwotwo_energies` : the \"both `≥ 3`\" conjecture is\n    refuted; `K_{2,2}` jumps `6 → 2 + 2√5`.\n\n## The cross-domain bridge\n\nThe proof links **graph combinatorics** (`K_{m,n}`, edge deletion), **low-rank\nlinear algebra** (rank-one and rank-three perturbations of `−I`, the matrix\ndeterminant lemma, characteristic polynomials), and **real analysis** (the\n`√((m+n−2)(m+n+6))` term and the monotone comparison). The Seidel energy — an\nanalytic sum of `|eigenvalue|` — is pinned down purely algebraically through\n`charpoly.roots`.\n\n## Natural next steps\n\n1. **Arbitrary edge sets.** Deleting `k` independent cross edges is a rank-`(2k+1)`\n   perturbation; the same `charpoly_mul_comm_of_le` machinery should yield a\n   `(2k+1)×(2k+1)` core determinant and a closed threshold in `(m, n, k)`.\n2. **Complete multipartite graphs `K_{n₁,…,nₜ}`.** The Seidel matrix is again a\n   small-rank perturbation of `−I` (rank `t`); the energy and its edge-deletion\n   behaviour should follow from a `t×t` core.\n3. **General Seidel-energy monotonicity.** Formalise the McClelland/Koolen–Moulton\n   style bounds and characterise which graph families are `Seidel-energy monotone`\n   under edge deletion.\n4. **Bounds toolkit.** Extract the reusable lemma `energy = (charpoly.roots).map |·| |>.sum`\n   (here `energy_eq_roots`) into a standalone Seidel/graph-energy library, with the\n   rank-one (`charpoly_vecMulVec`) and rank-`r` (`charpoly_mul_comm_of_le`) recipes.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Bridges"
@@ -27312,7 +27312,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Dreamtime Algebra\n\nThe file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge\nbetween Australian Aboriginal kinship systems and finite group theory: the\nfour-section system is realized as the Klein four-group `ℤ/2 × ℤ/2`, the\neight-subsection system as `(ℤ/2)³`, marriage rules as coset restrictions, and\nthe subsection system as a `ℤ/2`-extension (double cover) of the section system.\nNatural extensions:\n\n## 1. General kinship-group framework\nAbstract the constructions into a `structure KinshipSystem` recording a finite\nabelian group `G`, distinguished \"descent\" and \"marriage\" elements, and the\nconsistency laws (`father = spouse + mother`). Prove a classification: any\nsystem whose transformation group is generated by commuting involutions is an\nelementary abelian 2-group `(ℤ/2)ⁿ`.\n\n## 2. Person-set actions\nModel an explicit finite population as a `G`-set (torsor) and prove that the\nregular action is simply transitive (already available here as\n`section4_simplyTransitive`). Develop \"relationship terms\" as group elements and\nprove closure properties (e.g. the set of realizable relationships is a\nsubgroup).\n\n## 3. Systems beyond `(ℤ/2)ⁿ`\nNot all kinship systems are elementary abelian. The Aranda system and various\nDravidian systems involve `ℤ/4` cycles (matri-/patri-cycles of period 4).\nFormalize these as `ℤ/2 × ℤ/4` or dihedral-type groups and characterize which\nmarriage rules yield consistent (associative, well-defined) descent algebras.\n\n## 4. Cohomological extensions\nFrame the section → subsection refinement as a group extension classified by\n`H²(ℤ/2 × ℤ/2, ℤ/2)`, and enumerate the inequivalent subsection systems as\nextension classes. This connects kinship refinement to group cohomology.\n\n## 5. Representation theory\nBecause the transformation group is abelian, its irreducible representations are\none-dimensional characters. Interpreting the characters (the \"sign patterns\" of\nmoieties) could give a spectral description of the moiety/section partitions.\n\n## 6. Category-theoretic bridge\nPackage kinship systems and structure-preserving maps into a category and show\nthe forgetful functor `Subsection ⤳ Section` is (co)fibered, tying the\nanthropological refinement relation to standard categorical machinery.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Bridges"
@@ -27557,7 +27557,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby a canonical invertible `2`-cell, with coherence holding automatically.\n\n## What was proved\n\n**`CausalLoops/ThinMonoidal.lean` — coherence from thinness.**\n- `ThinCategory`: categories with at most one morphism between objects.\n- `monoidalOfThin`: *any* `MonoidalCategoryStruct` on a thin category is a genuine\n  `MonoidalCategory` — pentagon, triangle and all naturality squares hold for free.\n- `ThinCategory.subsingleton_iso`, `pentagon_eq`, `triangle_eq`, `associator_loop`: the\n  \"causal loop\" chases the associator around the pentagon and back to the identity.\n\n**`CausalLoops/ParenTree.lean` — a concrete non-strict monoidal category.**\n- `PTree α`: binary trees = formal bracketings, with `⊗ = node`, unit `nil`.\n- `instThinCategory`, `instIsIso`: the reassociation category is a thin groupoid.\n- `instMonoidalCategory`: `PTree α` is a monoidal category (coherence via `monoidalOfThin`).\n- `tensor_assoc_ne`, `not_strict`: `(a⊗b)⊗c` and `a⊗(b⊗c)` are genuinely distinct objects;\n  the category is not strict.\n- `associator_unique`: the associator is the unique iso between its endpoints.\n\n**`CausalLoops/Strictification.lean` — collapsing the loops.**\n- `normalize`, `iso_iff`: every bracketing is canonically isomorphic to its right-nested\n  normal form; two bracketings are isomorphic iff they have the same leaf-word (Mac Lane\n  coherence, concrete form).\n- `flattenFunctor`, `flattenFunctor_map_associator`: strictification collapses the\n  associator to an identity.\n- `strictify`: `PTree α ≌ Discrete (List α)` — the non-strict structure is equivalent to\n  its strict skeleton.\n\n## Directions to extend\n\n1. **Monoidal strictification.** Upgrade `strictify` to a *monoidal* equivalence: equip\n   `Discrete (List α)` with concatenation as tensor and show `flattenFunctor` is a strong\n   monoidal functor. This turns the categorical equivalence into the full statement of\n   Mac Lane's strictification theorem for this family.\n\n2. **Unitors and a coherent unit.** `PTree α` here uses `nil` as a strict-ish unit whose\n   unitors are non-identity isos (`node nil x` vs `x`). One can analyse the unit\n   coherence loops (`triangle`) in the same thin framework and compare with the\n   Saavedra/Kelly redundancy of unit axioms.\n\n3. **Bicategorical version.** Promote the delooping: a one-object bicategory is a monoidal\n   category (Mathlib's `EndMonoidal` / `MonoidalSingleObj`). Feeding `PTree α` through the\n   delooping yields an explicit one-object bicategory whose horizontal composition is\n   non-associative on the nose — a direct model of the mission's \"almost-category\".\n\n4. **Non-thin obstructions.** The clean coherence here is *because* the category is thin.\n   A natural sequel: exhibit a non-thin `MonoidalCategoryStruct` where the pentagon fails,\n   quantifying how thinness is exactly the boundary between free and obstructed coherence.\n\n5. **Free monoidal category.** Relate `PTree α` to Mathlib's `FreeMonoidalCategory`:\n   `PTree α` is the free monoidal category on the discrete category `α` *quotiented by\n   coherence*, and `strictify` exhibits its skeleton.\n\n\n# Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby a canonical invertible `2`-cell, with coherence holding automatically.\n\n## What was proved\n\n**`CausalLoops/ThinMonoidal.lean` — coherence from thinness.**\n- `ThinCategory`: categories with at most one morphism between objects.\n- `monoidalOfThin`: *any* `MonoidalCategoryStruct` on a thin category is a genuine\n  `MonoidalCategory` — pentagon, triangle and all naturality squares hold for free.\n- `ThinCategory.subsingleton_iso`, `pentagon_eq`, `triangle_eq`, `associator_loop`: the\n  \"causal loop\" chases the associator around the pentagon and back to the identity.\n\n**`CausalLoops/ParenTree.lean` — a concrete non-strict monoidal category.**\n- `PTree α`: binary trees = formal bracketings, with `⊗ = node`, unit `nil`.\n- `instThinCategory`, `instIsIso`: the reassociation category is a thin groupoid.\n- `instMonoidalCategory`: `PTree α` is a monoidal category (coherence via `monoidalOfThin`).\n- `tensor_assoc_ne`, `not_strict`: `(a⊗b)⊗c` and `a⊗(b⊗c)` are genuinely distinct objects;\n  the category is not strict.\n- `associator_unique`: the associator is the unique iso between its endpoints.\n\n**`CausalLoops/Strictification.lean` — collapsing the loops.**\n- `normalize`, `iso_iff`: every bracketing is canonically isomorphic to its right-nested\n  normal form; two bracketings are isomorphic iff they have the same leaf-word (Mac Lane\n  coherence, concrete form).\n- `flattenFunctor`, `flattenFunctor_map_associator`: strictification collapses the\n  associator to an identity.\n- `strictify`: `PTree α ≌ Discrete (List α)` — the non-strict structure is equivalent to\n  its strict skeleton.\n\n## Directions to extend\n\n1. **Monoidal strictification.** Upgrade `strictify` to a *monoidal* equivalence: equip\n   `Discrete (List α)` with concatenation as tensor and show `flattenFunctor` is a strong\n   monoidal functor. This turns the categorical equivalence into the full statement of\n   Mac Lane's strictification theorem for this family.\n\n2. **Unitors and a coherent unit.** `PTree α` here uses `nil` as a strict-ish unit whose\n   unitors are non-identity isos (`node nil x` vs `x`). One can analyse the unit\n   coherence loops (`triangle`) in the same thin framework and compare with the\n   Saavedra/Kelly redundancy of unit axioms.\n\n3. **Bicategorical version.** Promote the delooping: a one-object bicategory is a monoidal\n   category (Mathlib's `EndMonoidal` / `MonoidalSingleObj`). Feeding `PTree α` through the\n   delooping yields an explicit one-object bicategory whose horizontal composition is\n   non-associative on the nose — a direct model of the mission's \"almost-category\".\n\n4. **Non-thin obstructions.** The clean coherence here is *because* the category is thin.\n   A natural sequel: exhibit a non-thin `MonoidalCategoryStruct` where the pentagon fails,\n   quantifying how thinness is exactly the boundary between free and obstructed coherence.\n\n5. **Free monoidal category.** Relate `PTree α` to Mathlib's `FreeMonoidalCategory`:\n   `PTree α` is the free monoidal category on the discrete category `α` *quotiented by\n   coherence*, and `strictify` exhibits its skeleton.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Bridges"
@@ -28910,7 +28910,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Rucker: Infinity and the Mind\n\nThis project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entirely\ninside ZFC as available in Mathlib, a coherent slice of Cantor's hierarchy of\ninfinities. Below we record what was proved, what was *disproved* (contrarian\nmode), and the natural next steps.\n\n## What was proved\n\n* **An explicit tower of infinities** (`cantorTower`, `cantorTower_strictMono`):\n  the truncated beth sequence `ℵ₀ < 2^ℵ₀ < 2^(2^ℵ₀) < ⋯` is strictly increasing,\n  giving a concrete realization of Rucker's \"infinity as a place you can visit\".\n* **The power-set axiom guarantees strictly larger cardinals**\n  (`lt_powerset`, `exists_gt_cardinal`): Cantor's theorem `#s < #(𝒫 s)`.\n* **The cardinals are a proper class** (`cardinals_unbounded`): no cardinal\n  bounds them all.\n* **Hartogs' theorem** (`hartogs`): for every type there is a well-orderable\n  ordinal whose cardinality strictly exceeds it — with no appeal to a power set.\n* **`ℵ₁` and CH** (`aleph0_lt_aleph1`, `aleph1_le_continuum`,\n  `continuumHypothesis_iff`, `continuumHypothesis_iff_pow`): `ℵ₀ < ℵ₁ ≤ 𝔠` is a\n  theorem, and CH is *exactly* the remaining inequality `𝔠 ≤ ℵ₁`.\n* **König's theorem in action** (`aleph0_lt_cof_continuum`): the continuum has\n  uncountable cofinality.\n* **`ℵ₀` as \"the first unreachable place\"**\n  (`aleph0_inaccessible_except_uncountable`): `ℵ₀` is regular and a strong limit;\n  it fails to be inaccessible *only* because inaccessibility demands\n  uncountability by fiat.\n\n## What was disproved (contrarian mode)\n\n* **`𝔠 ≠ ℵ_ω`** (`continuum_ne_aleph_omega`): the naive guess that the continuum\n  might equal `ℵ_ω` is refuted outright in ZFC, because `cof(ℵ_ω) = ℵ₀`\n  (`cof_aleph_omega`) while `cof(𝔠) > ℵ₀`. This is a genuine ZFC theorem that\n  constrains the value of the continuum without deciding CH.\n* **There is no largest cardinal** — the \"conjecture\" that some infinity is\n  maximal is false.\n\n## Natural next steps\n\n1. **The full beth function** over all ordinals (`beth : Ordinal → Cardinal`)\n   and the beth-fixed-point cardinals; Mathlib has `Cardinal.beth`, so\n   `cantorTower` could be shown to agree with `beth ∘ (Nat.cast)` on `ℕ`.\n2. **More König consequences**: `𝔠 ≠ ℵ_{ω_1}` fails to be provable, but the\n   general statement `cof(2^κ) > κ` and `κ < κ^{cof κ}` can be packaged.\n3. **Independence of CH**. Mathlib does not currently contain forcing or inner\n   models, so neither `Con(ZFC) → Con(ZFC + CH)` (Gödel's constructible\n   universe) nor `Con(ZFC) → Con(ZFC + ¬CH)` (Cohen forcing) is available. A\n   long-term direction is to build (or import) a model theory of set theory\n   sufficient to state and prove these relative consistency results. Until then\n   `ContinuumHypothesis` is deliberately left as an undischarged `Prop`.\n4. **Large cardinals beyond inaccessibility**. Mathlib has\n   `Cardinal.IsInaccessible`; measurable, Ramsey, measurable-implies-inaccessible,\n   supercompact, and the consistency-strength hierarchy are not yet formalized.\n   A tractable first target is *weakly/strongly inaccessible* cardinals and the\n   theorem that a strongly inaccessible `κ` gives a model `V_κ ⊨ ZFC`, which\n   already exhibits the \"you cannot reach it from below\" phenomenon exactly.\n5. **Measurable cardinals** could be approached via `Filter`/ultrafilter\n   machinery already in Mathlib (a `κ`-complete non-principal ultrafilter on\n   `κ`), connecting to the existing `Ultrafilter` API.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic",
         "Pythagorean"
@@ -30061,6 +30061,46 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 4f5260f0 (Q=0.830), which proved 19 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formali",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "push_4f5260f0_690694e8",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9299999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4f5260f0",
+      "source_path": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-11T22:48:17.286043+00:00",
+      "title": "Deepening: Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -30431,7 +30471,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7e60f6c2 (Q=0.830), which proved 23 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -31151,7 +31191,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle c2b68f4a (Q=0.780), which proved 20 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -32391,7 +32431,7 @@
       "depth_estimate": 3,
       "description": "Cycle 7e60f6c2 (Q=0.830) proved 23 theorems in Bridges but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -32971,6 +33011,7 @@
   },
   "selection_log": [
     "abduction_followup",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
