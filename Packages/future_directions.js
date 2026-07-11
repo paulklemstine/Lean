@@ -538,7 +538,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8fb1d399",
     "description": "Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and prove that each jump genuinely increases theorem-proving power. Show that the oracle hierarchy is isomorphic to the Turing jump hierarchy.",
     "domains": [
       "Novelty",
@@ -548,7 +548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T11:25:55.608427+00:00",
     "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
   },
