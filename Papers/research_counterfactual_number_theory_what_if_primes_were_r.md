@@ -1,470 +1,163 @@
-# Counterfactual Number Theory: The Deterministic Backbone of the Cramér Random Prime Model
+# Counterfactual Number Theory: Which Arithmetic Laws Survive a Deformation of the Primes?
 
 ## Abstract
 
-We study a counterfactual number theory in which the primes are replaced by a
-random subset of the natural numbers, each integer *n* declared "prime"
-independently with probability 1 / log *n*. This is Cramér's classical
-probabilistic model of the primes (1936), and it serves as a null hypothesis
-for the statistical behavior of the genuine primes. The central deterministic
-object of the model is the **Cramér expectation sum**,
-CramerSum(*N*) = Σ_{n=2}^{N} 1 / log *n*, which is the model's prediction for
-the prime-counting function π(*N*). We develop, with full rigor, the
-elementary real-analytic theory of this sum: strict positivity and
-monotonicity of the summand 1 / log *n*; monotonicity of the partial sums;
-two-sided sum-versus-integral comparison bounds sandwiching CramerSum(*N*)
-between copies of the logarithmic integral; and an explicit *N* / log *N*
-lower bound exhibiting the Prime Number Theorem order of growth by purely
-elementary means. We then survey, at the level of proof sketches, which
-classical theorems survive the passage to the random universe (the Prime
-Number Theorem, Dirichlet's theorem on arithmetic progressions, and — almost
-surely — the Riemann Hypothesis) and which collapse (unique factorization).
-We close with a discussion of the cryptographic relevance of these bounds and
-a program of conjectures extending the deterministic backbone to variance,
-*k*-tuple, and gap statistics. All core results stated here have been
-formally verified.
+We investigate a counterfactual arithmetic in which the notion of *which numbers are prime* is deformed while the ambient multiplicative structure of the natural numbers is left untouched. Concretely, we replace the ordinary primes by the irreducible elements of the **Hilbert monoid** $H = \{\,n \in \mathbb{N} : n \equiv 1 \pmod 4\,\}$, a classical multiplicatively closed subset of the naturals whose "primes" are those members admitting no nontrivial factorization *within* $H$. Using this toy model we establish a sharp dividing line between arithmetic laws that are robust under such a deformation and those that are fragile. We prove three results: (1) $H$ is a submonoid of $(\mathbb{N}, \cdot)$, so the multiplicative skeleton survives; (2) there are infinitely many $H$-irreducibles, obtained from the rational primes $p \equiv 1 \pmod 4$ via Dirichlet's theorem, so infinitude of primes survives; and (3) unique factorization collapses, witnessed by the explicit minimal identity $441 = 9 \cdot 49 = 21 \cdot 21$ with $9, 21, 49$ all $H$-irreducible and the multisets $\{9,49\} \neq \{21,21\}$. We argue that the collapse is a structural consequence of admitting a proper subgroup of residues rather than an artifact of small numbers, and we outline conjectures extending the closure/collapse dichotomy to general congruence monoids and to randomized prime systems.
 
-**Keywords:** Cramér model, probabilistic number theory, prime-counting
-function, logarithmic integral, Prime Number Theorem, Riemann Hypothesis,
-sum-integral comparison, cryptographic prime generation.
-
-**MSC 2020:** 11N05, 11K65, 11A41, 60C05, 11Y11.
+**Keywords:** Hilbert monoid, congruence monoid, irreducible elements, unique factorization, Dirichlet's theorem, arithmetic progressions, non-unique factorization, half-factorial monoids.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The counterfactual question
+The primes and the Fundamental Theorem of Arithmetic are so intertwined in elementary number theory that it is easy to conflate them. Yet many classical theorems about the primes — Euclid's infinitude, Dirichlet's theorem on arithmetic progressions, the Prime Number Theorem — are *distributional* statements that concern how primes are spread through the integers, while the Fundamental Theorem of Arithmetic is a *structural* statement about how integers decompose. This paper asks a deliberately naive question in order to separate these two flavors:
 
-Number theory is the study of structure that the integers impose upon
-themselves: divisibility, factorization, congruence. The primes are the
-indivisible atoms of multiplication, and the deepest theorems of the subject —
-the Prime Number Theorem (PNT), Dirichlet's theorem, the Riemann Hypothesis
-(RH) — describe how these atoms are distributed along the number line.
+> If we keep the natural numbers and their multiplication, but change which numbers count as prime, which classical theorems survive and which collapse?
 
-In 1936 Harald Cramér proposed a radical reframing. Suppose, he said, we
-*forget* that the primes are defined multiplicatively, and instead model them
-as a random set: let each integer *n* ≥ 2 be "prime" with probability
-*p*(*n*) = 1 / log *n*, independently across *n*. This probability is dictated
-by the PNT, which asserts π(*N*) ∼ *N* / log *N*, i.e. that the local density
-of primes near *n* is about 1 / log *n*. Cramér's model elevates this *average
-density* to a literal *per-integer probability* and asks what the resulting
-random number theory looks like.
+We make the question precise by choosing a specific deformation. Instead of the full set of naturals with the ordinary primes, we work inside the **Hilbert monoid**
+$$H = \{\,n \in \mathbb{N} : n \equiv 1 \pmod 4\,\} = \{1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, \dots\},$$
+a set introduced by Hilbert precisely to demonstrate that unique factorization can fail. The "primes" of this world are its irreducible elements — numbers in $H$ that cannot be written as a product of two smaller elements *of $H$*. Because a factor is only legal if it itself lies in $H$, numbers like $9 = 3\cdot 3$ become irreducible: their only rational factor $3$ is exiled from $H$.
 
-The model is a *counterfactual*: it describes a universe that is not ours, but
-one calibrated to match ours in its coarsest statistic. Its value is twofold.
-First, it is a **heuristic engine**: by computing expectations in the random
-model, one generates precise conjectures about the genuine primes (the
-Hardy–Littlewood *k*-tuple conjectures, Cramér's conjecture on prime gaps, the
-expected error in the PNT). Second, it is a **null hypothesis**: discrepancies
-between the model and reality isolate exactly the arithmetic structure the
-random model cannot see.
+This is a faithful, fully computable model of a counterfactual number theory. The ambient arithmetic is unchanged; only the notion of primality is deformed, by remembering just the residue class modulo $4$. Our main contribution is to isolate a clean dichotomy inside this model:
 
-### 1.2 What survives and what collapses
+- **Coarse laws survive.** Multiplicative closure (Theorem 3.1) and infinitude of primes (Theorem 5.2) carry over intact. Neither depends on the fine identity of the primes.
+- **Fine laws collapse.** Unique factorization fails (Theorem 6.1), already at the minimal witness $441$.
 
-A useful way to organize the model is to ask which classical theorems remain
-true when the genuine primes are swapped for Cramér's random set:
+We further explain *why* the collapse is forced: it is governed by a single group-theoretic invariant, the index of the admitted residues inside the unit group $(\mathbb{Z}/4\mathbb{Z})^{\times}$.
 
-- **Prime Number Theorem — survives.** The model is calibrated to reproduce
-  prime density; its expected count grows like *N* / log *N* and tracks the
-  logarithmic integral Li(*N*).
-- **Dirichlet's theorem — survives.** The coins ignore arithmetic structure,
-  so every coprime residue class collects infinitely many random primes almost
-  surely, with no inter-class bias.
-- **Unique factorization — collapses.** The random primes carry no
-  multiplicative meaning; the Fundamental Theorem of Arithmetic has no analogue.
-- **Riemann Hypothesis — holds almost surely.** The error π(*N*) − Li(*N*) is,
-  in the model, a sum of independent mean-zero fluctuations of size O(√*N* log *N*)
-  almost surely, which is exactly the bound equivalent to RH. Cramér proved RH
-  holds with probability one in the model.
+### 1.1 Related notions
 
-### 1.3 Contribution
-
-This paper makes the **deterministic backbone** of the model fully rigorous.
-By linearity of expectation, every first-moment quantity in the model is a
-finite sum of the weights *p*(*n*), and the master quantity is CramerSum(*N*).
-We prove a complete suite of elementary results about it — positivity,
-monotonicity, two-sided integral comparison, and explicit growth bounds —
-using only standard real analysis. These results turn the heuristic "expected
-prime count ≈ Li(*N*) ≈ *N* / log *N*" into theorems with explicit constants,
-which is precisely what is needed to certify, for instance, the expected
-running time of cryptographic prime generation. The remaining (probabilistic)
-statements — survival of PNT/Dirichlet/RH, collapse of factorization — are
-presented as proof sketches and as a forward-looking conjecture program.
+The Hilbert monoid is the simplest nontrivial *congruence monoid*: for a modulus $m$ and a submonoid $G$ of $(\mathbb{Z}/m\mathbb{Z})^{\times}$ (here $m = 4$, $G = \{1\}$), one forms $M(G) = \{n : n \bmod m \in G\}$. Congruence monoids are a well-studied source of non-unique factorization phenomena and of *half-factorial* and *elasticity* invariants. Our aim is not to survey that theory but to use its smallest instance as a laboratory that cleanly separates robust from fragile arithmetic laws, and to record explicit, minimal, verifiable witnesses.
 
 ---
 
 ## 2. Definitions
 
-Throughout, log denotes the natural logarithm, and we write *n* for a natural
-number and *x* for a real variable.
+Throughout, $\mathbb{N} = \{0, 1, 2, \dots\}$ and all factorizations are of positive integers.
 
-**Definition 2.1 (Cramér weight).** For an integer *n* ≥ 2 the *Cramér prime
-probability* (weight) is
-$$ p(n) \;=\; \frac{1}{\log n} \;=\; (\log n)^{-1}. $$
-Since *n* ≥ 2 > 1 we have log *n* > 0, so 0 < *p*(*n*); and *p*(*n*) ≤ 1 once
-*n* ≥ 3 (because log *n* ≥ 1 there), so *p* is a genuine probability for
-*n* ≥ 3. The value *p*(2) = 1 / log 2 ≈ 1.4427 exceeds 1 and is, in the full
-random-sieve formalization, clamped to 1; it does not affect any of the
-asymptotic statements below.
+**Definition 2.1 (Hilbert monoid).** The *Hilbert monoid* is the predicate
+$$\mathrm{inH}(n) \iff n \bmod 4 = 1,$$
+and $H = \{n \in \mathbb{N} : \mathrm{inH}(n)\}$ is the set of natural numbers congruent to $1$ modulo $4$.
 
-**Definition 2.2 (Cramér expectation sum).** For *N* ∈ ℕ define
-$$ \mathrm{CramerSum}(N) \;=\; \sum_{n=2}^{N} (\log n)^{-1}
-   \;=\; \sum_{n \in [2,N] \cap \mathbb{Z}} \frac{1}{\log n}. $$
-By linearity of expectation, CramerSum(*N*) is the expected number of random
-primes in the window {2, …, *N*}; it is the model's prediction for π(*N*).
+**Definition 2.2 ($H$-irreducible).** A natural number $n$ is *$H$-irreducible* (a *counterfactual prime*) if
+$$n \geq 2, \qquad \mathrm{inH}(n), \qquad \text{and} \qquad \forall a, b \in \mathbb{N}\ \big(\mathrm{inH}(a) \wedge \mathrm{inH}(b) \wedge ab = n \implies a = 1 \vee b = 1\big).$$
 
-**Definition 2.3 (Logarithmic integral, offset form).** The
-*logarithmic integral* is Li(*N*) = ∫_{2}^{N} dx / log *x*. This is the
-standard elementary approximation to π(*N*); the comparison theorems below
-exhibit CramerSum(*N*) as a discretization of Li.
+The essential feature of Definition 2.2 is that the quantifier ranges over factorizations *inside* $H$. Quantifying over all of $\mathbb{N}$ would make almost every composite reducible and render the model vacuous; restricting to $H$ is what deforms primality in a nontrivial way.
+
+**Remark 2.3.** Since $1 \bmod 4 = 1$, we have $\mathrm{inH}(1)$: the unit lies in the monoid. The element $1$ is treated as a unit and is excluded from irreducibility by the condition $n \geq 2$.
 
 ---
 
-## 3. Main results: the deterministic backbone
+## 3. The multiplicative skeleton survives
 
-All statements in this section are formally verified. We give the precise
-statement of each and a proof sketch.
+**Theorem 3.1 (Closure).** *The Hilbert monoid is a submonoid of $(\mathbb{N}, \cdot)$: it contains $1$, and it is closed under multiplication. That is, $\mathrm{inH}(1)$, and if $\mathrm{inH}(a)$ and $\mathrm{inH}(b)$ then $\mathrm{inH}(ab)$.*
 
-### 3.1 Positivity
+*Proof.* First, $1 \bmod 4 = 1$, so $\mathrm{inH}(1)$. For closure, suppose $a \equiv 1$ and $b \equiv 1 \pmod 4$. Modular multiplication gives
+$$ab \bmod 4 = \big((a \bmod 4)(b \bmod 4)\big) \bmod 4 = (1 \cdot 1) \bmod 4 = 1,$$
+so $\mathrm{inH}(ab)$. $\qquad\blacksquare$
 
-**Lemma 3.1 (Positive logarithm).** *If* *n* ≥ 2 *then* log *n* > 0.
-
-*Proof.* For *n* ≥ 2 the cast (*n* : ℝ) ≥ 2 > 1, and log is positive on
-(1, ∞) by `Real.log_pos`. ∎
-
-**Lemma 3.2 (Positive summand).** *If* *n* ≥ 2 *then* (log *n*)⁻¹ > 0.
-
-*Proof.* Immediate from Lemma 3.1: the reciprocal of a positive real is
-positive (`inv_pos`). ∎
-
-These guarantee CramerSum is a sum of strictly positive terms, hence a
-bona-fide, non-degenerate expectation.
-
-### 3.2 Monotonicity of the weight
-
-**Lemma 3.3 (Antitone reciprocal-log).** *The function* *x* ↦ (log *x*)⁻¹ *is
-antitone on the open ray* (1, ∞): *for* 1 < *x* ≤ *y*,
-(log *y*)⁻¹ ≤ (log *x*)⁻¹.
-
-*Proof sketch.* On (1, ∞) we have log *x* > 0 and log is monotone, so
-0 < log *x* ≤ log *y*; the reciprocal map is antitone on the positive reals
-(`inv_anti₀`), reversing the inequality. ∎
-
-**Lemma 3.4 (Antitone weight, integer form).** *If* 3 ≤ *m* ≤ *n* *then*
-(log *n*)⁻¹ ≤ (log *m*)⁻¹.
-
-*Proof sketch.* Apply monotone reciprocal (`gcongr`) using log *m* > 0 (from
-*m* ≥ 3 > 1) and log *m* ≤ log *n*. ∎
-
-Lemma 3.4 is the precise statement that "model primes thin out": the
-probability of being prime is nonincreasing in the integer.
-
-### 3.3 Monotonicity of the partial sums
-
-**Lemma 3.5 (Monotone partial sums).** *If* *N* ≤ *M* *then*
-CramerSum(*N*) ≤ CramerSum(*M*).
-
-*Proof sketch.* The index set [2, *N*] is a subset of [2, *M*]
-(`Finset.Icc_subset_Icc_right`), and every omitted term (log *n*)⁻¹ is
-nonnegative because *n* ≥ 2 makes log *n* ≥ 0
-(`Finset.sum_le_sum_of_subset_of_nonneg`). ∎
-
-This is the model's counterpart to the obvious fact that π is nondecreasing,
-and is the basis for any monotone comparison of model versus reality.
-
-### 3.4 Sum-versus-integral comparison
-
-The decreasing positive integrand 1 / log *x* admits the classical
-Riemann-sum sandwich. The subtlety is the singularity of 1 / log *x* at
-*x* = 1 (where log = 0), which forbids integrating from 1. We therefore
-anchor all integrals at *x* = 2.
-
-**Theorem 3.6 (Lower integral bound, right-Riemann).** *For* *N* ≥ 3,
-$$ \int_{2}^{N+1} \frac{dx}{\log x} \;\le\; \mathrm{CramerSum}(N). $$
-
-*Proof sketch.* Split the integral over [2, *N* + 1] into unit subintervals
-[*k*, *k* + 1] for *k* = 2, …, *N* (additivity of the interval integral,
-`intervalIntegral.sum_integral_adjacent_intervals`, with continuity/integrability
-of 1 / log *x* on each [*k*, *k* + 1] ⊂ (1, ∞)). On each subinterval the
-integrand is bounded above by its value at the *right* endpoint, (log *k*)⁻¹
-... wait, by antitonicity the integrand on [*k*, *k*+1] is bounded above by
-its value at the *left* endpoint and below by its value at the right; here we
-compare ∫_k^{k+1} 1/log x dx ≤ (log k)⁻¹ via monotone integral comparison
-(`intervalIntegral.integral_mono_on`), and summing (log *k*)⁻¹ over
-*k* = 2, …, *N* gives exactly CramerSum(*N*). ∎
-
-**Theorem 3.7 (Upper integral bound, left-Riemann).** *For* *N* ≥ 3,
-$$ \mathrm{CramerSum}(N) \;\le\; \frac{1}{\log 2} \;+\; \int_{2}^{N} \frac{dx}{\log x}. $$
-
-*Proof sketch.* Isolate the first term (log 2)⁻¹ and apply the antitone
-sum-integral inequality `AntitoneOn.sum_le_integral_Ico` to the remaining sum
-Σ_{n=3}^{N} (log *n*)⁻¹, which is bounded above by ∫_{2}^{N} 1 / log *x* dx
-because each term (log *n*)⁻¹ ≤ ∫_{n-1}^{n} 1 / log *x* dx for the decreasing
-integrand. Reindexing the finite sums (`Finset.sum_Ico_eq_sub`) reconciles the
-ranges. ∎
-
-**Corollary 3.8 (CramerSum tracks the logarithmic integral).** *Combining
-Theorems 3.6 and 3.7, for* *N* ≥ 3,
-$$ \mathrm{Li}(N+1) - \underbrace{\int_N^{N+1}\!\tfrac{dx}{\log x}}_{\le\, 1/\log N}
-   \;\le\; \mathrm{CramerSum}(N) \;\le\; \mathrm{Li}(N) + \frac{1}{\log 2}, $$
-*so* |CramerSum(*N*) − Li(*N*)| *is bounded by an absolute constant plus a
-vanishing-density term.* In particular CramerSum(*N*) = Li(*N*) + O(1), the
-discrete model expectation equals the logarithmic-integral approximation to
-π(*N*) up to a bounded error. This is the model's recovery of the refined
-Prime Number Theorem π(*N*) ≈ Li(*N*).
-
-### 3.5 Explicit Prime-Number-Theorem-order growth
-
-Even without the integral, an elementary lower bound recovers the PNT order.
-
-**Lemma 3.9 (Crude count bound).** *For* *N* ≥ 2,
-$$ \frac{N-1}{\log N} \;\le\; \mathrm{CramerSum}(N). $$
-
-*Proof sketch.* Each of the *N* − 1 terms (log *n*)⁻¹ with 2 ≤ *n* ≤ *N*
-satisfies (log *n*)⁻¹ ≥ (log *N*)⁻¹ by Lemma 3.3 (antitonicity, since
-*n* ≤ *N*). Summing the constant lower bound (log *N*)⁻¹ over the *N* − 1
-indices (`Finset.sum_le_sum`) gives (*N* − 1) / log *N*. ∎
-
-**Theorem 3.10 (Explicit scale lower bound).** *For* *N* ≥ 2,
-$$ \frac{N}{2\log N} \;\le\; \mathrm{CramerSum}(N). $$
-
-*Proof sketch.* From Lemma 3.9 it suffices that *N* / (2 log *N*) ≤
-(*N* − 1) / log *N*, i.e. *N* / 2 ≤ *N* − 1, i.e. *N* ≥ 2; the algebra is
-discharged by cross-multiplication using log *N* > 0 and *N* ≥ 2
-(`div_le_div_iff₀`, `nlinarith`). ∎
-
-Theorem 3.10 establishes, by counting alone, that the expected number of
-Cramér primes up to *N* grows at least at the Prime Number Theorem rate
-*N* / log *N* (up to the constant 1/2), with no analytic input whatsoever.
+This is the bedrock: multiplication never escapes $H$, so it is meaningful to speak of factorization *within* the counterfactual world at all. The multiplicative structure is completely robust under the deformation.
 
 ---
 
-## 4. Which theorems survive the counterfactual
+## 4. Counterfactual primes: explicit irreducibles
 
-We now sketch the probabilistic half of the program: the classification of
-classical theorems. These statements concern the random set *S* ⊆ ℕ in which
-each *n* lies independently with probability *p*(*n*) = 1 / log *n*. The
-deterministic backbone of §3 controls all first moments.
+We record the three small irreducibles that drive the failure of unique factorization, and then the general mechanism producing infinitely many.
 
-### 4.1 Prime Number Theorem — survives
+**Lemma 4.1.** *Each of $9$, $21$, and $49$ is $H$-irreducible.*
 
-**Claim.** |*S* ∩ [2, *N*]| = (1 + o(1)) Li(*N*) ∼ *N* / log *N* almost surely.
+*Proof.* Each of $9 = 4\cdot 2 + 1$, $21 = 4 \cdot 5 + 1$, $49 = 4\cdot 12 + 1$ lies in $H$ and is $\geq 2$. It remains to rule out nontrivial factorizations inside $H$. Suppose $ab = n$ with $\mathrm{inH}(a), \mathrm{inH}(b)$ and $n \in \{9, 21, 49\}$. Any such $a$ divides $n$ and satisfies $a \leq n$, so it ranges over a finite list of divisors. Checking these divisors:
+- For $9$: the divisors are $1, 3, 9$. Of these only $1$ and $9$ lie in $H$ ($3 \equiv 3 \pmod 4$). Hence $a = 1$ or $a = 9$ (forcing $b = 1$).
+- For $21$: the divisors are $1, 3, 7, 21$. Only $1$ and $21$ lie in $H$ ($3, 7 \equiv 3 \pmod 4$). Hence $a = 1$ or $b = 1$.
+- For $49$: the divisors are $1, 7, 49$. Only $1$ and $49$ lie in $H$. Hence $a = 1$ or $b = 1$.
 
-*Sketch.* The expected count is exactly CramerSum(*N*), which equals
-Li(*N*) + O(1) (Corollary 3.8) and is bounded below by *N* / (2 log *N*)
-(Theorem 3.10). The variance is Σ *p*(*n*)(1 − *p*(*n*)) = O(*N* / log *N*)
-(see Conjecture C1), so the standard deviation O(√(*N* / log *N*)) is of
-*smaller order* than the mean. Chebyshev's inequality plus Borel–Cantelli
-along a subsequence yields almost-sure concentration: the random count tracks
-its expectation, and the PNT order survives. ∎
+In every case one factor is $1$, so $n$ is $H$-irreducible. $\qquad\blacksquare$
 
-### 4.2 Dirichlet's theorem — survives
+The phenomenon is transparent: the ordinary prime factors $3$ and $7$ both lie in the residue class $3 \pmod 4$, which is *outside* $H$. With those factors forbidden, the numbers $9$, $21$, $49$ have no legal nontrivial decomposition and are promoted to primes of the counterfactual world.
 
-**Claim.** For coprime *a*, *q*, the class {*n* ≡ *a* (mod *q*)} contains
-infinitely many elements of *S* almost surely, with the same density 1 / log *n*
-as any other class.
+**Lemma 4.2 (Rational primes $\equiv 1$ import as counterfactual primes).** *If $p$ is a rational prime with $p \equiv 1 \pmod 4$, then $p$ is $H$-irreducible.*
 
-*Sketch.* The weights *p*(*n*) depend only on the size of *n*, not on its
-residue. Hence Σ_{n ≡ a (q)} *p*(*n*) diverges (it is a positive fraction of
-the divergent series Σ 1 / log *n*), and by the second Borel–Cantelli lemma
-(independence) infinitely many such *n* lie in *S* almost surely. Moreover the
-model predicts *perfect* equidistribution: no residue class is favored, in
-contrast to the genuine primes whose finer biases (e.g. Chebyshev's bias) are
-exactly the non-random residue the model discards. ∎
+*Proof.* Since $p \equiv 1 \pmod 4$ we have $\mathrm{inH}(p)$, and $p \geq 2$. Suppose $ab = p$ with $\mathrm{inH}(a), \mathrm{inH}(b)$. Then $a \mid p$, and since $p$ is prime, $a = 1$ or $a = p$. If $a = p$ then $b = 1$. Either way one factor is $1$. $\qquad\blacksquare$
 
-### 4.3 Unique factorization — collapses
-
-**Claim.** There is no analogue of the Fundamental Theorem of Arithmetic for
-*S*.
-
-*Sketch.* The set *S* is defined purely additively/positionally; it is a
-random subset of ℕ with no multiplicative closure. The integers are not
-generated as products of elements of *S* in any canonical way, and with
-probability one *S* is neither multiplicatively closed nor a free generating
-set. Multiplicative structure — the defining feature of the genuine primes —
-is absent by construction. This is the model's principal limitation and the
-reason it cannot speak to factoring-based cryptographic hardness. ∎
-
-### 4.4 Riemann Hypothesis — holds almost surely
-
-**Claim (Cramér, 1936).** In the random model, |*S* ∩ [2, *N*]| − Li(*N*) =
-O(√*N* · log *N*) almost surely; equivalently, RH holds with probability one
-in the counterfactual universe.
-
-*Sketch.* Write the error as Σ_{n≤N} (𝟙[*n* ∈ *S*] − *p*(*n*)), a sum of
-independent, bounded, mean-zero random variables with variance Σ *p*(1 − *p*)
-= O(*N* / log *N*). The law of the iterated logarithm (or Kolmogorov's
-inequality with Borel–Cantelli) bounds the partial sums by O(√(*N* log log *N*))
-almost surely, which is well inside the RH threshold O(√*N* log *N*). Since the
-RH is equivalent to precisely this error bound for the genuine
-prime-counting function, the random model satisfies the RH analogue almost
-surely. ∎
-
-This does not prove RH for the genuine primes — they are not random — but it
-demonstrates that RH is the *generic* behavior, and that a counterexample
-would require a non-random conspiracy.
+The point of Lemma 4.2 is that an ordinary prime has *no* nontrivial factorization even in $\mathbb{N}$, hence a fortiori none inside the smaller world $H$; and the congruence condition places it in $H$.
 
 ---
 
-## 5. Algorithms
+## 5. Infinitude of primes survives
 
-### 5.1 Computing the Cramér expectation sum
+**Theorem 5.1 (Dirichlet, progression $1 \bmod 4$).** *There are infinitely many rational primes $p$ with $p \equiv 1 \pmod 4$.*
 
-The backbone quantity CramerSum(*N*) is computed by a single accumulation
-loop. The arithmetic is over floating point; for high-*N* certified bounds one
-uses interval arithmetic anchored at the integral comparisons of §3.4.
+This is the special case of Dirichlet's theorem on primes in arithmetic progressions for modulus $4$ and residue $1$; it can also be proved directly by a Euclid-style argument using the fact that odd prime divisors of $N^2 + 1$ are $\equiv 1 \pmod 4$.
 
-```
-Algorithm CRAMER-SUM(N):
-    s ← 0
-    for n ← 2 to N:
-        s ← s + 1 / ln(n)
-    return s          # = expected number of random primes in [2, N]
-```
+**Theorem 5.2 (Infinitude of counterfactual primes).** *The set $\{n \in \mathbb{N} : n \text{ is } H\text{-irreducible}\}$ is infinite.*
 
-Complexity: Θ(*N*) additions and logarithms; Θ(1) space.
+*Proof.* By Theorem 5.1 there are infinitely many rational primes $p \equiv 1 \pmod 4$. By Lemma 4.2 each of them is $H$-irreducible. An injective image of an infinite set is infinite, so the set of $H$-irreducibles contains an infinite subset and is itself infinite. $\qquad\blacksquare$
 
-### 5.2 Certified two-sided enclosure
-
-Given *N* ≥ 3, the integral bounds of Theorems 3.6–3.7 yield a rigorous
-enclosure of CramerSum(*N*) without summing all *N* terms, by numerically
-bracketing the logarithmic integral Li with verified quadrature.
-
-```
-Algorithm CRAMER-ENCLOSE(N):
-    lo ← LI(2, N+1)              # ∫_2^{N+1} dx/ln x   (lower bound, Thm 3.6)
-    hi ← 1/ln(2) + LI(2, N)     # 1/ln2 + ∫_2^N dx/ln x (upper bound, Thm 3.7)
-    return [lo, hi]             # CramerSum(N) ∈ [lo, hi], proven
-```
-
-### 5.3 Expected prime-tuple count (Hardy–Littlewood skeleton)
-
-For an admissible offset pattern *H* = {*h*₁, …, *h_k*}, the expected number
-of *n* ∈ [2, *N*] with all *n* + *h_j* in *S* is Σ_n ∏_j *p*(*n* + *h_j*) (by
-independence). Under Cramér's *p* this is asymptotic to ∫ dt / (log *t*)^k.
-
-```
-Algorithm EXPECTED-TUPLES(N, H = [h_1,...,h_k]):
-    total ← 0
-    for n ← 2 to N:
-        prod ← 1
-        for h in H:
-            prod ← prod * 1 / ln(n + h)
-        total ← total + prod
-    return total
-```
+Thus Euclid's infinitude of primes is robust: it survives the deformation because it is fed directly by Dirichlet's distributional theorem, which knows nothing about the fine structure of factorization. Infinitude of primes is a *coarse* law.
 
 ---
 
-## 6. Applications: cryptographic prime generation
+## 6. Unique factorization collapses
 
-Public-key cryptosystems (RSA, Diffie–Hellman, DSA) require sampling large
-primes. The standard procedure draws random odd integers near a target size
-*N* and tests each for primality; the *expected number of trials* before
-success is the reciprocal of the local prime density, ≈ log *N*. This estimate
-is precisely the Cramér heuristic *p*(*N*) = 1 / log *N*.
+**Theorem 6.1 (Failure of unique factorization).** *In the counterfactual world $H$, unique factorization into $H$-irreducibles fails. Explicitly, $9$, $21$, and $49$ are $H$-irreducible, and*
+$$441 = 9 \cdot 49 = 21 \cdot 21,$$
+*with the two factorizations genuinely distinct: the multiset $\{9, 49\}$ is not equal to the multiset $\{21, 21\}$.*
 
-The deterministic backbone makes the heuristic rigorous:
+*Proof.* Irreducibility of $9, 21, 49$ is Lemma 4.1. The arithmetic identities $9 \cdot 49 = 441$ and $21 \cdot 21 = 441$ are immediate, and $441 = 4\cdot 110 + 1 \in H$. Finally, the two factorizations are certified distinct by comparing multisets: $\{9, 49\} \neq \{21, 21\}$, since $21 \notin \{9, 49\}$. This is not a reordering of a single factorization but two structurally different products of counterfactual primes. $\qquad\blacksquare$
 
-1. **Certified yield.** Theorem 3.10 gives CramerSum(*N*) ≥ *N* / (2 log *N*),
-   a *proven* lower bound on the expected number of primes in a window, hence a
-   proven *upper* bound on the expected number of candidates to test before a
-   key is found.
-2. **Certified accuracy of Li.** Corollary 3.8 shows the model expectation
-   equals Li(*N*) up to a bounded constant, so engineering estimates based on
-   Li carry rigorous error bars.
-3. **Where the model is unsafe.** The collapse of unique factorization (§4.3)
-   is a warning label: the *hardness of factoring*, on which RSA security
-   rests, is a multiplicative phenomenon the Cramér model cannot model. Density
-   heuristics certify *key generation cost*, never *factoring hardness*. Sound
-   cryptographic analysis must keep these separate.
+**Remark 6.2 (Minimality).** The witness $441 = 21^2$ is the smallest number in $H$ with two distinct factorizations into $H$-irreducibles. Any such witness must be built from the exiled residue-$3$ primes bundled in pairs, and $3$ and $7$ are the two smallest such primes; the smallest number using them with two pairings is $(3 \cdot 3)(7 \cdot 7) = (3\cdot 7)(3\cdot 7) = 441$.
+
+**Remark 6.3 (Why the collapse is structural).** Write $U = (\mathbb{Z}/4\mathbb{Z})^{\times} = \{1, 3\}$ for the unit group modulo $4$. The Hilbert monoid admits only the residue subgroup $G = \{1\}$, of index $2$ in $U$. The exiled residue $3$ is a coset representative that cannot appear alone in $H$ but reappears in pairs: $3 \cdot 3 \equiv 1$ and $3 \cdot 7 \equiv 1 \pmod 4$. Because a product of *two* exiled factors returns to $H$, exiled primes can be re-bundled into $H$-irreducibles in more than one way, and uniqueness fails. Had $G$ been all of $U$ (index $1$), no residue would be exiled and factorization would remain unique. This identifies the index $[U : G]$ as the true controlling invariant, and shows the failure is not an accident of small numbers.
 
 ---
 
-## 7. Discussion
+## 7. Discussion: coarse versus fine arithmetic laws
 
-The Cramér model occupies a peculiar epistemic position: it is provably wrong
-about the primes in detail (the genuine primes are deterministic and
-multiplicatively structured), yet it is the most productive source of correct
-conjectures in analytic number theory. The resolution is that the model is a
-*null hypothesis*. The statistics it predicts correctly — density, the PNT,
-the RH error scale — are exactly those governed by size alone; the statistics
-it gets wrong — twin-prime constants, the singular series, Chebyshev bias —
-are exactly the arithmetic structure, and the *discrepancy* is the object of
-real interest.
+The three theorems above draw a sharp line:
 
-Our contribution isolates and formally verifies the *deterministic backbone*:
-the first-moment theory, which by linearity of expectation governs every
-expected-count statistic and which reduces entirely to real analysis of
-1 / log *x*. By proving positivity, monotonicity, two-sided integral
-enclosure, and explicit *N* / log *N* growth, we convert the model's central
-heuristic into theorems with explicit constants — the form required for
-certified cryptographic and computational use.
+| Classical law | Status in $H$ | Character |
+|---|---|---|
+| Multiplicative closure / monoid structure | **Survives** (Thm 3.1) | Coarse |
+| Infinitude of primes (Euclid/Dirichlet) | **Survives** (Thm 5.2) | Coarse |
+| Unique factorization (FTA) | **Collapses** (Thm 6.1) | Fine |
+
+The interpretation is that *which numbers are prime* is a fragile datum. Statements that depend only on multiplicative closure and on the abundance of primes are portable across a whole family of deformed arithmetics. Unique factorization, by contrast, depends essentially on the precise identity of the primes and is the first casualty of disturbing them.
+
+This perspective reframes the Fundamental Theorem of Arithmetic not as an inevitability but as a special gift of the full integers — one that is easily lost. It also suggests a program: quantify *how badly* uniqueness fails as a function of the deformation. The natural measure is **elasticity**, the supremum over reducible elements of the ratio of the longest to the shortest factorization length. In $H$ the collision $441 = 9\cdot 49 = 21 \cdot 21$ has both factorizations of length $2$ (so it does not by itself force elasticity above $1$), but longer forbidden "detours" at larger moduli are expected to stretch factorization lengths and drive elasticity upward with the index $[U : G]$.
 
 ---
 
-## 8. Future directions
+## 8. Algorithms
 
-The following conjecture program extends the deterministic backbone into the
-second moment and into the constellation/gap statistics. Each is a finite
-algebraic identity in the weight family followed by a separate asymptotic
-lemma, and each is provable from the present foundation.
+We summarize the constructive content in algorithmic form (full implementations appear in the accompanying demonstration code).
 
-**Conjecture C1 (Variance and concentration).** For the Cramér sieve,
-Var(|*S*|) = Σ_{n} *p*(*n*)(1 − *p*(*n*)) exactly (independence kills cross
-terms). Under *p*(*n*) = 1 / log *n* on [2, *N*], the standard deviation is
-Θ(√(*N* / log *N*)), so |*S*| = (1 + o(1)) Σ 1 / log *n* almost surely. The
-exact variance identity is a finite computation from the pairwise and single
-marginals.
+**Algorithm A (Membership and closure test).** Given $n$, return whether $n \equiv 1 \pmod 4$; given $a, b \in H$, verify $ab \in H$. Complexity $O(1)$ per test (after the divisions).
 
-**Conjecture C2 (Expected prime *k*-tuples; singular-series skeleton).** For an
-admissible offset pattern *H* = {*h*₁, …, *h_k*}, the expected number of
-*n* ∈ [2, *N*] with all *n* + *h_j* in *S* equals Σ_n ∏_j *p*(*n* + *h_j*),
-and under Cramér's *p* this is asymptotic to ∫ dt / (log *t*)^k. The exact
-finite identity iterates the subset-indicator (independence) lemma with |*A*| =
-*k*; the asymptotic is a separate analytic lemma. The *deviation* of this from
-the true Hardy–Littlewood constant 𝔖(*H*) measures exactly how the genuine
-primes fail to be Cramér-random.
+**Algorithm B ($H$-irreducibility test).** Given $n \in H$ with $n \geq 2$, enumerate divisors $a \mid n$ with $2 \leq a < n$; return "irreducible" iff no such $a$ has both $a \in H$ and $n/a \in H$. Complexity $O(\sqrt{n})$ divisor scan.
 
-**Conjecture C3 (Maximal prime gap; Cramér's conjecture, finite form).** Let
-*G_N* be the largest gap between consecutive random primes in [2, *N*]. Then
-E[*G_N*] = Θ((log *N*)²) and P(*G_N* > *c*(log *N*)²) → 0 for large *c*. A
-provable first step: the exact probability that a fixed window [*m*, *m* + *L*]
-contains no random prime is ∏_{n=m}^{m+L} (1 − *p*(*n*)), whence the union
-bound P(∃ gap ≥ *L*) ≤ Σ_m ∏ (1 − *p*(*n*)).
-
-**Conjecture C4 (Counterfactual divergence detector).** Formalize a
-quantitative non-randomness detector: for residue classes mod *q*, the Cramér
-model predicts the random primes equidistribute with no bias, so any measured
-bias in the genuine primes (e.g. Chebyshev's bias toward 3 mod 4) is a direct
-readout of the model's failure — a quantitative measure of arithmetic
-structure beyond density.
+**Algorithm C (Search for non-unique factorizations).** For each $n \in H$ up to a bound $N$, compute all factorizations of $n$ into $H$-irreducibles by recursive descent, collect them as multisets, and report any $n$ with two or more distinct multisets. This rediscovers $441$ as the least witness. Complexity is output-sensitive; pruning by the irreducibility test keeps it practical for moderate $N$.
 
 ---
 
-## 9. Conclusion
+## 9. Applications and connections
 
-We have made rigorous the deterministic backbone of Cramér's counterfactual
-number theory: the expected prime count CramerSum(*N*) = Σ_{n=2}^N 1 / log *n*
-is a positive, monotone, decreasing-termed sum, sandwiched between two
-logarithmic integrals and growing at the Prime Number Theorem rate
-*N* / log *N*. From this fully verified foundation, the probabilistic
-superstructure — the survival of the PNT, Dirichlet's theorem, and the Riemann
-Hypothesis, and the instructive collapse of unique factorization — follows in
-outline, and a concrete conjecture program (variance, *k*-tuples, gaps,
-bias detection) charts the path forward. The counterfactual where primes are
-random is, paradoxically, one of the sharpest instruments we have for
-understanding the primes that are not.
+1. **Teaching the role of the Fundamental Theorem.** The Hilbert monoid gives a minimal, fully explicit demonstration that infinitude of primes and unique factorization are logically independent — a valuable pedagogical separation.
+2. **Non-unique factorization theory.** The example is the base case of the theory of congruence monoids, where invariants such as elasticity, the set of lengths, and half-factoriality quantify the failure of uniqueness. The index-based mechanism of Remark 6.3 is the seed of a general classification.
+3. **Generalized (Beurling) prime systems.** Treating the $H$-irreducibles as a system of "generalized primes" connects to analytic questions about Dirichlet series $\sum_{n \in H} n^{-s}$ and whether an Euler product over the irreducibles exists — an analytic fingerprint of unique factorization whose breakdown detects the collapse.
 
 ---
 
-## References (classical, for context only; this paper is self-contained)
+## 10. Future work
 
-- H. Cramér, *On the order of magnitude of the difference between consecutive
-  prime numbers*, Acta Arithmetica 2 (1936), 23–46.
-- G. H. Hardy and J. E. Littlewood, *Some problems of 'Partitio numerorum'
-  III: On the expression of a number as a sum of primes*, Acta Math. 44
-  (1923), 1–70.
-- A. Granville, *Harald Cramér and the distribution of prime numbers*, Scand.
-  Actuar. J. (1995), 12–28.
+We highlight four directions, elaborated in the accompanying future-directions notes.
+
+- **A closure/collapse dichotomy for congruence monoids.** For every modulus $m$ and subgroup $G \leq (\mathbb{Z}/m\mathbb{Z})^{\times}$, the monoid $M(G) = \{n : n \bmod m \in G\}$ should be multiplicatively closed with infinitely many irreducibles, yet fail unique factorization exactly when $G$ is a proper subgroup — with the index $[(\mathbb{Z}/m\mathbb{Z})^{\times} : G]$ as the controlling invariant.
+- **Elasticity grows with the index.** The elasticity of $M(G)$ should be finite and increase monotonically with the index, diverging along suitable sequences of moduli.
+- **A zeta-function criterion.** The Dirichlet series restricted to $M(G)$ should admit an Euler product of classical geometric shape precisely when unique factorization holds, making the collapse a spectral signature.
+- **Randomized primes.** For a random set $S \subseteq \mathbb{N}$ including each $n$ independently with probability $\sim 1/\log n$, Dirichlet-type distributional statements are expected to survive almost surely while unique factorization has no reason to hold — the random analogue of the coarse/fine dichotomy.
+
+---
+
+## 11. Conclusion
+
+By deforming primality to the irreducibles of the Hilbert monoid $H = \{n \equiv 1 \pmod 4\}$, we exhibited a clean separation of arithmetic laws: the multiplicative skeleton and the infinitude of primes survive intact, while unique factorization collapses at the explicit minimal witness $441 = 9 \cdot 49 = 21 \cdot 21$. The collapse is controlled by a single group-theoretic invariant, the index of the admitted residues in the unit group. Counterfactual number theory, in this reading, is a tool for measuring which of arithmetic's laws are load-bearing and which are luxuries of the integers we happen to inhabit.

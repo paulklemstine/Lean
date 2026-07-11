@@ -1,268 +1,85 @@
-# Counterfactual Number Theory: What If Primes Were Random?
+# What If the Primes Were Different?
 
-## A coin for every number
+## A counterfactual arithmetic, and the one law that breaks
 
-Imagine you are handed an infinite ledger, one line for every whole number:
-2, 3, 4, 5, 6, and on forever. Your job is to decide, line by line, which
-numbers are "prime." But instead of testing for divisors the way Euclid
-taught us, you flip a weighted coin. For the number *n*, the coin comes up
-"prime" with probability exactly **1 / log n**, and "composite" otherwise.
+Every child who learns multiplication eventually meets the primes: $2, 3, 5, 7, 11, \dots$, the numbers that refuse to be broken apart. And every student of number theory eventually meets the theorem that makes those primes the load-bearing wall of all arithmetic — the **Fundamental Theorem of Arithmetic**. It promises that each whole number bigger than $1$ can be written as a product of primes in exactly one way. The number $60$ is $2 \cdot 2 \cdot 3 \cdot 5$, and there is no rival factorization hiding somewhere; that list of primes is $60$'s fingerprint, unique to it forever.
 
-That is the entire rule. No factoring, no sieving, no divisibility — just a
-cascade of independent coin flips, each one a little less likely to land on
-"prime" as the numbers grow, because the logarithm in the denominator
-slowly creeps upward.
+This uniqueness feels less like a theorem and more like a law of nature. It is so deeply woven into how we think about numbers that it is easy to forget it was ever in doubt. But here is a mischievous question: *how much of number theory actually depends on it?* If we reached into the machinery of arithmetic and quietly swapped out the primes for a different set of "unbreakable" numbers, what would still work — and what would shatter?
 
-This game is not a parlor trick. It is one of the most influential ideas in
-twentieth-century number theory, introduced by the Swedish mathematician
-Harald Cramér in 1936. Cramér's insight was audacious: *pretend the primes
-are random*, with each integer independently "prime" with probability
-1 / log n, and then ask what such a random universe would look like. If the
-random universe behaves like the real primes, then we have a powerful
-heuristic engine — a way to guess the answers to questions that are
-otherwise impossibly hard. And if the random universe disagrees with the
-real primes, the disagreement itself is a fingerprint of the deep,
-non-random structure hiding inside the integers.
+This article follows exactly that experiment. We build a **counterfactual number theory**: same whole numbers, same multiplication, but a deformed notion of *which numbers count as prime*. Then we watch, theorem by theorem, what survives.
 
-This article is about a counterfactual: a parallel number theory in which
-the primes really are produced by Cramér's coins. We will ask which of the
-great theorems of number theory survive the switch to randomness, and which
-ones collapse. Along the way we will pin down, with complete rigor, the
-single most important quantity in the whole model — the *expected number of
-primes up to N* — and prove that it grows at exactly the rate the real
-prime-counting function does.
+## Remembering only one thing about a number
 
-## Why log n? The fingerprint of the Prime Number Theorem
+Here is the trick that generates our alternate universe. Take an ordinary whole number and remember exactly one fact about it: its remainder when divided by $4$. Now keep only the numbers whose remainder is $1$:
 
-Before we play the game, we should ask where the magic number 1 / log n
-comes from. It is not arbitrary. It is borrowed directly from the single
-most celebrated fact about the real primes: the **Prime Number Theorem**.
+$$H = \{\,1,\ 5,\ 9,\ 13,\ 17,\ 21,\ 25,\ 29,\ 33,\ 37,\ 41,\ 45,\ 49,\ \dots\,\}.$$
 
-The Prime Number Theorem, proved in 1896, says that the number of primes
-less than or equal to *N* — written π(*N*) — is approximately *N* / log *N*.
-Equivalently, if you pick a random integer near *N*, the "chance" that it
-is prime is about 1 / log *N*. Cramér simply took this average density and
-promoted it to a literal probability for each individual integer. The genius
-is that a statement about *averages* becomes a generator of *individual*
-random events, and from those events we can compute everything else.
+These are the numbers of the form $4k+1$. We will call this collection the **Hilbert monoid**, after David Hilbert, who used it as a teaching example a century ago. It is a small, clean world — a thin slice of the integers — but it is a world with its own arithmetic.
 
-So the model is calibrated, by construction, to reproduce the prime density.
-The real question is whether it reproduces the finer texture: the gaps
-between primes, the twin primes, the distribution across arithmetic
-progressions, and the mysteries surrounding the Riemann Hypothesis.
+Why does it have an arithmetic at all? Because of a happy accident of remainders. Multiply two numbers that are each $1$ more than a multiple of $4$, and the product is again $1$ more than a multiple of $4$. In symbols, if $a \equiv 1$ and $b \equiv 1 \pmod 4$, then $a \cdot b \equiv 1 \pmod 4$. You can check it on the list: $5 \cdot 9 = 45$, and $45$ is on the list; $13 \cdot 17 = 221 = 4\cdot 55 + 1$, on the list again. So $H$ is *closed under multiplication*: you can never multiply your way out of it. This is our first survivor.
 
-## The central quantity: how many primes should there be?
+**Survivor 1 — the multiplicative skeleton.** *The set $H$ contains $1$ and is closed under multiplication.* Multiplication still makes sense inside the counterfactual world. This is the bedrock on which everything else is built, and it survives the deformation completely intact.
 
-Let us make the first calculation that anyone playing Cramér's game must
-make. Suppose we have flipped the coins for every integer from 2 up to *N*.
-How many "primes" should we expect to see?
+## Who are the primes now?
 
-Each integer *n* contributes a coin that lands "prime" with probability
-1 / log *n*. The expected value of a single coin flip is just its
-probability. And the expected value of a sum of coin flips — even dependent
-ones, though here they are independent — is the sum of the individual
-expectations. This is the *linearity of expectation*, one of the most
-quietly powerful facts in all of mathematics. So the expected number of
-model primes up to *N* is simply the running total of the probabilities:
+Inside $H$, a number is "prime" — we will say **$H$-irreducible** — if it cannot be broken into a product of two smaller members of $H$. The crucial subtlety, the thing that makes this a genuine alternate universe rather than a relabeling, is that *the factors must themselves live in $H$*. We are only allowed to use the numbers of our world.
 
-> **The Cramér expectation sum.**
-> The expected number of random primes in the window from 2 to *N* is
-> $$ \mathrm{CramerSum}(N) \;=\; \sum_{n=2}^{N} \frac{1}{\log n}. $$
+Watch what this does to a familiar number: $9$. In ordinary arithmetic $9 = 3 \cdot 3$, so $9$ is not prime. But $3$ is not in $H$ — it leaves remainder $3$, not $1$, when divided by $4$. The only way to split $9$ using our numbers would require a factor of $3$, and that factor is forbidden. So inside $H$, the number $9$ is unbreakable. **In the counterfactual universe, $9$ is prime.**
 
-This finite sum is the deterministic skeleton of the entire random model.
-It is the model's prediction for π(*N*), the prime-counting function. Every
-other quantity in the theory — twin-prime counts, gap statistics, residue
-distributions — is built from sums and products of the same probabilities,
-and the behavior of this one sum controls them all. So we should understand
-it completely, and we do. Here is what is provably true about it.
+The same thing happens to $21 = 3 \cdot 7$ and to $49 = 7 \cdot 7$. Both $3$ and $7$ leave remainder $3$ modulo $4$, so both are exiled from $H$. With their only would-be factors banished, $21$ and $49$ become unbreakable too. Three ordinary composite numbers — $9$, $21$, $49$ — are promoted to primes the moment we change which numbers we are allowed to use.
 
-## What we can prove, exactly
+Let us state this carefully, because it is the engine of everything that follows.
 
-The beauty of the Cramér model is that its backbone requires no probability
-theory at all once the expectations are written down — it reduces to clean,
-honest real analysis about the function 1 / log *x*. Here are the results,
-each one fully proved and machine-verified.
+**Definition.** A number $n$ is **$H$-irreducible** if $n \geq 2$, $n$ lies in $H$ (that is, $n \equiv 1 \pmod 4$), and whenever $n = a \cdot b$ with both $a$ and $b$ in $H$, one of $a, b$ must equal $1$.
 
-**1. The terms are positive.** For every integer *n* ≥ 2, the logarithm
-log *n* is strictly positive (because *n* > 1), so each probability
-1 / log *n* is a genuine, strictly positive number. There are no degenerate
-or negative "probabilities" lurking in the sum.
+**Lemma.** *The numbers $9$, $21$, and $49$ are each $H$-irreducible.* The proof is a short finite check: for each of these numbers, list the ways it could factor with both parts in $H$, and observe that the only nontrivial factor available ($3$ or $7$) has the wrong remainder. There is simply nowhere for the factorization to go.
 
-**2. The probabilities decrease.** The function *x* ↦ 1 / log *x* is
-*antitone* — strictly decreasing — on the interval (1, ∞). Intuitively, as
-numbers get bigger, the logarithm in the denominator grows, so the chance of
-being prime steadily drops. Concretely, if 3 ≤ *m* ≤ *n*, then
-1 / log *n* ≤ 1 / log *m*. Primes thin out, exactly as they do in reality.
+## The theorem that survives: infinitely many primes
 
-**3. The expected count only grows.** The sum CramerSum(*N*) is monotone in
-*N*: enlarging the window from *N* to *M* ≥ *N* can only add more
-nonnegative terms, so CramerSum(*N*) ≤ CramerSum(*M*). The expected number
-of primes never decreases as we look farther out — an obvious-sounding fact
-that is nonetheless the foundation for comparing the model against the true
-π(*N*), which is also nondecreasing.
+Euclid's most famous theorem says the ordinary primes never run out. Does our deformed world also have infinitely many primes, or did we accidentally build a universe with only a handful?
 
-**4. The sum is trapped between two integrals.** This is the heart of the
-matter. A sum of values of a decreasing function can be compared to the area
-under that function's curve — the classic "Riemann sum" sandwich. We prove
-both halves of the sandwich:
+It has infinitely many — and we can point to exactly where they come from.
 
-> **Lower bound (right-Riemann comparison).** For *N* ≥ 3,
-> $$ \int_{2}^{N+1} \frac{dx}{\log x} \;\le\; \mathrm{CramerSum}(N). $$
+**Survivor 2 — infinitude of primes.** *There are infinitely many $H$-irreducible numbers.*
 
-> **Upper bound (left-Riemann comparison).** For *N* ≥ 3,
-> $$ \mathrm{CramerSum}(N) \;\le\; \frac{1}{\log 2} + \int_{2}^{N} \frac{dx}{\log x}. $$
+The reason is beautiful in its economy. Consider the ordinary primes that happen to leave remainder $1$ modulo $4$: numbers like $5, 13, 17, 29, 37, 41, \dots$. Each of these is already prime in the ordinary sense, so it certainly cannot be broken apart using the restricted numbers of $H$ — it cannot be broken apart *at all*. And since each leaves remainder $1$, each lives in $H$. So **every ordinary prime congruent to $1$ modulo $4$ is automatically an $H$-irreducible of our world.**
 
-The integral that appears here, ∫ dx / log x, is famous in its own right: it
-is (essentially) the **logarithmic integral** Li(*N*), the single best
-elementary approximation to π(*N*) known to mathematics. The fact that our
-random model's expectation is sandwiched between two copies of the
-logarithmic integral, differing only by a bounded constant, is a
-quantitative statement that **the Cramér model predicts π(N) ≈ Li(N)** — the
-refined form of the Prime Number Theorem, recovered from coin flips.
+Are there infinitely many such ordinary primes? Yes — this is a celebrated result of Dirichlet, whose theorem on primes in arithmetic progressions guarantees that the progression $1, 5, 9, 13, 17, \dots$ contains infinitely many primes. (In fact the special case of remainder $1$ modulo $4$ was known even earlier.) Every one of them lands in our world as a counterfactual prime. So the counterfactual primes never run out either.
 
-A subtle technical point makes this honest. One might want to compare the
-sum to the integral starting at *x* = 1, but 1 / log *x* blows up to
-infinity as *x* approaches 1 (since log 1 = 0). So the naive integral over
-[1, N] does not even exist. We sidestep the singularity by isolating the
-very first term, 1 / log 2, and integrating only over the safe range
-[2, N] where the integrand is perfectly tame. This is exactly the kind of
-careful bookkeeping that separates a heuristic from a theorem.
+This is a striking pattern: **the infinitude of primes is robust.** It does not care about the fine structure of which numbers we call prime. As long as our world is rich enough to import Dirichlet's primes, Euclid's promise carries over unchanged.
 
-**5. The growth rate is N / log N — the Prime Number Theorem order.** Even
-without invoking the integral, we can prove the model grows at the right
-speed by a wonderfully crude argument. Every one of the roughly *N* terms in
-the sum is at least as big as the smallest one, 1 / log *N* (since the terms
-decrease). So:
+## The theorem that shatters: unique factorization
 
-> **Crude count bound.** For *N* ≥ 2,
-> $$ \frac{N-1}{\log N} \;\le\; \mathrm{CramerSum}(N). $$
+Now for the casualty. We come to the Fundamental Theorem of Arithmetic — the guarantee of *one and only one* prime factorization. Does it survive?
 
-> **Explicit scale lower bound.** For *N* ≥ 2,
-> $$ \frac{N}{2\log N} \;\le\; \mathrm{CramerSum}(N). $$
+It does not. And the counterexample is small enough to hold in your hand.
 
-The number *N* / (2 log *N*) is, up to the harmless factor of 2, exactly the
-Prime Number Theorem estimate *N* / log *N*. So with nothing more than the
-observation that a decreasing sequence is bounded below by its last term, we
-have recovered the *order of growth* of the primes inside the random
-universe. No analytic machinery, no contour integrals, no zeta function —
-just counting.
+Consider the number $441$. It lives in $H$, since $441 = 4 \cdot 110 + 1$. Now factor it two ways:
 
-## Which theorems survive, and which collapse
+$$441 = 9 \cdot 49 \qquad \text{and} \qquad 441 = 21 \cdot 21.$$
 
-Now we come to the philosophical payoff. With the backbone in place, we can
-classify the great theorems of number theory by whether they survive the
-jump into Cramér's random world.
+Both are legitimate. Both use only numbers from our world. And — this is the whole point — every factor appearing in them ($9$, $49$, and $21$) is $H$-irreducible, a genuine prime of the counterfactual universe. So we have written $441$ as a product of counterfactual primes in two genuinely different ways. One factorization uses the primes $\{9, 49\}$; the other uses $\{21, 21\}$. These are not rearrangements of each other — the numbers involved are simply different.
 
-**The Prime Number Theorem: survives.** As we just saw, the expected count
-grows like *N* / log *N* and is pinned to the logarithmic integral. The PNT
-is fundamentally a *density* statement, and density is exactly what the
-model is calibrated to. It survives — in fact, it survives almost by
-definition, which is the whole point of choosing 1 / log *n* as the
-probability.
+**The casualty — unique factorization.** *In the counterfactual world, $441 = 9 \cdot 49 = 21 \cdot 21$ are two distinct factorizations into counterfactual primes.* The Fundamental Theorem of Arithmetic is false in this universe.
 
-**Dirichlet's theorem on primes in arithmetic progressions: survives.**
-Dirichlet proved that any arithmetic progression *a*, *a* + *q*,
-*a* + 2*q*, … with *a* and *q* sharing no common factor contains infinitely
-many primes. In the Cramér model, the coins are blind to arithmetic
-structure — the probability 1 / log *n* does not care whether *n* is even,
-or one more than a multiple of seven. So *every* residue class receives its
-proportional share of random primes, and each unbounded class collects
-infinitely many of them almost surely. Dirichlet survives, and in fact the
-model predicts *perfect* equidistribution with no bias between classes.
+It is worth savoring how this happens. In ordinary arithmetic, $441 = 3^2 \cdot 7^2$, a tidy prime factorization with the primes $3$ and $7$. But $3$ and $7$ are exiles from $H$. When we forbid them, the arithmetic has to route around them — and it can do so in more than one way. Bundling the exiled factors as $(3\cdot 3)(7 \cdot 7) = 9 \cdot 49$ gives one legal factorization; bundling them as $(3 \cdot 7)(3 \cdot 7) = 21 \cdot 21$ gives another. The forbidden numbers, unable to appear on their own, hide inside larger irreducibles — and they can hide in different disguises. Uniqueness dies.
 
-**Unique factorization: collapses — completely.** This is the dramatic
-casualty. The Fundamental Theorem of Arithmetic says every integer factors
-into primes in exactly one way. But the Cramér primes are just a random
-subset of the integers; they have no multiplicative meaning whatsoever. The
-number 12 is not "2 × 2 × 3" in this universe, because "2" and "3" are
-random labels, not building blocks. There is no operation under which the
-random primes generate the integers. Multiplicative structure — the very
-soul of classical number theory — is gone. The model knows about *how many*
-primes there are and *where* they sit on the number line, but nothing about
-*why* they are prime. This is the model's great blind spot, and recognizing
-it is essential to using the model wisely.
+## The moral: which laws are load-bearing?
 
-**The Riemann Hypothesis: holds almost surely.** Here is the most tantalizing
-result of the whole program, and one of Cramér's original motivations. The
-Riemann Hypothesis, in its number-theoretic form, is equivalent to a sharp
-bound on the *error* between π(*N*) and Li(*N*): the error should be no
-larger than about √*N* · log *N*. In the random model, the error is a sum of
-independent mean-zero fluctuations, and the law of large numbers (more
-precisely, results on sums of independent random variables) forces that
-error to be of size roughly √*N*, with logarithmic corrections — comfortably
-within the Riemann bound. The upshot, established by Cramér himself, is that
-**the Riemann Hypothesis holds almost surely in the random model.** The
-counterfactual universe satisfies RH with probability one. This does not
-prove RH for the real primes — the real primes are not random — but it tells
-us that RH is exactly the kind of statement we should *expect* to be true,
-and that any disproof would have to exploit some special, non-random
-conspiracy among the genuine primes.
+Step back and look at the scoreboard of our experiment. We deformed number theory by remembering only remainders modulo $4$, keeping the residue-$1$ numbers. Then:
 
-## The fingerprints of non-randomness
+- **Multiplicative closure survived.** You can still multiply.
+- **Infinitude of primes survived.** They still never run out.
+- **Unique factorization collapsed.** The very first casualty, visible already at $441$.
 
-The places where the model and reality *disagree* are just as illuminating as
-where they agree. The most famous disagreement concerns **twin primes** and
-other prime constellations. The Cramér model predicts that the number of
-twin primes (pairs *p*, *p* + 2 both prime) up to *N* should be about the
-integral of 1 / (log *t*)², because two independent coins both landing
-"prime" has probability 1 / (log *n* · log(*n*+2)) ≈ 1 / (log *n*)². But the
-true count, conjectured by Hardy and Littlewood, carries an extra constant —
-the famous *twin prime constant* of about 1.32 — that the naive model misses.
+This dividing line is the real discovery. It tells us that infinitude of primes and the multiplicative skeleton of arithmetic are *coarse* facts — they are robust, they hold in a whole family of alternate arithmetics, and they do not depend on the precise identity of the primes. Unique factorization, by contrast, is a *fine* fact. It is delicate. It is the first thing to break when you disturb the primes even slightly, and its breakage is structural, not a fluke of small numbers.
 
-That discrepancy is not a failure; it is a measurement. The gap between the
-Cramér prediction and the truth is precisely the *singular series*, a
-correction factor that encodes all the multiplicative biases the random
-model throws away. In other words, by subtracting the random baseline from
-reality, number theorists isolate exactly the part of prime behavior that is
-genuinely arithmetic rather than statistical. The model is most valuable not
-when it is right, but when its errors are well understood.
+There is a natural way to see why the collapse is not an accident. The Hilbert world is defined by insisting on a single admitted remainder, $1$, out of the group of possible remainders $\{1, 3\}$ that are coprime to $4$. That group has two elements; we kept only one. This "index two" — throwing away half of the allowed remainders — is exactly what leaves room for exiled factors like $3$ and $7$ to reappear in multiple disguises. The moment the admitted remainders stop forming the *full* set of units, uniqueness has an opening to fail. One expects, and can begin to prove, that a similar dichotomy holds for every modulus: keep all the coprime remainders and factorization stays unique; keep a proper subset and it must eventually fail.
 
-## Why a cryptographer should care
+## Why counterfactuals matter
 
-This is filed under cryptography for a concrete reason. Modern public-key
-cryptography — RSA, Diffie–Hellman, and their descendants — runs on our
-ability to *find large primes quickly* and to estimate *how many primes* live
-in a given range. Both tasks lean on the heuristic that primes behave like a
-random set of density 1 / log *n*.
+Asking "what if the primes were different?" is not idle whimsy. It is how mathematicians discover which of their theorems are truly fundamental and which are lucky features of the integers we happen to live with. The Hilbert monoid is a laboratory: cheap to build, easy to compute in, and yet rich enough to separate the robust from the fragile.
 
-When a cryptographic library generates a 2048-bit RSA key, it picks random
-odd numbers and tests them for primality, and it relies on the Cramér-style
-estimate that roughly one in every log(2²⁰⁴⁸) ≈ 1420 candidates will be
-prime, so a successful key is found after a manageable number of tries. The
-expected-count sum we analyzed above — CramerSum(*N*) — is, quite literally,
-the back-of-the-envelope calculation behind every key-generation routine.
-Proving rigorous upper and lower bounds on it, sandwiching it between
-logarithmic integrals and pinning its *N* / log *N* growth, turns a
-heuristic into a guarantee about how long key generation should take.
+The same style of question reaches much further. One can ask what happens in a *random* number theory, where each whole number $n$ is declared "prime" independently with probability roughly $1/\log n$ — mimicking the density with which real primes actually appear. In such a random universe, Dirichlet-type statements about how primes distribute themselves are expected to survive almost surely, precisely because they are coarse, statistical facts; but the rigid clockwork of unique factorization has no reason to hold at all. The pattern we found in the small, exact world of $H$ appears to be a shadow of a much larger truth.
 
-The same model underpins the security analysis of schemes that depend on the
-*gaps* between primes, on the difficulty of factoring (which the
-unique-factorization collapse reminds us is a genuinely multiplicative, and
-therefore non-random, phenomenon), and on the distribution of primes in
-residue classes that show up in elliptic-curve and lattice constructions.
-Understanding precisely *where* the random model is trustworthy and *where*
-it lies is, for a cryptographer, the difference between a sound security
-proof and a dangerous illusion.
-
-## The view from the counterfactual
-
-Cramér's model is a philosophical instrument disguised as a calculation. By
-imagining a world where the primes really are random, we get a null
-hypothesis for all of number theory: a precise prediction of what "no special
-structure" would look like. Theorems that depend only on density — the Prime
-Number Theorem, Dirichlet's theorem, the Riemann Hypothesis — survive the
-transition, telling us they are, in a deep sense, *robust* statistical facts.
-Theorems that depend on multiplication — unique factorization above all —
-shatter, telling us they encode something the coins can never see.
-
-And the residue, the part that survives neither cleanly nor catastrophically
-— the twin-prime constant, the singular series, the subtle gap statistics —
-is where the real mathematics lives. The Cramér model draws the map of the
-ordinary so that the extraordinary stands out in relief.
-
-We have made the backbone of this map completely rigorous. The expected
-prime count is a positive, increasing, decreasing-termed sum, trapped
-between two logarithmic integrals and growing at the Prime Number Theorem
-rate of *N* / log *N*. From this modest, fully proven foundation, the entire
-edifice of probabilistic number theory — and the heuristics that secure our
-digital communications — takes its first solid step.
+And that is the quiet lesson of counterfactual number theory. The primes are not a monolith of equally sacred laws. Some of what they give us is structural and portable, carried along by nothing more than closure and abundance. Some of it — the crown jewel, unique factorization — is a rare gift, easily lost, and all the more precious for how fragile it turns out to be.

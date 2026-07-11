@@ -841,6 +841,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle c99af430 (Q=0.830) proved 0 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_c99af430_8634685f",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "c99af430",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:37.304151+00:00",
+    "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle cd5a9d7d (Q=0.820) proved 11 theorems in Pythagorean but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeat",
     "domains": [
       "Pythagorean"
@@ -881,21 +895,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T04:08:16.263156+00:00",
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
-  },
-  {
-    "consumed_by_exp_id": "c99af430",
-    "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0997",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T06:55:55.372602+00:00",
-    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
     "consumed_by_exp_id": "",
@@ -7060,6 +7059,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T08:51:18.956175+00:00",
     "title": "This project formalizes a model of hypercomputation, the physical-precision"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Paradoxes as Theorems\n\nThis cycle reduced the Liar, Russell, and Berry paradoxes to a single algebraic\nphenomenon \u2014 a *designated fixed point of negation* \u2014 and built a finite,\nsound, non-explosive theory that asserts all three while reflecting its own\nsoundness. The following conjectures push that finding further.\n\n## Conjecture 1 \u2014 The inconsistency degree is a genuine hierarchy invariant\n\nFor each `n`, there is a sound, non-explosive theory whose inconsistency degree\nis exactly `n`, and no sound theory with degree `n` can be collapsed to one of\ndegree `< n` without either dropping a paradox from its theorems or validating\nexplosion.\n\n*The key insight is* that gluts are not interchangeable book-keeping tokens but\nare individuated by which self-negating sentences a theory commits to, so the\ncount of gluts becomes a bona fide structural invariant of the theory rather than\nan artifact of presentation.\n\n*Why now?* We have, for the first time, a definition of inconsistency degree that\nis provably stable under the soundness and non-explosion constraints, which turns\na previously informal \"amount of contradiction\" into a measurable quantity.\n\n## Conjecture 2 \u2014 Self-soundness is available exactly when bivalence fails\n\nA coherent theory can contain a provable sentence whose designated status tracks\nits own soundness if and only if its value algebra admits a designated fixed point\nof negation; in particular no bivalent theory admits internal self-soundness.\n\n*The key insight is* that Tarski-style undefinability is powered specifically by\nthe *uniqueness* of the classical negation involution's lack of fixed points, so\nthe barrier dissolves precisely when a designated fixed point is introduced \u2014\nmaking self-soundness and paraconsistency two faces of the same algebraic fact.\n\n*Why now?* The explicit reflection result of this cycle shows one direction\nconcretely; the converse is a sharp, testable algebraic characterization that\nwould fully explain when self-referential soundness is possible.\n\n## Conjecture 3 \u2014 A compositional paradox calculus\n\nThe self-negating core generalizes: for every endomorphism `f` of the sentence\nalgebra whose induced action on values has a designated fixed point, there is a\nsound non-explosive theory in which every `f`-fixed sentence is a provable glut,\nand the Liar/Russell/Berry cases are the involutive instances.\n\n*The key insight is* that \"self-reference\" is exactly \"being a fixed point of a\nsyntactic endomorphism,\" so paradoxes form a category indexed by such\nendomorphisms rather than a short ad-hoc list.\n\n*Why now?* Having factored three classical paradoxes through one fixed-point lemma,\nthe natural next step is to vary the operator and map the entire landscape of\nconstructible self-referential theorems.\n\n## Conjecture 4 \u2014 Distributivity is the boundary of tame inconsistency\n\nThe four-valued algebra used here is a distributive De Morgan algebra; any value\nalgebra that supports a designated negation fixed point *and* remains distributive\nyields a non-explosive theory, whereas dropping distributivity reintroduces\nderivations that collapse gluts into triviality.\n\n*The key insight is* that it is the lattice-theoretic tameness of the connectives,\nnot merely the presence of a glut, that keeps inconsistency from spreading, so\ndistributivity is the precise structural firewall against explosion.\n\n*Why now?* The distributive-lattice laws for the connectives are now established\nalongside the paradox construction, making it possible to test whether relaxing\nthem is what actually breaks non-explosion.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1009",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c99af430",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:32.151438+00:00",
+    "title": "This cycle reduced the Liar, Russell, and Berry paradoxes to a single algebraic"
   },
   {
     "consumed_by_exp_id": "",

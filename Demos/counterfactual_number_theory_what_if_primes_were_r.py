@@ -1,216 +1,175 @@
 """
-Counterfactual Number Theory: What If Primes Were Random?
-=========================================================
+Counterfactual Number Theory: What If Primes Were Different?
 
-Numerical demonstrations of the deterministic backbone of Cramer's
-probabilistic model of the primes (1936), in which an integer n is declared
-"prime" independently with probability p(n) = 1 / log n.
+A fully self-contained numerical exploration of the Hilbert monoid
 
-The master quantity is the Cramer expectation sum
+    H = { n in N : n = 1 (mod 4) } = {1, 5, 9, 13, 17, 21, 25, 29, ...}
 
-    CramerSum(N) = sum_{n=2}^{N} 1 / log n,
+and its "counterfactual primes" (the H-irreducible elements).
 
-the model's prediction for the prime-counting function pi(N). This script
-verifies, numerically, every result proved in the accompanying paper:
+We demonstrate the three headline results:
 
-  * positivity and antitonicity of the summand 1 / log n,
-  * monotonicity of the partial sums,
-  * the two-sided sum-vs-integral sandwich
-        Li(2, N+1)  <=  CramerSum(N)  <=  1/log 2 + Li(2, N),
-  * the explicit Prime-Number-Theorem-order lower bound
-        N / (2 log N)  <=  CramerSum(N),
-  * the agreement CramerSum(N) ~ Li(N) ~ pi(N),
-  * the expected twin-prime / k-tuple counts.
+  1. Multiplicative closure SURVIVES: H is a submonoid of (N, *).
+  2. Infinitude of primes SURVIVES: rational primes p = 1 (mod 4) are
+     H-irreducible, and there are infinitely many of them (Dirichlet).
+  3. Unique factorization COLLAPSES: 441 = 9 * 49 = 21 * 21, with
+     9, 21, 49 all H-irreducible and {9, 49} != {21, 21}.
 
-Self-contained: standard library only.
+Run:  python demo.py
 """
 
 from __future__ import annotations
 
-import math
-from typing import Callable, List, Tuple
+from collections import Counter
+from typing import Iterator
 
 
-# --------------------------------------------------------------------------
-# Core definitions
-# --------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Core predicates
+# ---------------------------------------------------------------------------
 
-def cramer_weight(n: int) -> float:
-    """The Cramer prime probability p(n) = 1 / log n for n >= 2."""
+def in_H(n: int) -> bool:
+    """Membership in the Hilbert monoid H = {n : n = 1 (mod 4)}."""
+    return n % 4 == 1
+
+
+def is_prime(n: int) -> bool:
+    """Ordinary primality test by trial division."""
     if n < 2:
-        raise ValueError("Cramer weight defined for n >= 2")
-    return 1.0 / math.log(n)
+        return False
+    if n % 2 == 0:
+        return n == 2
+    d = 3
+    while d * d <= n:
+        if n % d == 0:
+            return False
+        d += 2
+    return True
 
 
-def cramer_sum(N: int) -> float:
-    """CramerSum(N) = sum_{n=2}^{N} 1 / log n (expected # of random primes)."""
-    return sum(cramer_weight(n) for n in range(2, N + 1))
-
-
-def log_integral(a: float, b: float, steps: int = 200_000) -> float:
-    """Numerical logarithmic integral Li(a, b) = int_a^b dx / log x.
-
-    Uses the composite Simpson rule. The integrand 1/log x is smooth on
-    (1, inf); we anchor at a >= 2 to avoid the singularity at x = 1.
+def is_H_irreducible(n: int) -> bool:
     """
-    if a <= 1.0:
-        raise ValueError("integrand 1/log x is singular at x = 1; need a > 1")
-    if b <= a:
-        return 0.0
-    if steps % 2 == 1:
-        steps += 1
-    h = (b - a) / steps
-    f: Callable[[float], float] = lambda x: 1.0 / math.log(x)
-    total = f(a) + f(b)
-    for i in range(1, steps):
-        total += (4.0 if i % 2 == 1 else 2.0) * f(a + i * h)
-    return total * h / 3.0
-
-
-def sieve_primes(N: int) -> List[int]:
-    """The genuine primes up to N via the sieve of Eratosthenes."""
-    if N < 2:
-        return []
-    is_prime = bytearray([1]) * (N + 1)
-    is_prime[0] = is_prime[1] = 0
-    for i in range(2, int(N ** 0.5) + 1):
-        if is_prime[i]:
-            is_prime[i * i: N + 1: i] = bytearray(len(range(i * i, N + 1, i)))
-    return [i for i in range(2, N + 1) if is_prime[i]]
-
-
-def prime_pi(N: int) -> int:
-    """The true prime-counting function pi(N)."""
-    return len(sieve_primes(N))
-
-
-# --------------------------------------------------------------------------
-# Demonstrations of the proved theorems
-# --------------------------------------------------------------------------
-
-def demo_positivity_and_antitone(N: int = 12) -> None:
-    """Lemmas 3.2 and 3.4: terms are positive and strictly decreasing."""
-    print("=" * 70)
-    print("Summand p(n) = 1 / log n : positive and (for n >= 3) decreasing")
-    print("=" * 70)
-    prev = float("inf")
-    for n in range(2, N + 1):
-        w = cramer_weight(n)
-        flag = "  (decreasing)" if n >= 3 and w <= prev else ""
-        print(f"  n = {n:2d}   p(n) = {w:.6f}{flag}")
-        prev = w
-    print()
-
-
-def demo_monotone_partial_sums(values: Tuple[int, ...] = (10, 50, 100, 500)) -> None:
-    """Lemma 3.5: CramerSum is monotone in N."""
-    print("=" * 70)
-    print("Monotonicity of CramerSum(N)")
-    print("=" * 70)
-    prev = -1.0
-    for N in values:
-        s = cramer_sum(N)
-        print(f"  CramerSum({N:4d}) = {s:12.5f}   {'<=' if s >= prev else '!!'} previous")
-        prev = s
-    print()
-
-
-def demo_integral_sandwich(values: Tuple[int, ...] = (10, 100, 1000, 10000)) -> None:
-    """Theorems 3.6-3.7 and Corollary 3.8: the two-sided integral sandwich."""
-    print("=" * 70)
-    print("Sum-vs-integral sandwich:  Li(2,N+1) <= CramerSum(N) <= 1/log2 + Li(2,N)")
-    print("=" * 70)
-    inv_log2 = 1.0 / math.log(2.0)
-    print(f"  {'N':>6} | {'lower=Li(2,N+1)':>16} | {'CramerSum(N)':>15} | "
-          f"{'upper':>15} | {'in bounds':>9}")
-    for N in values:
-        lo = log_integral(2.0, N + 1.0)
-        cs = cramer_sum(N)
-        hi = inv_log2 + log_integral(2.0, float(N))
-        ok = lo <= cs <= hi
-        print(f"  {N:>6} | {lo:>16.5f} | {cs:>15.5f} | {hi:>15.5f} | {str(ok):>9}")
-    print()
-
-
-def demo_scale_lower_bound(values: Tuple[int, ...] = (10, 100, 1000, 100000)) -> None:
-    """Theorem 3.10: N / (2 log N) <= CramerSum(N) (PNT-order growth)."""
-    print("=" * 70)
-    print("Explicit PNT-order lower bound:  N / (2 log N) <= CramerSum(N)")
-    print("=" * 70)
-    for N in values:
-        bound = N / (2.0 * math.log(N))
-        cs = cramer_sum(N)
-        print(f"  N = {N:6d}   N/(2 log N) = {bound:12.4f}   "
-              f"CramerSum = {cs:12.4f}   holds = {bound <= cs}")
-    print()
-
-
-def demo_model_vs_reality(values: Tuple[int, ...] = (100, 1000, 10000, 100000)) -> None:
-    """Compare the random-model prediction to the genuine primes."""
-    print("=" * 70)
-    print("Model vs reality:  CramerSum(N)  ~  Li(N)  ~  pi(N)")
-    print("=" * 70)
-    print(f"  {'N':>7} | {'pi(N) (true)':>13} | {'CramerSum(N)':>13} | "
-          f"{'Li(2,N)':>13} | {'CS/pi':>7}")
-    for N in values:
-        pi = prime_pi(N)
-        cs = cramer_sum(N)
-        li = log_integral(2.0, float(N))
-        ratio = cs / pi if pi else float("nan")
-        print(f"  {N:>7} | {pi:>13} | {cs:>13.3f} | {li:>13.3f} | {ratio:>7.4f}")
-    print()
-
-
-def expected_tuple_count(N: int, offsets: Tuple[int, ...]) -> float:
-    """Expected # of n in [2,N] with all n+h (h in offsets) random-prime.
-
-    By independence this is sum_n prod_h p(n+h). For offsets=(0,2) this is
-    the model's expected twin-prime count.
+    An H-irreducible (counterfactual prime): n >= 2, n in H, and n admits no
+    nontrivial factorization a*b = n with BOTH a, b in H (a, b > 1).
     """
-    total = 0.0
-    for n in range(2, N + 1):
-        prod = 1.0
-        for h in offsets:
-            m = n + h
-            if m >= 2:
-                prod *= cramer_weight(m)
-            else:
-                prod = 0.0
+    if n < 2 or not in_H(n):
+        return False
+    a = 1
+    while a * a <= n:
+        if n % a == 0:
+            b = n // a
+            if a > 1 and b > 1 and in_H(a) and in_H(b):
+                return False
+        a += 1
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Factorization into H-irreducibles
+# ---------------------------------------------------------------------------
+
+def H_factorizations(n: int) -> list[tuple[int, ...]]:
+    """
+    Return all factorizations of n (in H) into H-irreducibles, as sorted
+    tuples, de-duplicated so that reorderings count once.
+    """
+    irr = [m for m in range(2, n + 1) if is_H_irreducible(m)]
+    results: set[tuple[int, ...]] = set()
+
+    def rec(rem: int, start: int, acc: list[int]) -> None:
+        if rem == 1:
+            if acc:
+                results.add(tuple(sorted(acc)))
+            return
+        for p in irr:
+            if p < start:
+                continue
+            if p > rem:
                 break
-        total += prod
-    return total
+            if rem % p == 0:
+                acc.append(p)
+                rec(rem // p, p, acc)
+                acc.pop()
+
+    rec(n, 2, [])
+    return sorted(results)
 
 
-def demo_twin_primes(values: Tuple[int, ...] = (1000, 10000, 100000)) -> None:
-    """Expected twin-prime count and the Hardy-Littlewood discrepancy."""
+# ---------------------------------------------------------------------------
+# Demonstrations
+# ---------------------------------------------------------------------------
+
+def demo_closure(limit: int = 200) -> None:
+    """Result 1: H is closed under multiplication (checked exhaustively)."""
     print("=" * 70)
-    print("Expected twin primes (offsets {0,2}) vs true count")
-    print("  Hardy-Littlewood constant 2*C2 ~ 1.3203 is the model's blind spot")
+    print("RESULT 1  -  Multiplicative structure SURVIVES")
     print("=" * 70)
-    for N in values:
-        model = expected_tuple_count(N, (0, 2))
-        primes = set(sieve_primes(N + 2))
-        true_twins = sum(1 for p in primes if (p + 2) in primes and p <= N)
-        ratio = true_twins / model if model else float("nan")
-        print(f"  N = {N:6d}   model = {model:10.3f}   true = {true_twins:6d}   "
-              f"true/model = {ratio:6.4f}")
+    members = [n for n in range(1, limit) if in_H(n)]
+    print(f"H below {limit}: {members[:15]} ...")
+    print(f"1 in H? {in_H(1)}")
+    ok = all(in_H(a * b) for a in members for b in members if a * b < limit * limit)
+    print(f"Closure a,b in H  =>  a*b in H : verified = {ok}")
+    print()
+
+
+def demo_infinitude(limit: int = 100) -> None:
+    """Result 2: rational primes = 1 (mod 4) are counterfactual primes."""
+    print("=" * 70)
+    print("RESULT 2  -  Infinitude of primes SURVIVES (via Dirichlet)")
+    print("=" * 70)
+    dirichlet = [p for p in range(2, limit) if is_prime(p) and p % 4 == 1]
+    print(f"Rational primes = 1 (mod 4) below {limit}:")
+    print(f"  {dirichlet}")
+    all_irr = all(is_H_irreducible(p) for p in dirichlet)
+    print(f"Each is H-irreducible: {all_irr}")
+    counter_primes = [n for n in range(2, limit) if is_H_irreducible(n)]
+    print(f"All counterfactual primes below {limit}:")
+    print(f"  {counter_primes}")
+    print("(Note 9, 21, 25, 49, ... are promoted despite being composite.)")
+    print()
+
+
+def demo_unique_factorization_fails() -> None:
+    """Result 3: unique factorization collapses at 441."""
+    print("=" * 70)
+    print("RESULT 3  -  Unique factorization COLLAPSES")
+    print("=" * 70)
+    for n in (9, 21, 49):
+        print(f"  {n} is H-irreducible: {is_H_irreducible(n)}   "
+              f"(ordinary factorization forbidden: 3, 7 = 3 mod 4)")
+    print(f"  9 * 49 = {9 * 49},   21 * 21 = {21 * 21}")
+    facs = H_factorizations(441)
+    print(f"  Factorizations of 441 into counterfactual primes: {facs}")
+    ms1, ms2 = Counter([9, 49]), Counter([21, 21])
+    print(f"  Multisets differ: {{9,49}} != {{21,21}}  ->  {ms1 != ms2}")
+    print(f"  Fundamental Theorem of Arithmetic FAILS in H: "
+          f"{len(facs) >= 2}")
+    print()
+
+
+def demo_search_smallest_witness(limit: int = 600) -> None:
+    """Confirm 441 is the SMALLEST element of H with non-unique factorization."""
+    print("=" * 70)
+    print("RESULT 3b  -  441 is the minimal witness")
+    print("=" * 70)
+    witnesses: list[int] = []
+    for n in range(5, limit + 1):
+        if in_H(n) and len(H_factorizations(n)) >= 2:
+            witnesses.append(n)
+    print(f"Elements of H below {limit} with >= 2 factorizations:")
+    print(f"  {witnesses[:10]}")
+    if witnesses:
+        print(f"Smallest witness: {witnesses[0]}")
     print()
 
 
 def main() -> None:
-    print()
-    print("#" * 70)
-    print("#  COUNTERFACTUAL NUMBER THEORY: WHAT IF PRIMES WERE RANDOM?")
-    print("#  Cramer model  --  p(n) = 1 / log n")
-    print("#" * 70)
-    print()
-    demo_positivity_and_antitone()
-    demo_monotone_partial_sums()
-    demo_integral_sandwich()
-    demo_scale_lower_bound()
-    demo_model_vs_reality()
-    demo_twin_primes()
-    print("All proved theorems verified numerically.")
+    print("\nCOUNTERFACTUAL NUMBER THEORY  -  the Hilbert monoid H = {n = 1 mod 4}\n")
+    demo_closure()
+    demo_infinitude()
+    demo_unique_factorization_fails()
+    demo_search_smallest_witness()
+    print("Summary: closure survives, infinitude survives, uniqueness collapses.")
 
 
 if __name__ == "__main__":
