@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "90792fe8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Algebraic Geometry of ReLU Decision Boundaries\n\nThis cycle established two structural results about rectifier networks:\n\n1. **A depth-free characterization.** A real-valued functi",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 29,
-      "timestamp": "2026-07-10T19:15:53",
-      "title": "Deepening: Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-    },
-    {
       "cycle_id": "3a52b537",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nThis project formalizes the constructive core of the probabilistic method around three\nErdős-flavoured results. What is proved and what remains:\n\n## What is proved (0 sorries)\n\n##",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-11T11:42:29",
       "title": "Deepening: Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "cycle_id": "a0852bd7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Anti-Mathematics\n\nThis project formalises three of the ZFC \"anti-axioms\" from the mission via\nexplicit, fully verified models, built as a chain of results.\n\n## What is proved\n\n**",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 45,
+      "timestamp": "2026-07-11T11:59:05",
+      "title": "Anti-Mathematics: What If All Axioms Were Negated?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3fe1db8c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's study of intersecting families of permutations and the\nfixed-point bridge that recasts coordinate-agreement as a derangement condition.\n\n## 1. The matchi",
-      "quality_score": 0.8246161538461538,
-      "sorry_count": 3,
-      "theorem_count": 13,
-      "timestamp": "2026-07-03T19:50:08",
-      "title": "Proving the Existence of a Sufficiently Large Extremal Family"
-    },
     {
       "cycle_id": "bb55b186",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-11T11:42:29",
       "title": "Deepening: Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "cycle_id": "a0852bd7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Anti-Mathematics\n\nThis project formalises three of the ZFC \"anti-axioms\" from the mission via\nexplicit, fully verified models, built as a chain of results.\n\n## What is proved\n\n**",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 45,
+      "timestamp": "2026-07-11T11:59:05",
+      "title": "Anti-Mathematics: What If All Axioms Were Negated?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a547c760",
-      "domain": "Applications",
-      "name": "microConstant_unique",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "a547c760",
-      "domain": "Applications",
-      "name": "microWeighting_unique",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "a547c760",
-      "domain": "Applications",
-      "name": "microWeighting_exists",
-      "quality": 0.72
-    },
     {
       "cycle_id": "08430233",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "tsum_harmonicTerm_eq_top",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a0852bd7",
+      "domain": "Applications",
+      "name": "not_mem_zero",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "a0852bd7",
+      "domain": "Applications",
+      "name": "extensionality",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "a0852bd7",
+      "domain": "Applications",
+      "name": "mem_lt",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-11T11:42:29",
+  "last_updated": "2026-07-11T11:59:05",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "493ee817",
-        "quality": 0.78,
-        "theorems": 9,
-        "title": "Close Proofs: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-      },
-      {
         "cycle_id": "f57636f1",
         "quality": 0.82,
         "theorems": 48,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 8,
         "title": "Deepening: Counterfactual Number Theory: What If Primes Were Random?"
+      },
+      {
+        "cycle_id": "a0852bd7",
+        "quality": 0.8,
+        "theorems": 45,
+        "title": "Anti-Mathematics: What If All Axioms Were Negated?"
       }
     ],
     "Bridges": [

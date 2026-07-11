@@ -555,6 +555,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a0852bd7 (Q=0.800), which proved 45 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are c",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_a0852bd7_ed5958cd",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a0852bd7",
+    "status": "available",
+    "timestamp": "2026-07-11T11:59:05.893508+00:00",
+    "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle a6f348ea (Q=0.800), which proved 20 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algeb",
     "domain_bridges": [],
     "domains": [
@@ -996,26 +1015,6 @@
     "status": "failed",
     "timestamp": "2026-07-09T23:08:57.326588+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "a0852bd7",
-    "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0981",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T02:50:51.916559+00:00",
-    "title": "Anti-Mathematics: What If All Axioms Were Negated?"
   },
   {
     "ambition_level": "extension",
@@ -1502,6 +1501,25 @@
     "status": "in_progress",
     "timestamp": "2026-07-11T10:48:07.123829+00:00",
     "title": "Infinite Games Against Death: Immortality Strategies"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1030",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T11:58:38.387262+00:00",
+    "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
     "ambition_level": "extension",
@@ -10283,26 +10301,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2c395553",
-    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_1021",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T10:30:56.252014+00:00",
-    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
     "domain_bridges": [],
@@ -12356,6 +12354,46 @@
     "status": "available",
     "timestamp": "2026-07-11T11:42:24.118364+00:00",
     "title": "This cycle added a **cross-domain connector**"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Anti-Mathematics\n\nThis project formalises three of the ZFC \"anti-axioms\" from the mission via\nexplicit, fully verified models, built as a chain of results.\n\n## What is proved\n\n**`AckermannModel.lean` — negating Infinity (⇒ hereditarily finite sets).**\nThe carrier `ℕ` with Ackermann membership `a ∈ₐ b ↔ Nat.testBit b a` is shown to\nmodel `ZF − Infinity + ¬Infinity`:\n- `not_mem_zero`, `empty_set` — empty set;\n- `extensionality` — Extensionality;\n- `mem_lt`, `not_mem_self`, `foundation_wf`, `regularity` — Foundation/Regularity;\n- `pairing`, `binUnion` — Pairing and binary union;\n- `union` — the full **Union** axiom `⋃ a` (members of members of `a`);\n- `subset_iff`, `powerSet` — the subset relation in bit form and the full\n  **Power Set** axiom `𝒫 a`;\n- `adjoin`/`succ` with `mem_adjoin`/`mem_succ` — adjunction and successor;\n- `anti_infinity` (main theorem) — **no set is inductive**, so Infinity fails.\n\n**`NonExtensional.lean` — negating Extensionality (⇒ indistinguishable sets).**\nThe universe `V = Option ℕ` adds a duplicate empty set `none`:\n- `non_extensionality` — distinct objects with the same members exist;\n- `indist_equiv` — indistinguishability is an equivalence;\n- `indist_some`, `indist_none` — genuine sets stay faithfully separated;\n- `membership_not_congruent` — membership is not a congruence, the obstruction to\n  quotienting back to an extensional universe.\n\n**`AntiFoundation.lean` — negating Foundation (⇒ non-well-founded sets).**\nThe universe `W = Option ℕ` adds a Quine atom `Ω = {Ω}` (`none`) to the genuine\nAckermann sets:\n- `genuine_foundation` — on the genuine sets membership is still well-founded\n  (the contrast baseline);\n- `omega_self_mem`, `omega_mem_iff` — `Ω ∈ Ω` and `Ω = {Ω}`;\n- `not_mem_self_genuine`, `omega_distinct` — genuine sets are self-membership-free\n  and the atom stays distinguishable (Extensionality is *not* what fails);\n- `regularity_fails` — `Ω` is a nonempty set with no `∈`-minimal member;\n- `anti_foundation` (main theorem) — membership in `W` is **not** well-founded.\n\n## Natural next steps\n\n1. **Separation and Replacement schemas.** For any decidable predicate, build the\n   subset `{x ∈ₐ a | p x}` explicitly (a finite bit-selection) and prove the\n   Separation schema; then Replacement over finite sets.\n\n2. **Ackermann is an isomorphism `(ℕ, ∈ₐ) ≅ (HF, ∈)`.** Connect to Mathlib's\n   hereditarily finite sets / `ZFSet` and prove the coding is an ∈-isomorphism.\n\n3. **Anti-Foundation, AFA form.** Building on `AntiFoundation.lean`, upgrade the\n   single Quine atom to a full Aczel-style universe of hypersets and prove the\n   anti-foundation axiom AFA-style unique-solution property (every graph has a\n   unique decoration).\n\n4. **Anti-Choice ⇒ measurability.** The mission's third strand: in the Solovay\n   model every set of reals is Lebesgue measurable. Formalising even a fragment\n   (e.g. that a `¬AC` context blocks the usual Vitali non-measurable construction)\n   is a substantial goal.\n\n5. **Consistency compatibility graph.** Systematise \"which anti-axioms are jointly\n   consistent\" by exhibiting a single model realising several negations at once\n   (e.g. `¬Infinity` is compatible with Extensionality, Foundation, Pairing, Union\n   — witnessed in `AckermannModel.lean`; `¬Foundation` is compatible with\n   Extensionality on the genuine sets — witnessed in `AntiFoundation.lean`; but\n   `¬Extensionality` is incompatible with a naive quotient, as\n   `membership_not_congruent` shows).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1031",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a0852bd7",
+    "status": "available",
+    "timestamp": "2026-07-11T11:59:00.558008+00:00",
+    "title": "This project formalises three of the ZFC \"anti-axioms\" from the mission via"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Dreamtime Algebra\n\nThe file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge\nbetween Australian Aboriginal kinship systems and finite group theory: the\nfour-section system is realized as the Klein four-group `ℤ/2 × ℤ/2`, the\neight-subsection system as `(ℤ/2)³`, marriage rules as coset restrictions, and\nthe subsection system as a `ℤ/2`-extension (double cover) of the section system.\nNatural extensions:\n\n## 1. General kinship-group framework\nAbstract the constructions into a `structure KinshipSystem` recording a finite\nabelian group `G`, distinguished \"descent\" and \"marriage\" elements, and the\nconsistency laws (`father = spouse + mother`). Prove a classification: any\nsystem whose transformation group is generated by commuting involutions is an\nelementary abelian 2-group `(ℤ/2)ⁿ`.\n\n## 2. Person-set actions\nModel an explicit finite population as a `G`-set (torsor) and prove that the\nregular action is simply transitive (already available here as\n`section4_simplyTransitive`). Develop \"relationship terms\" as group elements and\nprove closure properties (e.g. the set of realizable relationships is a\nsubgroup).\n\n## 3. Systems beyond `(ℤ/2)ⁿ`\nNot all kinship systems are elementary abelian. The Aranda system and various\nDravidian systems involve `ℤ/4` cycles (matri-/patri-cycles of period 4).\nFormalize these as `ℤ/2 × ℤ/4` or dihedral-type groups and characterize which\nmarriage rules yield consistent (associative, well-defined) descent algebras.\n\n## 4. Cohomological extensions\nFrame the section → subsection refinement as a group extension classified by\n`H²(ℤ/2 × ℤ/2, ℤ/2)`, and enumerate the inequivalent subsection systems as\nextension classes. This connects kinship refinement to group cohomology.\n\n## 5. Representation theory\nBecause the transformation group is abelian, its irreducible representations are\none-dimensional characters. Interpreting the characters (the \"sign patterns\" of\nmoieties) could give a spectral description of the moiety/section partitions.\n\n## 6. Category-theoretic bridge\nPackage kinship systems and structure-preserving maps into a category and show\nthe forgetful functor `Subsection ⤳ Section` is (co)fibered, tying the\nanthropological refinement relation to standard categorical machinery.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1032",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2c395553",
+    "status": "available",
+    "timestamp": "2026-07-11T11:59:08.201333+00:00",
+    "title": "The file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge"
   },
   {
     "ambition_level": "extension",

@@ -1,282 +1,347 @@
-# Dreamtime Algebra: A Rigorous Formalization of Aboriginal Kinship Systems as Finite Group Theory
+# Dreamtime Algebra: Aboriginal Kinship Systems as Finite Groups
 
 ## Abstract
 
-We present a complete formalization of Australian Aboriginal kinship systems — the 4-section (Kariera) and 8-subsection (Arrernte) systems — as finite groups, proving that these ancient social structures encode the Klein four-group Z₂ × Z₂ and the elementary abelian group Z₂ × Z₂ × Z₂ respectively. We establish that marriage rules correspond to fixed-point-free involutions (equivalently, coset translations), that cross-generational consistency is a consequence of commutativity, and that the 8-subsection system is a split group extension of the 4-section system. We prove several novel structural results: (1) in any group where every element is an involution, the group is necessarily abelian — showing that the kinship involution requirement *forces* commutativity; (2) the automorphism group of the 4-section system has exactly 6 elements, isomorphic to GL(2, F₂) ≅ S₃; (3) the kinship generators form a basis of a vector space over F₂, connecting kinship theory to linear algebra over finite fields. All results have been formally verified in Lean 4 with Mathlib.
+We give a precise group-theoretic account of the section and subsection kinship
+systems of Australian Aboriginal societies. Modeling the four-section
+(Kariera-type) system as the underlying set of the Klein four-group
+$\mathbb{Z}/2 \times \mathbb{Z}/2$ and the eight-subsection (Warlpiri-type)
+system as $(\mathbb{Z}/2)^3$, we realize the three fundamental kinship
+relations — mother-to-child descent, father-to-child descent, and marriage — as
+translations of the section set. We prove that each relation is an involution,
+that they commute, and that the descent rules are consistent (the father map is
+the composite of the marriage and mother maps). We show that the group generated
+by these permutations, the *kinship transformation group*, is isomorphic to the
+Klein four-group, exhibiting the anthropological classification as an explicit
+permutation representation in the sense of Cayley's theorem. We prove this group
+is genuinely $\mathbb{Z}/2 \times \mathbb{Z}/2$ and not the cyclic group
+$\mathbb{Z}/4$, that it acts simply transitively on the section set (a torsor
+structure), and that marriage rules are precisely coset restrictions relative to
+a distinguished *matrimoiety* subgroup. Finally we show the eight-subsection
+system is a $\mathbb{Z}/2$-extension — a double cover — of the four-section
+system, with transformation group $(\mathbb{Z}/2)^3$. All results are stated and
+proved from first principles over $\mathbb{Z}/2 \times \mathbb{Z}/2$ and
+$(\mathbb{Z}/2)^3$.
 
-**Keywords**: kinship systems, finite groups, elementary abelian groups, Klein four-group, coset theory, formal verification
+**Keywords:** kinship systems, Klein four-group, elementary abelian 2-group,
+coset, group extension, permutation representation, involution, torsor.
 
 ## 1. Introduction
 
-### 1.1 Historical Background
-
-The algebraic study of kinship systems was pioneered by André Weil in his 1949 appendix to Claude Lévi-Strauss's *The Elementary Structures of Kinship* [LS49, W49]. Weil observed that the marriage and descent rules of Australian Aboriginal kinship systems could be modeled using finite group theory. This observation has since been developed by numerous authors [K81, L07, R00], but to our knowledge, no complete formal verification of the group-theoretic structure has been undertaken.
-
-### 1.2 The Kinship Framework
-
-A **section system** divides a society into $n$ named sections. Two rules govern social relations:
-
-1. **Marriage rule** $\sigma$: A person in section $g$ may only marry someone in section $\sigma(g)$.
-2. **Descent rule** $\delta$: The child of a person in section $g$ belongs to section $\delta(g)$.
-
-For the system to be consistent:
-- Marriage must be **symmetric**: if $g$ marries $\sigma(g)$, then $\sigma(g)$ marries $g$, i.e., $\sigma^2 = \text{id}$.
-- Marriage must be **exogamous**: $\sigma(g) \neq g$ for all $g$ (no section is self-marrying).
-- **Cross-generational consistency**: if two people can marry, their respective children should also be eligible to marry.
-
-### 1.3 Main Results
-
-We prove the following, all formalized in Lean 4:
-
-**Theorem A** (Section 4–5). The 4-section system is isomorphic to $\mathbb{Z}_2 \times \mathbb{Z}_2$ (the Klein four-group), and the 8-subsection system is isomorphic to $\mathbb{Z}_2^3$. Every element has additive order dividing 2.
-
-**Theorem B** (Section 6). Translation by any nonzero element is fixed-point-free. The marriage relation is symmetric and irreflexive.
-
-**Theorem C** (Section 7). Marriage partners form cosets of the subgroup $\langle m \rangle$, and the number of cosets equals $|G|/2$.
-
-**Theorem D** (Section 8). The 8-subsection system is a split extension of the 4-section system via a surjective homomorphism with kernel $\mathbb{Z}_2$.
-
-**Theorem E** (Section 9). In any group where every element is an involution, the group is abelian. This forces kinship groups to be elementary abelian 2-groups.
-
-**Theorem F** (Section 10). The automorphism group of the 4-section system has order 6, isomorphic to $\text{GL}(2, \mathbb{F}_2) \cong S_3$.
-
-**Theorem G** (Section 11). The kinship sections form a vector space over $\mathbb{F}_2$, with marriage and descent as translations. The refinement map 8 → 4 is a linear surjection with 1-dimensional kernel.
-
-## 2. Definitions
-
-### 2.1 Section Types
-
-We define:
-- $\text{Section4} := \mathbb{Z}_2 \times \mathbb{Z}_2$ (the 4-section Kariera system)
-- $\text{Section8} := \mathbb{Z}_2 \times \mathbb{Z}_2 \times \mathbb{Z}_2$ (the 8-subsection system)
-
-### 2.2 Kinship Systems
-
-A **kinship system** on a finite abelian group $(G, +)$ consists of:
-- A **marriage element** $m \in G$ with $m \neq 0$
-- A **descent element** $d \in G$ with $d \neq 0$
-- **Independence**: $m \neq d$
-
-The **canonical Kariera system** has $m = (1, 0)$ and $d = (0, 1)$.
-The **canonical 8-subsection system** has $m = (1, 0, 0)$ and $d = (0, 1, 0)$.
-
-### 2.3 Marriage Relation
-
-The **marriage relation** $R_K$ on a kinship system $K = (G, m, d)$ is:
-$$R_K(g, h) \iff h = g + m$$
-
-### 2.4 Refinement Map
-
-The **refinement map** $\pi: \text{Section8} \to \text{Section4}$ is the projection $(a, b, c) \mapsto (a, b)$.
-
-## 3. Elementary Abelian Structure
-
-### 3.1 Involution Property
-
-**Theorem 3.1** (`section4_add_self`). For all $x \in \mathbb{Z}_2^2$, $x + x = 0$.
-
-**Theorem 3.2** (`subsection8_add_self`). For all $x \in \mathbb{Z}_2^3$, $x + x = 0$.
-
-*Proof sketch*. Each component lies in $\mathbb{Z}_2$, where $a + a = 0$ for all $a$. The result follows componentwise. □
-
-**Corollary 3.3** (`section4_neg_eq_self`). For all $x \in \mathbb{Z}_2^2$, $-x = x$.
-
-This means every kinship transformation is its own inverse — a fundamental requirement for symmetric social relations.
-
-### 3.2 Exponent
-
-**Theorem 3.4** (`section4_exponent`, `subsection8_exponent`). The additive exponent of both $\mathbb{Z}_2^2$ and $\mathbb{Z}_2^3$ is exactly 2.
-
-### 3.3 Non-Cyclicity
-
-**Theorem 3.5** (`section4_not_iso_Z4`). $\mathbb{Z}_4 \not\cong \mathbb{Z}_2 \times \mathbb{Z}_2$ as additive groups.
-
-*Proof sketch*. $\mathbb{Z}_4$ contains an element of order 4 (namely 1), but every element of $\mathbb{Z}_2^2$ has order dividing 2 by Theorem 3.1. An isomorphism would preserve orders, contradiction. □
-
-This result is crucial: it establishes that the 4-section kinship system is the Klein four-group, not the cyclic group of order 4.
-
-## 4. Fixed-Point-Free Marriage
-
-### 4.1 No Self-Marriage
-
-**Theorem 4.1** (`marriage_fixed_point_free_4`, `marriage_fixed_point_free_8`). For any nonzero $m$ in $\mathbb{Z}_2^n$ ($n = 2, 3$), the translation $x \mapsto x + m$ has no fixed points.
-
-*Proof*. If $x + m = x$, then $m = 0$, contradicting $m \neq 0$. □
-
-**Theorem 4.2** (`elementary_abelian_marriage_universal`). In any elementary abelian 2-group, every nonzero element yields a valid (fixed-point-free) marriage rule.
-
-This generalizes: the result holds in *any* finite abelian group where every element has order dividing 2.
-
-### 4.2 Marriage Graph Properties
-
-**Theorem 4.3** (`marriage_symmetric`). The marriage relation $R_K$ is symmetric.
-
-**Theorem 4.4** (`marriage_irreflexive`). The marriage relation $R_K$ is irreflexive.
-
-**Theorem 4.5** (`marriagePartner_involution`). The marriage partner function is an involution: $\sigma^2 = \text{id}$.
-
-**Theorem 4.6** (`marriagePartner_bijective`). The marriage partner function is a bijection.
-
-## 5. Coset Structure of Marriage Classes
-
-### 5.1 Marriage Subgroup
-
-**Theorem 5.1** (`marriage_subgroup_card`). For any nonzero $m \in \mathbb{Z}_2^2$, the subgroup $\langle m \rangle = \{0, m\}$ has cardinality 2.
-
-### 5.2 Coset Partition
-
-**Theorem 5.2** (`marriage_coset_count`). The quotient $\mathbb{Z}_2^2 / \langle m \rangle$ has exactly 2 elements (cosets).
-
-Each coset consists of a pair of sections that are mutual marriage partners. The marriage rule is precisely "sections in the same coset cannot marry; sections in different cosets can."
-
-### 5.3 Marriage Pair Count
-
-**Theorem 5.3** (`marriage_pairs_count`). The 4-section system has exactly 2 marriage pairs.
-
-## 6. Cross-Generational Consistency
-
-### 6.1 Commutativity of Marriage and Descent
-
-**Theorem 6.1** (`marriage_descent_consistent`, `marriage_descent_consistent_8`). For any kinship system $(G, m, d)$ with $G$ abelian:
-$$(g + d) + m = (g + m) + d$$
-
-*Proof*. Immediate from commutativity and associativity of addition. □
-
-This means: the child of your spouse is the spouse of your child. If you and your partner have valid marriage sections, your children also have valid marriage sections relative to each other.
-
-### 6.2 The Grandmother Theorem
-
-**Theorem 6.2** (`descent_two_cycle`, `descent_two_cycle_8`, `grandmother_identity`). For any kinship system on an elementary abelian 2-group:
-$$g + d + d = g$$
-
-Grandchildren are in the same section as grandparents. This creates the "alternating generations" pattern observed by anthropologists.
-
-## 7. The Split Extension
-
-### 7.1 Refinement Homomorphism
-
-**Theorem 7.1** (`refinementMap_surjective`). The map $\pi(a, b, c) = (a, b)$ is a surjective group homomorphism $\mathbb{Z}_2^3 \to \mathbb{Z}_2^2$.
-
-**Theorem 7.2** (`refinementMap_kernel_card`). $|\ker \pi| = 2$.
-
-### 7.2 Splitting
-
-**Theorem 7.3** (`splittingMap_injective`). The map $s(a, b) = (a, b, 0)$ is an injective group homomorphism $\mathbb{Z}_2^2 \hookrightarrow \mathbb{Z}_2^3$.
-
-**Theorem 7.4** (`splitting_section`). $\pi \circ s = \text{id}$, i.e., $s$ is a section of $\pi$.
-
-**Theorem 7.5** (`subsection8_split_extension`). $\mathbb{Z}_2^3 \cong \mathbb{Z}_2^2 \times \mathbb{Z}_2$.
-
-This shows the 8-subsection system is a *split* (trivial) extension of the 4-section system — the additional kinship dimension adds independently, without twisting.
-
-## 8. The Weil Classification Theorem
-
-### 8.1 Involutions Force Commutativity
-
-**Theorem 8.1** (`involution_group_comm`). Let $(G, +)$ be a group (not necessarily abelian) where $x + x = 0$ for all $x$. Then $G$ is abelian: $a + b = b + a$ for all $a, b$.
-
-*Proof*. From $x + x = 0$ we deduce $-x = x$ for all $x$. Then:
-$$a + b = -(a + b) = -b + (-a) = b + a$$
-where the second equality uses the anti-homomorphism property of negation, and the third uses $-x = x$. □
-
-**Corollary 8.2**. Any kinship system where all transformations are involutions must be based on an abelian group.
-
-This is Weil's key observation generalized: the social requirement of symmetric marriage *forces* the underlying algebraic structure to be commutative. The kinship system cannot be based on a non-abelian group if bilateral marriage symmetry is required.
-
-### 8.2 Counting Kinship Systems
-
-**Theorem 8.3** (`kinship_system_count`). There are exactly 6 distinct kinship systems on $\mathbb{Z}_2^2$.
-
-**Theorem 8.4** (`kinship_system_count_8`). There are exactly 42 distinct kinship systems on $\mathbb{Z}_2^3$.
-
-## 9. Vector Space Structure and Linear Algebra Bridge
-
-### 9.1 Kinship Dimension
-
-**Theorem 9.1** (`section4_rank`). $\dim_{\mathbb{F}_2}(\mathbb{Z}_2^2) = 2$.
-
-**Theorem 9.2** (`subsection8_rank`). $\dim_{\mathbb{F}_2}(\mathbb{Z}_2^3) = 3$.
-
-The "kinship dimension" — the number of independent kinship relations — equals the $\mathbb{F}_2$-vector space dimension.
-
-### 9.2 Linear Refinement
-
-**Theorem 9.3** (`refinement_rank_nullity`). $\dim(\mathbb{Z}_2^3) = \dim(\mathbb{Z}_2^2) + 1$.
-
-This is the rank-nullity theorem applied to kinship: the 8-subsection system has exactly one more kinship dimension than the 4-section system.
-
-### 9.3 Kinship Basis
-
-**Theorem 9.4** (`kinship_generators_independent`). The marriage, descent, and third kinship elements are linearly independent over $\mathbb{F}_2$.
-
-**Theorem 9.5** (`kinship_generators_span`). They span all of $\mathbb{Z}_2^3$.
-
-Together, these show that the kinship generators form a basis — every section can be uniquely expressed as a linear combination of marriage, descent, and patrilineal kinship dimensions.
-
-## 10. Automorphism Group
-
-**Theorem 10.1** (`section4_aut_card`). $|\text{Aut}(\mathbb{Z}_2^2)| = 6$.
-
-The automorphism group $\text{Aut}(\mathbb{Z}_2^2) \cong \text{GL}(2, \mathbb{F}_2) \cong S_3$ has 6 elements. This counts the number of structurally distinct ways to relabel the 4-section system while preserving all kinship relations.
-
-## 11. PEGB Analysis
-
-### Theorem E: Involutions Force Commutativity
-
-- **Proof**: Complete Lean 4 proof via algebraic manipulation of negation
-- **Example**: In the dihedral group $D_4$, reflections are involutions but don't commute — consistent with the theorem, which requires *all* elements (including rotations) to be involutions
-- **Generalization**: Extends to topological groups: a Hausdorff group where every element is an involution is abelian
-- **Boundary**: Breaks for *partial* involution requirements — if only a generating set consists of involutions, the group need not be abelian (e.g., dihedral groups)
-
-### Theorem D: Split Extension
-
-- **Proof**: Explicit construction of the splitting map and isomorphism
-- **Example**: $\mathbb{Z}_2^3 \cong \mathbb{Z}_2^2 \times \mathbb{Z}_2$ via $(a, b, c) \mapsto ((a, b), c)$
-- **Generalization**: Any extension of elementary abelian 2-groups by $\mathbb{Z}_2$ splits, because $H^2(\mathbb{Z}_2^n, \mathbb{Z}_2) \neq 0$ in general, but the relevant extensions in kinship theory are always trivial
-- **Boundary**: Non-split extensions exist: $\mathbb{Z}_4$ is a non-split extension of $\mathbb{Z}_2$ by $\mathbb{Z}_2$. A 4-section kinship system based on $\mathbb{Z}_4$ would fail the involution requirement.
-
-### Theorem F: Automorphism Count
-
-- **Proof**: Decidable computation via Lean's `decide` tactic
-- **Example**: The 6 automorphisms correspond to permutations of the 3 nonzero elements $(1,0), (0,1), (1,1)$, exactly $S_3$
-- **Generalization**: $|\text{Aut}(\mathbb{Z}_2^n)| = |\text{GL}(n, \mathbb{F}_2)| = \prod_{k=0}^{n-1}(2^n - 2^k)$. For $n=3$: $7 \times 6 \times 4 = 168$.
-- **Boundary**: For non-elementary abelian groups, the automorphism group structure is much more complex
-
-## 12. Cross-Domain Bridge: Kinship and Coding Theory
-
-The kinship sections form a binary linear code over $\mathbb{F}_2$:
-
-- **Sections** are codewords in $\mathbb{F}_2^n$
-- **Marriage constraint** $m$ is a *parity-check vector*: two sections can marry iff they differ in the $m$-direction
-- **Cosets of $\langle m \rangle$** are *syndrome classes* in the coding-theoretic sense
-- **The refinement map** is a *puncturing* operation: removing one coordinate position
-
-This bridge suggests that kinship consistency is an error-correcting property: the group structure ensures that marriage and descent rules remain consistent even when "noise" (violations, edge cases) is introduced.
-
-## 13. Discussion and Future Work
-
-### 13.1 Universality of Elementary Abelian Structure
-
-Our Theorem 8.1 shows that the involution requirement forces commutativity. Combined with the requirement that all elements have order 2, this pins down the kinship group to be an elementary abelian 2-group $\mathbb{Z}_2^n$. This is a *classification theorem*: there is no kinship system based on $\mathbb{Z}_3$, $\mathbb{Z}_4$, $S_3$, or any other non-elementary-abelian group.
-
-### 13.2 Potential Extensions
-
-1. **16-section systems** ($\mathbb{Z}_2^4$): Do any cultures use a 16-fold kinship division? The mathematics supports it, but the social complexity may be prohibitive.
-
-2. **Kinship over other fields**: What if we replace $\mathbb{F}_2$ with $\mathbb{F}_3$? This would give 3-section systems where marriage rules are order-3 rotations rather than involutions. Such systems would not have symmetric marriage but might model unilateral kinship structures.
-
-3. **Categorical kinship**: Model kinship systems as functors from a category of social relations to the category of finite groups.
-
-## References
-
-- [LS49] C. Lévi-Strauss. *The Elementary Structures of Kinship*. 1949.
-- [W49] A. Weil. "Sur l'étude algébrique de certains types de lois de mariage (Système Murngin)." Appendix to [LS49]. 1949.
-- [K81] D.K. Kemeny. "The Algebra of Kinship." *Mathematics and Computers in Simulation*, 23(1):5-14, 1981.
-- [L07] R.P. Langlands. "An Essay on the Dynamics and Statistics of Aboriginal Kinship Systems." Unpublished manuscript, 2007.
-- [R00] A. Rauff. "An algebraic approach to the Kariera kinship system." *Pi Mu Epsilon Journal*, 11(2):77-85, 2000.
-
-### Catalog References
-
-- `Novelty/Kinship/Core.lean` — Core definitions and structural theorems
-- `Novelty/Kinship/Deeper.lean` — Extended results: abstract classification, counting, bridge theorems
-- Builds on: `FINAL/MachineLearning/ViralInformationTopology.lean` (consistent_section_restrict — analogous consistency property for information flow networks)
+Australian Aboriginal societies employ some of the most systematic kinship
+classifications documented in anthropology. In a *section system*, exemplified by
+the Kariera of Western Australia, the entire society is partitioned into four
+named classes ("sections"); in a *subsection system*, exemplified by the
+Warlpiri of the Central Desert, the partition has eight classes ("subsections").
+These classes govern marriage eligibility and determine, deterministically, the
+class of one's children from the classes of the parents.
+
+The internal consistency of these systems — that the marriage and descent rules
+never conflict and close up over generations — has long invited a structural
+explanation. In this paper we make the structure exact: the transformation group
+of a four-section system *is* the Klein four-group $\mathbb{Z}/2 \times
+\mathbb{Z}/2$, and that of an eight-subsection system *is* $(\mathbb{Z}/2)^3$.
+The correspondence is an isomorphism, not an analogy. Marriage rules become coset
+restrictions; descent rules become the group operation; and the refinement from
+sections to subsections becomes a central extension by $\mathbb{Z}/2$.
+
+The paper is organized as follows. Section 2 sets up the objects. Section 3
+realizes kinship relations as translations and establishes their algebraic
+properties. Section 4 proves the main connector theorem and distinguishes the
+group from $\mathbb{Z}/4$. Section 5 treats marriage as a coset restriction.
+Section 6 treats the subsection system as a double cover. Section 7 discusses
+applications, and Section 8 outlines future directions.
+
+## 2. Sections, subsections, and the base groups
+
+**Definition 2.1 (Section set).** The set of *sections* of a Kariera-type
+kinship system is
+$$
+\mathrm{Sec}_4 := \mathbb{Z}/2 \times \mathbb{Z}/2,
+$$
+the underlying set of the Klein four-group. It has four elements, which we write
+$(0,0), (0,1), (1,0), (1,1)$.
+
+**Definition 2.2 (Subsection set).** The set of *subsections* of a
+Warlpiri-type system is
+$$
+\mathrm{Sub}_8 := \mathbb{Z}/2 \times \mathbb{Z}/2 \times \mathbb{Z}/2 = (\mathbb{Z}/2)^3,
+$$
+with eight elements.
+
+**Proposition 2.3 (Cardinalities).** $|\mathrm{Sec}_4| = 4$ and
+$|\mathrm{Sub}_8| = 8$.
+
+*Proof.* Direct enumeration of the product sets. $\square$
+
+**Proposition 2.4 (Exponent two).** For every $g \in \mathrm{Sec}_4$ we have
+$g + g = 0$; likewise for every $g \in \mathrm{Sub}_8$.
+
+*Proof.* In $\mathbb{Z}/2$ we have $a + a = 0$ for both $a = 0$ and $a = 1$.
+Working coordinatewise in a finite product preserves this identity. $\square$
+
+Proposition 2.4 is the structural core of the entire development: both groups are
+*elementary abelian 2-groups*, in which every element is its own inverse.
+
+## 3. Kinship relations as translations
+
+We realize each kinship "step" as translation of the section set by a fixed
+element. Because the group has exponent two, every translation is an involution.
+
+**Definition 3.1 (Translation).** For $v \in \mathrm{Sec}_4$, the *translation*
+$T_v$ is the map
+$$
+T_v : \mathrm{Sec}_4 \to \mathrm{Sec}_4, \qquad T_v(x) = x + v.
+$$
+
+**Proposition 3.2.** Each $T_v$ is a bijection (a permutation of the four
+sections), with $T_v^{-1} = T_v$ because $v + v = 0$.
+
+*Proof.* $T_v(T_v(x)) = (x + v) + v = x + (v + v) = x + 0 = x$ by Proposition
+2.4, so $T_v$ is its own two-sided inverse and hence a bijection. $\square$
+
+**Proposition 3.3 (Composition law).** $T_0 = \mathrm{id}$ and, for all $v, w$,
+$$
+T_{v+w} = T_v \circ T_w.
+$$
+
+*Proof.* $T_0(x) = x + 0 = x$. For the composition,
+$T_v(T_w(x)) = (x + w) + v = x + (v + w) = T_{v+w}(x)$ using commutativity and
+associativity of addition. $\square$
+
+**Corollary 3.4 (Involutivity).** For every $v$, $T_v \circ T_v = \mathrm{id}$.
+
+*Proof.* $T_v \circ T_v = T_{v+v} = T_0 = \mathrm{id}$ by Propositions 3.3 and
+2.4. $\square$
+
+**Definition 3.5 (The three named relations).** We set
+$$
+\mathrm{mother} := T_{(0,1)}, \qquad
+\mathrm{spouse} := T_{(1,0)}, \qquad
+\mathrm{father} := T_{(1,1)}.
+$$
+Here $\mathrm{mother}$ sends a mother's section to her child's section,
+$\mathrm{spouse}$ sends a person's section to that of the section they marry, and
+$\mathrm{father}$ sends a father's section to his child's section.
+
+**Theorem 3.6 (Involutions).** Each of $\mathrm{mother}$, $\mathrm{spouse}$,
+$\mathrm{father}$ is an involution.
+
+*Proof.* Immediate from Corollary 3.4. $\square$
+
+**Theorem 3.7 (Commutativity).**
+$\mathrm{mother} \circ \mathrm{spouse} = \mathrm{spouse} \circ \mathrm{mother}$.
+
+*Proof.* Both equal $T_{(0,1)+(1,0)} = T_{(1,1)}$ by Proposition 3.3 and
+commutativity of $+$. $\square$
+
+**Theorem 3.8 (Consistency of descent).**
+$$
+\mathrm{father} = \mathrm{spouse} \circ \mathrm{mother}.
+$$
+
+*Proof.* By Proposition 3.3, $\mathrm{spouse} \circ \mathrm{mother} =
+T_{(1,0)} \circ T_{(0,1)} = T_{(1,0)+(0,1)} = T_{(1,1)} = \mathrm{father}$.
+$\square$
+
+Theorem 3.8 is the algebraic statement of a social fact: because a child's
+parents are spouses, the section reached "as a father's child" must coincide with
+the section reached "by marrying and then taking the mother's child." The
+identity $(1,0) + (0,1) = (1,1)$ is exactly this consistency.
+
+## 4. The connector theorem
+
+We now identify the group generated by the kinship relations.
+
+**Definition 4.1 (Kinship transformation homomorphism).** Let
+$\mathrm{Sym}(\mathrm{Sec}_4)$ be the symmetric group on the four sections.
+Define
+$$
+\Phi : \mathrm{Sec}_4 \to \mathrm{Sym}(\mathrm{Sec}_4), \qquad \Phi(v) = T_v,
+$$
+where the domain carries the group operation $+$. By Proposition 3.3, $\Phi$ is a
+group homomorphism (the *regular*, or Cayley, representation).
+
+**Lemma 4.2 (Injectivity).** $\Phi$ is injective.
+
+*Proof.* If $T_v = T_w$ then, evaluating at $0$, $v = 0 + v = T_v(0) = T_w(0) =
+0 + w = w$. $\square$
+
+**Theorem 4.3 (Cross-domain connector, four sections).** The kinship
+transformation group — the image $\Phi(\mathrm{Sec}_4) \le
+\mathrm{Sym}(\mathrm{Sec}_4)$ generated by the mother, father, and spouse
+permutations — is isomorphic to the Klein four-group $\mathbb{Z}/2 \times
+\mathbb{Z}/2$.
+
+*Proof.* By Lemma 4.2, $\Phi$ is an injective homomorphism, so it restricts to an
+isomorphism onto its image $\Phi(\mathrm{Sec}_4)$. Since the domain is
+$\mathbb{Z}/2 \times \mathbb{Z}/2$, the image is isomorphic to it. That the image
+is generated by mother, father, spouse follows because $(0,1)$, $(1,0)$, $(1,1)$
+together with $0$ exhaust $\mathrm{Sec}_4$. $\square$
+
+**Corollary 4.4 (Order four).** $|\Phi(\mathrm{Sec}_4)| = 4$.
+
+*Proof.* An isomorphism preserves cardinality, and $|\mathrm{Sec}_4| = 4$ by
+Proposition 2.3. $\square$
+
+**Theorem 4.5 (Not cyclic).** The section group is not cyclic; equivalently, the
+kinship transformation group is $\mathbb{Z}/2 \times \mathbb{Z}/2$ and not
+$\mathbb{Z}/4$.
+
+*Proof.* Suppose $\mathrm{Sec}_4$ were cyclic. Then it would contain an element
+$g$ whose order equals the group order, namely $4$. But by Proposition 2.4,
+$2g = g + g = 0$, so the order of every element divides $2$. Since $4 \nmid$ any
+divisor of $2$, no element has order $4$, a contradiction. Hence the group is not
+cyclic; being an abelian group of order $4$ with exponent $2$, it is
+$\mathbb{Z}/2 \times \mathbb{Z}/2$. $\square$
+
+Theorem 4.5 captures a genuine structural distinction: a four-section system is
+built from *two independent binary divisions* (two commuting involutions), not
+from a *single four-step cycle*. The mathematics distinguishes these social
+architectures.
+
+**Theorem 4.6 (Simple transitivity / torsor).** For all $x, y \in
+\mathrm{Sec}_4$ there is a unique $v$ with $x + v = y$, namely $v = y - x$.
+
+*Proof.* Existence: $x + (y - x) = y$. Uniqueness: if $x + w = y$ then
+$w = (y - x)$ by subtracting $x$. Thus the action of $\mathrm{Sec}_4$ on itself
+by translation is simply transitive, making the section set a torsor over the
+group. $\square$
+
+## 5. Marriage as a coset restriction
+
+**Definition 5.1 (Matrimoiety subgroup).** Let $\pi_2 : \mathrm{Sec}_4 \to
+\mathbb{Z}/2$ be projection onto the second coordinate. The *matrimoiety*
+subgroup is
+$$
+M := \ker \pi_2 = \{(0,0), (1,0)\}.
+$$
+Its two cosets, $M$ and $(0,1) + M$, are the two *matrimoieties* of the society.
+
+**Theorem 5.2 (Marriage as coset restriction).** Two distinct sections $x$ and
+$y$ may intermarry — that is, $y = x + (1,0) = \mathrm{spouse}(x)$ — if and only
+if $x$ and $y$ lie in the same coset of $M$.
+
+*Proof.* Two elements lie in the same coset of $M$ iff their difference lies in
+$M$, i.e. iff their difference has second coordinate $0$. The marriage step adds
+$(1,0)$, whose second coordinate is $0$; so $\mathrm{spouse}(x) - x = (1,0) \in
+M$, placing $x$ and its spouse's section in the same coset. Conversely, among the
+four sections the same-coset partner distinct from $x$ is exactly $x + (1,0)$,
+since $M = \{(0,0),(1,0)\}$ has two elements. $\square$
+
+Theorem 5.2 formalizes the anthropological description "marry within your moiety
+but into the opposite section": marriage moves you within a single coset of the
+matrimoiety subgroup while switching sections.
+
+## 6. Subsections as a double cover
+
+We now relate the eight-subsection system to the four-section system.
+
+**Definition 6.1 (Forgetful map).** Let $q : \mathrm{Sub}_8 \to \mathrm{Sec}_4$
+be the projection onto the first two coordinates,
+$q(a, b, c) = (a, b)$, forgetting the third bit.
+
+**Theorem 6.2 (Extension / double cover).** The map $q$ is a surjective group
+homomorphism whose kernel is
+$$
+\ker q = \{(0,0,0), (0,0,1)\} \cong \mathbb{Z}/2.
+$$
+Consequently
+$$
+\mathrm{Sub}_8 / \ker q \cong \mathrm{Sec}_4,
+$$
+so the eight-subsection system is a $\mathbb{Z}/2$-extension (double cover) of
+the four-section system.
+
+*Proof.* $q$ is a homomorphism because addition in $(\mathbb{Z}/2)^3$ is
+coordinatewise. It is surjective since $(a,b) = q(a,b,0)$. Its kernel consists of
+triples $(a,b,c)$ with $(a,b) = (0,0)$, i.e. $\{(0,0,0),(0,0,1)\}$, a group of
+order two isomorphic to $\mathbb{Z}/2$. The first isomorphism theorem gives
+$\mathrm{Sub}_8 / \ker q \cong \mathrm{Sec}_4$. Since $|\mathrm{Sub}_8| = 8 =
+2 \cdot 4 = 2 \cdot |\mathrm{Sec}_4|$, the fibers of $q$ each have two elements,
+exhibiting $\mathrm{Sub}_8$ as a two-to-one cover. $\square$
+
+**Theorem 6.3 (Subsection connector).** The subsection transformation group —
+the image of the regular representation $\Phi_8 : \mathrm{Sub}_8 \to
+\mathrm{Sym}(\mathrm{Sub}_8)$, $\Phi_8(v)(x) = x + v$ — is isomorphic to
+$(\mathbb{Z}/2)^3$.
+
+*Proof.* As in Section 4, $\Phi_8$ is an injective homomorphism (evaluate at $0$
+for injectivity; coordinatewise addition for the homomorphism property), so it
+restricts to an isomorphism onto its image, which is therefore isomorphic to the
+domain $(\mathbb{Z}/2)^3$. $\square$
+
+Thus the subsection system is again elementary abelian, of exponent two, with
+transformation group $(\mathbb{Z}/2)^3$, sitting over the section group as a
+central $\mathbb{Z}/2$-extension.
+
+## 7. Applications and interpretation
+
+**Verification of consistency.** The group formulation gives an immediate
+consistency check for a proposed kinship system: assign each class a bit-vector
+and verify that the descent and marriage generators satisfy $g + g = 0$ and the
+composite law $\mathrm{father} = \mathrm{spouse} + \mathrm{mother}$. If they do,
+the system closes up over all generations automatically, because closure is
+group closure.
+
+**Marriage-eligibility computation.** Determining whom a person may marry reduces
+to a coset computation: partner sections are those in the same $M$-coset,
+obtained by adding the marriage generator. This is a constant-time lookup once
+the bit-encoding is fixed.
+
+**Descent computation.** The section of a child is obtained by adding the mother
+(or father) generator to the parent's section; iterating traces matrilines and
+patrilines as cosets of the corresponding cyclic-of-order-two subgroups.
+
+**Classification insight.** Theorem 4.5 provides a diagnostic: a system whose
+generators are commuting involutions must be an elementary abelian 2-group
+$(\mathbb{Z}/2)^n$, with $2^n$ classes. Four- and eight-class systems correspond
+to $n = 2$ and $n = 3$. Systems with classes not a power of two, or with descent
+cycles of period greater than two, cannot be elementary abelian and require
+richer groups.
+
+## 8. Discussion and future directions
+
+The results above show that the section and subsection systems are not merely
+*describable* by group theory but *are* finite groups in a precise, structural
+sense: their transformation groups are $\mathbb{Z}/2 \times \mathbb{Z}/2$ and
+$(\mathbb{Z}/2)^3$, marriage is a coset restriction, and refinement is a
+$\mathbb{Z}/2$-extension. Several directions extend this program.
+
+*General kinship-group framework.* Abstract the constructions into a structure
+recording a finite abelian group, distinguished descent and marriage elements,
+and the consistency laws, and prove a classification: any system whose
+transformation group is generated by commuting involutions is elementary abelian.
+
+*Person-set actions.* Model an explicit finite population as a torsor over the
+group and develop relationship terms as group elements, proving closure
+properties of the realizable relationships.
+
+*Systems beyond $(\mathbb{Z}/2)^n$.* The Aranda and various Dravidian systems
+involve period-four cycles; these call for groups such as $\mathbb{Z}/2 \times
+\mathbb{Z}/4$ or dihedral-type groups, with a characterization of which marriage
+rules yield consistent descent algebras.
+
+*Cohomological extensions.* Frame section-to-subsection refinement as a group
+extension classified by the second cohomology group $H^2(\mathbb{Z}/2 \times
+\mathbb{Z}/2, \mathbb{Z}/2)$, enumerating inequivalent subsection systems as
+extension classes.
+
+*Representation theory.* Since the transformation group is abelian, its
+irreducible representations are one-dimensional characters; the sign patterns of
+these characters give a spectral description of the moiety and section
+partitions.
+
+*Category-theoretic bridge.* Package kinship systems and structure-preserving
+maps into a category and show the forgetful functor from subsection systems to
+section systems is (co)fibered.
+
+## 9. Conclusion
+
+An anthropological classification that once appeared bewilderingly intricate is,
+at its core, one of the simplest and most elegant objects in algebra. The
+four-section system is the Klein four-group; the eight-subsection system is
+$(\mathbb{Z}/2)^3$; marriage is a coset restriction; descent is the group
+operation; and refinement is a double cover. Cayley's theorem — that every finite
+group is a group of permutations — finds an unexpected and ancient realization in
+human kinship, where the set being permuted is a society itself.

@@ -411,6 +411,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a0852bd7 (Q=0.800), which proved 45 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are c",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_a0852bd7_ed5958cd",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "a0852bd7",
+    "status": "available",
+    "timestamp": "2026-07-11T11:59:05.893508+00:00",
+    "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle a6f348ea (Q=0.800), which proved 20 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algeb",
     "domains": [
       "Physics"
@@ -739,21 +753,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T23:08:57.326588+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "consumed_by_exp_id": "a0852bd7",
-    "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0981",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T02:50:51.916559+00:00",
-    "title": "Anti-Mathematics: What If All Axioms Were Negated?"
   },
   {
     "consumed_by_exp_id": "",
@@ -1115,6 +1114,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-11T10:48:07.123829+00:00",
     "title": "Infinite Games Against Death: Immortality Strategies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1030",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T11:58:38.387262+00:00",
+    "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
     "consumed_by_exp_id": "",
@@ -7298,6 +7311,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T11:42:24.118364+00:00",
     "title": "This cycle added a **cross-domain connector**"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Anti-Mathematics\n\nThis project formalises three of the ZFC \"anti-axioms\" from the mission via\nexplicit, fully verified models, built as a chain of results.\n\n## What is proved\n\n**`AckermannModel.lean` \u2014 negating Infinity (\u21d2 hereditarily finite sets).**\nThe carrier `\u2115` with Ackermann membership `a \u2208\u2090 b \u2194 Nat.testBit b a` is shown to\nmodel `ZF \u2212 Infinity + \u00acInfinity`:\n- `not_mem_zero`, `empty_set` \u2014 empty set;\n- `extensionality` \u2014 Extensionality;\n- `mem_lt`, `not_mem_self`, `foundation_wf`, `regularity` \u2014 Foundation/Regularity;\n- `pairing`, `binUnion` \u2014 Pairing and binary union;\n- `union` \u2014 the full **Union** axiom `\u22c3 a` (members of members of `a`);\n- `subset_iff`, `powerSet` \u2014 the subset relation in bit form and the full\n  **Power Set** axiom `\ud835\udcab a`;\n- `adjoin`/`succ` with `mem_adjoin`/`mem_succ` \u2014 adjunction and successor;\n- `anti_infinity` (main theorem) \u2014 **no set is inductive**, so Infinity fails.\n\n**`NonExtensional.lean` \u2014 negating Extensionality (\u21d2 indistinguishable sets).**\nThe universe `V = Option \u2115` adds a duplicate empty set `none`:\n- `non_extensionality` \u2014 distinct objects with the same members exist;\n- `indist_equiv` \u2014 indistinguishability is an equivalence;\n- `indist_some`, `indist_none` \u2014 genuine sets stay faithfully separated;\n- `membership_not_congruent` \u2014 membership is not a congruence, the obstruction to\n  quotienting back to an extensional universe.\n\n**`AntiFoundation.lean` \u2014 negating Foundation (\u21d2 non-well-founded sets).**\nThe universe `W = Option \u2115` adds a Quine atom `\u03a9 = {\u03a9}` (`none`) to the genuine\nAckermann sets:\n- `genuine_foundation` \u2014 on the genuine sets membership is still well-founded\n  (the contrast baseline);\n- `omega_self_mem`, `omega_mem_iff` \u2014 `\u03a9 \u2208 \u03a9` and `\u03a9 = {\u03a9}`;\n- `not_mem_self_genuine`, `omega_distinct` \u2014 genuine sets are self-membership-free\n  and the atom stays distinguishable (Extensionality is *not* what fails);\n- `regularity_fails` \u2014 `\u03a9` is a nonempty set with no `\u2208`-minimal member;\n- `anti_foundation` (main theorem) \u2014 membership in `W` is **not** well-founded.\n\n## Natural next steps\n\n1. **Separation and Replacement schemas.** For any decidable predicate, build the\n   subset `{x \u2208\u2090 a | p x}` explicitly (a finite bit-selection) and prove the\n   Separation schema; then Replacement over finite sets.\n\n2. **Ackermann is an isomorphism `(\u2115, \u2208\u2090) \u2245 (HF, \u2208)`.** Connect to Mathlib's\n   hereditarily finite sets / `ZFSet` and prove the coding is an \u2208-isomorphism.\n\n3. **Anti-Foundation, AFA form.** Building on `AntiFoundation.lean`, upgrade the\n   single Quine atom to a full Aczel-style universe of hypersets and prove the\n   anti-foundation axiom AFA-style unique-solution property (every graph has a\n   unique decoration).\n\n4. **Anti-Choice \u21d2 measurability.** The mission's third strand: in the Solovay\n   model every set of reals is Lebesgue measurable. Formalising even a fragment\n   (e.g. that a `\u00acAC` context blocks the usual Vitali non-measurable construction)\n   is a substantial goal.\n\n5. **Consistency compatibility graph.** Systematise \"which anti-axioms are jointly\n   consistent\" by exhibiting a single model realising several negations at once\n   (e.g. `\u00acInfinity` is compatible with Extensionality, Foundation, Pairing, Union\n   \u2014 witnessed in `AckermannModel.lean`; `\u00acFoundation` is compatible with\n   Extensionality on the genuine sets \u2014 witnessed in `AntiFoundation.lean`; but\n   `\u00acExtensionality` is incompatible with a naive quotient, as\n   `membership_not_congruent` shows).\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1031",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a0852bd7",
+    "status": "available",
+    "timestamp": "2026-07-11T11:59:00.558008+00:00",
+    "title": "This project formalises three of the ZFC \"anti-axioms\" from the mission via"
   },
   {
     "consumed_by_exp_id": "",
