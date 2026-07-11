@@ -1008,7 +1008,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
   {
-    "consumed_by_exp_id": "b05b9e61",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domains": [
       "Novelty",
@@ -1018,7 +1018,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T12:15:32.376849+00:00",
     "title": "Speculative: Computational Complexity as Physical Law"
   },
@@ -1154,7 +1154,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fermat Near-Misses in the Twilight Zone"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7669ab26",
     "description": "Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes from higher-genus surfaces achieve distance O(sqrt(g)) where g is the genus.",
     "domains": [
       "Novelty",
@@ -1164,7 +1164,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T12:31:49.043504+00:00",
     "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
