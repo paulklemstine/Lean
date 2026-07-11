@@ -171,20 +171,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "consumed_by_exp_id": "f0c42e84",
-    "description": "Building on cycle 0be793c6 (Q=0.820), which proved 42 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_0be793c6_f2db8510",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "0be793c6",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T02:51:11.452311+00:00",
-    "title": "Deepening: Non-Desarguesian Worlds: Geometry Without Desargues"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 0faef071 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
@@ -682,6 +668,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0996",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T06:55:55.264449+00:00",
+    "title": "Computational Complexity of Alien Civilizations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
       "Novelty",
@@ -878,6 +879,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T04:08:16.263156+00:00",
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
+  },
+  {
+    "consumed_by_exp_id": "c99af430",
+    "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0997",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T06:55:55.372602+00:00",
+    "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
     "consumed_by_exp_id": "",
@@ -6937,6 +6953,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T06:39:40.433078+00:00",
     "title": "These conjectures grow directly out of the present cycle, in which the factorial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Non-Desarguesian Worlds at Order 9 and Beyond\n\nThis cycle established that the smallest non-Desarguesian order, `9`, supports at least\ntwo *algebraically independent* coordinatizations: the Hall system, which fails\nDesargues' theorem through non-associativity (a nucleus defect), and the Dickson\nnearfield, which fails it through the collapse of the left distributive law while\nremaining fully associative. Along the way the multiplicative group of the nearfield was\nidentified as the quaternion group `Q\u2088`. The following conjectures grow directly out of\nthese findings.\n\n## 1. A distributive/associative dichotomy for finite non-Desarguesian planes\n\n**Conjecture.** Every non-Desarguesian projective plane of prime-power order admits a\ncoordinatizing quasifield whose obstruction is *purely* one of two types: either the\nmultiplication is non-associative with a proper nucleus, or it is associative but not\nleft distributive. No coordinatization is simultaneously associative and left\ndistributive.\n\n*The key insight is* that associativity and left distributivity are logically\nindependent defects \u2014 the Hall system realizes the first without the second, and the\nnearfield realizes the second without the first \u2014 so the two obstructions should\npartition all coordinatizing algebras rather than overlap.\n\n*Why now?* With both extremal cases pinned down at the same order by exhaustive\nverification, the remaining question is whether any plane needs *both* defects at once;\na single mixed example would refute the dichotomy, and its absence across small orders\nis now testable.\n\n## 2. The quaternion group as a universal nearfield symmetry\n\n**Conjecture.** For every prime `p`, the multiplicative group of the Dickson nearfield of\norder `p\u00b2` is the generalized quaternion group whose order is `p\u00b2 \u2212 1`; equivalently, the\nFrobenius twist forces a unique involution regardless of `p`.\n\n*The key insight is* that twisting the field product by an order-two automorphism on the\nnon-square coset embeds the cyclic multiplicative group of the field into a metacyclic\nextension with a single central involution \u2014 exactly the defining feature of the\n(generalized) quaternion groups.\n\n*Why now?* The order-9 case exhibits `Q\u2088` cleanly (one involution, all other elements of\norder four); the construction is uniform in `p`, so the pattern can be checked at\n`p = 5, 7` and then attacked structurally.\n\n## 3. Nucleus defect versus symmetry loss are not the same invariant\n\n**Conjecture.** The size of the collineation group of a non-Desarguesian plane is not\ndetermined by the nucleus of any coordinatizing quasifield: there exist planes with full\nnucleus (associative coordinatization) whose collineation groups are strictly smaller\nthan those of planes with proper nucleus at the same order.\n\n*The key insight is* that the nearfield plane has a full nucleus yet is non-Desarguesian,\nso nucleus size alone cannot govern the symmetry deficit relative to the classical plane;\na second, distributive invariant must enter.\n\n*Why now?* The existence of a full-nucleus non-Desarguesian plane at order 9 removes the\ntempting assumption that nucleus size is the master invariant, and forces a genuinely\ntwo-parameter theory of symmetry loss.\n\n## 4. Left distributivity as the unique boundary to ringhood\n\n**Conjecture.** Among all associative right quasifields (nearfields), the property of\nbeing a ring is equivalent to the single left distributive law; consequently a *finite*\nnearfield that is left distributive is automatically a commutative field.\n\n*The key insight is* that a nearfield already satisfies every ring axiom except left\ndistributivity, so imposing that one law produces a finite domain, which by the classical\ntheory of finite division rings must be a commutative field.\n\n*Why now?* The abstract construction turning a left-distributive nearfield into a ring is\nin hand; combining it with the classification of finite division rings would close the\nloop and explain precisely why proper nearfields must be noncommutative.\n\n## 5. Hall triple systems from the non-square coset\n\n**Conjecture.** The partition of the nonzero elements of `GF(p\u00b2)` into squares and\nnon-squares, which drives the Frobenius twist, induces a Hall triple system whose blocks\nare the fibers of the associator of the corresponding non-associative Hall product; the\nnumber of blocks grows as a fixed polynomial in `p`.\n\n*The key insight is* that the square/non-square dichotomy is exactly the combinatorial\ndata distinguishing the two order-9 constructions, so it should be the shared source of\nboth the nearfield's `Q\u2088` symmetry and the Hall system's triple-system structure.\n\n*Why now?* Having both constructions expressed over the *same* carrier `GF(p\u00b2)` with the\n*same* coset partition makes it feasible to compare their associators directly and search\nfor the predicted triple system.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0998",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f0c42e84",
+    "status": "available",
+    "timestamp": "2026-07-11T06:56:14.626045+00:00",
+    "title": "That the smallest non-Desarguesian order, `9`, supports a"
   },
   {
     "consumed_by_exp_id": "",
