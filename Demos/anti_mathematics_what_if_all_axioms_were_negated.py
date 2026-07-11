@@ -1,229 +1,221 @@
-#!/usr/bin/env python3
 """
-Anti-Mathematics Demo: Ackermann Encoding and Phantom Index
+Anti-Mathematics: numerical demonstrations of the negated set-theory axioms.
 
-Demonstrates the key concepts from the anti-mathematics research:
-1. Ackermann encoding of hereditarily finite sets
-2. Phantom index computation for anti-extensional universes
-3. Axiom defect spectrum analysis
+This self-contained script realizes the three "anti-universes" described in the
+accompanying paper, all built on Ackermann's binary coding of the hereditarily
+finite sets by the natural numbers:
+
+    a is a member of b   <=>   the a-th binary digit of b is 1.
+
+We then demonstrate, with concrete computations:
+
+    I.   Negating Infinity  -> the hereditarily finite universe (no inductive set).
+    II.  Negating Extensionality -> distinct objects with identical members.
+    III. Negating Foundation -> a Quine atom Omega = {Omega} (a membership loop).
+
+Run:  python demo.py
 """
 
-from typing import Set, FrozenSet
+from __future__ import annotations
+
+from typing import Iterator, List, Optional, Set, Tuple
 
 
-def ack_mem(m: int, n: int) -> bool:
-    """Ackermann membership: m ∈ₐ n iff bit m of n is set."""
-    return bool((n >> m) & 1)
+# ---------------------------------------------------------------------------
+# I. The Ackermann coding: natural numbers ARE hereditarily finite sets.
+# ---------------------------------------------------------------------------
+
+def mem(a: int, b: int) -> bool:
+    """Ackermann membership: a in b iff the a-th binary digit of b is 1."""
+    return (b >> a) & 1 == 1
 
 
-def ack_members(n: int) -> Set[int]:
-    """Return the set of members of the Ackermann-encoded set n."""
-    members = set()
-    i = 0
-    temp = n
-    while temp > 0:
-        if temp & 1:
-            members.add(i)
-        temp >>= 1
-        i += 1
-    return members
+def members(b: int) -> List[int]:
+    """The (finite) list of members of the set coded by b, in increasing order."""
+    return [a for a in range(b.bit_length()) if mem(a, b)]
 
 
-def ack_encode(s: Set[int]) -> int:
-    """Encode a set of natural numbers as an Ackermann number."""
-    return sum(1 << m for m in s)
+def decode(b: int) -> str:
+    """Render the set coded by b in braces notation, recursively."""
+    return "{" + ", ".join(decode(a) for a in members(b)) + "}"
 
 
-def ack_union(a: int, b: int) -> int:
-    """Union in Ackermann encoding = bitwise OR."""
+def adjoin(a: int, b: int) -> int:
+    """b union {a}: switch on bit a of b."""
+    return b | (1 << a)
+
+
+def bin_union(a: int, b: int) -> int:
+    """a union b as a bitwise OR."""
     return a | b
 
 
-def ack_intersection(a: int, b: int) -> int:
-    """Intersection in Ackermann encoding = bitwise AND."""
-    return a & b
+def is_subset(x: int, a: int) -> bool:
+    """x subset of a  <=>  x & a == x  (Theorem: subset via bitmask)."""
+    return (x & a) == x
 
 
-def ack_singleton(m: int) -> int:
-    """Singleton {m} in Ackermann encoding = 2^m."""
-    return 1 << m
+def union_axiom(a: int) -> int:
+    """Big union of a: members of members of a."""
+    u = 0
+    for b in members(a):
+        u |= b
+    return u
 
 
-def ack_pair(a: int, b: int) -> int:
-    """Pairing {a, b} in Ackermann encoding."""
-    return (1 << a) | (1 << b)
+def power_set(a: int) -> int:
+    """Power set of a: the code whose members are exactly the subsets of a."""
+    p = 0
+    for x in range(a + 1):
+        if is_subset(x, a):
+            p |= (1 << x)
+    return p
 
 
-def phantom_index(n: int, mem_rel: list[list[bool]]) -> int:
-    """
-    Compute the phantom index of a finite membership structure.
-    
-    Args:
-        n: number of elements (0, 1, ..., n-1)
-        mem_rel: n×n boolean matrix where mem_rel[x][y] means x ∈ y
-    
-    Returns:
-        phantom index = n - |equivalence classes|
-    """
-    # Compute extensional equivalence classes
-    classes: list[FrozenSet[int]] = []
-    assigned = [False] * n
-    
-    for i in range(n):
-        if assigned[i]:
-            continue
-        eq_class = {i}
-        for j in range(i + 1, n):
-            if assigned[j]:
-                continue
-            # Check if i and j are extensionally equivalent
-            equiv = True
-            for x in range(n):
-                if mem_rel[x][i] != mem_rel[x][j]:
-                    equiv = False
-                    break
-            if equiv:
-                eq_class.add(j)
-                assigned[j] = True
-        classes.append(frozenset(eq_class))
-        assigned[i] = True
-    
-    return n - len(classes)
+def succ(a: int) -> int:
+    """von Neumann successor a union {a}."""
+    return adjoin(a, a)
 
 
-def iterate_function(f: dict[int, int], n: int, x: int) -> int:
-    """Compute f^[n](x) for a finite function given as a dict."""
-    result = x
+def numeral(n: int) -> int:
+    """The n-th von Neumann numeral, coded in the Ackermann model."""
+    x = 0
     for _ in range(n):
-        result = f[result]
-    return result
+        x = succ(x)
+    return x
 
 
-def find_idempotent_iterate(f: dict[int, int]) -> int:
-    """Find the smallest N > 0 such that f^[N] is idempotent."""
-    domain = sorted(f.keys())
-    
-    for n in range(1, len(domain) ** 2 + 1):
-        # Check if f^[n] ∘ f^[n] = f^[n]
-        is_idempotent = True
-        for x in domain:
-            fn_x = iterate_function(f, n, x)
-            fn_fn_x = iterate_function(f, n, fn_x)
-            if fn_fn_x != fn_x:
-                is_idempotent = False
-                break
-        if is_idempotent:
-            return n
-    
-    return -1  # Should never happen for finite functions
+# ---------------------------------------------------------------------------
+# Demonstration helpers for each result.
+# ---------------------------------------------------------------------------
+
+def demo_coding() -> None:
+    print("=" * 70)
+    print("Ackermann coding: every natural number IS a hereditarily finite set")
+    print("=" * 70)
+    for b in range(11):
+        print(f"  {b:2d} = {format(b, '06b')}_2  ->  {decode(b)}")
+
+    print("\n  Empty set is 0:", members(0) == [])
+    print("  Extensionality check (0..63 all distinct as sets):",
+          len({decode(b) for b in range(64)}) == 64)
+
+    # Verify the ZF operations on random-ish samples.
+    ok_pair = ok_union = ok_pow = True
+    for a in range(8):
+        for b in range(8):
+            p = adjoin(a, adjoin(b, 0))          # pairing {a, b}
+            ok_pair &= set(members(p)) == {a, b}
+            u = bin_union(a, b)
+            ok_union &= set(members(u)) == set(members(a)) | set(members(b))
+    for a in range(8):
+        want = {x for x in range(a + 1) if is_subset(x, a)}
+        ok_pow &= set(members(power_set(a))) == want
+    print("  Pairing correct on all pairs (0..7):", ok_pair)
+    print("  Binary union correct on all pairs (0..7):", ok_union)
+    print("  Power set correct (0..7):", ok_pow)
 
 
-def main():
-    print("=" * 60)
-    print("ANTI-MATHEMATICS: Ackermann Encoding Demo")
-    print("=" * 60)
-    
-    # Demo 1: Ackermann encoding basics
-    print("\n--- Ackermann Encoding ---")
-    print(f"Empty set ∅ = 0, members: {ack_members(0)}")
-    print(f"{{0}} = {ack_singleton(0)}, members: {ack_members(ack_singleton(0))}")
-    print(f"{{1}} = {ack_singleton(1)}, members: {ack_members(ack_singleton(1))}")
-    print(f"{{0, 2}} = {ack_encode({0, 2})}, members: {ack_members(ack_encode({0, 2}))}")
-    print(f"{{0, 1, 2}} = {ack_encode({0, 1, 2})}, members: {ack_members(ack_encode({0, 1, 2}))}")
-    
-    # Demo 2: Set operations
-    print("\n--- Set Operations via Bitwise Arithmetic ---")
-    a = ack_encode({0, 2, 4})
-    b = ack_encode({1, 2, 3})
-    print(f"A = {{0, 2, 4}} = {a}")
-    print(f"B = {{1, 2, 3}} = {b}")
-    print(f"A ∪ B = {ack_members(ack_union(a, b))} = {ack_union(a, b)}")
-    print(f"A ∩ B = {ack_members(ack_intersection(a, b))} = {ack_intersection(a, b)}")
-    print(f"Pairing(3, 5) = {{{3, 5}}} = {ack_pair(3, 5)}, members: {ack_members(ack_pair(3, 5))}")
-    
-    # Demo 3: Verify extensionality
-    print("\n--- Extensionality Verification ---")
-    for n in range(20):
-        for m in range(n):
-            if ack_members(n) == ack_members(m):
-                print(f"WARNING: {n} and {m} have same members but are different!")
-    print("Verified: all numbers 0-19 have distinct membership sets ✓")
-    
-    # Demo 4: Anti-infinity
-    print("\n--- Anti-Infinity: No Universal Set ---")
-    for n in range(1, 100):
-        members = ack_members(n)
-        if len(members) == n:  # Would need all of {0,...,n-1}
-            print(f"n={n} has {len(members)} members (but universe has {n} elements)")
-    print("No number 1-99 contains all smaller numbers as members ✓")
-    
-    # Demo 5: Phantom index
-    print("\n--- Phantom Index ---")
-    
-    # Phantom universe: Bool with empty membership
-    phantom_mem = [[False, False], [False, False]]
-    pi = phantom_index(2, phantom_mem)
-    print(f"Phantom universe (2 elements, empty membership): phantom index = {pi}")
-    
-    # Extensional universe: each element distinguishable
-    ext_mem = [[False, True], [False, False]]  # 0 ∈ 1, nothing else
-    pi = phantom_index(2, ext_mem)
-    print(f"Extensional universe (0 ∈ 1): phantom index = {pi}")
-    
-    # Larger phantom example: 4 elements, all equivalent
-    all_false = [[False]*4 for _ in range(4)]
-    pi = phantom_index(4, all_false)
-    print(f"4-element all-empty: phantom index = {pi}")
-    
-    # Mixed: 4 elements, two pairs of phantoms
-    mixed = [[False]*4 for _ in range(4)]
-    mixed[0][0] = True; mixed[0][1] = True  # 0 ∈ 0 and 0 ∈ 1
-    mixed[2][2] = True; mixed[2][3] = True  # 2 ∈ 2 and 2 ∈ 3
-    pi = phantom_index(4, mixed)
-    print(f"4-element two-pair phantoms: phantom index = {pi}")
-    
-    # Demo 6: Eventual idempotence
-    print("\n--- Eventual Idempotence ---")
-    
-    # f: {0,1,2,3,4} → {0,1,2,3,4} with f(0)=1, f(1)=2, f(2)=0, f(3)=4, f(4)=3
-    f = {0: 1, 1: 2, 2: 0, 3: 4, 4: 3}
-    n = find_idempotent_iterate(f)
-    print(f"f = {f}")
-    print(f"Smallest idempotent iterate: N = {n}")
-    for x in sorted(f.keys()):
-        fn_x = iterate_function(f, n, x)
-        fn_fn_x = iterate_function(f, n, fn_x)
-        print(f"  f^[{n}]({x}) = {fn_x}, f^[{n}](f^[{n}]({x})) = {fn_fn_x}")
-    
-    # Demo 7: Axiom defect spectrum
-    print("\n--- Axiom Defect Spectrum ---")
-    axiom_names = ["Ext", "Pair", "Union", "Pow", "Inf", "Repl", "Found", "Choice"]
-    
-    # ZFC spectrum
-    zfc = [0.0] * 8
-    print(f"ZFC spectrum: {dict(zip(axiom_names, zfc))}")
-    print(f"Total deficiency: {sum(zfc)}")
-    
-    # Anti-infinity spectrum (Ackermann model)
-    ack_spectrum = [0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
-    print(f"\nAckermann model: {dict(zip(axiom_names, ack_spectrum))}")
-    print(f"Total deficiency: {sum(ack_spectrum)}")
-    
-    # Phantom universe spectrum
-    phantom_spectrum = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
-    print(f"\nPhantom universe: {dict(zip(axiom_names, phantom_spectrum))}")
-    print(f"Total deficiency: {sum(phantom_spectrum)}")
-    
-    # Check compatibility
-    def compatible(s, t):
-        return all(si + ti <= 1.0 for si, ti in zip(s, t))
-    
-    print(f"\nZFC ↔ Ackermann compatible: {compatible(zfc, ack_spectrum)}")
-    print(f"ZFC ↔ Phantom compatible: {compatible(zfc, phantom_spectrum)}")
-    print(f"Ackermann ↔ Phantom compatible: {compatible(ack_spectrum, phantom_spectrum)}")
-    
-    print("\n" + "=" * 60)
-    print("All demos completed successfully!")
+def demo_anti_infinity(bound: int = 200) -> None:
+    print("\n" + "=" * 70)
+    print("I. NEGATING INFINITY -> hereditarily finite sets (no inductive set)")
+    print("=" * 70)
+
+    print("  von Neumann numerals grow at least as fast as their index")
+    print("  (in fact they explode super-exponentially):")
+    for n in range(5):
+        print(f"    numeral({n}) = {numeral(n):4d}   (n <= numeral(n): {n <= numeral(n)})")
+
+    # Search for an inductive set below `bound`: contains 0 and closed under succ.
+    def is_inductive(I: int) -> bool:
+        if not mem(0, I):
+            return False
+        for x in members(I):
+            if not mem(succ(x), I):
+                return False
+        return True
+
+    witnesses = [I for I in range(bound) if is_inductive(I)]
+    print(f"\n  Inductive sets found below {bound}: {witnesses}")
+    print("  Theorem (Anti-Infinity): NONE exist, for the sharp reason that an")
+    print("  inductive I would contain numeral(I), forcing numeral(I) < I <= numeral(I).")
+    # Illustrate the contradiction concretely for a small candidate:
+    I = 4
+    print(f"\n  Example obstruction at I = {I}:")
+    print(f"    numeral({I}) = {numeral(I)}  and  I = {I}  =>  I <= numeral(I): "
+          f"{I <= numeral(I)}")
+    print("    so numeral(I) can never satisfy numeral(I) < I; no I is inductive.")
+
+
+def demo_anti_extensionality() -> None:
+    print("\n" + "=" * 70)
+    print("II. NEGATING EXTENSIONALITY -> indistinguishable sets")
+    print("=" * 70)
+    # Universe V = {STAR} u N.  STAR is a second, distinct empty object.
+    STAR: Optional[int] = None  # the extra element
+
+    def nmem(x: Optional[int], y: Optional[int]) -> bool:
+        if x is None or y is None:
+            return False  # STAR is never a member and has no members
+        return mem(x, y)
+
+    def indist(a: Optional[int], b: Optional[int], probe: int = 16) -> bool:
+        cands: List[Optional[int]] = [STAR] + list(range(probe))
+        return all(nmem(x, a) == nmem(x, b) for x in cands)
+
+    print("  0 and STAR are distinct objects, both with no members:")
+    print("    members of 0   :", [x for x in range(16) if nmem(x, 0)])
+    print("    members of STAR:", [x for x in range(16) if nmem(x, STAR)])
+    print("    0 == STAR ?", 0 == STAR, " | indistinguishable(0, STAR)?",
+          indist(0, STAR))
+
+    print("\n  Indistinguishability collapses ONLY {0, STAR}:")
+    for n in range(1, 6):
+        print(f"    indistinguishable(some {n}, STAR)? {indist(n, STAR)} "
+              f"(only true for n=0)")
+
+    print("\n  Membership is NOT a congruence (obstruction to quotienting):")
+    print(f"    0 ~ STAR, and 0 in 1 = {{0}}:  nmem(0, 1) = {nmem(0, 1)}")
+    print(f"    but STAR not in 1:            nmem(STAR, 1) = {nmem(STAR, 1)}")
+    print("    => cannot glue indistinguishables to recover Extensionality.")
+
+
+def demo_anti_foundation() -> None:
+    print("\n" + "=" * 70)
+    print("III. NEGATING FOUNDATION -> a Quine atom  Omega = {Omega}")
+    print("=" * 70)
+    # Universe W = {OMEGA} u N.  OMEGA's only member is itself.
+    OMEGA: Optional[int] = None
+
+    def wmem(x: Optional[int], y: Optional[int]) -> bool:
+        if x is None and y is None:
+            return True          # Omega in Omega
+        if x is None or y is None:
+            return False         # no other membership involving Omega
+        return mem(x, y)
+
+    print("  Omega in Omega ?", wmem(OMEGA, OMEGA))
+    print("  Omega's members:", "{Omega}" if wmem(OMEGA, OMEGA) else "{}")
+    print("  Genuine sets never contain themselves:")
+    print("    any n with n in n (n=0..63)?",
+          [n for n in range(64) if wmem(n, n)])
+
+    print("\n  Regularity fails: Omega is nonempty but has no in-minimal member,")
+    print("  since its only member Omega satisfies Omega in Omega.")
+
+    print("\n  An infinite descending membership chain (well-foundedness fails):")
+    chain = " in ".join(["Omega"] * 6) + " in ..."
+    print("    " + chain)
+
+
+def main() -> None:
+    demo_coding()
+    demo_anti_infinity()
+    demo_anti_extensionality()
+    demo_anti_foundation()
+    print("\n" + "=" * 70)
+    print("All three anti-universes realized concretely over the natural numbers.")
+    print("=" * 70)
 
 
 if __name__ == "__main__":

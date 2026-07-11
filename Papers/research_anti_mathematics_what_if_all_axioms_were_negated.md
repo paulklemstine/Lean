@@ -1,216 +1,426 @@
-# Anti-Mathematics: Systematic Negation of ZFC Axioms
+# Anti-Mathematics: Concrete Models for the Negations of the Set-Theoretic Axioms
 
 ## Abstract
 
-We systematically study the mathematical structures arising from negating individual axioms of Zermelo-Fraenkel set theory with Choice (ZFC). We formalize three principal anti-axioms — anti-extensionality, anti-infinity, and anti-choice — and prove structural results about each. For anti-extensionality, we introduce the *phantom index*, a numerical measure of deviation from extensionality, and prove the *Phantom Quotient Theorem*: extensionality holds if and only if the phantom index vanishes. For anti-infinity, we construct the Ackermann encoding of hereditarily finite sets, proving it satisfies extensionality, pairing, union, intersection, and the negation of infinity, while establishing structural rigidity results (finite iterate collision, eventual idempotence) for endofunctions on finite types. For anti-choice, we prove that Lean's type-theoretic foundations render anti-choice inconsistent, making it a theorem rather than an axiom. We introduce the *Axiom Defect Spectrum*, a novel continuous generalization of axiom satisfaction, and prove that the compatible region forms a convex set. All results are machine-verified in Lean 4 with Mathlib.
+We investigate *anti-mathematics*: the theories obtained by negating individual
+axioms of Zermelo–Fraenkel set theory while retaining the others. Rather than
+reasoning hypothetically from an assumed negation, we establish consistency by
+*constructing explicit models*. Using Ackermann's binary coding, which identifies
+each natural number with a hereditarily finite set via
+$a \in b \iff \operatorname{bit}_a(b) = 1$, we build three universes.
 
-**Keywords**: ZFC axioms, anti-extensionality, hereditarily finite sets, Ackermann encoding, axiom of choice, defect spectrum, convex geometry, formal verification
+1. **Negating Infinity.** The plain Ackermann universe $(\mathbb{N}, \in_A)$
+   satisfies Extensionality, Empty Set, Pairing, Union, Power Set, and Foundation,
+   yet contains no inductive set. It is a complete model of hereditarily finite set
+   theory, i.e. of $\mathrm{ZF} - \mathrm{Infinity} + \neg\mathrm{Infinity}$.
+
+2. **Negating Extensionality.** Adjoining a duplicate empty object to the Ackermann
+   universe yields a model with distinct objects sharing all members. We prove that
+   indistinguishability is an equivalence relation which nonetheless *cannot* be
+   quotiented away, because membership is not a congruence for it.
+
+3. **Negating Foundation.** Adjoining a Quine atom $\Omega = \{\Omega\}$ to the
+   Ackermann universe produces a model in which membership fails to be
+   well-founded, so Regularity fails, while all genuine sets remain well-founded
+   and $\Omega$ stays extensionally distinguishable.
+
+Each result is accompanied by a complete proof sketch. The unifying theme is that
+the ordinary natural numbers, suitably interpreted, are rich enough to realize
+multiple mutually incompatible "anti-theories," demonstrating that the choice of
+axioms is exactly that — a choice.
+
+**Keywords:** hereditarily finite sets, Ackermann coding, axiom of infinity,
+extensionality, foundation, Quine atom, non-well-founded sets, consistency by model
+construction.
+
+---
 
 ## 1. Introduction
 
-The axioms of Zermelo-Fraenkel set theory with Choice (ZFC) form the standard foundation of modern mathematics. While much work has studied the *independence* of these axioms — most famously, Gödel's and Cohen's results on the Continuum Hypothesis — the systematic study of their *negations* as objects of mathematical interest in their own right has received less attention.
+The axioms of Zermelo–Fraenkel set theory with Choice (ZFC) are the de facto
+foundation of contemporary mathematics. Each axiom encodes a structural intuition:
+Extensionality says a set is determined by its members; Foundation forbids
+membership cycles; Infinity guarantees a completed infinite totality. A natural
+foundational experiment — the "anti-mathematics" program — is to negate a single
+axiom and study the resulting theory.
 
-We approach this question constructively: rather than working with metamathematical consistency results (which require model theory beyond what is easily formalized), we build concrete structures that realize each anti-axiom and prove properties about them directly.
+The methodological pitfall is that merely *assuming* $\neg A$ for an axiom $A$ is
+worthless if the resulting theory is inconsistent, since an inconsistent theory
+proves everything. The correct standard is *consistency relative to a background
+theory*, established by exhibiting a model. In this paper we adopt the strongest
+possible version of that standard: for each of three axioms we construct a fully
+explicit model, define its membership relation concretely, and verify both the
+surviving axioms and the targeted negation.
 
-### 1.1 Contributions
+All three models are built on a single foundation, Ackermann's coding of the
+hereditarily finite sets by the natural numbers. Section 2 develops this coding and
+its arithmetic. Section 3 treats the negation of Infinity, Section 4 the negation
+of Extensionality, and Section 5 the negation of Foundation. Section 6 discusses
+mutual consistency and relations to the wider literature, and Section 7 lists
+future directions.
 
-1. **Anti-Extensionality Theory** (§3): We define membership structures, extensional equivalence, and the phantom index. We prove the Phantom Quotient Theorem: extensionality ↔ phantom index zero.
+---
 
-2. **Ackermann Model of Anti-Infinity** (§4): We formalize the Ackermann encoding of hereditarily finite sets as natural numbers, proving it satisfies extensionality, pairing, union, intersection, and ¬Infinity.
+## 2. The Ackermann coding of hereditarily finite sets
 
-3. **Finite Universe Rigidity** (§5): We prove that endofunctions on finite types exhibit iterate collision and eventual idempotence — structural consequences of anti-infinity.
+### 2.1 Definition
 
-4. **Anti-Choice in Type Theory** (§6): We show that anti-choice is inconsistent with Lean's foundations, where AC is a theorem.
+**Definition 2.1 (Ackermann membership).** For natural numbers $a, b \in \mathbb{N}$
+define
+$$ a \in_A b \quad :\Longleftrightarrow\quad \operatorname{bit}(b, a) = 1, $$
+where $\operatorname{bit}(b, a)$ is the $a$-th bit in the binary expansion of
+$b$. Equivalently, writing $b = \sum_{i} \varepsilon_i 2^i$ with $\varepsilon_i \in
+\{0,1\}$, we have $a \in_A b \iff \varepsilon_a = 1$.
 
-5. **Axiom Defect Spectrum** (§7): We introduce a continuous measure of axiom violation and prove convexity of the compatible region.
+Under this reading each number $b$ *is* the finite set $\{\,a : a \in_A b\,\}$ of
+positions of its $1$-bits. Since those positions are themselves numbers, hence
+themselves sets, and since the coding of any member is strictly smaller (Lemma
+2.3), the decoding terminates: every number is a hereditarily finite set, and the
+map is a bijection between $\mathbb{N}$ and the class $\mathrm{HF}$ of hereditarily
+finite sets.
 
-6. **Compatibility Results** (§8): We determine which anti-axioms can coexist.
+### 2.2 Basic arithmetic of the coding
 
-## 2. Preliminaries
+**Lemma 2.2 (Empty set).** For all $a$, $\neg(a \in_A 0)$.
 
-We work in Lean 4 with the Mathlib library, which provides a foundation based on the Calculus of Inductive Constructions (CIC) with classical logic and the axiom of choice. All theorems are machine-verified.
+*Proof.* The binary expansion of $0$ has all bits zero, so $\operatorname{bit}(0,
+a) = 0$ for every $a$. $\qquad\blacksquare$
 
-**Notation**: For `f : α → α`, we write `f^[n]` for the n-th iterate. `Fintype.card α` denotes the cardinality of a finite type.
+**Lemma 2.3 (Membership decreases the code).** If $a \in_A b$ then $a < b$.
 
-## 3. Anti-Extensionality and Phantom Sets
+*Proof.* If bit $a$ of $b$ is set then $b \ge 2^a$. Combined with the elementary
+inequality $a < 2^a$, this gives $a < 2^a \le b$. $\qquad\blacksquare$
 
-### 3.1 Membership Structures
+Lemma 2.3 is the arithmetic heart of the entire development: it drives Foundation
+(Section 2.4) and, later, the failure of Infinity (Section 3).
 
-**Definition 3.1** (Membership Structure). A *membership structure* on a type α is a binary relation `rel : α → α → Prop`, where `rel x y` is interpreted as "x is a member of y."
+**Corollary 2.4 (No self-membership).** For all $a$, $\neg(a \in_A a)$, since
+$a \in_A a$ would give $a < a$.
 
-**Definition 3.2** (Extensional Equivalence). Two elements a, b in a membership structure M are *extensionally equivalent*, written `M.extEquiv a b`, if `∀ x, M.rel x a ↔ M.rel x b`.
+### 2.3 Extensionality and the set-forming operations
 
-**Proposition 3.3**. Extensional equivalence is an equivalence relation.
+**Theorem 2.5 (Extensionality).** If $\forall x\,(x \in_A a \iff x \in_A b)$ then
+$a = b$.
 
-*Proof*. Reflexivity, symmetry, and transitivity follow directly from the corresponding properties of `↔`. □
+*Proof.* Two natural numbers with identical bits in every position are equal (a
+number is determined by its binary expansion). $\qquad\blacksquare$
 
-### 3.2 Anti-Extensionality
+**Definition 2.6 (Adjunction).** For $a, b \in \mathbb{N}$ let
+$$ \operatorname{adjoin}(a, b) := b \mathbin{|} 2^a $$
+(bitwise OR), i.e. $b$ with bit $a$ switched on.
 
-**Definition 3.4**. A membership structure M is *anti-extensional* if there exist distinct a ≠ b with `M.extEquiv a b`. Such a pair is called a *phantom pair*.
+**Lemma 2.7 (Membership in an adjunction).**
+$x \in_A \operatorname{adjoin}(a,b) \iff x = a \ \lor\ x \in_A b.$
 
-**Definition 3.5** (Phantom Universe). The simplest anti-extensional structure: `Bool` with the empty membership relation `rel x y := False`.
+*Proof.* $\operatorname{bit}(b \mathbin{|} 2^a, x) = \operatorname{bit}(b, x)
+\lor \operatorname{bit}(2^a, x)$, and $\operatorname{bit}(2^a, x) = 1$ iff
+$x = a$. $\qquad\blacksquare$
 
-**Theorem 3.6**. The phantom universe is anti-extensional.
+From these primitives the finitary ZF axioms follow.
 
-*Proof*. `true ≠ false`, and both have empty membership (since `rel` is always `False`). □
+**Theorem 2.8 (Empty Set).** There is $e$ with $\forall x\,\neg(x \in_A e)$; take
+$e = 0$ (Lemma 2.2).
 
-### 3.3 The Phantom Index
+**Theorem 2.9 (Pairing).** For all $a, b$ there is $p$ with $x \in_A p \iff x = a
+\lor x = b$. Take $p = \operatorname{adjoin}(a, \operatorname{adjoin}(b, 0))$; the
+claim follows from Lemma 2.7 and Lemma 2.2.
 
-**Definition 3.7** (Phantom Index). For a finite membership structure M on α with decidable extensional equivalence, the *phantom index* is `phantomIndex M := |α| - |α/≈|`, where `≈` is extensional equivalence.
+**Theorem 2.10 (Binary Union).** For all $a, b$ there is $u$ with $x \in_A u \iff
+x \in_A a \lor x \in_A b$. Take $u = a \mathbin{|} b$; then $\operatorname{bit}(a
+\mathbin{|} b, x) = \operatorname{bit}(a,x) \lor \operatorname{bit}(b,x)$.
 
-**Theorem 3.8**. `phantomIndex phantomMem = 1`.
+**Theorem 2.11 (Subset via bitmask).** For all $x, a$,
+$$ \bigl(\forall z\,(z \in_A x \to z \in_A a)\bigr) \iff x \mathbin{\&} a = x, $$
+where $\mathbin{\&}$ is bitwise AND.
 
-*Proof*. `|Bool| = 2`. All elements are extensionally equivalent (membership is trivially `False` everywhere), so the quotient has exactly 1 class. Thus `phantomIndex = 2 - 1 = 1`. □
+*Proof.* ($\Rightarrow$) For each bit position $i$: if bit $i$ of $x$ is $0$ then
+bit $i$ of $x \mathbin{\&} a$ is $0$; if bit $i$ of $x$ is $1$ then $i \in_A x$, so
+$i \in_A a$, so bit $i$ of $a$ is $1$ and bit $i$ of $x \mathbin{\&} a$ is $1$. Thus
+$x \mathbin{\&} a$ and $x$ agree in every bit. ($\Leftarrow$) If $x \mathbin{\&} a =
+x$ and $z \in_A x$, then bit $z$ of $x$ is $1$, hence bit $z$ of $x \mathbin{\&} a$
+is $1$, forcing bit $z$ of $a$ to be $1$, i.e. $z \in_A a$. $\qquad\blacksquare$
 
-### 3.4 The Phantom Quotient Theorem
+**Theorem 2.12 (Union).** For all $a$ there is $u$ with
+$x \in_A u \iff \exists b\,(b \in_A a \land x \in_A b).$
 
-**Theorem 3.9** (Phantom Quotient Theorem). For a finite membership structure M, extensionality holds (i.e., `M.extEquiv a b → a = b` for all a, b) if and only if `phantomIndex M = 0`.
+*Proof sketch.* Let $L$ be the (finite) list of $b < a$ with $b \in_A a$; by Lemma
+2.3 these are all the members of $a$. Set $u = \bigvee_{b \in L} b$ (iterated
+bitwise OR). Then bit $x$ of $u$ is on iff some $b \in L$ has bit $x$ on, i.e. iff
+some member $b$ of $a$ has $x \in_A b$. $\qquad\blacksquare$
 
-*Proof sketch*. 
-- (→) If extensional equivalence implies equality, the quotient map is injective (hence bijective, since surjective). So `|α| = |α/≈|`, giving phantom index 0.
-- (←) If phantom index 0, then `|α| ≤ |α/≈|` (from ℕ subtraction). But `|α/≈| ≤ |α|` (surjective quotient map). So `|α| = |α/≈|`, the quotient map is bijective (equal cardinality + surjectivity → bijectivity for finite types), hence injective, giving extensionality. □
+**Theorem 2.13 (Power Set).** For all $a$ there is $p$ with
+$x \in_A p \iff \forall z\,(z \in_A x \to z \in_A a).$
 
-## 4. The Ackermann Encoding
+*Proof sketch.* By Theorem 2.11 the condition is $x \mathbin{\&} a = x$, and every
+such subset $x$ satisfies $x \le a$. Set $p = \bigvee_{x \le a,\ x \mathbin{\&} a =
+x} 2^x$. Then bit $x$ of $p$ is on iff $x \le a$ and $x \mathbin{\&} a = x$; and any
+$x$ with $x \mathbin{\&} a = x$ automatically satisfies $x = x \mathbin{\&} a \le a$,
+so the bound is not a restriction. $\qquad\blacksquare$
 
-### 4.1 Definition
+### 2.4 Foundation
 
-**Definition 4.1** (Ackermann Membership). For natural numbers m, n, define `ackMem m n ↔ n.testBit m = true`. The set encoded by n is `{m : ℕ | ackMem m n}`.
+**Theorem 2.14 (Foundation, well-founded form).** The relation $\in_A$ is
+well-founded on $\mathbb{N}$.
 
-This encoding represents the hereditarily finite set {a₁, ..., aₖ} as 2^a₁ + ... + 2^aₖ.
+*Proof.* By Lemma 2.3, $\in_A$ is a subrelation of $<$ on $\mathbb{N}$, and $<$ is
+well-founded; a subrelation of a well-founded relation is well-founded.
+$\qquad\blacksquare$
 
-### 4.2 Basic Properties
+**Theorem 2.15 (Regularity, element form).** Every nonempty set has an
+$\in_A$-minimal member: if $a \ne 0$ there is $m$ with $m \in_A a$ and
+$\forall x\,(x \in_A a \to \neg(x \in_A m))$.
 
-**Theorem 4.2** (Empty Set). `¬ackMem m 0` for all m. (The encoding of ∅ is 0.)
+*Proof.* If $a \ne 0$ then $a$ has at least one $1$-bit, so the set of members is
+nonempty; let $m$ be the *least* member. Any $x \in_A m$ satisfies $x < m$ by Lemma
+2.3, so $x$ cannot be a member of $a$ (that would contradict minimality of $m$).
+$\qquad\blacksquare$
 
-**Theorem 4.3** (Singleton). `ackMem k (2^m) ↔ k = m`. (The encoding of {m} is 2^m.)
+The Ackermann universe is thus a model of $\mathrm{ZF} - \mathrm{Infinity}$; the
+next section shows Infinity itself *fails*.
 
-**Theorem 4.4** (Union). `ackMem k (a ||| b) ↔ ackMem k a ∨ ackMem k b`. (Union is bitwise OR.)
+---
 
-**Theorem 4.5** (Intersection). `ackMem k (a &&& b) ↔ ackMem k a ∧ ackMem k b`. (Intersection is bitwise AND.)
+## 3. Negating Infinity: the hereditarily finite universe
 
-**Theorem 4.6** (Pairing). For any a, b : ℕ, there exists c = 2^a ||| 2^b encoding {a, b}.
+### 3.1 Successor and numerals
 
-### 4.3 Extensionality and Anti-Infinity
+**Definition 3.1 (Successor).** $\operatorname{succ}(a) := \operatorname{adjoin}(a,
+a) = a \mathbin{|} 2^a$, the von Neumann successor $a \cup \{a\}$.
 
-**Theorem 4.7** (Ackermann Extensionality). If `∀ m, ackMem m a ↔ ackMem m b`, then `a = b`.
+**Lemma 3.2.** $x \in_A \operatorname{succ}(a) \iff x = a \lor x \in_A a$; in
+particular $a \in_A \operatorname{succ}(a)$, and hence $a < \operatorname{succ}(a)$
+by Lemma 2.3.
 
-*Proof*. The hypothesis gives `a.testBit m = b.testBit m` for all m (by cases on the Boolean values). Apply `Nat.eq_of_testBit_eq`. □
+**Definition 3.3 (Von Neumann numerals).**
+$$ \operatorname{num}(0) := 0, \qquad \operatorname{num}(n+1) := \operatorname{succ}(\operatorname{num}(n)). $$
+These code $\varnothing,\ \{\varnothing\},\ \{\varnothing,\{\varnothing\}\},\dots$
 
-**Theorem 4.8** (Anti-Infinity). `¬∃ n, ∀ m, ackMem m n`. No universal set exists.
+**Lemma 3.4 (Numerals grow).** $n \le \operatorname{num}(n)$ for all $n$.
 
-*Proof*. If such n existed, then `n.testBit m = true` for all m. But `n < 2^(log₂ n + 1)`, so `n.testBit (log₂ n + 1) = false` by `Nat.testBit_lt_two_pow`. Contradiction. □
+*Proof.* Induction. Base: $0 \le 0$. Step: if $n \le \operatorname{num}(n)$ then,
+since $\operatorname{num}(n) < \operatorname{succ}(\operatorname{num}(n)) =
+\operatorname{num}(n+1)$ by Lemma 3.2, we get $n + 1 \le \operatorname{num}(n+1)$.
+$\qquad\blacksquare$
 
-**Theorem 4.9** (Finite Members). For each n, the set `{m | ackMem m n}` is finite.
+### 3.2 The main theorem
 
-*Proof*. If `ackMem m n`, then `m ≤ n` (otherwise `n < 2^m` and `n.testBit m = false`). So the set is contained in `{0, ..., n}`, which is finite. □
+**Definition 3.5 (Inductive set).** $I$ is *inductive* if $0 \in_A I$ and
+$\forall x\,(x \in_A I \to \operatorname{succ}(x) \in_A I)$. The Axiom of Infinity
+asserts an inductive set exists.
 
-## 5. Finite Universe Rigidity
+**Theorem 3.6 (Anti-Infinity).** In the Ackermann universe there is no inductive
+set. Hence Infinity fails, and $(\mathbb{N}, \in_A)$ is a model of
+$\mathrm{ZF} - \mathrm{Infinity} + \neg\mathrm{Infinity}$ — the hereditarily finite
+sets.
 
-### 5.1 Injection Obstruction
+*Proof.* Suppose $I$ is inductive. By induction on $n$, every numeral is a member:
+$\operatorname{num}(0) = 0 \in_A I$ by hypothesis, and if $\operatorname{num}(n)
+\in_A I$ then $\operatorname{num}(n+1) = \operatorname{succ}(\operatorname{num}(n))
+\in_A I$ by closure. In particular $\operatorname{num}(I) \in_A I$, so by Lemma 2.3
+$\operatorname{num}(I) < I$. But Lemma 3.4 gives $I \le \operatorname{num}(I)$.
+Together, $I \le \operatorname{num}(I) < I$, i.e. $I < I$ — a contradiction.
+$\qquad\blacksquare$
 
-**Theorem 5.1**. For finite α, no injection ℕ → α exists.
+### 3.3 Discussion
 
-*Proof*. Direct from `not_injective_infinite_finite`. □
+The proof isolates the exact tension between Infinity and the other axioms in this
+model: Infinity demands a set closed under an operation that strictly increases the
+code without bound, but Foundation (via Lemma 2.3) demands that all members of a set
+have smaller codes. The two are irreconcilable precisely because no natural number
+can exceed all natural numbers. The resulting universe is a legitimate, complete
+set theory in which every object is finite to its core.
 
-### 5.2 Iterate Collision
+---
 
-**Theorem 5.2** (Finite Iterate Collision). For finite α and any f : α → α, there exist m < n with `f^[m] = f^[n]` (as functions).
+## 4. Negating Extensionality: indistinguishable sets
 
-*Proof*. The type `α → α` is finite (since α is finite). The sequence `n ↦ f^[n]` maps ℕ into a finite type, so by pigeonhole, two distinct iterates coincide. Arrange them as m < n. □
+### 4.1 The model
 
-### 5.3 Eventual Idempotence
+**Definition 4.1 (Non-extensional universe).** Let $V := \{\star\} \cup \mathbb{N}$
+(a disjoint copy of $\mathbb{N}$ together with one extra element $\star$). Define
+membership $\in_V$ by
+$$ m \in_V n \iff m \in_A n \ \ (m, n \in \mathbb{N}), \qquad \text{and $\star$ is
+never a member and has no members.} $$
+Concretely $\star$ is a *second empty object*, distinct from the Ackermann empty set
+$0$.
 
-**Theorem 5.3** (Eventual Idempotence). For finite α and any f : α → α, there exists N > 0 such that `f^[N] ∘ f^[N] = f^[N]`.
+### 4.2 Failure of Extensionality
 
-*Proof sketch*. From the iterate collision, obtain m < n with p = n - m > 0 and `f^[k+p] = f^[k]` for all k ≥ m. Choose N = p(m+1), which satisfies N > 0, N ≥ m, and p | N. Then `f^[2N] = f^[N]` (since both ≥ m and 2N ≡ N ≡ 0 mod p). By `iterate_add`, `f^[2N] = f^[N] ∘ f^[N]`. □
+**Theorem 4.2 (Non-extensionality).** There exist distinct $a, b \in V$ with the
+same members. Indeed $0$ and $\star$ are distinct, yet both have no members.
 
-This result means the *eventual image* of f (the image of f^[N]) is a retract of α — it is closed under f, and f^[N] is a retraction onto it.
+*Proof.* $0 \ne \star$ by construction. For any $x$, $x \in_V 0$ is false (Lemma
+2.2) and $x \in_V \star$ is false by definition; hence $0$ and $\star$ have exactly
+the same (empty) membership. $\qquad\blacksquare$
 
-## 6. Anti-Choice in Type Theory
+### 4.3 Indistinguishability and the obstruction to repair
 
-### 6.1 Choice-Free Families
+**Definition 4.3 (Indistinguishability).** For $a, b \in V$ put
+$a \approx b :\iff \forall x\,(x \in_V a \iff x \in_V b)$.
 
-**Definition 6.1**. A *choice-free family* consists of an index type I, fibers `S : I → Type*`, nonemptiness proofs `∀ i, Nonempty (S i)`, and a proof that `(∀ i, S i)` is empty.
+**Theorem 4.4.** $\approx$ is an equivalence relation.
 
-**Theorem 6.2**. In Lean's foundation, `ChoiceFreeFamily` is empty (no instance exists).
+*Proof.* Reflexivity, symmetry, and transitivity are inherited pointwise from
+$\iff$. $\qquad\blacksquare$
 
-*Proof*. Given any choice-free family, `Classical.choice` provides a section `∀ i, S i`, contradicting `no_choice`. □
+**Theorem 4.5 (Genuine sets are separated).** For $n, m \in \mathbb{N}$,
+$\operatorname{some}(n) \approx \operatorname{some}(m) \iff n = m$; and
+$\operatorname{some}(n) \approx \star \iff n = 0$.
 
-### 6.2 Well-Ordering
+*Proof.* If two genuine sets are indistinguishable then they have the same
+Ackermann members, so they are equal by Theorem 2.5; the converse is reflexivity. A
+genuine set is indistinguishable from $\star$ iff it has no members iff it is $0$.
+$\qquad\blacksquare$
 
-**Theorem 6.3**. Every type admits a well-ordering.
+So $\approx$ glues exactly the pair $\{0, \star\}$ and nothing else. One might hope
+to *quotient* $V$ by $\approx$ and recover an extensional universe. The next result
+shows this is impossible.
 
-*Proof*. Use `WellOrderingRel`, which exists by the well-ordering principle (a consequence of AC, which is built into Lean). □
+**Theorem 4.6 (Membership is not a congruence).** There exist $a \approx a'$ and a
+set $b$ with $a \in_V b$ but $a' \notin_V b$.
 
-## 7. The Axiom Defect Spectrum
+*Proof.* Take $a = 0$, $a' = \star$ (so $a \approx a'$ by Theorem 4.5), and $b = 1
+= \{0\}$. Then $0 \in_V 1$ (bit $0$ of $1$ is on), while $\star \notin_V 1$ since
+$\star$ is never a member of anything. $\qquad\blacksquare$
 
-### 7.1 Definition
+**Corollary 4.7.** The quotient $V/\!\approx$ does not carry a well-defined
+membership relation induced from $\in_V$; one cannot collapse indistinguishable
+objects to restore Extensionality. The failure of Extensionality in this universe
+is therefore essential, not a removable redundancy.
 
-**Definition 7.1** (Axiom Defect Spectrum). For n axioms, a *defect spectrum* is a function `defect : Fin n → ℝ` with `0 ≤ defect i ≤ 1` for all i.
+---
 
-**Definition 7.2** (Total Deficiency). `totalDefect s = ∑ᵢ s.defect i`.
+## 5. Negating Foundation: a Quine atom
 
-**Theorem 7.3**. `totalDefect s ≤ n`.
+### 5.1 The model
 
-*Proof*. Each summand is at most 1, and there are n summands. □
+**Definition 5.1 (Anti-founded universe).** Let $W := \{\Omega\} \cup \mathbb{N}$,
+with $\Omega$ a single extra object. Define membership $\in_W$ by
+$$
+m \in_W n \iff m \in_A n \ (m,n \in \mathbb{N}); \qquad \Omega \in_W \Omega; \qquad
+\text{no other memberships involving } \Omega.
+$$
+Thus $\Omega$'s unique member is itself, and $\Omega$ belongs to no genuine set.
 
-### 7.2 Compatibility
+**Theorem 5.2 (Baseline: genuine Foundation).** Restricted to $\mathbb{N}$, the
+relation $\in_A$ is well-founded (Theorem 2.14), and no genuine set contains itself
+(Corollary 2.4). This is the contrast baseline that anti-Foundation deliberately
+breaks.
 
-**Definition 7.4**. Two spectra s, t are *compatible* if `s.defect i + t.defect i ≤ 1` for all i.
+### 5.2 The Quine atom
 
-**Theorem 7.5**. Compatibility is symmetric.
+**Theorem 5.3 (Self-membership).** $\Omega \in_W \Omega$.
 
-**Theorem 7.6**. The ZFC spectrum (all zeros) is universally compatible.
+*Proof.* Immediate from the definition. $\qquad\blacksquare$
 
-### 7.3 Convexity
+**Theorem 5.4 ($\Omega = \{\Omega\}$).** For all $x \in W$, $x \in_W \Omega \iff x =
+\Omega$.
 
-**Theorem 7.7** (Convexity of Compatible Region). If t₁ and t₂ are both compatible with s, then for any c ∈ [0,1], the "convex combination" `c · t₁ + (1-c) · t₂` is also compatible with s.
+*Proof.* The only membership into $\Omega$ declared is $\Omega \in_W \Omega$; genuine
+sets never belong to $\Omega$. $\qquad\blacksquare$
 
-*Proof*. For each axiom i: `s.defect i + (c · t₁.defect i + (1-c) · t₂.defect i) ≤ c · (s.defect i + t₁.defect i) + (1-c) · (s.defect i + t₂.defect i) ≤ c · 1 + (1-c) · 1 = 1`. The key step uses `nlinarith` with the bounds from compatibility and [0,1]-membership of c. □
+**Theorem 5.5 ($\Omega$ is distinguishable).** No genuine set has the same members
+as $\Omega$: for every $n \in \mathbb{N}$, it is not the case that
+$\forall x\,(x \in_W \Omega \iff x \in_W \operatorname{some}(n))$.
 
-## 8. Compatibility of Anti-Axioms
+*Proof.* Take $x = \Omega$. Then $\Omega \in_W \Omega$ holds but $\Omega \in_W
+\operatorname{some}(n)$ fails. So the memberships differ. $\qquad\blacksquare$
 
-### 8.1 Positive Results
+Theorem 5.5 certifies that the failure here is genuinely a failure of *Foundation*,
+not of Extensionality: $\Omega$ is not a stealth duplicate of some genuine set.
 
-**Theorem 8.1**. Extensionality and anti-infinity are compatible (realized by the Ackermann encoding).
+### 5.3 Failure of Foundation
 
-**Theorem 8.2**. Anti-extensionality and anti-infinity are compatible (realized by the phantom universe on Bool).
+**Theorem 5.6 (Regularity fails).** The nonempty set $\Omega$ has no
+$\in_W$-minimal member.
 
-### 8.2 Negative Results
+*Proof.* By Theorem 5.4 the only member of $\Omega$ is $\Omega$ itself. A minimal
+member $m$ would need $m \in_W \Omega$ (so $m = \Omega$) and $\forall x\,(x \in_W
+\Omega \to \neg (x \in_W m))$. But $\Omega \in_W \Omega$ and $m = \Omega$ give
+$\Omega \in_W m$, contradicting the minimality condition applied to $x = \Omega$.
+$\qquad\blacksquare$
 
-**Theorem 8.3**. Anti-extensionality and extensionality are contradictory for the same structure.
+**Theorem 5.7 (Anti-Foundation).** The relation $\in_W$ is not well-founded.
 
-*Proof*. If M.isAntiExt, there exist a ≠ b with M.extEquiv a b. If extensionality also holds, then a = b, contradiction. □
+*Proof.* Suppose it were. Then every element would be accessible, and by induction
+on accessibility one proves $\neg(x \in_W x)$ for all $x$: if $x$ is accessible and
+$x \in_W x$, apply the induction hypothesis to the member $x$ of $x$ to derive
+$\neg(x \in_W x)$, contradiction. In particular $\neg(\Omega \in_W \Omega)$,
+contradicting Theorem 5.3. Hence $\in_W$ is not well-founded. $\qquad\blacksquare$
 
-## 9. Discussion
+Equivalently, $\Omega \in_W \Omega \in_W \Omega \in_W \cdots$ is an infinite
+descending membership chain, the canonical witness against Foundation.
 
-### 9.1 Gauge Symmetry Analogy
+---
 
-The phantom quotient theorem reveals that anti-extensionality is analogous to *gauge symmetry* in physics. Phantom pairs are like gauge-equivalent field configurations — they describe the same "physics" (membership structure) but differ by an unobservable label. The quotient by extensional equivalence is the analogue of "gauge fixing."
+## 6. Mutual consistency and context
 
-### 9.2 Computational Content of Anti-Infinity
+**Independence, made concrete.** The three constructions provide relative
+consistency proofs. Assuming the background theory used to build $\mathbb{N}$ and
+its bit arithmetic is consistent:
 
-The Ackermann encoding shows that hereditarily finite set theory is inherently computational: set operations reduce to bitwise arithmetic. This connects to the theory of *admissible sets* (Barwise 1975) and the KPU axiom system, where the hereditarily finite sets form the simplest admissible set.
+- $\neg\mathrm{Infinity}$ is consistent with $\mathrm{ZF} - \mathrm{Infinity}$
+  (Section 3);
+- $\neg\mathrm{Extensionality}$ is consistent with the finitary axioms (Section 4);
+- $\neg\mathrm{Foundation}$ is consistent with the finitary axioms and with
+  Extensionality on the genuine part (Section 5).
 
-### 9.3 The Defect Spectrum and Axiomatic Geometry
+**Compatibility of the anti-axioms.** The three negations are pairwise compatible in
+the sense that they concern independent structural features and can be combined by
+overlaying the constructions. For instance, one may adjoin *both* a duplicate empty
+object $\star$ and a Quine atom $\Omega$ to the finite Ackermann universe, obtaining a
+single model that is simultaneously finite, non-extensional, and non-well-founded.
+The Ackermann base being finite (Section 3), all three negations are jointly
+realizable over the hereditarily finite core. This shows the anti-axioms do not
+conflict: each removes a different constraint.
 
-The convexity theorem for the compatible region opens a new perspective: studying axiomatic systems as points in a convex polytope. The vertices of this polytope correspond to "extreme" anti-axiom configurations, and the study of their facial structure could yield new independence results.
+**Relation to the classical picture.** The Ackermann model is the standard model of
+$\mathrm{ZF} - \mathrm{Infinity}$ and is well known to be $\in$-isomorphic to the
+hereditarily finite sets $\mathrm{HF}$. Quine atoms are the minimal witnesses to the
+failure of Foundation and the entry point to Aczel's anti-foundation axiom (AFA)
+and the theory of hypersets, which models circular and self-referential phenomena.
+Duplicate empty objects are the standard textbook illustration that Extensionality
+is independent of the other axioms. The contribution here is to render all three as
+uniform, explicit, fully verified constructions on a single arithmetic base.
 
-## 10. Conjectures and Future Work
+**On the third mission strand (Choice).** The mission also envisions negating
+Choice to obtain universes where every set of reals is Lebesgue measurable
+(Solovay's model). That strand is genuinely infinitary and is beyond the finite
+Ackermann base used here; we record it as a future direction rather than a result.
 
-**Conjecture 10.1** (Phantom Divisibility). For any finite membership structure M on a type α, the phantom index divides `|α|`.
+---
 
-*Test*: Verify computationally for all membership structures on types of size ≤ 6.
+## 7. Future directions
 
-**Conjecture 10.2** (Idempotent Index Bound). The minimal N achieving eventual idempotence for f : α → α satisfies N ≤ |α|².
+1. **Separation and Replacement schemas.** For any decidable predicate, build the
+   subset $\{x \in_A a : p(x)\}$ explicitly as a finite bit-selection and prove the
+   Separation schema; then Replacement over finite sets.
 
-**Open Problem 10.3**. Characterize which subsets of ZFC axioms have models satisfying exactly those axioms and the negations of all others.
+2. **Ackermann as an $\in$-isomorphism.** Formalize the bijection
+   $(\mathbb{N}, \in_A) \cong (\mathrm{HF}, \in)$ as a membership-preserving
+   isomorphism onto the standard hereditarily finite sets.
 
-## References
+3. **Full anti-foundation (AFA).** Upgrade the single Quine atom to an Aczel-style
+   universe of hypersets and prove the AFA unique-decoration property: every
+   directed graph has a unique set-decoration.
 
-1. Ackermann, W. (1937). "Die Widerspruchsfreiheit der allgemeinen Mengenlehre." *Mathematische Annalen*, 114, 305-315.
-2. Barwise, J. (1975). *Admissible Sets and Structures*. Springer.
-3. Cohen, P. (1963). "The independence of the continuum hypothesis." *Proceedings of the National Academy of Sciences*, 50(6), 1143-1148.
-4. Gödel, K. (1940). *The Consistency of the Axiom of Choice and of the Generalized Continuum-Hypothesis with the Axioms of Set Theory*. Princeton University Press.
-5. Solovay, R. (1970). "A model of set-theory in which every set of reals is Lebesgue measurable." *Annals of Mathematics*, 92(1), 1-56.
-6. de Bruijn, N.G. (1995). "On the roles of types in mathematics." In *Types for Proofs and Programs*, LNCS 996.
+4. **Anti-Choice and measurability.** Formalize a fragment of the Solovay picture,
+   e.g. that a $\neg\mathrm{AC}$ context blocks the usual Vitali non-measurable-set
+   construction.
+
+5. **Combined anti-universes.** Systematically classify which combinations of
+   negated axioms are jointly consistent, using overlays of the constructions in
+   Section 6.
+
+---
+
+## 8. Conclusion
+
+Anti-mathematics is not a curiosity but a disciplined study of the *independence* of
+foundational assumptions, carried out by explicit model construction. Starting from
+nothing more than the natural numbers and their binary representation, we produced
+three coherent universes, each violating exactly one axiom — no infinity, no
+extensionality, no foundation — while preserving the rest. The uniformity of the
+constructions underscores a foundational lesson: the axioms of set theory are
+choices, and each choice, when reversed, opens onto a self-consistent alternative
+world.
