@@ -467,7 +467,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e65b62c",
     "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
     "domains": [
       "Novelty",
@@ -477,7 +477,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T03:07:28.618592+00:00",
     "title": "Thermodynamics of Mathematical Proof"
   },
@@ -838,7 +838,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Categorification of Entropy: The Information Loss of Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1978e429",
     "description": "Cycle c99af430 (Q=0.830) proved 0 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic",
     "domains": [
       "Novelty"
@@ -847,7 +847,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "c99af430",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T08:51:37.304151+00:00",
     "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
@@ -1282,7 +1282,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Central Symmetric 7-D Polytope"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9466ee5",
     "description": "For a normal geometrically connected variety X over a finite field k, a compactification \\(\\overline{X}\\), an effective Cartier divisor D with support in \\(Z = \\overline{X} \\setminus X\\), and an algebraically closed field F of characteristic p with discrete topology, the set of isomorphism classes of continuous semisimple geometric representations \\(\\rho : \\pi_1(X,D) \\to \\GL_n(F)\\) is finite (up to conjugacy in \\(\\GL_n(F)\\)).",
     "domains": [
       "Algebra",
@@ -1292,7 +1292,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T13:33:35.154740+00:00",
     "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental group"
   },
