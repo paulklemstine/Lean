@@ -186,6 +186,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 21228762 (Q=0.820), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_21228762_f5058515",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "21228762",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:43.419732+00:00",
+    "title": "Deepening: Counterfactual Number Theory: What If Primes Were Random?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domains": [
       "Applications"
@@ -711,21 +725,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T02:50:51.916559+00:00",
     "title": "Anti-Mathematics: What If All Axioms Were Negated?"
-  },
-  {
-    "consumed_by_exp_id": "21228762",
-    "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_1001",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T07:28:54.833066+00:00",
-    "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
   {
     "consumed_by_exp_id": "",
@@ -7074,6 +7073,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T08:51:32.151438+00:00",
     "title": "This cycle reduced the Liar, Russell, and Berry paradoxes to a single algebraic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Counterfactual Number Theory\n\nThis cycle isolated a clean dividing line inside a deformed arithmetic. Modelling\n\"counterfactual primes\" by the irreducibles of the Hilbert monoid\n`H = {n \u2261 1 (mod 4)}`, we proved that multiplicative closure and Dirichlet-type\ninfinitude of primes survive the deformation, whereas unique factorization\ncollapses (already at `441 = 9\u00b749 = 21\u00b721`). The conjectures below extend this\nfinding toward a general theory of which arithmetic laws are robust under\nreplacing the primes.\n\n## Conjecture 1 \u2014 A closure/collapse dichotomy for congruence monoids\n\nFor every modulus `m` and every subgroup `G \u2264 (\u2124/m\u2124)\u02e3`, the multiplicative monoid\n`M(G) = {n : n mod m \u2208 G}` is multiplicatively closed and contains infinitely\nmany irreducibles, yet fails unique factorization precisely when `G` is a proper\nsubgroup.\n\nThe key insight is that unique factorization is controlled by a single group\ninvariant \u2014 the index `[(\u2124/m\u2124)\u02e3 : G]` \u2014 so failure is not sporadic but is forced\nthe moment the admitted residues stop forming the full unit group.\nWhy now? The `m = 4`, `G = {1}` case is fully settled here with an explicit\nminimal counterexample, giving a concrete base case from which the index-based\nobstruction can be built modulus by modulus.\n\n## Conjecture 2 \u2014 Elasticity grows with the index\n\nDefine the elasticity of `M(G)` as the supremum, over elements with two\nirreducible factorizations, of the ratio of factorization lengths. Then the\nelasticity is finite and increases monotonically as the index `[(\u2124/m\u2124)\u02e3 : G]`\ngrows, diverging to infinity along a suitable sequence of moduli.\n\nThe key insight is that longer forbidden residue \"detours\" force irreducibles of\nincreasingly disparate sizes to coincide in a single product, stretching the\npossible factorization lengths.\nWhy now? The Hilbert case exhibits the first nontrivial length collision\n(`{9, 49}` vs `{21, 21}`, lengths `2` and `2` but distinct supports); systematic\nsearch over small moduli can now calibrate how quickly disparate lengths appear.\n\n## Conjecture 3 \u2014 The zeta function detects the collapse\n\nThe Dirichlet series `\u2211 1/n^s` restricted to a congruence monoid `M(G)` extends\nmeromorphically past its abscissa of convergence, and unique factorization holds\nin `M(G)` **iff** this series admits an Euler product over the `M(G)`-irreducibles\nwith all local factors of the classical geometric shape `(1 - p^{-s})^{-1}`.\n\nThe key insight is that the Euler product is exactly the analytic fingerprint of\nunique factorization, so its breakdown is a spectral, not merely combinatorial,\nsignature of the collapse.\nWhy now? Analytic tools for Beurling-type generalized prime systems are mature\nenough to test the Euler-product criterion against the explicit irreducibles\ncatalogued in the Hilbert case.\n\n## Conjecture 4 \u2014 Randomized primes preserve Dirichlet but not unique factorization\n\nLet a random subset `S \u2286 \u2115` include each `n` independently with probability\n`1/log n`. Then almost surely `S` is multiplicatively \"generic\": the counting\nfunction of the sub-monoid it generates obeys a prime-number-theorem\u2013style\nasymptotic, while unique factorization into `S`-irreducibles fails with\nprobability one.\n\nThe key insight is that infinitude and density are first-moment phenomena that\nconcentrate, whereas unique factorization is a rigid coincidence-free condition\nthat a positive density of independent choices will always violate.\nWhy now? The deterministic Hilbert model shows both halves of the dichotomy can\ncoexist in one arithmetic; recasting the admitted set as a random sieve turns the\n\"which laws survive\" question into a sharp almost-sure statement.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1010",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "21228762",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:39.289698+00:00",
+    "title": "This cycle isolated a clean dividing line inside a deformed arithmetic. Modellin"
   },
   {
     "consumed_by_exp_id": "",

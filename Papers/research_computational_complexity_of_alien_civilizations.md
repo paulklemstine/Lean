@@ -1,204 +1,415 @@
-# Substrate-Independent Computational Complexity: Universal Hierarchy Theory
+# The Substrate-Independent Structure of Computation: A Universal Complexity Hierarchy and the Diagonal Core of Impossibility
+
+**Author:** Aristotle
+**Date:** 2026-07-11
 
 ## Abstract
 
-We develop an axiomatic framework for computational complexity that is independent of any particular model of computation. Our central construction, the *Complexity Hierarchy*, captures the minimal structural properties shared by all known complexity-theoretic hierarchies: monotonicity, strictness, and diagonalizability. Within this framework, we prove that (1) strict hierarchies generate infinitely many pairwise-distinct complexity levels, (2) bounded-overhead simulations between computational frameworks transfer hierarchy strictness, (3) diagonal witnesses provide constructive separations at every level, (4) oracle extensions preserve and cannot collapse existing separations, and (5) mutually simulable frameworks exhibit order-isomorphic hierarchical structure. We extend these results to hypercomputational models, showing that even frameworks exceeding Turing computability exhibit analogous strict hierarchies. All results are fully formalized and machine-verified.
-
-**Keywords**: computational complexity, time hierarchy theorem, substrate independence, diagonalization, abstract complexity theory, hypercomputation, P vs NP universality
+We isolate the single mathematical fact that underlies every classical
+obstruction in the theory of computation and show that, because it is a statement
+of pure function theory, it is forced upon *any* civilization capable of
+expressing the notion of a function — independently of biology, physics, or
+machine model. The fact is Lawvere's fixed-point theorem: if a type $A$ admits a
+*point-surjective* indexing $\varphi : A \to (A \to B)$ of its own $B$-valued
+functions, then every endofunction $f : B \to B$ has a fixed point. From its
+contrapositive we recover, uniformly, Cantor's theorem, the undecidability of the
+halting problem, Gödel's first incompleteness theorem, Tarski's undefinability of
+truth, and Russell's paradox, each obtained by choosing the answer type $B$ and a
+fixed-point-free $f$. We then develop three consequences. First, we model an
+arbitrary notion of computation as a bare *computation model* — a type of
+programs with a Boolean acceptance relation — and prove **substrate
+independence**: every such model contains a decision behavior no program
+realizes, with no hypotheses whatsoever. Second, we relativize this to an
+arbitrary oracle and prove the **hypercomputation barrier**: even granted an
+unrestricted, possibly non-computable oracle, no oracle-program decides the
+model's own jump; adding power relocates the obstruction one level up rather than
+removing it. Third, we build the **universal complexity hierarchy** — the tower
+$\mathrm{Level}\,0 = A$, $\mathrm{Level}\,(n+1) = (\mathrm{Level}\,n \to
+\mathrm{Bool})$ — and prove it strictly increases at every step (an injection but
+no surjection between consecutive levels, equivalently strictly increasing
+cardinality) and has no maximal level. Finally we exhibit the positive face of
+the same theorem: Kleene's recursion theorem and the existence of quines in any
+complete programming system, together with the duality that a system complete for
+its own program-transformations is never complete for its own Boolean decisions.
+Every result is elementary and hypothesis-free at its core, making the entire
+edifice a genuinely universal, discovered-not-invented feature of computation.
 
 ## 1. Introduction
 
-### 1.1 Motivation
-
-The foundational results of computational complexity theory — the time and space hierarchy theorems, the existence of complete problems, the polynomial hierarchy — are typically stated and proved for specific computational models, most commonly Turing machines. Yet the intuition among complexity theorists has long been that these results are "model-independent": they reflect structural properties of computation rather than artifacts of a particular formalism.
-
-This intuition is supported by the invariance thesis (van Emde Boas, 1990), which asserts that all "reasonable" models of sequential computation are polynomially related. However, the invariance thesis is stated informally and its scope is debated. Moreover, it does not directly address whether complexity-theoretic phenomena persist in models that go beyond standard computation (hypercomputation, oracle computation, infinite-time computation).
-
-### 1.2 Contributions
-
-We make the following contributions:
-
-1. **Novel axiomatic framework**: We define the `ComplexityHierarchy` structure, which axiomatizes the minimal properties needed for complexity theory: a monotone family of sets indexed by resource bounds, with strict separations at every level.
-
-2. **Simulation Transfer Theorem**: We prove that bounded-overhead simulations between computational frameworks transfer hierarchy strictness, formalizing why P vs NP is model-independent.
-
-3. **Substrate Independence Theorem**: We prove that mutually simulable frameworks exhibit corresponding separation phenomena, meaning the "shape" of computational difficulty is preserved across substrates.
-
-4. **Hypercomputational Barriers**: We prove that iterating hypercomputational extensions yields an infinite tower of hierarchies, each exhibiting strict separations. This establishes that no extension of computational power can eliminate the fundamental structure of complexity.
-
-5. **Full formalization**: All results are formalized in Lean 4 with machine-verified proofs, providing the highest level of mathematical certainty.
-
-### 1.3 Related Work
-
-**Blum's Abstract Complexity Theory** (Blum, 1967) axiomatized complexity measures via the Blum axioms, proving the speedup theorem and gap theorem in a model-independent setting. Our work extends this tradition to the structural level, abstracting not just complexity measures but the hierarchical organization of complexity classes.
-
-**Hartmanis and Stearns** (1965) proved the time hierarchy theorem for multi-tape Turing machines. Subsequent work extended this to space complexity, nondeterministic time, alternating time, and other resource measures. Our framework unifies all these as instances of a single abstract construction.
-
-**Geometric Complexity Theory** (Mulmuley and Sohoni, 2001) approaches P vs NP through algebraic geometry and representation theory. Our work is complementary: while GCT seeks to resolve P vs NP for a specific model, we prove that whatever the resolution, it must be universal across models.
-
-## 2. Definitions
-
-### 2.1 Complexity Hierarchy
-
-**Definition 2.1** (Complexity Hierarchy). A *complexity hierarchy* over a type α consists of:
-- A family of sets `level : ℕ → Set α` (the complexity classes)
-- **Monotonicity**: For all m ≤ n, `level m ⊆ level n`
-- **Strictness**: For all n, there exists x ∈ `level(n+1)` \ `level(n)`
-
-The elements of α represent decision problems, and `level n` represents the class of problems solvable within resource bound n.
-
-**Remark.** The strictness axiom encodes the content of all time/space hierarchy theorems. In the Turing machine setting, this follows from diagonalization. In our abstract setting, we take it as an axiom and study its consequences.
-
-### 2.2 Framework Simulation
-
-**Definition 2.2** (Framework Simulation). A *framework simulation* from hierarchy H₁ (over α) to hierarchy H₂ (over β) consists of:
-- A translation `translate : β → α` mapping problems in H₂ to problems in H₁
-- An overhead function `overhead : ℕ → ℕ` that is monotone
-- **Simulation**: For all n and x, if x ∈ H₂.level(n), then translate(x) ∈ H₁.level(overhead(n))
-- **Faithfulness**: For all n and x, if x ∉ H₂.level(n), then translate(x) ∉ H₁.level(n)
-
-The overhead function captures the computational cost of simulation. For example, simulating a two-tape Turing machine on a single-tape machine incurs at most quadratic overhead.
-
-### 2.3 Diagonalizable Framework
-
-**Definition 2.3** (Diagonalizable Framework). A *diagonalizable framework* extends a complexity hierarchy with:
-- A diagonal function `diag : ℕ → α`
-- **Inclusion**: diag(n) ∈ level(n+1)
-- **Exclusion**: diag(n) ∉ level(n)
-
-This axiomatizes the diagonal construction that powers all hierarchy theorems.
-
-### 2.4 Oracle Extension
-
-**Definition 2.4** (Oracle Extension). An *oracle extension* of a hierarchy H consists of:
-- An augmented hierarchy that subsumes H (every class of H is contained in the corresponding augmented class)
-- Preservation of separations: if x ∉ H.level(n), then x ∉ augmented.level(n)
-
-### 2.5 Hierarchy Morphism
-
-**Definition 2.5** (Hierarchy Morphism). A *hierarchy morphism* from H₁ to H₂ is a map φ : α → β that preserves level membership and reflects non-membership.
-
-### 2.6 Hypercomputational Extension
-
-**Definition 2.6** (Hypercomputational Extension). A *hypercomputational extension* of a hierarchy H provides a new hierarchy (the hyperlevels) that subsumes H and itself satisfies strictness.
-
-## 3. Main Results
-
-### 3.1 Hierarchy Level Gap
-
-**Theorem 3.1** (Hierarchy Level Gap). *For any strict complexity hierarchy H and natural numbers n, k, there exists x ∈ H.level(n + k + 1) such that x ∉ H.level(n).*
-
-*Proof sketch.* By induction on k. The base case uses strictness directly. For the inductive step, if x ∈ level(n + k + 1) \ level(n), then by strictness at level n + k + 1, we obtain y ∈ level(n + k + 2) \ level(n + k + 1). By monotonicity, y ∉ level(n), since if it were, it would be in level(n + k + 1) by monotonicity. ∎
-
-### 3.2 Infinite Separation
-
-**Theorem 3.2** (Infinite Separation). *A strict complexity hierarchy has infinitely many pairwise-distinct levels: level(n) ≠ level(n+1) for all n.*
-
-*Proof sketch.* If level(n) = level(n+1), then the element guaranteed by strictness at level n belongs to both level(n+1) and its complement in level(n), a contradiction. ∎
-
-**Corollary 3.3** (Strict Inclusion). *For all n, level(n) ⊊ level(n+1).*
-
-### 3.3 Simulation Transfer
-
-**Theorem 3.4** (Simulation Transfer). *If H₁ faithfully simulates H₂ with overhead function f, then for every n there exists x ∈ H₁.level(f(n+1)) \ H₁.level(n).*
-
-*Proof sketch.* By strictness of H₂, there exists x ∈ H₂.level(n+1) \ H₂.level(n). The simulation property gives translate(x) ∈ H₁.level(f(n+1)), and faithfulness gives translate(x) ∉ H₁.level(n). ∎
-
-**Significance.** This theorem formalizes why P vs NP transfers between models. If Turing machines can simulate quantum computers with polynomial overhead and vice versa, then a separation in one model implies a separation in the other.
-
-### 3.4 Diagonal Separation
-
-**Theorem 3.5** (Diagonal Separation). *In a diagonalizable framework, diag(n) ∉ level(m) for all m ≤ n.*
-
-*Proof sketch.* By exclusion, diag(n) ∉ level(n). By monotonicity, level(m) ⊆ level(n) for m ≤ n. Hence diag(n) ∉ level(m). ∎
-
-**Significance.** The diagonal witness at level n separates not just consecutive levels, but separates level n+1 from ALL lower levels simultaneously.
-
-### 3.5 Substrate Independence
-
-**Theorem 3.6** (Substrate Independence). *If H₁ and H₂ are mutually simulable (each simulates the other with bounded overhead), then a separation at level n in H₁ implies a separation at the corresponding overhead level in H₂.*
-
-*Proof sketch.* Compose the backward simulation with the level-gap witness. ∎
-
-### 3.6 Hypercomputational Barriers
-
-**Theorem 3.7** (Nested Barriers). *Given a hierarchy H, an extension E of H, and a second extension E' of E, we have: (1) E' exhibits strict separations at every level, and (2) every problem in H.level(n) is contained in E'.hyperLevel(n).*
-
-*Proof sketch.* Part (1) follows from the strictness of E'. Part (2) follows by composing the subsumption maps: H ⊆ E ⊆ E'. ∎
-
-### 3.7 Strong Substrate Independence
-
-**Theorem 3.8** (Strong Substrate Independence). *For diagonalizable frameworks D₁ and D₂ connected by a mutual simulation M, the translated diagonal witness of D₂ separates levels in D₁: M.forward.translate(D₂.diag(n)) ∈ D₁.level(f(n+1)) and M.forward.translate(D₂.diag(n)) ∉ D₁.level(n).*
-
-*Proof sketch.* Apply the simulation and faithfulness properties of the forward simulation to D₂.diag_in and D₂.diag_not_in. ∎
-
-## 4. Discussion
-
-### 4.1 The Universality of P vs NP
-
-Our results provide a rigorous foundation for the claim that P vs NP is model-independent. The argument proceeds as follows:
-
-1. Any reasonable computation model gives rise to a complexity hierarchy (by the existence of hierarchy theorems in each model).
-2. Reasonable models are mutually simulable (the invariance thesis).
-3. By the Substrate Independence Theorem, separations transfer between mutually simulable models.
-4. Therefore, the answer to P vs NP is the same in all reasonable models.
-
-This does not resolve P vs NP, but it establishes that the question is well-posed in a model-independent sense.
-
-### 4.2 Hypercomputational Implications
-
-The Nested Barriers Theorem has a philosophically striking consequence: even civilizations with access to hypercomputational abilities (oracle machines, infinite-time Turing machines, Blum-Shub-Smale machines over the reals) would face their own complexity barriers. The structure of computational difficulty is not an artifact of our limited computational power — it is an intrinsic feature of the mathematical universe.
-
-### 4.3 Relation to Existing Axiomatizations
-
-Our framework is related to but distinct from Blum's axiomatic complexity theory. Blum axiomatized *complexity measures* (time, space) and proved results about individual measures (speedup, gap theorems). We axiomatize *complexity hierarchies* — the entire family of classes induced by a measure — and prove results about the hierarchical structure itself.
-
-This shift in perspective is what enables our substrate independence results. By abstracting away the specifics of any particular measure, we identify the invariants that persist across all models.
-
-### 4.4 Limitations
-
-Our framework captures the *structural* aspects of complexity theory but does not capture all phenomena. In particular:
-
-- **Completeness**: The notion of NP-completeness requires a specific notion of reduction, which depends on the model. Our framework does not axiomatize reductions.
-- **Randomization**: BPP, RP, and other randomized classes require probabilistic extensions not included in our basic framework.
-- **Interaction**: Interactive proofs (IP, AM) and their relationship to PSPACE involve structural properties beyond monotone hierarchies.
-
-These limitations suggest natural directions for future work.
-
-## 5. Algorithms and Computational Aspects
-
-### 5.1 Constructive Witnesses
-
-Our framework provides constructive separation witnesses through the `extractWitness` function, which takes a diagonalizable framework and a level index n and returns a certified pair: a problem x together with proofs that x ∈ level(n+1) and x ∉ level(n).
-
-### 5.2 Hierarchy Simulation Algorithm
-
-Given two complexity hierarchies connected by a simulation, our results yield an algorithm for transferring complexity-theoretic results:
-
-```
-Algorithm: TransferSeparation
-Input: Hierarchy H₂, Simulation sim: H₁ → H₂, level n
-Output: Witness of separation in H₁
-
-1. Obtain (x, proof_in, proof_out) from H₂.strict(n)
-2. Let y = sim.translate(x)
-3. Return (y, sim.simulation(proof_in), sim.faithful(proof_out))
-```
-
-This algorithm is efficient: it runs in time proportional to the cost of computing the translation and overhead functions.
-
-## 6. Future Work
-
-1. **Axiomatizing reductions**: Extend the framework with a notion of reduction between problems, enabling formalization of completeness results.
-2. **Probabilistic hierarchies**: Develop an analogous framework for randomized complexity classes.
-3. **Quantitative refinements**: Replace the qualitative strictness axiom with quantitative lower bounds, capturing not just the existence of separations but their magnitude.
-4. **Connection to GCT**: Bridge our abstract framework to the Geometric Complexity Theory axiomatization already formalized in the project catalog.
-
-## References
-
-1. Blum, M. (1967). A Machine-Independent Theory of the Complexity of Recursive Functions. *Journal of the ACM*, 14(2), 322-336.
-2. Hartmanis, J., & Stearns, R. E. (1965). On the computational complexity of algorithms. *Transactions of the American Mathematical Society*, 117, 285-306.
-3. Mulmuley, K., & Sohoni, M. (2001). Geometric Complexity Theory I: An Approach to the P vs. NP and Related Problems. *SIAM Journal on Computing*, 31(2), 496-526.
-4. van Emde Boas, P. (1990). Machine Models and Simulations. In *Handbook of Theoretical Computer Science*, Volume A, 1-66. Elsevier.
-5. Arora, S., & Barak, B. (2009). *Computational Complexity: A Modern Approach*. Cambridge University Press.
-6. Sipser, M. (2012). *Introduction to the Theory of Computation*. 3rd edition. Cengage Learning.
+A recurring thesis in the philosophy of computation holds that any technological
+civilization — regardless of its biological or physical substrate — must
+rediscover the same structural obstructions to computation. The thesis is
+usually argued informally. Our aim is to give it a precise mathematical spine: to
+identify the exact statement responsible for the obstructions, to verify that it
+refers to no machine model or physical resource, and to derive from it, with full
+rigor, the universal facts that any computing civilization must confront.
+
+The organizing observation is that the classical impossibility results — Cantor's
+theorem on the sizes of power sets, Turing's undecidability of the halting
+problem, Gödel's first incompleteness theorem, Tarski's undefinability of truth,
+and Russell's paradox — are not independent. They are instances of a single
+theorem of elementary category/function theory: **Lawvere's fixed-point
+theorem**. Because that theorem speaks only of types, functions, and fixed
+points, it is available to any civilization that can express the notion of a
+function. This is the precise content of the slogan "computational complexity is
+discovered, not invented."
+
+The paper is organized around four movements:
+
+1. **The diagonal core** (§3): Lawvere's theorem, its contrapositive, and the
+   Boolean special case (Cantor's theorem with its accompanying strict
+   embedding).
+2. **Substrate-independent uncomputability** (§4): an assumption-free model of
+   computation, in which the diagonal behavior is provably unrealizable.
+3. **The hypercomputation barrier** (§5): relativization to an arbitrary oracle,
+   showing the obstruction is invariant under unrestricted added power.
+4. **The universal hierarchy and the positive face** (§6–§7): an infinite,
+   strictly increasing tower of decision-power levels with no top, and Kleene's
+   recursion theorem with quines, exhibiting the creativity/limitation duality.
+
+## 2. Preliminaries and notation
+
+We work in a standard type-theoretic setting. For types $A$ and $B$ we write $A
+\to B$ for the type of functions from $A$ to $B$. We write $\mathrm{Bool} =
+\{\text{true}, \text{false}\}$ for the two-element type and $!\,{\cdot}$ for
+Boolean negation. A function $f : X \to Y$ is *injective* if $f(x) = f(x')$
+implies $x = x'$, and *surjective* if every $y : Y$ equals $f(x)$ for some $x$.
+For a type $X$ we write $\lvert X \rvert$ for its cardinality; $2^{\kappa}$
+denotes the cardinality of $X \to \mathrm{Bool}$ when $\lvert X \rvert = \kappa$.
+We use throughout the trivial but load-bearing fact:
+
+**Lemma 2.1 (Negation is fixed-point free).** *For every $b : \mathrm{Bool}$,
+$b \neq \,!\,b$.*
+
+*Proof.* Both cases $b = \text{true}$ and $b = \text{false}$ are checked
+directly: $\text{true} \neq \text{false}$ and $\text{false} \neq \text{true}$.
+$\qquad\blacksquare$
+
+This single asymmetry — that a two-valued negation has no fixed point — is the
+only "substrate input" the entire theory requires.
+
+## 3. The diagonal core: Lawvere's fixed-point theorem
+
+The central definition abstracts the idea of a coding scheme that names functions.
+
+**Definition 3.1 (Point-surjectivity).** Let $A$ and $B$ be types. A map
+$\varphi : A \to (A \to B)$ is **point-surjective** if for every $g : A \to B$
+there exists $a : A$ with $\varphi(a) = g$. Intuitively, $\varphi$ assigns to
+each *code* $a$ an $A$-parameterized *answer-function* $\varphi(a)$, and
+point-surjectivity says every such answer-function is named by some code — "the
+coding scheme is complete."
+
+**Theorem 3.2 (Lawvere's fixed-point theorem).** *If $\varphi : A \to (A \to B)$
+is point-surjective, then every $f : B \to B$ has a fixed point: there exists
+$b : B$ with $f(b) = b$.*
+
+*Proof.* Consider the diagonal function $d : A \to B$ defined by
+$d(x) = f(\varphi(x)(x))$. By point-surjectivity there is a code $a$ with
+$\varphi(a) = d$. Evaluating at $a$,
+$$\varphi(a)(a) = d(a) = f\big(\varphi(a)(a)\big).$$
+Hence $b := \varphi(a)(a)$ satisfies $f(b) = b$. $\qquad\blacksquare$
+
+The theorem's power comes from reading it in contrapositive.
+
+**Theorem 3.3 (Abstract diagonal argument).** *If $f : B \to B$ has no fixed
+point (i.e. $f(b) \neq b$ for all $b$), then no $\varphi : A \to (A \to B)$ is
+point-surjective.*
+
+*Proof.* Immediate from Theorem 3.2: a point-surjective $\varphi$ would produce a
+fixed point of $f$, a contradiction. $\qquad\blacksquare$
+
+Choosing $B = \mathrm{Bool}$ and $f = \,!\,{\cdot}$ (fixed-point free by Lemma
+2.1) yields the Boolean incarnation. Since any surjective $\varphi$ is in
+particular point-surjective, we obtain:
+
+**Theorem 3.4 (Cantor's theorem, Boolean form).** *For every type $A$, no map
+$\varphi : A \to (A \to \mathrm{Bool})$ is surjective. The space of decision
+procedures on $A$ is strictly richer than $A$ itself.*
+
+*Proof.* If $\varphi$ were surjective it would be point-surjective, and by
+Theorem 3.3 the fixed-point-free negation $!\,{\cdot}$ could not exist — a
+contradiction with Lemma 2.1. Concretely, the "anti-diagonal" $g(x) = \,!\,
+\varphi(x)(x)$ differs from every $\varphi(a)$ at $a$, so $g$ is not in the range
+of $\varphi$. $\qquad\blacksquare$
+
+Cantor's theorem also has a *positive* half: while $A \to \mathrm{Bool}$ cannot
+be covered from $A$, it always *contains* a copy of $A$.
+
+**Theorem 3.5 (The strict Boolean-power step).** *For every type $A$ there is an
+injection $A \hookrightarrow (A \to \mathrm{Bool})$, but no surjection $A \to (A
+\to \mathrm{Bool})$.*
+
+*Proof.* For the injection, send $a$ to its indicator $\mathbf{1}_a(x) =
+[\,x = a\,]$ (true exactly when $x = a$). If $\mathbf{1}_a = \mathbf{1}_b$ then
+evaluating at $b$ gives $[\,b = a\,] = [\,b = b\,] = \text{true}$, so $b = a$.
+Non-surjectivity is Theorem 3.4. $\qquad\blacksquare$
+
+**Instantiation table.** Every classical obstruction is Theorem 3.3 with a choice
+of $B$ and $f$:
+
+| Result | Answer type $B$ | Fixed-point-free $f$ | Reading of $\varphi(a)(x)$ |
+|---|---|---|---|
+| Cantor | $\mathrm{Bool}$ | negation | "$x$ is in the set coded by $a$" |
+| Halting problem | $\mathrm{Bool}$ | negation | "program $a$ accepts program $x$" |
+| Gödel incompleteness | sentences | "prepend $\neg$" (up to provability) | "$a$ is the code of a formula about $x$" |
+| Tarski undefinability | truth values | negation | truth predicate applied to codes |
+| Russell's paradox | $\mathrm{Bool}$ | negation | set membership |
+
+No entry mentions a machine. This is the sense in which the diagonal argument is
+*universal*.
+
+## 4. Substrate-independent uncomputability
+
+To formalize "any notion of computation" without importing a specific machine
+model, we take the weakest possible structure.
+
+**Definition 4.1 (Computation model).** A **computation model** consists of a type
+$\mathrm{Pgm}$ of *programs* (equivalently, codes) together with a Boolean
+*acceptance* relation $\mathrm{acc} : \mathrm{Pgm} \to \mathrm{Pgm} \to
+\mathrm{Bool}$, where $\mathrm{acc}(p)(q)$ reads "program $p$ halts and accepts
+the code of program $q$." No computability, finiteness, or structural assumption
+is placed on $\mathrm{Pgm}$ or $\mathrm{acc}$.
+
+**Definition 4.2 (Diagonal behavior).** The **diagonal behavior** of a model is
+$\mathrm{diag} : \mathrm{Pgm} \to \mathrm{Bool}$, $\mathrm{diag}(q) = \,!\,
+\mathrm{acc}(q)(q)$: on input $q$, return the opposite of what $q$ does on its
+own code.
+
+**Theorem 4.3 (Abstract undecidability).** *In every computation model, no program
+realizes the diagonal behavior: for all $p$, $\mathrm{acc}(p) \neq
+\mathrm{diag}$.*
+
+*Proof.* If $\mathrm{acc}(p) = \mathrm{diag}$ then evaluating at $p$ gives
+$\mathrm{acc}(p)(p) = \,!\,\mathrm{acc}(p)(p)$, contradicting Lemma 2.1.
+$\qquad\blacksquare$
+
+**Corollary 4.4 (Substrate independence).** *For every computation model there
+exists a decision behavior $g : \mathrm{Pgm} \to \mathrm{Bool}$ outside the range
+of $\mathrm{acc}$ — a "problem" no program solves. The statement holds with no
+hypotheses on the model.*
+
+*Proof.* Take $g = \mathrm{diag}$ and apply Theorem 4.3. $\qquad\blacksquare$
+
+The complete absence of hypotheses is the point: the obstruction depends only on
+the shape "programs acting on the codes that name them," never on what the
+programs are made of. Instantiating $\mathrm{acc}$ with the halting-decider gives
+the classical undecidability of the halting problem, but the statement itself is
+model-free and therefore identical across all civilizations.
+
+## 5. The hypercomputation barrier
+
+One might hope to escape §4 by enlarging the model's power. We formalize
+unrestricted added power as an arbitrary oracle.
+
+**Definition 5.1 (Oracle model).** An **oracle model** consists of a type
+$\mathrm{Pgm}$, an *arbitrary* function $\mathrm{oracle} : \mathrm{Pgm} \to
+\mathrm{Bool}$ (a stand-in for an unrestricted, possibly non-computable resource),
+and an oracle-relative acceptance relation $\mathrm{acc} : \mathrm{Pgm} \to
+\mathrm{Pgm} \to \mathrm{Bool}$. The oracle is completely unconstrained; that
+programs may consult it in any manner is already subsumed by allowing
+$\mathrm{acc}$ to be arbitrary.
+
+**Definition 5.2 (Jump).** The **jump** of an oracle model is
+$\mathrm{jump}(q) = \,!\,\mathrm{acc}(q)(q)$, the diagonal behavior of the
+enriched model.
+
+**Theorem 5.3 (Oracle barrier).** *In every oracle model, no program decides the
+model's own jump: for all $p$, $\mathrm{acc}(p) \neq \mathrm{jump}$.*
+
+*Proof.* Identical to Theorem 4.3; the oracle plays no role in the diagonal.
+$\qquad\blacksquare$
+
+**Theorem 5.4 (Hypercomputation barrier, universal form).** *For every program
+type $\mathrm{Pgm}$, every oracle $\mathrm{oracle} : \mathrm{Pgm} \to
+\mathrm{Bool}$ whatsoever, and every acceptance relation $\mathrm{acc}$, there is
+a decision behavior $g$ such that $\mathrm{acc}(p) \neq g$ for all $p$.*
+
+*Proof.* Assemble the oracle model $(\mathrm{Pgm}, \mathrm{oracle},
+\mathrm{acc})$ and take $g = \mathrm{jump}$; apply Theorem 5.3.
+$\qquad\blacksquare$
+
+Adding hypercomputational power does not dissolve the diagonal; it merely
+relocates it one level up. The jump of a class is never internal to the class.
+Consequently a civilization wielding hypercomputers meets an exact analog of the
+halting problem: a question its enhanced machines cannot settle, answerable only
+by a still-stronger machine that will, in turn, have its own jump. This is the
+abstract seed of the relativization phenomenon (in the vein of Baker–Gill–Solovay)
+and the reason diagonalization alone cannot resolve questions like P vs NP that
+must distinguish oracle worlds.
+
+## 6. The universal complexity hierarchy
+
+A single Cantor step (Theorem 3.5) lifts a type to the strictly larger type of
+its decision procedures. Iterating yields an unbounded tower.
+
+**Definition 6.1 (Level tower).** For a base type $A$ define
+$$\mathrm{Level}\,0 = A, \qquad \mathrm{Level}\,(n+1) = (\mathrm{Level}\,n \to
+\mathrm{Bool}).$$
+Level $n+1$ is the type of Boolean decision procedures over level $n$ — the
+"problems about problems about $\cdots$ about $A$."
+
+**Theorem 6.2 (Strict step).** *For every $n$ there is an injection
+$\mathrm{Level}\,n \hookrightarrow \mathrm{Level}\,(n+1)$, and no surjection
+$\mathrm{Level}\,n \to \mathrm{Level}\,(n+1)$.*
+
+*Proof.* Both halves are Theorem 3.5 applied to $X = \mathrm{Level}\,n$: the
+indicator embedding provides the injection, and Cantor's theorem forbids
+surjection. $\qquad\blacksquare$
+
+**Theorem 6.3 (Cardinal strict monotonicity).** *For every $n$,
+$\lvert \mathrm{Level}\,n \rvert < \lvert \mathrm{Level}\,(n+1) \rvert$; more
+generally $m < n$ implies $\lvert \mathrm{Level}\,m \rvert < \lvert
+\mathrm{Level}\,n \rvert$.*
+
+*Proof.* Since $\mathrm{Level}\,(n+1) = \mathrm{Level}\,n \to \mathrm{Bool}$, its
+cardinality is $2^{\lvert \mathrm{Level}\,n \rvert}$, and Cantor's cardinal
+inequality gives $\kappa < 2^{\kappa}$. The general case follows because a
+strictly increasing step yields a strictly monotone sequence. $\qquad\blacksquare$
+
+**Theorem 6.4 (No maximal level).** *For every $n$ there exists $m > n$ with
+$\lvert \mathrm{Level}\,n \rvert < \lvert \mathrm{Level}\,m \rvert$. The
+universal hierarchy has no top.*
+
+*Proof.* Take $m = n+1$ and apply Theorem 6.3. $\qquad\blacksquare$
+
+Because the construction and both proofs are pure function theory — no machine
+model, no physics — this hierarchy is forced on every civilization. Whatever
+decision-power a civilization attains (any finite level), a strictly greater level
+provably exists, admitting the current level as a sub-power but not itself
+reachable from it. This is the abstract skeleton onto which honest resource
+hierarchies (time, space) can later be grafted by instantiating the levels with
+an explicit resource measure.
+
+## 7. The positive face: recursion, quines, and a duality
+
+Read forward rather than backward, Theorem 3.2 becomes an existence principle for
+self-reference.
+
+**Definition 7.1 (Programming system).** A **programming system** consists of a
+type $\mathrm{Pgm}$ of programs and a map $\mathrm{build} : \mathrm{Pgm} \to
+(\mathrm{Pgm} \to \mathrm{Pgm})$ that indexes program-transformations by
+programs, such that $\mathrm{build}$ is point-surjective — every transformation
+$\mathrm{Pgm} \to \mathrm{Pgm}$ is named by some program. This is the abstract
+content of an *acceptable programming system* (closure under the $s$-$m$-$n$
+theorem).
+
+**Theorem 7.2 (Kleene's recursion theorem, abstract form).** *In a programming
+system, every transformation $f : \mathrm{Pgm} \to \mathrm{Pgm}$ has a fixed
+program $e$ with $f(e) = e$.*
+
+*Proof.* Apply Theorem 3.2 with $A = B = \mathrm{Pgm}$ and $\varphi =
+\mathrm{build}$. $\qquad\blacksquare$
+
+**Corollary 7.3 (Existence of quines).** *Reading $\mathrm{printer} :
+\mathrm{Pgm} \to \mathrm{Pgm}$ as "the program a given program becomes when asked
+to describe itself," there is a program $e$ with $\mathrm{printer}(e) = e$: a
+self-reproducing program. Every complete programming system possesses quines.*
+
+*Proof.* Instantiate Theorem 7.2 with $f = \mathrm{printer}$. $\qquad\blacksquare$
+
+**Theorem 7.4 (No complete self-semantics — the duality).** *Even in a
+programming system that is complete for its own transformations, there is no
+complete Boolean self-semantics: for every assignment $\mathrm{sem} :
+\mathrm{Pgm} \to (\mathrm{Pgm} \to \mathrm{Bool})$ of decision behaviors to
+programs there is a behavior $g$ with $\mathrm{sem}(p) \neq g$ for all $p$.*
+
+*Proof.* Take $g(q) = \,!\,\mathrm{sem}(q)(q)$; evaluating any putative
+$\mathrm{sem}(p) = g$ at $p$ contradicts Lemma 2.1. $\qquad\blacksquare$
+
+Theorems 7.2 and 7.4 coexist in a single system: completeness *for
+transformations* (answer type $\mathrm{Pgm}$) and incompleteness *for decisions*
+(answer type $\mathrm{Bool}$) are both Lawvere's theorem, differing only in the
+answer type. Creativity (self-reference, quines, self-modifying and
+self-compiling systems) and limitation (uncomputability) are not opposing forces
+but two readings of one theorem.
+
+**On non-vacuity.** In the full set-theoretic universe, a system complete for
+*all* its transformations $\mathrm{Pgm} \to \mathrm{Pgm}$ is forced to have a
+subsingleton program type (another shadow of the diagonal), so the pure-set
+instance of Theorem 7.2 is degenerate; the non-degenerate instances live in the
+computable category, where acceptable programming systems satisfy
+point-surjectivity via the $s$-$m$-$n$ theorem — the classical Kleene setting.
+The uncomputability theorems of §4–§6, by contrast, are non-vacuous already for
+concrete models (e.g. $\mathrm{Pgm} = \mathbb{N}$ with any acceptance relation).
+
+## 8. Algorithms
+
+Although the results are impossibility theorems, they are constructive: each
+supplies an explicit *witness* — a behavior demonstrably outside a given range —
+computed by a short algorithm.
+
+**Algorithm A (Anti-diagonal witness).** Given a finite tabulation of a candidate
+enumeration $\varphi$ of decision procedures on a finite domain, produce the
+decision procedure $g(x) = \,!\,\varphi(x)(x)$ and verify it differs from every
+$\varphi(a)$ at the point $a$. Complexity: $O(n)$ evaluations for a domain of
+size $n$; the verification is $O(n)$ point checks.
+
+**Algorithm B (Level cardinality).** Given a finite base of size $k$ and a level
+index $n$, compute $\lvert \mathrm{Level}\,n \rvert$ by the recurrence
+$c_0 = k$, $c_{i+1} = 2^{c_i}$, exhibiting the tower-of-exponentials growth that
+witnesses strict monotonicity.
+
+**Algorithm C (Fixed program / quine search).** In a finite complete system given
+by a table $\mathrm{build}$, and a transformation $f$, find a fixed program by
+forming the diagonal code and reading off Lawvere's witness $\varphi(a)(a)$;
+verify $f(e) = e$.
+
+Pseudocode and typed implementations of all three accompany this work.
+
+## 9. Applications and discussion
+
+**Why this matters for the "alien" thesis.** The results give a mathematically
+exact form to the claim that computational limits are universal. Any civilization
+able to form the concept of a function from codes to answers possesses Lawvere's
+theorem; from it, Cantor, the halting problem, the endless hierarchy, the oracle
+barrier, and Kleene's recursion theorem follow without any further assumptions.
+The limits are therefore *discovered* features of an abstract structure, not
+*invented* features of a particular technology.
+
+**Relation to P vs NP.** The framework suggests treating resource-bounded
+complexity classes as closure operators on decision behaviors and phrasing
+separations as properties of the resulting closure lattice. The oracle barrier
+(Theorem 5.4) is the abstract seed of relativization: because the diagonal
+survives every oracle, diagonalization alone cannot separate classes that behave
+differently across oracle worlds. This is the structural reason a resolution of P
+vs NP must go beyond pure diagonal methods — a substrate-independent meta-fact.
+
+**Relation to physics and hypercomputation.** The oracle formalizes any
+physical resource, however exotic, as an arbitrary Boolean function. Theorem 5.4
+then says that no proposed hypercomputer removes the diagonal obstruction; it
+merely defines a new, higher jump. Impossibility is stable under physical
+augmentation.
+
+## 10. Future work
+
+Several directions extend the present development:
+
+1. **P vs NP as structure, not model.** Formalize abstract resource-bounded
+   classes as closure operators on decision behaviors and state
+   P-vs-NP-type separations as properties of the closure lattice. The oracle
+   barrier is the seed of a Baker–Gill–Solovay-style theorem: construct oracles
+   $A, B$ with $\mathrm{P}^A = \mathrm{NP}^A$ and $\mathrm{P}^B \neq
+   \mathrm{NP}^B$, proving that diagonalization alone cannot settle P vs NP.
+
+2. **A concrete time/space hierarchy theorem.** Instantiate the abstract level
+   tower with an explicit resource measure (step counts of a universal
+   simulator) and prove $\mathrm{DTIME}(f) \subsetneq \mathrm{DTIME}(g)$ for
+   $f = o(g/\log g)$ via the same diagonal, connecting the cardinal hierarchy to
+   an honest complexity hierarchy.
+
+3. **Kleene's recursion theorem in the computable category.** Replace the
+   set-theoretically degenerate point-surjectivity hypothesis with an acceptable
+   programming system, recovering the classical non-degenerate recursion theorem
+   and its constructions.
+
+## 11. Conclusion
+
+A single line of pure function theory — Lawvere's fixed-point theorem — organizes
+the entire landscape of computational impossibility. Read backward it yields
+Cantor's theorem, the halting problem, Gödel's incompleteness, and an infinite
+strictly increasing hierarchy with no top; relativized it yields a barrier that
+survives arbitrary oracles; read forward it yields Kleene's recursion theorem and
+quines. None of these results mentions a machine, a bit, or a physical resource.
+They are theorems about the shape of computation itself and are therefore forced
+on every possible computing civilization. In the deepest sense, the mathematics
+of computation is the same across all worlds: it is discovered, not invented.

@@ -250,6 +250,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 21228762 (Q=0.820), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_21228762_f5058515",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "21228762",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:43.419732+00:00",
+    "title": "Deepening: Counterfactual Number Theory: What If Primes Were Random?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domain_bridges": [],
     "domains": [
@@ -878,26 +897,6 @@
     "status": "failed",
     "timestamp": "2026-07-11T02:34:00.123116+00:00",
     "title": "Surreal Topology: Open Sets at Infinity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "9ca5466b",
-    "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0996",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T06:55:55.264449+00:00",
-    "title": "Computational Complexity of Alien Civilizations"
   },
   {
     "ambition_level": "extension",
@@ -12073,6 +12072,26 @@
     "status": "available",
     "timestamp": "2026-07-11T08:51:39.289698+00:00",
     "title": "This cycle isolated a clean dividing line inside a deformed arithmetic. Modellin"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Computational Complexity of Alien Civilizations\n\nThis project isolates the *substrate-independent* core of computational\nobstructions: **Lawvere's fixed-point theorem**. Every classical impossibility\nresult — Cantor's theorem, undecidability of the halting problem, Kleene's\nrecursion theorem, Gödel's first incompleteness theorem, Tarski's undefinability\nof truth, Russell's paradox — is one instance, obtained by choosing the answer\ntype `B` and the endofunction `f : B → B`. Because the theorem mentions no\nmachine model, bits, or physics, any civilization able to speak of functions is\nforced to rediscover the same structure. That is the precise sense in which\n\"computational complexity is discovered, not invented\".\n\n### What is proved (see the `.lean` files)\n\n* **`Lawvere.lean`** — Lawvere's fixed-point theorem (`lawvere`); its\n  contrapositive (`no_pointSurjective_of_fixpointFree`); Cantor's theorem in\n  Boolean form (`cantor_bool`); the strict `Bool`-power step\n  (`cantor_pow`: an injection `A ↪ A→Bool` but no surjection). Axiom-free core.\n* **`Uncomputability.lean`** — an abstract `ComputationModel` with no structural\n  assumptions; abstract undecidability (`diagonal_not_realized`), the\n  model-independence statement (`substrate_independent`), and the **oracle /\n  hypercomputation barrier** (`hypercomputation_barrier`): even with an arbitrary,\n  possibly non-computable oracle, no oracle-program decides the model's own jump.\n* **`Hierarchy.lean`** — the universal complexity hierarchy `Level n` with strict\n  steps (`strict_step`, `mk_lt`), monotonic cardinality (`mk_strictMono`), and no\n  maximal level (`no_maximal`).\n* **`Recursion.lean`** — the *positive* face: Kleene's recursion theorem\n  (`recursion_theorem`) and quines (`exists_quine`) in complete systems, together\n  with the duality `no_complete_semantics` (a system complete for its program\n  transformations is never complete for its own Boolean decisions).\n\n### Directions to extend\n\n1. **P vs NP as structure, not model.** Formalize abstract resource-bounded\n   classes as closure operators on decision behaviours and state P-vs-NP-type\n   separations as properties of the closure lattice. The relativization results\n   here (`hypercomputation_barrier`) are the seed of a Baker–Gill–Solovay-style\n   theorem: build oracles `A, B` with `P^A = NP^A` and `P^B ≠ NP^B`, proving\n   diagonalization alone cannot settle P vs NP — a genuinely substrate-independent\n   meta-theorem.\n\n2. **A concrete Time/Space Hierarchy Theorem.** Instantiate the abstract\n   `Level` tower with an explicit resource measure (step counts of a universal\n   simulator) and prove `DTIME(f) ⊊ DTIME(g)` for `f = o(g / log g)` via the same\n   diagonal, connecting the cardinal hierarchy to an honest complexity hierarchy.\n\n3. **Kleene's recursion theorem, computable category.** Replace the (Set-only\n   degenerate) point-surjectivity hypothesis with an *acceptable programming\n   system* built on `Nat.Partrec` / `Computable`, giving a non-degenerate\n   `recursion_theorem` and genuine quines over `ℕ`.\n\n4. **Gödel and Tarski from the same lemma.** Instantiate `lawvere` with the\n   provability/truth predicate to derive incompleteness and undefinability,\n   exhibiting them as literally the same theorem as the halting problem.\n\n5. **Hypercomputation ordinal hierarchy.** Iterate the jump `jump` transfinitely\n   (the arithmetical/hyperarithmetical hierarchy) and show the barrier persists at\n   every level and limit — formalizing \"even infinite-time / oracle civilizations\n   face analogous barriers\" as a well-founded transfinite recursion.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_1011",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9ca5466b",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:45.629490+00:00",
+    "title": "This project isolates the *substrate-independent* core of computational"
   },
   {
     "ambition_level": "extension",

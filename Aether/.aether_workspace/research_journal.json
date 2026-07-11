@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8c745e9f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Real-rootedness under squaring of combinatorial triangles\n\nThese conjectures grow out of an explicit study of the square of the Eulerian triangle,\nwhose `(n, k)` entry is `C(n, k)",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-10T15:04:38",
-      "title": "Real-rootedness of the square of the Eulerian triangle"
-    },
-    {
       "cycle_id": "f5358691",
       "domain": "Computation",
       "key_insight": "# Future directions — Persistent Cycles in Randomized Graphs\n\n## What was established\n\nThe mission target — *for every `ε>0` there is `K` such that for `d ≥ K` and\n`p ∈ [εd/log n, d/log n]`, `G_p` a.a",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-11T08:51:37",
       "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+    },
+    {
+      "cycle_id": "21228762",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Counterfactual Number Theory\n\nThis cycle isolated a clean dividing line inside a deformed arithmetic. Modelling\n\"counterfactual primes\" by the irreducibles of the Hilbert monoid",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-11T08:51:43",
+      "title": "Counterfactual Number Theory: What If Primes Were Random?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "583299ca",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of the combinatorial and inverse-limit core of torsion\nlocal–global compatibility for conjugate self-dual representations over CM fields.",
-      "quality_score": 0.7779935103225806,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-03T07:33:59",
-      "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
-    },
     {
       "cycle_id": "70c42dc4",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-11T08:51:37",
       "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+    },
+    {
+      "cycle_id": "21228762",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Counterfactual Number Theory\n\nThis cycle isolated a clean dividing line inside a deformed arithmetic. Modelling\n\"counterfactual primes\" by the irreducibles of the Hilbert monoid",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-11T08:51:43",
+      "title": "Counterfactual Number Theory: What If Primes Were Random?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0981cb8f",
-      "domain": "Probability",
-      "name": "for",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "0981cb8f",
-      "domain": "Probability",
-      "name": "for",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "0981cb8f",
-      "domain": "Probability",
-      "name": "for",
-      "quality": 0.83
-    },
     {
       "cycle_id": "0ba9c9ed",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "toCode_inj",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "21228762",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "21228762",
+      "domain": "Novelty",
+      "name": "inH_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "21228762",
+      "domain": "Novelty",
+      "name": "inH_mul",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T08:51:37",
+  "last_updated": "2026-07-11T08:51:43",
   "open_questions": [
     {
       "context": "+Everything in this file is complete and `sorry`-free.; +range as a self-contained, `sorry`-free statement.  It isolates exactly the part; -    sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "75fb79ca",
-        "quality": 0.78,
-        "theorems": 27,
-        "title": "Self-Modifying Code That Cannot Be Stopped"
-      },
-      {
         "cycle_id": "0be793c6",
         "quality": 0.82,
         "theorems": 42,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 0,
         "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+      },
+      {
+        "cycle_id": "21228762",
+        "quality": 0.82,
+        "theorems": 11,
+        "title": "Counterfactual Number Theory: What If Primes Were Random?"
       }
     ],
     "NumberTheory": [
