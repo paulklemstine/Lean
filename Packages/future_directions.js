@@ -354,6 +354,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c67f6099 (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a sec",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_c67f6099_3d011daf",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "c67f6099",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:24.650821+00:00",
+    "title": "Deepening: Speculative: Mathematics as a Phase Transition"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle cd5a9d7d (Q=0.820), which proved 11 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum len",
     "domains": [
       "Pythagorean"
@@ -923,6 +937,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle c67f6099 (Q=0.820) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using stati",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_c67f6099_d57ad97f",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "c67f6099",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:24.740639+00:00",
+    "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle cd5a9d7d (Q=0.820) proved 11 theorems in Pythagorean but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeat",
     "domains": [
       "Pythagorean"
@@ -1182,20 +1210,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "consumed_by_exp_id": "c67f6099",
-    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1030",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T11:58:38.387262+00:00",
-    "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
     "consumed_by_exp_id": "",
@@ -7544,6 +7558,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T15:33:04.479128+00:00",
     "title": "The results established here place the box-counting dimension of a natural \"trut"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the **order-parameter / phase-transition** picture behind\nthe speculative theme *\"mathematics as a phase transition\"*. Rather than model a\nsociological process, we prove the rigorous mathematical core that any such\nstatistical-mechanical account rests on: two exactly-solvable mean-field models\nin which an order parameter switches on continuously as a coupling crosses a\ncritical threshold.\n\n## What is proved\n\n`Speculative/MeanFieldPhaseTransition.lean` \u2014 the Curie\u2013Weiss ferromagnet,\nself-consistency equation `m = tanh(\u03b2 m)`:\n\n* `magnetization_eq_zero_of_subcritical` \u2014 for `0 < \u03b2 \u2264 1` the only magnetization\n  is `m = 0` (disordered phase).\n* `exists_pos_magnetization_of_supercritical` \u2014 for `\u03b2 > 1` a positive\n  magnetization exists (ordered phase; symmetric partner via `IsMagnetization.neg`).\n* `magnetization_sq_ge_of_supercritical` \u2014 `3(\u03b2\u22121)/\u03b2\u00b3 \u2264 m\u00b2`, giving the\n  continuous (second-order) onset with mean-field exponent `1/2`.\n* Supporting calculus of `tanh`: `hasDerivAt_tanh`, `tanh_lt_self`,\n  `tanh_ge_cubic`.\n\n`Speculative/PercolationGiantComponent.lean` \u2014 Erd\u0151s\u2013R\u00e9nyi / Poisson-branching\npercolation, self-consistency equation `\u03c1 = 1 \u2212 exp(\u2212\u03bb \u03c1)`:\n\n* `survivalProb_eq_zero_of_subcritical` \u2014 for `0 < \u03bb \u2264 1` only `\u03c1 = 0` (no giant\n  component).\n* `exists_pos_survivalProb_of_supercritical` \u2014 for `\u03bb > 1` a giant component\n  `0 < \u03c1 < 1` emerges.\n* `survivalProb_ge_of_supercritical` \u2014 `2(\u03bb\u22121)/\u03bb\u00b2 \u2264 \u03c1`, giving the continuous\n  onset with the mean-field percolation exponent `1` (linear), in contrast with\n  the exponent `1/2` above.\n\n## Natural next steps\n\n1. **Upper bounds and exact critical exponents.** We prove lower bounds on the\n   order parameters near criticality. Complement them with matching upper bounds\n   (`m\u00b2 \u2264 3(\u03b2\u22121)/\u03b2\u00b3\u00b7(1+o(1))`, `\u03c1 \u2264 2(\u03bb\u22121)+o(\u03bb\u22121)`) to pin the exponents `1/2`\n   and `1` exactly, e.g. via higher-order Taylor bounds on `tanh` and `1\u2212e^{\u2212x}`.\n\n2. **Uniqueness of the ordered branch.** Show the positive solution is unique for\n   each `\u03b2 > 1` (resp. `\u03bb > 1`) using strict concavity of `m \u21a6 tanh(\u03b2 m)` and\n   `\u03c1 \u21a6 1 \u2212 e^{\u2212\u03bb\u03c1}`, and that it is strictly increasing in the coupling.\n\n3. **Free-energy / variational formulation.** Realize the magnetization solutions\n   as minimizers of the Curie\u2013Weiss free energy `f(m) = -\u00bd m\u00b2 - \u03b2^{-1} log cosh(\u03b2m)`\n   (suitably normalized) and characterize the transition as a bifurcation of\n   global minimizers.\n\n4. **From mean field to genuine percolation.** Connect the branching fixed point\n   to Bernoulli bond percolation: formalize the branching-process lower bound for\n   cluster sizes and, ultimately, the survival/extinction dichotomy on trees\n   (`\u03bb_c = 1` for the regular tree), a step toward `\u2124^d` percolation thresholds.\n\n5. **A discrete \"connectivity threshold\" companion.** Formalize the extremal-graph\n   statement that a simple graph on `n` vertices with more than `C(n\u22121, 2)` edges\n   is connected (sharp via `K_{n\u22121} \u2294 {pt}`), giving a purely combinatorial\n   threshold for global coherence to accompany the analytic transitions here.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1048",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c67f6099",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:14.349166+00:00",
+    "title": "This project formalizes the **order-parameter / phase-transition** picture behin"
   },
   {
     "consumed_by_exp_id": "",

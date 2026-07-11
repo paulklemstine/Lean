@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0faef071",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Tangled Hierarchies and Self-Referential Soundness\n\nThis cycle established, over Gödel–Löb frames, that the semantic Löb principle\n`□(□A → A) ⊆ □A` collapses any internal proof o",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 16,
-      "timestamp": "2026-07-10T23:50:39",
-      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-    },
-    {
       "cycle_id": "478ae68b",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\nThis file (`Catalog/Logic/StrangeLoops/Chain.lean`) builds a single dependency chain\nfrom the Liar paradox up to a non-vacuous Gödel incompleteness theorem and the\nprovability lat",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-07-11T15:33:11",
       "title": "The Fractal Dimension of Mathematical Truth"
+    },
+    {
+      "cycle_id": "c67f6099",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalizes the **order-parameter / phase-transition** picture behind\nthe speculative theme *\"mathematics as a phase transition\"*. Rather than model a\nsociological pro",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 21,
+      "timestamp": "2026-07-11T15:33:24",
+      "title": "Speculative: Mathematics as a Phase Transition"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e3e38cc8",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\n## 1. The even harmonic strength of an antipodal design always contains 2\n\nFor a finite antipodal set on a sphere of dimension at least two, the odd degrees of\nthe harmonic streng",
-      "quality_score": 0.5266726923076923,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-04T01:42:23",
-      "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
-    },
     {
       "cycle_id": "01bea6c3",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 64,
       "timestamp": "2026-07-11T15:33:11",
       "title": "The Fractal Dimension of Mathematical Truth"
+    },
+    {
+      "cycle_id": "c67f6099",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalizes the **order-parameter / phase-transition** picture behind\nthe speculative theme *\"mathematics as a phase transition\"*. Rather than model a\nsociological pro",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 21,
+      "timestamp": "2026-07-11T15:33:24",
+      "title": "Speculative: Mathematics as a Phase Transition"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1d01ef4b",
-      "domain": "Applications",
-      "name": "toCode_spec",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "1d01ef4b",
-      "domain": "Applications",
-      "name": "toCode_inj",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "21228762",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.82
-    },
     {
       "cycle_id": "21228762",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "bernoulli_odd_eq_zero",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "c67f6099",
+      "domain": "Novelty",
+      "name": "value_eq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c67f6099",
+      "domain": "Novelty",
+      "name": "valid_iff",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c67f6099",
+      "domain": "Novelty",
+      "name": "factorial_value_unique_via_mixed",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T15:33:11",
+  "last_updated": "2026-07-11T15:33:24",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "4936bb72",
-      "domain": "Novelty",
-      "sorry_count": 3,
-      "timestamp": "2026-07-10T07:49:49"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "3fa70466",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-11T15:33:11"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "c67f6099",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-11T15:33:24"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "1978e429",
-        "quality": 0.8,
-        "theorems": 26,
-        "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-      },
-      {
         "cycle_id": "3dc9cabc",
         "quality": 0.8,
         "theorems": 44,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 64,
         "title": "The Fractal Dimension of Mathematical Truth"
+      },
+      {
+        "cycle_id": "c67f6099",
+        "quality": 0.82,
+        "theorems": 21,
+        "title": "Speculative: Mathematics as a Phase Transition"
       }
     ],
     "NumberTheory": [
