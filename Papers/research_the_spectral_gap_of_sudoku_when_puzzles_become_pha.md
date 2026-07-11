@@ -1,436 +1,331 @@
-# The Spectral Gap of Sudoku: Constraint Decomposition and Critical Phenomena in Order-`n` Sudoku
+# The Spectral Gap of Constraint-Satisfaction Swap Chains: Connectivity, Not Clue Count, Is the Order Parameter
+
+**Author:** Aristotle
+**Date:** 2026-07-11
 
 ## Abstract
 
-We develop a rigorous combinatorial theory of phase transitions in order-`n`
-Sudoku, the constraint satisfaction problem on an `n²×n²` grid partitioned
-into `n×n` boxes. Our starting point is an exact decomposition of the Sudoku
-constraint graph into Latin-square (rook) constraints and box-only
-constraints, yielding the closed-form vertex degree `3n² − 2n − 1 =
-(3n+1)(n−1)`. From this degree identity we derive a suite of exact rational
-invariants: the *constraint interaction strength* `σ(n) = 2(n+1)/(3n+1)`,
-provably confined to the open interval `(2/3, 1)`; the *degree ratio*
-`(3n+1)/(2(n+1))`, which approaches `3/2` from below at the explicit rate
-`−1/(n+1)`; and the *constraint overlap fraction* `1/(n+1)`, quantifying the
-asymptotic independence of box constraints. We then define the *critical
-density* `d_c(n) = 1 − 1/n²` and prove that it is precisely the density at
-which (i) exactly `n²` cells remain free and (ii) the average branching
-factor equals `1` — the combinatorial signature of a critical point. We
-characterize the sharpness of the transition through a *window width* `1/n²`
-that is antitone in `n` but encloses a constant absolute slack of `n²` cells,
-and we connect geometry to information by proving that the residual
-constraint entropy at criticality is exactly a `1/n²` fraction of the total.
-Finally, we formalize the rook-graph model underlying Latin squares, proving
-that respecting the conflict graph forces row- and column-injectivity, and we
-state a falsifiable scaling conjecture `log(S(n)/L(n)) = −Θ(n² log n)` for the
-ratio of Sudoku to Latin-square solution counts. Every theorem stated here
-has been formally verified.
+A constraint-satisfaction puzzle such as Sudoku is defined by a finite set of
+admissible completions. A standard way to sample a random completion is the
+**swap chain**: from a current completion, repeatedly apply a *compatible swap* —
+a local move exchanging two entries while preserving every constraint — with some
+holding probability. The mixing speed of this chain is governed by its **spectral
+gap** $1-\lambda_2$, the distance between the top eigenvalue $1$ and the second
+eigenvalue. We construct the swap chain from first principles as a symmetric,
+doubly stochastic transition matrix attached to an arbitrary finite *move graph*
+$G$, and we establish the exact dictionary between the algebra of the chain and
+the combinatorics of $G$. The central identity is that one step of the chain is
+$I - cL$ for the graph Laplacian $L$, from which the entire spectral picture
+follows: the chain is stochastic and symmetric; a vector is fixed iff it is
+harmonic on $G$; disconnection of $G$ forces a nonconstant harmonic function and
+hence a vanishing gap; connection of $G$ forces every harmonic function to be
+constant (a discrete maximum principle), making $1$ a simple eigenvalue. An
+explicit two-state model exhibits the gap $2c>0$ in the connected case versus $0$
+in the disconnected case for puzzles with the *same* number of completions and
+clues, directly refuting the folklore that the gap is a function of clue count.
+Finally, a conservation law — every compatible swap preserves each line's value
+multiset (each Sudoku row sums to $36$) — explains why the move graph decomposes
+into invariant blocks. The conclusion is structural: connectivity of the move
+graph, not clue count, is the order parameter for mixing.
 
 ## 1. Introduction
 
-Phase transitions — abrupt, qualitative changes in a system's behavior driven
-by a smooth change in a control parameter — are a unifying theme across
-statistical physics, percolation theory, and the theory of random constraint
-satisfaction. The canonical computer-science instance is random `k`-SAT,
-where the ratio of clauses to variables passes through a sharp satisfiability
-threshold; below it almost all instances are satisfiable, above it almost
-none are, and instances drawn from the threshold are empirically the hardest
-to solve. Sudoku is a constraint satisfaction problem of exactly this flavor,
-with the appealing feature that its constraint graph is highly structured and
-amenable to exact analysis.
-
-This paper takes the *constraint-counting* route to the Sudoku phase
-transition. Rather than estimating solution counts probabilistically, we
-compute exact algebraic invariants of the constraint graph and the
-clue-density axis, and we identify the critical density as the unique point
-where the average branching factor is `1`. The advantage of this route is
-that every quantity is a rational or elementary function of `n` whose value
-and behavior can be — and has been — proved rigorously rather than estimated.
-
-Throughout, the *order* of the puzzle is the parameter `n`; the grid is
-`n²×n²` with `n⁴` cells and `n²` symbols, partitioned into `n²` boxes each of
-size `n×n`. Standard `9×9` Sudoku is `n = 3`.
-
-## 2. The Sudoku constraint graph and its degree
-
-### 2.1 Constraint types
-
-We distinguish two layers of constraints.
-
-**Definition 2.1 (Latin degree).** The number of cells sharing a fixed cell's
-row or column,
-```
-latinDegree(n) = 2(n² − 1).
-```
-A cell shares its row with `n² − 1` cells and its column with `n² − 1`
-disjoint cells.
-
-**Definition 2.2 (Box-only degree).** The number of cells sharing a fixed
-cell's box but *not* its row or column,
-```
-boxOnlyDegree(n) = (n − 1)².
-```
-The box contains `n² − 1` other cells; of these, `n − 1` share the row and
-`n − 1` share the column, leaving `(n² − 1) − 2(n − 1) = (n − 1)²` genuinely
-new constraints.
-
-**Definition 2.3 (Sudoku degree).**
-```
-sudokuDegree(n) = latinDegree(n) + boxOnlyDegree(n).
-```
-
-### 2.2 The degree formula
-
-**Theorem 2.4 (Degree formula).** For all `n ≥ 1`,
-```
-sudokuDegree(n) = 3n² − 2n − 1.
-```
-
-*Proof sketch.* Expand: `2(n² − 1) + (n − 1)² = 2n² − 2 + n² − 2n + 1 =
-3n² − 2n − 1`. The only subtlety is that the formalization is carried out in
-the natural numbers, where truncated subtraction requires the inequalities
-`1 ≤ n` and `1 ≤ n²`; these are supplied so that the additive identity
-`latinDegree(n) + boxOnlyDegree(n) + 2n + 1 = 3n²` can be rearranged into the
-subtractive form. ∎
-
-**Theorem 2.5 (Factorization).** For all `n ≥ 1`,
-```
-sudokuDegree(n) = (3n + 1)(n − 1).
-```
-
-*Proof sketch.* `(3n + 1)(n − 1) = 3n² − 3n + n − 1 = 3n² − 2n − 1`, then
-appeal to Theorem 2.4. The factorization exposes the trivial case `n = 1`
-(no constraints) as the vanishing of the `(n − 1)` factor. ∎
-
-For `n = 3`, `sudokuDegree(3) = 20`: the order-3 constraint graph is
-`20`-regular on `81` vertices, recovering the well-known structure of `9×9`
-Sudoku.
-
-## 3. Constraint interaction strength
-
-**Definition 3.1.** The *constraint interaction strength* is the fraction of
-each cell's constraints arising from Latin (row/column) structure:
-```
-σ(n) = latinDegree(n) / sudokuDegree(n)   (in ℚ).
-```
-
-**Theorem 3.2 (Closed form).** For `n ≥ 2`,
-```
-σ(n) = 2(n + 1) / (3n + 1).
-```
-
-*Proof sketch.* Cross-multiply and reduce: `2(n² − 1) · (3n + 1) =
-2(n + 1)(n − 1)(3n + 1)` and `(3n² − 2n − 1)·2(n + 1) =
-(3n + 1)(n − 1)·2(n + 1)` (using Theorem 2.5), which agree. Positivity of the
-denominator `sudokuDegree(n)` for `n ≥ 2` justifies clearing fractions. ∎
-
-**Theorem 3.3 (Lower bound).** For `n ≥ 2`, `2/3 < σ(n)`.
-
-**Theorem 3.4 (Upper bound).** For `n ≥ 2`, `σ(n) < 1`.
-
-*Proof sketch.* Both reduce, after Theorem 3.2 and clearing positive
-denominators, to linear inequalities: `2(3n + 1) < 3·2(n + 1)` i.e.
-`6n + 2 < 6n + 6` for the lower bound, and `2(n + 1) < 3n + 1` i.e.
-`2n + 2 < 3n + 1` (true for `n ≥ 2`) for the upper bound. ∎
-
-**Interpretation.** Row/column structure supplies between two-thirds and all
-of every cell's constraints, never the full amount (boxes always contribute)
-and never less than two-thirds (rows and columns always dominate). For `n = 3`
-the strength is exactly `0.8`.
-
-The reciprocal viewpoint is the degree ratio.
-
-**Definition 3.5.** `degreeRatio(n) = sudokuDegree(n) / latinDegree(n)`.
-
-**Theorem 3.6 (Closed form).** For `n ≥ 2`,
-```
-degreeRatio(n) = (3n + 1) / (2(n + 1)).
-```
-
-**Theorem 3.7 (Convergence).** For `n ≥ 2`,
-```
-degreeRatio(n) − 3/2 = −1/(n + 1).
-```
-
-*Proof sketch.* `(3n + 1)/(2(n + 1)) − 3/2 = [(3n + 1) − 3(n + 1)]/(2(n + 1))
-= −2/(2(n + 1)) = −1/(n + 1)`. ∎
-
-**Corollary 3.8.** For `n ≥ 2`, `1 < degreeRatio(n) < 3/2`. The ratio
-increases monotonically toward `3/2`, the asymptotic statement that boxes
-contribute exactly 50% more constraint mass than the underlying Latin square,
-with the gap closing at rate `1/(n + 1)`.
-
-## 4. Critical density and unit branching
-
-**Definition 4.1 (Critical density).**
-```
-d_c(n) = 1 − 1/n².
-```
-
-**Theorem 4.2 (Residual capacity).** For all `n ≥ 1`,
-```
-n⁴·(1 − d_c(n)) = n².
-```
-Here `n⁴ = (n²)²` is the total cell count. Thus exactly `n²` cells remain
-unfilled at the critical density.
-
-*Proof sketch.* `n⁴·(1 − (1 − 1/n²)) = n⁴ · (1/n²) = n²`. ∎
-
-**Theorem 4.3 (Unit branching).** For all `n ≥ 1`,
-```
-n²·(1 − d_c(n)) = 1.
-```
+### 1.1 Motivation and the folklore claim
+
+Constraint-satisfaction problems (CSPs) — Sudoku being the archetype — are
+naturally studied through their solution spaces. Given a partially filled $9\times
+9$ grid, the admissible completions are the fillings that respect the row, column,
+and box constraints. To sample such a completion uniformly at random, one uses a
+Markov chain whose moves are *local* and *constraint-preserving*. The archetypal
+move is a **compatible swap**: exchange the entries of two cells so that all
+constraints remain satisfied.
+
+A persistent piece of folklore asserts that these chains undergo a phase
+transition governed by the **clue count**. In the Sudoku setting one hears of a
+critical density $d_c = 17/81$ (seventeen being the minimum number of clues for a
+uniquely-solvable grid, over eighty-one cells): below it the gap is large (fast
+mixing, many solutions); at it the gap collapses (slow mixing, hard puzzles);
+above roughly $30/81$ the chain becomes absorbing (a unique solution, no moves).
+The implicit claim is that a *single scalar*, the number of clues, controls the
+spectral gap.
+
+### 1.2 Contribution
+
+We test this claim by modeling the swap chain intrinsically and computing its
+spectral dictionary exactly. The clue-count story turns out to be **false as
+stated**, but it points toward a correct theorem once the order parameter is
+identified. Our contributions are:
+
+1. A first-principles construction of the swap chain as a symmetric, doubly
+   stochastic matrix on an arbitrary finite move graph $G$, valid for any holding
+   parameter $0 \le c \le 1/\Delta$ (Section 3).
+2. The Laplacian identity $P = I - cL$ and its consequences: stochasticity,
+   symmetry, uniform stationarity, and the harmonic characterization of fixed
+   vectors (Section 3–4).
+3. **Reducibility $\Rightarrow$ vanishing gap** (Theorem 5.1): a disconnected
+   move graph admits a nonconstant harmonic function — the indicator of a
+   connected component — for *every* holding rate, forcing $\lambda_2 = 1$ and gap
+   $0$.
+4. **Irreducibility $\Rightarrow$ simple top eigenvalue** (Theorem 5.2): a
+   connected move graph makes every harmonic function constant, via a discrete
+   maximum principle, so $1$ is simple.
+5. An explicit **two-state model** (Section 6) exhibiting gap $2c>0$ (connected)
+   versus $0$ (disconnected) for puzzles with identical counts, refuting the
+   clue-count slogan.
+6. A **conservation law** (Section 7): compatible swaps preserve each line's value
+   multiset; each valid Sudoku row sums to $36$, seeding the block decomposition
+   of the move graph.
+
+The upshot: connectivity of the move graph, not clue count, is the order
+parameter for mixing. The "phase transition" is the reducible/irreducible
+dichotomy.
+
+## 2. Preliminaries
+
+Let $G=(V,E)$ be a finite simple graph, $V$ its vertex set (the admissible
+completions), and $E$ its edges (pairs of completions joined by a single
+compatible swap). We write $y \sim x$ for adjacency, $N(x) = \{y : y \sim x\}$ for
+the neighborhood, and $\deg(x) = |N(x)|$ for the degree. Let $\Delta = \max_x
+\deg(x)$ be the maximum degree.
+
+A function $f : V \to \mathbb{R}$ is identified with a vector indexed by $V$. The
+**graph Laplacian** acts by
+$$(Lf)(x) = \deg(x)\,f(x) - \sum_{y \sim x} f(y).$$
+A function $f$ is **harmonic** if $Lf = 0$, i.e. $\deg(x)\,f(x) = \sum_{y\sim x}
+f(y)$ for all $x$: the value at each vertex is the (unnormalized) sum, equivalently
+the average, of the values at its neighbors.
+
+We call $G$ **connected** (preconnected) if every pair of vertices is joined by a
+walk, and **disconnected** otherwise. Reachability is the equivalence relation
+"joined by a walk"; its classes are the connected components.
+
+## 3. The swap chain
+
+### 3.1 Definition
+
+**Definition 3.1 (Swap chain).** For a finite move graph $G$ and a holding
+parameter $c \in \mathbb{R}$, the *swap chain* transition matrix $P = P_{G,c}$ is
+$$P(x,y) = \begin{cases} 1 - c\,\deg(x) & \text{if } y = x,\\ c & \text{if } y \sim x,\\ 0 & \text{otherwise.}\end{cases}$$
+
+Intuitively: from state $x$, follow each of the $\deg(x)$ incident swap-edges with
+probability $c$ each, and otherwise remain in place. For $0 \le c \le 1/\Delta$ the
+diagonal entries are nonnegative and $P$ is a bona fide stochastic matrix.
+
+### 3.2 Stochasticity and symmetry
+
+**Theorem 3.2 (Row sums).** For every $x$, $\sum_{y} P(x,y) = 1$.
+
+*Proof sketch.* Separate the diagonal term from the off-diagonal ones. The
+off-diagonal contributions are $c$ over the $\deg(x)$ neighbors, summing to
+$c\,\deg(x)$; adding the diagonal $1 - c\,\deg(x)$ gives $1$. $\square$
+
+**Theorem 3.3 (Symmetry).** $P(x,y) = P(y,x)$ for all $x,y$.
+
+*Proof sketch.* The diagonal case is trivial. Off the diagonal, $P(x,y)$ and
+$P(y,x)$ both equal $c$ when $x \sim y$ (adjacency is symmetric) and both equal
+$0$ otherwise. $\square$
+
+A symmetric stochastic matrix is doubly stochastic, so the **uniform
+distribution** is stationary and all eigenvalues are real.
+
+### 3.3 The Laplacian identity
+
+**Theorem 3.4 (One step is $I - cL$).** For every $f : V \to \mathbb{R}$ and every
+$x$,
+$$(Pf)(x) = f(x) + c\Big(\sum_{y \sim x} f(y) - \deg(x)\,f(x)\Big) = f(x) - c\,(Lf)(x).$$
 
-*Proof sketch.* `n²·(1/n²) = 1`, using `n ≠ 0`. ∎
+*Proof sketch.* Expand $(Pf)(x) = \sum_y P(x,y)\,f(y)$ using Definition 3.1: the
+diagonal contributes $(1 - c\,\deg(x))\,f(x)$ and the neighbors contribute
+$c\sum_{y \sim x} f(y)$. Collecting terms yields the stated Laplacian form.
+$\square$
 
-**Interpretation.** The quantity `n²·(1 − d)` is the expected number of legal
-symbols available to a free cell when a fraction `d` of cells is fixed (each
-constraint, on average, eliminates one of the `n²` symbols per unit density).
-A branching factor `> 1` produces an exponentially branching search tree —
-super-abundant solutions; `< 1` produces a collapsing tree — generically no
-solutions. The critical density is the unique solution of `n²·(1 − d) = 1`,
-where the tree is marginal. This is the combinatorial analogue of a critical
-temperature: poised between proliferation and extinction, and empirically the
-regime of maximal solving difficulty.
+This identity is the engine of the paper: it converts every spectral question
+about $P$ into a combinatorial question about $L$, and hence about $G$.
 
-## 5. Sharpness of the transition
+## 4. Harmonic functions and the top eigenvalue
 
-**Definition 5.1 (Window width).** `transitionWindowWidth(n) = 1/n²`.
+**Corollary 4.1 (Constants are fixed; $\lambda_1 = 1$).** The constant vector
+$\mathbf{1}$ satisfies $P\mathbf{1} = \mathbf{1}$.
 
-**Theorem 5.2 (Antitone width).** If `1 ≤ n ≤ m`, then
-```
-transitionWindowWidth(m) ≤ transitionWindowWidth(n).
-```
+*Proof sketch.* Apply Theorem 3.4 with $f \equiv 1$: $\sum_{y\sim x} 1 = \deg(x) =
+\deg(x)\cdot 1$, so the Laplacian term vanishes. $\square$
 
-*Proof sketch.* `1/m² ≤ 1/n²` follows from `n² ≤ m²` and positivity. ∎
+Since $P$ is doubly stochastic, $1$ is the largest eigenvalue, $\lambda_1 = 1$.
 
-**Theorem 5.3 (Window scaling).** For all `n ≥ 1`,
-```
-n⁴·transitionWindowWidth(n) = n².
-```
-
-*Proof sketch.* `n⁴ · (1/n²) = n²`. ∎
-
-**Interpretation.** Measured in density, the critical window is `1/n²` wide
-and shrinks to zero as `n → ∞`: larger Sudokus undergo sharper transitions.
-Measured in absolute cells, the window is the constant `n²`, matching the
-residual capacity of Theorem 4.2. Sharpness arises because a fixed absolute
-slack becomes a vanishing fraction of an `n⁴`-cell grid — the hallmark of a
-genuine thermodynamic-limit phase transition.
-
-## 6. The entropy–complexity bridge
-
-**Definition 6.1 (Constraint entropy).** For a grid with `total` cells,
-`filled` of them fixed, and domain size `d`,
-```
-constraintEntropy(total, filled, d) = (total − filled)·log d.
-```
-Each free cell contributes `log d` of uncertainty.
-
-**Theorem 6.2 (Non-negativity).** If `1 ≤ d` and `filled ≤ total`, then
-`constraintEntropy(total, filled, d) ≥ 0`.
-
-*Proof sketch.* Product of two non-negatives: `total − filled ≥ 0` and
-`log d ≥ 0` for `d ≥ 1`. ∎
-
-**Theorem 6.3 (Monotone collapse).** If `f₁ ≤ f₂ ≤ total` and `1 ≤ d`, then
-```
-constraintEntropy(total, f₂, d) ≤ constraintEntropy(total, f₁, d).
-```
-
-*Proof sketch.* `total − f₂ ≤ total − f₁`, multiplied by the non-negative
-factor `log d`. ∎
-
-This is an information-theoretic monotonicity: adding clues never increases
-uncertainty. It is the precise sense in which constraint satisfaction is an
-irreversible accumulation of information.
-
-**Theorem 6.4 (Critical entropy fraction).** For `n ≥ 2`,
-```
-log(n) / (n²·log n) = 1/n².
-```
-
-*Proof sketch.* Cancel `log n`, which is positive for `n ≥ 2`. ∎
-
-The left side is the ratio of residual entropy at criticality (`n²` free cells
-× `log n`, normalized) to the total entropy (`n⁴` cells × `log n`,
-normalized). The surviving information fraction at the critical point is
-exactly `1/n²` — numerically identical to the density window width of
-Definition 5.1. Geometry and information coincide.
-
-## 7. Solution-space geometry
-
-**Definition 7.1 (Hamming distance).** For assignments `f, g : Fin n → α`
-with `α` having decidable equality,
-```
-sudokuHammingDist(n, f, g) = |{ i : f(i) ≠ g(i) }|.
-```
-
-**Theorem 7.2.** `sudokuHammingDist` is symmetric, vanishes iff `f = g`, and
-is bounded above by `n`.
-
-*Proof sketch.* Symmetry: the disagreement predicate is symmetric. Vanishing:
-an empty disagreement set is equivalent to pointwise equality, i.e. `f = g`.
-Bound: the disagreement set is a subset of a universe of size `n`. ∎
-
-**Definition 7.3 (Influence radius).** `maxInfluenceRadius(n) = 2n − 1`, the
-number of cells reachable from a changed cell within its row-and-column line
-in one box.
-
-**Theorem 7.4 (Sublinearity).** For `n ≥ 2`, `2n − 1 < n²`.
-
-*Proof sketch.* `n² − (2n − 1) = (n − 1)² > 0` for `n ≥ 2`. ∎
-
-The influence of a single cell change is sublinear in the grid's linear
-dimension `n²`, so local perturbations remain local.
-
-## 8. The rook graph and Latin colorings
-
-To anchor the framework in a clean graph model, we study the rook's graph on
-an `n×n` grid: cells conflict iff they share a row or a column.
-
-**Definition 8.1 (Rook adjacency).** For `c₁, c₂ : Fin n × Fin n`,
-```
-sudokuAdj(n, c₁, c₂)  ⇔  c₁ ≠ c₂ ∧ (c₁.1 = c₂.1 ∨ c₁.2 = c₂.2).
-```
-
-**Proposition 8.2.** `sudokuAdj` is symmetric and irreflexive.
-
-**Definition 8.3 (Valid coloring).** `f : Fin n × Fin n → Fin n` is a valid
-coloring if `sudokuAdj(n, c₁, c₂) ⇒ f(c₁) ≠ f(c₂)`.
-
-A valid coloring of the rook's graph is exactly a Latin square.
-
-**Theorem 8.4 (Row/column injectivity).** If `f` is a valid coloring, then for
-each fixed row index `i` the map `j ↦ f(i, j)` is injective, and for each
-fixed column index `j` the map `i ↦ f(i, j)` is injective.
-
-*Proof sketch.* If `f(i, j₁) = f(i, j₂)` with `j₁ ≠ j₂`, the cells `(i, j₁)`
-and `(i, j₂)` are adjacent (same row) but equicolored, contradicting validity;
-hence `j₁ = j₂`. The column case is symmetric. ∎
-
-This exhibits the row/column no-repeat conditions as logical consequences of
-respecting the conflict graph, rather than as independent axioms.
-
-## 9. Overlap geometry
-
-**Definition 9.1 (Overlap per cell).** `constraintOverlapPerCell(n) =
-2(n − 1)`, the number of boxmates that also share the cell's row or column.
-
-**Theorem 9.2 (Overlap fraction).** For `n ≥ 2`,
-```
-constraintOverlapPerCell(n) / latinDegree(n) = 1/(n + 1).
-```
-
-*Proof sketch.* `2(n − 1) / (2(n² − 1)) = (n − 1) / ((n − 1)(n + 1)) =
-1/(n + 1)`. ∎
-
-**Theorem 9.3 (Monotone decrease).** For `2 ≤ n ≤ m`, the overlap fraction at
-`m` is at most that at `n`.
-
-*Proof sketch.* `1/(m + 1) ≤ 1/(n + 1)`. ∎
-
-The shrinking overlap explains the asymptotic degree ratio of Section 3: as
-`n` grows, box constraints overlap less with row/column constraints, so they
-contribute increasingly fresh constraint mass, pushing `degreeRatio` toward
-`3/2`.
-
-## 10. A falsifiable scaling conjecture
-
-Let `S(n)` denote the number of valid order-`n` Sudoku grids and `L(n)` the
-number of Latin squares of side `n²`. Since Sudoku adds constraints,
-`S(n) ≤ L(n)`.
-
-**Definition 10.1.** `conjecturedLogRatio(n, c) = −c·n²·log n`.
-
-**Theorem 10.2 (Correct sign).** For `n ≥ 2` and `c > 0`,
-`conjecturedLogRatio(n, c) < 0`.
-
-*Proof sketch.* Product of `−c < 0`, `n² > 0`, and `log n > 0`. ∎
-
-**Conjecture 10.3.** `log(S(n)/L(n)) = −Θ(n²·log n)`; equivalently there
-exist constants `0 < c₁ ≤ c₂` with `conjecturedLogRatio(n, c₂) ≤
-log(S(n)/L(n)) ≤ conjecturedLogRatio(n, c₁)` for all large `n`.
-
-**Numerical anchor.** For `n = 2`: `L(2) = 576` (Latin squares of order 4),
-`S(2) = 288` (valid `4×4` Sudokus), so `S(2)/L(2) = 1/2`. Matching
-`−c·4·log 2 = log(1/2) = −log 2` gives `c = 1/4`. The conjecture predicts the
-analogous exponent for `n = 3` and is directly testable by enumeration.
-
-## 11. Algorithms
-
-The theory yields several constant-time and polynomial-time computational
-primitives:
-
-1. **Degree evaluation.** `sudokuDegree(n) = 3n² − 2n − 1` computed in `O(1)`.
-2. **Critical-density locator.** Solve `n²·(1 − d) = 1` for `d = 1 − 1/n²`,
-   `O(1)`.
-3. **Branching-factor probe.** Given a clue density `d`, return `n²·(1 − d)`
-   and classify the regime as subcritical (`> 1`), critical (`= 1`), or
-   supercritical (`< 1`).
-4. **Entropy tracker.** Maintain `(total − filled)·log d` incrementally as
-   clues are added; monotone by Theorem 6.3.
-5. **Constraint-graph builder.** Enumerate adjacencies via the row/column/box
-   predicate; the resulting graph is `(3n² − 2n − 1)`-regular by Theorem 2.4.
-
-## 12. Applications
-
-- **Puzzle difficulty calibration.** A puzzle's clue density relative to
-  `d_c(n)` predicts its position on the easy–hard–rigid spectrum better than
-  raw clue count.
-- **Random instance generation.** Sampling near `d_c` produces the hardest
-  instances, useful for benchmarking solvers — directly analogous to sampling
-  random `k`-SAT at its threshold.
-- **CSP theory.** The exact degree decomposition and overlap fraction give a
-  template for analyzing other structured CSPs (Latin squares with extra
-  block constraints, gerechte designs, hypergraph colorings).
-- **Statistical-physics pedagogy.** Sudoku provides a discrete, fully
-  rigorous model exhibiting a sharp transition with an explicit critical
-  point and window — a tabletop Ising-style example.
-
-## 13. Discussion
-
-The constraint-counting approach trades the generality of probabilistic
-threshold arguments for the certainty of exact algebra. Its strength is that
-every quantity here is an elementary function of `n` with a proved value: the
-degree `3n² − 2n − 1`, the interaction strength `2(n+1)/(3n+1) ∈ (2/3, 1)`,
-the critical density `1 − 1/n²`, and the recurring window/entropy invariant
-`1/n²`. The coincidence of the density window width with the residual entropy
-fraction (both `1/n²`) is the conceptual core: it ties the *geometry* of the
-transition to its *information content*, and both to the unit-branching
-condition that defines criticality.
-
-The limitation is that branching-factor criticality is a mean-field heuristic:
-`n²·(1 − d) = 1` treats constraint eliminations as independent and identically
-distributed, which the overlap analysis of Section 9 shows is only
-asymptotically true. A fully probabilistic treatment of `S(n)` — and hence a
-proof of Conjecture 10.3 — would require second-moment control of correlated
-constraints.
-
-## 14. Future work
-
-- Promote the unit-branching heuristic to a rigorous threshold theorem with
-  matching first- and second-moment bounds on `S(n)`.
-- Prove Conjecture 10.3 (or its `n = 3` instance) by explicit enumeration and
-  asymptotic analysis.
-- Develop the genuine spectral picture: compute the adjacency spectrum of the
-  order-`n` Sudoku graph via its Kronecker (tensor) decomposition into
-  all-ones and identity blocks, extract the second eigenvalue, and relate the
-  spectral gap to the mixing time of the random-swap Markov chain on
-  solutions.
-- Establish Hoffman-bound tightness `χ = 1 − λ_max/λ_min = n²` and use it,
-  together with the regularity `λ_max = 3n² − 2n − 1`, to pin the full
-  spectrum.
-- Extend to gerechte designs and other block-augmented Latin square families.
-
-## 15. Conclusion
-
-We have given a complete, formally verified, constraint-counting theory of the
-order-`n` Sudoku phase transition. The constraint graph is
-`(3n² − 2n − 1)`-regular; its Latin fraction is strictly between `2/3` and `1`;
-the critical density `1 − 1/n²` is exactly where the average branching factor
-equals `1`; the transition window is `1/n²` wide in density and `n²` cells
-wide in absolute terms; and the residual entropy fraction at criticality is
-also `1/n²`. Difficulty, we conclude, is governed not by the number of clues
-but by proximity to this critical line — the same principle that governs phase
-transitions throughout the physical and computational sciences.
+**Theorem 4.2 (Harmonic characterization of fixed vectors).** Let $c \ne 0$. Then
+$Pf = f$ if and only if $f$ is harmonic:
+$$\sum_{y \sim x} f(y) = \deg(x)\,f(x) \quad \text{for all } x.$$
+
+*Proof sketch.* By Theorem 3.4, $Pf = f$ iff $c\,(Lf)(x) = 0$ for all $x$. Since
+$c \ne 0$, this holds iff $(Lf)(x) = 0$ for all $x$, i.e. $f$ is harmonic.
+$\square$
+
+Thus the eigenspace for the eigenvalue $1$ is precisely the space of harmonic
+functions on $G$. The spectral gap is strictly positive **only if** this space is
+one-dimensional (the constants). We now determine when that happens.
+
+## 5. The dichotomy: connectivity is the order parameter
+
+### 5.1 Reducibility forces a vanishing gap
+
+**Definition 5.0 (Component indicator).** For a base vertex $x_0$, let
+$$\chi_{x_0}(y) = \begin{cases} 1 & \text{if } y \text{ is reachable from } x_0,\\ 0 & \text{otherwise.}\end{cases}$$
+
+**Theorem 5.1 (Reducibility $\Rightarrow$ degenerate top eigenvalue).** If $G$ is
+disconnected, then for *every* holding rate $c$ there is a nonconstant vector $f$
+with $Pf = f$. Consequently the eigenvalue $1$ has multiplicity at least two,
+$\lambda_2 = 1$, and the spectral gap is $0$.
+
+*Proof sketch.* Since $G$ is disconnected there exist $x_0, y_0$ with $y_0$ not
+reachable from $x_0$. Take $f = \chi_{x_0}$. At any vertex $x$, all neighbors of
+$x$ lie in the same reachability class as $x$ (a single edge cannot change
+reachability from $x_0$), so $\chi_{x_0}$ is constant on $N(x) \cup \{x\}$; hence
+$\sum_{y\sim x}\chi_{x_0}(y) = \deg(x)\,\chi_{x_0}(x)$ and $\chi_{x_0}$ is
+harmonic. By Theorem 3.4 this makes $\chi_{x_0}$ fixed by $P$ for every $c$ (the
+argument does not even need $c \ne 0$). It is nonconstant because
+$\chi_{x_0}(x_0) = 1 \ne 0 = \chi_{x_0}(y_0)$. Two independent eigenvectors
+($\mathbf{1}$ and $\chi_{x_0}$) for eigenvalue $1$ give $\lambda_2 = 1$ and gap
+$0$. $\square$
+
+This is the true "no mixing / absorbing" regime, and it is triggered by
+*disconnection of the swap graph*, with no reference whatsoever to clue count.
+
+### 5.2 Irreducibility forces a simple top eigenvalue
+
+**Theorem 5.2 (Irreducibility $\Rightarrow$ simple top eigenvalue; discrete
+maximum principle).** Let $c \ne 0$ and let $G$ be connected. If $Pf = f$ then $f$
+is constant. Hence the eigenvalue $1$ is simple.
+
+*Proof sketch.* By Theorem 4.2, $f$ is harmonic. On a nonempty finite vertex set
+$f$ attains a maximum $M = f(x_M)$. At $x_M$ the mean-value property gives
+$\sum_{y\sim x_M} f(y) = \deg(x_M)\,M$; equivalently $\sum_{y\sim x_M}(M - f(y)) =
+0$. Each summand is $\ge 0$ (since $M$ is the max), so a sum of nonnegative terms
+vanishing forces every term to vanish: $f(y) = M$ for all $y \sim x_M$. Thus the
+maximum propagates to all neighbors, then along any walk. Because $G$ is
+connected, every vertex is reachable from $x_M$ by a walk, so $f \equiv M$ is
+constant. $\square$
+
+Simplicity of $\lambda_1$ is the necessary condition for a strictly positive gap;
+in the connected case it holds, so genuine mixing is possible. (The *quantitative*
+size of the gap is then governed by graph conductance via Cheeger-type
+inequalities — see Section 8 and the Future Directions.)
+
+## 6. The two-state model: same counts, opposite gaps
+
+The dichotomy is exactly solvable on two completions.
+
+**Theorem 6.1 (Connected two-state gap).** Let $G$ be the single edge on
+$\{0,1\}$ (the complete graph on two vertices). Then the alternating vector
+$(1,-1)$ is an eigenvector of $P$ with eigenvalue $1 - 2c$, and the spectral gap is
+$$1 - (1 - 2c) = 2c,$$
+which is strictly positive whenever $c > 0$.
+
+*Proof sketch.* Here $\deg(0) = \deg(1) = 1$, so $P = \begin{pmatrix} 1-c & c \\ c
+& 1-c \end{pmatrix}$. Direct multiplication gives $P(1,-1)^\top = (1-2c)(1,-1)^\top$.
+The constant vector has eigenvalue $1$, so $\lambda_2 = 1-2c$ and the gap is $2c$.
+$\square$
+
+**Theorem 6.2 (Disconnected two-state gap).** Let $G$ be the empty graph on
+$\{0,1\}$ (no edge). Then $P$ is the $2\times 2$ identity matrix: every vector is
+fixed, $\lambda_2 = 1$, and the gap is $0$.
+
+*Proof sketch.* With no edges, $\deg(0) = \deg(1) = 0$, so $P(x,x) = 1$ and all
+off-diagonal entries are $0$; thus $P = I$. $\square$
+
+**Consequence.** Two puzzles may have the *same* number of completions (two) and
+can be arranged to have the same number of clues, yet exhibit gap $2c > 0$ or gap
+$0$ depending solely on whether a compatible swap connects the two completions.
+This refutes the slogan "the spectral gap is a function of the clue count." The
+gap is a function of the **swap geometry**.
+
+## 7. Why the move graph decomposes: a conservation law
+
+Connectivity being decisive, we explain why real Sudoku move graphs so often fail
+to be connected.
+
+**Theorem 7.1 (Row-multiset invariant).** Any valid Sudoku row is a bijection of
+its nine cells onto the nine symbols $\{0,1,\dots,8\}$, and therefore its entries
+sum to
+$$0 + 1 + 2 + \cdots + 8 = 36.$$
+
+*Proof sketch.* A bijection onto $\{0,\dots,8\}$ has the same entry-sum as the
+identity listing, namely $\sum_{k=0}^{8} k = 36$. $\square$
+
+A compatible swap permutes entries within lines and thus **preserves each line's
+value multiset**; in particular the per-row sum $36$ is invariant along every walk
+of the chain. Every such conserved statistic (row, column, and box multisets)
+partitions the solution space into level sets, and no move crosses between level
+sets. The connected components of the move graph therefore refine the fibers of
+the multiset map. This is the combinatorial origin of the invariant blocks: the
+walk is confined to a single joint multiset profile, and the number of chain
+components is at least the number of jointly attainable profiles. (See Conjecture
+2 in Section 9 for the conjectured converse.)
+
+## 8. Algorithms
+
+We summarize the computational procedures that instantiate the theory; full code
+appears in the accompanying demonstrations.
+
+**Algorithm A — Swap-chain matrix assembly.** Given a move graph $G$ on $n$
+vertices and a rate $c$, build $P$ by placing $c$ on each edge, $0$ on non-edges,
+and $1 - c\,\deg(x)$ on the diagonal. Complexity $O(n^2)$ time and space. The rate
+is chosen as $c = 1/\Delta$ (or smaller) to guarantee stochasticity.
+
+**Algorithm B — Spectral gap via symmetric eigendecomposition.** Since $P$ is
+symmetric, compute its real eigenvalues, sort them in decreasing order, and return
+$\lambda_1 - \lambda_2 = 1 - \lambda_2$. A self-contained Jacobi rotation sweep
+suffices; complexity $O(n^3)$ per sweep with a small number of sweeps.
+
+**Algorithm C — Connectivity test.** Determine whether $G$ is connected by
+breadth-first search from an arbitrary vertex; the graph is connected iff every
+vertex is visited. Complexity $O(n + |E|)$. By Theorems 5.1–5.2 this alone
+predicts whether the gap is zero (disconnected) or positive (connected).
+
+**Algorithm D — Empirical mixing time.** Iterate the row-stochastic power method
+$\mu \mapsto \mu P$ from a point mass and measure total-variation distance to
+uniform; the number of steps to fall below $\varepsilon$ is the empirical mixing
+time, which scales like $(1/\text{gap})\log(1/\varepsilon)$.
+
+## 9. Applications and discussion
+
+The analysis applies verbatim to any CSP whose sampler is built from local,
+constraint-preserving moves: graph coloring (Kempe-chain and single-vertex
+recolorings), scheduling, lattice models in statistical physics, and
+error-correcting codes. In each case the sampler is a symmetric walk on a move
+graph, and the same dictionary holds: uniform stationarity, harmonic fixed
+vectors, zero gap iff disconnected, simple top eigenvalue iff connected.
+
+The practical message is a warning against scalar proxies for hardness. Counting
+constraints (or clues) does not determine mixing; the connectivity and
+bottleneck structure of the move graph does. Two instances that look identical to
+a counting heuristic can have wildly different sampling difficulty. Diagnosing a
+sampler therefore means examining its move graph — its connectivity first, then
+its conductance.
+
+## 10. Future directions
+
+- **Quantitative gap from graph conductance.** For the max-degree lazy swap chain
+  on a connected move graph, the gap should be bounded below by $c\,h(G)^2/(2\Delta)$,
+  where $h(G)$ is the edge conductance and $\Delta$ the maximum degree — a Cheeger
+  inequality applied to the very Laplacian appearing in one step of the chain.
+- **Block decomposition from conserved multiset statistics.** The connected
+  components of the swap-move graph are conjecturally *exactly* the level sets of
+  the conserved row/column/box multisets, so the chain is irreducible iff all
+  admissible completions share every such profile.
+- **Uniqueness collapses the chain.** A puzzle with a unique completion yields a
+  one-state chain (the $1\times 1$ identity); "unique solution" is the degenerate
+  *fast* regime, not the slow one the folklore imagines.
+- **Symmetry forces spectral degeneracy.** A nontrivial automorphism acting freely
+  on completions makes $P$ commute with the induced permutation, forcing
+  eigenvalue multiplicities and predictable degeneracies in the spectrum.
+
+## 11. Conclusion
+
+We replaced the folklore "gap versus clue count" picture with a structural one.
+One step of the swap chain is $I - cL$; its fixed vectors are the harmonic
+functions of the move graph; the top eigenvalue is degenerate exactly when the
+graph is disconnected and simple exactly when it is connected. An explicit
+two-state model shows the gap can be positive or zero for puzzles with identical
+counts, and a conservation law explains why move graphs decompose into invariant
+blocks. Connectivity of the graph of compatible swaps — not the number of clues —
+is the order parameter for mixing.

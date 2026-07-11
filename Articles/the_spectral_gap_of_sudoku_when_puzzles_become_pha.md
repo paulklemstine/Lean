@@ -1,338 +1,214 @@
 # The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions
 
-## A puzzle that behaves like boiling water
-
-Heat a pot of water and nothing dramatic happens — until, at exactly one
-hundred degrees Celsius, it does. Liquid becomes vapor. A tiny change in
-temperature flips the whole system into a different state. Physicists call
-this a *phase transition*, and the temperature where it happens is the
-*critical point*. The remarkable thing about critical points is how sharp
-they are: the system is perfectly calm on either side, and frantic right
-in the middle.
-
-It turns out that the world's most popular logic puzzle hides a phase
-transition of exactly this kind. Take a Sudoku grid and start filling in
-clues. With very few clues, the puzzle has astronomically many solutions —
-it is "easy" in the sense that almost any guess can be patched into a valid
-grid. With very many clues, the puzzle is rigid: there is one solution, and
-no freedom to move. Somewhere in between lies a knife's edge, a critical
-density of clues, where the puzzle is at its hardest — where the number of
-solutions collapses from "essentially infinite" to "exactly one," and where
-the difficulty of finding that solution explodes.
-
-This article tells the story of that critical point. It is built on a set
-of theorems that have been verified down to the last logical step. We will
-not need any Sudoku-solving software, nor any heavy mathematics. We need
-only to count constraints carefully — and counting, done precisely enough,
-reveals the phase transition hiding in plain sight.
-
-## What a Sudoku puzzle really is
-
-Forget the 9×9 grid for a moment and think more generally. Pick a whole
-number `n`. An *order-`n` Sudoku* lives on a grid with `n²` rows and `n²`
-columns, divided into `n×n` boxes, each box itself an `n×n` square of cells.
-The familiar puzzle is the case `n = 3`: a `9×9 = 81`-cell grid carved into
-nine `3×3` boxes. The smallest interesting case is `n = 2`: a `4×4` grid
-with four `2×2` boxes.
-
-Every cell must be filled with one of `n²` symbols, subject to three rules:
-
-- **Row rule.** No symbol repeats within any of the `n²` rows.
-- **Column rule.** No symbol repeats within any of the `n²` columns.
-- **Box rule.** No symbol repeats within any of the `n²` boxes.
-
-These three rules are *constraints*. Two cells are said to be *in conflict*
-— or, in the language of graphs, *adjacent* — if they are forbidden from
-holding the same symbol. That happens precisely when they share a row, share
-a column, or share a box. Picture a graph whose dots are the cells of the
-grid and whose edges connect every pair of conflicting cells. This is the
-**Sudoku constraint graph**, and almost everything interesting about Sudoku
-is written into its structure.
-
-The central question of this article is: how many constraints does each cell
-feel, and what happens to the puzzle as we add clues that switch those
-constraints on?
-
-## Counting the conflicts of a single cell
-
-Pick any cell. How many other cells conflict with it?
-
-Start with the **Latin-square constraints** — the rows and columns alone,
-ignoring boxes. (A *Latin square* is a grid obeying just the row and column
-rules; Sudoku is a Latin square with the extra box rule.) The cell shares
-its row with `n² − 1` other cells and its column with another `n² − 1`. None
-of those overlap, so the row-and-column conflict count is
-
-> **Latin degree:**  `latinDegree(n) = 2(n² − 1).`
-
-Now add the box. The cell's box holds `n²` cells; remove the cell itself and
-we have `n² − 1` boxmates. But some of those boxmates are *already* counted,
-because they sit in the same row (there are `n − 1` of them) or the same
-column (another `n − 1`). The genuinely *new* conflicts contributed by the
-box are therefore
-
-> **Box-only degree:**  `boxOnlyDegree(n) = (n² − 1) − 2(n − 1) = (n − 1)².`
-
-Add the two pieces. After the dust of arithmetic settles, something clean
-emerges — and this is the first theorem that has been formally verified:
-
-> **Theorem (Degree formula).** For every `n ≥ 1`, the total number of cells
-> conflicting with any given cell is
->
-> `sudokuDegree(n) = latinDegree(n) + boxOnlyDegree(n) = 3n² − 2n − 1.`
-
-For ordinary `9×9` Sudoku (`n = 3`) this evaluates to `3·9 − 6 − 1 = 20`:
-every one of the 81 cells is in conflict with exactly 20 others. The
-constraint graph is perfectly even-handed — every cell carries the same
-load. In graph-theoretic language, the graph is *regular*.
-
-That same number factors in a strikingly tidy way, which is the second
-verified theorem:
-
-> **Theorem (Factorization).** For every `n ≥ 1`,
->
-> `sudokuDegree(n) = (3n + 1)(n − 1).`
-
-For `n = 3` this is `10 · 2 = 20`, as it must be. The factor `(n − 1)`
-vanishes when `n = 1`: a `1×1` Sudoku is trivial, with no conflicts at all.
-
-## How much of Sudoku is "really" Latin?
-
-Here is a question that sounds vague but has a precise answer. Of all the
-conflicts a cell feels, what *fraction* come from the row-and-column
-structure alone — the part Sudoku shares with the older, simpler Latin
-square? Call this the **constraint interaction strength**:
-
-> `σ(n) = latinDegree(n) / sudokuDegree(n).`
-
-Plugging in the formulas and simplifying gives the third verified theorem:
-
-> **Theorem (Interaction strength).** For `n ≥ 2`,
->
-> `σ(n) = 2(n + 1) / (3n + 1).`
-
-What is the meaning of this ratio? It measures how "Latin-like" a Sudoku is.
-And it is hemmed in tightly on both sides — two more theorems pin it down:
-
-> **Theorem (Bounds).** For every `n ≥ 2`,
->
-> `2/3 < σ(n) < 1.`
-
-The interpretation is vivid. The strength never reaches `1` — boxes always
-contribute *something*; Sudoku is never purely a Latin square. But the
-strength never drops below `2/3` either — the row-and-column structure always
-dominates, supplying at least two-thirds of every cell's constraints. For
-`9×9` Sudoku, `σ(3) = 8/10 = 0.8`: a full 80% of the puzzle's difficulty is
-"just" a Latin square, and only 20% comes from the boxes.
-
-The flip side is the **degree ratio**, comparing the full Sudoku load to the
-Latin load:
-
-> `degreeRatio(n) = sudokuDegree(n) / latinDegree(n) = (3n + 1) / (2(n + 1)).`
-
-Two further verified theorems describe how this behaves. As the grid grows,
-the ratio creeps steadily toward `3/2` from below, never reaching it:
-
-> **Theorem (Asymptotic ratio).** For `n ≥ 2`,
->
-> `degreeRatio(n) − 3/2 = −1/(n + 1),`
->
-> and consequently `1 < degreeRatio(n) < 3/2`.
-
-In the limit of an enormous grid, Sudoku has exactly 50% more constraints
-than the corresponding Latin square — the boxes add half again as much
-structure — and the gap to that limit closes at the gentle rate `1/(n+1)`.
-The boxes matter, but their marginal influence fades as the grid grows.
-
-## The critical density: where the puzzle teeters
-
-Now to the heart of the matter. Picture filling the grid one clue at a time
-and watching the *density* of clues climb from `0` toward `1`. Each clue
-freezes a cell and propagates its constraints. The key quantity is the
-**critical density** — the density at which the puzzle teeters between "many
-solutions" and "one solution":
-
-> `d_c(n) = 1 − 1/n².`
-
-What makes this density special? Two verified theorems make it concrete by
-looking at the cells left *empty*. The total number of cells is `(n²)² = n⁴`.
-At density `d_c`, the number of empty cells is exactly `n⁴·(1 − d_c)`, and:
-
-> **Theorem (Residual capacity).** For every `n ≥ 1`,
->
-> `n⁴·(1 − d_c(n)) = n².`
-
-So at the critical density precisely `n²` cells remain empty — a single
-"row's worth" of freedom (for `9×9`, exactly 9 empty cells out of 81). Below
-this density the empties form a sprawling sea of possibility; above it, the
-remaining freedom is too thin to support more than one completion.
-
-The companion theorem reframes the same fact through the lens of
-*branching*. When a solver fills cells one by one, the average number of
-legal choices per empty cell is the **branching factor**. At the critical
-density:
-
-> **Theorem (Unit branching at criticality).** For every `n ≥ 1`,
->
-> `n²·(1 − d_c(n)) = 1.`
-
-The branching factor equals exactly `1`. This is the mathematical signature
-of a critical point. A branching factor above `1` means the tree of partial
-solutions fans out — exponentially many solutions, easy to find one. A
-branching factor below `1` means the tree collapses — generically no
-solutions survive. Right at `1`, the system is *poised*: neither expanding
-nor contracting, balanced on the boundary between abundance and rigidity.
-This is precisely the behavior of water at its boiling point, or a magnet at
-its Curie temperature. The puzzle is hardest exactly here, because the search
-neither blows up (so you cannot stop early) nor narrows down (so you cannot
-prune).
-
-## How sharp is the transition?
-
-A phase transition is only interesting if it is *sharp*. Boiling would be a
-much less dramatic phenomenon if water simmered into vapor gradually over a
-fifty-degree range. The sharpness of the Sudoku transition is captured by the
-**transition window width**:
-
-> `transitionWindowWidth(n) = 1/n².`
-
-Two verified theorems describe this window. First, it shrinks as the grid
-grows:
-
-> **Theorem (Window narrows).** If `1 ≤ n ≤ m`, then
->
-> `transitionWindowWidth(m) ≤ transitionWindowWidth(n).`
-
-And second, when measured in *absolute* cells rather than in density, the
-window always covers exactly the same amount of room:
-
-> **Theorem (Window scaling).** For every `n ≥ 1`,
->
-> `n⁴·transitionWindowWidth(n) = n².`
-
-Read together, these say something beautiful. In density terms the critical
-window is `1/n²` wide and shrinks toward zero as `n` grows: larger Sudokus
-have *sharper* transitions, just as a larger pot of water boils more
-decisively. But in absolute terms the window is always `n²` cells wide — the
-same "one row's worth" of slack that we met as the residual capacity. The
-transition is sharp because the slack, though always present, becomes a
-vanishing *fraction* of an ever-larger grid.
-
-## Information, entropy, and the cost of a clue
-
-There is one more way to see the critical point, and it speaks the language
-of information theory. Each empty cell, before it is filled, carries
-uncertainty: it could hold any of `d` symbols, an amount of "surprise"
-measured by `log d`. The total uncertainty of a partially filled grid is its
-**constraint entropy**:
-
-> `constraintEntropy(total, filled, d) = (total − filled)·log d.`
-
-Two verified theorems govern this quantity. It is never negative (you cannot
-have less than zero uncertainty), and — crucially — every clue you add can
-only *decrease* it:
-
-> **Theorem (Monotone collapse of entropy).** If you fill more cells, the
-> entropy goes down: for `f₁ ≤ f₂`,
->
-> `constraintEntropy(total, f₂, d) ≤ constraintEntropy(total, f₁, d).`
-
-This is the second law of thermodynamics in miniature, run in reverse:
-information *increases* (entropy *decreases*) monotonically as constraints
-accumulate. There is no way to make a puzzle freer by adding a clue.
-
-And how much uncertainty is *left* at the critical point? With `n²` empty
-cells out of `n⁴`, each carrying `log n` worth of surprise, the residual
-entropy is a tiny slice of the total:
-
-> **Theorem (Critical entropy fraction).** For `n ≥ 2`,
->
-> `(residual entropy) / (total entropy) = log(n) / (n²·log n) = 1/n².`
-
-The same magic number `1/n²` reappears — the density width of the transition
-window equals the surviving fraction of entropy at the critical point. The
-geometry of the transition (how wide the window is) and its information
-content (how much uncertainty remains) are two faces of one coin.
-
-## The grain of the conflicts: overlap geometry
-
-Why do the boxes contribute *less and less* as the grid grows? The answer is
-about overlap. A cell's boxmates are partly redundant — some of them already
-share its row or column. The number of such doubly-constrained neighbors is
-the **constraint overlap**:
-
-> `constraintOverlapPerCell(n) = 2(n − 1).`
-
-Compared against the Latin degree, this overlap forms a clean fraction —
-another verified theorem:
-
-> **Theorem (Overlap fraction).** For `n ≥ 2`,
->
-> `constraintOverlapPerCell(n) / latinDegree(n) = 1/(n + 1),`
->
-> and this fraction shrinks as `n` grows.
-
-So as Sudokus get larger, the overlap between box constraints and row/column
-constraints melts away: boxes become *more independent*, contributing fresh
-constraints rather than redundant ones. This is the structural reason the
-degree ratio climbs toward `3/2` — the boxes get more efficient at adding
-genuinely new conflicts.
-
-## The smallest world: the rook's graph and proper colorings
-
-To make all of this concrete and checkable, the formal development also
-studies a stripped-down model: cells of an `n×n` grid, with two cells
-conflicting exactly when they share a row or a column. (Chess players will
-recognize this as the *rook's graph*: two squares conflict precisely when a
-rook could move between them.) A way of filling the grid that respects all
-conflicts is, in graph-coloring language, a **proper coloring** — and a
-proper coloring of the rook's graph is exactly a Latin square.
-
-Two verified theorems make the connection airtight. A valid filling must use
-distinct symbols in every row and in every column:
-
-> **Theorem (Row/column injectivity).** If a filling `f` assigns different
-> symbols to every pair of conflicting cells, then along any fixed row the map
-> `j ↦ f(i, j)` is injective, and along any fixed column the map
-> `i ↦ f(i, j)` is injective.
-
-This is the precise sense in which "no repeats in a row or column" is not an
-extra assumption but a *logical consequence* of respecting the conflict graph.
-
-## A conjecture with a sharp prediction
-
-The framework points beyond what has been proved, toward a falsifiable
-prediction. Let `S(n)` count the valid Sudoku grids of order `n`, and `L(n)`
-count the Latin squares of the same size. Since Sudoku has strictly more
-constraints, `S(n) ≤ L(n)`, and the conjecture is that the *logarithm* of
-their ratio scales sharply:
-
-> **Conjecture.**  `log(S(n)/L(n)) = −Θ(n²·log n).`
-
-The verified scaffolding for this is the function
-`conjecturedLogRatio(n, c) = −c·n²·log n`, proved to be negative for every
-positive constant `c` and every `n ≥ 2` — the right sign and the right shape.
-The case `n = 2` is a sanity check anyone can verify by hand: there are
-`L(2) = 576` Latin squares of order 4 and `S(2) = 288` valid `4×4` Sudokus,
-a ratio of exactly `1/2`. Plugging into the formula, `−c·4·log 2 = log(1/2)`
-gives `c = 1/4`. The conjecture predicts how this exponent grows for `n = 3`
-and beyond — a clean target for the next round of computation.
-
-## Why this matters
-
-The lesson of the Sudoku phase transition is that **difficulty is not the
-same as the number of clues.** A puzzle with very few clues is easy because
-solutions are plentiful; a puzzle with very many clues is easy because the
-answer is forced. Hardness lives at the critical density `d_c = 1 − 1/n²`,
-where the branching factor is exactly `1`, the solution count collapses from
-many to one, and the surviving uncertainty is exactly a `1/n²` sliver of the
-whole.
-
-This is the same mathematics that governs boiling water, magnetization, the
-spread of epidemics, and the sudden solvability of random logical formulas.
-Constraint satisfaction problems — of which Sudoku is the friendliest
-ambassador — are now understood to have critical points just like physical
-matter. The Sudoku grid, that humble distraction on a train platform, turns
-out to be a tabletop laboratory for one of the deepest ideas in science: that
-complex systems do not change gradually, but tip, all at once, at a single
-critical line. Cross it, and the puzzle is a different kind of thing entirely.
+## A puzzle inside the puzzle
+
+Everyone who has filled in a Sudoku grid knows the two moods of the game. Some
+puzzles melt away: fill in one forced square, and a cascade of others follows.
+Others resist for an hour, every cell frustratingly ambiguous, the grid seeming
+to shimmer between many possible answers. It feels as though there is a hidden
+temperature to a puzzle — a quantity that decides whether it is frozen solid or
+still liquid with possibility.
+
+Physicists have a precise name for a system that abruptly changes character as
+you turn a knob: a **phase transition**. Water becomes ice at a sharp
+temperature; a magnet loses its magnetism at a sharp temperature. The tempting
+story about Sudoku is that it has a phase transition too, governed by a single
+knob — the number of *clues*, the pre-filled digits you are handed at the start.
+Give a solver too few clues and the puzzle dissolves into countless solutions;
+give it too many and the answer is rigidly unique. Somewhere in between, the
+folklore says, sits a razor-thin critical point where puzzles are maximally
+hard.
+
+This article is about testing that story with the actual mathematics of random
+sampling — and discovering that the popular version is *wrong in an instructive
+way*. The number of clues is a red herring. The real order parameter, the true
+knob behind the phase transition, is a geometric property of how a puzzle's
+solutions are wired together. To see this, we need to turn a static puzzle into
+something that moves.
+
+## Turning a puzzle into a walk
+
+Imagine you already have a completed, valid grid, and you want to produce a
+*different* valid grid, chosen fairly at random. A natural way is to make small,
+constraint-preserving edits. In Sudoku, the cleanest such edit is a **compatible
+swap**: find two cells whose digits can be exchanged without breaking any row,
+column, or box rule, and exchange them. Do this over and over, occasionally
+choosing to stay put, and you perform a random walk through the space of valid
+grids.
+
+This is a **Markov chain** — a process that hops from state to state with fixed
+probabilities. Its states are all the admissible completions of the puzzle. Two
+states are joined by a step whenever a single compatible swap turns one into the
+other. Collect these adjacencies into a graph $G$, the **move graph**, whose
+vertices are the solutions and whose edges are the legal swaps. Everything about
+how the walk behaves is encoded in $G$.
+
+We can write the walk as a matrix. Fix a small step rate $c>0$. From a solution
+$x$ with $\deg(x)$ available swaps, the transition probabilities are
+
+$$P(x,y)=\begin{cases} 1-c\,\deg(x) & \text{if } y=x,\\ c & \text{if a compatible swap joins } x \text{ and } y,\\ 0 & \text{otherwise.}\end{cases}$$
+
+As long as $c$ is no larger than $1/\Delta$, where $\Delta$ is the largest number
+of swaps out of any solution, every row of $P$ is a genuine probability
+distribution: the entries are nonnegative and, as one checks directly, they sum
+to $1$. Moreover $P$ is **symmetric**, $P(x,y)=P(y,x)$, because a swap that takes
+$x$ to $y$ is exactly the swap that takes $y$ back to $x$. A symmetric stochastic
+matrix is *doubly* stochastic, and that single fact tells us the walk's
+long-run distribution is **uniform**: run it long enough and every valid grid is
+equally likely. That is precisely what we want from a fair sampler.
+
+## Mixing time and the spectral gap
+
+The question that matters is *how long is long enough?* How many swaps must we
+make before the walk forgets where it started and delivers a genuinely random
+solution? This waiting time is the **mixing time**, and it is controlled by the
+eigenvalues of $P$.
+
+Because $P$ is symmetric, all its eigenvalues are real, and because it is
+stochastic the largest is always $\lambda_1 = 1$, carried by the constant vector.
+The decisive quantity is the distance from $1$ down to the *second* eigenvalue
+$\lambda_2$:
+
+$$\text{spectral gap} = \lambda_1 - \lambda_2 = 1 - \lambda_2.$$
+
+A **large** gap means fast mixing: the walk equilibrates in a small number of
+steps, so random solutions are easy to generate. A gap **near zero** means the
+walk crawls, trapped for enormous stretches before it explores freely. A gap of
+**exactly zero** is the extreme case: the walk never mixes at all, because $1$ is
+no longer the unique top eigenvalue.
+
+So "how hard is it to sample a solution?" becomes "how big is the spectral gap?"
+And the spectral gap, we will see, is a property of the geometry of $G$ — not of
+the clue count.
+
+## The Laplacian hiding in one step
+
+Here is the small miracle that unlocks everything. Apply the transition matrix to
+any function $f$ assigning a number to each solution, and a short computation
+shows that one step does the following at each state $x$:
+
+$$(Pf)(x) = f(x) + c\Big(\textstyle\sum_{y\sim x} f(y) - \deg(x)\,f(x)\Big).$$
+
+The bracketed term is the **discrete Laplacian** of the move graph — the same
+operator that governs heat flow on a network, the vibration of a spring mesh, and
+the diffusion of a rumor through a social graph. In one clean identity, the walk
+becomes $P = I - cL$, where $L$ is the graph Laplacian. The mixing of a Sudoku
+sampler is heat diffusion on the graph of its solutions.
+
+This identity immediately explains which functions the walk leaves *unchanged*.
+A vector $f$ is fixed, $Pf=f$, exactly when the Laplacian term vanishes, i.e.
+
+$$\deg(x)\,f(x) = \sum_{y\sim x} f(y) \quad\text{for every } x.$$
+
+In words: the value at every solution equals the average of the values at its
+swap-neighbors. This is the **discrete mean-value property** — the defining
+feature of *harmonic* functions. The eigenvalue $1$ of the walk is exactly the
+space of harmonic functions on the move graph. To understand mixing, we must
+understand how many harmonic functions there are.
+
+## The true phase transition: connected or not
+
+Now comes the heart of the matter, and it is a dichotomy as crisp as ice versus
+water.
+
+**If the move graph is disconnected**, the walk cannot mix — and the reason is
+beautifully simple. Split the solutions into two groups that no compatible swap
+can bridge. Let $f$ be the function that is $1$ on one group and $0$ on the other.
+At any solution, all of its neighbors lie in the same group, so the mean of the
+neighbors equals the value at the center: $f$ is harmonic. But $f$ is *not*
+constant. So the eigenvalue $1$ is carried by at least two independent vectors,
+which forces $\lambda_2 = 1$ and
+
+$$\text{spectral gap} = 0.$$
+
+Remarkably, this holds for *every* step rate $c$ — the obstruction is purely
+combinatorial. A walk on a disconnected graph is trapped forever in whichever
+component it started in; it can never reach the solutions on the other side. This
+is the genuine "no mixing" regime.
+
+**If the move graph is connected**, the opposite is true: the *only* harmonic
+functions are the constants. This is the discrete **maximum principle**, and its
+proof is a small gem. Pick a solution $x_M$ where $f$ attains its maximum value
+$M$. The mean-value property says $M$ equals the average of $f$ over the
+neighbors of $x_M$; but none of those neighbors can exceed $M$, and an average of
+things no larger than $M$ can equal $M$ only if every one of them *is* $M$. So all
+neighbors of $x_M$ also attain the maximum. Repeat: their neighbors attain it
+too, and — because the graph is connected — the maximum spreads to every single
+solution. Hence $f$ is constant. The eigenvalue $1$ is **simple**, exactly the
+condition that leaves room for a strictly positive gap and genuine mixing.
+
+The dividing line, then, is not a clue density. It is a single yes/no question:
+**is the graph of compatible swaps connected?** Connectivity is the order
+parameter; the "phase transition" is the reducible/irreducible dichotomy of the
+move graph.
+
+## Two puzzles, same clues, opposite fates
+
+To see that the clue count is genuinely irrelevant, it helps to shrink Sudoku to
+its skeleton and compute everything by hand. Consider a puzzle with exactly two
+valid solutions.
+
+If a single compatible swap turns one solution into the other, the move graph is
+a single edge — the smallest connected graph. Its walk is the $2\times 2$ matrix
+whose off-diagonal entries are $c$. The constant vector $(1,1)$ has eigenvalue
+$1$; the alternating vector $(1,-1)$ has eigenvalue $1-2c$. The spectral gap is
+
+$$1 - (1 - 2c) = 2c > 0.$$
+
+The walk mixes, at a rate you can dial with $c$.
+
+Now take a *different* puzzle that also has exactly two solutions, but where no
+compatible swap connects them. The move graph is two isolated points, the walk
+matrix is the identity, every vector is fixed, and the gap is $0$. The walk never
+moves; it can never turn one solution into the other.
+
+Two puzzles, identical in every count a folklore theory would notice — same
+number of solutions, and one can even arrange the same number of clues — yet one
+mixes and the other is frozen. The distinguishing feature is invisible to clue
+counting and visible only in the wiring of the move graph. This is a direct,
+concrete refutation of the slogan "the gap is a function of the number of clues."
+
+## Why the graph breaks into pieces
+
+If connectivity is everything, we should understand *why* the move graph of a
+real Sudoku puzzle so often shatters into disconnected pieces. The answer is a
+**conservation law**.
+
+A compatible swap merely rearranges digits already present in a line; it never
+introduces a new value or removes an old one. So it preserves the *multiset* of
+values in each row, each column, and each box. Concretely, take any valid row: it
+is a bijection onto the nine symbols $\{0,1,\dots,8\}$, so its entries always sum
+to
+
+$$0 + 1 + 2 + \cdots + 8 = 36,$$
+
+no matter how the swaps shuffle them. That $36$ is an invariant — a quantity the
+walk can never change. Every conserved statistic of this kind carves the solution
+space into level sets, and no move can cross from one level set to another. The
+move graph therefore lives inside these fibers, and the connected components of
+the walk are refinements of them. Conserved multiset statistics are the reason
+the graph splits into invariant blocks, and blocks are the reason a walk can be
+trapped.
+
+## What Sudoku was really telling us
+
+The lesson generalizes far beyond a newspaper grid. *Every* constraint
+satisfaction problem — scheduling, graph coloring, protein folding on a lattice,
+error-correcting codes — comes with a sampler built from local, constraint-
+preserving moves, and every such sampler is a random walk on a move graph. The
+folklore instinct is always the same: blame the difficulty on some scalar count
+of constraints. The mathematics says otherwise. Difficulty of sampling is a
+**geometric** property of how solutions connect to one another under local moves.
+
+A connected move graph guarantees the top eigenvalue is simple and mixing is
+possible; a disconnected one guarantees a zero gap and a trapped walk; and the
+size of the gap in between is governed by *bottlenecks* — narrow bridges between
+otherwise well-connected regions — exactly the quantity that Cheeger-type
+inequalities relate to graph conductance. What looked like a mysterious hardness
+"temperature" of a puzzle turns out to be the humble, computable connectivity of
+a network you can draw.
+
+So the next time a Sudoku resists you, resist the urge to count its clues. The
+real question is whether its solutions form one connected web or a scattering of
+islands. That, and not the number of givens, is the phase transition hiding
+inside the puzzle.

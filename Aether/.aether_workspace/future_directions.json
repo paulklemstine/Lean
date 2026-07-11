@@ -525,7 +525,7 @@
         "Sidon sets",
         "convolution inequalities"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -571,7 +571,7 @@
         "Graph Product Theory",
         "Domination in Hypergraphs"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -802,7 +802,7 @@
         "graph theory (clique-width)",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -1413,7 +1413,7 @@
         "Algebraic geometry to combinatorics via geometric invariant theory",
         "Representation theory to geometric combinatorics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -2703,7 +2703,7 @@
         "nilperfect ring theory",
         "Dieudonné modules"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -2798,7 +2798,7 @@
         "the theory of matroids",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -3778,7 +3778,7 @@
         "probabilistic powerdomains",
         "Euclidean convex analysis"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -4076,7 +4076,7 @@
         "L₁ Space Analysis",
         "Functional Inequalities"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -4637,7 +4637,7 @@
         "Cartesian product of partial cubes",
         "harmonic-even partial cubes"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -5026,7 +5026,7 @@
       "depth_estimate": 3,
       "description": "The exponent α must equal 103/64 for the derived bound to hold universally regardless of κ.",
       "domain_bridges": "Interconnected with Dirichlet class formulations",
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -5212,7 +5212,7 @@
         "Set Theory",
         "Finite Combinatorics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -5587,7 +5587,7 @@
         "Parameterized Complexity",
         "Digraph Decomposition"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -6403,7 +6403,7 @@
         "Computational Number Theory (Rational Certificates)",
         "Hilbert Space Theory (Weighted Direct Sums)"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -6742,7 +6742,7 @@
         "harmonic_analysis",
         "algebraic_combinatorics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -7353,7 +7353,7 @@
       "domain_bridges": [
         "math.NT"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -7789,7 +7789,7 @@
         "topological graph theory",
         "graph coloring"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -7973,7 +7973,7 @@
         "analytic number theory",
         "real algebraic geometry"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -8513,7 +8513,7 @@
         "Combinatorics",
         "FiniteFieldTheory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -8703,7 +8703,7 @@
         "finite geometry",
         "coding theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -9382,7 +9382,7 @@
         "finite-binary-channel coding",
         "probabilistic chains"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -9574,7 +9574,7 @@
         "graph theory",
         "γ-positivity in polynomials"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -10203,7 +10203,7 @@
         "Graph Theory",
         "Discrete Mathematics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -10252,7 +10252,7 @@
         "graph_theory",
         "generating_functions"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -10490,7 +10490,7 @@
         "Graph_Theory",
         "Design_Theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -10537,7 +10537,7 @@
         "Polyhedral Geometry",
         "Polynomial Root Analysis"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -10634,7 +10634,7 @@
         "roots of unity",
         "Fibonacci and Lucas numbers"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -10772,7 +10772,7 @@
         "LinearAlgebra",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -11694,7 +11694,7 @@
         "Eulerian numbers",
         "Matrix products of combinatorial triangles"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -11742,7 +11742,7 @@
         "Combinatorics",
         "Graph Theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -11790,7 +11790,7 @@
         "Linear Algebra",
         "Real Analysis"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -12028,7 +12028,7 @@
         "cs.GT",
         "cs.DS"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -12565,7 +12565,7 @@
         "real analysis",
         "convex optimization"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -13199,7 +13199,7 @@
         "p_adic_galois_representations",
         "local_Langlands_correspondence"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Bridges"
@@ -13601,7 +13601,7 @@
         "deformation_theory--representation_theory",
         "tannakian_categories--algebraic_groups"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Bridges"
@@ -13998,7 +13998,7 @@
         "Linear_algebra",
         "Abstract_algebra"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -14045,7 +14045,7 @@
         "Discrete differential geometry",
         "Optimal transport"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -14142,7 +14142,7 @@
         "finite_model_theory",
         "minor_theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -14533,7 +14533,7 @@
         "harmonic_analysis_padic",
         "local_class_field_theory"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Bridges"
@@ -14674,7 +14674,7 @@
         "Linear Algebra",
         "Complex Analysis"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -14919,7 +14919,7 @@
         "Sampling theory → Zero distribution of L-functions",
         "Functional equations → Reflected zero pairs"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -15016,7 +15016,7 @@
         "analytic_number_theory",
         "diophantine_approximation"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -15162,7 +15162,7 @@
         "infinite_words_substitutions",
         "cyclic_avoidability"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -15210,7 +15210,7 @@
         "combinatorial_topology",
         "commutative_algebra"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -15256,7 +15256,7 @@
         "Constant-amortized-time algorithms",
         "Combinatorial superset properties"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -15742,7 +15742,7 @@
         "Simplicial Complexes",
         "Combinatorial Algebra"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -16145,7 +16145,7 @@
         "potential_theory_energy_minimization",
         "combinatorics_of_finite_metric_spaces"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -16658,7 +16658,7 @@
         "Probability Theory",
         "Asymptotic Analysis"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -16754,7 +16754,7 @@
         "graph_theory",
         "logic_and_combinatorics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -16901,7 +16901,7 @@
         "analytic_number_theory",
         "computational_number_theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -16949,7 +16949,7 @@
         "Formal languages and inductive types",
         "Enumerative combinatorics ↔ algebraic involution theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -17585,7 +17585,7 @@
         "combinatorics",
         "binomial_coefficients"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -17685,7 +17685,7 @@
         "hadamard_matrices",
         "finite_group_theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -17735,7 +17735,7 @@
         "Diagonal harmonics and nabla operator theory",
         "Modified Hall-Littlewood polynomials"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -17882,7 +17882,7 @@
         "arithmetic_geometry_over_finite_fields",
         "symplectic_group_representations"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Bridges"
@@ -18682,7 +18682,7 @@
         "Algebraic Combinatorics",
         "Spectral Graph Theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -18871,7 +18871,7 @@
         "Randomized algorithms",
         "Extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -20052,7 +20052,7 @@
         "Raney numbers",
         "Catalan combinatorics"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -20196,7 +20196,7 @@
         "combinatorial_geometry",
         "linear_algebra"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Bridges",
         "Logic"
@@ -20346,7 +20346,7 @@
         "Token sliding reconfiguration ↔ optimization value realization",
         "Logical meta-theorems ↔ parameterized complexity classification"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -20924,7 +20924,7 @@
         "math.GR (Group Theory)",
         "math.HR (Dynamics)"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -20972,7 +20972,7 @@
         "extremal graph theory",
         "topological graph theory"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -21121,7 +21121,7 @@
         "Combinatorial designs over finite rings",
         "Algebraic number theory via embedding determinants"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -21317,7 +21317,7 @@
         "Poincaré polynomials → Quiver representations via perverse sheaves",
         "Rational smoothness → Geometric representation theory via Springer fibers"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges",
         "Pythagorean"
@@ -21562,7 +21562,7 @@
         "combinatorial matrix theory",
         "algebraic geometry"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -21863,7 +21863,7 @@
         "formal verification",
         "algorithm verification"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -21999,7 +21999,7 @@
       "depth_estimate": 3,
       "description": "Bypassed",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -25617,7 +25617,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.82,
       "parent_direction": "",
       "priority_score": 0.77,
       "proof_strategy": "Define the Sudoku Markov chain M: state space = valid completions of the puzzle. Transitions: swap two compatible entries (entries in different rows, columns, and boxes). The transition matrix P has entries P(i,j) = probability of moving from state i to state j. The spectral gap is lambda_1 - lambda_2 where lambda_1 = 1 (the stationary distribution eigenvalue) and lambda_2 is the second-largest eigenvalue. For a connected state space (many solutions): lambda_1 - lambda_2 > 0, and the mixing time is O(1/(lambda_1 - lambda_2)). For a unique solution: the chain has only one state, so lambda_1 = lambda_2 = 1 (no gap). For critical puzzles (17 clues): the state space has many solutions but they are 'far apart' (connected only through long chains of swaps), so lambda_2 is close to 1 and the gap is small. Phase transition conjecture: as the number of clues k increases from 0 to 81, the spectral gap lambda_1 - lambda_2 transitions from large (many solutions, fast mixing) to small (few solutions, slow mixing) to zero (unique solution, no mixing). The critical point is k = 17 (the minimum number of clues for a unique solution). Test: generate Sudoku puzzles with k = 17, 20, 25, 30, 35, 40 clues, compute the transition matrix M for the swap Markov chain, find eigenvalues, measure spectral gap. For k >= 30 (unique solution), the chain has 1 state.",
@@ -25628,7 +25628,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-10T15:16:58.746626+00:00",
       "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
@@ -27287,7 +27287,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Isomorphisms of Meaning\n\nThis project formalizes the torsor structure of the set of isomorphisms between\ntwo isomorphic additive groups, the transport of all structural truth across an\nisomorphism, and the number-theoretic measurement of the residual ambiguity\n(\"meaning\") by Euler's totient.  Natural extensions:\n\n## 1. From automorphism groups to full torsors\n`autEquivIsoDom` / `isoEquivAutCod` are bijections of *sets*.  Upgrade them to an\nequivariant statement: `G ≃+ H` is a right torsor under `Aut(G)` and a left\ntorsor under `Aut(H)`, with the two actions commuting.  Then\n`Nat.card (G ≃+ H) = Nat.card (Aut G) = Nat.card (Aut H)` whenever `G ≃+ H` is\nnonempty, generalizing `card_iso_to_zmod` beyond cyclic groups.\n\n## 2. The totient bridge for general finite abelian groups\nBy the structure theorem, `Aut(⨁ ℤ/n_i)` is a product of general linear groups\nover residue rings.  A formal `card_aut_of_abelian` computing `|Aut(A)|` for\nfinite abelian `A` would let `card_iso` be stated for every such `A`, quantifying\n\"meaning ambiguity\" in complete generality.\n\n## 3. Multiplicative and ring-theoretic collisions\nMirror the additive development for `MulEquiv` and `RingEquiv`.  A striking\nnumber-theoretic collision to formalize: `(ZMod p)ˣ ≃* ZMod (p-1)` for prime `p`\n(a multiplicative structure among residues is secretly additive), sharpening the\nCRT example `crtCollision`.\n\n## 4. Categorical formulation\nRephrase transport (`structural_invariance`) as: any functor to `Prop` inverts\nisomorphisms.  The \"isomorphism of isomorphisms\" is then a statement about the\ncore groupoid; `Aut` is the automorphism group in the categorical sense and the\ntorsor is a `Aut`-principal homogeneous set.\n\n## 5. Logical / definability sharpening\n`structural_invariance` shows isomorphism-invariant predicates cannot separate\nisomorphic groups.  Connect this to a genuine definability statement: elements\nrelated by an automorphism satisfy the same first-order formulas with parameters\nfixed by that automorphism, making \"no formal system distinguishes them\" a\ntheorem of model theory rather than a schema over Lean predicates.\n\n## 6. Copycat / analogy quantification\nHofstadter's Copycat produces analogies \"map the role of `a` in `A` to its role\nin `B`\".  The formal counterpart here is: an analogy is an isomorphism, and the\nspace of equally valid analogies is the `Aut`-torsor.  A metric on this torsor\n(e.g. via a chosen generating set / Cayley graph of `Aut`) would formalize the\nnotion of \"conceptual slippage\" between competing analogies as graph distance.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Bridges"
@@ -27820,7 +27820,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Self-Reference, Fixed Points, and Strange Loops\n\nEach conjecture below is bold, falsifiable, and derived from the findings of this\ncycle — the observation that existence (Lawvere), impossibility (Cantor), size\n(cardinality), constructive stability (Tarski), and representability (Yoneda) are\nall shadows of a single diagonal.\n\n## 1. A quantitative cardinal gap for approximate self-models\n\n**Conjecture.** For a finite system with state space of size `n` and observation\nalphabet of size `k ≥ 2`, the best possible *approximate* self-model — a map\n`A → (A → B)` whose image covers a maximal fraction of observations — covers at\nmost `n / k^n` of them, and this bound is attained. Consequently the \"self-\nmodeling deficit\" grows super-exponentially with system size.\n\nThe key insight is that incompleteness is not a binary obstruction but a\nmeasurable quantity: the ratio `n / k^n` is a fidelity coefficient for how well a\nfinite system can mirror itself, turning Cantor's qualitative \"impossible\" into a\nsharp rate.\n\nWhy now? The exact finite boundary `|B|^{|A|} > |A|` isolated in this cycle gives\nthe denominator explicitly, so the extremal covering problem is now a concrete,\nattackable optimisation rather than a vague impossibility.\n\n## 2. Partial self-models and the domain-theoretic completion\n\n**Conjecture.** Every finite system extends to a *partial* self-model on its ideal\ncompletion (a complete lattice of \"self-descriptions ordered by information\") that\nis complete in the Knaster–Tarski sense, and the least fixed point of the induced\nmonotone operator is the unique minimal stable self-state.\n\nThe key insight is that the cardinal obstruction to finite self-reference\ndissolves under order completion: infinity enters not as raw set size but as the\nlimit of an information ordering, exactly where Tarski's theorem lives.\n\nWhy now? This cycle placed the finite impossibility and the lattice fixed-point\ntheorem side by side; the natural bridge — completing the finite state space to a\ndomain — is the obvious next construction and is entirely constructive.\n\n## 3. A strange-loop invariant distinguishing self-referential systems\n\n**Conjecture.** Assign to each self-modeling system the set of its diagonal loop\nstates `{ a : f a a = g (f a a) }` as `g` ranges over all transformations. Two\nsystems are isomorphic as self-models if and only if these loop-state families are\nnaturally isomorphic — a Yoneda-style reconstruction theorem for self-reference.\n\nThe key insight is that a system is determined by its loops: the totality of\nlevel-crossing fixed points plays the role that representable functors play in the\nYoneda lemma, so \"you are the family of your strange loops\".\n\nWhy now? Having both the explicit loop witness and the Yoneda self-determination\ntheorem in hand, the reconstruction statement is the precise fusion of the two\nand can be tested first on small finite and order-theoretic models.\n\n## 4. Fixed-point-free transformations as an obstruction spectrum\n\n**Conjecture.** For a fixed observation type `B`, the fixed-point-free self-maps\n`g : B → B` form a structured \"obstruction spectrum\" whose combinatorics exactly\nclassifies which state spaces `A` can admit complete self-models with values in\n`B`; in particular `B` admits *some* fixed-point-free map iff no `A` yields a\ncomplete self-model into `B`.\n\nThe key insight is that the barrier to self-reference is not a property of the\nsystem but of the observation alphabet: a single fixed-point-free transformation\nanywhere in `B` globally forbids completeness, so obstructions live entirely on\nthe value side.\n\nWhy now? The contrapositive proved this cycle\n(`no_complete_selfModel_of_fixedPointFree`) already turns one fixed-point-free map\ninto a global ban; cataloguing all such maps for structured `B` is the immediate,\nconcrete follow-up.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -28010,6 +28010,47 @@
       "thread_id": "th_e943ca73",
       "timestamp": "2026-07-11T01:12:12.830740+00:00",
       "title": "This work deepens the interval-graph analysis of register allocation"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — Mixing of Constraint-Satisfaction Swap Chains\n\nThis cycle replaced the folklore \"gap vs. clue count\" picture with a structural one:\nthe spectral gap of the swap chain is controlled by the connectivity of the graph of\ncompatible swaps between admissible completions. The following conjectures push that\ninsight further; each is falsifiable by an explicit small instance or by a single\ncounterexample.\n\n## Conjecture 1 — Quantitative gap from graph conductance\nFor the max-degree lazy swap chain on a connected move graph `G`, the spectral gap is\nbounded below by `c · h(G)² / (2·Δ)`, where `h(G)` is the edge conductance and `Δ` the\nmaximum degree. In particular the gap is strictly positive exactly when `G` is\nconnected, and its magnitude is a property of the swap geometry, never of the clue\ncount.\nThe key insight is that the discrete Laplacian appearing in one step of the chain is\nthe same operator whose Rayleigh quotient a Cheeger inequality bounds, so mixing speed\nand combinatorial bottleneck are two readings of one eigenvalue.\nWhy now? The mean-value characterization of fixed vectors and the maximum principle\nestablished this cycle already pin the eigenvalue `1`; the remaining step is to control\nthe *second* eigenvalue, for which the Cheeger machinery is exactly calibrated.\n\n## Conjecture 2 — Block decomposition from conserved multiset statistics\nThe connected components of the swap-move graph are precisely the level sets of the\nconserved statistics of the moves (row, column, and box value multisets). Consequently\nthe number of chain components equals the number of jointly attainable multiset\nprofiles, and the chain is irreducible on a puzzle iff all admissible completions share\nevery such profile.\nThe key insight is that a compatible swap is a transposition preserving each line's\nmultiset, so the reachability relation refines exactly into the fibers of the multiset\nmap.\nWhy now? This cycle proved the single-line invariant (`36` row-sum) that seeds these\nfibers; the natural next move is to show these invariants generate the entire block\nstructure.\n\n## Conjecture 3 — Uniqueness collapses the chain\nA puzzle with a unique admissible completion yields a one-state chain: the swap graph\nis a single isolated vertex, every vector is trivially fixed, and mixing is immediate\nand vacuous. Thus \"unique solution\" is not the slow-mixing regime of the folklore\nstory but the degenerate fast one.\nThe key insight is that with one state the transition matrix is the `1×1` identity, so\nthe notion of a gap between a first and second eigenvalue is empty, not small.\nWhy now? The two-state analysis of this cycle already isolates the boundary between\none- and many-state behaviour; extending it to the singleton clarifies the true\nmeaning of the \"absorbing\" phase.\n\n## Conjecture 4 — Symmetry forces spectral degeneracy\nWhen a puzzle admits a nontrivial automorphism acting freely on its completions, the\nswap chain's transition matrix commutes with the induced permutation, so its spectrum\nis degenerate and the gap is bounded above by a quantity depending only on the orbit\nstructure. Highly symmetric puzzles therefore mix slowly regardless of clue count.\nThe key insight is that a commuting symmetry block-diagonalizes the chain, and equal\ndiagonal blocks produce repeated eigenvalues that squeeze the gap.\nWhy now? The symmetric doubly stochastic structure proved this cycle is exactly the\nsetting in which commuting-operator arguments apply verbatim.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0968",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "d16ba3bc",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d16ba3bc",
+      "status": "available",
+      "thread_id": "th_1fcab73e",
+      "timestamp": "2026-07-11T01:12:21.487929+00:00",
+      "title": "This cycle replaced the folklore \"gap vs. clue count\" picture with a structural "
     },
     {
       "ambition_level": "extension",
@@ -28985,7 +29026,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7e60f6c2 (Q=0.830), which proved 23 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof path",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -29545,7 +29586,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle c2b68f4a (Q=0.780), which proved 20 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -30305,7 +30346,7 @@
       "depth_estimate": 3,
       "description": "Cycle 7e60f6c2 (Q=0.830) proved 23 theorems in Bridges but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search frac",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -30775,113 +30816,113 @@
   "pruned": [],
   "recent_domain_counts": {
     "Algebra": 4,
-    "Computation": 5,
+    "Computation": 6,
     "Cryptography": 1,
     "Geometry": 2,
     "Logic": 12,
-    "Novelty": 26
+    "Novelty": 27
   },
   "recent_theme_keywords": {
-    "'live'": 1,
-    "allocation": 1,
-    "assigns": 1,
+    "'spectral": 1,
+    "absorbing": 1,
     "attacks": 2,
     "because": 4,
+    "become": 1,
     "building": 4,
-    "colorin": 1,
-    "coloring": 1,
-    "colors": 1,
-    "combinatorics": 1,
-    "compiler": 1,
-    "compute": 4,
-    "conjecture": 20,
+    "clues": 1,
+    "compatible": 1,
+    "compute": 5,
+    "conjecture": 21,
+    "constraint": 1,
     "contains": 5,
     "counting": 2,
+    "critical": 1,
     "cycles": 5,
     "deepening": 4,
     "deeper": 5,
+    "density": 1,
+    "determined": 1,
+    "determines": 1,
     "deterministic": 2,
     "direction": 4,
-    "equivalent": 1,
+    "divided": 1,
+    "eigenvalues": 1,
+    "epsilon": 1,
     "expected": 2,
     "extend": 4,
-    "f0772bca": 1,
+    "find": 1,
     "fixed-point": 2,
     "formal": 2,
     "formalize": 5,
     "function": 8,
     "general": 4,
-    "graph": 1,
+    "generate": 1,
+    "hardness": 1,
     "hierarchies": 2,
     "homology": 2,
-    "impact": 15,
-    "interference": 1,
+    "impact": 16,
+    "lambda_2": 1,
+    "largest": 1,
     "length": 4,
+    "markov": 1,
+    "matrix": 1,
+    "meaning": 1,
     "measure": 4,
+    "minimal": 1,
+    "mixing": 1,
     "moreover": 2,
-    "needed": 2,
+    "needed": 3,
     "novelty": 4,
-    "number": 10,
-    "numbers": 2,
-    "optimization": 1,
+    "number": 11,
+    "numbers": 3,
     "original": 4,
+    "phase": 1,
+    "possible": 1,
+    "problem": 1,
     "proofs": 3,
     "proved": 8,
-    "q=0.830": 1,
-    "random": 8,
-    "register": 1,
-    "registers": 1,
+    "puzzle": 1,
+    "puzzles": 1,
+    "quickly": 1,
+    "random": 9,
+    "randomly": 1,
+    "reducible": 1,
     "remaining": 4,
     "result": 4,
     "results": 2,
+    "satisfaction": 1,
+    "satisfies": 1,
     "satisfy": 3,
     "sequence": 4,
     "series": 2,
     "setting": 6,
+    "slowly": 1,
+    "solution": 1,
     "sorries": 5,
     "specifically": 4,
-    "ssa-form": 1,
+    "spectral": 1,
     "standard": 2,
     "statement": 3,
     "states": 7,
     "strongest": 5,
     "structure": 3,
     "sufficiently": 2,
-    "symbols": 1,
-    "symmetric": 1,
     "system": 3,
-    "systems": 1,
     "tangled": 2,
-    "tau_mix": 1,
     "theorem": 10,
     "theorems": 6,
     "theory": 9,
-    "times": 1,
     "topology": 5,
-    "transfinite": 1,
-    "transposition": 1,
-    "transpositions": 1,
+    "transition": 1,
+    "transitions": 1,
     "triangle": 2,
-    "unavoidable": 1,
-    "uniform": 1,
-    "unitary": 1,
-    "universal": 1,
-    "unprovability": 1,
-    "validates": 1,
-    "values": 1,
+    "undergoes": 1,
+    "uniformly": 1,
+    "unique": 1,
     "vanishes": 2,
-    "variables": 1,
-    "verify": 11,
-    "vertices": 3,
-    "walks": 1,
-    "where": 1,
-    "whether": 1,
-    "winning": 1,
-    "yoneda": 1,
-    "zermelo's": 1,
-    "|<g|u^n|0>|^2": 1,
-    "|g><0|": 1,
-    "|lambda_2|": 1
+    "varying": 1,
+    "verify": 12,
+    "vertices": 3
   },
   "selection_log": [
     "famous_subtask",

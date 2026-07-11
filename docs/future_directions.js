@@ -115,20 +115,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorification of Entropy: The Information Loss of Functors"
   },
   {
-    "consumed_by_exp_id": "fd7d55eb",
-    "description": "Building on cycle f0772bca (Q=0.830), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_f0772bca_1603b1b6",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "f0772bca",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T20:20:23.542160+00:00",
-    "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 0643b2b3 (Q=0.820), which proved 11 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost r",
     "domains": [
@@ -6613,6 +6599,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T00:40:06.011625+00:00",
     "title": "Bold, falsifiable conjectures emerging from this cycle's study of chess on the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Chordal register allocation\n\nThis work deepens the interval-graph analysis of register allocation\n(`RegisterAllocationInterval.lean`) to the full **chordal** (SSA) setting.\n\n## What was proved (`ChordalRegisterAllocation.lean`)\n\n* `colorable_of_earlierDegree_lt` \u2014 greedy colouring lemma: if every vertex has\n  `< k` earlier neighbours in the elimination order, `G` is `k`-colourable.\n* `earlier_insert_isClique`, `earlierDegree_succ_le_cliqueNum` \u2014 under a perfect\n  elimination ordering each vertex plus its earlier neighbours is a clique, so the\n  earlier-degree is `< \u03c9(G)`.\n* `colorable_cliqueNum_of_peo` \u2014 a chordal graph is `\u03c9(G)`-colourable\n  (linear-scan / greedy optimality).\n* `chromaticNumber_eq_cliqueNum_of_peo` \u2014 **chordal graphs are perfect:**\n  `\u03c7(G) = \u03c9(G)`.\n* `interferenceGraph_isPEO` \u2014 sorted interval interference graphs are chordal\n  (they admit a PEO), so the interval results follow as corollaries\n  (`interval_chromaticNumber_eq_cliqueNum`, `interval_colorable_cliqueNum`).\n\nThe abstraction is the order-theoretic characterisation of chordality (existence\nof a perfect elimination ordering), realised concretely as the linear order on\n`Fin n`. Interval graphs become one instance among many.\n\n## Natural next steps\n\n1. **Chordal = perfect on all induced subgraphs.** Prove that deleting a vertex\n   (or restricting to any subset) preserves the PEO, giving the strong perfect-graph\n   statement `\u2200 induced H, \u03c7(H) = \u03c9(H)`. This needs an order-preserving reindexing\n   of the subset to `Fin m`.\n\n2. **Equivalence of chordality definitions.** Relate `IsPerfectElimOrder`\n   (order form) to the classical \"every cycle of length \u2265 4 has a chord\" form, and\n   to simplicial-vertex elimination (Dirac's theorem: a chordal graph has a\n   simplicial vertex).\n\n3. **SSA dominance-tree characterisation.** Formalise that the interference graph\n   of an SSA program is chordal because live ranges follow the dominator tree; the\n   elimination order is a reverse topological order of that tree. This closes the\n   gap to the original register-allocation conjecture at the program-semantics\n   level (currently intervals model straight-line/linear-scan code only).\n\n4. **Colouring algorithm extraction.** The greedy proof is constructive; extract a\n   verified `\u03c9`-colouring function and connect it to a linear-scan allocator, with a\n   bound on spills when the register budget `< \u03c9`.\n\n5. **Weighted / tree-width generalisations.** Chordal graphs have tree-width\n   `\u03c9 - 1`; formalising this links register pressure to tree-width and to dynamic\n   programming allocators on the clique tree.\n\n\n# Future Directions: Chordal register allocation\n\nThis work deepens the interval-graph analysis of register allocation\n(`RegisterAllocationInterval.lean`) to the full **chordal** (SSA) setting.\n\n## What was proved (`ChordalRegisterAllocation.lean`)\n\n* `colorable_of_earlierDegree_lt` \u2014 greedy colouring lemma: if every vertex has\n  `< k` earlier neighbours in the elimination order, `G` is `k`-colourable.\n* `earlier_insert_isClique`, `earlierDegree_succ_le_cliqueNum` \u2014 under a perfect\n  elimination ordering each vertex plus its earlier neighbours is a clique, so the\n  earlier-degree is `< \u03c9(G)`.\n* `colorable_cliqueNum_of_peo` \u2014 a chordal graph is `\u03c9(G)`-colourable\n  (linear-scan / greedy optimality).\n* `chromaticNumber_eq_cliqueNum_of_peo` \u2014 **chordal graphs are perfect:**\n  `\u03c7(G) = \u03c9(G)`.\n* `interferenceGraph_isPEO` \u2014 sorted interval interference graphs are chordal\n  (they admit a PEO), so the interval results follow as corollaries\n  (`interval_chromaticNumber_eq_cliqueNum`, `interval_colorable_cliqueNum`).\n\nThe abstraction is the order-theoretic characterisation of chordality (existence\nof a perfect elimination ordering), realised concretely as the linear order on\n`Fin n`. Interval graphs become one instance among many.\n\n## Natural next steps\n\n1. **Chordal = perfect on all induced subgraphs.** Prove that deleting a vertex\n   (or restricting to any subset) preserves the PEO, giving the strong perfect-graph\n   statement `\u2200 induced H, \u03c7(H) = \u03c9(H)`. This needs an order-preserving reindexing\n   of the subset to `Fin m`.\n\n2. **Equivalence of chordality definitions.** Relate `IsPerfectElimOrder`\n   (order form) to the classical \"every cycle of length \u2265 4 has a chord\" form, and\n   to simplicial-vertex elimination (Dirac's theorem: a chordal graph has a\n   simplicial vertex).\n\n3. **SSA dominance-tree characterisation.** Formalise that the interference graph\n   of an SSA program is chordal because live ranges follow the dominator tree; the\n   elimination order is a reverse topological order of that tree. This closes the\n   gap to the original register-allocation conjecture at the program-semantics\n   level (currently intervals model straight-line/linear-scan code only).\n\n4. **Colouring algorithm extraction.** The greedy proof is constructive; extract a\n   verified `\u03c9`-colouring function and connect it to a linear-scan allocator, with a\n   bound on spills when the register budget `< \u03c9`.\n\n5. **Weighted / tree-width generalisations.** Chordal graphs have tree-width\n   `\u03c9 - 1`; formalising this links register pressure to tree-width and to dynamic\n   programming allocators on the clique tree.\n",
+    "domains": [
+      "Logic",
+      "Geometry"
+    ],
+    "id": "fd_0967",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fd7d55eb",
+    "status": "available",
+    "timestamp": "2026-07-11T01:12:12.830740+00:00",
+    "title": "This work deepens the interval-graph analysis of register allocation"
   },
   {
     "consumed_by_exp_id": "",
