@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9b14e09c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Topology and Conservation Laws of Assembled Puzzles\n\nThis cycle established a conservation law for jigsaw assemblies — in any validly\nassembled row or rectangle the exposed ta",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 32,
-      "timestamp": "2026-07-10T10:45:49",
-      "title": "Deepening: The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-    },
-    {
       "cycle_id": "a9aa7bbf",
       "domain": "Geometry",
       "key_insight": "# Future Directions — The Thermodynamics of Sorting\n\nThis project formalizes the information-theoretic (Landauer / second-law) content of the\n\"thermodynamics of sorting\" mission. Below we record what",
@@ -499,19 +489,19 @@
       "theorem_count": 33,
       "timestamp": "2026-07-11T02:51:23",
       "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
+    },
+    {
+      "cycle_id": "08430233",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## What is proved here\n\n`TransfiniteComputation.lean` establishes a machine-checked **bridge** between\ncellular-automaton dynamics and ordinal / transfinite computation, via the t",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-11T02:51:29",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4b429121",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Zero-Knowledge Certification of Proofs\n\nThis cycle established three probabilistic pillars of a zero-knowledge\nproof-checking protocol: (i) independent repetition multiplies a pr",
-      "quality_score": 0.7118800000000001,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-02T14:13:50",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
     {
       "cycle_id": "5a8a4bbe",
       "domain": "NumberTheory",
@@ -2501,21 +2491,19 @@
       "theorem_count": 33,
       "timestamp": "2026-07-11T02:51:23",
       "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
+    },
+    {
+      "cycle_id": "08430233",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## What is proved here\n\n`TransfiniteComputation.lean` establishes a machine-checked **bridge** between\ncellular-automaton dynamics and ordinal / transfinite computation, via the t",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-11T02:51:29",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0643b2b3",
-      "domain": "Combinatorics",
-      "name": "crossScore_completeCoact",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a6f348ea",
-      "domain": "Physics",
-      "name": "specializes",
-      "quality": 0.8
-    },
     {
       "cycle_id": "a6f348ea",
       "domain": "Physics",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "microWeighting_exists",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "08430233",
+      "domain": "Applications",
+      "name": "mem_spread",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "08430233",
+      "domain": "Applications",
+      "name": "spread_iterate",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T02:51:23",
+  "last_updated": "2026-07-11T02:51:29",
   "open_questions": [
     {
       "context": "witnesses, not `sorry`ed placeholders, so the abstract hypotheses are demonstrably; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "2c002c80",
-        "quality": 0.78,
-        "theorems": 25,
-        "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
-      },
-      {
         "cycle_id": "6528f137",
         "quality": 0.83,
         "theorems": 8,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 33,
         "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
+      },
+      {
+        "cycle_id": "08430233",
+        "quality": 0.72,
+        "theorems": 11,
+        "title": "Cellular Automata at the Ordinals: Transfinite Computation"
       }
     ],
     "Bridges": [
