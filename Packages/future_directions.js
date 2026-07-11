@@ -411,6 +411,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0985",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T03:07:28.618592+00:00",
+    "title": "Thermodynamics of Mathematical Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 298c68ef (Q=0.780), which proved 66 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domains": [
       "Applications"
