@@ -24786,7 +24786,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Turing's Flowers: Morphogenesis as Algebraic Geometry\n\nThe file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the\ndegree/Chebyshev correspondence and the boundedness dichotomy that separates the\nthree linear-onset morphological classes (spots, stripes, labyrinths). Twelve\ntheorems are proved, all `sorry`-free. Natural next steps:\n\n## 1. Genus from complexification\nThe strongest form of the guiding conjecture reads pattern topology from the genus of\nthe complexified projective curve `T_n(X) − c = 0`. Formalizing this needs the theory\nof real/complex plane curves (smooth models, genus–degree formula\n`g = (d−1)(d−2)/2`, real ovals vs. non-compact branches). This is presently the main\nmissing piece; Mathlib does not yet carry the genus–degree formula in usable form.\n\n## 2. Exact degree of arbitrary multi-mode superpositions\nShow that a superposition `∑_{k=1}^{m} a_k cos(k θ)` with `a_m ≠ 0` is a polynomial of\ndegree exactly `m` in `X = cos θ` (leading coefficient `2^{m-1} a_m`). This upgrades\n`mode_as_poly` from single modes to genuine patterns and pins the algebraic degree to\nthe highest active mode.\n\n## 3. Two-dimensional level sets and lattices\nExtend the 1-D `cos(nx)` analysis to planar modes `cos(k·x)` for wave vectors on a\nhexagonal/square lattice, and connect the number of lattice orbits to the algebraic\ndegree of the resulting real variety (the sextic case corresponds to the classic\nhexagonal three-mode instability).\n\n## 4. Sharpness of the ellipse bound\n`ellipse_bounded` uses the loose radius `c/a + c/b`. Replace it with the sharp\nenclosing radius `√(c/min(a,b))` and prove tightness by exhibiting a point achieving\nit, giving a metric characterization of spot size in terms of diffusion anisotropy.\n\n## 5. Periodicity lattice of stripes\n`stripe_periodic` records invariance under a single generator `2π`. Formalize the full\ntranslation lattice and the quotient torus, framing a stripe pattern as a function on\n`ℝ / 2πℤ` and linking mode count to winding number.\n\n## 6. Link to the PDE\nConnect the algebraic level sets back to genuine reaction–diffusion dynamics: derive\nthe linear dispersion relation, identify the band of unstable wave numbers, and show\nthat the truncated Fourier expansion at onset lands in the polynomial class studied\nhere.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Geometry"
@@ -27328,7 +27328,7 @@
       "depth_estimate": 3,
       "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Computation"
@@ -27656,7 +27656,7 @@
       "depth_estimate": 3,
       "description": "Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadratic in synapse count.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Computation"
@@ -27933,24 +27933,24 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "01e9ab7a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Geometry"
       ],
       "github_issue": 0,
       "id": "fd_0966",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-11T01:29:07.246336+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -27965,7 +27965,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-11T00:55:56.825809+00:00",
       "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
@@ -28107,7 +28107,7 @@
       "depth_estimate": 3,
       "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Physics"
@@ -28148,7 +28148,7 @@
       "depth_estimate": 3,
       "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Physics"

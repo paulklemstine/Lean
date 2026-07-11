@@ -439,20 +439,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
-    "consumed_by_exp_id": "473442d5",
-    "description": "Building on cycle 3716954d (Q=0.780), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_3716954d_b8e54a15",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "3716954d",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T23:44:06.034172+00:00",
-    "title": "Deepening: The L-Function Universe: A Cosmic Census of All L-Functions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 73d4b43b (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a s",
     "domains": [
@@ -5612,7 +5598,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01e9ab7a",
     "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
     "domains": [
       "Novelty",
@@ -5622,7 +5608,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:55:56.825809+00:00",
     "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
   },
@@ -6658,6 +6644,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T01:28:45.184575+00:00",
     "title": "The results of this cycle establish a hard covering inequality linking an"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Analytic L-Function Census\n\nThis cycle deepens the earlier *combinatorial* L-function census (finite/periodic\ncoefficient packets are countable) into a statement about the genuine **analytic**\nobjects: Dirichlet series `LSeries f (s) = \u2211' n, f n / n ^ s` viewed as functions\n`\u2102 \u2192 \u2102`. The organizing theorem is **rigidity** \u2014 a convergent Dirichlet series is\nuniquely determined by its coefficients (`LSeries_injOn` in Mathlib) \u2014 from which we\nderive a chain culminating in:\n\n- `zeta_rigidity` \u2014 the Riemann zeta function is the unique normalized convergent\n  Dirichlet series taking its values;\n- `analytic_universe_infinite` \u2014 the monomial series `s \u21a6 (k+1)\u207b\u02e2` are pairwise\n  distinct analytic functions, so the universe is infinite;\n- `charLSeries_injOn_fixedMod` / `charCensusEquiv` \u2014 per modulus, Dirichlet\n  characters biject with their analytic L-functions (the census is *exact*);\n- `analyticDirichletUniverse_countable` \u2014 the whole analytic Dirichlet family is\n  countable.\n\n## Natural next steps\n\n1. **Cross-modulus faithfulness.** Show that the *bundled* map\n   `\u27e8N, \u03c7\u27e9 \u21a6 LSeries (charCoeff \u03c7)` is injective across moduli after restricting to\n   primitive characters (distinct primitive characters give distinct L-functions).\n   This would upgrade `analyticDirichletUniverse_countable` to \"countably infinite,\n   faithfully indexed by primitive characters\".\n\n2. **Euler product.** Formalize the Euler product `L(s,\u03c7) = \u220f_p (1 - \u03c7(p) p\u207b\u02e2)\u207b\u00b9`\n   for `Re s > 1` and use it to give a second, multiplicative proof that distinct\n   completely multiplicative coefficient systems yield distinct L-functions.\n\n3. **Degree-two stratum.** Extend `charCoeff`-style rigidity to L-functions of\n   modular forms / elliptic curves: their coefficient sequences (Hecke eigenvalues)\n   are algebraic and satisfy the Ramanujan bound `|a_p| \u2264 2 p^{1/2}`, which again\n   forces convergence and hence rigidity.\n\n4. **Selberg-class link.** Connect `SelbergDatum` (the finite invariant packet from\n   the combinatorial census) to the analytic side by proving that the classifying map\n   `analytic L-function \u21a6 its invariant packet` is well-defined and injective on a\n   suitable convergent, arithmetic subclass \u2014 turning the \"census principle\" into a\n   theorem about analytic objects.\n\n5. **Quantitative census.** Compute `Nat.card (DirichletCharacter \u2102 N)` per modulus\n   (`= \u03c6(N)` for `N \u2265 1`) and transport it along `charCensusEquiv` to count exactly\n   how many analytic Dirichlet L-functions occur at each modulus.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0973",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "473442d5",
+    "status": "available",
+    "timestamp": "2026-07-11T01:28:54.359847+00:00",
+    "title": "This cycle deepens the earlier *combinatorial* L-function census (finite/periodi"
   },
   {
     "consumed_by_exp_id": "",
