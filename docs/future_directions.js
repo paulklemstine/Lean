@@ -411,7 +411,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "473442d5",
     "description": "Building on cycle 3716954d (Q=0.780), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics \u2014 each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
     "domains": [
       "Applications"
@@ -420,7 +420,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "3716954d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T23:44:06.034172+00:00",
     "title": "Deepening: The L-Function Universe: A Cosmic Census of All L-Functions"
   },
@@ -495,19 +495,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
-    "consumed_by_exp_id": "d0bff55a",
-    "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d0bff55a (Q=0.780), which proved 20 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
     "domains": [
-      "Novelty",
-      "Logic"
+      "MachineLearning"
     ],
-    "id": "fd_0945",
-    "priority_score": 0.87,
+    "id": "push_d0bff55a_5a61b5b8",
+    "priority_score": 0.88,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T21:41:17.722375+00:00",
-    "title": "Transfinite Game Theory: Games That Last Forever"
+    "source_exp_id": "d0bff55a",
+    "status": "available",
+    "timestamp": "2026-07-11T00:23:26.434548+00:00",
+    "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
   },
   {
     "consumed_by_exp_id": "",
@@ -568,6 +567,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T23:08:57.326588+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadratic in synapse count.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0959",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T00:22:54.792080+00:00",
+    "title": "Digital Immortality: Can a Mind Be Encoded?"
   },
   {
     "consumed_by_exp_id": "",
@@ -682,7 +696,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
   },
   {
-    "consumed_by_exp_id": "8e21378d",
+    "consumed_by_exp_id": "",
     "description": "Cycle f0772bca (Q=0.830) proved 18 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocati",
     "domains": [
       "Novelty"
@@ -691,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "f0772bca",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T20:20:23.650892+00:00",
     "title": "Close Proofs: The Combinatorics of Compiler Optimization: Register Allocation as Gra"
   },
@@ -6485,6 +6499,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n`TransfiniteGames.lean` proves that every **well-founded** two-player game is\ndetermined: the value function `W` (the Zermelo fixed point) exists, every play\nterminates against any legal opponent, and the player to move can force a win iff\nthe position is winning (`determinacy : MoverWins p \u2194 W p`). This is Zermelo's\ntheorem for games of arbitrary transfinite rank. Natural extensions:\n\n1. **Ordinal rank and play-length bounds.** Attach to each position its\n   `WellFounded`-rank as an `Ordinal` and prove that the length of optimal play is\n   controlled by the rank. This would make the \"transfinite length\" quantitative\n   and connect to `Ordinal` arithmetic (`\u03c9`, `\u03c9\u00b2`, \u2026).\n\n2. **Sprague\u2013Grundy theory.** Refine the boolean value `W` to a Grundy value in\n   `\u2115` (or `Ordinal`) via `mex` of successors, and prove the sum-of-games theorem\n   for well-founded impartial games.\n\n3. **Partisan games / surreal numbers.** Specialize the position-encoded-turn\n   model to Conway's partisan games and relate the value here to game values in\n   `Mathlib`'s `SetTheory/Game`.\n\n4. **Beyond well-foundedness: topological determinacy.** The Gale\u2013Stewart theorem\n   (open and closed games on `Baire` space are determined in ZFC) is the next\n   milestone. It requires plays of length exactly `\u03c9` and a genuinely different,\n   strategy-tree argument. From there:\n\n5. **The determinacy hierarchy and large cardinals.** Borel determinacy\n   (Martin's theorem), analytic determinacy from a measurable cardinal, and the\n   equivalence of `AD` with inner-model/large-cardinal hypotheses. These are deep\n   set-theoretic results; formalizing even Borel determinacy would be a major\n   undertaking and is the long-range goal suggested by the mission statement.\n\n6. **Concrete transfinite instances.** Formalize the `\u2115 \u00d7\u2097 \u2115` (rank `\u03c9\u00b2`) and\n   `Ordinal`-indexed countdown games as further worked examples of the general\n   theory, computing their value functions explicitly.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0960",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d0bff55a",
+    "status": "available",
+    "timestamp": "2026-07-11T00:23:20.911643+00:00",
+    "title": "`TransfiniteGames.lean` proves that every **well-founded** two-player game is"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
     "domains": [
       "Novelty",
@@ -6514,7 +6543,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erdos-Renyi on Acid: Random Graphs That Hallucinate"
   },
   {
-    "consumed_by_exp_id": "96999870",
+    "consumed_by_exp_id": "",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -6524,7 +6553,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T18:11:39.565605+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },

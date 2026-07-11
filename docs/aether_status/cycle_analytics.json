@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-11T00:07:04.196029+00:00",
+  "last_updated": "2026-07-11T00:23:28.198102+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -4150,6 +4150,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-11T00:07:04.174592+00:00",
       "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 25,
+      "domain": "MachineLearning",
+      "duration_seconds": 979.5878291130066,
+      "end_time": 1783729392.577273,
+      "files_integrated": 4,
+      "job_id": "d0bff55a",
+      "outcome_quality": 0.78,
+      "phase": "complete",
+      "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783728412.9894438,
+      "strategy_count": 0,
+      "theorem_count": 20,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 16,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-11T00:23:28.174139+00:00",
+      "title": "Transfinite Game Theory: Games That Last Forever"
     }
   ]
 }
