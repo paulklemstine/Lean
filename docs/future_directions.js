@@ -712,6 +712,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
+    "domains": [
+      "Novelty",
+      "Tropical"
+    ],
+    "id": "fd_1062",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T19:27:06.982863+00:00",
+    "title": "Speculative: Tropical Mathematics of Social Choice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 0643b2b3 (Q=0.820) proved 11 theorems in Combinatorics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon",
     "domains": [
       "Combinatorics"
@@ -837,20 +852,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
   },
   {
-    "consumed_by_exp_id": "c67deafc",
-    "description": "Cycle e480cbbd (Q=0.830) proved 64 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_e480cbbd_17d536c8",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "e480cbbd",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T15:33:11.950891+00:00",
-    "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle f0772bca (Q=0.830) proved 18 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocati",
     "domains": [
@@ -938,6 +939,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T18:03:46.077584+00:00",
     "title": "Speculative: Category Theory as the DNA of Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Treat Lean 4's type checker as an 'environment' and formalized mathematics as 'organisms' adapting to it. Define fitness: f(M) = (number of theorems proved by M) / (lines of code in M). Prove: the fitness landscape has local optima corresponding to 'mathematical styles' (algebraic, analytic, combinatorial). Conjecture: Mathlib is a global fitness maximum for the set of theories expressible in CIC. Show: migrating a proof from one local optimum to another requires crossing a 'fitness valley' of temporarily decreased fitness.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_1063",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T19:27:07.217097+00:00",
+    "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },
   {
     "consumed_by_exp_id": "",
@@ -1175,7 +1191,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72f6ced3",
     "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
     "domains": [
       "Novelty",
@@ -1185,7 +1201,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T15:32:42.926609+00:00",
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
@@ -6271,6 +6287,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T19:10:33.575277+00:00",
     "title": "This cycle established, as exact theorems, that the number of logical qubits of "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Finalization status\n\nThe task line originally left four `sorry` placeholders across two files.\nThree were filled with complete, axiom-clean proofs (only `propext`,\n`Classical.choice`, `Quot.sound`); the fourth is a genuinely research-level\ntheorem and is documented in detail below. All other declarations in the two\ndeliverable files are complete and `sorry`-free, and both files elaborate:\n\n- `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` \u2014 complete,\n  no `sorry`.\n- `Catalog/Shared/CarmichaelHelper.lean` \u2014 complete, no `sorry`.\n- `Catalog/Shared/CarmichaelProof.lean` \u2014 complete except one documented `sorry`\n  (the infinite composite tail of Carmichael's theorem, see below). The tail is\n  now cleanly isolated into the single lemma `primPart_large_composite`\n  (`1 < primPart n` for composite `n > 10000`); the main theorem\n  `fib_carmichael_composite` is otherwise fully proved and just applies this\n  lemma together with `primPart_implies_primitive`. The `sorry` is a warning,\n  not a compile error, so the module still elaborates.\n\n## Filled placeholders (complete proofs)\n\nIn `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`:\n\n- `MixedRadixBridge.value_eq` \u2014 mixed-radix value at bases `i+1` equals the\n  factoradic value (via `MixedRadix.factorial_radixProd`).\n- `MixedRadixBridge.valid_iff` \u2014 mixed-radix validity at bases `i+1` equals\n  factoradic validity (via `MixedRadix.factorial_valid_iff`).\n- `MixedRadixBridge.factorial_value_unique_via_mixed` \u2014 factoradic uniqueness\n  re-derived from the general `MixedRadix.value_unique` through the two bridge\n  lemmas.\n- (Also fixed a stale import prefix `Catalog.Computation.*` \u2192 `Computation.*`.)\n\n## The one open case: Carmichael's theorem, infinite composite tail\n\n`fib_carmichael_composite` reduces (via `primPart_implies_primitive`, proved for\nall `n \u2265 3`) to the single statement\n\n    for every composite `n > 10000`,  `1 < primPart n`,\n\nwhere `primPart n` is the primitive part of `fib n` (the `native_decide`\ncomputation `primPart_check` already discharges the finite window\n`13 \u2264 n \u2264 10000`). This is exactly Carmichael's primitive-divisor theorem for\nFibonacci numbers (`F_n` has a prime factor dividing no earlier `F_k`, for all\n`n > 12`) \u2014 the Fibonacci case of Zsygmondy's theorem.\n\n### What Mathlib provides, and what is missing\n\nVerified against the pinned Mathlib:\n\n- Available: `Real.goldenRatio`, Binet's formula `Real.coe_fib_eq`\n  (`fib n = (\u03c6^n - \u03c8^n)/\u221a5`), strong divisibility `Nat.fib_gcd`, and the\n  standard Euler-totient API. The purely analytic ingredient is therefore within\n  reach: e.g. `\u03c6(n) > \u221an > 100` for `n > 10000`, and exponential Binet bounds on\n  `fib`.\n- Missing entirely: any primitive-divisor / Zsygmondy theory for Lucas\n  sequences; the p-adic valuation theory of `fib` (lifting-the-exponent, with\n  the delicate special primes `p = 2` and `p = 5`); the homogeneous cyclotomic\n  factorization `fib n = \u220f_{d\u2223n} \u03a6*_d` as an integer identity; and the\n  rank-of-apparition (\"law of apparition\") structure of imprimitive primes.\n\nThe arithmetic half is the real obstruction and must be built from scratch.\n\n### A concrete formalization path\n\n1. **Homogeneous cyclotomic factors.** Define `\u03a6*_n = \u220f_{d\u2223n} fib d ^ \u03bc(n/d)`\n   (M\u00f6bius inversion) and prove `fib n = \u220f_{d\u2223n} \u03a6*_d` with every `\u03a6*_d` a\n   positive integer.\n2. **Exponential size bound (analytic; feasible).** Prove\n   `C\u2081 \u00b7 \u03c6^{Euler \u03c6(n)} \u2264 \u03a6*_n \u2264 C\u2082 \u00b7 \u03c6^{Euler \u03c6(n)}` via Binet plus the\n   M\u00f6bius-sum identities `\u2211_{d\u2223n} \u03bc(n/d)\u00b7d = Euler \u03c6(n)` and\n   `\u2211_{d\u2223n} \u03bc(n/d) = 0` for `n > 1`, bounding the error term\n   `\u2211_{d\u2223n} \u03bc(n/d)\u00b7log(1-(\u03c8/\u03c6)^d)` by an absolute constant.\n3. **Rank / intrinsic-prime structure (arithmetic; the hard part).** Prove that\n   every imprimitive prime `p \u2223 \u03a6*_n` divides `n` and that the whole imprimitive\n   part of `\u03a6*_n` divides `n` (a constant slack absorbs `p = 2, 5`). This is the\n   lifting-the-exponent argument for `fib` via rank of apparition and\n   `Nat.fib_gcd`.\n4. **Comparison and the `primPart` bridge.** Combine `\u03a6*_n \u2265 \u03c6^{Euler \u03c6(n)}/C`\n   (step 2) with `Euler \u03c6(n) > \u221an > 100` for `n > 10000` to get `\u03a6*_n` larger\n   than its imprimitive part (step 3), so the primitive part exceeds `1`; then\n   identify `primPart n` (the concrete stripping algorithm in\n   `CarmichaelProof.lean`) with this primitive part.\n\nSteps (2)\u2013(4) are each substantial and (3)\u2013(4) require new theory; each should\nbe developed as its own file of reusable lemmas before assembling the final\ncomparison. Because the statement is a genuine, deep theorem with no supporting\nMathlib infrastructure, it is left as a single, well-isolated `sorry` rather than\ndischarged by an unsound shortcut (no `axiom`, no vacuous restatement).\n\n## Other follow-ups\n\n- Generalize the mixed-radix bridge to the base-`N` system\n  (`MixedRadix.baseN_radixProd` is already available) to exhibit both factoradic\n  and ordinary base-`N` numerals as instances of one parameterized theory.\n",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_1064",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c67deafc",
+    "status": "available",
+    "timestamp": "2026-07-11T19:27:19.450922+00:00",
+    "title": "The task line originally left four `sorry` placeholders across two files."
   },
   {
     "consumed_by_exp_id": "",

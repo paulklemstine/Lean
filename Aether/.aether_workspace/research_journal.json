@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4120a115",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Phantom Topologies over Ordered Observers\n\nThis cycle proved that the real line's \"two-observer\" phantom representation is a\nspecial case of a purely order-theoretic phenomenon:",
-      "quality_score": 0.5206,
-      "sorry_count": 3,
-      "theorem_count": 20,
-      "timestamp": "2026-07-04T07:35:15",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
-    {
       "cycle_id": "fbcfb71f",
       "domain": "Applications",
       "key_insight": "# Future Directions — A Bestiary of Arithmetic Monsters\n\nThese conjectures grew directly out of the casting-out-nines analysis of\ndigit-permutation factorizations and the binary-digit-sum bridge.\n\n##",
@@ -2501,6 +2491,16 @@
       "theorem_count": 24,
       "timestamp": "2026-07-11T19:10:40",
       "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+    },
+    {
+      "cycle_id": "c67deafc",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## Finalization status\n\nThe task line originally left four `sorry` placeholders across two files.\nThree were filled with complete, axiom-clean proofs (only `propext`,\n`Classical.c",
+      "quality_score": 0.6,
+      "sorry_count": 6,
+      "theorem_count": 0,
+      "timestamp": "2026-07-11T19:27:26",
+      "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T19:10:40",
+  "last_updated": "2026-07-11T19:27:26",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "cd5a9d7d",
-      "domain": "Pythagorean",
-      "sorry_count": 3,
-      "timestamp": "2026-07-10T15:48:57"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "b77ed1ec",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-11T19:10:40"
+    },
+    {
+      "context": "+  -- `sorry` (no `axiom`, no `@[implemented_by]`, no vacuous restatement).; +  sorry; -    sorry",
+      "cycle_id": "c67deafc",
+      "domain": "Tropical",
+      "sorry_count": 6,
+      "timestamp": "2026-07-11T19:27:26"
     }
   ],
   "research_threads": {
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "c72330ea",
-        "quality": 0.5940000000000001,
-        "theorems": 14,
-        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-      },
-      {
         "cycle_id": "f2499c75",
         "quality": 0.68192,
         "theorems": 15,
@@ -4009,6 +4003,12 @@
         "quality": 0.72,
         "theorems": 24,
         "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+      },
+      {
+        "cycle_id": "c67deafc",
+        "quality": 0.6,
+        "theorems": 0,
+        "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
       }
     ]
   }
