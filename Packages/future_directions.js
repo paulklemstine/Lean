@@ -811,7 +811,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3fb99ba",
     "description": "Cycle 094010ae (Q=0.820) proved 21 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that re",
     "domains": [
       "Novelty"
@@ -820,7 +820,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "094010ae",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T14:11:15.873547+00:00",
     "title": "Close Proofs: Reflective Type Theory: Proving Things About Proving Things"
   },
