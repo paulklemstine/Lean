@@ -297,20 +297,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "consumed_by_exp_id": "f3c4c6a5",
-    "description": "Building on cycle ace29f66 (Q=0.820), which proved 69 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_ace29f66_29203362",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "ace29f66",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T04:29:37.981147+00:00",
-    "title": "Deepening: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle cd5a9d7d (Q=0.820), which proved 11 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum len",
     "domains": [
@@ -379,6 +365,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-11T05:18:16.612897+00:00",
     "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
+  },
+  {
+    "consumed_by_exp_id": "58600b08",
+    "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0999",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T07:12:19.970065+00:00",
+    "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   {
     "consumed_by_exp_id": "",
@@ -6968,6 +6969,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T06:56:14.626045+00:00",
     "title": "That the smallest non-Desarguesian order, `9`, supports a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Dream Logic (Deepening)\n\nThis cycle deepened the *dream logic* development (paraconsistent, non-monotone,\nbelief-revisable reasoning where contradictions coexist) with three new self-contained,\nfully-proved Lean files under `Catalog/Logic/DreamLogic/`:\n\n* `Bilattice.lean` \u2014 the full **interlaced bilattice `FOUR`**: two partial orders (truth and\n  knowledge) each a bounded lattice, the four interlacing axioms, negation as a\n  truth-anti/knowledge-automorphism, conflation as its dual, and paraconsistency grounded\n  in this structure.\n* `TopologyGeneral.lean` \u2014 the closed-set semantics **generalized from `\u211d` to arbitrary\n  topological spaces**, with a sharp paraconsistency criterion (`gluts exist \u21d4 the closed\n  proposition is not open`), double-negation elimination for closed sets, and a general\n  `T1` theorem that a convergent sequence produces closed singletons whose union is not\n  closed.\n* `Consequence.lean` \u2014 a genuine propositional **consequence relation** valued in `FOUR`,\n  with Tarskian structural rules (reflexivity, weakening, cut), lattice behaviour of the\n  connectives, and formal non-explosion / non-validity of excluded middle and\n  non-contradiction.\n\n## Natural next steps\n\n1. **Bundle `FOUR` as a Mathlib-style typeclass.** Package the interlacing laws into a\n   `Bilattice` / `InterlacedBilattice` structure and instantiate `FOUR`. Then prove the\n   representation theorem: every interlaced bilattice embeds into a product `L \u2299 L` of a\n   lattice with itself (Ginsberg / Avron), with `FOUR = 2 \u2299 2`.\n\n2. **Completeness of the consequence relation.** Add a Hilbert- or sequent-style proof\n   system for the `neg/conj/disj` fragment and prove soundness *and* completeness against\n   the `FOUR`-valuation semantics in `Consequence.lean` (this is Belnap\u2013Dunn `FDE`).\n\n3. **Formal non-monotonic operator.** Lift the value-level `defaultClose` belief-retraction\n   to a closed-world consequence operator `\u0393 |~ \u03c6` on formulas and prove it is genuinely\n   non-monotone (a conclusion withdrawn when premises grow), while its monotone core\n   coincides with `\u22a8`.\n\n4. **Topological completeness.** Strengthen `TopologyGeneral.lean` to a representation\n   linking `FOUR`-models and closed-set algebras of a space, characterizing which\n   bilattices arise as `(closed sets, pneg)` of a topological space.\n\n5. **Larger bilattices / continuum of gluts.** Replace the two-element base lattice by\n   `[0,1]` to obtain a *fuzzy* dream logic (`[0,1] \u2299 [0,1]`), where gluts form a continuum,\n   and re-derive the interlacing and paraconsistency results in that setting.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1000",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f3c4c6a5",
+    "status": "available",
+    "timestamp": "2026-07-11T07:12:46.540918+00:00",
+    "title": "This cycle deepened the *dream logic* development (paraconsistent, non-monotone,"
   },
   {
     "consumed_by_exp_id": "",

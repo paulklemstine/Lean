@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "92e61cee",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Leading-Term Cancellation and Spectral Balance\n\nThe results of this cycle establish that the leading correction to a spectral\nheat-kernel trace, `L(t) = Σᵢ dᵢ e^{−t Eᵢ}`, cancels",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-10T13:11:38",
-      "title": "Conjecture on Leading Term Cancellation"
-    },
-    {
       "cycle_id": "0884751e",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Borsuk–Ulam and Social Choice\n\n## What was proved (file `BorsukUlamArrow.lean`, no `sorry`, standard axioms only)\n\n**Part I — the genuine topological kernel.**\n- `borsuk_ulam_1d`:",
@@ -499,19 +489,19 @@
       "theorem_count": 53,
       "timestamp": "2026-07-11T06:56:20",
       "title": "Deepening: Non-Desarguesian Worlds: Geometry Without Desargues"
+    },
+    {
+      "cycle_id": "f3c4c6a5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Dream Logic (Deepening)\n\nThis cycle deepened the *dream logic* development (paraconsistent, non-monotone,\nbelief-revisable reasoning where contradictions coexist) with three new",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-07-11T07:12:51",
+      "title": "Deepening: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f7b97a34",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — The Anti-Fibonacci Sequence\n\nDerived from this cycle's findings: the additive greedy sequence\n`A(0)=1, A(n+1)=A(n)+n` equals `1 + n(n-1)/2`, grows like `n²/2`, has consecutive\nra",
-      "quality_score": 0.460800096969697,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-03T04:31:26",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
     {
       "cycle_id": "aad22603",
       "domain": "Probability",
@@ -2501,15 +2491,19 @@
       "theorem_count": 53,
       "timestamp": "2026-07-11T06:56:20",
       "title": "Deepening: Non-Desarguesian Worlds: Geometry Without Desargues"
+    },
+    {
+      "cycle_id": "f3c4c6a5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Dream Logic (Deepening)\n\nThis cycle deepened the *dream logic* development (paraconsistent, non-monotone,\nbelief-revisable reasoning where contradictions coexist) with three new",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-07-11T07:12:51",
+      "title": "Deepening: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c2b68f4a",
-      "domain": "Bridges",
-      "name": "shift_zero",
-      "quality": 0.78
-    },
     {
       "cycle_id": "c2b68f4a",
       "domain": "Bridges",
@@ -2803,9 +2797,15 @@
       "domain": "Applications",
       "name": "W_period",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "f3c4c6a5",
+      "domain": "Novelty",
+      "name": "tle_refl",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T06:56:20",
+  "last_updated": "2026-07-11T07:12:51",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f0772bca",
-        "quality": 0.83,
-        "theorems": 18,
-        "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
-      },
-      {
         "cycle_id": "473442d5",
         "quality": 0.83,
         "theorems": 21,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 53,
         "title": "Deepening: Non-Desarguesian Worlds: Geometry Without Desargues"
+      },
+      {
+        "cycle_id": "f3c4c6a5",
+        "quality": 0.83,
+        "theorems": 100,
+        "title": "Deepening: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
       }
     ],
     "NumberTheory": [
