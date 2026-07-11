@@ -799,6 +799,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1037",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T13:04:49.880837+00:00",
+    "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 0643b2b3 (Q=0.820) proved 11 theorems in Combinatorics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon",
     "domains": [
       "Combinatorics"
@@ -1127,6 +1142,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T12:31:49.043504+00:00",
     "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1036",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T13:04:49.806401+00:00",
+    "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
   {
     "consumed_by_exp_id": "",
