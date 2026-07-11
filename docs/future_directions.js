@@ -496,6 +496,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
+    "consumed_by_exp_id": "ea473918",
+    "description": "Building on cycle 5e3f6a63 (Q=0.780), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_5e3f6a63_0a3cfcdf",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "5e3f6a63",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T07:46:01.798188+00:00",
+    "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 6e208619 (Q=0.780), which proved 27 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minimum sizes of r consecutive pieces, and define \\mu_r(a) = limsup_{n\\to\\infty} \\mu^r_n(a). For any fixe",
     "domains": [
@@ -1014,19 +1028,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "5e3f6a63",
-    "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
+    "consumed_by_exp_id": "",
+    "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domains": [
       "Novelty",
-      "Physics"
+      "Geometry"
     ],
-    "id": "fd_0975",
+    "id": "fd_1004",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T01:44:47.790029+00:00",
-    "title": "The Unreasonable Effectiveness of Wrong Theories"
+    "status": "available",
+    "timestamp": "2026-07-11T07:45:39.462265+00:00",
+    "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
     "consumed_by_exp_id": "",
@@ -1042,6 +1056,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T16:36:19.999072+00:00",
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
+    "domains": [
+      "Novelty",
+      "Combinatorics"
+    ],
+    "id": "fd_1003",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T07:45:39.325963+00:00",
+    "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
   {
     "consumed_by_exp_id": "",
@@ -7000,6 +7029,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T07:29:16.204110+00:00",
     "title": "This cycle deepened the cohomological theory of impossible figures in two ways."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Unreasonable Effectiveness of Wrong Theories\n\n`WrongTheories.lean` formalizes theory-space as a real inner-product space `E`\nwith a distinguished `truth`, wrongness `\u2016T \u2212 truth\u2016`, phenomena as measurement\ndirections `u`, and prediction error `predErr truth T u = |\u27eaT \u2212 truth, u\u27eb|`.\nProven results (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`):\n\n- `wrongness_eq_zero_iff`, `theory_exact_iff_all_phenomena` \u2014 a theory is exactly\n  true iff its wrongness vanishes iff it is perfect on every phenomenon.\n- `wrongness_correction_bound` \u2014 wrongness is `1`-Lipschitz in corrections.\n- `perturbation_tendsto_truth` \u2014 corrections summing to the truth-gap drive\n  wrongness to `0`: a convergent series toward truth.\n- `perturbation_tail_bound`, `perturbation_tail_tendsto_zero` \u2014 quantitative\n  (tail) control of that convergence.\n- `perturbation_geometric_rate` \u2014 an **explicit exponential rate**: geometrically\n  decaying corrections `\u2016c\u1d62\u2016 \u2264 M r\u2071` (`0 \u2264 r < 1`) give residual wrongness\n  `\u2264 M r\u207f / (1 \u2212 r)` after `n` terms.\n- `exact_on_orthogonal_phenomena` \u2014 a wrong theory is *exactly* right on the whole\n  hyperplane orthogonal to its error vector.\n- `wrong_theory_beats_rival` \u2014 **the meta-theorem**: if our wrong theory's error\n  is not parallel to a rival's, there is a phenomenon where we are exactly right\n  and the rival is wrong; hence we strictly out-predict it.\n\n## Natural next theorems\n\n> Direction 1 below (rate of convergence) has since been **proved** as\n> `perturbation_geometric_rate`; it is retained here to record the design and to\n> point at its natural sequels (variable-ratio and summable-tail refinements).\n\n1. **Rate of convergence.** For geometric corrections `\u2016c\u1d62\u2016 \u2264 M r\u2071` with `r < 1`,\n   `wrongness (partialTheory \u2026) \u2264 M r\u207f / (1 \u2212 r)`, an explicit exponential\n   rate specializing `perturbation_tail_bound` (**done**:\n   `perturbation_geometric_rate`). Sequel: relax to non-constant ratios\n   `\u2016c\u1d62\u208a\u2081\u2016 \u2264 r\u1d62 \u2016c\u1d62\u2016` and derive a product-form bound.\n\n2. **The \"class of phenomena\" as a hyperplane.** Upgrade\n   `exact_on_orthogonal_phenomena` to identify the exact-prediction set of a\n   theory `T` with the orthogonal complement `(\u211d \u2219 (T \u2212 truth))\u15ee`, a closed\n   hyperplane of codimension `1`; in `dim E \u2265 2` this set is infinite, making the\n   \"class of phenomena\" genuinely large.\n\n3. **Best rival on a phenomenon.** Given a finite family of rival theories, prove\n   there is a phenomenon on which our theory is a strict pointwise minimizer of\n   prediction error (a max\u2013min / separating-hyperplane refinement of\n   `wrong_theory_beats_rival`).\n\n4. **Probabilistic / measure version.** Put a measure `\u03bc` on phenomena and define\n   average error `\u222b |\u27eaT \u2212 truth, u\u27eb|\u00b2 d\u03bc`. Show that even a wrong theory can have\n   smaller weighted error than a rival on measurable phenomenon-classes where the\n   rival's error concentrates \u2014 an `L\u00b2` analogue of the meta-theorem.\n\n5. **Operator / dynamical theory-space.** Replace static points by evolution\n   operators (theories as `E \u2192L[\u211d] E`) and study perturbation series\n   `T = T\u2080 + \u2211 \u03b5\u207f T\u2099` (Rayleigh\u2013Schr\u00f6dinger style), proving convergence of\n   wrongness under a spectral-gap/`\u2016\u00b7\u2016 < 1` hypothesis.\n\n6. **Non-degeneracy without completeness.** `perturbation_tail_bound` currently\n   assumes `[CompleteSpace E]` (to sum the corrections). Explore versions phrased\n   directly via `HasSum` that avoid completeness, or specialize to Hilbert space\n   and connect to orthogonal projections.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1005",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5e3f6a63",
+    "status": "available",
+    "timestamp": "2026-07-11T07:45:54.430414+00:00",
+    "title": "`WrongTheories.lean` formalizes theory-space as a real inner-product space `E`"
   },
   {
     "consumed_by_exp_id": "",
