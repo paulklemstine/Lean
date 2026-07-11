@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "25448d9e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Turing's Flowers: Morphogenesis as Algebraic Geometry\n\nThe file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the\ndegree/Chebyshev correspondence and the boun",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-10T11:50:51",
-      "title": "Close Proofs: Turing's Flowers: Morphogenesis as Algebraic Geometry"
-    },
-    {
       "cycle_id": "df72d5fe",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent homology of the prime\npoint cloud is a genuine persistence module whose entire structure —",
@@ -499,19 +489,19 @@
       "theorem_count": 69,
       "timestamp": "2026-07-11T04:29:37",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "fec9de1f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Information-Theoretic Limits of Mind Uploading\n\nThis cycle established that the description length of a neural connectome is\nquadratic in the neuron count, that no computable code",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 14,
+      "timestamp": "2026-07-11T05:18:16",
+      "title": "Digital Immortality: Can a Mind Be Encoded?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3e52c27d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Manifold-Constrained Dichotomy Counts\n\nThis cycle established that the number of linearly-separable labelings a\nclassifier family can realize on data drawn from a low-dimensional",
-      "quality_score": 0.7916800000000002,
-      "sorry_count": 4,
-      "theorem_count": 23,
-      "timestamp": "2026-07-02T18:55:06",
-      "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
-    },
     {
       "cycle_id": "b714fdc8",
       "domain": "Applications",
@@ -2501,15 +2491,19 @@
       "theorem_count": 69,
       "timestamp": "2026-07-11T04:29:37",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "fec9de1f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Information-Theoretic Limits of Mind Uploading\n\nThis cycle established that the description length of a neural connectome is\nquadratic in the neuron count, that no computable code",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 14,
+      "timestamp": "2026-07-11T05:18:16",
+      "title": "Digital Immortality: Can a Mind Be Encoded?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cf42e929",
-      "domain": "Algebra",
-      "name": "coverable_7_3_1",
-      "quality": 0.79
-    },
     {
       "cycle_id": "cf42e929",
       "domain": "Algebra",
@@ -2803,17 +2797,16 @@
       "domain": "Applications",
       "name": "over",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "fec9de1f",
+      "domain": "Novelty",
+      "name": "specialised",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T04:29:37",
+  "last_updated": "2026-07-11T05:18:16",
   "open_questions": [
-    {
-      "context": "zero in the interval `(1 - C / log q, 1)`).  This is a hypothesis, never `sorry`.; axioms and no `sorry`.  The algorithmic scaffolding (asymptotics, enumeration, and the",
-      "cycle_id": "8202f9a7",
-      "domain": "Novelty",
-      "sorry_count": 2,
-      "timestamp": "2026-07-09T19:55:16"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "c2c03fe8",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 5,
       "timestamp": "2026-07-11T04:29:33"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "fec9de1f",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-11T05:18:16"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "00abb0ac",
-        "quality": 0.74,
-        "theorems": 58,
-        "title": "The Topology of Argumentation: Why Debates Have Holes"
-      },
-      {
         "cycle_id": "90792fe8",
         "quality": 0.83,
         "theorems": 29,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 69,
         "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+      },
+      {
+        "cycle_id": "fec9de1f",
+        "quality": 0.82,
+        "theorems": 14,
+        "title": "Digital Immortality: Can a Mind Be Encoded?"
       }
     ],
     "NumberTheory": [

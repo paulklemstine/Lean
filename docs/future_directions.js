@@ -382,6 +382,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle fec9de1f (Q=0.820), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadrati",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_fec9de1f_82b8c099",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "fec9de1f",
+    "status": "available",
+    "timestamp": "2026-07-11T05:18:16.612897+00:00",
+    "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle a6f348ea (Q=0.800), which proved 20 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algeb",
     "domains": [
       "Physics"
@@ -623,6 +637,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Construct a rigorous model of hypercomputation that can solve the halting problem. Prove that any physical system implementing hypercomputation requires infinite energy density or infinite precision. Formalize the distinction between accidentally computable (physical oracles) and essentially computable (Turing machines).",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0990",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T05:17:42.086276+00:00",
+    "title": "Hypercomputation: Computing the Uncomputable"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -665,21 +694,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T23:08:57.326588+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "consumed_by_exp_id": "fec9de1f",
-    "description": "Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadratic in synapse count.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0959",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:22:54.792080+00:00",
-    "title": "Digital Immortality: Can a Mind Be Encoded?"
   },
   {
     "consumed_by_exp_id": "",
@@ -852,6 +866,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle fec9de1f (Q=0.820) proved 14 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_fec9de1f_11a4f4d3",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "fec9de1f",
+    "status": "available",
+    "timestamp": "2026-07-11T05:18:16.685270+00:00",
+    "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Riemann zeta function zeta(s) has zeros at the non-trivial points s = 1/2 + i*gamma_n where gamma_n are the imaginary parts of the zeros. The Fourier transform of the zero counting function N(t) = #{gamma_n <= t} is related to the distribution of primes by the explicit formula. But what if we take the Fourier transform of zeta itself? Define Z(t) = zeta(1/2 + it) as a function of the real variable t. The Fourier transform Z_hat(w) = integral_{-inf}^{inf} Z(t) * e^{-2*pi*i*w*t} dt. Conjecture: Z_hat(w) has sharp peaks at w = log(p)/2*pi for each prime p. This is because the explicit formula expresses zeta(1/2+it) as a sum over primes: zeta(1/2+it) ~ sum_{p} p^{-1/2-it} = sum_{p} e^{-it*log(p)} / sqrt(p), which is a sum of complex exponentials with frequencies log(p). The Fourier transform of a sum of exponentials is a sum of delta functions at the frequencies log(p)/2*pi. So Z_hat(w) = sum_{p} delta(w - log(p)/2*pi) / sqrt(p) + (error from zeros and smooth terms). The peaks at w = log(p)/2*pi give a 'spectrogram' of the primes. Test: compute Z_hat(w) numerically for the first 10^6 zeros and verify the peaks at log(2)/2*pi, log(3)/2*pi, log(5)/2*pi, etc. Impact: you can HEAR the primes by playing the Fourier transform of the Riemann zeta function \u2014 each prime is a distinct note.",
     "domains": [
       "Novelty",
@@ -953,7 +981,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5e3f6a63",
     "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
     "domains": [
       "Novelty",
@@ -963,7 +991,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T01:44:47.790029+00:00",
     "title": "The Unreasonable Effectiveness of Wrong Theories"
   },
@@ -6848,6 +6876,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T04:29:36.125458+00:00",
     "title": "These conjectures are distilled from the present cycle, in which a four-valued"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Information-Theoretic Limits of Mind Uploading\n\nThis cycle established that the description length of a neural connectome is\nquadratic in the neuron count, that no computable code can beat the raw\nsynapse-slot count in the worst case, and that \u2014 through the Bekenstein bound \u2014\nthis forces the energy\u2013radius product of any storage region to grow at least\nquadratically. The following conjectures extend those findings.\n\n## Conjecture 1 \u2014 Directed, weighted connectomes are cubic, not quadratic\n\nIf synapses carry `b`-bit weights and are directional, the slot count becomes\n`b \u00b7 N (N-1)`, and for weight precision that itself scales with connectivity\n(`b \u224d log N`), the minimum description length grows as `N\u00b2 log N`.\n\n*The key insight is* that biological realism (directionality and graded\nsynaptic efficacy) enters the bound only as a multiplicative factor on the\nalready-dominant pair count, so no modeling refinement can reduce the quadratic\ncore \u2014 it can only raise the exponent.\n\n*Why now?* High-resolution connectomics (full-brain electron-microscopy\nreconstructions) is producing the first datasets where per-synapse weight\nstatistics can be measured, making the `b \u224d log N` scaling empirically testable\nrather than hypothetical.\n\n## Conjecture 2 \u2014 A sharp incompressibility threshold for real connectomes\n\nFor the ensemble of connectomes drawn from a biologically plausible\nsparse-random model with edge density `p`, the typical Kolmogorov complexity\nconcentrates at `H(p) \u00b7 N (N-1) / 2` bits, and the fraction of connectomes\ncompressible below `(H(p) - \u03b5) \u00b7 N (N-1)/2` bits vanishes as `N \u2192 \u221e`.\n\n*The key insight is* that sparsity lowers the constant (via the binary entropy\n`H(p)`) but never changes the quadratic order, so the \"wiring diagram\" \u2014 not the\nneuron list \u2014 is the irreducible carrier of identity.\n\n*Why now?* Measured cortical connection probabilities are small and stable\nacross species, so `H(p)` is an empirically pinned constant, turning an\nasymptotic statement into a concrete bit budget for a given brain.\n\n## Conjecture 3 \u2014 A physical no-cloning-style barrier at fixed energy density\n\nUnder a fixed maximal energy density (bounded by the Schwarzschild limit to\navoid collapse), the Bekenstein-derived energy\u2013radius bound converts into a\nminimal *volume* that scales at least linearly in `N\u00b2`, implying a hard lower\nbound on the physical size of any device that stores an `N`-neuron mind.\n\n*The key insight is* that combining an information lower bound with two physical\nconstraints (Bekenstein above, gravitational collapse below) squeezes the\nstorage medium from both sides, yielding a two-sided law rather than a single\ninequality.\n\n*Why now?* Proposals for molecular- and atomic-scale memories are approaching\nthe regime where the Bekenstein bound is no longer astronomically slack,\nso the barrier becomes engineering-relevant rather than merely conceptual.\n\n## Conjecture 4 \u2014 Lossy uploading has a fidelity\u2013compression frontier\n\nThere exists a monotone trade-off curve `R(D)` (bits per neuron pair versus\nbehavioural distortion `D`) such that any encoding achieving distortion below\n`D` must spend at least `R(D) \u00b7 N (N-1)/2` bits, and `R(D) \u2192 H(p)` as `D \u2192 0`.\n\n*The key insight is* that mind uploading is a rate\u2013distortion problem on graphs,\nso \"good enough\" copies obey the same quadratic scaling as perfect ones, only\nwith a smaller \u2014 but strictly positive \u2014 constant.\n\n*Why now?* Behavioural and connectomic similarity metrics are becoming\nquantitative, giving, for the first time, an operational distortion measure `D`\nagainst which the rate function `R(D)` could be estimated.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0991",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fec9de1f",
+    "status": "available",
+    "timestamp": "2026-07-11T05:18:10.326982+00:00",
+    "title": "That the description length of a neural connectome is"
   },
   {
     "consumed_by_exp_id": "",
