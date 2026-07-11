@@ -41,6 +41,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2c395553 (Q=0.830), which proved 40 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_2c395553_f2f15f5f",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2c395553",
+    "status": "available",
+    "timestamp": "2026-07-11T11:59:19.287459+00:00",
+    "title": "Deepening: Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
     "domain_bridges": [],
     "domains": [
@@ -1019,7 +1038,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6b0dfd4",
     "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
     "domain_bridges": [],
     "domains": [
@@ -1032,7 +1051,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T11:25:55.672367+00:00",
     "title": "Causal Loops in Category Theory: When Composition Loops Back"
   },
@@ -10301,26 +10320,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2c395553",
-    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_1021",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T10:30:56.252014+00:00",
-    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
     "domain_bridges": [],
@@ -12394,6 +12393,26 @@
     "status": "available",
     "timestamp": "2026-07-11T11:59:00.558008+00:00",
     "title": "This project formalises three of the ZFC \"anti-axioms\" from the mission via"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Dreamtime Algebra\n\nThe file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge\nbetween Australian Aboriginal kinship systems and finite group theory: the\nfour-section system is realized as the Klein four-group `ℤ/2 × ℤ/2`, the\neight-subsection system as `(ℤ/2)³`, marriage rules as coset restrictions, and\nthe subsection system as a `ℤ/2`-extension (double cover) of the section system.\nNatural extensions:\n\n## 1. General kinship-group framework\nAbstract the constructions into a `structure KinshipSystem` recording a finite\nabelian group `G`, distinguished \"descent\" and \"marriage\" elements, and the\nconsistency laws (`father = spouse + mother`). Prove a classification: any\nsystem whose transformation group is generated by commuting involutions is an\nelementary abelian 2-group `(ℤ/2)ⁿ`.\n\n## 2. Person-set actions\nModel an explicit finite population as a `G`-set (torsor) and prove that the\nregular action is simply transitive (already available here as\n`section4_simplyTransitive`). Develop \"relationship terms\" as group elements and\nprove closure properties (e.g. the set of realizable relationships is a\nsubgroup).\n\n## 3. Systems beyond `(ℤ/2)ⁿ`\nNot all kinship systems are elementary abelian. The Aranda system and various\nDravidian systems involve `ℤ/4` cycles (matri-/patri-cycles of period 4).\nFormalize these as `ℤ/2 × ℤ/4` or dihedral-type groups and characterize which\nmarriage rules yield consistent (associative, well-defined) descent algebras.\n\n## 4. Cohomological extensions\nFrame the section → subsection refinement as a group extension classified by\n`H²(ℤ/2 × ℤ/2, ℤ/2)`, and enumerate the inequivalent subsection systems as\nextension classes. This connects kinship refinement to group cohomology.\n\n## 5. Representation theory\nBecause the transformation group is abelian, its irreducible representations are\none-dimensional characters. Interpreting the characters (the \"sign patterns\" of\nmoieties) could give a spectral description of the moiety/section partitions.\n\n## 6. Category-theoretic bridge\nPackage kinship systems and structure-preserving maps into a category and show\nthe forgetful functor `Subsection ⤳ Section` is (co)fibered, tying the\nanthropological refinement relation to standard categorical machinery.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1032",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2c395553",
+    "status": "available",
+    "timestamp": "2026-07-11T11:59:08.201333+00:00",
+    "title": "The file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge"
   },
   {
     "ambition_level": "extension",

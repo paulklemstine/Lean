@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3a52b537",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThis project formalizes the constructive core of the probabilistic method around three\nErdős-flavoured results. What is proved and what remains:\n\n## What is proved (0 sorries)\n\n##",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-10T19:32:10",
-      "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
-    },
-    {
       "cycle_id": "f0772bca",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Combinatorics of Register Allocation\n\nThis cycle established that for programs whose variables occupy contiguous live ranges, the\ninterference graph is an interval graph, and",
@@ -499,19 +489,19 @@
       "theorem_count": 45,
       "timestamp": "2026-07-11T11:59:05",
       "title": "Anti-Mathematics: What If All Axioms Were Negated?"
+    },
+    {
+      "cycle_id": "2c395553",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Dreamtime Algebra\n\nThe file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge\nbetween Australian Aboriginal kinship systems and finite group theory: the\nfour-s",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-07-11T11:59:17",
+      "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bb55b186",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Extremal Positive p-Energies of Graphs\n\n## 1. Full path-minimality of positive p-energy via spectral majorization\n\nFor every connected bipartite graph on `n` vertices and every r",
-      "quality_score": 0.6012985714285713,
-      "sorry_count": 3,
-      "theorem_count": 7,
-      "timestamp": "2026-07-03T19:50:52",
-      "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
-    },
     {
       "cycle_id": "5961bdfa",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 45,
       "timestamp": "2026-07-11T11:59:05",
       "title": "Anti-Mathematics: What If All Axioms Were Negated?"
+    },
+    {
+      "cycle_id": "2c395553",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Dreamtime Algebra\n\nThe file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge\nbetween Australian Aboriginal kinship systems and finite group theory: the\nfour-s",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-07-11T11:59:17",
+      "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "08430233",
-      "domain": "Applications",
-      "name": "mem_spread",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "08430233",
-      "domain": "Applications",
-      "name": "spread_iterate",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "01e9ab7a",
-      "domain": "Novelty",
-      "name": "of",
-      "quality": 0.83
-    },
     {
       "cycle_id": "01e9ab7a",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "mem_lt",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "2c395553",
+      "domain": "Novelty",
+      "name": "in",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "2c395553",
+      "domain": "Novelty",
+      "name": "card_section4",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "2c395553",
+      "domain": "Novelty",
+      "name": "card_subsection8",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T11:59:05",
+  "last_updated": "2026-07-11T11:59:17",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "fec9de1f",
-        "quality": 0.82,
-        "theorems": 14,
-        "title": "Digital Immortality: Can a Mind Be Encoded?"
-      },
-      {
         "cycle_id": "f0c42e84",
         "quality": 0.83,
         "theorems": 53,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 44,
         "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+      },
+      {
+        "cycle_id": "2c395553",
+        "quality": 0.83,
+        "theorems": 40,
+        "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
       }
     ],
     "NumberTheory": [
