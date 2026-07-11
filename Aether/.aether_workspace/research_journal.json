@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fbcfb71f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — A Bestiary of Arithmetic Monsters\n\nThese conjectures grew directly out of the casting-out-nines analysis of\ndigit-permutation factorizations and the binary-digit-sum bridge.\n\n##",
-      "quality_score": 0.75424,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-04T08:03:45",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
-    {
       "cycle_id": "865247f5",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nBold, falsifiable conjectures emerging from the study of how the image of a finite set of\nintegers behaves under a monic polynomial map of degree `k`.\n\n## 1. The factor-`k` collap",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-11T19:27:26",
       "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
+    },
+    {
+      "cycle_id": "c695f186",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — TDA of Theorem Networks\n\nThe file `FlagComplex.lean` proves a self-contained chain of results about the flag\n(clique) complex of a theorem-citation network `G` and its `f`-vector",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-11T20:17:49",
+      "title": "Speculative: Topological Data Analysis of Theorem Networks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T19:27:26",
+  "last_updated": "2026-07-11T20:17:49",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f85e4d43",
-        "quality": 0.83,
-        "theorems": 15,
-        "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
-      },
-      {
         "cycle_id": "f9466ee5",
         "quality": 0.82,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 24,
         "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
+      },
+      {
+        "cycle_id": "c695f186",
+        "quality": 0.68,
+        "theorems": 10,
+        "title": "Speculative: Topological Data Analysis of Theorem Networks"
       }
     ],
     "Bridges": [
