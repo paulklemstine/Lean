@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
-    "consumed_by_exp_id": "c3787823",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2c395553 (Q=0.830), which proved 40 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire",
     "domains": [
       "Novelty"
@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "2c395553",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-11T11:59:19.287459+00:00",
     "title": "Deepening: Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
@@ -753,7 +753,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: Open Sets at Infinity"
   },
   {
-    "consumed_by_exp_id": "094010ae",
+    "consumed_by_exp_id": "bd481172",
     "description": "Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exactly the modal mu-calculus.",
     "domains": [
       "Novelty",
@@ -1187,7 +1187,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Mathematics as a Phase Transition"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "139c2d10",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
       "Novelty",
@@ -1197,7 +1197,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T13:54:33.301868+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
