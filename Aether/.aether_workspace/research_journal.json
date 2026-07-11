@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0be793c6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Non-Desarguesian Worlds\n\nThis project formalizes the algebraic engine behind non-Desarguesian planes and\ndelivers a fully verified concrete example. Two self-contained Lean files:",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 42,
-      "timestamp": "2026-07-11T02:51:11",
-      "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-    },
-    {
       "cycle_id": "a547c760",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThis development formalises the *microscopic weighting* of a finite Euclidean\nmetric space — the small-scale (`t → 0`) limit of Leinster's magnitude weighting\n— as a **distance-ma",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-11T20:51:04",
       "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+    },
+    {
+      "cycle_id": "7473e6ed",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself —\n`T ≈ Π (x : T), P x`, equivalently `T ≃ (T → Prop)`",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 14,
+      "timestamp": "2026-07-11T22:13:56",
+      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "22f3c392",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Anti-Fibonacci and Addition-Avoiding Sequences\n\nDerived from this cycle's findings: the \"anti-Fibonacci\" data `1,1,2,4,7,11,16,…` is the\ncentral-polygonal sequence `A(n) = 1 + n(",
-      "quality_score": 0.36398012292358806,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-04T09:16:15",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
     {
       "cycle_id": "e62d479c",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-11T20:51:04",
       "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+    },
+    {
+      "cycle_id": "7473e6ed",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself —\n`T ≈ Π (x : T), P x`, equivalently `T ≃ (T → Prop)`",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 14,
+      "timestamp": "2026-07-11T22:13:56",
+      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2c395553",
-      "domain": "Novelty",
-      "name": "card_section4",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "2c395553",
-      "domain": "Novelty",
-      "name": "card_subsection8",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "c06d8e8c",
-      "domain": "Applications",
-      "name": "package",
-      "quality": 0.82
-    },
     {
       "cycle_id": "c06d8e8c",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "diagonal_not_mem_range",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "7473e6ed",
+      "domain": "Physics",
+      "name": "fib_carmichael_composite",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "7473e6ed",
+      "domain": "Physics",
+      "name": "fib_carmichael_composite",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "7473e6ed",
+      "domain": "Physics",
+      "name": "fib_carmichael_large",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T20:51:04",
+  "last_updated": "2026-07-11T22:13:56",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "a1a5801c",
-      "domain": "Computation",
-      "sorry_count": 3,
-      "timestamp": "2026-07-10T16:36:47"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "5125e235",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-11T20:17:57"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "7473e6ed",
+      "domain": "Physics",
+      "sorry_count": 4,
+      "timestamp": "2026-07-11T22:13:56"
     }
   ],
   "research_threads": {
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "cfcd856c",
-        "quality": 0.66768,
-        "theorems": 15,
-        "title": "Noether's Theorem: Symmetries and Conservation Laws"
-      },
-      {
         "cycle_id": "bdfd9dbb",
         "quality": 0.3683071607142858,
         "theorems": 7,
@@ -3761,6 +3755,12 @@
         "quality": 0.8,
         "theorems": 20,
         "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+      },
+      {
+        "cycle_id": "7473e6ed",
+        "quality": 0.82,
+        "theorems": 14,
+        "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
       }
     ],
     "Probability": [
