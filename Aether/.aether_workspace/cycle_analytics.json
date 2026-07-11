@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-11T18:04:16.828499+00:00",
+  "last_updated": "2026-07-11T18:37:18.568912+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -6430,6 +6430,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-11T18:04:16.797352+00:00",
       "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "MachineLearning",
+      "duration_seconds": 973.4374487400055,
+      "end_time": 1783795022.200432,
+      "files_integrated": 4,
+      "job_id": "dac5bc28",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "sorry_density": 0.15384615384615385,
+      "start_time": 1783794048.7629833,
+      "strategy_count": 0,
+      "theorem_count": 26,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 15,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-11T18:37:18.536791+00:00",
+      "title": "Close Proofs: Reflective Type Theory: Proving Things About Proving Things"
     }
   ]
 }

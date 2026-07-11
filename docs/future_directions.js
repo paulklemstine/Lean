@@ -766,20 +766,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
   {
-    "consumed_by_exp_id": "dac5bc28",
-    "description": "Cycle 094010ae (Q=0.820) proved 21 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that re",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_094010ae_2fd3e031",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "094010ae",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T14:11:15.873547+00:00",
-    "title": "Close Proofs: Reflective Type Theory: Proving Things About Proving Things"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 0981cb8f (Q=0.830) proved 20 theorems in Probability but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian",
     "domains": [
@@ -1199,7 +1185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c695f186",
     "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
     "domains": [
       "Novelty",
@@ -1209,7 +1195,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T18:20:32.320925+00:00",
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
@@ -7620,6 +7606,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T18:04:08.793040+00:00",
     "title": "The mission conjectures a **complexity dichotomy** for the Chromatic Sum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Reflective Type Theory\n\n`ReflectiveTypeTheory.lean` gives a self-contained Kripke semantics for a\nprovability modality `\u25a1` and establishes, among others:\n\n- `godelian_satisfiable_in_K`: `\u25a1A \u2227 \u00ac\u25a1\u25a1A` (\"provable but not provably\n  provable\") is a satisfiable well-typed term in a non-transitive model;\n- `axiom4_of_transitive` / `godelian_unsat_in_transitive`: on transitive\n  frames the same sentence is unsatisfiable (provable \u21d2 provably provable);\n- `loeb_valid`: L\u00f6b's theorem on `GL` (transitive, converse-well-founded)\n  frames;\n- `goedel_second_incompleteness`: `\u25a1(\u00ac\u25a1\u22a5) \u2192 \u25a1\u22a5` as the `A := \u22a5` instance.\n\n## Natural next steps\n\n1. **A Hilbert-style proof system and completeness.** Define derivability\n   `\u22a2` for `K`, `K4`, and `GL` (axioms `K`, `4`, L\u00f6b; rules MP and\n   necessitation) and prove soundness against the semantics here, then\n   Kripke completeness for `GL` w.r.t. finite transitive irreflexive frames.\n   This would upgrade `godelian_unsat_in_transitive` to a *syntactic*\n   underivability result.\n\n2. **Fixed points / arithmetical realization.** Formalize the de Jongh\u2013Sambin\n   fixed-point theorem (unique fixed points of modalized formulas) and connect\n   `\u25a1` to an actual provability predicate `Prov_T` of a theory `T`, turning\n   the semantic G\u00f6del-2 statement into the arithmetical one.\n\n3. **Bimodal and polymodal reflection.** Add a second modality for\n   \"true\" vs \"provable\" (as in Grzegorczyk logic `Grz`, or the\n   provability/truth logic `GLS`) to distinguish \"provable but not provably\n   provable\" from \"true but not provable\".\n\n4. **Quantified / dependent version.** Move from propositional formulas to a\n   dependent type theory whose universes carry a provability operator, making\n   `\u25a1` an operation on types and `godelianReflection` a term-level construct;\n   study normalization and the analogue of axiom `4`.\n\n5. **Effectivity.** Provide a `Decidable` satisfaction check on finite models\n   and a decision procedure for `GL`, enabling `decide`-style verification of\n   further reflective sentences.\n\n\n# Future Directions \u2014 Reflective Type Theory\n\n`ReflectiveTypeTheory.lean` gives a self-contained Kripke semantics for a\nprovability modality `\u25a1` and establishes, among others:\n\n- `godelian_satisfiable_in_K`: `\u25a1A \u2227 \u00ac\u25a1\u25a1A` (\"provable but not provably\n  provable\") is a satisfiable well-typed term in a non-transitive model;\n- `axiom4_of_transitive` / `godelian_unsat_in_transitive`: on transitive\n  frames the same sentence is unsatisfiable (provable \u21d2 provably provable);\n- `loeb_valid`: L\u00f6b's theorem on `GL` (transitive, converse-well-founded)\n  frames;\n- `goedel_second_incompleteness`: `\u25a1(\u00ac\u25a1\u22a5) \u2192 \u25a1\u22a5` as the `A := \u22a5` instance.\n\n## Natural next steps\n\n1. **A Hilbert-style proof system and completeness.** Define derivability\n   `\u22a2` for `K`, `K4`, and `GL` (axioms `K`, `4`, L\u00f6b; rules MP and\n   necessitation) and prove soundness against the semantics here, then\n   Kripke completeness for `GL` w.r.t. finite transitive irreflexive frames.\n   This would upgrade `godelian_unsat_in_transitive` to a *syntactic*\n   underivability result.\n\n2. **Fixed points / arithmetical realization.** Formalize the de Jongh\u2013Sambin\n   fixed-point theorem (unique fixed points of modalized formulas) and connect\n   `\u25a1` to an actual provability predicate `Prov_T` of a theory `T`, turning\n   the semantic G\u00f6del-2 statement into the arithmetical one.\n\n3. **Bimodal and polymodal reflection.** Add a second modality for\n   \"true\" vs \"provable\" (as in Grzegorczyk logic `Grz`, or the\n   provability/truth logic `GLS`) to distinguish \"provable but not provably\n   provable\" from \"true but not provable\".\n\n4. **Quantified / dependent version.** Move from propositional formulas to a\n   dependent type theory whose universes carry a provability operator, making\n   `\u25a1` an operation on types and `godelianReflection` a term-level construct;\n   study normalization and the analogue of axiom `4`.\n\n5. **Effectivity.** Provide a `Decidable` satisfaction check on finite models\n   and a decision procedure for `GL`, enabling `decide`-style verification of\n   further reflective sentences.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_1057",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dac5bc28",
+    "status": "available",
+    "timestamp": "2026-07-11T18:37:10.829819+00:00",
+    "title": "`ReflectiveTypeTheory.lean` gives a self-contained Kripke semantics for a"
   },
   {
     "consumed_by_exp_id": "",
