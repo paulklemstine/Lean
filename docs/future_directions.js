@@ -966,7 +966,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f6d4bbb",
     "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
     "domains": [
       "Novelty",
@@ -976,7 +976,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T06:22:45.281103+00:00",
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
