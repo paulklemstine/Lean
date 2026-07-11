@@ -855,7 +855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Social Credit Scores as Topological Invariants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3399a930",
     "description": "Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensions.",
     "domains": [
       "Novelty",
@@ -865,7 +865,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:55:56.763664+00:00",
     "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
@@ -915,7 +915,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d12c4e3",
     "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
     "domains": [
       "Novelty",
@@ -925,7 +925,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:06:31.497939+00:00",
     "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
