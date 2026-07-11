@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ace29f66",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Dream Logic: Coexisting Contradictions and Non-Closure of Unions\n\nThese conjectures are distilled from the present cycle, in which a four-valued\nparaconsistent algebra of \"imposs",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-07-11T04:29:37",
-      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-    },
-    {
       "cycle_id": "fec9de1f",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Information-Theoretic Limits of Mind Uploading\n\nThis cycle established that the description length of a neural connectome is\nquadratic in the neuron count, that no computable code",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-11T23:05:15",
       "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
+    },
+    {
+      "cycle_id": "7b741692",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a",
+      "quality_score": 0.83,
+      "sorry_count": 3,
+      "theorem_count": 22,
+      "timestamp": "2026-07-11T23:38:59",
+      "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c63aa9e3",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the finding that the single-theater escalation game is the\nsubtraction game `{1,…,m}`, whose misère P-positions form the exact arithmetic\nprogression `r ≡ 1 (mod m+1)",
-      "quality_score": 0.6148,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-04T13:49:12",
-      "title": "Eventual congruence of misère P‑positions in nuclear escalation ladders"
-    },
     {
       "cycle_id": "ee6f49cd",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-11T23:05:15",
       "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
+    },
+    {
+      "cycle_id": "7b741692",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a",
+      "quality_score": 0.83,
+      "sorry_count": 3,
+      "theorem_count": 22,
+      "timestamp": "2026-07-11T23:38:59",
+      "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "dfaaa130",
-      "domain": "Novelty",
-      "name": "bernoulli_recurrence",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "dfaaa130",
-      "domain": "Novelty",
-      "name": "bernoulli_two",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "dfaaa130",
-      "domain": "Novelty",
-      "name": "bernoulli_odd_eq_zero",
-      "quality": 0.8
-    },
     {
       "cycle_id": "c67f6099",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Geometry",
       "name": "WetwareSystem",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "7b741692",
+      "domain": "Cryptography",
+      "name": "value_eq",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "7b741692",
+      "domain": "Cryptography",
+      "name": "valid_iff",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "7b741692",
+      "domain": "Cryptography",
+      "name": "factorial_value_unique_via_mixed",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T23:05:15",
+  "last_updated": "2026-07-11T23:38:59",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "90792fe8",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-10T19:15:53"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "cd868ba0",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 4,
       "timestamp": "2026-07-11T22:30:55"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "7b741692",
+      "domain": "Cryptography",
+      "sorry_count": 3,
+      "timestamp": "2026-07-11T23:38:59"
     }
   ],
   "research_threads": {
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "e94880cd",
-        "quality": 0.65224,
-        "theorems": 8,
-        "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-      },
-      {
         "cycle_id": "b86be6e3",
         "quality": 0.6648000000000001,
         "theorems": 16,
@@ -3389,6 +3383,12 @@
         "quality": 0.79,
         "theorems": 22,
         "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
+      },
+      {
+        "cycle_id": "7b741692",
+        "quality": 0.83,
+        "theorems": 22,
+        "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
       }
     ],
     "Geometry": [

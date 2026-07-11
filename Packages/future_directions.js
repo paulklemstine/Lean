@@ -115,20 +115,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
-    "consumed_by_exp_id": "7b741692",
-    "description": "Building on cycle 8e111703 (Q=0.830), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conje",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_8e111703_64fca037",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "8e111703",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T20:51:04.765267+00:00",
-    "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 90ef345f (Q=0.830), which proved 751 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci seq",
     "domains": [
@@ -798,7 +784,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb7a11a2",
     "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
     "domains": [
       "Novelty",
@@ -808,7 +794,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T19:27:06.982863+00:00",
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
@@ -1116,6 +1102,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T23:04:45.695664+00:00",
     "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts \u2014 enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_1086",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T23:38:26.558598+00:00",
+    "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
   {
     "consumed_by_exp_id": "",
@@ -6554,6 +6555,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T23:05:08.003015+00:00",
     "title": "This file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" \u2014 a device deciding number-theoretic statements \u2014 cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n\n## What is proved\n\n- `not_countable_truth`: the space of ground truths `\u2115 \u2192 Bool` is uncountable.\n- `perfect_unique`: an oracle is perfect for at most one ground truth.\n- `covered_countable`, `missed_uncountable`, `countable_family_incomplete`: any\n  countable (program-enumerable) family of oracles fails to be perfect for\n  uncountably many ground truths.\n- `no_computable_oracle_scheme`, `no_universal_oracle`: the computability corollaries.\n- `countable_computable_oracles`, `exists_truth_no_computable_perfect`: the honest\n  recursion-theoretic form via Mathlib's `Computable` / `Nat.Partrec.Code` \u2014 the type\n  of computable oracles is genuinely countable, and a single ground truth defeats\n  every computable oracle.\n- `family_errs_infinitely_often`: a single ground truth defeats every oracle of a\n  countable family at infinitely many statements (block diagonalization).\n- `exists_truth_zero_hits`, `no_oracle_high_accuracy_all_worlds`: no oracle can\n  guarantee any fixed positive accuracy across all worlds.\n\n## Directions to deepen\n\n1. **Genuine recursion-theoretic computability.** *(Now realized.)* The theorems\n   `countable_computable_oracles` and `exists_truth_no_computable_perfect` replace the\n   abstract \"countable family\" model by Mathlib's `Computable` / `Nat.Partrec.Code`:\n   each computable oracle is computed by a code, distinct oracles need distinct codes,\n   and codes are countable, so the counting argument applies to the honest notion of\n   computability. A remaining refinement is to phrase the same result directly in\n   terms of `ComputablePred` / oracle Turing machines with relativized queries.\n\n2. **Undecidability, not just non-computability.** Connect to the undecidability of\n   arithmetic truth: encode the halting problem into the ground truth and show that\n   even a *many-worlds-free* single true arithmetic is not decidable.\n\n3. **Quantitative accuracy over density.** Strengthen the accuracy result from\n   \"accuracy `0` on the adversarial world\" to a density statement: for any countable\n   family, there is a world on which each oracle has upper density of errors bounded\n   below by a positive constant, using a weighted block construction.\n\n4. **Bounded-length statements.** The original framing restricts to statements of\n   length `\u2264 100`, which is a *finite* set and hence trivially decidable by table\n   lookup. A faithful refinement replaces \"length `\u2264 100`\" by a growing family\n   `S\u2096` of statements of length `\u2264 k` and studies the growth rate at which\n   computable accuracy must degrade.\n\n5. **Probabilistic oracles.** Model an oracle as a distribution over verdicts and ask\n   whether a computable randomized oracle can achieve expected accuracy bounded away\n   from `1/2` uniformly over an adversarially chosen world.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_1087",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7b741692",
+    "status": "available",
+    "timestamp": "2026-07-11T23:38:51.082809+00:00",
+    "title": "This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
   },
   {
     "consumed_by_exp_id": "",
