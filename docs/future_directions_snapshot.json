@@ -668,25 +668,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4eef1c33",
-    "description": "Building on cycle dfaaa130 (Q=0.800), which proved 30 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_dfaaa130_32d1cbf6",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "dfaaa130",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T14:28:08.686661+00:00",
-    "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
     "domain_bridges": [],
@@ -1597,7 +1578,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7473e6ed",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (Gödel-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly ℵ_1^CK (the Church-Kleene ordinal).",
     "domain_bridges": [],
     "domains": [
@@ -1610,7 +1591,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T13:54:33.301868+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
@@ -12747,6 +12728,26 @@
     "status": "available",
     "timestamp": "2026-07-11T16:57:22.332617+00:00",
     "title": "Two self-contained Lean 4 files, built on Mathlib's `Computability.TuringDegree`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# The Mega-Sphere (Deepening) — Results and Future Directions\n\nThis cycle deepens the \"Mega-Sphere: all dimensions at once\" program (prior\ncycle dfaaa130) with three new self-contained Lean files under\n`Catalog/Novelty/`, each compiling with only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`) and no `sorry`.\n\n## What was proved\n\n### `MegaSphereInverseLimitDeepening.lean` (namespace `MegaSphereDeep`)\nRedevelops the by-hand inverse limit of a tower of additive groups and proves:\n- `int_eq_zero_of_forall_pow_dvd` — an integer divisible by every power of a base\n  `d` with `2 ≤ |d|` is zero.\n- `mulTower_invLimit_eq_bot` — **general collapse**: the tower `ℤ ←×d— ⋯`\n  collapses to `{0}` for every `d` with `2 ≤ |d|` (generalizes the doubling\n  collapse `d = 2`).\n- `exists_nontrivial_stages_trivial_invLimit` — **contrarian disproof**: the\n  bold conjecture \"*a tower of nontrivial groups has nontrivial inverse limit*\"\n  is false (all stages `ℤ/2`, all connecting maps zero).\n- `proj_zero_surjective_of_surjective` — **Mittag-Leffler for ℕ-towers**: if all\n  connecting maps are surjective, the projection to the bottom stage is\n  surjective, so surjective towers never collapse.\n\n### `MegaSphereBernoulliDeepening.lean` (namespace `MegaSphereBernoulliDeep`)\n- `mega_generating_function` — the single generating identity\n  `(∑ Bₙ Xⁿ/n!)·(eˣ−1) = X` encoding all Bernoulli numbers at once.\n- `bernoulli_one` (`B₁ = −1/2`) and the **contrarian disproof**\n  `not_all_odd_bernoulli_vanish` (\"all odd Bₙ vanish\" is false at `n = 1`).\n- `bernoulli_four` (`B₄ = −1/30`) and `faulhaber_four`\n  (`∑_{k<n} k⁴ = (n-1)n(2n-1)(3n²-3n-1)/30`).\n- `faulhaber_isPolynomial` — for every exponent `p`, a *single* polynomial in `n`\n  computes `∑_{k<n} kᵖ` at every stage simultaneously.\n\n### `MegaSphereStiefelWhitneyDeepening.lean` (namespace `MegaSphereSWDeep`)\nModelling `H*(ℝP^∞;𝔽₂) ≅ 𝔽₂[w]`:\n- `sw_not_nilpotent` vs `sw_nilpotent_in_truncation` — the sharp finite/infinite\n  dichotomy: `w` is not nilpotent in `ℝP^∞` but is nilpotent in every `ℝP^n`.\n- `sw_poincare` — `dim_{𝔽₂} 𝔽₂[w]_{<n} = n` (one class per degree; Poincaré\n  series `1/(1−t)`).\n- `sw_frobenius_series` — Whitney/Frobenius `(1+w)^{2^k} = 1 + w^{2^k}` in the\n  completed ring `𝔽₂⟦w⟧`.\n- `dual_sw_all_one` — every dual Stiefel–Whitney class equals `1`\n  (`(1+w)⁻¹ = ∑ wᵏ` in `𝔽₂⟦w⟧`).\n\n## What was disproved\n1. \"The inverse limit of a tower of nontrivial groups is nontrivial.\" — FALSE.\n2. \"All odd-indexed Bernoulli numbers vanish.\" — FALSE (`B₁ = −1/2`); true only\n   for odd `n ≥ 3`.\n\n## Future directions\n- **Inverse limits.** Formalize the exactness (Mittag-Leffler `lim¹ = 0`) for\n  towers of surjective maps of abelian groups; identify `lim` of the `p`-adic\n  tower with `ℤ_p` as a topological ring.\n- **Bernoulli / zeta.** Connect `bernoulli` to special values `ζ(2k) =\n  (−1)^{k+1} B_{2k} (2π)^{2k}/(2·(2k)!)` using Mathlib's `hasSum_zeta_nat`, and\n  formalize the von Staudt–Clausen theorem for denominators.\n- **Cohomology.** Upgrade the algebraic model to a genuine graded-ring statement\n  (graded pieces `Hⁿ ≅ 𝔽₂`), and formalize the Wu formula / total\n  Stiefel–Whitney class of `ℝP^n` via `(1+w)^{n+1}` and Lucas' theorem mod 2.\n- **Unification.** State the three pillars as one diagram: the inverse system of\n  truncations `𝔽₂[w]/(w^{n+1})` (finite `ℝP^n` cohomologies) with limit\n  `𝔽₂⟦w⟧`, tying the \"all dimensions at once\" object to the inverse-limit theory.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1053",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4eef1c33",
+    "status": "available",
+    "timestamp": "2026-07-11T17:47:17.211091+00:00",
+    "title": "This cycle deepens the \"Mega-Sphere: all dimensions at once\" program (prior"
   },
   {
     "ambition_level": "extension",

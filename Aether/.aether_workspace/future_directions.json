@@ -30934,7 +30934,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Infinite Games Against Death — Immortality Strategies\n\nThe formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a\ntransfinite survival game between **Mortal** (bounded computation) and\n**Eternity** (transfinite computation): rounds are indexed by ordinals, and each\nsurviving round Mortal must exhibit a strictly later \"moment of being alive\". The\nset of moments Mortal can reach is what its computational power buys, and its\norder type is the **survival value** — the round of guaranteed death.\n\n## What is proved\n\n- **Fundamental theorem** `mortalForces_iff_le`: Mortal can force survival to\n  round `β` iff `β ≤ value`.\n- **`ω` barrier (finite deterministic computation).** Moments indexed by `ℕ`:\n  survival value is exactly `ω`. Mortal survives every finite round\n  (`finite_forces_nat`) and forces `ω` (`mortal_forces_omega`) but dies at `ω`\n  (`omega_is_sharp`). Any Mortal whose moments embed into `ℕ` cannot pass `ω`\n  (`value_le_omega_of_embeds_nat`).\n- **`ω²` barrier (bounded nondeterminism).** Moments indexed by `ℕ ×ₗ ℕ`:\n  survival value is exactly `ω²`. Mortal survives every round `ω · n`\n  (`nondet_forces_omega_mul_nat`) and forces `ω²` (`mortal_forces_omega_sq`) but\n  dies at `ω²` (`omega_sq_is_sharp`).\n- **Refinement mechanism** `nondetExt_value`: refining each moment into an\n  `ω`-block multiplies the survival value by `ω`, explaining the jump `ω ↦ ω²`.\n\n## Connection to Infinite Time Turing Machines\n\nA deterministic ITTM with a finite alphabet that must halt traces reachable clock\nvalues order-isomorphic to `ω` before the first limit intervention (the finite\ngame). A bounded amount of nondeterministic branching lets a counter be reset\nacross limit stages, stacking `ω`-blocks up to `ω²` (the nondeterministic game).\n`ω` and `ω²` are the first two \"clockable\" milestones of this hierarchy.\n\n## Possible extensions\n\n1. **Higher barriers `ωⁿ`, `ω^ω`.** Iterating `nondetExt` should give `ω^(n+1)`;\n   a colimit over finite refinements reaches `ω^ω`.\n2. **Explicit strategy synthesis.** Build concrete CNF-based winning schedules as\n   computable strategies rather than abstract order embeddings.\n3. **Genuine ITTM dynamics.** Replace the abstract `Moment` type by an actual\n   ITTM configuration space with the `liminf` limit rule and prove the reachable\n   clock values realize the same order types.\n4. **Determinacy.** Prove that at each threshold either Mortal has a surviving\n   strategy or Eternity has a killing strategy, with the boundary exactly the\n   survival value.\n5. **Clockable ordinals.** Relate survival values to the clockable ordinals of\n   ITTMs.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Computation"
@@ -31006,24 +31006,24 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7473e6ed",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (Gödel-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly ℵ_1^CK (the Church-Kleene ordinal).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty",
         "Logic"
       ],
       "github_issue": 0,
       "id": "fd_1041",
-      "last_attempt_time": "2026-07-11T16:23:34.852759+00:00",
+      "last_attempt_time": "2026-07-11T17:47:40.074483+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31038,7 +31038,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-11T13:54:33.301868+00:00",
       "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
@@ -31221,7 +31221,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) → (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant α satisfies α = 1/(137.036...) because it's the simplest fixed point.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Novelty",
         "Physics"
@@ -31467,7 +31467,7 @@
       "depth_estimate": 3,
       "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(π) = K(π) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is Θ(2^n).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Computation"
@@ -31629,7 +31629,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty"
       ],
@@ -33749,7 +33749,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle c67f6099 (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a sec",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty"
       ],

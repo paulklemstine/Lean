@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0ba9c9ed",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Infinite-Dimensional Chess\n\nBold, falsifiable conjectures emerging from this cycle's study of chess on the\nboundless board `ℤ × ℤ`.\n\n## 1. The exact material threshold for mating",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-11T00:40:08",
-      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-    },
-    {
       "cycle_id": "fd7d55eb",
       "domain": "Bridges",
       "key_insight": "# Future Directions: Chordal register allocation\n\nThis work deepens the interval-graph analysis of register allocation\n(`RegisterAllocationInterval.lean`) to the full **chordal** (SSA) setting.\n\n## Wh",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-11T16:57:29",
       "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
+    },
+    {
+      "cycle_id": "4eef1c33",
+      "domain": "Novelty",
+      "key_insight": "# The Mega-Sphere (Deepening) — Results and Future Directions\n\nThis cycle deepens the \"Mega-Sphere: all dimensions at once\" program (prior\ncycle dfaaa130) with three new self-contained Lean files unde",
+      "quality_score": 0.83,
+      "sorry_count": 6,
+      "theorem_count": 27,
+      "timestamp": "2026-07-11T17:47:24",
+      "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6f613cb7",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Dark Mathematics\n\nA *dark theorem* asserts that witnesses of some property exist — indeed that many\ndo — while no single witness can ever be named. This cycle isolated the\nstruct",
-      "quality_score": 0.6449999999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-04T05:18:21",
-      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-    },
     {
       "cycle_id": "ca29fc4b",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-11T16:57:29",
       "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
+    },
+    {
+      "cycle_id": "4eef1c33",
+      "domain": "Novelty",
+      "key_insight": "# The Mega-Sphere (Deepening) — Results and Future Directions\n\nThis cycle deepens the \"Mega-Sphere: all dimensions at once\" program (prior\ncycle dfaaa130) with three new self-contained Lean files unde",
+      "quality_score": 0.83,
+      "sorry_count": 6,
+      "theorem_count": 27,
+      "timestamp": "2026-07-11T17:47:24",
+      "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ea473918",
-      "domain": "Novelty",
-      "name": "predErr_le_wrongness",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "8e65b62c",
-      "domain": "Novelty",
-      "name": "imageCard_le_card",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "8e65b62c",
-      "domain": "Novelty",
-      "name": "imageCard_pos",
-      "quality": 0.72
-    },
     {
       "cycle_id": "8e65b62c",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "zero_turingReducible",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "4eef1c33",
+      "domain": "Novelty",
+      "name": "mega_generating_function",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "4eef1c33",
+      "domain": "Novelty",
+      "name": "bernoulli_one",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "4eef1c33",
+      "domain": "Novelty",
+      "name": "not_all_odd_bernoulli_vanish",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T16:57:29",
+  "last_updated": "2026-07-11T17:47:24",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "9b14e09c",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-10T10:45:49"
-    },
     {
       "context": "+`sorry`-free. -/; -    sorry; +    documented future work rather than proved with `sorry`:",
       "cycle_id": "81ffd6ce",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-11T15:33:31"
+    },
+    {
+      "context": "+To keep this file free of `sorry` while remaining faithful, we prove the composite; -    sorry; +as an open conjecture rather than prove it with `sorry`.",
+      "cycle_id": "4eef1c33",
+      "domain": "Novelty",
+      "sorry_count": 6,
+      "timestamp": "2026-07-11T17:47:24"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2c395553",
-        "quality": 0.83,
-        "theorems": 40,
-        "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-      },
-      {
         "cycle_id": "f6b0dfd4",
         "quality": 0.83,
         "theorems": 26,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 22,
         "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+      },
+      {
+        "cycle_id": "4eef1c33",
+        "quality": 0.83,
+        "theorems": 27,
+        "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
       }
     ],
     "NumberTheory": [
