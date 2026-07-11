@@ -593,6 +593,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 75fb79ca (Q=0.780), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_75fb79ca_e9b86f9d",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "75fb79ca",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:45.150096+00:00",
+    "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7a9dcf2f (Q=0.780), which proved 81 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' — beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
     "domain_bridges": [],
     "domains": [
@@ -1150,26 +1169,6 @@
     "status": "failed",
     "timestamp": "2026-07-10T12:06:38.636322+00:00",
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "3399a930",
-    "description": "Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensions.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0965",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:55:56.763664+00:00",
-    "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
     "ambition_level": "extension",
@@ -11610,6 +11609,26 @@
     "status": "available",
     "timestamp": "2026-07-11T02:34:35.200917+00:00",
     "title": "This project (`Catalog/Computation/SelfModifyingHaltChain.lean`) develops a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Negative-Dimensional Topology\n\nThis project builds a self-contained, machine-checked theory of negative-dimensional\nspaces in `Core.lean`.  We model virtual graded spaces as the Laurent-polynomial ring\n`ℤ[t, t⁻¹] = AddMonoidAlgebra ℤ ℤ` (a concrete Spanier–Whitehead / pro-spectrum\npicture: `t⁻¹` is desuspension, producing negative dimensions) and define the Euler\ncharacteristic as the ring homomorphism `χ : t ↦ -1`.\n\n## What was proved\n\n* **Euler characteristic extends to negative dimensions** and satisfies the requested\n  formula `χ(X) = (-1)ⁿ · |π₀(X)|` for `dim X = -n` (`chi_pure_neg`, `chi_neg_dim`).\n* **Dimension `-1`** (the title question): a `k`-component `(-1)`-space has `χ = -k`\n  (`chi_dim_neg_one`).\n* `χ` is a **ring homomorphism**: additive under disjoint union (`chi_add`) and\n  multiplicative under product — a Künneth formula (`chi_mul`), with `χ(point) = 1`.\n* **Suspension/desuspension** flip the sign of `χ` (`chi_susp`, `chi_desusp`,\n  `chi_suspIter`), and are mutually inverse (`susp_desusp`, `desusp_susp`).\n* The **stabilization map** carries a `(-n)`-space to an honest `0`-dimensional space\n  (`stabilize_neg`, `stabilize_chi`).\n\n## What was disproved (contrarian results)\n\n* Not every negative-dimensional space has negative `χ` (`disproof_all_neg_chi`):\n  even codimensions give `χ > 0`.\n* `χ` is **not injective** (`disproof_chi_not_injective`): it only sees the parity of\n  the dimension, so it cannot recover the dimension.\n\n## Directions to extend\n\n1. **Betti numbers with genuine coefficients.**  Replace `ℤ` coefficients by graded\n   `ℤ`-modules / chain complexes and recover `χ` as the alternating sum of ranks,\n   proving the present `χ` agrees with the homological one for bounded complexes.\n2. **True `π₀` from a topological model.**  Here `|π₀|` is the rank in the defining\n   degree.  A next step is to attach an actual (pro-)space or spectrum and prove\n   `π₀` of that object matches this count, tightening the interpretation of the main\n   theorem.\n3. **Poincaré duality in negative degrees.**  With `χ(DX) = χ(X)` for Spanier–\n   Whitehead duals, formalize duality `t^d ↦ t^{-d}` and its interaction with `χ`.\n4. **Multiplicative structure / Grothendieck ring.**  Study the image of `χ` and the\n   ideal structure; characterize which integers arise as `χ` of a nonnegative-cell\n   (genuine) space versus a virtual one.\n5. **Higher invariants beyond `χ`.**  The disproof of injectivity shows `χ` forgets\n   dimension; introduce a refined invariant (e.g. the full Poincaré series, or a\n   `t`-graded Euler characteristic valued in `ℤ[t,t⁻¹]`) that is injective.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0980",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3399a930",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:48.069025+00:00",
+    "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
   },
   {
     "ambition_level": "extension",

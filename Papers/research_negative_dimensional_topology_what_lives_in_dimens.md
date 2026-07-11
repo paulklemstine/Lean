@@ -1,190 +1,332 @@
-# Negative-Dimensional Topology: Formal Dimension Objects, Suspension Algebra, and Poincaré Duality Below Zero
+# Negative-Dimensional Topology: An Algebraic Model and the Extension of the Euler Characteristic Below Zero
 
 ## Abstract
 
-We develop a rigorous algebraic theory of negative-dimensional spaces using formal dimension objects (FormalDimObj) equipped with integer dimension and Euler characteristic. The suspension functor χ(ΣX) = 2 - χ(X) extends canonically to negative dimensions, generating a pro-spectrum whose Euler characteristics exhibit universal oscillatory behavior. We prove: (1) the **spectrum gap theorem** — consecutive suspension levels have Euler characteristics summing to 2; (2) **Cesàro convergence** — the average Euler characteristic over 2(k+1) consecutive levels is exactly 1; (3) **suspension-product non-commutativity** — Σ(X × Y) ≠ (ΣX) × Y whenever χ(Y) ≠ 1; (4) a **negative-dimensional Poincaré duality** theorem — palindromic Betti sequences satisfy χ ≡ β_k (mod 2); and (5) the **uniform cell theorem** — spaces with all Betti numbers equal to 1 and even codimension have χ = 1. All results are formalized and machine-verified.
+We develop a rigorous, self-contained algebraic model of
+*negative-dimensional spaces* and prove that the Euler characteristic
+extends canonically to negative dimensions. A virtual graded space is
+represented by its cellular Poincaré datum: a finitely supported function
+$\mathbb{Z} \to \mathbb{Z}$ recording, for each integer dimension $d$
+(possibly negative), the virtual number of $d$-dimensional cells. This is
+precisely the ring of Laurent polynomials $\mathbb{Z}[t, t^{-1}]$, a
+concrete model of the Spanier–Whitehead / pro-spectrum picture in which
+desuspension — multiplication by $t^{-1}$ — produces negative dimensions.
+The Euler characteristic is the ring homomorphism
+$\chi : \mathbb{Z}[t,t^{-1}] \to \mathbb{Z}$ sending $t \mapsto -1$; being
+a ring homomorphism, it is simultaneously additive under disjoint union
+and multiplicative under product (a Künneth formula). Our main theorem
+states that a space of dimension $-n$ with $k = |\pi_0|$ connected
+components satisfies $\chi(X) = (-1)^n \cdot |\pi_0(X)|$. We show
+suspension and desuspension flip the sign of $\chi$ and are mutually
+inverse, providing an explicit stabilization map identifying negative and
+positive dimensions, and that suspending a $(-n)$-space $n$ times returns
+it to dimension $0$. We conclude with two contrarian results: not every
+negative-dimensional space has negative Euler characteristic, and $\chi$
+is not injective because it detects only the parity of the dimension.
+
+**Keywords:** negative dimension, Euler characteristic, Laurent
+polynomials, Spanier–Whitehead duality, suspension, desuspension,
+stabilization, pro-spectra.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The dimension of a space is usually a nonnegative integer: it counts
+independent directions, or the number of coordinates needed to specify a
+point. The ladder of shapes — point, segment, disk, ball — climbs upward
+from dimension $0$, and naïvely there is nothing below. Yet in stable
+homotopy theory one routinely *desuspends*, formally lowering dimension,
+and the resulting objects live naturally in the world of spectra where
+negative dimensions are unavoidable and productive.
+
+This paper isolates the arithmetic backbone of that phenomenon in a form
+that is elementary, complete, and self-contained. We forget geometry and
+retain only the bookkeeping of cells across all integer dimensions,
+encoded as a Laurent polynomial. Within this model we prove that the
+Euler characteristic — the most robust numerical invariant of a shape —
+extends to negative dimensions and obeys a clean closed formula there. We
+make the stabilization map explicit and prove it is invertible, tying
+negative dimensions rigidly to the ordinary ones. Finally, we record two
+natural conjectures that are false, clarifying the exact expressive power
+of the extended invariant.
+
+## 2. The model of virtual graded spaces
+
+### 2.1 Definition (virtual graded space)
+
+A **virtual graded space** is an element of the group ring
+$$\mathbb{Z}[t, t^{-1}] \;\cong\; \mathbb{Z}[\mathbb{Z}],$$
+the ring of Laurent polynomials with integer coefficients. Concretely it
+is a finitely supported function $b : \mathbb{Z} \to \mathbb{Z}$,
+$d \mapsto b_d$, written
+$$\sum_{d \in \mathbb{Z}} b_d\, t^d,$$
+where $b_d$ is the virtual number of $d$-dimensional cells and only
+finitely many $b_d$ are nonzero. The dimension index $d$ ranges over all
+integers, positive and negative.
+
+### 2.2 Definition (cell)
+
+For $d, c \in \mathbb{Z}$, the monomial
+$$\mathrm{cell}(d, c) := c\, t^d$$
+denotes $c$ cells placed in dimension $d$. In particular
+$\mathrm{cell}(0,1) = t^0 = 1$ is the one-point space and is the
+multiplicative identity of the ring.
 
-The idea that topological spaces might have meaning below dimension zero has roots in stable homotopy theory, where the sphere spectrum S⁰ can be formally desuspended to yield objects Σ⁻ⁿS⁰ with "dimension" -n. More concretely, the empty set ∅ is naturally assigned dimension -1 in several contexts: the Krull dimension of the zero ring is -∞ (or -1 by convention), and in the theory of simplicial complexes, the empty simplex has dimension -1.
+### 2.3 Ring operations as topological operations
+
+- **Addition** $\;\sum b_d t^d + \sum b'_d t^d = \sum (b_d + b'_d) t^d\;$
+  models disjoint union / wedge: cells in each dimension accumulate.
+- **Multiplication**, governed by $t^a \cdot t^b = t^{a+b}$, models the
+  product of spaces: dimensions add, and coefficients convolve exactly as
+  in a cellular Künneth formula.
+
+The key conceptual point is that nothing in these definitions privileges
+nonnegative $d$. Negative powers $t^{-1}, t^{-2}, \dots$ are legitimate
+elements and represent negative-dimensional cells. This is the concrete
+Spanier–Whitehead / pro-spectrum picture: the desuspension operator is
+multiplication by $t^{-1}$, and iterating it descends arbitrarily far
+below zero.
+
+## 3. The Euler characteristic as a ring homomorphism
+
+### 3.1 Definition (Euler characteristic)
+
+The **Euler characteristic** is the ring homomorphism
+$$\chi : \mathbb{Z}[t, t^{-1}] \longrightarrow \mathbb{Z}, \qquad t \longmapsto -1,$$
+so that
+$$\chi\!\left(\sum_{d} b_d\, t^d\right) = \sum_{d} (-1)^d\, b_d.$$
+The sign $(-1)^d$ is well defined for every integer $d$ because $(-1)$ is
+a unit in $\mathbb{Z}$ with $(-1)^{-1} = -1$; equivalently $(-1)^{-n} =
+(-1)^n$. The construction is the standard extension of a monoid
+homomorphism $\mathbb{Z} \to \mathbb{Z}^\times$, $d \mapsto (-1)^d$, to
+the group ring, which yields a ring homomorphism automatically.
+
+### 3.2 Proposition (structural laws)
 
-The Euler characteristic provides the bridge. The classical formula χ(ΣX) = 2 - χ(X) for the suspension uniquely determines the Euler characteristic at all integer dimensions once a base value is specified. Starting from χ(∅) = 0 and dim(∅) = -1, iterated suspension recovers all classical sphere Euler characteristics.
+For all virtual graded spaces $X, Y$:
+$$\chi(X + Y) = \chi(X) + \chi(Y), \qquad \chi(X \cdot Y) = \chi(X)\cdot\chi(Y), \qquad \chi(1) = 1.$$
 
-### 1.2 Main Contributions
+*Proof sketch.* These are the defining properties of a ring homomorphism.
+Additivity is $\chi$ preserving addition; multiplicativity — a Künneth
+formula — is $\chi$ preserving multiplication; and $\chi(1) = 1$ is
+preservation of the unit. That $\chi$ is a genuine ring homomorphism
+follows from extending the multiplicative sign map $d \mapsto (-1)^d$
+(a monoid homomorphism from the additive group $\mathbb{Z}$ to the units
+of $\mathbb{Z}$) linearly across the group ring. $\qquad\blacksquare$
 
-1. **Formal Dimension Objects**: We define a category of formal dimension objects (FormalDimObj) with integer-valued dimension and Euler characteristic, together with suspension, desuspension, and product operations.
+### 3.3 Lemma (Euler characteristic of a single stratum)
 
-2. **Suspension Algebra**: We establish the complete algebraic structure of iterated suspension, including the splitting theorem (Σⁿ⁺ᵐ = Σⁿ ∘ Σᵐ), parity formulas, and the spectrum gap.
+For all $d, c \in \mathbb{Z}$,
+$$\chi(\mathrm{cell}(d, c)) = (-1)^d\, c.$$
 
-3. **Cesàro Summation**: We prove exact formulas for partial sums of Euler characteristics in pro-spectra, establishing that the Cesàro average converges to 1.
+*Proof sketch.* By definition $\mathrm{cell}(d,c) = c\, t^d$ and $\chi$
+sends the monomial $t^d$ to $(-1)^d$; linearity extracts the coefficient
+$c$. $\qquad\blacksquare$
 
-4. **Dimension Pairing**: We introduce a bilinear form on FormalDimObj that detects complementarity and characterize its kernel completely.
+## 4. Suspension, desuspension, and stabilization
 
-5. **Formal Betti Sequences**: We define Betti sequences for negative-dimensional spaces and prove a Poincaré duality theorem relating palindromic symmetry to the parity of the Euler characteristic.
+### 4.1 Definition
 
-## 2. Definitions
+- **Suspension** $\Sigma X := t \cdot X$ raises every dimension by one.
+- **Desuspension** $\Sigma^{-1} X := t^{-1} \cdot X$ lowers every
+  dimension by one. This is the operation that *creates* negative
+  dimensions.
 
-### 2.1 Formal Dimension Objects
+On monomials, $\Sigma(\mathrm{cell}(d,c)) = \mathrm{cell}(d+1, c)$ and
+$\Sigma^{-1}(\mathrm{cell}(d,c)) = \mathrm{cell}(d-1, c)$.
 
-**Definition 2.1** (FormalDimObj). A *formal dimension object* is a pair (d, χ) ∈ ℤ × ℤ, where d is the formal dimension and χ is the Euler characteristic.
+### 4.2 Theorem (stabilization is invertible)
 
-**Definition 2.2** (Suspension). The suspension functor Σ: FormalDimObj → FormalDimObj is defined by Σ(d, χ) = (d+1, 2-χ).
+Suspension and desuspension are mutually inverse:
+$$\Sigma\,\Sigma^{-1} = \mathrm{id}, \qquad \Sigma^{-1}\,\Sigma = \mathrm{id}.$$
 
-**Definition 2.3** (Product). The product X × Y of formal dimension objects is defined by (d₁, χ₁) × (d₂, χ₂) = (d₁+d₂, χ₁·χ₂), implementing the Künneth formula.
+*Proof sketch.* Both compositions multiply by $t \cdot t^{-1} = t^0 = 1$,
+which is the identity of the ring. $\qquad\blacksquare$
 
-**Definition 2.4** (Iterated Suspension). Σⁿ is defined recursively: Σ⁰X = X, Σⁿ⁺¹X = Σ(ΣⁿX).
+This mutual invertibility is the **stabilization map**: positive and
+negative dimensions form a single bi-infinite ladder with no boundary at
+$0$, and the two halves are identified by iterated (de)suspension.
 
-### 2.2 Distinguished Objects
+### 4.3 Theorem (Euler characteristic under (de)suspension)
 
-- **Point**: pt = (0, 2) — the zero-dimensional space with two components.
-- **Empty Space**: ∅ = (-1, 0) — the empty set.
-- **Formal Sphere**: S^d = (d, 1 + (-1)^d) — extending the classical sphere Euler characteristic.
+For every virtual graded space $X$,
+$$\chi(\Sigma X) = -\chi(X), \qquad \chi(\Sigma^{-1} X) = -\chi(X).$$
+More generally, writing $\Sigma^n$ for the $n$-fold suspension,
+$$\chi(\Sigma^n X) = (-1)^n\, \chi(X).$$
 
-### 2.3 Formal Betti Sequences
+*Proof sketch.* By multiplicativity, $\chi(\Sigma X) = \chi(t)\cdot\chi(X)
+= (-1)\chi(X)$, and likewise $\chi(t^{-1}) = -1$. The iterated statement
+follows by induction on $n$, each step contributing a factor $-1$.
+$\qquad\blacksquare$
 
-**Definition 2.5** (FormalBettiSeq). A *formal Betti sequence* of codimension n consists of:
-- A natural number n (the codimension)
-- A sequence β: Fin(n+1) → ℕ of Betti numbers
-- A positivity condition: β₀ > 0
+### 4.4 Lemma (iterated suspension of a stratum)
 
-The Euler characteristic is χ(B) = Σᵢ (-1)ⁱ βᵢ.
+For $n \in \mathbb{N}$ and $d, c \in \mathbb{Z}$,
+$$\Sigma^n(\mathrm{cell}(d, c)) = \mathrm{cell}(d + n, c).$$
 
-### 2.4 Dimension Pairing
+*Proof sketch.* Induction on $n$: the base case is trivial, and each
+suspension increments the dimension index by one. $\qquad\blacksquare$
 
-**Definition 2.6** (dimPairing). For formal dimension objects X, Y and target dimension t ∈ ℤ:
-⟨X, Y⟩_t = (dim(X) + dim(Y) - t) · χ(X) · χ(Y)
+## 5. Main results: the Euler characteristic in negative dimensions
 
-## 3. Main Results
+### 5.1 Definition (pure space)
 
-### 3.1 Suspension Algebra
+A **pure space** $P$ is specified by a dimension $\dim P \in \mathbb{Z}$
+and a component count $\mathrm{components}(P) \in \mathbb{N}$. Its
+realization is
+$$P \longmapsto \mathrm{cell}(\dim P,\ \mathrm{components}(P)),$$
+and its set of connected components has cardinality
+$|\pi_0(P)| = \mathrm{components}(P)$: the points are isolated and
+concentrated in a single dimension.
 
-**Theorem 3.1** (Suspension Splitting). For all X ∈ FormalDimObj and m, n ∈ ℕ:
-Σᵐ⁺ⁿX = Σⁿ(ΣᵐX)
+### 5.2 Theorem (Euler characteristic in negative dimensions — main result)
 
-*Proof sketch.* By induction on n. The base case is immediate. For the inductive step, Σᵐ⁺⁽ⁿ⁺¹⁾X = Σ(Σᵐ⁺ⁿX) = Σ(Σⁿ(ΣᵐX)) = Σⁿ⁺¹(ΣᵐX). □
+Let $X$ be a pure space of dimension $-n$, $n \in \mathbb{N}$, with
+$k = |\pi_0(X)|$ connected components. Then
+$$\boxed{\;\chi(X) = (-1)^n \cdot |\pi_0(X)|.\;}$$
 
-**Theorem 3.2** (Parity Formulas).
-- (Σ²ᵏX).euler = X.euler
-- (Σ²ᵏ⁺¹X).euler = 2 - X.euler
+*Proof sketch.* By §5.1 and Lemma 3.3, $\chi(X) = (-1)^{-n} k$. Since
+$(-1)$ is its own inverse, $(-1)^{-n} = (-1)^n$, giving
+$\chi(X) = (-1)^n k$. $\qquad\blacksquare$
 
-*Proof sketch.* For the even case, induction on k using the splitting theorem and double suspension involution. The odd case follows from the even case and the definition of single suspension. □
+Equivalently, in unbundled form: for every $n \in \mathbb{N}$ and
+$k \in \mathbb{Z}$,
+$$\chi(\mathrm{cell}(-n, k)) = (-1)^n\, k.$$
 
-### 3.2 Spectrum Gap
+### 5.3 Corollary (what lives in dimension −1)
 
-**Theorem 3.3** (Spectrum Gap). For all X ∈ FormalDimObj and n ∈ ℕ:
-χ(ΣⁿX) + χ(Σⁿ⁺¹X) = 2
+A $k$-component $(-1)$-dimensional space has Euler characteristic
+$$\chi = -k.$$
+In particular, the "$(-1)$-sphere" — a single point in dimension $-1$,
+obtained by desuspending a point once — has $\chi = -1$.
 
-This is the fundamental periodicity relation: consecutive Euler characteristics in any pro-spectrum always sum to 2.
+*Proof sketch.* Apply Theorem 5.2 with $n = 1$. $\qquad\blacksquare$
 
-**Theorem 3.4** (Determinism). If X.euler = Y.euler, then (ΣⁿX).euler = (ΣⁿY).euler for all n.
+### 5.4 Theorem (stabilization to an honest space)
 
-*Proof sketch.* Induction on n; the suspension formula depends only on the Euler characteristic. □
+Let $X = \mathrm{cell}(-n, k)$ be a pure $(-n)$-dimensional space.
+Suspending it $n$ times returns a genuine $0$-dimensional space with the
+same components:
+$$\Sigma^n(\mathrm{cell}(-n, k)) = \mathrm{cell}(0, k).$$
 
-### 3.3 Cesàro Summation
+*Proof sketch.* By Lemma 4.4, $\Sigma^n(\mathrm{cell}(-n,k)) =
+\mathrm{cell}(-n + n, k) = \mathrm{cell}(0, k)$. $\qquad\blacksquare$
 
-**Theorem 3.5** (Even Count Sum). For any X and k ∈ ℕ:
-Σᵢ₌₀²⁽ᵏ⁺¹⁾⁻¹ χ(ΣⁱX) = 2(k+1)
+### 5.5 Consistency of stabilization
 
-The sum over an even number of suspension levels equals that number — each consecutive pair contributes exactly 2.
+Combining §4.3 and §5.4 confirms internal coherence: the
+$0$-dimensional space $\mathrm{cell}(0,k)$ has $\chi = k$, while
+$$\chi(\Sigma^n X) = (-1)^n\chi(X) = (-1)^n\cdot(-1)^n k = k.$$
+Both routes agree. Thus every negative-dimensional pure space is the exact
+desuspension of an ordinary discrete space, and the Euler characteristic
+tracks the descent by the predictable sign law.
 
-**Theorem 3.6** (Odd Count Sum). For any X and k ∈ ℕ:
-Σᵢ₌₀²ᵏ χ(ΣⁱX) = 2k + χ(X)
+## 6. Contrarian results: the limits of the invariant
 
-When summing an odd number of terms, the unpaired base term χ(X) remains, shifted by 2k from the k complete pairs.
+### 6.1 Proposition (not every negative-dimensional space has negative χ)
 
-**Corollary 3.7** (Cesàro Convergence). The Cesàro mean (1/(N+1))Σᵢ₌₀ᴺ χ(ΣⁱX) converges to 1 as N → ∞, with the mean equaling exactly 1 when N+1 is even.
-
-### 3.4 Dimension Pairing
-
-**Theorem 3.8** (Complementarity). ⟨X, Y⟩_t = 0 if and only if dim(X) + dim(Y) = t, or χ(X) = 0, or χ(Y) = 0.
-
-*Proof sketch.* The pairing is a product of two integer factors. It vanishes iff one factor is zero. The first factor vanishes iff dim(X) + dim(Y) = t; the second iff χ(X) = 0 or χ(Y) = 0. □
-
-### 3.5 Betti-Euler Inequality
-
-**Theorem 3.9** (Triangle Inequality). |χ(B)| ≤ totalBetti(B) for any Betti sequence B.
-
-*Proof sketch.* Triangle inequality for sums: |Σ (-1)ⁱβᵢ| ≤ Σ|(-1)ⁱβᵢ| = Σβᵢ. □
-
-### 3.6 Uniform Cell Theorem
-
-**Theorem 3.10** (Uniform Betti). For a Betti sequence with codim = 2k and all βᵢ = 1:
-χ = 1
-
-*Proof sketch.* The Euler characteristic is 1 - 1 + 1 - 1 + ... + 1 with 2k+1 terms. By induction, this alternating sum of an odd number of 1's equals 1. □
-
-### 3.7 Suspension-Product Non-Commutativity
-
-**Theorem 3.11** (Non-Commutativity). If χ(Y) ≠ 1, then:
-χ(Σ(X × Y)) ≠ χ((ΣX) × Y)
-
-*Proof sketch.* χ(Σ(X × Y)) = 2 - χ(X)χ(Y), while χ((ΣX) × Y) = (2-χ(X))χ(Y). The difference is 2(1-χ(Y)) ≠ 0 when χ(Y) ≠ 1. □
-
-### 3.8 Negative-Dimensional Poincaré Duality
-
-**Theorem 3.12** (Poincaré Duality). Let B be a Betti sequence with codim = 2k and palindromic Betti numbers (βᵢ = β₂ₖ₋ᵢ). Then:
-χ(B) ≡ βₖ (mod 2)
-
-*Proof sketch.* First, (-1)ⁱ ≡ 1 (mod 2) for all i, so (-1)ⁱβᵢ ≡ βᵢ (mod 2). The sum Σβᵢ mod 2 can be split: pair βᵢ with β₂ₖ₋ᵢ = βᵢ for i ≠ k. Each pair contributes 2βᵢ ≡ 0 (mod 2). The unpaired middle term βₖ determines the parity. □
-
-## 4. Applications
-
-### 4.1 Empty Space as Generator
-
-The empty space ∅ = (-1, 0) generates the fundamental oscillation 0, 2, 0, 2, ... under iterated suspension. This sequence generates all sphere Euler characteristics by the formula χ(Sⁿ) = Σⁿ⁺¹∅.
-
-### 4.2 Point Duality
-
-The point pt = (0, 2) generates the dual oscillation 2, 0, 2, 0, .... Together, ∅ and pt are complementary: dim(∅) + dim(pt) = -1 + 0 = -1, and their pairing with target -1 vanishes.
-
-### 4.3 Stabilization
-
-Every formal dimension object can be suspended into positive dimension (the stabilization theorem). The number of suspensions needed is (-dim(X)).toNat + 1, which is bounded and constructive.
-
-## 5. Algorithms
-
-### 5.1 Euler Characteristic Computation
-
-Given a formal dimension object or Betti sequence, the Euler characteristic can be computed in O(n) time where n is the codimension.
-
-### 5.2 Dimension Pairing Evaluation
-
-The dimension pairing ⟨X, Y⟩_t can be evaluated in O(1) time from the stored dimension and Euler characteristic data.
-
-### 5.3 Pro-Spectrum Generation
-
-A pro-spectrum from a base object X can be lazily generated as a stream: X, Σ(X), Σ²(X), ..., computing each level in O(1) time using the suspension formula.
-
-## 6. Discussion
-
-### 6.1 Relation to Stable Homotopy Theory
-
-Our formal dimension objects are the "shadow" (numerical invariant) of objects in the stable homotopy category. A pro-spectrum in our sense corresponds to the sequence of spaces in a genuine spectrum, with the compatibility condition matching the structure maps.
-
-### 6.2 The Spectrum Gap as a Conservation Law
-
-The relation χ(ΣⁿX) + χ(Σⁿ⁺¹X) = 2 can be viewed as a conservation law: the "total Euler characteristic" across any two consecutive dimensions is conserved at 2. This is analogous to charge conservation in physics.
-
-### 6.3 Non-Commutativity and Categorification
-
-The failure of suspension to distribute over products (Theorem 3.11) suggests that the correct framework for products in the stable category requires a more sophisticated monoidal structure than the naive one. This connects to the theory of E_∞ ring spectra.
-
-### 6.4 Poincaré Duality and Atiyah Duality
-
-Theorem 3.12 extends Poincaré duality to negative dimensions. In classical topology, Poincaré duality for a closed n-manifold gives βᵢ = βₙ₋ᵢ, which implies χ ≡ βₙ/₂ (mod 2) when n is even. Our theorem shows this pattern persists formally in negative codimension.
-
-## 7. Future Work
-
-1. **Chromatic filtration**: Extend the formal theory to include chromatic levels, connecting to chromatic homotopy theory.
-2. **Motivic extension**: Develop negative-dimensional motivic spaces with motivic Euler characteristics valued in the Grothendieck-Witt ring.
-3. **Computational complexity**: Study the complexity of computing invariants of negative-dimensional CW complexes with unbounded cell counts.
-
-## References
-
-1. Adams, J.F. *Stable Homotopy and Generalised Homology*. University of Chicago Press, 1974.
-2. Baez, J.C. "Euler Characteristic versus Homotopy Cardinality." Lecture notes, 2002.
-3. Leinster, T. "The Euler characteristic of a category." *Documenta Mathematica* 13 (2008): 21-49.
-4. Schanuel, S. "Negative sets have Euler characteristic and dimension." *Category Theory* (1991): 379-385.
-5. Propp, J. "Euler measure as generalization of cardinality." arXiv:math/0203289, 2002.
+There exist negative-dimensional spaces with strictly positive Euler
+characteristic. For instance a single point in dimension $-2$ has
+$$\chi(\mathrm{cell}(-2, 1)) = (-1)^2 \cdot 1 = +1 > 0.$$
+
+*Proof sketch.* The sign in Theorem 5.2 is $(-1)^n$, governed by the
+parity of $n$, not by the sign of the dimension. Even codimension yields
+$\chi > 0$. $\qquad\blacksquare$
+
+This refutes the tempting conjecture that "below zero" should mean
+"negative characteristic": the correct statement is that odd negative
+dimensions carry a minus sign and even ones do not.
+
+### 6.2 Proposition (χ is not injective)
+
+The Euler characteristic $\chi$ is not injective as a map
+$\mathbb{Z}[t,t^{-1}] \to \mathbb{Z}$; it cannot recover the dimension of
+a space. For example $\mathrm{cell}(0,1)$ and $\mathrm{cell}(2,1)$ are
+distinct virtual spaces with
+$$\chi(\mathrm{cell}(0,1)) = \chi(\mathrm{cell}(2,1)) = 1.$$
+
+*Proof sketch.* $\chi$ depends on $d$ only through the parity $(-1)^d$;
+any two strata of the same parity and coefficient collapse to the same
+value. $\qquad\blacksquare$
+
+The invariant is therefore a faithful record of a space's *parity class*
+and total signed count, but deliberately forgets its precise position on
+the dimensional ladder — the information that suspension freely shifts.
+
+## 7. Algorithms
+
+Two elementary computations underlie the theory and are made explicit in
+the accompanying software.
+
+- **Euler characteristic evaluation.** Given a finite cell record
+  $\{(d_i, b_i)\}$, compute $\chi = \sum_i (-1)^{d_i} b_i$ in linear time.
+- **Stabilization.** Given a pure $(-n)$-space, shift its dimension index
+  by $+n$ to land at dimension $0$, verifying $\chi$ transforms by
+  $(-1)^n$.
+
+Both are $O(m)$ in the number $m$ of nonzero strata, using only integer
+arithmetic and the parity of dimension indices.
+
+## 8. Applications and interpretation
+
+The model gives a disciplined language for objects that arise whenever
+one desuspends. Because $\chi$ is a ring homomorphism, computations with
+virtual and negative-dimensional pieces obey exactly the familiar
+additive and multiplicative laws, so formulas proved for ordinary
+complexes transport verbatim. The stabilization theorem guarantees that
+no genuinely new phenomenon appears below zero that is not already the
+sign-flipped shadow of an ordinary space, which is reassuring for
+computation: one may always suspend into nonnegative dimensions, compute,
+and translate back.
+
+## 9. Discussion and future directions
+
+This project builds a self-contained theory of negative-dimensional
+spaces. We model virtual graded spaces as the Laurent-polynomial ring
+$\mathbb{Z}[t, t^{-1}]$ (a concrete Spanier–Whitehead / pro-spectrum
+picture: $t^{-1}$ is desuspension, producing negative dimensions) and
+define the Euler characteristic as the ring homomorphism $\chi : t \mapsto
+-1$.
+
+**What was proved.** The Euler characteristic extends to negative
+dimensions and satisfies $\chi(X) = (-1)^n \cdot |\pi_0(X)|$ for
+$\dim X = -n$; a $k$-component $(-1)$-space has $\chi = -k$; $\chi$ is a
+ring homomorphism (additive under disjoint union, multiplicative under
+product, with $\chi(\text{point}) = 1$); suspension and desuspension flip
+the sign of $\chi$ and are mutually inverse; and the stabilization map
+carries a $(-n)$-space to an honest $0$-dimensional space.
+
+**What was disproved.** Not every negative-dimensional space has negative
+$\chi$ (even codimensions give $\chi > 0$), and $\chi$ is not injective
+(it sees only the parity of the dimension).
+
+**Directions to extend.**
+
+1. **Betti numbers with genuine coefficients.** Replace $\mathbb{Z}$
+   coefficients by graded $\mathbb{Z}$-modules / chain complexes and
+   recover $\chi$ as the alternating sum of ranks, proving the present
+   $\chi$ agrees with the homological one for bounded complexes.
+2. **True $\pi_0$ from a topological model.** Here $|\pi_0|$ is the rank
+   in the defining degree. A next step is to attach an actual (pro-)space
+   or spectrum and prove $\pi_0$ of that object matches this count.
+3. **Poincaré duality in negative degrees.** With $\chi(DX) = \chi(X)$
+   for Spanier–Whitehead duals, formalize the duality $t^d \mapsto t^{-d}$
+   and its interaction with $\chi$.
+4. **Multiplicative structure / Grothendieck ring.** Study the image of
+   $\chi$ and the ideal structure; characterize which integers arise as
+   $\chi$ of a nonnegative-cell (genuine) space versus a virtual one.
+5. **Higher invariants beyond $\chi$.** The failure of injectivity shows
+   $\chi$ forgets dimension; introduce a refined invariant (e.g. the full
+   Poincaré series, or a $t$-graded Euler characteristic valued in
+   $\mathbb{Z}[t,t^{-1}]$) that is injective.
+
+## 10. Conclusion
+
+By recognizing that the Euler characteristic is nothing more than the ring
+homomorphism $t \mapsto -1$ on the Laurent-polynomial ring of cell
+counts, we find that its extension below dimension zero is not merely
+possible but forced. Negative dimensions are the desuspensions of ordinary
+spaces; the invariant obeys the same additive and multiplicative laws it
+always did; and dimension $-1$, once a riddle, holds a space with Euler
+characteristic $-k$ for $k$ components. The theory is small, complete, and
+exact — a clean staircase of dimensions descending forever below the
+point.

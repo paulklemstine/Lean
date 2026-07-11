@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e37aa20a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Chaos and Cryptography via the Logistic Map\n\nThis cycle established the exact semiconjugacy `f(sin² t) = sin²(2 t)` of the\nfull-strength logistic map `f(x) = 4x(1-x)` to angle dou",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-10T09:26:12",
-      "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
-    },
-    {
       "cycle_id": "207fb5b4",
       "domain": "Applications",
       "key_insight": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logi",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-11T02:34:32",
       "title": "Social Credit Scores as Topological Invariants"
+    },
+    {
+      "cycle_id": "75fb79ca",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project (`Catalog/Computation/SelfModifyingHaltChain.lean`) develops a\nlinear chain of results on the halting problem for **self-modifying code** —\nmachines whose transition",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-07-11T02:34:45",
+      "title": "Self-Modifying Code That Cannot Be Stopped"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ce78e135",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nBold, testable conjectures arising from the study of when `a^n - a` is uniformly\ndivisible by a fixed modulus.\n\n## 1. The universal divisor of `a^n - a` is a squarefree product of",
-      "quality_score": 0.48488999999999993,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-02T11:13:24",
-      "title": "Prove Fermats Little Theorem for p=5"
-    },
     {
       "cycle_id": "e39940c9",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-11T02:34:32",
       "title": "Social Credit Scores as Topological Invariants"
+    },
+    {
+      "cycle_id": "75fb79ca",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project (`Catalog/Computation/SelfModifyingHaltChain.lean`) develops a\nlinear chain of results on the halting problem for **self-modifying code** —\nmachines whose transition",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-07-11T02:34:45",
+      "title": "Self-Modifying Code That Cannot Be Stopped"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "17fb4d11",
-      "domain": "Cryptography",
-      "name": "exists_pump_down",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "17fb4d11",
-      "domain": "Cryptography",
-      "name": "exists_shorter_of_long",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "00abb0ac",
-      "domain": "Novelty",
-      "name": "mem_charF",
-      "quality": 0.74
-    },
     {
       "cycle_id": "00abb0ac",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "scons_eta",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "75fb79ca",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "75fb79ca",
+      "domain": "Novelty",
+      "name": "lawvere_fixed_point",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "75fb79ca",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-11T02:34:32",
+  "last_updated": "2026-07-11T02:34:45",
   "open_questions": [
     {
       "context": "witnesses, not `sorry`ed placeholders, so the abstract hypotheses are demonstrably; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c22096e0",
-        "quality": 0.7,
-        "theorems": 16,
-        "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
-      },
-      {
         "cycle_id": "92e61cee",
         "quality": 0.83,
         "theorems": 11,
@@ -3637,6 +3631,12 @@
         "quality": 0.63,
         "theorems": 14,
         "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
+      },
+      {
+        "cycle_id": "75fb79ca",
+        "quality": 0.78,
+        "theorems": 27,
+        "title": "Self-Modifying Code That Cannot Be Stopped"
       }
     ],
     "NumberTheory": [

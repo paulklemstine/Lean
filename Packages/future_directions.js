@@ -382,21 +382,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "75fb79ca",
-    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0961",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:39:31.318499+00:00",
-    "title": "Self-Modifying Code That Cannot Be Stopped"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 298c68ef (Q=0.780), which proved 66 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domains": [
@@ -451,6 +436,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T05:00:51.739107+00:00",
     "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 75fb79ca (Q=0.780), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_75fb79ca_e9b86f9d",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "75fb79ca",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:45.150096+00:00",
+    "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
   },
   {
     "consumed_by_exp_id": "",
@@ -6704,6 +6703,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T02:34:26.129033+00:00",
     "title": "This project formalizes \"social credit scores as topological invariants\" through"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project (`Catalog/Computation/SelfModifyingHaltChain.lean`) develops a\nlinear chain of results on the halting problem for **self-modifying code** \u2014\nmachines whose transition function may rewrite the running program mid-execution.\n\n## What was proved (the chain)\n\n1. `lawvere_fixed_point` \u2014 Lawvere's fixed-point theorem, the abstract diagonal engine.\n2. `no_surj_to_pred` \u2014 Cantor for Boolean predicates, derived from (1).\n3. `no_contrarian_behavior` \u2014 no program realizes the anti-diagonal behavior.\n4. `SMM` / `run` / `halts` \u2014 the self-modifying machine model.\n5. `run_map_eq`, `run_none_iff`, `halts_iff_std` \u2014 the simulation theorem: a\n   self-modifying machine halts iff its fixed-program simulation halts.\n6. `reduce_selfmod_to_std`, `reduce_std_to_selfmod`, `halting_turing_equiv`,\n   `selfmod_decidable_of_std`, `std_decidable_of_selfmod` \u2014 many-one\n   equivalence of the two halting problems.\n7. `no_correct_decider`, `halting_contradiction`, `selfref_hypotheses_satisfiable`\n   \u2014 the self-referential halting theorem: a system that can build the\n   *contrarian* program has no correct total halting decider.\n8. `virus_no_detector` \u2014 the virus paradox: no total detector decides\n   self-halting behavior everywhere.\n9. `alignment_no_monitor` \u2014 the alignment obstruction: no total monitor can\n   correctly certify \"never terminates on its own code\" for every program.\n\n**Correction to the informal framing.** The mission asked to show the\nself-modifying halting problem is *strictly harder* than the classical halting\nproblem. The formalization shows the opposite: it is *many-one equivalent* to it\n(`halting_turing_equiv` + the two decider transfers). The running program is\nabsorbed into the data by `SMM.toStd`, so no strictly higher Turing degree is\nintroduced. Undecidability is real, but it is the classical undecidability.\n\n## Directions to extend the chain\n\n1. **A concrete universal contrarian.** `no_correct_decider` takes the\n   contrarian program `d` as a hypothesis. Build `d` explicitly inside a concrete\n   universal `SMM \u2115 \u2115` (a small register/Turing machine), turning the conditional\n   undecidability into an unconditional statement about that machine.\n\n2. **Oracle self-modification and the arithmetical hierarchy.** Add oracle access\n   to `SMM` and locate the resulting halting problem in the hierarchy. The\n   present equivalence suggests it stays at `\u03a3\u2070\u2081` relative to the oracle; make\n   this precise and prove non-collapse for iterated oracles.\n\n3. **Bounded self-modification depth.** Define machines that may rewrite their\n   program at most `k` times; show decidability at `k = 0` and undecidability for\n   `k \u2265 1` over a Turing-complete base, pinning the exact threshold.\n\n4. **Rice's theorem, in full.** Generalize `virus_no_detector` to every\n   non-trivial *behavioral* property of `SMM.run`, deriving it from\n   `no_correct_decider` by an explicit reduction.\n\n5. **Quantitative alignment.** Strengthen `alignment_no_monitor` to a measure /\n   density statement: not only is a perfect monitor impossible, but any total\n   monitor errs on a \"large\" set of programs. Requires a probability measure on\n   the program space.\n\n6. **Kleene fixed points for `SMM`.** Prove a recursion theorem for\n   self-modifying machines (every total transformation of programs has a program\n   that behaves like its own image), giving quines and self-reproducing\n   configurations as corollaries.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0979",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "75fb79ca",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:35.200917+00:00",
+    "title": "This project (`Catalog/Computation/SelfModifyingHaltChain.lean`) develops a"
   },
   {
     "consumed_by_exp_id": "",
