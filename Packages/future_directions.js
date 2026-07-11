@@ -781,21 +781,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
   {
-    "consumed_by_exp_id": "2bd85c25",
-    "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1037",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T13:04:49.880837+00:00",
-    "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 0643b2b3 (Q=0.820) proved 11 theorems in Combinatorics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon",
     "domains": [
@@ -1198,7 +1183,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd69696d",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
     "domains": [
       "Novelty",
@@ -1208,7 +1193,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T13:54:33.301868+00:00",
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
@@ -7574,6 +7559,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T15:33:27.450469+00:00",
     "title": "The results of this cycle established that a *controlled* failure of associativi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Theorems as Phase Transitions in Proof Space\n\nThis project formalizes, in Lean 4 (Mathlib), a rigorous mathematical skeleton\nfor the speculative picture of *proof space* as a statistical-mechanical system\nwhose order parameter \u2014 the provable fraction \u2014 undergoes a sharp transition at a\ncritical length, and whose \"volume\" scales with a dimension `log k`.\n\n## What is proved\n\n- **`Counting.lean`** \u2014 Proof space is the set of words over a `k`-symbol\n  alphabet. Closed geometric form `(k-1)\u00b7S k n = k^{n+1}-1`, the sandwich\n  `k^n \u2264 S k n \u2264 k^{n+1}`, and exponential growth `2^n \u2264 S k n`.\n- **`OrderParameter.lean`** \u2014 The order parameter `r n = prov n / tot n` lives in\n  `[0,1]`, and **asymptotic incompleteness**: if provable statements grow with\n  base `a < k`, then `r n \u2192 0` (almost every statement is unprovable \u2014 the\n  disordered phase).\n- **`PhaseTransition.lean`** \u2014 The logistic transition profile is strictly\n  monotone, equals `1/2` at criticality, and converges to a Heaviside step as the\n  sharpness `\u03b2 \u2192 \u221e`: a genuine sharp (first-order-like) transition at `n_c`.\n- **`Dimension.lean`** \u2014 The growth rate `log(tot n)/n \u2192 log k` (box-counting\n  dimension / topological entropy of proof space), and the geometric length\n  distribution `(k-1)/k^{n+1}` is a probability distribution whose `k^{-n}` tail\n  realizes the predicted power law.\n- **`Incompleteness.lean`** \u2014 The abstract core of G\u00f6del's first incompleteness\n  theorem (a sound consistent system with a G\u00f6del sentence is incomplete),\n  non-vacuity of the hypotheses, and a Cantor obstruction: the properties of\n  statements cannot be enumerated by statements.\n\n## Natural next steps\n\n1. **Endogenous sharpness.** Derive the logistic profile from a microscopic model\n   (e.g. an energy/complexity functional on proofs) instead of positing it, so\n   that `n_c` and `\u03b2` emerge from the counting data rather than being parameters.\n2. **Width of the critical window.** Quantify sharpness: prove the length of the\n   interval where `\u03a6 \u2208 (\u03b5, 1-\u03b5)` shrinks like `1/\u03b2`, giving a critical-exponent\n   statement.\n3. **Concrete provability.** Replace the abstract `prov`/`tot` with a genuine\n   proof calculus (Mathlib's `FirstOrder` language) and bound `prov n` to\n   instantiate `orderParameter_tendsto_zero` unconditionally.\n4. **Genuine Hausdorff dimension.** Put a metric on the space of infinite\n   statement-streams (a Cantor space) and connect `log k` to Mathlib's\n   `Metric.hausdorffMeasure`/`dimH`, upgrading the box-counting analogue to an\n   honest Hausdorff dimension.\n5. **Self-referential fixed point.** Strengthen `Incompleteness.lean` by\n   *constructing* the G\u00f6del sentence via a diagonal lemma rather than assuming it,\n   linking the \"G\u00f6del threshold\" to the length at which self-reference is first\n   expressible.\n6. **Length distribution of real theorem corpora.** Empirically fit the power-law\n   exponent against Mathlib/AFP theorem-length statistics and compare with the\n   `log k` prediction.\n",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_1050",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2bd85c25",
+    "status": "available",
+    "timestamp": "2026-07-11T16:23:12.103943+00:00",
+    "title": "This project formalizes, in Lean 4 (Mathlib), a rigorous mathematical skeleton"
   },
   {
     "consumed_by_exp_id": "",

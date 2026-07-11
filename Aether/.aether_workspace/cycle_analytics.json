@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-11T15:33:33.569449+00:00",
+  "last_updated": "2026-07-11T16:23:19.812664+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -6258,6 +6258,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-11T15:33:33.540384+00:00",
       "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 87,
+      "domain": "Novelty",
+      "duration_seconds": 987.4729924201965,
+      "end_time": 1783786984.3142474,
+      "files_integrated": 4,
+      "job_id": "2bd85c25",
+      "outcome_quality": 0.72,
+      "phase": "complete",
+      "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783785996.841255,
+      "strategy_count": 0,
+      "theorem_count": 22,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 18,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-11T16:23:19.778834+00:00",
+      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ]
 }

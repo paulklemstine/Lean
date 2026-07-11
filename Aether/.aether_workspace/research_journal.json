@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d0bff55a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n`TransfiniteGames.lean` proves that every **well-founded** two-player game is\ndetermined: the value function `W` (the Zermelo fixed point) exists, every play\nterminates against an",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-11T00:23:26",
-      "title": "Transfinite Game Theory: Games That Last Forever"
-    },
-    {
       "cycle_id": "0981cb8f",
       "domain": "Probability",
       "key_insight": "# Future Directions: Self-Reference, Fixed Points, and Strange Loops\n\nEach conjecture below is bold, falsifiable, and derived from the findings of this\ncycle — the observation that existence (Lawvere)",
@@ -499,19 +489,19 @@
       "theorem_count": 40,
       "timestamp": "2026-07-11T15:33:31",
       "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "cycle_id": "2bd85c25",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Theorems as Phase Transitions in Proof Space\n\nThis project formalizes, in Lean 4 (Mathlib), a rigorous mathematical skeleton\nfor the speculative picture of *proof space* as a sta",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-11T16:23:18",
+      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a1e3ce3a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThese conjectures grow directly out of the exact support laws established for the\nsum and difference kernels of Sidon sets: for a nonempty Sidon set of size `k`,\nthe difference se",
-      "quality_score": 0.44295649681528665,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-04T04:39:28",
-      "title": "Multi-kernel smoothing lemma for Sidon sets"
-    },
     {
       "cycle_id": "3498198a",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 40,
       "timestamp": "2026-07-11T15:33:31",
       "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "cycle_id": "2bd85c25",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Theorems as Phase Transitions in Proof Space\n\nThis project formalizes, in Lean 4 (Mathlib), a rigorous mathematical skeleton\nfor the speculative picture of *proof space* as a sta",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-11T16:23:18",
+      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "21228762",
-      "domain": "Novelty",
-      "name": "inH_mul",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "9ca5466b",
-      "domain": "Applications",
-      "name": "Level_zero",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "9ca5466b",
-      "domain": "Applications",
-      "name": "Level_succ",
-      "quality": 0.8
-    },
     {
       "cycle_id": "9ca5466b",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "hom_ext",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "2bd85c25",
+      "domain": "Novelty",
+      "name": "S_closed_form",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "2bd85c25",
+      "domain": "Novelty",
+      "name": "pow_le_S",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "2bd85c25",
+      "domain": "Novelty",
+      "name": "S_le_pow",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T15:33:31",
+  "last_updated": "2026-07-11T16:23:18",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3dc9cabc",
-        "quality": 0.8,
-        "theorems": 44,
-        "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-      },
-      {
         "cycle_id": "2c395553",
         "quality": 0.83,
         "theorems": 40,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 21,
         "title": "Speculative: Mathematics as a Phase Transition"
+      },
+      {
+        "cycle_id": "2bd85c25",
+        "quality": 0.72,
+        "theorems": 22,
+        "title": "Speculative: Theorems as Phase Transitions in Proof Space"
       }
     ],
     "NumberTheory": [
