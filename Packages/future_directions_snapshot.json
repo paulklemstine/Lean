@@ -1172,6 +1172,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to Gödel's incompleteness gap.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1014",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T09:41:21.629957+00:00",
+    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 6e208619 (Q=0.780) proved 27 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minim",
     "domain_bridges": [],
     "domains": [
@@ -1303,6 +1323,26 @@
     "status": "in_progress",
     "timestamp": "2026-07-11T06:22:45.281103+00:00",
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Study near-misses to Fermat's Last Theorem: triples (a,b,c) where |a^n + b^n - c^n| is small. Prove that such near-misses exist for every n and characterize their distribution. Show that the density of near-misses decreases super-exponentially and connect to the ABC conjecture's effective version.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_1015",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T09:41:21.700734+00:00",
+    "title": "Fermat Near-Misses in the Twilight Zone"
   },
   {
     "ambition_level": "extension",
