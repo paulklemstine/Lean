@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a6f348ea",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Stone Duality for Neural Networks\n\nThe file `StoneDualityNeuralNetworks.lean` formalizes the finite-Boolean-algebra core of Stone\nduality for a single ReLU-type layer evaluated on",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-10T21:09:03",
-      "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-    },
-    {
       "cycle_id": "523eb163",
       "domain": "Logic",
       "key_insight": "# Future Directions: Hypergraph Ramsey Theory\n\nThis project develops `r`-uniform hypergraph Ramsey theory from scratch across\nseveral self-contained Lean files. All files listed below compile with no",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-11T13:21:45",
       "title": "Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "cycle_id": "997ab258",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Infinite Games Against Death — Immortality Strategies\n\nThe formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a\ntransfinite survival game between **Mortal**",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-11T13:38:26",
+      "title": "Infinite Games Against Death: Immortality Strategies"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6d5a2dac",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## 1. The Escher Height Invariant via Krull Dimension Gaps\nDefine the *Escher height* of a commutative ring as the largest Krull dimension of\na quotient by the base of a strictly",
-      "quality_score": 0.67304,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-03T21:09:59",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
     {
       "cycle_id": "af0095a3",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-11T13:21:45",
       "title": "Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "cycle_id": "997ab258",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Infinite Games Against Death — Immortality Strategies\n\nThe formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a\ntransfinite survival game between **Mortal**",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-11T13:38:26",
+      "title": "Infinite Games Against Death: Immortality Strategies"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "46d2d021",
-      "domain": "Applications",
-      "name": "giving",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "46d2d021",
-      "domain": "Applications",
-      "name": "and",
-      "quality": 0.82
-    },
     {
       "cycle_id": "6e208619",
       "domain": "Applications",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "flatten_node",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "997ab258",
+      "domain": "Novelty",
+      "name": "of",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "997ab258",
+      "domain": "Novelty",
+      "name": "mortalForces_iff_le",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T13:21:45",
+  "last_updated": "2026-07-11T13:38:26",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f3c4c6a5",
-        "quality": 0.83,
-        "theorems": 100,
-        "title": "Deepening: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-      },
-      {
         "cycle_id": "5e3f6a63",
         "quality": 0.78,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 26,
         "title": "Causal Loops in Category Theory: When Composition Loops Back"
+      },
+      {
+        "cycle_id": "997ab258",
+        "quality": 0.72,
+        "theorems": 19,
+        "title": "Infinite Games Against Death: Immortality Strategies"
       }
     ],
     "NumberTheory": [

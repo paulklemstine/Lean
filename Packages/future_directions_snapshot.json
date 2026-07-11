@@ -573,25 +573,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1e86ff35",
-    "description": "Building on cycle 1978e429 (Q=0.800), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle c99af430 (Q=0.830) proved 0 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems ",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_1978e429_33c113a4",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "1978e429",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T10:49:45.592025+00:00",
-    "title": "Deepening: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 9ca5466b (Q=0.800), which proved 40 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hyperco",
     "domain_bridges": [],
@@ -1577,26 +1558,6 @@
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "997ab258",
-    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1022",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T10:48:07.123829+00:00",
-    "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
     "ambition_level": "extension",
@@ -12530,6 +12491,46 @@
     "status": "available",
     "timestamp": "2026-07-11T13:21:38.622606+00:00",
     "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Infinite Games Against Death — Immortality Strategies\n\nThe formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a\ntransfinite survival game between **Mortal** (bounded computation) and\n**Eternity** (transfinite computation): rounds are indexed by ordinals, and each\nsurviving round Mortal must exhibit a strictly later \"moment of being alive\". The\nset of moments Mortal can reach is what its computational power buys, and its\norder type is the **survival value** — the round of guaranteed death.\n\n## What is proved\n\n- **Fundamental theorem** `mortalForces_iff_le`: Mortal can force survival to\n  round `β` iff `β ≤ value`.\n- **`ω` barrier (finite deterministic computation).** Moments indexed by `ℕ`:\n  survival value is exactly `ω`. Mortal survives every finite round\n  (`finite_forces_nat`) and forces `ω` (`mortal_forces_omega`) but dies at `ω`\n  (`omega_is_sharp`). Any Mortal whose moments embed into `ℕ` cannot pass `ω`\n  (`value_le_omega_of_embeds_nat`).\n- **`ω²` barrier (bounded nondeterminism).** Moments indexed by `ℕ ×ₗ ℕ`:\n  survival value is exactly `ω²`. Mortal survives every round `ω · n`\n  (`nondet_forces_omega_mul_nat`) and forces `ω²` (`mortal_forces_omega_sq`) but\n  dies at `ω²` (`omega_sq_is_sharp`).\n- **Refinement mechanism** `nondetExt_value`: refining each moment into an\n  `ω`-block multiplies the survival value by `ω`, explaining the jump `ω ↦ ω²`.\n\n## Connection to Infinite Time Turing Machines\n\nA deterministic ITTM with a finite alphabet that must halt traces reachable clock\nvalues order-isomorphic to `ω` before the first limit intervention (the finite\ngame). A bounded amount of nondeterministic branching lets a counter be reset\nacross limit stages, stacking `ω`-blocks up to `ω²` (the nondeterministic game).\n`ω` and `ω²` are the first two \"clockable\" milestones of this hierarchy.\n\n## Possible extensions\n\n1. **Higher barriers `ωⁿ`, `ω^ω`.** Iterating `nondetExt` should give `ω^(n+1)`;\n   a colimit over finite refinements reaches `ω^ω`.\n2. **Explicit strategy synthesis.** Build concrete CNF-based winning schedules as\n   computable strategies rather than abstract order embeddings.\n3. **Genuine ITTM dynamics.** Replace the abstract `Moment` type by an actual\n   ITTM configuration space with the `liminf` limit rule and prove the reachable\n   clock values realize the same order types.\n4. **Determinacy.** Prove that at each threshold either Mortal has a surviving\n   strategy or Eternity has a killing strategy, with the boundary exactly the\n   survival value.\n5. **Clockable ordinals.** Relate survival values to the clockable ordinals of\n   ITTMs.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1039",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "997ab258",
+    "status": "available",
+    "timestamp": "2026-07-11T13:38:19.459989+00:00",
+    "title": "The formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle deepens *\"Paradoxes as Theorems: Liar, Berry, and Russell Made\nConsistent\"* into a single **cross-domain bridge** and proves it in Lean 4 with\nno `sorry` and only the standard axioms.\n\n## What was proved (`Catalog/Logic/ParadoxesLawvereBridge.lean`)\n\nThe unifying result is **Lawvere's fixed-point theorem**\n(`lawvere_fixedPoint`, axiom-free): a point-surjection `A ↠ (A → C)` forces every\nendomap of `C` to have a fixed point. From its contrapositive\n(`lawvere_no_pointSurjective`) we derive, as instances of one diagonal:\n\n* `no_prop_pointSurjective`, `cantor_no_surjective` — **Cantor's theorem**;\n* `russell_paradox`, `russell_no_comprehension` — **Russell's paradox** / failure\n  of naive comprehension;\n* `liar_no_selfnegating`, `not_no_fixpoint` — the **Liar** (negation has no\n  propositional fixed point).\n\nThe counting shadow (**Berry / Chaitin**) is proved by pigeonhole\n(`berry_pigeonhole`, `chaitin_incompressible`), and the algebraic side of the\nbridge (`boolean_neg_fixpoint_trivial`, `no_boolean_neg_fixpoint` versus Belnap's\n`BV.has_designated_neg_fixpoint`) is packaged in `paradox_dichotomy` and\n`paradoxes_are_one_theorem`.\n\n## Concrete paraconsistent witness (`Catalog/Logic/ParadoxSelfSoundness.lean`)\n\nA self-contained companion file (depending only on Mathlib) develops the\nfour-valued Belnap base theory (`BelnapVal`, `ParaconsistentTheory`,\n`ParaconsistentTheory.isSound`, `HasExplosion`, `inconsistencyDegree`) and\nexhibits an explicit six-element model `paradoxModel : ParaconsistentTheory (Fin\n6)`. In it three distinct paradox sentences are simultaneously provable and\nglut-valued (`paradoxes_as_theorems`), every provable sentence is designated\n(`paradoxModel_self_sound`), explosion is rejected by an explicit counterexample\n(`paradoxModel_rejects_explosion`), and the inconsistency degree is exactly three\n(`paradoxModel_inconsistency_degree`). This is a fully computational realization\nof next step 3 below.\n\n## Promising next steps\n\n1. **Gödel's diagonal lemma as a Lawvere instance.** Formalize a syntactic\n   provability predicate and a Gödel numbering as a point-surjection, deriving the\n   diagonal lemma and the first incompleteness theorem uniformly from\n   `lawvere_fixedPoint`, completing the \"Liar → Gödel\" leg of the bridge.\n\n2. **Category-theoretic Lawvere.** Restate `lawvere_fixedPoint` for a cartesian\n   closed category (weak point-surjectivity of `A → C^A`) and recover the\n   `Type`-level version as the concrete instance, making the bridge to category\n   theory literal rather than by analogy.\n\n3. **Paraconsistent object language.** Extend the Belnap `BV` fragment to a full\n   propositional calculus with a provability relation, and prove *inside* it that\n   the Liar/Russell/Berry sentences are theorems while non-explosion\n   (`⊬ ⊥`) is preserved — a machine-checked consistent paraconsistent theory.\n\n4. **Quantitative Berry.** Sharpen `berry_pigeonhole` to the density statement that\n   the fraction of `n`-bit-incompressible numbers below `2^{n+k}` tends to `1`,\n   connecting to Kolmogorov complexity in Mathlib once available.\n\n5. **Sheaf/fixed-point generalizations.** Investigate whether the same diagonal\n   yields Rice's theorem and the recursion theorem as further `lawvere_fixedPoint`\n   corollaries, unifying computability-theoretic limitations with the logical\n   ones.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1040",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1e86ff35",
+    "status": "available",
+    "timestamp": "2026-07-11T13:38:28.478969+00:00",
+    "title": "This cycle deepens *\"Paradoxes as Theorems: Liar, Berry, and Russell Made"
   },
   {
     "ambition_level": "extension",

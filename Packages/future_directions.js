@@ -1172,21 +1172,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "997ab258",
-    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1022",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T10:48:07.123829+00:00",
-    "title": "Infinite Games Against Death: Immortality Strategies"
-  },
-  {
     "consumed_by_exp_id": "c67f6099",
     "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
     "domains": [
@@ -7427,6 +7412,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T13:21:38.622606+00:00",
     "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Infinite Games Against Death \u2014 Immortality Strategies\n\nThe formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a\ntransfinite survival game between **Mortal** (bounded computation) and\n**Eternity** (transfinite computation): rounds are indexed by ordinals, and each\nsurviving round Mortal must exhibit a strictly later \"moment of being alive\". The\nset of moments Mortal can reach is what its computational power buys, and its\norder type is the **survival value** \u2014 the round of guaranteed death.\n\n## What is proved\n\n- **Fundamental theorem** `mortalForces_iff_le`: Mortal can force survival to\n  round `\u03b2` iff `\u03b2 \u2264 value`.\n- **`\u03c9` barrier (finite deterministic computation).** Moments indexed by `\u2115`:\n  survival value is exactly `\u03c9`. Mortal survives every finite round\n  (`finite_forces_nat`) and forces `\u03c9` (`mortal_forces_omega`) but dies at `\u03c9`\n  (`omega_is_sharp`). Any Mortal whose moments embed into `\u2115` cannot pass `\u03c9`\n  (`value_le_omega_of_embeds_nat`).\n- **`\u03c9\u00b2` barrier (bounded nondeterminism).** Moments indexed by `\u2115 \u00d7\u2097 \u2115`:\n  survival value is exactly `\u03c9\u00b2`. Mortal survives every round `\u03c9 \u00b7 n`\n  (`nondet_forces_omega_mul_nat`) and forces `\u03c9\u00b2` (`mortal_forces_omega_sq`) but\n  dies at `\u03c9\u00b2` (`omega_sq_is_sharp`).\n- **Refinement mechanism** `nondetExt_value`: refining each moment into an\n  `\u03c9`-block multiplies the survival value by `\u03c9`, explaining the jump `\u03c9 \u21a6 \u03c9\u00b2`.\n\n## Connection to Infinite Time Turing Machines\n\nA deterministic ITTM with a finite alphabet that must halt traces reachable clock\nvalues order-isomorphic to `\u03c9` before the first limit intervention (the finite\ngame). A bounded amount of nondeterministic branching lets a counter be reset\nacross limit stages, stacking `\u03c9`-blocks up to `\u03c9\u00b2` (the nondeterministic game).\n`\u03c9` and `\u03c9\u00b2` are the first two \"clockable\" milestones of this hierarchy.\n\n## Possible extensions\n\n1. **Higher barriers `\u03c9\u207f`, `\u03c9^\u03c9`.** Iterating `nondetExt` should give `\u03c9^(n+1)`;\n   a colimit over finite refinements reaches `\u03c9^\u03c9`.\n2. **Explicit strategy synthesis.** Build concrete CNF-based winning schedules as\n   computable strategies rather than abstract order embeddings.\n3. **Genuine ITTM dynamics.** Replace the abstract `Moment` type by an actual\n   ITTM configuration space with the `liminf` limit rule and prove the reachable\n   clock values realize the same order types.\n4. **Determinacy.** Prove that at each threshold either Mortal has a surviving\n   strategy or Eternity has a killing strategy, with the boundary exactly the\n   survival value.\n5. **Clockable ordinals.** Relate survival values to the clockable ordinals of\n   ITTMs.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1039",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "997ab258",
+    "status": "available",
+    "timestamp": "2026-07-11T13:38:19.459989+00:00",
+    "title": "The formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a"
   },
   {
     "consumed_by_exp_id": "",
