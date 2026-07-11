@@ -1,443 +1,227 @@
-# Transfinite Cellular Automata: Limit Stages, Monotone Convergence, and the Boolean $\omega$-Limit
+# Cellular Automata at the Ordinals: Transfinite Computation via Monotone Least Fixed Points
 
 ## Abstract
 
-Classical cellular automata evolve in discrete time indexed by the natural
-numbers $\mathbb{N}$: a local rule of finite radius is applied synchronously at
-every cell, once per tick. We develop the foundational theory of cellular
-automata whose time index is extended to the **ordinals**, so that evolution can
-proceed not only through successor stages but also through *limit* stages, where
-the configuration must be reconstructed from the entire transfinite history that
-precedes it. Our central contribution is a rigorous, self-contained account of
-**limit-stage construction**. We define a history as a function from ordinals to
-configurations, formalize *coordinatewise eventual constancy below a limit
-ordinal* as the well-definedness condition for a limit stage, and prove that
-under this condition the limit configuration **exists and is unique**. We then
-identify a broad, natural class of rules for which the condition is automatic:
-**inflationary** Boolean rules, those that can only ever switch a cell on. For
-such a rule, every cell's history is a monotone Boolean sequence, every monotone
-Boolean sequence is eventually constant, and therefore the $\omega$-limit
-configuration exists and is unique for *every* initial configuration. The
-classical OR rule $l \lor c \lor r$ is shown to be inflationary, yielding a
-concrete transfinite cellular automaton with a well-defined $\omega$-stage. We
-situate these results within the theory of ordinal computation and Infinite Time
-Turing Machines (ITTMs), explain why the limit rule is the cellular analogue of
-the ITTM limit law, and discuss the resulting dichotomy between *collapsing*
-automata (where the transfinite stage adds nothing) and genuinely *super-Turing*
-behaviour. All results stated here have been formally verified.
+We establish a rigorous bridge between two *a priori* unrelated subjects: the dynamics of cellular automata and the theory of ordinal (transfinite) computation. The connecting device is the classical theory of monotone operators on complete lattices and their least fixed points computed by transfinite iteration. We exhibit a concrete one-dimensional cellular automaton—the *spreading automaton* on the cells $\mathbb{N}$, with a permanent source at the origin and unit-speed rightward propagation—and prove three facts that, taken together, exhibit genuinely transfinite behaviour. First, the automaton is a bona fide radius-$1$, monotone cellular automaton, and its finite-time evolution from the empty configuration lights exactly the initial segment $\{0,1,\dots,k-1\}$ after $k$ steps. Second, *no finite stage completes the computation*: for every natural number $k$, the configuration is a proper subset of the fully-on configuration. Third, under the transfinite iteration governed by the standard limit rule of Infinite Time Turing Machines (take the limit inferior, which for a monotone run is the union of all earlier configurations), the automaton completes *exactly* at the first limit ordinal $\omega$, at which stage every cell is on—and this fully-on configuration is precisely the least fixed point of the rule. Thus the automaton's **closure ordinal is exactly $\omega$**. We conclude with the general connector: for *any* monotone cellular-automaton rule on *any* complete-lattice configuration space, the global fixed point is a value of the transfinite ordinal evolution. This mirrors, at the level of cellular automata, the way Infinite Time Turing Machines strictly exceed ordinary Turing machines.
 
-**Keywords.** Cellular automata, ordinal computation, transfinite recursion,
-Infinite Time Turing Machines, hypercomputation, monotone convergence, limit
-stages, super-Turing computation.
+**Keywords.** Cellular automata; ordinal computation; transfinite iteration; monotone operators; least fixed points; complete lattices; Infinite Time Turing Machines; closure ordinals.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Cellular automata and the assumption of finite time
+A *cellular automaton* is a discrete dynamical system in which a fixed local rule is applied uniformly and simultaneously to every cell of a lattice. Despite the extreme simplicity of the local rule, cellular automata can display arbitrarily complex global behaviour; Rule 110 is famously Turing-complete. Traditionally the dynamics unfold in discrete *finite* time: one applies the global update map $t = 0, 1, 2, \dots$ and studies the resulting orbit.
 
-A one-dimensional cellular automaton over a state set $\sigma$ is specified by a
-local rule $f : \sigma \times \sigma \times \sigma \to \sigma$ of radius $1$,
-which determines the next state of a cell from its own state and those of its two
-nearest neighbours. The global dynamics is the synchronous application of $f$ at
-every cell. Despite their austerity, cellular automata are computationally
-universal: Rule 110 simulates a universal Turing machine, and Conway's Game of
-Life supports universal computation through gliders, glider guns, and logic
-gates.
+*Ordinal computation* asks what happens when a computational process is allowed to proceed past the finite stages into the transfinite: through $\omega, \omega+1, \dots, \omega \cdot 2, \dots, \omega^2, \dots$. The paradigm is the theory of **Infinite Time Turing Machines** (ITTMs), which run for ordinal time and, at *limit* stages—ordinals with no immediate predecessor—resolve the tape by a *limit rule*, typically the *limit inferior* of the earlier tape contents. ITTMs decide problems far beyond the reach of ordinary Turing machines, giving a robust notion of super-Turing computation.
 
-Every such system carries an implicit assumption: time is the ordered set
-$\mathbb{N} = \{0, 1, 2, \dots\}$. Configurations are indexed by a natural number
-$t$, and the configuration at time $t+1$ is obtained from that at time $t$ by one
-application of the global rule. There is no provision for, or even meaning to, "the
-configuration after all finite times."
+The purpose of this paper is to make precise, and prove, the sense in which *cellular automata run at the ordinals strictly exceed their finite-time counterparts*. Our central tool is the theory of monotone operators on complete lattices. A monotone cellular-automaton rule is a monotone operator on the configuration lattice; its transfinite iteration from the bottom element—applying the rule at successor stages and taking suprema at limit stages—is exactly the constructive, ordinal-indexed computation of the *least fixed point* guaranteed by the Knaster–Tarski theorem. This identifies:
 
-### 1.2 Extending time to the ordinals
+- one CA step with a successor stage of the iteration;
+- the ITTM limit rule (limit inferior / union) with a limit stage of the iteration;
+- the completed computation with the least fixed point of the rule.
 
-The ordinal numbers extend $\mathbb{N}$ into the transfinite while preserving a
-well-ordered notion of "next." Each ordinal is either a **successor** $\alpha+1$,
-reached by a single step from $\alpha$, or a **limit** $\lambda$, which has no
-immediate predecessor and is approached only as the supremum of all smaller
-ordinals. The first limit ordinal is $\omega = \sup\{0,1,2,\dots\}$; further limit
-ordinals include $\omega \cdot 2, \omega \cdot 3, \dots$ and their supremum
-$\omega^2$.
+We instantiate this dictionary on a minimal but genuine example, the spreading automaton, and prove that its closure ordinal is exactly $\omega$.
 
-Transfinite dynamics is defined by recursion on the ordinals:
+### 1.1 The dictionary
 
-- **Successor stage.** The configuration at $\alpha + 1$ is one application of the
-  global rule to the configuration at $\alpha$. This is the usual dynamics.
-- **Limit stage.** The configuration at a limit $\lambda$ is reconstructed from
-  the *entire history* of configurations at stages below $\lambda$. There is no
-  single predecessor to update; the limit stage must be *defined*, and its
-  coherence proved.
-
-The entire mathematical subtlety of transfinite cellular automata lives in the
-limit-stage rule. This paper provides a rigorous foundation for it.
-
-### 1.3 Relation to ordinal computation
-
-The Infinite Time Turing Machine (ITTM) of Hamkins and Lewis (2000) is an ordinary
-Turing machine permitted to run for ordinal time. At a limit stage, each tape cell
-is set to the $\limsup$ of its previous values (equivalently, to $1$ if it is $1$
-cofinally often below the limit, and to $0$ otherwise), and the head and state are
-reset to designated limit values. ITTMs decide every arithmetical set, the halting
-problem for ordinary Turing machines, and far more; they are a canonical model of
-*hypercomputation*.
-
-The limit-stage rule we study is precisely the cellular analogue of the ITTM tape
-rule: each cell takes a limit of its own history. Our results establish the
-*coherence* of this analogue. We work with the cleaner notion of *eventual
-constancy* (rather than the full $\limsup$) because it is exactly the condition
-under which the limit value is unambiguous, and because it is automatically
-satisfied by the monotone dynamics that furnishes our principal examples. We
-discuss the relationship to the genuine $\limsup$ rule, and the resulting
-super-Turing phenomena, in Section 6.
-
-### 1.4 Summary of contributions
-
-1. A formal model of configurations, the radius-$1$ global step, ordinal-indexed
-   histories, and the eventual-constancy condition for limit stages
-   (Section 2).
-2. **Uniqueness of the eventual value** of a coordinate history (Theorem 3.1) and
-   the **existence and uniqueness of the limit configuration** under
-   coordinatewise eventual constancy (Theorem 3.3), with an explicit
-   characterization (Theorem 3.2).
-3. A **monotone-convergence pathway** to limit stages: inflationary rules make
-   histories monotone (Theorem 4.2), monotone Boolean sequences are eventually
-   constant (Theorem 4.3), and hence the **$\omega$-limit exists** for every
-   inflationary rule (Theorem 4.4).
-4. A **concrete instance**: the OR rule is inflationary (Theorem 5.1), so the OR
-   cellular automaton has a well-defined, unique $\omega$-stage (Theorem 5.2).
-
-All results below are accompanied by complete proof sketches; the full
-development has been mechanically verified, with no gaps.
+| Cellular automaton | Ordinal computation |
+| :--- | :--- |
+| configuration space | a complete lattice $\alpha$ |
+| local monotone update rule | a monotone operator $f : \alpha \to \alpha$ |
+| one CA step | successor stage of the transfinite iteration |
+| limit-of-time (ITTM $\liminf$) rule | limit stage of the transfinite iteration (supremum) |
+| the completed computation | the least fixed point $\mathrm{lfp}(f)$ |
 
 ---
 
-## 2. The model
+## 2. Preliminaries
 
-### 2.1 Configurations and the global step
+### 2.1 Complete lattices and monotone operators
 
-Let $\sigma$ be a state set.
+A **complete lattice** is a partially ordered set $(\alpha, \le)$ in which every subset $S \subseteq \alpha$ has a least upper bound (supremum) $\bigvee S$ and a greatest lower bound (infimum) $\bigwedge S$. In particular it has a bottom element $\bot = \bigvee \varnothing$ and a top element $\top$. The motivating example for cellular automata is the power set $\mathcal{P}(X)$ of any set $X$, ordered by inclusion, with supremum given by union and infimum by intersection; here $\bot = \varnothing$ and $\top = X$.
 
-> **Definition 2.1 (Configuration).** A *configuration* is a function
-> $c : \mathbb{N} \to \sigma$ assigning a state to each cell. We write
-> $\mathrm{Config}\,\sigma := (\mathbb{N} \to \sigma)$.
+An operator $f : \alpha \to \alpha$ is **monotone** if $a \le b$ implies $f(a) \le f(b)$. Monotonicity captures the intuition that "turning on more input can only turn on more output"—for a cellular automaton, that adding live cells never kills a cell that would otherwise be alive.
 
-> **Definition 2.2 (Global step).** Given a radius-$1$ local rule
-> $f : \sigma \to \sigma \to \sigma \to \sigma$, the *global step* is
-> $$(\mathrm{step}\,f\,c)(n) \;=\; f\big(c(n-1),\, c(n),\, c(n+1)\big),$$
-> where $n - 1$ denotes truncated subtraction on $\mathbb{N}$; in particular the
-> left neighbour of cell $0$ is cell $0$ itself (a fixed reflecting boundary at the
-> origin).
+### 2.2 The Knaster–Tarski theorem and its constructive form
 
-Iterating the global step gives the finite-time dynamics
-$c,\ \mathrm{step}\,f\,c,\ (\mathrm{step}\,f)^{2}c,\ \dots$, i.e.
-$(\mathrm{step}\,f)^{[k]}c$ for $k \in \mathbb{N}$.
+**Theorem (Knaster–Tarski).** Every monotone operator $f$ on a complete lattice $\alpha$ has a least fixed point $\mathrm{lfp}(f)$, characterized as the least element $x$ with $f(x) = x$, equivalently the least *prefixed point* (least $x$ with $f(x) \le x$).
 
-### 2.2 Histories and eventual constancy
+The least fixed point admits an explicit *constructive* description by transfinite iteration. Define an ordinal-indexed family $g : \mathrm{Ord} \to \alpha$ by
 
-To speak of limit stages we record, for each ordinal stage, the configuration
-reached so far.
+$$
+g(\beta) \;=\; \bigvee \Bigl(\{\, f(g(\gamma)) : \gamma < \beta \,\} \cup \{\bot\}\Bigr).
+$$
 
-> **Definition 2.3 (History).** A *history* is a function
-> $H : \mathrm{Ord} \to \mathrm{Config}\,\sigma$. For a fixed cell $n$, the
-> *coordinate history* is the map $\alpha \mapsto H(\alpha)(n)$.
+Read concretely, this says:
+- $g(0) = \bot$ (the empty configuration);
+- at a **successor** $\beta = \gamma + 1$, one has $g(\gamma+1) = f(g(\gamma))$—apply the rule once more;
+- at a **limit** $\lambda$, one has $g(\lambda) = \bigvee_{\gamma < \lambda} g(\gamma)$—take the supremum (union) of all earlier stages.
 
-The well-definedness of a limit stage hinges on each coordinate history *settling
-down* below the limit.
+Because $\alpha$ is a set, the ordinal-indexed sequence $g$ cannot be strictly increasing forever; it stabilizes at some ordinal, and its stable value is exactly $\mathrm{lfp}(f)$. We write $g(\beta)$ for the stage-$\beta$ approximant. The least ordinal at which $g$ reaches $\mathrm{lfp}(f)$ is the **closure ordinal** of $f$.
 
-> **Definition 2.4 (Eventual constancy below a stage).** A function
-> $h : \mathrm{Ord} \to \sigma$ is *eventually constant below* $\lambda$ *with
-> value* $v$, written $\mathrm{EC}(h, v, \lambda)$, if
-> $$\exists\, \beta < \lambda \ \ \forall \gamma,\ \beta \le \gamma < \lambda \ \Rightarrow\ h(\gamma) = v.$$
-> That is, there is a threshold stage $\beta$ (still below $\lambda$) past which,
-> and below $\lambda$, the history is constantly $v$.
+When $f$ is monotone, the map $\beta \mapsto g(\beta)$ is itself monotone in $\beta$, and the successor rule specializes to ordinary finite iteration at natural-number stages: $g(n) = f^{[n]}(\bot)$, the $n$-fold composite of $f$ applied to $\bot$.
 
-> **Definition 2.5 (Coordinatewise eventual constancy).** A history $H$ is
-> *eventually constant below* $\lambda$ *with limit configuration* $c$, written
-> $\mathrm{ECC}(H, c, \lambda)$, if for every cell $n$ the coordinate history
-> $\alpha \mapsto H(\alpha)(n)$ is eventually constant below $\lambda$ with value
-> $c(n)$:
-> $$\mathrm{ECC}(H, c, \lambda) \iff \forall n,\ \mathrm{EC}\big(\alpha \mapsto H(\alpha)(n),\, c(n),\, \lambda\big).$$
+### 2.3 The limit rule and Infinite Time Turing Machines
 
-This is the limit-stage rule in its purest form: the limit configuration assigns to
-each cell the value its history has stabilized at.
+An Infinite Time Turing Machine runs the ordinary transition function at successor stages of ordinal time and, at each limit stage, sets each cell of the tape to the *limit inferior* of its earlier values: a cell reads $1$ at the limit iff it is *eventually always* $1$ (equivalently, for a value that only ever increases, iff it is $1$ at some earlier stage). For a **monotone** run—one in which cells never switch from on to off—the limit inferior of the cell traces coincides with the *union* of all earlier configurations. This is precisely the supremum rule $g(\lambda) = \bigvee_{\gamma<\lambda} g(\gamma)$ of the constructive least-fixed-point iteration. This coincidence is the technical heart of the bridge: **the ITTM limit rule and the least-fixed-point limit rule agree on monotone runs.**
 
 ---
 
-## 3. Existence and uniqueness of limit stages
+## 3. The spreading cellular automaton
 
-### 3.1 Uniqueness of the eventual value
+### 3.1 Definition
 
-> **Theorem 3.1 (Uniqueness of the eventual value).** Let
-> $h : \mathrm{Ord} \to \sigma$ and let $\lambda$ be any ordinal. If
-> $\mathrm{EC}(h, u, \lambda)$ and $\mathrm{EC}(h, v, \lambda)$, then $u = v$.
+We work on the one-dimensional lattice of cells $\mathbb{N} = \{0, 1, 2, \dots\}$. A **configuration** is a subset $S \subseteq \mathbb{N}$, interpreted as the set of "on" cells; the configuration space is the complete lattice $(\mathcal{P}(\mathbb{N}), \subseteq)$.
 
-*Proof sketch.* Let $\beta_u$ witness $\mathrm{EC}(h,u,\lambda)$ and $\beta_v$
-witness $\mathrm{EC}(h,v,\lambda)$. Set $\gamma = \max(\beta_u, \beta_v)$. Since
-ordinals below $\lambda$ are closed under finite maxima, $\gamma < \lambda$, and
-$\gamma \ge \beta_u$, $\gamma \ge \beta_v$. The first witness gives
-$h(\gamma) = u$; the second gives $h(\gamma) = v$. Hence $u = v$. $\qquad\blacksquare$
+**Definition (spreading rule).** The *spreading automaton* is the operator
+$$
+\mathrm{spread}(S) \;=\; \{0\} \cup \{\, n+1 : n \in S \,\}.
+$$
+In words: after one step, cell $0$ is on (a permanent source at the origin), and cell $m$ is on for $m \ge 1$ iff its left neighbour $m-1$ was on.
 
-This is the crucial coherence property: a coordinate cannot settle on two
-different limit values.
+**Proposition 3.1 (Monotonicity).** $\mathrm{spread}$ is a monotone operator on $\mathcal{P}(\mathbb{N})$.
 
-### 3.2 Construction and characterization of the limit configuration
+*Proof.* If $S \subseteq T$ then $\{n+1 : n \in S\} \subseteq \{n+1 : n \in T\}$, and inserting the source $0$ into both preserves the inclusion. $\qquad\blacksquare$
 
-Suppose now that at each cell the history admits *some* eventual value; that is,
+**Proposition 3.2 (Locality).** For every configuration $S$ and every cell $n$,
+$$
+n \in \mathrm{spread}(S) \iff n = 0 \ \text{ or } \ \bigl(n > 0 \ \text{and}\ n-1 \in S\bigr).
+$$
+Hence $\mathrm{spread}$ is a genuine cellular automaton of radius $1$: the state of cell $n$ after one step depends only on the source and on the single left neighbour $n-1$.
 
-$$\forall n,\ \exists v,\ \mathrm{EC}\big(\alpha \mapsto H(\alpha)(n),\, v,\, \lambda\big). \tag{$\ast$}$$
+*Proof.* ($\Rightarrow$) If $n \in \{0\} \cup \{m+1 : m \in S\}$ then either $n = 0$, or $n = m+1$ for some $m \in S$; in the latter case $n > 0$ and $n - 1 = m \in S$. ($\Leftarrow$) If $n = 0$ then $n$ is the inserted source. If $n > 0$ and $n-1 \in S$ then $n = (n-1)+1$ lies in the image, since $n - 1 \in S$. $\qquad\blacksquare$
 
-By choosing, for each $n$, a witnessing value, we obtain a configuration.
+### 3.2 Finite-time behaviour
 
-> **Definition 3.0 (Limit configuration).** Under $(\ast)$, define
-> $\mathrm{limitConfig}(H, \lambda)(n)$ to be a chosen eventual value of the
-> coordinate history at $n$. (The choice uses the axiom of choice across cells; by
-> Theorem 3.1 the chosen value is in fact the unique eventual value, so the
-> resulting configuration does not depend on the choice.)
+Let $\mathrm{Iio}(k) = \{0, 1, \dots, k-1\}$ denote the initial segment of length $k$ (so $\mathrm{Iio}(0) = \varnothing$).
 
-> **Theorem 3.2 (Characterization).** Under $(\ast)$, the configuration
-> $\mathrm{limitConfig}(H, \lambda)$ realizes the eventual value at every cell:
-> $$\mathrm{ECC}\big(H,\ \mathrm{limitConfig}(H, \lambda),\ \lambda\big).$$
+**Theorem 3.3 (Finite orbit).** For every $k \in \mathbb{N}$,
+$$
+\mathrm{spread}^{[k]}(\varnothing) \;=\; \{0, 1, \dots, k-1\} \;=\; \mathrm{Iio}(k).
+$$
 
-*Proof sketch.* Immediate from the defining property of the chosen witnesses: for
-each $n$, the chosen value satisfies $\mathrm{EC}$ for the coordinate history at
-$n$, which is exactly the assertion of $\mathrm{ECC}$ at $n$. $\qquad\blacksquare$
+*Proof.* By induction on $k$. For $k = 0$, the zero-fold iterate is the identity, giving $\varnothing = \mathrm{Iio}(0)$. For the inductive step, assume $\mathrm{spread}^{[k]}(\varnothing) = \mathrm{Iio}(k)$. Then
+$$
+\mathrm{spread}^{[k+1]}(\varnothing) = \mathrm{spread}\bigl(\mathrm{Iio}(k)\bigr) = \{0\} \cup \{\, n+1 : 0 \le n < k \,\} = \{0\} \cup \{1, 2, \dots, k\} = \mathrm{Iio}(k+1).
+$$
+By Proposition 3.2, $x \in \mathrm{spread}(\mathrm{Iio}(k))$ iff $x = 0$ or ($x > 0$ and $x - 1 < k$), i.e. iff $x < k+1$. $\qquad\blacksquare$
 
-> **Theorem 3.3 (Limit stage: existence and uniqueness).** Under $(\ast)$, there
-> is a *unique* configuration $c$ with $\mathrm{ECC}(H, c, \lambda)$. Symbolically,
-> $$\exists!\, c,\ \mathrm{ECC}(H, c, \lambda).$$
+The picture is a wave of "on" cells advancing rightward at unit speed:
+$$
+\varnothing \ \to\ \{0\} \ \to\ \{0,1\} \ \to\ \{0,1,2\} \ \to\ \cdots
+$$
 
-*Proof sketch.* Existence is Theorem 3.2 with $c = \mathrm{limitConfig}(H,
-\lambda)$. For uniqueness, suppose $\mathrm{ECC}(H, c', \lambda)$ for some other
-$c'$. Fix a cell $n$. Then both $c'(n)$ and $\mathrm{limitConfig}(H,\lambda)(n)$
-are eventual values of the coordinate history at $n$; by Theorem 3.1 they are
-equal. Since $n$ was arbitrary, $c' = \mathrm{limitConfig}(H,\lambda)$ by
-function extensionality. $\qquad\blacksquare$
+**Theorem 3.4 (No finite stage completes).** For every $k \in \mathbb{N}$,
+$$
+\mathrm{spread}^{[k]}(\varnothing) \ne \mathbb{N}.
+$$
+Consequently, at every finite time the configuration is a *proper* subset of the fully-on configuration.
 
-Theorem 3.3 is the foundational result: **whenever every coordinate history
-settles below a limit ordinal $\lambda$, the limit stage of the transfinite
-cellular automaton is well-defined and uniquely determined.** It holds at every
-limit ordinal, not only $\omega$, and so licenses continuation of the dynamics
-through $\omega \cdot 2$, $\omega^2$, and beyond.
+*Proof.* By Theorem 3.3, $\mathrm{spread}^{[k]}(\varnothing) = \mathrm{Iio}(k)$, and the cell $k \notin \mathrm{Iio}(k)$ (since $k \not< k$), whereas $k \in \mathbb{N}$. Hence the two sets differ. $\qquad\blacksquare$
 
----
+Theorem 3.4 is the negative half of the transfinite phenomenon: the computation whose intended output is "all cells on" *cannot be completed at any finite deadline*.
 
-## 4. Monotone convergence and the $\omega$-limit
+### 3.3 The intended output as a least fixed point
 
-Theorem 3.3 reduces the existence of limit stages to the question: *do the
-coordinate histories settle?* We now exhibit a large class of rules for which the
-answer is always yes. We specialize to Boolean state $\sigma = \mathrm{Bool}$ with
-the order $\mathrm{false} < \mathrm{true}$.
+**Theorem 3.5 (Least fixed point).** The least fixed point of $\mathrm{spread}$ is the fully-on configuration:
+$$
+\mathrm{lfp}(\mathrm{spread}) \;=\; \mathbb{N}.
+$$
 
-### 4.1 Inflationary rules
+*Proof.* Write $L = \mathrm{lfp}(\mathrm{spread})$, so $\mathrm{spread}(L) = L$ by the fixed-point property. We show every cell lies in $L$ by induction. Base case: $0 \in \mathrm{spread}(L) = L$ since $0$ is always inserted. Inductive step: if $m \in L$, then $m + 1 \in \mathrm{spread}(L) = L$ because $m+1 = m+1$ with $m \in L$ lies in the image. Hence $L = \mathbb{N}$. Since $\mathbb{N} = \top$ is the greatest element, and $L \le \top$ always, we conclude $L = \mathbb{N}$. (That $\mathbb{N}$ is itself a fixed point is immediate: $\mathrm{spread}(\mathbb{N}) = \{0\} \cup \{n+1 : n \in \mathbb{N}\} = \mathbb{N}$.) $\qquad\blacksquare$
 
-> **Definition 4.1 (Inflationary global map).** A global map
-> $F : \mathrm{Config}\,\mathrm{Bool} \to \mathrm{Config}\,\mathrm{Bool}$ is
-> *inflationary* if it never switches a cell off:
-> $$\forall c\ \forall n,\quad c(n) \le (F\,c)(n).$$
-
-Inflationary rules are monotone ratchets at the level of individual cells: a cell
-that is on remains on under one application of $F$ (since the only value
-$\ge \mathrm{true}$ is $\mathrm{true}$).
-
-### 4.2 Iterates are coordinatewise monotone
-
-> **Theorem 4.2 (Monotone iterates).** If $F$ is inflationary, then for every
-> initial configuration $c_0$ and every cell $n$, the map
-> $$k \;\longmapsto\; \big(F^{[k]} c_0\big)(n) \qquad (k \in \mathbb{N})$$
-> is monotone nondecreasing.
-
-*Proof sketch.* It suffices to check the single-step inequality
-$(F^{[k]}c_0)(n) \le (F^{[k+1]}c_0)(n)$ for all $k$, since a Boolean sequence that
-never decreases between consecutive indices is monotone. But
-$F^{[k+1]}c_0 = F(F^{[k]}c_0)$, and inflationarity of $F$ applied to the
-configuration $F^{[k]}c_0$ at cell $n$ gives exactly
-$(F^{[k]}c_0)(n) \le (F(F^{[k]}c_0))(n)$. $\qquad\blacksquare$
-
-### 4.3 Monotone Boolean sequences stabilize
-
-> **Theorem 4.3 (Monotone Boolean convergence).** Every monotone nondecreasing
-> sequence $s : \mathbb{N} \to \mathrm{Bool}$ is eventually constant: there is an
-> $N$ with $s(k) = s(N)$ for all $k \ge N$.
-
-*Proof sketch.* Two cases. If $s(j) = \mathrm{true}$ for some $j$, let $N = j$;
-monotonicity forces $s(k) = \mathrm{true} = s(N)$ for all $k \ge N$. If
-$s(j) = \mathrm{false}$ for all $j$, then $s$ is constantly $\mathrm{false}$ and
-any $N$ (say $N = 0$) works. $\qquad\blacksquare$
-
-### 4.4 The Boolean $\omega$-limit exists
-
-To index the finite iterate chain by ordinals below $\omega$, we use a retraction
-$\mathrm{natOfOrdinal} : \mathrm{Ord} \to \mathbb{N}$ that genuinely inverts the
-inclusion $\mathbb{N} \hookrightarrow \mathrm{Ord}$ below $\omega$:
-$\mathrm{natOfOrdinal}(n) = n$ for $n \in \mathbb{N}$, and
-$(\mathrm{natOfOrdinal}\,\alpha : \mathrm{Ord}) = \alpha$ whenever $\alpha < \omega$.
-The history of the iterate chain is then $\alpha \mapsto F^{[\mathrm{natOfOrdinal}\,\alpha]} c_0$.
-
-> **Theorem 4.4 (Existence of the $\omega$-limit).** Let $F$ be inflationary and
-> $c_0$ any initial configuration. Then there is a *unique* configuration $c$ with
-> $$\mathrm{ECC}\big(\alpha \mapsto F^{[\mathrm{natOfOrdinal}\,\alpha]} c_0,\ c,\ \omega\big).$$
-
-*Proof sketch.* By Theorem 3.3 it suffices to verify $(\ast)$ at $\omega$: each
-coordinate history settles below $\omega$. Fix a cell $n$. By Theorem 4.2 the
-finite sequence $k \mapsto (F^{[k]}c_0)(n)$ is monotone, so by Theorem 4.3 there is
-$N \in \mathbb{N}$ with $(F^{[k]}c_0)(n) = (F^{[N]}c_0)(n)$ for all $k \ge N$. Take
-the threshold ordinal $\beta = N < \omega$ and eventual value $(F^{[N]}c_0)(n)$.
-For any ordinal $\gamma$ with $N \le \gamma < \omega$, we have
-$\mathrm{natOfOrdinal}\,\gamma \ge N$ (because the retraction inverts the cast
-below $\omega$ and preserves order there), so the history value at $\gamma$ equals
-$(F^{[N]}c_0)(n)$. This establishes $\mathrm{EC}$ for the coordinate history at
-$n$, hence $(\ast)$, hence the claim by Theorem 3.3. $\qquad\blacksquare$
-
-Thus the entire transfinite apparatus is unconditionally well-defined at stage
-$\omega$ for the broad class of inflationary Boolean automata.
+Thus the "intended answer" is not an arbitrary target but the canonical least fixed point selected by the Knaster–Tarski theorem.
 
 ---
 
-## 5. A concrete transfinite automaton: the OR rule
+## 4. Transfinite behaviour: the main results
 
-> **Definition 5.0 (OR rule).** The Boolean local rule
-> $\mathrm{orRule} : \mathrm{Bool} \to \mathrm{Bool} \to \mathrm{Bool} \to \mathrm{Bool}$
-> is $\mathrm{orRule}(l, c, r) = l \lor c \lor r$. Its global step,
-> $(\mathrm{step}\,\mathrm{orRule}\,c)(n) = c(n-1) \lor c(n) \lor c(n+1)$, turns a
-> cell on whenever it or either neighbour is on.
+Let $g(\beta) = g_{\mathrm{spread}}(\beta)$ denote the stage-$\beta$ approximant of the constructive least-fixed-point iteration from $\bot = \varnothing$, as in §2.2.
 
-> **Theorem 5.1 (The OR step is inflationary).** $\mathrm{step}\,\mathrm{orRule}$
-> is inflationary: $c(n) \le (\mathrm{step}\,\mathrm{orRule}\,c)(n)$ for all $c, n$.
+**Lemma 4.1 (Finite stages match iteration).** For every natural number $n$,
+$$
+g(n) \;=\; \mathrm{spread}^{[n]}(\varnothing).
+$$
 
-*Proof sketch.* By definition $(\mathrm{step}\,\mathrm{orRule}\,c)(n)$ contains the
-disjunct $c(n)$, and $b \le b \lor x$ for every Boolean $b, x$. A two-case check on
-$c(n)$ (true or false) closes the goal. $\qquad\blacksquare$
+*Proof.* By induction on $n$. At $n = 0$, the approximant $g(0)$ is the supremum of the empty family together with $\bot$, which is $\bot = \varnothing = \mathrm{spread}^{[0]}(\varnothing)$. At a successor, the constructive iteration satisfies $g(n+1) = \mathrm{spread}(g(n))$; by the inductive hypothesis $g(n) = \mathrm{spread}^{[n]}(\varnothing)$, so $g(n+1) = \mathrm{spread}(\mathrm{spread}^{[n]}(\varnothing)) = \mathrm{spread}^{[n+1]}(\varnothing)$. $\qquad\blacksquare$
 
-> **Theorem 5.2 (The OR automaton has a unique $\omega$-stage).** For every initial
-> configuration $c_0$ there is a unique configuration $c$ with
-> $$\mathrm{ECC}\big(\alpha \mapsto (\mathrm{step}\,\mathrm{orRule})^{[\mathrm{natOfOrdinal}\,\alpha]} c_0,\ c,\ \omega\big).$$
+**Theorem 4.2 (The limit rule is the union of all finite stages).**
+$$
+g(\omega) \;=\; \bigcup_{n \in \mathbb{N}} \mathrm{spread}^{[n]}(\varnothing).
+$$
 
-*Proof sketch.* Immediate from Theorem 4.4 with $F = \mathrm{step}\,\mathrm{orRule}$,
-using Theorem 5.1 to supply inflationarity. $\qquad\blacksquare$
+*Proof.* ($\subseteq$) By definition $g(\omega) = \bigvee\bigl(\{\mathrm{spread}(g(\gamma)) : \gamma < \omega\} \cup \{\bot\}\bigr)$. Every $\gamma < \omega$ is a natural number $n$, and $\mathrm{spread}(g(n)) = g(n+1) = \mathrm{spread}^{[n+1]}(\varnothing)$ by Lemma 4.1 and the successor rule; and $\bot = \mathrm{spread}^{[0]}(\varnothing)$. Hence every element of the family taking the supremum is one of the finite iterates, so $g(\omega) \subseteq \bigcup_n \mathrm{spread}^{[n]}(\varnothing)$.
 
-**Interpretation.** The OR automaton models an unstoppable contagion: the set of
-on-cells grows monotonically, advancing one cell outward in each direction per
-step. Its $\omega$-stage answers, simultaneously for all cells, the reachability
-question *"will this cell ever be reached by the spreading region?"* — a global
-fact that no single finite stage computes, but that the limit stage records
-exactly. Concretely, if the initial on-set is the interval $[a,b]$, then after $k$
-steps it is $[a-k, b+k]$ (clamped at the origin by the reflecting boundary), and at
-stage $\omega$ every cell is on.
+($\supseteq$) For each fixed $n$, Lemma 4.1 gives $\mathrm{spread}^{[n]}(\varnothing) = g(n)$, and monotonicity of $\beta \mapsto g(\beta)$ with $n < \omega$ gives $g(n) \le g(\omega)$. Taking the union over $n$ yields the reverse inclusion. $\qquad\blacksquare$
 
----
+This is precisely the ITTM limit rule specialized to a monotone run: at the limit stage $\omega$, a cell is on iff it was on at some finite stage.
 
-## 6. Discussion: collapse versus super-Turing power
+**Theorem 4.3 (Completion at $\omega$).**
+$$
+g(\omega) \;=\; \mathbb{N}.
+$$
+Every cell is on at the first limit ordinal.
 
-The results above expose a fundamental dichotomy in transfinite cellular automata.
+*Proof.* By Theorem 4.2, $g(\omega) = \bigcup_n \mathrm{spread}^{[n]}(\varnothing) = \bigcup_n \mathrm{Iio}(n)$ using Theorem 3.3. Given any cell $n$, we have $n \in \mathrm{Iio}(n+1)$, hence $n$ lies in the union. Thus the union is all of $\mathbb{N}$. $\qquad\blacksquare$
 
-**The collapsing regime.** For an inflationary rule, Theorem 4.4 shows more than
-existence of the $\omega$-stage: each cell *already* stabilizes at some *finite*
-stage $N(n)$. The $\omega$-stage merely tabulates verdicts that the finite
-dynamics had already reached cell by cell. In this regime the transfinite leap is
-*free* — it computes nothing that an (unbounded but finite) simulation could not
-have read off pointwise. More generally, whenever a rule admits an ordinal
-Lyapunov potential (a stage-decreasing well-founded measure), the orbit must reach
-a fixed point in fewer than $\omega$ steps and the $\omega$-stage adds nothing.
+**Corollary 4.4 (Closure ordinal exactly $\omega$).** Combining Theorems 3.4, 3.5, and 4.3:
+$$
+g(\omega) = \mathrm{lfp}(\mathrm{spread}) = \mathbb{N}, \qquad \text{yet} \qquad g(n) \ne \mathbb{N} \ \text{ for every } n \in \mathbb{N}.
+$$
+The spreading automaton reaches its least fixed point at the transfinite stage $\omega$ and at no finite stage. Its **closure ordinal is exactly $\omega$**.
 
-**The super-Turing regime.** The power of transfinite computation is unlocked
-precisely when histories *fail* to settle on their own. The paradigmatic example
-is the parity / toggle automaton, whose finite orbit oscillates
-$\mathrm{false}, \mathrm{true}, \mathrm{false}, \mathrm{true}, \dots$ and never
-converges. Eventual constancy fails, so the *clean* limit rule of this paper does
-not assign a value. The *full* $\limsup$ limit rule of ITTMs — "a cell is on at the
-limit iff it is on cofinally often below the limit" — does assign a value
-($\mathrm{true}$, in the toggle case), thereby reading a definite answer out of an
-oscillation that no finite machine can resolve. This is exactly the mechanism by
-which ITTMs decide the halting problem, transplanted into cellular form. The two
-rules agree wherever histories settle, but the $\limsup$ rule is strictly more
-expressive on non-convergent histories.
-
-The clean eventual-constancy rule studied here is therefore best seen as the
-*coherent core* of transfinite CA dynamics: it is exactly the part on which all
-reasonable limit rules (eventual-constancy, $\liminf$, $\limsup$) agree, and on
-which existence and uniqueness are guaranteed. The super-Turing extension lives in
-the disagreement, and is the subject of ongoing work (Section 8).
+This is the precise sense in which the transfinite run strictly exceeds every finite run: a concrete, unambiguous computation—light every cell—is provably impossible to complete in finite time yet completed at the first infinite ordinal.
 
 ---
 
-## 7. Algorithms
+## 5. The general bridge
 
-While the transfinite stages are infinitary objects, the finite-time dynamics and
-the *detection* of stabilization are fully computable, and they are what one
-simulates in practice.
+The spreading automaton is an instance of a completely general phenomenon.
 
-**Algorithm A — Finite-orbit evolution.** Given a local rule $f$, an initial
-configuration $c_0$, a window $[-W, W]$ of cells, and a horizon $T$, compute
-$(\mathrm{step}\,f)^{[t]}c_0$ restricted to the window for $t = 0, \dots, T$. Cost
-$O(T \cdot W)$ time, $O(W)$ space per row.
+**Theorem 5.1 (Cellular fixed points are transfinitely computable).** Let $\alpha$ be any complete lattice and let $f : \alpha \to \alpha$ be any monotone operator (an arbitrary monotone cellular-automaton rule on an arbitrary configuration space). Then the least fixed point $\mathrm{lfp}(f)$ is a value of the transfinite ordinal iteration: there exists an ordinal $\beta$—the closure ordinal of $f$—such that $g_f(\beta) = \mathrm{lfp}(f)$, where $g_f$ is the constructive iteration of §2.2. Moreover $g_f$ is monotone in the stage, applies $f$ at successors, and takes suprema (the ITTM limit rule for monotone runs) at limits.
 
-**Algorithm B — Stabilization detection ($\omega$-stage approximation).** For an
-inflationary rule, each cell's value is monotone in $t$; track, per cell, the first
-$t$ at which it becomes on. After the on-region exits the window, every cell in the
-window has stabilized, yielding the restriction of the $\omega$-stage to the
-window. Cost $O(T \cdot W)$, terminating once all windowed cells have settled.
+*Proof.* This is the constructive form of the Knaster–Tarski theorem (§2.2). The ordinal-indexed sequence $g_f$ is monotone; since $\alpha$ is a set it cannot strictly increase through a proper class of ordinals, so it stabilizes at some ordinal $\beta$, and the stable value is a fixed point of $f$. One checks it is the *least* prefixed point, hence $\mathrm{lfp}(f)$. The successor and limit rules hold by the defining recursion of $g_f$. $\qquad\blacksquare$
 
-**Algorithm C — Cofinal-frequency ($\limsup$) evaluation.** For non-monotone rules,
-approximate the ITTM-style $\limsup$ limit by tracking, per cell, whether it has
-been on after the current candidate threshold; a cell that is on infinitely often
-(detected as: on again after every proposed threshold up to $T$) is assigned on at
-the limit. This distinguishes convergent cells (collapse) from cofinally-on cells
-(genuine limit information).
+Theorem 5.1 is the abstract connector foreshadowed by the dictionary of §1.1: *the global fixed point of any monotone cellular-automaton rule is reached by transfinite ordinal iteration*, with one CA step per successor stage and the ITTM limit rule at limit stages. The spreading automaton realizes the simplest nontrivial case, with closure ordinal $\omega$.
 
-Pseudocode and reference implementations appear in the accompanying `demo.py` and
-in the package's `algorithms` section.
+---
+
+## 6. Algorithms
+
+Two computational procedures underlie the results. Both operate on *finite representations* of configurations (initial segments and threshold indices), which suffices because all approximants of the spreading automaton are downward-closed initial segments.
+
+### 6.1 Finite-stage simulation
+
+To compute the configuration after $k$ finite steps, iterate the local rule $k$ times from the empty set. For the spreading automaton the result is always an initial segment, so we may represent a configuration by its length. The general (set-based) simulation runs in $O(k \cdot w)$ time where $w$ bounds the size of the live region, and is used to *witness* Theorems 3.3 and 3.4 for concrete $k$.
+
+### 6.2 Closure-ordinal detection
+
+To detect the closure ordinal, iterate the rule, taking a union (limit inferior) at the simulated limit stage $\omega$, and test for a fixed point. For a monotone rule on a decidable, finitely-presentable lattice this yields the *stabilization stage*: the first ordinal (represented symbolically) at which two consecutive approximants agree. For the spreading automaton the finite iterates never stabilize (each is a strict superset of the previous), while the union at $\omega$ is a fixed point—detecting closure ordinal exactly $\omega$.
+
+---
+
+## 7. Applications and discussion
+
+**Super-Turing computation via automata.** The result gives a cellular-automaton mascot for the ITTM phenomenon: a fixed local rule that, run on the ordinals, completes a task provably beyond every finite deadline. The closure ordinal becomes a quantitative measure of a computation's transfinite content.
+
+**Fixed-point semantics.** Least-fixed-point iteration is the backbone of denotational semantics, inductive definitions, and datalog-style query evaluation. The bridge here reframes those iterations as *cellular-automaton dynamics run at the ordinals*, and conversely gives cellular-automata a clean semantics as monotone least-fixed-point computations.
+
+**A hierarchy of closure ordinals.** By enriching the lattice one can climb the transfinite staircase. On the grid $\mathcal{P}(\mathbb{N} \times \mathbb{N})$, the rule "fill row $i+1$ only once row $i$ is complete" completes each of infinitely many rows in $\omega$ steps and hence closes at $\omega^2$. Analogous constructions target $\omega + 1$, $\omega \cdot 2$, and beyond. The scaffolding used for the spreading automaton—the successor rule, monotonicity in the stage, and the characterization of limit stages as suprema—generalizes directly; the remaining work is computing the limit stages $\bigvee_{\gamma < \lambda} g(\gamma)$ at each limit $\lambda$.
+
+**Limits of monotonicity.** The clean fixed-point story requires monotonicity. Rule 110 and other computationally universal automata are *not* monotone (cells oscillate), so the least-fixed-point machinery does not apply verbatim. There the appropriate device is the genuine ITTM limit inferior on the cell traces, and the goal becomes a *simulation* theorem rather than a fixed-point theorem.
 
 ---
 
 ## 8. Future work
 
-The following directions extend the verified core.
+1. **Closure ordinals beyond $\omega$.** Design monotone CA rules whose least fixed point is reached only at $\omega+1$, $\omega \cdot 2$, $\omega^2$, and prove the exact closure ordinal. The $\omega^2$ target is met by a grid rule that fills row $i+1$ only once row $i$ is complete; the work is computing the limit stages at each limit ordinal.
 
-1. **An exact potential dichotomy.** Conjecture: a transfinite CA's $\omega$-stage
-   is *informative* (differs from every finite stage on some cell) **iff** the
-   local rule admits *no* ordinal Lyapunov potential on its reachable
-   configurations. One direction (potential $\Rightarrow$ collapse) follows from
-   the Lyapunov collapse theorem; the missing converse ("no collapse $\Rightarrow$
-   no potential") should be obtained by building a potential out of the
-   stabilization stage itself.
+2. **A Rule-110 analog.** Rule 110 is not monotone, so the least-fixed-point machinery does not apply verbatim. Two routes: (a) study a monotone sub-shift / growth restriction of Rule-110-like dynamics where the fixed-point iteration applies; or (b) model the genuinely non-monotone limit dynamics with the ITTM limit-inferior rule directly (limit inferior of the Boolean cell traces) and prove a simulation result.
 
-2. **A clock hierarchy at $\omega \cdot k$.** Conjecture: for each $k$ there is a
-   transfinite CA whose output first stabilizes exactly at stage $\omega \cdot k$,
-   yielding a strict hierarchy in which $\omega^2$ dominates every $\omega \cdot k$.
-   Since the limit stages $\omega \cdot (k+1)$ are cofinal below $\omega^2$, one can
-   stack $k$ independent ITTM-style limits via a diagonal construction nesting $k$
-   copies of the toggle separation, each resolved one limit later.
-
-3. **Genuine ordinal $\limsup$ versus nat-sampling.** Conjecture: replacing the
-   nat-sampling limit rule with the true ordinal $\limsup$ ("on cofinally often
-   below $o$") yields a rule that agrees with the $\omega$-stage at $\omega$ but is
-   strictly more expressive at every limit $o \ge \omega \cdot 2$, because the
-   nat-sampling rule only reads stages below $\omega$ and is blind to information
-   created at higher limits.
+3. **ITTM connection, formalized.** Define an Infinite Time Turing Machine tape as a Boolean bi-infinite sequence evolving over the ordinals with the limit-inferior limit rule, and prove that the monotone CA studied here is *simulated* by such a machine, so that the CA's closure ordinal is an ITTM halting time.
 
 ---
 
 ## 9. Conclusion
 
-We have given a rigorous, self-contained foundation for cellular automata indexed
-by ordinal time, centered on the construction of limit stages. The eventual-
-constancy condition is the precise hypothesis under which a limit stage is
-coherent, and under it the limit configuration exists and is unique (Theorem 3.3).
-Inflationary Boolean rules satisfy this hypothesis automatically via monotone
-convergence (Theorem 4.4), and the classical OR rule provides a concrete
-transfinite automaton with a well-defined $\omega$-stage (Theorem 5.2). These
-results place the cellular analogue of the Infinite Time Turing Machine limit law
-on firm ground, and isolate the boundary — between collapsing and genuinely
-super-Turing dynamics — at which transfinite computation becomes more than the sum
-of its finite parts.
-
----
-
-## References (for context only; this paper is self-contained)
-
-- J. D. Hamkins and A. Lewis, *Infinite Time Turing Machines*, Journal of Symbolic
-  Logic, 2000.
-- M. Cook, *Universality in Elementary Cellular Automata*, Complex Systems, 2004.
-- S. Wolfram, *A New Kind of Science*, 2002.
+We have exhibited a concrete, minimal cellular automaton whose computation is genuinely transfinite: provably impossible to complete in any finite number of steps, yet completed exactly at the first infinite ordinal $\omega$, where it reaches its canonical least-fixed-point output. Behind the example stands a general correspondence: every monotone cellular-automaton rule on every complete-lattice configuration space computes its global fixed point by transfinite ordinal iteration, with one automaton step per successor stage and the Infinite Time Turing Machine limit rule at limit stages. Cellular automata, run at the ordinals, strictly exceed their finite-time counterparts—precisely as Infinite Time Turing Machines exceed ordinary Turing machines.

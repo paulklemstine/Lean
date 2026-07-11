@@ -4041,20 +4041,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Superlinear distance multiplicity in Minkowski grids"
   },
   {
-    "consumed_by_exp_id": "a547c760",
-    "description": "For any finite subset X of \u211d\u207f equipped with the Euclidean metric, the microscopic weighting \u03bc exists and satisfies: \u03bc(x) > 0 if and only if x is a vertex (extreme point) of conv(X), and \u03bc(x) \u2264 0 for every non-extreme point of X. This formalizes the heuristic that the microscopic weighting emphasizes boundary points and assigns greater weight to outlying regions.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0584",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05349v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T21:33:24.349961+00:00",
-    "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The paper proves that \u03bc\u2082 \u2264 1 + \u03c1, where \u03bc\u2082 is the infimum over all infinite sequences of radial cuts of the supremum of the ratio of maximum to minimum portion (adjacent-pair) sizes, and \u03c1 \u2248 0.75488 is the unique real root of x\u00b2 + x\u00b3 = 1 in (0,1). Korsky proved \u03bc\u2082 \u2265 5/3. The conjecture asserts that the paper's upper bound is tight: \u03bc\u2082 = 1 + \u03c1. This would require showing that no cutting strategy can achieve a ratio strictly less than 1 + \u03c1 in the limit, which likely demands a structural impossibility argument about the combinatorics of slice-size configurations.",
     "domains": [
@@ -6761,6 +6747,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T02:51:05.410039+00:00",
     "title": "This project formalizes the algebraic engine behind non-Desarguesian planes and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis development formalises the *microscopic weighting* of a finite Euclidean\nmetric space \u2014 the small-scale (`t \u2192 0`) limit of Leinster's magnitude weighting\n\u2014 as a **distance-matrix weighting** `\u03bc` satisfying `D \u03bc = \u03bb\u00b7\ud835\udfd9`, `\u03a3 \u03bc = 1`,\nand establishes the sign characterisation (\"positive at vertices of `conv X`,\nnon-positive at interior points\") on representative configurations.\n\n## What is proved\n\n* `Core.lean` \u2014 the predicate `IsMicroWeighting`, well-definedness of the\n  constant `\u03bb` for symmetric `D`, uniqueness for invertible `D`, existence\n  via `\u03bc = D\u207b\u00b9\ud835\udfd9 / (\ud835\udfd9\u1d40 D\u207b\u00b9\ud835\udfd9)`, and the identity `\u03bb = \u03bc\u1d40 D \u03bc` expressing the\n  constant as the quadratic energy of the weighting.\n* `Examples.lean` \u2014 exact microscopic weightings and per-coordinate signs for:\n  two points, three collinear points, the equilateral triangle, and the\n  square-plus-centre (where the interior weight is genuinely negative).\n* `ExtremePoints.lean` \u2014 the geometric half: the full sign \u2194 extreme-point\n  equivalence for the collinear configuration in `\u211d` and for the\n  square-plus-centre in `\u211d\u00b2`.\n\n## Natural next steps\n\n1. **General existence.** Prove that for `n` distinct points in `\u211d\u1d48` the Euclidean\n   distance matrix `D` is invertible (it is conditionally negative definite of\n   full rank), giving `\u03bc` for every finite Euclidean set, not just examples.\n\n2. **General sign theorem.** Prove `\u03bc(x) > 0 \u2194 x \u2208 extremePoints (conv X)` in full\n   generality. The natural route is to connect `sign(\u03bc)` to a supporting-hyperplane\n   / Delaunay characterisation of extreme points.\n\n3. **Link to magnitude asymptotics.** Formalise `Z_t = J - tD + O(t\u00b2)` and prove\n   that the finite-scale weighting `w_t` converges to `\u03bc` as `t \u2192 0`, tying the\n   algebraic object back to its analytic origin.\n\n4. **Higher-dimensional and generic configurations.** Extend the `\u211d\u00b2`\n   extreme-point machinery (`pin_vertex`) to polytopes and to point sets in `\u211d\u1d48`.\n\n5. **Negative-type framework.** Develop Schoenberg's theorem\n   (negative-type \u21d4 embeddable) inside the project to underpin positive\n   definiteness of the similarity matrices `Z_t`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0983",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a547c760",
+    "status": "available",
+    "timestamp": "2026-07-11T02:51:13.716812+00:00",
+    "title": "This development formalises the *microscopic weighting* of a finite Euclidean"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ff42203a",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThis project formalizes the *order-theoretic bridge* connecting structural\ngraph/matroid theory (Robertson–Seymour forbidden minors) with commutative\nalgebra (Dickson's lemma / fi",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-10T09:58:20",
-      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
-    },
-    {
       "cycle_id": "9b14e09c",
       "domain": "Applications",
       "key_insight": "# Future Directions: The Topology and Conservation Laws of Assembled Puzzles\n\nThis cycle established a conservation law for jigsaw assemblies — in any validly\nassembled row or rectangle the exposed ta",
@@ -499,19 +489,19 @@
       "theorem_count": 42,
       "timestamp": "2026-07-11T02:51:11",
       "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+    },
+    {
+      "cycle_id": "a547c760",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis development formalises the *microscopic weighting* of a finite Euclidean\nmetric space — the small-scale (`t → 0`) limit of Leinster's magnitude weighting\n— as a **distance-ma",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-07-11T02:51:23",
+      "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e3b2c2b9",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's study of the congruence \"the fifth power of an\ninteger differs from the integer itself by a multiple of five\", together with\nits finite-field explanation",
-      "quality_score": 0.5254,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-02T12:46:30",
-      "title": "Prove Fermats Little Theorem for p=5"
-    },
     {
       "cycle_id": "4b429121",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 42,
       "timestamp": "2026-07-11T02:51:11",
       "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+    },
+    {
+      "cycle_id": "a547c760",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis development formalises the *microscopic weighting* of a finite Euclidean\nmetric space — the small-scale (`t → 0`) limit of Leinster's magnitude weighting\n— as a **distance-ma",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-07-11T02:51:23",
+      "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3a52b537",
-      "domain": "Cryptography",
-      "name": "card_filter_isMono_le",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "3a52b537",
-      "domain": "Cryptography",
-      "name": "not_arrows_of_two_mul_choose_lt",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "f0772bca",
-      "domain": "Novelty",
-      "name": "Interfere",
-      "quality": 0.83
-    },
     {
       "cycle_id": "0643b2b3",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "dMul_zero_right",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a547c760",
+      "domain": "Applications",
+      "name": "microConstant_unique",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "a547c760",
+      "domain": "Applications",
+      "name": "microWeighting_unique",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "a547c760",
+      "domain": "Applications",
+      "name": "microWeighting_exists",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T02:51:11",
+  "last_updated": "2026-07-11T02:51:23",
   "open_questions": [
     {
       "context": "witnesses, not `sorry`ed placeholders, so the abstract hypotheses are demonstrably; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "df72d5fe",
-        "quality": 0.83,
-        "theorems": 22,
-        "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-      },
-      {
         "cycle_id": "2c002c80",
         "quality": 0.78,
         "theorems": 25,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 22,
         "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
+      },
+      {
+        "cycle_id": "a547c760",
+        "quality": 0.72,
+        "theorems": 33,
+        "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
       }
     ],
     "Bridges": [

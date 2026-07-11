@@ -7101,35 +7101,6 @@
     "title": "Superlinear distance multiplicity in Minkowski grids"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.MG",
-      "math.CO",
-      "magnitude_of_metric_spaces",
-      "negative_type_metric_spaces",
-      "Schoenberg_embedding"
-    ],
-    "consumed_by_exp_id": "a547c760",
-    "description": "For any finite subset X of ℝⁿ equipped with the Euclidean metric, the microscopic weighting μ exists and satisfies: μ(x) > 0 if and only if x is a vertex (extreme point) of conv(X), and μ(x) ≤ 0 for every non-extreme point of X. This formalizes the heuristic that the microscopic weighting emphasizes boundary points and assigns greater weight to outlying regions.",
-    "domain_bridges": [
-      "convex_geometry_extreme_points",
-      "potential_theory_energy_minimization",
-      "combinatorics_of_finite_metric_spaces"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0584",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "First formalize the magnitude weighting w(t) as the solution to the linear system ∑_{y∈X} e^{-td(x,y)} w(y,t) = 1, then define the microscopic weighting as the limit μ(x) = lim_{t→∞} w(x,t). Use the Schoenberg embedding characterization for spaces of strictly negative type, and the energy integral optimization formulation. The sign characterization likely requires analyzing the variational problem: show that minimizing the energy forces positive mass onto extreme points (which are maximally spread) and non-positive mass onto interior points (which are redundant for energy minimization). For the converse direction (non-extreme points get non-positive weight), use the convex combination structure of interior points and the strict negativity of the kernel.",
-    "research_mode": "team",
-    "source_exp_id": "2607.05349v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T21:33:24.349961+00:00",
-    "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO",
@@ -11687,6 +11658,26 @@
     "status": "available",
     "timestamp": "2026-07-11T02:51:05.410039+00:00",
     "title": "This project formalizes the algebraic engine behind non-Desarguesian planes and"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis development formalises the *microscopic weighting* of a finite Euclidean\nmetric space — the small-scale (`t → 0`) limit of Leinster's magnitude weighting\n— as a **distance-matrix weighting** `μ` satisfying `D μ = λ·𝟙`, `Σ μ = 1`,\nand establishes the sign characterisation (\"positive at vertices of `conv X`,\nnon-positive at interior points\") on representative configurations.\n\n## What is proved\n\n* `Core.lean` — the predicate `IsMicroWeighting`, well-definedness of the\n  constant `λ` for symmetric `D`, uniqueness for invertible `D`, existence\n  via `μ = D⁻¹𝟙 / (𝟙ᵀ D⁻¹𝟙)`, and the identity `λ = μᵀ D μ` expressing the\n  constant as the quadratic energy of the weighting.\n* `Examples.lean` — exact microscopic weightings and per-coordinate signs for:\n  two points, three collinear points, the equilateral triangle, and the\n  square-plus-centre (where the interior weight is genuinely negative).\n* `ExtremePoints.lean` — the geometric half: the full sign ↔ extreme-point\n  equivalence for the collinear configuration in `ℝ` and for the\n  square-plus-centre in `ℝ²`.\n\n## Natural next steps\n\n1. **General existence.** Prove that for `n` distinct points in `ℝᵈ` the Euclidean\n   distance matrix `D` is invertible (it is conditionally negative definite of\n   full rank), giving `μ` for every finite Euclidean set, not just examples.\n\n2. **General sign theorem.** Prove `μ(x) > 0 ↔ x ∈ extremePoints (conv X)` in full\n   generality. The natural route is to connect `sign(μ)` to a supporting-hyperplane\n   / Delaunay characterisation of extreme points.\n\n3. **Link to magnitude asymptotics.** Formalise `Z_t = J - tD + O(t²)` and prove\n   that the finite-scale weighting `w_t` converges to `μ` as `t → 0`, tying the\n   algebraic object back to its analytic origin.\n\n4. **Higher-dimensional and generic configurations.** Extend the `ℝ²`\n   extreme-point machinery (`pin_vertex`) to polytopes and to point sets in `ℝᵈ`.\n\n5. **Negative-type framework.** Develop Schoenberg's theorem\n   (negative-type ⇔ embeddable) inside the project to underpin positive\n   definiteness of the similarity matrices `Z_t`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0983",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a547c760",
+    "status": "available",
+    "timestamp": "2026-07-11T02:51:13.716812+00:00",
+    "title": "This development formalises the *microscopic weighting* of a finite Euclidean"
   },
   {
     "ambition_level": "extension",

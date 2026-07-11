@@ -1,247 +1,76 @@
-# Cellular Automata at the Ordinals: When Computation Refuses to Stop
+# When Computers Count Past Infinity: Cellular Automata at the Ordinals
 
-## A grid that thinks forever
+## A machine that never finishes—until it does
 
-Imagine an infinite row of light bulbs, stretching off to the horizon. Each
-bulb is either on or off. A simple rule governs them: at every tick of a
-universal clock, each bulb looks at itself and its two immediate neighbours,
-and decides whether to be on or off in the next instant. That is all. No
-central controller, no memory beyond the neighbourhood, no foresight. Just a
-local rule, applied everywhere at once, again and again.
+Imagine a row of light bulbs stretching off to the right, forever. They are numbered $0, 1, 2, 3, \dots$, one for every counting number. At the start, all of them are dark. Now we plug in a simple, rigid rule and let time tick forward:
 
-This is a **cellular automaton**, one of the most deceptively simple objects in
-all of science. Conway's *Game of Life* is one. The famous *Rule 110*, which
-turns out to be capable of running any computer program, is another. From these
-microscopic, purely local instructions, vast and intricate behaviour emerges:
-gliders that sail across the grid, factories that spawn them, logic gates,
-counters, even universal computers built entirely out of blinking cells.
+- Bulb $0$ is special: it is wired directly to the wall, so it is always on.
+- Every other bulb turns on at the next tick if and only if the bulb immediately to its *left* was on at the previous tick.
 
-But every cellular automaton in the textbooks shares a hidden assumption, so
-natural we rarely notice it: **time is the natural numbers**. Tick 0, tick 1,
-tick 2, and so on. The clock counts $0, 1, 2, 3, \dots$ and never reaches any
-kind of "end." If a pattern still hasn't settled down after a billion ticks,
-we simply wait for tick a-billion-and-one.
+That is the whole machine. There is no controller, no memory, no clever program—just a local rule copied identically at every position, deciding each bulb's fate from the state of its neighbour. This is a *cellular automaton*, the same species of object that includes Conway's Game of Life and the intricate patterns of Rule 110.
 
-This article is about what happens when we refuse to accept that limitation.
-What if we let the clock run *past* infinity?
+Watch it run. At tick $1$, only bulb $0$ is on. At tick $2$, bulbs $0$ and $1$ glow. At tick $3$, bulbs $0, 1, 2$. In general, after $k$ ticks the lit bulbs are exactly $\{0, 1, \dots, k-1\}$—a wave of light advancing rightward at one bulb per tick, an unstoppable but agonizingly patient march.
 
-## The clock that counts past infinity
+Here is the puzzle. **Will every bulb eventually turn on?**
 
-In ordinary arithmetic, there is no number after "all the natural numbers." But
-mathematicians have a perfectly rigorous way to keep counting once the natural
-numbers run out. These are the **ordinal numbers**.
+Your instinct says yes: give it enough time and the wave sweeps across the whole line. But "enough time" hides a trap. At *no finite moment* is the whole line lit. Pick any tick $k$ you like—a thousand, a trillion, a googolplex—and bulb number $k$ is still dark. The set of lit bulbs is always a *proper part* of the whole. The computation whose intended answer is "everything is on" never actually delivers that answer in ordinary time. It is a task that provably cannot be finished by any finite deadline.
 
-The ordinals begin in the familiar way:
+And yet the answer is *supposed* to be "all of them." So where does the completed computation live?
 
-$$0, \; 1, \; 2, \; 3, \; \dots$$
+## Counting past the last finite number
 
-and then, crucially, they keep going. After *every* natural number comes a brand
-new number called $\omega$ ("omega"). It is not the largest natural number —
-there is no such thing — it is the first number that lies *beyond* all of them.
-And the ordinals do not stop there:
+The resolution is one of the most beautiful ideas in mathematical logic: we let the clock run *past* infinity.
 
-$$\omega, \; \omega+1, \; \omega+2, \; \dots, \; \omega\cdot 2, \; \dots, \; \omega^2, \; \dots$$
+The ordinary counting numbers $0, 1, 2, \dots$ never reach an end—but mathematicians long ago learned to place a number *after all of them*. It is called $\omega$ (the Greek letter omega), the first *transfinite ordinal*. After $\omega$ come $\omega+1, \omega+2, \dots$, then $\omega \cdot 2$, and eventually $\omega^2$ and far beyond. These *ordinals* are the backbone of transfinite mathematics: an unending staircase where, crucially, some steps—the *limit stages* like $\omega$—sit at the very top of an infinite run of earlier steps with no immediate predecessor.
 
-There are two flavours of ordinal. A **successor** ordinal, like $5$ or
-$\omega+1$, is one that comes immediately after some other ordinal — you reach
-it by taking a single step. A **limit** ordinal, like $\omega$ or $\omega\cdot 2$
-or $\omega^2$, has *nothing* immediately before it. You cannot reach $\omega$ by
-adding one to anything; you can only reach it by *running through the entire
-infinite sequence that precedes it*.
+The question is what a machine should do *at* such a limit stage. It cannot look at "the previous step," because there is no previous step: $\omega$ has no ordinal just below it. So we need a *limit rule*. The natural one, the one used by *Infinite Time Turing Machines*—the transfinite computers studied in mathematical logic—is this:
 
-This distinction is the whole story. At a successor stage, a cellular automaton
-knows exactly what to do: apply the local rule once more. But what should it do
-at a *limit* stage? There is no "previous tick" to update from. The configuration
-at stage $\omega$ cannot be computed from the configuration "just before
-$\omega$," because there is no such configuration.
+> **At a limit stage, a bulb is on if it had switched on at some earlier stage and stayed on.**
 
-The answer — the idea at the heart of this work — is to define the limit stage
-not from a single predecessor, but from the **entire infinite history** that came
-before it.
+In our automaton, once a bulb turns on it never turns off, so this rule simplifies beautifully: at the limit stage $\omega$, a bulb is on precisely if it was on at *some* finite tick. We take the *union* of everything that ever happened.
 
-## Taking limits, cell by cell
+Now run the calculation. Every bulb $n$ turns on at tick $n+1$—a perfectly finite moment. So by the time we reach the limit stage $\omega$, *every* bulb has already had its turn. The union of all the finite stages is the entire line:
 
-Here is the rule. Run the automaton through stages $0, 1, 2, \dots$ in the usual
-way. Each individual bulb traces out an infinite sequence of on/off values across
-these stages — its personal **history**. To decide what that bulb should be at
-the limit stage $\omega$, we look at its history and ask: *does it eventually
-settle down?*
+$$\text{(configuration at stage } \omega) \;=\; \bigcup_{k=0}^{\infty} \{0, 1, \dots, k-1\} \;=\; \{0, 1, 2, 3, \dots\}.$$
 
-If a bulb is on, off, on, off, on, off forever, it never settles, and the limit
-is genuinely ambiguous. But if a bulb is, say, off for a while and then turns on
-and *stays* on — off, off, off, on, on, on, on, $\dots$ — then there is an
-obvious value to assign at stage $\omega$: **on**. The bulb has made up its mind,
-and the limit stage simply records the decision.
+**At stage $\omega$, and not one moment sooner, every bulb is on.** The computation that could never finish in finite time finishes at the *first* infinite instant.
 
-We make this precise with a notion we call *eventual constancy below a stage*. A
-history $h$ is **eventually constant below $\lambda$ with value $v$** if there is
-some earlier stage $\beta$ (still below $\lambda$) past which the history is
-always equal to $v$:
+This is the whole drama in miniature. The task is impossible for every finite clock, yet completed at the first transfinite tick. Mathematicians say the automaton's **closure ordinal**—the exact stage at which it settles into its final, unchanging answer—is precisely $\omega$.
 
-> there exists $\beta < \lambda$ such that for every $\gamma$ with
-> $\beta \le \gamma < \lambda$, we have $h(\gamma) = v$.
+## Why the answer is "all of them," provably
 
-The first thing one must check is that this is not self-contradictory: a history
-cannot settle on two *different* answers. And indeed it cannot. If a history is
-eventually $u$ and also eventually $v$, then far enough along it must equal both
-$u$ and $v$ at the same stage — so $u = v$. This is our first rigorously
-established fact:
+It is one thing to watch the wave and *believe* it fills the line; it is another to *prove* that the fully-lit configuration is genuinely the right, canonical answer and not an arbitrary guess.
 
-> **Uniqueness of limits.** If a coordinate's history is eventually constant
-> below $\lambda$ with value $u$, and also eventually constant with value $v$,
-> then $u = v$.
+The rigorous formulation uses the idea of a *fixed point*. A configuration is *stable* under our rule if applying the rule changes nothing—the picture at the next tick is identical to the picture now. The all-on configuration is stable: bulb $0$ stays on (it is the source), and every other bulb stays on because its left neighbour is on. So "everything on" is a fixed point.
 
-Now apply this cell by cell. Suppose that at a limit stage $\lambda$, *every*
-bulb's history has settled down. Then there is one and only one configuration of
-the whole grid whose value at each cell is that cell's eventual value. This is
-the **limit configuration**, and it is the genuinely new ingredient that lets a
-cellular automaton survive the passage through infinity:
+But is it the *right* fixed point? A cornerstone theorem about monotone rules—rules that never turn a bulb off once the input grows—guarantees that among all stable configurations there is a *least* one, the smallest fixed point reachable by starting from nothing and iterating. This *least fixed point* is the honest, canonical output of the computation. For our automaton one can prove, by a short induction sweeping rightward along the line, that the least fixed point is exactly the all-on configuration. The transfinite run does not merely *reach* some fixed point at stage $\omega$; it reaches *the* least fixed point—the intended answer, delivered on schedule at the first infinite ordinal.
 
-> **Limit stages exist and are unique.** If every cell's history is eventually
-> constant below the limit stage $\lambda$, then there is a *unique* whole-grid
-> configuration realizing all of those eventual values simultaneously.
+## The dictionary between two worlds
 
-This theorem is the foundation. It tells us that whenever the histories behave
-well — whenever every bulb eventually makes up its mind — the automaton can be
-continued past $\omega$, past $\omega\cdot 2$, in principle all the way up the
-ordinals, and there is never any ambiguity about what the next limit looks like.
+The example is deliberately simple, but it is a window onto a sweeping correspondence—a dictionary translating the language of cellular automata into the language of transfinite computation:
 
-## When every cell is guaranteed to settle
+| Cellular automaton | Ordinal computation |
+| :--- | :--- |
+| space of configurations | a complete lattice of states |
+| local update rule | a monotone operator $f$ |
+| one tick of the clock | one successor stage |
+| the limit-of-time rule | a limit stage (take the union) |
+| the completed computation | the least fixed point of $f$ |
 
-A skeptic will object: that is a big "if." Why should every bulb's history settle
-down? In general it need not — the blinking on/off/on/off bulb is a permanent
-counterexample. So the interesting question becomes: **which rules guarantee that
-the histories settle, so that the limit stage is always well-defined?**
+The general principle behind the dictionary is a classical result on monotone operators: for *any* monotone update rule on *any* space of configurations that is rich enough to take unions (a "complete lattice"), the transfinite iteration—apply the rule at successor stages, take unions at limit stages—is *guaranteed* to reach the least fixed point at some ordinal stage. In other words:
 
-There is a beautiful and broad class of rules for which the answer is "always,"
-and the reason is a one-word idea: **monotonicity**.
+> **Every monotone cellular-automaton rule, no matter how it is defined or on what space, has its final global answer reached by transfinite ordinal iteration.**
 
-Call a rule **inflationary** if it can only ever turn bulbs *on*, never off.
-Formally, for every configuration $c$ and every cell $n$,
+Ordinary Turing machines halt (or not) in finite time. Infinite Time Turing Machines keep computing across the ordinals, and this lets them decide problems no finite machine ever could. Our light bulbs are a cellular-automaton mascot for exactly this leap: the *finite-time* automaton is strictly weaker than its *transfinite* cousin, in the sharpest possible sense. There is a concrete, unambiguous task—light every bulb—that the finite machine can approach forever but never achieve, and the transfinite machine completes at its first infinite step.
 
-$$c(n) \le (F\,c)(n),$$
+## Beyond the first infinity
 
-where we order the two states by $\text{off} < \text{on}$. An inflationary rule
-is a ratchet: once a light comes on, it stays on.
+Why stop at $\omega$? The same machinery predicts a rich hierarchy. Consider an automaton on a *grid* of bulbs instead of a line, with the rule: fill row $i+1$ only once row $i$ is completely lit. Each individual row takes $\omega$ ticks to finish, and there are infinitely many rows to complete in sequence. Finishing all of them takes $\omega$ copies of $\omega$—the closure ordinal climbs to $\omega^2$. Stack the construction cleverly and you can engineer automata whose computations settle only at $\omega+1$, at $\omega \cdot 2$, at $\omega^2$, and onward up the transfinite staircase. The closure ordinal becomes a precise measure of a computation's *transfinite difficulty*.
 
-Now watch what happens to a single bulb across the stages $0, 1, 2, \dots$. Its
-history can only climb: it might be off for a while, but the moment it turns on it
-is on forever. A history that only ever climbs from off to on is what
-mathematicians call a **monotone** Boolean sequence, and such a sequence has the
-simplest possible long-term behaviour:
+There is a catch worth naming honestly. The clean fixed-point story relies on *monotonicity*—the promise that bulbs never switch off. The most famous cellular automata, like Rule 110, are *not* monotone; cells flicker on and off, and the tidy "take the union at limits" rule must be replaced by the more delicate *limit inferior* used by Infinite Time Turing Machines, which asks what a cell *eventually settles into*. Extending the transfinite picture to those genuinely oscillating, computationally universal automata is the frontier this work points toward: a full bridge on which the halting time of a cellular automaton becomes, literally, the halting time of a transfinite machine.
 
-> **Monotone Boolean sequences settle.** A sequence of on/off values that never
-> decreases is eventually constant: it is off for a finite stretch and then on
-> forever (or off the whole time).
+## Why it matters
 
-The proof is almost a tautology, which is exactly why it is so powerful: either
-the bulb turns on at some first stage $N$ — after which it is pinned at on — or it
-never turns on, in which case it is off forever. Either way, it settles.
+At first glance, lighting an infinite row of bulbs is a toy. But it dramatizes a profound recalibration of what "computation" means. Computation need not end at a finite deadline; run on the ordinals, a rule as mindless as "copy your left neighbour" acquires the power to complete tasks that are demonstrably beyond every finite process. The same idea underlies the study of definability in logic, the analysis of when iterative processes stabilize, and the theory of super-Turing computation.
 
-Chain these facts together. An inflationary rule makes every history monotone;
-every monotone history settles; and when every history settles, the limit stage
-exists and is unique. We arrive at the central existence theorem:
-
-> **The $\omega$-limit exists.** For *any* inflationary rule $F$ and *any* starting
-> configuration, the cell-by-cell histories of the iterates
-> $c, \; F c, \; F^2 c, \; \dots$ are all eventually constant, so the $\omega$-stage
-> configuration exists and is unique.
-
-This is not an empty abstraction. It applies to a concrete, recognizable
-automaton. Consider the **OR rule**: a cell turns on if it, or either of its
-neighbours, is on. In symbols,
-
-$$(\text{OR-step}\,c)(n) = c(n-1) \;\text{OR}\; c(n) \;\text{OR}\; c(n+1).$$
-
-This rule models the spread of an unstoppable contagion across the row: switch on
-a single bulb, and the "on" region grows by one cell in each direction at every
-tick, advancing forever outward but never retreating. The OR rule is plainly
-inflationary — it never switches anything off — so our theorem applies verbatim:
-
-> **The OR automaton has a well-defined $\omega$-stage.** Running the OR rule from
-> any initial pattern, every cell eventually turns on (or stays off forever if no
-> "on" ever reaches it), and the limit configuration at stage $\omega$ exists and
-> is unique.
-
-For the OR rule the $\omega$-stage has a vivid meaning: a cell is on at stage
-$\omega$ exactly when it would *ever* be reached by the spreading contagion. The
-limit stage performs, in a single transfinite leap, a computation that no finite
-number of ordinary ticks could finish — it answers the question "will this cell
-ever light up?" for *all* cells at once.
-
-## Why the leap past infinity matters
-
-This is where the story connects to one of the deepest themes in the theory of
-computation. An ordinary computer, in the mathematical idealization known as a
-Turing machine, can run for any finite number of steps. But there are perfectly
-well-posed questions it can never settle — most famously, *the halting problem*:
-will a given program eventually stop, or run forever? No finite computation can
-answer this in general, because to answer "no, it runs forever" you would have to
-watch infinitely many steps.
-
-In the 1990s, the logicians Joel David Hamkins and Andy Lewis proposed a daring
-fix: the **Infinite Time Turing Machine**. It is an ordinary machine, but it is
-allowed to run for transfinitely many steps. At limit stages, each memory cell is
-set according to the *limit* of its past values. With this extra power, the
-machine can simply run a program for $\omega$ steps and read off, at stage
-$\omega$, whether it ever halted. Questions hopelessly beyond ordinary computers
-become decidable. This is the realm of **super-Turing**, or **hypercomputation**.
-
-The transfinite cellular automaton is the same revolutionary idea, transplanted
-from the centralized, tape-and-head world of Turing machines into the radically
-decentralized world of cellular automata. The limit rule "each cell takes the
-limit of its history" is exactly the cellular analogue of the Infinite Time
-Turing Machine's limit rule for its tape cells. And the theorems above are the
-rigorous guarantee that this analogue is *coherent* — that the limit stages
-genuinely exist and are unambiguous whenever the dynamics is well-behaved.
-
-There is a striking tension lurking here, and it is worth naming. For a *nice*
-(inflationary) rule, the $\omega$-stage adds nothing truly new: every cell has
-already settled at some finite stage, so stage $\omega$ merely tallies the
-verdicts. The transfinite machinery quietly *collapses* back to ordinary
-computation. The genuinely super-Turing power lives at the boundary — in rules
-whose histories *never* settle on their own, where the limit rule must *impose* a
-verdict that no finite stage ever reached. The blinking on/off/on/off bulb is the
-seed of that power: a finite computer sees only endless oscillation, but a
-transfinite limit rule can be designed to read a definite answer out of it at
-stage $\omega$. Distinguishing these two regimes — when the leap past infinity is
-free, and when it is genuinely creative — is the frontier this work opens.
-
-## Climbing higher: $\omega$, $\omega\cdot 2$, and $\omega^2$
-
-Why stop at $\omega$? The limit-stage theorem is not special to $\omega$; it works
-at *any* limit ordinal. Once you have passed $\omega$, you keep applying the local
-rule — stages $\omega+1, \omega+2, \dots$ — until you reach the next limit,
-$\omega\cdot 2$, where you take limits again. Then onward to $\omega\cdot 3$, and
-so on through every $\omega\cdot k$, and finally to $\omega^2$, the limit of all of
-them.
-
-Each limit stage is a fresh opportunity to extract information that the stages
-below could not finish computing. Stacking these opportunities suggests a
-*hierarchy*: a computation that needs one transfinite leap, versus one that needs
-two, versus one that needs $k$. The conjecture motivating future work is that
-these levels are genuinely distinct — that there are automata whose answer first
-crystallizes only at stage $\omega\cdot k$ and not a moment sooner, so that
-running on the timeline $\omega^2$ is strictly more powerful than running on any
-$\omega\cdot k$. The ordinal $\omega^2$ would then sit at the top of an infinite
-tower of computational power, each floor built from a single trip past infinity.
-
-## The view from the top
-
-Strip away the formalism and a simple, almost philosophical, picture remains.
-Computation, we usually think, is something that happens *in time*: step follows
-step, and the answer arrives — if it arrives at all — after finitely many of them.
-The transfinite cellular automaton challenges that picture at its root. It says:
-let time itself be richer. Let it have *limit moments*, points reached not by one
-more step but by the accumulated weight of an entire infinite past. At those
-moments, ask not "what did the last step produce?" but "what did the whole history
-converge to?"
-
-The mathematics shows this can be done coherently. Whenever the histories settle —
-and for an enormous, natural class of rules they always do — the limit stages
-exist, they are unique, and the automaton glides through infinity without
-stumbling. A humble row of light bulbs, governed by nothing more than "look at
-your neighbours," can be made to compute not just for all time, but *beyond* it.
-
-And in that beyond lies the answer to questions that no finite machine, running on
-ordinary time, could ever resolve.
+The moral is quietly radical. Infinity is not merely "a very long time." It is a *place*—a specific stage on a well-ordered staircase—where computations that were forever unfinished suddenly stand complete. Our little wave of light, which can never fill the line on any human or cosmic timescale, is already, waiting at the first step past infinity, entirely aglow.
