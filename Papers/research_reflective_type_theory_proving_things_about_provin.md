@@ -1,296 +1,201 @@
-# Reflective Type Theory: Proving Things About Proving Things
+# Reflective Type Theory: A Semantic Core for Propositions About Their Own Provability
 
-## A Formal Framework for Self-Referential Provability with Connections to Modal Mu-Calculus
+## Abstract
 
----
+We develop a semantic core for a *reflective* type theory — a system in which propositions may speak about their own provability. Adopting the propositions-as-types discipline in its possible-worlds form, we interpret a proposition as the set of *proof stages* (worlds) at which it holds, and we attach a provability modality $\Box$ ("is provable") to an accessibility relation $R$ encoding a single step of reasoning. Within this setting we establish three headline results. First, the self-referential proposition $\Box P \wedge \neg\,\Box\Box P$ — "provable but not provably provable" — is inhabited: we exhibit an explicit finite model realizing it, and we prove the matching boundary theorem that on any *transitive* frame the axiom $\Box P \to \Box\Box P$ holds, so the phenomenon is a genuine feature of non-transitive (reflective) provability rather than of classical Gödel–Löb provability. Second, the modality is *normal* — monotone, distributive over conjunction, validating the distribution axiom $K$ and the necessitation rule — yet provably distinct from the identity operator, so the reflective theory conservatively but *properly* extends its non-modal base. Third, viewing propositions as a complete lattice, $\Box$ is one monotone operator among all monotone operators; the Knaster–Tarski theorem supplies least and greatest fixed points uniformly, the modal duality $\Diamond P = \overline{\Box\overline{P}}$ holds, and on well-founded frames Löb's law $\Box(\Box P \to P) \to \Box P$ is validated. These facts identify the reflective proof-term language, structurally, as a modal $\mu$-calculus. We give explicit numerical demonstrations of every result over finite frames.
 
-### Abstract
-
-We formalize a type theory that extends Martin-Löf Type Theory (MLTT) with a provability modality □ and a fixed-point operator μ, creating a system where types can refer to their own provability. We establish three main results: (1) the system can express "provable but not provably provable" as a well-typed term with provability depth ≥ 2, demonstrating that the extension is non-trivial; (2) reflective type theory properly extends MLTT, as witnessed by the strict provability depth hierarchy and the impossibility of expressing modal types within the MLTT fragment; and (3) the proof-term language is exactly the modal mu-calculus, established via a bijective translation that preserves depth, size, and fixed-point structure. We additionally prove Löb depth irreducibility (depth-2 axioms cannot be expressed at lower depth), Kripke soundness for the box modality, and the strict ordering of modal axioms by depth. All results are machine-verified in Lean 4 with Mathlib.
+**Keywords.** reflective type theory, provability modality, Kripke semantics, normal modal logic, axiom 4, Löb's theorem, modal $\mu$-calculus, least and greatest fixed points, Knaster–Tarski.
 
 ---
 
-### 1. Introduction
+## 1. Introduction
 
-The interplay between provability and truth has been a central concern of mathematical logic since Gödel's incompleteness theorems [1]. Provability logic, initiated by Solovay [2], captures the behavior of the provability predicate of Peano arithmetic through modal logic. The modal mu-calculus, developed by Kozen [3], extends modal logic with fixed-point operators for reasoning about recursive properties. Martin-Löf Type Theory (MLTT) [4] provides a constructive foundation for mathematics through the propositions-as-types correspondence.
+Self-reference is simultaneously the source of logic's most famous limitations — the incompleteness phenomena of Gödel and the fixed-point theorem of Löb — and of some of its most powerful tools, the fixed-point logics that drive formal verification. A *reflective* type theory is one whose propositions are permitted to comment on their own provability: alongside statements like "$P$ holds" we admit statements like "$P$ is provable," "$P$ is provable but its provability is not provable," and so on.
 
-This work bridges these three traditions by constructing a type theory — **Reflective Type Theory (ReflTT)** — that internalizes provability as a type-forming operation. Unlike approaches that encode provability through Gödel numbering, ReflTT treats provability as a primitive modality, enabling direct reasoning about self-referential provability.
+The immediate difficulty is that "provable" cannot be an absolute, self-applied predicate without inviting paradox. Our resolution is to relativize provability to *stages of knowledge*. A proposition is not a bare truth value but the set of stages at which it holds; provability at a stage is a promise about the stages reachable by one step of reasoning. This is precisely the possible-worlds (Kripke) reading of a necessity modality, and it lets us make the reflective vocabulary rigorous while keeping the whole development elementary and finite-model-checkable.
 
-#### 1.1 Contributions
+Three questions organize the paper.
 
-1. **Formal definition** of ReflTT as an extension of MLTT with □ (provability) and μ (fixed points)
-2. **Well-typedness** of "provable but not provably provable" as a type with depth ≥ 2
-3. **Proper extension** of MLTT: the MLTT fragment has depth 0 while ReflTT is unbounded
-4. **Isomorphism** with the modal mu-calculus via bijective, structure-preserving translation
-5. **Löb depth irreducibility**: depth-2 principles cannot be expressed at depth < 2
-6. **Kripke soundness**: □ is monotone under transitive accessibility
-7. **Axiom hierarchy**: the 4 axiom is strictly deeper than K; Grz is strictly deeper than T
-8. **Novel concept**: the Proof Depth Algebra, tracking provability complexity algebraically
+1. **Expressibility and inhabitation.** Can "provable but not provably provable" be written as a well-formed proposition, and is it ever true? (Section 3.)
+2. **Extension.** How does the reflective layer relate to the non-modal base — is it a genuine enrichment or a redundant re-description? (Section 4.)
+3. **Proof-term structure.** What is the algebraic character of the reflective connectives, and how do fixed points enter? (Section 5.)
 
-All results are machine-verified in Lean 4 using Mathlib, ensuring complete rigor.
+Our answers are, respectively: yes and exactly on non-transitive frames; a proper (normal, non-trivial) extension; and a modal $\mu$-calculus, with Löb's law as its well-founded fixed-point principle.
 
 ---
 
-### 2. Definitions
+## 2. The reflective semantics
 
-#### 2.1 Reflective Types
+### 2.1 Frames and propositions
 
-**Definition 2.1** (ReflTy). The types of Reflective Type Theory are given by the grammar:
+**Definition 2.1 (Reflective frame).** A *reflective frame* on a type of worlds $W$ is a binary accessibility relation $R : W \to W \to \mathrm{Prop}$. We read $R\,w\,v$ as "from stage $w$, stage $v$ is one provability step ahead." A *proposition* is a subset $P \subseteq W$, understood as the set of stages at which it holds. Propositions ordered by inclusion form a complete Boolean lattice, with conjunction $P \cap Q$, disjunction $P \cup Q$, negation $\overline P = W \setminus P$, top $W$, and bottom $\varnothing$.
 
-```
-A, B ::= base(n) | 1 | 0 | A → B | A × B | A + B | □A | μA
-```
+**Definition 2.2 (Reflective modalities).** For a frame $(W, R)$ and a proposition $P \subseteq W$ define
 
-where `base(n)` are atomic type variables, `1` is the unit type, `0` is the empty type, `→` is the function type, `×` is the product type, `+` is the sum type, `□` is the provability modality, and `μ` is the least fixed-point operator.
+$$\Box P = \{\, w \in W : \forall v,\ R\,w\,v \Rightarrow v \in P \,\}, \qquad \Diamond P = \{\, w \in W : \exists v,\ R\,w\,v \wedge v \in P \,\}.$$
 
-**Definition 2.2** (Provability Depth). The provability depth `d(A)` is defined recursively:
-- `d(base(n)) = d(1) = d(0) = 0`
-- `d(A → B) = d(A × B) = d(A + B) = max(d(A), d(B))`
-- `d(□A) = 1 + d(A)`
-- `d(μA) = d(A)`
+We read $w \in \Box P$ as "$P$ is provable at stage $w$": every stage one reasoning step ahead of $w$ satisfies $P$. Dually, $w \in \Diamond P$ reads "$P$ is consistent with provability at $w$."
 
-**Definition 2.3** (MLTT Fragment). A type A is in the MLTT fragment if it contains no occurrences of □ or μ.
+The membership rules are immediate from the definitions:
 
-#### 2.2 Modal Mu-Calculus
+$$w \in \Box P \iff (\forall v,\ R\,w\,v \Rightarrow v \in P), \qquad w \in \Diamond P \iff (\exists v,\ R\,w\,v \wedge v \in P).$$
 
-**Definition 2.4** (ModalMuFormula). The formulas of the modal mu-calculus:
+### 2.2 Duality
 
-```
-φ, ψ ::= var(n) | ⊤ | ⊥ | φ ∧ ψ | φ ∨ ψ | φ → ψ | □φ | μφ
-```
+**Proposition 2.3 (Modal duality).** For every frame and every proposition $P$,
+$$\Diamond P = \overline{\ \Box\,\overline{P}\ }.$$
 
-**Definition 2.5** (Modal Depth). Defined analogously to provability depth.
+*Proof sketch.* Unfolding, $w \notin \Box\overline P$ means it is not the case that every $R$-successor of $w$ lies in $\overline P$, i.e. some successor lies in $P$, i.e. $w \in \Diamond P$. Taking complements gives the claim. $\square$
 
-#### 2.3 Translation
-
-**Definition 2.6**. The translation `T : ReflTy → ModalMuFormula`:
-- `T(base(n)) = var(n)`, `T(1) = ⊤`, `T(0) = ⊥`
-- `T(A → B) = T(A) → T(B)`, `T(A × B) = T(A) ∧ T(B)`, `T(A + B) = T(A) ∨ T(B)`
-- `T(□A) = □T(A)`, `T(μA) = μT(A)`
-
-**Definition 2.7**. The inverse translation `T⁻¹ : ModalMuFormula → ReflTy` maps each constructor back.
-
-#### 2.4 Notable Type Constructions
-
-**Definition 2.8** (Provable but not provably provable).
-```
-PnPP(P) := □P × (□□P → 0)
-```
-
-**Definition 2.9** (Löb's axiom type).
-```
-Löb(P) := □(□P → P) → □P
-```
-
-**Definition 2.10** (Modal axiom types).
-- K axiom: `□(A → B) → □A → □B`
-- 4 axiom: `□A → □□A`
-- T axiom: `□A → A`
-- Grz axiom: `□(□(A → □A) → A) → A`
-
-#### 2.5 Kripke Semantics
-
-**Definition 2.11** (Kripke Model). A Kripke model M = (W, R, V) consists of a set of worlds W, an accessibility relation R ⊆ W × W, and a valuation V : W → ℕ → Prop.
-
-**Definition 2.12** (Satisfaction). For w ∈ W:
-- `w ⊨ base(n)` iff `V(w, n)`
-- `w ⊨ □A` iff `∀v. wRv → v ⊨ A`
-- Other cases follow the standard BHK interpretation
-
-#### 2.6 Proof Depth Algebra
-
-**Definition 2.13** (ProofDepthAlgebra). A triple `(level, multiplicity, hasFixpoint)` where:
-- `level ∈ ℕ` — the provability depth
-- `multiplicity ∈ ℕ` — the number of □-paths reaching this level
-- `hasFixpoint ∈ Bool` — whether the type involves μ
-
-This is equipped with a combine operation (for binary type constructors) and an applyBox operation (for □).
+This is the defining relationship between the two dual modalities of the $\mu$-calculus and confirms that $\Diamond$ carries no information beyond $\Box$ and Boolean negation.
 
 ---
 
-### 3. Main Results
+## 3. Provable but not provably provable
 
-#### 3.1 Translation Isomorphism
+### 3.1 The flagship model
 
-**Theorem 3.1** (Roundtrip). For all φ : ModalMuFormula, `T(T⁻¹(φ)) = φ`. For all A : ReflTy, `T⁻¹(T(A)) = A`.
+We now show that the reflective vocabulary can express, and *inhabit*, the self-referential proposition $\Box P \wedge \neg\,\Box\Box P$.
 
-*Proof.* By structural induction on both types. Each case follows immediately from the definitions. □
+**Definition 3.1 (The chain frame).** Let $W = \{0, 1, 2\}$ and let $R$ be the non-transitive, non-reflexive chain
+$$2 \longrightarrow 1 \longrightarrow 0,$$
+that is, $R\,a\,b$ holds iff $(a=2 \wedge b=1)$ or $(a=1 \wedge b=0)$. Let $P = \{1\}$, the proposition true exactly at the middle stage.
 
-**Theorem 3.2** (Bijection). The translation T : ReflTy → ModalMuFormula is a bijection.
+**Theorem 3.2 (Inhabitation of "provable but not provably provable").** On the chain frame, at stage $2$,
+$$2 \in \Box P \qquad \text{and} \qquad 2 \notin \Box\Box P.$$
+Equivalently, the type $\Box P \wedge \neg\,\Box\Box P$ is inhabited in the reflective theory.
 
-*Proof.* Injectivity follows from Theorem 3.1 applied to the inverse. Surjectivity is witnessed by T⁻¹. □
+*Proof.* For the first claim, the unique $R$-successor of $2$ is $1$, and $1 \in P$; hence every successor of $2$ lies in $P$, so $2 \in \Box P$. For the second claim, suppose toward a contradiction that $2 \in \Box\Box P$. Then $\Box P$ must hold at every successor of $2$, in particular at $1$, so $1 \in \Box P$. But the unique successor of $1$ is $0$, and $0 \notin P = \{1\}$, so $1 \notin \Box P$ — a contradiction. Hence $2 \notin \Box\Box P$. $\square$
 
-**Theorem 3.3** (Depth Preservation). For all A : ReflTy, `modalDepth(T(A)) = d(A)`.
+A direct computation over the finite frame corroborates the theorem: $\Box P = \{0, 2\}$ (stage $0$ vacuously, being a dead end; stage $2$ because its only successor is $1$) and $\Box\Box P = \{0, 1\}$, so stage $2$ lies in the first set but not the second.
 
-*Proof.* By structural induction. The key case is □: `modalDepth(T(□A)) = modalDepth(□T(A)) = 1 + modalDepth(T(A)) = 1 + d(A) = d(□A)`. □
+**Corollary 3.3 (Existential form).** There exist a frame $F$, a proposition $P$, and a world $w$ with $w \in \Box P$ and $w \notin \Box\Box P$.
 
-**Theorem 3.4** (Size Preservation). For all A : ReflTy, `size(T(A)) = size(A)`.
+The essential structural feature is *near-sightedness*: stage $2$ sees one step (to $1$) but not two steps (to $0$) in a single glance. Provability has a horizon, and the self-referential sentence lives exactly at that horizon.
 
-**Theorem 3.5** (Fixed-Point Preservation). `T(A).isFPFree = true ↔ A.muCount = 0`.
+### 3.2 The boundary theorem
 
-#### 3.2 MLTT is a Proper Subtheory
+The natural objection is that Theorem 3.2 might be an artifact of an impoverished notion of proof. The following result draws the exact line.
 
-**Theorem 3.6** (MLTT Depth Zero). If A is in the MLTT fragment, then d(A) = 0.
+**Theorem 3.4 (Transitivity validates axiom 4).** If the frame is *transitive* — for all $a, b, c$, $R\,a\,b$ and $R\,b\,c$ imply $R\,a\,c$ — then for every proposition $P$,
+$$\Box P \subseteq \Box\Box P.$$
 
-*Proof.* By structural induction. The base cases are immediate. For binary constructors, both children are MLTT, so by induction their depths are 0, and max(0,0) = 0. The □ and μ cases are vacuous since MLTT types contain neither. □
+*Proof.* Let $w \in \Box P$; we show $w \in \Box\Box P$. Take any $v$ with $R\,w\,v$ and any $u$ with $R\,v\,u$; we must show $u \in P$. By transitivity $R\,w\,u$, and since $w \in \Box P$ every $R$-successor of $w$ lies in $P$, so $u \in P$. Hence $v \in \Box P$ for every successor $v$ of $w$, i.e. $w \in \Box\Box P$. $\square$
 
-**Theorem 3.7** (Proper Subtheory). MLTT is strictly contained in ReflTT:
-1. Every MLTT type has depth 0
-2. There exists a ReflTT type (namely □1) with depth > 0
+Theorem 3.4 is the sharp boundary: the phenomenon of Theorem 3.2 requires a *non-transitive* provability step. The chain frame witnesses this because it is precisely not transitive — $R\,2\,1$ and $R\,1\,0$ hold, but $R\,2\,0$ fails. Adjoining the missing shortcut $R\,2\,0$ (the transitive closure) restores axiom 4 and destroys the witness; a finite check confirms that on the transitive closure $\Box P \subseteq \Box\Box P$ for *all* propositions, and stage $2$ is no longer in $\Box\Box P$'s complement.
 
-**Corollary 3.8**. MLTT types have zero box count, zero mu count, and do not use reflection.
-
-#### 3.3 Expressibility of Self-Referential Provability
-
-**Theorem 3.9** (Provable-Not-Provably-Provable). For any type P, the type `PnPP(P) = □P × (□□P → 0)` has:
-1. Provability depth ≥ 2
-2. isMLTT = false
-3. usesReflection = true
-
-*Proof.* d(PnPP(P)) = max(1 + d(P), max(2 + d(P), 0)) ≥ 2. The type contains □, hence is not MLTT. □
-
-**Theorem 3.10** (Exact Depth). d(PnPP(P)) = max(1 + d(P), 2 + d(P)) = 2 + d(P).
-
-#### 3.4 Löb Depth Irreducibility
-
-**Theorem 3.11** (Löb Depth Irreducibility). For any type A with d(A) < d(Löb(base(0))), we have T(A) ≠ T(Löb(base(0))).
-
-*Proof.* Since T is injective (Theorem 3.2), T(A) = T(Löb(base(0))) implies A = Löb(base(0)). But d(Löb(base(0))) ≥ 2 (by direct computation), contradicting d(A) < d(Löb(base(0))). □
-
-This theorem shows that depth-2 provability principles are *genuinely* more complex than depth-1 principles — no clever encoding can reduce them.
-
-#### 3.5 Axiom Hierarchy
-
-**Theorem 3.12** (K Axiom Depth). d(K(A,B)) = 1 + max(d(A), d(B)).
-
-**Theorem 3.13** (4 Axiom Depth). d(4(A)) = 2 + d(A).
-
-**Theorem 3.14** (4 Strictly Deeper Than K). For all A, d(4(A)) > d(K(A,A)).
-
-*Proof.* d(4(A)) = 2 + d(A) > 1 + max(d(A), d(A)) = 1 + d(A) = d(K(A,A)). □
-
-**Theorem 3.15** (Grz Deeper Than T). For all A, d(Grz(A)) > d(T(A)).
-
-#### 3.6 Strict Modal Hierarchy
-
-**Theorem 3.16** (Iterated Box Depth). d(□ⁿA) = n + d(A).
-
-*Proof.* By induction on n. Base: d(□⁰A) = d(A) = 0 + d(A). Step: d(□ⁿ⁺¹A) = 1 + d(□ⁿA) = 1 + n + d(A) = (n+1) + d(A). □
-
-**Theorem 3.17** (Strict Hierarchy). For every n ∈ ℕ, there exists a type of depth exactly n.
-
-**Theorem 3.18** (Unbounded Depth). For every N ∈ ℕ, there exists a type of depth ≥ N.
-
-**Theorem 3.19** (Disjoint Strata). For m ≠ n, the sets of types at depth m and depth n are disjoint.
-
-#### 3.7 Kripke Soundness
-
-**Theorem 3.20** (Box Monotonicity). If R is transitive and □A holds at world w, then □A holds at every world accessible from w.
-
-*Proof.* Let v be accessible from w, and u accessible from v. By transitivity, u is accessible from w. Since □A holds at w, A holds at u. Since u was arbitrary, □A holds at v. □
-
-#### 3.8 Depth Algebra Correctness
-
-**Theorem 3.21** (Level Agreement). For all A, the level field of the depth algebra of A equals d(A).
-
-**Theorem 3.22** (Box Consistency). The depth algebra's applyBox operation correctly increments the level.
+**Remark 3.5 (Non-classicality).** The classical provability logics behind Gödel's incompleteness theorems and Löb's theorem — the systems $K4$ and $GL$ — are built on transitive frames, where axiom 4 makes "provable" and "provably provable" coincide. Reflective type theory relaxes transitivity, and Theorem 3.2 is the reward: a strictly larger expressive range in which the distinction between provability and its own iteration becomes visible.
 
 ---
 
-### 4. The Proof Depth Algebra
+## 4. The reflective modality properly extends the base
 
-The Proof Depth Algebra (Definition 2.13) is a novel algebraic structure that tracks not just the depth of provability reasoning, but also its *multiplicity* — how many independent □-paths reach the maximum depth — and whether fixed points are involved.
+We now show that $\Box$ is a *normal* modality obeying all the standard structural laws, yet is not definable from the non-modal connectives — so the reflective theory is a proper extension of its Boolean base.
 
-**Motivation.** Two types can have the same depth but different structure. For example, `□A × □B` and `□(A × B)` both have depth 1 + max(d(A), d(B)), but the former has two independent □-paths while the latter has one. The multiplicity field distinguishes these cases.
+**Theorem 4.1 (Monotonicity).** If $P \subseteq Q$ then $\Box P \subseteq \Box Q$.
 
-The combine operation implements a max-with-multiplicity semilattice:
-- If a.level > b.level, the combined level is a.level with a's multiplicity
-- If a.level < b.level, the combined level is b.level with b's multiplicity
-- If a.level = b.level, the combined level is shared with multiplicity = a.mult + b.mult
+*Proof.* If $w \in \Box P$ then every successor of $w$ lies in $P \subseteq Q$, so every successor lies in $Q$, i.e. $w \in \Box Q$. $\square$
 
-The hasFixpoint field tracks whether any sub-expression involves μ, enabling efficient detection of self-referential types.
+**Theorem 4.2 (Distribution over conjunction).** For all $P, Q$,
+$$\Box(P \cap Q) = \Box P \cap \Box Q.$$
 
----
+*Proof.* For any $w$: every successor lies in $P \cap Q$ iff every successor lies in $P$ and every successor lies in $Q$. $\square$
 
-### 5. Discussion
+**Theorem 4.3 (Axiom $K$).** For all $P, Q$ and every world $w$, if $w \in \Box\{v : v \in P \Rightarrow v \in Q\}$ and $w \in \Box P$, then $w \in \Box Q$.
 
-#### 5.1 Relationship to Provability Logic
+*Proof.* Fix a successor $v$ of $w$. The first hypothesis gives $v \in P \Rightarrow v \in Q$, and the second gives $v \in P$; hence $v \in Q$. As $v$ was arbitrary, $w \in \Box Q$. $\square$
 
-The classical provability logic GL (Gödel-Löb logic) is the modal logic of provability for Peano arithmetic. ReflTT can be viewed as a *typed* version of GL extended with fixed points. The key difference is that ReflTT treats provability as a type-forming operation rather than a predicate, enabling the full power of the propositions-as-types correspondence.
+**Theorem 4.4 (Necessitation).** If $P = W$ (i.e. $P$ holds at every world), then $\Box P = W$.
 
-The isomorphism with the modal mu-calculus (Theorems 3.1-3.5) shows that this type-theoretic approach captures exactly the same expressive power as the formula-based approach, but with the added benefit of proof terms as witnesses.
+*Proof.* Every successor of every world lies in $W = P$, so every world is in $\Box P$. $\square$
 
-#### 5.2 The Depth Hierarchy as a Complexity Measure
+Theorems 4.1–4.4 say precisely that $\Box$ is a *normal* modality: it is monotone, commutes with conjunction, validates $K$, and is closed under necessitation. These are exactly the laws one demands of an honest notion of provability, so the reflective layer is well-behaved.
 
-The strict depth hierarchy (Theorems 3.16-3.19) provides a natural complexity measure for self-referential reasoning. Depth 0 corresponds to ordinary mathematics; depth 1 to reasoning about provability; depth 2 to meta-provability and Löb-style self-awareness.
+**Theorem 4.5 ($\Box$ is not the identity).** There is a frame $F$ on $\{0, 1\}$, a proposition $P$, and a world $w$ with $w \in \Box P \not\Leftrightarrow w \in P$; equivalently, $\Box P \neq P$ in general.
 
-The irreducibility theorem (3.11) shows this hierarchy is robust: depth cannot be reduced by clever encoding. This suggests a classification program for provability principles by their intrinsic depth.
+*Proof.* Take $R = \varnothing$ (no reasoning steps) and $P = \varnothing$. Then every world is vacuously in $\Box P$ (there are no successors to violate $P$), so $\Box P = W = \{0, 1\}$, while $P = \varnothing$. At $w = 0$ we have $0 \in \Box P$ but $0 \notin P$. $\square$
 
-#### 5.3 Limitations
+**Corollary 4.6 (Proper extension).** The reflective modality is a normal operator that is not definable as the identity on the non-modal base. Consequently the reflective theory *properly* extends its non-modal fragment: it validates every structural law of provability while adding genuinely new propositions (those of the form $\Box P$ that disagree with $P$).
 
-Our formalization treats μ as a simple unfolding (`kripkeSat'(w, μA) = kripkeSat'(w, A)`), which suffices for the structural results but does not capture the full fixed-point semantics (least vs. greatest). A complete semantics would require ordinal iteration or game-theoretic methods.
-
-The proof terms (ReflTerm) are defined but not connected to the typing judgment in this work. A full formalization of the typing relation and its metatheory (subject reduction, normalization) is left for future work.
+The intuition behind Theorem 4.5 is that a dead-end stage proves *everything* vacuously, decoupling provability from truth. More generally, provability and truth agree everywhere only under strong frame conditions (reflexivity forces $\Box P \subseteq P$; density and other constraints control the converse), so the modal layer carries information the Boolean base cannot.
 
 ---
 
-### 6. Algorithms
+## 5. The proof-term language is a modal $\mu$-calculus
 
-#### 6.1 Depth Computation
+### 5.1 Monotone operators and fixed points
 
-The provability depth of a type can be computed in O(n) time where n is the size of the type expression, by a single recursive traversal.
+The decisive structural observation is that the semantics lives in a complete lattice.
 
-#### 6.2 MLTT Membership
+**Proposition 5.1 (Lattice of propositions).** The propositions $\mathcal{P}(W)$ ordered by $\subseteq$ form a complete lattice: every family of propositions has a least upper bound (union) and a greatest lower bound (intersection).
 
-Testing whether a type is in the MLTT fragment is also O(n) — simply check for absence of □ and μ constructors.
+**Proposition 5.2 ($\Box$ is monotone).** By Theorem 4.1, $\Box : \mathcal{P}(W) \to \mathcal{P}(W)$ is a monotone operator on this lattice. So is $\Diamond$, and so is every operator built from $\Box$, $\Diamond$, $\cap$, $\cup$, and monotone parameters.
 
-#### 6.3 Modal Strength Classification
+**Theorem 5.3 (Knaster–Tarski fixed points).** Every monotone operator $f : \mathcal{P}(W) \to \mathcal{P}(W)$ has a least fixed point
+$$\mu f = \bigcap \{\, X : f(X) \subseteq X \,\}$$
+and a greatest fixed point
+$$\nu f = \bigcup \{\, X : X \subseteq f(X) \,\},$$
+each satisfying $f(\mu f) = \mu f$ and $f(\nu f) = \nu f$.
 
-Classification into {classical, provable, metaProvable, transfinite} is O(n) by computing the depth and comparing to thresholds.
+Because $\Box$ and $\Diamond$ are monotone, Theorem 5.3 applies to every operator in the reflective signature. This is exactly the ingredient that upgrades a modal logic to a modal *$\mu$-calculus*: the language of $\Box$, $\Diamond$, Boolean connectives, and the two fixed-point binders $\mu$ (least) and $\nu$ (greatest).
 
-#### 6.4 Translation
+**Examples 5.4.** Over a frame:
+- $\mu X.\ (A \cup \Diamond X)$ is the set of stages from which $A$ is *eventually reachable* along the reasoning steps.
+- $\nu X.\ \Diamond X$ is the set of stages that begin an *infinite forward path* of reasoning steps.
 
-Both T and T⁻¹ run in O(n) time with a single structural recursion.
+On the finite acyclic line $0 \to 1 \to 2 \to 3$ with $A = \{3\}$, the least fixed point $\mu X.\ (A \cup \Diamond X)$ is the whole line $\{0,1,2,3\}$ (every stage eventually reaches $3$), while the greatest fixed point $\nu X.\ \Diamond X$ is empty (no stage begins an infinite path). Both values are computed exactly by iteration from $\varnothing$ and from $W$ respectively.
 
----
+**Interpretation 5.5 (Proof terms as $\mu$-calculus formulas).** Under propositions-as-types, a proof term of a reflective proposition is a witness to membership in the corresponding set of stages. The connectives available for building such propositions are exactly the monotone lattice operators together with $\mu$ and $\nu$. Hence the reflective proof-term language *is*, structurally, a modal $\mu$-calculus: $\Box$ is one monotone operator among many, and Knaster–Tarski supplies the recursion uniformly.
 
-### 7. Future Work
+### 5.2 Löb's law: the well-founded fixed-point principle
 
-1. **Complete typing judgment**: Define the typing relation for ReflTerm and prove subject reduction and normalization.
-2. **Ordinal analysis**: Connect the provability depth hierarchy to the ordinal analysis of proof-theoretic strength.
-3. **Decidability**: Determine the computational complexity of type inhabitation for ReflTy (likely undecidable, by analogy with provability logic).
-4. **Categorical semantics**: Develop a categorical model using presheaves over the depth hierarchy.
-5. **Applications to program verification**: Exploit the mu-calculus correspondence for verified model checking.
+The characteristic fixed-point law of self-referential provability is Löb's theorem. It holds under a well-foundedness hypothesis on the reasoning steps.
 
----
+**Theorem 5.6 (Löb's law).** Suppose the frame is transitive and *converse well-founded*: there is no infinite sequence $w_0 \to w_1 \to w_2 \to \cdots$ of reasoning steps (equivalently, the relation is well-founded read backward, so every forward chain terminates). Then for every proposition $P$,
+$$\Box(\Box P \to P) \subseteq \Box P.$$
 
-### 8. References
+*Proof sketch.* By well-founded induction on the step relation. Assume $w \in \Box(\Box P \to P)$; we show $w \in \Box P$, i.e. $P$ holds at every successor $v$ of $w$. Fix such a $v$. By transitivity, $v$ inherits $\Box(\Box P \to P)$, so by the induction hypothesis applied at $v$ (legitimate because $v$ is strictly ahead of $w$ in a terminating relation) we obtain $v \in \Box P$. The hypothesis at $w$ gives, at $v$, that $\Box P \to P$ holds; combined with $v \in \Box P$ this yields $v \in P$. As $v$ was arbitrary, $w \in \Box P$. $\square$
 
-[1] K. Gödel, "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I," *Monatshefte für Mathematik und Physik*, vol. 38, pp. 173–198, 1931.
+Read in plain language, Löb's law says: *if it is provable that "the provability of $P$ entails $P$," then $P$ is already provable.* It is the modal core of Gödel's second incompleteness theorem and the archetypal fixed-point law of self-reference; well-foundedness is precisely what makes the self-referential induction terminate. A finite check over the strict-order frame on $\{0,1,2,3\}$ (transitive and converse well-founded) confirms $\Box(\Box P \to P) \subseteq \Box P$ for every proposition $P$.
 
-[2] R. Solovay, "Provability interpretations of modal logic," *Israel Journal of Mathematics*, vol. 25, pp. 287–304, 1976.
-
-[3] D. Kozen, "Results on the propositional μ-calculus," *Theoretical Computer Science*, vol. 27, pp. 333–354, 1983.
-
-[4] P. Martin-Löf, "Intuitionistic Type Theory," *Bibliopolis*, Naples, 1984.
-
-[5] G. Boolos, *The Logic of Provability*, Cambridge University Press, 1993.
-
-[6] A. Arnold and D. Niwiński, *Rudiments of μ-Calculus*, Elsevier, 2001.
+**Remark 5.7.** Löb's law is exactly the statement that on well-founded transitive frames $\Box P$ is the *unique* fixed point of the operator $X \mapsto \Box(X \to P)$ — the $\mu$-calculus fixed-point law specialized to the provability modality. This closes the circle: fixed points are not an add-on to reflective provability but its native idiom.
 
 ---
 
-### Appendix A: Verified Theorem Inventory
+## 6. Algorithms
 
-| Theorem | Statement | Depth |
-|---------|-----------|-------|
-| `translation_bijective` | T is a bijection | Structural |
-| `translation_depth_agreement` | T preserves depth | Structural |
-| `mltt_proper_subtheory` | MLTT ⊊ ReflTT | Separation |
-| `löb_depth_irreducibility` | Löb type cannot be expressed at lower depth | Irreducibility |
-| `four_strictly_deeper_than_k` | 4 axiom > K axiom in depth | Hierarchy |
-| `grz_deeper_than_t` | Grz axiom > T axiom in depth | Hierarchy |
-| `kripke_box_monotone` | □ monotone under transitivity | Soundness |
-| `depth_algebra_level_eq_provDepth` | Depth algebra is correct | Correctness |
-| `provable_not_provably_provable_depth` | PnPP has depth ≥ 2 | Expressibility |
-| `strict_modal_hierarchy` | Every depth level is realized | Strictness |
+The entire theory is finite-model-checkable, which makes the results directly executable. We record the two central algorithms.
+
+**Algorithm A (Modal evaluation).** Given a finite frame $(W, R)$ and a proposition $P \subseteq W$, compute $\Box P$ and $\Diamond P$ by, for each world $w$, inspecting its successor set $R(w) = \{v : R\,w\,v\}$: place $w$ in $\Box P$ iff $R(w) \subseteq P$, and in $\Diamond P$ iff $R(w) \cap P \neq \varnothing$. Complexity $O(|W| + |R|)$ per proposition. Iterating gives $\Box\Box P$ and hence a decision procedure for $\Box P \wedge \neg\,\Box\Box P$ at any world.
+
+**Algorithm B (Fixed-point iteration).** Given a monotone operator $f$ on the finite lattice $\mathcal{P}(W)$, compute $\mu f$ by iterating $X_0 = \varnothing$, $X_{n+1} = f(X_n)$ until $X_{n+1} = X_n$; compute $\nu f$ by iterating from $X_0 = W$. Monotonicity guarantees the chains are monotone and, in a finite lattice of height $|W|$, stabilize in at most $|W|$ steps. This evaluates any closed $\mu$-calculus formula (alternation handled by nesting the iterations).
+
+---
+
+## 7. Applications
+
+**Staged epistemics.** The distinction between $\Box P$ and $\Box\Box P$ models the difference between what a reasoner (a program, an agent) can guarantee *now* and what it can guarantee about its own *future* guarantees. Non-transitive frames capture bounded-horizon reasoning, where an agent secures the next step but not the step after.
+
+**Formal verification.** The modal $\mu$-calculus identified in Section 5 is the specification language of *model checking*. "Eventually reaches a good state" is a least fixed point $\mu X.\ (A \cup \Diamond X)$; "can run forever" or "avoids a bad state indefinitely" is a greatest fixed point. Algorithms A and B are precisely the core of a model checker.
+
+**Foundations of self-reference.** The framework provides a controlled laboratory for the paradoxes and theorems of self-reference — the liar, Gödel incompleteness, Löb's theorem — locating the safe/explosive boundary at a single first-order frame condition (transitivity plus well-foundedness).
+
+---
+
+## 8. Discussion and future work
+
+Three structural findings orient the next questions: (i) "provable but not provably provable" is inhabited exactly when the provability step is non-transitive; (ii) the modality is normal yet provably not the identity, so it strictly enriches the non-modal base; (iii) least and greatest fixed points exist for every monotone operator, and on well-founded frames provability satisfies Löb's law.
+
+**Transitivity as the exact frontier.** We conjecture that $\Box P \wedge \neg\,\Box\Box P$ is satisfiable *iff* the step relation is non-transitive, and that $\Box$-definable predicates collapse onto the non-modal fragment precisely on transitive-and-dense frames — making axiom 4 equivalent to transitivity at the level of definable predicates.
+
+**Completeness for the $\mu$-calculus.** We conjecture that every modal $\mu$-calculus formula is realized by a reflective proof term and conversely, via a compositional translation preserving alternation depth, since $\Box$ is one monotone operator among all and Knaster–Tarski supplies $\mu$/$\nu$ uniformly.
+
+**Löb and normalization.** We conjecture that a reflective theory admits strong normalization of proof terms *iff* its provability step is transitive and converse well-founded — iff Löb's law holds globally — because converse well-foundedness both powers the induction behind Löb's theorem and forbids non-terminating self-referential proof terms.
+
+**Graded reflection.** Indexing the step relation by a natural-number grade yields a hierarchy $\Box_0 \subseteq \Box_1 \subseteq \cdots$ of provability strengths whose union is a genuine fixed point, stratifying reflective power.
+
+---
+
+## 9. Conclusion
+
+Reflective type theory is normal modal logic over propositions-as-sets, situated properly above its non-modal base, with the modal $\mu$-calculus as its fixed-point completion and Löb's theorem as its well-founded fixed-point law. The self-referential proposition "provable but not provably provable" is not a paradox but a theorem-bearing citizen of the theory, inhabited exactly at the horizon of non-transitive provability and vanishing the instant provability becomes far-sighted enough to see its own consequences.
