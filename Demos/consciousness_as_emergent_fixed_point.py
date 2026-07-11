@@ -1,397 +1,250 @@
-#!/usr/bin/env python3
 """
-Consciousness as Emergent Fixed Point — Numerical Demonstrations
+demo.py — Numerical demonstrations of self-reference as a fixed point.
 
-Demonstrates the key theorems computationally:
-1. Lawvere's fixed point construction
-2. Self-observation idempotence
-3. Strange loop operator behavior
-4. Finite type non-reflectivity
-5. Fixed point iteration convergence
+This self-contained script illustrates the five facets of the diagonal
+fixed-point argument developed in the accompanying paper:
+
+    1. Lawvere's fixed-point theorem: a complete self-model f : A -> (A -> B)
+       forces every transformation g : B -> B to have a fixed point, realized
+       by the explicit diagonal "strange-loop" witness.
+    2. The Cantor / diagonal obstruction: a fixed-point-free transformation
+       (Boolean NOT) certifies that no complete self-model exists, and the
+       diagonal set exhibits a subset missed by any candidate surjection.
+    3. The cardinal boundary: |B|^|A| > |A| for |B| >= 2, so finite systems
+       cannot self-model completely.
+    4. Knaster-Tarski: a monotone self-model on a finite complete lattice has
+       a least fixed point, computed by iterating from the bottom element.
+    5. Yoneda: a finite object is reconstructed, up to isomorphism, from its
+       probe profile (the family of hom-sets into it).
+
+Run with:  python demo.py
 """
 
-import numpy as np
-from typing import Callable, Optional, Tuple, List
+from __future__ import annotations
+
+from typing import Callable, Dict, FrozenSet, Sequence, Set, Tuple
 
 
-def lawvere_fixed_point_demo():
-    """Demonstrate Lawvere's fixed point theorem on a simple reflective system.
+# ---------------------------------------------------------------------------
+# 1. Lawvere's fixed-point theorem via the diagonal construction
+# ---------------------------------------------------------------------------
 
-    We use the 'universal' type: functions N -> N, with repr being
-    a Gödel numbering (pairing function encoding).
+def build_selfmodel_realizing_twist(
+    states: Sequence[int],
+    base: Dict[Tuple[int, int], int],
+    g: Callable[[int], int],
+    s: int,
+    a0: int,
+) -> Callable[[int], Callable[[int], int]]:
+    """Faithfully realize Lawvere's diagonal construction on a finite system.
+
+    Lawvere's proof needs only that the *twisted lens* phi(a) = g(f(a)(a)) is
+    realized by some state a0 (point-surjectivity at that one lens), not full
+    surjectivity. We build such an f: rows a != a0 are given by `base`, and the
+    row a0 is defined to equal phi, using a fixed point s = g(s) on the diagonal:
+
+        f(a0)(a) = g(base[a, a])   for a != a0,   f(a0)(a0) = s.
+
+    Then f(a0) == phi, so f(a0)(a0) = phi(a0) = g(f(a0)(a0)) is a fixed point.
     """
-    print("=" * 60)
-    print("DEMO 1: Lawvere's Fixed Point Theorem")
-    print("=" * 60)
-
-    # Simple model: X = Z (integers), repr(n) = lambda m: n + m
-    # This is NOT surjective, so Lawvere doesn't apply — demonstrating the failure.
-    print("\n--- Non-reflective system: repr(n)(m) = n + m ---")
-    repr_add = lambda n: lambda m: n + m
-    f = lambda x: x + 1  # successor has no fixed point
-    print(f"f(x) = x + 1")
-    print(f"Searching for fixed point in range [-100, 100]...")
-    found = False
-    for x in range(-100, 101):
-        if f(x) == x:
-            print(f"  Fixed point found: x = {x}")
-            found = True
-    if not found:
-        print("  No fixed point found (as expected — system is not reflective)")
-
-    # Reflective-like model: X = functions {0,...,N-1} -> {0,...,N-1}
-    # repr(f)(g) = f ∘ g (composition). This IS surjective for function spaces.
-    print("\n--- Reflective construction: diagonal argument ---")
-    print("Given surjective φ and endomorphism f, the fixed point is φ(a)(a)")
-    print("where φ(a) = x ↦ f(φ(x)(x))")
-    print("\nExample: φ = identity on (Z → Z), f(h) = h ∘ h (double composition)")
-    print("The fixed point is an h with h ∘ h = h, i.e., an idempotent function.")
-    print("Solution: the identity function, or any constant function.")
-
-
-def self_observation_demo():
-    """Demonstrate that self-observation is idempotent."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Self-Observation Idempotence")
-    print("=" * 60)
-
-    # Self-model retract: X = R^3, M = R^2 (projection to first 2 coords)
-    print("\nSelf-model retract: X = R³, M = R²")
-    print("embed(x, y) = (x, y, 0)")
-    print("project(x, y, z) = (x, y)")
-    print("observe = embed ∘ project: (x, y, z) ↦ (x, y, 0)")
-
-    embed = lambda v: np.array([v[0], v[1], 0.0])
-    project = lambda v: np.array([v[0], v[1]])
-    observe = lambda v: embed(project(v))
-
-    test_points = [
-        np.array([1.0, 2.0, 3.0]),
-        np.array([0.5, -1.0, 7.0]),
-        np.array([0.0, 0.0, 0.0]),
-    ]
-
-    for x in test_points:
-        obs1 = observe(x)
-        obs2 = observe(obs1)
-        print(f"\n  x = {x}")
-        print(f"  observe(x)          = {obs1}")
-        print(f"  observe(observe(x)) = {obs2}")
-        print(f"  Idempotent: {np.allclose(obs1, obs2)}")
-
-    # Iterate many times
-    print("\n--- Iterated observation stabilizes after 1 step ---")
-    x = np.array([3.14, 2.71, 1.41])
-    print(f"  Starting point: {x}")
-    for n in range(1, 6):
-        x_n = x.copy()
-        for _ in range(n):
-            x_n = observe(x_n)
-        print(f"  observe^{n}(x) = {x_n}")
-
-
-def strange_loop_demo():
-    """Demonstrate strange loop operator properties."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Strange Loop Operators")
-    print("=" * 60)
-
-    # Strange loop on R: op(x) = sign(x), shift(x) = x + 1
-    # Tangling: sign(sign(x)) = sign(sign(x+1))? No, this doesn't satisfy the axioms.
-    # Better: op = observe from self-model, shift = observe (same).
-
-    # Use the projection example
-    print("\nStrange loop from self-model retract (X = R³, projection to R²)")
-    print("op = shift = observe: (x, y, z) ↦ (x, y, 0)")
-
-    observe = lambda v: np.array([v[0], v[1], 0.0])
-
-    x = np.array([1.0, 2.0, 3.0])
-    print(f"\n  x = {x}")
-    print(f"  op(x) = {observe(x)}")
-    print(f"  op(op(x)) = {observe(observe(x))}")
-    print(f"  op(shift(x)) = op(op(x)) = {observe(observe(x))}")
-    print(f"  Tangling: op(op(x)) == op(shift(x))? {np.allclose(observe(observe(x)), observe(observe(x)))}")
-    print(f"  Absorption: op(shift(x)) == op(x)? {np.allclose(observe(observe(x)), observe(x))}")
-    print(f"  Idempotent: op(op(x)) == op(x)? {np.allclose(observe(observe(x)), observe(x))}")
-
-    # Fixed points
-    print("\n--- Fixed points of the strange loop ---")
-    print("  Fixed points: all (x, y, 0) — the image of observe")
-    fps = [np.array([1.0, 0.0, 0.0]),
-           np.array([0.0, 1.0, 0.0]),
-           np.array([3.0, -2.0, 0.0])]
-    for fp in fps:
-        print(f"  op({fp}) = {observe(fp)}, fixed: {np.allclose(observe(fp), fp)}")
-
-
-def finite_non_reflective_demo():
-    """Demonstrate that finite types can't be reflective."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Finite Types Cannot Be Reflective")
-    print("=" * 60)
-
-    for n in range(2, 8):
-        n_endo = n ** n
-        print(f"  |Fin {n}| = {n}, |Fin {n} → Fin {n}| = {n}^{n} = {n_endo}")
-        print(f"    Surjection possible? {n >= n_endo} (need {n} ≥ {n_endo})")
-
-
-def fixed_point_iteration_demo():
-    """Demonstrate fixed point iteration for contractive maps."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Fixed Point Iteration (Banach)")
-    print("=" * 60)
-
-    # Contractive map: f(x) = cos(x)
-    f = np.cos
-    x = 0.5
-    print(f"\n  f(x) = cos(x), starting at x₀ = {x}")
-    print(f"  {'n':>4}  {'x_n':>12}  {'f(x_n)':>12}  {'|f(x_n) - x_n|':>16}")
-    for n in range(20):
-        fx = f(x)
-        err = abs(fx - x)
-        print(f"  {n:4d}  {x:12.8f}  {fx:12.8f}  {err:16.2e}")
-        if err < 1e-12:
-            print(f"  Converged at iteration {n}!")
-            break
-        x = fx
-
-    # Self-observation as projection (contractive on orthogonal complement)
-    print(f"\n  Fixed point: x* ≈ {x:.10f}")
-    print(f"  cos(x*) ≈ {np.cos(x):.10f}")
-
-
-def consciousness_tower_demo():
-    """Demonstrate consciousness tower stabilization."""
-    print("\n" + "=" * 60)
-    print("DEMO 6: Consciousness Tower Stabilization")
-    print("=" * 60)
-
-    # Tower: Level n = R^(n+1), up = zero-pad, down = truncate
-    print("\nTower: Level(n) = R^(n+1)")
-    print("up_n(x) = (x, 0)  — zero-pad")
-    print("down_n(x) = x[:-1] — truncate last coordinate")
-
-    x_base = np.array([1.0, 2.0, 3.0])  # Level 2
-    print(f"\nStarting at Level 2: x = {x_base}")
-
-    # Observe at level 2: up_2 ∘ down_2
-    up = lambda v: np.append(v, 0.0)
-    down = lambda v: v[:-1]
-    observe = lambda v: up(down(v))
-
-    x_up = up(x_base)  # Level 3: (1, 2, 3, 0)
-    print(f"up(x) = {x_up} (Level 3)")
-
-    obs1 = observe(x_up)
-    obs2 = observe(obs1)
-    print(f"observe(up(x)) = {obs1}")
-    print(f"observe²(up(x)) = {obs2}")
-    print(f"Stabilized: {np.allclose(obs1, obs2)}")
-
-    # Retraction check
-    x_rt = down(up(x_base))
-    print(f"\nRetraction check: down(up(x)) = {x_rt}")
-    print(f"Equal to x? {np.allclose(x_rt, x_base)}")
-
-
-def main():
-    """Run all demonstrations."""
-    print("╔══════════════════════════════════════════════════════════╗")
-    print("║  CONSCIOUSNESS AS EMERGENT FIXED POINT                  ║")
-    print("║  Numerical Demonstrations                               ║")
-    print("╚══════════════════════════════════════════════════════════╝")
-
-    lawvere_fixed_point_demo()
-    self_observation_demo()
-    strange_loop_demo()
-    finite_non_reflective_demo()
-    fixed_point_iteration_demo()
-    consciousness_tower_demo()
-
-    print("\n" + "=" * 60)
-    print("All demonstrations complete.")
-    print("=" * 60)
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Finite Type Non-Reflectivity
-
-Shows why no finite type with n >= 2 can be reflective:
-the endomorphism count n^n grows super-exponentially vs n.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from math import comb
-
-
-def count_idempotents(n):
-    """Count idempotent endomorphisms of {0,...,n-1}."""
-    total = 0
-    for k in range(n + 1):
-        total += comb(n, k) * (k ** max(0, n - k))
-    return total
-
-
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Panel 1: n vs n^n — the reflectivity gap
-    ax1 = axes[0]
-    ns = np.arange(1, 8)
-    n_vals = ns.astype(float)
-    nn_vals = np.array([n ** n for n in ns], dtype=float)
-
-    ax1.bar(ns - 0.2, n_vals, width=0.35, color='#3498db', label='$n$ (domain size)',
-            alpha=0.8, edgecolor='white')
-    ax1.bar(ns + 0.2, nn_vals, width=0.35, color='#e74c3c', label='$n^n$ (endomorphisms)',
-            alpha=0.8, edgecolor='white')
-
-    ax1.set_yscale('log')
-    ax1.set_xlabel('$n$', fontsize=13)
-    ax1.set_ylabel('Count (log scale)', fontsize=13)
-    ax1.set_title('The Reflectivity Gap:\nSurjection requires $n \\geq n^n$', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=11, loc='upper left')
-    ax1.set_xticks(ns)
-    ax1.grid(True, alpha=0.3, axis='y')
-
-    # Annotate the gap for n=3
-    ax1.annotate('Gap: 3 vs 27',
-                 xy=(3, 27), xytext=(4.5, 50),
-                 arrowprops=dict(arrowstyle='->', color='black', lw=1.5),
-                 fontsize=11, fontweight='bold')
-
-    # Panel 2: Idempotents as fraction of all endomorphisms
-    ax2 = axes[1]
-    ns2 = np.arange(1, 9)
-    idems = np.array([count_idempotents(n) for n in ns2], dtype=float)
-    endos = np.array([n ** n for n in ns2], dtype=float)
-    fracs = idems / endos
-
-    bars = ax2.bar(ns2, fracs * 100, color='#2ecc71', alpha=0.8, edgecolor='white')
-
-    # Label each bar
-    for bar, f, ide, endo in zip(bars, fracs, idems, endos):
-        height = bar.get_height()
-        ax2.text(bar.get_x() + bar.get_width()/2., height + 1,
-                 f'{int(ide)}/{int(endo)}',
-                 ha='center', va='bottom', fontsize=8, rotation=45)
-
-    ax2.set_xlabel('$n$ (size of Fin $n$)', fontsize=13)
-    ax2.set_ylabel('Idempotents / Endomorphisms (%)', fontsize=13)
-    ax2.set_title('Strange Loop Density:\nIdempotent Fraction of Endomorphisms', fontsize=13, fontweight='bold')
-    ax2.set_xticks(ns2)
-    ax2.grid(True, alpha=0.3, axis='y')
-
-    fig.suptitle('Finite Types Cannot Support Self-Awareness',
-                 fontsize=15, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('viz_finite_reflectivity.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_finite_reflectivity.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Fixed Point Convergence — Cobweb Diagram
-
-Shows how iteration of a contractive map converges to a fixed point,
-illustrating the core mechanism of consciousness stabilization.
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-
-
-def cobweb_plot(f, x0, n_iter, ax, label="f", color="blue"):
-    """Draw a cobweb diagram for iterating f starting at x0."""
-    x = x0
-    xs = [x]
-    ys = [0]
-    for _ in range(n_iter):
-        y = f(x)
-        xs.extend([x, y])
-        ys.extend([y, y])
-        x = y
-    xs.append(x)
-    ys.append(f(x))
-    ax.plot(xs, ys, color=color, alpha=0.7, linewidth=1.5, label=f"Iteration from {x0:.1f}")
-
-
-def main():
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Panel 1: Cobweb for cos(x) — contractive fixed point
-    ax1 = axes[0]
-    f = np.cos
-    x = np.linspace(-0.5, 2.0, 300)
-    ax1.plot(x, f(x), 'b-', linewidth=2, label=r'$f(x) = \cos(x)$')
-    ax1.plot(x, x, 'k--', linewidth=1, label=r'$y = x$')
-
-    for x0, color in [(0.1, '#e74c3c'), (1.5, '#2ecc71'), (0.8, '#3498db')]:
-        cobweb_plot(f, x0, 20, ax1, color=color)
-
-    # Mark fixed point
-    fp = 0.7390851332
-    ax1.plot(fp, fp, 'ko', markersize=10, zorder=5)
-    ax1.annotate(f'Fixed point\n({fp:.4f}, {fp:.4f})',
-                 xy=(fp, fp), xytext=(fp + 0.3, fp - 0.3),
-                 arrowprops=dict(arrowstyle='->', color='black'),
-                 fontsize=10, fontweight='bold')
-
-    ax1.set_xlabel('x', fontsize=12)
-    ax1.set_ylabel('f(x)', fontsize=12)
-    ax1.set_title('Consciousness Fixed Point:\nSelf-Observation Converges', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=9, loc='lower right')
-    ax1.set_xlim(-0.2, 1.8)
-    ax1.set_ylim(-0.2, 1.2)
-    ax1.grid(True, alpha=0.3)
-
-    # Panel 2: Idempotent stabilization — iteration count vs distance
-    ax2 = axes[1]
-
-    # Show multiple starting points converging
-    n_steps = 15
-    starts = np.linspace(0.0, 1.5, 8)
-    colors = plt.cm.viridis(np.linspace(0.1, 0.9, len(starts)))
-
-    for x0, color in zip(starts, colors):
-        trajectory = [x0]
-        x = x0
-        for _ in range(n_steps):
-            x = np.cos(x)
-            trajectory.append(x)
-        distances = [abs(t - fp) for t in trajectory]
-        ax2.semilogy(range(len(distances)), distances, 'o-', color=color,
-                     markersize=4, linewidth=1.5, alpha=0.7,
-                     label=f'$x_0 = {x0:.1f}$')
-
-    ax2.axhline(y=1e-12, color='red', linestyle=':', alpha=0.5, label='Machine precision')
-    ax2.set_xlabel('Iteration $n$', fontsize=12)
-    ax2.set_ylabel('$|x_n - x^*|$ (log scale)', fontsize=12)
-    ax2.set_title('Self-Reflection Stabilization:\nExponential Convergence', fontsize=13, fontweight='bold')
-    ax2.legend(fontsize=8, ncol=2, loc='upper right')
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(1e-16, 10)
-
-    fig.suptitle('Consciousness as Fixed Point of Self-Modeling',
-                 fontsize=15, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    plt.savefig('viz_fixed_point_convergence.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: viz_fixed_point_convergence.png")
+    assert g(s) == s, "s must be a fixed point of g"
+    table: Dict[Tuple[int, int], int] = dict(base)
+    for a in states:
+        table[(a0, a)] = s if a == a0 else g(base[(a, a)])
+    return lambda a: (lambda b: table[(a, b)])
+
+
+def find_strange_loop(
+    states: Sequence[int],
+    f: Callable[[int], Callable[[int], int]],
+    g: Callable[[int], int],
+) -> Tuple[int, int]:
+    """Locate a strange-loop state a0 whose row equals the twisted lens
+    phi(a) = g(f(a)(a)); return (a0, f(a0)(a0)) with g(f(a0)(a0)) == f(a0)(a0)."""
+    phi: Tuple[int, ...] = tuple(g(f(a)(a)) for a in states)
+    for a0 in states:
+        if tuple(f(a0)(a) for a in states) == phi:
+            s = f(a0)(a0)
+            assert g(s) == s, "diagonal construction failed"
+            return a0, s
+    raise ValueError("twisted lens is not realized by any state")
+
+
+def demo_lawvere() -> None:
+    print("=" * 70)
+    print("1. Lawvere's fixed-point theorem (diagonal / strange-loop witness)")
+    print("=" * 70)
+    states = [0, 1, 2]  # state space A = {0, 1, 2}
+    values = [0, 1, 2]  # observation palette B = {0, 1, 2}
+    # A transformation of observations that HAS a fixed point (2 is fixed).
+    g = lambda b: {0: 1, 1: 2, 2: 2}[b]
+    s = 2  # the fixed point of g used on the loop diagonal
+    a0 = 0  # the designated strange-loop state
+    # Arbitrary base rows for the other states.
+    base = {(a, b): (a * b + 1) % len(values) for a in states for b in states}
+    f = build_selfmodel_realizing_twist(states, base, g, s, a0)
+    found_a0, fixed = find_strange_loop(states, f, g)
+    print(f"  |B| = {len(values)}, |A| = {len(states)}")
+    print(f"  strange-loop state a0 = {found_a0}")
+    print(f"  fixed observation s = f(a0)(a0) = {fixed},  g(s) = {g(fixed)}"
+          f"  ->  g(s)==s: {g(fixed) == fixed}")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# 2. The Cantor / diagonal obstruction
+# ---------------------------------------------------------------------------
+
+def diagonal_missed_subset(
+    A: Sequence[int], f: Callable[[int], FrozenSet[int]]
+) -> FrozenSet[int]:
+    """For any candidate f : A -> P(A), return the diagonal set
+    D = { a in A : a not in f(a) }, which is provably NOT in the image of f."""
+    return frozenset(a for a in A if a not in f(a))
+
+
+def demo_cantor() -> None:
+    print("=" * 70)
+    print("2. Cantor / diagonal obstruction: no surjection A -> P(A)")
+    print("=" * 70)
+    A = list(range(4))
+    # An arbitrary attempt at a surjection A -> P(A).
+    attempt: Dict[int, FrozenSet[int]] = {
+        0: frozenset(),
+        1: frozenset({0, 1}),
+        2: frozenset({1, 2, 3}),
+        3: frozenset({0, 3}),
+    }
+    f = lambda a: attempt[a]
+    D = diagonal_missed_subset(A, f)
+    image = {f(a) for a in A}
+    print(f"  A = {A},  |P(A)| = {2 ** len(A)} but |A| = {len(A)}")
+    print(f"  diagonal set D = {set(D)}")
+    print(f"  is D in the image of f? {D in image}  (must be False -> f not onto)")
+    # Boolean NOT is fixed-point-free -> obstruction, i.e. Cantor.
+    not_map = lambda b: not b
+    print(f"  NOT has a fixed point? {any(not_map(b) == b for b in (False, True))}"
+          f"  -> fixed-point-free, so no complete self-model into Bool")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# 3. The cardinal boundary
+# ---------------------------------------------------------------------------
+
+def self_modeling_deficit(card_A: int, card_B: int) -> int:
+    """The self-modeling deficit |B|^|A| - |A|: strictly positive whenever
+    |B| >= 2, certifying that no finite complete self-model exists."""
+    return card_B ** card_A - card_A
+
+
+def demo_cardinal_boundary() -> None:
+    print("=" * 70)
+    print("3. Cardinal boundary: |B|^|A| > |A| forbids finite self-models")
+    print("=" * 70)
+    print(f"  {'|A|':>4} {'|B|':>4} {'|A->B|=|B|^|A|':>16} {'deficit':>12}")
+    for card_A in range(1, 7):
+        for card_B in (2, 3):
+            deficit = self_modeling_deficit(card_A, card_B)
+            print(f"  {card_A:>4} {card_B:>4} {card_B**card_A:>16} {deficit:>12}")
+    print("  deficit > 0 always (for |B| >= 2): completeness impossible.")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# 4. Knaster-Tarski least fixed point on a finite complete lattice
+# ---------------------------------------------------------------------------
+
+def least_fixed_point_powerset(
+    ground: Sequence[int], f: Callable[[FrozenSet[int]], FrozenSet[int]]
+) -> FrozenSet[int]:
+    """Compute the least fixed point of a monotone f on the powerset lattice of
+    `ground`, by Kleene iteration from the bottom element (the empty set)."""
+    current: FrozenSet[int] = frozenset()
+    while True:
+        nxt = f(current)
+        if nxt == current:
+            return current
+        current = nxt
+
+
+def demo_tarski() -> None:
+    print("=" * 70)
+    print("4. Knaster-Tarski least fixed point (monotone self-model)")
+    print("=" * 70)
+    ground = list(range(5))
+    # Monotone operator: reachability closure from seed {0} under successor +2.
+    edges = {0: {2}, 2: {4}, 1: {3}, 3: {1}}
+
+    def f(S: FrozenSet[int]) -> FrozenSet[int]:
+        out = set(S) | {0}  # always include seed 0 (monotone, adds bottom info)
+        for x in list(S):
+            out |= edges.get(x, set())
+        return frozenset(out)
+
+    lfp = least_fixed_point_powerset(ground, f)
+    print(f"  ground set = {ground}")
+    print(f"  least fixed point lfp(f) = {sorted(lfp)}")
+    print(f"  is it a fixed point? {f(lfp) == lfp}")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# 5. Yoneda reconstruction from the probe profile (finite category)
+# ---------------------------------------------------------------------------
+
+def probe_profile(
+    objects: Sequence[str], hom: Dict[Tuple[str, str], Set[str]], X: str
+) -> Dict[str, Set[str]]:
+    """The probe profile of X: for every object Z, the hom-set Hom(Z, X)."""
+    return {Z: hom.get((Z, X), set()) for Z in objects}
+
+
+def reconstruct_up_to_iso(
+    objects: Sequence[str], hom: Dict[Tuple[str, str], Set[str]]
+) -> Dict[str, Tuple[Tuple[str, int], ...]]:
+    """Reconstruct each object's isomorphism invariant from its probe profile:
+    the multiset of hom-set sizes indexed by probe object. By Yoneda, distinct
+    objects have distinct profiles up to relabeling."""
+    invariants: Dict[str, Tuple[Tuple[str, int], ...]] = {}
+    for X in objects:
+        prof = probe_profile(objects, hom, X)
+        invariants[X] = tuple(sorted((Z, len(m)) for Z, m in prof.items()))
+    return invariants
+
+
+def demo_yoneda() -> None:
+    print("=" * 70)
+    print("5. Yoneda: a system is determined by the ways it can be probed")
+    print("=" * 70)
+    objects = ["A", "B", "C"]
+    # Hom-sets in a small category (identities implicit; sizes are what matter).
+    hom = {
+        ("A", "A"): {"id_A"},
+        ("B", "B"): {"id_B"},
+        ("C", "C"): {"id_C"},
+        ("A", "B"): {"u"},
+        ("A", "C"): {"v", "w"},
+        ("B", "C"): {"t"},
+    }
+    invariants = reconstruct_up_to_iso(objects, hom)
+    for X in objects:
+        print(f"  probe profile of {X}: {invariants[X]}")
+    distinct = len(set(invariants.values())) == len(objects)
+    print(f"  all objects distinguished by their probe profiles? {distinct}")
+    print("  -> objects are determined, up to isomorphism, by their probes.")
+    print()
+
+
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    demo_lawvere()
+    demo_cantor()
+    demo_cardinal_boundary()
+    demo_tarski()
+    demo_yoneda()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":
