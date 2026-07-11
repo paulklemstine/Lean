@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f0772bca",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Combinatorics of Register Allocation\n\nThis cycle established that for programs whose variables occupy contiguous live ranges, the\ninterference graph is an interval graph, and",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 18,
-      "timestamp": "2026-07-10T20:20:23",
-      "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
-    },
-    {
       "cycle_id": "0643b2b3",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — The Caterer Hierarchy and Higher Layers\n\nThis cycle established the two lowest floors of the *caterer hierarchy*: the lazy caterer\nnumbers (plane regions from lines) and the cake",
@@ -499,19 +489,19 @@
       "theorem_count": 40,
       "timestamp": "2026-07-11T11:59:17",
       "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+    },
+    {
+      "cycle_id": "c06d8e8c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Geometry Between the Dimensions\n\nThis cycle established that \"infinite Hausdorff dimension\" (`dimH = ⊤`) is the\ncorrect rigorous surrogate for the informal notion of a surface who",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-11T12:48:37",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5961bdfa",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Sidon sets, convolution kernels, and energy\n\nThese conjectures grew out of a study of Sidon sets (finite sets of integers\nwhose pairwise sums are all distinct) through the lens o",
-      "quality_score": 0.7401600000000002,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-03T19:52:39",
-      "title": "Multi-kernel smoothing lemma for Sidon sets"
-    },
     {
       "cycle_id": "95c356ab",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 40,
       "timestamp": "2026-07-11T11:59:17",
       "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+    },
+    {
+      "cycle_id": "c06d8e8c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Geometry Between the Dimensions\n\nThis cycle established that \"infinite Hausdorff dimension\" (`dimH = ⊤`) is the\ncorrect rigorous surrogate for the informal notion of a surface who",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-11T12:48:37",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "01e9ab7a",
-      "domain": "Novelty",
-      "name": "holonomy_coboundary",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "01e9ab7a",
-      "domain": "Novelty",
-      "name": "holonomy_of_realizable",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "39ced9f7",
-      "domain": "Applications",
-      "name": "that",
-      "quality": 0.72
-    },
     {
       "cycle_id": "39ced9f7",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "card_subsection8",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "c06d8e8c",
+      "domain": "Applications",
+      "name": "package",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c06d8e8c",
+      "domain": "Applications",
+      "name": "uses",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c06d8e8c",
+      "domain": "Applications",
+      "name": "exhibits",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T11:59:17",
+  "last_updated": "2026-07-11T12:48:37",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f57636f1",
-        "quality": 0.82,
-        "theorems": 48,
-        "title": "Deepening: The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
-      },
-      {
         "cycle_id": "0250199a",
         "quality": 0.83,
         "theorems": 36,
@@ -3141,6 +3135,12 @@
         "quality": 0.8,
         "theorems": 45,
         "title": "Anti-Mathematics: What If All Axioms Were Negated?"
+      },
+      {
+        "cycle_id": "c06d8e8c",
+        "quality": 0.82,
+        "theorems": 9,
+        "title": "Aleph-1 Surface: Geometry Between Dimensions"
       }
     ],
     "Bridges": [

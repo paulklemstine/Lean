@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-11T11:59:20.713227+00:00",
+  "last_updated": "2026-07-11T12:48:39.215529+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -6000,6 +6000,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-11T11:59:20.688022+00:00",
       "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 75,
+      "domain": "Applications",
+      "duration_seconds": 982.0522031784058,
+      "end_time": 1783774108.2983596,
+      "files_integrated": 4,
+      "job_id": "c06d8e8c",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783773126.2461565,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 8,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-11T12:48:39.189210+00:00",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
   ]
 }

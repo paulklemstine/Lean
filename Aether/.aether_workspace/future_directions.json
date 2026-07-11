@@ -29946,7 +29946,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "67719bf8",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29974,7 +29974,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-07-11T09:41:21.700734+00:00",
       "title": "Fermat Near-Misses in the Twilight Zone"
@@ -31322,11 +31322,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c3787823",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31338,7 +31338,7 @@
       ],
       "github_issue": 0,
       "id": "push_2c395553_f2f15f5f",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-11T12:48:52.186331+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31353,7 +31353,7 @@
       "source": "",
       "source_exp_id": "2c395553",
       "source_path": "Aboriginal Kinship as Group Theory: Dreamtime Algebra",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-11T11:59:19.287459+00:00",
       "title": "Deepening: Aboriginal Kinship as Group Theory: Dreamtime Algebra"
@@ -32572,7 +32572,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 9ca5466b (Q=0.800), which proved 40 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hyperco",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],
@@ -32612,7 +32612,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a0852bd7 (Q=0.800), which proved 45 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are c",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -32877,6 +32877,46 @@
       "thread_id": "",
       "timestamp": "2026-07-10T00:21:15.177603+00:00",
       "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle c06d8e8c (Q=0.820), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "push_c06d8e8c_57842008",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "c06d8e8c",
+      "source_path": "Aleph-1 Surface: Geometry Between Dimensions",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-11T12:48:37.547989+00:00",
+      "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
     },
     {
       "ambition_level": "extension",
@@ -33252,7 +33292,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications"
       ],
@@ -33292,7 +33332,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f9466ee5 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For a normal geometrically connected variety X over a finite field k, a compactification \\(\\overline{X}\\), an effective Cartier divisor D with support in \\(Z = \\overline{X} \\setminus X\\), and an algebraically closed field F of characteristic p with discrete topology, the set of isomorphism classes o",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -33372,7 +33412,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle fb4f44b5 (Q=0.830), which proved 38 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the complete bipartite graph K_{m,n} with parts of sizes m and n, the Seidel energy strictly increases under any edge deletion if and only if both m,n ≥ 3. This conjecture claims that the threshold conditions (m,n) ≥ (3,6), (6,3), (2,15), (15,2) and (4,4) established in the paper are not sharp f",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],

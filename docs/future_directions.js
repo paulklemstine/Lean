@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3787823",
     "description": "Building on cycle 2c395553 (Q=0.830), which proved 40 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire",
     "domains": [
       "Novelty"
@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "2c395553",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T11:59:19.287459+00:00",
     "title": "Deepening: Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
@@ -309,6 +309,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T22:51:37.493006+00:00",
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c06d8e8c (Q=0.820), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_c06d8e8c_57842008",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "c06d8e8c",
+    "status": "available",
+    "timestamp": "2026-07-11T12:48:37.547989+00:00",
+    "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
     "consumed_by_exp_id": "",
@@ -1070,7 +1084,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
   {
-    "consumed_by_exp_id": "67719bf8",
+    "consumed_by_exp_id": "",
     "description": "Study near-misses to Fermat's Last Theorem: triples (a,b,c) where |a^n + b^n - c^n| is small. Prove that such near-misses exist for every n and characterize their distribution. Show that the density of near-misses decreases super-exponentially and connect to the ABC conjecture's effective version.",
     "domains": [
       "Novelty",
@@ -1080,7 +1094,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T09:41:21.700734+00:00",
     "title": "Fermat Near-Misses in the Twilight Zone"
   },
@@ -1128,21 +1142,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T16:01:43.810023+00:00",
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-  },
-  {
-    "consumed_by_exp_id": "c06d8e8c",
-    "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_1004",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T07:45:39.462265+00:00",
-    "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
     "consumed_by_exp_id": "997ab258",
@@ -7370,6 +7369,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T11:59:08.201333+00:00",
     "title": "The file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Geometry Between the Dimensions\n\nThis cycle established that \"infinite Hausdorff dimension\" (`dimH = \u22a4`) is the\ncorrect rigorous surrogate for the informal notion of a surface whose dimension\nlies beyond every finite value: it is a complete obstruction to embeddings into\nfinite\u2011dimensional spaces, it is realized inside a single separable Hilbert\nspace, and it is incompatible with finite triangulations. The following\nconjectures push the boundary further.\n\n## 1. The Hausdorff dimension of a metric space is never a cardinal invariant\n**Conjecture.** For every metric space, the Hausdorff dimension is an element of\nthe extended nonnegative reals, and there is no metric space whose Hausdorff\ndimension can be meaningfully identified with an uncountable cardinal; the only\n\"transfinite\" value attainable is the top element `\u22a4`.\n\nThe key insight is that Hausdorff dimension is defined through the infimum over\nreal exponents controlling a measure, so its target totally orders like the\nreals and collapses every notion of \"size beyond countable\" to a single symbol\n`\u22a4`. Why now? Having pinned the obstruction, ladder, and realization theorems to\nthe single value `\u22a4`, we can state precisely what a cardinal\u2011valued refinement\nwould have to violate, turning a vague slogan into a sharp impossibility claim.\n\n## 2. Sharp dimension gap for antilipschitz maps\n**Conjecture.** If there is a `K`\u2011antilipschitz map from an `n`\u2011dimensional\nEuclidean space into a normed space `E`, then `dim E \u2265 n`, and moreover the\noptimal constant `K` grows without bound as `dim E` approaches `n` from above.\n\nThe key insight is that dimension is not merely a yes/no obstruction but a\nquantitative one: squeezing a high\u2011dimensional cube into barely enough room\nforces distances to be distorted at a rate controlled by the dimension deficit.\nWhy now? The present ladder theorem already proves the qualitative `dim E \u2265 n`;\nthe natural next step is to extract the quantitative distortion bound that the\nsame Hausdorff\u2011measure inequality secretly contains.\n\n## 3. Every separable metric space of infinite dimension re\u2011embeds in `\u2113\u00b2`\n**Conjecture.** Any separable metric space that receives isometric copies of\n`\u211d\u207f` for all `n` admits a bi\u2011Lipschitz embedding into `\u2113\u00b2`, and the image again\nhas Hausdorff dimension `\u22a4`.\n\nThe key insight is that `\u2113\u00b2` is a *universal* home for finite\u2011dimensional\nEuclidean geometry, so an object built by stacking Euclidean stages can always\nbe reassembled inside it without losing the infinite\u2011dimension certificate. Why\nnow? The construction here builds exactly such a stack (`euclToLp`) and proves\nits dimension is `\u22a4`; generalizing from the specific stack to arbitrary\nseparable stacks is the obvious universality statement.\n\n## 4. Triangulation obstruction is stable under countable refinement\n**Conjecture.** A space of infinite Hausdorff dimension is not only free of\nfinite triangulations but also of any *locally finite* countable triangulation\nwhose simplices have uniformly bounded dimension.\n\nThe key insight is that the supremum controlling `dimH` of a countable union is\ninsensitive to how many pieces there are and sees only the supremum of their\ndimensions, so a uniform finite bound on piece dimension caps the whole union.\nWhy now? The finite\u2011cover theorem of this cycle is the base case; replacing\n`Fin m` by a countable index with a uniform dimension bound is a direct\nstrengthening that the same supremum computation should reach.\n\n## 5. Continuum\u2011indexed dimension ladders and the Hilbert cube\n**Conjecture.** The Hilbert cube itself (not merely the ambient `\u2113\u00b2`) has\nHausdorff dimension `\u22a4`, witnessed by scaled Euclidean cubes of every dimension\npacked into disjoint coordinate blocks.\n\nThe key insight is that Hausdorff dimension is scale\u2011invariant, so shrinking a\nfull `n`\u2011cube to fit inside the `n`\u2011th factor of the cube preserves its\ndimension `n`, and the disjoint blocks then push the total dimension past every\nfinite bound. Why now? We have already shown the ambient Hilbert space has\ndimension `\u22a4`; localizing the witness to the compact Hilbert cube is the precise\nstrengthening needed to claim a genuinely *compact* surface between the\ndimensions.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1035",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c06d8e8c",
+    "status": "available",
+    "timestamp": "2026-07-11T12:48:31.955113+00:00",
+    "title": "That \"infinite Hausdorff dimension\" (`dimH = \u22a4`) is the"
   },
   {
     "consumed_by_exp_id": "",
