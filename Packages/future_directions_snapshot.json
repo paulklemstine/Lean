@@ -439,26 +439,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2ace1a06",
-    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own Gödel sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0952",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T22:30:11.227768+00:00",
-    "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
     "domain_bridges": [],
@@ -11490,6 +11470,26 @@
     "status": "available",
     "timestamp": "2026-07-11T01:12:21.487929+00:00",
     "title": "This cycle replaced the folklore \"gap vs. clue count\" picture with a structural "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Mind, Machine, and the Diagonal Principle\n\nThis cycle established that the logical (Gödel/Lucas–Penrose) and information-theoretic\n(Chaitin/Berry) limitation theorems are two projections of a single fixed-point principle,\nand that the \"mind versus machine\" gap is exactly the gap between a semantic truth valuation\nand a syntactic provability predicate that a sound system necessarily leaves open. The\nfollowing conjectures push that unification further.\n\n## 1. A quantitative Lucas–Penrose gap\n\n**Conjecture.** For every sound, self-referential system there is a *strictly increasing*\nhierarchy of independent truths: adjoining the Gödel sentence as a new axiom produces a\nlarger sound system with its own fresh Gödel sentence, and the ordinal length of this tower\nis a genuine invariant of the system, not of any single sentence.\n\nThe key insight is that the mind/machine gap is not a single sentence but a *well-ordered\nreflection process*: each act of \"seeing\" the current Gödel truth is itself a mechanical\nstep, so the mind's advantage is measured by how far the reflection ordinal outruns any\nfixed machine's proof-theoretic ordinal.\n\nWhy now? The abstract `FormalSystem` interface isolates exactly the data (soundness plus one\nfixed point) needed to iterate the construction, so the tower can be built uniformly rather\nthan re-derived for each concrete theory.\n\n## 2. Complexity-graded incompleteness\n\n**Conjecture.** In any sound system that can express its own descriptive-complexity bounds,\nthe largest provable lower bound \"K(x) > c\" is bounded by a constant determined by the\nsystem's own description length — and this constant is *computable from* the system's Gödel\nsentence.\n\nThe key insight is that Chaitin's incompressibility and Gödel's unprovable sentence are the\nsame obstruction viewed through two coordinates: the incompressible number *is* an\nundecidable statement about complexity, and its incompressibility threshold is the numerical\nshadow of the proof-theoretic strength that produced the Gödel sentence.\n\nWhy now? The counting kernel `chaitin_incompressible` and the logical kernel\n`FormalSystem.godel_true` are now available in a common setting, making it possible to state\nand test the exact correspondence between \"incompressibility threshold\" and \"reflection\nstrength\" rather than treating them as separate folklore.\n\n## 3. Berry paradox as a resource lower bound\n\n**Conjecture.** The finite Berry pigeonhole — no injective code compresses `2^n + 1` objects\ninto `n` bits — sharpens to a *smooth* trade-off: any encoding that keeps the average code\nlength below `n - k` must fail injectivity on a set of size at least `2^k`, with the constant\ntight.\n\nThe key insight is that the Berry paradox is not merely an existence statement about one\nincompressible number but a *density* statement: incompressible objects are cofinite, so\ncompression failure is generic, and its rate is governed by a clean exponential law.\n\nWhy now? The infinitude result `chaitin_incompressible_infinite` upgrades the paradox from\n\"there exists\" to \"almost all\", which is precisely the regime where a quantitative trade-off\nlaw becomes meaningful and falsifiable.\n\n## 4. Point-surjectivity as a uniform impossibility engine\n\n**Conjecture.** Every classical self-reference impossibility — Cantor, Russell, Tarski,\nTuring halting, Gödel, Rice's theorem — is provably equivalent, over a weak base, to a single\nstatement: \"no type point-surjects onto its own Boolean function space.\" The equivalences are\nnot merely analogies but two-way derivations.\n\nThe key insight is that Lawvere's fixed-point theorem is not one tool among many but the\n*complete* characterisation of self-referential impossibility: a limitation theorem holds\nexactly when the relevant self-map lacks a fixed point.\n\nWhy now? With `lawvere_fixedpoint`, `cantor_no_pointSurjective`, and the catalog's\n`diagonal_no_decider` already derived from one another, the remaining classical theorems can\nbe slotted into the same frame, turning a scattered folklore into a single equivalence class.\n\n## 5. The unsoundness escape hatch\n\n**Conjecture.** Every complete self-referential system is unsound in a *measurable* way: the\nset of provable-but-false sentences has positive density under any reasonable enumeration, and\nthis density is bounded below by a function of how much completeness the system claims.\n\nThe key insight is that `not_complete` shows soundness and completeness are incompatible for\nself-referential systems, but the incompatibility is quantitative — buying completeness costs\na definite amount of falsehood, and the exchange rate is an invariant worth computing.\n\nWhy now? The explicit sound-but-incomplete witness `weakArithmetic` provides the boundary\ncase; perturbing it toward completeness is the natural experiment for measuring the price of\neach false theorem admitted.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0969",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2ace1a06",
+    "status": "available",
+    "timestamp": "2026-07-11T01:12:27.443621+00:00",
+    "title": "That the logical (Gödel/Lucas–Penrose) and information-th"
   },
   {
     "ambition_level": "extension",
