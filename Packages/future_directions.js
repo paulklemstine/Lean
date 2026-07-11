@@ -554,6 +554,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Extend topological space theory to include Conway's surreal numbers as the underlying set. Prove that the order topology on No is not first-countable and that every real open set has a surreal extension. Determine whether No is connected, compact, or paracompact in the interval topology.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0977",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:00.123116+00:00",
+    "title": "Surreal Topology: Open Sets at Infinity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
       "Novelty",
@@ -853,21 +868,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T12:06:38.636322+00:00",
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
-  },
-  {
-    "consumed_by_exp_id": "0bde247f",
-    "description": "Formalize social credit systems as continuous maps from a population to a totally ordered set. Prove that any such map creates fixed-point attractors in the social graph topology. Show that under reasonable assumptions, credit scores converge to a Cantor set attractor where small perturbations cause phase transitions.",
-    "domains": [
-      "Novelty",
-      "Bridges"
-    ],
-    "id": "fd_0953",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T22:46:15.005354+00:00",
-    "title": "Social Credit Scores as Topological Invariants"
   },
   {
     "consumed_by_exp_id": "3399a930",
@@ -6689,6 +6689,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T02:17:53.816703+00:00",
     "title": "That a memory, modelled as a structure-preserving map fro"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes \"social credit scores as topological invariants\" through\nthree self-contained Lean 4 files under `Applications/SocialCredit/`:\n\n* `FixedPoint.lean` \u2014 extremal members of a compact population (extreme value\n  theorem), the affine credit-update dynamics with a unique attracting\n  equilibrium `c/(1-k)`, and a Knaster\u2013Tarski fixed point for monotone credit\n  maps on `[0,1]`.\n* `CantorAttractor.lean` \u2014 the ternary verdict encoding `cantorEnc`, its\n  `[0,1]` bounds, the IFS self-similarity `C = C/3 \u222a (C/3 + 2/3)`, and\n  injectivity of the encoding (the attractor is a genuine Cantor set).\n* `PhaseTransition.lean` \u2014 the threshold tier classifier is discontinuous\n  exactly at its cutoff, is sensitive there, and \u2014 since `\u211d` is connected \u2014 any\n  continuous binary classifier is constant, making phase transitions inevitable.\n\n## Natural extensions\n\n1. **Topological embedding.**  Give `\u2115 \u2192 Bool` the product (Cantor-space)\n   topology and prove `cantorEnc` is continuous, hence a topological embedding\n   (continuous injection from a compact space into a Hausdorff space).  This\n   would upgrade \"the range is a self-similar injective image\" to \"the range is\n   homeomorphic to the Cantor space\", and let one show the attractor is compact,\n   perfect, and totally disconnected.\n\n2. **Contraction / IFS via Hausdorff metric.**  Reprove `cantorSet_self_similar`\n   as the *unique* fixed point of the Hutchinson operator on the space of\n   nonempty compact subsets of `[0,1]` with the Hausdorff metric, using Banach's\n   fixed-point theorem (`ContractingWith`).  This makes the attractor genuinely\n   an attractor of a contraction, matching the informal framing.\n\n3. **General damping.**  Extend `creditIterate_tendsto` to complex or vector\n   scores, or to `|k| < 1` with `k` possibly negative, and to nonautonomous\n   updates `x\u2099\u208a\u2081 = c\u2099 + k\u2099 x\u2099` with `\u220f k\u2099 \u2192 0`.\n\n4. **Multi-tier phase diagram.**  Generalize `PhaseTransition.lean` from `Bool`\n   to `Fin m`: any continuous classifier `\u211d \u2192 Fin m` is constant, and a monotone\n   `m`-tier classifier has exactly `(number of occupied tiers) \u2212 1` phase\n   transitions, quantifying the number of critical scores.\n\n5. **Measure/dimension.**  Compute the Hausdorff dimension `log 2 / log 3` of the\n   attractor and show it has Lebesgue measure zero, tying the \"small\n   perturbations, big effects\" theme to a rigorous dimension statement.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0978",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0bde247f",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:26.129033+00:00",
+    "title": "This project formalizes \"social credit scores as topological invariants\" through"
   },
   {
     "consumed_by_exp_id": "",

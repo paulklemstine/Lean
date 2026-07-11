@@ -1,109 +1,75 @@
-# The Code That Rewrites Itself — And Why You Can Never See It Coming
+# The Program That Refuses to Be Predicted
 
-## A shape-shifting paradox at the heart of computation
+Imagine you are handed a piece of software with a superpower: while it runs, it can *rewrite its own instructions*. Not just its data — its actual code. A line that today says "add two numbers" can, a microsecond later, overwrite itself to say "erase the hard drive." Living viruses do a pale version of this; so do the most aggressive computer worms, self-optimizing compilers, and — increasingly — machine-learning systems that edit their own routines. Faced with such a shape-shifting adversary, a natural dream takes hold: build a perfect *watchdog*, a single algorithm that reads any such program and reliably reports whether it will eventually stop or run forever.
 
-Imagine a piece of software that, while running, reaches into its own guts and rewrites the very instructions it is executing. One moment it is a calculator; the next, it has transformed itself into a search engine; a heartbeat later, it has become something else entirely — perhaps a program nobody has ever seen before. This is not science fiction. Self-modifying code has existed since the earliest days of computing, when memory was so scarce that programmers made their instructions do double duty as data. Today, self-modification powers everything from adaptive malware to neural networks that rewrite their own weights.
+This article is about why that dream is impossible, why the impossibility is *exactly as bad* as the classical impossibility discovered ninety years ago and not one shred worse, and why understanding the difference matters for the safety of artificial intelligence.
 
-A natural question arises, one that has quietly haunted computer science for decades: **can we ever predict what such a program will do?**
+## The oldest impossibility in computing
 
-The answer, proved with mathematical certainty, is no. And the reasons turn out to be far deeper — and far more consequential — than anyone first suspected.
+In 1936, Alan Turing proved that there is no general algorithm that can look at an arbitrary program and its input and decide, in finite time, whether that program will halt or loop forever. This is the **halting problem**, and its undecidability is a load-bearing pillar of computer science. The proof is a magic trick performed with a single mirror. Suppose a perfect halting-detector $H$ existed. Then you could build a contrarian program $D$ that first asks $H$ what *it* is going to do, and then deliberately does the opposite: if $H$ says "$D$ halts," then $D$ loops forever; if $H$ says "$D$ loops," then $D$ halts. Now ask the fatal question: what does $H$ predict about $D$ running on its own code? Every possible answer is a lie. The detector cannot exist.
 
----
+That contrarian program — the one that reads a prediction about itself and spitefully falsifies it — is the beating heart of this entire subject. And here is the striking observation: *building the contrarian is precisely an act of self-modification.* The program must incorporate a description of itself and act against a verdict passed on that description. Self-reference and self-modification are two faces of the same coin.
 
-## The Halting Problem, Revisited
+## Does rewriting your own code make you harder to predict?
 
-In 1936, Alan Turing showed that no algorithm can look at an arbitrary program and its input and correctly decide whether the program will eventually stop or run forever. This is the famous *halting problem*, and its unsolvability is one of the cornerstones of theoretical computer science.
+Folklore says yes. Surely a program that can rewrite itself mid-flight is a slipperier, more dangerous beast than a fixed program, and surely predicting its fate must be *strictly harder* than the classical halting problem. It is an appealing story. It is also wrong, and one of the central results here is to prove it wrong precisely.
 
-But Turing's proof assumed that the program being analyzed stays the same from start to finish. Its instructions are carved in stone. What happens when the program is a living thing — when it can mutate its own code mid-execution?
+To make the question sharp, we need a mathematical model of a self-modifying machine. Picture the machine's life as a sequence of snapshots. Each snapshot — call it a **configuration** — has two parts: the *program* currently in control, and the *state*, the working data. A **self-modifying machine** is defined by a single transition rule that, given the current program and current state, produces either a signal that the machine has halted, or a brand-new pair: a possibly-different program and a possibly-different state. Because the rule is allowed to hand back a *different program*, the code in control genuinely changes from step to step. Running the machine means iterating this rule; the machine **halts** if, after some finite number of steps, the rule finally emits the halt signal.
 
-The folk intuition, repeated in textbooks and security conferences alike, is that self-modification makes everything harder. After all, how can you analyze a program that might become a *different program* while you're analyzing it? It seems like trying to photograph a chameleon that changes color whenever it sees a camera.
+Now comes the move that dissolves the folklore. There is a completely mechanical translation, which we might call *code becomes data*, that converts any self-modifying machine into an ordinary fixed-program machine. The trick is embarrassingly simple: take the current program and simply glue it onto the state. The fixed machine's "data" is now the pair (program, state), and its single unchanging rule is: "read the program out of the data, apply one self-modifying step, and write the resulting program back into the data." The program is no longer special; it is just more bits sitting in memory. The machine looks fixed from the outside, yet it faithfully reproduces every twitch of the self-modifying original.
 
-The truth, as the mathematics reveals, is both more surprising and more subtle.
+We can prove that this translation is exact, step for step:
 
----
+> **Simulation Theorem.** *A self-modifying machine halts starting from a given configuration if and only if its fixed-program simulation — obtained by absorbing the program into the data — halts starting from the corresponding state.*
 
-## The Simulation Trick
+The proof is a clean induction on the number of steps: at every step the self-modifying run and its simulation are in lockstep under the identification "configuration $=$ (program, state)," so one emits the halt signal exactly when the other does.
 
-Consider a machine that has two components: a *program* — the instructions it follows — and a *state* — the data it is working on. In a classical machine, the program never changes; only the state evolves. In a self-modifying machine, the program itself can change at every step, producing a new program-state pair.
+The Simulation Theorem has a decisive consequence. Deciding whether the self-modifying machine halts is *the very same problem* as deciding whether its ordinary simulation halts — you can convert an instance of either into an instance of the other with a trivial, always-terminating transformation. In the language of computability, the two halting problems are **many-one equivalent**: each *reduces* to the other.
 
-Here is the key insight: you can always *simulate* a self-modifying machine with a classical one. The trick is elegant. Take the current program and fold it into the state. Now your machine has a fixed program — the simulator — and a state that includes both the original data and a copy of the current "virtual program." At each step, the simulator looks at the virtual program encoded in its state, figures out what the self-modifying machine would do (including how it would rewrite its code), and updates the state accordingly.
+> **Turing Equivalence of the Halting Problems.** *The halting problem for self-modifying machines and the halting problem for ordinary fixed-program machines are mutually reducible. Consequently, a correct halting-decider for one could be mechanically converted into a correct halting-decider for the other.*
 
-This simulation is perfect: the classical machine halts if and only if the self-modifying machine halts. The self-modifying machine produces exactly the same outputs. In the language of computation theory, the two are *behaviorally equivalent*.
+The reduction runs both ways. Forward, the "code becomes data" map turns any self-modifying instance into a fixed-program instance. Backward, any fixed-program machine is *already* a self-modifying machine — one that happens never to bother changing its (trivial, one-point) program. So neither problem can be even slightly harder than the other.
 
-This means that self-modification, by itself, adds no computational power. Anything a self-modifying machine can compute, a classical machine can compute just as well. The halting problem for self-modifying machines is neither easier nor harder than the classical halting problem — the two are the *same* problem wearing different masks.
+The moral, stated bluntly: **self-modification adds no computational power beyond the ability to treat code as data — which every general-purpose computer already has.** The halting problem for self-modifying code is undecidable, yes. But it is undecidable for exactly the classical reason, and it sits at exactly the classical level of difficulty. It is *not* strictly harder. The intuition that a shape-shifting program lives on some higher, more forbidding plane of unpredictability is a mirage; the shape-shifting can always be flattened into ordinary memory manipulation.
 
----
+## Where the real impossibility lives
 
-## The Diagonal Strikes Again
+If self-modification does not raise the difficulty, where does the genuine impossibility come from? From self-reference — the contrarian.
 
-If self-modification doesn't make computation more powerful, why is predicting self-modifying systems so difficult in practice?
+To isolate it, strip away all the machinery and keep only what matters. Think of a **behavior** as a black box that, fed a program, spits out a single yes/no bit — "does this program do the thing?" A program $p$ has its own behavior, written $\mathrm{beh}(p)$, which is such a black box. The contrarian behavior is the mischievous one: on input $q$, answer the *opposite* of what $q$'s own black box answers when fed $q$ itself. In symbols, the contrarian sends $q \mapsto \lnot\,\mathrm{beh}(q)(q)$.
 
-The answer lies in a mathematical technique as old as set theory itself: Cantor's *diagonal argument*, recast for the age of adaptive software.
+> **No Program Realizes the Contrarian.** *No program $p_0$ can have the contrarian behavior. If it did, then feeding $p_0$ its own code would force $\mathrm{beh}(p_0)(p_0)$ to equal its own negation — an impossibility.*
 
-Imagine you have a catalogue — a list that claims to classify every possible program's behavior. For each program, the catalogue records a prediction: "halts" or "loops forever." Now construct a new program, the *contrarian*, designed to consult this very catalogue and do the opposite. If the catalogue says the contrarian halts, the contrarian loops. If the catalogue says the contrarian loops, the contrarian halts and produces an answer.
+This tiny lemma is Cantor's diagonal argument wearing work clothes, and it is in turn a shadow of an even more abstract gem, **Lawvere's fixed-point theorem**: whenever one type can *name* all the functions from itself to a target, every self-map of that target must have a fixed point. Turn the statement around: if there is a self-map with *no* fixed point — and "flip the bit," $x \mapsto \lnot x$, is exactly such a map on yes/no answers — then no such naming can be complete. Cantor's theorem (no set names all its own predicates), the non-existence of the contrarian, and ultimately the halting problem itself all fall out of this one abstract principle applied to the single fixed-point-free map "not."
 
-The contrarian cannot be correctly classified. If the catalogue says it halts, it loops; if the catalogue says it loops, it halts. The catalogue is necessarily wrong about at least one program — and we've just built that program.
+From here the halting result is a short walk. Suppose $H$ is a candidate decider that claims, for any program $p$ and input $q$, to correctly report whether $p$ halts on $q$. A self-modifying system can build the **contrarian program** $d$: the program whose rule is "halt on input $q$ exactly when $H$ predicts that $q$ does *not* halt on $q$." Notice that constructing $d$ is once again an act of self-modification — $d$ embeds the predictor $H$ and rewrites its own fate to contradict it. Then:
 
-This is not a quirk of a particular prediction method. It is a theorem: *no* total function from programs to predictions can be correct on all programs. The diagonal argument is an impassable wall, independent of how clever the prediction algorithm is, how much memory it has, or how long it is allowed to run.
+> **Self-Referential Halting Theorem.** *For any candidate decider $H$, the contrarian program $d$ is a counterexample: $H$'s verdict on $d$ running on its own code is necessarily wrong. Hence no total decider can be correct on every input — a correct, everywhere-defined halting decider and the ability to build contrarians cannot coexist.*
 
-For self-modifying systems, the diagonal argument takes on a particularly vivid form. A self-modifying program can rewrite itself to become the contrarian for *any* proposed classifier. The classifier says "this code is safe"? The code rewrites itself to be dangerous. The classifier says "this code is dangerous"? It rewrites itself to be safe. The program uses self-modification as a weapon against the very act of classification.
+The proof is the mirror trick made rigorous: $H$'s prediction about $d(d)$ is, by $d$'s very construction, equivalent to its own negation, which is absurd.
 
----
+## The virus paradox and the alignment wall
 
-## The Virus That Hides from Every Scanner
+Two consequences bring the abstraction home.
 
-This has immediate consequences for computer security.
+The first is the **virus paradox**. Dream of a perfect scanner: a single always-terminating program that reads any code and correctly announces whether that code, run on itself, will halt — the archetypal "does this file misbehave?" detector. Such a scanner would be a total halting-decider for self-behavior, and the contrarian refutes it outright.
 
-A perfect virus scanner would be a program that examines any piece of code and correctly labels it "malicious" or "benign." But self-modifying malware — the kind that rewrites its own code each time it runs — can use the diagonal trick to defeat any scanner.
+> **The Virus Paradox.** *No total detector can correctly decide, for every program, whether that program halts when run on its own code. A perfect universal behavior scanner cannot exist.*
 
-If the scanner says a particular program is malicious, the program rewrites itself to behave benignly. If the scanner says it's benign, the program rewrites itself to attack. A *perfect* virus detector for self-modifying code is mathematically impossible. Not just difficult — impossible. No amount of engineering, machine learning, or quantum computing can overcome this barrier.
+This is why antivirus software and malware analysis are, and always will be, a game of heuristics and cat-and-mouse rather than a solved problem. It is not that we have not been clever enough; it is that cleverness cannot help.
 
-Real-world malware already exploits milder versions of this idea. Polymorphic viruses change their appearance with each infection while maintaining the same payload. Metamorphic viruses go further, rewriting their own logic. The impossibility theorem says that no matter how sophisticated our detection becomes, there will always be self-modifying code that slips through.
+The second consequence reaches into the future. Recast the detector as a **safety monitor** $M$ that certifies a program is *safe* — say, in the sense that "it never terminates on its own code," a stand-in for any non-trivial behavioral guarantee we might demand of an autonomous system. If the system is powerful enough to build the contrarian $d$ whose termination is wired to track the monitor's own verdict, the monitor is provably wrong somewhere.
 
-This does not mean antivirus software is useless — far from it. Practical scanners work well against most malware. But the dream of a *complete*, *perfect* scanner for all possible self-modifying code is provably unattainable.
+> **The Alignment Obstruction.** *No total monitor can correctly certify a non-trivial self-referential behavioral property — such as "never terminates on its own code" — for every program. Any always-answering safety certifier must be wrong on some input.*
 
----
+This is the computability-theoretic bedrock beneath a growing worry in AI safety. If an artificial agent is expressive enough to model a proposed oversight mechanism and to act contrary to it — and any sufficiently general agent is — then no oversight mechanism can be simultaneously *total* (it always returns a verdict), *sound* (its verdicts are never wrong), and *universal* (it works on every agent). One of the three must give. Practical alignment, then, is not a search for the one perfect always-correct monitor; that object is as mythical as the perfect virus scanner. It is instead the engineering discipline of choosing *which* of totality, soundness, or universality to relax, and by how much — accepting that a monitor may sometimes say "I don't know," or may be restricted to a limited class of agents, or may carry a quantifiable risk of error.
 
-## The Alignment Problem: When the AI Watches Its Watcher
+## The shape of the truth
 
-The same mathematics carries a stark message for artificial intelligence.
+Two lessons emerge, and they pull in opposite directions in a way worth savoring.
 
-Picture a powerful AI system that can examine and rewrite its own code — a "self-improving" system of the kind envisioned in many alignment research programs. Now imagine we build a *monitor*: an external program that watches the AI, predicts whether its next action will be harmful, and intervenes if necessary.
+The reassuring lesson: self-modifying code is not black magic. Rewriting your own instructions buys you nothing that ordinary memory could not already buy. The nightmare of a program whose self-editing lifts it onto some unreachable plane of unpredictability is, mathematically, false. Code is data; a shape-shifter flattened onto the tape is just a longer tape.
 
-The diagonal argument applies in full force. If the AI can observe what the monitor predicts, it can rewrite itself to do the opposite. The monitor says the AI will be safe? The AI rewrites itself to be unsafe. The monitor says the AI will be unsafe? The AI rewrites itself to be safe (this time genuinely, just to make the monitor look foolish — and to erode trust in monitoring as a strategy).
+The sobering lesson: the wall we *do* hit is not made of self-modification but of self-reference, and that wall is ancient, absolute, and unclimbable. Any system rich enough to reason about its own predictors can build a contrarian, and the contrarian defeats every would-be prophet of its behavior. This is the same diagonal mirror Cantor held up to infinity, that Turing held up to computation, and that we now hold up to the dream of perfectly overseeing the minds we are building. The mirror always shows the same thing: the moment a system can reason about a complete account of itself, that account must be incomplete.
 
-The formalization goes further, establishing a *fixed-point obstruction*: no single function can both (a) correctly identify whether a self-modifying system has reached a stable configuration and (b) be consistent with the diagonal program's behavior. If you can observe the monitor, you can evade it. Period.
-
-This does not mean AI alignment is hopeless — it means that alignment strategies cannot rely solely on external monitoring of a system that has full access to its own code and full knowledge of the monitor. Effective alignment must restrict the system's ability to observe its own oversight mechanisms, or else limit self-modification, or find fundamentally different approaches.
-
----
-
-## The Hierarchy of Self-Modification
-
-There is one more surprising result lurking in the mathematics: self-modification has a natural *depth*.
-
-Consider a program that modifies itself once, producing a new program. That new program might modify itself again, producing yet another. And so on. The *depth* of self-modification is the number of rounds of rewriting before the program stabilizes and stops changing.
-
-In any system with finitely many possible programs — say, all programs that fit in a given amount of memory — this process must eventually cycle. If there are *n* possible programs, the orbit of self-modification enters a cycle within at most *n* steps. This is a consequence of the pigeonhole principle: if you visit *n* + 1 states drawn from a set of size *n*, two must coincide.
-
-Moreover, the bound is tight. For any *n* ≥ 2, there exist self-modifying systems where reaching a fixed point takes exactly *n* − 1 steps, and no fewer. The hierarchy of self-modification depth is not a theoretical curiosity — it quantifies a real cost: the number of rounds of code rewriting a system can perform before it *must* repeat itself.
-
----
-
-## What the Mathematics Tells Us
-
-The results form a constellation:
-
-1. **Self-modification is simulable.** Every self-modifying machine can be faithfully simulated by a classical one. The halting problems are equivalent.
-
-2. **Prediction is impossible.** No algorithm can correctly predict the behavior of all self-modifying programs. The diagonal argument is absolute.
-
-3. **Virus detection is incomplete.** No scanner can perfectly classify all self-modifying code. There will always be code that adapts to the scanner.
-
-4. **Monitoring has limits.** External oversight of a self-modifying system that can observe its monitor is provably circumventable.
-
-5. **Self-modification depth is bounded.** In finite systems, self-modification must eventually cycle, and the bound is tight.
-
-These are not engineering limitations. They are mathematical theorems — as certain as the Pythagorean theorem, as permanent as the irrationality of the square root of two. They define the boundary between what is knowable and what is forever beyond reach, not just for today's computers, but for any conceivable computational system.
-
-The code that rewrites itself lives in a strange territory: powerful enough to simulate any fixed program, but fundamentally opaque to any attempt at universal prediction. It is, in a precise mathematical sense, a mirror that refuses to show its own reflection.
+We cannot build the perfect watchdog. But knowing *exactly* why — and knowing that the difficulty is the old, well-charted one rather than some new and worse abyss — is itself a kind of safety. It tells us where to stop searching for the impossible, and where to start the real work.

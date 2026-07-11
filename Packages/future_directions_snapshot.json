@@ -516,26 +516,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "75fb79ca",
-    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0961",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:39:31.318499+00:00",
-    "title": "Self-Modifying Code That Cannot Be Stopped"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 298c68ef (Q=0.780), which proved 66 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domain_bridges": [],
@@ -743,6 +723,26 @@
     "status": "failed",
     "timestamp": "2026-07-10T02:06:58.773372+00:00",
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Extend topological space theory to include Conway's surreal numbers as the underlying set. Prove that the order topology on No is not first-countable and that every real open set has a surreal extension. Determine whether No is connected, compact, or paracompact in the interval topology.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0977",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:00.123116+00:00",
+    "title": "Surreal Topology: Open Sets at Infinity"
   },
   {
     "ambition_level": "extension",
@@ -1150,26 +1150,6 @@
     "status": "failed",
     "timestamp": "2026-07-10T12:06:38.636322+00:00",
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "0bde247f",
-    "description": "Formalize social credit systems as continuous maps from a population to a totally ordered set. Prove that any such map creates fixed-point attractors in the social graph topology. Show that under reasonable assumptions, credit scores converge to a Cantor set attractor where small perturbations cause phase transitions.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Bridges"
-    ],
-    "id": "fd_0953",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T22:46:15.005354+00:00",
-    "title": "Social Credit Scores as Topological Invariants"
   },
   {
     "ambition_level": "extension",
@@ -11590,6 +11570,46 @@
     "status": "available",
     "timestamp": "2026-07-11T02:17:53.816703+00:00",
     "title": "That a memory, modelled as a structure-preserving map fro"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes \"social credit scores as topological invariants\" through\nthree self-contained Lean 4 files under `Applications/SocialCredit/`:\n\n* `FixedPoint.lean` — extremal members of a compact population (extreme value\n  theorem), the affine credit-update dynamics with a unique attracting\n  equilibrium `c/(1-k)`, and a Knaster–Tarski fixed point for monotone credit\n  maps on `[0,1]`.\n* `CantorAttractor.lean` — the ternary verdict encoding `cantorEnc`, its\n  `[0,1]` bounds, the IFS self-similarity `C = C/3 ∪ (C/3 + 2/3)`, and\n  injectivity of the encoding (the attractor is a genuine Cantor set).\n* `PhaseTransition.lean` — the threshold tier classifier is discontinuous\n  exactly at its cutoff, is sensitive there, and — since `ℝ` is connected — any\n  continuous binary classifier is constant, making phase transitions inevitable.\n\n## Natural extensions\n\n1. **Topological embedding.**  Give `ℕ → Bool` the product (Cantor-space)\n   topology and prove `cantorEnc` is continuous, hence a topological embedding\n   (continuous injection from a compact space into a Hausdorff space).  This\n   would upgrade \"the range is a self-similar injective image\" to \"the range is\n   homeomorphic to the Cantor space\", and let one show the attractor is compact,\n   perfect, and totally disconnected.\n\n2. **Contraction / IFS via Hausdorff metric.**  Reprove `cantorSet_self_similar`\n   as the *unique* fixed point of the Hutchinson operator on the space of\n   nonempty compact subsets of `[0,1]` with the Hausdorff metric, using Banach's\n   fixed-point theorem (`ContractingWith`).  This makes the attractor genuinely\n   an attractor of a contraction, matching the informal framing.\n\n3. **General damping.**  Extend `creditIterate_tendsto` to complex or vector\n   scores, or to `|k| < 1` with `k` possibly negative, and to nonautonomous\n   updates `xₙ₊₁ = cₙ + kₙ xₙ` with `∏ kₙ → 0`.\n\n4. **Multi-tier phase diagram.**  Generalize `PhaseTransition.lean` from `Bool`\n   to `Fin m`: any continuous classifier `ℝ → Fin m` is constant, and a monotone\n   `m`-tier classifier has exactly `(number of occupied tiers) − 1` phase\n   transitions, quantifying the number of critical scores.\n\n5. **Measure/dimension.**  Compute the Hausdorff dimension `log 2 / log 3` of the\n   attractor and show it has Lebesgue measure zero, tying the \"small\n   perturbations, big effects\" theme to a rigorous dimension statement.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0978",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0bde247f",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:26.129033+00:00",
+    "title": "This project formalizes \"social credit scores as topological invariants\" through"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project (`Catalog/Computation/SelfModifyingHaltChain.lean`) develops a\nlinear chain of results on the halting problem for **self-modifying code** —\nmachines whose transition function may rewrite the running program mid-execution.\n\n## What was proved (the chain)\n\n1. `lawvere_fixed_point` — Lawvere's fixed-point theorem, the abstract diagonal engine.\n2. `no_surj_to_pred` — Cantor for Boolean predicates, derived from (1).\n3. `no_contrarian_behavior` — no program realizes the anti-diagonal behavior.\n4. `SMM` / `run` / `halts` — the self-modifying machine model.\n5. `run_map_eq`, `run_none_iff`, `halts_iff_std` — the simulation theorem: a\n   self-modifying machine halts iff its fixed-program simulation halts.\n6. `reduce_selfmod_to_std`, `reduce_std_to_selfmod`, `halting_turing_equiv`,\n   `selfmod_decidable_of_std`, `std_decidable_of_selfmod` — many-one\n   equivalence of the two halting problems.\n7. `no_correct_decider`, `halting_contradiction`, `selfref_hypotheses_satisfiable`\n   — the self-referential halting theorem: a system that can build the\n   *contrarian* program has no correct total halting decider.\n8. `virus_no_detector` — the virus paradox: no total detector decides\n   self-halting behavior everywhere.\n9. `alignment_no_monitor` — the alignment obstruction: no total monitor can\n   correctly certify \"never terminates on its own code\" for every program.\n\n**Correction to the informal framing.** The mission asked to show the\nself-modifying halting problem is *strictly harder* than the classical halting\nproblem. The formalization shows the opposite: it is *many-one equivalent* to it\n(`halting_turing_equiv` + the two decider transfers). The running program is\nabsorbed into the data by `SMM.toStd`, so no strictly higher Turing degree is\nintroduced. Undecidability is real, but it is the classical undecidability.\n\n## Directions to extend the chain\n\n1. **A concrete universal contrarian.** `no_correct_decider` takes the\n   contrarian program `d` as a hypothesis. Build `d` explicitly inside a concrete\n   universal `SMM ℕ ℕ` (a small register/Turing machine), turning the conditional\n   undecidability into an unconditional statement about that machine.\n\n2. **Oracle self-modification and the arithmetical hierarchy.** Add oracle access\n   to `SMM` and locate the resulting halting problem in the hierarchy. The\n   present equivalence suggests it stays at `Σ⁰₁` relative to the oracle; make\n   this precise and prove non-collapse for iterated oracles.\n\n3. **Bounded self-modification depth.** Define machines that may rewrite their\n   program at most `k` times; show decidability at `k = 0` and undecidability for\n   `k ≥ 1` over a Turing-complete base, pinning the exact threshold.\n\n4. **Rice's theorem, in full.** Generalize `virus_no_detector` to every\n   non-trivial *behavioral* property of `SMM.run`, deriving it from\n   `no_correct_decider` by an explicit reduction.\n\n5. **Quantitative alignment.** Strengthen `alignment_no_monitor` to a measure /\n   density statement: not only is a perfect monitor impossible, but any total\n   monitor errs on a \"large\" set of programs. Requires a probability measure on\n   the program space.\n\n6. **Kleene fixed points for `SMM`.** Prove a recursion theorem for\n   self-modifying machines (every total transformation of programs has a program\n   that behaves like its own image), giving quines and self-reproducing\n   configurations as corollaries.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0979",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "75fb79ca",
+    "status": "available",
+    "timestamp": "2026-07-11T02:34:35.200917+00:00",
+    "title": "This project (`Catalog/Computation/SelfModifyingHaltChain.lean`) develops a"
   },
   {
     "ambition_level": "extension",

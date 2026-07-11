@@ -1,424 +1,291 @@
-#!/usr/bin/env python3
-"""
-Self-Modifying Computation: Numerical Demonstrations
-=====================================================
+"""Numerical demonstrations for
+"The Halting Problem for Self-Modifying Code: Undecidable, but Not Strictly Harder".
 
-Demonstrates the key results from the formalization of self-modifying
-machines and the halting problem:
+This self-contained script illustrates, with concrete finite objects, the core
+results of the accompanying paper:
 
-1. The diagonal argument: constructing a function that escapes any enumeration.
-2. Self-modifying machine simulation: showing behavioral equivalence.
-3. Pigeonhole bound on self-modification depth.
-4. Adaptive adversary defeating any classifier.
-5. Fixed-point delay in finite self-modifying systems.
+  1. Lawvere's fixed-point theorem and Cantor's diagonal argument (over Bool).
+  2. The self-modifying machine (SMM) model and its "code becomes data"
+     standard simulation.
+  3. The Simulation Theorem: an SMM halts iff its standard simulation halts,
+     step for step.
+  4. Turing (many-one) equivalence of the two halting problems via explicit
+     reduction maps.
+  5. The self-referential halting theorem, the virus paradox, and the alignment
+     obstruction, each realized as a concrete contradiction on a finite domain.
+
+Everything is finite and fully computable, so every claim below is checked by
+direct enumeration -- no external dependencies are required.
 """
 
 from __future__ import annotations
-from typing import Callable, Optional
+
+from dataclasses import dataclass
+from typing import Callable, Generic, Optional, Tuple, TypeVar
+
+P = TypeVar("P")  # program type
+S = TypeVar("S")  # state type
 
 
-# ===========================================================================
-# Demo 1: The Diagonal Argument
-# ===========================================================================
+# ---------------------------------------------------------------------------
+# 1. The diagonalization engine: Lawvere and Cantor over Bool
+# ---------------------------------------------------------------------------
 
-def demo_diagonal_argument() -> None:
+def lawvere_fixed_point(
+    domain: list,
+    g: Callable[[object], Callable[[object], bool]],
+    f: Callable[[bool], bool],
+) -> Optional[bool]:
+    """Lawvere's fixed-point theorem, constructive form.
+
+    If ``g : A -> (A -> Bool)`` is surjective, then any ``f : Bool -> Bool``
+    has a fixed point. The witness is ``g(a)(a)`` where ``g(a)`` names the
+    diagonal map ``x |-> f(g(x)(x))``. We return the fixed value, or ``None``
+    if ``g`` is *not* surjective (which is exactly Cantor's theorem in action).
     """
-    Demonstrate the diagonal argument: given any enumeration of Boolean
-    predicates on {0,...,n-1}, the anti-diagonal predicate disagrees with
-    every enumerated predicate on its own index.
-
-    This is the engine behind all halting-problem impossibility results.
-    """
-    print("=" * 70)
-    print("DEMO 1: The Diagonal Argument")
-    print("=" * 70)
-
-    # An enumeration of 5 Boolean predicates on {0,1,2,3,4}
-    enum: list[list[bool]] = [
-        [True,  False, True,  False, True ],  # predicate 0
-        [False, True,  False, True,  False],  # predicate 1
-        [True,  True,  False, False, True ],  # predicate 2
-        [False, False, True,  True,  True ],  # predicate 3
-        [True,  False, False, True,  False],  # predicate 4
-    ]
-    n = len(enum)
-
-    print(f"\nEnumeration of {n} predicates on {{0,...,{n-1}}}:")
-    for i, pred in enumerate(enum):
-        diag_marker = " <-- diagonal" if i < n else ""
-        vals = ", ".join(
-            f"*{str(v):>5}*" if j == i else f" {str(v):>5} "
-            for j, v in enumerate(pred)
-        )
-        print(f"  enum[{i}] = [{vals}]{diag_marker}")
-
-    # Extract diagonal
-    diagonal = [enum[i][i] for i in range(n)]
-    anti_diagonal = [not enum[i][i] for i in range(n)]
-
-    print(f"\nDiagonal entries:      {diagonal}")
-    print(f"Anti-diagonal (flipped): {anti_diagonal}")
-
-    # Verify anti-diagonal differs from every row at its index
-    print("\nVerification: anti-diagonal ≠ enum[i] at position i:")
-    for i in range(n):
-        assert anti_diagonal[i] != enum[i][i], "Diagonal argument failed!"
-        print(f"  anti_diagonal[{i}] = {anti_diagonal[i]} ≠ enum[{i}][{i}] = {enum[i][i]}  ✓")
-
-    print("\n→ The anti-diagonal cannot appear in any enumeration.")
-    print("  This is why the halting problem is undecidable.\n")
+    diagonal: Callable[[object], bool] = lambda x: f(g(x)(x))
+    for a in domain:
+        if all(g(a)(x) == diagonal(x) for x in domain):
+            b = g(a)(a)
+            assert f(b) == b, "Lawvere witness must be a fixed point"
+            return b
+    return None
 
 
-# ===========================================================================
-# Demo 2: Self-Modifying Machine Simulation
-# ===========================================================================
+def demo_cantor() -> None:
+    """No map g : A -> (A -> Bool) is surjective (Cantor, Boolean form).
 
-def demo_selfmod_simulation() -> None:
-    """
-    Demonstrate that a self-modifying machine can be perfectly simulated
-    by a standard (fixed-program) machine.
-
-    We build a self-modifying machine where the "program" is an integer
-    that gets modified at each step, and show the standard simulation
-    produces identical behavior.
+    We enumerate a candidate g on a small finite A and exhibit the
+    anti-diagonal predicate that g misses. Since Bool-negation is
+    fixed-point-free, ``lawvere_fixed_point`` must return ``None``.
     """
     print("=" * 70)
-    print("DEMO 2: Self-Modifying Machine ↔ Standard Simulation")
+    print("1. CANTOR / LAWVERE: no g : A -> (A -> Bool) is surjective")
+    print("=" * 70)
+    A = [0, 1, 2]
+
+    # An arbitrary candidate 'enumeration' of predicates on A.
+    table = {0: (True, False, True), 1: (False, False, True), 2: (True, True, False)}
+    g = lambda a: (lambda x: table[a][x])
+
+    # The anti-diagonal predicate q |-> not g(q)(q); no a in A can name it.
+    anti = tuple(not g(a)(a) for a in A)
+    named = {tuple(g(a)(x) for x in A) for a in A}
+    print(f"  predicates named by g : {sorted(named)}")
+    print(f"  anti-diagonal predicate: {anti}  in named? {anti in named}")
+
+    result = lawvere_fixed_point(A, g, lambda b: not b)
+    print(f"  fixed point of NOT via this g: {result}  (None => g not surjective)")
+    assert anti not in named and result is None
+    print("  => Cantor confirmed: the contrarian predicate is unrealizable.\n")
+
+
+# ---------------------------------------------------------------------------
+# 2-3. The SMM model, the standard simulation, and the Simulation Theorem
+# ---------------------------------------------------------------------------
+
+@dataclass
+class SMM(Generic[P, S]):
+    """A self-modifying machine: one step maps (program, state) to an optional
+    new (program, state). ``None`` means halt. The program itself may change."""
+
+    step: Callable[[P, S], Optional[Tuple[P, S]]]
+
+    def run(self, cfg: Tuple[P, S], n: int) -> Optional[Tuple[P, S]]:
+        """Run for n steps; return None if it halts within those n steps."""
+        for _ in range(n):
+            nxt = self.step(cfg[0], cfg[1])
+            if nxt is None:
+                return None
+            cfg = nxt
+        return cfg
+
+    def halts_within(self, cfg: Tuple[P, S], budget: int) -> bool:
+        return any(self.run(cfg, n) is None for n in range(budget + 1))
+
+    def to_std(self) -> "Std[Tuple[P, S]]":
+        """Code becomes data: absorb the program into the state, producing a
+        fixed-program machine over the enlarged state P x S."""
+        return Std(step=lambda ps: self.step(ps[0], ps[1]))
+
+
+@dataclass
+class Std(Generic[S]):
+    """A standard (fixed-program) machine: one step maps state to optional
+    new state. ``None`` means halt."""
+
+    step: Callable[[S], Optional[S]]
+
+    def run(self, s: S, n: int) -> Optional[S]:
+        for _ in range(n):
+            nxt = self.step(s)
+            if nxt is None:
+                return None
+            s = nxt
+        return s
+
+    def halts_within(self, s: S, budget: int) -> bool:
+        return any(self.run(s, n) is None for n in range(budget + 1))
+
+    def emb(self) -> "SMM[None, S]":
+        """Embed a standard machine as an SMM with a trivial one-point program."""
+        def step(_: None, s: S) -> Optional[Tuple[None, S]]:
+            nxt = self.step(s)
+            return None if nxt is None else (None, nxt)
+
+        return SMM(step=step)
+
+
+def demo_simulation() -> None:
+    """Simulation Theorem: an SMM halts iff its standard simulation halts.
+
+    We build a genuinely self-modifying machine over programs {A, B} and state
+    N: program A decrements the counter and rewrites itself to B; program B
+    decrements and rewrites to A; either halts when the counter hits 0. We then
+    check step-for-step agreement with the 'code becomes data' simulation.
+    """
+    print("=" * 70)
+    print("2-3. SIMULATION THEOREM (self-modifying halts iff simulation halts)")
     print("=" * 70)
 
-    # Self-modifying machine: program is an int, state is an int.
-    # step(p, s) = Some(p + 1, s * p) if s < 1000, else None (halt)
-    def selfmod_step(prog: int, state: int) -> Optional[tuple[int, int]]:
-        if state >= 1000:
-            return None  # halt
-        return (prog + 1, state + prog)
-
-    # Run self-modifying machine
-    def run_selfmod(
-        prog: int, state: int, max_steps: int
-    ) -> list[tuple[int, int, str]]:
-        trace: list[tuple[int, int, str]] = []
-        for step in range(max_steps):
-            result = selfmod_step(prog, state)
-            if result is None:
-                trace.append((prog, state, "HALT"))
-                return trace
-            trace.append((prog, state, "→"))
-            prog, state = result
-        trace.append((prog, state, "..."))
-        return trace
-
-    # Standard simulation: state = (prog, data), fixed step function
-    def std_step(combined: tuple[int, int]) -> Optional[tuple[int, int]]:
-        prog, state = combined
-        result = selfmod_step(prog, state)
-        if result is None:
+    def step(p: str, s: int) -> Optional[Tuple[str, int]]:
+        if s <= 0:
             return None
-        return result
+        return ("B" if p == "A" else "A", s - 1)
 
-    def run_std(
-        prog: int, state: int, max_steps: int
-    ) -> list[tuple[int, int, str]]:
-        trace: list[tuple[int, int, str]] = []
-        combined = (prog, state)
-        for step in range(max_steps):
-            result = std_step(combined)
-            if result is None:
-                trace.append((combined[0], combined[1], "HALT"))
-                return trace
-            trace.append((combined[0], combined[1], "→"))
-            combined = result
-        trace.append((combined[0], combined[1], "..."))
-        return trace
+    m: SMM[str, int] = SMM(step=step)
+    std = m.to_std()
 
-    init_prog, init_state = 1, 0
-    max_steps = 100
+    for start in [("A", 0), ("A", 3), ("B", 5)]:
+        budget = 20
+        h_smm = m.halts_within(start, budget)
+        h_std = std.halts_within(start, budget)
+        # step-exact agreement of the runs (code-as-data identity):
+        agree = all(
+            (m.run(start, n) if m.run(start, n) is None else m.run(start, n))
+            == std.run(start, n)
+            for n in range(budget + 1)
+        )
+        print(f"  start {start!s:>8}: SMM halts={h_smm}, sim halts={h_std}, "
+              f"runs agree step-for-step={agree}")
+        assert h_smm == h_std and agree
+    print("  => The self-modifying run and its flattened simulation coincide.\n")
 
-    sm_trace = run_selfmod(init_prog, init_state, max_steps)
-    std_trace = run_std(init_prog, init_state, max_steps)
 
-    print(f"\nInitial: prog={init_prog}, state={init_state}")
-    print(f"\nSelf-modifying machine trace (first 10 steps + last):")
-    for i, (p, s, status) in enumerate(sm_trace[:10]):
-        print(f"  Step {i:3d}: prog={p:4d}, state={s:6d} {status}")
-    if len(sm_trace) > 10:
-        p, s, status = sm_trace[-1]
-        print(f"  ...{len(sm_trace) - 11} steps omitted...")
-        print(f"  Step {len(sm_trace)-1:3d}: prog={p:4d}, state={s:6d} {status}")
+# ---------------------------------------------------------------------------
+# 4. Turing (many-one) equivalence of the two halting problems
+# ---------------------------------------------------------------------------
 
-    # Verify equivalence
-    match = all(
-        sm_trace[i] == std_trace[i] for i in range(len(sm_trace))
+def demo_equivalence() -> None:
+    """Many-one equivalence: each halting problem reduces to the other.
+
+    Forward: cfg |-> (prog, state) sends an SMM instance to a standard one.
+    Backward: s |-> ((), s) embeds a standard machine as an SMM. We verify the
+    reduction identities on concrete instances.
+    """
+    print("=" * 70)
+    print("4. TURING EQUIVALENCE (self-modifying halting  <=>_m  standard)")
+    print("=" * 70)
+
+    # An SMM whose halting we reduce to standard halting.
+    m: SMM[str, int] = SMM(
+        step=lambda p, s: None if s <= 0 else (("B" if p == "A" else "A"), s - 1)
     )
-    print(f"\nStandard simulation produces identical trace: {match}  ✓")
-    print(f"Both machines halt at step {len(sm_trace) - 1}.")
-    print("\n→ Self-modification adds no computational power.\n")
+    std = m.to_std()
+    for cfg in [("A", 4), ("B", 0), ("A", 7)]:
+        # reduction map is the identity (prog, state) here
+        assert m.halts_within(cfg, 30) == std.halts_within(cfg, 30)
+    print("  forward reduction cfg |-> (prog,state): halting preserved  [OK]")
+
+    # A standard machine embedded back into an SMM.
+    base: Std[int] = Std(step=lambda s: None if s <= 0 else s - 1)
+    emb = base.emb()
+    for s in [0, 1, 5, 9]:
+        assert base.halts_within(s, 30) == emb.halts_within((None, s), 30)
+    print("  backward reduction s |-> ((),s):        halting preserved  [OK]")
+    print("  => Both reductions are total; the problems share one Turing degree.")
+    print("  => CORRECTION to folklore: self-modification is NOT strictly harder.\n")
 
 
-# ===========================================================================
-# Demo 3: Pigeonhole Bound on Self-Modification Depth
-# ===========================================================================
+# ---------------------------------------------------------------------------
+# 5. Self-reference: no correct decider, virus paradox, alignment obstruction
+# ---------------------------------------------------------------------------
 
-def demo_pigeonhole_bound() -> None:
-    """
-    Demonstrate the pigeonhole principle for finite self-modifying systems:
-    in a system with n possible states, the orbit of self-modification
-    must cycle within at most n steps.
-    """
-    print("=" * 70)
-    print("DEMO 3: Pigeonhole Bound on Self-Modification Depth")
-    print("=" * 70)
+def demo_self_reference() -> None:
+    """Self-referential halting theorem and its two corollaries.
 
-    def iterate_and_find_cycle(
-        f: Callable[[int], int], start: int, n: int
-    ) -> tuple[list[int], int, int]:
-        """Return orbit, first repeated index i, and matching index j (i < j)."""
-        orbit: list[int] = [start]
-        seen: dict[int, int] = {start: 0}
-        x = start
-        for step in range(1, n + 2):
-            x = f(x)
-            orbit.append(x)
-            if x in seen:
-                return orbit, seen[x], step
-            seen[x] = step
-        return orbit, -1, -1  # should not happen for finite types
-
-    # Example 1: permutation on {0,...,5} (n=6)
-    n = 6
-    perm = [2, 4, 0, 5, 3, 1]  # a permutation of {0,...,5}
-    f1: Callable[[int], int] = lambda x: perm[x]
-
-    orbit, i, j = iterate_and_find_cycle(f1, 0, n)
-
-    print(f"\nExample 1: Permutation on {{0,...,{n-1}}}")
-    print(f"  f = {perm}")
-    print(f"  Orbit from 0: {' → '.join(map(str, orbit))}")
-    print(f"  Collision: f^{i}(0) = f^{j}(0) = {orbit[i]}")
-    print(f"  j = {j} ≤ n = {n}  ✓ (pigeonhole bound)")
-
-    # Example 2: self-modification on {0,...,9} (n=10)
-    n2 = 10
-    selfmod = [3, 7, 5, 1, 9, 2, 8, 4, 0, 6]
-    f2: Callable[[int], int] = lambda x: selfmod[x]
-
-    orbit2, i2, j2 = iterate_and_find_cycle(f2, 0, n2)
-
-    print(f"\nExample 2: Self-modification on {{0,...,{n2-1}}}")
-    print(f"  f = {selfmod}")
-    print(f"  Orbit from 0: {' → '.join(map(str, orbit2))}")
-    print(f"  Collision: f^{i2}(0) = f^{j2}(0) = {orbit2[i2]}")
-    print(f"  j = {j2} ≤ n = {n2}  ✓")
-
-    # Example 3: worst case — cycle of length n
-    n3 = 8
-    cycle_n = [(i + 1) % n3 for i in range(n3)]
-    f3: Callable[[int], int] = lambda x: cycle_n[x]
-
-    orbit3, i3, j3 = iterate_and_find_cycle(f3, 0, n3)
-
-    print(f"\nExample 3: Full cycle on {{0,...,{n3-1}}} (worst case)")
-    print(f"  f = {cycle_n}")
-    print(f"  Orbit from 0: {' → '.join(map(str, orbit3))}")
-    print(f"  Collision: f^{i3}(0) = f^{j3}(0) = {orbit3[i3]}")
-    print(f"  j = {j3} = n = {n3}  ✓ (bound is tight!)")
-    print("\n→ Any orbit in a finite type cycles within n steps.\n")
-
-
-# ===========================================================================
-# Demo 4: Adaptive Adversary Defeating Classifiers
-# ===========================================================================
-
-def demo_adaptive_adversary() -> None:
-    """
-    Demonstrate the adaptive adversary theorem: for ANY classifier
-    of adaptive programs, the contrarian program defeats it.
+    On a finite program domain we let the 'system' build, for any candidate
+    predictor, the contrarian program d whose self-behavior is wired to
+    contradict the predictor. We then verify that EVERY total predictor errs on
+    d, realizing (a) the no-correct-decider theorem, (b) the virus paradox, and
+    (c) the alignment obstruction, each as a concrete Boolean contradiction.
     """
     print("=" * 70)
-    print("DEMO 4: Adaptive Adversary (Virus Detection Paradox)")
+    print("5. SELF-REFERENCE: contrarian defeats every total predictor")
     print("=" * 70)
 
-    # An adaptive program: given a classifier's output, it reacts
-    class AdaptiveProgram:
-        def __init__(self, name: str, react: Callable[[bool], bool]) -> None:
-            self.name = name
-            self.react = react
+    programs = ["p0", "p1", "d"]  # 'd' will play the contrarian role
 
-        def actual_behavior(self, classifier_output: bool) -> bool:
-            return self.react(classifier_output)
+    # (a) No correct decider. For each candidate H, we define Halts(d, .) so
+    #     that Halts(d, q) <=> H(q, q) == False (the defining property of d).
+    #     Then H is necessarily wrong about d on its own code.
+    import itertools
 
-    # The contrarian: always does the opposite of the classifier's prediction
-    contrarian = AdaptiveProgram("contrarian", lambda pred: not pred)
+    def make_H(bits: Tuple[bool, ...]) -> Callable[[str, str], bool]:
+        idx = {q: i for i, q in enumerate(programs)}
+        return lambda p, q: bits[idx[q]]  # H depends only on the input q here
 
-    # Some other programs for context
-    always_safe = AdaptiveProgram("always_safe", lambda _: True)
-    always_malicious = AdaptiveProgram("always_malicious", lambda _: False)
-    copycat = AdaptiveProgram("copycat", lambda pred: pred)
+    n = len(programs)
+    all_wrong = True
+    for bits in itertools.product([False, True], repeat=n):
+        H = make_H(bits)
+        # d's self-behavior is forced by construction:
+        halts_d_on = {q: (H(q, q) is False) for q in programs}
+        # Correctness at d would require H(d,d) <=> Halts(d,d):
+        correct_at_d = (H("d", "d") is True) == halts_d_on["d"]
+        all_wrong = all_wrong and (not correct_at_d)
+    print(f"  every total predictor H errs on the contrarian d? {all_wrong}")
+    assert all_wrong
 
-    programs = [always_safe, always_malicious, copycat, contrarian]
+    # (b) Virus paradox: a detector Detect(q) claiming to decide self-halting
+    #     Halts(q,q) is refuted by the same contrarian.
+    def virus_paradox(detect: Callable[[str], bool]) -> bool:
+        halts_d_on = {q: (detect(q) is False) for q in programs}
+        # Does Detect decide self-halting everywhere?
+        return all((detect(q) is True) == halts_d_on[q] for q in programs)
 
-    # Try several classifiers
-    classifiers: list[tuple[str, Callable[[AdaptiveProgram], bool]]] = [
-        ("optimist (always says safe)", lambda p: True),
-        ("pessimist (always says malicious)", lambda p: False),
-        ("name-based (safe if name contains 'safe')", lambda p: "safe" in p.name),
-        ("smart heuristic", lambda p: p.name != "contrarian"),
-    ]
-
-    for clf_name, classifier in classifiers:
-        print(f"\nClassifier: {clf_name}")
-        all_correct = True
-        for prog in programs:
-            prediction = classifier(prog)
-            actual = prog.actual_behavior(prediction)
-            correct = prediction == actual
-            if not correct:
-                all_correct = False
-            status = "✓" if correct else "✗ WRONG"
-            print(
-                f"  {prog.name:20s}: "
-                f"predicted={'safe' if prediction else 'malicious':10s}, "
-                f"actual={'safe' if actual else 'malicious':10s}  {status}"
-            )
-        if not all_correct:
-            print(f"  → Classifier '{clf_name}' is defeated!")
-
-    print(
-        "\n→ No classifier is correct on the contrarian."
-        "\n  This is the virus detection paradox: self-modifying malware"
-        "\n  that reacts to the scanner cannot be perfectly detected.\n"
+    detectors_all_fail = not any(
+        virus_paradox(lambda q, b=bits: {p: v for p, v in zip(programs, b)}[q])
+        for bits in itertools.product([False, True], repeat=n)
     )
+    print(f"  no total detector decides self-halting everywhere?    "
+          f"{detectors_all_fail}")
+    assert detectors_all_fail
 
+    # (c) Alignment obstruction: a monitor M(q) certifying 'never halts on self'
+    #     (not Halts(q,q)) is wrong on d, whose termination tracks M's verdict.
+    def alignment_fails(M: Callable[[str], bool]) -> bool:
+        # d built so that Halts(d, q) <=> M(q) == True
+        halts_d_on = {q: (M(q) is True) for q in programs}
+        # Correct certification at d requires M(d) <=> not Halts(d,d):
+        return (M("d") is True) == (not halts_d_on["d"])
 
-# ===========================================================================
-# Demo 5: Fixed-Point Delay in Finite Systems
-# ===========================================================================
+    monitors_all_wrong = not any(
+        alignment_fails(lambda q, b=bits: {p: v for p, v in zip(programs, b)}[q])
+        for bits in itertools.product([False, True], repeat=n)
+    )
+    print(f"  no total safety monitor certifies self-termination?   "
+          f"{monitors_all_wrong}")
+    assert monitors_all_wrong
+    print("  => Self-reference, not self-modification, is the true obstruction.\n")
 
-def demo_fixpoint_delay() -> None:
-    """
-    Demonstrate the tight upper bound on fixed-point delay:
-    for n ≥ 2, the maximum number of steps to reach a fixed point
-    of f : {0,...,n-1} → {0,...,n-1} is exactly n - 1.
-    """
-    print("=" * 70)
-    print("DEMO 5: Fixed-Point Delay (Tight Bound: n - 1)")
-    print("=" * 70)
-
-    def find_fixpoint_delay(f: list[int], start: int) -> Optional[int]:
-        """Find minimum k such that f^k(start) = f^{k+1}(start), or None."""
-        x = start
-        for k in range(len(f) + 1):
-            if f[x] == x:
-                return k
-            x = f[x]
-        return None
-
-    def max_fixpoint_delay(n: int) -> tuple[int, list[int], int]:
-        """Find the maximum fixed-point delay over all f and starting points."""
-        max_delay = 0
-        best_f: list[int] = []
-        best_start = 0
-        # Enumerate all functions f : {0,...,n-1} → {0,...,n-1}
-        # with at least one fixed point
-        from itertools import product
-        for f_tuple in product(range(n), repeat=n):
-            f = list(f_tuple)
-            # Check if f has a reachable fixed point from each starting point
-            for start in range(n):
-                delay = find_fixpoint_delay(f, start)
-                if delay is not None and delay > max_delay:
-                    max_delay = delay
-                    best_f = f
-                    best_start = start
-        return max_delay, best_f, best_start
-
-    print("\nComputing maximum fixed-point delay for small n:")
-    print(f"  {'n':>3s} | {'max delay':>10s} | {'bound (n-1)':>11s} | {'tight?':>7s}")
-    print(f"  {'-'*3}-+-{'-'*10}-+-{'-'*11}-+-{'-'*7}")
-
-    for n in range(2, 7):
-        delay, best_f, best_start = max_fixpoint_delay(n)
-        bound = n - 1
-        tight = "YES" if delay == bound else "no"
-        print(f"  {n:3d} | {delay:10d} | {bound:11d} | {tight:>7s}")
-
-    # Show a concrete worst-case example
-    n_ex = 5
-    delay_ex, f_ex, start_ex = max_fixpoint_delay(n_ex)
-    print(f"\nWorst case for n = {n_ex}:")
-    print(f"  f = {f_ex}")
-    print(f"  Starting from {start_ex}:")
-    x = start_ex
-    steps: list[str] = [str(x)]
-    for k in range(delay_ex + 1):
-        x = f_ex[x]
-        steps.append(str(x))
-    print(f"  Orbit: {' → '.join(steps)}")
-    print(f"  Fixed point reached at step {delay_ex} = n - 1 = {n_ex - 1}  ✓")
-    print("\n→ The bound n - 1 is tight for all n ≥ 2.\n")
-
-
-# ===========================================================================
-# Demo 6: Lawvere's Fixed-Point Theorem
-# ===========================================================================
-
-def demo_lawvere() -> None:
-    """
-    Demonstrate Lawvere's fixed-point theorem: if e : A → (A → B) is
-    surjective, every endomorphism t : B → B has a fixed point.
-    Contrapositive: if t has no fixed point, e cannot be surjective.
-    """
-    print("=" * 70)
-    print("DEMO 6: Lawvere's Fixed-Point Theorem")
-    print("=" * 70)
-
-    # Bool with negation: no fixed point
-    print("\nBool with negation (t = not):")
-    print("  not(True)  = False ≠ True")
-    print("  not(False) = True  ≠ False")
-    print("  → no fixed point of 'not'")
-    print("  → by Lawvere's theorem, no surjection ℕ → (ℕ → Bool) exists")
-
-    # Integers mod 3 with +1: no fixed point
-    print("\nℤ/3ℤ with t(x) = x + 1 mod 3:")
-    for x in range(3):
-        tx = (x + 1) % 3
-        print(f"  t({x}) = {tx} {'= ' if tx == x else '≠ '}{x}")
-    print("  → no fixed point")
-    print("  → no surjection α → (α → ℤ/3ℤ) exists")
-
-    # Positive example: t(x) = x² mod 5 has fixed points 0, 1
-    print("\nℤ/5ℤ with t(x) = x² mod 5 (has fixed points):")
-    for x in range(5):
-        tx = (x * x) % 5
-        fp = " ← FIXED POINT" if tx == x else ""
-        print(f"  t({x}) = {tx}{fp}")
-    print("  → fixed points exist, so Lawvere's theorem is consistent")
-    print("    (but does NOT require a surjection to exist)\n")
-
-
-# ===========================================================================
-# Main
-# ===========================================================================
 
 def main() -> None:
-    print()
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  Self-Modifying Computation: Numerical Demonstrations              ║")
-    print("║  Companion to the machine-verified proofs in Lean 4                ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
-    print()
-
-    demo_diagonal_argument()
-    demo_selfmod_simulation()
-    demo_pigeonhole_bound()
-    demo_adaptive_adversary()
-    demo_fixpoint_delay()
-    demo_lawvere()
-
-    print("=" * 70)
+    demo_cantor()
+    demo_simulation()
+    demo_equivalence()
+    demo_self_reference()
     print("All demonstrations completed successfully.")
-    print("=" * 70)
 
 
 if __name__ == "__main__":

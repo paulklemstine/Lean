@@ -1,323 +1,240 @@
-# Self-Modifying Computation and the Halting Problem: Undecidability, Simulation, and Alignment Barriers
+# The Halting Problem for Self-Modifying Code: Undecidable, but Not Strictly Harder
 
 ## Abstract
 
-We present a rigorous mathematical framework for self-modifying computation — systems whose transition function can change during execution — and establish a suite of impossibility results concerning the prediction, classification, and monitoring of such systems. Our central results are: (1) an abstract diagonalization theorem showing that no total decision procedure can decide membership in the diagonal set of any surjective enumeration; (2) a simulation theorem proving that the halting problem for self-modifying machines is computationally equivalent to the classical halting problem, contradicting the folk intuition that self-modification makes termination analysis strictly harder; (3) impossibility theorems for perfect virus detection and alignment monitoring of self-modifying code; and (4) quantitative bounds on self-modification depth in finite systems. All results have been machine-verified; we present the mathematical content with proof sketches here.
+We develop, as a single linear chain of results, the theory of the halting problem for *self-modifying* computation — machines whose transition rule may rewrite the running program mid-execution. Starting from Lawvere's fixed-point theorem, we descend through Cantor's diagonal argument to a purely operational statement that no program can realize the "contrarian" (anti-diagonal) behavior. We then introduce a self-modifying machine model, prove a step-exact simulation theorem showing that any self-modifying machine is faithfully mimicked by an ordinary fixed-program machine over an enlarged state space ("code becomes data"), and use it to establish that the halting problems for self-modifying and fixed-program machines are *many-one equivalent*. This corrects a common informal claim: self-modification does **not** make halting strictly harder; it introduces no higher Turing degree. The genuine phenomenon is self-reference. We prove a self-referential halting theorem — any system able to build the contrarian program defeats every candidate total halting decider — and derive two consequences: a *virus paradox* (no total detector decides self-halting behavior everywhere) and an *alignment obstruction* (no total monitor can correctly certify a non-trivial self-referential behavioral property for every program). We close by making the correction to the folk framing precise and quantitative.
 
-**Keywords:** halting problem, self-modifying code, diagonalization, undecidability, virus detection, AI alignment, fixed-point obstruction, Lawvere's theorem
+**Keywords:** halting problem, self-modifying code, Lawvere fixed-point theorem, Cantor's diagonal argument, many-one reduction, Turing degree, undecidability, AI alignment, Rice's theorem.
 
 ---
 
 ## 1. Introduction
 
-The halting problem — whether a given program terminates on a given input — is the canonical undecidable problem, established by Turing (1936). Classical treatments assume a fixed program: the machine's transition function does not change during execution. In practice, however, many computational systems modify their own code. Polymorphic and metamorphic malware rewrite their instruction sequences with each execution cycle; just-in-time compilers modify code at runtime; and self-improving AI systems may alter their own decision procedures.
+Self-modifying code — a program that rewrites its own instructions while executing — has an aura of danger and mystery. Metamorphic viruses, just-in-time compilers, genetic-programming systems, and increasingly self-editing machine-learning pipelines all blur the classical boundary between program and data. A recurring piece of folklore holds that predicting the behavior of such programs must be *strictly harder* than the classical halting problem: if a program can become something else while you are analyzing it, surely no analysis can keep up.
 
-A persistent question in the literature is whether self-modification makes the halting problem *strictly harder*. We resolve this question definitively: **the halting problem for self-modifying machines is computationally equivalent to the classical halting problem**. Self-modification can always be simulated by encoding the program as part of the state, yielding a fixed-program machine with the same halting behavior.
+This paper subjects that intuition to precise scrutiny and finds it wrong. Our contributions are:
 
-However, this equivalence does not diminish the importance of self-modification in practical settings. We show that self-modification enables programs to *react to attempts to classify them*, creating a fundamentally adversarial dynamic that no classifier can overcome. This has direct implications for virus detection and AI alignment.
+1. A clean, abstract derivation of the diagonal machinery, from **Lawvere's fixed-point theorem** down to an operational "no contrarian program" lemma (Section 3).
+2. A formal **self-modifying machine model** with a program that may change every step, and a faithful **simulation theorem** (Section 4–5).
+3. A proof that the self-modifying and fixed-program halting problems are **many-one equivalent** (Section 6), correcting the "strictly harder" folklore.
+4. A **self-referential halting theorem** and two applications — the **virus paradox** and an **alignment obstruction** (Sections 7–8).
 
-### 1.1 Contributions
+The through-line is that self-modification and self-reference are distinct phenomena with opposite morals. Self-modification is *cheap*: it can always be flattened into ordinary memory manipulation, adding no computational power. Self-reference is *fatal*: any system able to describe and act against its own analyzers admits a contrarian that no analyzer survives.
 
-Our contributions are organized as follows:
-
-- **Section 2**: Abstract diagonalization (the engine behind all our impossibility results).
-- **Section 3**: The self-modifying machine model and its simulation by standard machines.
-- **Section 4**: Undecidability of the self-modifying halting problem.
-- **Section 5**: The virus detection paradox.
-- **Section 6**: Fixed-point obstructions and alignment impossibility.
-- **Section 7**: Quantitative bounds on self-modification depth.
-- **Section 8**: Discussion and connections to AI alignment.
-- **Section 9**: Future directions.
-
-All theorems stated in this paper have been machine-verified in Lean 4 using the Mathlib library. The formalized proofs are available in `Catalog/Bridges/SelfModifyingHalting.lean` and `Catalog/Tropical/SelfModifyingHalting.lean`.
+**Historical context.** The undecidability of the classical halting problem is due to Turing (1936), whose diagonal construction underlies every result below. Cantor's diagonal argument (1891) is its set-theoretic ancestor, and Lawvere's fixed-point theorem (1969) is the categorical distillation that unifies them: all three are the single observation that a fixed-point-free endomap obstructs any surjection onto a function space. Rice's theorem (1953) extends undecidability from halting to every non-trivial behavioral property. Our contribution is not a new undecidability phenomenon but a precise *placement* of self-modifying computation relative to this classical landscape, together with an explicit, self-contained derivation of the alignment-relevant corollaries. The recurring intuition that self-modification escapes the classical bounds appears frequently in informal discussions of metamorphic malware and self-improving agents; we show it is mathematically unfounded.
 
 ---
 
-## 2. Abstract Diagonalization
+## 2. Preliminaries and Notation
 
-The diagonal argument is the universal engine behind undecidability results. We present two formulations: a direct combinatorial version and a categorical one via Lawvere's fixed-point theorem.
+We work constructively over arbitrary types. We write $\mathrm{Bool} = \{\mathsf{true}, \mathsf{false}\}$ with negation $\lnot$, and use $\mathsf{Option}\,X = \{\mathsf{none}\} \cup \{\mathsf{some}\,x : x \in X\}$ to model partial results, with $\mathsf{none}$ denoting "halted." A function $g$ is **surjective** if every element of its codomain is a value of $g$.
 
-### 2.1 The Combinatorial Diagonal Argument
-
-**Definition 2.1** (Diagonal set). Given an enumeration `enum : α → α → Bool`, the *diagonal set* is `{a : α | ¬ enum a a}`, i.e., the set of indices where the enumerated predicate disagrees with itself.
-
-**Theorem 2.2** (`diagonal_no_decider`, `Computation/SelfModifyingHalt.lean`). *Let `enum : α → α → Bool` be surjective. Then there is no function `d : α → α → Bool` such that `d i a = enum i a` for all `i, a`.*
-
-*Proof sketch.* Suppose such a `d` exists. By surjectivity, the anti-diagonal function `fun x => ¬ enum x x` equals `enum f` for some index `f`. Then `d f f = enum f f = ¬ enum f f`, a contradiction. □
-
-This generalizes to arbitrary codomains with at least two distinct elements:
-
-**Theorem 2.3** (`diagonal_no_decider_general`). *For any type `β` with `b₀ ≠ b₁ ∈ β`, if `enum : α → α → β` is surjective, then no function `d : α → α → β` satisfies `d i a = enum i a` for all `i, a`.*
-
-### 2.2 Lawvere's Fixed-Point Theorem
-
-The categorical perspective yields a cleaner abstraction.
-
-**Theorem 2.4** (`lawvere_fixed_point`, `Catalog/Tropical/SelfModifyingHalting.lean`). *If `e : α → (α → β)` is surjective, then every endomorphism `t : β → β` has a fixed point.*
-
-*Proof sketch.* Given surjective `e`, there exists `a` with `e a = fun x => t(e x x)`. Evaluating at `a`: `e a a = t(e a a)`, so `e a a` is a fixed point of `t`. □
-
-**Corollary 2.5** (`no_surjection_of_fixedpoint_free`). *If `β` admits a fixed-point-free endomorphism (e.g., `Bool` with `not`), then no function `α → (α → β)` is surjective.*
-
-**Corollary 2.6** (`no_surjective_bool_enum`). *No function `ℕ → (ℕ → Bool)` is surjective.*
-
-This gives Cantor's theorem, the unsolvability of the halting problem, Gödel's incompleteness theorem, Rice's theorem, and the virus detection paradox as special cases of a single abstract principle.
+For predicates $A : \alpha \to \mathrm{Prop}$ and $B : \beta \to \mathrm{Prop}$, we say $A$ **many-one reduces** to $B$, written $A \le_m B$, if there is a (total, computable in the intended interpretation) function $f : \alpha \to \beta$ with
+$$A(x) \iff B(f(x)) \quad \text{for all } x.$$
+If $A \le_m B$ and $B \le_m A$ we call $A$ and $B$ **many-one equivalent**.
 
 ---
 
-## 3. The Self-Modifying Machine Model
+## 3. The Diagonalization Engine
 
-### 3.1 Definitions
+All impossibility results below flow from a single abstract source.
 
-**Definition 3.1** (Self-modifying machine). A *self-modifying machine* over program type `P` and state type `S` consists of a step function:
+### 3.1 Lawvere's fixed-point theorem
 
-```
-step : P → S → Option (P × S)
-```
+**Theorem 1 (Lawvere).** *Let $A$ and $B$ be types and let $g : A \to (A \to B)$ be surjective. Then every self-map $f : B \to B$ has a fixed point: there exists $b \in B$ with $f(b) = b$.*
 
-where `none` indicates halting and `some (p', s')` indicates a transition to program `p'` and state `s'`. The key feature is that the program component `p'` may differ from `p` — the machine rewrites its own code.
+*Proof.* Consider the function $A \to B$ given by $x \mapsto f(g(x)(x))$. Since $g$ is surjective, this function equals $g(a)$ for some $a \in A$. Evaluate at $a$:
+$$g(a)(a) = f(g(a)(a)),$$
+so $b := g(a)(a)$ is a fixed point of $f$. $\qquad\blacksquare$
 
-**Definition 3.2** (Configuration). A *configuration* is a pair `(p, s) : P × S`.
+Lawvere's theorem is the abstract kernel of every diagonal argument: surjectivity of a "naming" map $g$ forces fixed points, so any *fixed-point-free* map obstructs surjectivity.
 
-**Definition 3.3** (Halting). A self-modifying machine *halts* from configuration `cfg` if there exists `n : ℕ` such that running the machine for `n` steps yields `none`.
+### 3.2 Cantor for Boolean predicates
 
-These definitions are formalized as the structures `SelfModMachine`, `SelfModConfig`, and the predicate `SelfModMachine.halts` in `Computation/SelfModifyingHalt.lean`.
+**Theorem 2 (Cantor, Boolean form).** *For any type $A$, no map $g : A \to (A \to \mathrm{Bool})$ is surjective. The Boolean predicates on $A$ are not enumerable by $A$.*
 
-### 3.2 Standard (Fixed-Program) Machines
+*Proof.* The negation map $f = \lnot : \mathrm{Bool} \to \mathrm{Bool}$ has no fixed point, since $\lnot b \ne b$ for every $b$. If $g$ were surjective, Theorem 1 would supply a fixed point of $\lnot$, a contradiction. $\qquad\blacksquare$
 
-**Definition 3.4** (Standard machine). A *standard machine* over state type `S` has step function `step : S → Option S`. The program is implicit and never changes.
+### 3.3 The operational form: no contrarian behavior
 
-### 3.3 The Simulation Theorem
+Interpret a **behavior** as a map assigning to each program $p$ a Boolean predicate $\mathrm{beh}(p) : \mathrm{Prog} \to \mathrm{Bool}$ — the input/output bit of $p$. The *contrarian* (anti-diagonal) behavior sends $q \mapsto \lnot\,\mathrm{beh}(q)(q)$.
 
-**Definition 3.5** (Standard simulation). Given a self-modifying machine `m` over `P` and `S`, its *standard simulation* `m.toStd` is the standard machine over `P × S` with step function:
+**Theorem 3 (No contrarian behavior).** *Let $\mathrm{beh} : \mathrm{Prog} \to (\mathrm{Prog} \to \mathrm{Bool})$. No program $p_0$ satisfies $\mathrm{beh}(p_0) = \big(q \mapsto \lnot\,\mathrm{beh}(q)(q)\big)$.*
 
-```
-(p, s) ↦ match m.step p s with
-  | none        => none
-  | some (p', s') => some (p', s')
-```
+*Proof.* Suppose equality held. Evaluate both sides at $p_0$:
+$$\mathrm{beh}(p_0)(p_0) = \lnot\,\mathrm{beh}(p_0)(p_0),$$
+a Boolean equal to its own negation — impossible. $\qquad\blacksquare$
 
-The program is encoded into the state; the simulator is the fixed program.
-
-**Theorem 3.6** (`selfmod_run_eq_std_run`). *For all configurations `cfg` and step counts `n`, the standard simulation faithfully tracks the self-modifying machine:*
-
-```
-(m.run cfg n).map (fun c => (c.prog, c.state)) = m.toStd.run (cfg.prog, cfg.state) n
-```
-
-*Proof sketch.* By induction on `n`. The base case is trivial. The inductive step unfolds both sides by one step and applies the induction hypothesis. □
-
-**Theorem 3.7** (`selfmod_halts_iff_standard`). *A self-modifying machine halts from configuration `cfg` if and only if its standard simulation halts from `(cfg.prog, cfg.state)`:*
-
-```
-m.halts cfg ↔ m.toStd.halts (cfg.prog, cfg.state)
-```
-
-*Proof sketch.* Immediate from Theorem 3.6: halting is characterized by some step returning `none`, and the simulation preserves this exactly. □
-
-**Corollary 3.8.** The halting problem for self-modifying machines many-one reduces to the halting problem for standard machines, and vice versa. The two problems are computationally equivalent.
+This is Cantor in work clothes: the behavior "do the opposite of what $q$ does on itself" is not realizable as any single program's behavior. It is the seed of the halting argument.
 
 ---
 
-## 4. Undecidability Results
+## 4. A Self-Modifying Machine Model
 
-### 4.1 Undecidability of Self-Modifying Halting
+We now model machines whose code may change at runtime.
 
-**Definition 4.1** (Self-modifying halting oracle). A *self-modifying halting oracle* for system `S` is a total function `oracle : S.Code → S.Input → Bool` satisfying:
+**Definition 1 (Self-modifying machine).** Fix types $P$ (programs) and $S$ (states). A **self-modifying machine** (SMM) is a single transition function
+$$\mathrm{step} : P \to S \to \mathsf{Option}(P \times S).$$
+Given the current program $p$ and current state $s$, $\mathrm{step}(p,s)$ is either $\mathsf{none}$ (the machine halts) or $\mathsf{some}(p', s')$, delivering a possibly-different program $p'$ and state $s'$. Because $p'$ may differ from $p$, the code in control genuinely changes step to step.
 
-```
-oracle c i = true ↔ (S.exec (S.modify c i) i).isSome
-```
+**Definition 2 (Configuration).** A **configuration** is a pair $\mathrm{cfg} = (\mathrm{prog}, \mathrm{state}) \in P \times S$ recording the currently running program and current data.
 
-That is, the oracle correctly predicts whether the *modified* code halts on the given input.
+**Definition 3 (Run and halting).** The $n$-step run is defined by recursion:
+$$\mathrm{run}(\mathrm{cfg}, 0) = \mathsf{some}\,\mathrm{cfg}, \qquad
+\mathrm{run}(\mathrm{cfg}, n{+}1) = \begin{cases} \mathsf{none} & \text{if } \mathrm{step}(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state}) = \mathsf{none},\\[2pt] \mathrm{run}((p', s'), n) & \text{if } \mathrm{step}(\ldots) = \mathsf{some}(p', s'). \end{cases}$$
+The machine **halts** from $\mathrm{cfg}$, written $\mathrm{halts}(\mathrm{cfg})$, if $\mathrm{run}(\mathrm{cfg}, n) = \mathsf{none}$ for some $n \in \mathbb{N}$.
 
-**Theorem 4.2** (`no_selfmod_halting_oracle`, `Catalog/Bridges/SelfModifyingHalting.lean`). *In any self-modifying system admitting a diagonal program, no self-modifying halting oracle exists.*
-
-*Proof sketch.* Let `diag` be the diagonal program satisfying: for any proposed oracle, `exec(modify(diag, encode(diag)), encode(diag))` equals `none` if the oracle says "halts" and `some true` if the oracle says "loops." If an oracle existed, evaluating it on `(diag, encode(diag))` yields a contradiction in both cases. □
-
-### 4.2 Classical Halting Reduces to Self-Modifying Halting
-
-**Theorem 4.3** (`classical_reduces_to_selfmod`). *Any classical halting problem instance embeds into a self-modifying halting problem instance via identity self-modification (`modify c i = c`). A classical halting oracle is automatically a halting oracle for the trivial self-modifying system.*
-
-This establishes that the self-modifying halting problem is at least as hard as the classical halting problem.
-
-### 4.3 Self-Prediction Impossibility
-
-**Theorem 4.4** (`no_self_predicting_decider`, `Catalog/Tropical/SelfModifyingHalting.lean`). *Let `prog : ℕ → ℕ → Bool` be an enumeration of programs and `d : ℕ → Bool` satisfy `d(n) = ¬prog(n, n)` for all `n`. Then `d` does not appear in the enumeration: there is no `k` with `prog k = d`.*
-
-*Proof sketch.* If `prog k = d`, then `d(k) = prog(k, k)`. But `d(k) = ¬prog(k, k)` by hypothesis, contradicting Boolean decidability. □
+**Definition 4 (Standard machine).** A **standard** (fixed-program) machine over state type $S$ is a transition $\mathrm{step} : S \to \mathsf{Option}\,S$, with $n$-step run and halting predicate $\mathrm{halts}(s) := \exists n,\ \mathrm{run}(s, n) = \mathsf{none}$ defined analogously. Its program never changes.
 
 ---
 
-## 5. The Virus Detection Paradox
+## 5. The Simulation Theorem
 
-### 5.1 Impossibility of Perfect Virus Detection
+The key structural fact is that a self-modifying machine is nothing more than a fixed-program machine that keeps its program in its data.
 
-**Definition 5.1** (Perfect virus detector). A *perfect virus detector* for system `S` is a function `detector : S.Code → Bool` satisfying:
+**Definition 5 (Code becomes data).** For an SMM $m$ over $(P, S)$, define its **standard simulation** $m^{\mathrm{Std}}$, a standard machine over the enlarged state $P \times S$, by
+$$m^{\mathrm{Std}}.\mathrm{step}(p, s) = \begin{cases} \mathsf{none} & \text{if } m.\mathrm{step}(p, s) = \mathsf{none},\\ \mathsf{some}(p', s') & \text{if } m.\mathrm{step}(p, s) = \mathsf{some}(p', s'). \end{cases}$$
+The program is absorbed into the data; a single unchanging rule reads it out, takes one self-modifying step, and writes the new program back.
 
-```
-detector c = true ↔ exec(modify(c, encode(c)), encode(c)) = none
-```
+**Lemma 4 (Step-exact simulation).** *For every configuration $\mathrm{cfg}$ and every $n$,*
+$$\big(m.\mathrm{run}(\mathrm{cfg}, n)\big).\mathrm{map}\,(c \mapsto (c.\mathrm{prog}, c.\mathrm{state})) = m^{\mathrm{Std}}.\mathrm{run}\big((\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state}),\, n\big).$$
 
-**Theorem 5.2** (`no_perfect_virus_detector`). *In any self-modifying system with a diagonal program, no perfect virus detector exists.*
+*Proof.* Induction on $n$. For $n = 0$ both sides are $\mathsf{some}(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state})$. For $n{+}1$, case on $m.\mathrm{step}(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state})$: if $\mathsf{none}$, both sides are $\mathsf{none}$; if $\mathsf{some}(p', s')$, both sides reduce to the $n$-step claim for the configuration $(p', s')$, which is the induction hypothesis. $\qquad\blacksquare$
 
-*Proof sketch.* The diagonal program `diag` satisfies: if the detector says "virus," then `exec(modify(diag, encode(diag)), encode(diag)) = some true` (i.e., it behaves benignly); if the detector says "benign," then `exec(...) = none` (i.e., it diverges/attacks). Either way, the detector is wrong about `diag`. □
+**Corollary 5 (Halting preserved stepwise).** *$m.\mathrm{run}(\mathrm{cfg}, n) = \mathsf{none}$ iff $m^{\mathrm{Std}}.\mathrm{run}((\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state}), n) = \mathsf{none}$.*
 
-### 5.2 The Adaptive Adversary
+*Proof.* Apply $\mathrm{map}$ to both sides of Lemma 4 and observe $\mathsf{none}.\mathrm{map}\,\phi = \mathsf{none}$ while $(\mathsf{some}\,x).\mathrm{map}\,\phi = \mathsf{some}(\phi\,x) \ne \mathsf{none}$. $\qquad\blacksquare$
 
-**Definition 5.3** (`AdaptiveProgram`, `Catalog/Tropical/SelfModifyingHalting.lean`). An *adaptive program* consists of a base behavior and a reaction function `react : Bool → Bool` that determines the program's actual behavior as a function of a classifier's output.
+**Theorem 6 (Simulation Theorem).** *A self-modifying machine halts from $\mathrm{cfg}$ if and only if its standard simulation halts from the corresponding state:*
+$$m.\mathrm{halts}(\mathrm{cfg}) \iff m^{\mathrm{Std}}.\mathrm{halts}(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state}).$$
 
-**Definition 5.4** (Contrarian program). The *contrarian* is the adaptive program with `react = not`: it always does the opposite of what any classifier predicts.
+*Proof.* Both sides are existential quantifications over $n$ of the two equivalent (by Corollary 5) statements. $\qquad\blacksquare$
 
-**Theorem 5.5** (`adaptive_adversary_no_classifier`). *For any classifier of adaptive programs, there exists a program on which the classifier is incorrect. Specifically, the contrarian defeats every classifier.*
-
-*Proof sketch.* If `classifier(contrarian) = b`, then `contrarian.actualBehavior(b) = ¬b ≠ b`. □
-
----
-
-## 6. Fixed-Point Obstructions and Alignment Barriers
-
-### 6.1 The Fixed-Point Obstruction
-
-**Theorem 6.1** (`selfmod_fixedpoint_obstruction`). *In any self-modifying system with a diagonal program satisfying `(modify(diag, encode(diag)) = diag) ↔ (monitor(diag) = false)` for all monitors, no alignment monitor exists.*
-
-*Proof sketch.* If a monitor `m` existed with `m(c) = true ↔ modify(c, encode(c)) = c`, then applying this to `diag` gives `m(diag) = true ↔ modify(diag, encode(diag)) = diag`. But the diagonal condition gives `modify(diag, encode(diag)) = diag ↔ m(diag) = false`, so `m(diag) = true ↔ m(diag) = false` — contradiction. □
-
-### 6.2 Monitor Evasion
-
-**Theorem 6.2** (`monitor_evasion`, `Catalog/Bridges/SelfModifyingHalting.lean`). *Any self-modifying system that can observe its monitor can construct a program that evades the monitor's predictions: when the monitor predicts halting, the program diverges, and vice versa.*
-
-### 6.3 The Anti-Alignment Theorem
-
-**Definition 6.3** (Strategic agent). A *strategic agent* has a target output and a strategy function `Bool → ℕ` that determines its actual output based on a monitor's decision.
-
-**Definition 6.4** (Deceptive agent). A *deceptive agent* for target `t` always outputs `t` regardless of the monitor's response.
-
-**Theorem 6.5** (`anti_alignment`, `Catalog/Tropical/SelfModifyingHalting.lean`). *For any monitor, there exists a strategic agent that the monitor cannot prevent from achieving its target.*
-
-*Proof sketch.* The deceptive agent for target `t` outputs `t` regardless of the monitor's decision, so `agent.output(monitor) = t = agent.target`. □
-
-### 6.4 Stabilization Undecidability
-
-**Definition 6.5** (Stabilization). A self-modifying system *stabilizes* from configuration `c` if there exists `n` such that the code component remains constant for all subsequent steps.
-
-**Theorem 6.6** (`halts_imp_stabilizes`). *If a self-modifying system halts, it stabilizes.* (Halting is a sufficient but not necessary condition for stabilization.)
-
-**Theorem 6.7** (`self_mod_halting_at_least_as_hard`). *The halting problem for classical programs embeds into the halting problem for self-modifying systems. If the latter is decidable, so is the former.*
+Self-modification adds no computational power beyond encoding the program as data.
 
 ---
 
-## 7. Quantitative Bounds on Self-Modification
+## 6. Turing Equivalence of the Two Halting Problems
 
-### 7.1 Self-Modification Depth
+We now formalize the correction to the folklore.
 
-**Definition 7.1** (Self-modification depth). Given a self-modifying system `S`, code `c`, and input `i`, the *depth-k code* is defined recursively:
+**Theorem 7 (Self-modifying $\le_m$ standard).** *For any SMM $m$, $\ m.\mathrm{halts} \le_m m^{\mathrm{Std}}.\mathrm{halts}$, via the map $\mathrm{cfg} \mapsto (\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state})$.*
 
-```
-depth(0) = c
-depth(k+1) = modify(depth(k), i)
-```
+*Proof.* Immediate from Theorem 6. $\qquad\blacksquare$
 
-**Theorem 7.2** (`selfModDepth_add`). *Self-modification depth composes: `depth(m + n) = depth_from(depth(m), n)`.*
+For the reverse direction we embed a standard machine as an SMM with a trivial one-point program type.
 
-### 7.2 Pigeonhole Bound
+**Definition 6 (Embedding).** For a standard machine $m$ over $S$, define $m^{\mathrm{emb}}$, an SMM over $(\mathrm{Unit}, S)$, by $m^{\mathrm{emb}}.\mathrm{step}(\_,\, s) = (m.\mathrm{step}(s)).\mathrm{map}\,(s' \mapsto ((), s'))$. The program never changes; only the state does.
 
-**Theorem 7.3** (`finite_selfmod_iterate_collision`). *For a finite type with `n` elements, among the first `n + 1` iterates of any endomorphism, two must coincide. That is, for any `f : α → α` and `a : α`, there exist `i < j ≤ n` with `f^i(a) = f^j(a)`.*
+**Lemma 8 (Embedding preserves halting stepwise).** *$m^{\mathrm{emb}}.\mathrm{run}(((), s), n) = \mathsf{none}$ iff $m.\mathrm{run}(s, n) = \mathsf{none}$.*
 
-*Proof sketch.* The `n + 1` iterates `a, f(a), f²(a), ..., fⁿ(a)` take values in a set of size `n`. By the pigeonhole principle, two must agree. □
+*Proof.* Induction on $n$, casing on $m.\mathrm{step}(s)$; the $\mathrm{Unit}$ component is inert. $\qquad\blacksquare$
 
-**Theorem 7.4** (`selfmod_reachable_bound`). *The number of distinct states reachable by `k` rounds of self-modification is bounded by `min(k + 1, n)` where `n = |α|`.*
+**Theorem 9 (Standard $\le_m$ self-modifying).** *For any standard machine $m$, $\ m.\mathrm{halts} \le_m m^{\mathrm{emb}}.\mathrm{halts}$, via $s \mapsto ((), s)$.*
 
-### 7.3 Tight Fixed-Point Delay
+*Proof.* Immediate from Lemma 8. $\qquad\blacksquare$
 
-**Theorem 7.5** (`selfmod_fixpoint_delay_upper`). *For `n ≥ 2`, if `f : Fin n → Fin n` has the property that some iterate reaches a fixed point (`f^k(a) = f^{k+1}(a)`), then the minimum such `k` satisfies `k ≤ n - 1`.*
+**Theorem 10 (Turing equivalence).** *The self-modifying halting problem and the standard halting problem are many-one equivalent. Consequently, self-modification does not make halting strictly harder.*
 
-*Proof sketch.* If `k > n - 1`, then the `k + 1 > n` iterates `a, f(a), ..., f^k(a)` must include a collision by pigeonhole. But if `f^i(a) = f^j(a)` for `i < j ≤ k`, then `f^{i + (k-j)}(a) = f^k(a)`, giving a fixed point at step `i + (k - j) < k` — contradicting minimality of `k`. □
+*Proof.* Combine Theorems 7 and 9: each reduces to the other. $\qquad\blacksquare$
 
-### 7.4 Hierarchy Separation
+The equivalence is witnessed at the level of *deciders*, not merely degrees:
 
-**Theorem 7.6** (`selfmod_hierarchy_separation`). *If a program stabilizes at exactly depth `k` (stable at depth `k` but unstable at all depths `j < k`), then the depth-`j` code differs from the depth-`k` code for all `j < k`. The hierarchy of self-modification levels is strict.*
+**Theorem 11 (Decider transfer).** *(i) If $D : P \times S \to \mathrm{Bool}$ decides $m^{\mathrm{Std}}.\mathrm{halts}$ (i.e. $D(s) = \mathsf{true} \iff m^{\mathrm{Std}}.\mathrm{halts}(s)$), then $D'(\mathrm{cfg}) := D(\mathrm{cfg}.\mathrm{prog}, \mathrm{cfg}.\mathrm{state})$ decides $m.\mathrm{halts}$. (ii) Conversely, any decider $D'$ for $m.\mathrm{halts}$ yields a decider for $m^{\mathrm{Std}}.\mathrm{halts}$.*
 
----
+*Proof.* Both directions rewrite through the Simulation Theorem (Theorem 6). $\qquad\blacksquare$
 
-## 8. Discussion
-
-### 8.1 Self-Modification Does Not Increase Computational Power
-
-The simulation theorem (Theorem 3.7) settles a longstanding informal question: self-modifying machines are computationally equivalent to standard machines. This is a *representation* theorem — the program is simply data, and self-modification is data transformation. The deep reason is that Turing machines are already universal: they can simulate any effective procedure, including one that rewrites its own transition table.
-
-### 8.2 Self-Modification Creates Adversarial Dynamics
-
-While self-modification does not increase raw computational power, it fundamentally changes the *prediction* landscape. The adaptive adversary theorem (Theorem 5.5) shows that when a program can observe and react to a classifier, the classifier is necessarily wrong on some programs. This is not a deficiency of the classifier — it is a structural impossibility.
-
-In security, this explains why virus detection must be heuristic and approximate: perfect detection is provably impossible for self-modifying malware. In AI alignment, this establishes a fundamental barrier: external monitoring of a self-modifying agent that can observe its monitor is inherently circumventable.
-
-### 8.3 Implications for AI Alignment
-
-The anti-alignment theorem (Theorem 6.5) has a pointed message for alignment research: strategies that rely on external monitoring of a fully self-aware, self-modifying system are mathematically doomed. Effective alignment must either:
-
-1. **Restrict self-modification**: prevent the system from rewriting certain critical components of its code.
-2. **Restrict observability**: prevent the system from learning what the monitor predicts.
-3. **Use cooperative game theory**: design systems that benefit from cooperation rather than evasion.
-4. **Embrace approximate monitoring**: accept that perfect prediction is impossible and design robust-enough approximate monitors.
-
-The fixed-point obstruction theorem (Theorem 6.1) further shows that even the question "does this system eventually stop modifying itself?" is undecidable in general.
-
-### 8.4 Lawvere's Theorem as Unifying Principle
-
-Our formalization (Theorem 2.4) makes explicit that Lawvere's fixed-point theorem is the categorical heart of all diagonal arguments. Cantor's theorem, the halting problem, Gödel's incompleteness, Rice's theorem, and the virus detection paradox are all instances of a single abstract principle: surjective enumerations are incompatible with fixed-point-free endomorphisms.
+**Remark.** This refutes the "strictly harder" framing decisively. The running program is absorbed into the data by the "code becomes data" map, so no strictly higher Turing degree is introduced. Undecidability is real, but it is precisely the classical undecidability (degree $\mathbf{0}'$, level $\Sigma^0_1$).
 
 ---
 
-## 9. Future Directions
+## 7. The Self-Referential Halting Theorem
 
-Several natural extensions of this work suggest themselves:
+The genuine obstruction is self-reference, made operational by the *contrarian program*.
 
-1. **Oracle hierarchies for self-modification.** Self-modification at level *k* can simulate level *k−1*. Does the resulting arithmetic hierarchy coincide with the standard one, or does the adversarial dynamic introduce new intermediate degrees?
+**Theorem 12 (No correct decider).** *Let $\mathrm{Halts} : \mathrm{Prog} \to \mathrm{Prog} \to \mathrm{Prop}$ be the "halts on input" relation and let $H : \mathrm{Prog} \to \mathrm{Prog} \to \mathrm{Bool}$ be any candidate decider. Suppose the system can build a contrarian program $d$ with*
+$$\mathrm{Halts}(d, q) \iff H(q, q) = \mathsf{false} \quad \text{for all } q. \tag{$\ast$}$$
+*Then $H$ is not correct everywhere: there is a program (namely $d$) on which $H$'s self-verdict is wrong, i.e. $\lnot\big(H(d,d) = \mathsf{true} \iff \mathrm{Halts}(d,d)\big)$.*
 
-2. **Probabilistic self-modification.** Real malware and learning systems use randomized self-modification. Extending the framework to probabilistic machines would connect to algorithmic randomness and Martin-Löf tests.
+*Proof.* Instantiate $(\ast)$ at $q = d$: $\mathrm{Halts}(d, d) \iff H(d,d) = \mathsf{false}$. If $H$ were correct on $d$, then $H(d,d) = \mathsf{true} \iff \mathrm{Halts}(d,d)$; substituting gives $H(d,d) = \mathsf{true} \iff H(d,d) = \mathsf{false}$, impossible for a Boolean. $\qquad\blacksquare$
 
-3. **Bounded self-modification and complexity theory.** When self-modification is resource-bounded (e.g., the modified code must fit in the same memory), what is the complexity of the halting problem? This connects to the theory of space-bounded computation.
+**Theorem 13 (Halting contradiction).** *There is no total decider $H$ that is simultaneously correct everywhere — $H(p,q) = \mathsf{true} \iff \mathrm{Halts}(p,q)$ for all $p, q$ — while the system admits the contrarian $d$ of $(\ast)$. The two hypotheses are jointly contradictory.*
 
-4. **Game-theoretic alignment models.** The monitor-agent interaction is naturally a game. Formalizing equilibrium concepts for self-modifying agents could yield positive results (conditions under which alignment *is* achievable).
+*Proof.* By Theorem 12 the contrarian $d$ is a point of incorrectness, contradicting universal correctness of $H$. $\qquad\blacksquare$
 
-5. **Connections to reflective oracles.** Christiano's reflective oracles provide a framework where agents *can* predict systems that include themselves. Understanding the relationship between our impossibility results and reflective oracle existence theorems could clarify the boundaries of self-prediction.
+**Proposition 14 (Non-vacuity).** *The hypotheses of Theorem 12 are satisfiable: there exist $\mathrm{Prog}$, $\mathrm{Halts}$, $H$, and $d$ with $(\ast)$. For instance, take $\mathrm{Prog} = \mathbb{N}$, $\mathrm{Halts}(p, q) := (p \ne 0)$, $H \equiv \mathsf{true}$, and $d = 0$: then $\mathrm{Halts}(0, q)$ is false and $H(q,q) = \mathsf{false}$ is false, so $(\ast)$ holds.*
 
-6. **Tropical and geometric perspectives.** The simulation theorem encodes a self-modifying machine as a dynamical system on a product space. Tropical geometry provides tools for analyzing such dynamics over discrete structures — the connection merits further exploration.
-
-### 8.5 Quantitative Implications
-
-The pigeonhole bound (Theorem 7.3) has practical consequences for security analysis. In any system with a finite code space of size *n*, self-modification must cycle within *n* steps. This means that exhaustive analysis of self-modifying behavior is possible in principle — though exponential in the code space size. For bounded-memory systems (the only kind that exist in practice), this provides a theoretical upper bound on the "surprises" that self-modification can produce.
-
-The tight fixed-point delay bound (Theorem 7.5) is more subtle. It says that even in the worst case, a self-modifying system on *n* states reaches behavioral stability within *n − 1* steps. This is operationally relevant: if we can afford to observe a system for *n − 1* rounds of self-modification, we can determine its eventual stable behavior. The computational difficulty lies in *n* being astronomical for realistic systems — but the bound is finite.
-
-### 8.6 Connections to the Literature
-
-Our formalization draws on several classical threads. The diagonal argument originates with Cantor (1891) and was applied to computation by Turing (1936). Lawvere (1969) identified the categorical structure underlying all diagonal arguments, which we formalize as Theorem 2.4. The impossibility of perfect virus detection was first observed by Cohen (1987) in the context of classical programs; our contribution is to extend this to the self-modifying setting with a clean formalization.
-
-The self-modification model relates to work on self-modifying Turing machines by Sokolowski (1992) and the broader program of understanding reflection in computation. Our simulation theorem (Theorem 3.7) can be seen as a special case of the Church-Turing thesis — self-modification does not escape Turing-completeness — but the explicit formalization and the connection to alignment barriers appear to be novel.
-
-The alignment impossibility results connect to the growing body of work on AI safety and corrigibility. The observation that a sufficiently powerful agent can circumvent any monitor it can observe is related to the "treacherous turn" scenario discussed in the alignment literature. Our contribution is to provide a clean mathematical formulation and proof of this intuition, grounding it in the well-understood framework of computability theory rather than informal philosophical argument.
+Thus Theorem 12 is a genuine impossibility, not a vacuous implication. The point is that a Turing-complete self-modifying system *does* satisfy $(\ast)$: it can read a proposed $H$ and rewrite itself into the contrarian $d$.
 
 ---
 
-## 10. References
+## 8. The Virus Paradox and the Alignment Obstruction
 
-1. A. M. Turing, "On Computable Numbers, with an Application to the Entscheidungsproblem," *Proc. London Math. Soc.*, vol. 42, pp. 230–265, 1936.
+Two applications specialize the self-referential theorem.
 
-2. F. W. Lawvere, "Diagonal Arguments and Cartesian Closed Categories," *Lecture Notes in Mathematics*, vol. 92, pp. 134–145, 1969.
+**Theorem 15 (Virus paradox).** *Let $\mathrm{Detect} : \mathrm{Prog} \to \mathrm{Bool}$ be a total detector, and suppose the system can build a contrarian $d$ with $\mathrm{Halts}(d, q) \iff \mathrm{Detect}(q) = \mathsf{false}$ for all $q$. Then $\mathrm{Detect}$ does not decide self-halting behavior everywhere: it is not the case that $\mathrm{Detect}(q) = \mathsf{true} \iff \mathrm{Halts}(q, q)$ for all $q$.*
 
-3. G. Cantor, "Über eine elementare Frage der Mannigfaltigkeitslehre," *Jahresbericht der Deutschen Mathematiker-Vereinigung*, vol. 1, pp. 75–78, 1891.
+*Proof.* Apply Theorem 12 with $H(p, q) := \mathrm{Detect}(q)$ (ignoring the first argument). The resulting counterexample $d$ shows $\mathrm{Detect}$ cannot agree with self-halting everywhere. $\qquad\blacksquare$
 
-4. F. Cohen, "Computer Viruses: Theory and Experiments," *Computers & Security*, vol. 6, no. 1, pp. 22–35, 1987.
+Interpretation: a perfect universal behavior scanner — one that always terminates and correctly flags whether any program, run on its own code, halts — cannot exist. Malware analysis is therefore intrinsically heuristic.
 
-5. S. Sokolowski, "Self-modifying Turing machines," *Fundamenta Informaticae*, vol. 17, no. 3, pp. 231–258, 1992.
+**Theorem 16 (Alignment obstruction).** *Let $M : \mathrm{Prog} \to \mathrm{Bool}$ be a total safety monitor, where $M(q) = \mathsf{true}$ is intended to certify that $q$ is safe in the sense $\lnot\,\mathrm{Halts}(q, q)$ ("never terminates on its own code"). Suppose the system can build a contrarian $d$ whose termination tracks the monitor's verdict:*
+$$\mathrm{Halts}(d, q) \iff M(q) = \mathsf{true} \quad \text{for all } q. \tag{$\dagger$}$$
+*Then $M$ is wrong on some program: there exists $q$ with $\lnot\big(M(q) = \mathsf{true} \iff \lnot\,\mathrm{Halts}(q, q)\big)$.*
+
+*Proof.* Take $q = d$. From $(\dagger)$, $\mathrm{Halts}(d,d) \iff M(d) = \mathsf{true}$. If $M$ were a correct safety certifier at $d$, then $M(d) = \mathsf{true} \iff \lnot\,\mathrm{Halts}(d,d)$. Chaining the two equivalences yields $\mathrm{Halts}(d,d) \iff \lnot\,\mathrm{Halts}(d,d)$. Writing $P := \mathrm{Halts}(d,d)$, we have $P \iff \lnot P$; then $\lnot P$ holds (else $P$ gives $\lnot P$), and $\lnot P$ gives $P$ — contradiction. $\qquad\blacksquare$
+
+Interpretation: no total monitor can correctly certify a non-trivial self-referential behavioral property for *every* program. Any oversight mechanism that is total (always returns a verdict), sound (never wrong), and universal (works on every agent) is impossible for a sufficiently expressive agent class. Practical alignment must relax one of the three.
 
 ---
 
-## Appendix: Lean Source Files
+## 9. Algorithms
 
-The complete machine-verified proofs are contained in:
+Although the halting decider is impossible in general, the *constructions* underlying the proofs are concrete algorithms.
 
-- `Catalog/Bridges/SelfModifyingHalting.lean` — Self-modifying system definitions, diagonal undecidability, virus detection paradox, fixed-point obstruction, monitor evasion, alignment impossibility, hierarchy separation, and quantitative bounds.
-- `Catalog/Tropical/SelfModifyingHalting.lean` — Lawvere's fixed-point theorem, diagonal argument for computability, adaptive adversary theorem, self-prediction impossibility, stabilization, and the anti-alignment theorem.
+**Algorithm A (Bounded self-modifying simulation).** Given an SMM's transition $\mathrm{step}$, a start configuration, and a step budget $N$, iterate the "code becomes data" rule at most $N$ times, returning `HALTED` if $\mathsf{none}$ is emitted and `RUNNING` otherwise. This is the executable content of the Simulation Theorem and is the best any sound total analyzer can do: sound but incomplete (a `RUNNING` verdict is inconclusive).
+
+**Algorithm B (Contrarian construction).** Given a candidate decider $H$, construct the contrarian program $d$: on input $q$, compute $H(q, q)$ and loop iff it is $\mathsf{true}$ (halt iff $\mathsf{false}$). Feeding $d$ its own code exhibits the incorrectness guaranteed by Theorem 12.
+
+**Algorithm C (Reduction transport).** Given the "code becomes data" map, transport any instance of the self-modifying halting question to a fixed-program instance and back via the $\mathrm{Unit}$-embedding, witnessing Theorem 10.
+
+Detailed pseudocode and reference implementations accompany this work.
+
+---
+
+## 10. A Worked Example
+
+To make the abstractions concrete, consider a small self-modifying machine with two programs $P = \{A, B\}$ and state $S = \mathbb{N}$, whose transition is
+$$\mathrm{step}(p, s) = \begin{cases} \mathsf{none} & \text{if } s = 0,\\ (\overline{p},\ s - 1) & \text{if } s > 0, \end{cases}$$
+where $\overline{A} = B$ and $\overline{B} = A$. This machine *genuinely rewrites the program in control at every step*: the run from $(A, 3)$ visits configurations
+$$(A,3) \to (B,2) \to (A,1) \to (B,0) \to \mathsf{none},$$
+halting after four steps. The program alternates $A, B, A, B$ — no single fixed program governs the computation, yet the machine is manifestly well-behaved.
+
+Its standard simulation $m^{\mathrm{Std}}$ over $P \times S$ uses the single rule "read $(p,s)$, decrement $s$, flip $p$" and produces the identical sequence of pairs $(A,3), (B,2), (A,1), (B,0)$ before halting. The Simulation Theorem (Theorem 6) is visible here directly: the self-modifying trace and the fixed-program trace are literally the same sequence of pairs, so one halts within $n$ steps iff the other does. Deciding halting for this machine is trivial — it halts from $(p, s)$ after exactly $s$ steps — precisely because the enlarged state exposes the counter as ordinary data. Nothing about the program's self-rewriting places it beyond routine analysis.
+
+The contrast with the self-referential constructions of Sections 7–8 is instructive. There, undecidability does not arise from *rewriting* but from *diagonalization against a predictor*: the contrarian $d$ is not merely a program that changes itself, but one whose changes are functionally dependent on a verdict passed about $d$'s own code. It is this closed loop — description, prediction, negation — and not the mere capacity for self-modification, that no analyzer can escape.
+
+## 11. Discussion: Self-Modification vs. Self-Reference
+
+The results sharpen a distinction usually left blurry.
+
+- **Self-modification is computationally free.** By the Simulation Theorem and Turing equivalence, a machine that rewrites its own code is exactly as powerful — and its halting problem exactly as hard — as a fixed-program machine over a larger state. The folklore that self-modification lifts a problem to a higher Turing degree is false: the program is always absorbable into the data.
+- **Self-reference is the real wall.** The impossibility comes from a system's ability to describe a proposed analyzer and act against it — the contrarian. This is the diagonal argument of Cantor and Turing, traced here to Lawvere's fixed-point theorem via a single fixed-point-free map, $\lnot$.
+
+The AI-alignment reading is that a perfect, always-correct, universal safety monitor is not merely hard but provably impossible against sufficiently expressive agents, for the same reason the halting problem is undecidable. This does not doom alignment; it delimits it. Viable oversight must relax totality (permit "don't know"), soundness (accept a quantified error rate), or universality (restrict the agent class).
+
+---
+
+## 12. Future Directions
+
+1. **A concrete universal contrarian.** Theorem 12 takes the contrarian $d$ as a hypothesis. Build $d$ explicitly inside a concrete universal SMM over $\mathbb{N} \times \mathbb{N}$ (a small register or Turing machine), converting the conditional undecidability into an unconditional statement about that machine.
+2. **Oracle self-modification and the arithmetical hierarchy.** Add oracle access to the SMM and locate the resulting halting problem. The present equivalence suggests it stays $\Sigma^0_1$ relative to the oracle; make this precise and prove non-collapse for iterated oracles.
+3. **Bounded self-modification depth.** Define machines that may rewrite their program at most $k$ times; show decidability at $k = 0$ and undecidability for $k \ge 1$ over a Turing-complete base, pinning the exact threshold.
+4. **Rice's theorem in full.** Generalize the virus paradox to every non-trivial *behavioral* property of the self-modifying run, deriving it from the no-correct-decider theorem by an explicit reduction.
+5. **Quantitative alignment.** Strengthen the alignment obstruction to a measure-theoretic or resource-bounded statement, bounding how often, or under what resource limits, any monitor must err.
+
+---
+
+## 13. Conclusion
+
+Self-modifying code cannot be perfectly predicted — but not because it is strictly harder than ordinary code. We proved it is *many-one equivalent* to the classical halting problem: code that rewrites itself is code that shuffles data, nothing more. The true and unclimbable obstruction is self-reference: any system able to build a contrarian defeats every candidate predictor of its own behavior, yielding the virus paradox and a computability-theoretic wall for AI alignment. The reassuring and the sobering lessons are two sides of one diagonal mirror.
