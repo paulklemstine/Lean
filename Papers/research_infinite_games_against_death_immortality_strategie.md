@@ -1,255 +1,177 @@
-# Ordinal Arenas and Immortality Strategies: A Theory of Asymmetric Infinite Games
+# Infinite Games Against Death: Immortality Strategies and the $\omega$–$\omega^2$ Dichotomy
 
 ## Abstract
 
-We develop a rigorous theory of two-player survival games with asymmetric computational power. Player **Mortal** has finite computation; player **Eternity** has transfinite computation. We introduce the **Ordinal Arena**, a novel mathematical structure equipping survival games with ordinal-valued rank functions, and prove three main results:
+We introduce and analyze a transfinite *survival game* between two players: **Mortal**, whose computational power is captured by a well-ordered set of reachable internal configurations, and **Eternity**, an adversary who may prolong the contest through transfinitely many ordinal-indexed rounds and seeks Mortal's demise. Each round Mortal survives, it must exhibit a strictly later reachable *moment*; the length of any survivable play is therefore bounded by the order type of Mortal's moment set. We define the **survival value** of a game as this order type and prove a *Fundamental Theorem*: Mortal can force survival to round $\beta$ if and only if $\beta \le \mathrm{value}(G)$. From this single reduction we derive a sharp dichotomy. A finite deterministic Mortal (moments of order type $\omega$) forces every finite round and forces round $\omega$, but dies exactly at $\omega$; moreover *any* Mortal whose moments order-embed into $\mathbb{N}$ cannot pass $\omega$. A Mortal with bounded nondeterminism (moments of order type $\omega^2$, indexed lexicographically) forces every round $\omega \cdot n$ and forces $\omega^2$, but dies exactly at $\omega^2$. Underlying the jump is a **refinement principle**: subdividing each moment into an $\omega$-block of sub-moments multiplies the survival value by $\omega$. We interpret these thresholds through the lens of Infinite Time Turing Machines, where $\omega$ and $\omega^2$ are the first two clockable milestones met when climbing from deterministic to boundedly nondeterministic transfinite computation.
 
-1. **Omega Survival Theorem**: If a game satisfies the *Safe Escape* property (at every alive position, Mortal has a move safe against all responses), then Mortal has a single greedy strategy guaranteeing survival for all finite rounds — an ordinal duration of ω.
+**Keywords:** ordinals, order type, well-order, transfinite game, survival value, bounded nondeterminism, infinite time Turing machines, clockable ordinals.
 
-2. **Asymmetry Collapse Theorem**: In safe-escape games, Eternity's transfinite computational advantage provides zero additional killing power. The asymmetry gap between finite and infinite computation collapses completely.
-
-3. **ω²-Survival Theorem**: With adaptive bounded nondeterminism (an unbounded sequence of independent game layers), Mortal's total survival duration reaches ω² = ω·ω.
-
-All results are formalized and machine-verified in Lean 4 with Mathlib, with no axioms beyond the standard foundations (propext, Classical.choice, Quot.sound).
-
-**Keywords**: Infinite games, ordinal arithmetic, transfinite computation, game theory, survival strategies, Lean 4
+---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Classical computability measures a machine's power by *what* it can compute. A complementary question asks *how long* a machine can persist under an adversary who is willing to wait transfinitely long. This question is naturally phrased as a game. One player, **Mortal**, is a bounded computational agent; the other, **Eternity**, controls a clock indexed by the ordinals and wins the instant Mortal cannot make a legal move. Because time is well-founded — one may climb ordinals indefinitely but never descend them forever — Mortal's predicament reduces to a single structural fact about the set of configurations it can reach.
 
-The interplay between finite and infinite computation is a central theme in mathematical logic, from Turing's original work on computability to Hamkins and Lewis's Infinite Time Turing Machines (ITTMs) [1]. A natural question arises: in an adversarial setting, how much does infinite computational power actually help?
+Our contribution is a compact, fully rigorous framework for this game together with a sharp analysis of two natural computational regimes. The framework isolates one invariant, the **survival value**, and shows that survival is *entirely* governed by it (Theorem 3.1). We then compute the value in two cases of independent interest:
 
-We address this through **survival games** — a two-player perfect-information game where Mortal (finite computation) tries to avoid a "death set" while Eternity (transfinite computation) tries to force Mortal into it. The game produces a history of (move, response) pairs, and the death predicate is monotone: once dead, extending the history keeps the game dead.
+1. **Finite deterministic computation.** Reachable moments have order type $\omega$; survival is exactly $\omega$ (Section 4), and this bound is intrinsic to *any* system whose configurations embed into $\mathbb{N}$.
+2. **Bounded nondeterminism.** Reachable moments have order type $\omega^2$; survival is exactly $\omega^2$ (Section 5).
 
-### 1.2 Prior Work
+The mechanism connecting the two is a general **refinement principle** (Section 6): replacing each moment by an $\omega$-block of sub-moments multiplies survival by $\omega$. Finally (Section 7) we interpret $\omega$ and $\omega^2$ as the first two clockable milestones of Infinite Time Turing Machines.
 
-Zermelo's theorem (1913) established determinacy of finite games [2]. Martin's Borel Determinacy theorem (1975) extended this to infinite games with Borel payoff sets [3]. Our framework differs from the classical Gale-Stewart game setting in two key ways:
+All statements below are elementary consequences of the theory of ordinals and order types; we favor transparent proofs over generality.
 
-1. **Asymmetric computation**: We explicitly model the computational gap between players, rather than treating both as having equal access to strategies.
-2. **Survival semantics**: The payoff is not win/lose but *survival duration*, measured as an ordinal.
+---
 
-The connection to ITTMs [1] arises naturally: the ordinal duration of a survival game corresponds to the computational complexity class accessible at that ordinal level of the ITTM hierarchy.
+## 2. The Survival Game
 
-### 1.3 Contributions
+### 2.1 Ordinals, well-orders, and order type
 
-- **Ordinal Arena** (Definition 6.1): A novel mathematical structure combining survival games with ordinal-valued rank functions, enabling precise measurement of game complexity.
-- **Arena Strategy** (Definition 6.3): A strategy that exploits rank descent to guarantee both survival and measurable progress.
-- **Strategy Refinement Preorder** (Section 12): A preorder on strategies based on survival inclusion.
-- **Game Product** (Section 13): Parallel composition of survival games with component-wise analysis.
+We work throughout with **ordinals**, the canonical representatives of well-order types. A linear order $(X, <)$ is a **well-order** if every nonempty subset has a least element, equivalently if there is no infinite strictly descending sequence. Every well-order $(X,<)$ has a unique **order type** $\mathrm{type}(X,<)$, the ordinal to which it is order-isomorphic. We write $\omega$ for the order type of $(\mathbb{N}, <)$, the least infinite ordinal. Ordinal multiplication is defined so that $\alpha \cdot \beta$ is the order type of $\beta$ copies of $\alpha$ laid end to end; in particular $\omega \cdot \omega = \omega^2$.
 
-## 2. Definitions
+Two standard facts drive every proof in this paper.
 
-### 2.1 Core Objects
+- **(Order-type comparison.)** For well-orders $A$ and $B$, one has $\mathrm{type}(A) \le \mathrm{type}(B)$ if and only if there exists an order embedding (a strictly increasing, order-reflecting injection) $A \hookrightarrow B$.
+- **(Initial-segment realization.)** For every ordinal $\beta$, the collection of ordinals below $\beta$, ordered by $<$, is itself a well-order of type $\beta$.
 
-**Definition 2.1** (Mortal Strategy). A *Mortal strategy* is a function `ms : List(ℕ × ℕ) → ℕ` mapping game histories to moves.
+### 2.2 The game and its value
 
-**Definition 2.2** (Eternity Strategy). An *Eternity strategy* is a function `es : List(ℕ × ℕ) → ℕ → ℕ` mapping histories and Mortal's current move to a response.
+**Definition 2.1 (Survival game).** A *survival game* $G$ consists of a set $\mathrm{Moment}(G)$ of **moments of being alive**, linearly ordered by a relation $<$ that is a well-order. A moment is an internal configuration certifying that Mortal is still alive; the well-order encodes that time advances and never regresses.
 
-**Definition 2.3** (Play Rounds). For strategies ms and es, the play history after n rounds is defined recursively:
-- `playRounds ms es 0 = []`
-- `playRounds ms es (n+1) = playRounds ms es n ++ [(ms hist, es hist (ms hist))]` where `hist = playRounds ms es n`.
+**Definition 2.2 (Survival value).** The *survival value* of $G$ is the order type of its moments,
+$$\mathrm{value}(G) := \mathrm{type}\big(\mathrm{Moment}(G), <\big).$$
 
-**Definition 2.4** (Survival Game). A *survival game* G consists of:
-- A death predicate `hasDied : List(ℕ × ℕ) → Prop`
-- An axiom `start_alive : ¬hasDied []`
-- A monotonicity axiom `death_permanent : ∀ hist pair, hasDied hist → hasDied (hist ++ [pair])`
+**Definition 2.3 (Play).** For an ordinal $\beta$, a *play of length $\beta$* is an order embedding
+$$f : (\{\gamma : \gamma < \beta\}, <) \hookrightarrow (\mathrm{Moment}(G), <),$$
+i.e. an assignment of a strictly increasing moment to each round below $\beta$. Mortal **forces round $\beta$**, written $\mathrm{Forces}(G,\beta)$, if a play of length $\beta$ exists.
 
-### 2.2 Survival Notions
+The interpretation is faithful to the informal rules: to survive $\beta$ rounds, Mortal must, for each round $\gamma < \beta$, produce a moment $f(\gamma)$ strictly later than all previously used moments. Injectivity forbids reusing a moment; monotonicity encodes the forward flow of time.
 
-**Definition 2.5** (Finite Survival). Mortal *survives N rounds* with strategies ms, es if `¬G.hasDied (playRounds ms es N)`.
+---
 
-**Definition 2.6** (Guaranteed Survival). Mortal *can guarantee survival for N rounds* if `∃ ms, ∀ es, survivesN G ms es N`.
+## 3. The Fundamental Theorem
 
-**Definition 2.7** (Immortal Strategy). Mortal has an *immortal strategy* if `∃ ms, ∀ es, ∀ n, survivesN G ms es n`.
+**Theorem 3.1 (Fundamental Theorem of the survival game).** For every survival game $G$ and every ordinal $\beta$,
+$$\mathrm{Forces}(G, \beta) \iff \beta \le \mathrm{value}(G).$$
 
-**Theorem 2.8** (Antitone Survival). Survival is antitone: `m ≤ n → survivesN G ms es n → survivesN G ms es m`. *Proof*: By the prefix property of play histories and monotonicity of death.
+*Proof.* ($\Rightarrow$) A play of length $\beta$ is an order embedding of the round set $\{\gamma < \beta\}$, which has type $\beta$, into $\mathrm{Moment}(G)$, which has type $\mathrm{value}(G)$. By order-type comparison, the existence of such an embedding gives $\beta \le \mathrm{value}(G)$.
 
-## 3. The Safe Escape Property
+($\Leftarrow$) Suppose $\beta \le \mathrm{value}(G)$. Since $\beta$ equals the type of its own round set, order-type comparison yields an order embedding from the round set into $\mathrm{Moment}(G)$. That embedding *is* a play of length $\beta$, so $\mathrm{Forces}(G,\beta)$. $\qquad\blacksquare$
 
-**Definition 3.1** (Safe Escape). A game G has *Safe Escape* if: for all histories hist with ¬G.hasDied hist, there exists a move m such that for all responses e, ¬G.hasDied(hist ++ [(m,e)]).
+The theorem reduces the entire game to one ordinal invariant. Three immediate corollaries record the consequences.
 
-This is a pointwise condition: at each alive position, Mortal has at least one move that maintains aliveness regardless of Eternity's response.
+**Corollary 3.2 (Monotonicity / downward closure).** If $\mathrm{Forces}(G,\beta)$ and $\gamma \le \beta$, then $\mathrm{Forces}(G,\gamma)$.
 
-**Definition 3.2** (Safe Strategy). Given SafeEscape, the *safe strategy* picks, at each alive history, a move m witnessing the SafeEscape condition. At dead histories (which are unreachable under the safe strategy), it defaults to 0.
+*Proof.* By Theorem 3.1, $\beta \le \mathrm{value}(G)$; transitivity gives $\gamma \le \mathrm{value}(G)$; apply Theorem 3.1 again. $\qquad\blacksquare$
 
-## 4. Omega Survival Theorem
+**Corollary 3.3 (Survival below the value).** If $\beta < \mathrm{value}(G)$ then $\mathrm{Forces}(G,\beta)$.
 
-**Theorem 4.1** (Omega Survival). If G has Safe Escape, then G has an immortal strategy.
+**Corollary 3.4 (Certain death at the value).** If $\mathrm{value}(G) < \beta$ then $\neg\,\mathrm{Forces}(G,\beta)$.
 
-*Proof sketch*: The safe strategy suffices. By induction on n:
-- **Base**: Round 0 — the empty history is alive by start_alive.
-- **Step**: If alive at round n, the safe strategy picks a safe move, and SafeEscape guarantees aliveness at round n+1.
+Thus $\mathrm{value}(G)$ is precisely the least round Mortal cannot force: survival for all rounds strictly below it, guaranteed death at it and beyond.
 
-The theorem is named for ω because the immortal strategy survives all rounds n ∈ ℕ, achieving an ordinal survival duration of sup{n : n ∈ ℕ} = ω.
+---
 
-**Corollary 4.2** (Survival Ordinal). For safe-escape games, `survivalOrdinal G = ω`.
+## 4. Finite Determinism: the $\omega$ Barrier
 
-## 5. Asymmetry Collapse
+**Definition 4.1 (Finite deterministic game).** Let $\mathsf{Fin}$ be the survival game with $\mathrm{Moment}(\mathsf{Fin}) = \mathbb{N}$ under the usual order. This models a machine with finite memory whose clock advances one tick per round, with no branching.
 
-**Theorem 5.1** (Asymmetry Collapse). In safe-escape games, no Eternity strategy can kill a Mortal using the safe strategy:
-`¬∃ es, ∃ n, G.hasDied (playRounds (safeStrategy G hse) es n)`.
+**Proposition 4.2.** $\mathrm{value}(\mathsf{Fin}) = \omega$.
 
-*Proof*: Direct from Theorem 4.1 — the safe strategy survives all rounds against all strategies.
+*Proof.* The order type of $(\mathbb{N}, <)$ is $\omega$ by definition of $\omega$. $\qquad\blacksquare$
 
-**Discussion**: This result is surprising because Eternity's strategy space is vastly larger than Mortal's. An Eternity strategy can in principle encode any function from histories to responses, including non-computable functions. Yet this additional power is useless against the safe strategy.
+**Theorem 4.3 (Finite Mortal survives every finite round and forces $\omega$).**
+For every $n \in \mathbb{N}$, $\mathrm{Forces}(\mathsf{Fin}, n)$; moreover $\mathrm{Forces}(\mathsf{Fin}, \omega)$.
 
-The collapse occurs because SafeEscape is a *pointwise* condition. Eternity's global planning ability cannot overcome Mortal's local safety guarantee. This parallels the way local-to-global principles work in algebraic topology: a locally contractible space need not be globally simple, but local contractibility suffices for certain global properties.
+*Proof.* Each finite $n$ satisfies $n < \omega = \mathrm{value}(\mathsf{Fin})$, so $\mathrm{Forces}(\mathsf{Fin}, n)$ by Corollary 3.3. Since $\omega \le \omega = \mathrm{value}(\mathsf{Fin})$, Theorem 3.1 gives $\mathrm{Forces}(\mathsf{Fin}, \omega)$. $\qquad\blacksquare$
 
-## 6. Ordinal Arena
+**Theorem 4.4 ($\omega$ is sharp).** $\neg\,\mathrm{Forces}(\mathsf{Fin}, \omega + 1)$.
 
-**Definition 6.1** (Ordinal Arena). An *Ordinal Arena* extends a survival game with:
-- `rank : List(ℕ × ℕ) → Ordinal` — ordinal rank of each position
-- `rank_start : rank [] > 0` — positive initial rank
-- `rank_dead : hasDied hist → rank hist = 0` — dead positions have zero rank
-- `rank_live : ¬hasDied hist → rank hist > 0` — live positions have positive rank
-- `rank_descent : ¬hasDied hist → ∃ m, ∀ e, ¬hasDied(hist++[(m,e)]) ∧ rank(hist++[(m,e)]) < rank hist` — safe rank-decreasing moves exist
+*Proof.* $\mathrm{value}(\mathsf{Fin}) = \omega < \omega + 1$; apply Corollary 3.4. $\qquad\blacksquare$
 
-**Theorem 6.2**. Every ordinal arena has Safe Escape.
+The $\omega$ barrier is not peculiar to this particular indexing; it is a property of finite deterministic computation as such.
 
-*Proof*: The rank_descent axiom directly provides the safe escape witness.
+**Theorem 4.5 (Intrinsic $\omega$ bound).** If the moments of a survival game $G$ order-embed into $(\mathbb{N}, <)$, then $\mathrm{value}(G) \le \omega$, and hence $\neg\,\mathrm{Forces}(G, \omega+1)$.
 
-**Definition 6.3** (Arena Strategy). The *arena strategy* uses rank_descent to pick rank-decreasing moves at each alive position.
+*Proof.* An order embedding $\mathrm{Moment}(G) \hookrightarrow \mathbb{N}$ gives, by order-type comparison, $\mathrm{value}(G) \le \mathrm{type}(\mathbb{N}) = \omega$. The final clause is Corollary 3.4. $\qquad\blacksquare$
 
-**Theorem 6.4** (Arena Strategy Survival). The arena strategy maintains survival at all rounds.
+Embeddability into $\mathbb{N}$ is the order-theoretic signature of finite deterministic behavior: a machine whose reachable configurations can be enumerated as an increasing sequence of naturals. Theorem 4.5 says that no such machine survives past $\omega$. Breaking the barrier requires leaving this class.
 
-**Theorem 6.5** (Rank Descent Sequence). Under the arena strategy, the ordinal ranks form a strictly decreasing sequence:
-`rank(playRounds arenaStrat es (n+1)) < rank(playRounds arenaStrat es n)`
-for all alive positions.
+---
 
-**PEGB Analysis for Arena Strategy**:
-- **P**roof: By induction, using rank_descent to get both survival and rank decrease.
-- **E**xample: A finite arena with rank function `rank(hist) = max(0, K - |hist|)` for initial rank K. After K rounds, rank hits 0.
-- **G**eneralization: The rank need not be a natural number — any ordinal works, enabling transfinite complexity measurement.
-- **B**oundary: An arena with rank_descent but without rank_live would allow dead positions with positive rank, breaking the invariant.
+## 5. Bounded Nondeterminism: the $\omega^2$ Barrier
 
-## 7. Layered Survival
+We now grant Mortal a bounded amount of nondeterministic choice, modeled by a second coordinate that counts how many limit stages ("blocks") it has survived.
 
-**Definition 7.1** (Layered Game). A *k-layered game* consists of k independent survival games, each with Safe Escape.
+**Definition 5.1 (Bounded-nondeterministic game).** Let $\mathsf{Nd}$ be the survival game with
+$$\mathrm{Moment}(\mathsf{Nd}) = \mathbb{N} \times_{\mathrm{lex}} \mathbb{N},$$
+the set of pairs $(b, t)$ ordered **lexicographically**: $(b,t) < (b',t')$ iff $b < b'$, or $b = b'$ and $t < t'$. The major coordinate $b$ counts completed $\omega$-blocks; the minor coordinate $t$ counts ticks within the current block. A bounded nondeterministic reset lets Mortal increment $b$ and restart $t$.
 
-**Theorem 7.2**. Each layer provides independent immortality.
+**Proposition 5.2.** $\mathrm{value}(\mathsf{Nd}) = \omega^2$.
 
-**Theorem 7.3** (Layered Ordinal). The total layered survival ordinal is ω·k.
+*Proof.* The lexicographic product of two well-orders has order type equal to the product of their types, taken as $\mathrm{type}(\text{minor}) \cdot \mathrm{type}(\text{major})$ in the ordinal-multiplication convention where $\alpha \cdot \beta$ is $\beta$ copies of $\alpha$. Here both factors have type $\omega$, so $\mathrm{value}(\mathsf{Nd}) = \omega \cdot \omega = \omega^2$. $\qquad\blacksquare$
 
-**Theorem 7.4**. For k ≥ 2, the layered survival ordinal strictly exceeds ω.
+**Theorem 5.3 (Nondeterministic Mortal survives every $\omega \cdot n$ and forces $\omega^2$).**
+For every $n \in \mathbb{N}$, $\mathrm{Forces}(\mathsf{Nd}, \omega \cdot n)$; moreover $\mathrm{Forces}(\mathsf{Nd}, \omega^2)$.
 
-*Proof*: ω·k > ω·1 = ω when k ≥ 2, by ordinal multiplication monotonicity.
+*Proof.* For finite $n$, $\omega \cdot n \le \omega \cdot \omega = \omega^2 = \mathrm{value}(\mathsf{Nd})$ (since $n \le \omega$ and multiplication on the left by $\omega$ is monotone), so Theorem 3.1 gives $\mathrm{Forces}(\mathsf{Nd}, \omega \cdot n)$. Since $\omega^2 \le \omega^2$, likewise $\mathrm{Forces}(\mathsf{Nd}, \omega^2)$. $\qquad\blacksquare$
 
-**PEGB Analysis for Layered Survival**:
-- **P**roof: Each layer contributes ω via Omega Survival; k layers sum to ω·k.
-- **E**xample: 3 layers of the "matching game" (death when Mortal's move equals Eternity's response with 3 available moves). Each layer survives forever. Total: ω·3.
-- **G**eneralization: Layers can have different safe-escape games, not just copies.
-- **B**oundary: With 0 layers (vacuous), the game doesn't start. With 1 layer, equals standard ω survival.
+**Theorem 5.4 ($\omega^2$ is sharp).** $\neg\,\mathrm{Forces}(\mathsf{Nd}, \omega^2 + 1)$.
 
-## 8. ω²-Survival via Adaptive Layering
+*Proof.* $\mathrm{value}(\mathsf{Nd}) = \omega^2 < \omega^2 + 1$; apply Corollary 3.4. $\qquad\blacksquare$
 
-**Definition 8.1** (Adaptive Layered Game). An *adaptive layered game* has a base safe-escape game and a growth function `growth : ℕ → ℕ` with `∀ n, ∃ k, growth k > n` (unbounded growth).
+**Theorem 5.5 (Nondeterminism strictly helps).** $\mathrm{value}(\mathsf{Fin}) < \mathrm{value}(\mathsf{Nd})$.
 
-**Theorem 8.2** (ω²-Survival). The adaptive survival ordinal equals ω².
+*Proof.* $\omega = \omega \cdot 1 < \omega \cdot \omega = \omega^2$, since $1 < \omega$ and left multiplication by the positive ordinal $\omega$ is strictly monotone. $\qquad\blacksquare$
 
-*Proof*: Each epoch k contributes `growth(k)` layers, hence ω·growth(k) rounds. With unbounded growth and ω many epochs, total survival = ω · (sup{growth(k)} across ω) = ω · ω = ω².
+Thus a bounded pinch of nondeterminism lifts survival from $\omega$ to its square — from the first infinity to a genuinely two-dimensional transfinite lifespan.
 
-**Theorem 8.3** (ω² > ω). Proved: ω·ω > ω·1 = ω by ordinal multiplication.
+---
 
-**Theorem 8.4** (ω·ω = ω^2). The multiplicative and exponential expressions are equal.
+## 6. The Refinement Principle
 
-**PEGB Analysis for ω²-Survival**:
-- **P**roof: Ordinal arithmetic + Omega Survival applied layer-by-layer.
-- **E**xample: Growth function g(k) = k+1. Epoch 0: 1 layer. Epoch 1: 2 layers. Epoch k: k+1 layers. Cumulative layers after n epochs: n(n+1)/2.
-- **G**eneralization: Faster growth functions (exponential, Ackermann) still yield ω² — the ordinal doesn't change because any unbounded ℕ→ℕ function's ordinal is ω.
-- **B**oundary: If growth is bounded (eventually constant), total survival = ω·k for some finite k, strictly below ω².
+The jump from $\omega$ to $\omega^2$ is a special case of a uniform construction.
 
-## 9. Strategic Depth
+**Definition 6.1 ($\omega$-refinement).** For a survival game $G$, its *$\omega$-refinement* $R(G)$ is the game with
+$$\mathrm{Moment}(R(G)) = \mathrm{Moment}(G) \times_{\mathrm{lex}} \mathbb{N},$$
+ordered lexicographically with the original moment as the major coordinate. Each original moment is thereby expanded into an $\omega$-block of sub-moments.
 
-**Definition 9.1**. The *strategic depth* of a game is:
-- 0 if all strategies survive (trivial game)
-- 1 if a specific strategy is needed (safe escape)
-- ⊤ if no finite-level strategy suffices
+**Theorem 6.2 (Refinement multiplies survival by $\omega$).**
+$$\mathrm{value}(R(G)) = \omega \cdot \mathrm{value}(G).$$
 
-**Theorem 9.2**. Safe-escape games have strategic depth ≤ 1.
+*Proof.* The lexicographic product $\mathrm{Moment}(G) \times_{\mathrm{lex}} \mathbb{N}$ has order type $\mathrm{type}(\mathbb{N}) \cdot \mathrm{type}(\mathrm{Moment}(G)) = \omega \cdot \mathrm{value}(G)$, by the order type of a lexicographic product (minor factor first in the ordinal-multiplication convention). $\qquad\blacksquare$
 
-## 10. Game Product
+**Corollary 6.3 (Recovering $\omega^2$).** $\mathrm{value}(R(\mathsf{Fin})) = \omega \cdot \omega = \omega^2$.
 
-**Definition 10.1** (Game Product). The product game `G₁ × G₂` has death predicate `hasDied(hist) ↔ G₁.hasDied(hist) ∨ G₂.hasDied(hist)`.
+*Proof.* Apply Theorem 6.2 with $\mathrm{value}(\mathsf{Fin}) = \omega$. $\qquad\blacksquare$
 
-**Theorem 10.2**. Product immortality implies component immortality.
+The refinement principle localizes the entire phenomenon: bounded nondeterminism is exactly one application of $R$, and nothing about the argument is special to $\omega$. Iterating $R$ yields survival values $\omega^3, \omega^4, \dots$, and a limit of finite refinements approaches $\omega^\omega$ (Section 8).
 
-**Theorem 10.3**. Product survival implies component survival (both directions).
+---
 
-**PEGB Analysis for Game Product**:
-- **P**roof: Immediate from the ∨ structure of the product death predicate.
-- **E**xample: Product of "matching game with 3 moves" and "matching game with 5 moves". Mortal must avoid matching in both games simultaneously.
-- **G**eneralization: n-ary products, infinite products (with appropriate topology).
-- **B**oundary: The converse of Theorem 10.2 fails: component immortality does NOT imply product immortality, because a single strategy may not simultaneously avoid death in both games. (The safe moves for G₁ might conflict with those for G₂.)
+## 7. Connection to Infinite Time Turing Machines
 
-## 11. No-Free-Lunch Theorem
+An **Infinite Time Turing Machine** (ITTM) executes over ordinal time: it performs ordinary successor steps, and at each limit stage sets each cell to the limit inferior (equivalently, the eventual value) of its earlier contents, then continues from a designated limit state. ITTMs decide sets far beyond the arithmetic hierarchy and organize a rich theory of *clockable* ordinals — those that arise as halting times.
 
-**Theorem 11.1**. If Safe Escape fails, there exists an alive position where every move can be punished:
-`∃ hist, ¬G.hasDied hist ∧ ∀ m, ∃ e, G.hasDied(hist ++ [(m,e)])`.
+The survival game is a stripped-down model of *how far such a machine clocks before its first structural reckoning*.
 
-This is the precise dual of Safe Escape and characterizes when Eternity has genuine local advantage.
+- A **deterministic** ITTM with a finite work alphabet that must eventually halt traces, before its first limit intervention, a sequence of configurations whose reachable clock values are order-isomorphic to an initial segment of $\omega$. This is precisely $\mathsf{Fin}$, with survival value $\omega$ (Proposition 4.2).
+- Allowing a **bounded** amount of nondeterministic branching at each stage lets the machine reset a bounded counter across limit stages, stacking $\omega$-blocks. The reachable clock values then realize $\omega^2$. This is precisely $\mathsf{Nd}$, with survival value $\omega^2$ (Proposition 5.2).
 
-## 12. Strategy Refinement Preorder
+The ordinals $\omega$ and $\omega^2$ are the first two clockable milestones one meets when climbing from deterministic to boundedly nondeterministic transfinite computation, and Theorems 4.4 and 5.4 pin each down exactly. The refinement principle (Theorem 6.2) is the abstract counterpart of adding one more layer of bounded counting across limits.
 
-**Definition 12.1**. Strategy σ₁ *refines* σ₂ (written σ₁ ≤ σ₂) if σ₁ survives whenever σ₂ does.
+---
 
-**Theorem 12.2**. Refinement is reflexive and transitive (a preorder).
+## 8. Discussion and Future Work
 
-## 13. Connection to Infinite Time Turing Machines
+The framework isolates a single invariant, the survival value, and reduces an ostensibly dynamic transfinite contest to its computation. The resulting dichotomy — $\omega$ for finite determinism, $\omega^2$ for bounded nondeterminism — is sharp in both directions, and the refinement principle explains the gap as a single multiplication by $\omega$. Several natural directions remain.
 
-The ordinal duration hierarchy has a precise correspondence with ITTM computational thresholds:
+1. **Higher barriers $\omega^n$ and $\omega^\omega$.** Iterating $R$ should yield survival value $\omega^{n+1}$ after $n$ refinements of $\mathsf{Fin}$; a suitable colimit over finite refinements should reach $\omega^\omega$. Making the colimit precise, with the correct limit ordering on moments, is the first structural extension.
+2. **Explicit strategy synthesis.** Our plays are abstract order embeddings. One would like concrete, computable winning schedules — for instance CNF-based encodings of the increasing moment sequences — realizing the same survival values constructively.
+3. **Genuine ITTM dynamics.** Replace the abstract moment type by an actual ITTM configuration space with the liminf limit rule, and prove that the reachable clock values realize the same order types identified here.
+4. **Determinacy.** Prove that at each threshold either Mortal has a surviving strategy or Eternity has a killing strategy, with the boundary located exactly at the survival value; this would recast the results as a determinacy statement.
+5. **Clockable ordinals.** Relate survival values systematically to the clockable ordinals of ITTMs, aiming for a dictionary between computational regimes and the ordinals they clock.
 
-| Game Duration | ITTM Parallel | Description |
-|---|---|---|
-| ω | ω steps | One supertask — read entire input |
-| ω·k | ω·k steps | k supertasks |
-| ω² | ω² steps | ω supertasks — first "limit of limits" |
-| ω^ω | ω^ω steps | Transfinite tower of supertasks |
+## 9. Conclusion
 
-The ω² barrier is particularly significant: it's the threshold where ITTMs first gain qualitatively new computational power beyond ω steps. Our ω²-Survival Theorem shows that Mortal can reach this threshold through adaptive layering — a natural game-theoretic construction that mirrors the ITTM limit ordinal hierarchy.
-
-## 14. Falsifiable Conjecture
-
-**Conjecture (Safe Escape Density)**. For random survival games with m available moves and death probability p per move-response pair, the probability of Safe Escape at depth n is approximately:
-
-P(SafeEscape | m, n, p) ≈ (1 - p^m)^n
-
-**Testable prediction**: For m = 2, p = 0.3:
-- n = 10: P ≈ 0.389
-- n = 20: P ≈ 0.151
-
-This can be tested by Monte Carlo simulation with 10,000 random games. Deviation beyond 2σ falsifies the conjecture.
-
-## 15. Future Work
-
-1. **Determinacy at ω²**: Characterize which games at the ω² level are determined.
-2. **Effective Arena Construction**: Given a game, construct its ordinal arena algorithmically.
-3. **Beyond ω²**: Can Mortal reach ω^ω through higher-order layering?
-4. **Game products and Safe Escape**: Characterize when the product of two safe-escape games itself has safe escape.
-
-## References
-
-[1] J.D. Hamkins, A. Lewis. "Infinite Time Turing Machines." *Journal of Symbolic Logic*, 65(2):567-604, 2000.
-
-[2] E. Zermelo. "Über eine Anwendung der Mengenlehre auf die Theorie des Schachspiels." *Proceedings of the Fifth International Congress of Mathematicians*, 1913.
-
-[3] D.A. Martin. "Borel Determinacy." *Annals of Mathematics*, 102(2):363-371, 1975.
-
-[4] Y.N. Moschovakis. *Descriptive Set Theory*. North-Holland, 1980.
-
-[5] A. Blass. "Complexity of Winning Strategies." *Discrete Mathematics*, 3:295-300, 1972.
-
-## Appendix: Formalization Details
-
-All results are formalized in Lean 4 with Mathlib. The development consists of approximately 310 lines of verified code in `Computation/MortalEternityCore.lean`. Key verified theorems:
-
-- `omega_survival`: SafeEscape → hasImmortalStrategy
-- `asymmetry_collapse_thm`: ¬∃ es n, hasDied (playRounds safeStrat es n)
-- `arena_immortal`: OrdinalArena → hasImmortalStrategy
-- `arenaStrategy_survives`: Arena strategy maintains survival
-- `arenaStrategy_rank_descent`: Arena strategy strictly decreases rank
-- `layered_exceeds_omega`: ω·k > ω for k ≥ 2
-- `omega_sq_gt_omega`: ω·ω > ω
-- `omega_sq_eq`: ω·ω = ω^2
-- `adaptive_reaches_omega_sq`: Adaptive layering reaches ω^2
-- `product_immortal_left`: Product immortality → component immortality
+Survival against an unbounded adversary is governed by one ordinal. Finite deterministic computation reaches $\omega$ and no further; a bounded pinch of nondeterminism reaches $\omega^2$; and a single refinement principle explains why each added layer of bounded structure multiplies survival by a whole factor of infinity. In the infinite game against death, the gap between $\omega$ and $\omega^2$ measures, precisely, the value of a little bit of choice.
