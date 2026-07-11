@@ -1038,6 +1038,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0974",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T01:44:47.705634+00:00",
+    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 73d4b43b (Q=0.780) proved 14 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a ci",
     "domain_bridges": [],
     "domains": [
@@ -1210,6 +1230,26 @@
     "status": "in_progress",
     "timestamp": "2026-07-10T21:57:34.355461+00:00",
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0975",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T01:44:47.790029+00:00",
+    "title": "The Unreasonable Effectiveness of Wrong Theories"
   },
   {
     "ambition_level": "extension",
