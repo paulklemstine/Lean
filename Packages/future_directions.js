@@ -185,7 +185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4a0469f",
     "description": "Building on cycle 21228762 (Q=0.820), which proved 11 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
     "domains": [
       "Novelty"
@@ -194,7 +194,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "21228762",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T08:51:43.419732+00:00",
     "title": "Deepening: Counterfactual Number Theory: What If Primes Were Random?"
   },
@@ -241,7 +241,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: That the zero-dimensional persistent homology of the prim"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3dc9cabc",
     "description": "Building on cycle 4d0c820d (Q=0.820), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
     "domains": [
       "Novelty"
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "4d0c820d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T04:13:20.698129+00:00",
     "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
