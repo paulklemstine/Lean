@@ -477,7 +477,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "58600b08",
+    "consumed_by_exp_id": "",
     "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
     "domain_bridges": [],
     "domains": [
@@ -490,7 +490,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T07:12:19.970065+00:00",
     "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
@@ -8534,7 +8534,7 @@
       "complete multipartite graph spectra",
       "blow-up graph analysis"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb4f44b5",
     "description": "For the complete bipartite graph K_{m,n} with parts of sizes m and n, the Seidel energy strictly increases under any edge deletion if and only if both m,n ≥ 3. This conjecture claims that the threshold conditions (m,n) ≥ (3,6), (6,3), (2,15), (15,2) and (4,4) established in the paper are not sharp for complete bipartite graphs, and the actual threshold for K_{m,n} is both parts having size at least 3. The conjecture is falsifiable by computing Seidel energies for specific counterexamples with parts of size 2 or less.",
     "domain_bridges": [
       "linear_algebra",
@@ -8552,7 +8552,7 @@
     "proof_strategy": "Compute the Seidel matrix spectrum of K_{m,n} explicitly using interlacing and rank-one perturbation techniques, then analyze how edge deletion modifies this spectrum. Use the explicit eigenvalue formulas to determine when the sum of absolute values increases. Verify the conjecture by examining small cases computationally and proving the general pattern using algebraic identities.",
     "research_mode": "team",
     "source_exp_id": "2607.06095v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T23:13:00.366786+00:00",
     "title": "Sharp threshold characterization for Seidel energy increase in complete bipartite graphs under edge deletion"
   },

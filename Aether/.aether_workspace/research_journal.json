@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9d20b474",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Geometry of the Logistic–Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-10T16:20:37",
-      "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
-    },
-    {
       "cycle_id": "b77ed1ec",
       "domain": "Tropical",
       "key_insight": "# Future Directions — The 3n+1 Map: Tropical Dynamics and the Logic of Halting\n\nThis cycle established the elementary but rigorous scaffolding around the Collatz\nmap: orbit-invariance of the halting p",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-11T09:25:07",
       "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
+    },
+    {
+      "cycle_id": "ea473918",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Unreasonable Effectiveness of Wrong Theories\n\nThis deepening (`WrongTheoriesDeepening.lean`) adds, on top of the earlier\nmetric/perturbative and single-phenomenon results:\n\n-",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-11T09:25:12",
+      "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9bec4051",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nFive bold, falsifiable conjectures growing out of this cycle's study of the\nextremal Sidon function `F(N)` — the largest number of integers in `{1, …, N}`\nwhose pairwise differenc",
-      "quality_score": 0.4398394666666667,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-03T09:53:34",
-      "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
-    },
     {
       "cycle_id": "f91c88c3",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-11T09:25:07",
       "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
+    },
+    {
+      "cycle_id": "ea473918",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Unreasonable Effectiveness of Wrong Theories\n\nThis deepening (`WrongTheoriesDeepening.lean`) adds, on top of the earlier\nmetric/perturbative and single-phenomenon results:\n\n-",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-11T09:25:12",
+      "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2ca6565f",
-      "domain": "Applications",
-      "name": "carries",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "2ca6565f",
-      "domain": "Applications",
-      "name": "recon_inj",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "473442d5",
-      "domain": "Novelty",
-      "name": "abscissa_lt_top_of_summable",
-      "quality": 0.83
-    },
     {
       "cycle_id": "473442d5",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "bool_ne_not",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "ea473918",
+      "domain": "Novelty",
+      "name": "wrongness_nonneg",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "ea473918",
+      "domain": "Novelty",
+      "name": "predErr_nonneg",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "ea473918",
+      "domain": "Novelty",
+      "name": "predErr_le_wrongness",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-11T09:25:07",
+  "last_updated": "2026-07-11T09:25:12",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0be793c6",
-        "quality": 0.82,
-        "theorems": 42,
-        "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-      },
-      {
         "cycle_id": "01e9ab7a",
         "quality": 0.83,
         "theorems": 35,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 11,
         "title": "Counterfactual Number Theory: What If Primes Were Random?"
+      },
+      {
+        "cycle_id": "ea473918",
+        "quality": 0.8,
+        "theorems": 9,
+        "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
       }
     ],
     "NumberTheory": [

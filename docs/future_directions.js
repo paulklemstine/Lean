@@ -353,7 +353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
   },
   {
-    "consumed_by_exp_id": "58600b08",
+    "consumed_by_exp_id": "",
     "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
     "domains": [
       "Novelty",
@@ -363,7 +363,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T07:12:19.970065+00:00",
     "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
@@ -508,20 +508,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T11:50:35.030003+00:00",
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
-  },
-  {
-    "consumed_by_exp_id": "ea473918",
-    "description": "Building on cycle 5e3f6a63 (Q=0.780), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_5e3f6a63_0a3cfcdf",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "5e3f6a63",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T07:46:01.798188+00:00",
-    "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
   },
   {
     "consumed_by_exp_id": "",
@@ -4800,7 +4786,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact asymptotic growth of \\u03c7^r_F(d) for the balanced\u2011triangle family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb4f44b5",
     "description": "For the complete bipartite graph K_{m,n} with parts of sizes m and n, the Seidel energy strictly increases under any edge deletion if and only if both m,n \u2265 3. This conjecture claims that the threshold conditions (m,n) \u2265 (3,6), (6,3), (2,15), (15,2) and (4,4) established in the paper are not sharp for complete bipartite graphs, and the actual threshold for K_{m,n} is both parts having size at least 3. The conjecture is falsifiable by computing Seidel energies for specific counterexamples with parts of size 2 or less.",
     "domains": [
       "Pythagorean",
@@ -4810,7 +4796,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06095v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T23:13:00.366786+00:00",
     "title": "Sharp threshold characterization for Seidel energy increase in complete bipartite graphs under edge deletion"
   },
@@ -7103,6 +7089,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T09:25:00.519189+00:00",
     "title": "That the wiring diagram of `n` neurons carries an intrins"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Unreasonable Effectiveness of Wrong Theories\n\nThis deepening (`WrongTheoriesDeepening.lean`) adds, on top of the earlier\nmetric/perturbative and single-phenomenon results:\n\n- prediction errors are globally controlled by wrongness (Cauchy\u2013Schwarz);\n- perturbative convergence propagates to *every* fixed phenomenon;\n- an **explicit** quantitative single-rival meta-theorem (gap `= \u2016orthogonal\n  component\u2016\u00b2`);\n- the **flagship generalization**: a wrong theory beats *any finite family* of\n  rivals simultaneously on a single phenomenon, via a linear-algebra core lemma\n  (`exists_inner_ne_zero_list`) about avoiding finitely many hyperplanes.\n\n## Natural next steps\n\n1. **Countably many rivals.** Extend `wrong_theory_beats_finite_rivals` to a\n   countable family of rivals whose orthogonalized errors are, say, uniformly\n   bounded below, using a Baire-category argument in a complete space (the set of\n   good phenomena is a dense G\u03b4).\n\n2. **Measure of good phenomena.** Show the set of phenomena on which `A` beats a\n   fixed rival `B` is \"large\": it is the complement of a proper subspace\n   (measure zero / meager), so generic phenomena favour the wrong theory once its\n   error is non-parallel.\n\n3. **Quantitative multi-rival gap.** Give an explicit lower bound on\n   `min_B predErr truth B u` for the constructed `u` in the finite-rivals theorem,\n   in terms of the Gram matrix of the orthogonalized rival errors.\n\n4. **Best wrong theory in a model class.** For a closed subspace `M \u2286 E` of\n   admissible theories, relate the minimal achievable wrongness to the orthogonal\n   projection of `truth` onto `M`, and characterize on which phenomena the\n   projected theory is exact.\n\n5. **Normed (non-inner-product) theory-space.** Replace the inner product by a\n   general dual pairing / Banach setting and identify which results survive\n   (Hahn\u2013Banach replaces Gram\u2013Schmidt for the separation statements).\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_1013",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ea473918",
+    "status": "available",
+    "timestamp": "2026-07-11T09:25:09.771755+00:00",
+    "title": "This deepening (`WrongTheoriesDeepening.lean`) adds, on top of the earlier"
   },
   {
     "consumed_by_exp_id": "",
