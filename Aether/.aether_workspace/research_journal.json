@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "478ae68b",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\nThis file (`Catalog/Logic/StrangeLoops/Chain.lean`) builds a single dependency chain\nfrom the Liar paradox up to a non-vacuous Gödel incompleteness theorem and the\nprovability lat",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-11T00:07:03",
-      "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
-    },
-    {
       "cycle_id": "d0bff55a",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\n`TransfiniteGames.lean` proves that every **well-founded** two-player game is\ndetermined: the value function `W` (the Zermelo fixed point) exists, every play\nterminates against an",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-11T15:33:24",
       "title": "Speculative: Mathematics as a Phase Transition"
+    },
+    {
+      "cycle_id": "f8dd2b6a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Causal Loops in Category Theory\n\nThe results of this cycle established that a *controlled* failure of associativity — where\n`(f · g) · h` and `f · (g · h)` are distinct but unique",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 40,
+      "timestamp": "2026-07-11T15:33:31",
+      "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "01bea6c3",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Forcing edges, deletion, and near-bipartite bricks\n\nThese conjectures grow out of the deletion characterisation of forcing edges\n(an edge `uv` lies in a unique perfect matching e",
-      "quality_score": 0.573804028436019,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-04T02:31:07",
-      "title": "Every b‑invariant edge is forcing exactly for near‑bipartite bricks (up to the three classical excep"
-    },
     {
       "cycle_id": "a1e3ce3a",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-11T15:33:24",
       "title": "Speculative: Mathematics as a Phase Transition"
+    },
+    {
+      "cycle_id": "f8dd2b6a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Causal Loops in Category Theory\n\nThe results of this cycle established that a *controlled* failure of associativity — where\n`(f · g) · h` and `f · (g · h)` are distinct but unique",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 40,
+      "timestamp": "2026-07-11T15:33:31",
+      "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "21228762",
-      "domain": "Novelty",
-      "name": "inH_one",
-      "quality": 0.82
-    },
     {
       "cycle_id": "21228762",
       "domain": "Novelty",
@@ -2803,17 +2797,16 @@
       "domain": "Novelty",
       "name": "factorial_value_unique_via_mixed",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "f8dd2b6a",
+      "domain": "Applications",
+      "name": "hom_ext",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T15:33:24",
+  "last_updated": "2026-07-11T15:33:31",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "3fa70466",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-10T08:38:10"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "9b14e09c",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 3,
       "timestamp": "2026-07-11T15:33:24"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "f8dd2b6a",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-11T15:33:31"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0250199a",
-        "quality": 0.83,
-        "theorems": 36,
-        "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
-      },
-      {
         "cycle_id": "1d01ef4b",
         "quality": 0.72,
         "theorems": 19,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 9,
         "title": "Aleph-1 Surface: Geometry Between Dimensions"
+      },
+      {
+        "cycle_id": "f8dd2b6a",
+        "quality": 0.83,
+        "theorems": 40,
+        "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
       }
     ],
     "Bridges": [

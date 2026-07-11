@@ -192,25 +192,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f8dd2b6a",
-    "description": "Building on cycle f6b0dfd4 (Q=0.830), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_f6b0dfd4_ed5c2b86",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f6b0dfd4",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T13:21:45.766460+00:00",
-    "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domain_bridges": [],
@@ -2868,7 +2849,7 @@
       "cs.DM",
       "cs.DS"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6949247",
     "description": "We conjecture that the Chromatic Sum problem exhibits a complexity dichotomy based on the structure of the forbidden graph H: it is polynomial-time solvable on H-free graphs when H is a forest, and NP-complete when H contains at least one cycle. This directly extends the complete classification mentioned in the paper for H-free graphs.",
     "domain_bridges": [
       "graph_theory",
@@ -2885,7 +2866,7 @@
     "proof_strategy": "1) Prove membership in P for forest H by constructing an algorithm leveraging the structural properties of H-free graphs (e.g., bounded clique-width or decomposition techniques). 2) Prove NP-hardness for non-forest H by adapting the reduction techniques from planar subcubic graphs and bounded independence number frameworks in the paper. 3) Formalize both directions using graph minors, tree-width, and forbidden subgraph machinery in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:06:46.539264+00:00",
     "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
   },
@@ -12726,6 +12707,26 @@
     "status": "available",
     "timestamp": "2026-07-11T15:33:14.349166+00:00",
     "title": "This project formalizes the **order-parameter / phase-transition** picture behin"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Causal Loops in Category Theory\n\nThe results of this cycle established that a *controlled* failure of associativity — where\n`(f · g) · h` and `f · (g · h)` are distinct but uniquely isomorphic — organizes itself\ninto a coherent monoidal structure whose reassociation groupoid has words for components\nand Catalan numbers for component sizes. The following conjectures push the theme further.\n\n## 1. The associahedron is the coherence complex of the reassociation groupoid\n\n**Conjecture.** For a product of `n` factors, the reassociation moves (single applications\nof the associator) between bracketings assemble into a regular CW-complex whose face\nlattice is the Tamari lattice, and whose realization is the associahedron `K_{n}`; the\nnumber of top-dimensional cells equals the number of maximal chains in the Tamari lattice.\n\n**The key insight is** that the associator is not merely an isomorphism but a *directed*\nreassociation, so the connected, contractible component counted here by a Catalan number\ncarries a finer poset structure whose geometric realization is a convex polytope.\n\n**Why now?** The census of a component has just been identified as a Catalan number, and\nCatalan numbers are exactly the vertex counts of associahedra; making the polytope\nstructure intrinsic to the reassociation groupoid is the natural next layer.\n\n## 2. Thinness is the sharp boundary for free coherence\n\n**Conjecture.** Free coherence — the property that *every* choice of associator/unitor data\nautomatically satisfies the pentagon and triangle equations — holds for a category if and\nonly if the full subcategory on each isomorphism class is thin (equivalently, the category\nis locally a preorder). Any category with two parallel non-equal isomorphisms admits tensor\ndata violating the pentagon.\n\n**The key insight is** that coherence is free precisely when there is no room for two\ndistinct rebracketing witnesses to disagree; thinness removes that room entirely, and its\nfailure reintroduces genuine coherence obligations.\n\n**Why now?** We proved thinness is *sufficient* for free coherence; establishing that it is\nalso *necessary* would characterize exactly the structures where \"loop-tolerant\"\nassociativity carries no hidden data.\n\n## 3. Weighted bracketing censuses interpolate between Catalan and Fuss–Catalan\n\n**Conjecture.** Replacing binary products by `k`-ary products in the parenthesization\ncategory yields a reassociation groupoid whose components again correspond to words, but\nwhose component sizes are the Fuss–Catalan numbers `C_n^{(k)} = \\frac{1}{(k-1)n+1}\\binom{kn}{n}`;\nthe binary case `k = 2` recovers the ordinary Catalan census.\n\n**The key insight is** that the census counts rooted plane trees whose internal nodes have a\nfixed arity, and the arity is the single parameter deforming the enumeration.\n\n**Why now?** The binary census is now a theorem via an explicit tree bijection; the same\nbijection strategy generalizes verbatim to `k`-ary trees, making the Fuss–Catalan\nextension immediately testable.\n\n## 4. The strictification functor is a monoidal equivalence onto the free monoid\n\n**Conjecture.** The normal-form assignment sending each bracketing to its underlying word\nextends to a strong monoidal equivalence between the parenthesization category and the\ndiscrete monoidal category on the free monoid `(List α, ++, [])`; consequently every\nnon-strict monoidal structure on a thin category is monoidally equivalent to a strict one.\n\n**The key insight is** that when isomorphism classes are rigid (thin components), the entire\ntower of associators is redundant data recoverable from the underlying word, so the skeleton\nis strict.\n\n**Why now?** We already exhibited the object-level normal form and its monoidal comparison\nisomorphisms; upgrading these to a full equivalence of monoidal categories is the remaining\nstep and would give a concrete instance of Mac Lane's strictification theorem.\n\n## 5. Reassociation entropy grows logarithmically in the number of factors\n\n**Conjecture.** Define the reassociation entropy of an `n`-factor product as `log` of its\ncomponent size. Then this entropy is `2n log 2 - (3/2) log n + O(1)`, the asymptotics of\n`log C_{n-1}`, and it equals the maximal number of independent associator applications\nneeded to connect two extreme bracketings up to a bounded factor.\n\n**The key insight is** that the size of a contractible component measures how much\ninformation the associator silently absorbs, and this \"loop budget\" grows almost linearly\nin the number of factors.\n\n**Why now?** With the component size pinned to the Catalan number, its precise asymptotics\nfollow from standard estimates, turning a structural statement into a quantitative law about\nhow far composition can loop back.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1049",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f8dd2b6a",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:27.450469+00:00",
+    "title": "The results of this cycle established that a *controlled* failure of associativi"
   },
   {
     "ambition_level": "extension",

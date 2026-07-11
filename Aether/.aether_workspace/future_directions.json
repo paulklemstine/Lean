@@ -4383,7 +4383,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "cs.CC",
         "cs.DM",
@@ -4391,7 +4391,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f6949247",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -4408,7 +4408,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0148",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-11T15:33:44.063272+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem chromatic_sum_complexity_dichotomy (H : Graph) : (is_forest H → P_time_chromatic_sum_on_H_free_graphs) ∧ (¬is_forest H → NP_complete_chromatic_sum_on_H_free_graphs)",
       "lineage_refs": [],
@@ -4423,7 +4423,7 @@
       "source": "",
       "source_exp_id": "2607.00263v1",
       "source_path": "http://arxiv.org/abs/2607.00263v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T14:06:46.539264+00:00",
       "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
@@ -33185,7 +33185,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 9ca5466b (Q=0.800), which proved 40 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hyperco",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -33225,7 +33225,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a0852bd7 (Q=0.800), which proved 45 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are c",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -33505,7 +33505,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle c06d8e8c (Q=0.820), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -34105,7 +34105,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f9466ee5 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For a normal geometrically connected variety X over a finite field k, a compactification \\(\\overline{X}\\), an effective Cartier divisor D with support in \\(Z = \\overline{X} \\setminus X\\), and an algebraically closed field F of characteristic p with discrete topology, the set of isomorphism classes o",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -34185,7 +34185,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle fb4f44b5 (Q=0.830), which proved 38 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the complete bipartite graph K_{m,n} with parts of sizes m and n, the Seidel energy strictly increases under any edge deletion if and only if both m,n ≥ 3. This conjecture claims that the threshold conditions (m,n) ≥ (3,6), (6,3), (2,15), (15,2) and (4,4) established in the paper are not sharp f",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -35535,6 +35535,7 @@
     "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
