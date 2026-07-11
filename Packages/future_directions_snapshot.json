@@ -959,26 +959,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4f5260f0",
-    "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1065",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T19:40:15.547245+00:00",
-    "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension). Show: the parallel postulate is NOT universal (non-Euclidean geometries exist). Conjecture: the Riemann Hypothesis IS universal (every sufficiently rich arithmetic system proves it or its negation). Explore: what would alien number theory look like? Would aliens discover primes?",
     "domain_bridges": [],
@@ -11149,6 +11129,26 @@
     "status": "available",
     "timestamp": "2026-07-11T22:48:01.235566+00:00",
     "title": "This mission formalizes a finite model of theorem dependency graphs and proves t"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Rucker: Infinity and the Mind\n\nThis project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entirely\ninside ZFC as available in Mathlib, a coherent slice of Cantor's hierarchy of\ninfinities. Below we record what was proved, what was *disproved* (contrarian\nmode), and the natural next steps.\n\n## What was proved\n\n* **An explicit tower of infinities** (`cantorTower`, `cantorTower_strictMono`):\n  the truncated beth sequence `ℵ₀ < 2^ℵ₀ < 2^(2^ℵ₀) < ⋯` is strictly increasing,\n  giving a concrete realization of Rucker's \"infinity as a place you can visit\".\n* **The power-set axiom guarantees strictly larger cardinals**\n  (`lt_powerset`, `exists_gt_cardinal`): Cantor's theorem `#s < #(𝒫 s)`.\n* **The cardinals are a proper class** (`cardinals_unbounded`): no cardinal\n  bounds them all.\n* **Hartogs' theorem** (`hartogs`): for every type there is a well-orderable\n  ordinal whose cardinality strictly exceeds it — with no appeal to a power set.\n* **`ℵ₁` and CH** (`aleph0_lt_aleph1`, `aleph1_le_continuum`,\n  `continuumHypothesis_iff`, `continuumHypothesis_iff_pow`): `ℵ₀ < ℵ₁ ≤ 𝔠` is a\n  theorem, and CH is *exactly* the remaining inequality `𝔠 ≤ ℵ₁`.\n* **König's theorem in action** (`aleph0_lt_cof_continuum`): the continuum has\n  uncountable cofinality.\n* **`ℵ₀` as \"the first unreachable place\"**\n  (`aleph0_inaccessible_except_uncountable`): `ℵ₀` is regular and a strong limit;\n  it fails to be inaccessible *only* because inaccessibility demands\n  uncountability by fiat.\n\n## What was disproved (contrarian mode)\n\n* **`𝔠 ≠ ℵ_ω`** (`continuum_ne_aleph_omega`): the naive guess that the continuum\n  might equal `ℵ_ω` is refuted outright in ZFC, because `cof(ℵ_ω) = ℵ₀`\n  (`cof_aleph_omega`) while `cof(𝔠) > ℵ₀`. This is a genuine ZFC theorem that\n  constrains the value of the continuum without deciding CH.\n* **There is no largest cardinal** — the \"conjecture\" that some infinity is\n  maximal is false.\n\n## Natural next steps\n\n1. **The full beth function** over all ordinals (`beth : Ordinal → Cardinal`)\n   and the beth-fixed-point cardinals; Mathlib has `Cardinal.beth`, so\n   `cantorTower` could be shown to agree with `beth ∘ (Nat.cast)` on `ℕ`.\n2. **More König consequences**: `𝔠 ≠ ℵ_{ω_1}` fails to be provable, but the\n   general statement `cof(2^κ) > κ` and `κ < κ^{cof κ}` can be packaged.\n3. **Independence of CH**. Mathlib does not currently contain forcing or inner\n   models, so neither `Con(ZFC) → Con(ZFC + CH)` (Gödel's constructible\n   universe) nor `Con(ZFC) → Con(ZFC + ¬CH)` (Cohen forcing) is available. A\n   long-term direction is to build (or import) a model theory of set theory\n   sufficient to state and prove these relative consistency results. Until then\n   `ContinuumHypothesis` is deliberately left as an undischarged `Prop`.\n4. **Large cardinals beyond inaccessibility**. Mathlib has\n   `Cardinal.IsInaccessible`; measurable, Ramsey, measurable-implies-inaccessible,\n   supercompact, and the consistency-strength hierarchy are not yet formalized.\n   A tractable first target is *weakly/strongly inaccessible* cardinals and the\n   theorem that a strongly inaccessible `κ` gives a model `V_κ ⊨ ZFC`, which\n   already exhibits the \"you cannot reach it from below\" phenomenon exactly.\n5. **Measurable cardinals** could be approached via `Filter`/ultrafilter\n   machinery already in Mathlib (a `κ`-complete non-principal ultrafilter on\n   `κ`), connecting to the existing `Ultrafilter` API.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_1081",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4f5260f0",
+    "status": "available",
+    "timestamp": "2026-07-11T22:48:13.939441+00:00",
+    "title": "This project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entire"
   },
   {
     "ambition_level": "extension",

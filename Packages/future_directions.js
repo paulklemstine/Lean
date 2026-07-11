@@ -1220,21 +1220,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "b6492bf5",
-    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1060",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T19:10:22.546301+00:00",
-    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
-  },
-  {
     "consumed_by_exp_id": "319bd9f6",
     "description": "Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. Explore: what is the minimal volume complete hyperbolic 3-manifold? Conjecture: the Weeks manifold (volume ~0.94) is minimal. Connect to Rucker's vision of donut-shaped spacetime.",
     "domains": [
@@ -6481,6 +6466,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T22:47:52.076754+00:00",
     "title": "This cycle extends the self-contained theory of negative-dimensional (virtual"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Anti-Gravity Mathematics\n\nThis mission formalizes a finite model of theorem dependency graphs and proves the\nrobust combinatorial core of the \"anti-gravity theorems\" theme, while honestly\nrefuting its over-strong universal predictions. See\n`Catalog/Speculative/AntiGravity.lean`.\n\n## What is proved\n\nLet a library be a finite type `V` with a decidable dependency relation\n`D a b` = \"`b` depends on `a`\", gravitational weight `depWeight D a = #{b | D a b}`,\nand proof-length function `plen`. A theorem is *anti-gravity* at `(w0, l0)` if\n`w0 \u2264 depWeight D a \u2227 plen a \u2264 l0`.\n\n1. **Handshake identity** `sum_depWeight_eq_sum_inDeg`: total weight = total number\n   of dependency edges = total in-degree.\n2. **Weight bounds** `depWeight_le_card`, `depWeight_lt_card_of_irrefl`.\n3. **Averaging principle** `exists_max_depWeight`, `sum_depWeight_le_card_mul_max`:\n   the heaviest theorem carries at least the average weight.\n4. **Existence of anti-gravity theorems** `exists_antigravity_of_short_heavy`: if\n   the short-proof theorems together carry `\u2265 w0 \u00b7 |S|` weight, one of them is\n   anti-gravity. This is the precise, provable version of \"anti-gravity theorems\n   exist\".\n5. **Foundational = heaviest** `depWeight_le_of_trans`: along a transitive\n   dependency order, more foundational theorems have at least as much weight.\n6. **Concrete linear witness** `linear_library_bottom_weight`,\n   `linear_library_antigravity`: in the linear library on `Fin n`, the bottom\n   theorem has weight `n-1` and a length-1 proof \u2014 genuinely anti-gravity.\n7. **Concrete quadratic witness** `grid_library_bottom_weight`,\n   `grid_library_antigravity`: in the grid library on `Fin n \u00d7 Fin m`, a\n   bottom-row node is depended on by every later row, giving weight `(n-1)\u00b7m`\n   with a length-1 proof. This realizes the theme's `O(n^2)` weight / `O(1)`\n   proof-length example.\n8. **Refutation of universality** `no_deps_no_antigravity`: a dependency-free\n   library has *no* anti-gravity theorems, so the \"anti-gravity in every branch\"\n   and \"10% of theorems\" claims are false as universal statements.\n\n## Honest status of the theme's stronger claims\n\n- *\"Weight `O(n^2)`, proof length `O(1)`\"*: realized and formalized. A single\n  foundational theorem depended on by an `n \u00d7 m` grid of downstream results has\n  quadratic weight and constant proof length. `linear_library_*` formalizes the\n  linear (`O(n)`) case and `grid_library_*` formalizes the quadratic (`\u0398(n\u00b7m)`)\n  case.\n- *\"Density in a topology\"*: underspecified. There is no canonical topology on\n  \"the space of all theorems\". Under the discrete topology density is vacuous;\n  under an edit/Levenshtein metric on statements it becomes a genuine but\n  model-dependent question. We deliberately did **not** encode a false theorem.\n- *\"Exactly 10%\"*: false as a law; it is at best an empirical average over a\n  specific corpus, not a theorem.\n\n## Concrete next steps\n\n1. **Transitive closure.** Define `depClosure` as the reflexive-transitive closure\n   of a raw edge relation and prove `depWeight_le_of_trans` applies to it, so that\n   \"weight\" counts *all* downstream theorems, not just direct dependents.\n2. **Fraction bounds instead of a fixed 10%.** Prove sharp two-sided bounds: for\n   any `p \u2208 [0,1]` there is a library whose anti-gravity fraction is exactly `p`\n   (interpolating between the antichain `A_n` at 0% and the linear library at a\n   high fraction), turning the \"10%\" folklore into a rigorous \"any fraction is\n   achievable\" theorem.\n3. **A topology on statements.** Fix the edit-distance metric on encoded theorem\n   statements and investigate when the anti-gravity set is dense; state the\n   density question precisely and attempt the easy direction (anti-gravity\n   statements are not isolated).\n4. **Empirical instantiation.** Extract the actual dependency graph of a real\n   Lean/Mathlib development, compute `depWeight` and proof lengths, and check the\n   averaging hypothesis of `exists_antigravity_of_short_heavy` on live data.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1080",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b6492bf5",
+    "status": "available",
+    "timestamp": "2026-07-11T22:48:01.235566+00:00",
+    "title": "This mission formalizes a finite model of theorem dependency graphs and proves t"
   },
   {
     "consumed_by_exp_id": "",
