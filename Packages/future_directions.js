@@ -926,7 +926,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
-    "consumed_by_exp_id": "3ec9ce02",
+    "consumed_by_exp_id": "",
     "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
     "domains": [
       "Novelty",
@@ -936,12 +936,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T13:54:33.388202+00:00",
     "title": "Speculative: Number Theory as Music Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e2e987f1",
     "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
     "domains": [
       "Novelty",
@@ -951,7 +951,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T18:03:46.077584+00:00",
     "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
