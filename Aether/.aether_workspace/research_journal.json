@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5125e235",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Cancellation structure of spectral heat-kernel expansions\n\nThis cycle sharpened the leading-order cancellation theory in two directions:\na **moment-spectrum** characterisation (`",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 7,
-      "timestamp": "2026-07-10T17:24:09",
-      "title": "Deepening: Conjecture on Leading Term Cancellation"
-    },
-    {
       "cycle_id": "3d209fc8",
       "domain": "Shared",
       "key_insight": "# Future Directions — Quantitative Invariants of the Prime Barcode\n\nThis cycle turned the qualitative statement \"the zero-dimensional barcode of the\nprime point cloud is governed by the gap sequence\"",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-11T10:14:37",
       "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental "
+    },
+    {
+      "cycle_id": "8e65b62c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` — the positive theory:\n\n* **`erasedBits`** — infor",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-07-11T10:14:43",
+      "title": "Thermodynamics of Mathematical Proof"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6d0ee8e6",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Generalized Honeymoon Oberwolfach Problem\n\nThese conjectures are derived from this cycle's findings: the acquaintance count `2n(n-1)`,\nthe divisibility necessary condition `M = ∑",
-      "quality_score": 0.6876800000000001,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-03T14:04:43",
-      "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
-    },
     {
       "cycle_id": "87ba90ae",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-11T10:14:37",
       "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental "
+    },
+    {
+      "cycle_id": "8e65b62c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` — the positive theory:\n\n* **`erasedBits`** — infor",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-07-11T10:14:43",
+      "title": "Thermodynamics of Mathematical Proof"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "473442d5",
-      "domain": "Novelty",
-      "name": "abscissa_lt_top_of_bounded",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "473442d5",
-      "domain": "Novelty",
-      "name": "lseries_inj",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "0bde247f",
-      "domain": "Applications",
-      "name": "scons_zero",
-      "quality": 0.72
-    },
     {
       "cycle_id": "0bde247f",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "predErr_le_wrongness",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "8e65b62c",
+      "domain": "Novelty",
+      "name": "imageCard_le_card",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "8e65b62c",
+      "domain": "Novelty",
+      "name": "imageCard_pos",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "8e65b62c",
+      "domain": "Novelty",
+      "name": "imageCard_le_codomain",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T10:14:37",
+  "last_updated": "2026-07-11T10:14:43",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "01e9ab7a",
-        "quality": 0.83,
-        "theorems": 35,
-        "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
-      },
-      {
         "cycle_id": "4d0c820d",
         "quality": 0.82,
         "theorems": 26,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 9,
         "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
+      },
+      {
+        "cycle_id": "8e65b62c",
+        "quality": 0.72,
+        "theorems": 32,
+        "title": "Thermodynamics of Mathematical Proof"
       }
     ],
     "NumberTheory": [

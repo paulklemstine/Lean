@@ -481,21 +481,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "8e65b62c",
-    "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0985",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T03:07:28.618592+00:00",
-    "title": "Thermodynamics of Mathematical Proof"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 298c68ef (Q=0.780), which proved 66 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Godel's incompleteness theorem says there are true statements that cannot be proved. But what if we turn incompleteness into a GAME? Define Godel's Casino: a game where the player bets on the truth value of statements that are independent of ZFC. The house deals cards representing arithmetic stateme",
     "domains": [
@@ -726,7 +711,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0852bd7",
     "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
     "domains": [
       "Novelty",
@@ -736,7 +721,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T02:50:51.916559+00:00",
     "title": "Anti-Mathematics: What If All Axioms Were Negated?"
   },
@@ -7177,6 +7162,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T10:14:32.399162+00:00",
     "title": "This cycle isolated the group-theoretic engine behind the finiteness of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` \u2014 the positive theory:\n\n* **`erasedBits`** \u2014 information erased by a proof step `f : \u03b1 \u2192 \u03b2`, as the entropy drop\n  `log\u2082(card \u03b1) \u2212 log\u2082|image f|`, with `landauerCost bits kB T = bits \u00b7 kB \u00b7 T \u00b7 ln 2`.\n* **`erasedBits_nonneg`** \u2014 erasure is never negative.\n* **`erasedBits_eq_zero_iff_injective`** \u2014 a step erases zero bits **iff** it is injective\n  (logically reversible): the reversibility criterion.\n* **`landauerCost_pos_of_not_injective`** \u2014 Landauer's principle: any irreversible step\n  dissipates strictly positive entropy at positive temperature.\n* **`erasedBits_lower_bound`** \u2014 erasing into a `card \u03b2`-state register costs at least\n  `log\u2082(card \u03b1) \u2212 log\u2082(card \u03b2)`.\n* **`erasedBits_mono_comp`** \u2014 a data-processing inequality: erasure only accumulates along a\n  proof pipeline; it cannot be undone downstream.\n* **`erasedBits_bennett`** \u2014 Bennett's reversible embedding `x \u21a6 (x, f x)` erases zero bits,\n  so computation *per se* is free; only logical irreversibility costs energy.\n* **`erasedBits_collapse = n`, `erasedBits_bigCollapse = 2^m`,\n  `exponential_erasure_separation`** \u2014 explicit families whose verification erases linearly\n  resp. exponentially many bits; the erasure is unbounded.\n* **`incompressible`** \u2014 a Kolmogorov counting bound: the `2\u207f` Boolean predicates on `n` bits\n  cannot be injectively coded by the `2\u207f \u2212 1` programs of length `< n`, so some predicate has\n  no proof shorter than `n` bits, and erasing its truth table costs `\u2265 n \u00b7 kB T ln 2`.\n\n`ThermodynamicsOfProofContrarian.lean` \u2014 bold conjectures adjudicated:\n\n* **Refuted** \"every non-identity step erases\" (`exists_reversible_nontrivial_step`, the NOT\n  gate).\n* **Confirmed** the textbook AND-gate erasure of exactly one bit (`erasedBits_andGate`).\n* **Refuted** additivity of erasure under composition (`erasedBits_not_additive`); the correct\n  law is sub-additivity/monotonicity.\n* **Confirmed** every bijection is free (`erasedBits_bijective_zero`).\n\n## Open directions\n\n1. **Genuine creation vs. erasure ledger.** Extend the model with an explicit *creation*\n   primitive (allocating ancilla / writing bits) and a *cost functional* over full proofs\n   (lists of create/erase steps).  Conjecture: for every function there is a reversible\n   dilation with zero net erasure (Bennett), but the *minimal simultaneous* creation and\n   erasure of a proof of a fixed predicate obey a trade-off `create + erase \u2265 K(predicate)`.\n\n2. **Kolmogorov complexity proper.** Replace the counting proxy `incompressible` with a real\n   prefix/plain Kolmogorov complexity `K` (a universal machine formalized in Lean) and prove\n   the *thermodynamic verification bound*: verifying `x` from a shortest certificate erases\n   `\u2265 K(x) \u2212 O(1)` bits, hence dissipates `\u2265 (K(x) \u2212 O(1)) \u00b7 kB T ln 2`.\n\n3. **Exponential proof-vs-answer gap.** Formalize a concrete decision problem where the\n   shortest checkable certificate is exponentially longer than the answer's description\n   (`bigCollapse` is a toy witness), tying the erasure separation to proof-complexity lower\n   bounds.\n\n4. **Second-law / monotone entropy for proof DAGs.** Generalize `erasedBits_mono_comp` from\n   linear pipelines to arbitrary proof DAGs and formulate a Clausius-style inequality for the\n   total dissipated entropy of a derivation.\n\n5. **Landauer efficiency of specific calculi.** Compute the erasure cost of standard inference\n   rules (resolution, modus ponens, cut) and compare calculi by their intrinsic erasure per\n   derived consequence.\n\n\n# Future Directions \u2014 Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` \u2014 the positive theory:\n\n* **`erasedBits`** \u2014 information erased by a proof step `f : \u03b1 \u2192 \u03b2`, as the entropy drop\n  `log\u2082(card \u03b1) \u2212 log\u2082|image f|`, with `landauerCost bits kB T = bits \u00b7 kB \u00b7 T \u00b7 ln 2`.\n* **`erasedBits_nonneg`** \u2014 erasure is never negative.\n* **`erasedBits_eq_zero_iff_injective`** \u2014 a step erases zero bits **iff** it is injective\n  (logically reversible): the reversibility criterion.\n* **`landauerCost_pos_of_not_injective`** \u2014 Landauer's principle: any irreversible step\n  dissipates strictly positive entropy at positive temperature.\n* **`erasedBits_lower_bound`** \u2014 erasing into a `card \u03b2`-state register costs at least\n  `log\u2082(card \u03b1) \u2212 log\u2082(card \u03b2)`.\n* **`erasedBits_mono_comp`** \u2014 a data-processing inequality: erasure only accumulates along a\n  proof pipeline; it cannot be undone downstream.\n* **`erasedBits_bennett`** \u2014 Bennett's reversible embedding `x \u21a6 (x, f x)` erases zero bits,\n  so computation *per se* is free; only logical irreversibility costs energy.\n* **`erasedBits_collapse = n`, `erasedBits_bigCollapse = 2^m`,\n  `exponential_erasure_separation`** \u2014 explicit families whose verification erases linearly\n  resp. exponentially many bits; the erasure is unbounded.\n* **`incompressible`** \u2014 a Kolmogorov counting bound: the `2\u207f` Boolean predicates on `n` bits\n  cannot be injectively coded by the `2\u207f \u2212 1` programs of length `< n`, so some predicate has\n  no proof shorter than `n` bits, and erasing its truth table costs `\u2265 n \u00b7 kB T ln 2`.\n\n`ThermodynamicsOfProofContrarian.lean` \u2014 bold conjectures adjudicated:\n\n* **Refuted** \"every non-identity step erases\" (`exists_reversible_nontrivial_step`, the NOT\n  gate).\n* **Confirmed** the textbook AND-gate erasure of exactly one bit (`erasedBits_andGate`).\n* **Refuted** additivity of erasure under composition (`erasedBits_not_additive`); the correct\n  law is sub-additivity/monotonicity.\n* **Confirmed** every bijection is free (`erasedBits_bijective_zero`).\n\n## Open directions\n\n1. **Genuine creation vs. erasure ledger.** Extend the model with an explicit *creation*\n   primitive (allocating ancilla / writing bits) and a *cost functional* over full proofs\n   (lists of create/erase steps).  Conjecture: for every function there is a reversible\n   dilation with zero net erasure (Bennett), but the *minimal simultaneous* creation and\n   erasure of a proof of a fixed predicate obey a trade-off `create + erase \u2265 K(predicate)`.\n\n2. **Kolmogorov complexity proper.** Replace the counting proxy `incompressible` with a real\n   prefix/plain Kolmogorov complexity `K` (a universal machine formalized in Lean) and prove\n   the *thermodynamic verification bound*: verifying `x` from a shortest certificate erases\n   `\u2265 K(x) \u2212 O(1)` bits, hence dissipates `\u2265 (K(x) \u2212 O(1)) \u00b7 kB T ln 2`.\n\n3. **Exponential proof-vs-answer gap.** Formalize a concrete decision problem where the\n   shortest checkable certificate is exponentially longer than the answer's description\n   (`bigCollapse` is a toy witness), tying the erasure separation to proof-complexity lower\n   bounds.\n\n4. **Second-law / monotone entropy for proof DAGs.** Generalize `erasedBits_mono_comp` from\n   linear pipelines to arbitrary proof DAGs and formulate a Clausius-style inequality for the\n   total dissipated entropy of a derivation.\n\n5. **Landauer efficiency of specific calculi.** Compute the erasure cost of standard inference\n   rules (resolution, modus ponens, cut) and compare calculi by their intrinsic erasure per\n   derived consequence.\n",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_1019",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8e65b62c",
+    "status": "available",
+    "timestamp": "2026-07-11T10:14:40.485913+00:00",
+    "title": "`ThermodynamicsOfProof.lean` \u2014 the positive theory:"
   },
   {
     "consumed_by_exp_id": "",
