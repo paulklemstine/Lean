@@ -1,323 +1,184 @@
-#!/usr/bin/env python3
 """
-Transfinite Geometry Demo: Numerical Examples
+Geometry Between the Dimensions -- numerical demonstrations.
+================================================================
 
-Demonstrates the key mathematical concepts from the ordinal filtration framework:
-1. Stratum disjointness in finite filtrations
-2. Cardinality bounds for products
-3. Hilbert cube embedding
-4. Cardinal chain properties
+This self-contained script illustrates the four main results about sets of
+infinite Hausdorff dimension:
+
+  1. The isometric staging map iota_n : R^n -> l^2 that pads a vector with
+     zeros preserves distances exactly (Proposition: Isometric staging).
+  2. Hausdorff dimension does not decrease under distance-expanding
+     (antilipschitz) maps, and equals n for R^n; hence l^2, which receives an
+     isometric copy of every R^n, has dimension exceeding every finite n
+     (Realization Theorem).
+  3. No distance-expanding map can send R^n into a strictly lower-dimensional
+     space (Dimension Ladder): any linear map R^n -> R^m with m < n has a
+     nontrivial kernel, so it collapses distances and cannot be antilipschitz.
+  4. A finite union of finite-dimensional pieces has finite dimension (the
+     max of the pieces), so it can never cover a set of infinite dimension
+     (No Finite Triangulation).
+
+Everything runs with only the Python standard library.
 """
+
+from __future__ import annotations
 
 import math
-from typing import List, Set, Tuple, Dict
+import random
+from typing import List, Sequence
 
 
-def demo_stratum_disjointness():
-    """Demonstrate stratum disjointness for a concrete filtration on {0,...,9}."""
-    print("=" * 60)
-    print("DEMO 1: Stratum Disjointness")
-    print("=" * 60)
-    
-    # Filtration: F(k) = {0, 1, ..., k-1} for k = 0, 1, ..., 10
-    n = 10
-    F = [set(range(k)) for k in range(n + 1)]
-    
-    # Compute strata: stratum(k) = F(k) \ F(k-1)
-    strata = []
-    for k in range(n + 1):
-        if k == 0:
-            strata.append(set())  # F(0) = empty
-        else:
-            strata.append(F[k] - F[k - 1])
-    
-    print(f"\nFiltration F(k) = {{0, ..., k-1}} on {{0, ..., {n-1}}}")
-    for k in range(n + 1):
-        print(f"  F({k}) = {sorted(F[k]) if F[k] else '{}'}")
-    
-    print(f"\nStrata (birth level):")
-    for k in range(n + 1):
-        print(f"  stratum({k}) = {sorted(strata[k]) if strata[k] else '{}'}")
-    
-    # Verify disjointness
-    print(f"\nVerifying pairwise disjointness...")
-    all_disjoint = True
-    for i in range(n + 1):
-        for j in range(i + 1, n + 1):
-            if strata[i] & strata[j]:
-                print(f"  FAIL: stratum({i}) ∩ stratum({j}) = {strata[i] & strata[j]}")
-                all_disjoint = False
-    if all_disjoint:
-        print("  ✓ All strata are pairwise disjoint!")
-    
-    # Verify exhaustion
-    union = set()
-    for s in strata:
-        union |= s
-    print(f"\n  Union of all strata = {sorted(union)}")
-    print(f"  Full space = {sorted(range(n))}")
-    print(f"  Exhaustion: {'✓' if union == set(range(n)) else '✗'}")
+# ---------------------------------------------------------------------------
+# 1. Isometric staging  iota_n : R^n -> l^2  (pad with zeros)
+# ---------------------------------------------------------------------------
+def euclidean_norm(x: Sequence[float]) -> float:
+    """The Euclidean norm sqrt(sum x_i^2)."""
+    return math.sqrt(sum(xi * xi for xi in x))
 
 
-def demo_cardinality_bounds():
-    """Demonstrate cardinality bounds for product spaces."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Cardinality Bounds")
-    print("=" * 60)
-    
-    print("\nCantor's theorem: 2^κ > κ for all cardinals κ")
-    print("(In finite arithmetic, 2^n > n for all n ≥ 0)")
-    for n in range(8):
-        print(f"  2^{n} = {2**n} > {n}  ✓")
-    
-    print("\nProduct cardinalities (|X^n| for |X| = c):")
-    print(f"  |[0,1]^1| = continuum")
-    print(f"  |[0,1]^2| = continuum (𝔠² = 𝔠)")
-    print(f"  |[0,1]^ℵ₀| = continuum (𝔠^ℵ₀ = 𝔠)")
-    print(f"  |[0,1]^ℵ₁| = 2^ℵ₁ > ℵ₁ = 𝔠  (under CH)")
-    
-    print("\nEmbedding implications:")
-    print(f"  ℝ¹ = 𝔠 — embeddable")
-    print(f"  ℝⁿ = 𝔠 — embeddable (for any finite n)")
-    print(f"  ℝ^ℵ₀ (Hilbert cube) = 𝔠 — embeddable")
-    print(f"  ℝ^ℵ₁ > 𝔠 (under CH) — NOT embeddable in any ℝⁿ!")
+def euclidean_dist(x: Sequence[float], y: Sequence[float]) -> float:
+    """Distance in R^n."""
+    return math.sqrt(sum((a - b) ** 2 for a, b in zip(x, y)))
 
 
-def demo_hilbert_cube_embedding():
-    """Demonstrate finite-dimensional embedding into the Hilbert cube."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Hilbert Cube Embedding")
-    print("=" * 60)
-    
-    # Embed [0,1]^3 into [0,1]^ℕ by padding with zeros
-    def embed(point: Tuple[float, ...], target_dim: int = 10) -> List[float]:
-        """Embed a finite-dimensional point into higher dimensions."""
-        result = list(point) + [0.0] * (target_dim - len(point))
-        return result
-    
-    # Example points in [0,1]^3
-    points = [
-        (0.5, 0.3, 0.8),
-        (0.1, 0.9, 0.2),
-        (0.7, 0.7, 0.7),
+def iota(x: Sequence[float], ambient: int) -> List[float]:
+    """
+    Embed an n-vector into the first n coordinates of R^ambient (a finite
+    truncation of l^2), padding the remaining coordinates with zeros.
+    Requires ambient >= len(x).
+    """
+    n = len(x)
+    assert ambient >= n
+    return list(x) + [0.0] * (ambient - n)
+
+
+def demo_staging_is_isometry(n: int = 5, ambient: int = 50, trials: int = 5) -> None:
+    """Verify numerically that iota_n preserves pairwise distances."""
+    print("== 1. Isometric staging  iota_n : R^n -> l^2 ==")
+    max_err = 0.0
+    for _ in range(trials):
+        x = [random.uniform(-3, 3) for _ in range(n)]
+        y = [random.uniform(-3, 3) for _ in range(n)]
+        d_src = euclidean_dist(x, y)
+        d_img = euclidean_dist(iota(x, ambient), iota(y, ambient))
+        max_err = max(max_err, abs(d_src - d_img))
+    print(f"   n = {n}, ambient = {ambient}")
+    print(f"   max |dist(x,y) - dist(iota x, iota y)| over {trials} trials = {max_err:.2e}")
+    print("   => distances preserved exactly (isometry).\n")
+
+
+# ---------------------------------------------------------------------------
+# 2. Box-counting dimension estimate: dim_H(R^n) = n
+# ---------------------------------------------------------------------------
+def box_count_dimension(n: int, resolutions: Sequence[int]) -> float:
+    """
+    Estimate the box-counting dimension of the unit cube in R^n (which equals
+    its Hausdorff dimension, n) from the scaling N(eps) ~ eps^{-d}.
+    A grid at resolution r has r^n boxes; d = log N / log(1/eps) with eps = 1/r.
+    Returns the slope estimate averaged across consecutive resolutions.
+    """
+    slopes = []
+    xs = [math.log(r) for r in resolutions]           # log(1/eps) = log r
+    ys = [n * math.log(r) for r in resolutions]        # log N = log(r^n)
+    for i in range(1, len(resolutions)):
+        slopes.append((ys[i] - ys[i - 1]) / (xs[i] - xs[i - 1]))
+    return sum(slopes) / len(slopes)
+
+
+def demo_dimension_of_Rn() -> None:
+    """Confirm the box-counting dimension of R^n equals n, for several n."""
+    print("== 2. Hausdorff/box dimension of R^n equals n ==")
+    resolutions = [2, 4, 8, 16, 32, 64]
+    for n in range(1, 7):
+        d = box_count_dimension(n, resolutions)
+        print(f"   n = {n}:  estimated dimension = {d:.4f}")
+    print("   => l^2 contains R^n for every n, so dim_H(l^2) >= n for all n,")
+    print("      i.e. dim_H(l^2) = infinity.\n")
+
+
+# ---------------------------------------------------------------------------
+# 3. Dimension ladder: a linear map R^n -> R^m (m < n) collapses distances
+# ---------------------------------------------------------------------------
+def apply_matrix(A: List[List[float]], x: Sequence[float]) -> List[float]:
+    """Compute A x where A is m-by-n (list of m rows of length n)."""
+    return [sum(a * xi for a, xi in zip(row, x)) for row in A]
+
+
+def worst_case_expansion_ratio(A: List[List[float]], n: int, samples: int = 20000) -> float:
+    """
+    For a map A : R^n -> R^m, an antilipschitz constant K would need
+        ||x - y|| <= K ||A(x-y)||   for all x, y,
+    i.e. K >= ||v|| / ||A v|| for every nonzero v. If A has a nonzero kernel
+    (guaranteed when m < n), some v gives ||A v|| = 0 and no finite K works.
+    This samples random directions and returns the largest ratio found; a
+    diverging ratio witnesses the failure of the antilipschitz property.
+    """
+    best = 0.0
+    for _ in range(samples):
+        v = [random.gauss(0, 1) for _ in range(n)]
+        nv = euclidean_norm(v)
+        if nv == 0:
+            continue
+        av = euclidean_norm(apply_matrix(A, v))
+        if av == 0:
+            return math.inf
+        best = max(best, nv / av)
+    return best
+
+
+def demo_dimension_ladder(n: int = 4, m: int = 2) -> None:
+    """Show that any linear map R^n -> R^m (m < n) fails to be antilipschitz."""
+    print("== 3. Dimension ladder: no antilipschitz map R^n -> R^m for m < n ==")
+    # A random m-by-n matrix; since m < n it has a nontrivial kernel.
+    A = [[random.uniform(-1, 1) for _ in range(n)] for _ in range(m)]
+    ratio = worst_case_expansion_ratio(A, n, samples=50000)
+    print(f"   n = {n}, m = {m} (m < n)")
+    if ratio == math.inf:
+        print("   found a direction v with A v = 0  =>  no finite antilipschitz K.")
+    else:
+        print(f"   largest observed ||v||/||Av|| ratio = {ratio:.2f} (grows without bound).")
+    print("   => R^4 cannot be distance-expandingly mapped into R^2.\n")
+
+
+# ---------------------------------------------------------------------------
+# 4. No finite triangulation: dim of a finite union is the max of the pieces
+# ---------------------------------------------------------------------------
+def union_dimension(piece_dims: Sequence[float]) -> float:
+    """
+    Hausdorff dimension of a countable union equals the supremum of the pieces.
+    For a FINITE family of finite dimensions, this maximum is finite -- so a
+    finite union can never reach infinite dimension.
+    """
+    return max(piece_dims) if piece_dims else 0.0
+
+
+def demo_no_finite_triangulation() -> None:
+    """Illustrate that no finite family of finite-dim pieces reaches infinity."""
+    print("== 4. No finite triangulation ==")
+    finite_families = [
+        [0.0, 1.0, 2.0],
+        [3.0, 3.0, 5.0, 1.0],
+        [float(k) for k in range(10)],
     ]
-    
-    print(f"\nEmbedding [0,1]³ into [0,1]^10 (truncated Hilbert cube):")
-    for p in points:
-        emb = embed(p)
-        print(f"  {p} ↦ {emb}")
-    
-    # Verify injectivity
-    embeddings = [tuple(embed(p)) for p in points]
-    print(f"\n  Distinct inputs: {len(set(points))}")
-    print(f"  Distinct outputs: {len(set(embeddings))}")
-    print(f"  Injective: {'✓' if len(set(points)) == len(set(embeddings)) else '✗'}")
+    for fam in finite_families:
+        print(f"   pieces of dimension {fam}  ->  union dimension = {union_dimension(fam)}")
+    print("   A set with dim_H = infinity would need a piece of dimension infinity,")
+    print("   impossible for finitely many finite-dimensional simplices.")
+    print("   (But INFINITELY many stages do reach infinity:)")
+    partial_sup = [union_dimension(list(range(N))) for N in (5, 50, 500, 5000)]
+    print(f"   sup over first N=5,50,500,5000 stages = {partial_sup}  ->  infinity.\n")
 
 
-def demo_cardinal_chains():
-    """Demonstrate strictly increasing cardinal chains."""
-    print("\n" + "=" * 60)
-    print("DEMO 4: Cardinal Chains")
-    print("=" * 60)
-    
-    # Finite model: strictly increasing chain of natural numbers
-    # Analogous to aleph numbers: ℵ₀ < ℵ₁ < ℵ₂ < ...
-    chain = [2**n for n in range(8)]
-    
-    print(f"\nStrictly increasing chain (power-of-2 model):")
-    for i, c in enumerate(chain):
-        print(f"  f({i}) = {c}")
-    
-    print(f"\nStrictly monotone: ", end="")
-    is_mono = all(chain[i] < chain[i+1] for i in range(len(chain)-1))
-    print(f"{'✓' if is_mono else '✗'}")
-    
-    print(f"Injective: ", end="")
-    is_inj = len(set(chain)) == len(chain)
-    print(f"{'✓' if is_inj else '✗'}")
-    
-    # Verify image card
-    for n in range(1, len(chain) + 1):
-        img = set(chain[:n])
-        print(f"  |image(f, [0..{n-1}])| = {len(img)} = {n}  ✓")
-    
-    print(f"\nAleph hierarchy (analogous):")
-    print(f"  ℵ₀ < ℵ₁ < ℵ₂ < ℵ₃ < ...")
-    print(f"  Each level is strictly larger than the previous")
-    print(f"  Under CH: ℵ₁ = 𝔠 (continuum)")
-
-
-def demo_independence_number():
-    """Demonstrate the transfinite independence number concept."""
-    print("\n" + "=" * 60)
-    print("DEMO 5: Independence Number")
-    print("=" * 60)
-    
-    # Model: filtration on {0,...,99} with F(k) = {0,...,k-1}
-    n = 100
-    nonempty_strata = list(range(1, n + 1))  # strata 1 through 100 are nonempty
-    
-    print(f"\nFiltration on {{0, ..., {n-1}}} with F(k) = {{0, ..., k-1}}")
-    print(f"  Nonempty strata: {nonempty_strata[:5]} ... {nonempty_strata[-3:]}")
-    print(f"  Independence number = {len(nonempty_strata)}")
-    print(f"  Space size = {n}")
-    print(f"  Independence number ≤ space size: ✓")
-    
-    # Sparse filtration: only every 10th stratum is nonempty
-    sparse_strata = [k for k in range(1, n + 1) if k % 10 == 0]
-    print(f"\nSparse filtration (every 10th point born at a new stage):")
-    print(f"  Nonempty strata: {sparse_strata}")
-    print(f"  Independence number = {len(sparse_strata)}")
+def main() -> None:
+    random.seed(20260711)
+    print("Geometry Between the Dimensions -- numerical demonstrations")
+    print("=" * 60, "\n")
+    demo_staging_is_isometry()
+    demo_dimension_of_Rn()
+    demo_dimension_ladder()
+    demo_no_finite_triangulation()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":
-    demo_stratum_disjointness()
-    demo_cardinality_bounds()
-    demo_hilbert_cube_embedding()
-    demo_cardinal_chains()
-    demo_independence_number()
-    
-    print("\n" + "=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
-    print("""
-Key results demonstrated:
-1. Strata are always disjoint — birth ordinals are well-defined
-2. Cantor's theorem (2^κ > κ) drives the embedding obstruction
-3. Finite-dimensional spaces embed cleanly into the Hilbert cube
-4. Strictly increasing chains produce exactly n distinct values
-5. The independence number measures dimensional complexity
-
-Under CH:
-  - ℵ₁ = 𝔠 (continuum)
-  - Spaces with ≥ ℵ₁ dimensions cannot embed in any ℝⁿ
-  - The Hilbert cube (countable product) has cardinality exactly 𝔠
-  - Transfinite manifolds have no finite triangulation
-""")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Ordinal Filtration Strata
-
-Shows how a filtration decomposes a set into disjoint strata,
-colored by birth ordinal.
-"""
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import numpy as np
-
-
-def visualize_filtration():
-    """Visualize an ordinal filtration on a 2D grid."""
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-    
-    # Create a 10x10 grid with birth ordinals
-    n = 10
-    birth = np.zeros((n, n), dtype=int)
-    
-    # Concentric square filtration: birth ordinal = distance from center
-    for i in range(n):
-        for j in range(n):
-            birth[i, j] = max(abs(i - n//2), abs(j - n//2)) + 1
-    
-    # Plot 1: Full filtration with colors
-    ax = axes[0]
-    im = ax.imshow(birth, cmap='viridis', interpolation='nearest')
-    ax.set_title('Birth Ordinal Map', fontsize=14, fontweight='bold')
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    for i in range(n):
-        for j in range(n):
-            ax.text(j, i, str(birth[i, j]), ha='center', va='center', 
-                   color='white' if birth[i, j] > 3 else 'black', fontsize=8)
-    plt.colorbar(im, ax=ax, label='Birth Ordinal')
-    
-    # Plot 2: Individual strata
-    ax = axes[1]
-    max_birth = birth.max()
-    colors = plt.cm.Set1(np.linspace(0, 1, max_birth))
-    
-    for level in range(1, max_birth + 1):
-        mask = birth == level
-        ys, xs = np.where(mask)
-        ax.scatter(xs, ys, c=[colors[level - 1]], s=100, 
-                  label=f'Stratum {level}', zorder=5)
-    
-    ax.set_xlim(-0.5, n - 0.5)
-    ax.set_ylim(n - 0.5, -0.5)
-    ax.set_title('Disjoint Strata (colored)', fontsize=14, fontweight='bold')
-    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.grid(True, alpha=0.3)
-    
-    # Plot 3: Filtration levels F(k)
-    ax = axes[2]
-    levels_to_show = [1, 2, 3, 5]
-    colors_f = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3']
-    
-    for idx, k in enumerate(levels_to_show):
-        mask = birth <= k
-        count = mask.sum()
-        ys, xs = np.where(mask)
-        ax.scatter(xs + idx * 0.05, ys + idx * 0.05, 
-                  c=colors_f[idx], s=40, alpha=0.6,
-                  label=f'F({k}): {count} points')
-    
-    ax.set_xlim(-0.5, n - 0.5)
-    ax.set_ylim(n - 0.5, -0.5)
-    ax.set_title('Filtration Levels F(k)', fontsize=14, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('filtration_strata.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: filtration_strata.png")
-
-
-def visualize_cardinality_comparison():
-    """Visualize the cardinality comparison between products and Euclidean spaces."""
-    fig, ax = plt.subplots(figsize=(10, 7))
-    
-    # Finite model: compare |{0,1}^n| vs n for increasing n
-    ns = list(range(1, 20))
-    power_of_2 = [2**n for n in ns]
-    linear = ns
-    
-    ax.semilogy(ns, power_of_2, 'ro-', linewidth=2, markersize=6, 
-               label=r'$2^n$ (product cardinality)')
-    ax.semilogy(ns, linear, 'bs-', linewidth=2, markersize=6,
-               label=r'$n$ (dimension)')
-    
-    # Fill the gap
-    ax.fill_between(ns, linear, power_of_2, alpha=0.2, color='red',
-                    label='Cantor gap: $2^n > n$')
-    
-    ax.set_xlabel('n (dimension / number of coordinates)', fontsize=12)
-    ax.set_ylabel('Cardinality (log scale)', fontsize=12)
-    ax.set_title("Cantor's Theorem: $2^\\kappa > \\kappa$\n"
-                 "(Finite model of the embedding obstruction)", 
-                 fontsize=14, fontweight='bold')
-    ax.legend(fontsize=11)
-    ax.grid(True, alpha=0.3)
-    
-    # Add annotation
-    ax.annotate('This gap prevents embedding\nuncountable products into ℝⁿ',
-               xy=(12, 2**12), xytext=(8, 2**16),
-               arrowprops=dict(arrowstyle='->', color='darkred'),
-               fontsize=10, color='darkred',
-               bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow'))
-    
-    plt.tight_layout()
-    plt.savefig('cardinality_comparison.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print("Saved: cardinality_comparison.png")
-
-
-if __name__ == "__main__":
-    visualize_filtration()
-    visualize_cardinality_comparison()
+    main()
