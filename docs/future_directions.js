@@ -724,7 +724,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: Open Sets at Infinity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acce14cf",
     "description": "Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension). Show: the parallel postulate is NOT universal (non-Euclidean geometries exist). Conjecture: the Riemann Hypothesis IS universal (every sufficiently rich arithmetic system proves it or its negation). Explore: what would alien number theory look like? Would aliens discover primes?",
     "domains": [
       "Novelty",
@@ -734,12 +734,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T22:30:19.797682+00:00",
     "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79f5af13",
     "description": "Formalize the GEB thesis: deep isomorphisms connect G\u00f6del's incompleteness, Escher's visual paradoxes, and Bach's fugues. Define: a 'GEB isomorphism' is a structure-preserving map between three domains: (1) a formal system, (2) a visual art form, (3) a musical form. Prove: the self-reference in G\u00f6del's theorem, Escher's 'Drawing Hands,' and Bach's 'Crab Canon' all instantiate the same fixed-point construction (Lawvere's fixed point theorem). Show: every GEB isomorphism factors through the Y combinator.",
     "domains": [
       "Novelty",
@@ -749,7 +749,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T22:47:23.766775+00:00",
     "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
   },

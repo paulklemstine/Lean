@@ -28654,11 +28654,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "acce14cf",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -28671,7 +28671,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1075",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-11T22:48:46.718899+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -28686,7 +28686,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-11T22:30:19.797682+00:00",
       "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
@@ -28777,11 +28777,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "79f5af13",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -28794,7 +28794,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1078",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-11T22:48:39.464090+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -28809,7 +28809,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-11T22:47:23.766775+00:00",
       "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
@@ -33012,6 +33012,8 @@
   "selection_log": [
     "abduction_followup",
     "famous_subtask",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "cross_domain_bridge",
+    "famous_subtask"
   ]
 }
