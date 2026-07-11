@@ -231,6 +231,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_2ca6565f_fb8f73b6",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2ca6565f",
+    "status": "available",
+    "timestamp": "2026-07-11T01:28:51.638164+00:00",
+    "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 34e9f39c (Q=0.820), which proved 20 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determ",
     "domain_bridges": [],
     "domains": [
@@ -708,6 +727,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0970",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T01:28:27.691105+00:00",
+    "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' — a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities — they form a continuous family, and the hat is just one point on the spectrum.",
     "domain_bridges": [],
     "domains": [
@@ -723,26 +762,6 @@
     "status": "failed",
     "timestamp": "2026-07-10T02:06:58.773372+00:00",
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2ca6565f",
-    "description": "Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0956",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:06:31.434712+00:00",
-    "title": "Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
     "ambition_level": "extension",
@@ -10157,6 +10176,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0971",
+    "lineage_refs": [],
+    "priority_score": 0.79,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T01:28:27.766817+00:00",
+    "title": "Flatland Catastrophe: When 2D Physics Breaks"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
     "domain_bridges": [],
     "domains": [
@@ -11490,6 +11529,26 @@
     "status": "available",
     "timestamp": "2026-07-11T01:12:27.443621+00:00",
     "title": "That the logical (Gödel/Lucas–Penrose) and information-th"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Surveillance Networks and the Privacy–Utility Frontier\n\nThe results of this cycle establish a hard covering inequality linking an\nobserver's channel rate to the distortion at which a finite dynamic network can\nbe reconstructed, and pin perfect privacy to the degenerate `rate = 1` corner of\nthat inequality. The following conjectures push the frontier outward.\n\n## Conjecture 1 — A logarithmic rate–distortion staircase\n\nFor a network on `n` nodes under the edge-Hamming dissimilarity, the minimum\nchannel rate needed to reconstruct within distortion `D` equals\n`2^(n² − f(n, D))`, where `f(n, D)` is the log-size of a Hamming ball of radius\n`D` in dimension `n²`, and the achievable rates form a strictly decreasing\nstaircase in `D`.\n\nThe key insight is that the fibrewise covering argument is tight whenever the\ndistortion balls tile the configuration space, so the extremal channel is a\nperfect covering code and the rate is governed entirely by ball volume.\n\nWhy now? The covering lower bound is already in hand; the remaining step is a\nmatching construction, and covering-code volume estimates in the Hamming cube are\nexactly the tool needed to close the gap.\n\n## Conjecture 2 — Privacy is monotone in temporal aggregation\n\nIf an observer aggregates snapshots over a time window of length `T` before\nreporting, the achievable privacy (largest distortion ball that still permits\n`rate = 1`) grows at least linearly in `T`, so temporal blurring is a provably\noptimal privacy mechanism up to a constant factor.\n\nThe key insight is that aggregation is a channel composition, and composing a\nprivate channel with any post-processing cannot decrease privacy, while a\nwindow-average enlarges the indistinguishability ball at a controlled rate.\n\nWhy now? The single-snapshot `rate = 1` characterization gives the base case;\nextending it to composed channels only requires a data-processing style\ninequality for the covering functional developed here.\n\n## Conjecture 3 — Sparse networks are cheaper to surveil but harder to hide\n\nRestricting to networks with at most `k` edges reduces the reconstruction cost\nfrom `n²` bits to `Θ(k log(n²/k))` bits, yet simultaneously shrinks every\ndistortion ball, so the privacy threshold `B` collapses and perfect privacy\nbecomes unattainable for `k ≥ 1` once `n` is large.\n\nThe key insight is that sparsity trades configuration-space volume for ball\nvolume asymmetrically: the numerator of the covering bound shrinks faster than\nthe denominator, tightening the privacy–utility gap.\n\nWhy now? The counting corollary for the full space is settled; the sparse count\nis a standard binomial estimate, so the two halves of the covering ratio can be\ncompared directly.\n\n## Conjecture 4 — A phase transition in observer coalitions\n\nIf several independent observers each hold a low-rate channel and later pool\ntheir records, reconstruction fidelity exhibits a sharp threshold: below a\ncritical total rate the pooled distortion stays macroscopic, and above it the\nnetwork is reconstructed almost exactly, with a transition window of width\nvanishing in `n`.\n\nThe key insight is that pooling multiplies the effective alphabet, so the\ncovering bound crosses the configuration count abruptly as the summed log-rates\npass `n²`.\n\nWhy now? The additivity of `log` rate under channel products follows from the\ncounting lemma proved this cycle, turning the coalition question into a single\nthreshold comparison.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0972",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2ca6565f",
+    "status": "available",
+    "timestamp": "2026-07-11T01:28:45.184575+00:00",
+    "title": "The results of this cycle establish a hard covering inequality linking an"
   },
   {
     "ambition_level": "extension",

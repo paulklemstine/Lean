@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7e49f0c7",
-      "domain": "Novelty",
-      "key_insight": "# Stochastic Galois Theory over Finite Fields — Results and Future Directions\n\n## What was proved (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n**`Catalog/Novelty/StochasticGal",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-10T08:38:04",
-      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
-    },
-    {
       "cycle_id": "3fa70466",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Morphogenesis as Algebraic Geometry\n\nThe linear analysis established here recasts the onset of Turing patterns as\nconic-section geometry: the number of excited spatial modes is a",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-11T01:12:18",
       "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
+    },
+    {
+      "cycle_id": "2ca6565f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Surveillance Networks and the Privacy–Utility Frontier\n\nThe results of this cycle establish a hard covering inequality linking an\nobserver's channel rate to the distortion at whi",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-11T01:28:51",
+      "title": "Surveillance Networks: Information-Theoretic Undetectability"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "756bc0b6",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nBold, testable conjectures emerging from the study of the valley statistic on lower\nendpoints of greedy Tamari intervals and its relation to bipartite planar maps.\n\n## 1. The refi",
-      "quality_score": 0.389,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-02T07:55:33",
-      "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined enumeration of biparti"
-    },
     {
       "cycle_id": "8b7f43f1",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-11T01:12:18",
       "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
+    },
+    {
+      "cycle_id": "2ca6565f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Surveillance Networks and the Privacy–Utility Frontier\n\nThe results of this cycle establish a hard covering inequality linking an\nobserver's channel rate to the distortion at whi",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-11T01:28:51",
+      "title": "Surveillance Networks: Information-Theoretic Undetectability"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b77ed1ec",
-      "domain": "Tropical",
-      "name": "value_eq",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "b77ed1ec",
-      "domain": "Tropical",
-      "name": "valid_iff",
-      "quality": 0.72
-    },
     {
       "cycle_id": "a1a5801c",
       "domain": "Computation",
@@ -2803,9 +2791,21 @@
       "domain": "Bridges",
       "name": "colorable_of_earlierDegree_lt",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "2ca6565f",
+      "domain": "Applications",
+      "name": "carries",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "2ca6565f",
+      "domain": "Applications",
+      "name": "recon_inj",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T01:12:18",
+  "last_updated": "2026-07-11T01:28:51",
   "open_questions": [
     {
       "context": "witnesses, not `sorry`ed placeholders, so the abstract hypotheses are demonstrably; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "81ffd6ce",
-        "quality": 0.6,
-        "theorems": 0,
-        "title": "Close Proofs: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psych"
-      },
-      {
         "cycle_id": "da4694df",
         "quality": 0.82,
         "theorems": 17,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 16,
         "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+      },
+      {
+        "cycle_id": "2ca6565f",
+        "quality": 0.82,
+        "theorems": 18,
+        "title": "Surveillance Networks: Information-Theoretic Undetectability"
       }
     ],
     "Bridges": [
