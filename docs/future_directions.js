@@ -144,6 +144,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle fb4f44b5 (Q=0.830), which proved 38 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the complete bipartite graph K_{m,n} with parts of sizes m and n, the Seidel energy strictly increases under any edge deletion if and only if both m,n \u2265 3. This conjecture claims that the threshold conditions (m,n) \u2265 (3,6), (6,3), (2,15), (15,2) and (4,4) established in the paper are not sharp f",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_fb4f44b5_3d98523f",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "fb4f44b5",
+    "status": "available",
+    "timestamp": "2026-07-11T11:08:41.152651+00:00",
+    "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0643b2b3 (Q=0.820), which proved 11 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost r",
     "domains": [
       "Combinatorics"
@@ -438,7 +452,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "feb5fd04",
     "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
     "domains": [
       "Novelty",
@@ -448,7 +462,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T10:30:55.818755+00:00",
     "title": "Quantum Proofs of Classical Theorems"
   },
@@ -1028,6 +1042,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_1025",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T11:07:24.978165+00:00",
+    "title": "The Mega-Sphere: All Dimensions at Once"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proofs are static objects, but what if proofs could improve? Define a proof refinement system where each proof P has a complexity C(P) = length(P) + depth(P) + number of lemmas, and a proof P' is a refinement of P if P' proves the same theorem with C(P') < C(P). Conjecture: For every theorem T provable in ZFC, there exists a sequence of refinements P = P_0, P_1, P_2, ... such that C(P_n) is non-increasing and the limit P_infinity is the simplest proof of T (in the sense of Kolmogorov complexity). Moreover, the refinement process halts: there exists N such that C(P_N) = C(P_{N+1}) = ... = C(P_infinity). The key insight: proof simplification is a well-founded process because the complexity is a natural number that decreases at each step. But the process can be arbitrarily long \u2014 the proof of the four-color theorem might require 10^100 refinements to reach its simplest form. Test: formalize the refinement system in Lean 4. Starting from the statement of the irrationality of sqrt(2), generate refinements by eliminating unnecessary lemmas, shortening case splits, and removing redundant quantifiers. Measure C(P) at each step and verify it decreases. Impact: proofs are not static \u2014 they are living objects that can be improved. The simplest proof of a theorem is the LIMIT of the refinement process, and this limit ALWAYS exists.",
     "domains": [
       "Novelty",
@@ -1087,7 +1116,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
   },
   {
-    "consumed_by_exp_id": "fba297f5",
+    "consumed_by_exp_id": "",
     "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
     "domains": [
       "Novelty",
@@ -1097,7 +1126,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T07:45:39.325963+00:00",
     "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
@@ -4845,21 +4874,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact asymptotic growth of \\u03c7^r_F(d) for the balanced\u2011triangle family"
   },
   {
-    "consumed_by_exp_id": "fb4f44b5",
-    "description": "For the complete bipartite graph K_{m,n} with parts of sizes m and n, the Seidel energy strictly increases under any edge deletion if and only if both m,n \u2265 3. This conjecture claims that the threshold conditions (m,n) \u2265 (3,6), (6,3), (2,15), (15,2) and (4,4) established in the paper are not sharp for complete bipartite graphs, and the actual threshold for K_{m,n} is both parts having size at least 3. The conjecture is falsifiable by computing Seidel energies for specific counterexamples with parts of size 2 or less.",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_0670",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06095v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T23:13:00.366786+00:00",
-    "title": "Sharp threshold characterization for Seidel energy increase in complete bipartite graphs under edge deletion"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
     "domains": [
@@ -7238,6 +7252,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T10:49:54.743955+00:00",
     "title": "This cycle deepened the transreal formalization (`TReal = \u211d \u228e {+\u221e, -\u221e, \u03a6}`) in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThis project formalises the exact Seidel spectrum and Seidel energy of complete\nbipartite graphs and their single-edge deletions, and settles the sharp threshold\nfor the energy increase.\n\n## What is proved (Lean, no `sorry`, standard axioms only)\n\n* `SeidelEnergyBipartite.lean`\n  * `seidelEnergy_Kmn` : `E(K_{m,n}) = 2(m+n\u22121)`, via the rank-one identity\n    `S = w w\u1d40 \u2212 I` and the matrix determinant lemma for `charpoly`.\n* `SeidelEnergyDeletion.lean`\n  * `Sddel_charpoly` : the deleted graph's characteristic polynomial,\n    `(X+1)^{m+n\u22123}(X\u22121)(X\u00b2\u2212(m+n\u22124)X\u2212(3(m+n)\u22127))`, via a rank-three factorisation\n    `Sddel + I = U K U\u1d40` and `charpoly_mul_comm_of_le`.\n  * `Sddel_energy` : `E(K_{m,n} \u2212 e) = (m+n\u22122) + \u221a((m+n\u22122)(m+n+6))`.\n  * `seidel_energy_increase_iff` : **strict increase \u21d4 `m+n \u2265 4`** (the sharp\n    threshold \u2014 not \"both parts `\u2265 3`\").\n  * `conjecture_is_false` / `Ktwotwo_energies` : the \"both `\u2265 3`\" conjecture is\n    refuted; `K_{2,2}` jumps `6 \u2192 2 + 2\u221a5`.\n\n## The cross-domain bridge\n\nThe proof links **graph combinatorics** (`K_{m,n}`, edge deletion), **low-rank\nlinear algebra** (rank-one and rank-three perturbations of `\u2212I`, the matrix\ndeterminant lemma, characteristic polynomials), and **real analysis** (the\n`\u221a((m+n\u22122)(m+n+6))` term and the monotone comparison). The Seidel energy \u2014 an\nanalytic sum of `|eigenvalue|` \u2014 is pinned down purely algebraically through\n`charpoly.roots`.\n\n## Natural next steps\n\n1. **Arbitrary edge sets.** Deleting `k` independent cross edges is a rank-`(2k+1)`\n   perturbation; the same `charpoly_mul_comm_of_le` machinery should yield a\n   `(2k+1)\u00d7(2k+1)` core determinant and a closed threshold in `(m, n, k)`.\n2. **Complete multipartite graphs `K_{n\u2081,\u2026,n\u209c}`.** The Seidel matrix is again a\n   small-rank perturbation of `\u2212I` (rank `t`); the energy and its edge-deletion\n   behaviour should follow from a `t\u00d7t` core.\n3. **General Seidel-energy monotonicity.** Formalise the McClelland/Koolen\u2013Moulton\n   style bounds and characterise which graph families are `Seidel-energy monotone`\n   under edge deletion.\n4. **Bounds toolkit.** Extract the reusable lemma `energy = (charpoly.roots).map |\u00b7| |>.sum`\n   (here `energy_eq_roots`) into a standalone Seidel/graph-energy library, with the\n   rank-one (`charpoly_vecMulVec`) and rank-`r` (`charpoly_mul_comm_of_le`) recipes.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1026",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fb4f44b5",
+    "status": "available",
+    "timestamp": "2026-07-11T11:08:22.955088+00:00",
+    "title": "This project formalises the exact Seidel spectrum and Seidel energy of complete"
   },
   {
     "consumed_by_exp_id": "",

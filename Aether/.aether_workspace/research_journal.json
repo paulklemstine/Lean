@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "00abb0ac",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-07-10T18:12:07",
-      "title": "The Topology of Argumentation: Why Debates Have Holes"
-    },
-    {
       "cycle_id": "99c2e84e",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nThis project formalizes two cross-domain bridge theorems around the tropical\n(min-plus) semiring, motivated by the \"tropical cryptography\" / min-plus\nDiffie–Hellman proposal. All",
@@ -499,19 +489,19 @@
       "theorem_count": 44,
       "timestamp": "2026-07-11T10:50:18",
       "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+    },
+    {
+      "cycle_id": "fb4f44b5",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThis project formalises the exact Seidel spectrum and Seidel energy of complete\nbipartite graphs and their single-edge deletions, and settles the sharp threshold\nfor the energy in",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-07-11T11:08:40",
+      "title": "Sharp threshold characterization for Seidel energy increase in complete bipartite graphs under edge "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "db78fb28",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of the identification of sheared\narithmetic vectors as the filtered colimit of their truncations.\n\n## 1. Descent is an equivalence, not m",
-      "quality_score": 0.66208,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-03T18:11:08",
-      "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
-    },
     {
       "cycle_id": "3d19dc30",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 44,
       "timestamp": "2026-07-11T10:50:18",
       "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+    },
+    {
+      "cycle_id": "fb4f44b5",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThis project formalises the exact Seidel spectrum and Seidel energy of complete\nbipartite graphs and their single-edge deletions, and settles the sharp threshold\nfor the energy in",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-07-11T11:08:40",
+      "title": "Sharp threshold characterization for Seidel energy increase in complete bipartite graphs under edge "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3399a930",
-      "domain": "Applications",
-      "name": "cell_zero_one",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "3399a930",
-      "domain": "Applications",
-      "name": "chi_cell",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "3399a930",
-      "domain": "Applications",
-      "name": "chi_mul",
-      "quality": 0.83
-    },
     {
       "cycle_id": "0be793c6",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "neg_def",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "fb4f44b5",
+      "domain": "Applications",
+      "name": "Sd_herm",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "fb4f44b5",
+      "domain": "Applications",
+      "name": "energy_eq_roots",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "fb4f44b5",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T10:50:18",
+  "last_updated": "2026-07-11T11:08:40",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "46d2d021",
-        "quality": 0.82,
-        "theorems": 23,
-        "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
-      },
-      {
         "cycle_id": "6e208619",
         "quality": 0.78,
         "theorems": 27,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 11,
         "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's r"
+      },
+      {
+        "cycle_id": "fb4f44b5",
+        "quality": 0.83,
+        "theorems": 38,
+        "title": "Sharp threshold characterization for Seidel energy increase in complete bipartit"
       }
     ],
     "Bridges": [
