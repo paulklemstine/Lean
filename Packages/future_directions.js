@@ -311,7 +311,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3c4c6a5",
     "description": "Building on cycle ace29f66 (Q=0.820), which proved 69 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty"
@@ -320,7 +320,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "ace29f66",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T04:29:37.981147+00:00",
     "title": "Deepening: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -637,7 +637,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
-    "consumed_by_exp_id": "03029642",
+    "consumed_by_exp_id": "",
     "description": "Extend topological space theory to include Conway's surreal numbers as the underlying set. Prove that the order topology on No is not first-countable and that every real open set has a surreal extension. Determine whether No is connected, compact, or paracompact in the interval topology.",
     "domains": [
       "Novelty",
@@ -647,7 +647,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T02:34:00.123116+00:00",
     "title": "Surreal Topology: Open Sets at Infinity"
   },
