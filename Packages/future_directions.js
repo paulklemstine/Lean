@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "f57636f1",
-    "description": "Building on cycle 01e9ab7a (Q=0.830), which proved 35 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as develop",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_01e9ab7a_12f70646",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "01e9ab7a",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T03:40:53.664436+00:00",
-    "title": "Deepening: The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domains": [
@@ -608,7 +594,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
   },
   {
-    "consumed_by_exp_id": "d2d2bff1",
+    "consumed_by_exp_id": "",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domains": [
       "Novelty",
@@ -618,7 +604,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T01:28:27.691105+00:00",
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
@@ -711,6 +697,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T02:50:51.916559+00:00",
     "title": "Anti-Mathematics: What If All Axioms Were Negated?"
+  },
+  {
+    "consumed_by_exp_id": "21228762",
+    "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_1001",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T07:28:54.833066+00:00",
+    "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
   {
     "consumed_by_exp_id": "",
@@ -6984,6 +6985,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T07:12:46.540918+00:00",
     "title": "This cycle deepened the *dream logic* development (paraconsistent, non-monotone,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Topology of Impossible Objects\n\nThis cycle deepened the cohomological theory of impossible figures in two ways.\nFirst, the pointwise \"realizable iff zero holonomy\" dichotomy for one\u2013dimensional\nfigures (Penrose triangle, Escher staircase) was upgraded to a genuine homological\nstatement: the coboundary and holonomy maps form an exact two\u2013term complex, and the\nfirst cohomology group of a cyclic figure is *canonically isomorphic to the\ncoefficient group*, with holonomy realising the isomorphism. Second, the theory was\nextended to genuinely two\u2013dimensional figures (Escher's *Waterfall*) on the discrete\ntorus, where realizability is governed by a *local* curvature and *two* global\nperiods, together with a discrete Stokes / Gauss\u2013Bonnet identity forcing the total\ncurvature of any closed figure to vanish.\n\nThe following conjectures push the program further.\n\n## 1. Higher\u2013genus impossibility and the Betti numbers of a figure\n\n**Conjecture.** For a cyclic figure drawn on a closed orientable surface of genus\n`g`, the group of impossibility classes is free of rank `2g`, and a figure is\nrealizable exactly when it is flat and all `2g` period integrals around a symplectic\nbasis of loops vanish.\n\n**The key insight is** that impossibility is a first\u2013cohomology phenomenon, so the\nnumber of independent ways a figure can fail to close up is exactly the first Betti\nnumber of the surface on which it is drawn \u2014 one obstruction per independent loop.\n\n**Why now?** The one\u2013dimensional case (`H\u00b9(S\u00b9) \u2245 A`, rank `1`) and the toroidal case\n(`H\u00b9(T\u00b2) \u2245 A\u00b2`, rank `2`) are now both settled with explicit period maps and a\nmatching discrete Stokes identity. The pattern `rank = 2g` is the unmistakable next\ntarget, and the period\u2013integral machinery generalises verbatim once a basis of loops\nis fixed.\n\n## 2. Non\u2013abelian monodromy and the Penrose \"staircase group\"\n\n**Conjecture.** When the local gluing data of an impossible figure takes values in a\nnon\u2013abelian group `G` (rotations of apparent viewpoint, not merely depth shifts), the\nfigure is realizable iff its ordered monodromy is trivial, and the realizable figures\nform a normal subgroup whose quotient is a free product determined by the figure's\nloop structure.\n\n**The key insight is** that the abelian holonomy sum is the shadow of an ordered\nproduct of gluing transformations, so replacing a commutative group by a\nnon\u2013commutative one turns the single holonomy invariant into a full conjugacy class,\ndetecting subtler impossibilities invisible to depth alone.\n\n**Why now?** The additive `H\u00b9 \u2245 A` isomorphism and the multiplicative developable\nclassification are both in hand; they agree precisely because the coefficient group\nis abelian. Isolating where commutativity was used pinpoints exactly the step that\nmust be replaced to reach the non\u2013abelian regime.\n\n## 3. Klein bottles and the orientation obstruction as a torsion class\n\n**Conjecture.** On a non\u2013orientable base (M\u00f6bius band, Klein bottle) the impossibility\ngroup splits as a free part measuring depth holonomy and a `\u2124/2` torsion part\nmeasuring orientation reversal, and a figure is realizable iff both vanish; moreover\nthe `\u2124/2` part is detected by the parity of the number of orientation\u2013reversing\noverlaps.\n\n**The key insight is** that one\u2013sidedness is itself a cohomology class \u2014 the parity of\norientation flips around a loop \u2014 so the Klein bottle contributes a torsion summand\nthat no depth\u2013only invariant can see, cleanly separating \"impossible because of\nheight\" from \"impossible because of handedness\".\n\n**Why now?** The `\u2124/2` orientation obstruction already appears in the present cycle as\na nonzero holonomy class detecting non\u2013orientability of a one\u2013sided band. Placing it\nalongside the real depth invariant, as orthogonal summands of one impossibility group,\nis the natural unification and is directly supported by the completed exactness result.\n\n## 4. A quantitative Gauss\u2013Bonnet for impossible figures\n\n**Conjecture.** For a two\u2013dimensional figure the signed count of \"impossible tiles\"\n(squares of nonzero curvature), weighted by their curvature, is a topological\ninvariant of the underlying surface and equals zero on any closed surface but a\nprescribed nonzero constant on a surface with boundary, proportional to the boundary\nholonomy.\n\n**The key insight is** that the discrete Stokes identity proved this cycle \u2014 total\ncurvature vanishes on a closed torus \u2014 is the boundaryless case of a boundary formula\nin which local curvature and global boundary holonomy are exchanged, exactly as in the\nsmooth Gauss\u2013Bonnet theorem.\n\n**Why now?** The closed\u2013surface identity is established, and the period maps already\nencode boundary holonomy. Introducing a boundary and tracking how the total curvature\npicks up the boundary period is a direct, testable next step that would convert a\nqualitative impossibility criterion into a quantitative conservation law.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1002",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f57636f1",
+    "status": "available",
+    "timestamp": "2026-07-11T07:29:16.204110+00:00",
+    "title": "This cycle deepened the cohomological theory of impossible figures in two ways."
   },
   {
     "consumed_by_exp_id": "",
