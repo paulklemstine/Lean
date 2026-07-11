@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0643b2b3",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — The Caterer Hierarchy and Higher Layers\n\nThis cycle established the two lowest floors of the *caterer hierarchy*: the lazy caterer\nnumbers (plane regions from lines) and the cake",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 11,
-      "timestamp": "2026-07-10T20:52:48",
-      "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-    },
-    {
       "cycle_id": "a6f348ea",
       "domain": "Physics",
       "key_insight": "# Future Directions: Stone Duality for Neural Networks\n\nThe file `StoneDualityNeuralNetworks.lean` formalizes the finite-Boolean-algebra core of Stone\nduality for a single ReLU-type layer evaluated on",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-11T12:48:37",
       "title": "Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "cycle_id": "f6b0dfd4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-11T13:21:45",
+      "title": "Causal Loops in Category Theory: When Composition Loops Back"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "95c356ab",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. The exact three-colour homothety spectrum of short gap patterns\n\nFor a three-point pattern `{0, p, q}` with `0 < p < q`, define its three-colour\nhomothety number as the leas",
-      "quality_score": 0.8257369999999999,
-      "sorry_count": 1,
-      "theorem_count": 8,
-      "timestamp": "2026-07-03T20:14:15",
-      "title": "Exact value of G₃({0,2,5})"
-    },
     {
       "cycle_id": "6d5a2dac",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-11T12:48:37",
       "title": "Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "cycle_id": "f6b0dfd4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-11T13:21:45",
+      "title": "Causal Loops in Category Theory: When Composition Loops Back"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "39ced9f7",
-      "domain": "Applications",
-      "name": "over",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "fec9de1f",
-      "domain": "Novelty",
-      "name": "specialised",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "46d2d021",
-      "domain": "Applications",
-      "name": "and",
-      "quality": 0.82
-    },
     {
       "cycle_id": "46d2d021",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "exhibits",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "f6b0dfd4",
+      "domain": "Novelty",
+      "name": "flatten_nil",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "f6b0dfd4",
+      "domain": "Novelty",
+      "name": "flatten_leaf",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "f6b0dfd4",
+      "domain": "Novelty",
+      "name": "flatten_node",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T12:48:37",
+  "last_updated": "2026-07-11T13:21:45",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f0c42e84",
-        "quality": 0.83,
-        "theorems": 53,
-        "title": "Deepening: Non-Desarguesian Worlds: Geometry Without Desargues"
-      },
-      {
         "cycle_id": "f3c4c6a5",
         "quality": 0.83,
         "theorems": 100,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 40,
         "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
+      },
+      {
+        "cycle_id": "f6b0dfd4",
+        "quality": 0.83,
+        "theorems": 26,
+        "title": "Causal Loops in Category Theory: When Composition Loops Back"
       }
     ],
     "NumberTheory": [
