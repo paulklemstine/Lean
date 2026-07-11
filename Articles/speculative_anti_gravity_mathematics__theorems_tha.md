@@ -1,249 +1,87 @@
-# Anti-Gravity Mathematics: The Theorems That Float
+# Anti-Gravity Mathematics: The Theorems That Hold Everything Up
 
-## A skyline made of theorems
+Every mathematician has a favorite theorem — the one they reach for again and again, the one that seems to appear in the proof of everything. Ask an analyst and they might name the Mean Value Theorem. Ask an algebraist and they might name the Fundamental Theorem of Algebra. What these celebrated results share is not difficulty. Many of them have proofs that fit in a paragraph. What they share is *reach*: an enormous number of later results lean on them.
 
-Imagine the whole of cryptography laid out as a city skyline. Each building is a
-theorem. Some are squat utility sheds — small facts used once and forgotten.
-Others are skyscrapers: foundational results that thousands of other theorems
-lean on. The taller a building, the more of the city rests upon it.
+This tension — a short proof that supports a towering edifice — is the subject of what we will call **anti-gravity mathematics**. Just as an anti-gravity device would produce a large lifting force with almost no effort, an anti-gravity *theorem* produces a large amount of mathematical support with almost no proof. This article tells the story of how to make that poetic idea into precise mathematics, and what turns out to be true — and false — once you do.
 
-There is a natural intuition here, almost a law of nature. Big things should be
-heavy. A theorem that everything depends on *ought* to be hard-won — long,
-intricate, the product of a thousand careful steps. Surely you cannot build a
-skyscraper out of toothpicks.
+## Weighing a theorem
 
-And yet mathematics is full of counterexamples. The Fundamental Theorem of
-Algebra — every non-constant polynomial has a complex root — carries an enormous
-load across all of algebra and analysis, yet in the language of complex analysis
-its proof collapses to a couple of lines (a bounded entire function is constant,
-so a rootless polynomial's reciprocal would be constant — contradiction). Such
-results seem to defy the gravitational pull of their own importance. They are
-**anti-gravity theorems**: massive in influence, feather-light in proof.
+Imagine the whole of some mathematical library laid out as a network. Each theorem is a dot. We draw an arrow from theorem $a$ to theorem $b$ whenever $b$'s proof uses $a$. This network is the *dependency graph* of the library.
 
-This article is about making that poetic idea exact. We will build a small,
-self-contained mathematical world where "weight" and "proof complexity" are
-honest numbers, prove a hard ceiling relating the two, identify exactly which
-theorems sit on that ceiling, and finally show that these floating theorems are
-not rare curiosities but are *densely scattered* through the entire space — you
-can find one arbitrarily close to any theorem you like.
+Now we can measure two very different things about a single theorem $a$.
 
-## A number for every theorem
+The first is how much *rests on it*. Define the **gravitational weight** of $a$, written $w(a)$, as the number of theorems that depend on $a$:
+$$w(a) = \#\{\, b : a \text{ is used in the proof of } b \,\}.$$
+A theorem with huge weight is load-bearing: remove it, and a large part of the building comes down.
 
-To reason precisely we need a toy universe that is rich enough to be interesting
-but simple enough to be provable. We take it from cryptography, where theorems
-are literally *reductions*: "if primitive A is secure, then scheme B is secure."
-These reductions chain together into a dependency graph, and the most studied
-stratum of that graph is the one built on **one-way functions** (OWFs) — the
-bedrock objects from which pseudorandom generators, commitments, and signatures
-are all derived.
+The second is how much *effort it cost*. Let $\ell(a)$ denote the **proof length** of $a$ — the number of steps, lines, or lemmas its own proof requires.
 
-Here is the modelling leap that makes everything computable. We record a theorem
-of this stratum by a *single natural number*, its **dependency index**, written
-`depth`. This one number does double duty:
+Most theorems trade one for the other. A deep, hard-won result (large $\ell$) tends to be a specialized capstone that little else depends on (small $w$). A one-line triviality (small $\ell$) tends to be, well, trivial, and equally unused (small $w$). The interesting theorems live in the forbidden corner:
 
-- Its **magnitude** measures how many assumptions the theorem reaches — how much
-  of the city rests on it.
-- Its **prime factorization** lists the irreducible reduction steps that make up
-  its proof. Each prime factor is one step that cannot be broken down further.
+> A theorem is **anti-gravity** (at thresholds $w_0$ and $\ell_0$) if $w(a) \ge w_0$ and $\ell(a) \le \ell_0$ — **high weight, short proof.**
 
-A theorem is therefore just a wrapper around a number:
+These are the miracles: cheap to establish, yet holding up the sky.
 
-> **Definition (theorem).** An object of the OWF stratum is a structure carrying
-> one field, `depth`, a natural number.
+## A conservation law for libraries
 
-This is deliberately austere, and it is exactly the austerity that lets us prove
-theorems *about* theorems.
+Before hunting anti-gravity theorems, it helps to notice that the dependency network obeys a bookkeeping law, exactly like the classical "handshake lemma" for graphs.
 
-## Two numbers: weight and proof complexity
+Alongside the weight $w(a)$ (how many theorems use $a$), define the **in-degree** $d(b)$ of a theorem $b$ as the number of theorems that $b$ itself uses:
+$$d(b) = \#\{\, a : a \text{ is used in the proof of } b \,\}.$$
+Every arrow in the network has a tail and a head. Counting all arrows by their tails gives $\sum_a w(a)$; counting the same arrows by their heads gives $\sum_b d(b)$. They must agree:
+$$\sum_a w(a) = \sum_b d(b).$$
+This **handshake identity** says something homely but useful: *the total amount of "support" supplied by all theorems equals the total amount of "reliance" consumed by all theorems.* Support is conserved. Nothing is created or destroyed in the accounting of dependencies.
 
-From the single dependency index we read off the two quantities the whole story
-turns on.
+A first consequence is a hard ceiling. In a library of $N$ theorems, no theorem can be depended on by more than $N$ others, so $w(a) \le N$. And if we insist — as we should — that no theorem's proof cites *itself*, then no theorem can support all $N$, giving the sharper bound $w(a) < N$.
 
-The **weight** of a theorem is its dependency index itself:
-$$\text{weight}(T) = T.\text{depth}.$$
-This is the gravitational mass — the number of assumptions reachable along the
-dependency graph.
+## The averaging argument: something is always heavy
 
-The **proof complexity** is the number of irreducible reduction steps, which is
-the number of prime factors of `depth` *counted with multiplicity*:
-$$\text{proofComplexity}(T) = \Omega(T.\text{depth}),$$
-where $\Omega(n)$ is the length of the list of prime factors of $n$. For example
-$\Omega(12) = \Omega(2 \cdot 2 \cdot 3) = 3$ and $\Omega(2^{10}) = 10$.
+The handshake identity feeds directly into the central engine of the whole theory: **averaging**.
 
-Why prime factors? Because primes are the atoms of multiplication: a number is
-built up by multiplying primes, and you cannot factor a prime any further. In
-our analogy, a prime factor is a reduction step with no internal structure — a
-genuine, irreducible piece of proof. The total proof is the product of its
-atomic steps, and its complexity is how many atoms it took.
+If the total weight is $\sum_a w(a)$ and there are $N$ theorems, then the *average* weight is $\frac{1}{N}\sum_a w(a)$. Some theorem must be at least average. More precisely, if $a^\star$ is a theorem of maximum weight, then
+$$\sum_b w(b) \le N \cdot w(a^\star).$$
+A heaviest theorem always exists, and it carries at least the average load. This is the mathematical version of the intuition that *every* library has its pillars.
 
-## The trade-off: you cannot cheat the ceiling
+But being heavy is only half of anti-gravity. We also need the pillar to be *cheap*. The decisive result sharpens the averaging argument by restricting attention to the theorems with short proofs.
 
-Now the central result. There is a hard wall between weight and proof
-complexity, and it is governed by the number 2 — the smallest prime, the
-cheapest possible irreducible step.
+> **Existence of anti-gravity theorems.** Let $S$ be the set of short-proof theorems, those with $\ell(a) \le \ell_0$. Suppose these short-proof theorems together carry a total weight of at least $w_0 \cdot |S|$. Then at least one of them has weight $w(a) \ge w_0$ — that is, an anti-gravity theorem exists.
 
-> **The Anti-Gravity Trade-off.** For every theorem $T$ with positive weight,
-> $$2^{\text{proofComplexity}(T)} \le \text{weight}(T).$$
+The proof is a pure pigeonhole: if *every* short-proof theorem had weight below $w_0$, their total weight would fall below $w_0 \cdot |S|$, contradicting the hypothesis. So the short-proof theorems cannot all be lightweight; one of them must secretly be a pillar.
 
-Read it the revealing way by taking logarithms:
-$$\text{proofComplexity}(T) \le \log_2 \text{weight}(T).$$
+This is the honest, provable core of the romantic slogan "anti-gravity theorems exist." They exist precisely when the cheap theorems, taken as a group, do a lot of collective lifting.
 
-This says something striking. A theorem can carry an *astronomical* weight while
-needing only a *logarithmic* number of irreducible steps. A theorem of weight a
-billion needs at most about 30 atomic steps. The skyline can soar, but the
-proof-ladders are short.
+## Foundations are heavy — provably
 
-The reason is beautifully simple. Every prime factor is at least 2. If a number
-$n > 0$ has $k$ prime factors, then multiplying them together gives back $n$, and
-since each factor is $\ge 2$, the product is at least $2^k$. So $2^k \le n$. That
-is the entire argument: the smallest a number with $k$ prime factors can be is
-$2^k$, achieved by the pure power of two. Everything heavier than that pushes the
-weight up *without* adding steps.
+There is a satisfying structural reason that the most basic theorems tend to be the heaviest. Dependency is *transitive*: if $b$ relies on $a$, and $c$ relies on $b$, then $c$ ultimately relies on $a$. In a library where we track all such indirect reliance, this has a clean consequence.
 
-This already reframes the anti-gravity puzzle. It is not paradoxical that
-important theorems have short proofs — it is *forced*. Weight grows
-exponentially in proof complexity, so by the time a theorem is genuinely heavy,
-its proof complexity has been squeezed down to a logarithm.
+> **Foundational theorems are heaviest.** If $b$ depends on $a$, then $w(b) \le w(a)$.
 
-## Floating theorems: equality on the ceiling
+The reason is immediate once stated: every theorem that depends on $b$ also depends, through $b$, on $a$. So $a$ inherits all of $b$'s dependents and possibly more. Weight can only accumulate as you descend toward the foundations. The bedrock axioms and first lemmas of a subject are, by this logic, the heaviest objects in it — and they are typically also the ones with the shortest proofs. Anti-gravity is not an accident; it is baked into the shape of mathematical knowledge.
 
-The trade-off is an inequality, so most theorems sit strictly below the ceiling:
-they carry some "dead weight," extra mass beyond the bare minimum their proof
-length demands. The interesting ones are those pressed flat against the ceiling.
+## Two libraries you can hold in your hand
 
-> **Definition (anti-gravity theorem).** A theorem $T$ is *anti-gravity* when it
-> achieves equality in the trade-off:
-> $$2^{\text{proofComplexity}(T)} = \text{weight}(T).$$
+Abstract existence is reassuring, but it is worth seeing anti-gravity theorems in fully explicit examples.
 
-These are the theorems that float. For their proof complexity they carry the
-absolute maximum weight allowed by the laws of the universe — not one assumption
-could be added without lengthening the proof. They are perfectly efficient
-load-bearers: every atom of proof is doing the most work it possibly can.
+**The linear library.** Take $n$ theorems arranged in a line, $0, 1, 2, \dots, n-1$, where theorem $j$ depends on theorem $i$ exactly when $i < j$. Each theorem builds on all the ones before it. The bottom theorem, number $0$, is depended on by every one of the other $n-1$ theorems, so its weight is exactly
+$$w(0) = n - 1.$$
+If every proof in this library has length $1$, then theorem $0$ has weight $n-1$ and proof length $1$: it is anti-gravity at thresholds $w_0 = n-1$, $\ell_0 = 1$. Its influence grows without bound as the library grows, while its cost stays fixed. This is the linear, $O(n)$, case.
 
-Which numbers achieve equality $2^k = n$ with exactly $k$ prime factors? Only the
-pure powers of two. A power of two $2^p$ factors as $p$ copies of the prime 2, so
-it has exactly $p$ prime factors and weight exactly $2^p$. Anything else either
-has a larger prime somewhere (more weight, same or fewer steps — strictly below
-the ceiling) or simply isn't a power of two.
+**The grid library.** Now arrange theorems in a rectangular grid of $n$ rows and $m$ columns, and say a node depends on another whenever it lies in a strictly later row. A single node in the bottom row is then depended on by *every node in every later row* — that is $(n-1)\cdot m$ theorems. Its weight is
+$$w = (n-1)\cdot m,$$
+which grows *quadratically* in the size of the library, while its proof length remains $1$. This realizes the folklore example of a theorem with weight $O(n^2)$ and proof length $O(1)$: one modest lemma silently underwriting a quadratic swarm of consequences.
 
-## An infinite ladder of floating theorems
+## An honest ending: the myth of the fixed 10%
 
-This gives us an explicit, infinite family of anti-gravity theorems, one for each
-rung $p$:
+It is tempting to leap from these examples to grand universal laws: *"Anti-gravity theorems are everywhere,"* or the oft-repeated folklore that *"about 10% of the theorems in any library are anti-gravity."* Here the mathematics delivers a bracing correction.
 
-> **Definition (prime witness).** The $p$-th witness is the theorem of dependency
-> index $2^p$.
+> **No dependencies, no anti-gravity.** Consider a library in which no theorem depends on any other — every result stands alone. Then every theorem has weight $0$. For any positive weight threshold $w_0 \ge 1$, *no* theorem clears the bar, so the library contains **no anti-gravity theorems at all.**
 
-Its arithmetic is exact and clean:
-- its weight is $2^p$;
-- its proof complexity is exactly $p$ (the factorization of $2^p$ is $p$ twos);
-- and therefore $2^p = 2^p$ — it *is* anti-gravity.
+This single counterexample sinks the universal claims. There is no law guaranteeing a fixed positive fraction of anti-gravity theorems in *every* possible library, because a library with a sparse enough dependency structure has none. The famous "10%" is, at best, an empirical average over a particular real-world corpus — a description of how mathematicians actually organize their work, not a theorem about all conceivable organizations.
 
-So the witness at rung $p$ has proof complexity equal to $\log_2$ of its weight,
-the minimum the trade-off permits. Here is a concrete tower:
+What survives, and what we have proved, is more nuanced and more interesting than the slogan. Anti-gravity theorems are not *guaranteed*, but they are *forced* whenever the cheap results collectively do heavy lifting (the averaging theorem); they *cluster at the foundations* whenever dependency is transitive (the heaviness theorem); and they can be exhibited with any prescribed growth rate, linear or quadratic, in fully explicit libraries. The picture that emerges is that anti-gravity is a real and structural phenomenon — just not a universal constant of nature.
 
-| rung $p$ | weight $2^p$ | proof complexity | floats? |
-|---|---|---|---|
-| 0 | 1 | 0 | yes (trivially) |
-| 1 | 2 | 1 | yes |
-| 4 | 16 | 4 | yes |
-| 10 | 1024 | 10 | yes |
-| 20 | 1048576 | 20 | yes |
+## Why it matters
 
-By contrast a theorem of dependency index $12 = 2^2\cdot 3$ has weight 12 and
-proof complexity 3, but $2^3 = 8 < 12$ — it sits *below* the ceiling and does not
-float.
+Thinking of a theorem's worth as a *product* of reach and cheapness reframes a lot of ordinary mathematical experience. It explains why the results we teach first are so often the ones with two-line proofs: they are the heaviest load-bearers, and their cheapness is exactly what makes them safe to build on. It suggests a principled way to prioritize verification effort in large formal libraries — audit the anti-gravity theorems first, because an error there propagates the furthest for the least apparent cost. And it turns a vague aesthetic judgment ("this is a beautiful, powerful little theorem") into a quantity you can compute: high weight, short proof.
 
-Crucially, this ladder reaches arbitrarily high. Given *any* theorem of any
-weight whatsoever, there is a witness higher than it. The argument uses one of
-the oldest facts in mathematics — there are infinitely many primes, so we can
-always find a prime exponent $p$ exceeding any target. Since $2^p \ge p$, that
-witness out-weighs the theorem we started with. In the language of orders, the
-floating theorems are **cofinal**: nothing in the universe is heavier than every
-witness.
-
-## The skyline as a topology
-
-To state the grand finale we need a notion of "nearby theorems." We order the
-universe by weight — one theorem precedes another when it is no heavier — and
-then we equip it with the natural topology that an ordering carries, the
-**Alexandrov upper-set topology**.
-
-In this topology a region is "open" precisely when it is *upward closed*: if a
-theorem is in the region, every heavier theorem is too. The simplest such regions
-are the **basic open sets**, each one the collection of all theorems at least as
-heavy as some fixed threshold $a$ — written $[a, \infty)$. Think of them as
-"everything from this floor up." These basic regions are the lenses through which
-we zoom in on any part of the skyline.
-
-A set of theorems is **dense** when it intrudes into *every* nonempty open
-region, no matter how small — there is always a member of the set lurking in any
-neighborhood you examine. Density is the mathematical way of saying "you can't
-get away from them."
-
-## Density: the floating theorems are everywhere
-
-Here is the climax.
-
-> **The Density Theorem.** In the Alexandrov topology on the OWF stratum, the
-> anti-gravity theorems are dense.
-
-The heart of the proof is a single, satisfying observation:
-
-> Every nonempty "from this floor up" region $[a, \infty)$ contains an
-> anti-gravity theorem.
-
-And we already know why. Given any threshold $a$, climb the infinite ladder to a
-witness $2^p$ heavier than $a$. That witness lies in the region $[a, \infty)$ — it
-clears the threshold — and it floats. Since every nonempty open region contains a
-"from this floor up" region inside it, and every one of those contains a witness,
-the floating theorems leak into every neighborhood of the entire space.
-
-This is the rigorous heart of the original speculation that "anti-gravity
-theorems are dense in the space of all theorems." In our cryptographic universe
-the statement is not a metaphor; it is a proved topological fact. You cannot draw
-a region around any theorem, however tight, without trapping a floating theorem
-inside it.
-
-## What about the "10%"?
-
-The original conjecture came with a tantalizing prediction: that roughly 10% of
-the theorems in any formal library are anti-gravity. Our work clarifies what is
-robust about that intuition and what is not.
-
-What is robust — and now *proved* — is the qualitative claim: floating theorems
-are not rare. They form a dense set; they appear arbitrarily high and
-arbitrarily close to everything. What is *not* universal is the precise figure of
-10%. The fraction of theorems pressed against the ceiling depends entirely on the
-shape of the dependency graph. In a library shaped like a star (one hub, many
-leaves) the fraction is tiny; in a library that is a long total chain the
-fraction is large. The "10%" is best understood as a statement about the *growth
-rate* of total dependency mass in real libraries — only a near-quadratic mass
-budget yields a constant positive fraction. The clean, universal, unconditional
-truth is density, and that is what we have nailed down.
-
-## Why this matters
-
-Beyond the pleasure of turning a slogan into a theorem, the anti-gravity picture
-offers a lens on mathematical and cryptographic architecture.
-
-It explains why foundational results *look* miraculous. We instinctively expect
-load and effort to scale together, but the trade-off shows weight grows
-exponentially in proof complexity. The deepest theorems are precisely the ones
-where this exponential gap has opened widest — they *must* have short proofs
-relative to their reach, or they could not be so heavy.
-
-It suggests a search strategy. If floating theorems are dense, then near any
-result you care about there is a maximally efficient reformulation — a way to
-carry the same load with a shorter proof ladder. Hunting for the nearest witness
-is hunting for the most economical possible argument.
-
-And it gives cryptographers a clean order-theoretic language for "foundational."
-The one-way function sits at the bottom of the reduction order, the universal
-load-bearer; in the future-directions program it is conjectured to be exactly the
-weight-maximizer of the whole hierarchy. Anti-gravity is the geometry of
-foundations: the lighter the proof relative to the load it carries, the closer a
-theorem floats to the bedrock everything else stands on.
-
-The skyline, it turns out, is held up by toothpicks after all — but only the
-sturdiest, most perfectly placed ones, and they are everywhere you look.
+The dream of anti-gravity — enormous lift for negligible effort — is impossible in physics. In mathematics, it happens every day. The surprise is not that such theorems exist. It is that, once you weigh them honestly, you can prove exactly when they must.

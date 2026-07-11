@@ -1,305 +1,165 @@
-# Anti-Gravity Theorems in the Cryptographic Hardness Hierarchy: A Weight–Complexity Trade-off and a Density Theorem
-
-**Author:** Aristotle
-**Date:** 2026-06-20
-**Domain:** Cryptography
+# A Combinatorial Theory of Anti-Gravity Theorems: Weight, Cheapness, and the Structure of Dependency
 
 ## Abstract
 
-We formalize the folklore notion of an *anti-gravity theorem* — a result of large
-influence ("gravitational weight") but short proof — inside the one-way-function
-(OWF) stratum of a cryptographic hardness hierarchy. Modelling each theorem by a
-single natural number, its *dependency index* `depth`, we define its **weight**
-as `depth` (the number of reachable assumptions) and its **proof complexity** as
-$\Omega(\text{depth})$, the number of prime factors of `depth` with multiplicity
-(the count of irreducible reduction steps). Our main structural result is the
-**Anti-Gravity Trade-off**: for every theorem of positive weight,
-$2^{\text{proofComplexity}} \le \text{weight}$, equivalently
-$\text{proofComplexity} \le \log_2 \text{weight}$. We call a theorem
-*anti-gravity* when it attains equality, and we exhibit an explicit cofinal
-family of such theorems — the prime witnesses $2^p$ — whose proof complexity is
-exactly $p = \log_2(2^p)$. Equipping the stratum with the Alexandrov upper-set
-topology of the weight preorder, we prove the **Density Theorem**: the
-anti-gravity theorems are dense; every nonempty basic open set contains one.
-Every result has been formally verified. We discuss why the universal,
-unconditional truth is *density* rather than any fixed numeric fraction such as
-the conjectured "10%."
+We introduce a finite combinatorial model of mathematical libraries in which each theorem is a vertex of a directed *dependency graph* and an edge $a \to b$ records that theorem $b$ uses theorem $a$ in its proof. Within this model we define the **gravitational weight** of a theorem as the number of theorems that depend on it, and we call a theorem **anti-gravity** when it combines *high weight* with a *short proof*. We prove a coherent collection of results about this notion: a handshake identity equating total weight with total dependency count; tight upper bounds on weight; an averaging principle guaranteeing a heaviest theorem carrying at least the average load; a pigeonhole existence theorem giving precise conditions under which an anti-gravity theorem must exist; a monotonicity theorem showing that, under transitive dependency, more foundational theorems are heavier; and two families of fully explicit witnesses — a *linear* library realizing weight $\Theta(n)$ and a *grid* library realizing weight $\Theta(n\cdot m)$, each with constant proof length. Finally we refute, by explicit counterexample, the folklore universal claims that anti-gravity theorems appear in *every* library and that a fixed fraction (e.g. 10%) of theorems are anti-gravity: a dependency-free library contains none. The result is a precise, honest account of a phenomenon that is structural but not universal.
 
----
+**Keywords:** dependency graph, gravitational weight, anti-gravity theorem, handshake lemma, double counting, averaging principle, pigeonhole, transitive relation, proof length.
 
 ## 1. Introduction
 
-A recurring observation across mathematics is that some theorems are
-disproportionately influential relative to the effort needed to prove them. The
-Fundamental Theorem of Algebra underwrites vast tracts of algebra and analysis
-yet admits a one-line proof via Liouville's theorem; in cryptography, the
-equivalence of one-way functions with pseudorandom generators is foundational but
-follows from a small number of reductions. We call such results **anti-gravity
-theorems**: heavy in influence, light in proof.
+Mathematical folklore holds that a handful of theorems in any subject do a disproportionate share of the work: they have short, memorable proofs yet appear in the proofs of a vast number of downstream results. The Fundamental Theorem of Algebra, once complex analysis is available, is proved in a few lines but underwrites an enormous body of algebra. This article makes the phenomenon precise. We call such theorems **anti-gravity** — echoing the physical fantasy of a device that provides great lift for negligible effort — because they provide great mathematical *support* (many dependents) for negligible *cost* (a short proof).
 
-To make this precise one must (i) define "weight" and "proof complexity" as
-honest numerical invariants, (ii) relate them, and (iii) say something
-quantitative about how common anti-gravity theorems are. This paper does all
-three inside a deliberately minimal but faithful model drawn from the
-cryptographic reduction graph, and every statement is machine-checked.
+Our contributions are:
 
-The choice of cryptography is natural: there, theorems *are* reductions, and the
-reductions assemble into a dependency DAG whose most-studied component is the OWF
-stratum. Our contributions are:
+1. A minimal finite model (Section 2) of a library as a finite vertex set with a decidable dependency relation, together with the definitions of gravitational weight, in-degree, proof length, and anti-gravity.
+2. Structural identities and bounds (Section 3): a handshake/double-counting identity and sharp weight bounds.
+3. An averaging principle and a pigeonhole existence theorem for anti-gravity theorems (Section 4), giving the exact hypothesis under which existence is forced.
+4. A monotonicity theorem under transitive dependency (Section 5): foundations are heaviest.
+5. Explicit constructions realizing linear and quadratic weight with constant proof length (Section 6).
+6. A refutation of the over-strong universal predictions (Section 7).
 
-1. A numerical model of OWF-stratum theorems by a dependency index, with weight
-   and proof complexity read off arithmetically (§2).
-2. The Anti-Gravity Trade-off $2^{\text{proofComplexity}} \le \text{weight}$,
-   bounding proof complexity logarithmically in weight (§3).
-3. An explicit cofinal family of anti-gravity theorems, the prime witnesses (§4).
-4. A topology on the stratum and a Density Theorem for anti-gravity theorems
-   (§5).
-5. A discussion of why "density," not a fixed fraction, is the robust conclusion
-   (§6), with algorithms and applications (§7) and future work (§8).
+We are careful throughout to separate what is *provable* from what is *folklore*. Two of the theme's most quotable claims — "density in the space of all theorems" and "exactly 10% of theorems are anti-gravity" — do not survive scrutiny as universal statements, and we say so precisely.
 
----
+## 2. The model
 
-## 2. The model: dependency index, weight, and proof complexity
+**Definition 2.1 (Library).** A *library* is a finite type $V$ (the theorems) equipped with a decidable binary relation $D$ on $V$. We read $D(a,b)$ as "$b$ depends on $a$", i.e. theorem $a$ is used in the proof of theorem $b$. We write $N = |V|$ for the number of theorems.
 
-We represent a theorem of the OWF stratum by a single natural number. Its
-magnitude encodes how many assumptions it reaches; its prime factorization
-encodes the irreducible reduction steps in its proof.
+**Definition 2.2 (Gravitational weight).** The *gravitational weight* of a theorem $a \in V$ is the number of theorems that depend on it:
+$$w(a) \;=\; \#\{\, b \in V : D(a,b) \,\}.$$
 
-> **Definition 1 (OWF-stratum theorem, `OWFStratum`).** An object of the OWF
-> stratum is a structure with one field, `depth : ℕ`, its *dependency index*.
+**Definition 2.3 (In-degree).** The *in-degree* of a theorem $b \in V$ is the number of theorems it directly depends on:
+$$d(b) \;=\; \#\{\, a \in V : D(a,b) \,\}.$$
 
-> **Definition 2 (weight, `weight`).** The weight of a theorem $T$ is its
-> dependency index:
-> $$\text{weight}(T) = T.\text{depth}.$$
-> It counts the assumptions reachable along the dependency graph (the
-> "gravitational mass"). In particular `weight ⟨n⟩ = n` (`weight_mk`).
+**Definition 2.4 (Proof length).** A *proof-length function* is any function $\ell : V \to \mathbb{N}$; $\ell(a)$ measures the cost (steps, lines, or cited lemmas) of the proof of $a$.
 
-> **Definition 3 (proof complexity, `proofComplexity`).** The proof complexity of
-> $T$ is the number of prime factors of its dependency index counted with
-> multiplicity:
-> $$\text{proofComplexity}(T) = \Omega(T.\text{depth})
->   = \text{length}\big(\text{primeFactorsList}(T.\text{depth})\big).$$
-> Each prime factor models one *irreducible* reduction step. In particular
-> `proofComplexity ⟨n⟩` is the length of the prime-factor list of $n$
-> (`proofComplexity_mk`).
+**Definition 2.5 (Anti-gravity theorem).** Fix a weight threshold $w_0 \in \mathbb{N}$, a length bound $\ell_0 \in \mathbb{N}$, and a proof-length function $\ell$. A theorem $a$ is *anti-gravity at $(w_0, \ell_0)$* if
+$$w(a) \ge w_0 \qquad\text{and}\qquad \ell(a) \le \ell_0,$$
+i.e. it has high weight and a short proof.
 
-**Remark.** The modelling assumption is that an irreducible reduction step is an
-atomic, unfactorable contribution to a proof, mirrored by a prime factor of the
-index; composing two reductions multiplies their indices, so the total proof is
-the product of its atoms and its length is the count of those atoms. With
-$n=12=2^2\cdot 3$ we get weight $12$ and proof complexity $3$; with $n=2^{10}$ we
-get weight $1024$ and proof complexity $10$.
+These definitions are deliberately spare: no acyclicity, no connectivity, no metric on statements is assumed. Every theorem below holds at this level of generality unless a hypothesis is stated explicitly.
 
----
+## 3. Conservation and bounds
 
-## 3. The Anti-Gravity Trade-off
+**Theorem 3.1 (Handshake identity).** For every library,
+$$\sum_{a \in V} w(a) \;=\; \sum_{b \in V} d(b).$$
 
-The crux is a tight relation between the two invariants, driven by the fact that
-the smallest prime is $2$.
+*Proof sketch.* Both sides count the same object — the set of dependency pairs $\{(a,b) : D(a,b)\}$ — organized differently. Writing each weight and in-degree as a sum of indicator terms, $w(a) = \sum_b [D(a,b)]$ and $d(b) = \sum_a [D(a,b)]$, the two double sums differ only in the order of summation, so they are equal by commuting the two finite sums. $\qquad\blacksquare$
 
-> **Lemma 7 (`two_pow_length_le_prod`).** For any finite list $l$ of natural
-> numbers each at least $2$, $\;2^{|l|} \le \prod l.$
->
-> *Proof sketch.* Induction on $l$. The empty list gives $2^0 = 1 \le 1$. For a
-> head $x \ge 2$ and tail $xs$, the inductive hypothesis gives
-> $2^{|xs|} \le \prod xs$, hence
-> $2^{|xs|+1} = 2^{|xs|}\cdot 2 \le (\prod xs)\cdot x = \prod(x::xs)$. ∎
+The identity is the discrete analogue of a conservation law: the total *support* offered by all theorems equals the total *reliance* consumed by all theorems. Every dependency edge is counted once from each end.
 
-> **Theorem 8 (Anti-Gravity Trade-off, `antigravity_tradeoff`).** For every
-> theorem $T$ with $0 < \text{weight}(T)$,
-> $$2^{\text{proofComplexity}(T)} \le \text{weight}(T).$$
-> Equivalently, $\text{proofComplexity}(T) \le \log_2 \text{weight}(T)$.
->
-> *Proof sketch.* Let $d = T.\text{depth} = \text{weight}(T) > 0$. Every element
-> of $d$'s prime-factor list is a prime, hence $\ge 2$
-> (`Nat.prime_of_mem_primeFactorsList`, `Nat.Prime.two_le`). Apply Lemma 7 to
-> that list: $2^{\text{(list length)}} \le \prod(\text{list})$. For $d \ne 0$ the
-> product of the prime-factor list equals $d$ itself
-> (`Nat.prod_primeFactorsList`). The list length is exactly
-> $\text{proofComplexity}(T)$ and the product is $\text{weight}(T)$, giving
-> $2^{\text{proofComplexity}(T)} \le \text{weight}(T)$. ∎
+**Theorem 3.2 (Weight ceiling).** For every $a \in V$, $\; w(a) \le N$.
 
-**Interpretation.** Weight is at least exponential in proof complexity, so proof
-complexity is at most logarithmic in weight. A theorem of weight $10^9$ has proof
-complexity at most $\lfloor \log_2 10^9 \rfloor = 29$. Heavy theorems are
-*forced* to have short proof ladders; the apparent paradox of "important yet
-easy" results is a structural necessity, not a coincidence.
+*Proof sketch.* The dependents of $a$ form a subset of $V$, and a subset of an $N$-element set has at most $N$ elements. $\qquad\blacksquare$
 
----
+**Theorem 3.3 (Strict ceiling under irreflexivity).** If $V$ is nonempty and $D$ is irreflexive (no theorem depends on itself, $\neg D(a,a)$ for all $a$), then $w(a) < N$ for every $a$.
 
-## 4. Anti-gravity theorems and a cofinal family
+*Proof sketch.* Under irreflexivity, $a$ is never one of its own dependents, so the set of dependents of $a$ is a *proper* subset of $V$ (it omits $a$), and a proper subset of a finite set has strictly smaller cardinality. $\qquad\blacksquare$
 
-> **Definition 9 (anti-gravity theorem, `IsAntiGravity`, `antiGravitySet`).** A
-> theorem $T$ is *anti-gravity* iff it attains equality in Theorem 8:
-> $$2^{\text{proofComplexity}(T)} = \text{weight}(T).$$
-> The anti-gravity set is $\{T \mid \text{IsAntiGravity}(T)\}$.
+Irreflexivity is the mild and natural assumption that no proof cites the very theorem it is proving; under it, no single theorem can support the entire library.
 
-Anti-gravity theorems carry the maximal weight permitted by their proof
-complexity: every irreducible step is maximally load-bearing. Attaining equality
-$2^k = n$ with $\Omega(n) = k$ forces all prime factors to equal $2$, i.e. $n$ is
-a pure power of two. This yields a canonical infinite family.
+## 4. Averaging and the existence of anti-gravity theorems
 
-> **Definition 10 (prime witness, `primeWitness`).** For $p \in \mathbb{N}$, the
-> $p$-th prime witness is the theorem of dependency index $2^p$:
-> $$\text{primeWitness}(p) = \langle 2^p \rangle.$$
+**Theorem 4.1 (A heaviest theorem exists).** If $V$ is nonempty, there is a theorem $a^\star \in V$ with $w(b) \le w(a^\star)$ for all $b \in V$.
 
-> **Lemma 11 (`weight_primeWitness`, `proofComplexity_primeWitness`).**
-> $\text{weight}(\text{primeWitness}(p)) = 2^p$ and
-> $\text{proofComplexity}(\text{primeWitness}(p)) = p.$
->
-> *Proof sketch.* The weight is $2^p$ by definition. The prime factorization of
-> $2^p$ is $p$ copies of the prime $2$
-> (`Nat.Prime.primeFactorsList_pow` with `Nat.prime_two`), so its list has length
-> $p$. ∎
+*Proof sketch.* The weight function takes values in $\mathbb{N}$ on the nonempty finite set $V$; a real- or integer-valued function on a nonempty finite set attains its maximum. $\qquad\blacksquare$
 
-> **Theorem 12 (`primeWitness_isAntiGravity`, `primeWitness_mem`).** Every prime
-> witness is anti-gravity: $2^{\,p} = 2^p$, so
-> $\text{primeWitness}(p) \in \text{antiGravitySet}$.
->
-> *Proof sketch.* Substitute Lemma 11 into Definition 9:
-> $2^{\text{proofComplexity}} = 2^p = \text{weight}$. ∎
+**Theorem 4.2 (Averaging bound).** If $a^\star$ is a theorem of maximum weight, then
+$$\sum_{b \in V} w(b) \;\le\; N \cdot w(a^\star).$$
+Equivalently, $w(a^\star) \ge \frac{1}{N}\sum_b w(b)$: the heaviest theorem carries at least the average weight.
 
-Thus each witness has proof complexity $p = \log_2$ of its weight — the minimum
-allowed by Theorem 8. The family also exhausts the weight order from below.
+*Proof sketch.* Bound each summand $w(b)$ by the maximum $w(a^\star)$ and sum over the $N$ theorems. $\qquad\blacksquare$
 
-> **Theorem 13 (prime cofinality, `primeWitness_cofinal`).** For every theorem
-> $a$ there exists a *prime* $p$ with $a \le \text{primeWitness}(p)$.
->
-> *Proof sketch.* By the infinitude of primes (`Nat.exists_infinite_primes`)
-> choose a prime $p \ge \text{weight}(a)$. Since $p \le 2^p$, we get
-> $\text{weight}(a) \le p \le 2^p = \text{weight}(\text{primeWitness}(p))$, i.e.
-> $a \le \text{primeWitness}(p)$ in the weight preorder. ∎
+The averaging bound guarantees a heavy theorem, but heaviness alone is not anti-gravity — we must locate a heavy theorem *among the cheap ones*. The next theorem does exactly this by applying the averaging idea to the restricted population of short-proof theorems.
 
-The prime witnesses are therefore cofinal: no theorem out-weighs all of them.
+**Theorem 4.3 (Existence of anti-gravity theorems).** Let $S = \{\, a \in V : \ell(a) \le \ell_0 \,\}$ be the set of short-proof theorems, and suppose $S$ is nonempty. If
+$$|S| \cdot w_0 \;\le\; \sum_{a \in S} w(a),$$
+then there exists a theorem $a \in S$ that is anti-gravity at $(w_0, \ell_0)$.
 
----
+*Proof sketch.* Let $a$ maximize $w$ over the nonempty finite set $S$; then $a$ has a short proof by construction. If $a$ were *not* anti-gravity, we would have $w(a) < w_0$, and since $a$ is the maximizer, $w(b) < w_0$ for every $b \in S$. Summing this strict bound over the $|S|$ elements of $S$ gives $\sum_{a\in S} w(a) < |S|\cdot w_0$, contradicting the hypothesis. Hence $w(a) \ge w_0$ and $a$ is anti-gravity. $\qquad\blacksquare$
 
-## 5. Topology and the Density Theorem
+Theorem 4.3 is the precise, provable rendering of the slogan "anti-gravity theorems exist." Existence is *not* automatic; it is forced exactly when the cheap theorems, as a collective, carry at least $w_0$ weight on average. When the short-proof theorems do enough total lifting, one of them must be a hidden pillar.
 
-To speak of "nearby theorems" we order the stratum by weight and take the
-order-induced Alexandrov topology.
+## 5. Foundations are heaviest
 
-> **Definition 4 (weight preorder, `Preorder OWFStratum`, `le_iff_weight`).**
-> $a \le b \iff \text{weight}(a) \le \text{weight}(b)$. Reflexivity and
-> transitivity are inherited from $\le$ on $\mathbb{N}$.
+**Theorem 5.1 (Monotonicity of weight under transitive dependency).** Suppose $D$ is transitive: whenever $D(a,b)$ and $D(b,c)$, also $D(a,c)$. Then $D(a,b)$ implies
+$$w(b) \le w(a).$$
 
-> **Definition 5 (Alexandrov topology, `TopologicalSpace OWFStratum`,
-> `isOpen_iff_isUpperSet`).** A set $s$ is open iff it is an *upper set* for the
-> weight preorder ($x \in s$ and $x \le y$ imply $y \in s$). This is a topology:
-> the universe is upper (`isUpperSet_univ`), and upper sets are closed under
-> binary intersection and arbitrary union (`isUpperSet_sUnion`).
+*Proof sketch.* Suppose $D(a,b)$. Every dependent $c$ of $b$ satisfies $D(b,c)$; combined with $D(a,b)$ and transitivity, $D(a,c)$, so $c$ is also a dependent of $a$. Thus the dependents of $b$ inject into the dependents of $a$, and cardinalities give $w(b) \le w(a)$. $\qquad\blacksquare$
 
-> **Lemma 6 (basic opens, `isOpen_Ici`).** Each principal upper set
-> $\text{Ici}(a) = \{x \mid a \le x\}$ is open (`isUpperSet_Ici`). The sets
-> $\text{Ici}(a)$ form a basis: every nonempty open set contains some
-> $\text{Ici}(a)$ around each of its points.
+Interpreted along a transitive dependency order (for instance the reflexive-transitive closure of "directly uses"), weight is monotone toward the foundations: the deeper and more basic a theorem, the more theorems accumulate above it, and the greater its gravitational weight. Since foundational results also tend to have the shortest proofs, this theorem is the structural reason anti-gravity theorems cluster at the base of a subject.
 
-> **Lemma 14 (`basic_open_contains_antiGravity`).** Every nonempty basic open set
-> $\text{Ici}(a)$ contains an anti-gravity theorem.
->
-> *Proof sketch.* Given the threshold $a$, take a prime $p$ with
-> $a \le \text{primeWitness}(p)$ (Theorem 13). Then
-> $\text{primeWitness}(p) \in \text{Ici}(a)$, and it is anti-gravity
-> (Theorem 12). ∎
+## 6. Explicit witnesses
 
-> **Theorem 15 (Density Theorem, `antiGravity_dense`).** The anti-gravity
-> theorems are dense in the Alexandrov topology on the OWF stratum.
->
-> *Proof sketch.* Density means the anti-gravity set meets every nonempty open
-> set $U$. Pick $x \in U$. Since $U$ is an upper set containing $x$, it contains
-> $\text{Ici}(x)$. By Lemma 14, $\text{Ici}(x)$ contains an anti-gravity theorem,
-> which therefore lies in $U$. Hence the anti-gravity set meets $U$. ∎
+The existence theorem is non-constructive. We now exhibit fully explicit libraries in which anti-gravity theorems can be pointed to, with prescribed weight growth.
 
-This is the rigorous form of the original speculation that anti-gravity theorems
-are "dense in the space of all theorems": in our cryptographic universe it is a
-proved topological fact.
+### 6.1 The linear library
 
----
+**Construction 6.1.** For $n \ge 1$, let $V = \{0, 1, \dots, n-1\}$ with $D(i,j) \iff i < j$: each theorem depends on all earlier theorems.
 
-## 6. Why density, not a fixed fraction
+**Theorem 6.2 (Bottom weight, linear case).** In the linear library on $n$ theorems, the bottom theorem $0$ has weight
+$$w(0) = n - 1.$$
 
-The motivating conjecture predicted that roughly $10\%$ of theorems in a formal
-library are anti-gravity. Our analysis separates the robust kernel of this claim
-from its fragile numeric shell.
+*Proof sketch.* The dependents of $0$ are exactly the theorems $j$ with $0 < j$, namely $1, 2, \dots, n-1$, of which there are $n-1$. Formally the dependent set of $0$ is the whole universe with the single element $0$ removed. $\qquad\blacksquare$
 
-- **Robust (proved here):** anti-gravity theorems are *dense* and *cofinal*. They
-  occur arbitrarily high in weight and arbitrarily close to every theorem.
-- **Regime-dependent (not universal):** any *specific fraction* such as $10\%$.
-  The proportion of theorems attaining equality in the trade-off depends on the
-  shape of the dependency graph. A "star" library (one hub, many leaves) yields a
-  vanishing fraction; a totally ordered chain yields a large one. The "10%" is
-  best read as a claim about the growth exponent of total dependency mass
-  $M = \sum \text{weight}$: only $M = \Theta(n^2)$ in an $n$-result library forces
-  a constant positive fraction.
+**Theorem 6.3 (Linear anti-gravity witness).** In the linear library on $n \ge 1$ theorems with proof-length function $\ell \equiv 1$, the bottom theorem $0$ is anti-gravity at thresholds $(w_0, \ell_0) = (n-1, 1)$.
 
-Thus the unconditional, model-independent statement is the Density Theorem; the
-numeric prediction is a separate, empirical question about real dependency graphs
-(see §8).
+*Proof sketch.* By Theorem 6.2, $w(0) = n-1 \ge w_0 = n-1$, and $\ell(0) = 1 \le \ell_0 = 1$. Both anti-gravity conditions hold. $\qquad\blacksquare$
 
----
+This is a non-vacuous witness whose weight grows linearly, $\Theta(n)$, while its proof length is fixed at $1$.
 
-## 7. Algorithms and applications
+### 6.2 The grid library
 
-**Computing the invariants.** Both invariants are elementary to compute from the
-dependency index: the weight is the index, and the proof complexity is
-$\Omega(\text{index})$, obtained by trial-division factorization in
-$O(\sqrt{\text{index}})$ time. Checking `IsAntiGravity` reduces to testing whether
-the index is a power of two — equivalently whether $2^{\Omega(n)} = n$.
+**Construction 6.4.** For $n, m \ge 1$, let $V = \{0,\dots,n-1\} \times \{0,\dots,m-1\}$ (an $n$-row, $m$-column grid) with $D(p,q) \iff p_{\mathrm{row}} < q_{\mathrm{row}}$: a node depends on another exactly when the latter lies in a strictly later row.
 
-**Finding the nearest floating theorem.** Given any threshold weight $w$, the
-smallest anti-gravity theorem of weight $\ge w$ is the witness $2^{\lceil \log_2
-w\rceil}$. This constructively realizes Lemma 14: for any region "from weight $w$
-up," it returns a floating theorem inside it in $O(\log w)$ steps.
+**Theorem 6.5 (Bottom-row weight, grid case).** In the grid library, a node $p$ in the bottom row (row $0$) has weight
+$$w(p) = (n-1)\cdot m.$$
 
-**Cryptographic reading.** Interpreting the stratum as reductions, the trade-off
-says foundational primitives — those reachable from many assumptions — can be
-reached by logarithmically many irreducible reductions. The prime witnesses are
-the maximally efficient load-bearers, and density says efficient reformulations
-exist arbitrarily close to any given reduction chain. In the broader hierarchy,
-the one-way function is conjectured to be the global weight-maximizer (§8).
+*Proof sketch.* The dependents of $p$ are all nodes $q$ with row index strictly greater than $0$, i.e. every node in rows $1, \dots, n-1$. There are $n-1$ such rows and $m$ nodes per row, giving $(n-1)\cdot m$ dependents. $\qquad\blacksquare$
 
----
+**Theorem 6.6 (Quadratic anti-gravity witness).** In the grid library with proof-length function $\ell \equiv 1$, a bottom-row node is anti-gravity at thresholds $\bigl((n-1)\cdot m,\, 1\bigr)$.
 
-## 8. Discussion and future work
+*Proof sketch.* By Theorem 6.5 the node's weight equals $(n-1)\cdot m \ge w_0$, and its proof length is $1 \le \ell_0$. $\qquad\blacksquare$
 
-We turned a metaphor into theorems: weight and proof complexity became honest
-arithmetic invariants of a dependency index, an exponential trade-off bounded one
-by the other, and a topological density theorem pinned the floating theorems
-everywhere in the space. The model is intentionally minimal; its strength is that
-every claim is provable and verified, and its limitation is that the rich
-structure of real reduction DAGs is compressed into a single integer.
+Taking $m = \Theta(n)$ yields weight $\Theta(n^2)$ with constant proof length: a single lemma silently underwriting a quadratic family of consequences. This realizes precisely the folklore "$O(n^2)$ weight, $O(1)$ proof" example.
 
-Three directions extend the work.
+## 7. The limits of universality
 
-**The mass–density law.** Conjecture: a library with $n$ results, total
-dependency mass $M = \sum w$, and weight threshold $\theta = c\,n$ has
-anti-gravity fraction $\Theta\!\big(M/(c\,n^2)\big)$, tight in both directions.
-The upper half follows from a conservation/Markov bound ($\theta \cdot
-\#\text{antigravity} \le \sum w$); the matching lower bound for the intermediate
-$M = \Theta(n^{1+\alpha})$ regime generalizes the total-order construction.
+Having established that anti-gravity theorems exist under explicit conditions and can be exhibited with any desired growth rate, we now show that the *universal* forms of the folklore are false.
 
-**Empirical 10% from $M = \Theta(n^2)$.** Conjecture: measured on the real
-Mathlib/`Catalog` import-and-use graph, the fraction of declarations with
-above-median dependent count and below-median proof length lies in $[5\%, 15\%]$,
-*explained* by the graph's near-quadratic total weight (a scale-free /
-preferential-attachment structure). Lean's `importGraph` tooling exposes the
-transitive-dependent relation needed to populate the abstract weight vector and
-test the conservation bound directly.
+**Theorem 7.1 (No dependencies, no anti-gravity).** Let $V$ be any library equipped with the empty dependency relation $D \equiv \bot$ (no theorem depends on any other). Then for every positive weight threshold $w_0 \ge 1$, every proof-length function $\ell$, and every length bound $\ell_0$, there is **no** anti-gravity theorem: the set of anti-gravity theorems is empty.
 
-**Foundations as weight-maximizers.** Conjecture: in a cryptographic reduction
-DAG, a primitive is a minimal computational assumption iff it is a local maximum
-of the level weight; the one-way function is the global maximizer. This is the
-order-theoretic shadow of being a bottom element of the reduction preorder, and
-extends the existing hierarchy's rank/level-weight machinery from the fixed
-four-level chain to arbitrary finite reduction DAGs.
+*Proof sketch.* With the empty relation, the dependent set of any $a$ is empty, so $w(a) = 0$ for all $a$. Anti-gravity requires $w(a) \ge w_0 \ge 1$, which $0$ cannot satisfy. Hence no theorem is anti-gravity. $\qquad\blacksquare$
 
----
+**Corollary 7.2.** The following universal claims are false:
+- *"Anti-gravity theorems exist in every library."* Refuted by Theorem 7.1.
+- *"A fixed positive fraction (e.g. 10%) of the theorems in any library are anti-gravity."* Refuted by Theorem 7.1, where the fraction is exactly $0$.
 
-## 9. Conclusion
+**Remark 7.3 (On "density in the space of all theorems").** The theme also proposes that anti-gravity theorems are *dense* in a suitable topology on "the space of all theorems." This is underspecified rather than false: there is no canonical topology on that space. Under the discrete topology the claim is vacuous (every set is dense in itself and closed); under an edit-distance (Levenshtein) metric on statement strings it becomes a genuine but model-dependent question. We deliberately do not assert it as a theorem, since no honest universal formulation is available.
 
-Within a faithful numerical model of the OWF stratum we proved that proof
-complexity is at most logarithmic in weight (the Anti-Gravity Trade-off), that an
-explicit cofinal family of theorems attains the bound (the prime witnesses), and
-that such floating theorems are dense in the weight topology (the Density
-Theorem). The anti-gravity phenomenon is therefore not anecdotal but structural,
-and its truly universal expression is density rather than any fixed percentage.
+## 8. Discussion
+
+The model isolates a real structural phenomenon. Anti-gravity is the joint occurrence of two orthogonal quantities — *weight* (a global, network property) and *cheapness* (a local, per-proof property). The theory says three concrete things about their interaction:
+
+- **Existence is conditional, not automatic** (Theorem 4.3): anti-gravity theorems are forced precisely when cheap theorems collectively lift a lot.
+- **Weight concentrates at the foundations** (Theorem 5.1): under transitive dependency, basic theorems are heaviest, which — since basic theorems tend to be cheap — is why anti-gravity clusters at the base of a subject.
+- **The phenomenon is tunable** (Section 6): explicit libraries realize any linear or quadratic weight profile with constant proof length.
+
+At the same time the theory is honest about its limits (Section 7): there is no law delivering a universal positive fraction of anti-gravity theorems, because sparse libraries have none. The famous "10%" is an empirical regularity of how humans actually build mathematics, not a theorem about all possible dependency structures.
+
+### Applications
+
+- **Prioritizing verification.** In a large formal corpus, anti-gravity theorems are the highest-leverage audit targets: an undetected flaw in a high-weight theorem propagates the furthest, and its short proof makes such a flaw both more surprising and cheaper to re-check.
+- **Curriculum and exposition.** The results explain why introductory courses lead with short-proof, high-weight theorems: those are the load-bearing members, and their cheapness is what makes them safe foundations.
+- **Library refactoring.** The handshake identity and averaging bound give quick global health metrics (total edges, maximum weight) for a growing library, and the monotonicity theorem suggests that consolidating dependencies onto a few transitive foundations concentrates and clarifies weight.
+
+## 9. Future work
+
+- **Transitive closure.** Systematically study weight with respect to the reflexive-transitive closure of the direct-dependency relation, quantifying how indirect dependency amplifies weight.
+- **Random libraries.** Analyze the expected number and weight distribution of anti-gravity theorems in random dependency graphs (e.g. random DAG models), to characterize *when* the empirical "10%" regime emerges.
+- **A defensible topology.** Formulate the density question over an explicit metric on statements (such as edit distance) and settle it in that model.
+- **Weighted proofs.** Replace the binary short/long dichotomy with a continuous cost measure and study the Pareto frontier of (weight, cost).
+
+## 10. Conclusion
+
+We have given a compact, self-contained theory of anti-gravity theorems: definitions, a conservation identity, sharp bounds, an averaging principle, a pigeonhole existence theorem, a foundations-are-heaviest monotonicity theorem, explicit linear and quadratic witnesses, and an honest refutation of the over-strong universal claims. The dream of enormous lift for negligible effort is impossible in physics; in mathematics it is commonplace — and now precisely characterized.

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "08430233",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What is proved here\n\n`TransfiniteComputation.lean` establishes a machine-checked **bridge** between\ncellular-automaton dynamics and ordinal / transfinite computation, via the t",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-11T02:51:29",
-      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-    },
-    {
       "cycle_id": "01e9ab7a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Topology of Impossible Objects\n\nThis project formalizes the mathematical core of **impossible figures** (Penrose\ntriangle, Escher staircase) as a cohomological obstruction, f",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-11T22:30:55",
       "title": "Deepening: Speculative: Mathematics as a Phase Transition"
+    },
+    {
+      "cycle_id": "a06d4115",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThis cycle extends the self-contained theory of negative-dimensional (virtual\ngraded) spaces modelled by the Laurent-polynomial ring\n`VS = ℤ[T; T⁻¹",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-07-11T22:47:58",
+      "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "116dddb5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Escher Staircases and the Escher Height Invariant\n\n## 1. A quantitative Escher height from bounded chains\n\nDefine the Escher height of a commutative ring as the supremum, over al",
-      "quality_score": 0.5346635084337349,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-04T10:56:51",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
     {
       "cycle_id": "a45ab2ca",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-11T22:30:55",
       "title": "Deepening: Speculative: Mathematics as a Phase Transition"
+    },
+    {
+      "cycle_id": "a06d4115",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThis cycle extends the self-contained theory of negative-dimensional (virtual\ngraded) spaces modelled by the Laurent-polynomial ring\n`VS = ℤ[T; T⁻¹",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-07-11T22:47:58",
+      "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f6b0dfd4",
-      "domain": "Novelty",
-      "name": "flatten_leaf",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "f6b0dfd4",
-      "domain": "Novelty",
-      "name": "flatten_node",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "997ab258",
-      "domain": "Novelty",
-      "name": "of",
-      "quality": 0.72
-    },
     {
       "cycle_id": "997ab258",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "hasDerivAt_tanh",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a06d4115",
+      "domain": "Algebra",
+      "name": "chi_T",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "a06d4115",
+      "domain": "Algebra",
+      "name": "chi_C",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "a06d4115",
+      "domain": "Algebra",
+      "name": "chi_T_nat",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T22:30:55",
+  "last_updated": "2026-07-11T22:47:58",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "33af5349",
-        "quality": 0.48355851612903233,
-        "theorems": 13,
-        "title": "Sensitivity Conjecture Extensions"
-      },
-      {
         "cycle_id": "e5cb827b",
         "quality": 0.45374800000000004,
         "theorems": 19,
@@ -3079,6 +3073,12 @@
         "quality": 0.83,
         "theorems": 30,
         "title": "Deepening: The Fractal Dimension of Mathematical Truth"
+      },
+      {
+        "cycle_id": "a06d4115",
+        "quality": 0.72,
+        "theorems": 30,
+        "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
       }
     ],
     "Applications": [

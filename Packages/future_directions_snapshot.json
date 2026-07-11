@@ -900,6 +900,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize 'strange loops' — hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: Gödel's incompleteness theorem IS a strange loop (the Gödel sentence G says 'G is not provable'). Show: Tarski's undefinability of truth is a stronger strange loop (no formula can assert its own truth). Conjecture: every sufficiently expressive formal system contains infinitely many distinct strange loops. Explore: can we formalize the 'tangled hierarchy' where level N refers to level N-1 which refers to level N?",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1077",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T22:47:23.412172+00:00",
+    "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' — a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities — they form a continuous family, and the hat is just one point on the spectrum.",
     "domain_bridges": [],
     "domains": [
@@ -975,6 +995,26 @@
     "status": "available",
     "timestamp": "2026-07-11T22:30:19.797682+00:00",
     "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the GEB thesis: deep isomorphisms connect Gödel's incompleteness, Escher's visual paradoxes, and Bach's fugues. Define: a 'GEB isomorphism' is a structure-preserving map between three domains: (1) a formal system, (2) a visual art form, (3) a musical form. Prove: the self-reference in Gödel's theorem, Escher's 'Drawing Hands,' and Bach's 'Crab Canon' all instantiate the same fixed-point construction (Lawvere's fixed point theorem). Show: every GEB isomorphism factors through the Y combinator.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1078",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T22:47:23.766775+00:00",
+    "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
   },
   {
     "ambition_level": "extension",
@@ -1600,26 +1640,6 @@
     "status": "failed",
     "timestamp": "2026-07-11T17:13:54.266169+00:00",
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "b6492bf5",
-    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1060",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T19:10:22.546301+00:00",
-    "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
   },
   {
     "ambition_level": "extension",
@@ -10613,26 +10633,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a06d4115",
-    "description": "# Future Directions — Negative-Dimensional Topology\n\nThis project builds a self-contained, machine-checked theory of negative-dimensional\nspaces in `Core.lean`.  We model virtual graded spaces as the Laurent-polynomial ring\n`ℤ[t, t⁻¹] = AddMonoidAlgebra ℤ ℤ` (a concrete Spanier–Whitehead / pro-spectrum\npicture: `t⁻¹` is desuspension, producing negative dimensions) and define the Euler\ncharacteristic as the ring homomorphism `χ : t ↦ -1`.\n\n## What was proved\n\n* **Euler characteristic extends to negative dimensions** and satisfies the requested\n  formula `χ(X) = (-1)ⁿ · |π₀(X)|` for `dim X = -n` (`chi_pure_neg`, `chi_neg_dim`).\n* **Dimension `-1`** (the title question): a `k`-component `(-1)`-space has `χ = -k`\n  (`chi_dim_neg_one`).\n* `χ` is a **ring homomorphism**: additive under disjoint union (`chi_add`) and\n  multiplicative under product — a Künneth formula (`chi_mul`), with `χ(point) = 1`.\n* **Suspension/desuspension** flip the sign of `χ` (`chi_susp`, `chi_desusp`,\n  `chi_suspIter`), and are mutually inverse (`susp_desusp`, `desusp_susp`).\n* The **stabilization map** carries a `(-n)`-space to an honest `0`-dimensional space\n  (`stabilize_neg`, `stabilize_chi`).\n\n## What was disproved (contrarian results)\n\n* Not every negative-dimensional space has negative `χ` (`disproof_all_neg_chi`):\n  even codimensions give `χ > 0`.\n* `χ` is **not injective** (`disproof_chi_not_injective`): it only sees the parity of\n  the dimension, so it cannot recover the dimension.\n\n## Directions to extend\n\n1. **Betti numbers with genuine coefficients.**  Replace `ℤ` coefficients by graded\n   `ℤ`-modules / chain complexes and recover `χ` as the alternating sum of ranks,\n   proving the present `χ` agrees with the homological one for bounded complexes.\n2. **True `π₀` from a topological model.**  Here `|π₀|` is the rank in the defining\n   degree.  A next step is to attach an actual (pro-)space or spectrum and prove\n   `π₀` of that object matches this count, tightening the interpretation of the main\n   theorem.\n3. **Poincaré duality in negative degrees.**  With `χ(DX) = χ(X)` for Spanier–\n   Whitehead duals, formalize duality `t^d ↦ t^{-d}` and its interaction with `χ`.\n4. **Multiplicative structure / Grothendieck ring.**  Study the image of `χ` and the\n   ideal structure; characterize which integers arise as `χ` of a nonnegative-cell\n   (genuine) space versus a virtual one.\n5. **Higher invariants beyond `χ`.**  The disproof of injectivity shows `χ` forgets\n   dimension; introduce a refined invariant (e.g. the full Poincaré series, or a\n   `t`-graded Euler characteristic valued in `ℤ[t,t⁻¹]`) that is injective.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0980",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3399a930",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T02:34:48.069025+00:00",
-    "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Non-Desarguesian Worlds\n\nThis project formalizes the algebraic engine behind non-Desarguesian planes and\ndelivers a fully verified concrete example. Two self-contained Lean files:\n\n* `QuasifieldAffinePlane.lean` — abstract theory: a `Quasifield` structure and a\n  proof that **every quasifield coordinatizes an affine plane** (two points\n  determine a unique line, Playfair's parallel axiom, non-degeneracy), together\n  with `DivisionRing.toQuasifield` showing division rings are the \"tame\"\n  (Desarguesian) special case.\n* `NearfieldPlaneOrder9.lean` — the **Dickson nearfield of order 9**, verified by\n  exhaustive computation to be a quasifield that is associative and\n  right-distributive but **not left-distributive** and **not commutative**, hence\n  not a division ring; it coordinatizes a non-Desarguesian affine plane of order\n  9 with 81 points and 90 lines.\n\n## What is proved\n\n1. General incidence theory of quasifield planes (fully general `Q`).\n2. A concrete proper nearfield of order 9 and all its quasifield axioms.\n3. The algebraic obstruction to Desargues: failure of left distributivity.\n\n## Natural next steps\n\n1. **Geometric Desargues failure.** Formalize a Desargues configuration\n   (two triangles perspective from a point) inside the coordinatized plane and\n   exhibit an explicit 10-point/10-line witness in the Dickson plane where the\n   axis of perspectivity fails. This turns the algebraic obstruction into a\n   directly geometric non-Desarguesian statement.\n\n2. **The coordinatization theorem.** Prove the converse bridge: an affine plane\n   in which (the little/major) Desargues theorem holds is coordinatized by a\n   division ring. This is the deep classical equivalence; the quasifield/plane\n   scaffolding here is the right starting point.\n\n3. **Existence at every prime power `q = pⁿ`, `n ≥ 2`.** Generalize the Dickson\n   twist to `GF(q²)` with the Frobenius `x ↦ x^q`, giving a proper nearfield and\n   a non-Desarguesian plane of order `q²` for every prime power `q`. The finite\n   `decide` proofs would be replaced by structural arguments about `GF(q²)` and\n   its Frobenius automorphism.\n\n4. **Collineation groups strictly smaller than PGL.** Formalize that the\n   collineation group of the Dickson plane fixes the distinguished nucleus and is\n   therefore a proper subgroup of `PGL(3, 9)` acting on the Desarguesian plane —\n   the \"symmetry loss\" theme.\n\n5. **Hall systems and the classification of order-9 planes.** Connect the\n   nearfield plane to the Hall plane, its dual, and the Hughes plane, formalizing\n   the enumeration of the four projective planes of order 9.\n\n6. **Nucleus theory over quasifields.** Relate the left/middle/right nuclei of a\n   quasifield to the group of central collineations, tying non-associativity to\n   the Lenz–Barlotti classification.\n",
     "domain_bridges": [],
@@ -11109,6 +11109,46 @@
     "status": "available",
     "timestamp": "2026-07-11T22:30:47.487400+00:00",
     "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Negative-Dimensional Topology\n\nThis cycle extends the self-contained theory of negative-dimensional (virtual\ngraded) spaces modelled by the Laurent-polynomial ring\n`VS = ℤ[T; T⁻¹] = AddMonoidAlgebra ℤ ℤ`, with Euler characteristic the ring\nhomomorphism `χ : T ↦ -1`.\n\n## What is proved in `Core.lean`\n\nA single, self-contained file (`import Mathlib`) building one chain of results,\neach using the previous ones.\n\n**Euler characteristic and its values.**\n`chi` (ring hom `T ↦ -1`); `chi_T`, `chi_C`, `chi_T_nat`, `chi_T_neg_nat`\ncompute it on monomials.\n\n**Ring-homomorphism structure.**\n`chi_one` (point has `χ = 1`), `chi_add` (disjoint union), `chi_mul` (Künneth),\n`chi_surjective` (every integer is a `χ`), and `chi_ker_witness` (`χ(T+1) = 0`,\nthe degree-`1` witness for the ideal `ker χ = (T+1)`).\n\n**Euler characteristic in negative dimensions (main formula).**\n`chi_pureSpace`, `chi_dim_neg_one` (a `k`-component `(-1)`-space has `χ = -k`),\n`chi_pure_neg` (`χ = (-1)ⁿ · |π₀|` in dimension `-n`).\n\n**Suspension / desuspension.**\n`susp_desusp`, `desusp_susp` (mutually inverse); `chi_susp`, `chi_desusp`,\n`chi_suspIter` (sign flips of `χ`).\n\n**Spanier–Whitehead duality (new).**\n`dual : Tᵈ ↦ T⁻ᵈ` as an involutive ring automorphism (`dual_T`, `dual_C`,\n`dual_involutive`), exchanging suspension and desuspension (`dual_susp`,\n`dual_desusp`), compatible with the ring structure (`dual_mul`, `dual_add`),\nand **preserving the Euler characteristic**: `chi_dual : χ(DX) = χ(X)` — a\nPoincaré-duality statement in negative degrees.\n\n**A refined invariant (new).**\n`topDim` (top occupied dimension) with `topDim_T`, and\n`refined_separates_collision`: it distinguishes `T⁰` from `T²`, a pair `χ`\ncannot separate (`disproof_chi_not_injective`), so it strictly refines `χ`.\n\n**Contrarian results.**\n`disproof_all_neg_chi` (even codimensions give `χ > 0`);\n`disproof_chi_not_injective` (`χ` forgets the dimension).\n\nThe theorems use only the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`; there are no `sorry`s.\n\n## Directions to extend further\n\n1. **Full Poincaré series as an injective invariant.**  Promote `topDim` to the\n   entire graded object (the `t`-graded Euler characteristic valued in\n   `ℤ[T;T⁻¹]`) and prove it is injective, recovering both `χ` and the dimension.\n2. **Kernel of `χ` and the Grothendieck ring.**  With `chi_ker_witness` in hand\n   (`T + 1 ∈ ker χ`), identify `ker χ` as the *full* ideal `(T + 1)` and study\n   which integers arise as `χ` of a genuine (nonnegative-cell) space versus a\n   virtual one.\n3. **Interaction of duality with the product.**  `dual_mul` / `dual_add` show\n   duality respects the ring structure; a next step is\n   `D(susp^[m] X) = desusp^[m] (DX)`, packaging duality as a symmetric monoidal\n   involution on the Grothendieck ring.\n4. **Genuine coefficients / chain complexes.**  Replace `ℤ` coefficients by\n   graded `ℤ`-modules and recover `χ` as the alternating sum of ranks.\n5. **A topological (pro-)space model.**  Attach an actual spectrum whose `π₀`\n   matches the degree-count used here, tightening the interpretation of the main\n   theorem.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1079",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a06d4115",
+    "status": "available",
+    "timestamp": "2026-07-11T22:47:52.076754+00:00",
+    "title": "This cycle extends the self-contained theory of negative-dimensional (virtual"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Anti-Gravity Mathematics\n\nThis mission formalizes a finite model of theorem dependency graphs and proves the\nrobust combinatorial core of the \"anti-gravity theorems\" theme, while honestly\nrefuting its over-strong universal predictions. See\n`Catalog/Speculative/AntiGravity.lean`.\n\n## What is proved\n\nLet a library be a finite type `V` with a decidable dependency relation\n`D a b` = \"`b` depends on `a`\", gravitational weight `depWeight D a = #{b | D a b}`,\nand proof-length function `plen`. A theorem is *anti-gravity* at `(w0, l0)` if\n`w0 ≤ depWeight D a ∧ plen a ≤ l0`.\n\n1. **Handshake identity** `sum_depWeight_eq_sum_inDeg`: total weight = total number\n   of dependency edges = total in-degree.\n2. **Weight bounds** `depWeight_le_card`, `depWeight_lt_card_of_irrefl`.\n3. **Averaging principle** `exists_max_depWeight`, `sum_depWeight_le_card_mul_max`:\n   the heaviest theorem carries at least the average weight.\n4. **Existence of anti-gravity theorems** `exists_antigravity_of_short_heavy`: if\n   the short-proof theorems together carry `≥ w0 · |S|` weight, one of them is\n   anti-gravity. This is the precise, provable version of \"anti-gravity theorems\n   exist\".\n5. **Foundational = heaviest** `depWeight_le_of_trans`: along a transitive\n   dependency order, more foundational theorems have at least as much weight.\n6. **Concrete linear witness** `linear_library_bottom_weight`,\n   `linear_library_antigravity`: in the linear library on `Fin n`, the bottom\n   theorem has weight `n-1` and a length-1 proof — genuinely anti-gravity.\n7. **Concrete quadratic witness** `grid_library_bottom_weight`,\n   `grid_library_antigravity`: in the grid library on `Fin n × Fin m`, a\n   bottom-row node is depended on by every later row, giving weight `(n-1)·m`\n   with a length-1 proof. This realizes the theme's `O(n^2)` weight / `O(1)`\n   proof-length example.\n8. **Refutation of universality** `no_deps_no_antigravity`: a dependency-free\n   library has *no* anti-gravity theorems, so the \"anti-gravity in every branch\"\n   and \"10% of theorems\" claims are false as universal statements.\n\n## Honest status of the theme's stronger claims\n\n- *\"Weight `O(n^2)`, proof length `O(1)`\"*: realized and formalized. A single\n  foundational theorem depended on by an `n × m` grid of downstream results has\n  quadratic weight and constant proof length. `linear_library_*` formalizes the\n  linear (`O(n)`) case and `grid_library_*` formalizes the quadratic (`Θ(n·m)`)\n  case.\n- *\"Density in a topology\"*: underspecified. There is no canonical topology on\n  \"the space of all theorems\". Under the discrete topology density is vacuous;\n  under an edit/Levenshtein metric on statements it becomes a genuine but\n  model-dependent question. We deliberately did **not** encode a false theorem.\n- *\"Exactly 10%\"*: false as a law; it is at best an empirical average over a\n  specific corpus, not a theorem.\n\n## Concrete next steps\n\n1. **Transitive closure.** Define `depClosure` as the reflexive-transitive closure\n   of a raw edge relation and prove `depWeight_le_of_trans` applies to it, so that\n   \"weight\" counts *all* downstream theorems, not just direct dependents.\n2. **Fraction bounds instead of a fixed 10%.** Prove sharp two-sided bounds: for\n   any `p ∈ [0,1]` there is a library whose anti-gravity fraction is exactly `p`\n   (interpolating between the antichain `A_n` at 0% and the linear library at a\n   high fraction), turning the \"10%\" folklore into a rigorous \"any fraction is\n   achievable\" theorem.\n3. **A topology on statements.** Fix the edit-distance metric on encoded theorem\n   statements and investigate when the anti-gravity set is dense; state the\n   density question precisely and attempt the easy direction (anti-gravity\n   statements are not isolated).\n4. **Empirical instantiation.** Extract the actual dependency graph of a real\n   Lean/Mathlib development, compute `depWeight` and proof lengths, and check the\n   averaging hypothesis of `exists_antigravity_of_short_heavy` on live data.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1080",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b6492bf5",
+    "status": "available",
+    "timestamp": "2026-07-11T22:48:01.235566+00:00",
+    "title": "This mission formalizes a finite model of theorem dependency graphs and proves t"
   },
   {
     "ambition_level": "extension",

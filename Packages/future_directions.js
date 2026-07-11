@@ -666,6 +666,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize 'strange loops' \u2014 hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: G\u00f6del's incompleteness theorem IS a strange loop (the G\u00f6del sentence G says 'G is not provable'). Show: Tarski's undefinability of truth is a stronger strange loop (no formula can assert its own truth). Conjecture: every sufficiently expressive formal system contains infinitely many distinct strange loops. Explore: can we formalize the 'tangled hierarchy' where level N refers to level N-1 which refers to level N?",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1077",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T22:47:23.412172+00:00",
+    "title": "Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -723,6 +738,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T22:30:19.797682+00:00",
     "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the GEB thesis: deep isomorphisms connect G\u00f6del's incompleteness, Escher's visual paradoxes, and Bach's fugues. Define: a 'GEB isomorphism' is a structure-preserving map between three domains: (1) a formal system, (2) a visual art form, (3) a musical form. Prove: the self-reference in G\u00f6del's theorem, Escher's 'Drawing Hands,' and Bach's 'Crab Canon' all instantiate the same fixed-point construction (Lawvere's fixed point theorem). Show: every GEB isomorphism factors through the Y combinator.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1078",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T22:47:23.766775+00:00",
+    "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
   },
   {
     "consumed_by_exp_id": "",
@@ -6078,21 +6108,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project formalizes \"social credit scores as topological invariants\" through"
   },
   {
-    "consumed_by_exp_id": "a06d4115",
-    "description": "# Future Directions \u2014 Negative-Dimensional Topology\n\nThis project builds a self-contained, machine-checked theory of negative-dimensional\nspaces in `Core.lean`.  We model virtual graded spaces as the Laurent-polynomial ring\n`\u2124[t, t\u207b\u00b9] = AddMonoidAlgebra \u2124 \u2124` (a concrete Spanier\u2013Whitehead / pro-spectrum\npicture: `t\u207b\u00b9` is desuspension, producing negative dimensions) and define the Euler\ncharacteristic as the ring homomorphism `\u03c7 : t \u21a6 -1`.\n\n## What was proved\n\n* **Euler characteristic extends to negative dimensions** and satisfies the requested\n  formula `\u03c7(X) = (-1)\u207f \u00b7 |\u03c0\u2080(X)|` for `dim X = -n` (`chi_pure_neg`, `chi_neg_dim`).\n* **Dimension `-1`** (the title question): a `k`-component `(-1)`-space has `\u03c7 = -k`\n  (`chi_dim_neg_one`).\n* `\u03c7` is a **ring homomorphism**: additive under disjoint union (`chi_add`) and\n  multiplicative under product \u2014 a K\u00fcnneth formula (`chi_mul`), with `\u03c7(point) = 1`.\n* **Suspension/desuspension** flip the sign of `\u03c7` (`chi_susp`, `chi_desusp`,\n  `chi_suspIter`), and are mutually inverse (`susp_desusp`, `desusp_susp`).\n* The **stabilization map** carries a `(-n)`-space to an honest `0`-dimensional space\n  (`stabilize_neg`, `stabilize_chi`).\n\n## What was disproved (contrarian results)\n\n* Not every negative-dimensional space has negative `\u03c7` (`disproof_all_neg_chi`):\n  even codimensions give `\u03c7 > 0`.\n* `\u03c7` is **not injective** (`disproof_chi_not_injective`): it only sees the parity of\n  the dimension, so it cannot recover the dimension.\n\n## Directions to extend\n\n1. **Betti numbers with genuine coefficients.**  Replace `\u2124` coefficients by graded\n   `\u2124`-modules / chain complexes and recover `\u03c7` as the alternating sum of ranks,\n   proving the present `\u03c7` agrees with the homological one for bounded complexes.\n2. **True `\u03c0\u2080` from a topological model.**  Here `|\u03c0\u2080|` is the rank in the defining\n   degree.  A next step is to attach an actual (pro-)space or spectrum and prove\n   `\u03c0\u2080` of that object matches this count, tightening the interpretation of the main\n   theorem.\n3. **Poincar\u00e9 duality in negative degrees.**  With `\u03c7(DX) = \u03c7(X)` for Spanier\u2013\n   Whitehead duals, formalize duality `t^d \u21a6 t^{-d}` and its interaction with `\u03c7`.\n4. **Multiplicative structure / Grothendieck ring.**  Study the image of `\u03c7` and the\n   ideal structure; characterize which integers arise as `\u03c7` of a nonnegative-cell\n   (genuine) space versus a virtual one.\n5. **Higher invariants beyond `\u03c7`.**  The disproof of injectivity shows `\u03c7` forgets\n   dimension; introduce a refined invariant (e.g. the full Poincar\u00e9 series, or a\n   `t`-graded Euler characteristic valued in `\u2124[t,t\u207b\u00b9]`) that is injective.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0980",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3399a930",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T02:34:48.069025+00:00",
-    "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Non-Desarguesian Worlds\n\nThis project formalizes the algebraic engine behind non-Desarguesian planes and\ndelivers a fully verified concrete example. Two self-contained Lean files:\n\n* `QuasifieldAffinePlane.lean` \u2014 abstract theory: a `Quasifield` structure and a\n  proof that **every quasifield coordinatizes an affine plane** (two points\n  determine a unique line, Playfair's parallel axiom, non-degeneracy), together\n  with `DivisionRing.toQuasifield` showing division rings are the \"tame\"\n  (Desarguesian) special case.\n* `NearfieldPlaneOrder9.lean` \u2014 the **Dickson nearfield of order 9**, verified by\n  exhaustive computation to be a quasifield that is associative and\n  right-distributive but **not left-distributive** and **not commutative**, hence\n  not a division ring; it coordinatizes a non-Desarguesian affine plane of order\n  9 with 81 points and 90 lines.\n\n## What is proved\n\n1. General incidence theory of quasifield planes (fully general `Q`).\n2. A concrete proper nearfield of order 9 and all its quasifield axioms.\n3. The algebraic obstruction to Desargues: failure of left distributivity.\n\n## Natural next steps\n\n1. **Geometric Desargues failure.** Formalize a Desargues configuration\n   (two triangles perspective from a point) inside the coordinatized plane and\n   exhibit an explicit 10-point/10-line witness in the Dickson plane where the\n   axis of perspectivity fails. This turns the algebraic obstruction into a\n   directly geometric non-Desarguesian statement.\n\n2. **The coordinatization theorem.** Prove the converse bridge: an affine plane\n   in which (the little/major) Desargues theorem holds is coordinatized by a\n   division ring. This is the deep classical equivalence; the quasifield/plane\n   scaffolding here is the right starting point.\n\n3. **Existence at every prime power `q = p\u207f`, `n \u2265 2`.** Generalize the Dickson\n   twist to `GF(q\u00b2)` with the Frobenius `x \u21a6 x^q`, giving a proper nearfield and\n   a non-Desarguesian plane of order `q\u00b2` for every prime power `q`. The finite\n   `decide` proofs would be replaced by structural arguments about `GF(q\u00b2)` and\n   its Frobenius automorphism.\n\n4. **Collineation groups strictly smaller than PGL.** Formalize that the\n   collineation group of the Dickson plane fixes the distinguished nucleus and is\n   therefore a proper subgroup of `PGL(3, 9)` acting on the Desarguesian plane \u2014\n   the \"symmetry loss\" theme.\n\n5. **Hall systems and the classification of order-9 planes.** Connect the\n   nearfield plane to the Hall plane, its dual, and the Hughes plane, formalizing\n   the enumeration of the four projective planes of order 9.\n\n6. **Nucleus theory over quasifields.** Relate the left/middle/right nuclei of a\n   quasifield to the group of central collineations, tying non-associativity to\n   the Lenz\u2013Barlotti classification.\n",
     "domains": [
@@ -6451,6 +6466,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T22:30:47.487400+00:00",
     "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Negative-Dimensional Topology\n\nThis cycle extends the self-contained theory of negative-dimensional (virtual\ngraded) spaces modelled by the Laurent-polynomial ring\n`VS = \u2124[T; T\u207b\u00b9] = AddMonoidAlgebra \u2124 \u2124`, with Euler characteristic the ring\nhomomorphism `\u03c7 : T \u21a6 -1`.\n\n## What is proved in `Core.lean`\n\nA single, self-contained file (`import Mathlib`) building one chain of results,\neach using the previous ones.\n\n**Euler characteristic and its values.**\n`chi` (ring hom `T \u21a6 -1`); `chi_T`, `chi_C`, `chi_T_nat`, `chi_T_neg_nat`\ncompute it on monomials.\n\n**Ring-homomorphism structure.**\n`chi_one` (point has `\u03c7 = 1`), `chi_add` (disjoint union), `chi_mul` (K\u00fcnneth),\n`chi_surjective` (every integer is a `\u03c7`), and `chi_ker_witness` (`\u03c7(T+1) = 0`,\nthe degree-`1` witness for the ideal `ker \u03c7 = (T+1)`).\n\n**Euler characteristic in negative dimensions (main formula).**\n`chi_pureSpace`, `chi_dim_neg_one` (a `k`-component `(-1)`-space has `\u03c7 = -k`),\n`chi_pure_neg` (`\u03c7 = (-1)\u207f \u00b7 |\u03c0\u2080|` in dimension `-n`).\n\n**Suspension / desuspension.**\n`susp_desusp`, `desusp_susp` (mutually inverse); `chi_susp`, `chi_desusp`,\n`chi_suspIter` (sign flips of `\u03c7`).\n\n**Spanier\u2013Whitehead duality (new).**\n`dual : T\u1d48 \u21a6 T\u207b\u1d48` as an involutive ring automorphism (`dual_T`, `dual_C`,\n`dual_involutive`), exchanging suspension and desuspension (`dual_susp`,\n`dual_desusp`), compatible with the ring structure (`dual_mul`, `dual_add`),\nand **preserving the Euler characteristic**: `chi_dual : \u03c7(DX) = \u03c7(X)` \u2014 a\nPoincar\u00e9-duality statement in negative degrees.\n\n**A refined invariant (new).**\n`topDim` (top occupied dimension) with `topDim_T`, and\n`refined_separates_collision`: it distinguishes `T\u2070` from `T\u00b2`, a pair `\u03c7`\ncannot separate (`disproof_chi_not_injective`), so it strictly refines `\u03c7`.\n\n**Contrarian results.**\n`disproof_all_neg_chi` (even codimensions give `\u03c7 > 0`);\n`disproof_chi_not_injective` (`\u03c7` forgets the dimension).\n\nThe theorems use only the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`; there are no `sorry`s.\n\n## Directions to extend further\n\n1. **Full Poincar\u00e9 series as an injective invariant.**  Promote `topDim` to the\n   entire graded object (the `t`-graded Euler characteristic valued in\n   `\u2124[T;T\u207b\u00b9]`) and prove it is injective, recovering both `\u03c7` and the dimension.\n2. **Kernel of `\u03c7` and the Grothendieck ring.**  With `chi_ker_witness` in hand\n   (`T + 1 \u2208 ker \u03c7`), identify `ker \u03c7` as the *full* ideal `(T + 1)` and study\n   which integers arise as `\u03c7` of a genuine (nonnegative-cell) space versus a\n   virtual one.\n3. **Interaction of duality with the product.**  `dual_mul` / `dual_add` show\n   duality respects the ring structure; a next step is\n   `D(susp^[m] X) = desusp^[m] (DX)`, packaging duality as a symmetric monoidal\n   involution on the Grothendieck ring.\n4. **Genuine coefficients / chain complexes.**  Replace `\u2124` coefficients by\n   graded `\u2124`-modules and recover `\u03c7` as the alternating sum of ranks.\n5. **A topological (pro-)space model.**  Attach an actual spectrum whose `\u03c0\u2080`\n   matches the degree-count used here, tightening the interpretation of the main\n   theorem.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1079",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a06d4115",
+    "status": "available",
+    "timestamp": "2026-07-11T22:47:52.076754+00:00",
+    "title": "This cycle extends the self-contained theory of negative-dimensional (virtual"
   },
   {
     "consumed_by_exp_id": "",

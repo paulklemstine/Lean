@@ -1,174 +1,206 @@
 """
-Anti-Gravity Theorems in the Cryptographic Hardness Hierarchy
-=============================================================
+Anti-Gravity Mathematics: numerical demonstrations.
 
-Numerical demonstration of the formally verified results about the
-one-way-function (OWF) stratum.
+A *library* is a finite set of theorems V with a dependency relation D, where
+D(a, b) means "theorem b depends on theorem a" (a is used in the proof of b).
 
-A theorem of the stratum is modelled by a single natural number, its
-*dependency index* ``depth``.  From it we read off two invariants:
+  * gravitational weight w(a) = #{ b : D(a, b) }   (number of dependents)
+  * in-degree         d(b)   = #{ a : D(a, b) }   (number of direct dependencies)
+  * a theorem a is ANTI-GRAVITY at (w0, l0) if  w(a) >= w0  and  plen(a) <= l0
+    (high weight, short proof).
 
-    weight(T)          = depth                      (gravitational mass)
-    proofComplexity(T) = Omega(depth)               (number of prime factors
-                                                     with multiplicity =
-                                                     irreducible reduction steps)
-
-This script exercises the *main* theorem (the Anti-Gravity Trade-off
-``2 ** proofComplexity <= weight``) and its consequences: anti-gravity
-theorems, the prime-witness family ``2 ** p``, cofinality, and the
-constructive "nearest floating theorem" map underlying the Density Theorem.
+This script verifies, on concrete libraries, every result of the accompanying
+paper: the handshake identity, weight bounds, the averaging principle, the
+pigeonhole existence theorem, monotonicity under transitivity, the explicit
+linear and grid witnesses, and the refutation of the universal "fixed fraction"
+prediction.
 
 Self-contained: standard library only.
 """
 
 from __future__ import annotations
 
-from typing import List
+from typing import Callable, Dict, List, Optional, Set, Tuple
 
 
-# --------------------------------------------------------------------------
-# Model: the two invariants of a theorem, read off its dependency index.
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Core model                                                                  #
+# --------------------------------------------------------------------------- #
 
-def prime_factors_list(n: int) -> List[int]:
-    """Prime factors of ``n`` with multiplicity (Mathlib's primeFactorsList).
-
-    Mirrors ``Nat.primeFactorsList``; returns ``[]`` for ``n in (0, 1)``.
-    """
-    if n < 2:
-        return []
-    factors: List[int] = []
-    d = 2
-    m = n
-    while d * d <= m:
-        while m % d == 0:
-            factors.append(d)
-            m //= d
-        d += 1
-    if m > 1:
-        factors.append(m)
-    return factors
+def dep_weight(vertices: List[object], dep: Callable[[object, object], bool],
+               a: object) -> int:
+    """Gravitational weight of a: number of theorems that depend on a."""
+    return sum(1 for b in vertices if dep(a, b))
 
 
-def weight(depth: int) -> int:
-    """weight(T) = T.depth  (Lean: OWFStratum.weight)."""
-    return depth
+def in_degree(vertices: List[object], dep: Callable[[object, object], bool],
+              b: object) -> int:
+    """In-degree of b: number of theorems b directly depends on."""
+    return sum(1 for a in vertices if dep(a, b))
 
 
-def proof_complexity(depth: int) -> int:
-    """proofComplexity(T) = Omega(depth)  (Lean: OWFStratum.proofComplexity)."""
-    return len(prime_factors_list(depth))
+def is_anti_gravity(vertices: List[object], dep: Callable[[object, object], bool],
+                    plen: Callable[[object], int], w0: int, l0: int,
+                    a: object) -> bool:
+    """True iff a has weight >= w0 and proof length <= l0."""
+    return dep_weight(vertices, dep, a) >= w0 and plen(a) <= l0
 
 
-def is_anti_gravity(depth: int) -> bool:
-    """IsAntiGravity T  <->  2 ** proofComplexity = weight  (Lean: IsAntiGravity)."""
-    return 2 ** proof_complexity(depth) == weight(depth)
+def anti_gravity_set(vertices: List[object], dep: Callable[[object, object], bool],
+                     plen: Callable[[object], int], w0: int, l0: int
+                     ) -> List[object]:
+    """All anti-gravity theorems in the library at thresholds (w0, l0)."""
+    return [a for a in vertices if is_anti_gravity(vertices, dep, plen, w0, l0, a)]
 
 
-def prime_witness(p: int) -> int:
-    """primeWitness p = <2 ** p>  (Lean: OWFStratum.primeWitness)."""
-    return 2 ** p
+# --------------------------------------------------------------------------- #
+# Demo 1: handshake identity and weight bounds                                #
+# --------------------------------------------------------------------------- #
 
-
-def nearest_floating_theorem(w: int) -> int:
-    """Smallest anti-gravity dependency index of weight >= w.
-
-    Constructive realisation of ``basic_open_contains_antiGravity``:
-    returns the witness 2 ** ceil(log2 w) covering the basic open Ici(w).
-    """
-    p = 0
-    while 2 ** p < w:
-        p += 1
-    return prime_witness(p)
-
-
-# --------------------------------------------------------------------------
-# Demo 1 — The Anti-Gravity Trade-off holds for every positive weight.
-# --------------------------------------------------------------------------
-
-def demo_tradeoff(limit: int = 200) -> None:
+def demo_handshake() -> None:
     print("=" * 70)
-    print("Demo 1: Anti-Gravity Trade-off   2 ** proofComplexity <= weight")
+    print("DEMO 1: Handshake identity  sum w(a) = sum d(b), and weight bounds")
     print("=" * 70)
-    worst_slack = None
-    for depth in range(1, limit + 1):
-        lhs = 2 ** proof_complexity(depth)
-        rhs = weight(depth)
-        assert lhs <= rhs, f"trade-off VIOLATED at depth={depth}"
-        slack = rhs - lhs
-        if worst_slack is None or slack < worst_slack[1]:
-            worst_slack = (depth, slack)
-    print(f"  Verified 2**Omega(n) <= n for all 1 <= n <= {limit}.  OK")
-    print(f"  proofComplexity <= log2(weight) confirmed numerically.")
-    print(f"  Tightest non-trivial slack (rhs-lhs) at depth={worst_slack[0]} "
-          f"(slack {worst_slack[1]}).")
+    # A small irreflexive library on {0,...,4}: j depends on i iff i < j.
+    n = 5
+    V = list(range(n))
+    dep = lambda i, j: i < j
+
+    total_weight = sum(dep_weight(V, dep, a) for a in V)
+    total_indeg = sum(in_degree(V, dep, b) for b in V)
+    print(f"  vertices           : {V}")
+    print(f"  sum of weights     : {total_weight}")
+    print(f"  sum of in-degrees  : {total_indeg}")
+    assert total_weight == total_indeg, "handshake identity failed"
+    print("  handshake identity : sum w = sum d   OK")
+
+    for a in V:
+        w = dep_weight(V, dep, a)
+        assert w <= n, "weight ceiling failed"
+        assert w < n, "strict ceiling (irreflexive) failed"
+    print(f"  all weights < N={n} (irreflexive strict ceiling)   OK")
+    print(f"  weights            : {[dep_weight(V, dep, a) for a in V]}")
     print()
 
 
-# --------------------------------------------------------------------------
-# Demo 2 — Prime witnesses 2**p attain equality (they float).
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Demo 2: averaging principle and pigeonhole existence                        #
+# --------------------------------------------------------------------------- #
 
-def demo_prime_witnesses(max_p: int = 16) -> None:
+def demo_existence() -> None:
     print("=" * 70)
-    print("Demo 2: Prime witnesses 2**p achieve equality (anti-gravity)")
+    print("DEMO 2: Averaging bound + pigeonhole existence of anti-gravity")
     print("=" * 70)
-    print(f"  {'p':>3} | {'weight=2**p':>12} | {'proofComplexity':>15} | floats?")
-    print("  " + "-" * 50)
-    for p in range(0, max_p + 1):
-        depth = prime_witness(p)
-        pc = proof_complexity(depth)
-        assert pc == p, "proofComplexity(2**p) must equal p"
-        assert is_anti_gravity(depth)
-        if p <= 8 or p == max_p:
-            print(f"  {p:>3} | {depth:>12} | {pc:>15} | {is_anti_gravity(depth)}")
-    print("  Every prime witness floats: proofComplexity = log2(weight).")
+    n = 8
+    V = list(range(n))
+    dep = lambda i, j: i < j           # linear library
+    plen = lambda a: 1                  # every proof has length 1
+
+    weights = [dep_weight(V, dep, a) for a in V]
+    a_star = max(V, key=lambda a: dep_weight(V, dep, a))
+    w_max = dep_weight(V, dep, a_star)
+    total = sum(weights)
+    print(f"  weights            : {weights}")
+    print(f"  max weight w(a*)   : {w_max}  (at a*={a_star})")
+    print(f"  averaging bound    : sum w = {total} <= N*w(a*) = {n * w_max}   "
+          f"{'OK' if total <= n * w_max else 'FAIL'}")
+
+    # Pigeonhole existence: short-proof set S = all (l0 = 1); if |S|*w0 <= sum,
+    # an anti-gravity theorem must exist.
+    l0 = 1
+    S = [a for a in V if plen(a) <= l0]
+    sum_S = sum(dep_weight(V, dep, a) for a in S)
+    w0 = sum_S // len(S)               # the guaranteed floor: average weight
+    print(f"  short-proof set S  : {S}")
+    print(f"  |S|*w0={len(S) * w0} <= sum_S={sum_S}   "
+          f"{'(hypothesis holds)' if len(S) * w0 <= sum_S else '(fails)'}")
+    witnesses = anti_gravity_set(V, dep, plen, w0, l0)
+    print(f"  guaranteed w0      : {w0}")
+    print(f"  anti-gravity found : {witnesses}   (nonempty as predicted)")
+    assert witnesses, "existence theorem prediction failed"
     print()
 
 
-# --------------------------------------------------------------------------
-# Demo 3 — Density: every "from weight w up" region contains a floater.
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Demo 3: monotonicity under transitive dependency (foundations are heaviest) #
+# --------------------------------------------------------------------------- #
 
-def demo_density(thresholds: List[int]) -> None:
+def demo_monotonicity() -> None:
     print("=" * 70)
-    print("Demo 3: Density Theorem -- nearest floating theorem above a threshold")
+    print("DEMO 3: Foundations are heaviest (weight monotone under transitivity)")
     print("=" * 70)
-    print(f"  {'threshold w':>12} | {'nearest 2**p >= w':>18} | "
-          f"{'proofComplexity':>15} | floats?")
-    print("  " + "-" * 64)
-    for w in thresholds:
-        witness = nearest_floating_theorem(w)
-        assert witness >= w
-        assert is_anti_gravity(witness)
-        print(f"  {w:>12} | {witness:>18} | "
-              f"{proof_complexity(witness):>15} | {is_anti_gravity(witness)}")
-    print("  Each basic open Ici(w) is met by an anti-gravity theorem.")
+    n = 6
+    V = list(range(n))
+    dep = lambda i, j: i < j           # transitive
+    for a in V:
+        for b in V:
+            if dep(a, b):              # b depends on a  =>  w(b) <= w(a)
+                assert dep_weight(V, dep, b) <= dep_weight(V, dep, a)
+    print("  verified: D(a,b) implies w(b) <= w(a) for all pairs   OK")
+    print(f"  weights (descending toward foundation 0): "
+          f"{[dep_weight(V, dep, a) for a in V]}")
     print()
 
 
-# --------------------------------------------------------------------------
-# Demo 4 — How rare are floaters? Fraction is regime-dependent, not 10%.
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Demo 4: explicit witnesses (linear O(n) and grid O(n*m))                    #
+# --------------------------------------------------------------------------- #
 
-def demo_fraction(limit: int = 4096) -> None:
+def demo_witnesses() -> None:
     print("=" * 70)
-    print("Demo 4: Anti-gravity fraction among indices 1..N (regime-dependent)")
+    print("DEMO 4: Explicit anti-gravity witnesses (linear and grid libraries)")
     print("=" * 70)
-    floaters = [n for n in range(1, limit + 1) if is_anti_gravity(n)]
-    # Among 1..N the floaters are exactly the powers of two.
-    powers = [2 ** p for p in range(0, limit.bit_length()) if 2 ** p <= limit]
-    assert floaters == powers, "anti-gravity indices in [1,N] are powers of two"
-    frac = len(floaters) / limit
-    print(f"  N = {limit}: {len(floaters)} floaters = powers of two = {floaters}")
-    print(f"  fraction = {frac:.5f}  (~ log2(N)/N, decays -- NOT a fixed 10%).")
-    print("  The robust, proved statement is topological DENSITY, not a fraction.")
+    # Linear library: bottom theorem 0 has weight n-1.
+    for n in (3, 10, 50):
+        V = list(range(n))
+        dep = lambda i, j: i < j
+        w0 = dep_weight(V, dep, 0)
+        print(f"  linear n={n:<3}: w(0) = {w0}  (predicted n-1 = {n - 1})   "
+              f"{'OK' if w0 == n - 1 else 'FAIL'},  proof length 1")
+        assert w0 == n - 1
+
+    print()
+    # Grid library on Fin n x Fin m: node q depends on p iff p.row < q.row.
+    for n, m in ((3, 4), (5, 5), (10, 8)):
+        V = [(r, c) for r in range(n) for c in range(m)]
+        dep = lambda p, q: p[0] < q[0]
+        bottom = (0, 0)
+        w = dep_weight(V, dep, bottom)
+        pred = (n - 1) * m
+        print(f"  grid {n}x{m}: w(bottom-row) = {w}  "
+              f"(predicted (n-1)*m = {pred})   {'OK' if w == pred else 'FAIL'},"
+              f"  proof length 1")
+        assert w == pred
+    print("  -> weight Theta(n^2) with m=Theta(n), constant proof length")
+    print()
+
+
+# --------------------------------------------------------------------------- #
+# Demo 5: refutation of the universal "fixed fraction" prediction            #
+# --------------------------------------------------------------------------- #
+
+def demo_refutation() -> None:
+    print("=" * 70)
+    print("DEMO 5: Refutation -- a dependency-free library has NO anti-gravity")
+    print("=" * 70)
+    n = 20
+    V = list(range(n))
+    dep = lambda i, j: False           # empty dependency relation
+    plen = lambda a: 1
+    for w0 in (1, 2, 5):
+        found = anti_gravity_set(V, dep, plen, w0, l0=1)
+        frac = len(found) / n
+        print(f"  w0={w0}: anti-gravity count = {len(found)}  "
+              f"(fraction = {frac:.0%})")
+        assert not found
+    print("  -> fraction is exactly 0%, refuting any universal positive fraction")
     print()
 
 
 if __name__ == "__main__":
-    demo_tradeoff(limit=200)
-    demo_prime_witnesses(max_p=16)
-    demo_density(thresholds=[3, 5, 17, 100, 1000, 65537])
-    demo_fraction(limit=4096)
-    print("All demonstrations completed successfully.")
+    demo_handshake()
+    demo_existence()
+    demo_monotonicity()
+    demo_witnesses()
+    demo_refutation()
+    print("All demonstrations passed.")
