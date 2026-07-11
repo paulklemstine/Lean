@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3d209fc8",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Quantitative Invariants of the Prime Barcode\n\nThis cycle turned the qualitative statement \"the zero-dimensional barcode of the\nprime point cloud is governed by the gap sequence\"",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-07-10T17:56:03",
-      "title": "That the zero-dimensional persistent homology of the prim"
-    },
-    {
       "cycle_id": "17fb4d11",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Automatic Sequences and Decidability\n\nThe file `AutomaticSequences.lean` establishes, for an arbitrary DFA `M` over a\nfinite alphabet with finitely many states:\n\n* `accepts_nonem",
@@ -499,19 +489,19 @@
       "theorem_count": 32,
       "timestamp": "2026-07-11T10:14:43",
       "title": "Thermodynamics of Mathematical Proof"
+    },
+    {
+      "cycle_id": "1978e429",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nTwo self-contained Lean files (each importing only Mathlib) realize the mission\n\"Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent\":\n\n- `Catalog/Logic/ParadoxesConsi",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-11T10:49:45",
+      "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "87ba90ae",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Fan-structure in Selmer group distributions\n\nThese conjectures grow directly out of the current cycle, in which the rank\ndistribution of subspaces of a finite vector space was sh",
-      "quality_score": 0.73448,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-03T14:49:45",
-      "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
-    },
     {
       "cycle_id": "6044c919",
       "domain": "Combinatorics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 32,
       "timestamp": "2026-07-11T10:14:43",
       "title": "Thermodynamics of Mathematical Proof"
+    },
+    {
+      "cycle_id": "1978e429",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nTwo self-contained Lean files (each importing only Mathlib) realize the mission\n\"Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent\":\n\n- `Catalog/Logic/ParadoxesConsi",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-11T10:49:45",
+      "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0bde247f",
-      "domain": "Applications",
-      "name": "scons_succ",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "0bde247f",
-      "domain": "Applications",
-      "name": "scons_eta",
-      "quality": 0.72
-    },
     {
       "cycle_id": "75fb79ca",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "imageCard_le_codomain",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "1978e429",
+      "domain": "Novelty",
+      "name": "neg_neg",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "1978e429",
+      "domain": "Novelty",
+      "name": "paradoxModel_degree_ge_three",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-11T10:14:43",
+  "last_updated": "2026-07-11T10:49:45",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4d0c820d",
-        "quality": 0.82,
-        "theorems": 26,
-        "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-      },
-      {
         "cycle_id": "ace29f66",
         "quality": 0.82,
         "theorems": 69,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 32,
         "title": "Thermodynamics of Mathematical Proof"
+      },
+      {
+        "cycle_id": "1978e429",
+        "quality": 0.8,
+        "theorems": 26,
+        "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
       }
     ],
     "NumberTheory": [

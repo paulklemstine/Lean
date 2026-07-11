@@ -344,25 +344,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3dc9cabc",
-    "description": "Building on cycle 4d0c820d (Q=0.820), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize transreal arithmetic (Anderson's system: R ∪ {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_4d0c820d_2a7be6c5",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "4d0c820d",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T04:13:20.698129+00:00",
-    "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7ca0f553 (Q=0.820), which proved 61 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but n",
     "domain_bridges": [],
@@ -531,6 +512,25 @@
     "status": "failed",
     "timestamp": "2026-07-11T07:12:19.970065+00:00",
     "title": "Categorical Physics: The Shape of a Theory of Everything"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 1978e429 (Q=0.800), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle c99af430 (Q=0.830) proved 0 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems ",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_1978e429_33c113a4",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1978e429",
+    "status": "available",
+    "timestamp": "2026-07-11T10:49:45.592025+00:00",
+    "title": "Deepening: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
     "ambition_level": "extension",
@@ -1152,25 +1152,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1978e429",
-    "description": "Cycle c99af430 (Q=0.830) proved 0 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_c99af430_8634685f",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c99af430",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T08:51:37.304151+00:00",
-    "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle cd5a9d7d (Q=0.820) proved 11 theorems in Pythagorean but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeat",
     "domain_bridges": [],
@@ -1441,6 +1422,26 @@
     "status": "available",
     "timestamp": "2026-07-11T07:45:39.462265+00:00",
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1022",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T10:48:07.123829+00:00",
+    "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
     "ambition_level": "extension",
@@ -12245,6 +12246,46 @@
     "status": "available",
     "timestamp": "2026-07-11T10:14:40.485913+00:00",
     "title": "`ThermodynamicsOfProof.lean` — the positive theory:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nTwo self-contained Lean files (each importing only Mathlib) realize the mission\n\"Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent\":\n\n- `Catalog/Logic/ParadoxesConsistentConnector.lean` establishes a bridge\n  between Boolean-algebra theory and the metatheory of self-referential\n  paradoxes:\n  - A negation fixed point in any Boolean algebra collapses it (`⊥ = ⊤`), so a\n    consistent theory with a Liar-style sentence cannot be Boolean-valued.\n  - Belnap's four-valued logic `BV` supplies a *designated* negation fixed point\n    `B`, and an explicit six-sentence paraconsistent theory makes the Liar,\n    Russell and Berry sentences simultaneously provable while staying nontrivial\n    and non-explosive.\n- `Catalog/Logic/ParadoxSelfSoundness.lean` gives a fully computational finite\n  certificate: it develops a small paraconsistent-logic vocabulary (Belnap\n  values, a paraconsistent theory, soundness, explosion, inconsistency degree)\n  and verifies, by decision procedure, that the concrete six-element model has\n  three distinct provable gluts, is self-sound, rejects explosion, and has\n  inconsistency degree exactly three.\n\nNatural continuations:\n\n1. **Full propositional paraconsistent calculus.** Extend `ParaTheory` with a\n   syntax of connectives (`∧, ∨, ¬, →`) interpreted through `conj`, `disj`,\n   `neg`, and prove a soundness/completeness theorem for the designated-value\n   consequence relation `Γ ⊨ φ`.\n\n2. **Algebraic generality.** Replace `BV` by an arbitrary De Morgan bilattice\n   and characterize exactly which finite De Morgan algebras admit a designated\n   negation fixed point (equivalently, host a consistent Liar). Relate this to\n   the failure of the law of non-contradiction / excluded middle.\n\n3. **Encoding genuine self-reference.** Connect the abstract fixed-point value\n   `B` to a real diagonalization: a Gödel-style fixed-point lemma producing a\n   sentence provably equivalent to its own negation inside a paraconsistent\n   arithmetic, so that \"Liar/Russell/Berry\" are derived rather than posited.\n\n4. **Berry-specific refinement.** Model definability/nameability bounds so that\n   Berry's paradox arises from an explicit least-undefinable-number construction\n   rather than sharing the generic self-negation shape.\n\n5. **Quantitative inconsistency.** Study the \"inconsistency degree\" (number of\n   gluts) as an invariant of paraconsistent theories and its behaviour under\n   theory extensions and morphisms.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1023",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1978e429",
+    "status": "available",
+    "timestamp": "2026-07-11T10:49:26.131107+00:00",
+    "title": "Two self-contained Lean files (each importing only Mathlib) realize the mission"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Transreal Arithmetic (Deepening)\n\nThis cycle deepened the transreal formalization (`TReal = ℝ ⊎ {+∞, -∞, Φ}`) in\n`Catalog/Novelty/TransrealArithmeticDeepening.lean`, a fully self-contained file.\nBuilding a chain of results on top of the reproduced core arithmetic, it adds:\n\n1. **Bundled surviving structure.** `AddCommMonoid TReal` and `CommMonoid TReal`\n   instances, so the full Mathlib commutative-monoid API now applies to the\n   transreals.\n2. **Negation as a homomorphism** of both structures: `neg_add`, `neg_mul`,\n   `mul_neg`, `neg_mul_neg`, valid even at `±∞`.\n3. **ℝ embeds** as `rlAddHom : ℝ →+ TReal` and `rlMulHom : ℝ →* TReal`.\n4. **Sharp reach of the reciprocal involution:**\n   `recip (recip x) = x ↔ x ≠ -∞` — the failure is pinned to the single point\n   `-∞`, refining the coarse \"not an involution\".\n5. **Reciprocal vs negation:** `recip (-x) = -(recip x)` off `0`, with an\n   explicit failure at `0` (`recip_neg_zero_fails`).\n6. **A non-linear partial order:** `PartialOrder TReal` with `-∞ < ℝ < +∞` and\n   `Φ` incomparable; provably not total (`not_total`), with `ℝ` order-embedding\n   (`rlOrderEmbedding`) and — because `Φ` floats free — no greatest and no least\n   element (`no_greatest`, `no_least`), unlike the extended reals.\n\n## Natural next steps\n\n* **Order/algebra interaction.** Determine whether the surviving monoid + order\n  form an `OrderedAddCommMonoid` on the comparable part (`TReal \\ {Φ}`), and\n  characterize exactly which covariance laws `a ≤ b → c + a ≤ c + b` survive at\n  `±∞`. A promising target: quotient out `Φ` and study `[-∞,+∞]` as the induced\n  linear order.\n* **Continuity / analysis survival.** State transreal limits and ask which\n  classical theorems survive: e.g. IVT fails across `Φ`, but monotone-limit\n  statements may survive on the `Φ`-free part. Formalize `TReal`-valued\n  sequences and their limit behaviour near `±∞`.\n* **Comparison with wheels and the projective line.** Formalize the\n  single-point projective wheel `ℝ ∪ {∞, ⊥}` and prove a precise\n  non-embedding/embedding relationship with `TReal`, making rigorous the slogan\n  \"transreals sit strictly below the wheel axioms\".\n* **Involution repair.** Investigate the largest sub-carrier on which `recip` is\n  an involution (everything but `-∞`) and whether it carries a group-like\n  reciprocal structure.\n* **Matrices / linear algebra over `TReal`.** Since `TReal` is only a pair of\n  monoids (no distributivity), study what a \"transreal matrix product\" can and\n  cannot satisfy.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1024",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3dc9cabc",
+    "status": "available",
+    "timestamp": "2026-07-11T10:49:54.743955+00:00",
+    "title": "This cycle deepened the transreal formalization (`TReal = ℝ ⊎ {+∞, -∞, Φ}`) in"
   },
   {
     "ambition_level": "extension",
