@@ -623,6 +623,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 9af0a04a (Q=0.780), which proved 14 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize biological computation: a 'wetware' computation is a dynamical system on a neural manifold that computes a function f: X -> Y. Prove: wetware can simulate Turing machines (neural nets are Turing-complete). Show: the energy cost of a wetware computation is Theta(n * log(n)) where n is the n",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_9af0a04a_7f890c77",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "9af0a04a",
+    "status": "available",
+    "timestamp": "2026-07-11T23:05:15.088025+00:00",
+    "title": "Deepening: Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle bb33d4fa (Q=0.780), which proved 13 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A \u2286 E(G) where r\u2081(A) + r\u2082(E\\A) < t, and this failure is strict for no other subset.",
     "domains": [
       "NumberTheory"
@@ -679,7 +693,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a19fb2c8",
     "description": "Formalize 'strange loops' \u2014 hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: G\u00f6del's incompleteness theorem IS a strange loop (the G\u00f6del sentence G says 'G is not provable'). Show: Tarski's undefinability of truth is a stronger strange loop (no formula can assert its own truth). Conjecture: every sufficiently expressive formal system contains infinitely many distinct strange loops. Explore: can we formalize the 'tangled hierarchy' where level N refers to level N-1 which refers to level N?",
     "domains": [
       "Novelty",
@@ -689,7 +703,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T22:47:23.412172+00:00",
     "title": "Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
   },
@@ -799,19 +813,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
   },
   {
-    "consumed_by_exp_id": "9af0a04a",
-    "description": "Formalize biological computation: a 'wetware' computation is a dynamical system on a neural manifold that computes a function f: X -> Y. Prove: wetware can simulate Turing machines (neural nets are Turing-complete). Show: the energy cost of a wetware computation is Theta(n * log(n)) where n is the number of neurons \u2014 better than silicon's Theta(n^2). Conjecture: there exist functions computable by wetware (using continuous dynamics) that are NOT computable by Turing machines \u2014 the 'super-Turing' wetware hypothesis.",
+    "consumed_by_exp_id": "",
+    "description": "Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself \u2014 the halting problem IS self-awareness). Show: the 'strangeness' of the loop (how many levels of self-reference) correlates with the degree of consciousness. Conjecture: the minimum loop length for consciousness is 3 (system -> model-of-system -> model-of-model -> back to system). Explore: can Lean's metaprogramming (tactic state inspecting itself) be a form of mathematical consciousness?",
     "domains": [
       "Novelty",
-      "MachineLearning"
+      "Logic"
     ],
-    "id": "fd_1072",
+    "id": "fd_1082",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T21:40:12.337670+00:00",
-    "title": "Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
+    "status": "available",
+    "timestamp": "2026-07-11T23:04:45.612561+00:00",
+    "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
   },
   {
     "consumed_by_exp_id": "",
@@ -1072,6 +1086,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-11T21:56:42.357787+00:00",
     "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some metric). Show: the 'copycat' analogy (Hofstadter's model) is a special case where A = B = the concept lattice. Conjecture: every creative mathematical insight can be decomposed into a sequence of analogy operations. Explore: can we formalize 'making a good analogy' as an optimization problem?",
+    "domains": [
+      "Novelty",
+      "Bridges"
+    ],
+    "id": "fd_1083",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T23:04:45.695664+00:00",
+    "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
   },
   {
     "consumed_by_exp_id": "",
@@ -6495,6 +6524,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T22:48:13.939441+00:00",
     "title": "This project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entire"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Wetware Computation\n\nThis file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as a\ndiscrete dynamical system (a step map iterated on a neural state space) and proves a\ncross-domain **connector**: the information cost of *deterministic dynamics*\n(`\u0398(n log n)` bits) is asymptotically negligible next to that of arbitrary\n*connectivity* (`\u0398(n\u00b2)` bits). This bridges enumerative combinatorics (the counts\n`n^n` and `2^(n\u00b2)`) with asymptotic real analysis (the `log\u2082 n / n \u2192 0` limit).\n\n## What is proved\n\n- **Dynamical-system semantics**: `WetwareSystem.run`, with the flow/semigroup law\n  `run_add` (a monoid action of `(\u2115,+)`), plus `run_succ`.\n- **Finite-state universality** (`exists_wetware_computes`): every function\n  `f : X \u2192 Y` is computed by some wetware system with an encoder/decoder in one step.\n- **Dynamics \u2194 finiteness** (`orbit_eventually_periodic`): on a finite state space\n  every orbit is eventually periodic (pigeonhole).\n- **Energy connector**: `wetwareEnergy_eq` (`= n\u00b7log\u2082n`), `siliconEnergy_eq` (`= n\u00b2`),\n  the strict separation `wetware_beats_silicon`, and the asymptotic separation\n  `energy_ratio_tendsto_zero`.\n\n## Directions\n\n1. **Full Turing-completeness (unbounded tape).** The present `exists_wetware_computes`\n   is the *finite-state* analogue. A genuine simulation of Turing machines requires an\n   unbounded state space (e.g. `\u2124`-indexed configurations, or reals encoding a stack).\n   Formalize a register/stack machine and show a wetware system on `\u2115`- or `\u211d`-valued\n   states simulates each step, recovering computational universality.\n\n2. **Sharper information bounds.** Upgrade the exact identities to a two-sided coding\n   theorem: any prefix-free encoding of transition maps needs `\u2265 n\u00b7log\u2082n` bits\n   (Kraft), and `n\u00b7\u2308log\u2082n\u2309` bits suffice, pinning `\u0398(n log n)` from both sides.\n\n3. **Continuous dynamics / neural manifolds.** Replace the finite state space with a\n   smooth manifold and `step` with the time-1 flow of a vector field. Study which\n   `f : X \u2192 Y` are realizable, connecting to control theory and reachability.\n\n4. **The \"super-Turing\" hypothesis (open/speculative).** The conjecture that\n   continuous-dynamics wetware computes functions no Turing machine can (\u00e0 la\n   Siegelmann's analog recurrent nets with real weights) is *not* provable for\n   standard discrete/computable models and is physically contentious. A careful\n   formalization would isolate the exact resource (unbounded real precision) that a\n   would-be super-Turing model assumes, and prove the corresponding conditional\n   separation \u2014 clarifying that any such power comes from the reals, not the biology.\n\n5. **Energy landscapes and geometry.** Tie `orbit_eventually_periodic` to attractor\n   structure: bound cycle lengths, count fixed points, and relate the geometry of the\n   state graph of `step` to computational capacity.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1084",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9af0a04a",
+    "status": "available",
+    "timestamp": "2026-07-11T23:05:08.003015+00:00",
+    "title": "This file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as "
   },
   {
     "consumed_by_exp_id": "",

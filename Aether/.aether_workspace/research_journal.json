@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "39ced9f7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Coarse block–cut tree-decompositions\n\nThis cycle isolated the metric engine behind adhesion-diameter estimates in coarse\ntree-decompositions: distances across a decomposition acc",
-      "quality_score": 0.72,
-      "sorry_count": 5,
-      "theorem_count": 15,
-      "timestamp": "2026-07-11T04:29:33",
-      "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
-    },
-    {
       "cycle_id": "ace29f66",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Dream Logic: Coexisting Contradictions and Non-Closure of Unions\n\nThese conjectures are distilled from the present cycle, in which a four-valued\nparaconsistent algebra of \"imposs",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-11T22:48:17",
       "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
+    },
+    {
+      "cycle_id": "9af0a04a",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Wetware Computation\n\nThis file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as a\ndiscrete dynamical system (a step map iterated on a neural state space) and",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-11T23:05:15",
+      "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0f872c04",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's finding that, for `ζ = exp(2πi/5)`, the minimal modulus\n`σ₅(n)` of a sum of `n` fifth roots of unity is non-increasing along every residue\nclass modulo 5",
-      "quality_score": 0.62536,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-04T11:58:18",
-      "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class"
-    },
     {
       "cycle_id": "c63aa9e3",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-11T22:48:17",
       "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
+    },
+    {
+      "cycle_id": "9af0a04a",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Wetware Computation\n\nThis file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as a\ndiscrete dynamical system (a step map iterated on a neural state space) and",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-11T23:05:15",
+      "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c3787823",
-      "domain": "Novelty",
-      "name": "card_kin",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "c3787823",
-      "domain": "Novelty",
-      "name": "kin_add_self",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "c3787823",
-      "domain": "Novelty",
-      "name": "kin_two_nsmul",
-      "quality": 0.83
-    },
     {
       "cycle_id": "dfaaa130",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "cantorTower_succ",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "9af0a04a",
+      "domain": "Geometry",
+      "name": "linking",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "9af0a04a",
+      "domain": "Geometry",
+      "name": "For",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "9af0a04a",
+      "domain": "Geometry",
+      "name": "WetwareSystem",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-11T22:48:17",
+  "last_updated": "2026-07-11T23:05:15",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "eee0a16a",
-        "quality": 0.42575842352941173,
-        "theorems": 9,
-        "title": "Brocard-Ramanujan Triangular Classification"
-      },
-      {
         "cycle_id": "73a5599a",
         "quality": 0.69548,
         "theorems": 17,
@@ -3451,6 +3445,12 @@
         "quality": 0.83,
         "theorems": 18,
         "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+      },
+      {
+        "cycle_id": "9af0a04a",
+        "quality": 0.78,
+        "theorems": 14,
+        "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
       }
     ],
     "Logic": [
