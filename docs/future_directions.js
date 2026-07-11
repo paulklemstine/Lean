@@ -922,7 +922,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Categorification of Entropy: The Information Loss of Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a5d3cfa",
     "description": "Cycle c67f6099 (Q=0.820) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using stati",
     "domains": [
       "Novelty"
@@ -931,7 +931,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "c67f6099",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T15:33:24.740639+00:00",
     "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
   },
@@ -1023,7 +1023,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3ec9ce02",
     "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
     "domains": [
       "Novelty",
@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T13:54:33.388202+00:00",
     "title": "Speculative: Number Theory as Music Theory"
   },
