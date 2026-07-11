@@ -130,6 +130,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_f85e4d43_14fdaa4f",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "f85e4d43",
+    "status": "available",
+    "timestamp": "2026-07-11T09:58:05.573769+00:00",
+    "title": "Deepening: The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0643b2b3 (Q=0.820), which proved 11 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost r",
     "domains": [
       "Combinatorics"
@@ -983,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "67719bf8",
     "description": "Study near-misses to Fermat's Last Theorem: triples (a,b,c) where |a^n + b^n - c^n| is small. Prove that such near-misses exist for every n and characterize their distribution. Show that the density of near-misses decreases super-exponentially and connect to the ABC conjecture's effective version.",
     "domains": [
       "Novelty",
@@ -993,7 +1007,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T09:41:21.700734+00:00",
     "title": "Fermat Near-Misses in the Twilight Zone"
   },
@@ -7031,21 +7045,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "`WrongTheories.lean` formalizes theory-space as a real inner-product space `E`"
   },
   {
-    "consumed_by_exp_id": "f85e4d43",
-    "description": "# Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem of the form\n   `slots \u00b7 log\u2082 w` bits would generalize the Boolean bit-length bound and\n   quantify the cost of storing synaptic strengths, not just topology.\n\n2. **Average-case (entropy) bounds.** `few_small_codewords` / `most_incompressible`\n   give a worst-case pigeonhole statement. Formalizing Shannon entropy of a\n   uniform distribution over connectomes (`H = C(N,2)` bits) and proving that no\n   uniquely-decodable code beats it (Kraft\u2013McMillan) would upgrade the argument\n   from \"some mind is incompressible\" to \"the average mind is incompressible\".\n\n3. **Directed + weighted composition.** Combine `directed_count_sq` with the\n   weighted count to obtain the full state space `w^(N(N-1))` of directed,\n   graded connectomes and its exact bit-length.\n\n4. **Sharper Bekenstein packing.** `neuron_count_sqrt_bound` gives\n   `N \u2264 1 + \u221a(2\u00b7capacity)`. Plugging in concrete SI values for `\u0127, c` and a\n   cortex-scale `R, E` would yield an explicit numeric neuron ceiling, provable\n   by `norm_num`/interval arithmetic.\n\n5. **Merging hierarchies.** `synapseSlots_add` is the two-brain case of a general\n   superadditivity `C(\u2211N\u1d62, 2) = \u2211 C(N\u1d62,2) + \u2211_{i<j} N\u1d62 N\u2c7c`, which would formalize\n   the combinatorial explosion of cross-connections when many minds are fused.\n\n## Completed auxiliary theory\n\n* **Mixed-radix / factorial bridge** (`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`).\n  The factorial number system is exhibited as the mixed-radix system with bases\n  `b i = i + 1`: `value_eq` (place values are factorials), `valid_iff` (the digit\n  bound `c\u1d62 \u2264 i` is `c\u1d62 < i+1`), and `factorial_value_unique_via_mixed`, which\n  re-derives factoradic uniqueness as a corollary of the general\n  `MixedRadix.value_unique`.  All three are now fully proved.\n\n* **Carmichael primitive divisors for Fibonacci numbers** (`Catalog/Shared/CarmichaelProof.lean`,\n  `Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`,\n  `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`).  For every `n` with\n  `13 \u2264 n \u2264 10000`, `F(n)` has a primitive prime divisor.  The proof combines the\n  elementary prime case with a computationally certified composite case (the\n  `native_decide` checks `primPart_check` / `fib_coprime_part_pos_small`) fed\n  through the structural entry-point lemmas.\n\n## Open: the general Carmichael theorem\n\nThe headline Fibonacci results above are currently proved only on the certified\nrange `n \u2264 10000`.  The fully general statement \u2014 every `F(n)` with `n \u2209 {1,2,6,12}`\nhas a primitive prime divisor \u2014 is *Carmichael's theorem*.  Removing the upper\nbound requires infrastructure not yet in Mathlib:\n\n* the primitive-part (cyclotomic) factorization `F(n) = \u220f_{d\u2223n} \u03a6_d` of the\n  Fibonacci sequence, together with the fact that the `\u03a6_d` are the correct\n  \"primitive parts\";\n* a Zsygmondy-type growth bound showing `\u03a6_n` exceeds its only possible intrinsic\n  factor (the largest prime dividing `n`, appearing to the first power) once\n  `n > 12`.\n\nFormalizing these two ingredients would close the tail and upgrade\n`fib_primitive_divisor` to the unrestricted `n \u2265 13`.\n\n## Build & compilation status\n\nThe completed deliverables of this mission are collected under the `MindEncoding`\nlibrary target and build end-to-end with a plain `lake build`:\n\n* `Novelty.MindEncodingBounds`\n* `Novelty.MindEncodingRefined`\n* `Speculative.AutoResearch.MixedRadixFactorialBridge`\n* `Shared.CarmichaelHelper`, `Shared.CarmichaelProof`\n* `Speculative.AutoResearch.CarmichaelComposite`\n* `Speculative.CarmichaelPrimitiveDivisor`\n\nAll of them are `sorry`-free and their axiom audits show only the standard\naxioms (`propext`, `Classical.choice`, `Quot.sound`, plus\n`Lean.ofReduceBool`/`Lean.trustCompiler` for the `native_decide`-certified\nCarmichael range).\n\nThe project also ships a large shared `Catalog/` of files contributed by many\nunrelated cycles.  Every top-level directory is declared as its own `lean_lib`\n(so any individual module can be built by name), but the catalog as a whole is\n*not* buildable end-to-end: it contains numerous pre-existing dangling imports\n\u2014 references to source modules that were never included in the repository (for\nexample `Pythagorean.HOCriticalPairs`, `Physics.QuantumInfo.VonNeumannEntropy`,\n`Logic.LobFixedPoint`).  Repairing those would require recreating the missing\nsource files, which is outside the scope of this mission.  For that reason the\ndefault build target is the curated `MindEncoding` library rather than the full\ncatalog.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_1006",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0250199a",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T08:02:37.643508+00:00",
-    "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThis project formalizes a model of hypercomputation, the physical-precision\nbarrier, and the accidentally/essentially computable distinction. Natural\nextensions:\n\n## Deepening the physical model\n- **Energy quantization.** Replace the abstract \"precision `p` = number of bits\"\n  with a physical resolution `\u03b5 = 2^{-p}` and relate it to an energy scale via a\n  Landauer/Heisenberg-style bound `E \u00b7 \u0394t \u2273 \u0127`, turning\n  `halting_needs_infinite_precision` into an explicit divergent-energy statement.\n- **Real-number oracles.** Encode the oracle stream `b : \u2115 \u2192 Bool` as the binary\n  expansion of a real `r = \u2211 b_k 2^{-(k+1)} \u2208 [0,1]` and prove that a\n  measurement of resolution `2^{-p}` recovers exactly `readBits b p`, connecting\n  the combinatorial statements here to genuine real analysis.\n- **Noise and robustness.** Model measurement error and show that an oracle\n  usable only up to bounded noise is equivalent to a finite-precision oracle,\n  hence essentially computable.\n\n## Strengthening the computability results\n- **Diagonal halting set.** Prove non-computability of the self-application\n  diagonal `fun c => (eval c (encode c)).Dom` directly, and derive the\n  Turing-jump hierarchy (`\u2205', \u2205'', \u2026`), formalizing a proper strictly-increasing\n  chain of hypercomputational powers.\n- **Relative computability.** Define oracle Turing reductions `A \u2264_T B` and prove\n  the halting set is complete for the class of `\u03a3\u2081` sets, situating the oracle of\n  `EssentialComputability.lean` in the arithmetical hierarchy.\n- **Rice-type barriers.** Use Mathlib's `rice`/`rice\u2082` to show that *every*\n  non-trivial semantic property of programs demands hypercomputation, sharpening\n  `no_computable_halting_decider`.\n\n## Measure and category\n- Upgrade `uncomputable_uncountable` to a **measure-theoretic** statement: with\n  the fair-coin (Bernoulli) measure on `\u2115 \u2192 Bool`, the computable functions form\n  a null set, so a \"random\" oracle is uncomputable almost surely.\n",
     "domains": [
@@ -7134,6 +7133,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T09:25:09.771755+00:00",
     "title": "This deepening (`WrongTheoriesDeepening.lean`) adds, on top of the earlier"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Graded Connectomes and the Combinatorics of Merged Minds\n\nThe results just established fix the exact description-length law for graded\nsynapses (`log\u2082(w^slots) = slots \u00b7 log\u2082 w`), the full directed\u2013graded state\ncount `w^(N(N-1))`, and the general superadditive merge identity\n`slots(\u2211N\u1d62) = \u2211 slots(N\u1d62) + \u2211_{i<j} N\u1d62 N\u2c7c` together with its algebraic\ncompanion `(\u2211N\u1d62)\u00b2 = \u2211N\u1d62\u00b2 + 2\u2211_{i<j}N\u1d62 N\u2c7c`. These suggest several bold, testable\ndirections.\n\n## 1. A graded incompressibility theorem\n\n**Conjecture.** Under any injective encoding of `w`-graded connectomes into\nnatural numbers, all but a vanishing fraction of configurations require at least\n`slots \u00b7 log\u2082 w \u2212 O(1)` bits, so the average graded mind is incompressible at the\ngraded rate, not merely the topological rate.\n\n*The key insight is* that the multiplicative jump from `2^slots` to `w^slots`\nturns into a clean additive premium of `log\u2082 w` bits per slot, so the pigeonhole\ncounting argument that gives worst-case Boolean incompressibility transfers\nverbatim once the codeword-value threshold is rescaled by `w^slots`.\n\n*Why now?* The exact count and its logarithm are already pinned down; only the\ncounting (Kraft\u2013McMillan style) layer remains, and that layer is independent of\nthe weight alphabet, so the generalisation is within immediate reach.\n\n## 2. Entropy of the merge cross term\n\n**Conjecture.** When `k` brains of equal size `n` are fused, the fraction of\nsynapse slots that are *relational* (cross-brain) tends to `1 \u2212 1/k` as the\nhierarchy grows, so a fused collective of many equal minds is asymptotically\n\"all interface\".\n\n*The key insight is* that the merge identity splits total slots into an\nintrinsic part `k\u00b7C(n,2) \u2248 k n\u00b2/2` and a cross part `C(k,2)\u00b7n\u00b2 \u2248 k\u00b2 n\u00b2/2`, whose\nratio is governed solely by `k`; the square-of-a-sum identity makes the crossover\nexact rather than asymptotic.\n\n*Why now?* The closed form for the cross term is established, so the limiting\nratio is a direct corollary awaiting a clean asymptotic statement.\n\n## 3. Optimal weight quantisation under a physical bit budget\n\n**Conjecture.** Given a fixed Bekenstein bit capacity `B`, the neuron count and\nthe weight resolution trade off along the curve `C(N,2)\u00b7log\u2082 w \u2264 B`; the mind of\nmaximal representational richness at fixed `N` uses the largest `w` with\n`log\u2082 w \u2264 B / C(N,2)`, and this frontier is strictly concave in `(N, log\u2082 w)`.\n\n*The key insight is* that description length is bilinear in `slots` and `log\u2082 w`,\nso the physical constraint carves out a hyperbola-like feasible region whose\nPareto frontier can be characterised exactly instead of numerically.\n\n*Why now?* Both ingredients \u2014 the quadratic slot growth and the logarithmic\nweight cost \u2014 are now formalised, so the trade-off surface can be stated and its\nconcavity proven directly.\n\n## 4. Superadditivity as a strict inequality with an exact defect\n\n**Conjecture.** For any partition of a brain into `k \u2265 2` non-empty parts, the\ncapacity gained by fusion is *exactly* the cross term and is strictly positive;\nmoreover among all partitions of a fixed neuron total into `k` parts the cross\nterm is maximised by the balanced partition and minimised by the most lopsided\none.\n\n*The key insight is* that the cross term equals `((\u2211N\u1d62)\u00b2 \u2212 \u2211N\u1d62\u00b2)/2`, so\nextremising it is precisely extremising `\u2211N\u1d62\u00b2` under a fixed sum \u2014 a convexity\nproblem with a known balanced/lopsided dichotomy.\n\n*Why now?* The identity linking the cross term to the square of the sum is\nproven, reducing an apparently combinatorial extremal question to a one-line\nconvexity argument.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1016",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f85e4d43",
+    "status": "available",
+    "timestamp": "2026-07-11T09:58:00.134256+00:00",
+    "title": "The results just established fix the exact description-length law for graded"
   },
   {
     "consumed_by_exp_id": "",

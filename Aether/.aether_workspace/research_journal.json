@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b77ed1ec",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — The 3n+1 Map: Tropical Dynamics and the Logic of Halting\n\nThis cycle established the elementary but rigorous scaffolding around the Collatz\nmap: orbit-invariance of the halting p",
-      "quality_score": 0.72,
-      "sorry_count": 5,
-      "theorem_count": 24,
-      "timestamp": "2026-07-10T16:20:42",
-      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-    },
-    {
       "cycle_id": "a1a5801c",
       "domain": "Computation",
       "key_insight": "# Future Directions — Categorification of Entropy\n\nThe file `FunctorialEntropy.lean` develops the information loss of a functor as the\nconditional entropy of the domain object given its image, for fun",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-11T09:25:12",
       "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
+    },
+    {
+      "cycle_id": "f85e4d43",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Graded Connectomes and the Combinatorics of Merged Minds\n\nThe results just established fix the exact description-length law for graded\nsynapses (`log₂(w^slots) = slots · log₂ w`)",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-11T09:58:05",
+      "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f91c88c3",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's findings about the octahedron `\\overline{3K₂}` — the\ncomplement of a perfect matching on six vertices — as the single forbidden induced\nsubgraph separati",
-      "quality_score": 0.78952,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-03T12:42:34",
-      "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
-    },
     {
       "cycle_id": "f498d6bb",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-11T09:25:12",
       "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
+    },
+    {
+      "cycle_id": "f85e4d43",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Graded Connectomes and the Combinatorics of Merged Minds\n\nThe results just established fix the exact description-length law for graded\nsynapses (`log₂(w^slots) = slots · log₂ w`)",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-11T09:58:05",
+      "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-11T09:25:12",
+  "last_updated": "2026-07-11T09:58:05",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "08430233",
-        "quality": 0.72,
-        "theorems": 11,
-        "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-      },
-      {
         "cycle_id": "39ced9f7",
         "quality": 0.72,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 13,
         "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
+      },
+      {
+        "cycle_id": "f85e4d43",
+        "quality": 0.83,
+        "theorems": 15,
+        "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
       }
     ],
     "Bridges": [
