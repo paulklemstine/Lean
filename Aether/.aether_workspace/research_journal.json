@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0981cb8f",
-      "domain": "Probability",
-      "key_insight": "# Future Directions: Self-Reference, Fixed Points, and Strange Loops\n\nEach conjecture below is bold, falsifiable, and derived from the findings of this\ncycle — the observation that existence (Lawvere)",
-      "quality_score": 0.83,
-      "sorry_count": 6,
-      "theorem_count": 20,
-      "timestamp": "2026-07-11T00:40:03",
-      "title": "Consciousness as Emergent Fixed Point"
-    },
-    {
       "cycle_id": "0ba9c9ed",
       "domain": "Probability",
       "key_insight": "# Future Directions — Infinite-Dimensional Chess\n\nBold, falsifiable conjectures emerging from this cycle's study of chess on the\nboundless board `ℤ × ℤ`.\n\n## 1. The exact material threshold for mating",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-11T16:23:18",
       "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+    },
+    {
+      "cycle_id": "8fb1d399",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Oracle's Burden\n\n## What was proved (this project)\n\nTwo self-contained Lean 4 files, built on Mathlib's `Computability.TuringDegree` / `RecursiveIn`.\n\n### `Catalog/Computation",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-11T16:57:29",
+      "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3498198a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Escher Staircases in Algebra\n\nAn *Escher staircase* is an infinite strictly ascending chain of ideals\n`I₀ ⊂ I₁ ⊂ I₂ ⊂ ⋯` in a commutative ring. A ring admits such a chain exactly",
-      "quality_score": 0.7818800000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-04T05:06:11",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
     {
       "cycle_id": "6f613cb7",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-11T16:23:18",
       "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+    },
+    {
+      "cycle_id": "8fb1d399",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Oracle's Burden\n\n## What was proved (this project)\n\nTwo self-contained Lean 4 files, built on Mathlib's `Computability.TuringDegree` / `RecursiveIn`.\n\n### `Catalog/Computation",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-11T16:57:29",
+      "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9ca5466b",
-      "domain": "Applications",
-      "name": "bool_ne_not",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "ea473918",
-      "domain": "Novelty",
-      "name": "wrongness_nonneg",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "ea473918",
-      "domain": "Novelty",
-      "name": "predErr_nonneg",
-      "quality": 0.8
-    },
     {
       "cycle_id": "ea473918",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "S_le_pow",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "8fb1d399",
+      "domain": "Applications",
+      "name": "recursiveIn_cut",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "8fb1d399",
+      "domain": "Applications",
+      "name": "recursiveIn_mono",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "8fb1d399",
+      "domain": "Applications",
+      "name": "zero_turingReducible",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T16:23:18",
+  "last_updated": "2026-07-11T16:57:29",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1d01ef4b",
-        "quality": 0.72,
-        "theorems": 19,
-        "title": "Hypercomputation: Computing the Uncomputable"
-      },
-      {
         "cycle_id": "9ca5466b",
         "quality": 0.8,
         "theorems": 40,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 40,
         "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
+      },
+      {
+        "cycle_id": "8fb1d399",
+        "quality": 0.72,
+        "theorems": 22,
+        "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
       }
     ],
     "Bridges": [

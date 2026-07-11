@@ -129,7 +129,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorification of Entropy: The Information Loss of Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c37c01fa",
     "description": "Building on cycle e480cbbd (Q=0.830), which proved 64 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncompu",
     "domains": [
       "Novelty"
@@ -138,7 +138,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "e480cbbd",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T15:33:11.863697+00:00",
     "title": "Deepening: The Fractal Dimension of Mathematical Truth"
   },
@@ -185,7 +185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
   {
-    "consumed_by_exp_id": "0cb469a3",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
     "domains": [
       "Novelty"
@@ -194,7 +194,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "094010ae",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-11T14:11:15.793499+00:00",
     "title": "Deepening: Reflective Type Theory: Proving Things About Proving Things"
   },
@@ -564,21 +564,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T21:40:59.530765+00:00",
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-  },
-  {
-    "consumed_by_exp_id": "8fb1d399",
-    "description": "Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and prove that each jump genuinely increases theorem-proving power. Show that the oracle hierarchy is isomorphic to the Turing jump hierarchy.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1027",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T11:25:55.608427+00:00",
-    "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
   },
   {
     "consumed_by_exp_id": "",
@@ -7574,6 +7559,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T16:23:12.103943+00:00",
     "title": "This project formalizes, in Lean 4 (Mathlib), a rigorous mathematical skeleton"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Oracle's Burden\n\n## What was proved (this project)\n\nTwo self-contained Lean 4 files, built on Mathlib's `Computability.TuringDegree` / `RecursiveIn`.\n\n### `Catalog/Computation/OracleHierarchy.lean` \u2014 relativized computability + base case\n* `recursiveIn_cut` \u2014 cut / generalized transitivity for oracle computability.\n* `recursiveIn_mono` \u2014 relativization is monotone in the oracle set.\n* `reducible_zero_iff_partrec` \u2014 the bottom degree `0` is exactly the partial recursive functions.\n* `join_lub` (with `left_le_join`, `right_le_join`) \u2014 the two-oracle set `{f, g}` is the least\n  upper bound of `f` and `g`.\n* `partrec_oracle_useless` \u2014 **disproof**: a computable oracle adds nothing.\n* `exists_not_partrec`, `exists_degree_gt_zero` \u2014 the degrees are non-trivial; the first jump\n  `PA < PA^H` genuinely increases power.\n\n### `Catalog/Computation/TuringJumpHierarchy.lean` \u2014 the abstract jump tower\n* `IsJump` \u2014 axiomatization of a Turing-jump operator (`A \u2264\u1d40 J A`, `\u00ac J A \u2264\u1d40 A`).\n* `IsJump.lt` \u2014 one jump strictly increases the degree (`A <\u1d40 J A`).\n* `IsJump.hierarchy_strictMono`, `IsJump.hierarchy_lt` \u2014 the iterated tower is strictly ascending.\n* `IsJump.hierarchyEmbedding` \u2014 the tower is an order embedding `(\u2115,<) \u21aao TuringDegree`, i.e. the\n  oracle hierarchy is order-isomorphic to the standard `\u03c9`-indexed Turing-jump hierarchy.\n* `IsJump.hierarchy_injective` \u2014 all levels are distinct.\n* `jump_not_idempotent` \u2014 **disproof**: the jump is never idempotent.\n* `IsJump.not_equiv` \u2014 a jump never fixes an oracle up to Turing equivalence.\n* `not_isJump_id`, `not_isJump_const` \u2014 **disproof**: the identity and constant operators are\n  not jumps, so the `IsJump` axiomatization has genuine content (it is not satisfied by trivial\n  operators).\n\n## The honest gap, and the main next step\n\nThe hierarchy theorems are stated for *any* operator satisfying `IsJump`. The canonical model is\nthe Turing jump `A \u21a6 A'`, and its two axioms are precisely the **relativized halting theorem**.\nWhat is *not* yet formalized here is the construction of a concrete `J` witnessing `IsJump`\nunconditionally at every level. Concretely, this requires:\n\n1. **A relativized universal machine.** Extend `Mathlib.Computability.PartrecCode` to oracle\n   codes `evalIn : Code \u2192 (\u2115 \u2192. \u2115) \u2192 \u2115 \u2192. \u2115`, and prove\n   `RecursiveIn {O} f \u2194 \u2203 c, evalIn c O = f` (a relativized `exists_code`). This mirrors the\n   existing (unrelativized) `PartrecCode.lean` and is the single largest missing piece.\n2. **The concrete jump.** Define `A' := \u03bb e, evalIn (decode e) A e` restricted to its halting set\n   (or its characteristic function) and prove `A \u2264\u1d40 A'` and `\u00ac A' \u2264\u1d40 A` by relativized\n   diagonalization \u2014 instantiating `IsJump`.\n3. **Base case link.** Connect `Mathlib.Computability.Halting.halting_problem` to\n   `exists_degree_gt_zero` so the level-0 witness is literally the halting problem `H`, not just\n   an abstract non-computable function.\n\n## Further mathematical directions\n\n* **Post's theorem / arithmetical hierarchy.** Prove `A'` is r.e. in `A` but not recursive in `A`,\n  and relate the jump tower to `\u03a3\u2070\u2099` definability \u2014 the \"proves consistency / cannot decide\n  soundness\" slogan becomes the r.e.-but-not-recursive dichotomy.\n* **Join as a lattice operation on degrees.** Upgrade `join_lub` to a `SemilatticeSup TuringDegree`\n  instance (needs a numeric join `f \u2295 g` and its lub proof on the quotient).\n* **Genuine proof theory.** The literal reading \u2014 `PA + Con`-style towers, `PA^H` proving its own\n  consistency but not soundness \u2014 needs an arithmetized provability predicate (\u00e0 la\n  `Mathlib`'s incompleteness development) layered over the oracle. This is a substantial\n  independent formalization.\n* **Transfinite jumps.** Extend `J^[n]` to `J^[\u03b1]` for computable ordinals `\u03b1`, giving the\n  hyperarithmetical hierarchy.\n",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_1051",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8fb1d399",
+    "status": "available",
+    "timestamp": "2026-07-11T16:57:22.332617+00:00",
+    "title": "Two self-contained Lean 4 files, built on Mathlib's `Computability.TuringDegree`"
   },
   {
     "consumed_by_exp_id": "",
