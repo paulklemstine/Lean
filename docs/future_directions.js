@@ -256,6 +256,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle d16ba3bc (Q=0.820), which proved 14 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_d16ba3bc_a8d7c837",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "d16ba3bc",
+    "status": "available",
+    "timestamp": "2026-07-11T01:12:24.864758+00:00",
+    "title": "Deepening: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle da4694df (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/",
     "domains": [
       "Applications"
@@ -5658,21 +5672,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
   {
-    "consumed_by_exp_id": "d16ba3bc",
-    "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0909",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T15:16:58.746626+00:00",
-    "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle b77ed1ec (Q=0.720) proved 24 theorems in Tropical but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elus",
     "domains": [
@@ -6614,6 +6613,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T01:12:12.830740+00:00",
     "title": "This work deepens the interval-graph analysis of register allocation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Mixing of Constraint-Satisfaction Swap Chains\n\nThis cycle replaced the folklore \"gap vs. clue count\" picture with a structural one:\nthe spectral gap of the swap chain is controlled by the connectivity of the graph of\ncompatible swaps between admissible completions. The following conjectures push that\ninsight further; each is falsifiable by an explicit small instance or by a single\ncounterexample.\n\n## Conjecture 1 \u2014 Quantitative gap from graph conductance\nFor the max-degree lazy swap chain on a connected move graph `G`, the spectral gap is\nbounded below by `c \u00b7 h(G)\u00b2 / (2\u00b7\u0394)`, where `h(G)` is the edge conductance and `\u0394` the\nmaximum degree. In particular the gap is strictly positive exactly when `G` is\nconnected, and its magnitude is a property of the swap geometry, never of the clue\ncount.\nThe key insight is that the discrete Laplacian appearing in one step of the chain is\nthe same operator whose Rayleigh quotient a Cheeger inequality bounds, so mixing speed\nand combinatorial bottleneck are two readings of one eigenvalue.\nWhy now? The mean-value characterization of fixed vectors and the maximum principle\nestablished this cycle already pin the eigenvalue `1`; the remaining step is to control\nthe *second* eigenvalue, for which the Cheeger machinery is exactly calibrated.\n\n## Conjecture 2 \u2014 Block decomposition from conserved multiset statistics\nThe connected components of the swap-move graph are precisely the level sets of the\nconserved statistics of the moves (row, column, and box value multisets). Consequently\nthe number of chain components equals the number of jointly attainable multiset\nprofiles, and the chain is irreducible on a puzzle iff all admissible completions share\nevery such profile.\nThe key insight is that a compatible swap is a transposition preserving each line's\nmultiset, so the reachability relation refines exactly into the fibers of the multiset\nmap.\nWhy now? This cycle proved the single-line invariant (`36` row-sum) that seeds these\nfibers; the natural next move is to show these invariants generate the entire block\nstructure.\n\n## Conjecture 3 \u2014 Uniqueness collapses the chain\nA puzzle with a unique admissible completion yields a one-state chain: the swap graph\nis a single isolated vertex, every vector is trivially fixed, and mixing is immediate\nand vacuous. Thus \"unique solution\" is not the slow-mixing regime of the folklore\nstory but the degenerate fast one.\nThe key insight is that with one state the transition matrix is the `1\u00d71` identity, so\nthe notion of a gap between a first and second eigenvalue is empty, not small.\nWhy now? The two-state analysis of this cycle already isolates the boundary between\none- and many-state behaviour; extending it to the singleton clarifies the true\nmeaning of the \"absorbing\" phase.\n\n## Conjecture 4 \u2014 Symmetry forces spectral degeneracy\nWhen a puzzle admits a nontrivial automorphism acting freely on its completions, the\nswap chain's transition matrix commutes with the induced permutation, so its spectrum\nis degenerate and the gap is bounded above by a quantity depending only on the orbit\nstructure. Highly symmetric puzzles therefore mix slowly regardless of clue count.\nThe key insight is that a commuting symmetry block-diagonalizes the chain, and equal\ndiagonal blocks produce repeated eigenvalues that squeeze the gap.\nWhy now? The symmetric doubly stochastic structure proved this cycle is exactly the\nsetting in which commuting-operator arguments apply verbatim.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0968",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d16ba3bc",
+    "status": "available",
+    "timestamp": "2026-07-11T01:12:21.487929+00:00",
+    "title": "This cycle replaced the folklore \"gap vs. clue count\" picture with a structural "
   },
   {
     "consumed_by_exp_id": "",

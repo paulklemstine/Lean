@@ -9,9 +9,9 @@ window.PACKAGE_INDEX = [
     "exp_id": "d16ba3bc",
     "filename": "the_spectral_gap_of_sudoku_when_puzzles_become_pha.json",
     "pkg_num": 410,
-    "quality": "unrated",
-    "quality_score": null,
-    "quality_tier": "unrated",
+    "quality": "substantial",
+    "quality_score": 0.82,
+    "quality_tier": "gold",
     "title": "The Spectral Gap of Sudoku: Connectivity, Not Clue Count, Is the Order Parameter"
   },
   {
@@ -12420,8 +12420,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_spectral_gap_of_sudoku_when_puzzles_become_pha",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.82,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Spectral Gap of Sudoku: Connectivity, Not Clue Count, Is the Order Parameter"
     },
