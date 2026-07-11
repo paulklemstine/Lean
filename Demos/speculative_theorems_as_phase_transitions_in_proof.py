@@ -1,311 +1,167 @@
 """
-Proof Density Phase Transitions — Numerical Demonstrations
+Theorems as Phase Transitions in Proof Space -- numerical demonstrations.
 
-This script demonstrates the key results from the ProofDensitySpace theory:
-1. Provability density phase transition
-2. Gap amplification cascade
-3. Proof dimension vs incompleteness
+This self-contained script illustrates the main results of the paper:
+
+  1. Combinatorics of proof space: the exact count S(k, n) of statements of
+     length <= n, its geometric closed form (k-1)*S = k^(n+1) - 1, and the
+     sandwich k^n <= S(k, n) <= k^(n+1).
+  2. The order parameter r(n) = prov(n) / tot(n) and asymptotic incompleteness:
+     when provable statements grow with base a < k, r(n) -> 0.
+  3. The logistic sharp-transition profile: critical value 1/2, strict
+     monotonicity, and convergence to a Heaviside step as sharpness beta -> oo.
+  4. The dimension of proof space, log(tot n)/n -> log k, and the geometric
+     length distribution p(n) = (k-1)/k^(n+1), which sums to 1 with power-law
+     tail k^(-n).
+
+Run:  python demo.py
+Requires only the Python standard library.
 """
 
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+from __future__ import annotations
+
+import math
+from typing import Callable, List
 
 
-def provability_density(b: int, proof_bound_fn, n: int) -> float:
-    """Compute provability density ρ(n) = b^proofBound(n) / b^n."""
-    pb = proof_bound_fn(n)
-    if n == 0:
-        return 1.0
-    return b ** pb / b ** n
+# ---------------------------------------------------------------------------
+# 1. Combinatorics of proof space
+# ---------------------------------------------------------------------------
+
+def statements(k: int, n: int) -> int:
+    """Number of statements of length exactly n over a k-symbol alphabet."""
+    return k ** n
 
 
-def unprovability_gap(b: int, proof_bound_fn, n: int) -> int:
-    """Compute the gap: b^n - b^proofBound(n)."""
-    pb = proof_bound_fn(n)
-    return max(0, b ** n - b ** pb)
+def S(k: int, n: int) -> int:
+    """Number of statements of length <= n, i.e. sum_{i=0}^{n} k^i."""
+    return sum(k ** i for i in range(n + 1))
 
 
-def demo_phase_transition():
-    """Demonstrate the phase transition in provability density."""
-    print("=" * 60)
-    print("DEMO 1: Provability Density Phase Transition")
-    print("=" * 60)
-
-    b = 2  # binary alphabet
-
-    # Scenario: proofBound(n) = n for n ≤ 5, then proofBound(n) = 5 + log(n-5)
-    # This models a system where short proofs cover short statements
-    # but can't keep up with longer ones.
-    nc = 5  # completeness threshold
-
-    def proof_bound(n):
-        if n <= nc:
-            return n  # complete regime
-        return nc + int(np.log2(max(1, n - nc)))  # sublinear growth
-
-    print(f"\nAlphabet size b = {b}, Completeness threshold n_c = {nc}")
-    print(f"\n{'n':>4} {'stmtCount':>12} {'provBound':>10} {'maxProvable':>12} {'density':>10} {'gap':>12}")
-    print("-" * 65)
-
-    for n in range(1, 21):
-        stmt_count = b ** n
-        pb = proof_bound(n)
-        max_provable = b ** pb
-        density = provability_density(b, proof_bound, n)
-        gap = unprovability_gap(b, proof_bound, n)
-        marker = " <-- TRANSITION" if n == nc + 1 else ""
-        print(f"{n:>4} {stmt_count:>12} {pb:>10} {max_provable:>12} {density:>10.6f} {gap:>12}{marker}")
+def demo_counting(k: int = 3, n_max: int = 8) -> None:
+    print(f"\n[1] Combinatorics of proof space (alphabet size k = {k})")
+    print(f"    {'n':>3} {'S(k,n)':>12} {'(k-1)S':>14} {'k^(n+1)-1':>14} "
+          f"{'k^n<=S':>7} {'S<=k^(n+1)':>11}")
+    for n in range(n_max + 1):
+        s = S(k, n)
+        closed = (k - 1) * s
+        target = k ** (n + 1) - 1
+        lower_ok = k ** n <= s
+        upper_ok = s <= k ** (n + 1)
+        print(f"    {n:>3} {s:>12} {closed:>14} {target:>14} "
+              f"{str(lower_ok):>7} {str(upper_ok):>11}")
+    print("    -> geometric closed form and sandwich bounds confirmed.")
 
 
-def demo_gap_amplification():
-    """Demonstrate exponential gap amplification."""
-    print("\n" + "=" * 60)
-    print("DEMO 2: Gap Amplification Cascade")
-    print("=" * 60)
+# ---------------------------------------------------------------------------
+# 2. Order parameter and asymptotic incompleteness
+# ---------------------------------------------------------------------------
 
-    b = 2
-    n_start = 6  # first incomplete level
-    initial_gap = 1  # one unprovable statement
-
-    print(f"\nStarting with gap = {initial_gap} at n = {n_start}")
-    print(f"Under gap amplification (factor b = {b} per level):\n")
-
-    gap = initial_gap
-    for k in range(15):
-        n = n_start + k
-        print(f"  n = {n:>3}: gap ≥ {b}^{k} = {b**k:>10} unprovable statements")
-        gap *= b
-
-    print(f"\n  After {15} levels: at least {b**14:,} unprovable statements!")
-    print("  → Incompleteness cascades exponentially")
+def order_parameter(prov: Callable[[int], float],
+                    tot: Callable[[int], float], n: int) -> float:
+    """Fraction of length-<= n statements that are provable."""
+    return prov(n) / tot(n)
 
 
-def demo_proof_dimension():
-    """Demonstrate proof dimension and its connection to incompleteness."""
-    print("\n" + "=" * 60)
-    print("DEMO 3: Proof Dimension Theory")
-    print("=" * 60)
-
-    b = 2
-
-    scenarios = [
-        ("Complete system", lambda n: n, "d = 1.0"),
-        ("Linear proofs (slope 0.9)", lambda n: int(0.9 * n), "d = 0.9"),
-        ("Linear proofs (slope 0.5)", lambda n: n // 2, "d = 0.5"),
-        ("Logarithmic proofs", lambda n: max(1, int(3 * np.log2(max(1, n)))), "d → 0"),
-        ("Constant proofs", lambda n: 10, "d → 0"),
-    ]
-
-    for name, pbound, expected_dim in scenarios:
-        print(f"\n  {name} (proofBound(n) ≈ ..., expected {expected_dim}):")
-        dims = []
-        for n in [10, 50, 100, 500, 1000]:
-            pb = pbound(n)
-            dim = pb / n if n > 0 else 1.0
-            dims.append(dim)
-            incomplete = "INCOMPLETE" if pb < n else "complete"
-            print(f"    n={n:>4}: proofBound={pb:>4}, dim={dim:.4f} [{incomplete}]")
+def demo_order_parameter(k: float = 3.0, a: float = 2.0, C: float = 1.0,
+                         n_max: int = 30) -> None:
+    print(f"\n[2] Order parameter r(n) = prov/tot  (k = {k}, provable base a = {a})")
+    tot = lambda n: float(k) ** n          # tot(n) >= k^n
+    prov = lambda n: C * (float(a) ** n)    # prov(n) <= C a^n
+    print(f"    {'n':>3} {'r(n)':>14} {'bound C(a/k)^n':>16}")
+    for n in [0, 5, 10, 15, 20, 25, 30]:
+        r = order_parameter(prov, tot, n)
+        bound = C * (a / k) ** n
+        print(f"    {n:>3} {r:>14.6e} {bound:>16.6e}")
+    print(f"    -> r(n) -> 0 since a/k = {a / k:.3f} < 1 (disordered phase).")
 
 
-def demo_critical_density_plot():
-    """Generate a plot showing the phase transition."""
-    b = 2
-    nc = 8
+# ---------------------------------------------------------------------------
+# 3. Logistic sharp-transition profile
+# ---------------------------------------------------------------------------
 
-    def proof_bound(n):
-        if n <= nc:
-            return n
-        return nc + int(np.sqrt(max(0, n - nc)))
-
-    ns = list(range(1, 31))
-    densities = [provability_density(b, proof_bound, n) for n in ns]
-    dimensions = [proof_bound(n) / n if n > 0 else 1.0 for n in ns]
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Plot 1: Provability density
-    ax1.plot(ns, densities, 'b-o', markersize=4, linewidth=2)
-    ax1.axvline(x=nc, color='r', linestyle='--', alpha=0.7, label=f'n_c = {nc}')
-    ax1.set_xlabel('Statement Length n', fontsize=12)
-    ax1.set_ylabel('Provability Density ρ(n)', fontsize=12)
-    ax1.set_title('Phase Transition in Provability Density', fontsize=14)
-    ax1.set_yscale('log')
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(bottom=1e-8)
-
-    # Plot 2: Proof dimension
-    ax2.plot(ns, dimensions, 'g-s', markersize=4, linewidth=2)
-    ax2.axhline(y=1, color='gray', linestyle=':', alpha=0.5, label='d = 1 (complete)')
-    ax2.axvline(x=nc, color='r', linestyle='--', alpha=0.7, label=f'n_c = {nc}')
-    ax2.set_xlabel('Statement Length n', fontsize=12)
-    ax2.set_ylabel('Proof Dimension d(n)', fontsize=12)
-    ax2.set_title('Proof Dimension vs Statement Length', fontsize=14)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('phase_transition_plot.png', dpi=150, bbox_inches='tight')
-    print("\nPlot saved to phase_transition_plot.png")
+def logistic(beta: float, x_c: float, x: float) -> float:
+    """Logistic order-parameter profile with sharpness beta, critical length x_c."""
+    return 1.0 / (1.0 + math.exp(-(beta * (x - x_c))))
 
 
-if __name__ == "__main__":
+def demo_phase_transition(x_c: float = 10.0) -> None:
+    print(f"\n[3] Logistic transition profile (critical length x_c = {x_c})")
+    xs = [x_c - 2, x_c - 0.5, x_c, x_c + 0.5, x_c + 2]
+    betas = [0.5, 2.0, 8.0, 50.0]
+    header = "    " + f"{'x':>7}" + "".join(f"{'b=' + str(b):>12}" for b in betas)
+    print(header)
+    for x in xs:
+        row = "    " + f"{x:>7.2f}"
+        for b in betas:
+            row += f"{logistic(b, x_c, x):>12.6f}"
+        print(row)
+    print(f"    -> value at x_c is exactly 0.5 for every beta;")
+    print(f"       as beta grows the profile approaches a Heaviside step.")
+
+
+# ---------------------------------------------------------------------------
+# 4. Dimension and length distribution
+# ---------------------------------------------------------------------------
+
+def growth_rate(tot: Callable[[int], float], n: int) -> float:
+    """log(tot n)/n, whose limit is the dimension of proof space."""
+    return math.log(tot(n)) / n
+
+
+def length_dist(k: float, n: int) -> float:
+    """Length distribution weight p(n) = (k-1)/k^(n+1)."""
+    return (k - 1.0) / (k ** (n + 1))
+
+
+def demo_dimension(k: float = 3.0, n_max: int = 40) -> None:
+    print(f"\n[4] Dimension and length distribution (k = {k}, log k = {math.log(k):.6f})")
+    tot = lambda n: float(k) ** n
+    print(f"    {'n':>4} {'log(tot n)/n':>16} {'log k':>12}")
+    for n in [1, 5, 10, 20, 40]:
+        print(f"    {n:>4} {growth_rate(tot, n):>16.8f} {math.log(k):>12.8f}")
+    partial = sum(length_dist(k, n) for n in range(n_max + 1))
+    print(f"    partial sum of p(n), n=0..{n_max}: {partial:.10f}  (-> 1)")
+    print(f"    tail p(n) ~ k^(-n): p(0)={length_dist(k,0):.4f}, "
+          f"p(5)={length_dist(k,5):.6f}, p(10)={length_dist(k,10):.8f}")
+
+
+# ---------------------------------------------------------------------------
+# 5. Abstract Godel incompleteness (finite Boolean witness)
+# ---------------------------------------------------------------------------
+
+def demo_incompleteness() -> None:
+    """The non-vacuity witness: sentences = {True, False}, nothing provable,
+    negation = not, truth(b) = b. Then G = True is a Godel sentence."""
+    print("\n[5] Abstract Godel incompleteness -- finite witness")
+    sentences: List[bool] = [True, False]
+    provable = lambda s: False           # nothing is provable
+    truth = lambda s: s is True          # each sentence is its own truth value
+    neg = lambda s: not s
+    sound = all((not provable(s)) or truth(s) for s in sentences)
+    neg_true = all(truth(neg(s)) == (not truth(s)) for s in sentences)
+    consistent = all(not (provable(s) and provable(neg(s))) for s in sentences)
+    G = True
+    godel = (truth(G) == (not provable(G)))
+    print(f"    sound = {sound}, negation-respects-truth = {neg_true}, "
+          f"consistent = {consistent}")
+    print(f"    G = True is a Godel sentence: {godel}")
+    print(f"    -> G is true ({truth(G)}), unprovable ({not provable(G)}), "
+          f"and its negation is unprovable ({not provable(neg(G))}).")
+
+
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    print("=" * 70)
+    print("Theorems as Phase Transitions in Proof Space -- demonstrations")
+    print("=" * 70)
+    demo_counting()
+    demo_order_parameter()
     demo_phase_transition()
-    demo_gap_amplification()
-    demo_proof_dimension()
-    demo_critical_density_plot()
-
-    print("\n" + "=" * 60)
-    print("KEY INSIGHTS FROM FORMAL PROOFS")
-    print("=" * 60)
-    print("""
-1. COUNTING INCOMPLETENESS: In any formal system with alphabet b,
-   if b^(proofBound(n)) < stmtCount(n), then unprovable statements
-   MUST exist at length n. This is a purely combinatorial fact.
-
-2. PHASE TRANSITION: At the completeness threshold n_c, the
-   provability density ρ(n) drops from 1 to strictly below 1.
-   This is a sharp, discontinuous transition — not gradual.
-
-3. GAP AMPLIFICATION: A single unprovable statement at length n
-   forces b^k unprovable statements at length n+k (under natural
-   growth conditions). Incompleteness is self-amplifying.
-
-4. PROOF DIMENSION: The "proof dimension" d = lim proofBound(n)/n
-   characterizes the system. d < 1 ⟹ incomplete at all large scales.
-""")
-
-
-"""
-Visualization: Phase Transition in Provability Density
-
-Generates a comprehensive plot showing the sharp phase transition
-in provability density at the Gödel threshold, along with the
-exponential gap amplification.
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
-
-
-def compute_density(b, proof_bound_fn, n):
-    if n == 0:
-        return 1.0
-    pb = proof_bound_fn(n)
-    return min(1.0, b ** pb / b ** n)
-
-
-def compute_gap(b, proof_bound_fn, n):
-    pb = proof_bound_fn(n)
-    return max(0, b ** n - b ** pb)
-
-
-def compute_dimension(proof_bound_fn, n):
-    if n == 0:
-        return 1.0
-    return proof_bound_fn(n) / n
-
-
-def main():
-    b = 2
-    nc = 8
-
-    def proof_bound_linear(n):
-        if n <= nc:
-            return n
-        return nc + (n - nc) // 3
-
-    def proof_bound_sqrt(n):
-        if n <= nc:
-            return n
-        return nc + int(np.sqrt(max(0, n - nc)))
-
-    def proof_bound_log(n):
-        if n <= nc:
-            return n
-        return nc + int(2 * np.log2(max(1, n - nc)))
-
-    ns = np.arange(1, 35)
-
-    fig = plt.figure(figsize=(16, 12))
-    gs = GridSpec(2, 2, figure=fig, hspace=0.3, wspace=0.3)
-
-    # Plot 1: Phase transition in density
-    ax1 = fig.add_subplot(gs[0, 0])
-    for pf, label, color in [(proof_bound_linear, 'Linear (slope 1/3)', 'blue'),
-                              (proof_bound_sqrt, 'Square root', 'green'),
-                              (proof_bound_log, 'Logarithmic', 'red')]:
-        densities = [compute_density(b, pf, int(n)) for n in ns]
-        ax1.semilogy(ns, densities, '-o', color=color, label=label, markersize=3, linewidth=1.5)
-
-    ax1.axvline(x=nc, color='gray', linestyle='--', alpha=0.7, label=f'n_c = {nc}')
-    ax1.set_xlabel('Statement Length n', fontsize=11)
-    ax1.set_ylabel('Provability Density ρ(n)', fontsize=11)
-    ax1.set_title('Phase Transition in Provability Density', fontsize=13, fontweight='bold')
-    ax1.legend(fontsize=9)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(bottom=1e-10)
-
-    # Plot 2: Gap amplification
-    ax2 = fig.add_subplot(gs[0, 1])
-    for pf, label, color in [(proof_bound_linear, 'Linear', 'blue'),
-                              (proof_bound_sqrt, 'Sqrt', 'green'),
-                              (proof_bound_log, 'Log', 'red')]:
-        gaps = [compute_gap(b, pf, int(n)) for n in ns]
-        gaps_positive = [max(g, 0.5) for g in gaps]
-        ax2.semilogy(ns, gaps_positive, '-s', color=color, label=label, markersize=3, linewidth=1.5)
-
-    ax2.axvline(x=nc, color='gray', linestyle='--', alpha=0.7)
-    ax2.set_xlabel('Statement Length n', fontsize=11)
-    ax2.set_ylabel('Unprovability Gap G(n)', fontsize=11)
-    ax2.set_title('Gap Amplification Cascade', fontsize=13, fontweight='bold')
-    ax2.legend(fontsize=9)
-    ax2.grid(True, alpha=0.3)
-
-    # Plot 3: Proof dimension
-    ax3 = fig.add_subplot(gs[1, 0])
-    for pf, label, color in [(proof_bound_linear, 'Linear', 'blue'),
-                              (proof_bound_sqrt, 'Sqrt', 'green'),
-                              (proof_bound_log, 'Log', 'red')]:
-        dims = [compute_dimension(pf, int(n)) for n in ns]
-        ax3.plot(ns, dims, '-^', color=color, label=label, markersize=3, linewidth=1.5)
-
-    ax3.axhline(y=1, color='gray', linestyle=':', alpha=0.5, label='d = 1 (complete)')
-    ax3.axvline(x=nc, color='gray', linestyle='--', alpha=0.7)
-    ax3.fill_between(ns, 0, 1, alpha=0.05, color='red', label='Incomplete region (d < 1)')
-    ax3.set_xlabel('Statement Length n', fontsize=11)
-    ax3.set_ylabel('Proof Dimension d(n)', fontsize=11)
-    ax3.set_title('Proof Dimension vs Length', fontsize=13, fontweight='bold')
-    ax3.legend(fontsize=9, loc='upper right')
-    ax3.grid(True, alpha=0.3)
-    ax3.set_ylim(-0.05, 1.15)
-
-    # Plot 4: Provability ratio comparison
-    ax4 = fig.add_subplot(gs[1, 1])
-    for pf, label, color in [(proof_bound_linear, 'Linear', 'blue'),
-                              (proof_bound_sqrt, 'Sqrt', 'green'),
-                              (proof_bound_log, 'Log', 'red')]:
-        ratios = [min(1.0, b ** pf(int(n)) / b ** int(n)) for n in ns]
-        ax4.semilogy(ns, ratios, '-d', color=color, label=label, markersize=3, linewidth=1.5)
-
-    ax4.axvline(x=nc, color='gray', linestyle='--', alpha=0.7)
-    ax4.set_xlabel('Statement Length n', fontsize=11)
-    ax4.set_ylabel('Provability Ratio r(n) = P(n)/b^n', fontsize=11)
-    ax4.set_title('Provability Ratio Decay', fontsize=13, fontweight='bold')
-    ax4.legend(fontsize=9)
-    ax4.grid(True, alpha=0.3)
-    ax4.set_ylim(bottom=1e-10)
-
-    fig.suptitle('Proof Density Space: Phase Transitions in Provability',
-                 fontsize=15, fontweight='bold', y=0.98)
-
-    plt.savefig('phase_transition_comprehensive.png', dpi=150, bbox_inches='tight')
-    print("Saved: phase_transition_comprehensive.png")
+    demo_dimension()
+    demo_incompleteness()
+    print("\nAll demonstrations complete.")
 
 
 if __name__ == "__main__":
