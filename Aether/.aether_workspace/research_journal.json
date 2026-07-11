@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2fed8c0e",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n**Theme.** *The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map* —\na connector between **arithmetic dynamics** (the Collatz / 3n+1 map) and\n**Fourier analysis** (charac",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-10T11:50:34",
-      "title": "The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
-    },
-    {
-      "cycle_id": "9f734f3e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Morphogenesis as Algebraic Geometry\n\nThis cycle established the coordinate-free conic classification of two-mode Turing\npatterns: the discriminant `Δ = b² − 4ac` of the leading q",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 7,
-      "timestamp": "2026-07-10T11:50:43",
-      "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
-    },
-    {
       "cycle_id": "25448d9e",
       "domain": "Applications",
       "key_insight": "# Future Directions — Turing's Flowers: Morphogenesis as Algebraic Geometry\n\nThe file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the\ndegree/Chebyshev correspondence and the boun",
@@ -499,29 +479,29 @@
       "theorem_count": 26,
       "timestamp": "2026-07-11T04:13:20",
       "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+    },
+    {
+      "cycle_id": "39ced9f7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Coarse block–cut tree-decompositions\n\nThis cycle isolated the metric engine behind adhesion-diameter estimates in coarse\ntree-decompositions: distances across a decomposition acc",
+      "quality_score": 0.72,
+      "sorry_count": 5,
+      "theorem_count": 15,
+      "timestamp": "2026-07-11T04:29:33",
+      "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
+    },
+    {
+      "cycle_id": "ace29f66",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Dream Logic: Coexisting Contradictions and Non-Closure of Unions\n\nThese conjectures are distilled from the present cycle, in which a four-valued\nparaconsistent algebra of \"imposs",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-07-11T04:29:37",
+      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d991c87b",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Succinct, Binding, Zero-Knowledge Certification of Proofs\n\nThis cycle established two pillars of a certify-without-revealing protocol for\nformal proofs: a hash-tree commitment th",
-      "quality_score": 0.4437857425742574,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-02T17:10:36",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
-      "cycle_id": "bfccf79e",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nBold, testable conjectures emerging from the study of `a⁵ − a` and its\ndivisibility structure.\n\n## 1. The universal denominator of `aⁿ − a`\n\n**Conjecture.** For each exponent `n ≥",
-      "quality_score": 0.712488,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-02T18:11:16",
-      "title": "Prove Fermats Little Theorem for p=5"
-    },
     {
       "cycle_id": "3e52c27d",
       "domain": "Novelty",
@@ -2501,21 +2481,29 @@
       "theorem_count": 26,
       "timestamp": "2026-07-11T04:13:20",
       "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+    },
+    {
+      "cycle_id": "39ced9f7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Coarse block–cut tree-decompositions\n\nThis cycle isolated the metric engine behind adhesion-diameter estimates in coarse\ntree-decompositions: distances across a decomposition acc",
+      "quality_score": 0.72,
+      "sorry_count": 5,
+      "theorem_count": 15,
+      "timestamp": "2026-07-11T04:29:33",
+      "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
+    },
+    {
+      "cycle_id": "ace29f66",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Dream Logic: Coexisting Contradictions and Non-Closure of Unions\n\nThese conjectures are distilled from the present cycle, in which a four-valued\nparaconsistent algebra of \"imposs",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-07-11T04:29:37",
+      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "523eb163",
-      "domain": "Logic",
-      "name": "towerExp_zero",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "523eb163",
-      "domain": "Logic",
-      "name": "towerExp_succ",
-      "quality": 0.72
-    },
     {
       "cycle_id": "cf42e929",
       "domain": "Algebra",
@@ -2803,17 +2791,22 @@
       "domain": "Novelty",
       "name": "holonomy_of_realizable",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "39ced9f7",
+      "domain": "Applications",
+      "name": "that",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "39ced9f7",
+      "domain": "Applications",
+      "name": "over",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T04:13:20",
+  "last_updated": "2026-07-11T04:29:37",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "4231f6a2",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-07T03:17:13"
-    },
     {
       "context": "zero in the interval `(1 - C / log q, 1)`).  This is a hypothesis, never `sorry`.; axioms and no `sorry`.  The algorithmic scaffolding (asymptotics, enumeration, and the",
       "cycle_id": "8202f9a7",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 3,
       "timestamp": "2026-07-11T04:13:20"
+    },
+    {
+      "context": "+    -- WORK-IN-PROGRESS (single documented `sorry`).  Reducing this to `1 < primPart n`; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "39ced9f7",
+      "domain": "Applications",
+      "sorry_count": 5,
+      "timestamp": "2026-07-11T04:29:33"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6528f137",
-        "quality": 0.83,
-        "theorems": 8,
-        "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Gro"
-      },
-      {
         "cycle_id": "6c565e60",
         "quality": 0.72,
         "theorems": 38,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 11,
         "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+      },
+      {
+        "cycle_id": "39ced9f7",
+        "quality": 0.72,
+        "theorems": 15,
+        "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
       }
     ],
     "Bridges": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8c745e9f",
-        "quality": 0.82,
-        "theorems": 26,
-        "title": "Real-rootedness of the square of the Eulerian triangle"
-      },
-      {
         "cycle_id": "00abb0ac",
         "quality": 0.74,
         "theorems": 58,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 26,
         "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+      },
+      {
+        "cycle_id": "ace29f66",
+        "quality": 0.82,
+        "theorems": 69,
+        "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
       }
     ],
     "NumberTheory": [

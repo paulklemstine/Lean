@@ -421,6 +421,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ace29f66 (Q=0.820), which proved 69 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_ace29f66_29203362",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ace29f66",
+    "status": "available",
+    "timestamp": "2026-07-11T04:29:37.981147+00:00",
+    "title": "Deepening: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle cd5a9d7d (Q=0.820), which proved 11 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum len",
     "domain_bridges": [],
     "domains": [
@@ -802,7 +821,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d2d2bff1",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domain_bridges": [],
     "domains": [
@@ -815,7 +834,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T01:28:27.691105+00:00",
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
@@ -1147,26 +1166,6 @@
     "status": "failed",
     "timestamp": "2026-07-10T04:08:16.263156+00:00",
     "title": "The Fourier Transform of the Riemann Zeta: Hearing the Primes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ace29f66",
-    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0974",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T01:44:47.705634+00:00",
-    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
     "ambition_level": "extension",
@@ -9458,39 +9457,6 @@
     "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "ADGSmallCounterexamples",
-      "AJKW",
-      "BLPPSep",
-      "DGHLMGallai",
-      "FujPapCoa",
-      "LiuWeakCoarseMenger",
-      "McMFat",
-      "NgScSeCoa",
-      "NgScSeAsyIV",
-      "GeoPapMin"
-    ],
-    "consumed_by_exp_id": "39ced9f7",
-    "description": "Conjecture that for every d ∈ ℕ, every connected graph admits a tree-decomposition where each bag is (d,2d+1)-inseparable and each adhesion set has diameter at most 4d+2 (improving the 5d+2 bound of Theorem 1).",
-    "domain_bridges": [
-      "metric geometry",
-      "graph minors"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0751",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Refine the original construction by applying the coarse Menger theorem to find separators of smaller diameter that still separate large‑diameter parts, then use an iterative compression argument to reduce adhesion size while preserving the (d,2d+1)-inseparability of bags.",
-    "research_mode": "team",
-    "source_exp_id": "2607.07030v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T10:41:07.742340+00:00",
-    "title": "Improved adhesion bound in coarse block-cutvertex tree-decomposition"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "normal_numbers",
@@ -10237,6 +10203,25 @@
     "status": "failed",
     "timestamp": "2026-07-10T03:33:45.828923+00:00",
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 39ced9f7 (Q=0.720) proved 15 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that for every d ∈ ℕ, every connected graph admits a tree-decomposition where each bag is (d,2d+1)-inseparable and each adhesion set has diameter at most 4d+2 (improving the 5d+2 bound of T",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_39ced9f7_8a733cc6",
+    "lineage_refs": [],
+    "priority_score": 0.77,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "39ced9f7",
+    "status": "available",
+    "timestamp": "2026-07-11T04:29:33.695485+00:00",
+    "title": "Close Proofs: Improved adhesion bound in coarse block-cutvertex tree-decomposition"
   },
   {
     "ambition_level": "extension",
@@ -11755,6 +11740,46 @@
     "status": "available",
     "timestamp": "2026-07-11T04:13:15.516267+00:00",
     "title": "This cycle formalized Anderson's transreal line `ℝ ∪ {+∞, −∞, Φ}`, confirmed tha"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Coarse block–cut tree-decompositions\n\nThis cycle isolated the metric engine behind adhesion-diameter estimates in coarse\ntree-decompositions: distances across a decomposition accumulate linearly along chains of\noverlapping bounded-diameter bags, with the accumulation constant being exactly the quantity\nthat the `5d+2 → 4d+2` question tries to sharpen. The following conjectures are the natural\nnext targets.\n\n## 1. The `4d+2` adhesion optimum via routing-vertex selection\n\n**Conjecture.** For every `d`, every connected graph admits a tree-decomposition in which each\nbag is `(d, 2d+1)`-inseparable and every adhesion set has diameter at most `4d+2`.\n\nThe key insight is that the excess in the previous `5d+2` bound comes from routing the\ndistance estimate through an *arbitrary* shared vertex of two consecutive bags; choosing the\nshared vertex that is metrically central to the adhesion removes one additive `d`, collapsing\n`5d+2` to `4d+2`.\n\nWhy now? The linear-accumulation law has been cleanly separated from the separator theory, so\nthe entire problem is now a *local optimisation over the routing vertex* — a finite, testable\nquestion about a single adhesion set rather than a global argument about the whole tree.\n\n## 2. Tightness: an unavoidable `4d+2` family\n\n**Conjecture.** There is a family of connected graphs on which *every* tree-decomposition with\n`(d, 2d+1)`-inseparable bags has some adhesion set of diameter at least `4d+1`.\n\nThe key insight is that inseparability forces adjacent bags to overlap in a set that already\nspans two \"radius-`d` shells\", so the adhesion cannot be metrically thinner than roughly `4d`\nwithout violating the thickness requirement.\n\nWhy now? Small-case computation (see the evidence notes) shows subdivided-clique gadgets whose\nadhesions resist compression, giving a concrete blueprint for a matching lower bound.\n\n## 3. Chain-length independence of the additive slack\n\n**Conjecture.** In any tree-decomposition with bags of diameter `≤ D`, the distance between a\nvertex of the first bag and a vertex of the `n`-th bag along a tree path is at most\n`(n+1)·D + n`, and this linear form (slope `D+1`, no super-linear correction) is best possible.\n\nThe key insight is that each additional overlapping bag contributes at most `D` from its own\ndiameter plus `1` from the metric cost of the hand-off, and these contributions never interact\nto produce a super-linear term.\n\nWhy now? The accumulation lemma is fully established, so the remaining question — matching the\nslope `D+1` with a lower-bound family — is a concrete extremal problem.\n\n## 4. From block–cut trees to coarse block–cut trees\n\n**Conjecture.** The classical block–cut tree of a connected graph refines into a coarse\ntree-decomposition whose adhesion sets are single \"coarse cutvertices\" of diameter at most\n`2d`, strictly below the general `4d+2` bound.\n\nThe key insight is that genuine cut structure concentrates the adhesion onto a bounded ball\naround a cutvertex, so the generic two-shell overlap degenerates to one shell.\n\nWhy now? Isolating adhesion diameter as the sole metric obstruction makes it possible to ask\nexactly when the block–cut skeleton already delivers the optimal constant, separating the\n\"tree-like\" part of a graph from its dense parts.\n\n## 5. Stability of the bound under bounded-degree perturbation\n\n**Conjecture.** Adding or deleting a bounded number of edges at each vertex changes the optimal\nadhesion-diameter constant by an additive `O(1)` independent of `d`.\n\nThe key insight is that bounded-degree perturbations move graph distances by a bounded additive\namount, and the accumulation law depends on distances only through the bag-diameter parameter.\n\nWhy now? The reduction of the whole theory to a single Lipschitz-in-distance accumulation lemma\nmakes robustness statements of this kind directly attackable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0988",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "39ced9f7",
+    "status": "available",
+    "timestamp": "2026-07-11T04:29:28.084749+00:00",
+    "title": "This cycle isolated the metric engine behind adhesion-diameter estimates in coar"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Dream Logic: Coexisting Contradictions and Non-Closure of Unions\n\nThese conjectures are distilled from the present cycle, in which a four-valued\nparaconsistent algebra of \"impossible objects\" was shown to be two-facedly identical to a\nclosed-set topological semantics, with paraconsistency traced to the non-closure of\narbitrary unions of closed sets.\n\n## 1. Gluts are exactly boundaries — a dimension-free coexistence law\n**Conjecture.** In every topological space, under the negation \"closure of the complement\",\nthe set of points where a region and its negation coexist equals the topological frontier of\nthat region; consequently a region admits a coexisting contradiction if and only if its\nfrontier is nonempty, i.e. if and only if it is neither open nor its own complement-closure.\n\nThe key insight is that a \"true contradiction\" is not a defect of a proposition but a\ngeometric feature of its boundary, so the amount of inconsistency a proposition can carry is\nmeasured by the size of its frontier rather than by any syntactic property.\n\nWhy now? The finite-value and real-line cases already coincide exactly, so the general\nstatement is the natural next span; it needs only frontier calculus that is fully developed\nfor arbitrary spaces, making the leap from one dimension to all spaces immediate to test.\n\n## 2. Paraconsistency is calibrated by failure of union-closure\n**Conjecture.** A closed-set logic over a space is explosive (a contradiction entails\neverything) if and only if the space is finite (equivalently, its closed sets are closed\nunder arbitrary union). For every infinite space the logic is properly paraconsistent, and\nthe \"degree\" of paraconsistency grows with the supremum of frontier cardinalities.\n\nThe key insight is that non-explosion and the topological fact that infinite unions of\nclosed sets can escape closedness are one and the same phenomenon viewed from two sides, so\nparaconsistency is a compactness-flavoured, not an axiomatic, property.\n\nWhy now? The present cycle exhibits the union-failure witness and the non-explosion witness\nas mirror images on the real line; abstracting the equivalence to a finiteness criterion is\nthe immediate structural generalization and is decidable on finite spaces.\n\n## 3. Dual pairs: intuitionistic and dream logic on the same space\n**Conjecture.** For any space, the open-set (intuitionistic) logic and the closed-set (dream)\nlogic are exact De Morgan duals: excluded middle holds in one precisely where\nnon-contradiction holds in the other, and a proposition is a fixed point of one negation iff\nits complement is a fixed point of the other. Neither logic is definable from the other by a\ntruth-functional translation unless the space is discrete.\n\nThe key insight is that consistency and completeness are not absolute virtues but dual\nresources traded against each other by choosing open versus closed carriers, so a reasoner\ncan select paracompleteness or paraconsistency simply by reorienting the topology.\n\nWhy now? Both logics are realized side by side in this cycle (excluded middle proved to\nsurvive on closed sets while non-contradiction fails), so the duality is concrete and its\nnon-definability claim is a sharp, falsifiable target.\n\n## 4. Non-monotonicity from default closure of gaps\n**Conjecture.** Layering a closed-world default (read every gap as false) on the information\norder of any bilattice-valued dream logic yields a consequence operator that is non-monotone\nexactly when the value space contains a gap; and the retracted conclusions are precisely\nthose supported only by gap-valued atoms.\n\nThe key insight is that belief retraction is caused not by contradictions but by *gaps*\nbeing optimistically resolved, so paracompleteness — not paraconsistency — is the true\nengine of non-monotone reasoning.\n\nWhy now? The four-valued model already demonstrates a single explicit retraction along\n`neither ≤ tt`; characterizing exactly which conclusions are unstable is the direct\nfollow-up and is checkable on small value spaces.\n\n## 5. A metric of \"dreamability\"\n**Conjecture.** Assign to each space the supremum, over regions, of the boundary-to-region\nratio witnessing coexisting contradictions. This invariant is zero exactly for discrete\nspaces, is maximal for spaces where every point is a boundary point (e.g. the rationals),\nand is monotone under continuous surjections.\n\nThe key insight is that how vividly a space can host impossible objects is a genuine\ntopological invariant, letting \"dream-likeness\" be compared quantitatively across spaces.\n\nWhy now? The boundary-as-glut identification of this cycle makes the invariant well defined,\nand the extreme cases (discrete versus dense-in-itself) are already understood, giving\nimmediate anchor points for the conjecture.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0989",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ace29f66",
+    "status": "available",
+    "timestamp": "2026-07-11T04:29:36.125458+00:00",
+    "title": "These conjectures are distilled from the present cycle, in which a four-valued"
   },
   {
     "ambition_level": "extension",

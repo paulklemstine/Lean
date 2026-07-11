@@ -1,215 +1,208 @@
-# Dream Logic: Where Contradictions Are Allowed to Coexist
+# Dream Logic: A Mathematics Where Contradictions Are Allowed to Coexist
 
-Picture a dream. You are in your childhood home, except the home is also a train
-station, and the train is leaving, except it has already left, and you are both
-on it and standing on the platform watching it go. None of this feels alarming
-while you sleep. The mind glides over the impossibilities. Only on waking does
-the daylight rule snap back into place: a thing cannot be true and false at once;
-if it were, anything at all would follow, and reasoning would dissolve into noise.
+Every night, for a few hours, your mind runs on a different operating system. In
+a dream you can be walking down a hallway that is also your childhood kitchen; a
+person can be simultaneously a stranger and your best friend; a door can be both
+locked and open. When you wake, the spell breaks and the old rule snaps back into
+place: a thing cannot be both true and false. That rule — the *law of
+non-contradiction* — has been the load-bearing wall of Western logic since
+Aristotle. Contradiction, we are taught, is the end of thought. Accept one, and
+everything collapses.
 
-That daylight rule has a name in classical logic. It is the principle of
-*explosion*, sometimes given its medieval Latin tag *ex contradictione quodlibet*
-— "from a contradiction, anything." In ordinary mathematics it is iron law: if
-you ever derive both a statement $P$ and its negation $\neg P$, you can derive
-every statement whatsoever, including that $0 = 1$ and that the moon is made of
-prime numbers. One contradiction, and the whole edifice collapses.
+And yet, mathematically, that collapse is a *choice*, not a law of nature. There
+is a coherent, rigorous, well-behaved logic in which contradictions are permitted
+to exist locally without setting the entire universe of statements on fire. This
+article is about that logic — a "dream logic" — and about a beautiful and
+surprising fact: it is secretly a piece of **topology**, the mathematics of
+shape, space, and boundary. In dream logic, a true contradiction is not a
+paradox to be exorcised. It is a *place*. Specifically, it lives on the
+**boundary** of a region.
 
-But the dreaming mind does not collapse. It holds the train both arriving and
-departed, and simply keeps going. This raises a genuine mathematical question,
-not a poetic one: **can we build a rigorous logic in which contradictions are
-permitted to coexist, where a single inconsistency does not detonate everything?**
+## The problem with contradictions
 
-The answer is yes. Logics of this kind are called *paraconsistent*, and they have
-been studied since the mid-twentieth century. What follows is a tour of a small,
-complete, machine-checked world of dream logic — four truth values, a handful of
-operations, and three precise theorems — and a surprising bridge that connects
-this abstract algebra to the geometry of shapes and their boundaries.
+Classical logic has a doomsday device built into it, and it has a name:
+**explosion**, or in Latin, *ex contradictione quodlibet* — "from a
+contradiction, anything." The argument is short and deadly. Suppose you accept
+some statement $P$ and its negation $\neg P$ at the same time. From $P$ you may
+conclude "$P$ or $Q$" for literally any statement $Q$ — say, "the moon is made of
+cheese." But you also have $\neg P$, which rules out $P$; so from "$P$ or $Q$"
+you are forced into $Q$. Cheese moon. And Q could have been anything at all.
 
-## Four truth values instead of two
+The consequence is stark: in classical logic a single contradiction anywhere
+makes *every* statement provable. The system doesn't just get one thing wrong; it
+loses the ability to distinguish truth from falsehood entirely. This is why
+mathematicians treat inconsistency as catastrophe.
 
-Classical logic offers two verdicts: **true** and **false**. Every statement
-gets exactly one of them. The dream world needs two more.
+But real reasoning — human, legal, dreaming, and increasingly artificial —
+tolerates local contradictions all the time. A large database scraped from the
+web will list a person's birth year as both 1970 and 1971. A legal code will
+contain two statutes that, in some rare case, conflict. A dreamer holds
+impossible objects in mind and keeps right on reasoning. None of these thinkers
+concludes that the moon is cheese. Somehow they *quarantine* the contradiction.
+Logics that can do this are called **paraconsistent**: literally, "beside the
+consistent."
 
-The idea, due to the logician Nuel Belnap in the 1970s, is to stop thinking of
-truth as a fact about the world and start thinking of it as *information you have
-received*. Imagine a vast database fed by many unreliable informants. For any
-given claim, four things can happen:
+The question this work answers is: what is the *geometry* of such a logic? What
+does a contradiction actually look like, if it isn't an explosion?
 
-- Some informants say it holds, none deny it. We have a clean **true**.
-- Some say it fails, none affirm it. A clean **false**.
-- Some affirm it *and* some deny it. The database is told both at once — a state
-  Belnap calls a **glut**. We will write it `both`.
-- *No one* has said anything either way. The database has a hole — a **gap**.
-  We will write it `neither`.
+## Propositions as regions of space
 
-These four values — `true`, `false`, `both`, `neither` — make up Belnap's logic,
-traditionally called **FOUR**. The two newcomers, `both` and `neither`, are the
-"impossible objects" of dream logic. `both` is a statement that is simultaneously
-affirmed and denied — the train that has both left and not left. `neither` is a
-statement about which all belief has been suspended or retracted — a fact that
-slipped out of the dream entirely.
+Here is the key move. Instead of thinking of a proposition as a naked
+true-or-false token, think of it as a **region** — a set of points in some space
+$X$. A point of $X$ is a "possible situation," and a proposition is the set of
+situations in which it holds. "It is raining" is the set of rainy worlds. This
+picture, that propositions are regions and logic is the algebra of regions, is
+old and fruitful; it is how topology and logic first shook hands.
 
-To reason with these values we need to say how *and*, *or*, and *not* behave.
-Negation is the simplest: it swaps `true` and `false`, just as you would expect,
-but it *fixes* the two impossible objects. The negation of `both` is `both`; the
-negation of `neither` is `neither`. This is the formal heart of the dream: an
-impossible object is its own opposite. Denying it changes nothing.
+Now we add a twist that comes from topology. Not every region is equally
+well-behaved. Some regions are **open**: every point sits comfortably in the
+interior, with a little breathing room around it entirely inside the region — an
+open interval $(0,1)$ on the number line, with no endpoints. Some regions are
+**closed**: they contain their own edge — the closed interval $[0,1]$, endpoints
+included. And every region has a **boundary** (or *frontier*): the razor-thin set
+of points that are neither safely inside nor safely outside, the shoreline
+between a region and its complement. For $[0,1]$ the boundary is just the two
+points $\{0, 1\}$.
 
-Conjunction (*and*) and disjunction (*or*) come from arranging the four values in
-a diamond, ordered by "how true." At the bottom sits `false`; at the top sits
-`true`; and floating in the middle, side by side and incomparable, sit `both` and
-`neither`. Conjunction takes the lower of two values (the meet), disjunction the
-higher (the join). On the classical values `true` and `false`, everything behaves
-exactly as it always has. The novelty lives entirely in the middle of the diamond.
+Formally, for a region $A$ in a space $X$, the boundary is
+$$\partial A = \overline{A} \cap \overline{X \setminus A},$$
+the overlap between the closure of $A$ and the closure of everything outside $A$.
+It is exactly the set of points you cannot cleanly assign to "inside" or
+"outside."
 
-Finally we need to know which verdicts count as *acceptance* — which values mean
-"yes, believe this." Belnap's choice is elegant: a value is **designated**
-(accepted) when it carries at least some affirming evidence. That means `true`
-(purely affirmed) and `both` (affirmed, even if also denied) are accepted, while
-`false` and `neither` are not. The glut `both` is accepted *despite* being
-contradictory. That single decision is what makes the whole logic work.
+Dream logic is what you get when you build your logic out of the **closed
+regions** and define negation the natural topological way.
 
-## The three theorems of the dream
+## Negation as "the closure of the opposite"
 
-With the machinery in place, three facts can be stated precisely and proved. Each
-has been verified by a proof assistant down to the last symbol, so there is no
-hand-waving hiding in the gaps.
+If a proposition is a closed region $A$, what should "not $A$" be? The naive
+answer, the plain complement $X \setminus A$, doesn't work: the complement of a
+closed set is open, so it's the wrong *kind* of region. To stay in the world of
+closed regions we take the **closure** of the complement:
+$$\neg A = \overline{X \setminus A}.$$
+In words: "not $A$" is everything outside $A$, together with its edge. Because we
+closed it up, this is again a bona fide closed region, and we can keep reasoning.
 
-**First: contradictions can be accepted without breaking anything.** Take the
-glut value `both`. Its negation is again `both`. Conjoin them — `both` *and*
-`both` — and you get `both`, which is an accepted value. So here is a statement
-$x$ for which "$x$ and not-$x$" is *believed*. The Law of Non-Contradiction, the
-rule that nothing can be both true and false, simply fails for this value. In the
-formal development this is the theorem named `lnc_can_fail`: there exists a value
-whose contradiction with itself is accepted. The dream tolerates the train that
-has both left and not left.
+This one honest adjustment — closing up the complement so it stays the right
+shape — is the entire source of dream logic's strange and wonderful behavior.
+Watch what happens when we ask the forbidden question: where do $A$ and $\neg A$
+*both* hold?
 
-**Second, and most important: explosion fails.** This is the theorem
-`explosion_fails`, and it is the entire point of a paraconsistent logic. It says
-that it is *not* true that "from an accepted contradiction, everything follows."
-The proof is almost insolently simple. Consider the glut `both`, which accepts its
-own contradiction, and consider the value `false`, which is *not* accepted. The
-existence of the contradiction at `both` does nothing to make `false` acceptable.
-A single inconsistency stays local. It does not spread. The dreamer can hold one
-impossible thing without being forced to believe *all* things. This is the formal
-expression of why a dream does not dissolve into static the moment it contradicts
-itself.
+## The punchline: contradictions are boundaries
 
-**Third: belief can be withheld, too.** The value `neither` does the opposite
-work. For it, the Law of Excluded Middle — the classical rule that every statement
-is either true or false, with no third option — fails. Disjoin `neither` with its
-own negation (`neither` again) and you get `neither`, which is *not* accepted. So
-there is a statement for which neither it nor its negation is forced upon you.
-This is the theorem `lem_can_fail`, and it models the retraction or suspension of
-belief: the fact that quietly left the dream and was never missed.
+Take a closed region $A$ and intersect it with its negation. A short computation
+in topology gives an exact, clean answer:
+$$A \wedge \neg A \;=\; A \cap \overline{X \setminus A} \;=\; \partial A.$$
+The set of situations where $A$ and "not $A$" hold *simultaneously* is precisely
+the **boundary of $A$**.
 
-Two further results make the picture exact. The glut `both` is not just *a* value
-that breaks Non-Contradiction — it is the *only* one (`glut_iff`). And `neither`
-is the unique value that breaks Excluded Middle (`gap_iff`). The two impossible
-objects divide the labor perfectly: one is solely responsible for tolerated
-contradictions, the other solely for suspended beliefs.
+Read that again, because it is the heart of the matter. In dream logic, a "true
+contradiction" is not a logical malfunction. It is a geometric location: the
+shoreline of a proposition. A statement can be both true and false exactly on its
+edge — at the very points where inside and outside meet and blur, like the
+dream-hallway that is also the kitchen because you are standing in the doorway
+between them.
 
-To make sure none of this is an accident of the proof software, the same
-development records the contrasting classical facts: in ordinary two-valued logic
-there are no gluts at all (`classical_no_glut`), and a contradiction really does
-explode into everything (`classical_explosion`). Paraconsistency is a genuine
-feature of the four-valued world, not a loophole in the underlying mathematics.
+This immediately tells us *which* propositions can carry a contradiction and
+which cannot. A closed region has an empty boundary exactly when it is also open
+— a so-called **clopen** set, a region that is all interior with no shoreline at
+all. So:
 
-## The unexpected bridge: contradictions live on boundaries
+> A proposition admits a genuine, coexisting contradiction **if and only if** its
+> region is not open — that is, if and only if it has a nonempty boundary.
 
-Here the story takes a turn that no one would predict from the logic alone. The
-impossible objects of dream logic turn out to be *boundaries* — the edges of
-shapes in space.
+Contradiction is not a property of the *symbols* in a sentence. It is a property
+of the *shape* of what the sentence describes. The more boundary a proposition
+has, the more contradiction it can hold. A perfectly crisp, boundaryless
+proposition behaves classically. A proposition with a fat, jagged frontier is
+deeply, richly paraconsistent.
 
-To see how, switch domains entirely and think about a region of space, say a
-filled-in disk, or the interval of numbers from $0$ to $1$ on the real line. Such
-a region has an inside, an outside, and an edge. Topologists have a precise word
-for that edge: the **frontier** (or boundary) of the set — the points that are
-arbitrarily close to both the region and its complement.
+## Why the moon stays rocky: no explosion
 
-Now define a paraconsistent negation for regions, in the spirit of the four-valued
-logic. Classically, "not $A$" is the complement of $A$. The dream version is
-subtler: the paraconsistent negation of a region $A$ is the **closure of its
-complement** — the complement together with all the points that hug up against it.
-Call this `pneg A`.
+We can now see, geometrically, exactly why dream logic refuses to explode.
+Explosion demanded that a contradiction entail *everything* — in region language,
+that $A \wedge \neg A$ be contained in every other region, which forces it to be
+the **empty region** (the only thing inside everything is nothing). But we just
+computed $A \wedge \neg A = \partial A$, and on any interesting space, boundaries
+are not empty. The interval $[0,1]$ on the real line has boundary $\{0,1\}$ — two
+perfectly real points. The contradiction "lives" there, at those two points, and
+*nowhere else*. It does not leak. It does not license the cheese moon. It is
+contained, quarantined, exactly on the frontier where it was born.
 
-The crucial move is to ask: which points belong to $A$ *and* to its dream
-negation `pneg A` at the same time? Such a point is in the region and also in (the
-closure of) everything outside it. It is, in exactly the topological sense, an
-impossible object — a point that is simultaneously inside and outside. The set of
-all such points is the **contradiction set** of $A$.
+So paraconsistency — the safe coexistence of contradictions — is not an exotic
+axiom we bolted on. It is the topological fact that **regions have edges**.
 
-And here is the first bridge theorem, `contradiction_eq_frontier`: for a closed
-region, the contradiction set is *precisely the frontier*. The logical
-dialetheias — the points that are both in and out — are exactly the geometric
-boundary points. The impossible objects of dream logic are the edges of things.
+## The deep reason: unions of closed sets can fail to be closed
 
-This has a beautiful consequence, the theorem `lnc_holds_iff_clopen`. The Law of
-Non-Contradiction holds for a region $A$ — meaning its contradiction set is empty,
-no impossible points — *if and only if* the region is **clopen**: both closed and
-open at once, a set with no boundary whatsoever. In most familiar spaces the only
-clopen sets are the trivial ones (everything, or nothing). Every honest, ordinary
-region has a boundary, and therefore every honest region harbors contradictions.
-Classical, contradiction-free reasoning is the rare exception, available only for
-the boundary-less sets; dream logic is the generic case.
+There is a still deeper way to see what is going on, and it explains *when* dream
+logic is genuinely paraconsistent and when it quietly collapses back into
+classical logic.
 
-A concrete example seals it. Take the closed interval $[0,1]$ on the real number
-line. Its boundary is the two-point set $\{0, 1\}$. The point $0$ lies in the
-interval $[0,1]$, and it also lies in the closure of everything outside the
-interval (you can approach $0$ from the negative numbers). So $0$ is a genuine,
-flesh-and-blood impossible object: a number that is both inside and outside the
-interval at once. This is the theorem `dream_object_real`, and it is not a
-metaphor — it is a verified fact about the real line you learned in school.
+The whole phenomenon rests on one asymmetry in topology. If you take *two* closed
+regions and union them, you get a closed region. But if you union *infinitely
+many* closed regions, the result can spill outside the closed world. The classic
+witness lives on the number line: each single point $\{x\}$ for $x$ strictly
+between $0$ and $1$ is a closed region, but their infinite union is the *open*
+interval $(0,1)$, which is not closed. Closing it back up drags in the two
+boundary points $0$ and $1$ — and those two points are exactly the contradiction
+$\partial[0,1]$ from before.
 
-The phenomenon is not fragile, either. The theorem `connected_forces_paraconsistency`
-shows that on any **connected** space — any space that is all in one piece, like a
-line, a plane, or a sphere — *every* proper, non-trivial region must have a
-non-empty contradiction set. You cannot carve out a meaningful belief in a
-connected world without admitting at least one impossible object on its edge.
-Connectedness *forces* dream logic.
+The non-closure of infinite unions and the non-explosion of contradictions are
+**the same fact seen from two sides.** Where infinite unions of closed sets stay
+closed, boundaries vanish, contradictions become empty, and the logic explodes
+back into ordinary classical reasoning. Where they escape — as they must on the
+real line and on any infinite continuum — boundaries appear, contradictions find
+a home, and the logic becomes a true dream logic.
 
-## Two impossible objects, one and the same
+This gives a striking dividing line. On a **finite** space every union is a
+finite union, so closed sets are always closed under union, boundaries can be
+made to vanish, and paraconsistency has no room to breathe. It is precisely the
+**infinite**, the continuous, the spatially rich, that makes contradiction
+survivable. Dreams need room.
 
-The final theorem, the capstone of the whole development, fuses the two stories.
-On one side we built the algebra: `both`, the glut value, the accepted
-contradiction that is its own negation. On the other side we built the geometry:
-the frontier point, sitting on the boundary of a region, both inside and outside.
+## Two logics, one space: the waking/dreaming duality
 
-These were invented for entirely different reasons — one to model the logic of
-unreliable databases, the other to capture the topology of shapes. The bridge
-result, `dream_object_real_is_glut`, proves they are *the same thing*. Assign to
-every point of a region a truth value: `true` if it is robustly inside, `false`
-if robustly outside, and `both` if it sits on the frontier. Then the boundary
-point $0$ of the interval $[0,1]$ receives the value `both`. That value equals its
-own negation. And it is an accepted contradiction. The algebraic impossible object
-and the geometric impossible object coincide, exactly, point for point. The
-theorem `val_both_iff_frontier` states the general law: a point gets the glut
-value `both` if and only if it lies on the frontier.
+Finally, there is a gorgeous symmetry. We built dream logic out of *closed*
+regions and defined negation as the closure of the complement. Suppose instead we
+build a logic out of *open* regions, and define negation as the *interior* of the
+complement, $\sim A = \mathrm{int}(X \setminus A)$. This is not some new
+invention: it is the well-known **intuitionistic logic**, the logic of
+constructive mathematics, where a statement is "true" only where you can plant it
+with breathing room.
 
-So the dialetheia of the logician — the proposition that is both true and false —
-turns out to be, quite literally, the edge of a shape. The contradiction is the
-boundary. The impossible object is the place where inside meets outside.
+These two logics are perfect mirror images — **De Morgan duals** — living on the
+very same space, related by swapping "inside" for "outside," open for closed,
+interior for closure.
 
-## Why it matters beyond the dream
+- In open (intuitionistic) logic, the **law of excluded middle** fails: $A$ and
+  "not $A$" can leave a *gap*, a sliver of the space — again the boundary — where
+  neither holds. Intuitionistic logic is **paracomplete**: it tolerates gaps.
+- In closed (dream) logic, the **law of non-contradiction** fails: $A$ and "not
+  $A$" *overlap* on the boundary, a *glut* where both hold. Dream logic is
+  **paraconsistent**: it tolerates gluts.
 
-This is not merely a clever curiosity. Paraconsistent logics are quietly useful
-wherever reasoning must survive inconsistency. Large databases assembled from many
-sources routinely contain contradictory records; a classical query engine would,
-in principle, be entitled to return *any* answer once a single conflict appears.
-Paraconsistent reasoning lets a system register "this field is contested"
-(`both`) and "this field is unknown" (`neither`) as first-class states, and keep
-answering sensible questions about everything else. Belnap designed FOUR with
-exactly this computational application in mind.
+The same boundary that intuitionistic logic leaves *empty* (a gap of "neither"),
+dream logic fills *twice over* (a glut of "both"). Consistency and completeness
+turn out not to be absolute virtues but **dual resources**, traded against one
+another by a single choice: do you carve your propositions from the open regions
+or the closed ones? Waking logic and dream logic are the two faces of one
+geometry.
 
-The same spirit appears in robust artificial-intelligence systems that must act on
-conflicting sensor readings, in legal and ethical reasoning where genuine dilemmas
-arise, and in the formal study of the paradoxes that have haunted mathematics
-since Russell. In each case the lesson of dream logic is the same: an inconsistency
-need not be a catastrophe. It can be a *boundary* — a marked place where two
-truths meet — that the rest of the reasoning quietly flows around.
+## Why this matters
 
-The dreamer was never confused. The train had left and had not left, and that was
-simply the edge of one region of the dream pressing against another. On waking, we
-draw the boundary sharp and call one side true and the other false. But the
-boundary itself, the frontier where they touch, was always there — a small,
-rigorous, impossible object, and now a theorem.
+This is more than a curiosity for logicians. Reasoning systems that must operate
+on messy, contradictory information — merging conflicting databases, reconciling
+inconsistent legal or medical records, running artificial agents that ingest the
+open web — need exactly this: a principled way to hold a contradiction without
+melting down. Dream logic tells them where to put it. A contradiction is not a
+bug to be crushed but a **boundary** to be located, measured, and worked around.
+The amount of inconsistency a claim can safely carry is quantified by the size of
+its frontier.
+
+And there is something humane in the picture, too. The dreaming mind that holds
+impossible objects, the poet who writes a truth that is also a lie, the judge who
+finds two laws in genuine conflict — none of them is malfunctioning. They are
+standing on a boundary, in that thin bright shoreline where inside meets outside,
+where a thing can be, for a moment, both true and not. Mathematics, it turns out,
+has a precise and generous name for that place. It calls it the frontier — and it
+says you are allowed to stand there.

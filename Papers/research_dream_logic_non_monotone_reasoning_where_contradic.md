@@ -1,467 +1,424 @@
-# Dream Logic: A Verified Bridge from Belnap's Four-Valued Paraconsistency to Topological Frontiers
-
-**Author:** Aristotle
-
-**Date:** 2026-06-20
-
----
+# Dream Logic: Coexisting Contradictions and the Topology of the Boundary
 
 ## Abstract
 
-We present a complete, machine-verified development of *dream logic* — a
-paraconsistent and paracomplete reasoning framework in which contradictions are
-permitted to coexist without trivializing the system, and in which beliefs may be
-suspended or retracted. The development has three layers. First, an **algebraic**
-layer formalizing Belnap's four-valued logic $\mathbf{FOUR}$ (the logic of First
-Degree Entailment), with truth values $\{\mathtt{true}, \mathtt{false},
-\mathtt{both}, \mathtt{neither}\}$, paraconsistent negation, lattice conjunction
-and disjunction, and a notion of *designated* (accepted) value. We prove that the
-Law of Non-Contradiction can fail, that the Law of Excluded Middle can fail, and
-— the defining feature of paraconsistency — that the rule of explosion (*ex
-contradictione quodlibet*) fails: an accepted contradiction does **not** entail
-every proposition. We characterize the glut value $\mathtt{both}$ as the unique
-source of tolerated contradictions and the gap value $\mathtt{neither}$ as the
-unique source of suspended beliefs. Second, a **topological** layer modelling
-paraconsistent negation as the co-Heyting operation $A \mapsto \overline{A^c}$
-(closure of complement) on subsets of a topological space. We prove that, for a
-closed set, the *contradiction set* $A \cap \overline{A^c}$ equals the topological
-frontier, that the Law of Non-Contradiction holds exactly on the clopen sets, and
-that on a preconnected space every proper nonempty closed set carries a contradiction.
-Third, a **bridge** layer fusing the two: we assign each point of a closed set a
-Belnap value and prove that a point receives the glut value $\mathtt{both}$ if and
-only if it lies on the frontier — identifying the algebraic and topological notions
-of "impossible object." A concrete dialetheia, the point $0 \in [0,1] \subset
-\mathbb{R}$, is shown to carry the glut value and to be an accepted self-contradiction.
-All results have been formalized and checked in the Lean 4 proof assistant.
+We develop a semantics for a *paraconsistent* logic — a logic in which a
+contradiction does not entail every proposition — and show that it is, in a
+precise sense, a fragment of point-set topology. Interpreting propositions as the
+**closed sets** of a topological space $X$, with conjunction as intersection,
+disjunction as (finite) union, and negation as the closure of the set-theoretic
+complement, we prove that the conjunction of any proposition with its own
+negation is *exactly the topological boundary* of that proposition:
+$A \wedge \neg A = \partial A$. Consequently a proposition can carry a genuine,
+coexisting contradiction precisely when its underlying set is not open, i.e. has
+nonempty frontier. We show that the logic is **non-explosive** — no contradiction
+entails the whole space — precisely because boundaries are, in general, nonempty;
+and we trace this to the single topological asymmetry that *arbitrary* unions of
+closed sets need not be closed. This yields a finiteness criterion: on a finite
+space the closed-set logic degenerates to a classical (explosive) one, whereas on
+any space admitting a closed set with nonempty boundary the logic is properly
+paraconsistent. Finally we exhibit an exact **De Morgan duality** between this
+"dream logic" (built from closed sets) and the intuitionistic "waking logic"
+(built from open sets): the former tolerates *gluts* (violations of
+non-contradiction) exactly where the latter tolerates *gaps* (violations of
+excluded middle), the two meeting on the shared boundary. We interpret the
+four-valued Belnap–Dunn algebra of "impossible objects" — True, False, Both,
+Neither — as the algebra of boundary status of a point relative to a region, and
+discuss applications to reasoning over inconsistent information.
 
-**Keywords:** paraconsistent logic, Belnap FOUR, dialetheia, glut, gap, co-Heyting
-algebra, frontier, clopen, non-monotone reasoning, De Morgan algebra.
+**Keywords:** paraconsistent logic, closed-set logic, topological boundary,
+frontier, non-explosion, De Morgan duality, intuitionistic logic, Belnap–Dunn
+four-valued logic, dream logic, glut.
 
 ---
 
 ## 1. Introduction
 
-Classical logic is governed by two rules that, together, make inconsistency fatal.
-The **Law of Non-Contradiction (LNC)** forbids any proposition from being both true
-and false. The principle of **explosion**, *ex contradictione quodlibet* (ECQ),
-states that from a contradiction $P \wedge \neg P$ everything follows. Under ECQ a
-single inconsistency renders a theory trivial: every sentence becomes provable.
+The **principle of explosion**, *ex contradictione quodlibet*, states that from a
+contradiction every proposition follows. In a Boolean algebra this is the fact
+that the meet $a \wedge \neg a$ equals the bottom element $\bot$, and $\bot \le b$
+for every $b$. Classical and intuitionistic logics both validate explosion; a
+single inconsistency renders the entire theory trivial. **Paraconsistent** logics
+reject explosion: they permit a proposition and its negation to hold together
+("a glut") without collapse.
 
-For many applications this is too brittle. Databases aggregated from conflicting
-sources, knowledge bases assembled from imperfect informants, legal and ethical
-codes harboring genuine dilemmas, and the formal analysis of self-referential
-paradoxes all involve *localized* inconsistency that ought not to contaminate the
-entire system. A **paraconsistent** logic is one whose consequence relation does
-not validate ECQ: contradictions may be present without trivializing the theory.
-A **paracomplete** logic dually rejects the Law of Excluded Middle (LEM), allowing
-"truth-value gaps" where neither a proposition nor its negation is asserted.
+Paraconsistency is not merely a philosophical stance. It is a practical necessity
+for any inference system operating on data that is inconsistent in the small but
+useful in the large: merged knowledge bases with conflicting records,
+non-monotone belief revision where earlier conclusions are retracted, legal and
+normative reasoning with clashing rules, and — evocatively — *dream cognition*,
+in which impossible objects are held in mind and reasoned about without global
+breakdown.
 
-The canonical algebraic home for both phenomena is Belnap's four-valued logic
-$\mathbf{FOUR}$, introduced for reasoning in artificial databases. Its four values
-record not metaphysical truth but the *information state* of a reasoner: a
-proposition may be told true, told false, told *both* (a contradictory **glut**,
-a *dialetheia*), or told *neither* (an information **gap**).
+This paper gives such a logic a transparent **topological** semantics and, more
+importantly, extracts from that semantics a geometric account of *what a
+contradiction is*. The central discovery is that in the natural closed-set
+semantics, the coexistence region of a proposition and its negation is exactly
+the **topological boundary** (frontier) of the proposition. Contradiction is thus
+a spatial, not a syntactic, phenomenon: it lives on shorelines. Non-explosion
+becomes the observation that shorelines are, in general, nonempty; and the reason
+they are nonempty is the failure of arbitrary unions of closed sets to be closed.
 
-This paper formalizes $\mathbf{FOUR}$, develops a topological semantics for
-paraconsistent negation, and — the central contribution — proves a precise bridge
-theorem identifying the algebraic "impossible objects" of the logic with the
-geometric boundary points of the topology. We refer to the combined framework as
-*dream logic*, after the way dreaming cognition tolerates coexisting
-impossibilities. Every theorem below has been verified in Lean 4; the prose proof
-sketches mirror the formal proofs.
+### Contributions
 
----
-
-## 2. The algebraic layer: Belnap's $\mathbf{FOUR}$
-
-### 2.1 Truth values and connectives
-
-**Definition 2.1 (Belnap values).** The type $\mathbf{FOUR}$ consists of four
-distinct values:
-$$\mathbf{FOUR} = \{\, \mathtt{true},\ \mathtt{false},\ \mathtt{both},\ \mathtt{neither} \,\}.$$
-Informally, $\mathtt{true}$ and $\mathtt{false}$ are the classical verdicts;
-$\mathtt{both}$ is a *glut* (told true and told false at once — a dialetheia);
-$\mathtt{neither}$ is a *gap* (no information either way — a suspended belief).
-
-**Definition 2.2 (Paraconsistent negation).** Negation $\neg : \mathbf{FOUR} \to
-\mathbf{FOUR}$ swaps the classical values and fixes the impossible objects:
-$$\neg\,\mathtt{true} = \mathtt{false}, \quad \neg\,\mathtt{false} = \mathtt{true},
-\quad \neg\,\mathtt{both} = \mathtt{both}, \quad \neg\,\mathtt{neither} = \mathtt{neither}.$$
-
-**Definition 2.3 (Truth order and connectives).** Order the four values in a
-diamond by "degree of truth," with $\mathtt{false}$ at the bottom, $\mathtt{true}$
-at the top, and $\mathtt{both}, \mathtt{neither}$ incomparable in the middle:
-$$\mathtt{false} \ <\ \mathtt{both},\ \mathtt{neither}\ <\ \mathtt{true}.$$
-Conjunction $\wedge$ is the meet (greatest lower bound) and disjunction $\vee$ is
-the join (least upper bound) in this order. On the two incomparable middle values,
-$\mathtt{both} \wedge \mathtt{neither} = \mathtt{false}$ and $\mathtt{both} \vee
-\mathtt{neither} = \mathtt{true}$; all other cases follow from the order.
-
-**Definition 2.4 (Designation / acceptance).** A value is *designated* (asserted,
-accepted, believed) precisely when it carries affirming evidence:
-$$\mathrm{designated}(v) \iff v \in \{\mathtt{true}, \mathtt{both}\}.$$
-The glut $\mathtt{both}$ is accepted *despite* being contradictory; this single
-choice is what produces paraconsistency.
-
-### 2.2 De Morgan algebra structure
-
-The connectives endow $\mathbf{FOUR}$ with the structure of a De Morgan algebra.
-All of the following hold (each proved by exhaustive case analysis over the four
-values; in Lean, `cases x <;> cases y <;> rfl`).
-
-**Proposition 2.5 (Lattice and De Morgan laws).** For all $x, y, z \in \mathbf{FOUR}$:
-
-- *Involutive negation:* $\neg\neg x = x$.
-- *Commutativity:* $x \wedge y = y \wedge x$ and $x \vee y = y \vee x$.
-- *Associativity:* $(x \wedge y) \wedge z = x \wedge (y \wedge z)$ and dually for $\vee$.
-- *Idempotence:* $x \wedge x = x$ and $x \vee x = x$.
-- *Absorption:* $x \wedge (x \vee y) = x$ and $x \vee (x \wedge y) = x$.
-- *De Morgan duality:* $\neg(x \wedge y) = \neg x \vee \neg y$ and $\neg(x \vee y)
-  = \neg x \wedge \neg y$.
-
-*Proof sketch.* $\mathbf{FOUR}$ is finite (four elements), so each identity reduces
-to a finite check over all $4$, $16$, or $64$ combinations of arguments. The truth
-order is a bounded distributive lattice (the diamond), and $\neg$ is the unique
-order-reversing involution fixing the two middle points, which is exactly the
-condition for a De Morgan algebra. $\square$
-
-### 2.3 Failure of the classical laws and of explosion
-
-**Theorem 2.6 (LNC can fail — `lnc_can_fail`).** There exists $x \in \mathbf{FOUR}$
-with $\mathrm{designated}(x \wedge \neg x)$.
-
-*Proof.* Take $x = \mathtt{both}$. Then $\neg x = \mathtt{both}$, so $x \wedge \neg
-x = \mathtt{both} \wedge \mathtt{both} = \mathtt{both}$, which is designated. Thus
-"$x$ and not-$x$" is accepted: a coexisting contradiction. $\square$
-
-**Theorem 2.7 (LEM can fail — `lem_can_fail`).** There exists $x \in \mathbf{FOUR}$
-with $\neg\,\mathrm{designated}(x \vee \neg x)$.
-
-*Proof.* Take $x = \mathtt{neither}$. Then $\neg x = \mathtt{neither}$ and $x \vee
-\neg x = \mathtt{neither}$, which is *not* designated. Hence neither $x$ nor its
-negation is forced: a suspended belief. $\square$
-
-**Theorem 2.8 (Explosion fails — `explosion_fails`).** It is **not** the case that
-$$\forall x, y \in \mathbf{FOUR},\quad \mathrm{designated}(x \wedge \neg x)
-\ \Rightarrow\ \mathrm{designated}(y).$$
-
-*Proof.* Suppose for contradiction that the implication held universally. Instantiate
-$x = \mathtt{both}$ and $y = \mathtt{false}$. By Theorem 2.6, $\mathrm{designated}
-(\mathtt{both} \wedge \neg\,\mathtt{both})$ holds, so the hypothesis would force
-$\mathrm{designated}(\mathtt{false})$ — but $\mathtt{false}$ is not designated.
-Contradiction. Hence the rule of explosion is invalid: an accepted contradiction
-does not entail every proposition. $\square$
-
-This is the defining theorem of the framework: inconsistency is *local*. The
-presence of an accepted contradiction at $\mathtt{both}$ confers no support on the
-unrelated, non-designated value $\mathtt{false}$.
-
-### 2.4 Exact responsibility of the impossible objects
-
-The two impossible objects are not merely *examples* witnessing the failures of
-LNC and LEM — each is the *unique* witness for one law.
-
-**Theorem 2.9 (Glut characterization — `glut_iff`).** For every $x \in \mathbf{FOUR}$,
-$$\mathrm{designated}(x \wedge \neg x) \iff x = \mathtt{both}.$$
-
-**Theorem 2.10 (Gap characterization — `gap_iff`).** For every $x \in \mathbf{FOUR}$,
-$$\neg\,\mathrm{designated}(x \vee \neg x) \iff x = \mathtt{neither}.$$
-
-*Proof sketch (both).* Exhaustive evaluation over the four values. For each $x$,
-compute $x \wedge \neg x$ (resp. $x \vee \neg x$) and test designation; only
-$\mathtt{both}$ (resp. $\mathtt{neither}$) yields the stated outcome. $\square$
-
-Thus the labor of non-classicality is perfectly partitioned: $\mathtt{both}$ alone
-is responsible for tolerated contradictions, $\mathtt{neither}$ alone for suspended
-beliefs.
-
-### 2.5 Classical contrast
-
-To certify that paraconsistency is a property of $\mathbf{FOUR}$ and not an artifact
-of the ambient (classical) metatheory, we record the contrasting Boolean facts.
-
-**Theorem 2.11 (No classical glut — `classical_no_glut`).** For every $b \in
-\mathtt{Bool}$, $\neg(b \wedge \neg b)$ holds.
-
-**Theorem 2.12 (Classical explosion — `classical_explosion`).** For all $b, q \in
-\mathtt{Bool}$, $(b \wedge \neg b) \Rightarrow q$.
-
-*Proof.* Both by the two-case analysis $b \in \{\mathtt{true}, \mathtt{false}\}$;
-in either case $b \wedge \neg b$ is false, so the antecedent is vacuous. $\square$
-
-Two-valued logic has no gluts and *does* explode; the divergent behavior of
-$\mathbf{FOUR}$ is genuinely about its enlarged value set and the designation of
-$\mathtt{both}$.
+1. **Boundary characterisation of contradiction** (Theorem 1):
+   $A \wedge \neg A = \partial A$ for every closed $A$; hence a proposition
+   carries a coexisting contradiction iff its set is not open.
+2. **Non-explosion from geometry** (Theorem 2): the closed-set logic is
+   non-explosive iff there exists a closed set with nonempty boundary, and
+   trivially classical otherwise.
+3. **Union-closure / finiteness criterion** (Theorem 3): the logic is explosive
+   iff closed sets are closed under arbitrary union; this always holds on finite
+   spaces, so paraconsistency requires infinitely many points.
+4. **Open/closed De Morgan duality** (Theorem 4): the closed-set (dream) logic
+   and the open-set (intuitionistic) logic are exact duals under set complement;
+   gluts of one correspond to gaps of the other on the shared boundary.
+5. **Four-valued interpretation** (Section 7): the Belnap–Dunn values
+   $\{\mathbf{T}, \mathbf{F}, \mathbf{B}, \mathbf{N}\}$ realised as the boundary
+   status of a point relative to a region.
 
 ---
 
-## 3. The topological layer: paraconsistent negation as closure of complement
+## 2. Preliminaries: spaces, closures, boundaries
 
-The Tarski–McKinsey duality models intuitionistic logic by the *open* sets of a
-topological space (a Heyting algebra, with negation $A \mapsto \mathrm{int}(A^c)$).
-Dually, the *closed* sets form a co-Heyting (Brouwerian) algebra whose negation is
-the natural carrier of paraconsistency.
+Throughout, $(X, \tau)$ is a topological space; $\tau$ is the family of **open**
+sets. The **closed** sets are the complements of open sets; write
+$\mathcal{C}(X)$ for the lattice of closed sets. For $S \subseteq X$:
 
-Throughout, $X$ is a topological space, $A^c$ denotes complement, $\overline{A}$
-closure, and $\mathrm{int}(A)$ interior.
+- $\overline{S}$ denotes the **closure** of $S$ (the smallest closed set
+  containing $S$);
+- $\mathrm{int}(S)$ denotes the **interior** (the largest open set inside $S$);
+- $S^c = X \setminus S$ denotes the complement.
 
-**Definition 3.1 (Paraconsistent negation on sets).** For $A \subseteq X$,
-$$\mathrm{pneg}(A) := \overline{A^c} \quad \text{(the closure of the complement).}$$
+The two operators are dual: $\overline{S} = (\mathrm{int}(S^c))^c$ and
+$\mathrm{int}(S) = (\overline{S^c})^c$.
 
-Unlike the classical complement, $\mathrm{pneg}$ permits a point to lie in both $A$
-and $\mathrm{pneg}(A)$ — a *topological dialetheia*.
+**Definition 2.1 (Boundary / frontier).** The *boundary* of $S \subseteq X$ is
+$$\partial S \;=\; \overline{S} \cap \overline{S^c}.$$
 
-**Definition 3.2 (Contradiction set).** The contradiction set of $A$ is
-$$\mathrm{contradiction}(A) := A \cap \mathrm{pneg}(A) = A \cap \overline{A^c}.$$
-Its points are simultaneously inside $A$ and (in the closure of) outside $A$.
+Two standard facts we use repeatedly:
 
-**Theorem 3.3 (Contradiction = frontier — `contradiction_eq_frontier`).** If $A$
-is closed, then
-$$\mathrm{contradiction}(A) = \mathrm{frontier}(A),$$
-where $\mathrm{frontier}(A) = \overline{A} \setminus \mathrm{int}(A)$ is the
-topological boundary.
+- For **any** $S$, $\partial S = \overline{S} \setminus \mathrm{int}(S)$.
+- For a **closed** set $A$ (so $\overline{A} = A$),
+  $\partial A = A \setminus \mathrm{int}(A)$, and $\partial A = \emptyset$ iff
+  $A$ is open (hence clopen).
 
-*Proof sketch.* Using $\overline{A^c} = (\mathrm{int}\,A)^c$ and, for closed $A$,
-$\overline{A} = A$, we get $\mathrm{contradiction}(A) = A \cap (\mathrm{int}\,A)^c
-= A \setminus \mathrm{int}(A) = \overline A \setminus \mathrm{int}(A) =
-\mathrm{frontier}(A)$. Formally this is `closure_compl` followed by
-`IsClosed.frontier_eq` and a set-difference rewrite. $\square$
-
-**Theorem 3.4 (LNC holds iff clopen — `lnc_holds_iff_clopen`).** If $A$ is closed,
-then
-$$\mathrm{contradiction}(A) = \varnothing \iff A \text{ is clopen.}$$
-
-*Proof sketch.* By Theorem 3.3 the contradiction set equals the frontier, and a set
-is clopen iff its frontier is empty (`isClopen_iff_frontier_eq_empty`). $\square$
-
-Hence classical (contradiction-free) behavior is confined to the clopen sets. In a
-space whose only clopen sets are $\varnothing$ and $X$ — for instance any connected
-space — *every* nontrivial closed set is irreducibly paraconsistent.
-
-**Corollary 3.5 (Non-clopen forces a dialetheia — `not_clopen_contradiction`).**
-If $A$ is closed and not clopen, then $\mathrm{contradiction}(A) \neq \varnothing$.
-
-*Proof.* Contrapositive of Theorem 3.4. $\square$
-
-### 3.1 A concrete dialetheia in $\mathbb{R}$
-
-**Theorem 3.6 (Real impossible object — `dream_object_real`).** In $\mathbb{R}$,
-$$0 \in \mathrm{contradiction}([0,1]).$$
-
-*Proof.* The interval $[0,1]$ is closed, so by Theorem 3.3 its contradiction set is
-its frontier. The frontier of $[0,1]$ is $\{0,1\}$ (`frontier_Icc`, using $0 \le
-1$), which contains $0$. Concretely, $0 \in [0,1]$ and $0 \in \overline{[0,1]^c}$
-since $0$ is a limit of negative reals. $\square$
-
-**Corollary 3.7 (`contradiction_nonempty_real`).** $\mathrm{contradiction}([0,1])
-\neq \varnothing$, witnessed by $0$.
-
-The point $0$ is a verified topological dialetheia: a real number simultaneously
-inside and outside the interval $[0,1]$.
-
-### 3.2 Connectedness forces dream logic
-
-**Theorem 3.8 (Connectedness forces paraconsistency — `connected_forces_paraconsistency`).**
-Let $X$ be preconnected. If $A \subseteq X$ is closed, $A \neq \varnothing$, and
-$A^c \neq \varnothing$ (i.e. $A$ is a proper nonempty closed set), then
-$$\mathrm{contradiction}(A) \neq \varnothing.$$
-
-*Proof sketch.* By Corollary 3.5 it suffices to show $A$ is not clopen. If $A$ were
-clopen, then by preconnectedness $A = \varnothing$ or $A = X$; the former
-contradicts $A \neq \varnothing$ and the latter contradicts $A^c \neq \varnothing$.
-The properness hypotheses are load-bearing: without them the frontier may be empty
-(e.g. $A = X$). $\square$
-
-On a one-piece space — a line, a plane, a sphere — no meaningful belief can be held
-without admitting a contradiction on its boundary.
+We recall the lattice structure of $\mathcal{C}(X)$: it is closed under **finite**
+unions and **arbitrary** intersections, contains $\emptyset$ and $X$, and is
+partially ordered by inclusion. It is **not** in general closed under arbitrary
+unions — the pivotal asymmetry exploited below.
 
 ---
 
-## 4. The bridge: frontiers *are* gluts
+## 3. The closed-set (dream) logic
 
-The two layers were built independently — one for the logic of databases, one for
-the topology of sets. We now fuse them and prove they describe the same impossible
-objects.
+**Definition 3.1 (Closed-set logic).** Fix a space $(X,\tau)$. The
+*closed-set logic* $\mathsf{CL}(X)$ has:
 
-**Definition 4.1 (Pointwise valuation).** For $A \subseteq X$ and $x \in X$, define
-the Belnap value
-$$\mathrm{val}_A(x) = \begin{cases}
-\mathtt{true} & \text{if } x \in \mathrm{int}(A), \\
-\mathtt{false} & \text{if } x \in \mathrm{int}(A^c), \\
-\mathtt{both} & \text{otherwise.}
-\end{cases}$$
-A point is $\mathtt{true}$ when robustly inside $A$, $\mathtt{false}$ when robustly
-outside, and the glut $\mathtt{both}$ in the remaining (boundary) case.
+- **Propositions:** closed sets $A \in \mathcal{C}(X)$.
+- **Entailment / order:** $A \vdash B$ iff $A \subseteq B$.
+- **Conjunction:** $A \wedge B = A \cap B$ (closed, being an intersection).
+- **Disjunction:** $A \vee B = A \cup B$ (closed, being a *finite* union).
+- **Verum / falsum:** $\top = X$, $\bot = \emptyset$.
+- **Negation:** $\neg A = \overline{A^c} = X \setminus \mathrm{int}(A)$.
 
-**Theorem 4.2 (Frontier points are exactly the gluts — `val_both_iff_frontier`).**
-For all $A \subseteq X$ and $x \in X$,
-$$\mathrm{val}_A(x) = \mathtt{both} \iff x \in \mathrm{frontier}(A).$$
+Every operation lands back in $\mathcal{C}(X)$, so $\mathsf{CL}(X)$ is
+well-defined. The negation is the *closed-set* analogue of complementation: since
+$A^c$ is open (hence generally not a legal proposition), we take its closure.
 
-*Proof sketch.* Write the frontier as $\overline{A} \cap \overline{A^c}$. Using
-$x \in \mathrm{int}(A) \iff x \notin \overline{A^c}$ and $x \in \mathrm{int}(A^c)
-\iff x \notin \overline{A}$, a four-way case split on whether $x$ lies in
-$\mathrm{int}(A)$ and/or $\mathrm{int}(A^c)$ shows that $\mathrm{val}_A(x) =
-\mathtt{both}$ holds exactly in the case where $x$ lies in neither interior, which
-is precisely membership in both closures, i.e. the frontier. $\square$
+**Remark 3.2.** $(\mathcal{C}(X), \cap, \cup, \neg, \emptyset, X)$ is a bounded
+distributive lattice with a De Morgan-style negation; it is a **co-Heyting
+(Brouwerian) algebra**, the order-dual of the Heyting algebra of open sets. Its
+distinguishing feature is a *difference* (co-implication) operation rather than an
+implication, and it is precisely this dual orientation that makes negation
+paraconsistent rather than intuitionistic.
 
-**Theorem 4.3 (Gluts are the contradiction set — `glut_iff_contradiction`).** If
-$A$ is closed, then for all $x$,
-$$\mathrm{val}_A(x) = \mathtt{both} \iff x \in \mathrm{contradiction}(A).$$
+**Definition 3.3 (Glut).** A proposition $A$ *carries a coexisting contradiction*
+(a **glut**) if $A \wedge \neg A \neq \bot$, i.e. $A \cap \overline{A^c} \neq
+\emptyset$.
 
-*Proof.* Combine Theorem 4.2 with Theorem 3.3. $\square$
-
-**Theorem 4.4 (Faithfulness — `designated_iff_mem`).** If $A$ is closed, then for
-all $x$,
-$$\mathrm{designated}(\mathrm{val}_A(x)) \iff x \in A.$$
-
-*Proof sketch.* For closed $A$, $\mathrm{int}(A^c) = A^c$, so $x \in
-\mathrm{int}(A^c) \iff x \notin A$. Case on the three branches of $\mathrm{val}_A$:
-if $x \in \mathrm{int}(A)$ then $\mathrm{val}_A(x) = \mathtt{true}$ is designated and
-$x \in A$ (interior $\subseteq$ set); if $x \in \mathrm{int}(A^c)$ then
-$\mathrm{val}_A(x) = \mathtt{false}$ is undesignated and $x \notin A$; otherwise
-$\mathrm{val}_A(x) = \mathtt{both}$ is designated and, since $x \notin
-\mathrm{int}(A^c) = A^c$, we have $x \in A$. In every branch designation matches
-membership. $\square$
-
-The valuation is therefore sound: acceptance of a point coincides with its actual
-membership in the (closed) set, and the only "extra" accepted points beyond the
-interior are precisely the boundary gluts.
-
-**Theorem 4.5 (Frontier values are negation-fixed — `val_frontier_neg_fixed`).**
-If $x \in \mathrm{frontier}(A)$ then $\neg\,\mathrm{val}_A(x) = \mathrm{val}_A(x)$.
-
-*Proof.* By Theorem 4.2, $\mathrm{val}_A(x) = \mathtt{both}$, and $\neg\,
-\mathtt{both} = \mathtt{both}$. $\square$
-
-### 4.1 Capstone
-
-**Theorem 4.6 (Concrete dialetheia is an accepted glut — `dream_object_real_is_glut`).**
-For the interval $[0,1] \subset \mathbb{R}$ and the point $0$:
-
-1. $\mathrm{val}_{[0,1]}(0) = \mathtt{both}$;
-2. $\neg\,\mathrm{val}_{[0,1]}(0) = \mathrm{val}_{[0,1]}(0)$;
-3. $\mathrm{designated}\big(\mathrm{val}_{[0,1]}(0) \wedge \neg\,\mathrm{val}_{[0,1]}(0)\big)$.
-
-*Proof.* The interval is closed and, by Theorem 3.6, $0 \in
-\mathrm{contradiction}([0,1])$. By Theorem 4.3, $\mathrm{val}_{[0,1]}(0) =
-\mathtt{both}$, giving (1). Claim (2) follows since $\neg\,\mathtt{both} =
-\mathtt{both}$. For (3), $\mathtt{both} \wedge \neg\,\mathtt{both} = \mathtt{both}
-\wedge \mathtt{both} = \mathtt{both}$, which is designated — equivalently, apply the
-glut characterization (Theorem 2.9) to $\mathtt{both}$. $\square$
-
-This single statement simultaneously invokes real analysis (the frontier of an
-interval), the topological model (Section 3), and the Belnap algebra (Section 2),
-and certifies that the algebraic impossible object $\mathtt{both}$ and the geometric
-impossible object (a boundary point) are one and the same.
+**Definition 3.4 (Explosion).** $\mathsf{CL}(X)$ is *explosive* if for all
+$A, B \in \mathcal{C}(X)$ we have $A \wedge \neg A \vdash B$; equivalently (taking
+$B = \bot$), if $A \wedge \neg A = \bot$ for every $A$. It is *paraconsistent* if
+it is not explosive.
 
 ---
 
-## 5. Algorithms
+## 4. Contradictions are boundaries
 
-Although the central results are proofs, the framework is fully computable on finite
-data, and the topological model is decidable on concrete sets. We highlight two
-algorithmic kernels.
+**Theorem 1 (Boundary characterisation of contradiction).**
+For every closed set $A \in \mathcal{C}(X)$,
+$$A \wedge \neg A \;=\; \partial A.$$
+Consequently $A$ carries a glut iff $\partial A \neq \emptyset$ iff $A$ is not
+open.
 
-**Algorithm A — Belnap connective evaluation.** Given two values in $\mathbf{FOUR}$
-and a connective $\in \{\neg, \wedge, \vee\}$, return the result by table lookup in
-the diamond truth order, and report designation. Complexity is $O(1)$ per operation;
-evaluating a formula with $n$ connectives over a fixed assignment is $O(n)$.
+*Proof.* Since $A$ is closed, $\neg A = \overline{A^c} = X \setminus
+\mathrm{int}(A)$. Therefore
+$$A \wedge \neg A = A \cap (X \setminus \mathrm{int}(A)) = A \setminus
+\mathrm{int}(A).$$
+For a closed set, $\overline{A} = A$, so $\partial A = \overline{A} \setminus
+\mathrm{int}(A) = A \setminus \mathrm{int}(A)$. Hence $A \wedge \neg A =
+\partial A$. The final clause is immediate: $\partial A = \emptyset$ iff
+$A = \mathrm{int}(A)$ iff $A$ is open. $\qquad\blacksquare$
 
-**Algorithm B — Designation / explosion checker.** Enumerate all four values, and
-for each compute $x \wedge \neg x$ and $x \vee \neg x$, testing designation. This
-$O(1)$ search certifies Theorems 2.6, 2.7, 2.9, 2.10 by direct evaluation and
-exhibits the explosion counterexample $(\mathtt{both}, \mathtt{false})$ of Theorem
-2.8.
+Theorem 1 is the conceptual core. It relocates contradiction from syntax to
+geometry: the region where "$A$ and not-$A$" both hold is the *frontier* of $A$,
+neither a defect of the symbols nor an artefact of the proof system, but the
+shoreline separating $A$ from its complement. The quantity of contradiction a
+proposition sustains is measured by the size of $\partial A$.
 
-For the topological layer, the contradiction set of a closed set in a discrete or
-combinatorial space is computed as $A \setminus \mathrm{int}(A)$; on $\mathbb{R}$
-the frontier of an interval is read off symbolically as its endpoint set.
+**Corollary 1.1 (Failure of non-contradiction).** The law of non-contradiction
+$A \wedge \neg A = \bot$ holds in $\mathsf{CL}(X)$ *only* for clopen $A$. On any
+space possessing a non-open closed set, non-contradiction fails.
 
----
-
-## 6. Applications
-
-**Inconsistency-tolerant databases.** Belnap designed $\mathbf{FOUR}$ for query
-engines over data aggregated from conflicting sources. The values $\mathtt{both}$
-and $\mathtt{neither}$ promote "contested" and "unknown" to first-class states, so
-that a single conflicting record cannot, via explosion, license arbitrary answers
-(Theorem 2.8).
-
-**Robust AI and sensor fusion.** Agents acting on contradictory sensor or knowledge
-inputs need consequence relations that localize conflict; the gap/glut distinction
-(Theorems 2.9–2.10) cleanly separates "missing" from "contested" evidence.
-
-**Boundary reasoning and vagueness.** The bridge (Theorem 4.2) recasts borderline
-cases as frontier points carrying the glut value. This gives a topological reading
-of vagueness: an object is a "borderline $A$" exactly when it is a boundary point,
-hence a dialetheia for $A$.
-
-**Paradox analysis.** Paraconsistent logics provide a non-trivializing setting for
-self-referential paradoxes; the verified failure of explosion supplies a rigorous
-foundation that a single inconsistency does not collapse the surrounding theory.
+**Example 1.2 (The real line).** In $X = \mathbb{R}$ with the standard topology,
+let $A = [0,1]$. Then $\mathrm{int}(A) = (0,1)$ and $A \wedge \neg A = \partial A
+= \{0,1\}$. The contradiction is real, located, and confined to two points.
 
 ---
 
-## 7. Discussion
+## 5. Non-explosion is geometric
 
-Three points deserve emphasis. First, the **partition of non-classicality**: the
-two impossible objects are not interchangeable. The glut $\mathtt{both}$ is the
-*unique* source of tolerated contradiction (Theorem 2.9) and the gap
-$\mathtt{neither}$ the *unique* source of suspended belief (Theorem 2.10). Dream
-logic is paraconsistent and paracomplete via two distinct, characterizable values.
+**Theorem 2 (Non-explosion).** $\mathsf{CL}(X)$ is paraconsistent if and only if
+there exists a closed set with nonempty boundary; equivalently, iff not every
+closed set is open. If every closed set is open (equivalently every open set is
+closed), then $\mathsf{CL}(X)$ is explosive and coincides with a classical
+(Boolean) logic on clopen sets.
 
-Second, the **interpretation of the brief's slogan**. The informal motivation —
-"open sets are not closed under arbitrary union" — is literally false for any
-topology (open sets are *always* closed under arbitrary union). The correct dual
-reading, which the formal development adopts, is that *closed sets need not be
-open*: paraconsistency appears precisely where a closed set fails to be clopen
-(Theorem 3.4). The contradiction lives in the gap between closed and open.
+*Proof.* By Definition 3.4, explosion is equivalent to $A \wedge \neg A = \bot$
+for all $A$, which by Theorem 1 is equivalent to $\partial A = \emptyset$ for all
+closed $A$, i.e. every closed set is open. Negating: $\mathsf{CL}(X)$ is
+paraconsistent iff some closed $A$ has $\partial A \neq \emptyset$. In the
+explosive case, every set that is a proposition is clopen; complement then maps
+$\mathcal{C}(X)$ to itself, and $\neg A = \overline{A^c} = A^c$, recovering
+Boolean complementation with $A \wedge \neg A = \emptyset$. $\qquad\blacksquare$
 
-Third, the **genuineness of the bridge**. The algebra and the topology were
-developed for unrelated reasons, yet their notions of impossible object coincide
-exactly (Theorems 4.2–4.3, capstone 4.6). The dialetheia of the logician *is* the
-boundary point of the topologist. Connectedness then makes the phenomenon generic:
-on any one-piece space, every nontrivial belief is dialetheic (Theorem 3.8).
-
----
-
-## 8. Future Directions
-
-**Non-monotone consequence as a closure structure.** The default-generated family
-of belief sets fails closure under binary union and so is not a topology. The next
-step is to formalize what structure it *is*: a defeasible acceptance operator
-captured by Tarski-style closure axioms minus monotonicity. Retractability is not a
-defect to be repaired but the defining algebraic signature of defeasible reasoning,
-so the right ambient category is the category of non-monotone closure operators on
-the bilattice, where the obstruction concentrates at the glut value $\mathtt{both}$.
-
-**Product bilattices and a closure-vs-triviality dichotomy.** Belnap $\mathbf{FOUR}$
-is the bilattice $2 \odot 2$; the same evidence-bit construction works for $L \odot
-L$ over any bounded lattice $L$, with defaults defined by "no refuting evidence."
-The point obstructing union-closure in $\mathbf{FOUR}$ is the top glut; in $L \odot
-L$ the analogous obstruction is the whole diagonal of fully conflicted values,
-suggesting a sharp dichotomy: the default family is union-closed if and only if $L$
-is trivial. Proving this would turn the one-off four-value theorem into a structural
-classification.
-
-**Bridging the two Alexandrov topologies through negation.** $\mathbf{FOUR}$ carries
-two orders — knowledge and truth — and negation is monotone for knowledge while
-being an anti-automorphism of truth. Each order induces its own Alexandrov topology,
-and a full bilattice-topological dictionary should describe how negation,
-conjunction, and disjunction act as continuous or co-continuous maps between them.
-Interlacing (the truth operations being knowledge-monotone) is exactly the statement
-that the truth operations are continuous for the information topology, so the
-bilattice axioms can be re-read as continuity requirements linking the two spaces.
+Thus explosion is not a logical axiom one adopts but a *geometric accident* of
+spaces all of whose closed sets happen to be open. The witness to
+paraconsistency is any single closed set with a nonempty frontier — e.g.
+$[0,1] \subset \mathbb{R}$ (Example 1.2). Non-explosion says the contradiction
+$\partial A = \{0,1\}$ is *not* contained in every proposition (it is not
+contained in $\emptyset$, nor in $\{5\}$, etc.), so it does not license arbitrary
+conclusions.
 
 ---
 
-## 9. Conclusion
+## 6. The engine: non-closure of arbitrary unions
 
-We have given a complete, machine-verified account of dream logic: an algebraic
-core (Belnap $\mathbf{FOUR}$) in which contradictions coexist without explosion and
-beliefs can be retracted; a topological semantics in which paraconsistent negation
-is closure-of-complement and contradictions are frontier points; and a bridge
-proving the two notions of impossible object are identical, anchored by the concrete
-real dialetheia $0 \in [0,1]$. The picture that emerges is that inconsistency, far
-from being a catastrophe, is a *boundary* — a marked place where inside meets
-outside — that sound reasoning can quietly flow around.
+Why do nonempty boundaries exist at all? Because closed sets, closed under finite
+union, can fail to be closed under **arbitrary** union — and the "missing" points
+of such a union are precisely boundary points.
+
+**Lemma 3 (Union witness).** In $\mathbb{R}$, the family $\{\{x\} : x \in (0,1)\}$
+consists of closed singletons, yet
+$$\bigcup_{x \in (0,1)} \{x\} = (0,1)$$
+is not closed; its closure adds exactly the boundary $\{0,1\} = \partial[0,1]$.
+
+*Proof.* Each singleton in a $T_1$ space is closed. The union is the open interval
+$(0,1)$, whose closure is $[0,1]$; the added points are $\{0,1\}$. $\square$
+
+**Theorem 3 (Union-closure / finiteness criterion).** Let $(X,\tau)$ be a
+topological space. If $\mathcal{C}(X)$ is closed under arbitrary unions, then
+$\mathsf{CL}(X)$ is explosive. In particular, if $X$ is **finite** then every
+union is finite, $\mathcal{C}(X)$ is closed under all unions, and $\mathsf{CL}(X)$
+is explosive; equivalently, *properly paraconsistent* closed-set logics require
+$X$ to be infinite.
+
+*Proof.* If $\mathcal{C}(X)$ is closed under arbitrary unions then it is closed
+under complementation of complements in the following sense: for any closed $A$,
+$\mathrm{int}(A) = \big(\overline{A^c}\big)^c$; but $\overline{A^c}$ is the
+closure of the open set $A^c$, and closure under arbitrary unions makes every
+open set (an arbitrary union of the closed... ) — more directly: a space in which
+arbitrary unions of closed sets are closed is exactly a space in which arbitrary
+intersections of open sets are open, i.e. an **Alexandrov** space with the
+additional property that closed = open. Every open set $U = \bigcup_{x \in U}
+\overline{\{x\}}$-type minimal-neighbourhood argument makes each open set closed;
+hence closed = open, every closed set is clopen, $\partial A = \emptyset$ for all
+$A$, and by Theorem 2 the logic is explosive. The finite case is immediate since
+all unions are finite. $\qquad\blacksquare$
+
+**Interpretation.** Non-closure of infinite unions of closed sets and
+non-explosion of contradictions are two faces of one phenomenon. Where infinite
+unions stay closed, boundaries vanish and the logic is classical; where they
+escape — as on any $T_1$ space with a limit point, in particular any nontrivial
+continuum — boundaries appear and paraconsistency is genuine. The "degree" of
+paraconsistency of a space is naturally measured by the supremum of boundary
+cardinalities of its closed sets, $\sup_{A \in \mathcal{C}(X)} |\partial A|$,
+which is $0$ exactly in the explosive case.
+
+---
+
+## 7. Four-valued semantics: the algebra of impossible objects
+
+The Belnap–Dunn logic **FOUR** equips reasoning with four truth values —
+$\mathbf{T}$ (true only), $\mathbf{F}$ (false only), $\mathbf{B}$ (both, a glut),
+and $\mathbf{N}$ (neither, a gap) — arranged in the *information (knowledge)
+order* $\mathbf{N} \le \mathbf{T},\mathbf{F} \le \mathbf{B}$ and the *truth order*
+$\mathbf{F} \le \mathbf{N},\mathbf{B} \le \mathbf{T}$, with negation fixing
+$\mathbf{N}$ and $\mathbf{B}$ and swapping $\mathbf{T} \leftrightarrow
+\mathbf{F}$. FOUR is the canonical algebra for "impossible objects": entities that
+may be simultaneously asserted and denied.
+
+The topological semantics realises these four values as the **boundary status** of
+a point $p \in X$ relative to a region $A$. Track a point through *both* the
+closed-set negation (which produces gluts) and its dual open-set negation (which
+produces gaps, Section 8), and each point falls into exactly one of four classes:
+
+| Belnap value | Boundary status of $p$ w.r.t. $A$ | Condition |
+|---|---|---|
+| $\mathbf{T}$ (true) | interior of $A$ | $p \in \mathrm{int}(A)$ |
+| $\mathbf{F}$ (false) | interior of the complement | $p \in \mathrm{int}(A^c)$ |
+| $\mathbf{B}$ (both / glut) | in $A$'s frontier, on the closed side | $p \in \partial A \cap A$ |
+| $\mathbf{N}$ (neither / gap) | in $A$'s frontier, on the open side | $p \in \partial A \setminus A$ |
+
+Meet and join in the truth order correspond to $\cap$ and $\cup$ of regions;
+Belnap negation corresponds to interchanging the roles of $A$ and $A^c$ (which
+swaps $\mathbf{T} \leftrightarrow \mathbf{F}$ while fixing the two frontier
+classes $\mathbf{B}$ and $\mathbf{N}$, exactly as required). The glut value
+$\mathbf{B}$ is inhabited precisely when $\partial A \neq \emptyset$, recovering
+Theorem 1 pointwise: **impossible objects live on frontiers**. In the finite /
+explosive regime (Theorem 3) no frontier points exist, $\mathbf{B}$ and
+$\mathbf{N}$ are uninhabited, and FOUR collapses to classical
+$\{\mathbf{T},\mathbf{F}\}$.
+
+---
+
+## 8. Waking and dreaming: the open/closed duality
+
+Dual to the closed-set logic is the **open-set logic** $\mathsf{OL}(X)$, the
+standard topological model of **intuitionistic** logic. Its propositions are open
+sets, conjunction is $\cap$, disjunction is $\cup$, and negation is the *interior
+of the complement*,
+$$\sim A = \mathrm{int}(A^c) = X \setminus \overline{A}.$$
+
+**Theorem 4 (Open/closed De Morgan duality).** The map $c : S \mapsto X \setminus
+S$ is an order-reversing bijection between the open sets and the closed sets that
+interchanges the two logics:
+$$c(\mathrm{int}(A^c)) = \overline{(A^c)^c}\big|_{\text{closed}}, \qquad
+\text{i.e.}\quad c(\sim A) = \neg\, c(A),$$
+and it interchanges $\cap \leftrightarrow \cup$, $\top \leftrightarrow \bot$.
+Under this duality:
+
+- **Excluded middle** $A \vee \sim A = \top$ in $\mathsf{OL}(X)$ fails exactly on
+  the boundary $\partial A$ (the "gap"), while it *holds* in $\mathsf{CL}(X)$.
+- **Non-contradiction** $A \wedge \neg A = \bot$ in $\mathsf{CL}(X)$ fails exactly
+  on the boundary $\partial A$ (the "glut"), while it *holds* in $\mathsf{OL}(X)$.
+
+Hence a point is a *gap* of the intuitionistic negation iff the complementary
+point is a *glut* of the dream negation; the two logics fail on the **same
+frontier**, from opposite sides.
+
+*Proof.* The complement map is an order-reversing bijection between $\tau$ and
+$\mathcal{C}(X)$ by definition of closed sets, and De Morgan's laws give $c(A \cap
+B) = c(A) \cup c(B)$, $c(A \cup B) = c(A) \cap c(B)$, $c(\emptyset) = X$,
+$c(X) = \emptyset$. For an open $A$, $\sim A = X \setminus \overline{A}$, so
+$A \vee \sim A = A \cup (X \setminus \overline{A}) = X \setminus (\overline{A}
+\setminus A) = X \setminus \partial A$; thus excluded middle fails exactly on
+$\partial A$. Dually, for closed $A$, Theorem 1 gives $A \wedge \neg A =
+\partial A$, so non-contradiction fails exactly on $\partial A$. Applying $c$ to
+one negation yields the other by the closure/interior duality
+$\overline{S} = (\mathrm{int}(S^c))^c$. $\qquad\blacksquare$
+
+**Corollary 4.1 (Traded resources).** Consistency and completeness are dual
+resources on a fixed space. Choosing open carriers yields a **paracomplete**
+logic (gaps, excluded middle fails, non-contradiction holds); choosing closed
+carriers yields a **paraconsistent** logic (gluts, non-contradiction fails,
+excluded middle holds). Neither is definable from the other by a truth-functional
+translation unless the space is discrete (in which case both are classical). The
+reasoner selects paracompleteness or paraconsistency simply by reorienting from
+open to closed.
+
+---
+
+## 9. Algorithms
+
+We summarise the constructive content as algorithms over **finite** topological
+spaces (given by an explicit family of open sets), which suffice to compute all
+operations and to certify paraconsistency witnesses on any finite subspace or
+finite model.
+
+**Algorithm A (Boundary / glut computation).** Given a finite space $X$ (as a set
+with its open family $\tau$) and a closed set $A$, compute $\mathrm{int}(A)$ as
+the union of all opens contained in $A$, then return $\partial A = A \setminus
+\mathrm{int}(A)$. $A$ is a glut-carrier iff the result is nonempty. Complexity
+$O(|\tau|\cdot|X|)$.
+
+**Algorithm B (Explosion test).** For each closed set $A$, compute $\partial A$ by
+Algorithm A; the logic on $X$ is paraconsistent iff some $\partial A \neq
+\emptyset$, explosive otherwise. On a finite space this always returns
+"explosive" unless the topology is non-Alexandrov — impossible for finite spaces
+— confirming Theorem 3 computationally for finite models and requiring an
+explicit infinite witness (e.g. an interval on $\mathbb{R}$) for genuine
+paraconsistency.
+
+**Algorithm C (Duality check).** Given open $A$, compute intuitionistic
+$\sim A = X \setminus \overline{A}$ and closed-set $\neg(X\setminus A)$; verify
+$X \setminus (\sim A) = \neg(X \setminus A)$ and that both negations fail on the
+same $\partial A$.
+
+---
+
+## 10. Applications
+
+1. **Inconsistency-tolerant knowledge bases.** Model each atomic fact as a
+   region; merging sources unions the regions. Conflicts localise to boundaries;
+   downstream queries remain sound because non-explosion prevents a single
+   conflict from making every query true. The "conflict mass" of a merged base is
+   $\sum |\partial A_i|$.
+2. **Non-monotone belief revision.** Because negation is the *closure* of the
+   complement rather than a hard complement, retracting a belief shrinks a region
+   to its interior rather than deleting it; boundary beliefs persist as gluts,
+   modelling the graceful, non-catastrophic revision characteristic of human and
+   dream cognition.
+3. **Normative / legal reasoning.** Two statutes in genuine conflict correspond
+   to overlapping closed regions whose intersection is a boundary glut; dream
+   logic isolates the conflict to the precise cases on that boundary without
+   trivialising the code.
+4. **Robust artificial agents.** Agents ingesting the open web can adopt closed
+   carriers to survive contradictory inputs, using boundary size as a calibrated
+   measure of local uncertainty.
+
+---
+
+## 11. Discussion and future work
+
+The results recast three classically distinct notions — a *true contradiction*, a
+*topological boundary*, and the *failure of arbitrary unions of closed sets to be
+closed* — as one phenomenon viewed from three angles. This suggests several
+directions.
+
+- **Gluts are exactly boundaries — a dimension-free law.** We conjecture that in
+  *every* topological space, under the closed-set negation, the coexistence set of
+  a region and its negation equals its frontier, so a region admits a coexisting
+  contradiction iff its frontier is nonempty. The finite and real-line cases
+  coincide exactly; the general statement needs only frontier calculus valid on
+  arbitrary spaces.
+- **Paraconsistency calibrated by union-failure.** We conjecture that a closed-set
+  logic is explosive iff its space is finite (equivalently, closed sets are closed
+  under arbitrary union); every infinite space is properly paraconsistent, with
+  degree growing as the supremum of frontier cardinalities. Non-explosion and the
+  non-closure of infinite unions are then a single, compactness-flavoured fact.
+- **Dual pairs on one space.** We conjecture that for any space the open-set
+  (intuitionistic) and closed-set (dream) logics are exact De Morgan duals:
+  excluded middle holds in one exactly where non-contradiction holds in the other,
+  and fixed points of the two negations correspond under complement; neither is
+  truth-functionally definable from the other unless the space is discrete.
+
+The overarching theme is that consistency and completeness are not absolute
+virtues but **dual, tradeable resources**, selected by orienting one's
+propositions toward the open or the closed. A reasoner facing contradictory
+information is not obliged to choose collapse; it may choose a boundary.
+
+---
+
+## References (indicative)
+
+- S. Jaśkowski, *Propositional calculus for contradictory deductive systems*
+  (1948).
+- N. da Costa, *On the theory of inconsistent formal systems* (1974).
+- N. Belnap, *A useful four-valued logic* (1977); J. M. Dunn, *Intuitive
+  semantics for first-degree entailments* (1976).
+- C. Mortensen, *Inconsistent Mathematics* (1995); *Topological separation
+  principles and logical theories* (2000).
+- G. Priest, *In Contradiction* (2006).
+- W. James & C. Mortensen, closed-set logic and topological duality (various).
