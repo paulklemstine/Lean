@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c2b68f4a",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nThe file `QuantumWalkCayley.lean` establishes the spectral backbone of random walks\non Cayley graphs of finite abelian groups: characters diagonalize every\ntranslation-invariant (",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-10T23:50:32",
-      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-    },
-    {
       "cycle_id": "0faef071",
       "domain": "Applications",
       "key_insight": "# Future Directions — Tangled Hierarchies and Self-Referential Soundness\n\nThis cycle established, over Gödel–Löb frames, that the semantic Löb principle\n`□(□A → A) ⊆ □A` collapses any internal proof o",
@@ -499,19 +489,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-11T14:28:08",
       "title": "The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "cycle_id": "e480cbbd",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThe results established here place the box-counting dimension of a natural \"truth\nset\" strictly inside the unit interval and expose i",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 64,
+      "timestamp": "2026-07-11T15:33:11",
+      "title": "The Fractal Dimension of Mathematical Truth"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3a1da3d1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Vampire Numbers and the Fang Congruence\n\n## 1. The mod-9 residue distribution is asymptotically saturated\nEvery digit-preserving factorization forces `(x-1)(y-1) ≡ 1` modulo nine",
-      "quality_score": 0.71008,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-04T00:48:10",
-      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-    },
     {
       "cycle_id": "e3e38cc8",
       "domain": "NumberTheory",
@@ -2501,6 +2491,16 @@
       "theorem_count": 30,
       "timestamp": "2026-07-11T14:28:08",
       "title": "The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "cycle_id": "e480cbbd",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThe results established here place the box-counting dimension of a natural \"truth\nset\" strictly inside the unit interval and expose i",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 64,
+      "timestamp": "2026-07-11T15:33:11",
+      "title": "The Fractal Dimension of Mathematical Truth"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-11T14:28:08",
+  "last_updated": "2026-07-11T15:33:11",
   "open_questions": [
-    {
-      "context": "+single `sorry` in `fib_carmichael_composite`, since the required primitive-part; sorry; collision ⇒ Merkle–Damgård hash collision, all constructive and `sorry`-free.",
-      "cycle_id": "34a8cfea",
-      "domain": "Novelty",
-      "sorry_count": 6,
-      "timestamp": "2026-07-10T07:33:38"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "4936bb72",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-11T14:11:15"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "e480cbbd",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-11T15:33:11"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8e65b62c",
-        "quality": 0.72,
-        "theorems": 32,
-        "title": "Thermodynamics of Mathematical Proof"
-      },
-      {
         "cycle_id": "1978e429",
         "quality": 0.8,
         "theorems": 26,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 30,
         "title": "The Mega-Sphere: All Dimensions at Once"
+      },
+      {
+        "cycle_id": "e480cbbd",
+        "quality": 0.83,
+        "theorems": 64,
+        "title": "The Fractal Dimension of Mathematical Truth"
       }
     ],
     "NumberTheory": [

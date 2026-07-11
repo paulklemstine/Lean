@@ -129,6 +129,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorification of Entropy: The Information Loss of Functors"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e480cbbd (Q=0.830), which proved 64 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncompu",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_e480cbbd_e538d018",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "e480cbbd",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:11.863697+00:00",
+    "title": "Deepening: The Fractal Dimension of Mathematical Truth"
+  },
+  {
     "consumed_by_exp_id": "f8dd2b6a",
     "description": "Building on cycle f6b0dfd4 (Q=0.830), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms",
     "domains": [
@@ -722,21 +736,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
-    "consumed_by_exp_id": "e480cbbd",
-    "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1017",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T10:14:12.172691+00:00",
-    "title": "The Fractal Dimension of Mathematical Truth"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
@@ -935,6 +934,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T15:48:57.575555+00:00",
     "title": "Close Proofs: The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle e480cbbd (Q=0.830) proved 64 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_e480cbbd_17d536c8",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "e480cbbd",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:11.950891+00:00",
+    "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
   },
   {
     "consumed_by_exp_id": "",
@@ -1228,6 +1241,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T07:45:39.325963+00:00",
     "title": "Borges' Library of Babel: Combinatorics of Everything"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_1046",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T15:32:42.926609+00:00",
+    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
     "consumed_by_exp_id": "",
@@ -7501,6 +7529,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T14:28:02.441253+00:00",
     "title": "This project formalizes the rigorous algebraic skeleton behind the \"mega-sphere\""
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Fractal Dimension of Mathematical Truth\n\nThe results established here place the box-counting dimension of a natural \"truth\nset\" strictly inside the unit interval and expose it as a limit of finite,\neffectively computable estimates, mirroring the from-below approximation of a\nChaitin-style halting constant. The following conjectures push this program\nfurther.\n\n## 1. The dimension spectrum of definable theories fills the unit interval\n\n**Conjecture.** For every rational `r \u2208 [0,1]` there is a theory, defined by a\nfixed periodic pattern of constrained coordinates, whose truth set has box\ndimension exactly `r`; and the set of achievable dimensions of *arbitrary*\ntheories is all of `[0,1]`.\n\nThe key insight is that the dimension equals the asymptotic density of\ninformation-bearing coordinates, so any target density \u2014 rational by periodic\npatterns, irrational by aperiodic Beatty-type patterns \u2014 is realizable by a direct\nconstruction rather than an existence argument.\n\nWhy now? The exact parity count that pins the truth set to dimension `1/2`\ngeneralizes verbatim to any arithmetic-progression pattern, so the full spectrum is\nwithin reach of the same squeeze technique, upgrading a single value to a complete\nclassification.\n\n## 2. Sub-dimensional gaps force logical incompleteness\n\n**Conjecture.** If a theory's truth set has box dimension `d < 1`, then the\n\"missing\" statements of positive upper density cannot all be decided by any single\nfinitely axiomatized extension; equivalently, a dimension drop below `1` is a\nquantitative obstruction of G\u00f6delian type.\n\nThe key insight is that dimension `< 1` means the accepted strings occupy an\nexponentially thin cylinder cover, so a decision procedure would have to\nconcentrate measure on a null-density target \u2014 a covering-number bottleneck that\nbehaves like an incompleteness budget.\n\nWhy now? With the dimension framework and its universal `[0,1]` bounds in place,\nincompleteness can be phrased as a covering-number deficit and attacked with the\nsame limsup machinery rather than purely syntactic diagonalization.\n\n## 3. Dimension is \u03a0-approximable but not computable\n\n**Conjecture.** The map sending a (uniformly decidable) theory to its box dimension\nis approximable from above by a computable sequence of rational upper bounds, yet\nis not computable: there is no algorithm outputting the dimension to within every\nprescribed accuracy uniformly in the theory.\n\nThe key insight is that the dimension is a `limsup` of computable estimates, hence\nnaturally a from-above limit exactly as `\u03a9` is a from-below limit; the two\none-sided approximabilities are dual faces of the same non-computability.\n\nWhy now? Having formalized both the from-above approximation of the dimension and\nthe from-below approximation of `\u03a9`, the remaining step is a reduction linking a\ndimension oracle to a halting oracle, a concrete and self-contained target.\n\n## 4. A metric entropy law for truth\n\n**Conjecture.** Under the prefix metric on statement space, the truth set of a\nconsistent, recursively axiomatized theory has Hausdorff dimension equal to its box\ndimension, and both equal the topological entropy of the associated subshift of\naccepted prefixes divided by `log 2`.\n\nThe key insight is that accepted prefixes form a subshift whose growth rate is a\nsingle invariant, so the three classically distinct notions \u2014 Hausdorff dimension,\nbox dimension, and entropy \u2014 must coincide for the highly self-similar cylinder\nstructure that truth sets exhibit.\n\nWhy now? The counting function and its exponential growth rate are already isolated\nas the governing quantity; identifying it with subshift entropy connects the\npresent combinatorial estimates to the mature ergodic theory of symbolic dynamics.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1047",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e480cbbd",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:04.479128+00:00",
+    "title": "The results established here place the box-counting dimension of a natural \"trut"
   },
   {
     "consumed_by_exp_id": "",

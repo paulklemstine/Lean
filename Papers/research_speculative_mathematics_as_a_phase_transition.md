@@ -1,298 +1,348 @@
-# Coherence Percolation Systems: Phase Transitions in Knowledge Graphs
+# Order Parameters and Critical Thresholds: Two Exactly-Solvable Mean-Field Phase Transitions
 
 ## Abstract
 
-We introduce the **Coherence Percolation System**, a novel mathematical structure that models phase transitions in mathematical knowledge graphs. A coherence percolation system consists of a monotone order parameter Φ : ℕ → [0,1] satisfying axioms inspired by percolation theory: initial fragmentation (Φ(0) = 1/n), monotonicity, boundedness, and eventual saturation (Φ(K) = 1). We define the critical point as the minimum step where Φ ≥ 1/2 and prove a suite of theorems characterizing phase transition behavior: supercritical persistence (irreversibility of threshold crossing), susceptibility telescoping (conservation of coherence budget), critical jump bounds ((n-1)/n maximum), merge dominance (parallel systems accelerate criticality), and sharp threshold existence. All results are fully formalized in Lean 4 with Mathlib, yielding 18 machine-verified theorems and 3 concrete system constructions with zero remaining proof obligations.
+We give a rigorous, self-contained analysis of the paradigmatic *second-order
+phase transition* of statistical mechanics — the spontaneous magnetization of the
+mean-field (Curie–Weiss) Ising ferromagnet — and of its combinatorial cousin, the
+emergence of a giant connected component in mean-field percolation (equivalently,
+the survival of a Poisson Galton–Watson branching process). In each case the model
+reduces to a scalar self-consistency equation for an *order parameter*: the
+magnetization $m = \tanh(\beta m)$ and the survival probability
+$\rho = 1 - e^{-\lambda \rho}$. We prove that both models undergo a phase
+transition at the critical value $1$ of their coupling: below threshold the only
+solution is the trivial one (no order), while above threshold a nontrivial ordered
+branch appears. We further establish quantitative lower bounds near criticality —
+$m^2 \ge 3(\beta-1)/\beta^3$ and $\rho \ge 2(\lambda-1)/\lambda^2$ — which exhibit
+the *continuous* (second-order) onset of order and identify the mean-field
+critical exponents $\tfrac12$ (magnetization) and $1$ (percolation). The two
+different exponents, arising from the same structural template, are a concrete
+illustration of universality. All results are proved from elementary Taylor-type
+inequalities for $\tanh$ and $1 - e^{-x}$ that we derive from first principles.
+
+**Keywords:** phase transition, order parameter, Curie–Weiss model, mean-field
+Ising, percolation, giant component, branching process, critical exponent,
+self-consistency equation, universality.
 
 ## 1. Introduction
 
-Phase transitions — abrupt qualitative changes in system behavior at critical parameter values — are among the most universal phenomena in nature. Originally studied in thermodynamics (melting, magnetization, superconductivity), phase transitions have since been identified in random graph theory [1], computational complexity [2], social networks [3], and information theory [4].
+A *phase transition* is a qualitative, often discontinuous, change in the
+macroscopic state of a many-body system induced by the smooth variation of a
+control parameter across a critical value. The organizing concept, due to Landau,
+is the **order parameter**: a scalar (or tensor) quantity that vanishes in the
+disordered phase and becomes nonzero in the ordered phase. A transition is
+**first order** when the order parameter jumps discontinuously and **second order
+(continuous)** when it grows continuously from zero, typically as a power
+$(g - g_c)^{\beta_{\mathrm{exp}}}$ of the distance from the critical coupling
+$g_c$; the number $\beta_{\mathrm{exp}}$ is a **critical exponent**.
 
-We propose that mathematical knowledge itself undergoes phase transitions. The historical record shows long periods of incremental progress in isolated subfields, punctuated by sudden reorganizations where previously disconnected areas fuse into unified frameworks. Examples include the unification of algebra and geometry through analytic geometry (Descartes), the emergence of abstract algebra from number theory and geometry (Noether, Artin), and the ongoing Langlands program connecting number theory, algebraic geometry, and representation theory.
+Two of the most influential exactly-solvable models are:
 
-To formalize this intuition, we introduce the **Coherence Percolation System** — an axiomatic framework that captures the essential features of monotone knowledge growth and threshold behavior. Our main contributions are:
+1. **The mean-field (Curie–Weiss) Ising ferromagnet.** Each of $N$ spins
+   interacts equally with all others. In the thermodynamic limit the average
+   magnetization $m$ satisfies $m = \tanh(\beta(Jm + h))$ where $\beta$ is inverse
+   temperature, $J$ the coupling and $h$ an external field. In zero field with
+   $J$ absorbed into $\beta$, this is $m = \tanh(\beta m)$.
 
-1. A novel mathematical structure (CoherencePercolation) with well-motivated axioms
-2. A critical point theory with existence, uniqueness, and boundedness results
-3. A susceptibility theory with telescoping, non-negativity, and sharp bounds
-4. Concrete constructions (sequential merge, sharp transition) as worked examples
-5. A merge composition theorem connecting parallel research programs
-6. Complete formal verification in Lean 4
+2. **Mean-field percolation / the Poisson branching process.** In the
+   Erdős–Rényi random graph $G(n, \lambda/n)$, the exploration of a connected
+   cluster converges (locally) to a Galton–Watson tree with $\mathrm{Poisson}(\lambda)$
+   offspring. The survival probability $\rho$ — asymptotically the fraction of
+   vertices in the giant component — satisfies $\rho = 1 - e^{-\lambda\rho}$.
 
-## 2. Definitions
+Both models are governed by a scalar **self-consistency equation**
+$x = \Phi(x)$ with $\Phi$ smooth, concave on $[0,\infty)$, fixing $0$, and with
+$\Phi'(0)$ equal to the coupling. This shared structure produces a shared
+phenomenology: a transition exactly when $\Phi'(0)$ crosses $1$. The purpose of
+this paper is to develop this phenomenology rigorously and quantitatively, with
+complete proofs built from elementary inequalities.
 
-### 2.1 Coherence Percolation System
+Our contributions are:
 
-**Definition 2.1** (CoherencePercolation). A *coherence percolation system* is a tuple (n, Φ) where:
-- n ∈ ℕ with n ≥ 2 (system size)
-- Φ : ℕ → ℝ (order parameter) satisfying:
-  1. **Monotonicity**: a ≤ b ⟹ Φ(a) ≤ Φ(b)
-  2. **Initial fragmentation**: Φ(0) = 1/n
-  3. **Lower bound**: ∀k, 1/n ≤ Φ(k)
-  4. **Upper bound**: ∀k, Φ(k) ≤ 1
-  5. **Saturation**: ∃K, Φ(K) = 1
+- A clean derivation of the calculus and Taylor-type inequalities for $\tanh$ and
+  $1 - e^{-x}$ needed to control the fixed-point maps (Section 3).
+- A full proof of the transition for the Curie–Weiss model, including uniqueness
+  of $m=0$ below threshold, existence of a symmetric ordered pair above threshold,
+  and the near-critical lower bound yielding exponent $\tfrac12$ (Section 4).
+- The parallel development for mean-field percolation, with the near-critical
+  lower bound yielding exponent $1$ (Section 5).
+- A discussion of universality, the meaning of the two different exponents, and a
+  speculative program relating the growth of mathematical knowledge to a
+  percolation transition (Sections 6–7).
 
-The value Φ(k) represents the coherence of the knowledge graph at step k — the fraction of knowledge nodes in the largest connected component.
+## 2. Definitions and setup
 
-**Definition 2.2** (Critical Point). The *critical point* of a system S is:
-$$k^* = \min\{k : \Phi(k) \geq 1/2\}$$
+Throughout, all variables are real.
 
-This is well-defined by monotonicity and saturation (since Φ(K) = 1 ≥ 1/2 for some K).
+**Definition 2.1 (Magnetization / order parameter of the ferromagnet).** For a
+coupling $\beta \in \mathbb{R}$, a real number $m$ is a *magnetization* at
+coupling $\beta$ if it is a fixed point of $m \mapsto \tanh(\beta m)$:
+$$\tanh(\beta m) = m.$$
 
-**Definition 2.3** (Susceptibility). The *susceptibility* at step k is:
-$$\chi(k) = \Phi(k+1) - \Phi(k)$$
+**Definition 2.2 (Survival probability / order parameter of percolation).** For a
+mean connectivity $\lambda \in \mathbb{R}$, a real number $\rho$ is a *survival
+probability* at connectivity $\lambda$ if
+$$\rho = 1 - e^{-\lambda \rho}.$$
 
-This measures the system's "response" to a new connection at step k.
+In both cases $x = 0$ is a fixed point for every coupling (Propositions 4.1 and
+5.1): the disordered/extinction state is always admissible. A phase transition is
+the appearance of an *additional*, nontrivial fixed point.
 
-**Definition 2.4** (Coherence Gap). The *coherence gap* at step k is:
-$$\Delta(k) = 1 - \Phi(k)$$
+**Definition 2.3 (Critical coupling).** The critical coupling of a self-consistency
+map $\Phi$ with $\Phi(0)=0$ is the value of $\Phi'(0)$ at which the nontrivial
+branch appears. For both models here $\Phi'(0)$ equals the coupling itself, so the
+critical values are $\beta_c = 1$ and $\lambda_c = 1$.
 
-The initial gap is Δ(0) = 1 - 1/n = (n-1)/n.
+## 3. Analytic toolkit
 
-### 2.2 Edge Coherence System
+The entire analysis rests on a handful of elementary inequalities, each proved by
+identifying a monotone auxiliary function via its derivative.
 
-**Definition 2.5** (EdgeCoherenceSystem). An *edge coherence system* is a concrete realization where:
-- n vertices are given
-- maxComp : ℕ → ℕ tracks the largest component size
-- maxComp(0) = 1, maxComp is monotone, maxComp(k) ≤ n
-- ∃K, maxComp(K) = n
+### 3.1 The hyperbolic tangent
 
-Every EdgeCoherenceSystem canonically maps to a CoherencePercolation via Φ(k) = maxComp(k)/n.
+**Lemma 3.1 (Derivative of $\tanh$).** For all $x$, $\dfrac{d}{dx}\tanh x = 1 - \tanh^2 x$.
 
-### 2.3 System Composition
+*Proof.* Write $\tanh = \sinh/\cosh$ and apply the quotient rule with
+$\sinh' = \cosh$, $\cosh' = \sinh$ and $\cosh^2 - \sinh^2 = 1$. In particular
+$\tanh$ is differentiable, hence continuous, everywhere. $\qquad\blacksquare$
 
-**Definition 2.6** (Merge). Given two systems S₁, S₂ with the same n, their *merge* is:
-$$\Phi_{\text{merge}}(k) = \max(\Phi_1(k), \Phi_2(k))$$
+**Lemma 3.2 (Sub-diagonal bound).** For every $x > 0$, $\tanh x < x$.
 
-This models parallel research programs where we take the best coherence at each step.
+*Proof.* Equivalently $\sinh x < x\cosh x$. The function
+$g(t) = t\cosh t - \sinh t$ satisfies $g(0) = 0$ and $g'(t) = t\sinh t > 0$ for
+$t > 0$, so $g$ is strictly increasing on $[0,\infty)$ and $g(x) > 0$. $\qquad\blacksquare$
 
-## 3. Main Results
+**Lemma 3.3 (Nonnegativity).** For $x \ge 0$, $\tanh x \ge 0$.
 
-### 3.1 Critical Point Theory
+*Proof.* $\sinh$ is increasing with $\sinh 0 = 0$, and $\cosh > 0$. $\qquad\blacksquare$
 
-**Theorem 3.1** (Critical Point Specification).
-For any coherence percolation system S:
-$$\Phi(k^*) \geq 1/2$$
+**Lemma 3.4 (Cubic Taylor lower bound).** For $x \ge 0$,
+$\tanh x \ge x - \dfrac{x^3}{3}$.
 
-*Proof.* Direct from the definition as a Nat.find. □
+*Proof.* Let $h(t) = \tanh t - (t - t^3/3)$. Then $h(0) = 0$ and, by Lemma 3.1,
+$h'(t) = (1 - \tanh^2 t) - (1 - t^2) = t^2 - \tanh^2 t$. For $t \ge 0$ we have
+$0 \le \tanh t \le t$ (Lemmas 3.2–3.3), so $\tanh^2 t \le t^2$ and $h'(t) \ge 0$.
+Hence $h$ is nondecreasing on $[0,\infty)$ and $h(x) \ge 0$. $\qquad\blacksquare$
 
-**Theorem 3.2** (Subcritical Characterization).
-For all k < k*:
-$$\Phi(k) < 1/2$$
+We also record $|\tanh x| < 1$ for all $x$ and $\tanh(-x) = -\tanh x$, standard
+facts used below.
 
-*Proof.* If Φ(k) ≥ 1/2 for some k < k*, then k* ≤ k by minimality of Nat.find, contradiction. □
+### 3.2 The percolation nonlinearity
 
-**Theorem 3.3** (Critical Point for n = 2).
-If n = 2, then k* = 0.
+**Lemma 3.5 (Sub-diagonal bound).** For every $x > 0$, $1 - e^{-x} < x$.
 
-*Proof.* Φ(0) = 1/2, so the predicate holds at 0. □
+*Proof.* The strict convexity bound $1 + t < e^{t}$ for $t \ne 0$ at $t = -x$
+gives $1 - x < e^{-x}$, i.e. $1 - e^{-x} < x$. $\qquad\blacksquare$
 
-**Theorem 3.4** (Critical Point Positivity).
-If n ≥ 3, then k* > 0.
+**Lemma 3.6 (Quadratic Taylor lower bound).** For $x \ge 0$,
+$1 - e^{-x} \ge x - \dfrac{x^2}{2}$.
 
-*Proof.* Φ(0) = 1/n ≤ 1/3 < 1/2, so the predicate fails at 0. □
+*Proof.* Let $k(t) = (1 - t + t^2/2) - e^{-t}$. Then $k(0) = 0$ and
+$k'(t) = (-1 + t) + e^{-t} = t + e^{-t} - 1 \ge 0$ by the convexity bound
+$e^{-t} \ge 1 - t$. Hence $k$ is nondecreasing on $[0,\infty)$, so $k(x)\ge 0$,
+which rearranges to the claim. $\qquad\blacksquare$
 
-**Theorem 3.5** (Critical Point Bound).
-k* ≤ saturation point (the first K with Φ(K) = 1).
+## 4. The Curie–Weiss transition
 
-*Proof.* At the saturation point, Φ = 1 ≥ 1/2, so k* ≤ K by minimality. □
+### 4.1 Elementary structural facts
 
-### 3.2 Susceptibility Theory
+**Proposition 4.1 (Trivial solution).** $m = 0$ is a magnetization for every
+$\beta$, since $\tanh 0 = 0$.
 
-**Theorem 3.6** (Susceptibility Non-negativity).
-For all k: χ(k) ≥ 0.
+**Proposition 4.2 (Symmetry).** If $m$ is a magnetization at coupling $\beta$,
+then so is $-m$. Indeed $\tanh(\beta(-m)) = -\tanh(\beta m) = -m$. This is the
+$\mathbb{Z}_2$ (spin-flip) symmetry of the Ising ferromagnet.
 
-*Proof.* χ(k) = Φ(k+1) - Φ(k) ≥ 0 by monotonicity. □
+**Proposition 4.3 (Boundedness).** Every magnetization satisfies $|m| < 1$,
+because $|m| = |\tanh(\beta m)| < 1$.
 
-**Theorem 3.7** (Susceptibility Bound).
-For all k:
-$$\chi(k) \leq 1 - 1/n$$
+### 4.2 Disordered phase
 
-*Proof.* χ(k) = Φ(k+1) - Φ(k) ≤ 1 - 1/n since Φ(k+1) ≤ 1 and Φ(k) ≥ 1/n. □
+**Theorem 4.4 (Uniqueness below threshold).** If $0 < \beta \le 1$, the only
+magnetization is $m = 0$.
 
-**Theorem 3.8** (Susceptibility Telescoping).
-For a ≤ b:
-$$\sum_{i=a}^{b-1} \chi(i) = \Phi(b) - \Phi(a)$$
+*Proof.* Suppose $m$ is a magnetization. If $m > 0$ then $\beta m > 0$ and, by
+Lemma 3.2, $\tanh(\beta m) < \beta m \le m$ (using $\beta \le 1$), contradicting
+$\tanh(\beta m) = m$. If $m < 0$ apply the same argument to $-m$ via Proposition
+4.2. Hence $m = 0$. $\qquad\blacksquare$
 
-*Proof.* Standard telescoping sum identity. □
+Thus below the critical coupling there is no spontaneous order.
 
-**Theorem 3.9** (Susceptibility at Saturation).
-If Φ(k) = 1, then χ(k) = 0.
+### 4.3 Ordered phase
 
-*Proof.* Φ(k+1) ≤ 1 = Φ(k) and Φ(k+1) ≥ Φ(k) by monotonicity, so Φ(k+1) = Φ(k). □
+**Theorem 4.5 (Existence above threshold).** If $\beta > 1$, there exists a
+magnetization $m > 0$ (and, by Proposition 4.2, also $-m$).
 
-### 3.3 Phase Transition Properties
+*Proof.* Consider the continuous residual $F(m) = \tanh(\beta m) - m$. Set the
+critical scale $c = 3(\beta - 1)/\beta^3 > 0$ and the test point
+$a = \tfrac12\sqrt{c} > 0$, so that $a^2 = c/4$. By the cubic bound (Lemma 3.4),
+$$\tanh(\beta a) \ge \beta a - \frac{(\beta a)^3}{3}
+= \beta a - \frac{\beta^3 a^2}{3}\,a.$$
+Since $a^2 = c/4$ we have $\beta^3 a^2 = \beta^3 c/4 = \tfrac34(\beta - 1)$, whence
+$\beta a - (\beta a)^3/3 = \beta a\bigl(1 - \tfrac14(\beta-1)\bigr)$, and a short
+computation using $0 < a < 1$ shows this exceeds $a$; therefore $F(a) > 0$. On the
+other hand $F(a+1) = \tanh(\beta(a+1)) - (a+1) < 1 - (a+1) \le 0$ because
+$\tanh < 1$. Since $F$ is continuous and changes sign on $[a, a+1]$, the
+intermediate value theorem yields $m \in (a, a+1)$ with $F(m) = 0$, i.e. a
+magnetization with $m \ge a > 0$. $\qquad\blacksquare$
 
-**Theorem 3.10** (Supercritical Persistence).
-If Φ(k) ≥ 1/2 and k ≤ m, then Φ(m) ≥ 1/2.
+Above the critical coupling, spontaneous symmetry breaking occurs: the pair
+$\pm m$ of ordered states appears alongside the (now unstable) disordered state.
 
-*Proof.* Φ(m) ≥ Φ(k) ≥ 1/2 by monotonicity. □
+### 4.4 Continuous onset and critical exponent
 
-More generally:
+**Theorem 4.6 (Near-critical lower bound; exponent $\tfrac12$).** If $\beta > 1$
+and $m > 0$ is a magnetization, then
+$$m^2 \ge \frac{3(\beta - 1)}{\beta^3}.$$
 
-**Theorem 3.11** (Threshold Persistence).
-For any α ∈ ℝ: if α ≤ Φ(k) and k ≤ m, then α ≤ Φ(m).
+*Proof.* Since $\beta m \ge 0$, the cubic bound (Lemma 3.4) gives
+$m = \tanh(\beta m) \ge \beta m - (\beta m)^3/3$. Rearranging,
+$0 \ge (\beta - 1)m - \beta^3 m^3/3$, and dividing by $m > 0$ and by
+$\beta^3/3 > 0$ yields $m^2 \ge 3(\beta-1)/\beta^3$. $\qquad\blacksquare$
 
-**Theorem 3.12** (Coherence Gap Antitonicity).
-The coherence gap Δ is antitone (non-increasing).
+**Corollary 4.7.** As $\beta \downarrow 1$, every ordered branch satisfies
+$m \gtrsim \sqrt{3(\beta - 1)}$, so the magnetization emerges *continuously* from
+$0$ with mean-field critical exponent $\beta_{\mathrm{exp}} = \tfrac12$. The
+transition is therefore **second order**.
 
-*Proof.* Δ(b) - Δ(a) = Φ(a) - Φ(b) ≤ 0 for a ≤ b. □
+## 5. The percolation / giant-component transition
 
-**Theorem 3.13** (Initial Gap).
-Δ(0) = (n-1)/n.
+### 5.1 Elementary structural facts
 
-**Theorem 3.14** (Critical Jump Bound).
-If k* > 0:
-$$\Phi(k^*) - \Phi(k^* - 1) \leq 1 - 1/n$$
+**Proposition 5.1 (Trivial solution).** $\rho = 0$ is a survival probability for
+every $\lambda$.
 
-*Proof.* Same argument as susceptibility bound. □
+**Proposition 5.2 (Boundedness).** Every survival probability satisfies
+$\rho < 1$, since $\rho = 1 - e^{-\lambda\rho}$ and $e^{-\lambda\rho} > 0$.
 
-**Theorem 3.15** (Transition Ordering).
-For ε ∈ (0, 1/2]: if Φ(k₁) > 1-ε and Φ(k₂) < ε, then k₂ < k₁.
+### 5.2 Subcritical regime
 
-*Proof.* If k₁ ≤ k₂, then Φ(k₁) ≤ Φ(k₂) < ε ≤ 1-ε < Φ(k₁), contradiction. □
+**Theorem 5.3 (No giant component below threshold).** If $0 < \lambda \le 1$ and
+$\rho \ge 0$ is a survival probability, then $\rho = 0$.
 
-### 3.4 Merge Dominance
+*Proof.* If $\rho > 0$ then $\lambda\rho > 0$ and Lemma 3.5 gives
+$\rho = 1 - e^{-\lambda\rho} < \lambda\rho \le \rho$ (using $\lambda \le 1$), a
+contradiction. $\qquad\blacksquare$
 
-**Theorem 3.16** (Merge Critical Point).
-For systems S₁, S₂ with the same n:
-$$k^*_{\text{merge}} \leq \min(k^*_1, k^*_2)$$
+### 5.3 Supercritical regime
 
-*Proof.* At k = min(k₁*, k₂*), one of Φ₁, Φ₂ is ≥ 1/2, so max(Φ₁, Φ₂) ≥ 1/2. □
+**Theorem 5.4 (Giant component above threshold).** If $\lambda > 1$, there exists
+a survival probability with $0 < \rho < 1$.
 
-### 3.5 Concrete Examples
+*Proof.* Consider the continuous residual $G(\rho) = (1 - e^{-\lambda\rho}) - \rho$.
+Take the test point $a = (\lambda - 1)/\lambda^2 \in (0, 1)$. Then
+$\lambda a = (\lambda - 1)/\lambda$, and the quadratic bound (Lemma 3.6) gives
+$$1 - e^{-\lambda a} \ge \lambda a - \frac{(\lambda a)^2}{2}
+= \frac{\lambda-1}{\lambda} - \frac{(\lambda-1)^2}{2\lambda^2}
+> \frac{\lambda-1}{\lambda^2} = a,$$
+the strict inequality because $(\lambda-1)^2 > 0$; hence $G(a) > 0$. At $\rho = 1$,
+$G(1) = -e^{-\lambda} < 0$. By continuity and the intermediate value theorem there
+is $\rho \in (a, 1)$ with $G(\rho) = 0$, giving a survival probability with
+$0 < \rho < 1$. $\qquad\blacksquare$
 
-**Example 3.17** (Sequential Merge). For the system maxComp(k) = min(k+1, n):
-- Coherence grows linearly: Φ(k) = min(k+1, n)/n
-- Critical point: ⌈n/2⌉ - 1
-- Saturation: step n-1
-- Saturates: Φ(n-1) = 1 ✓ (verified)
+### 5.4 Continuous onset and critical exponent
 
-**Example 3.18** (Sharp Transition). For Φ(0) = 1/n, Φ(k) = 1 for k ≥ 1:
-- Maximum susceptibility: χ(0) = 1 - 1/n ✓ (verified)
-- Critical point: 1 for n ≥ 3 ✓ (verified)
-- Critical point: 0 for n = 2 ✓ (verified)
-- This is the sharpest possible transition
-
-## 4. Algorithms
-
-### 4.1 Percolation Simulation
-
-```
-Algorithm: SimulatePercolation(n)
-Input: n vertices
-Output: coherence trajectory [(k, Φ(k))]
-
-1. Initialize UnionFind on {0, ..., n-1}
-2. Generate edges E = {(i,j) : 0 ≤ i < j ≤ n-1}
-3. Randomly shuffle E
-4. trajectory ← [(0, 1/n)]
-5. For each edge (u,v) in E:
-   a. Union(u, v)
-   b. Φ ← MaxComponent() / n
-   c. Append (step, Φ) to trajectory
-6. Return trajectory
-```
-
-### 4.2 Critical Point Detection
-
-```
-Algorithm: FindCriticalPoint(trajectory)
-Input: coherence trajectory
-Output: critical step k*
-
-1. For (k, Φ) in trajectory:
-   a. If Φ ≥ 0.5: return k
-2. Return |trajectory|
-```
-
-### 4.3 Merge Composition
-
-```
-Algorithm: MergeSystems(S₁, S₂)
-Input: two coherence systems
-Output: merged system
-
-1. Assert S₁.n = S₂.n
-2. Φ_merge(k) ← max(Φ₁(k), Φ₂(k)) for all k
-3. Return CoherencePercolation(n, Φ_merge)
-```
-
-## 5. Connection to Existing Results
-
-Our framework generalizes several existing catalog results:
-
-1. **`generalized_phase_transition`** (Algebra/BootstrapDynamics.lean): Our threshold persistence theorem (Theorem 3.11) is a strict generalization — it applies to any monotone real-valued function, not just bootstrap dynamics.
-
-2. **`fractal_phase_transition`** (Bridges/FractalProofSearch/Theorems.lean): Our critical point theory provides the abstract scaffolding that fractal phase transitions instantiate.
-
-3. **`critical_density_bounds`** (Novelty/SegmentAlgebra.lean): Our susceptibility bound (Theorem 3.7) gives a universal upper bound on the rate of coherence change, complementing the density bounds.
-
-4. **`complexity_phase_transition_sharp`** (Bridges/LorentzianComplexityBarrier.lean): Our sharp transition example (Example 3.18) shows that complexity-theoretic phase transitions are instances of coherence percolation.
-
-## 6. Discussion
-
-### 6.1 Universality
-
-The most striking feature of coherence percolation is its universality. The theorems hold for *any* monotone knowledge growth process, regardless of the specific domain. This suggests that phase transitions in mathematical knowledge are not contingent on the particular structure of mathematics but are inevitable consequences of monotone growth in bounded systems.
-
-### 6.2 Predictive Power
-
-The merge dominance theorem (Theorem 3.16) has practical implications for research strategy. It predicts that interdisciplinary research programs — which effectively merge knowledge graphs from different domains — should exhibit earlier phase transitions than domain-specific programs. This provides a quantitative argument for funding cross-disciplinary initiatives.
-
-### 6.3 Limitations
-
-Our model assumes monotonicity (no knowledge loss) and eventual saturation (eventual unification). Both assumptions are idealizations:
-- Knowledge *can* be lost (forgotten results, deprecated theories)
-- Full unification may never be achieved (incompleteness, undecidability)
-
-Extensions relaxing these assumptions would be valuable future work.
-
-### 6.4 The Langlands Prediction
-
-Applying our framework to the Langlands program: if we model the ~5000 key results in number theory and algebraic geometry as nodes, our theory predicts that ~5000 new cross-connections (proportional to n, not n²) would be needed for a full unification — a phase transition in mathematical coherence. Current progress (p-adic Hodge theory, geometric Langlands, automorphic forms) is building these connections. Whether the threshold has been reached remains an open question.
-
-## 7. Future Work
-
-1. **Probabilistic extensions**: Incorporate randomness to model the Erdős-Rényi transition more precisely
-2. **Critical exponents**: Characterize the scaling behavior near criticality
-3. **Metric coherence**: Replace the discrete order parameter with a continuous metric on knowledge space
-4. **Empirical validation**: Apply the framework to citation networks and mathematical databases (MathSciNet, zbMATH)
-5. **Computational complexity**: Study the complexity of computing the critical point in concrete knowledge graphs
-
-## References
-
-[1] Erdős, P. and Rényi, A. "On the evolution of random graphs." Publications of the Mathematical Institute of the Hungarian Academy of Sciences 5 (1960): 17–61.
-
-[2] Friedgut, E. and Kalai, G. "Every monotone graph property has a sharp threshold." Proceedings of the American Mathematical Society 124.10 (1996): 2993–3002.
-
-[3] Watts, D.J. and Strogatz, S.H. "Collective dynamics of 'small-world' networks." Nature 393 (1998): 440–442.
-
-[4] Mézard, M. and Montanari, A. *Information, Physics, and Computation*. Oxford University Press, 2009.
-
-## Appendix: Formalization Summary
-
-| Result | Lean Name | Status |
-|--------|-----------|--------|
-| Critical point spec | `criticalPoint_spec` | ✓ Verified |
-| Below critical point | `below_criticalPoint` | ✓ Verified |
-| Critical bound by saturation | `criticalPoint_le_saturationPoint` | ✓ Verified |
-| n=2 critical point | `criticalPoint_eq_zero_of_n_eq_two` | ✓ Verified |
-| n≥3 critical positive | `criticalPoint_pos_of_large` | ✓ Verified |
-| Susceptibility ≥ 0 | `susceptibility_nonneg` | ✓ Verified |
-| Susceptibility = 0 iff | `susceptibility_eq_zero_iff` | ✓ Verified |
-| Susceptibility at saturation | `susceptibility_zero_at_saturation` | ✓ Verified |
-| Susceptibility telescope | `susceptibility_telescope` | ✓ Verified |
-| Susceptibility bound | `susceptibility_bound` | ✓ Verified |
-| Threshold persistence | `threshold_persistence` | ✓ Verified |
-| Supercritical persistence | `supercritical_persistence` | ✓ Verified |
-| Gap antitone | `coherenceGap_antitone` | ✓ Verified |
-| Initial gap | `initialGap_eq` | ✓ Verified |
-| Gap at zero | `coherenceGap_zero` | ✓ Verified |
-| Critical jump bound | `critical_jump_bound` | ✓ Verified |
-| Merge dominance | `merge_criticalPoint_le` | ✓ Verified |
-| Transition ordering | `transition_ordering` | ✓ Verified |
-| Sequential merge saturates | `sequentialMerge_saturates` | ✓ Verified |
-| Sharp transition critical pt | `sharpTransition_criticalPoint` | ✓ Verified |
-| Sharp transition suscept. | `sharpTransition_max_susceptibility` | ✓ Verified |
-| Sharp transition n=2 | `sharpTransition_n2_critical` | ✓ Verified |
+**Theorem 5.5 (Near-critical lower bound; exponent $1$).** If $\lambda > 1$ and
+$\rho > 0$ is a survival probability, then
+$$\rho \ge \frac{2(\lambda - 1)}{\lambda^2}.$$
+
+*Proof.* Since $\lambda\rho \ge 0$, Lemma 3.6 gives
+$\rho = 1 - e^{-\lambda\rho} \ge \lambda\rho - (\lambda\rho)^2/2$. Rearranging,
+$0 \ge (\lambda - 1)\rho - \lambda^2\rho^2/2$, and dividing by $\rho > 0$ and
+$\lambda^2/2$ yields $\rho \ge 2(\lambda-1)/\lambda^2$. $\qquad\blacksquare$
+
+**Corollary 5.6.** As $\lambda \downarrow 1$, $\rho \gtrsim 2(\lambda - 1)$, so the
+giant-component fraction grows *linearly* from $0$: the mean-field percolation
+critical exponent is $\beta_{\mathrm{exp}} = 1$.
+
+## 6. Universality: one template, two exponents
+
+The two models share a structural template: a self-consistency map $\Phi$ with
+$\Phi(0) = 0$, concave and increasing on $[0,\infty)$, with $\Phi'(0)$ equal to
+the coupling. The transition occurs precisely when $\Phi'(0)$ crosses $1$, because
+that is when the graph of $\Phi$ detaches from the diagonal at the origin. This is
+why both critical values equal $1$.
+
+Yet the *onset* differs. The behavior near criticality is dictated by the *first
+nonlinear term* of $\Phi$:
+
+- For the ferromagnet, $\tanh(\beta m) = \beta m - \tfrac13(\beta m)^3 + \cdots$
+  is *cubic* (the linear-order symmetry $m \mapsto -m$ forbids a quadratic term).
+  Balancing $(\beta - 1)m$ against $m^3$ gives $m \sim \sqrt{\beta-1}$, exponent
+  $\tfrac12$.
+- For percolation, $1 - e^{-\lambda\rho} = \lambda\rho - \tfrac12(\lambda\rho)^2 + \cdots$
+  is *quadratic* (there is no $\rho \mapsto -\rho$ symmetry). Balancing
+  $(\lambda-1)\rho$ against $\rho^2$ gives $\rho \sim \lambda - 1$, exponent $1$.
+
+That the same skeleton yields distinct exponents governed only by the leading
+nonlinearity and its symmetry is a first, exactly-solvable instance of
+**universality**: critical behavior is insensitive to microscopic detail but
+sensitive to symmetry and the order of the leading nonlinearity.
+
+## 7. Applications and interpretation
+
+**Statistical physics.** The Curie–Weiss result is the mean-field backbone of
+ferromagnetism and, via the same equation, of order–disorder transitions in
+alloys, the Weiss molecular-field theory, and the mean-field limit of countless
+lattice models.
+
+**Networks and epidemics.** The percolation result underlies the giant-component
+threshold of the Erdős–Rényi graph, the basic-reproduction-number criterion
+$R_0 > 1$ for epidemic outbreaks, cascading failures in infrastructure, and the
+robustness/fragility of complex networks. The self-consistency equation
+$\rho = 1 - e^{-\lambda\rho}$ is exactly the extinction–survival dichotomy for the
+Poisson Galton–Watson branching process.
+
+**A speculative program: knowledge as a percolating network.** One may model a
+body of mathematical results as a graph whose vertices are theorems and whose
+edges are logical dependencies or conceptual bridges. A natural *coherence order
+parameter* is the fraction of results lying in the largest connected component. If
+new bridges are formed at an average rate per result of $\lambda$, the branching
+heuristic predicts that this coherence order parameter is essentially zero while
+$\lambda < 1$ and switches on continuously once $\lambda$ exceeds $1$ — a
+percolation transition in the space of ideas, in which many separate strands
+suddenly fuse into a single connected theory. This picture is at present a
+*conjecture*: it awaits a precise, empirically grounded definition of the vertex
+and edge sets and of the coupling $\lambda$. The rigorous results of this paper
+supply the mathematical scaffolding such a program would rest on, and make precise
+what "a phase transition in mathematics" would even mean.
+
+## 8. Discussion and future work
+
+We proved *lower* bounds on the order parameters near criticality, which suffice
+to establish continuity of onset and to lower-bound the exponents. The natural
+next steps are:
+
+1. **Matching upper bounds and exact exponents.** Complement the lower bounds with
+   $m^2 \le 3(\beta-1)/\beta^3\,(1 + o(1))$ and $\rho \le 2(\lambda-1) + o(\lambda-1)$
+   via higher-order Taylor bounds, pinning the exponents $\tfrac12$ and $1$ exactly.
+
+2. **Uniqueness of the ordered branch.** Use strict concavity of
+   $m \mapsto \tanh(\beta m)$ and $\rho \mapsto 1 - e^{-\lambda\rho}$ on
+   $(0,\infty)$ to show the positive fixed point is unique for each supercritical
+   coupling and strictly increasing in the coupling.
+
+3. **Free-energy / variational formulation.** Realize the magnetizations as
+   critical points of the Curie–Weiss free energy
+   $f(m) = -\tfrac12 m^2 - \beta^{-1}\log\cosh(\beta m)$ and characterize the
+   transition as a bifurcation of global minimizers.
+
+4. **From mean field to genuine percolation.** Connect the branching fixed point
+   to Bernoulli bond percolation on trees (where $\lambda_c = 1$ for the regular
+   tree) and, ultimately, toward $\mathbb{Z}^d$ percolation thresholds.
+
+5. **A discrete connectivity-threshold companion.** Formalize the extremal result
+   that a simple graph on $n$ vertices with more than $\binom{n-1}{2}$ edges is
+   connected (sharp via $K_{n-1} \sqcup \{\mathrm{pt}\}$), a combinatorial cousin
+   of the percolation threshold.
+
+## 9. Conclusion
+
+Two of the most important transitions in science — spontaneous magnetization and
+the emergence of a giant component — are captured by scalar self-consistency
+equations $m = \tanh(\beta m)$ and $\rho = 1 - e^{-\lambda\rho}$. We proved from
+elementary principles that each undergoes a sharp transition at coupling $1$: no
+order below, a continuously emerging ordered branch above, with mean-field
+critical exponents $\tfrac12$ and $1$ respectively. The shared template and the
+divergent exponents together form a transparent, fully rigorous window onto the
+phenomena of criticality and universality.

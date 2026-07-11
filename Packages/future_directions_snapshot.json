@@ -173,6 +173,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e480cbbd (Q=0.830), which proved 64 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncompu",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_e480cbbd_e538d018",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e480cbbd",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:11.863697+00:00",
+    "title": "Deepening: The Fractal Dimension of Mathematical Truth"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "f8dd2b6a",
     "description": "Building on cycle f6b0dfd4 (Q=0.830), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms",
     "domain_bridges": [],
@@ -976,26 +995,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e480cbbd",
-    "description": "Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sparse but not negligible). Connect to Chaitin's Omega and prove that the fractal dimension is uncomputable but approximable.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1017",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T10:14:12.172691+00:00",
-    "title": "The Fractal Dimension of Mathematical Truth"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' — a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities — they form a continuous family, and the hat is just one point on the spectrum.",
     "domain_bridges": [],
@@ -1262,6 +1261,25 @@
     "status": "available",
     "timestamp": "2026-07-10T15:48:57.575555+00:00",
     "title": "Close Proofs: The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle e480cbbd (Q=0.830) proved 64 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_e480cbbd_17d536c8",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e480cbbd",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:11.950891+00:00",
+    "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
   },
   {
     "ambition_level": "extension",
@@ -1580,25 +1598,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c67f6099",
-    "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1030",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T11:58:38.387262+00:00",
-    "title": "Speculative: Mathematics as a Phase Transition"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (Gödel-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly ℵ_1^CK (the Church-Kleene ordinal).",
     "domain_bridges": [],
@@ -1655,6 +1654,26 @@
     "status": "failed",
     "timestamp": "2026-07-11T07:45:39.325963+00:00",
     "title": "Borges' Library of Babel: Combinatorics of Everything"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) → (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant α satisfies α = 1/(137.036...) because it's the simplest fixed point.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_1046",
+    "lineage_refs": [],
+    "priority_score": 0.81,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T15:32:42.926609+00:00",
+    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
     "ambition_level": "extension",
@@ -12629,6 +12648,46 @@
     "status": "available",
     "timestamp": "2026-07-11T14:28:02.441253+00:00",
     "title": "This project formalizes the rigorous algebraic skeleton behind the \"mega-sphere\""
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThe results established here place the box-counting dimension of a natural \"truth\nset\" strictly inside the unit interval and expose it as a limit of finite,\neffectively computable estimates, mirroring the from-below approximation of a\nChaitin-style halting constant. The following conjectures push this program\nfurther.\n\n## 1. The dimension spectrum of definable theories fills the unit interval\n\n**Conjecture.** For every rational `r ∈ [0,1]` there is a theory, defined by a\nfixed periodic pattern of constrained coordinates, whose truth set has box\ndimension exactly `r`; and the set of achievable dimensions of *arbitrary*\ntheories is all of `[0,1]`.\n\nThe key insight is that the dimension equals the asymptotic density of\ninformation-bearing coordinates, so any target density — rational by periodic\npatterns, irrational by aperiodic Beatty-type patterns — is realizable by a direct\nconstruction rather than an existence argument.\n\nWhy now? The exact parity count that pins the truth set to dimension `1/2`\ngeneralizes verbatim to any arithmetic-progression pattern, so the full spectrum is\nwithin reach of the same squeeze technique, upgrading a single value to a complete\nclassification.\n\n## 2. Sub-dimensional gaps force logical incompleteness\n\n**Conjecture.** If a theory's truth set has box dimension `d < 1`, then the\n\"missing\" statements of positive upper density cannot all be decided by any single\nfinitely axiomatized extension; equivalently, a dimension drop below `1` is a\nquantitative obstruction of Gödelian type.\n\nThe key insight is that dimension `< 1` means the accepted strings occupy an\nexponentially thin cylinder cover, so a decision procedure would have to\nconcentrate measure on a null-density target — a covering-number bottleneck that\nbehaves like an incompleteness budget.\n\nWhy now? With the dimension framework and its universal `[0,1]` bounds in place,\nincompleteness can be phrased as a covering-number deficit and attacked with the\nsame limsup machinery rather than purely syntactic diagonalization.\n\n## 3. Dimension is Π-approximable but not computable\n\n**Conjecture.** The map sending a (uniformly decidable) theory to its box dimension\nis approximable from above by a computable sequence of rational upper bounds, yet\nis not computable: there is no algorithm outputting the dimension to within every\nprescribed accuracy uniformly in the theory.\n\nThe key insight is that the dimension is a `limsup` of computable estimates, hence\nnaturally a from-above limit exactly as `Ω` is a from-below limit; the two\none-sided approximabilities are dual faces of the same non-computability.\n\nWhy now? Having formalized both the from-above approximation of the dimension and\nthe from-below approximation of `Ω`, the remaining step is a reduction linking a\ndimension oracle to a halting oracle, a concrete and self-contained target.\n\n## 4. A metric entropy law for truth\n\n**Conjecture.** Under the prefix metric on statement space, the truth set of a\nconsistent, recursively axiomatized theory has Hausdorff dimension equal to its box\ndimension, and both equal the topological entropy of the associated subshift of\naccepted prefixes divided by `log 2`.\n\nThe key insight is that accepted prefixes form a subshift whose growth rate is a\nsingle invariant, so the three classically distinct notions — Hausdorff dimension,\nbox dimension, and entropy — must coincide for the highly self-similar cylinder\nstructure that truth sets exhibit.\n\nWhy now? The counting function and its exponential growth rate are already isolated\nas the governing quantity; identifying it with subshift entropy connects the\npresent combinatorial estimates to the mature ergodic theory of symbolic dynamics.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1047",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e480cbbd",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:04.479128+00:00",
+    "title": "The results established here place the box-counting dimension of a natural \"trut"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the **order-parameter / phase-transition** picture behind\nthe speculative theme *\"mathematics as a phase transition\"*. Rather than model a\nsociological process, we prove the rigorous mathematical core that any such\nstatistical-mechanical account rests on: two exactly-solvable mean-field models\nin which an order parameter switches on continuously as a coupling crosses a\ncritical threshold.\n\n## What is proved\n\n`Speculative/MeanFieldPhaseTransition.lean` — the Curie–Weiss ferromagnet,\nself-consistency equation `m = tanh(β m)`:\n\n* `magnetization_eq_zero_of_subcritical` — for `0 < β ≤ 1` the only magnetization\n  is `m = 0` (disordered phase).\n* `exists_pos_magnetization_of_supercritical` — for `β > 1` a positive\n  magnetization exists (ordered phase; symmetric partner via `IsMagnetization.neg`).\n* `magnetization_sq_ge_of_supercritical` — `3(β−1)/β³ ≤ m²`, giving the\n  continuous (second-order) onset with mean-field exponent `1/2`.\n* Supporting calculus of `tanh`: `hasDerivAt_tanh`, `tanh_lt_self`,\n  `tanh_ge_cubic`.\n\n`Speculative/PercolationGiantComponent.lean` — Erdős–Rényi / Poisson-branching\npercolation, self-consistency equation `ρ = 1 − exp(−λ ρ)`:\n\n* `survivalProb_eq_zero_of_subcritical` — for `0 < λ ≤ 1` only `ρ = 0` (no giant\n  component).\n* `exists_pos_survivalProb_of_supercritical` — for `λ > 1` a giant component\n  `0 < ρ < 1` emerges.\n* `survivalProb_ge_of_supercritical` — `2(λ−1)/λ² ≤ ρ`, giving the continuous\n  onset with the mean-field percolation exponent `1` (linear), in contrast with\n  the exponent `1/2` above.\n\n## Natural next steps\n\n1. **Upper bounds and exact critical exponents.** We prove lower bounds on the\n   order parameters near criticality. Complement them with matching upper bounds\n   (`m² ≤ 3(β−1)/β³·(1+o(1))`, `ρ ≤ 2(λ−1)+o(λ−1)`) to pin the exponents `1/2`\n   and `1` exactly, e.g. via higher-order Taylor bounds on `tanh` and `1−e^{−x}`.\n\n2. **Uniqueness of the ordered branch.** Show the positive solution is unique for\n   each `β > 1` (resp. `λ > 1`) using strict concavity of `m ↦ tanh(β m)` and\n   `ρ ↦ 1 − e^{−λρ}`, and that it is strictly increasing in the coupling.\n\n3. **Free-energy / variational formulation.** Realize the magnetization solutions\n   as minimizers of the Curie–Weiss free energy `f(m) = -½ m² - β^{-1} log cosh(βm)`\n   (suitably normalized) and characterize the transition as a bifurcation of\n   global minimizers.\n\n4. **From mean field to genuine percolation.** Connect the branching fixed point\n   to Bernoulli bond percolation: formalize the branching-process lower bound for\n   cluster sizes and, ultimately, the survival/extinction dichotomy on trees\n   (`λ_c = 1` for the regular tree), a step toward `ℤ^d` percolation thresholds.\n\n5. **A discrete \"connectivity threshold\" companion.** Formalize the extremal-graph\n   statement that a simple graph on `n` vertices with more than `C(n−1, 2)` edges\n   is connected (sharp via `K_{n−1} ⊔ {pt}`), giving a purely combinatorial\n   threshold for global coherence to accompany the analytic transitions here.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1048",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c67f6099",
+    "status": "available",
+    "timestamp": "2026-07-11T15:33:14.349166+00:00",
+    "title": "This project formalizes the **order-parameter / phase-transition** picture behin"
   },
   {
     "ambition_level": "extension",
