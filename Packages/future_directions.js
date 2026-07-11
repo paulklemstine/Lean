@@ -1139,7 +1139,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e7b7e7bd",
     "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
     "domains": [
       "Novelty"
@@ -1148,7 +1148,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T13:04:49.806401+00:00",
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
