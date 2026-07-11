@@ -694,11 +694,6 @@ document.addEventListener('DOMContentLoaded', () => {
             header.appendChild(title);
             header.appendChild(btnGroup);
 
-            const desc = document.createElement('p');
-            desc.className = 'viz-description';
-            desc.textContent = item.description || '';
-            desc.style.cssText = 'margin: 4px 0 8px; color: var(--text-muted); font-size: 0.9em;';
-
             const editor = document.createElement('textarea');
             editor.className = 'code-editor';
             editor.spellcheck = false;
@@ -727,7 +722,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); padding: 12px 0;">Source code not available for this visualization</div>';
                         return;
                     }
-                    window.runVisualization(codeToRun, outputContainer, genBtn);
+                    window.runVisualization(codeToRun, outputContainer, genBtn, item.description || '');
                 }
             };
 
@@ -775,7 +770,6 @@ document.addEventListener('DOMContentLoaded', () => {
             genBtn.addEventListener('click', runViz);
 
             card.appendChild(header);
-            card.appendChild(desc);
             card.appendChild(editor);
             card.appendChild(outputContainer);
             container.appendChild(card);
@@ -787,7 +781,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function renderInteractiveHTMLDemos(containerId, items) {
+    function renderInteractiveHTMLDemos(containerId, items, inline = false) {
         // Register global message listener once to receive height reports
         // from demo iframes (they postMessage their content height from inside)
         if (!window._aetherIframeResizeListener) {
@@ -796,7 +790,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (evt.data && evt.data.aetherIframeHeight !== undefined) {
                     const iframe = window._aetherDemoIframes[evt.data.aetherIframeHeight];
                     if (iframe) {
-                        iframe.style.height = evt.data.height + 'px';
+                        // Add 20px padding to guarantee that no content is clipped and scrollbars are avoided
+                        iframe.style.height = (evt.data.height + 20) + 'px';
                     }
                 }
             };
@@ -812,12 +807,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         container.style.display = '';
 
-        const sectionTitle = document.createElement('h3');
-        sectionTitle.className = 'section-title';
-        sectionTitle.textContent = 'Interactive HTML';
-        sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-top: 32px;';
-        container.appendChild(sectionTitle);
-
         const validItems = items.filter(item => {
             if (typeof item === 'string') {
                 console.warn('Skipping string interactive demo entry:', item);
@@ -830,35 +819,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        if (!inline) {
+            const sectionTitle = document.createElement('h3');
+            sectionTitle.className = 'section-title';
+            sectionTitle.textContent = 'Interactive HTML';
+            sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-top: 32px;';
+            container.appendChild(sectionTitle);
+        }
+
         validItems.forEach((item, idx) => {
-            const card = document.createElement('div');
-            card.className = 'code-card';
-            card.style.cssText = 'margin-bottom: 12px;';
-
-            const header = document.createElement('div');
-            header.className = 'code-header';
-
-            const title = document.createElement('span');
-            title.className = 'code-title';
-            title.textContent = item.name || `Interactive Demo ${idx + 1}`;
-
-            header.appendChild(title);
-
-            if (item.description) {
-                const desc = document.createElement('p');
-                desc.style.cssText = 'color: var(--text-muted); font-size: 0.9em; margin: 4px 0 8px;';
-                desc.textContent = item.description;
-                header.appendChild(desc);
-            }
-
             // Generate a random unique ID for iframe auto-sizer communication
             const uniqueId = 'iframe_' + Math.random().toString(36).substr(2, 9);
-
-            // Sandbox each demo in its own iframe via srcdoc.  This gives each
-            // demo its own document context, script scope, and CSS isolation.
-            const content = document.createElement('div');
-            content.className = 'interactive-demo-content';
-            content.style.cssText = 'background: #fff; color: #222; border-radius: 0 0 12px 12px; overflow: visible;';
 
             let demoHtml = item.html || '<p>No content</p>';
 
@@ -872,7 +843,15 @@ document.addEventListener('DOMContentLoaded', () => {
 (function(){
   var last=0,debounce=null;
   function report(){
-    var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,60);
+    var h=Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight,
+      document.body.clientHeight,
+      document.documentElement.clientHeight,
+      60
+    );
     if(Math.abs(h-last)<5)return;
     last=h;
     parent.postMessage({aetherIframeHeight:'${uniqueId}',height:h},'*');
@@ -900,16 +879,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const iframe = document.createElement('iframe');
             iframe.srcdoc = srcdoc;
-            iframe.style.cssText = 'width:100%;border:none;border-radius:0 0 12px 12px;min-height:60px;display:block;background:#fff;';
-            iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+            
+            if (inline) {
+                iframe.style.cssText = 'width:100%;border:none;min-height:60px;display:block;background:transparent;overflow:hidden;';
+                // Register this iframe so the message listener can resize it
+                window._aetherDemoIframes[uniqueId] = iframe;
+                container.appendChild(iframe);
+            } else {
+                iframe.style.cssText = 'width:100%;border:none;border-radius:0 0 12px 12px;min-height:60px;display:block;background:#fff;';
+                
+                const card = document.createElement('div');
+                card.className = 'code-card';
+                card.style.cssText = 'margin-bottom: 12px;';
 
-            // Register this iframe so the message listener can resize it
-            window._aetherDemoIframes[uniqueId] = iframe;
+                const header = document.createElement('div');
+                header.className = 'code-header';
 
-            content.appendChild(iframe);
-            card.appendChild(header);
-            card.appendChild(content);
-            container.appendChild(card);
+                const title = document.createElement('span');
+                title.className = 'code-title';
+                title.textContent = item.name || `Interactive Demo ${idx + 1}`;
+
+                header.appendChild(title);
+
+                if (item.description) {
+                    const desc = document.createElement('p');
+                    desc.style.cssText = 'color: var(--text-muted); font-size: 0.9em; margin: 4px 0 8px;';
+                    desc.textContent = item.description;
+                    header.appendChild(desc);
+                }
+
+                const content = document.createElement('div');
+                content.className = 'interactive-demo-content';
+                content.style.cssText = 'background: #fff; color: #222; border-radius: 0 0 12px 12px; overflow: visible;';
+
+                // Register this iframe so the message listener can resize it
+                window._aetherDemoIframes[uniqueId] = iframe;
+
+                content.appendChild(iframe);
+                card.appendChild(header);
+                card.appendChild(content);
+                container.appendChild(card);
+            }
         });
     }
 

@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Visualization Execution ---
     // Runs a Python visualization script (matplotlib or plotly) and renders the output inline.
     // Auto-runs on page load. Auto-detects library and captures output.
-    window.runVisualization = async function(code, outputContainer, buttonEl) {
+    window.runVisualization = async function(code, outputContainer, buttonEl, description) {
         if (!window.Aether.pyodideInstance) {
             outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted);">Engine still loading — click the button again in a moment.</div>';
             return;
@@ -570,6 +570,7 @@ base64.b64encode(buf.read()).decode('utf-8')
                 const imgData = String(result || '');
                 const img = document.createElement('img');
                 img.src = 'data:image/png;base64,' + imgData;
+                img.alt = description || '';
                 img.style.cssText = 'width: 100%; border-radius: 8px; cursor: pointer; display: block;';
                 img.title = 'Click to view full size';
                 img.addEventListener('click', () => {
