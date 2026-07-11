@@ -102,6 +102,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8e111703 (Q=0.830), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conje",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_8e111703_64fca037",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "8e111703",
+    "status": "available",
+    "timestamp": "2026-07-11T20:51:04.765267+00:00",
+    "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 90ef345f (Q=0.830), which proved 751 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci seq",
     "domains": [
       "Probability"
@@ -681,22 +695,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: Open Sets at Infinity"
   },
   {
-    "consumed_by_exp_id": "8e111703",
-    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "fd_1058",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T18:53:34.680666+00:00",
-    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f5260f0",
     "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
     "domains": [
       "Novelty",
@@ -706,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T19:40:15.547245+00:00",
     "title": "Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
   },
@@ -6348,6 +6347,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T20:17:52.356093+00:00",
     "title": "This cycle closed the outstanding placeholder results connecting the factorial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: reliable intuition as a non-computable resource\n\nThis cycle modelled Ramanujan-style intuition as a verdict map on encoded\nstatements and proved two complementary obstructions to its being computable: a\ncardinality obstruction (the space of verdict maps is not enumerable, and a\nflawless verdict map escapes any enumeration of programs) and a *quantitative*\none (accuracy on a block of `N` statements confines an oracle to a Hamming ball\nof size `\u2211_{k\u2264d} C(N,k)`, so any small pool of oracles is defeated by some truth\npattern). The following conjectures push these findings further.\n\n## 1. A sharp accuracy\u2013enumeration tradeoff\n\n**Conjecture.** For every accuracy level `\u03b1 \u2208 (1/2, 1)` there is a truth\nassignment on the integers such that *no* uniformly enumerated family of oracles\nof subexponential growth attains asymptotic accuracy `\u03b1` on the length-`N`\nprefixes as `N \u2192 \u221e`; and this fails exactly at `\u03b1 = 1/2`, where trivial constant\noracles suffice.\n\nThe key insight is that the Hamming-ball count `\u2211_{k\u2264(1-\u03b1)N} C(N,k)` collapses\nsuper-polynomially once `\u03b1 > 1/2`, so the number of oracles required to cover all\npatterns crosses from polynomial to exponential precisely at the `1/2` threshold.\n\nWhy now? The finite counting barrier proved this cycle already isolates the\ncovering threshold `2^N / \u2211_{k\u2264d}C(N,k)`; turning the finite bound into an\nasymptotic density statement is the natural next step and needs only a limiting\nargument over growing blocks.\n\n## 2. Bi-immune truth assignments as intuition-hard instances\n\n**Conjecture.** There exist truth assignments whose length-`N` prefixes cannot be\npredicted by any single computable oracle with accuracy bounded away from `1/2`\non a set of prefixes of positive density \u2014 a robust, block-wise strengthening of\nnon-computability.\n\nThe key insight is that combining the per-block ball bound with a diagonalisation\nover programs yields functions that are not merely non-computable but\n*approximation-resistant*: every algorithm eventually performs no better than\ncoin-flipping on infinitely many blocks.\n\nWhy now? The exact ball-size formula makes the per-block failure probability\nexplicit, so the classical bi-immunity construction can be driven quantitatively\nrather than qualitatively.\n\n## 3. Intuition and the jump hierarchy\n\n**Conjecture.** Grading truth assignments by the least oracle-degree that predicts\ntheir prefixes with accuracy `\u03b1 \u2192 1` induces a strictly increasing hierarchy that\ninterleaves with the Turing-jump hierarchy: each jump level unlocks a new band of\nattainable accuracies, and no finite jump suffices for perfect prefix prediction\nof a sufficiently generic assignment.\n\nThe key insight is that the \"intuitive leap\" is not a single non-computable act\nbut a *graded* resource: higher reliability costs strictly more oracle power,\nmirroring the strict increase of the jump operator.\n\nWhy now? With the accuracy barrier established as a counting phenomenon, relativis-\ning the same count to an oracle turns each accuracy demand into a definite lower\nbound on the oracle degree required, making the hierarchy claim directly testable.\n\n## 4. A coding-theoretic dictionary for discovery\n\n**Conjecture.** The maximum number of mutually \"independent\" reliable oracles on a\nblock of size `N` equals the maximum size of a code with minimum distance\n`2(1-\u03b1)N + 1`, so classical bounds (Singleton, Hamming, Plotkin) translate into\nsharp limits on how many genuinely distinct high-accuracy intuitions can coexist.\n\nThe key insight is that two oracles disagreeing on more than `2(1-\u03b1)N` statements\ncannot both be `\u03b1`-accurate on the same truth pattern \u2014 exactly the packing\ncondition defining an error-correcting code.\n\nWhy now? This cycle already routed the whole argument through Hamming balls; the\npacking dual of a covering bound is the immediate companion result and imports a\ncentury of coding theory wholesale.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_1070",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8e111703",
+    "status": "available",
+    "timestamp": "2026-07-11T20:50:57.803684+00:00",
+    "title": "This cycle modelled Ramanujan-style intuition as a verdict map on encoded"
   },
   {
     "consumed_by_exp_id": "",

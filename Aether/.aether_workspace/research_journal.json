@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3399a930",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThis project builds a self-contained, machine-checked theory of negative-dimensional\nspaces in `Core.lean`.  We model virtual graded spaces as the",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-11T02:34:51",
-      "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
-    },
-    {
       "cycle_id": "0be793c6",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Non-Desarguesian Worlds\n\nThis project formalizes the algebraic engine behind non-Desarguesian planes and\ndelivers a fully verified concrete example. Two self-contained Lean files:",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-11T20:17:57",
       "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
+    },
+    {
+      "cycle_id": "8e111703",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: reliable intuition as a non-computable resource\n\nThis cycle modelled Ramanujan-style intuition as a verdict map on encoded\nstatements and proved two complementary obstructions to",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-11T20:51:04",
+      "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "563a1975",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Sharp Threshold Constants for Cycle Games\n\n## 1. The threshold constant tends to two\n\n**Conjecture.** For the cycle avoidance/creation game, the leading constant\n`c_k = ((k-1)·(2",
-      "quality_score": 0.4794705000000001,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-04T09:12:37",
-      "title": "Sharp Threshold Constant for Cycle Games"
-    },
     {
       "cycle_id": "22f3c392",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-11T20:17:57",
       "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
+    },
+    {
+      "cycle_id": "8e111703",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: reliable intuition as a non-computable resource\n\nThis cycle modelled Ramanujan-style intuition as a verdict map on encoded\nstatements and proved two complementary obstructions to",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-11T20:51:04",
+      "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a0852bd7",
-      "domain": "Applications",
-      "name": "extensionality",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "a0852bd7",
-      "domain": "Applications",
-      "name": "mem_lt",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "2c395553",
-      "domain": "Novelty",
-      "name": "in",
-      "quality": 0.83
-    },
     {
       "cycle_id": "2c395553",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "fib_mul_binom",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "8e111703",
+      "domain": "Novelty",
+      "name": "no_enumeration_of_oracles",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "8e111703",
+      "domain": "Novelty",
+      "name": "diagonal_ne",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "8e111703",
+      "domain": "Novelty",
+      "name": "diagonal_not_mem_range",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T20:17:57",
+  "last_updated": "2026-07-11T20:51:04",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f6b0dfd4",
-        "quality": 0.83,
-        "theorems": 26,
-        "title": "Causal Loops in Category Theory: When Composition Loops Back"
-      },
-      {
         "cycle_id": "997ab258",
         "quality": 0.72,
         "theorems": 19,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 27,
         "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
+      },
+      {
+        "cycle_id": "8e111703",
+        "quality": 0.83,
+        "theorems": 12,
+        "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
       }
     ],
     "NumberTheory": [
