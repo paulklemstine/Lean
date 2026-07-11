@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "34e9f39c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Knots, Lattices, and Signed Enumeration\n\nThis cycle settled the naive \"Alexander polynomial = lattice-path count\"\nconjecture in the negative and isolated the correct signed object",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-10T14:32:36",
-      "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
-    },
-    {
       "cycle_id": "bb33d4fa",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\nThis project analyses the mission conjecture — *\"a minimal obstruction to total rainbow\nforests fails the Rainbow Forest Inequality (RFI) for exactly one edge subset\"* — through\nt",
@@ -499,19 +489,19 @@
       "theorem_count": 36,
       "timestamp": "2026-07-11T08:02:43",
       "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
+    },
+    {
+      "cycle_id": "1d01ef4b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes a model of hypercomputation, the physical-precision\nbarrier, and the accidentally/essentially computable distinction. Natural\nextensions:\n\n## Deepening the",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-11T08:51:26",
+      "title": "Hypercomputation: Computing the Uncomputable"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bb3ce4ee",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Dark Mathematics\n\nFive bold, falsifiable conjectures arising from this cycle's finding that darkness —\nknowing a witness must exist while being unable to name one — is real, stra",
-      "quality_score": 0.7902000000000001,
-      "sorry_count": 3,
-      "theorem_count": 15,
-      "timestamp": "2026-07-03T05:53:55",
-      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-    },
     {
       "cycle_id": "7488be0a",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 36,
       "timestamp": "2026-07-11T08:02:43",
       "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
+    },
+    {
+      "cycle_id": "1d01ef4b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes a model of hypercomputation, the physical-precision\nbarrier, and the accidentally/essentially computable distinction. Natural\nextensions:\n\n## Deepening the",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-11T08:51:26",
+      "title": "Hypercomputation: Computing the Uncomputable"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d0bff55a",
-      "domain": "MachineLearning",
-      "name": "W_fix",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "d0bff55a",
-      "domain": "MachineLearning",
-      "name": "W_has_move",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "d0bff55a",
-      "domain": "MachineLearning",
-      "name": "W_not_terminal",
-      "quality": 0.78
-    },
     {
       "cycle_id": "0981cb8f",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "wrongness_nonneg",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "1d01ef4b",
+      "domain": "Applications",
+      "name": "natPR_partrec",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "1d01ef4b",
+      "domain": "Applications",
+      "name": "toCode_spec",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "1d01ef4b",
+      "domain": "Applications",
+      "name": "toCode_inj",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T08:02:43",
+  "last_updated": "2026-07-11T08:51:26",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0bde247f",
-        "quality": 0.72,
-        "theorems": 29,
-        "title": "Social Credit Scores as Topological Invariants"
-      },
-      {
         "cycle_id": "3399a930",
         "quality": 0.83,
         "theorems": 22,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 36,
         "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
+      },
+      {
+        "cycle_id": "1d01ef4b",
+        "quality": 0.72,
+        "theorems": 19,
+        "title": "Hypercomputation: Computing the Uncomputable"
       }
     ],
     "Bridges": [

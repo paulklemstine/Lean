@@ -623,21 +623,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
-    "consumed_by_exp_id": "1d01ef4b",
-    "description": "Construct a rigorous model of hypercomputation that can solve the halting problem. Prove that any physical system implementing hypercomputation requires infinite energy density or infinite precision. Formalize the distinction between accidentally computable (physical oracles) and essentially computable (Turing machines).",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0990",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T05:17:42.086276+00:00",
-    "title": "Hypercomputation: Computing the Uncomputable"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
@@ -694,7 +679,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-11T08:18:43.476862+00:00",
+    "timestamp": "2026-07-11T08:20:49.958663+00:00",
     "title": "Reflective Type Theory: Proving Things About Proving Things"
   },
   {
@@ -7060,6 +7045,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T08:02:37.643508+00:00",
     "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a model of hypercomputation, the physical-precision\nbarrier, and the accidentally/essentially computable distinction. Natural\nextensions:\n\n## Deepening the physical model\n- **Energy quantization.** Replace the abstract \"precision `p` = number of bits\"\n  with a physical resolution `\u03b5 = 2^{-p}` and relate it to an energy scale via a\n  Landauer/Heisenberg-style bound `E \u00b7 \u0394t \u2273 \u0127`, turning\n  `halting_needs_infinite_precision` into an explicit divergent-energy statement.\n- **Real-number oracles.** Encode the oracle stream `b : \u2115 \u2192 Bool` as the binary\n  expansion of a real `r = \u2211 b_k 2^{-(k+1)} \u2208 [0,1]` and prove that a\n  measurement of resolution `2^{-p}` recovers exactly `readBits b p`, connecting\n  the combinatorial statements here to genuine real analysis.\n- **Noise and robustness.** Model measurement error and show that an oracle\n  usable only up to bounded noise is equivalent to a finite-precision oracle,\n  hence essentially computable.\n\n## Strengthening the computability results\n- **Diagonal halting set.** Prove non-computability of the self-application\n  diagonal `fun c => (eval c (encode c)).Dom` directly, and derive the\n  Turing-jump hierarchy (`\u2205', \u2205'', \u2026`), formalizing a proper strictly-increasing\n  chain of hypercomputational powers.\n- **Relative computability.** Define oracle Turing reductions `A \u2264_T B` and prove\n  the halting set is complete for the class of `\u03a3\u2081` sets, situating the oracle of\n  `EssentialComputability.lean` in the arithmetical hierarchy.\n- **Rice-type barriers.** Use Mathlib's `rice`/`rice\u2082` to show that *every*\n  non-trivial semantic property of programs demands hypercomputation, sharpening\n  `no_computable_halting_decider`.\n\n## Measure and category\n- Upgrade `uncomputable_uncountable` to a **measure-theoretic** statement: with\n  the fair-coin (Bernoulli) measure on `\u2115 \u2192 Bool`, the computable functions form\n  a null set, so a \"random\" oracle is uncomputable almost surely.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1008",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1d01ef4b",
+    "status": "available",
+    "timestamp": "2026-07-11T08:51:18.956175+00:00",
+    "title": "This project formalizes a model of hypercomputation, the physical-precision"
   },
   {
     "consumed_by_exp_id": "",
