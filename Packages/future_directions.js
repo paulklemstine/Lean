@@ -865,7 +865,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Combinatorics of Compiler Optimization: Register Allocation as Gra"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0250199a",
     "description": "Cycle fec9de1f (Q=0.820) proved 14 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied",
     "domains": [
       "Novelty"
@@ -874,7 +874,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "fec9de1f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T05:18:16.685270+00:00",
     "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
   },
@@ -5651,7 +5651,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
   },
   {
-    "consumed_by_exp_id": "f4c4425a",
+    "consumed_by_exp_id": "",
     "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
     "domains": [
       "Novelty",
@@ -5661,7 +5661,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T01:28:27.766817+00:00",
     "title": "Flatland Catastrophe: When 2D Physics Breaks"
   },
