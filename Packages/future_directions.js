@@ -439,6 +439,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_1020",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T10:30:55.818755+00:00",
+    "title": "Quantum Proofs of Classical Theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
     "domains": [
       "Cryptography"
@@ -996,7 +1011,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "2f6d4bbb",
+    "consumed_by_exp_id": "",
     "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
     "domains": [
       "Novelty",
@@ -1006,7 +1021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T06:22:45.281103+00:00",
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
@@ -5695,6 +5710,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T14:48:26.572436+00:00",
     "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
+  },
+  {
+    "consumed_by_exp_id": "2c395553",
+    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_1021",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T10:30:56.252014+00:00",
+    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
   {
     "consumed_by_exp_id": "",
