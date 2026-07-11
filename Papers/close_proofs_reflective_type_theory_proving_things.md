@@ -1,73 +1,57 @@
-# Computational Evidence — Reflective Type Theory II (Correspondence & Limits)
+# Computational Evidence — Reflective Type Theory
 
-Before formalizing, we checked the conjectured correspondence dictionary and the
-limiting phenomena on small explicit provability steps.
+The central object is the reflective modal sentence
 
-## 1. Small-case check of the correspondence dictionary
+    G(A) := □A ∧ ¬□□A      ("A is provable but not provably provable").
 
-We interpret a proposition as the set of stages at which it holds, and `□P` as
-"all one-step successors satisfy `P`". On a finite stage set the schemata below can
-be checked by brute force over all subsets `P`.
+## 1. Small-case model search (satisfiability of G)
 
-Frames tested (worlds `{0,1,2}`):
+We look for a finite Kripke model `(W, R, V)` and a world `w` with `G(atom)`
+true at `w`. Reading `□φ` at `x` as "φ holds at every `R`-successor of `x`":
 
-| frame `R` | reflexive | transitive | serial | symmetric | euclidean |
-|---|---|---|---|---|---|
-| empty step (no edges)            | no  | yes | no  | yes | yes |
-| identity step (`i→i`)            | yes | yes | yes | yes | yes |
-| chain `2→1→0`                    | no  | no  | no  | no  | no  |
-| full step (all edges)            | yes | yes | yes | yes | yes |
+* `□A` at `w`  ⇔  every successor of `w` satisfies `A`.
+* `¬□□A` at `w` ⇔ some successor `v` of `w` has a successor `u` with `A` false.
 
-For each frame we enumerated all `P ⊆ {0,1,2}` (8 subsets) and confirmed:
+For both to hold, the "bad" world `u` (where `A` is false) must be reachable in
+two steps from `w` but must NOT be a direct successor of `w`. This is possible
+only when `R` is **not transitive**.
 
-- `∀P. □P ⊆ P` held **iff** the step was reflexive.
-- `∀P. □P ⊆ □□P` held **iff** the step was transitive.
-- `∀P. □P ⊆ ◇P` held **iff** the step was serial.
-- `∀P. P ⊆ □◇P` held **iff** the step was symmetric.
-- `∀P. ◇P ⊆ □◇P` held **iff** the step was euclidean.
+Smallest witness (3 worlds, chain `a → b → c`, `A` true only at `b`):
 
-No frame in the sample violated any equivalence — consistent with the general
-theorems `T_iff_reflexive`, `four_iff_transitive`, `D_iff_serial`,
-`B_iff_symmetric`, `five_iff_euclidean`.
+| world | A? | successors | □A here? | □□A here? |
+|-------|----|-----------|----------|-----------|
+| a     | F  | {b}       | T (b⊨A)  | F (□A fails at b) |
+| b     | T  | {c}       | F (c⊭A)  | —         |
+| c     | F  | {}        | T (vac.) | T (vac.)  |
 
-## 2. "Provable but not provably provable" and non-transitivity
+So `G(A)` is true at `a`. This is exactly `Kmodel` / `godelian_satisfiable_in_K`.
 
-On the chain `2→1→0` with `P = {1}`:
+## 2. Counterexample hunt on transitive frames
 
-- `□P` at stage `2`: the only successor of `2` is `1 ∈ P`, so `2 ∈ □P`. ✓
-- `□□P` at stage `2`: requires `1 ∈ □P`, i.e. `0 ∈ P`; but `0 ∉ P`, so `2 ∉ □□P`. ✓
+Exhaustive reasoning (not an isolated example): in ANY transitive frame the
+axiom `4` `□A → □□A` holds, because a 2-step successor is already a 1-step
+successor. Hence `G(A) = □A ∧ ¬□□A` is **unsatisfiable on every transitive
+frame**. We verified this at the level of a general proof rather than sampling:
+`axiom4_of_transitive` and `godelian_unsat_in_transitive`.
 
-Thus stage `2` witnesses `□P ∧ ¬□□P`. A search over the four sample frames found
-such a witness **only** on the non-transitive chain — matching
-`not_transitive_of_witness` (any such witness forces non-transitivity).
+This means the "provable but not provably provable" phenomenon is a strict
+feature of NON-transitive provability (systems lacking provable
+Σ₁-completeness). In standard arithmetic (and in `GL`) it cannot happen — a
+genuinely instructive negative result.
 
-## 3. Gödel–Löb limit
+## 3. Löb / Gödel-2 sanity check
 
-On the chain `2→1→0` (transitive closure would be needed for a true GL frame; we use
-the strict-order step `i→j` iff `i>j`, which is transitive and converse
-well-founded):
-
-- `□∅` = stages with no successor = `{0}`.
-- `(□∅)ᶜ` = `{1,2}`.
-- `□((□∅)ᶜ)` = stages all of whose successors lie in `{1,2}` = `{2}` (since `2→1` only;
-  `1→0` fails as `0 ∉ {1,2}`).
-- `□∅` again = `{0}`.
-- Check `□((□∅)ᶜ) ⊆ □∅`: is `{2} ⊆ {0}`? **No** — but note this step is *not*
-  converse well-founded-consistent with the naive reading; recomputing on the genuine
-  GL frame `i→j ⇔ i>j` over `{0,1,2}`:
-  - `□∅` = `{0}` (only `0` has no successor).
-  - `(□∅)ᶜ = {1,2}`; `□(□∅)ᶜ` = stages whose successors ⊆ `{1,2}` = `{1}` (successors
-    of `1` are `{0}`? no: with `>`, successors of `1` are `{0}`, so `1 ∉`; successors of
-    `2` are `{0,1}`, `0 ∉ {1,2}` so `2 ∉`). Hence `□(□∅)ᶜ = ∅ ⊆ □∅`. ✓
-
-The corrected computation confirms `goedel_two` on the genuine GL step: provable
-consistency is empty, hence trivially below `□∅`. The subtlety (empty-step vs strict
-order) is exactly why the formal statement quantifies over transitive, converse
-well-founded steps.
+On the concrete `GL` model `W = ℕ`, `R a b := b < a` (transitive, converse
+well-founded), Löb's schema `□(□A → A) → □A` is valid, and its instance
+`A := ⊥` gives `□(¬□⊥) → □⊥` (Gödel's second theorem). Small check of converse
+well-foundedness: `fun a b => R b a = (a < b)`, and `<` on `ℕ` is well-founded,
+so there is no infinite ascending `R`-chain — the hypothesis of Löb's theorem
+holds. Encoded as `GLmodel_converse_wf`, `loeb_valid_GLmodel`.
 
 ## Conclusion
 
-All computational checks are consistent with the formalized theorems. No
-counterexample was found; the only apparent discrepancy (Section 3) resolved once the
-frame was required to be genuinely Gödel–Löb (transitive **and** converse
-well-founded), which is precisely the hypothesis of `goedel_two`.
+Computationally the picture is clean and complete: `G(A)` is satisfiable
+(3-world non-transitive model) and unsatisfiable on all transitive frames.
+No OEIS sequence arises; the content is logical/semantic rather than numerical.
+All findings are backed by the machine-checked proofs in
+`ReflectiveTypeTheory.lean`.
