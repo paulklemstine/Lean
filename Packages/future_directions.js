@@ -157,7 +157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f0c42e84",
     "description": "Building on cycle 0be793c6 (Q=0.820), which proved 42 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
     "domains": [
       "Novelty"
@@ -166,7 +166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "0be793c6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T02:51:11.452311+00:00",
     "title": "Deepening: Non-Desarguesian Worlds: Geometry Without Desargues"
   },
@@ -580,7 +580,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03029642",
     "description": "Extend topological space theory to include Conway's surreal numbers as the underlying set. Prove that the order topology on No is not first-countable and that every real open set has a surreal extension. Determine whether No is connected, compact, or paracompact in the interval topology.",
     "domains": [
       "Novelty",
@@ -590,7 +590,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T02:34:00.123116+00:00",
     "title": "Surreal Topology: Open Sets at Infinity"
   },
