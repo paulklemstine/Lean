@@ -200,6 +200,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_094010ae_b0a422cf",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "094010ae",
+    "status": "available",
+    "timestamp": "2026-07-11T14:11:15.793499+00:00",
+    "title": "Deepening: Reflective Type Theory: Proving Things About Proving Things"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0ba9c9ed (Q=0.820), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domains": [
       "Probability"
@@ -753,21 +767,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: Open Sets at Infinity"
   },
   {
-    "consumed_by_exp_id": "094010ae",
-    "description": "Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exactly the modal mu-calculus.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1007",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T08:20:49.958663+00:00",
-    "title": "Reflective Type Theory: Proving Things About Proving Things"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
@@ -810,6 +809,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T20:52:48.400479+00:00",
     "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 094010ae (Q=0.820) proved 21 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that re",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_094010ae_2fd3e031",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "094010ae",
+    "status": "available",
+    "timestamp": "2026-07-11T14:11:15.873547+00:00",
+    "title": "Close Proofs: Reflective Type Theory: Proving Things About Proving Things"
   },
   {
     "consumed_by_exp_id": "",
@@ -7458,6 +7471,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T13:38:28.478969+00:00",
     "title": "This cycle deepens *\"Paradoxes as Theorems: Liar, Berry, and Russell Made"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Reflective Type Theory\n\nThe reflective calculus interprets propositions as sets of proof stages and\nattaches a provability modality `\u25a1` to a step relation `R`. Three structural\nfindings orient the next questions: (i) \"provable but not provably provable\" is\ninhabited exactly when the provability step is non-transitive; (ii) the modality\nis normal (monotone, distributes over conjunction, validates `K` and\nnecessitation) yet is provably not the identity, so it strictly enriches the\nnon-modal base; (iii) least/greatest fixpoints exist for every monotone\noperator, and on well-founded frames provability satisfies L\u00f6b's fixpoint law.\n\n## Conjecture 1 \u2014 Transitivity is the exact expressivity frontier\nOn the class of frames, the formula scheme `\u25a1P \u2227 \u00ac\u25a1\u25a1P` is satisfiable **iff** the\nstep relation is non-transitive, and moreover the propositions definable using\n`\u25a1` collapse onto the non-modal fragment precisely on the transitive-and-dense\nframes.\n- The key insight is that axiom `4` (`\u25a1P \u2192 \u25a1\u25a1P`) is not merely *implied by*\n  transitivity but *equivalent* to it at the level of definable predicates, so\n  the reflective/classical boundary is a single first-order frame condition.\n- Why now? The finite three-stage witness already separates the two regimes, and\n  the normal-modality laws give the algebraic scaffolding to turn the separation\n  into an exact correspondence.\n\n## Conjecture 2 \u2014 Reflective proof terms are complete for the modal \u03bc-calculus\nEvery modal \u03bc-calculus formula is realised by a reflective proof term, and\nconversely every reflective proof term denotes a \u03bc-calculus-definable predicate;\nthe translation is compositional and preserves the alternation depth.\n- The key insight is that `\u25a1` is one monotone operator among all monotone\n  operators, and the Knaster\u2013Tarski fixpoints supply the `\u03bc`/`\u03bd` constructors\n  uniformly, so the proof-term language and the \u03bc-calculus share one lattice\n  semantics.\n- Why now? The fixpoint equations for `\u25a1` are already available for arbitrary\n  monotone operators, reducing the completeness claim to a syntactic induction.\n\n## Conjecture 3 \u2014 L\u00f6b's law characterises the normalising fragment\nA reflective theory admits strong normalisation of its proof terms **iff** its\nprovability step is transitive and converse well-founded, i.e. iff L\u00f6b's theorem\n`\u25a1(\u25a1P \u2192 P) \u2192 \u25a1P` holds globally.\n- The key insight is that converse well-foundedness is exactly what powers the\n  induction behind L\u00f6b's theorem, and the same well-foundedness is what forbids\n  non-terminating self-referential proof terms.\n- Why now? L\u00f6b's theorem has been established here by a single well-founded\n  induction, exposing the precise hypothesis (no infinite ascending step-chain)\n  that a normalisation argument would reuse.\n\n## Conjecture 4 \u2014 Graded reflection stratifies provability strength\nIndexing the step relation by a natural-number grade yields a hierarchy of\nmodalities `\u25a1\u2080 \u2286 \u25a1\u2081 \u2286 \u22ef` whose union is a genuine fixed point, and the hierarchy\nis strict on every frame with unbounded ascending chains.\n- The key insight is that iterating the monotone `\u25a1` operator produces an\n  ordinal-indexed decreasing chain whose limit is the greatest fixpoint, so\n  grading measures exactly how far a proposition is from being a fixed point of\n  provability.\n- Why now? The greatest-fixpoint equation for `\u25a1` is already in hand, making the\n  limit stage well-defined and the strictness question concrete.\n\n\n# Future Directions: Reflective Type Theory\n\nThe reflective calculus interprets propositions as sets of proof stages and\nattaches a provability modality `\u25a1` to a step relation `R`. Three structural\nfindings orient the next questions: (i) \"provable but not provably provable\" is\ninhabited exactly when the provability step is non-transitive; (ii) the modality\nis normal (monotone, distributes over conjunction, validates `K` and\nnecessitation) yet is provably not the identity, so it strictly enriches the\nnon-modal base; (iii) least/greatest fixpoints exist for every monotone\noperator, and on well-founded frames provability satisfies L\u00f6b's fixpoint law.\n\n## Conjecture 1 \u2014 Transitivity is the exact expressivity frontier\nOn the class of frames, the formula scheme `\u25a1P \u2227 \u00ac\u25a1\u25a1P` is satisfiable **iff** the\nstep relation is non-transitive, and moreover the propositions definable using\n`\u25a1` collapse onto the non-modal fragment precisely on the transitive-and-dense\nframes.\n- The key insight is that axiom `4` (`\u25a1P \u2192 \u25a1\u25a1P`) is not merely *implied by*\n  transitivity but *equivalent* to it at the level of definable predicates, so\n  the reflective/classical boundary is a single first-order frame condition.\n- Why now? The finite three-stage witness already separates the two regimes, and\n  the normal-modality laws give the algebraic scaffolding to turn the separation\n  into an exact correspondence.\n\n## Conjecture 2 \u2014 Reflective proof terms are complete for the modal \u03bc-calculus\nEvery modal \u03bc-calculus formula is realised by a reflective proof term, and\nconversely every reflective proof term denotes a \u03bc-calculus-definable predicate;\nthe translation is compositional and preserves the alternation depth.\n- The key insight is that `\u25a1` is one monotone operator among all monotone\n  operators, and the Knaster\u2013Tarski fixpoints supply the `\u03bc`/`\u03bd` constructors\n  uniformly, so the proof-term language and the \u03bc-calculus share one lattice\n  semantics.\n- Why now? The fixpoint equations for `\u25a1` are already available for arbitrary\n  monotone operators, reducing the completeness claim to a syntactic induction.\n\n## Conjecture 3 \u2014 L\u00f6b's law characterises the normalising fragment\nA reflective theory admits strong normalisation of its proof terms **iff** its\nprovability step is transitive and converse well-founded, i.e. iff L\u00f6b's theorem\n`\u25a1(\u25a1P \u2192 P) \u2192 \u25a1P` holds globally.\n- The key insight is that converse well-foundedness is exactly what powers the\n  induction behind L\u00f6b's theorem, and the same well-foundedness is what forbids\n  non-terminating self-referential proof terms.\n- Why now? L\u00f6b's theorem has been established here by a single well-founded\n  induction, exposing the precise hypothesis (no infinite ascending step-chain)\n  that a normalisation argument would reuse.\n\n## Conjecture 4 \u2014 Graded reflection stratifies provability strength\nIndexing the step relation by a natural-number grade yields a hierarchy of\nmodalities `\u25a1\u2080 \u2286 \u25a1\u2081 \u2286 \u22ef` whose union is a genuine fixed point, and the hierarchy\nis strict on every frame with unbounded ascending chains.\n- The key insight is that iterating the monotone `\u25a1` operator produces an\n  ordinal-indexed decreasing chain whose limit is the greatest fixpoint, so\n  grading measures exactly how far a proposition is from being a fixed point of\n  provability.\n- Why now? The greatest-fixpoint equation for `\u25a1` is already in hand, making the\n  limit stage well-defined and the strictness question concrete.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1043",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "094010ae",
+    "status": "available",
+    "timestamp": "2026-07-11T14:11:10.362564+00:00",
+    "title": "The reflective calculus interprets propositions as sets of proof stages and"
   },
   {
     "consumed_by_exp_id": "",
