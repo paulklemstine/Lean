@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fd7d55eb",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Chordal register allocation\n\nThis work deepens the interval-graph analysis of register allocation\n(`RegisterAllocationInterval.lean`) to the full **chordal** (SSA) setting.\n\n## Wh",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-11T01:12:18",
-      "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
-    },
-    {
       "cycle_id": "2ca6565f",
       "domain": "Applications",
       "key_insight": "# Future Directions — Surveillance Networks and the Privacy–Utility Frontier\n\nThe results of this cycle establish a hard covering inequality linking an\nobserver's channel rate to the distortion at whi",
@@ -499,19 +489,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-11T17:47:24",
       "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "cycle_id": "f6949247",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Chromatic Sum Complexity Dichotomy\n\n## Mission and what was formalised\n\nThe mission conjectures a **complexity dichotomy** for the Chromatic Sum\nproblem on `H`-free graphs: polyn",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-11T18:04:15",
+      "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ca29fc4b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nFive self-contained, falsifiable conjectures arising from the study of *possibility*\ntopologies (pooled resolution) as the order-dual of *consensus* topologies (unanimous\nagreemen",
-      "quality_score": 0.467453,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-04T05:20:33",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
     {
       "cycle_id": "aed51c81",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-11T17:47:24",
       "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
+    },
+    {
+      "cycle_id": "f6949247",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Chromatic Sum Complexity Dichotomy\n\n## Mission and what was formalised\n\nThe mission conjectures a **complexity dichotomy** for the Chromatic Sum\nproblem on `H`-free graphs: polyn",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-11T18:04:15",
+      "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8e65b62c",
-      "domain": "Novelty",
-      "name": "imageCard_le_codomain",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "1978e429",
-      "domain": "Novelty",
-      "name": "neg_neg",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "1978e429",
-      "domain": "Novelty",
-      "name": "paradoxModel_degree_ge_three",
-      "quality": 0.8
-    },
     {
       "cycle_id": "3dc9cabc",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "not_all_odd_bernoulli_vanish",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "f6949247",
+      "domain": "Applications",
+      "name": "exists_isProperColoring",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f6949247",
+      "domain": "Applications",
+      "name": "chromaticSumSet_nonempty",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f6949247",
+      "domain": "Applications",
+      "name": "chromaticSum_mem",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-11T17:47:24",
+  "last_updated": "2026-07-11T18:04:15",
   "open_questions": [
     {
       "context": "+`sorry`-free. -/; -    sorry; +    documented future work rather than proved with `sorry`:",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "9ca5466b",
-        "quality": 0.8,
-        "theorems": 40,
-        "title": "Computational Complexity of Alien Civilizations"
-      },
-      {
         "cycle_id": "1c874912",
         "quality": 0.83,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 22,
         "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
+      },
+      {
+        "cycle_id": "f6949247",
+        "quality": 0.72,
+        "theorems": 28,
+        "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
       }
     ],
     "Bridges": [

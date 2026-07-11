@@ -995,6 +995,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_1054",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-11T18:03:46.077584+00:00",
+    "title": "Speculative: Category Theory as the DNA of Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 6e208619 (Q=0.780) proved 27 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minim",
     "domains": [
       "Applications"
@@ -1139,7 +1154,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21f0ccc8",
     "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
     "domains": [
       "Novelty",
@@ -1149,7 +1164,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T17:13:54.266169+00:00",
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
@@ -1851,21 +1866,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T13:24:03.491700+00:00",
     "title": "Conjecture: Balanced graphs coincide with hereditary clique\u2011Helly graphs"
-  },
-  {
-    "consumed_by_exp_id": "f6949247",
-    "description": "We conjecture that the Chromatic Sum problem exhibits a complexity dichotomy based on the structure of the forbidden graph H: it is polynomial-time solvable on H-free graphs when H is a forest, and NP-complete when H contains at least one cycle. This directly extends the complete classification mentioned in the paper for H-free graphs.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0148",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00263v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T14:06:46.539264+00:00",
-    "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -7590,6 +7590,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T17:47:17.211091+00:00",
     "title": "This cycle deepens the \"Mega-Sphere: all dimensions at once\" program (prior"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Chromatic Sum Complexity Dichotomy\n\n## Mission and what was formalised\n\nThe mission conjectures a **complexity dichotomy** for the Chromatic Sum\nproblem on `H`-free graphs: polynomial-time solvable when the forbidden graph\n`H` is a forest, NP-complete when `H` contains a cycle.\n\nComplexity-theoretic statements (membership in P, NP-completeness, polynomial\nreductions) require a formal model of computation and are outside the scope of\nwhat is proved here. Instead, we built and verified the **combinatorial\nsubstrate** of the chromatic sum invariant `\u03a3(G)`, and used it to settle several\nbold quantitative conjectures \u2014 the contrarian brief of the mission.\n\n### Proved (`Defs.lean`, `Dichotomy.lean`, `StarForest.lean`)\n\n* `chromaticSum` is well defined as an attained minimum (`chromaticSum_mem`) with\n  the expected universal property (`chromaticSum_le_colorSum`, `le_chromaticSum`).\n* `card_le_chromaticSum` : `|V| \u2264 \u03a3(G)`.\n* `chromaticSum_bot` : `\u03a3(\u22a5) = |V|` (edgeless graph).\n* `chromaticSum_mono` : `\u03a3` is monotone under subgraph inclusion.\n* `chromaticSum_top` : `\u03a3(K\u2099) = n(n+1)/2` (the `n`-th triangular number); the\n  crux is `colorSum_injective_ge`, that `n` distinct positive colours sum to at\n  least `1 + 2 + \u22ef + n` (via `fin_sum_ge`).\n* `chromaticSum_top_eq_card_add_edges` : `\u03a3(K\u2099) = |V| + |E|`.\n* `chromaticSum_P3` : `\u03a3(P\u2083) = 4`.\n* `chromaticSum_star` (`StarForest.lean`) : `\u03a3(K\u2081,\u2099) = n + 2` for every `n \u2265 1`\n  \u2014 an exact closed form for the star, the simplest non-trivial tree family, and\n  hence a concrete instance of the *forest* (tractable) side of the dichotomy.\n  The sum-optimum colours the centre `2` and every leaf `1` (sum `n + 2`),\n  strictly beating the naive \"centre `1`, leaves `2`\" colouring (sum `1 + 2n`).\n  This subsumes `chromaticSum_P3` (`P\u2083 = K\u2081,\u2082`).\n\n### Disproved (contrarian results)\n\n* `conj_card_add_edges_false` : the closed form `\u03a3(G) = |V| + |E(G)|` \u2014 correct\n  for edgeless graphs, single edges and *every* complete graph \u2014 is **false in\n  general**, already failing for the path `P\u2083` (a forest): `\u03a3 = 4 \u2260 5`.\n* `exists_proper_not_minimum` : a proper colouring using the optimal *number* of\n  colours (`\u03c7`) need not minimise the colour *sum*; `P\u2083` has a proper\n  `2`-colouring of sum `5 > 4 = \u03a3(P\u2083)`.\n\nThese disproofs are exactly the phenomena that make Chromatic Sum harder than\nordinary colouring, and hence motivate the conjectured dichotomy.\n\n## Concrete next steps\n\n1. **General forest formula.** Done for stars (`chromaticSum_star`). Next,\n   develop a polynomial recursion for `\u03a3` on general trees (a natural DP over\n   subtrees). This is the \"easy side\" of the dichotomy and is fully\n   formalisable without a computation model.\n2. **Bipartite lower bounds.** Formalise `\u03a3(G) \u2265 |V| + (matching number)` type\n   bounds and the exact value on complete bipartite graphs.\n3. **`\u03a3` vs `\u03c7` gap.** Formalise a family (e.g. balanced binary trees) where any\n   minimum-sum colouring provably uses more than `2` colours, quantifying the\n   `\u03c7`/`\u03a3` discrepancy hinted at by `exists_proper_not_minimum`.\n4. **Computational model.** Introduce a lightweight cost model (or reuse an\n   existing Lean formalisation of `TM`/`P`/`NP`) to state the dichotomy itself;\n   then the tractable-on-forests direction can be attacked via the tree DP of\n   step 1.\n5. **`H`-free structure theory.** Formalise the Ramsey/Gy\u00e1rf\u00e1s-style structural\n   consequences of forbidding a forest `H`, the graph-theoretic engine behind\n   the polynomial algorithms.\n\n## Honest limitations\n\n* No claim is made or proved about P vs NP or NP-completeness.\n* The dichotomy statement is *not* formalised; only the combinatorial invariant\n  `\u03a3(G)` and the specific (dis)proofs above are.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1055",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f6949247",
+    "status": "available",
+    "timestamp": "2026-07-11T18:04:08.793040+00:00",
+    "title": "The mission conjectures a **complexity dichotomy** for the Chromatic Sum"
   },
   {
     "consumed_by_exp_id": "",
