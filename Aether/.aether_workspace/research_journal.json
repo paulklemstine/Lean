@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0bde247f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes \"social credit scores as topological invariants\" through\nthree self-contained Lean 4 files under `Applications/SocialCredit/`:\n\n* `FixedPoint.lean` — extre",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-11T02:34:32",
-      "title": "Social Credit Scores as Topological Invariants"
-    },
-    {
       "cycle_id": "75fb79ca",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis project (`Catalog/Computation/SelfModifyingHaltChain.lean`) develops a\nlinear chain of results on the halting problem for **self-modifying code** —\nmachines whose transition",
@@ -499,19 +489,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-11T18:54:06",
       "title": "Deepening: The Fractal Dimension of Mathematical Truth"
+    },
+    {
+      "cycle_id": "7669ab26",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Topological Quantum Codes from Homology\n\nThis cycle established, as exact theorems, that the number of logical qubits of a\nCSS code equals the first Betti number of its underlying",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 24,
+      "timestamp": "2026-07-11T19:10:40",
+      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0a7c4b5a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. A degree-squared law for zeros on the critical line\nFor a fixed self-dual cuspidal automorphic representation attached to a degree-`d` L-function, and\nfor families of twists",
-      "quality_score": 0.65567,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-04T07:33:59",
-      "title": "Lower Bound for the Proportion of Zeros on the Critical Line for PGL(3) L-functions"
-    },
     {
       "cycle_id": "4120a115",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-11T18:54:06",
       "title": "Deepening: The Fractal Dimension of Mathematical Truth"
+    },
+    {
+      "cycle_id": "7669ab26",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Topological Quantum Codes from Homology\n\nThis cycle established, as exact theorems, that the number of logical qubits of a\nCSS code equals the first Betti number of its underlying",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 24,
+      "timestamp": "2026-07-11T19:10:40",
+      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d4a0469f",
-      "domain": "Applications",
-      "name": "harmonicTerm_le_cramerDensity",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d4a0469f",
-      "domain": "Applications",
-      "name": "not_summable_harmonic_shift",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d4a0469f",
-      "domain": "Applications",
-      "name": "tsum_harmonicTerm_eq_top",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a0852bd7",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Algebra",
       "name": "dimEstimate_nonneg",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "7669ab26",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "7669ab26",
+      "domain": "Applications",
+      "name": "removePrimesOf_dvd",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "7669ab26",
+      "domain": "Applications",
+      "name": "fib_carmichael_large",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-11T18:54:06",
+  "last_updated": "2026-07-11T19:10:40",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "6528f137",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-10T12:39:35"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "cd5a9d7d",
@@ -3016,6 +3009,13 @@
       "domain": "Algebra",
       "sorry_count": 4,
       "timestamp": "2026-07-11T18:54:06"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "7669ab26",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-11T19:10:40"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1c874912",
-        "quality": 0.83,
-        "theorems": 13,
-        "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
-      },
-      {
         "cycle_id": "f85e4d43",
         "quality": 0.83,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 28,
         "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
+      },
+      {
+        "cycle_id": "7669ab26",
+        "quality": 0.82,
+        "theorems": 24,
+        "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
       }
     ],
     "Bridges": [
