@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alethean Research Dashboard</title>
+    <style>
+        :root {
+            --bg: #0a0e17; --card: #131a2b; --border: #1e2d4a; --accent: #00d4ff;
+            --accent2: #7c3aed; --text: #e2e8f0; --dim: #64748b;
+            --success: #10b981; --warning: #f59e0b; --error: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        .header { background: linear-gradient(135deg, #0a0e17 0%, #1a1040 100%); padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+        .header h1 { font-size: 1.5rem; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header .nav { display: flex; gap: 1rem; align-items: center; }
+        .header .nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+        .header .nav a:hover { text-decoration: underline; }
+        .header .refresh { color: var(--dim); font-size: 0.8rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+        .card h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dim); margin-bottom: 0.75rem; }
+        .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+        .stat-label { font-size: 0.8rem; color: var(--dim); margin-top: 0.15rem; }
+        .full-width { grid-column: 1 / -1; }
+        .bar-row { display: flex; align-items: center; margin: 0.3rem 0; }
+        .bar-label { width: 100px; font-size: 0.78rem; color: var(--dim); text-align: right; padding-right: 0.5rem; }
+        .bar-track { flex: 1; height: 16px; background: #1a2240; border-radius: 3px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+        .bar-count { width: 55px; font-size: 0.72rem; color: var(--dim); padding-left: 0.4rem; }
+        .job-row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+        .job-row:last-child { border-bottom: none; }
+        .badge { font-size: 0.65rem; padding: 0.1rem 0.4rem; border-radius: 9999px; font-weight: 500; white-space: nowrap; }
+        .cycle-row { display: flex; gap: 0.6rem; padding: 0.35rem 0; border-bottom: 1px solid var(--border); font-size: 0.78rem; align-items: center; }
+        .cycle-row:last-child { border-bottom: none; }
+        .quality-bars { display: flex; align-items: flex-end; gap: 2px; height: 60px; margin-top: 0.5rem; }
+        .quality-bar { width: 10px; border-radius: 2px 2px 0 0; transition: height 0.3s; min-height: 2px; }
+        .insight-grid { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+        .insight-stat { text-align: center; }
+        .insight-stat .num { font-size: 1.4rem; font-weight: 700; }
+        .insight-stat .label { font-size: 0.68rem; color: var(--dim); }
+        .domain-stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.4rem; }
+        .domain-stat { padding: 0.45rem; border-radius: 8px; border: 1px solid var(--border); }
+        .domain-stat .name { font-weight: 600; font-size: 0.8rem; }
+        .domain-stat .detail { font-size: 0.68rem; color: var(--dim); }
+        .sparkline { display: inline-block; vertical-align: middle; }
+        .funnel-row { display: flex; align-items: center; margin: 0.4rem 0; }
+        .funnel-label { width: 120px; font-size: 0.78rem; color: var(--dim); text-align: right; padding-right: 0.5rem; }
+        .funnel-track { flex: 1; height: 24px; background: #1a2240; border-radius: 4px; overflow: hidden; position: relative; }
+        .funnel-fill { height: 100%; border-radius: 4px; transition: width 0.5s; display: flex; align-items: center; justify-content: flex-end; padding-right: 0.3rem; }
+        .funnel-fill span { font-size: 0.68rem; color: #fff; font-weight: 500; }
+        .funnel-pct { width: 45px; font-size: 0.72rem; color: var(--dim); padding-left: 0.4rem; }
+        .insight-list { max-height: 200px; overflow-y: auto; font-size: 0.78rem; }
+        .insight-item { padding: 0.35rem 0; border-bottom: 1px solid #1a2240; }
+        .insight-item:last-child { border-bottom: none; }
+        .insight-item .domain { font-size: 0.68rem; color: var(--accent); }
+        .insight-item .desc { color: var(--text); }
+        .breakthrough { background: #10b98115; border: 1px solid #10b98140; border-radius: 8px; padding: 0.75rem; margin-bottom: 0.5rem; }
+        .breakthrough .title { font-weight: 600; color: var(--success); font-size: 0.9rem; }
+        .breakthrough .detail { font-size: 0.78rem; color: var(--dim); margin-top: 0.25rem; }
+        .no-data { color: var(--dim); font-style: italic; }
+        .stale { color: var(--warning); }
+        .tag-info { background: #3b82f620; color: #3b82f6; }
+        .tag-success { background: #10b98120; color: #10b981; }
+        .tag-warning { background: #f59e0b20; color: #f59e0b; }
+        .tag-accent { background: #7c3aed20; color: #7c3aed; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ Alethean Research Dashboard</h1>
+        <div class="nav">
+            <input type="text" id="search-input" placeholder="Search directions..." style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:4px;font-size:0.85rem;width:200px">
+            <a href="index.html">← Graph View</a>
+            <span class="refresh" id="refresh-info">Loading...</span>
+        </div>
+    </div>
+    <div class="grid">
+        <!-- Overview -->
+        <div class="card">
+            <h2>Overview</h2>
+            <div class="stat-row">
+                <div><div class="stat-value" id="available">—</div><div class="stat-label">Available</div></div>
+                <div><div class="stat-value" id="inflight">—</div><div class="stat-label">In Flight</div></div>
+                <div><div class="stat-value" id="completed">—</div><div class="stat-label">Completed</div></div>
+                <div><div class="stat-value" id="pruned">—</div><div class="stat-label">Pruned</div></div>
+            </div>
+        </div>
+        <!-- Search Results -->
+        <div class="card full-width" id="search-results-card" style="display:none">
+            <h2>🔍 Search Results <span id="search-count" style="font-size:0.75rem;color:var(--dim)"></span></h2>
+            <div id="search-results" style="max-height:300px;overflow-y:auto;font-size:0.85rem"></div>
+        </div>
+        <!-- Quality -->
+        <div class="card">
+            <h2>Avg Quality (recent)</h2>
+            <div class="stat-value" id="avg-quality">—</div>
+            <div class="stat-label" id="quality-samples">No data yet</div>
+            <div class="quality-bars" id="quality-chart"></div>
+        </div>
+        <!-- Insight Store -->
+        <div class="card">
+            <h2>Insight Store</h2>
+            <div class="insight-grid">
+                <div class="insight-stat"><div class="num" id="barriers">0</div><div class="label">Barriers</div></div>
+                <div class="insight-stat"><div class="num" id="strategies">0</div><div class="label">Strategies</div></div>
+                <div class="insight-stat"><div class="num" id="bridges">0</div><div class="label">Bridges</div></div>
+                <div class="insight-stat"><div class="num" id="costs">0</div><div class="label">Cost Est.</div></div>
+            </div>
+        </div>
+        <!-- Breakthroughs -->
+        <div class="card" id="breakthroughs-card">
+            <h2>🌟 Breakthroughs (Q &gt; 0.8)</h2>
+            <div id="breakthroughs-list"><div class="no-data">None yet</div></div>
+        </div>
+        <!-- Domain Distribution -->
+        <div class="card">
+            <h2>Available by Domain</h2>
+            <div id="domain-bars"></div>
+        </div>
+        <!-- Direction Funnel -->
+        <div class="card">
+            <h2>Direction Funnel</h2>
+            <div id="funnel-bars"></div>
+        </div>
+        <!-- Inflight Jobs -->
+        <div class="card full-width">
+            <h2>Inflight Jobs</h2>
+            <div id="inflight-list"><div class="job-row"><span class="no-data">Loading...</span></div></div>
+        </div>
+        <!-- Recent Cycles -->
+        <div class="card full-width">
+            <h2>Recent Cycles</h2>
+            <div id="cycles-list"><div class="no-data">Waiting for cycle data...</div></div>
+        </div>
+        <!-- Barriers -->
+        <div class="card">
+            <h2>🚧 Known Barriers</h2>
+            <div class="insight-list" id="barriers-list"><div class="no-data">No barriers identified yet</div></div>
+        </div>
+        <!-- Strategies -->
+        <div class="card">
+            <h2>💡 Proof Strategies</h2>
+            <div class="insight-list" id="strategies-list"><div class="no-data">No strategies identified yet</div></div>
+        </div>
+        <!-- Domain Performance -->
+        <div class="card full-width">
+            <h2>Per-Domain Performance</h2>
+            <div id="domain-stats" class="domain-stat-grid"><div class="no-data">Waiting for analytics data...</div></div>
+        </div>
+        <!-- Direction Lifecycle -->
+        <div class="card full-width">
+            <h2>🔄 Direction Lifecycle</h2>
+            <div id="lifecycle" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.5rem;">
+                <div class="no-data">Loading...</div>
+            </div>
+        </div>
+        <!-- Quality Trend Chart -->
+        <div class="card full-width">
+            <h2>📈 Quality Trend by Domain</h2>
+            <canvas id="quality-chart" width="800" height="300" style="width:100%;max-height:300px"></canvas>
+            <div id="chart-legend" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;font-size:0.75rem;color:var(--dim)"></div>
+        </div>
+        <!-- Cross-Domain Correlation -->
+        <div class="card">
+            <h2>🔗 Cross-Domain Correlation</h2>
+            <div id="correlation-list" style="max-height:200px;overflow-y:auto;font-size:0.78rem;">
+                <div class="no-data">Waiting for correlation data...</div>
+            </div>
+        </div>
+    </div>
+    <script>
+    const COLORS = {
+        'Algebra':'#3b82f6','Geometry':'#10b981','Computation':'#f59e0b','Novelty':'#7c3aed',
+        'Logic':'#ec4899','Physics':'#06b6d4','Pythagorean':'#84cc16','Tropical':'#f97316',
+        'Cryptography':'#a855f7','Bridges':'#14b8a6','Applications':'#6366f1','EML':'#eab308',
+        'MachineLearning':'#22d3ee','Shared':'#94a3b8','Speculative':'#fb923c'
+    };
+    let allDirections = []; // Global for search
+    function badgeClass(d){d=(d||'').toLowerCase();if(d.includes('algebra'))return'tag-info';if(d.includes('geometry'))return'tag-success';if(d.includes('computation'))return'tag-warning';if(d.includes('novelty'))return'tag-accent';if(d.includes('logic'))return'tag-info';if(d.includes('physics'))return'tag-success';if(d.includes('tropical'))return'tag-warning';return'tag-info';}
+
+    function sparkline(values, color='#00d4ff', w=60, h=20) {
+        if (!values || values.length < 2) return '';
+        const mn = Math.min(...values), mx = Math.max(...values);
+        const range = mx - mn || 1;
+        const pts = values.map((v, i) => {
+            const x = (i / (values.length - 1)) * w;
+            const y = h - ((v - mn) / range) * (h - 2) - 1;
+            return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(' ');
+        return `<svg class="sparkline" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
+    }
+
+    async function loadData() {
+        try {
+            const [fdR, iR, insR, anR] = await Promise.all([
+                fetch('future_directions.json').catch(()=>null),
+                fetch('aether_status/inflight_jobs.json').catch(()=>null),
+                fetch('aether_status/insights.json').catch(()=>null),
+                fetch('aether_status/cycle_analytics.json').catch(()=>null),
+            ]);
+            if (fdR && fdR.ok) {
+                const fdD = await fdR.json();
+                const dirs = Array.isArray(fdD) ? fdD : (fdD.directions || []);
+                allDirections = dirs; // Store for search
+                const avail = dirs.filter(d => d.status === 'available');
+                const infl = dirs.filter(d => d.status === 'in_progress');
+                const comp = dirs.filter(d => d.status === 'completed');
+                const prun = dirs.filter(d => d.status === 'pruned');
+                document.getElementById('available').textContent = avail.length;
+                document.getElementById('inflight').textContent = infl.length;
+                document.getElementById('completed').textContent = comp.length;
+                document.getElementById('pruned').textContent = prun.length;
+
+                // Domain bars
+                const dc = {};
+                avail.forEach(d => (d.domains||[]).forEach(dom => dc[dom]=(dc[dom]||0)+1));
+                const sorted = Object.entries(dc).sort((a,b)=>b[1]-a[1]);
+                const maxC = Math.max(...sorted.map(s=>s[1]),1);
+                const tot = sorted.reduce((s,e)=>s+e[1],0);
+                let bH = '';
+                sorted.forEach(([dom,cnt]) => {
+                    const pct=((cnt/tot)*100).toFixed(1);
+                    const w=Math.max(2,(cnt/maxC)*100);
+                    const flag=pct>30?' ⚠️':'';
+                    bH+=`<div class="bar-row"><span class="bar-label">${dom}</span><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${COLORS[dom]||'#64748b'}"></div></div><span class="bar-count">${cnt} (${pct}%)${flag}</span></div>`;
+                });
+                document.getElementById('domain-bars').innerHTML = bH;
+
+                // Direction Funnel
+                const seedAvail = avail.filter(d => (d.source_exp_id||'').startsWith('seed')).length;
+                const organicAvail = avail.length - seedAvail;
+                const seedComp = comp.filter(d => (d.source_exp_id||'').startsWith('seed')).length;
+                const organicComp = comp.length - seedComp;
+                const inflightCount = infl.length;
+                const funnelData = [
+                    {label:'Seed available', count:seedAvail, color:'#7c3aed'},
+                    {label:'Organic available', count:organicAvail, color:'#3b82f6'},
+                    {label:'In progress', count:inflightCount, color:'#f59e0b'},
+                    {label:'Completed', count:comp.length, color:'#10b981'},
+                    {label:'Pruned', count:prun.length, color:'#ef4444'},
+                ];
+                const funnelMax = Math.max(...funnelData.map(f=>f.count),1);
+                let fH = '';
+                funnelData.forEach(f => {
+                    const w = Math.max(2,(f.count/funnelMax)*100);
+                    fH+=`<div class="funnel-row"><span class="funnel-label">${f.label}</span><div class="funnel-track"><div class="funnel-fill" style="width:${w}%;background:${f.color}"><span>${f.count}</span></div></div></div>`;
+                });
+                document.getElementById('funnel-bars').innerHTML = fH;
+
+                // Inflight
+                let jH='';
+                infl.forEach(d => {
+                    const dom=(d.domains||[])[0]||'?';
+                    jH+=`<div class="job-row"><span class="badge ${badgeClass(dom)}">${dom}</span><span style="flex:1;margin:0 0.5rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(d.title||'').substring(0,60)}</span></div>`;
+                });
+                if(!jH) jH='<div class="job-row"><span class="no-data">No inflight jobs</span></div>';
+                document.getElementById('inflight-list').innerHTML = jH;
+            }
+
+            // Insights
+            if (insR && insR.ok) {
+                const ins = await insR.json();
+                document.getElementById('barriers').textContent = (ins.barriers||[]).length;
+                document.getElementById('strategies').textContent = (ins.strategies||[]).length;
+                document.getElementById('bridges').textContent = (ins.cross_domain_bridges||[]).length;
+                document.getElementById('costs').textContent = Object.keys(ins.cost_estimates||{}).length;
+
+                // Barriers list
+                const blist = (ins.barriers||[]).slice(0,10);
+                let bH2 = '';
+                blist.forEach(b => {
+                    bH2+=`<div class="insight-item"><div class="domain">${b.domain||'?'}</div><div class="desc">${(b.description||'').substring(0,80)}</div></div>`;
+                });
+                document.getElementById('barriers-list').innerHTML = bH2 || '<div class="no-data">No barriers identified yet</div>';
+
+                // Strategies list
+                const slist = (ins.strategies||[]).slice(0,10);
+                let sH = '';
+                slist.forEach(s => {
+                    sH+=`<div class="insight-item"><div class="domain">${s.domain||'?'}</div><div class="desc">${(s.pattern||s.description||'').substring(0,80)}</div></div>`;
+                });
+                document.getElementById('strategies-list').innerHTML = sH || '<div class="no-data">No strategies identified yet</div>';
+            }
+
+            // Analytics
+            if (anR && anR.ok) {
+                const an = await anR.json();
+                const recs = an.records || [];
+                if (recs.length > 0) {
+                    const recent = recs.slice(-50);
+                    const withQ = recent.filter(r => r.quality_score > 0);
+                    const avgQ = withQ.length > 0 ? (withQ.reduce((s,r)=>s+r.quality_score,0)/withQ.length).toFixed(3) : '—';
+                    document.getElementById('avg-quality').textContent = avgQ;
+                    document.getElementById('quality-samples').textContent = `${withQ.length} scored / ${recent.length} recent`;
+
+                    // Quality chart
+                    const last20 = recs.slice(-20).filter(r=>r.quality_score>0);
+                    let cH='';
+                    const maxQ = Math.max(...last20.map(r=>r.quality_score),0.01);
+                    last20.forEach(r=>{
+                        const h=Math.max(2,(r.quality_score/maxQ)*60);
+                        const color=COLORS[r.domain]||'#00d4ff';
+                        cH+=`<div class="quality-bar" style="height:${h}px;background:${color}" title="${r.domain||'?'}: ${r.quality_score.toFixed(2)}"></div>`;
+                    });
+                    document.getElementById('quality-chart').innerHTML = cH;
+
+                    // Breakthroughs
+                    const breakthroughs = recs.filter(r=>r.quality_score>0.8);
+                    let btH='';
+                    breakthroughs.slice(-5).reverse().forEach(r=>{
+                        btH+=`<div class="breakthrough"><div class="title">Q=${r.quality_score.toFixed(3)} — ${(r.title||'?').substring(0,50)}</div><div class="detail">${r.domain||'?'} · ${r.theorem_count||0} theorems · ${((r.sorry_density||0)*100).toFixed(0)}% sorry</div></div>`;
+                    });
+                    document.getElementById('breakthroughs-list').innerHTML = btH || '<div class="no-data">No breakthroughs yet (Q > 0.8)</div>';
+
+                    // Recent cycles with duration
+                    const last10 = recs.slice(-10).reverse();
+                    const avgDuration = recs.filter(r=>r.duration_seconds>0).reduce((s,r)=>s+r.duration_seconds,0)/Math.max(recs.filter(r=>r.duration_seconds>0).length,1);
+                    let cyH='';
+                    last10.forEach(r=>{
+                        const dom=r.domain||'?';
+                        const q=r.quality_score>0?r.quality_score.toFixed(2):'—';
+                        const t=r.theorem_count||0;
+                        const s=r.sorry_density>0?(r.sorry_density*100).toFixed(0)+'% sorry':'';
+                        const dur=r.duration_seconds>0?(r.duration_seconds/60).toFixed(1)+'m':'—';
+                        const slowFlag=(r.duration_seconds>0&&avgDuration>0&&r.duration_seconds>2*avgDuration)?' ⚠️':'';
+                        cyH+=`<div class="cycle-row"><span class="badge ${badgeClass(dom)}">${dom}</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.title||'').substring(0,40)}</span><span>Q:${q}</span><span>${t}thms</span><span>${dur}${slowFlag}</span></div>`;
+                    });
+                    document.getElementById('cycles-list').innerHTML = cyH || '<div class="no-data">No cycles recorded</div>';
+
+                    // Domain stats with sparklines
+                    const ds={};
+                    recs.forEach(r=>{
+                        if(!r.domain)return;
+                        if(!ds[r.domain])ds[r.domain]={count:0,quality:0,theorems:0,sorry:0,qualities:[]};
+                        ds[r.domain].count++; ds[r.domain].quality+=r.quality_score||0;
+                        ds[r.domain].theorems+=r.theorem_count||0; ds[r.domain].sorry+=r.sorry_density||0;
+                        if(r.quality_score>0)ds[r.domain].qualities.push(r.quality_score);
+                    });
+                    let stH='';
+                    Object.entries(ds).sort((a,b)=>b[1].count-a[1].count).forEach(([dom,s])=>{
+                        const avgQ=s.count>0?(s.quality/s.count).toFixed(3):'—';
+                        const avgS=s.count>0?((s.sorry/s.count)*100).toFixed(1)+'% sorry':'—';
+                        const color=COLORS[dom]||'#64748b';
+                        const sp=sparkline(s.qualities,color);
+                        stH+=`<div class="domain-stat" style="background:${color}12;border-color:${color}40"><div class="name" style="color:${color}">${dom} ${sp}</div><div class="detail">${s.count} cycles · Q:${avgQ} · ${s.theorems} thms · ${avgS}</div></div>`;
+                    });
+                    document.getElementById('domain-stats').innerHTML = stH || '<div class="no-data">No domain data</div>';
+                }
+            }
+            // Direction lifecycle stats
+            if (fdR && fdR.ok) {
+                const dirs = Array.isArray(fdD) ? fdD : (fdD.directions || []);
+                const lifecycles = {
+                    available: {count: 0, retried: 0, avg_attempts: 0, attempts: []},
+                    in_progress: {count: 0, retried: 0, avg_attempts: 0, attempts: []},
+                    completed: {count: 0, retried: 0, avg_attempts: 0, attempts: []},
+                    pruned: {count: 0, retried: 0, avg_attempts: 0, attempts: []},
+                };
+                dirs.forEach(d => {
+                    const s = d.status || 'available';
+                    if (!lifecycles[s]) lifecycles[s] = {count: 0, retried: 0, attempts: []};
+                    lifecycles[s].count++;
+                    const ac = d.attempt_count || 0;
+                    if (ac > 1) lifecycles[s].retried++;
+                    if (ac > 0) lifecycles[s].attempts.push(ac);
+                });
+                // Compute avg attempts per status
+                Object.values(lifecycles).forEach(l => {
+                    l.avg_attempts = l.attempts.length ? (l.attempts.reduce((a,b)=>a+b,0)/l.attempts.length).toFixed(2) : '—';
+                });
+                const total = dirs.length || 1;
+                const colors = {available:'#3b82f6',in_progress:'#f59e0b',completed:'#10b981',pruned:'#ef4444'};
+                let lH = '';
+                Object.entries(lifecycles).forEach(([status, data]) => {
+                    const pct = (data.count/total*100).toFixed(1);
+                    const c = colors[status] || '#64748b';
+                    lH += `<div class="domain-stat" style="background:${c}12;border-color:${c}40">
+                        <div class="name" style="color:${c}">${status.replace('_',' ')}</div>
+                        <div class="detail">${data.count} (${pct}%) · retried: ${data.retried} · avg attempts: ${data.avg_attempts}</div>
+                    </div>`;
+                });
+                // Seed vs organic
+                const seedAvail = dirs.filter(d => d.status === 'available' && (d.source_exp_id||'').startsWith('seed')).length;
+                const organicAvail = dirs.filter(d => d.status === 'available' && !(d.source_exp_id||'').startsWith('seed') && d.source_exp_id).length;
+                const freshAvail = dirs.filter(d => d.status === 'available' && !d.source_exp_id).length;
+                lH += `<div class="domain-stat" style="background:#64748b12;border-color:#64748b40">
+                    <div class="name" style="color:#94a3b8">Origin</div>
+                    <div class="detail">seed: ${seedAvail} · organic: ${organicAvail} · fresh: ${freshAvail}</div>
+                </div>`;
+                document.getElementById('lifecycle').innerHTML = lH;
+            }
+
+            // Quality trend line chart
+            if (anR && anR.ok) {
+                const recs = (await anR.json()).records || [];
+                // Group by domain, collect quality scores with cycle numbers
+                const domainData = {};
+                recs.forEach(r => {
+                    if (r.domain && r.quality_score > 0) {
+                        if (!domainData[r.domain]) domainData[r.domain] = [];
+                        domainData[r.domain].push({cycle: r.cycle_n || domainData[r.domain].length, q: r.quality_score});
+                    }
+                });
+                // Draw chart on canvas
+                const canvas = document.getElementById('quality-chart');
+                if (canvas && Object.keys(domainData).length > 0) {
+                    const ctx = canvas.getContext('2d');
+                    const W = canvas.width, H = canvas.height;
+                    const pad = {l:40, r:10, t:10, b:30};
+                    const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
+                    // Find ranges
+                    let allCycles = [], allQ = [];
+                    Object.values(domainData).forEach(pts => pts.forEach(p => { allCycles.push(p.cycle); allQ.push(p.q); }));
+                    const minC = Math.min(...allCycles), maxC = Math.max(...allCycles);
+                    const minQ = 0, maxQ = Math.max(...allQ, 1);
+                    const domainList = Object.keys(domainData).sort();
+                    // Clear
+                    ctx.fillStyle = '#131a2b'; ctx.fillRect(0, 0, W, H);
+                    // Grid
+                    ctx.strokeStyle = '#1e2d4a'; ctx.lineWidth = 0.5;
+                    for (let q = minQ; q <= maxQ; q += 0.1) {
+                        const y = pad.t + plotH * (1 - (q - minQ) / (maxQ - minQ));
+                        ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+                    }
+                    // Y axis labels
+                    ctx.fillStyle = '#64748b'; ctx.font = '10px Inter, sans-serif'; ctx.textAlign = 'right';
+                    for (let q = minQ; q <= maxQ; q += 0.2) {
+                        const y = pad.t + plotH * (1 - (q - minQ) / (maxQ - minQ));
+                        ctx.fillText(q.toFixed(1), pad.l - 4, y + 3);
+                    }
+                    // Lines per domain
+                    const legendEl = document.getElementById('chart-legend');
+                    let legendH = '';
+                    domainList.forEach((dom, i) => {
+                        const color = COLORS[dom] || '#64748b';
+                        const pts = domainData[dom];
+                        ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.beginPath();
+                        pts.forEach((p, j) => {
+                            const x = pad.l + (maxC > minC ? (p.cycle - minC) / (maxC - minC) : 0.5) * plotW;
+                            const y = pad.t + plotH * (1 - (p.q - minQ) / (maxQ - minQ));
+                            j === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                        });
+                        ctx.stroke();
+                        // Dots
+                        pts.forEach(p => {
+                            const x = pad.l + (maxC > minC ? (p.cycle - minC) / (maxC - minC) : 0.5) * plotW;
+                            const y = pad.t + plotH * (1 - (p.q - minQ) / (maxQ - minQ));
+                            ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI*2); ctx.fill();
+                        });
+                        legendH += `<span style="color:${color}">● ${dom}</span>`;
+                    });
+                    legendEl.innerHTML = legendH;
+                }
+            }
+            // Cross-domain correlation
+            if (anR && anR.ok) {
+                const anData = await anR.json();
+                const recs = anData.records || [];
+                // Compute simple co-occurrence correlation
+                const domainScores = {};
+                recs.forEach(r => {
+                    if (r.domain && r.quality_score > 0) {
+                        if (!domainScores[r.domain]) domainScores[r.domain] = [];
+                        domainScores[r.domain].push(r.quality_score);
+                    }
+                });
+                const domains = Object.keys(domainScores).sort();
+                let corrH = '';
+                if (domains.length >= 2) {
+                    // For each pair, compute avg quality similarity
+                    for (let i = 0; i < domains.length; i++) {
+                        for (let j = i + 1; j < domains.length; j++) {
+                            const a = domainScores[domains[i]];
+                            const b = domainScores[domains[j]];
+                            if (a.length >= 1 && b.length >= 1) {
+                                const avgA = a.reduce((s,v)=>s+v,0)/a.length;
+                                const avgB = b.reduce((s,v)=>s+v,0)/b.length;
+                                const diff = Math.abs(avgA - avgB);
+                                const label = diff < 0.05 ? '🟢' : diff < 0.15 ? '🟡' : '🔴';
+                                if (diff < 0.15) {
+                                    corrH += `<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${label} ${domains[i]} ↔ ${domains[j]}</span><span style="color:var(--dim)">${diff < 0.05 ? 'strong' : 'moderate'} (Δ=${diff.toFixed(3)})</span></div>`;
+                                }
+                            }
+                        }
+                    }
+                }
+                document.getElementById('correlation-list').innerHTML = corrH || '<div class="no-data">Need more data per domain</div>';
+            }
+            document.getElementById('refresh-info').textContent = `Updated ${new Date().toLocaleTimeString()} · 60s refresh`;
+        } catch(e) { console.error(e); document.getElementById('refresh-info').textContent = `Error: ${e.message}`; }
+    }
+    loadData();
+    // Live update: poll lightweight last_update.json every 5s,
+    // only do full data reload when the timestamp changes
+    let lastUpdateTs = '';
+    setInterval(async () => {
+        try {
+            const resp = await fetch('aether_status/last_update.json', {cache:'no-store'});
+            if (resp.ok) {
+                const data = await resp.json();
+                if (data.timestamp && data.timestamp !== lastUpdateTs) {
+                    lastUpdateTs = data.timestamp;
+                    loadData();  // full reload on change
+                }
+            }
+        } catch(e) {}  // ignore errors for lightweight poll
+    }, 5000);
+    // Search handler
+    document.getElementById('search-input').addEventListener('input', function(e) {
+        const q = e.target.value.toLowerCase().trim();
+        const card = document.getElementById('search-results-card');
+        const results = document.getElementById('search-results');
+        if (!q) { card.style.display = 'none'; return; }
+        card.style.display = '';
+        const matches = allDirections.filter(d =>
+            (d.title||'').toLowerCase().includes(q) ||
+            (d.domains||[]).join(' ').toLowerCase().includes(q) ||
+            (d.status||'').toLowerCase().includes(q)
+        ).slice(0, 30);
+        document.getElementById('search-count').textContent = `(${matches.length} of ${allDirections.length})`;
+        let html = '';
+        matches.forEach(d => {
+            const dom = (d.domains||[])[0]||'?';
+            const color = COLORS[dom]||'#64748b';
+            html += `<div style="display:flex;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--border);align-items:center">
+                <span class="badge" style="background:${color}20;color:${color}">${dom}</span>
+                <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.85rem">${(d.title||'').substring(0,70)}</span>
+                <span style="font-size:0.7rem;color:var(--dim)">${d.status||'?'} ${d.priority_score?'Q:'+d.priority_score.toFixed(2):''}</span>
+            </div>`;
+        });
+        results.innerHTML = html || '<div class="no-data">No matches found</div>';
+    });
+    </script>
+</body>
+</html>

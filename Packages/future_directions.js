@@ -707,7 +707,7 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-11T19:36:24.583932+00:00",
+    "timestamp": "2026-07-11T19:40:15.547245+00:00",
     "title": "Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
   },
   {
