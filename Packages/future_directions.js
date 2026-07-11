@@ -31,20 +31,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
-    "consumed_by_exp_id": "c3787823",
-    "description": "Building on cycle 2c395553 (Q=0.830), which proved 40 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_2c395553_f2f15f5f",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "2c395553",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T11:59:19.287459+00:00",
-    "title": "Deepening: Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
     "domains": [
@@ -782,7 +768,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2bd85c25",
     "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domains": [
       "Novelty",
@@ -792,7 +778,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T13:04:49.880837+00:00",
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
@@ -7486,6 +7472,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T14:11:10.362564+00:00",
     "title": "The reflective calculus interprets propositions as sets of proof stages and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Dreamtime Algebra, Deepened\n\nThe file `DreamtimeKinshipGL.lean` develops the group theory of Australian\nAboriginal kinship systems uniformly over the elementary abelian 2-group\n`Kin n := Fin n \u2192 \u2124/2`, extending the earlier four-section (`\u2124/2 \u00d7 \u2124/2`) and\neight-subsection (`(\u2124/2)\u00b3`) results to arbitrary rank `n`, and proves the\n**symmetry theorem**: the automorphism group of the kinship system is\n`GL(n, \ud835\udd3d\u2082)`, of order `\u220f\u1d62 (2\u207f \u2212 2\u2071)`. In particular the four-section symmetry\ngroup has order `6 = 3! = |S\u2083|` (`GL(2, \ud835\udd3d\u2082) \u2245 S\u2083`).\n\nPossible next steps:\n\n1. **`GL(2, \ud835\udd3d\u2082) \u2245 S\u2083` as an explicit group isomorphism.** We proved the\n   cardinalities agree (`karieraSymmetry_card`). Constructing the explicit\n   `MulEquiv` \u2014 the action on the three nonzero sections / marriage rules \u2014\n   would upgrade equality of orders to a full isomorphism.\n\n2. **The affine symmetry group.** The full symmetry group of the *labelled*\n   kinship diagram (relabellings that need not fix a distinguished section) is\n   the affine group `AGL(n, \ud835\udd3d\u2082) = \ud835\udd3d\u2082\u207f \u22ca GL(n, \ud835\udd3d\u2082)`, of order\n   `2\u207f \u00b7 \u220f\u1d62 (2\u207f \u2212 2\u2071)`. Formalizing this semidirect product and its order is a\n   natural extension of `card_addAut`.\n\n3. **Marriage rules as linear functionals.** Each choice of moiety corresponds to\n   a nonzero linear functional `Kin n \u2192 \ud835\udd3d\u2082`; there are `2\u207f \u2212 1` of them, matching\n   `card_kinshipSpectrum` by self-duality of `\ud835\udd3d\u2082\u207f`. Making this duality explicit\n   would connect the spectrum count to the hyperplane (moiety) count.\n\n4. **General extensions / towers.** `subsectionQuotIso` and `kerIso` exhibit\n   `Kin (n+1)` as a `\u2124/2`-extension of `Kin n`. Iterating gives the full tower\n   `Kin 0 \u2282 Kin 1 \u2282 \u22ef`; one could formalize the composition series and show every\n   quotient is `\u2124/2`, recovering that `Kin n` is elementary abelian of length `n`.\n\n5. **Beyond `\ud835\udd3d\u2082`.** Some kinship systems use more than two moiety values. Working\n   over `\u2124/m` (or `Fin n \u2192 \u2124/m`) and identifying the symmetry group as\n   `GL(n, \u2124/m)` would generalize the whole development.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1044",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c3787823",
+    "status": "available",
+    "timestamp": "2026-07-11T14:11:18.459426+00:00",
+    "title": "The file `DreamtimeKinshipGL.lean` develops the group theory of Australian"
   },
   {
     "consumed_by_exp_id": "",

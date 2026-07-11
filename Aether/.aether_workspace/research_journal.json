@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cf42e929",
-      "domain": "Algebra",
-      "key_insight": "# The Poincaré Conjecture for Data — Results and Future Directions\n\nDomain: Algebra / Topological Data Analysis. Mode: Contrarian (prove bold conjectures,\ncount disproofs). All statements are formaliz",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-10T22:14:01",
-      "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-    },
-    {
       "cycle_id": "f9bf2df0",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Isomorphisms of Meaning\n\nThis project formalizes the torsor structure of the set of isomorphisms between\ntwo isomorphic additive groups, the transport of all structural truth acr",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-11T14:11:15",
       "title": "Reflective Type Theory: Proving Things About Proving Things"
+    },
+    {
+      "cycle_id": "c3787823",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Dreamtime Algebra, Deepened\n\nThe file `DreamtimeKinshipGL.lean` develops the group theory of Australian\nAboriginal kinship systems uniformly over the elementary abelian 2-group\n`K",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-07-11T14:11:22",
+      "title": "Deepening: Aboriginal Kinship as Group Theory: Dreamtime Algebra"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ade3f670",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's findings that a reality can be distributed across two or more\ngenuinely sharper observers exactly when its topology is *join-reducible* (the join of two",
-      "quality_score": 0.46629999999999994,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-03T23:54:08",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
     {
       "cycle_id": "e0253a8b",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-11T14:11:15",
       "title": "Reflective Type Theory: Proving Things About Proving Things"
+    },
+    {
+      "cycle_id": "c3787823",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Dreamtime Algebra, Deepened\n\nThe file `DreamtimeKinshipGL.lean` develops the group theory of Australian\nAboriginal kinship systems uniformly over the elementary abelian 2-group\n`K",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-07-11T14:11:22",
+      "title": "Deepening: Aboriginal Kinship as Group Theory: Dreamtime Algebra"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f57636f1",
-      "domain": "Applications",
-      "name": "cobHom_apply",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f57636f1",
-      "domain": "Applications",
-      "name": "holonomy_sub",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5e3f6a63",
-      "domain": "Novelty",
-      "name": "about",
-      "quality": 0.78
-    },
     {
       "cycle_id": "5e3f6a63",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "mem_box",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "c3787823",
+      "domain": "Novelty",
+      "name": "card_kin",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "c3787823",
+      "domain": "Novelty",
+      "name": "kin_add_self",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "c3787823",
+      "domain": "Novelty",
+      "name": "kin_two_nsmul",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-11T14:11:15",
+  "last_updated": "2026-07-11T14:11:22",
   "open_questions": [
     {
       "context": "+single `sorry` in `fib_carmichael_composite`, since the required primitive-part; sorry; collision ⇒ Merkle–Damgård hash collision, all constructive and `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "21228762",
-        "quality": 0.82,
-        "theorems": 11,
-        "title": "Counterfactual Number Theory: What If Primes Were Random?"
-      },
-      {
         "cycle_id": "ea473918",
         "quality": 0.8,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 21,
         "title": "Reflective Type Theory: Proving Things About Proving Things"
+      },
+      {
+        "cycle_id": "c3787823",
+        "quality": 0.83,
+        "theorems": 37,
+        "title": "Deepening: Aboriginal Kinship as Group Theory: Dreamtime Algebra"
       }
     ],
     "NumberTheory": [

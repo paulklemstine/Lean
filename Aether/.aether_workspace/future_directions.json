@@ -30842,11 +30842,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2bd85c25",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -30859,7 +30859,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1037",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-11T14:11:32.704766+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -30874,7 +30874,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-11T13:04:49.880837+00:00",
       "title": "Speculative: Theorems as Phase Transitions in Proof Space"
@@ -35129,6 +35129,7 @@
     "cross_domain_bridge",
     "famous_subtask",
     "cross_domain_bridge",
+    "famous_subtask",
     "famous_subtask"
   ]
 }
