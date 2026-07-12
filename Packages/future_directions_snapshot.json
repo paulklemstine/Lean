@@ -287,7 +287,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00319e93",
     "description": "Building on cycle 0c4e7ae8 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis cycle deepens the probabilistic-method development (Erdős Ramsey lower bound, first-moment\nprinciple, and the Lovász Local Lemma chain rule) by formalising a *second* pillar of the\nprobabilistic method: **Property B**, the two-colourability of sparse hypergraphs\n(`m(k) ≥ 2^",
     "domain_bridges": [],
     "domains": [
@@ -299,7 +299,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0c4e7ae8",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T21:59:33.338083+00:00",
     "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
   },

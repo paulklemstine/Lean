@@ -287,6 +287,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "00319e93",
+    "description": "Building on cycle 0c4e7ae8 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis cycle deepens the probabilistic-method development (Erdős Ramsey lower bound, first-moment\nprinciple, and the Lovász Local Lemma chain rule) by formalising a *second* pillar of the\nprobabilistic method: **Property B**, the two-colourability of sparse hypergraphs\n(`m(k) ≥ 2^",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_0c4e7ae8_a15d8e6c",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0c4e7ae8",
+    "status": "in_progress",
+    "timestamp": "2026-07-12T21:59:33.338083+00:00",
+    "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 0faef071 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domain_bridges": [],
