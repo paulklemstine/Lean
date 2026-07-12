@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4b281557",
-      "domain": "Probability",
-      "key_insight": "# Future Directions: Time-Travel Logic and Causal Consistency\n\nThe file `Catalog/Probability/TimeTravelCausalConsistency.lean` develops a single\nchain of results modelling closed timelike curves (CTCs",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-12T02:28:00",
-      "title": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
-    },
-    {
       "cycle_id": "f6622907",
       "domain": "Logic",
       "key_insight": "# Future Directions — Tangled Hierarchies\n\nBold, testable conjectures distilled from this cycle's central finding: a level\nstructure is *graded* exactly when it is free of strange loops, and the maxim",
@@ -499,19 +489,19 @@
       "theorem_count": 119,
       "timestamp": "2026-07-12T18:49:09",
       "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+    },
+    {
+      "cycle_id": "44b2d089",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nThis cycle established that the geometry surrounding the Hopf fibration is\norganised by the composition (normed division",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 21,
+      "timestamp": "2026-07-12T19:56:34",
+      "title": "Deepening: The cycle established a compact algebraic core for four-dimensional geometry: a"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c05d7abb",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Hilbert's Hotel for Primes\n\nThe file `PrimeHotelRearrangement.lean` formalizes, entirely without the prime number theorem:\n\n* **Finite support ⇒ well behaved** (`wellBehaved_of_f",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 27,
-      "timestamp": "2026-07-10T00:21:15",
-      "title": "Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-    },
     {
       "cycle_id": "acc2ac17",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 119,
       "timestamp": "2026-07-12T18:49:09",
       "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+    },
+    {
+      "cycle_id": "44b2d089",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nThis cycle established that the geometry surrounding the Hopf fibration is\norganised by the composition (normed division",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 21,
+      "timestamp": "2026-07-12T19:56:34",
+      "title": "Deepening: The cycle established a compact algebraic core for four-dimensional geometry: a"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f3dfcf44",
-      "domain": "Applications",
-      "name": "continuous_tanh",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f3dfcf44",
-      "domain": "Applications",
-      "name": "tanh_lt_id",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "73c84a79",
-      "domain": "Novelty",
-      "name": "below",
-      "quality": 0.82
-    },
     {
       "cycle_id": "73c84a79",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "eigenvalue_imp_atomicNumber",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "44b2d089",
+      "domain": "Applications",
+      "name": "carries",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "44b2d089",
+      "domain": "Applications",
+      "name": "verbatim",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "44b2d089",
+      "domain": "Applications",
+      "name": "sum_of_squares_core",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-12T18:49:09",
+  "last_updated": "2026-07-12T19:56:34",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "7669ab26",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-11T19:10:40"
-    },
     {
       "context": "+  -- `sorry` (no `axiom`, no `@[implemented_by]`, no vacuous restatement).; +  sorry; -    sorry",
       "cycle_id": "c67deafc",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 5,
       "timestamp": "2026-07-12T18:49:09"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "44b2d089",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-12T19:56:34"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bc831bad",
-        "quality": 0.83,
-        "theorems": 7,
-        "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding re"
-      },
-      {
         "cycle_id": "d019c88a",
         "quality": 0.88,
         "theorems": 30,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 119,
         "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematic"
+      },
+      {
+        "cycle_id": "44b2d089",
+        "quality": 0.83,
+        "theorems": 21,
+        "title": "Deepening: The cycle established a compact algebraic core for four-dimensional g"
       }
     ],
     "Bridges": [

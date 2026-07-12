@@ -171,20 +171,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
   },
   {
-    "consumed_by_exp_id": "44b2d089",
-    "description": "Building on cycle 00880e6f (Q=0.820), which proved 23 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThe cycle established a compact algebraic core for four-dimensional geometry: a\nsingle sum-of-squares identity, `(a+b)\u00b2 = 4ab + (a-b)\u00b2`, drives the Hopf map, the\nClifford torus, and the norm-preservation of the \"rotation through",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_00880e6f_5b804bda",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "00880e6f",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T17:21:08.922463+00:00",
-    "title": "Deepening: The cycle established a compact algebraic core for four-dimensional geometry: a"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 0643b2b3 (Q=0.820), which proved 11 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost r",
     "domains": [
@@ -7340,6 +7326,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T18:48:58.182750+00:00",
     "title": "The cycle established a clean split between two notions of \"finite\": every"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Fourth Dimension as a Composition-Algebra Playground\n\nThis cycle established that the geometry surrounding the Hopf fibration is\norganised by the composition (normed division) algebras, and that a single\nalgebraic device \u2014 the Hermitian inner product of two unit vectors \u2014 recovers the\nfull fibre structure of the Hopf map. The following conjectures push that picture\noutward.\n\n## Conjecture 1 \u2014 The octonionic Hopf map has abelian great-sphere fibres\n\nFor the octonionic Hopf map `S\u00b9\u2075 \u2192 S\u2078`, the fibres `S\u2077` are recoverable from a\nsingle \"inner-product witness\" analogous to `\u03bb = z\u0304z' + w\u0304w'`, but the witness must\nbe evaluated in a fixed associative subalgebra of the octonions.\n\n*The key insight is* that the phase ambiguity of a unit vector is always a\nprincipal homogeneous space for the unit group of the underlying composition\nalgebra, and octonionic non-associativity only obstructs the *global* group\nstructure, not the local reconstruction of the fibre from two points.\n\n*Why now?* The complex fibre reconstruction was reduced this cycle to two bilinear\nidentities and one norm-multiplicativity step; each has a direct quaternionic and\noctonionic analogue via the two- and four-square identities, so the same proof\nskeleton can be transported dimension by dimension.\n\n## Conjecture 2 \u2014 Balanced tori are the unique isoperimetric flat tori on every odd sphere\n\nAmong all flat `m`-tori embedded in `S^{2m-1}` with radii `(r\u2081,\u2026,r_m)`,\n`\u2211 r\u1d62\u00b2 = 1`, the balanced torus `r\u1d62\u00b2 = 1/m` uniquely maximises the induced volume,\nand its volume grows like `m^{-m/2}` up to an explicit constant.\n\n*The key insight is* that the volume is a monotone function of the elementary\nsymmetric product `\u220f r\u1d62\u00b2`, so the arithmetic\u2013geometric mean inequality \u2014 verified\nhere for `m = 2, 3` with a sharp equality case \u2014 controls the extremal problem in\nevery dimension simultaneously.\n\n*Why now?* The two- and three-radius balance results already exhibit the exact\nextremiser and the exact bound; the general statement needs only the `m`-variable\narithmetic\u2013geometric mean together with the observed monotonicity of the volume\nfunctional, both of which are within reach of the present techniques.\n\n## Conjecture 3 \u2014 Fixed-point-free isometries of even spheres are exactly the almost-complex ones\n\nEvery fixed-point-free linear isometry of `S^{2n-1}` of order dividing 4 is\nconjugate to multiplication by `i` on `\u2102\u207f`; equivalently, the \"rotation through the\nfourth dimension\" is, up to change of coordinates, the *only* algebraic complex\nstructure available.\n\n*The key insight is* that fixed-point freeness is equivalent to the absence of the\neigenvalue `1`, which for an order-4 isometry forces the `\u00b1i` eigenspaces to pair\nthe coordinates exactly as a complex structure does.\n\n*Why now?* The obstruction was made concrete this cycle: `J = \u00b7i` on `\u2102\u207f` squares\nto `\u22121`, preserves the norm and has no invariant axis, and the fixed-point analysis\nreduced to the single scalar fact `i \u2212 1 \u2260 0`. Turning necessity into a\nclassification is the natural next step.\n\n## Conjecture 4 \u2014 The four-square identity is the last bilinear composition identity\n\nThere is no bilinear identity expressing a product of two sums of three squares as\na sum of three squares, nor of five, six, or seven squares; the ladder of\ncomposition identities terminates at four (before jumping to eight).\n\n*The key insight is* that a bilinear norm-multiplicative form on `\u211d^d` endows\n`\u211d^d` with a composition-algebra structure, and the associated quadratic form's\nmultiplicativity is exactly what fails when `d \u2209 {1,2,4,8}`.\n\n*Why now?* The two- and four-square identities were both reduced to a single\npolynomial identity this cycle, and the three-square case was shown numerically to\nhave no such reduction \u2014 isolating the exact dimension at which the phenomenon\nbreaks and pointing at the algebraic reason.\n\n## Conjecture 5 \u2014 Conjugation rigidity characterises the sphere's rotation group\n\nThe isometries of `S\u00b3` arising as `x \u21a6 qxq\u207b\u00b9` for unit quaternions `q`, together\nwith left/right translations, generate the full rotation group `SO(4)`, and the\nkernel of the double cover is exactly `{\u00b11}`.\n\n*The key insight is* that quaternion conjugation preserves the norm for *every*\nnonzero quaternion \u2014 not merely unit ones \u2014 so the rotation action factors through\nthe projective unit group, producing the classical `2:1` covers `S\u00b3 \u2192 SO(3)` and\n`S\u00b3 \u00d7 S\u00b3 \u2192 SO(4)`.\n\n*Why now?* The norm-preservation of conjugation was established here in full\ngenerality from multiplicativity and inversion of the quaternion norm; assembling\nthe generation and covering statements is a group-theoretic continuation of the\nsame computation.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1158",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "44b2d089",
+    "status": "available",
+    "timestamp": "2026-07-12T19:56:26.915544+00:00",
+    "title": "That the geometry surrounding the Hopf fibration is"
   },
   {
     "consumed_by_exp_id": "",
