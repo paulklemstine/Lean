@@ -15079,14 +15079,14 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Korsky_conjecture_mu2_equals_2",
         "cake_cutting_portion_bounds"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "1abce342",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15102,7 +15102,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0570",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T23:32:57.354369+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Real.Basic\nimport Mathlib.Data.Real.Irrational\n\n-- The unique real root of ρ² + ρ³ = 1 in (0,1)\nnoncomputable def rho : ℝ :=\n  sorry -- defined as the unique real root\n\ntheorem rho_spec : rho ^ 2 + rho ^ 3 = 1 := sorry\ntheorem rho_pos : (0 : ℝ) < rho := sorry\ntheorem rho_lt_one : rho < (1 : ℝ) := sorry\n\n-- A portion is a pair of adjacent slices; portion_ratio computes\n-- max_portion / min_portion after n cuts for a given cut sequence\nnoncomputable def portion_ratio (cuts : ℕ → ℝ) (n : ℕ) : ℝ := sorry\n\n-- μ₂ is the infimum over all infinite cut sequences of the\n-- supremum over n of the portion ratio\nnoncomputable def mu₂ : ℝ :=\n  sInf { r | ∃ cuts : ℕ → ℝ,\n    ∀ n, portion_ratio cuts n ≤ r }\n\n/-- The optimal worst-case portion ratio equals 1 + ρ.\n    The upper bound follows from the constructive algorithm in the paper.\n    The lower bound remains open. -/\ntheorem mu₂_eq_one_plus_rho : mu₂ = 1 + rho := by\n  sorry",
       "lineage_refs": [],
@@ -15117,7 +15117,7 @@
       "source": "",
       "source_exp_id": "2607.05330v1",
       "source_path": "http://arxiv.org/abs/2607.05330v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-07T18:26:42.696541+00:00",
       "title": "The optimal portion ratio μ₂ equals 1 + ρ"
@@ -37911,11 +37911,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7362296f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37927,7 +37927,7 @@
       ],
       "github_issue": 0,
       "id": "sorry_fill_82394822_9aae26c3",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T23:32:46.667565+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -37942,7 +37942,7 @@
       "source": "",
       "source_exp_id": "82394822",
       "source_path": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-12T23:32:06.223021+00:00",
       "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
@@ -38708,7 +38708,6 @@
     "without": 6
   },
   "selection_log": [
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -38727,6 +38726,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }

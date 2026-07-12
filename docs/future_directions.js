@@ -4138,7 +4138,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Threshold for No-$(k+1)$-in-line Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1abce342",
     "description": "The constant \u03bc\u2082 is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves \u03bc\u2082 \u2264 1 + \u03c1 where \u03c1 \u2248 0.75488 is the unique real root of \u03c1\u00b2 + \u03c1\u00b3 = 1. The conjecture asserts this bound is tight: \u03bc\u2082 = 1 + \u03c1, meaning no cutting strategy can achieve a worst-case portion ratio strictly below 1 + \u03c1. This would also establish \u03bc\u2082 as irrational, since \u03c1 is irrational.",
     "domains": [
       "Pythagorean"
@@ -4147,7 +4147,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05330v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T18:26:42.696541+00:00",
     "title": "The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
@@ -5650,7 +5650,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Improved adhesion bound in coarse block-cutvertex tree-decomposition"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7362296f",
     "description": "Cycle 82394822 (Q=0.720) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's ",
     "domains": [
       "Novelty"
@@ -5659,7 +5659,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "82394822",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T23:32:06.223021+00:00",
     "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },

@@ -6989,7 +6989,7 @@
       "Korsky_conjecture_mu2_equals_2",
       "cake_cutting_portion_bounds"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1abce342",
     "description": "The constant μ₂ is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves μ₂ ≤ 1 + ρ where ρ ≈ 0.75488 is the unique real root of ρ² + ρ³ = 1. The conjecture asserts this bound is tight: μ₂ = 1 + ρ, meaning no cutting strategy can achieve a worst-case portion ratio strictly below 1 + ρ. This would also establish μ₂ as irrational, since ρ is irrational.",
     "domain_bridges": [
       "math.CO",
@@ -7005,7 +7005,7 @@
     "proof_strategy": "The upper bound μ₂ ≤ 1 + ρ is proven constructively via a specific cutting algorithm and a word-avoidance argument over {0,1,2,3}. The lower bound μ₂ ≥ 1 + ρ remains wide open (only μ₂ ≥ 5/3 is known). A plausible approach: (1) Show that any infinite cutting sequence achieving ratio < 1 + ρ must, after sufficient normalization, produce slices whose sizes lie in ratios from {1, ρ, ρ², ρ³}, (2) Prove that the corresponding word over {0,1,2,3} must avoid all factors in the forbidden set A from Proposition O, (3) Show by combinatorial or automata-theoretic means that no infinite word cyclically avoiding A can have all adjacent-pair sums below 1 + ρ times the minimum adjacent-pair sum. Alternatively, a potential-function argument tracking the distribution of slice sizes could force a lower bound.",
     "research_mode": "team",
     "source_exp_id": "2607.05330v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T18:26:42.696541+00:00",
     "title": "The optimal portion ratio μ₂ equals 1 + ρ"
   },
@@ -9882,7 +9882,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7362296f",
     "description": "Cycle 82394822 (Q=0.720) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's ",
     "domain_bridges": [],
     "domains": [
@@ -9894,7 +9894,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "82394822",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T23:32:06.223021+00:00",
     "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
