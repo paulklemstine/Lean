@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c1de826b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Neural Coding Theorems\n\nThis cycle deepened the neural-coding development by adding a self-contained\ntheory of **error-correcting neural codes** in\n`Catalog/Novelty/NeuralErrorCo",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 33,
-      "timestamp": "2026-07-12T08:27:31",
-      "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-    },
-    {
-      "cycle_id": "62dd551b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Aleph-One Surface\n\nThis cycle established the Hilbert cube `Q = ℕ → [0,1]` as the canonical \"surface\nbetween the dimensions\": a compact, metrizable continuum with continuum-m",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 22,
-      "timestamp": "2026-07-12T08:27:47",
-      "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
-    },
-    {
       "cycle_id": "e978b5fe",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: White's Quadratic Exchange Conjecture\n\nThis cycle isolated the *element-census invariant* as the exact obstruction that\nquadratic exchange moves preserve, verified that every symm",
@@ -499,29 +479,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-12T23:32:06",
       "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+    },
+    {
+      "cycle_id": "0242f406",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle closed the three positional-numeral bridge gaps connecting the general\nmixed-radix theory with the factorial number system, and it isolated the single\nremaining obstruc",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 0,
+      "timestamp": "2026-07-12T23:51:57",
+      "title": "Close Proofs: The opposite-semicube Helly property characterizes harmonic-evenness i"
+    },
+    {
+      "cycle_id": "86966da0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Reflective Tower after Cross-Level Separation\n\nThis cycle sharpened the reflective tower `L(0) = Bool`, `L(n+1) = L(n) → Bool`\nfrom a locally strict chain into a *globally ri",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 11,
+      "timestamp": "2026-07-12T23:52:10",
+      "title": "That a type which fully quantifies over itself —"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "48961a11",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Optimal Strategy in Social-Deduction Games\n\nThe current cycle established the exact symmetry backbone of Bayesian werewolf\nplay: under population-only information every player ca",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 16,
-      "timestamp": "2026-07-10T05:35:47",
-      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-    },
-    {
-      "cycle_id": "b152086d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n`Core.lean` formalizes the *analytic engine* behind the uncertainty principle and its\ninstantiation on the Fourier, Laplace, and Mellin transforms:\n\n* the identity-principle uncer",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-10T05:35:58",
-      "title": "The Uncertainty Principle Is a Fourier Thing: Position-Momentum Duality"
-    },
     {
       "cycle_id": "996ff4be",
       "domain": "Applications",
@@ -2501,21 +2481,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-12T23:32:06",
       "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+    },
+    {
+      "cycle_id": "0242f406",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle closed the three positional-numeral bridge gaps connecting the general\nmixed-radix theory with the factorial number system, and it isolated the single\nremaining obstruc",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 0,
+      "timestamp": "2026-07-12T23:51:57",
+      "title": "Close Proofs: The opposite-semicube Helly property characterizes harmonic-evenness i"
+    },
+    {
+      "cycle_id": "86966da0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Reflective Tower after Cross-Level Separation\n\nThis cycle sharpened the reflective tower `L(0) = Bool`, `L(n+1) = L(n) → Bool`\nfrom a locally strict chain into a *globally ri",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 11,
+      "timestamp": "2026-07-12T23:52:10",
+      "title": "That a type which fully quantifies over itself —"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "00880e6f",
-      "domain": "Novelty",
-      "name": "with",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "00880e6f",
-      "domain": "Novelty",
-      "name": "sum_of_squares_core",
-      "quality": 0.82
-    },
     {
       "cycle_id": "00880e6f",
       "domain": "Novelty",
@@ -2803,24 +2791,22 @@
       "domain": "Novelty",
       "name": "count",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "86966da0",
+      "domain": "Applications",
+      "name": "shows",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "86966da0",
+      "domain": "Applications",
+      "name": "and",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T23:32:06",
+  "last_updated": "2026-07-12T23:52:10",
   "open_questions": [
-    {
-      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; necessary.  All main theorems are `sorry`-free and use genuine arguments; -    sorry",
-      "cycle_id": "c016fced",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-12T05:03:54"
-    },
-    {
-      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; necessary.  All main theorems are `sorry`-free and use genuine arguments; -    sorry",
-      "cycle_id": "26d2653d",
-      "domain": "Applications",
-      "sorry_count": 6,
-      "timestamp": "2026-07-12T06:11:35"
-    },
     {
       "context": "+recorded as a future direction rather than left as an unproven `sorry`.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "e2c082ff",
@@ -3016,6 +3002,20 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-12T23:32:06"
+    },
+    {
+      "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.; Everything is elementary and `sorry`-free.; necessary.  All main theorems are `sorry`-free and use genuine arguments",
+      "cycle_id": "0242f406",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-12T23:51:57"
+    },
+    {
+      "context": "+--   · sorry   -- infinite tail: composite n > 10000 (Carmichael's analytic core); -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "86966da0",
+      "domain": "Applications",
+      "sorry_count": 5,
+      "timestamp": "2026-07-12T23:52:10"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c81fdc47",
-        "quality": 0.82,
-        "theorems": 23,
-        "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
-      },
-      {
         "cycle_id": "b6e3f70d",
         "quality": 0.83,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 7,
         "title": "Deepening: `ThermodynamicsOfProof.lean` — the positive theory:"
+      },
+      {
+        "cycle_id": "86966da0",
+        "quality": 0.82,
+        "theorems": 11,
+        "title": "That a type which fully quantifies over itself —"
       }
     ],
     "Bridges": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "91f941b6",
-        "quality": 0.78,
-        "theorems": 12,
-        "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
-      },
-      {
         "cycle_id": "d95af58e",
         "quality": 0.82,
         "theorems": 28,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 15,
         "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+      },
+      {
+        "cycle_id": "0242f406",
+        "quality": 0.72,
+        "theorems": 0,
+        "title": "Close Proofs: The opposite-semicube Helly property characterizes harmonic-evenne"
       }
     ],
     "NumberTheory": [
