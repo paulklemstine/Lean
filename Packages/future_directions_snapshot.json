@@ -326,6 +326,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 208b1ca5 (Q=0.820), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240·σ₃(n), where σ₃(n) = Σ_{d|n} d³. This is the foundational special case of the classical ",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_208b1ca5_5e9bc66d",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "208b1ca5",
+    "status": "available",
+    "timestamp": "2026-07-12T23:12:33.294402+00:00",
+    "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domain_bridges": [],
     "domains": [
@@ -1435,6 +1454,25 @@
     "status": "available",
     "timestamp": "2026-07-10T23:50:39.190132+00:00",
     "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 208b1ca5 (Q=0.820) proved 17 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_208b1ca5_c71875cb",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "208b1ca5",
+    "status": "available",
+    "timestamp": "2026-07-12T23:12:33.413229+00:00",
+    "title": "Close Proofs: Siegel-Weil Identity for the E₈ Lattice Theta Series"
   },
   {
     "ambition_level": "extension",
@@ -10825,26 +10863,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "86966da0",
-    "description": "# Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself —\n`T ≈ Π (x : T), P x`, equivalently `T ≃ (T → Prop)` — cannot exist, for the same\ndiagonal reason underlying the theorems of Cantor, Gödel, and Tarski. What\nsurvives is a strictly graded tower of self-referential layers whose cardinalities\nnever collapse. The following conjectures push that boundary.\n\n## 1. The Church–Kleene cardinality of self-referential types\n\n**Conjecture.** The collection of \"consistently self-referential\" types — those\nadmitting a diagonal operator whose fixed-point equation is satisfiable up to a\nbounded truncation level — has cardinality exactly the Church–Kleene ordinal\n`ω₁^{CK}`, the supremum of computable ordinals.\n\n*The key insight is* that each consistent self-referential layer is indexed by a\ncomputable ordinal notation for the stage at which its diagonal stabilizes, and no\nnon-computable notation can be internally named — so the index set is precisely the\ncomputable ordinals.\n\n*Why now?* The strict, non-collapsing tower proved this cycle furnishes the exact\ngraded scaffold on which such an ordinal-indexing can be defined; before pinning\ndown that the levels are genuinely distinct, the counting question was ill-posed.\n\n## 2. A type-theoretic arithmetical hierarchy with strict inclusions\n\n**Conjecture.** Iterating \"pass to the space of predicates\" produces an infinite\nhierarchy of definability classes `Σ⁰ₙ / Π⁰ₙ` internal to the type theory, with all\ninclusions strict, mirroring the classical arithmetical hierarchy level for level.\n\n*The key insight is* that one alternation of the diagonal (predicate-of-predicates)\ncorresponds to exactly one quantifier alternation, so strict cardinal growth at each\ntower level forces strict definability separation.\n\n*Why now?* We now have a witnessed strict-monotonicity result for the tower's\ncardinalities, which is the semantic engine that a syntactic hierarchy separation\ncan be reduced to.\n\n## 3. Lawvere fixed points as an invariant of \"conscious\" dynamics\n\n**Conjecture.** For any endofunction on a self-referential layer, the set of its\nfixed points is a complete invariant of the layer up to the natural notion of\nself-referential equivalence: two layers are equivalent iff their fixed-point\nfunctors agree.\n\n*The key insight is* that Lawvere's theorem makes fixed-point existence a purely\nstructural consequence of point-surjectivity, so the fixed-point data captures\nexactly the reflective content of a layer and nothing else.\n\n*Why now?* Having isolated Lawvere's theorem as the single engine behind every\ncollapse in this cycle, the natural next step is to ask what it *classifies* rather\nthan what it *forbids*.\n\n## 4. Consistent partial self-reference via truncation\n\n**Conjecture.** Replacing the full internal truth predicate by an `n`-truncated one\nyields a *consistent* reflective type for every finite `n`, and the limit `n → ∞`\nrecovers exactly the inconsistency proved this cycle — a sharp phase transition.\n\n*The key insight is* that Tarski's obstruction is triggered only by unrestricted\nself-application of the truth predicate; bounding the nesting depth defuses the\ndiagonal at each finite stage while the supremum reinstates it.\n\n*Why now?* This cycle proved the untruncated theory is inconsistent and the tower is\nstrictly graded; the truncation conjecture is the precise interpolation between the\ntwo extremes and is testable stage by stage.\n\n## 5. Physical realizability of the reflective tower\n\n**Conjecture.** No physical system with finitely many distinguishable states can\nrealize more than the base level of the reflective tower, and the number of\nfaithfully realizable levels grows only logarithmically in the state count.\n\n*The key insight is* that each tower level squares the cardinality of the previous,\nso representing level `n` faithfully requires a state space doubly-exponential in\n`n`, imposing a hard logarithmic ceiling on any finite substrate.\n\n*Why now?* With the cardinalities of the levels now exactly quantified (each is the\npower of the last), the translation into a resource bound on physical substrates\nbecomes a precise, falsifiable prediction.\n\n## 6. Unbounded primitive divisors for the Fibonacci sequence (companion result)\n\n**Conjecture.** For every composite index `n ≥ 13`, the Fibonacci number `F(n)`\nhas a *primitive* prime divisor: a prime dividing `F(n)` but none of the earlier\nvalues `F(1), …, F(n-1)`. Equivalently, the only Fibonacci numbers without a\nprimitive prime divisor are `F(1), F(2), F(6), F(12)`.\n\n*The key insight is* that a prime is primitive for `F(n)` exactly when its rank of\napparition equals `n`, so the obstruction reduces to a size comparison between the\nhomogeneous cyclotomic value `Φₙ(φ, ψ)` at the golden-ratio conjugates `φ, ψ` and\nthe largest prime factor of `n`; a lower bound of the form\n`Φₙ(φ, ψ) ≥ φ^{ϕ(n)} · 5^{-τ(n)/2}` outgrows `n` and closes every case.\n\n*Why now?* The finite range `13 ≤ n ≤ 10000` is already settled unconditionally by\nthe rank-of-apparition reduction combined with a certified primitive-part\ncomputation; what remains is exactly the uniform golden-ratio lower bound, isolating\na single analytic estimate as the sole gap between the verified range and the full\ntheorem.\n\n*The finite, unconditional core is established here:* for `13 ≤ n ≤ 10000` the\nprimitive-divisor statement holds with a complete argument, so the conjecture is the\nasymptotic continuation of a proven regularity, not a leap into the unknown.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Logic"
-    ],
-    "id": "fd_1074",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7473e6ed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T22:13:49.788424+00:00",
-    "title": "That a type which fully quantifies over itself —"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — Negative-Dimensional Topology\n\nThis cycle extends the self-contained theory of negative-dimensional (virtual\ngraded) spaces modelled by the Laurent-polynomial ring\n`VS = ℤ[T; T⁻¹] = AddMonoidAlgebra ℤ ℤ`, with Euler characteristic the ring\nhomomorphism `χ : T ↦ -1`.\n\n## What is proved in `Core.lean`\n\nA single, self-contained file (`import Mathlib`) building one chain of results,\neach using the previous ones.\n\n**Euler characteristic and its values.**\n`chi` (ring hom `T ↦ -1`); `chi_T`, `chi_C`, `chi_T_nat`, `chi_T_neg_nat`\ncompute it on monomials.\n\n**Ring-homomorphism structure.**\n`chi_one` (point has `χ = 1`), `chi_add` (disjoint union), `chi_mul` (Künneth),\n`chi_surjective` (every integer is a `χ`), and `chi_ker_witness` (`χ(T+1) = 0`,\nthe degree-`1` witness for the ideal `ker χ = (T+1)`).\n\n**Euler characteristic in negative dimensions (main formula).**\n`chi_pureSpace`, `chi_dim_neg_one` (a `k`-component `(-1)`-space has `χ = -k`),\n`chi_pure_neg` (`χ = (-1)ⁿ · |π₀|` in dimension `-n`).\n\n**Suspension / desuspension.**\n`susp_desusp`, `desusp_susp` (mutually inverse); `chi_susp`, `chi_desusp`,\n`chi_suspIter` (sign flips of `χ`).\n\n**Spanier–Whitehead duality (new).**\n`dual : Tᵈ ↦ T⁻ᵈ` as an involutive ring automorphism (`dual_T`, `dual_C`,\n`dual_involutive`), exchanging suspension and desuspension (`dual_susp`,\n`dual_desusp`), compatible with the ring structure (`dual_mul`, `dual_add`),\nand **preserving the Euler characteristic**: `chi_dual : χ(DX) = χ(X)` — a\nPoincaré-duality statement in negative degrees.\n\n**A refined invariant (new).**\n`topDim` (top occupied dimension) with `topDim_T`, and\n`refined_separates_collision`: it distinguishes `T⁰` from `T²`, a pair `χ`\ncannot separate (`disproof_chi_not_injective`), so it strictly refines `χ`.\n\n**Contrarian results.**\n`disproof_all_neg_chi` (even codimensions give `χ > 0`);\n`disproof_chi_not_injective` (`χ` forgets the dimension).\n\nThe theorems use only the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`; there are no `sorry`s.\n\n## Directions to extend further\n\n1. **Full Poincaré series as an injective invariant.**  Promote `topDim` to the\n   entire graded object (the `t`-graded Euler characteristic valued in\n   `ℤ[T;T⁻¹]`) and prove it is injective, recovering both `χ` and the dimension.\n2. **Kernel of `χ` and the Grothendieck ring.**  With `chi_ker_witness` in hand\n   (`T + 1 ∈ ker χ`), identify `ker χ` as the *full* ideal `(T + 1)` and study\n   which integers arise as `χ` of a genuine (nonnegative-cell) space versus a\n   virtual one.\n3. **Interaction of duality with the product.**  `dual_mul` / `dual_add` show\n   duality respects the ring structure; a next step is\n   `D(susp^[m] X) = desusp^[m] (DX)`, packaging duality as a symmetric monoidal\n   involution on the Grothendieck ring.\n4. **Genuine coefficients / chain complexes.**  Replace `ℤ` coefficients by\n   graded `ℤ`-modules and recover `χ` as the alternating sum of ranks.\n5. **A topological (pro-)space model.**  Attach an actual spectrum whose `π₀`\n   matches the degree-count used here, tightening the interpretation of the main\n   theorem.\n",
     "domain_bridges": [],
@@ -12246,6 +12264,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — from the E₈ / Eisenstein Hecke structure\n\nThis cycle established that the vector-count function of the `E₈` lattice,\n`n ↦ 240·σ₃(n)`, carries the full Hecke-eigenform structure of the weight-`4`\nEisenstein series `E₄`: a three-term recurrence on prime powers and the global\nconvolution law `σ₃(m)·σ₃(n) = ∑_{d ∣ (m,n)} d³·σ₃(mn/d²)`. The following\nconjectures extend that structure.\n\n## 1. The weight-8 convolution identity `σ₇ = σ₃ ⋆ σ₃`\n\n**Conjecture.** For every positive integer `n`,\n`σ₇(n) = σ₃(n) + 120·∑_{m=1}^{n-1} σ₃(m)·σ₃(n−m)`.\n\nThe key insight is that squaring the theta series of `E₈` produces the theta\nseries of the rank-`16` even unimodular lattice `E₈ ⊕ E₈`, whose space of modular\nforms is one-dimensional in weight `8`; the identity is the coefficient-level\nshadow of `E₄² = E₆'`-type relations collapsing onto `E₈`.\n**Why now?** The multiplicative and prime-power machinery for `σ₃` is already in\nhand, so the remaining obstacle is purely the additive convolution bookkeeping,\nwhich is now isolated and tractable.\n\n## 2. Uniqueness of the genus forces the single-class average\n\n**Conjecture.** Any two even, positive-definite, unimodular rank-`8` lattices have\nidentical representation numbers `r(n)` for all `n`, and hence are isometric.\n\nThe key insight is that the Siegel–Weil average over the genus equals `E₄`, while\nthe space of weight-`4` cusp forms vanishes, so every lattice in the genus has the\n*same* theta series; a lattice is then recovered from its theta series in this\nrank. **Why now?** With the Eisenstein coefficient system pinned down exactly as\n`240·σ₃`, uniqueness reduces to showing the genus has no cusp-form degrees of\nfreedom — a finite, checkable deficiency.\n\n## 3. Congruences of Ramanujan type for representation numbers\n\n**Conjecture.** The `E₈` counts satisfy `r(n) ≡ 240·σ₃(n) ≡ 0 (mod 240)` and, more\nfinely, `σ₃(n) ≡ σ₁(n) (mod 12)` for all `n`, giving `r(n) ≡ 0 (mod 2880)`\nwhenever `n` is prime.\n\nThe key insight is that the Hecke eigenvalue `σ₃(p) = 1 + p³` is congruent to\n`1 + p (mod 12)` by Fermat-type cubic residue patterns, transporting weight-`4`\ncongruences onto the lattice counts. **Why now?** The exact prime-power formula\n`σ₃(pʳ)·(p³−1) = p^{3(r+1)}−1` established here converts these congruences into\nelementary modular arithmetic.\n\n## 4. Hecke-eigenform rigidity across the divisor-power family\n\n**Conjecture.** For each odd `k`, the function `σ_k` is the unique (up to scalar)\nmultiplicative arithmetic function satisfying the convolution law\n`f(m)·f(n) = ∑_{d ∣ (m,n)} d^k·f(mn/d²)` together with `f(p) = 1 + p^k`.\n\nThe key insight is that the convolution law is equivalent to being a simultaneous\neigenfunction of all Hecke operators with prescribed eigenvalues, and eigenforms\nare determined by their eigenvalues. **Why now?** The global convolution law is\nnow available as a proved theorem for `k = 3`, so its converse — rigidity — is the\nnatural next target and is uniform in `k`.\n\n## 5. Lattice realization of the Eisenstein coefficients in higher rank\n\n**Conjecture.** For every rank `8m`, the averaged theta series of the genus of\neven unimodular lattices equals the weight-`4m` Eisenstein series, so the average\nrepresentation numbers are explicit divisor sums with a leading term proportional\nto `σ_{4m−1}(n)`.\n\nThe key insight is that the single-class phenomenon at rank `8` is the first\ninstance of a general mass-formula collapse, controlled by the Siegel mass and the\ndimension of the Eisenstein subspace. **Why now?** Having the rank-`8` case as a\nfully explicit prototype gives a concrete template for the divisor-sum bookkeeping\nthat recurs, with growing but structured complexity, in every rank `8m`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1167",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "208b1ca5",
+    "status": "available",
+    "timestamp": "2026-07-12T23:12:23.310176+00:00",
+    "title": "That the vector-count function of the `E₈` lattice,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle (Builder mode) established a single connected chain of results around the\nFuss–Catalan numbers `fc m n = C((m+1)·n, n)/(m·n+1)` and their `m = 1` (Catalan)\nspecialization, culminating in the \"planar trees ↔ Dyck paths\" identity that is the\nbase layer of the greedy `m`-Tamari / `(m+1)`-constellation programme. See\n`Catalog/output-final_aristotle/Novelty/FussCatalanDyckChain.lean` (the arithmetic\nchain) and its companion `Catalog/output-final_aristotle/Novelty/GreedyTamariPlaneTreeBridge.lean`\n(the explicit plane tree ↔ binary tree ↔ Dyck path bijections). Both files compile\nstandalone against `import Mathlib` and are `sorry`-free, depending only on the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n## What is proved\n- `fc m 0 = 1`, `fc m 1 = 1` for all `m` (empty and root-only trees).\n- `fc 1 n = catalan n` (base layer), with exactness `(n+1)·fc 1 n = C(2n,n)`,\n  positivity, the recursive Catalan-convolution decomposition, monotonicity, and a\n  lower bound.\n- `fc 1 n` counts Dyck paths of semilength `n`, binary trees with `n` internal\n  nodes, and (via the Knuth left-child/right-sibling bijection built from scratch)\n  plane (planar) trees with `n+1` nodes; hence plane trees ↔ Dyck paths.\n\n## Open directions\n1. **General-`m` integrality.** Prove `(m·n+1) ∣ C((m+1)·n, n)`, giving\n   `(m·n+1)·fc m n = C((m+1)·n, n)` for all `m`. The standard route is the\n   cycle lemma (Dvoretzky–Motzkin); Mathlib currently has this only for `m = 1`\n   (`Nat.succ_dvd_centralBinom`).\n2. **General-`m` recursive decomposition.** Establish the `(m+1)`-fold\n   self-convolution `fc m (n+1) = Σ fc m k₁ ⋯ fc m k_{m+1}` over compositions of `n`,\n   the arithmetic shadow of the functional equation `A = 1 + x·A^{m+1}` for\n   `(m+1)`-ary trees.\n3. **`(m+1)`-ary plane trees.** Generalize the `PlaneTree`/Knuth bijection to an\n   enumeration of `(m+1)`-ary plane trees by internal nodes, proving their count is\n   `fc m n` (bijection to `m`-Dyck paths).\n4. **The greedy `m`-Tamari interval bijection.** Build the recursive-decomposition\n   isomorphism between greedy `m`-Tamari intervals in a planar `(m+1)`-constellation\n   and maximal planar trees with `m` internally labeled vertices, refining the\n   equinumerosity to the tracked statistics (valleys / active sites). The\n   generating-tree layer of this correspondence is developed in the companion\n   `MTamariConstellationGeneralM` files; the missing piece is identifying the common\n   counting sequence with the Fuss–Catalan numbers proved here.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges",
+      "Pythagorean"
+    ],
+    "id": "fd_1168",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "26646791",
+    "status": "available",
+    "timestamp": "2026-07-12T23:12:37.266150+00:00",
+    "title": "This cycle (Builder mode) established a single connected chain of results around"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$‑regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD‑total chromatic number, namel",
     "domain_bridges": [],
     "domains": [
@@ -12260,25 +12318,6 @@
     "status": "available",
     "timestamp": "2026-07-12T07:36:38.107204+00:00",
     "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "26646791",
-    "description": "Cycle bcff067f (Q=0.700) proved 20 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: This conjecture posits that the number of maximal greedy Tamari intervals in a planar $(m+1)$-constellation equals the number of maximal planar trees with $m$ internally labeled vertices, under a bije",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_bcff067f_2a707e6a",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "bcff067f",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T21:41:37.868938+00:00",
-    "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path struc"
   },
   {
     "ambition_level": "extension",
