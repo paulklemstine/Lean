@@ -213,20 +213,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "167b800e",
-    "description": "Building on cycle 0fe20e26 (Q=0.820), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 823f5582 (Q=0.820) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_0fe20e26_72979793",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "0fe20e26",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T18:30:57.788818+00:00",
-    "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domains": [
@@ -2543,7 +2529,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82155f74",
     "description": "For increasing Boolean functions f,g:{0,1}^n\u2192{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small \u03b5, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i \u2228 x_j).",
     "domains": [
       "Physics"
@@ -2552,7 +2538,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
@@ -7341,6 +7327,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T19:56:26.915544+00:00",
     "title": "That the geometry surrounding the Hopf fibration is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Euler\u2013Poincar\u00e9 theory of decision surfaces\n\n`EulerCharacteristic.lean` deepens the Hodge/Betti theory of piecewise-linear\ndecision surfaces `V(f)` of ReLU networks (`DecisionSurface.lean`,\n`RankFormula.lean`) by pinning down **all three** homology groups of the cellular\ncomplex `C\u2082 \u2192[d\u2082] C\u2081 \u2192[d\u2081] C\u2080` simultaneously and assembling their Euler\ncharacteristic.\n\n## What was proved (the chain of results)\n\n1. `euler_poincare_defect` / `euler_poincare` \u2014 the abstract Euler\u2013Poincar\u00e9\n   principle for a numerical homology profile: the alternating sum of homology\n   dimensions equals the alternating sum of chain dimensions up to a single\n   top-boundary term `(\u22121)\u1d38\u00b7r\u1d38`, which vanishes for a bounded complex.\n   (Induction on the length, telescoping the boundary ranks.)\n2. `finrank_cokernelH`, `finrank_kernelH`, `finrank_middleH` \u2014 the three homology\n   dimensions of the concrete complex read off by rank\u2013nullity: a cokernel, a\n   kernel, and the subquotient.\n3. `euler_char_three_term` \u2014 the Euler characteristic of the decision surface,\n   `dim H\u2080 \u2212 dim H\u2081 + dim H\u2082 = dim C\u2080 \u2212 dim C\u2081 + dim C\u2082`, obtained by feeding the\n   three dimensions into the abstract principle.\n4. `euler_char_indep_of_differentials`, `euler_char_abs_le_total`,\n   `euler_char_le_width` \u2014 rigidity (the invariant depends only on chain sizes),\n   a total-dimension bound, and the width-driven bound `|\u03c7| \u2264 3\u00b7\u220f\u1d62 2^{w\u1d62}`.\n\n## Natural next steps\n\n* **General length-`n` complexes.** The abstract `euler_poincare` already handles\n  arbitrary length; what remains is to package a genuine `\u2115`-indexed chain complex\n  of finite-dimensional modules (with the endpoint cokernel/kernel included) and\n  show its per-position homology dimensions satisfy the two defining relations\n  `h 0 = a 0 \u2212 r 0`, `h (n+1) = a (n+1) \u2212 r n \u2212 r (n+1)`. This yields\n  `\u03c7(H) = \u03c7(C)` for decision surfaces of arbitrary depth.\n\n* **Bigraded / Hodge-number refinement.** The conjecture recorded in the earlier\n  files \u2014 `h^{p,q} \u2264 C(w\u2081,p)\u00b7C(w_L,q)\u00b7\u220f w\u1d62` \u2014 would refine the single Euler\n  number into a Hodge diamond indexed by activation depth.\n\n* **Sharpness.** Construct explicit ReLU networks realising the width bound\n  `|\u03c7| = 3\u00b7\u220f\u1d62 2^{w\u1d62}` (or determine the true extremal constant), turning the\n  inequality `euler_char_le_width` into an equality on a witness family.\n\n* **Morse/critical-cell interpretation.** Relate `dim C\u1d62` to counts of activation\n  regions of a fixed local dimension, giving a Morse-theoretic reading of the\n  Euler characteristic in terms of the network's piecewise-linear geometry.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1159",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "167b800e",
+    "status": "available",
+    "timestamp": "2026-07-12T19:56:38.010898+00:00",
+    "title": "`EulerCharacteristic.lean` deepens the Hodge/Betti theory of piecewise-linear"
   },
   {
     "consumed_by_exp_id": "",

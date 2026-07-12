@@ -3945,7 +3945,7 @@
     "catalog_references": [
       "arXiv:2405.12345"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82155f74",
     "description": "For increasing Boolean functions f,g:{0,1}^n→{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small ε, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i ∨ x_j).",
     "domain_bridges": [
       "Fourier analysis on the Boolean cube",
@@ -3961,7 +3961,7 @@
     "proof_strategy": "Use the inductive four-restriction scheme from the original proof to isolate the deficit term, apply a sharp Bonami-Beckner inequality to control higher-degree Fourier mass, and invoke an invariance principle to reduce to Gaussian space where the extremal configurations are classified via Ehrhard-type inequalities.",
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T15:19:41.775801+00:00",
     "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },

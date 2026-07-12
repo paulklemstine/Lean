@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f6622907",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Tangled Hierarchies\n\nBold, testable conjectures distilled from this cycle's central finding: a level\nstructure is *graded* exactly when it is free of strange loops, and the maxim",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-12T03:02:25",
-      "title": "Hofstadter: Tangled Hierarchies in Type Theory"
-    },
-    {
       "cycle_id": "0664586a",
       "domain": "Computation",
       "key_insight": "# Future Directions — Alien Number Systems\n\nBold, falsifiable conjectures distilled from this cycle's study of negative,\ncomplex, and irrational bases.\n\n## 1. A uniform bijection theorem for every bas",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-12T19:56:34",
       "title": "Deepening: The cycle established a compact algebraic core for four-dimensional geometry: a"
+    },
+    {
+      "cycle_id": "167b800e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Euler–Poincaré theory of decision surfaces\n\n`EulerCharacteristic.lean` deepens the Hodge/Betti theory of piecewise-linear\ndecision surfaces `V(f)` of ReLU networks (`DecisionSurf",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-12T19:56:51",
+      "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "acc2ac17",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThis project formalizes a small algebraic complexity theory of recipes, modelling a\nrecipe by its cooking time `C(R)` and verification time `V(R)` and classifying recipes\nas quick",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-10T00:56:33",
-      "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
-    },
     {
       "cycle_id": "90ef345f",
       "domain": "Probability",
@@ -2501,15 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-12T19:56:34",
       "title": "Deepening: The cycle established a compact algebraic core for four-dimensional geometry: a"
+    },
+    {
+      "cycle_id": "167b800e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Euler–Poincaré theory of decision surfaces\n\n`EulerCharacteristic.lean` deepens the Hodge/Betti theory of piecewise-linear\ndecision surfaces `V(f)` of ReLU networks (`DecisionSurf",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-12T19:56:51",
+      "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "73c84a79",
-      "domain": "Novelty",
-      "name": "isIsolating_iff_hasStrictMin",
-      "quality": 0.82
-    },
     {
       "cycle_id": "73c84a79",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Applications",
       "name": "sum_of_squares_core",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "167b800e",
+      "domain": "Applications",
+      "name": "euler_poincare_defect",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T19:56:34",
+  "last_updated": "2026-07-12T19:56:51",
   "open_questions": [
     {
       "context": "+  -- `sorry` (no `axiom`, no `@[implemented_by]`, no vacuous restatement).; +  sorry; -    sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "d019c88a",
-        "quality": 0.88,
-        "theorems": 30,
-        "title": "Exact dictionary \"logical qubits = middle homology\""
-      },
-      {
         "cycle_id": "edd57dbd",
         "quality": 0.86,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 21,
         "title": "Deepening: The cycle established a compact algebraic core for four-dimensional g"
+      },
+      {
+        "cycle_id": "167b800e",
+        "quality": 0.82,
+        "theorems": 14,
+        "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decisio"
       }
     ],
     "Bridges": [
