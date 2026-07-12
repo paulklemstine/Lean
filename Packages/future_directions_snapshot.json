@@ -591,7 +591,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8254dbf",
     "description": "Building on cycle e618ea1a (Q=0.820), which proved 29 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological structure of\nthe conflict-free complex `K(AF)`. Three self-contained files:\n\n* `ArgumentationCore.le",
     "domain_bridges": [],
     "domains": [
@@ -603,7 +603,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "e618ea1a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T11:18:27.403225+00:00",
     "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
   },
