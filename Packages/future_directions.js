@@ -353,7 +353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a73ca9a",
     "description": "Building on cycle 823f5582 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology cla",
     "domains": [
       "Applications"
@@ -362,7 +362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "823f5582",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T21:41:40.173065+00:00",
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
@@ -437,7 +437,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Lower bounds on clique densities using generalized inverses"
   },
   {
-    "consumed_by_exp_id": "f8254dbf",
+    "consumed_by_exp_id": "304c2df4",
     "description": "Building on cycle e618ea1a (Q=0.820), which proved 29 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological structure of\nthe conflict-free complex `K(AF)`. Three self-contained files:\n\n* `ArgumentationCore.le",
     "domains": [
       "Novelty"
@@ -762,7 +762,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21de0059",
     "description": "Building on cycle 9af0a04a (Q=0.780), which proved 14 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize biological computation: a 'wetware' computation is a dynamical system on a neural manifold that computes a function f: X -> Y. Prove: wetware can simulate Turing machines (neural nets are Turing-complete). Show: the energy cost of a wetware computation is Theta(n * log(n)) where n is the n",
     "domains": [
       "Geometry"
@@ -771,7 +771,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "9af0a04a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T23:05:15.088025+00:00",
     "title": "Deepening: Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
   },
