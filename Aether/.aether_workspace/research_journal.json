@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9af0a04a",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Wetware Computation\n\nThis file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as a\ndiscrete dynamical system (a step map iterated on a neural state space) and",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-11T23:05:15",
-      "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
-    },
-    {
       "cycle_id": "7b741692",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-12T16:46:15",
       "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
+    },
+    {
+      "cycle_id": "b6e3f70d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Tightness of the Isolation Lemma under edge offsets\n\nThis cycle established, for the singleton hypergraph with an arbitrary integer\nedge offset, an exact product–sum formula for",
+      "quality_score": 0.83,
+      "sorry_count": 5,
+      "theorem_count": 0,
+      "timestamp": "2026-07-12T16:46:33",
+      "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6c21e233",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalizes a self-contained theory of **total nonnegativity** (all minors\n`≥ 0`) and applies it to the **interval-subdivision transformation matrices** of finite\nsimp",
-      "quality_score": 0.618,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-09T20:47:56",
-      "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
-    },
     {
       "cycle_id": "6b9c675a",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 23,
       "timestamp": "2026-07-12T16:46:15",
       "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
+    },
+    {
+      "cycle_id": "b6e3f70d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Tightness of the Isolation Lemma under edge offsets\n\nThis cycle established, for the singleton hypergraph with an arbitrary integer\nedge offset, an exact product–sum formula for",
+      "quality_score": 0.83,
+      "sorry_count": 5,
+      "theorem_count": 0,
+      "timestamp": "2026-07-12T16:46:33",
+      "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T16:46:15",
+  "last_updated": "2026-07-12T16:46:33",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "f8dd2b6a",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-11T15:33:31"
-    },
     {
       "context": "+To keep this file free of `sorry` while remaining faithful, we prove the composite; -    sorry; +as an open conjecture rather than prove it with `sorry`.",
       "cycle_id": "4eef1c33",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-12T15:55:11"
+    },
+    {
+      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "b6e3f70d",
+      "domain": "Applications",
+      "sorry_count": 5,
+      "timestamp": "2026-07-12T16:46:33"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "b290e3a0",
-        "quality": 0.82,
-        "theorems": 22,
-        "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
-      },
-      {
         "cycle_id": "16e4b1d9",
         "quality": 0.8,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 23,
         "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
+      },
+      {
+        "cycle_id": "b6e3f70d",
+        "quality": 0.83,
+        "theorems": 0,
+        "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
       }
     ],
     "Bridges": [

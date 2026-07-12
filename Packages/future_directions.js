@@ -1079,20 +1079,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "b6e3f70d",
-    "description": "Cycle 73c84a79 (Q=0.820) proved 20 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every inclusion-free hypergraph H on n vertices, there exists an edge offset function f : H \u2192 \u211d such that the number of isolating weight assignments w \u2208 [d]^n equals the lower bound n * \u2211_{j=0}^{d",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_73c84a79_e8bc7db1",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "73c84a79",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T13:35:34.607424+00:00",
-    "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 7473e6ed (Q=0.820) proved 14 theorems in Physics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any su",
     "domains": [
@@ -7277,6 +7263,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T16:46:07.280928+00:00",
     "title": "Order-theoretic backbone of the statement *\"Bruhat or"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Tightness of the Isolation Lemma under edge offsets\n\nThis cycle established, for the singleton hypergraph with an arbitrary integer\nedge offset, an exact product\u2013sum formula for the number of isolating weight\nassignments, and identified its two extreme regimes: constant offsets reproduce\nthe Faber\u2013Harris extremal value `n \u00b7 \u2211_{j<d} j^{n-1}`, while widely separated\noffsets isolate every assignment and reach the maximum `d^n`. The following\nconjectures extend these findings.\n\n## Conjecture 1 \u2014 Offset monotonicity of the isolating count\n\nFor the singleton hypergraph, the isolating count is minimised exactly at the\nconstant offsets: every integer offset `f` satisfies\n`I(n,d,f) \u2265 n \u00b7 \u2211_{j<d} j^{n-1}`, with equality iff `f` is constant.\n\nThe key insight is that spreading the offsets apart can only *break* ties in\nfavour of a unique minimiser, never create them, so the symmetric offset sits at\nthe bottom of the count and any deviation strictly increases the number of\nisolating assignments. Why now? The exact product\u2013sum formula reduces the claim\nto a term-by-term comparison of \"above threshold\" cardinalities against their\nsymmetric baseline, turning a global extremal statement into a local, checkable\ninequality.\n\n## Conjecture 2 \u2014 Full offset spectrum\n\nAs `f` ranges over all integer offsets, the isolating count `I(n,d,f)` takes\n*every* integer value in the interval `[ n \u00b7 \u2211_{j<d} j^{n-1}, d^n ]` and no value\noutside it.\n\nThe key insight is that the constant and separated offsets realise the two\nendpoints, and interpolating one coordinate of the offset at a time changes the\ncount by controlled increments, sweeping out the whole interval. Why now? Both\nendpoints are now pinned down exactly, so the remaining task is a connectivity\nargument on the offset lattice rather than a search for the extremes.\n\n## Conjecture 3 \u2014 General inclusion-free hypergraphs attain the lower bound\n\nFor every inclusion-free hypergraph `H` on `n` vertices there exists an edge\noffset `f` for which the number of isolating assignments equals the Faber\u2013Harris\nlower bound `n \u00b7 \u2211_{j<d} j^{n-1}` exactly.\n\nThe key insight is that a carefully chosen offset can force every edge except a\nminimal \"spanning skeleton\" to be non-competitive, reducing the isolating\nstructure of an arbitrary Sperner family to that of the singleton hypergraph\nalready solved here. Why now? The singleton case is the offset-free anchor; with\nits exact count in hand, the general statement becomes a question of transporting\nthat count along an offset that collapses `H` onto its skeleton.\n\n## Conjecture 4 \u2014 Real versus integer offsets\n\nThe set of isolating-count values achievable with real offsets coincides with\nthe set achievable with integer offsets; passing to the reals adds no new counts.\n\nThe key insight is that the isolating condition depends only on the linear order\nof the finitely many edge weights, and any real offset can be perturbed to a\nrational \u2014 then cleared to an integer \u2014 without crossing a tie. Why now? The\ninteger theory is now exact, so the reduction from real to integer offsets is the\nonly missing link to the full real-valued Isolation Lemma statement.\n\n## Conjecture 5 \u2014 Offset that maximises uniqueness margin\n\nAmong all offsets achieving the maximal count `d^n`, the separated offset\n`f i = i\u00b7d` minimises the total number of distinct edge-weight values used, and\nis optimal for the \"isolation margin\" (the smallest gap between the minimum edge\nweight and the runner-up) in a precise `1/`-scaling sense.\n\nThe key insight is that geometric separation by exactly the vertex range `d` is\nthe tightest spacing that still guarantees a global order of edges independent of\nthe assignment. Why now? The separated construction is already shown to saturate\nthe count; quantifying *how efficiently* it does so is the natural next question\nand connects the counting bound to the quantitative margin that the Isolation\nLemma is usually applied through.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1148",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b6e3f70d",
+    "status": "available",
+    "timestamp": "2026-07-12T16:46:20.592042+00:00",
+    "title": "This cycle established, for the singleton hypergraph with an arbitrary integer"
   },
   {
     "consumed_by_exp_id": "",
