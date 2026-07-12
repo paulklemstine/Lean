@@ -382,7 +382,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3fe1d06",
     "description": "Building on cycle 3d209fc8 (Q=0.820), which proved 32 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent homology of the prime\npoint cloud is a genuine persistence module whose entire structure — functorial\nmerging, total persistence, global merge scale, unbounded bars, and Betti number —\nis re",
     "domain_bridges": [],
     "domains": [
@@ -394,7 +394,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3d209fc8",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T17:56:03.370905+00:00",
     "title": "Deepening: That the zero-dimensional persistent homology of the prim"
   },

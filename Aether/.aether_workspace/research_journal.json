@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1978e429",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nTwo self-contained Lean files (each importing only Mathlib) realize the mission\n\"Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent\":\n\n- `Catalog/Logic/ParadoxesConsi",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-11T10:49:45",
-      "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-    },
-    {
       "cycle_id": "3dc9cabc",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Transreal Arithmetic (Deepening)\n\nThis cycle deepened the transreal formalization (`TReal = ℝ ⊎ {+∞, -∞, Φ}`) in\n`Catalog/Novelty/TransrealArithmeticDeepening.lean`, a fully self",
@@ -499,19 +489,19 @@
       "theorem_count": 2828,
       "timestamp": "2026-07-12T06:11:35",
       "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+    },
+    {
+      "cycle_id": "2cd42066",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Repulsion, Sparsity, and Exceptional Zeros\n\nThese conjectures are distilled from the present cycle, whose central finding is that\nthe \"at most one exceptional character\" phenomeno",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-12T06:11:40",
+      "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e92fe2c1",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Finite Rogers–Ramanujan machinery\n\n## 1. The second Rogers–Ramanujan polynomial and its Lucas shadow\n\nIntroduce the companion Schur polynomials `E_n` with `E_0 = 1`, `E_1 = 1 + q",
-      "quality_score": 0.46650342687540775,
-      "sorry_count": 3,
-      "theorem_count": 9,
-      "timestamp": "2026-07-06T05:40:46",
-      "title": "Formalized Rogers–Ramanujan identities for q-Pochhammer symbols"
-    },
     {
       "cycle_id": "1e8c0c26",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 2828,
       "timestamp": "2026-07-12T06:11:35",
       "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+    },
+    {
+      "cycle_id": "2cd42066",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Repulsion, Sparsity, and Exceptional Zeros\n\nThese conjectures are distilled from the present cycle, whose central finding is that\nthe \"at most one exceptional character\" phenomeno",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-12T06:11:40",
+      "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4f5260f0",
-      "domain": "Bridges",
-      "name": "cantorTower_succ",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "9af0a04a",
-      "domain": "Geometry",
-      "name": "linking",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "9af0a04a",
-      "domain": "Geometry",
-      "name": "For",
-      "quality": 0.78
-    },
     {
       "cycle_id": "9af0a04a",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "det_NeronSeveri",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "2cd42066",
+      "domain": "Novelty",
+      "name": "on",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "2cd42066",
+      "domain": "Novelty",
+      "name": "asserts",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "2cd42066",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-12T06:11:35",
+  "last_updated": "2026-07-12T06:11:40",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "1e86ff35",
-        "quality": 0.83,
-        "theorems": 25,
-        "title": "Deepening: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-      },
-      {
         "cycle_id": "094010ae",
         "quality": 0.82,
         "theorems": 21,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 1185,
         "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+      },
+      {
+        "cycle_id": "2cd42066",
+        "quality": 0.74,
+        "theorems": 28,
+        "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
       }
     ],
     "NumberTheory": [

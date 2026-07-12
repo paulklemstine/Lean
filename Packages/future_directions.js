@@ -283,7 +283,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3fe1d06",
     "description": "Building on cycle 3d209fc8 (Q=0.820), which proved 32 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent homology of the prime\npoint cloud is a genuine persistence module whose entire structure \u2014 functorial\nmerging, total persistence, global merge scale, unbounded bars, and Betti number \u2014\nis re",
     "domains": [
       "Shared"
@@ -292,7 +292,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "3d209fc8",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T17:56:03.370905+00:00",
     "title": "Deepening: That the zero-dimensional persistent homology of the prim"
   },
@@ -4438,20 +4438,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polylogarithmic Paucity of Square Products of Shifted Squares"
   },
   {
-    "consumed_by_exp_id": "2cd42066",
-    "description": "For any \u03b5 > 0, there exist effectively computable constants C(\u03b5) > 0 and Q\u2080(\u03b5) > 0 such that: if for every primitive quadratic Dirichlet character \u03c7 with conductor q \u2265 Q\u2080(\u03b5), all non-real zeros \u03c1 of L(s,\u03c7) satisfy Re(\u03c1) \u2264 1 - C(\u03b5)/log(q), then there is at most one such character \u03c7 whose associated L-function has a real zero \u03b2 in the interval [1 - q^(-\u03b5), 1). This formalizes the paper's main result that excluding non-real zeros from a shrinking neighborhood of s=1 allows a significant refinement of Page's theorem.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0605",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06433v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T05:36:19.999905+00:00",
-    "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For the free Catalan structure (C, e, \u03bb, \u2295) satisfying the unique decomposition property from Definition 1, the involution h = rev \u2218 corev \u2218 rev restricted to level C_n has exactly C_n fixed points, where C_n = (2n choose n)/(n+1) is the n-th Catalan number. This asserts that the fixed-point enumerator of h matches the Catalan generating function.",
     "domains": [
@@ -6944,6 +6930,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T06:11:26.567700+00:00",
     "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Repulsion, Sparsity, and Exceptional Zeros\n\nThese conjectures are distilled from the present cycle, whose central finding is that\nthe \"at most one exceptional character\" phenomenon of Page's theorem is, at its logical\ncore, a *quantitative repulsion-to-uniqueness* implication: a pairwise lower bound on\nhow far apart two near-`1` real zeros must sit, combined with a bounded conductor\nwindow, forces uniqueness precisely when the repulsion constant dominates\n`2\u00b7Q\u2080^{-\u03b5}\u00b7log M`.\n\n## 1. Sharp window\u2013constant trade-off is an equality, not just a threshold\n\n**Conjecture.** For each `\u03b5 > 0` there is a critical curve `C = \u03ba(\u03b5)\u00b7Q\u2080^{-\u03b5}\u00b7log M`\nsuch that below it two distinct exceptional characters can genuinely coexist, and the\nextremal configurations are attained by pairs of quadratic characters whose conductors\nare as close as the window permits.\n\nThe key insight is that the threshold `2\u00b7Q\u2080^{-\u03b5}\u00b7log M` isolated in this cycle is not\nan artefact of the estimation but the true order of magnitude of the barrier, so the\ninequality governing uniqueness should be reversible up to the constant `\u03ba(\u03b5)`.\n\nWhy now? The recent programme of pushing non-real zeros back to `Re \u03c1 \u2264 1 \u2212 C/log q`\nsupplies, for the first time, explicit repulsion constants whose dependence on `\u03b5` can\nbe tracked, making the extremal analysis concrete rather than heuristic.\n\n## 2. Repulsion upgrades \"at most one per window\" to \"at most one globally\"\n\n**Conjecture.** If the repulsion constant grows at least like `C(q) \u224d (log q)^{1+\u03b4}`\nfor some `\u03b4 > 0` \u2014 a strength just beyond what pairwise product-`L`-function positivity\ngives \u2014 then across *all* conductors, not merely a bounded window, at most one\nprimitive quadratic character has an exceptional real zero.\n\nThe key insight is that the obstruction to a global statement is entirely the slow\ngrowth of `log(q\u2081q\u2082)`; a repulsion constant that itself grows with the conductor\noverwhelms this and collapses the family of exceptional characters to a single point.\n\nWhy now? Conditional inputs excluding non-real zeros from shrinking neighbourhoods of\n`s = 1` are exactly the mechanism believed to boost the effective repulsion strength,\nso the hypothesis `C(q) \u224d (log q)^{1+\u03b4}` is newly within conditional reach.\n\n## 3. The repulsion template transfers to higher-degree L-functions\n\n**Conjecture.** The same repulsion-to-sparsity implication holds verbatim for families\nof automorphic `L`-functions indexed by analytic conductor, yielding \"at most one\nexceptional form\" statements for `GL(2)` newforms of bounded conductor.\n\nThe key insight is that nothing in the uniqueness deduction uses the quadratic nature\nof the characters \u2014 only a real parameter attached to each object and a pairwise\ninequality of the shape `min(\u03b2, \u03b2') \u2264 1 \u2212 C/log(q q')` \u2014 so the phenomenon is a\nstructural feature of conductor-indexed families, not of Dirichlet characters.\n\nWhy now? Explicit pairwise repulsion estimates for `GL(2)` `L`-functions have recently\nbeen made unconditional in several ranges, so the abstract template can be instantiated\nwithout waiting for a full zero-density theory.\n\n## 4. Exceptional moduli are a genuinely sparse set with a computable exponent\n\n**Conjecture.** Under the conditional non-real-zero exclusion, the number of conductors\n`q \u2264 X` carrying an exceptional real zero is `O((log X)^{A})` for an effectively\ncomputable `A = A(\u03b5)`, and in fact bounded by a constant once the window analysis is\niterated dyadically.\n\nThe key insight is that the window result of this cycle can be chained across a dyadic\ndecomposition of `[1, X]`, and the per-window bound of `1` accumulates only through the\nnumber of windows, which is logarithmic.\n\nWhy now? Effective, \u03b5-explicit constants `C(\u03b5)`, `Q\u2080(\u03b5)` are precisely what the recent\nconditional refinements provide, turning a qualitative \"rare\" into a quantitative count.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1115",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2cd42066",
+    "status": "available",
+    "timestamp": "2026-07-12T06:11:38.559922+00:00",
+    "title": "These conjectures are distilled from the present cycle, whose central finding is"
   },
   {
     "consumed_by_exp_id": "",
