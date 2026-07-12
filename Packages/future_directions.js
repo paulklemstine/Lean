@@ -423,20 +423,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorifying the quantum binomial product rule via filtrations of plethystic mo"
   },
   {
-    "consumed_by_exp_id": "62dd551b",
-    "description": "Building on cycle c06d8e8c (Q=0.820), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_c06d8e8c_57842008",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "c06d8e8c",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T12:48:37.547989+00:00",
-    "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle da4694df (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/",
     "domains": [
@@ -536,7 +522,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "053b0731",
     "description": "Building on cycle 9ca5466b (Q=0.800), which proved 40 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hyperco",
     "domains": [
       "Applications"
@@ -545,7 +531,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "9ca5466b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T08:51:48.793508+00:00",
     "title": "Deepening: Computational Complexity of Alien Civilizations"
   },
@@ -6991,6 +6977,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T08:27:22.398056+00:00",
     "title": "This cycle deepened the neural-coding development by adding a self-contained"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Aleph-One Surface\n\nThis cycle established the Hilbert cube `Q = \u2115 \u2192 [0,1]` as the canonical \"surface\nbetween the dimensions\": a compact, metrizable continuum with continuum-many\npoints (exactly `\u2135\u2081` under the Continuum Hypothesis), containing an embedded copy\nof every finite cube, and homeomorphic both to its own square and to itself with\none extra interval coordinate attached. The conjectures below are the natural\nnext escalations.\n\n## 1. Dimensional invisibility of cardinality is sharp\n\n**Conjecture.** No cardinal-valued invariant \u2014 not merely the raw point count,\nbut any invariant defined purely from the underlying set and its Boolean algebra\nof subsets \u2014 can separate `Q` from a finite cube. Every genuine separation must\ninvoke a topological or metric structure that remembers the coordinate order.\n\nThe key insight is that the padding-by-zero embeddings realize each finite cube\nas a *retract* of `Q`, so all cubes and `Q` itself sit inside a single\nequinumerous tower; the only surviving distinction lives in how the retractions\ninteract with the topology, never in the sets themselves.\n\nWhy now? The equinumerosity of `Q` with every positive-dimensional Euclidean\nspace is now established constructively, so the boundary between what cardinality\ncan and cannot see is finally precise enough to attack the converse.\n\n## 2. The self-similarity signature characterizes infinite dimension\n\n**Conjecture.** Among compact metrizable spaces, being homeomorphic to one's own\nproduct with an interval (`X \u2243 X \u00d7 [0,1]`) forces infinite covering dimension;\nconversely, the finite cubes are exactly the compact convex bodies for which this\nfails at every stage.\n\nThe key insight is that the coordinate-shuffling bijection `\u2115 \u2243 \u2115 \u2295 Unit` used to\nabsorb a new dimension has no finite analogue: a bijection `Fin n \u2243 Fin n \u2295 Unit`\nsimply does not exist, and this counting obstruction is the shadow of the\ntopological one.\n\nWhy now? The absorption homeomorphism `Q \u2243 Q \u00d7 [0,1]` has been pinned down\nexplicitly, turning a folklore slogan into a concrete map whose finite failure\ncan be quantified.\n\n## 3. A tower presentation forces the absence of finite triangulation\n\n**Conjecture.** Any compact space admitting surjective, mutually compatible\ntruncations onto cubes of unboundedly growing dimension cannot be a finite\nsimplicial complex, because a finite complex has a hard ceiling on the dimension\nof embeddable cubes.\n\nThe key insight is that the truncation maps `Q \u2192 [0,1]\u207f` are simultaneously\nsurjective for all `n`, exhibiting `Q` as an inverse limit whose stages never\nstabilize; a finite triangulation would cap the stages, a contradiction.\n\nWhy now? The truncations are now known to be continuous, surjective, and\nsectioned, so the inverse-limit skeleton needed for the argument is fully in\nplace.\n\n## 4. Under CH the surface is a canonical model of the first uncountable cardinal\n\n**Conjecture.** Assuming the Continuum Hypothesis, the Hilbert cube provides a\nuniform geometric representative for `\u2135\u2081`: every separable metrizable space of\nsize `\u2135\u2081` embeds into it, so `Q` is a universal `\u2135\u2081`-sized separable space.\n\nThe key insight is that `Q` is a universal separable metrizable space, and under\nCH the separable metrizable spaces of size continuum are precisely those of size\n`\u2135\u2081`, collapsing a topological universality statement into a set-theoretic one.\n\nWhy now? The conditional identity \"cardinality of `Q` equals `\u2135\u2081` under CH\" has\nbeen made exact, so the universality question can be posed at the correct\ncardinal rather than at an ambiguous continuum.\n\n## 5. Retract towers detect transfinite dimension quantitatively\n\n**Conjecture.** For a compact metric space `X`, the supremum of dimensions `n`\nsuch that `[0,1]\u207f` is a retract of `X` is a homeomorphism invariant that equals\nthe covering dimension when finite and diverges exactly for the\ninfinite-dimensional compacta such as `Q`.\n\nThe key insight is that retracts, not merely subspaces, are the right carriers of\ndimension because a retract inherits every cohomological obstruction of its\nambient space, so a diverging retract-dimension is genuine transfinite dimension\nrather than an artefact of loose embedding.\n\nWhy now? Each finite cube has been shown to be a retract of `Q` (via an explicit\nsection\u2013truncation pair), giving the first rung of exactly the invariant this\nconjecture proposes to study.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1122",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "62dd551b",
+    "status": "available",
+    "timestamp": "2026-07-12T08:27:34.627801+00:00",
+    "title": "Hilbert cube `Q = \u2115 \u2192 [0,1]` as the canonical \"surfac"
   },
   {
     "consumed_by_exp_id": "",

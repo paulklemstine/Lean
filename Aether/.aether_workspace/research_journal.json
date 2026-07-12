@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2c395553",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Dreamtime Algebra\n\nThe file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge\nbetween Australian Aboriginal kinship systems and finite group theory: the\nfour-s",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 40,
-      "timestamp": "2026-07-11T11:59:17",
-      "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-    },
-    {
       "cycle_id": "c06d8e8c",
       "domain": "Applications",
       "key_insight": "# Future Directions: Geometry Between the Dimensions\n\nThis cycle established that \"infinite Hausdorff dimension\" (`dimH = ⊤`) is the\ncorrect rigorous surrogate for the informal notion of a surface who",
@@ -499,19 +489,19 @@
       "theorem_count": 33,
       "timestamp": "2026-07-12T08:27:31",
       "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+    },
+    {
+      "cycle_id": "62dd551b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Aleph-One Surface\n\nThis cycle established the Hilbert cube `Q = ℕ → [0,1]` as the canonical \"surface\nbetween the dimensions\": a compact, metrizable continuum with continuum-m",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 22,
+      "timestamp": "2026-07-12T08:27:47",
+      "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ecf65bf0",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Power-Saving for Polynomial Images of Finite Sets\n\nThese conjectures grow out of the corridor `|A|/k ≤ |f(A)| ≤ |A|^{k−1/k²}` established for\na monic degree-`k` integer polynomia",
-      "quality_score": 0.6173599999999999,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-06T14:28:38",
-      "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomials"
-    },
     {
       "cycle_id": "048b9775",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 33,
       "timestamp": "2026-07-12T08:27:31",
       "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+    },
+    {
+      "cycle_id": "62dd551b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Aleph-One Surface\n\nThis cycle established the Hilbert cube `Q = ℕ → [0,1]` as the canonical \"surface\nbetween the dimensions\": a compact, metrizable continuum with continuum-m",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 22,
+      "timestamp": "2026-07-12T08:27:47",
+      "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "319bd9f6",
-      "domain": "Shared",
-      "name": "asserts",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "47a54792",
-      "domain": "NumberTheory",
-      "name": "volume_ball_dim_four",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "47a54792",
-      "domain": "NumberTheory",
-      "name": "rot4_isometry",
-      "quality": 0.82
-    },
     {
       "cycle_id": "b4ccc3c5",
       "domain": "Pythagorean",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "det_NeronSeveri",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "62dd551b",
+      "domain": "Novelty",
+      "name": "hilbertCube_compact",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "62dd551b",
+      "domain": "Novelty",
+      "name": "hilbertCube_metrizable",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "62dd551b",
+      "domain": "Novelty",
+      "name": "hilbertCube_secondCountable",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T08:27:31",
+  "last_updated": "2026-07-12T08:27:47",
   "open_questions": [
-    {
-      "context": "+    -- WORK-IN-PROGRESS (single documented `sorry`).  Reducing this to `1 < primPart n`; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "39ced9f7",
-      "domain": "Applications",
-      "sorry_count": 5,
-      "timestamp": "2026-07-11T04:29:33"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "fec9de1f",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-12T08:27:31"
+    },
+    {
+      "context": "-    sorry; +      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "62dd551b",
+      "domain": "Novelty",
+      "sorry_count": 5,
+      "timestamp": "2026-07-12T08:27:47"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c3787823",
-        "quality": 0.83,
-        "theorems": 37,
-        "title": "Deepening: Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-      },
-      {
         "cycle_id": "dfaaa130",
         "quality": 0.8,
         "theorems": 30,
@@ -3637,6 +3631,12 @@
         "quality": 0.62,
         "theorems": 22,
         "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k ≥ 3 and n ≥ k"
+      },
+      {
+        "cycle_id": "62dd551b",
+        "quality": 0.82,
+        "theorems": 22,
+        "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
       }
     ],
     "NumberTheory": [
