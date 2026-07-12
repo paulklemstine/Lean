@@ -11,8 +11,8 @@
   - `jones_RIII_invariant`: V is invariant under Reidemeister III
 -/
 import Mathlib
-import Logic.Defs
-import Geometry.KnotTheory.KauffmanBracket
+import Speculative.Knot.Defs
+import Speculative.Knot.KauffmanBracket
 
 namespace Knot
 
