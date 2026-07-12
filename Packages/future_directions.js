@@ -1655,7 +1655,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a70bc30",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -1664,7 +1664,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
