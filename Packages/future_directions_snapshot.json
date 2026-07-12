@@ -6336,7 +6336,7 @@
       "math.NT",
       "math.AG"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cbbd1369",
     "description": "The Giampietro-Darmon factorization formula for the norm of $p$-adic cross-ratios of CM points on Atkin-Lehner quotients of Shimura curves, currently proven only for genus 0 quotients, holds unconditionally for all squarefree $N > 1$ with an even number of prime factors. For quotients of higher genus, the infinite product of $p$-adic cross-ratios factors into a product of local intersection multiplicities of the corresponding Heegner divisors, up to a global obstruction given by the Néron-Tate height pairing on the Jacobian.",
     "domain_bridges": [
       "p-adic analysis",
@@ -6353,7 +6353,7 @@
     "proof_strategy": "Generalize the $p$-adic uniformization to higher genus quotients by considering the rigid analytic Jacobian, relate the $p$-adic cross-ratios to the Néron-Tate height pairing of Heegner divisors, and apply the $p$-inverted Howard-Yang counting problem to compute the local intersection multiplicities, thereby reducing the arbitrary genus case to the genus 0 case via a height decomposition.",
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T21:36:16.381208+00:00",
     "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
   },
@@ -9878,6 +9878,25 @@
     "status": "available",
     "timestamp": "2026-07-11T04:29:33.695485+00:00",
     "title": "Close Proofs: Improved adhesion bound in coarse block-cutvertex tree-decomposition"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 82394822 (Q=0.720) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's ",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_82394822_9aae26c3",
+    "lineage_refs": [],
+    "priority_score": 0.77,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "82394822",
+    "status": "available",
+    "timestamp": "2026-07-12T23:32:06.223021+00:00",
+    "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
   {
     "ambition_level": "extension",

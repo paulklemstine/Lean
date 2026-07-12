@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b88b4225",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — quantum binomial characters and plethystic filtrations\n\nThis cycle established the character-level backbone of the conjectured\nfield-independent filtration of `Δ^{(n,m)} Sym^d E`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 848,
-      "timestamp": "2026-07-12T07:53:41",
-      "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
-    },
-    {
       "cycle_id": "c1de826b",
       "domain": "Applications",
       "key_insight": "# Future Directions — Neural Coding Theorems\n\nThis cycle deepened the neural-coding development by adding a self-contained\ntheory of **error-correcting neural codes** in\n`Catalog/Novelty/NeuralErrorCo",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T23:31:48",
       "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
+    },
+    {
+      "cycle_id": "82394822",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalises the *logical core* of the classification of Boolean cubic forms in\nten variables: the Burnside ⇄ orbit–stabilizer bridge, the division principle that turns",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T23:32:06",
+      "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4d30d98b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Number Theory on Networks via the Ihara Zeta Function\n\nThis cycle proved the arithmetic core of the Ihara–Ramanujan correspondence: a\nsingle spectral local factor `q u² − λ u + 1`",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-10T05:18:26",
-      "title": "The Zeta Function of a Graph: Number Theory on Networks"
-    },
     {
       "cycle_id": "48961a11",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T23:31:48",
       "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
+    },
+    {
+      "cycle_id": "82394822",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalises the *logical core* of the classification of Boolean cubic forms in\nten variables: the Burnside ⇄ orbit–stabilizer bridge, the division principle that turns",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T23:32:06",
+      "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ddbb821f",
-      "domain": "Novelty",
-      "name": "conflictFree_admissible_of_symmetric",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ddbb821f",
-      "domain": "Novelty",
-      "name": "maximalConflictFree_stable_of_symmetric",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ddbb821f",
-      "domain": "Novelty",
-      "name": "exists_maximalConflictFree",
-      "quality": 0.82
-    },
     {
       "cycle_id": "00880e6f",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "card_filter_disjoint",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "82394822",
+      "domain": "Novelty",
+      "name": "and",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "82394822",
+      "domain": "Novelty",
+      "name": "and",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "82394822",
+      "domain": "Novelty",
+      "name": "count",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-12T23:31:48",
+  "last_updated": "2026-07-12T23:32:06",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "0664586a",
-      "domain": "Computation",
-      "sorry_count": 3,
-      "timestamp": "2026-07-12T03:21:37"
-    },
     {
       "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; necessary.  All main theorems are `sorry`-free and use genuine arguments; -    sorry",
       "cycle_id": "c016fced",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-12T23:31:30"
+    },
+    {
+      "context": "Everything is `sorry`-free and self-contained (`import Mathlib`).",
+      "cycle_id": "82394822",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-12T23:32:06"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0fe20e26",
-        "quality": 0.82,
-        "theorems": 17,
-        "title": "Close Proofs: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Deci"
-      },
-      {
         "cycle_id": "91f941b6",
         "quality": 0.78,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 9,
         "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey"
+      },
+      {
+        "cycle_id": "82394822",
+        "quality": 0.72,
+        "theorems": 15,
+        "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
       }
     ],
     "NumberTheory": [

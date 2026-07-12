@@ -2782,20 +2782,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equivalenceof Shahidi's Partial Bessel Functions and Partial Bessel Integrals in Exterior Cube \u03b3-factor Stability"
   },
   {
-    "consumed_by_exp_id": "82394822",
-    "description": "The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's lemma and the orbit-stabilizer theorem.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0304",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28473v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T17:47:18.653210+00:00",
-    "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The coefficients r(n) of Ramanujan's third-order mock theta function \u03c1(q) = \u2211_{m\u22650} q^{2m(m+1)} / \u220f_{k=1}^m (1 + q^{2k-1} + q^{4k-2}) satisfy a strict sign pattern for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, r(3n+2) \u2264 0, with exactly five zeros in the non-positive residue classes: r(2) = r(4) = r(8) = r(11) = r(20) = 0. This strengthens the asymptotic result proven in the paper (which only guarantees the sign pattern for sufficiently large n) to an exact, finite conjecture.",
     "domains": [
@@ -3810,7 +3796,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Simplicial Stochastic Cone Characterization of RB-Domains in Probabilistic Powerdomains"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cbbd1369",
     "description": "The Giampietro-Darmon factorization formula for the norm of $p$-adic cross-ratios of CM points on Atkin-Lehner quotients of Shimura curves, currently proven only for genus 0 quotients, holds unconditionally for all squarefree $N > 1$ with an even number of prime factors. For quotients of higher genus, the infinite product of $p$-adic cross-ratios factors into a product of local intersection multiplicities of the corresponding Heegner divisors, up to a global obstruction given by the N\u00e9ron-Tate height pairing on the Jacobian.",
     "domains": [
       "Pythagorean",
@@ -3820,7 +3806,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02306v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T21:36:16.381208+00:00",
     "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
   },
@@ -5665,6 +5651,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 82394822 (Q=0.720) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_82394822_9aae26c3",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "82394822",
+    "status": "available",
+    "timestamp": "2026-07-12T23:32:06.223021+00:00",
+    "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle b77ed1ec (Q=0.720) proved 24 theorems in Tropical but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elus",
     "domains": [
       "Tropical"
@@ -7475,6 +7475,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T23:31:38.667709+00:00",
     "title": "This cycle adds a **second pillar of the probabilistic method** to the Novelty c"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalises the *logical core* of the classification of Boolean cubic forms in\nten variables: the Burnside \u21c4 orbit\u2013stabilizer bridge, the division principle that turns a\nfixed-point sum into an orbit count, a fully computed concrete instance, and the arithmetic\nof the target number `3 691 560`. Natural extensions:\n\n## 1. Build the cubic-form space concretely\nReplace the abstract `GL(10,2)`-set `C` in `booleanCubic10_orbitCount_of_burnside` with the\ngenuine Reed\u2013Muller sub-quotient `RM(3,10)/RM(2,10)`:\n* Define `RM(r,n)` as the submodule of `\ud835\udd3d\u2082`-Boolean functions of algebraic degree `\u2264 r`\n  (via the algebraic normal form / M\u00f6bius transform over `Fin n \u2192 \ud835\udd3d\u2082`).\n* Prove `RM(r,n)` is `GL(n,2)`-invariant under the substitution action already defined here\n  (`boolFunAction`), so `GL(n,2)` acts on the quotient.\n* Establish `dim RM(3,n)/RM(2,n) = C(n,3)`.\n\n## 2. Compute the Burnside sum from conjugacy classes\nThe `n = 10` count is obtained by summing `|Fix(g)|` over the conjugacy classes of\n`GL(10,2)`. Formalising this requires:\n* the conjugacy class data of `GL(10,2)` (rational canonical forms over `\ud835\udd3d\u2082`);\n* a formula for `|Fix(g)|` on the cubic layer in terms of the invariant factors of `g`.\nThis would let one *derive* `\u2211_g |Fix(g)| = 3 691 560 \u00b7 |GL(10,2)|` and hence discharge the\nhypothesis of `booleanCubic10_orbitCount_of_burnside`, upgrading it to an unconditional\ntheorem.\n\n## 3. Small-`n` full classifications by `decide`/`native_decide`\nFor `n \u2264 6` the cubic layer is small enough (`dim = C(n,3) \u2264 20`) that a decidable orbit\nenumeration is plausible with careful representations, giving unconditional orbit counts to\nseed the sequence and cross-check the general machinery.\n\n## 4. Generalise the bridge\n* Extend `orbitCount_two_ways` to the *weighted* orbit-counting theorem (P\u00f3lya\n  enumeration), connecting to generating-function combinatorics.\n* Package the `fixedByStabilizerEquiv` incidence bijection as a reusable lemma for other\n  double-counting arguments over group actions.\n\n## 5. Other invariant families\nThe same pipeline applies to `GL(n,2)`-orbits of quadratic forms, quartic forms, and\nbent/plateaued Boolean functions, connecting coding theory (Reed\u2013Muller codes),\ncryptography (Boolean function classification), and finite group theory.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1171",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "82394822",
+    "status": "available",
+    "timestamp": "2026-07-12T23:31:55.732114+00:00",
+    "title": "This project formalises the *logical core* of the classification of Boolean cubi"
   },
   {
     "consumed_by_exp_id": "",
