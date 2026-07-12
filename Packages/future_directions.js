@@ -522,6 +522,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   {
+    "consumed_by_exp_id": "053b0731",
+    "description": "Building on cycle 9ca5466b (Q=0.800), which proved 40 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hyperco",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_9ca5466b_a1bd971c",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "9ca5466b",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T08:51:48.793508+00:00",
+    "title": "Deepening: Computational Complexity of Alien Civilizations"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle a0852bd7 (Q=0.800), which proved 45 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are c",
     "domains": [
@@ -579,7 +593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Proofs of Classical Theorems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53945fe2",
     "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
     "domains": [
       "Cryptography"
@@ -588,7 +602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "3a52b537",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T19:32:10.856151+00:00",
     "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
@@ -1627,7 +1641,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a70bc30",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -1636,7 +1650,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
