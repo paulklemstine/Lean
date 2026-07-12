@@ -783,7 +783,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53945fe2",
     "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
     "domain_bridges": [],
     "domains": [
@@ -795,7 +795,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3a52b537",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T19:32:10.856151+00:00",
     "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
@@ -2272,7 +2272,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a70bc30",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -2288,7 +2288,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },

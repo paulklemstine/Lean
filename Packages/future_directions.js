@@ -579,7 +579,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Proofs of Classical Theorems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53945fe2",
     "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
     "domains": [
       "Cryptography"
@@ -588,7 +588,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "3a52b537",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T19:32:10.856151+00:00",
     "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
@@ -1627,7 +1627,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a70bc30",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -1636,7 +1636,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
