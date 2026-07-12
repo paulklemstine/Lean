@@ -1,60 +1,54 @@
-# Computational Evidence — Semicubes, the Helly property, and Cartesian products
+# Computational Evidence — Opposite-semicube Helly property of Cartesian products
 
-We model the hypercube `Q(ι)` over an index set `ι` by taking a vertex to be a finite
-set `A : Finset ι` (the coordinates equal to `1`), with Hamming distance
-`hdist A B = |A △ B|`. A **semicube** is a coordinate half-space: for a coordinate `i`
-and a sign `b`, `semicube i b` is `{A | i ∈ A}` when `b = true` and `{A | i ∉ A}` when
-`b = false`. The **opposite** of `semicube i b` is `semicube i (¬b)`.
+We test the claim that a Cartesian product of two partial cubes satisfies the
+opposite-semicube Helly property (equivalently: is harmonic-even) **iff both
+factors are harmonic-even**, on small partial cubes modelled as sign-vector sets
+`V ⊆ {0,1}^α`.
 
-## 1. Small-case calculations (pairwise vs. global intersection)
+Recall a coordinate `i` is *balanced* when its two opposite semicubes
+`W_i^+ = {v ∈ V : v i = 1}` and `W_i^- = {v ∈ V : v i = 0}` have equal size, and
+`V` is *harmonic-even* when every coordinate is balanced. The opposite-semicube
+Helly property (a matching of each opposite pair exists) is equivalent to
+harmonic-evenness, since a bijection between two finite sets exists iff they are
+equinumerous.
 
-Take `ι = Fin 2`. Consider the family of semicubes indexed by
-`s = {(0,true), (1,false)}`.
+## Small-case calculations
 
-* `semicube 0 true = {A | 0 ∈ A}`.
-* `semicube 1 false = {A | 1 ∉ A}`.
-* Pairwise intersection: `{A | 0 ∈ A ∧ 1 ∉ A} = {{0}}` — nonempty.
-* Global intersection: same set — nonempty. Witness `A = {0}`.
+Two building blocks over a single coordinate:
 
-Now add a conflicting pair `s = {(0,true), (0,false)}`.
+* `P2 = {∅, {0}}` — the 2-vertex path `K2` (an edge). Semicube sizes at
+  coordinate `0`: `(|W^+|, |W^-|) = (1, 1)`. **Balanced ⇒ harmonic-even.**
+* `K1 = {∅}` — a single vertex. Semicube sizes at coordinate `0`:
+  `(|W^+|, |W^-|) = (0, 1)`. **Not balanced ⇒ not harmonic-even.**
 
-* `semicube 0 true ∩ semicube 0 false = {A | 0 ∈ A ∧ 0 ∉ A} = ∅`.
-* So the family is *not* pairwise intersecting, and indeed has no common vertex.
+Products (coordinates split as `α ⊕ β`; `inl` = first factor, `inr` = second):
 
-Pattern observed on all `ι = Fin k` for `k ≤ 4`: a family of semicubes has a common
-vertex **iff** no coordinate occurs with both signs **iff** it is pairwise intersecting.
-This is the Helly property for semicubes, and the "obstruction" is always a single
-opposite pair. (Helly number = 2.)
+| product        | vertices | `inl 0` sizes | `inr 0` sizes | harmonic-even? |
+|----------------|----------|---------------|---------------|----------------|
+| `P2 □ K1`      | 2        | `(1, 1)`      | `(0, 2)`      | **no**         |
+| `P2 □ P2`      | 4        | `(2, 2)`      | `(2, 2)`      | **yes**        |
 
-## 2. Cross-factor pairs in a product
+`P2 □ K1` fails balance exactly on the `inr`-coordinate coming from the
+unbalanced factor `K1`, while `P2 □ P2` (the 4-cycle `C4`, the square) is balanced
+on every coordinate. This is precisely the predicted behaviour: the product is
+harmonic-even iff *both* factors are.
 
-Vertices of `Q(ι) × Q(κ)` are pairs `(A, B) : Finset ι × Finset κ`. A left semicube
-constrains only `A`; a right semicube constrains only `B`. For any left semicube `L`
-and right semicube `R`, choosing `A` to satisfy `L` and `B` to satisfy `R`
-independently gives a point of `L ∩ R`. Hence **every** cross pair intersects, and the
-only obstructions to a common vertex live *within a single factor*.
+The multiplicative fingerprint is visible in the numbers: each product semicube
+size is a factor semicube size times the cardinality of the other factor
+(`|W^+_{inl 0}| = 1·|P2| = ... `), so balance of a coordinate survives the product
+exactly when the corresponding factor coordinate is balanced (the positive factor
+`|other|` cancels).
 
-Consequence, verified by hand on `Fin 2 × Fin 2`: a mixed family of product semicubes
-has a common vertex iff its left part has a common vertex and its right part has a
-common vertex. The product Helly property therefore reduces to the two factors.
+## Counterexample hunt
 
-## 3. Geodesics (partial-cube / Djoković–Winkler check)
-
-For `ι = Fin 3`, `A = {0,1}`, `B = {1,2}`: `hdist A B = |{0,2}| = 2`. A shortest walk
-inside `Q(3)` is `{0,1} → {1} → {1,2}` (delete `0`, insert `2`), length `2 = hdist`.
-No shorter walk exists (triangle inequality). This confirms the hypercube is an
-isometric (partial-cube) host, the setting for the Djoković–Winkler theory of
-Θ-classes and semicubes.
-
-## 4. OEIS
-
-No integer sequence is central to these structural (existence/characterization)
-results, so no OEIS lookup applies.
+No counterexample to the equivalence was found. The single-vertex factor `K1`
+provides the sharp boundary case showing the *nonemptiness* hypotheses on the
+factors are necessary: with an empty factor the product would be empty and
+vacuously balanced regardless of the other factor.
 
 ## Conclusion
 
-The computations support three provable statements: (i) semicubes have the Helly
-property with Helly number 2, the sole obstruction being an opposite pair;
-(ii) the Helly property of a product reduces to that of its factors because cross
-pairs are never obstructions; (iii) the hypercube is an isometric host, so semicubes
-are genuine Θ-classes in the sense of Djoković and Winkler.
+The finite experiments are fully consistent with, and sharpen, the main theorem:
+harmonic-evenness (equivalently the opposite-semicube Helly property) of a
+Cartesian product is governed coordinate-by-coordinate and factors as the
+conjunction over the two factors.

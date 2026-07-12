@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "538f30a2",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to t",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 47,
-      "timestamp": "2026-07-12T03:38:30",
-      "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
-    },
-    {
       "cycle_id": "08eba531",
       "domain": "Applications",
       "key_insight": "# Future Directions: Formal Limits of Molecular Computing\n\nThis project formalizes, in Lean 4 / Mathlib, three pillars of the \"nanotechnology\ncomputation\" moonshot, each stated as fully proved theorem",
@@ -499,19 +489,19 @@
       "theorem_count": 28,
       "timestamp": "2026-07-12T20:14:26",
       "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
+    },
+    {
+      "cycle_id": "465c6137",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis file records the enumerative layer of the *\"Recursive decomposition\nisomorphism for general `m`-Tamari intervals and planar `(m+1)`-constellations\"*\nprogram. It complements t",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-12T20:32:01",
+      "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7ca0f553",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nThe file `Catalog/Pythagorean/InfiniteChessOmega.lean` develops an abstract,\nfaithful model of winning game trees and their **ordinal game values**, and\nproves that the values `ω`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-07-10T01:48:37",
-      "title": "Infinite Chess: Checkmate in Omega Moves"
-    },
     {
       "cycle_id": "4de79d68",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 28,
       "timestamp": "2026-07-12T20:14:26",
       "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
+    },
+    {
+      "cycle_id": "465c6137",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis file records the enumerative layer of the *\"Recursive decomposition\nisomorphism for general `m`-Tamari intervals and planar `(m+1)`-constellations\"*\nprogram. It complements t",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-12T20:32:01",
+      "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "73c84a79",
-      "domain": "Novelty",
-      "name": "card_gt",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "bc831bad",
-      "domain": "Applications",
-      "name": "weight_eq_sum_indicator",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "bc831bad",
-      "domain": "Applications",
-      "name": "card_active_pair",
-      "quality": 0.83
-    },
     {
       "cycle_id": "d019c88a",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "euler_poincare_defect",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "465c6137",
+      "domain": "Applications",
+      "name": "fussCatalan_zero",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "465c6137",
+      "domain": "Applications",
+      "name": "fussCatalan_key",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "465c6137",
+      "domain": "Applications",
+      "name": "fussCatalan_closedForm",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-12T20:14:26",
+  "last_updated": "2026-07-12T20:32:01",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "edd57dbd",
-        "quality": 0.86,
-        "theorems": 9,
-        "title": "Deepening: The Lean development `Catalog/MachineLearning/KnottedLightAlexander.l"
-      },
-      {
         "cycle_id": "b35b4ce5",
         "quality": 0.79,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 14,
         "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decisio"
+      },
+      {
+        "cycle_id": "465c6137",
+        "quality": 0.72,
+        "theorems": 19,
+        "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Co"
       }
     ],
     "Bridges": [

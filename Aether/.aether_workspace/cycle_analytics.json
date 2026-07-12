@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T20:14:31.134842+00:00",
+  "last_updated": "2026-07-12T20:32:03.474819+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -9784,6 +9784,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T20:14:31.082740+00:00",
       "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 86,
+      "domain": "Applications",
+      "duration_seconds": 1037.231505393982,
+      "end_time": 1783888288.6786928,
+      "files_integrated": 4,
+      "job_id": "465c6137",
+      "outcome_quality": 0.72,
+      "phase": "complete",
+      "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783887251.4471874,
+      "strategy_count": 0,
+      "theorem_count": 19,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 16,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T20:32:03.436304+00:00",
+      "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
     }
   ]
 }

@@ -1711,7 +1711,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5922885f",
+    "consumed_by_exp_id": "",
     "description": "Cycle 6e208619 (Q=0.780) proved 27 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minim",
     "domain_bridges": [],
     "domains": [
@@ -1723,7 +1723,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "6e208619",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T06:39:37.539189+00:00",
     "title": "Close Proofs: Upper bound conjecture for the cake balancing ratio sequence"
   },
@@ -2581,7 +2581,7 @@
       "Chapoton 2024",
       "Bousquet-Mélou 2023"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bcff067f",
     "description": "This conjecture posits that the number of maximal greedy Tamari intervals in a planar $(m+1)$-constellation equals the number of maximal planar trees with $m$ internally labeled vertices, under a bijective correspondence established via Dyck paths. It generalizes the planarity-based result of Bousquet-Mélou and Chapoton and extends it to arbitrary $m$.",
     "domain_bridges": [
       "the theory of matroids",
@@ -2597,37 +2597,9 @@
     "proof_strategy": "Recursive combinatorial argument leveraging bijections with Dyck paths and planar trees",
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:19:01.445297+00:00",
     "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Dermenjian's work on greedy ν-Tamari posets",
-      "Bousquet-Mélou and Chapoton's functional equation solution for m-Tamari intervals",
-      "Flajolet and Sedgewick's Analytic Combinatorics for tree/map decompositions"
-    ],
-    "consumed_by_exp_id": "465c6137",
-    "description": "For every m ≥ 1, the greedy m-Tamari intervals admit a recursive decomposition structure isomorphic to that of planar (m+1)-constellations, establishing a refined bijection preserving key combinatorial statistics such as the number of valleys, peaks, and component sizes. This conjecture generalizes the m=1 case proven in the paper and implies equi-enumeration with planar (m+1)-constellations.",
-    "domain_bridges": [
-      "Bijection between Dyck paths and plane trees",
-      "Recursive decomposition schemes in planar maps",
-      "Functional equations in Tamari-type posets"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0099",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "1. Define recursive decomposition rules for greedy m-Tamari intervals based on valley/peak structures. 2. Establish analogous decomposition for planar (m+1)-constellations using m-edge-colored map operations. 3. Construct a structure-preserving bijection between the two decompositions, proving isomorphism. 4. Derive generating function equivalence through the decomposition isomorphism and validate against known functional equations.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T22:37:32.513498+00:00",
-    "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
   },
   {
     "ambition_level": "extension",
@@ -7753,7 +7725,7 @@
       "Eisenstein series",
       "Theta series"
     ],
-    "consumed_by_exp_id": "208b1ca5",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240·σ₃(n), where σ₃(n) = Σ_{d|n} d³. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of θ_L coincide with those of E₄.",
     "domain_bridges": [
       "Lattice theory and quadratic forms",
@@ -7769,7 +7741,7 @@
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
   },
@@ -12171,6 +12143,26 @@
     "status": "available",
     "timestamp": "2026-07-12T20:14:18.227979+00:00",
     "title": "This cycle deepened the anti-Infinity strand (the Ackermann model of the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis file records the enumerative layer of the *\"Recursive decomposition\nisomorphism for general `m`-Tamari intervals and planar `(m+1)`-constellations\"*\nprogram. It complements the structural (generating-tree / statistic-transport)\nfiles elsewhere in the project, which established a refined isomorphism engine but\nexplicitly left the identification of the counting sequences open.\n\n## What is proved here (`FussCatalanEnumeration.lean`)\n\n* **Closed form of the Fuss–Catalan numbers.** With the manifestly-integer\n  definition `Cat_m(n) = C((m+1)n, n) − m·C((m+1)n, n−1)`, we prove\n  `(mn+1)·Cat_m(n) = C((m+1)n, n)` for all `m, n` (`fussCatalan_closedForm`),\n  hence the divisibility `(mn+1) ∣ C((m+1)n, n)` (`fussCatalan_dvd`) — the\n  `m`-generalisation of the classical `(n+1) ∣ C(2n, n)`.\n* **`m = 1` recovers Catalan.** `Cat_1(n) = catalan n` (`fussCatalan_one_eq_catalan`),\n  the size of the Tamari lattice.\n* **Small values and non-triviality.** `Cat_m(1) = 1`, `Cat_m(2) = m+1`,\n  positivity, and `Cat_m(2) > 1` for `m ≥ 1`.\n* **Interval numbers.** The Bousquet-Mélou–Chapoton interval formula `Int_m(n)`\n  is defined over `ℚ` and its classical values `1,3,13,68` (`m=1`, A000260) and\n  `1,6,58` (`m=2`) are verified; intervals strictly outnumber elements\n  (`interval_gt_element`).\n* **`n`-factor of interval integrality.** For all `m` and all `n ≥ 1`, `n`\n  divides the numerator `(m+1)·C((m+1)²n + m, n−1)` of `Int_m(n)`\n  (`tamariInterval_n_dvd`), by a single binomial absorption identity\n  (`Nat.choose_succ_right_eq` with `N − n + 1 = m(m+2)n + (m+1)`). Since\n  `gcd(n, mn+1) = 1`, this reduces the full integrality of `Int_m(n)` to\n  divisibility of the same numerator by `mn+1` alone (open problem 1 below).\n* **Disproofs.** Fuss–Catalan numbers are not `(m,n)`-symmetric; the `m`-free\n  two-term formula is wrong.\n\n## Open problems, in increasing order of difficulty\n\n1. **General integrality of `Int_m(n)`.** Prove `n(mn+1) ∣ (m+1)·C((m+1)²n+m, n−1)`\n   for all `m, n`. The `n`-factor is now settled (`tamariInterval_n_dvd`), and\n   since `gcd(n, mn+1) = 1` the remaining task is exactly divisibility by `mn+1`.\n   Unlike the `n`-factor, this does *not* follow from a single absorption step\n   (the index `n−1` and the target modulus `mn+1` are unrelated), and appears to\n   require a cycle-lemma / Lagrange-inversion argument analogous to the one\n   behind `fussCatalan_dvd`.\n\n2. **Fuss–Catalan recurrence.** Prove the convolution recurrence\n   `Cat_m(n+1) = Σ Cat_m(i₁)···Cat_m(i_{m+1})` over `i₁+···+i_{m+1}=n`,\n   connecting the closed form to the `(m+1)`-ary tree decomposition directly.\n\n3. **Identify the generating-tree counting sequence with `Cat_m` / `Int_m`.** The\n   structural files build succession rules and prove refined equinumerosity of two\n   encodings; the remaining step is to show the resulting counting sequence *is*\n   the `m`-Tamari interval sequence `Int_m(n)`, i.e. to connect the abstract\n   generating tree to the Bousquet-Mélou–Chapoton functional equation.\n\n4. **The full conjecture.** Establish, for every `m ≥ 1`, a statistic-preserving\n   bijection between greedy `m`-Tamari intervals and planar `(m+1)`-constellations.\n   The `m=1` case is Chapoton's theorem (Tamari intervals ↔ planar triangulations);\n   the enumerative equality `Int_m(n) = #{(m+1)\\text{-constellations}}` is the\n   equi-enumeration target implied by the bijection.\n\n## Method note\n\nThe decisive tool is the elementary binomial recurrence\n`Nat.choose_succ_right_eq : C(N, k+1)·(k+1) = C(N, k)·(N−k)`.\nSpecialising `N = (m+1)(n+1)`, `k = n` gives `N − k = m(n+1)+1`, which is exactly\nthe denominator of the Fuss–Catalan closed form — the single arithmetic identity\nunderlying integrality.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1161",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "465c6137",
+    "status": "available",
+    "timestamp": "2026-07-12T20:31:50.282993+00:00",
+    "title": "This file records the enumerative layer of the *\"Recursive decomposition"
   },
   {
     "ambition_level": "extension",

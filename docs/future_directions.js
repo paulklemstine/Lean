@@ -1267,7 +1267,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
   {
-    "consumed_by_exp_id": "5922885f",
+    "consumed_by_exp_id": "",
     "description": "Cycle 6e208619 (Q=0.780) proved 27 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minim",
     "domains": [
       "Applications"
@@ -1276,7 +1276,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "6e208619",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T06:39:37.539189+00:00",
     "title": "Close Proofs: Upper bound conjecture for the cake balancing ratio sequence"
   },
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bcff067f",
     "description": "This conjecture posits that the number of maximal greedy Tamari intervals in a planar $(m+1)$-constellation equals the number of maximal planar trees with $m$ internally labeled vertices, under a bijective correspondence established via Dyck paths. It generalizes the planarity-based result of Bousquet-M\u00e9lou and Chapoton and extends it to arbitrary $m$.",
     "domains": [
       "Pythagorean",
@@ -1807,24 +1807,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:19:01.445297+00:00",
     "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
-  },
-  {
-    "consumed_by_exp_id": "465c6137",
-    "description": "For every m \u2265 1, the greedy m-Tamari intervals admit a recursive decomposition structure isomorphic to that of planar (m+1)-constellations, establishing a refined bijection preserving key combinatorial statistics such as the number of valleys, peaks, and component sizes. This conjecture generalizes the m=1 case proven in the paper and implies equi-enumeration with planar (m+1)-constellations.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0099",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T22:37:32.513498+00:00",
-    "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
   },
   {
     "consumed_by_exp_id": "",
@@ -4510,7 +4495,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "208b1ca5",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4519,7 +4504,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
@@ -7343,6 +7328,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T20:14:18.227979+00:00",
     "title": "This cycle deepened the anti-Infinity strand (the Ackermann model of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis file records the enumerative layer of the *\"Recursive decomposition\nisomorphism for general `m`-Tamari intervals and planar `(m+1)`-constellations\"*\nprogram. It complements the structural (generating-tree / statistic-transport)\nfiles elsewhere in the project, which established a refined isomorphism engine but\nexplicitly left the identification of the counting sequences open.\n\n## What is proved here (`FussCatalanEnumeration.lean`)\n\n* **Closed form of the Fuss\u2013Catalan numbers.** With the manifestly-integer\n  definition `Cat_m(n) = C((m+1)n, n) \u2212 m\u00b7C((m+1)n, n\u22121)`, we prove\n  `(mn+1)\u00b7Cat_m(n) = C((m+1)n, n)` for all `m, n` (`fussCatalan_closedForm`),\n  hence the divisibility `(mn+1) \u2223 C((m+1)n, n)` (`fussCatalan_dvd`) \u2014 the\n  `m`-generalisation of the classical `(n+1) \u2223 C(2n, n)`.\n* **`m = 1` recovers Catalan.** `Cat_1(n) = catalan n` (`fussCatalan_one_eq_catalan`),\n  the size of the Tamari lattice.\n* **Small values and non-triviality.** `Cat_m(1) = 1`, `Cat_m(2) = m+1`,\n  positivity, and `Cat_m(2) > 1` for `m \u2265 1`.\n* **Interval numbers.** The Bousquet-M\u00e9lou\u2013Chapoton interval formula `Int_m(n)`\n  is defined over `\u211a` and its classical values `1,3,13,68` (`m=1`, A000260) and\n  `1,6,58` (`m=2`) are verified; intervals strictly outnumber elements\n  (`interval_gt_element`).\n* **`n`-factor of interval integrality.** For all `m` and all `n \u2265 1`, `n`\n  divides the numerator `(m+1)\u00b7C((m+1)\u00b2n + m, n\u22121)` of `Int_m(n)`\n  (`tamariInterval_n_dvd`), by a single binomial absorption identity\n  (`Nat.choose_succ_right_eq` with `N \u2212 n + 1 = m(m+2)n + (m+1)`). Since\n  `gcd(n, mn+1) = 1`, this reduces the full integrality of `Int_m(n)` to\n  divisibility of the same numerator by `mn+1` alone (open problem 1 below).\n* **Disproofs.** Fuss\u2013Catalan numbers are not `(m,n)`-symmetric; the `m`-free\n  two-term formula is wrong.\n\n## Open problems, in increasing order of difficulty\n\n1. **General integrality of `Int_m(n)`.** Prove `n(mn+1) \u2223 (m+1)\u00b7C((m+1)\u00b2n+m, n\u22121)`\n   for all `m, n`. The `n`-factor is now settled (`tamariInterval_n_dvd`), and\n   since `gcd(n, mn+1) = 1` the remaining task is exactly divisibility by `mn+1`.\n   Unlike the `n`-factor, this does *not* follow from a single absorption step\n   (the index `n\u22121` and the target modulus `mn+1` are unrelated), and appears to\n   require a cycle-lemma / Lagrange-inversion argument analogous to the one\n   behind `fussCatalan_dvd`.\n\n2. **Fuss\u2013Catalan recurrence.** Prove the convolution recurrence\n   `Cat_m(n+1) = \u03a3 Cat_m(i\u2081)\u00b7\u00b7\u00b7Cat_m(i_{m+1})` over `i\u2081+\u00b7\u00b7\u00b7+i_{m+1}=n`,\n   connecting the closed form to the `(m+1)`-ary tree decomposition directly.\n\n3. **Identify the generating-tree counting sequence with `Cat_m` / `Int_m`.** The\n   structural files build succession rules and prove refined equinumerosity of two\n   encodings; the remaining step is to show the resulting counting sequence *is*\n   the `m`-Tamari interval sequence `Int_m(n)`, i.e. to connect the abstract\n   generating tree to the Bousquet-M\u00e9lou\u2013Chapoton functional equation.\n\n4. **The full conjecture.** Establish, for every `m \u2265 1`, a statistic-preserving\n   bijection between greedy `m`-Tamari intervals and planar `(m+1)`-constellations.\n   The `m=1` case is Chapoton's theorem (Tamari intervals \u2194 planar triangulations);\n   the enumerative equality `Int_m(n) = #{(m+1)\\text{-constellations}}` is the\n   equi-enumeration target implied by the bijection.\n\n## Method note\n\nThe decisive tool is the elementary binomial recurrence\n`Nat.choose_succ_right_eq : C(N, k+1)\u00b7(k+1) = C(N, k)\u00b7(N\u2212k)`.\nSpecialising `N = (m+1)(n+1)`, `k = n` gives `N \u2212 k = m(n+1)+1`, which is exactly\nthe denominator of the Fuss\u2013Catalan closed form \u2014 the single arithmetic identity\nunderlying integrality.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1161",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "465c6137",
+    "status": "available",
+    "timestamp": "2026-07-12T20:31:50.282993+00:00",
+    "title": "This file records the enumerative layer of the *\"Recursive decomposition"
   },
   {
     "consumed_by_exp_id": "",
