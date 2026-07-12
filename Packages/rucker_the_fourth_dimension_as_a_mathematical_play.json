@@ -49,19 +49,22 @@
       "name": "Gamma-Function Evaluation of the n-Ball Volume",
       "description": "Evaluates the volume of a ball of radius r in R^n using the closed form pi^(n/2) r^n / Gamma(n/2 + 1). For even n = 2m the Gamma factor is m!, producing a clean rational multiple of pi^m; at n = 4 this yields exactly (pi^2/2) r^4. Runtime is O(1) up to the cost of one Gamma evaluation.",
       "pseudocode": "function ball_volume(n, r):\n    omega <- pi^(n/2) / Gamma(n/2 + 1)   # unit-ball volume\n    return omega * r^n\n# n = 4  =>  omega = pi^2 / 2,  volume = (pi^2/2) r^4",
-      "code": "from math import gamma, pi\n\ndef unit_ball_volume(n: int) -> float:\n    \"\"\"Volume of the unit ball in R^n.\"\"\"\n    return pi ** (n / 2) / gamma(n / 2 + 1)\n\ndef ball_volume(n: int, r: float) -> float:\n    \"\"\"Volume of a radius-r ball in R^n; equals (pi^2/2) r^4 when n = 4.\"\"\"\n    return unit_ball_volume(n) * r ** n\n"
+      "code": "from math import gamma, pi\n\ndef unit_ball_volume(n: int) -> float:\n    \"\"\"Volume of the unit ball in R^n.\"\"\"\n    return pi ** (n / 2) / gamma(n / 2 + 1)\n\ndef ball_volume(n: int, r: float) -> float:\n    \"\"\"Volume of a radius-r ball in R^n; equals (pi^2/2) r^4 when n = 4.\"\"\"\n    return unit_ball_volume(n) * r ** n\n",
+      "code_file": "visualizations/rucker_the_fourth_dimension_as_a_mathematical_play_gamma_function_evaluation_of_the_n_ball_.py"
     },
     {
       "name": "Hopf Projection with Sum-of-Squares Certification",
       "description": "Projects a point (z,w) of C^2 to R^3 via the Hopf map and returns the squared norm of the image. The identity 4|z|^2|w|^2 + (|z|^2-|w|^2)^2 = (|z|^2+|w|^2)^2 certifies that any point on S^3 (where |z|^2+|w|^2 = 1) is sent exactly to S^2. Constant time.",
       "pseudocode": "function hopf_project(z, w):\n    c    <- 2 * z * conjugate(w)\n    real <- |z|^2 - |w|^2\n    pt   <- (Re c, Im c, real)\n    norm2 <- |c|^2 + real^2          # = (|z|^2 + |w|^2)^2\n    return (pt, norm2)",
-      "code": "from typing import Tuple\n\ndef hopf_project(z: complex, w: complex) -> Tuple[Tuple[float, float, float], float]:\n    \"\"\"Return (point on S^2, squared norm of image). On S^3 the squared norm is 1.\"\"\"\n    c = 2 * z * w.conjugate()\n    real = abs(z) ** 2 - abs(w) ** 2\n    pt = (c.real, c.imag, real)\n    norm_sq = abs(c) ** 2 + real ** 2       # = (|z|^2 + |w|^2)^2 by the sum-of-squares identity\n    return pt, norm_sq\n"
+      "code": "from typing import Tuple\n\ndef hopf_project(z: complex, w: complex) -> Tuple[Tuple[float, float, float], float]:\n    \"\"\"Return (point on S^2, squared norm of image). On S^3 the squared norm is 1.\"\"\"\n    c = 2 * z * w.conjugate()\n    real = abs(z) ** 2 - abs(w) ** 2\n    pt = (c.real, c.imag, real)\n    norm_sq = abs(c) ** 2 + real ** 2       # = (|z|^2 + |w|^2)^2 by the sum-of-squares identity\n    return pt, norm_sq\n",
+      "code_file": "visualizations/rucker_the_fourth_dimension_as_a_mathematical_play_hopf_projection_with_sum_of_squares_cert.py"
     },
     {
       "name": "Hypercube Face Lattice and Euler-Poincare Invariants",
       "description": "Enumerates the k-face counts C(n,k)2^(n-k) of the n-cube and forms two alternating sums: the full sum (always 1, by the binomial theorem applied to (2-1)^n) and the boundary sum obtained by dropping the top cell (equal to 1-(-1)^n, the Euler characteristic of the boundary sphere S^(n-1)). Runtime O(n).",
       "pseudocode": "function cube_invariants(n):\n    counts <- [ C(n,k) * 2^(n-k)  for k in 0..n ]\n    full     <- sum (-1)^k * counts[k]   over k in 0..n     # = 1\n    boundary <- sum (-1)^k * counts[k]   over k in 0..n-1   # = 1 - (-1)^n\n    return (counts, full, boundary)",
-      "code": "from math import comb\nfrom typing import List, Tuple\n\ndef cube_invariants(n: int) -> Tuple[List[int], int, int]:\n    \"\"\"Return (face counts, full alternating sum, boundary Euler characteristic).\"\"\"\n    counts = [comb(n, k) * 2 ** (n - k) for k in range(n + 1)]\n    full = sum((-1) ** k * c for k, c in enumerate(counts))          # always 1\n    boundary = sum((-1) ** k * c for k, c in enumerate(counts[:-1])) # 1 - (-1)^n\n    return counts, full, boundary\n"
+      "code": "from math import comb\nfrom typing import List, Tuple\n\ndef cube_invariants(n: int) -> Tuple[List[int], int, int]:\n    \"\"\"Return (face counts, full alternating sum, boundary Euler characteristic).\"\"\"\n    counts = [comb(n, k) * 2 ** (n - k) for k in range(n + 1)]\n    full = sum((-1) ** k * c for k, c in enumerate(counts))          # always 1\n    boundary = sum((-1) ** k * c for k, c in enumerate(counts[:-1])) # 1 - (-1)^n\n    return counts, full, boundary\n",
+      "code_file": "visualizations/rucker_the_fourth_dimension_as_a_mathematical_play_hypercube_face_lattice_and_euler_poincar.py"
     }
   ],
   "visualizations": [
