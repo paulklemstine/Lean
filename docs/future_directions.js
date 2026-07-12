@@ -326,6 +326,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 82155f74 (Q=0.820), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For increasing Boolean functions f,g:{0,1}^n\u2192{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small \u03b5, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibl",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_82155f74_9eb005cf",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "82155f74",
+    "status": "available",
+    "timestamp": "2026-07-12T21:59:16.097786+00:00",
+    "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 823f5582 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology cla",
     "domains": [
       "Applications"
@@ -2513,20 +2527,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "consumed_by_exp_id": "82155f74",
-    "description": "For increasing Boolean functions f,g:{0,1}^n\u2192{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small \u03b5, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i \u2228 x_j).",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0247",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.32024v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T15:19:41.775801+00:00",
-    "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For all integers n \u2265 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) \u2261 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 \u2261 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Ern\u00e9-Stege moment reduction.",
     "domains": [
@@ -4508,7 +4508,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "208b1ca5",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4517,7 +4517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
@@ -7386,6 +7386,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T21:41:33.221201+00:00",
     "title": "The file `Catalog/Novelty/GreedyTamariPlaneTreeBridge.lean` builds a constructiv"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Stability of the Sharp Diagonal Spectral Correlation Inequality\n\nThis cycle resolved the *diagonal* case of the correlation-stability problem for\nincreasing Boolean functions with sharp constants: the diagonal correlation\n`Cov(f,f)` equals `E[f](1 - E[f])`, is maximised exactly by balanced functions,\nand satisfies the tight stability estimate `(E[f] - 1/2)\u00b2 \u2264 \u03b5` whenever\n`Cov(f,f) \u2265 1/4 - \u03b5`. The extremal configurations were computed exactly:\ndictatorships attain the diagonal maximum `1/4`, while the two-variable\nAND / OR pair attains the off-diagonal value `1/16`. The directions below push\nfrom the settled diagonal toward the open off-diagonal regime.\n\n## Conjecture 1 \u2014 Off-diagonal AND/OR rigidity\n\nIf two increasing Boolean functions have covariance within `\u03b5` of the extremal\noff-diagonal value and neither is a dictatorship nor supported on disjoint\ncoordinates, then, after permuting coordinates and possibly swapping the two\nfunctions, they are `O(\u221a\u03b5)`-close in `L\u00b2` to the two-coordinate pair\n`(x_i x_j, x_i \u2228 x_j)`.\n\n**The key insight is** that the diagonal variance identity already forces both\nfunctions to be near-balanced, and near-balancedness plus near-maximal\ncorrelation pins the low-degree Fourier weight onto a single pair of\ncoordinates, leaving the AND/OR pattern as the only configuration consistent\nwith monotonicity.\n\n**Why now?** The exact diagonal constants proved this cycle remove the last\nsource of slack in the extremal analysis, so the off-diagonal argument no longer\nneeds an unspecified absolute constant \u2014 it can be run with the explicit\n`(e-1/2)\u00b2 = 1/4 - e(1-e)` identity as its quantitative engine.\n\n## Conjecture 2 \u2014 Trichotomy sharpness of the stability threshold\n\nThere is an explicit threshold `\u03b5\u2080 > 0` below which the near-extremal set splits\ninto exactly three disjoint classes (disjoint-coordinate pairs, common\ndictatorships, and AND/OR-type pairs), and at `\u03b5 = \u03b5\u2080` two of the classes merge.\n\n**The key insight is** that each class corresponds to a distinct value of the\nleading covariance term (`0`, `1/4`, `1/16`), and stability is possible only when\n`\u03b5` is smaller than half the minimum gap between these values.\n\n**Why now?** The three extremal values are now known exactly, so the merging\nthreshold is a concrete finite computation rather than an asymptotic estimate.\n\n## Conjecture 3 \u2014 Weighted (biased-measure) diagonal stability\n\nUnder the `p`-biased product measure the diagonal identity becomes\n`Cov_p(f,f) = E_p[f](1 - E_p[f])`, and the stability estimate\n`(E_p[f] - 1/2)\u00b2 \u2264 \u03b5` persists with the *same* constant `1`, independent of `p`.\n\n**The key insight is** that the variance identity is measure-agnostic: it uses\nonly that `f` is `{0,1}`-valued, so the sharp diagonal bound transfers verbatim\nto every product measure.\n\n**Why now?** The uniform-measure proof isolates exactly the algebraic identity\nresponsible for sharpness, making the generalisation to biased measures a matter\nof replacing the counting average by the weighted one.\n\n## Conjecture 4 \u2014 Multiplicative correlation gap for non-dictator monotone pairs\n\nFor increasing Boolean functions that are not dictatorships and do not share a\npivotal coordinate, the normalised correlation `Cov(f,g) / \u221a(Var f \u00b7 Var g)` is\nbounded away from `1` by an absolute constant, with the AND/OR pair achieving the\nextremal ratio.\n\n**The key insight is** that the Harris inequality gives positivity, while the\nAND/OR computation gives the first quantitative separation from perfect\ncorrelation; interpolating between them should yield a universal spectral gap.\n\n**Why now?** With Harris positivity and the exact AND/OR value both in hand, the\nratio is bracketed on both sides, so the remaining task is to prove the interior\nbound is attained only at AND/OR.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1165",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "82155f74",
+    "status": "available",
+    "timestamp": "2026-07-12T21:58:43.225868+00:00",
+    "title": "This cycle resolved the *diagonal* case of the correlation-stability problem for"
   },
   {
     "consumed_by_exp_id": "",

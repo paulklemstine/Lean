@@ -440,6 +440,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 82155f74 (Q=0.820), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For increasing Boolean functions f,g:{0,1}^n→{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small ε, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibl",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_82155f74_9eb005cf",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "82155f74",
+    "status": "available",
+    "timestamp": "2026-07-12T21:59:16.097786+00:00",
+    "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 823f5582 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology cla",
     "domain_bridges": [],
     "domains": [
@@ -3897,31 +3916,6 @@
     "status": "available",
     "timestamp": "2026-07-03T14:51:39.872882+00:00",
     "title": "Functional Equations Enforce Primitivity of Coefficients"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "arXiv:2405.12345"
-    ],
-    "consumed_by_exp_id": "82155f74",
-    "description": "For increasing Boolean functions f,g:{0,1}^n→{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small ε, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibly swapping f,g they are L^2-close to the two-coordinate AND-OR pair (x_i x_j, x_i ∨ x_j).",
-    "domain_bridges": [
-      "Fourier analysis on the Boolean cube",
-      "Extremal combinatorics",
-      "Influence theory"
-    ],
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0247",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the inductive four-restriction scheme from the original proof to isolate the deficit term, apply a sharp Bonami-Beckner inequality to control higher-degree Fourier mass, and invoke an invariance principle to reduce to Gaussian space where the extremal configurations are classified via Ehrhard-type inequalities.",
-    "research_mode": "team",
-    "source_exp_id": "2606.32024v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T15:19:41.775801+00:00",
-    "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
   },
   {
     "ambition_level": "extension",
@@ -7730,7 +7724,7 @@
       "Eisenstein series",
       "Theta series"
     ],
-    "consumed_by_exp_id": "208b1ca5",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240·σ₃(n), where σ₃(n) = Σ_{d|n} d³. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of θ_L coincide with those of E₄.",
     "domain_bridges": [
       "Lattice theory and quadratic forms",
@@ -7746,7 +7740,7 @@
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
   },
@@ -11492,26 +11486,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0c4e7ae8",
-    "description": "# Future Directions\n\nThis cycle deepens the probabilistic-method development (Erdős Ramsey lower bound, first-moment\nprinciple, and the Lovász Local Lemma chain rule) by formalising a *second* pillar of the\nprobabilistic method: **Property B**, the two-colourability of sparse hypergraphs\n(`m(k) ≥ 2^{k-1}`, Erdős 1963). The result is in `Catalog/Cryptography/PropertyBTwoColoring.lean`.\n\n## What was proved\n\n- `PropertyB.exists_proper_two_coloring` — sharp form: if every edge of a hypergraph on `Fin N`\n  has `≥ k ≥ 1` vertices and there are fewer than `2^{k-1}` edges, then some red/blue vertex\n  colouring makes every edge bichromatic. Proof: finite union bound over the `2^N` colourings,\n  reusing the Boolean-lattice interval counts `card_filter_superset` / `card_filter_disjoint`.\n- `PropertyB.property_B` — the classical `k`-uniform statement (special case).\n- `PropertyB.two_colorable_of_lt` — the same, phrased as \"every edge meets and misses the red\n  set\".\n- Concrete corollaries: `single_edge_two_colorable`, `property_B_three_edges_three_uniform`.\n- `PropertyB.IsNonTwoColorable` and `PropertyB.card_ge_of_nonTwoColorable` /\n  `card_ge_of_nonTwoColorable_uniform` — the extremal-function lower bound `2^{k-1} ≤ m(k)`:\n  every non-2-colourable hypergraph whose edges each have `≥ k ≥ 1` vertices has at least\n  `2^{k-1}` edges (the contrapositive packaging of the main theorem).\n- `PropertyB.triangleGraph`, `triangleGraph_card`, `triangleGraph_two_uniform`,\n  `triangleGraph_nonTwoColorable`, and `exists_nonTwoColorable_two_uniform_three_edges` — a\n  concrete extremal *witness* for `k = 2`: the triangle is a non-2-colourable `2`-uniform\n  hypergraph with exactly `3` edges, giving the matching upper bound `m(2) ≤ 3` (checked over\n  the `2^3` colourings). Combined with the lower bound this pins the configuration `m(2) = 3`\n  down to an explicit realiser.\n\n## Natural next steps\n\n1. **Extremal function `m(k)`.** The lower bound `2^{k-1} ≤ m(k)` is now formalised as\n   `PropertyB.card_ge_of_nonTwoColorable`, and the upper-bound witness `m(2) ≤ 3` is realised\n   concretely by `PropertyB.exists_nonTwoColorable_two_uniform_three_edges` (the triangle). The\n   remaining work is to formalise the further matching bounds — notably `m(3)=7` (Fano plane) —\n   the sharp *lower* bound `m(2) ≥ 3` (every 2-edge graph is bipartite), and to package `m(k)`\n   itself as an explicit extremal number (e.g. via `Nat.find` over non-2-colourable\n   configurations).\n\n2. **Random / alteration improvement.** Upgrade the lower bound to the Radhakrishnan–Srinivasan\n   `m(k) = Ω(2^k √(k/log k))` via the semi-random (Lovász-Local-Lemma-assisted) colouring, using\n   the existing `LovaszLocalLemmaChain` backbone.\n\n3. **LLL two-colourability.** Combine `ProbMethod` (the chain-rule LLL positivity) with a bounded\n   edge-intersection hypothesis to get the LLL version of Property B: a `k`-uniform hypergraph in\n   which each edge meets fewer than `2^{k-3}` others is 2-colourable. The remaining work is to\n   verify the conditional-avoidability hypothesis of `measure_iInter_compl_pos_of_cond_lt` from a\n   dependency-degree bound `e·p·(d+1) ≤ 1`.\n\n4. **Weighted / list colourings.** Extend to `r`-colourings (`m_r(k) ≥ r^{k-1}/…`) by replacing\n   the Boolean powerset count with an `r`-ary function count.\n\n5. **Bridge to Ramsey.** Both `RamseyProbabilisticLowerBound` and this file share the identical\n   double-count `#{A ⊆ Gr : S ⊆ A} = 2^{|Gr|-|S|}`; a shared `Shared/` counting module would let\n   the two theorems (and the Turán bound) be derived from a single first-moment lemma.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Cryptography"
-    ],
-    "id": "fd_1128",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "53945fe2",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T10:27:03.898881+00:00",
-    "title": "This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and that\nan `n² × n²` Sudoku grid sits exactly on it. The following conjectures push that\npicture toward the random, multi-constraint, and quantitative regimes.\n\n## 1. A sharp clue-density threshold for random puzzles\n\n**Conjecture.** Fix the order `n` and generate a partial `n² × n²` grid by\nrevealing each cell independently with probability `p`, filling it with a symbol\nconsistent so far. There is a critical clue density `p_c(n)` such that below it a\ncompletion exists with probability tending to `1`, and above it with probability\ntending to `0`, with the transition window shrinking as the grid grows.\n\n*The key insight is* that satisfiability is a monotone event in the revealed\nclues — once a clue set is contradictory it stays contradictory under further\nrevelation — so the transition must be a single up-set boundary, exactly the\norder-theoretic skeleton proved here, now lifted to a random ensemble.\n\n*Why now?* The deterministic boundary (satisfiable iff each line stays at or\nbelow its balance point) is now pinned down exactly; the only missing ingredient\nis the probabilistic concentration that turns a monotone boundary into a sharp\nthreshold, which modern sharp-threshold technology is built to supply.\n\n## 2. Boxes strictly lower the critical density below Latin squares\n\n**Conjecture.** The full Sudoku CSP (rows, columns, and boxes) has a strictly\nsmaller critical clue density than its row-and-column relaxation (Latin squares):\nthe box constraints move the transition to lower density, and the gap is bounded\nbelow uniformly in the order `n`.\n\n*The key insight is* that the explicit cyclic solution `L(i,j) = i + j` solves\nrows and columns but provably fails the box constraint, so the box demands are\nnot implied by the line demands — they are genuinely new constraints that must\ntighten the feasible region.\n\n*Why now?* We can already exhibit a closed-form witness for the relaxation and\ncertify that it violates the box demand; quantifying how much the extra demand\ncosts is the natural next measurement.\n\n## 3. The vanishing partition function as an analytic order parameter\n\n**Conjecture.** The proper-assignment count of a constraint block, viewed as a\nfalling-factorial partition function, admits an analytic continuation in the\nalphabet size whose real zeros accumulate exactly at the critical demand count,\nso that the location of the transition can be read off from the zero set alone.\n\n*The key insight is* that the partition function is strictly positive in the\nsatisfiable phase and identically zero beyond criticality; the boundary between\nthese regimes is precisely the largest zero of the falling factorial, turning a\ncombinatorial threshold into a zero-counting problem.\n\n*Why now?* The exact identification of the partition function with the falling\nfactorial removes all guesswork about its zeros, so the analytic-continuation\nprogram can be carried out on a fully explicit object.\n\n## 4. A list-colouring (defective-clue) threshold\n\n**Conjecture.** If each Sudoku cell is given a private list of allowed symbols of\nsize `L`, completion is possible once `L` exceeds a critical value `L_c(n)` that\nis strictly smaller than the naive `n²`, and equals it only in the worst case.\n\n*The key insight is* that the CSP is exactly a proper colouring of a union of\ncomplete graphs, so the powerful gap between chromatic number and list-chromatic\nnumber for structured graphs should manifest as a strictly easier list version of\nSudoku.\n\n*Why now?* The equivalence between the AllDifferent atom and complete-graph\ncolouring is now on firm footing, so the list-colouring refinement can be stated\nand attacked with existing colouring machinery.\n\n## 5. Width of the transition window scales polynomially\n\n**Conjecture.** The clue-density interval over which the completion probability\nfalls from `0.99` to `0.01` shrinks like a fixed negative power of the grid side\n`n²`, so the transition becomes discontinuous in the infinite-order limit.\n\n*The key insight is* that criticality is scale-invariant — every order sits at\ndensity `1` for the line constraints — so the only room for scaling lives in the\nfluctuations, and those are governed by second-moment behaviour of the number of\ncompletions.\n\n*Why now?* With the first moment (the partition function) computed exactly, a\nsecond-moment estimate is the single remaining step to control the window width.\n",
     "domain_bridges": [],
@@ -12208,6 +12182,46 @@
     "status": "available",
     "timestamp": "2026-07-12T21:41:33.221201+00:00",
     "title": "The file `Catalog/Novelty/GreedyTamariPlaneTreeBridge.lean` builds a constructiv"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Stability of the Sharp Diagonal Spectral Correlation Inequality\n\nThis cycle resolved the *diagonal* case of the correlation-stability problem for\nincreasing Boolean functions with sharp constants: the diagonal correlation\n`Cov(f,f)` equals `E[f](1 - E[f])`, is maximised exactly by balanced functions,\nand satisfies the tight stability estimate `(E[f] - 1/2)² ≤ ε` whenever\n`Cov(f,f) ≥ 1/4 - ε`. The extremal configurations were computed exactly:\ndictatorships attain the diagonal maximum `1/4`, while the two-variable\nAND / OR pair attains the off-diagonal value `1/16`. The directions below push\nfrom the settled diagonal toward the open off-diagonal regime.\n\n## Conjecture 1 — Off-diagonal AND/OR rigidity\n\nIf two increasing Boolean functions have covariance within `ε` of the extremal\noff-diagonal value and neither is a dictatorship nor supported on disjoint\ncoordinates, then, after permuting coordinates and possibly swapping the two\nfunctions, they are `O(√ε)`-close in `L²` to the two-coordinate pair\n`(x_i x_j, x_i ∨ x_j)`.\n\n**The key insight is** that the diagonal variance identity already forces both\nfunctions to be near-balanced, and near-balancedness plus near-maximal\ncorrelation pins the low-degree Fourier weight onto a single pair of\ncoordinates, leaving the AND/OR pattern as the only configuration consistent\nwith monotonicity.\n\n**Why now?** The exact diagonal constants proved this cycle remove the last\nsource of slack in the extremal analysis, so the off-diagonal argument no longer\nneeds an unspecified absolute constant — it can be run with the explicit\n`(e-1/2)² = 1/4 - e(1-e)` identity as its quantitative engine.\n\n## Conjecture 2 — Trichotomy sharpness of the stability threshold\n\nThere is an explicit threshold `ε₀ > 0` below which the near-extremal set splits\ninto exactly three disjoint classes (disjoint-coordinate pairs, common\ndictatorships, and AND/OR-type pairs), and at `ε = ε₀` two of the classes merge.\n\n**The key insight is** that each class corresponds to a distinct value of the\nleading covariance term (`0`, `1/4`, `1/16`), and stability is possible only when\n`ε` is smaller than half the minimum gap between these values.\n\n**Why now?** The three extremal values are now known exactly, so the merging\nthreshold is a concrete finite computation rather than an asymptotic estimate.\n\n## Conjecture 3 — Weighted (biased-measure) diagonal stability\n\nUnder the `p`-biased product measure the diagonal identity becomes\n`Cov_p(f,f) = E_p[f](1 - E_p[f])`, and the stability estimate\n`(E_p[f] - 1/2)² ≤ ε` persists with the *same* constant `1`, independent of `p`.\n\n**The key insight is** that the variance identity is measure-agnostic: it uses\nonly that `f` is `{0,1}`-valued, so the sharp diagonal bound transfers verbatim\nto every product measure.\n\n**Why now?** The uniform-measure proof isolates exactly the algebraic identity\nresponsible for sharpness, making the generalisation to biased measures a matter\nof replacing the counting average by the weighted one.\n\n## Conjecture 4 — Multiplicative correlation gap for non-dictator monotone pairs\n\nFor increasing Boolean functions that are not dictatorships and do not share a\npivotal coordinate, the normalised correlation `Cov(f,g) / √(Var f · Var g)` is\nbounded away from `1` by an absolute constant, with the AND/OR pair achieving the\nextremal ratio.\n\n**The key insight is** that the Harris inequality gives positivity, while the\nAND/OR computation gives the first quantitative separation from perfect\ncorrelation; interpolating between them should yield a universal spectral gap.\n\n**Why now?** With Harris positivity and the exact AND/OR value both in hand, the\nratio is bracketed on both sides, so the remaining task is to prove the interior\nbound is attained only at AND/OR.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1165",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "82155f74",
+    "status": "available",
+    "timestamp": "2026-07-12T21:58:43.225868+00:00",
+    "title": "This cycle resolved the *diagonal* case of the correlation-stability problem for"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle continues the probabilistic-method thread on **Property B** (Erdős 1963,\ntwo-colourability of sparse hypergraphs). The previous cycle proved the general lower bound\n`2^{k-1} ≤ m(k)` and exhibited the triangle as a concrete non-2-colourable graph, giving\n`m(2) ≤ 3`. This cycle **packages the Erdős extremal function `m(k)` itself as an explicit\nnatural number** and determines its first two exact values, `m(1) = 1` and `m(2) = 3`.\n\nNew file: `Catalog/Cryptography/PropertyBExtremal.lean` (self-contained).\n\n## What was proved (a chain, each result building on the previous)\n\n- `PropertyBExtremal.exists_proper_two_coloring`, `single_edge_two_colorable`,\n  `card_ge_of_nonTwoColorable` — the union-bound foundation, reproduced so the file compiles\n  independently.\n- `PropertyBExtremal.mSet` and `PropertyBExtremal.m` — the extremal function packaged as an\n  honest infimum: `m k = sInf {c | ∃ N H, H is k-uniform, #H = c, H non-2-colourable}`.\n- `PropertyBExtremal.mSet_ge` / `m_ge` — the general lower bound `2^{k-1} ≤ m(k)` (for `k ≥ 1`,\n  whenever the configuration set is nonempty), repackaged for the `sInf` formulation.\n- `PropertyBExtremal.one_mem_mSet_one` and `m_one : m 1 = 1` — the exact value for `k = 1`,\n  witnessed by the single vertex-edge `{{0}}`.\n- `PropertyBExtremal.two_colorable_of_card_le_two` — **the sharp lower-bound step for `k = 2`**:\n  every graph (2-uniform hypergraph) with at most `2` edges is 2-colourable. This \"every 2-edge\n  graph is bipartite\" argument is the genuinely new mathematical content; it upgrades the generic\n  `m(2) ≥ 2` to the sharp `m(2) ≥ 3`.\n- `PropertyBExtremal.not_nonTwoColorable_of_card_le_two`, `mSet_two_ge_three` — the contrapositive\n  packaging and its consequence that every element of `mSet 2` is `≥ 3`.\n- `PropertyBExtremal.triangleGraph`, `three_mem_mSet_two`, and `m_two : m 2 = 3` — combining the\n  triangle witness (upper bound) with the sharp lower bound to pin down the exact value `m(2) = 3`.\n\n## Natural next steps\n\n1. **`m(3) = 7` (Fano plane).** Build the Fano plane as a concrete 3-uniform hypergraph on\n   `Fin 7`, verify (by `decide`) that it is non-2-colourable with `7` edges (upper bound\n   `m(3) ≤ 7`), and prove the matching lower bound `m(3) ≥ 7` (rule out every 3-uniform\n   hypergraph with `≤ 6` edges). The lower bound is substantially harder than the `k = 2` case\n   and likely needs a structural/greedy colouring argument rather than a single case split.\n\n2. **Monotonicity and general structure of `m`.** Prove `m` is (weakly) increasing in `k`, and\n   `mSet_nonempty` for all `k ≥ 1` by exhibiting the complete `k`-uniform hypergraph on `2k-1`\n   vertices as a non-2-colourable witness, so that `m_ge` applies unconditionally.\n\n3. **Alteration / Radhakrishnan–Srinivasan improvement.** Upgrade the lower bound to\n   `m(k) = Ω(2^k √(k/log k))` via a semi-random (LLL-assisted) colouring, reusing the\n   `LovaszLocalLemmaChain` backbone from earlier cycles.\n\n4. **`r`-colourings.** Generalise the extremal function to `m_r(k)` (`r`-colourability) by\n   replacing the Boolean powerset count with an `r`-ary function count, giving `m_r(k) ≥ r^{k-1}`.\n\n5. **Shared first-moment module.** Both this file and `RamseyProbabilisticLowerBound` rest on the\n   identical Boolean-lattice double count `#{A ⊆ Gr : S ⊆ A} = 2^{|Gr|-|S|}`\n   (`card_filter_superset` / `card_filter_disjoint`); factoring these into a shared `Shared/`\n   counting module would let Property B, the Ramsey bound, and the Turán bound descend from one\n   lemma.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_1166",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0c4e7ae8",
+    "status": "available",
+    "timestamp": "2026-07-12T21:59:25.872839+00:00",
+    "title": "This cycle continues the probabilistic-method thread on **Property B** (Erdős 19"
   },
   {
     "ambition_level": "extension",
