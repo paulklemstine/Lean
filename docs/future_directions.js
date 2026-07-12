@@ -144,6 +144,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle eb025541 (Q=0.830), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` \u2014 the positive theory:\n\n* **`erasedBits`** \u2014 information erased by a proof step `f : \u03b1 \u2192 \u03b2`, as the entropy drop\n  `log\u2082(card \u03b1) \u2212 log\u2082|image f|`, wit",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_eb025541_904a3964",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "eb025541",
+    "status": "available",
+    "timestamp": "2026-07-12T21:41:30.513742+00:00",
+    "title": "Deepening: `ThermodynamicsOfProof.lean` \u2014 the positive theory:"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domains": [
       "Applications"
@@ -1823,21 +1837,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T22:10:42.305562+00:00",
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
-  },
-  {
-    "consumed_by_exp_id": "bcff067f",
-    "description": "This conjecture posits that the number of maximal greedy Tamari intervals in a planar $(m+1)$-constellation equals the number of maximal planar trees with $m$ internally labeled vertices, under a bijective correspondence established via Dyck paths. It generalizes the planarity-based result of Bousquet-M\u00e9lou and Chapoton and extends it to arbitrary $m$.",
-    "domains": [
-      "Pythagorean",
-      "Bridges"
-    ],
-    "id": "fd_0097",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T22:19:01.445297+00:00",
-    "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
   },
   {
     "consumed_by_exp_id": "",
@@ -4509,7 +4508,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "208b1ca5",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4518,7 +4517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
@@ -6159,21 +6158,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The results just established fix the exact description-length law for graded"
   },
   {
-    "consumed_by_exp_id": "eb025541",
-    "description": "# Future Directions \u2014 Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` \u2014 the positive theory:\n\n* **`erasedBits`** \u2014 information erased by a proof step `f : \u03b1 \u2192 \u03b2`, as the entropy drop\n  `log\u2082(card \u03b1) \u2212 log\u2082|image f|`, with `landauerCost bits kB T = bits \u00b7 kB \u00b7 T \u00b7 ln 2`.\n* **`erasedBits_nonneg`** \u2014 erasure is never negative.\n* **`erasedBits_eq_zero_iff_injective`** \u2014 a step erases zero bits **iff** it is injective\n  (logically reversible): the reversibility criterion.\n* **`landauerCost_pos_of_not_injective`** \u2014 Landauer's principle: any irreversible step\n  dissipates strictly positive entropy at positive temperature.\n* **`erasedBits_lower_bound`** \u2014 erasing into a `card \u03b2`-state register costs at least\n  `log\u2082(card \u03b1) \u2212 log\u2082(card \u03b2)`.\n* **`erasedBits_mono_comp`** \u2014 a data-processing inequality: erasure only accumulates along a\n  proof pipeline; it cannot be undone downstream.\n* **`erasedBits_bennett`** \u2014 Bennett's reversible embedding `x \u21a6 (x, f x)` erases zero bits,\n  so computation *per se* is free; only logical irreversibility costs energy.\n* **`erasedBits_collapse = n`, `erasedBits_bigCollapse = 2^m`,\n  `exponential_erasure_separation`** \u2014 explicit families whose verification erases linearly\n  resp. exponentially many bits; the erasure is unbounded.\n* **`incompressible`** \u2014 a Kolmogorov counting bound: the `2\u207f` Boolean predicates on `n` bits\n  cannot be injectively coded by the `2\u207f \u2212 1` programs of length `< n`, so some predicate has\n  no proof shorter than `n` bits, and erasing its truth table costs `\u2265 n \u00b7 kB T ln 2`.\n\n`ThermodynamicsOfProofContrarian.lean` \u2014 bold conjectures adjudicated:\n\n* **Refuted** \"every non-identity step erases\" (`exists_reversible_nontrivial_step`, the NOT\n  gate).\n* **Confirmed** the textbook AND-gate erasure of exactly one bit (`erasedBits_andGate`).\n* **Refuted** additivity of erasure under composition (`erasedBits_not_additive`); the correct\n  law is sub-additivity/monotonicity.\n* **Confirmed** every bijection is free (`erasedBits_bijective_zero`).\n\n## Open directions\n\n1. **Genuine creation vs. erasure ledger.** Extend the model with an explicit *creation*\n   primitive (allocating ancilla / writing bits) and a *cost functional* over full proofs\n   (lists of create/erase steps).  Conjecture: for every function there is a reversible\n   dilation with zero net erasure (Bennett), but the *minimal simultaneous* creation and\n   erasure of a proof of a fixed predicate obey a trade-off `create + erase \u2265 K(predicate)`.\n\n2. **Kolmogorov complexity proper.** Replace the counting proxy `incompressible` with a real\n   prefix/plain Kolmogorov complexity `K` (a universal machine formalized in Lean) and prove\n   the *thermodynamic verification bound*: verifying `x` from a shortest certificate erases\n   `\u2265 K(x) \u2212 O(1)` bits, hence dissipates `\u2265 (K(x) \u2212 O(1)) \u00b7 kB T ln 2`.\n\n3. **Exponential proof-vs-answer gap.** Formalize a concrete decision problem where the\n   shortest checkable certificate is exponentially longer than the answer's description\n   (`bigCollapse` is a toy witness), tying the erasure separation to proof-complexity lower\n   bounds.\n\n4. **Second-law / monotone entropy for proof DAGs.** Generalize `erasedBits_mono_comp` from\n   linear pipelines to arbitrary proof DAGs and formulate a Clausius-style inequality for the\n   total dissipated entropy of a derivation.\n\n5. **Landauer efficiency of specific calculi.** Compute the erasure cost of standard inference\n   rules (resolution, modus ponens, cut) and compare calculi by their intrinsic erasure per\n   derived consequence.\n\n\n# Future Directions \u2014 Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` \u2014 the positive theory:\n\n* **`erasedBits`** \u2014 information erased by a proof step `f : \u03b1 \u2192 \u03b2`, as the entropy drop\n  `log\u2082(card \u03b1) \u2212 log\u2082|image f|`, with `landauerCost bits kB T = bits \u00b7 kB \u00b7 T \u00b7 ln 2`.\n* **`erasedBits_nonneg`** \u2014 erasure is never negative.\n* **`erasedBits_eq_zero_iff_injective`** \u2014 a step erases zero bits **iff** it is injective\n  (logically reversible): the reversibility criterion.\n* **`landauerCost_pos_of_not_injective`** \u2014 Landauer's principle: any irreversible step\n  dissipates strictly positive entropy at positive temperature.\n* **`erasedBits_lower_bound`** \u2014 erasing into a `card \u03b2`-state register costs at least\n  `log\u2082(card \u03b1) \u2212 log\u2082(card \u03b2)`.\n* **`erasedBits_mono_comp`** \u2014 a data-processing inequality: erasure only accumulates along a\n  proof pipeline; it cannot be undone downstream.\n* **`erasedBits_bennett`** \u2014 Bennett's reversible embedding `x \u21a6 (x, f x)` erases zero bits,\n  so computation *per se* is free; only logical irreversibility costs energy.\n* **`erasedBits_collapse = n`, `erasedBits_bigCollapse = 2^m`,\n  `exponential_erasure_separation`** \u2014 explicit families whose verification erases linearly\n  resp. exponentially many bits; the erasure is unbounded.\n* **`incompressible`** \u2014 a Kolmogorov counting bound: the `2\u207f` Boolean predicates on `n` bits\n  cannot be injectively coded by the `2\u207f \u2212 1` programs of length `< n`, so some predicate has\n  no proof shorter than `n` bits, and erasing its truth table costs `\u2265 n \u00b7 kB T ln 2`.\n\n`ThermodynamicsOfProofContrarian.lean` \u2014 bold conjectures adjudicated:\n\n* **Refuted** \"every non-identity step erases\" (`exists_reversible_nontrivial_step`, the NOT\n  gate).\n* **Confirmed** the textbook AND-gate erasure of exactly one bit (`erasedBits_andGate`).\n* **Refuted** additivity of erasure under composition (`erasedBits_not_additive`); the correct\n  law is sub-additivity/monotonicity.\n* **Confirmed** every bijection is free (`erasedBits_bijective_zero`).\n\n## Open directions\n\n1. **Genuine creation vs. erasure ledger.** Extend the model with an explicit *creation*\n   primitive (allocating ancilla / writing bits) and a *cost functional* over full proofs\n   (lists of create/erase steps).  Conjecture: for every function there is a reversible\n   dilation with zero net erasure (Bennett), but the *minimal simultaneous* creation and\n   erasure of a proof of a fixed predicate obey a trade-off `create + erase \u2265 K(predicate)`.\n\n2. **Kolmogorov complexity proper.** Replace the counting proxy `incompressible` with a real\n   prefix/plain Kolmogorov complexity `K` (a universal machine formalized in Lean) and prove\n   the *thermodynamic verification bound*: verifying `x` from a shortest certificate erases\n   `\u2265 K(x) \u2212 O(1)` bits, hence dissipates `\u2265 (K(x) \u2212 O(1)) \u00b7 kB T ln 2`.\n\n3. **Exponential proof-vs-answer gap.** Formalize a concrete decision problem where the\n   shortest checkable certificate is exponentially longer than the answer's description\n   (`bigCollapse` is a toy witness), tying the erasure separation to proof-complexity lower\n   bounds.\n\n4. **Second-law / monotone entropy for proof DAGs.** Generalize `erasedBits_mono_comp` from\n   linear pipelines to arbitrary proof DAGs and formulate a Clausius-style inequality for the\n   total dissipated entropy of a derivation.\n\n5. **Landauer efficiency of specific calculi.** Compute the erasure cost of standard inference\n   rules (resolution, modus ponens, cut) and compare calculi by their intrinsic erasure per\n   derived consequence.\n",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_1019",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8e65b62c",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T10:14:40.485913+00:00",
-    "title": "`ThermodynamicsOfProof.lean` \u2014 the positive theory:"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThis project formalises the exact Seidel spectrum and Seidel energy of complete\nbipartite graphs and their single-edge deletions, and settles the sharp threshold\nfor the energy increase.\n\n## What is proved (Lean, no `sorry`, standard axioms only)\n\n* `SeidelEnergyBipartite.lean`\n  * `seidelEnergy_Kmn` : `E(K_{m,n}) = 2(m+n\u22121)`, via the rank-one identity\n    `S = w w\u1d40 \u2212 I` and the matrix determinant lemma for `charpoly`.\n* `SeidelEnergyDeletion.lean`\n  * `Sddel_charpoly` : the deleted graph's characteristic polynomial,\n    `(X+1)^{m+n\u22123}(X\u22121)(X\u00b2\u2212(m+n\u22124)X\u2212(3(m+n)\u22127))`, via a rank-three factorisation\n    `Sddel + I = U K U\u1d40` and `charpoly_mul_comm_of_le`.\n  * `Sddel_energy` : `E(K_{m,n} \u2212 e) = (m+n\u22122) + \u221a((m+n\u22122)(m+n+6))`.\n  * `seidel_energy_increase_iff` : **strict increase \u21d4 `m+n \u2265 4`** (the sharp\n    threshold \u2014 not \"both parts `\u2265 3`\").\n  * `conjecture_is_false` / `Ktwotwo_energies` : the \"both `\u2265 3`\" conjecture is\n    refuted; `K_{2,2}` jumps `6 \u2192 2 + 2\u221a5`.\n\n## The cross-domain bridge\n\nThe proof links **graph combinatorics** (`K_{m,n}`, edge deletion), **low-rank\nlinear algebra** (rank-one and rank-three perturbations of `\u2212I`, the matrix\ndeterminant lemma, characteristic polynomials), and **real analysis** (the\n`\u221a((m+n\u22122)(m+n+6))` term and the monotone comparison). The Seidel energy \u2014 an\nanalytic sum of `|eigenvalue|` \u2014 is pinned down purely algebraically through\n`charpoly.roots`.\n\n## Natural next steps\n\n1. **Arbitrary edge sets.** Deleting `k` independent cross edges is a rank-`(2k+1)`\n   perturbation; the same `charpoly_mul_comm_of_le` machinery should yield a\n   `(2k+1)\u00d7(2k+1)` core determinant and a closed threshold in `(m, n, k)`.\n2. **Complete multipartite graphs `K_{n\u2081,\u2026,n\u209c}`.** The Seidel matrix is again a\n   small-rank perturbation of `\u2212I` (rank `t`); the energy and its edge-deletion\n   behaviour should follow from a `t\u00d7t` core.\n3. **General Seidel-energy monotonicity.** Formalise the McClelland/Koolen\u2013Moulton\n   style bounds and characterise which graph families are `Seidel-energy monotone`\n   under edge deletion.\n4. **Bounds toolkit.** Extract the reusable lemma `energy = (charpoly.roots).map |\u00b7| |>.sum`\n   (here `energy_eq_roots`) into a standalone Seidel/graph-energy library, with the\n   rank-one (`charpoly_vecMulVec`) and rank-`r` (`charpoly_mul_comm_of_le`) recipes.\n",
     "domains": [
@@ -7375,6 +7359,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 A Second Law for Mathematical Derivations\n\nThis cycle promoted the single-step Landauer theory of proof to a *pipeline* theory: an entire\nderivation, viewed as a sequence of steps on a fixed finite register, obeys a discrete\nClausius inequality \u2014 its total dissipated entropy equals a sum of nonnegative per-step\nproductions, is monotone under extension of the derivation, and vanishes exactly when the\nderivation is logically reversible. A creation/erasure ledger makes precise the trade-off in\nBennett's reversible dilation: reversibility is bought by allocating ancilla rather than by\nerasing. The following bold, testable conjectures grow out of these findings.\n\n## 1. A Clausius inequality for branching derivations (proof DAGs)\n\n**Conjecture.** For any proof organized as a directed acyclic graph of steps (with joins that\nmerge intermediate registers), the total dissipated entropy equals the sum of nonnegative\nlocal productions over the edges, and is invariant under topological re-serialization of the\nDAG.\n\nThe key insight is that the linear-pipeline Clausius decomposition already exhibits total\ndissipation as an *additive edge functional*; branching only adds join nodes, whose merge cost\nis itself an image-collapse and hence a nonnegative production. **Why now?** The pipeline\nledger established here isolates the marginal (not standalone) production of each step, which is\nexactly the quantity that remains additive across the non-tree structure of a DAG \u2014 the missing\ningredient that made earlier tree-only statements too weak.\n\n## 2. Reversibility is a local, checkable property of a derivation\n\n**Conjecture.** A derivation dissipates zero entropy if and only if every prefix map is\ninjective, and this global reversibility can be certified by a linear-time left-to-right scan\nthat never needs to inspect the whole composite.\n\nThe key insight is that per-step productions are nonnegative and sum to the total, so the total\nis zero exactly when each increment is zero \u2014 a local condition on consecutive images rather\nthan a global condition on the final map. **Why now?** With the ledger identity in hand, zero\ntotal dissipation factors through the individual `stepDrop` terms, turning a global injectivity\nquestion into a per-edge test.\n\n## 3. The creation/erasure trade-off is tight and conserved\n\n**Conjecture.** Among all reversible dilations of a fixed irreversible step, Bennett's\ninput-retaining embedding minimizes created ancilla, and the minimum created capacity equals\nthe logarithm of the output register size \u2014 no reversible implementation can do with less.\n\nThe key insight is that any injective dilation must separate all inputs that the original step\nmerged, and the cheapest way to do so is to retain precisely the output coordinate, giving\ncreated bits equal to `log\u2082(card \u03b2)`. **Why now?** The ledger already computes Bennett's\ncreation cost exactly; the remaining step is a matching lower bound over all reversible\ndilations, which the injective-image counting made available here brings within reach.\n\n## 4. Intrinsic dissipation of an inference rule\n\n**Conjecture.** Each standard inference rule has a well-defined intrinsic dissipation \u2014 the\nmarginal entropy production of its register-collapse \u2014 and rules can be ordered by this\nquantity, with resolution and cut strictly dominating structural rules.\n\nThe key insight is that the marginal production `stepDrop` depends only on how a rule collapses\ndistinguishable premise-states onto conclusion-states, a purely combinatorial datum\nindependent of the surrounding derivation. **Why now?** The pipeline framework supplies exactly\nthe context-independent marginal cost needed to attach a single number to a rule rather than to\na whole proof.\n\n## 5. A thermodynamic proof-length lower bound\n\n**Conjecture.** If verifying a statement requires collapsing an exponentially large certificate\nspace to a single accept-state, then every derivation of it dissipates entropy at least linear\nin the certificate length, giving an unconditional heat lower bound for verification.\n\nThe key insight is that monotonicity of pipeline dissipation forbids recovering erased\ndistinctions later, so the total erasure is bounded below by the single largest collapse in the\nderivation. **Why now?** The monotone-prefix theorem converts one large local collapse into a\nglobal lower bound, connecting the thermodynamic ledger to proof-complexity separations for the\nfirst time in this framework.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1163",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "eb025541",
+    "status": "available",
+    "timestamp": "2026-07-12T21:41:24.083166+00:00",
+    "title": "This cycle promoted the single-step Landauer theory of proof to a *pipeline* the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was proved\n\nThe file `Catalog/Novelty/GreedyTamariPlaneTreeBridge.lean` builds a constructive\n**cross-domain bridge** between three combinatorial families, one of which\n(plane trees) has no prior presence in Mathlib:\n\n* **Plane trees** \u2014 ordered rooted trees of arbitrary arity (tree combinatorics);\n* **Binary trees** \u2014 `Mathlib`'s `Tree Unit` (data structures / algebra);\n* **Dyck words** \u2014 `Mathlib`'s `DyckWord` lattice paths (path combinatorics).\n\nKey results (all `sorry`-free, depending only on `propext`, `Classical.choice`,\n`Quot.sound`):\n\n* `forestEquivBin : List PlaneTree \u2243 Tree Unit` \u2014 the left-child/right-sibling\n  (Knuth) transform, proved a genuine bijection with explicit inverse.\n* `planeTreeEquivBin : PlaneTree \u2243 Tree Unit` \u2014 the global bijection.\n* `numNodes_forestToBin` \u2014 the transform preserves node counts.\n* `card_forest_eq_catalan`, `card_planeTree_eq_catalan` \u2014 enumeration of plane\n  forests/trees by Catalan numbers.\n* `planeTreeEquivDyck : {t // t.numNodes = n+1} \u2243 {p : DyckWord // p.semilength = n}`\n  and `card_planeTree_eq_card_dyck` \u2014 the headline **planar trees \u2194 Dyck paths**\n  correspondence.\n\nThis is exactly the `m = 1` backbone of the mission's programme: the \"bijective\ncorrespondence established *via Dyck paths*\" relating **planar trees** to objects\ngoverned by the Tamari lattice.\n\n## Toward the full conjecture (arbitrary `m`)\n\nThe mission conjecture concerns maximal *greedy Tamari intervals* in planar\n`(m+1)`-constellations versus maximal planar trees with `m` internally labeled\nvertices. Natural next steps, in increasing difficulty:\n\n1. **Fuss\u2013Catalan / `m`-ary layer.** Introduce full `(m+1)`-ary plane trees and\n   `m`-Dyck paths (steps `+1` / `-m`, staying non-negative). Generalize\n   `forestEquivBin` to an `(m+1)`-fold first-return decomposition and prove the\n   count is the Fuss\u2013Catalan number\n   `\\frac{1}{mn+1}\\binom{(m+1)n}{n}`. This is the direct `m`-analogue of the file\n   and the cleanest extension. The main new ingredient is a Fuss\u2013Catalan\n   convolution recurrence, provable by induction on the number of internal nodes.\n\n2. **Tamari order.** Formalize the Tamari partial order on Dyck words / binary\n   trees via the right-rotation cover relation, and prove antisymmetry through a\n   strictly monotone integer statistic. This is the missing order-theoretic\n   infrastructure (Mathlib currently has none) needed to even *state* \"Tamari\n   interval\".\n\n3. **Greedy / synchronized intervals.** Define greedy (synchronized) Tamari\n   intervals and their maximal elements, then attempt the enumeration bridge to\n   labeled planar trees. This is genuine research-level territory generalizing\n   Bousquet-M\u00e9lou\u2013Chapoton; the bijection in this file is the shared\n   Dyck-path substrate on which such a correspondence would be built.\n\n## Reusability\n\nPlane trees, their node count, and the Knuth transform are stated generically and\nare independently useful; they could seed a `Mathlib` contribution on ordered\ntrees, which are currently absent despite binary trees and Dyck words being\npresent.\n",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "fd_1164",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bcff067f",
+    "status": "available",
+    "timestamp": "2026-07-12T21:41:33.221201+00:00",
+    "title": "The file `Catalog/Novelty/GreedyTamariPlaneTreeBridge.lean` builds a constructiv"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
     "domains": [
       "Applications"
@@ -7386,6 +7400,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:36:38.107204+00:00",
     "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
+  },
+  {
+    "consumed_by_exp_id": "26646791",
+    "description": "Cycle bcff067f (Q=0.700) proved 20 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: This conjecture posits that the number of maximal greedy Tamari intervals in a planar $(m+1)$-constellation equals the number of maximal planar trees with $m$ internally labeled vertices, under a bije",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_bcff067f_2a707e6a",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bcff067f",
+    "status": "in_progress",
+    "timestamp": "2026-07-12T21:41:37.868938+00:00",
+    "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path struc"
   },
   {
     "consumed_by_exp_id": "",

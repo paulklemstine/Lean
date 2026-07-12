@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e6201bf5",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Objective Reduction and the Limits of Computable Cognition\n\nThe results of this cycle pin down the quantitative skeleton of the objective\nreduction proposal for conscious events a",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-12T04:29:00",
-      "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
-    },
-    {
-      "cycle_id": "245dd564",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Mind Tools: Mathematics as Cognitive Extension\n\nThis project formalizes Rudy Rucker's notion of a **mind tool** (a formal system\nthat extends what a cognitive agent can directly",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 44,
-      "timestamp": "2026-07-12T04:46:27",
-      "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
-    },
-    {
       "cycle_id": "c016fced",
       "domain": "Applications",
       "key_insight": "# Future Directions: Winning on the Hilbert Board\n\nThis cycle established that the lone-rook fortress on the infinite plane is not a\nplanar accident: the king's one-step escape, its infinite escape ru",
@@ -499,29 +479,29 @@
       "theorem_count": 29,
       "timestamp": "2026-07-12T20:49:46",
       "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partia"
+    },
+    {
+      "cycle_id": "eb025541",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — A Second Law for Mathematical Derivations\n\nThis cycle promoted the single-step Landauer theory of proof to a *pipeline* theory: an entire\nderivation, viewed as a sequence of step",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T21:41:30",
+      "title": "`ThermodynamicsOfProof.lean` — the positive theory:"
+    },
+    {
+      "cycle_id": "bcff067f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was proved\n\nThe file `Catalog/Novelty/GreedyTamariPlaneTreeBridge.lean` builds a constructive\n**cross-domain bridge** between three combinatorial families, one of which\n(p",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 20,
+      "timestamp": "2026-07-12T21:41:37",
+      "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "14000bf9",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The Mathematics of Jigsaw Puzzles\n\nThis cycle established that edge complementation is an order-two symmetry whose\nfixed points are exactly the border edges, that encoding truth v",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-10T02:41:36",
-      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-    },
-    {
-      "cycle_id": "7976e906",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe file `MachineLearning/RipsDoublingLowerBound.lean` establishes, with complete\nLean proofs and only the standard axioms, the combinatorial and metric core behind\nthe statement",
-      "quality_score": 0.62,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-10T02:59:06",
-      "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
-    },
     {
       "cycle_id": "7a9dcf2f",
       "domain": "MachineLearning",
@@ -2501,45 +2481,29 @@
       "theorem_count": 29,
       "timestamp": "2026-07-12T20:49:46",
       "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partia"
+    },
+    {
+      "cycle_id": "eb025541",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — A Second Law for Mathematical Derivations\n\nThis cycle promoted the single-step Landauer theory of proof to a *pipeline* theory: an entire\nderivation, viewed as a sequence of step",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T21:41:30",
+      "title": "`ThermodynamicsOfProof.lean` — the positive theory:"
+    },
+    {
+      "cycle_id": "bcff067f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was proved\n\nThe file `Catalog/Novelty/GreedyTamariPlaneTreeBridge.lean` builds a constructive\n**cross-domain bridge** between three combinatorial families, one of which\n(p",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 20,
+      "timestamp": "2026-07-12T21:41:37",
+      "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d019c88a",
-      "domain": "Applications",
-      "name": "parity_adj",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "d019c88a",
-      "domain": "Applications",
-      "name": "hypercube_walk_length_parity",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "d019c88a",
-      "domain": "Applications",
-      "name": "hypercube_closed_walk_even",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "f8254dbf",
-      "domain": "Novelty",
-      "name": "defends_mono",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "f8254dbf",
-      "domain": "Novelty",
-      "name": "charF_mono",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "f8254dbf",
-      "domain": "Novelty",
-      "name": "stable_defends",
-      "quality": 0.83
-    },
     {
       "cycle_id": "edd57dbd",
       "domain": "Applications",
@@ -2803,17 +2767,46 @@
       "domain": "Applications",
       "name": "fussCatalan_closedForm",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "eb025541",
+      "domain": "Novelty",
+      "name": "logb2_le",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "eb025541",
+      "domain": "Novelty",
+      "name": "compose_nil",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "eb025541",
+      "domain": "Novelty",
+      "name": "compose_append_singleton",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "bcff067f",
+      "domain": "Novelty",
+      "name": "children_node",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "bcff067f",
+      "domain": "Novelty",
+      "name": "node_children",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "bcff067f",
+      "domain": "Novelty",
+      "name": "numNodes_node",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-12T20:49:46",
+  "last_updated": "2026-07-12T21:41:37",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "7473e6ed",
-      "domain": "Physics",
-      "sorry_count": 4,
-      "timestamp": "2026-07-11T22:13:56"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "29aa9d96",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-12T20:49:46"
+    },
+    {
+      "context": "Every proof below is complete and `sorry`-free; the file compiles standalone.",
+      "cycle_id": "bcff067f",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-12T21:41:37"
     }
   ],
   "research_threads": {
@@ -3579,18 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "494cab2e",
-        "quality": 0.82,
-        "theorems": 21,
-        "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
-      },
-      {
-        "cycle_id": "3cdfbb0e",
-        "quality": 0.82,
-        "theorems": 26,
-        "title": "Deepening: Automatic Sequences and the Halting Problem: When Is a Sequence Compu"
-      },
-      {
         "cycle_id": "ddbb821f",
         "quality": 0.82,
         "theorems": 25,
@@ -3637,6 +3625,18 @@
         "quality": 0.78,
         "theorems": 29,
         "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
+      },
+      {
+        "cycle_id": "eb025541",
+        "quality": 0.83,
+        "theorems": 15,
+        "title": "`ThermodynamicsOfProof.lean` — the positive theory:"
+      },
+      {
+        "cycle_id": "bcff067f",
+        "quality": 0.7,
+        "theorems": 20,
+        "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
       }
     ],
     "NumberTheory": [
