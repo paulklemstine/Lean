@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "29aa9d96",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field\norder parameter `m = tanh(β m)` undergoes a sharp, continuous (second-order)\nphase transition at t",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 11,
-      "timestamp": "2026-07-11T22:30:55",
-      "title": "Deepening: Speculative: Mathematics as a Phase Transition"
-    },
-    {
       "cycle_id": "a06d4115",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThis cycle extends the self-contained theory of negative-dimensional (virtual\ngraded) spaces modelled by the Laurent-polynomial ring\n`VS = ℤ[T; T⁻¹",
@@ -499,19 +489,19 @@
       "theorem_count": 31,
       "timestamp": "2026-07-12T15:03:14",
       "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
+    },
+    {
+      "cycle_id": "919ceb1f",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLe",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-12T15:20:37",
+      "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6b4ee47d",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nThis project proves the upper half of the generalized Turán result\n`ex(n, K_{a,b}, K_{3,b+1}) = Θ(n^3)` and, as a **connector**, re-expresses the combinatorial\ncardinality bound i",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-09T19:54:51",
-      "title": "Upper Bound on Generalized Turán Number ex(n, K_{a,b}, K_{3,b+1})"
-    },
     {
       "cycle_id": "52557551",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 31,
       "timestamp": "2026-07-12T15:03:14",
       "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
+    },
+    {
+      "cycle_id": "919ceb1f",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLe",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-12T15:20:37",
+      "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "62dd551b",
-      "domain": "Novelty",
-      "name": "hilbertCube_compact",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "62dd551b",
-      "domain": "Novelty",
-      "name": "hilbertCube_metrizable",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "62dd551b",
-      "domain": "Novelty",
-      "name": "hilbertCube_secondCountable",
-      "quality": 0.82
-    },
     {
       "cycle_id": "e978b5fe",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "diamond_not_isTree",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "919ceb1f",
+      "domain": "Novelty",
+      "name": "card_gt",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "919ceb1f",
+      "domain": "Novelty",
+      "name": "card_fiber",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "919ceb1f",
+      "domain": "Novelty",
+      "name": "card_strictMinAt",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-12T15:03:14",
+  "last_updated": "2026-07-12T15:20:37",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "49f67430",
-        "quality": 0.62,
-        "theorems": 22,
-        "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k ≥ 3 and n ≥ k"
-      },
-      {
         "cycle_id": "62dd551b",
         "quality": 0.82,
         "theorems": 22,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 34,
         "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, t"
+      },
+      {
+        "cycle_id": "919ceb1f",
+        "quality": 0.83,
+        "theorems": 18,
+        "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
       }
     ],
     "NumberTheory": [

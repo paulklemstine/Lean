@@ -420,25 +420,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "919ceb1f",
-    "description": "Building on cycle 73c84a79 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every inclusion-free hypergraph H on n vertices, there exists an edge offset function f : H → ℝ such that the number of isolating weight assignments w ∈ [d]^n equals the lower bound n * ∑_{j=0}^{d-1} j^{n-1}. This would show that the bound proved in the paper is not only globally tight (achieved",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_73c84a79_2cf3972c",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "73c84a79",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T13:35:34.495525+00:00",
-    "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7473e6ed (Q=0.820), which proved 14 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (Gödel-style). Show: the fixed points of the type-forming operations cor",
     "domain_bridges": [],
@@ -11193,7 +11174,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00880e6f",
     "description": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThe cycle established a compact algebraic core for four-dimensional geometry: a\nsingle sum-of-squares identity, `(a+b)² = 4ab + (a-b)²`, drives the Hopf map, the\nClifford torus, and the norm-preservation of the \"rotation through the fourth\ndimension\", while an odd-dimensional eigenvalue obstruction explains why that\nrotation is fixed-point-free. The following conjectures extend those findings.\n\n## 1. Every fixed-point-free isometry of an odd sphere is a complex (or quaternionic) structure up to conjugacy\n\nOn `S^{2n-1}` a linear isometry without fixed points must have `-1`-free real\nspectrum only in the sense that it has no eigenvalue `1`; we conjecture that the\ngeneric such isometry is orthogonally conjugate to a block-diagonal sum of planar\nrotations, and that the *canonical* fixed-point-free representative is exactly a\ncomplex structure `J` with `J² = -I`.\n\nThe key insight is that fixed-point freeness on the sphere is equivalent to the\nabsence of the eigenvalue `1`, and among all such maps the complex structures are\nthe unique isometries whose square is central. Why now? The `4`-dimensional case\nis fully settled here by an explicit `J`, giving a concrete anchor from which the\n`2n`-dimensional classification can be bootstrapped one rotation block at a time.\n\n## 2. The Clifford torus is the unique flat torus on `S³` with balanced coordinate radii\n\nAmong all embeddings of the flat `2`-torus into `S³` of the form\n`(θ,φ) ↦ (r₁cosθ, r₁sinθ, r₂cosφ, r₂sinφ)` with `r₁² + r₂² = 1`, the Clifford\ntorus `r₁ = r₂ = 1/√2` is conjectured to be the unique critical point of the area\nfunctional, and simultaneously the unique one invariant under the Hopf circle\naction.\n\nThe key insight is that the balance condition `r₁² = r₂² = 1/2` proved here is\nequivalent to invariance under the diagonal circle action, which is precisely the\nEuler–Lagrange condition for the area. Why now? The balanced-radius identity is\nalready available in exact form, so the variational uniqueness reduces to a\none-parameter optimisation over `r₁² ∈ (0,1)`.\n\n## 3. The alternating face count `1 - (-1)ⁿ` characterises the Euler characteristic of every convex `n`-polytope boundary\n\nThe identity `∑ₖ (-1)ᵏ C(n,k) 2ⁿ⁻ᵏ = 1` yields boundary Euler characteristic\n`1 - (-1)ⁿ` for the `n`-cube. We conjecture the same value governs the boundary of\n*every* simple `n`-polytope, independent of combinatorial type, via a\ndeformation to the cube's face lattice.\n\nThe key insight is that the alternating face sum is a topological invariant of the\nboundary sphere `S^{n-1}`, so it cannot depend on the polytope's fine\ncombinatorics. Why now? The cube case is proved from the binomial theorem alone,\nexposing the invariant in its simplest possible form and inviting a\ndeformation-invariance argument.\n\n## 4. The Hopf circle action is the maximal symmetry preserving all Hopf fibres\n\nHaving shown the Hopf map is constant on the orbits `(z,w) ↦ (λz, λw)`, we\nconjecture that the diagonal circle is the *largest* connected subgroup of `SO(4)`\nacting freely on `S³` with the Hopf fibres as its orbits, so the Hopf fibration is\nrigid: no larger continuous symmetry preserves the whole fibre family.\n\nThe key insight is that any fibre-preserving isometry must commute with the\ncomplex structure realising the action, and the centraliser of a complex structure\nin `SO(4)` is exactly the unitary group `U(2)`, whose center is that circle. Why\nnow? The invariance identity pins the action down explicitly, turning the rigidity\nquestion into a centraliser computation.\n\n## 5. The `(π²/2)r⁴` volume law is the extremal case of a dimension-`4` isoperimetric hierarchy\n\nThe `4`-ball volume `(π²/2)r⁴` and the `3`-sphere it bounds should saturate a\nsharp four-dimensional isoperimetric inequality: among all regions of `ℝ⁴` with a\nfixed `3`-dimensional boundary measure, the ball uniquely maximises volume, with\nthe constant `π²/2` appearing as the extremal ratio.\n\nThe key insight is that the Gamma-function volume constant `π²/2 = π²/2!` is\nexactly the value that makes the isoperimetric ratio scale-invariant in dimension\nfour. Why now? The exact volume constant is established, so the remaining step is\nto match it against the surface-area constant of `S³` and verify the extremal\nratio directly.\n",
     "domain_bridges": [],
     "domains": [
@@ -11206,7 +11187,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "47a54792",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:29:32.040516+00:00",
     "title": "The cycle established a compact algebraic core for four-dimensional geometry: a"
   },
@@ -12069,6 +12050,26 @@
     "status": "available",
     "timestamp": "2026-07-12T15:03:11.200266+00:00",
     "title": "File: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conjecture is FALSE** (`general_tightness_fails`).\n   It is *not* true that every inclusion-free hypergraph attains the Faber–Harris\n   bound `n·∑_{j<d} j^{n-1}` for some real offset. A single-edge hypergraph makes\n   every assignment isolating, giving count `d^n` for *all* offsets `f`, strictly\n   above the bound (already `4 > 2` at `n=d=2`). Offset freedom does not repair an\n   over-counting hypergraph.\n\n2. **A new symmetric extremal witness** (`card_strictMax_eq`). The co-singleton\n   hypergraph (all `(n-1)`-edges) *also* attains the bound exactly with zero\n   offset, via a min↔max reflection duality (`hasStrictMin_iff_rev`,\n   `card_strictMax_eq_card_isolating`). Thus the bound has at least two\n   symmetric extremal witnesses (singletons and their complements).\n\n## Open questions raised\n\n- **Characterise the extremal hypergraphs.** Computation for `n=3` shows exactly\n  the singletons and the all-pairs (co-singleton) families reach the bound.\n  Conjecture: for the *offset-free* problem, an antichain attains `B(n,d)` iff it\n  is vertex-transitive and \"sum-symmetric\" (e.g. the `k`-uniform complete designs\n  for suitable `k`). A formal characterisation is open.\n\n- **Covering antichains still fail.** Even covering antichains such as\n  `{{0,1},{0,2}}` overshoot the bound for every offset (verified computationally,\n  excess ≥ 1). A formal proof of failure that quantifies over *all real offsets*\n  (not just the degenerate single-edge case) would strengthen\n  `general_tightness_fails`. The obstacle is reducing the continuum of offsets to\n  the finite set of order-types; a Lean development of that reduction is the\n  natural next step.\n\n- **Which `k`-uniform complete hypergraphs are extremal?** The singletons (`k=1`)\n  and co-singletons (`k=n-1`) are extremal. Are the complete `k`-uniform families\n  extremal for intermediate `k`? Preliminary data suggests not in general; a clean\n  criterion is open.\n\n- **Quantitative excess.** Define `excess(H) := min_f #isolating(H,f) − B(n,d) ≥ 0`.\n  Understanding `excess` as a hypergraph invariant (monotonicity, additivity under\n  disjoint unions) is an appealing direction.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1144",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "919ceb1f",
+    "status": "available",
+    "timestamp": "2026-07-12T15:20:30.569302+00:00",
+    "title": "This cycle deepened the singleton-hypergraph tightness result of"
   },
   {
     "ambition_level": "extension",
