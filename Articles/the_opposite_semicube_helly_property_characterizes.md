@@ -1,182 +1,182 @@
-# When Pairs Are Enough: The Surprising Simplicity of Halfspaces in a Cube
+# Perfectly Balanced Worlds: When a Product of Shapes Reflects Itself
 
-## A puzzle about agreement
+## A puzzle about symmetry
 
-Imagine a committee of experts, each of whom cares about exactly one feature of a
-proposal and insists it take a particular value. One expert demands *"the budget
-must be approved."* Another insists *"the budget must be rejected."* A third says
-*"the deadline must be in spring."* A fourth wants *"the venue downtown."* Each
-expert, on their own, is easy to satisfy: there are plenty of proposals meeting any
-single demand. The interesting question is whether **all** the experts can be
-satisfied *at once*.
+Imagine standing in a vast city whose streets run only north–south and
+east–west, like a perfect grid. Every intersection is a place you can be, and
+every block you walk changes exactly one of your two coordinates. Such grids —
+and their higher-dimensional cousins, the *hypercubes* — are the cleanest
+geometric objects in all of combinatorics. They are so clean that mathematicians
+use them as a universal yardstick: a graph is called a **partial cube** if it can
+be laid down inside a hypercube without ever distorting distances, so that the
+shortest path between any two of its points is faithfully preserved.
 
-There is an obvious obstruction. If one expert wants the budget approved and another
-wants it rejected, no proposal can please both — their demands are flatly
-contradictory. But here is the striking fact this article is about: *that is the only
-way things can go wrong.* If you can satisfy every **pair** of experts
-simultaneously, then you can satisfy **all** of them simultaneously. Two-at-a-time
-consistency automatically upgrades to all-at-once consistency.
+Partial cubes are everywhere once you learn to look. The cycle you trace walking
+around an even-sided polygon is one. The family tree of "flip one switch at a
+time" configurations is one. Media theory, the mathematics of how preferences and
+opinions evolve one change at a time, lives entirely inside partial cubes. They
+are the natural habitat of *one-step-at-a-time* worlds.
 
-This is a small miracle of geometry, and it is exact, provable, and — as we'll see —
-part of a much larger story about how complicated spaces can be broken into simple,
-independent pieces.
+This article is about a single, surprisingly delicate question: **when is such a
+world perfectly balanced, and what happens to that balance when you multiply two
+worlds together?**
 
-## The cube as a universe of choices
+## Cuts, halves, and the meaning of balance
 
-To make the puzzle precise, picture every proposal as a string of yes/no answers.
-With $n$ binary features, a proposal is a point in the **$n$-dimensional cube** $Q_n$:
-the set of all binary strings of length $n$. For $n = 2$ this is a square with corners
-$00, 01, 10, 11$; for $n = 3$ it is an ordinary cube with eight corners; for larger
-$n$ it is the higher-dimensional analogue, with $2^n$ corners in all. Two corners are
-neighbors precisely when they differ in a single coordinate, so the cube is not just a
-set of points but a graph — a network of proposals connected by "flip one feature"
-moves.
+Every partial cube comes equipped with a natural family of **cuts**. Picture the
+grid-city again. If you slice the city along a single vertical line running
+between two columns of blocks, the whole city falls into two pieces: everything to
+the west of the slice and everything to the east. Crucially, *every* edge that
+crossed that slice ran in the same compass direction. In the language of partial
+cubes, the edges group into **coordinate classes** (the technical name is
+*Θ-classes*, after Djoković and Winkler who discovered them), and deleting one
+class cuts the graph cleanly into two opposite halves. These halves are called
+**semicubes**.
 
-It is convenient to describe a corner by the *set of features it turns on*. A corner
-of $Q_n$ is then simply a subset $s$ of the coordinate set $\{1, 2, \dots, n\}$: the
-coordinates in $s$ are the "yes" answers, and the rest are "no." This bookkeeping —
-corners as subsets — will make everything below clean.
+Now the key idea. Some cuts are lopsided: they leave many vertices on one side and
+few on the other. Others are perfectly even, splitting the world into two halves
+of exactly equal size. We call a cut **balanced** when its two opposite semicubes
+contain the same number of vertices, and we call an entire partial cube
+**harmonic-even** when *every one of its cuts is balanced*.
 
-## Semicubes: the natural halfspaces
+The name is chosen with care. In classical analysis, a *harmonic* function is one
+whose value at each point equals the average of its neighbours — a perfect local
+symmetry, a balancing of the scales. Harmonic-evenness is exactly the discrete
+shadow of that idea: across every possible cut, the two sides weigh the same.
 
-Each expert's demand carves the cube in half. Fix a coordinate $i$ and a bit
-$b \in \{\text{yes}, \text{no}\}$. The **semicube** $H(i, b)$ is the set of all corners
-whose $i$-th coordinate equals $b$:
+Which worlds are harmonic-even?
 
-$$H(i, b) = \{\, s : \text{coordinate } i \text{ of } s \text{ equals } b \,\}.$$
+- **Hypercubes are.** Slice an $n$-dimensional hypercube along any coordinate and
+  you get two faces of equal size $2^{n-1}$. Perfect balance, every time.
+- **Even cycles are.** Walk around a $2k$-gon and cut it along any coordinate
+  class; the cycle falls into two arcs of exactly $k$ vertices each.
+- **Most paths are not.** A straight path of three or more vertices has cuts that
+  peel off a single endpoint, leaving one vertex against many. Only the exact
+  middle cut of an even path is balanced; all the others tilt. So a long corridor
+  is emphatically *not* harmonic-even.
 
-A semicube is exactly one of the two opposite faces of the cube perpendicular to the
-$i$-th direction. It contains half the corners — $2^{n-1}$ of them. Semicubes are the
-cube's version of *halfspaces*, the fundamental convex slabs out of which everything
-else is built. An expert's demand "feature $i$ must equal $b$" is precisely the request
-that the chosen proposal lie in the semicube $H(i, b)$.
+Balance, then, is a genuine and selective property. It separates the round, closed
+worlds (cubes and cycles) from the open-ended ones (paths and trees).
 
-Two facts about semicubes are immediate but worth stating, because the whole theory
-rests on them.
+## Matching the two sides: a Helly-type view
 
-**Opposite semicubes are disjoint.** For a single coordinate $i$, the two semicubes
-$H(i, \text{yes})$ and $H(i, \text{no})$ share no corner at all:
+There is a second, more dynamic way to think about balance, and it is where the
+word *Helly* enters our story. Instead of merely counting the vertices on each
+side of a cut, ask: **can I pair them up?** Can I set up a perfect
+correspondence — a bijection — that matches every vertex on the west side with a
+unique partner on the east side, and vice versa, with nobody left over?
 
-$$H(i, \text{yes}) \cap H(i, \text{no}) = \varnothing.$$
+We say a partial cube has the **opposite-semicube Helly property** when, for
+*every* cut, such a matching of the two opposite semicubes exists. This is a
+transversal condition in the spirit of the great matching and intersection
+theorems of combinatorics — Hall's marriage theorem and Helly's theorem on
+overlapping convex sets — which all ask whether local compatibility can be
+assembled into a global structure.
 
-A corner cannot have its $i$-th coordinate be both yes and no. This is the geometric
-form of the contradictory-experts obstruction.
+For finite worlds the connection between the two viewpoints is immediate and
+beautiful: **two finite sets can be matched by a bijection precisely when they
+have the same size.** So the dynamic matching property and the static counting
+property are one and the same:
 
-**Different coordinates are independent.** If two semicubes concern *different*
-coordinates $i \neq j$, they always overlap. Whatever the demands on features $i$ and
-$j$, there is a corner meeting both — just set coordinate $i$ and coordinate $j$ to the
-requested values and fill in the rest arbitrarily. Cross-coordinate demands never
-conflict.
+> **A finite partial cube has the opposite-semicube Helly property if and only if
+> it is harmonic-even.**
 
-## The main theorem: pairs decide everything
+Counting balance *is* matchability. This is our first theorem, and it is the
+bridge on which everything else is built: it turns a statement about the existence
+of perfect pairings into a statement about equal cardinalities, which we can
+compute.
 
-We can now state the result cleanly. A family of demands is nothing but a finite
-collection $F$ of pairs $(i, b)$ — coordinate and requested bit. We say the family is
-**pairwise satisfiable** if for every two demands in $F$ there is a corner meeting both.
+## Multiplying worlds
 
-> **Helly Number Two for Semicubes.** *Let $F$ be any finite family of semicubes in the
-> cube $Q_n$. If every pair of semicubes in $F$ has a common corner, then all of the
-> semicubes in $F$ share a common corner.*
+Here is where the real drama begins. Given two worlds $G$ and $H$, there is a
+canonical way to build a bigger one, the **Cartesian product** $G \,\square\, H$.
+Its points are all pairs $(g, h)$ with $g$ from $G$ and $h$ from $H$; you may move
+by taking one step in $G$ while standing still in $H$, or one step in $H$ while
+standing still in $G$. The grid-city is exactly the product of two paths. An
+$n$-dimensional hypercube is a product of $n$ single edges. Products are how large
+combinatorial worlds are assembled from small ones.
 
-The name comes from a classical theme in geometry. **Helly's theorem** says that among
-convex sets in $d$-dimensional Euclidean space, if every $d+1$ of them intersect, then
-all of them intersect; the number $d+1$ is the *Helly number* of that family. The
-theorem above says the Helly number of the semicubes of a cube is just **2**, no matter
-how large the dimension $n$ is. This is remarkable: a $1000$-dimensional cube, with its
-astronomically many corners and thousands of independent directions, still needs only
-*pairwise* consistency to guarantee global consistency. Dimension does not inflate the
-threshold at all.
+What are the cuts of a product? This is the structural heart of the matter, and
+the answer is as clean as one could hope: **the cuts of $G \,\square\, H$ are
+exactly the cuts of $G$ together with the cuts of $H$, side by side.** A cut
+coming from $G$ slices the product by slicing the $G$-factor and carrying along a
+complete, undisturbed copy of $H$ at every position. If the $G$-cut left $a$
+vertices on one side and $b$ on the other, then the corresponding cut in the
+product leaves $a \cdot |H|$ vertices on one side and $b \cdot |H|$ on the other,
+where $|H|$ is the number of vertices of $H$.
 
-### Why it is true
+Now watch what balance does under this operation. The product-cut is balanced
+exactly when
+$$a \cdot |H| = b \cdot |H|.$$
+As long as $H$ is nonempty, its vertex count $|H|$ is a positive number, and we
+may cancel it from both sides to recover $a = b$ — precisely the balance of the
+original cut in $G$. The bulk of the second factor multiplies both sides equally
+and then divides out, leaving the balance of the first factor exactly as it was.
+The same reasoning applies symmetrically to cuts coming from $H$.
 
-The proof is as transparent as the statement. Suppose every pair of demands in $F$ can
-be met simultaneously. We build one corner that meets *all* of them, by the most naive
-recipe imaginable.
+Assembling these observations gives the centrepiece of the theory:
 
-**Step 1 — Each coordinate speaks with one voice.** Take any coordinate $i$ that appears
-in the family. Could the family contain *both* the demand $(i, \text{yes})$ and the
-demand $(i, \text{no})$? If it did, those two demands would form a pair with no common
-corner — because opposite semicubes are disjoint — contradicting pairwise
-satisfiability. So for every coordinate mentioned by $F$, all demands about that
-coordinate ask for the *same* bit. The family assigns each coordinate a well-defined
-value; there is no internal disagreement.
+> **Main Theorem.** *Let $G$ and $H$ be nonempty finite partial cubes. Their
+> Cartesian product $G \,\square\, H$ satisfies the opposite-semicube Helly
+> property if and only if both $G$ and $H$ are harmonic-even.*
 
-**Step 2 — Read off the answer.** Define a single corner $v$ by the rule: coordinate
-$i$ of $v$ is "yes" exactly when the family contains the demand $(i, \text{yes})$; every
-other coordinate is set to "no." Because Step 1 guarantees no coordinate is demanded to
-be both yes and no, this rule is unambiguous. And $v$ meets every demand in $F$ by
-construction: if $(i, b)$ is in the family, then coordinate $i$ of $v$ was set to $b$.
-So $v$ lies in every semicube of $F$, which is exactly the common corner we needed.
+In words: **a product world reflects itself perfectly exactly when each of its
+factor worlds does.** Balance is multiplicative. It neither leaks away nor
+appears from nowhere when you multiply; it is inherited, factor by factor, cut by
+cut.
 
-That is the entire argument. The only obstruction to global agreement is a single
-coordinate pulled in two directions at once, and pairwise consistency rules that out.
-Everything else takes care of itself, because distinct coordinates never interfere.
+## Why the nonemptiness matters
 
-## Products, and where the story turns subtle
+It is worth pausing on a subtlety that the careful reader may have spotted. The
+theorem insists that both factors be nonempty, and this is not idle bookkeeping.
+If $H$ were empty, the product $G \,\square\, H$ would collapse to nothing at all —
+and the empty world is vacuously balanced, since there is nothing to be
+unbalanced. In that degenerate case the product would be "balanced" no matter how
+lopsided $G$ was. The cancellation step, dividing out $|H|$, is exactly what fails
+when $|H| = 0$. So the requirement that each factor actually contain points is
+what makes balance genuinely detectable in the product. It is a small hypothesis
+carrying real weight.
 
-The independence of distinct coordinates has a beautiful structural consequence. A cube
-$Q_{m+n}$ is a **Cartesian product** $Q_m \times Q_n$: a corner of the big cube is just
-a pair consisting of a corner of the first factor and a corner of the second. The
-coordinates split cleanly into "left" coordinates and "right" coordinates, and — as we
-saw — a left demand and a right demand can never conflict. So the Helly property of the
-product reduces, for free, to the Helly property of each factor separately. *Cross
-pairs are never the problem.* This is why the theorem scales to any dimension: adding
-independent directions adds no new obstructions.
+## A companion result: overlapping halves
 
-But cubes are only the simplest members of a richer family called **partial cubes** —
-graphs that embed into a cube without distorting distances, so that the graph distance
-between two vertices equals the number of coordinates in which they differ. Trees, grid
-graphs, the skeleta of many polytopes, and the "flip graphs" that appear throughout
-combinatorics are all partial cubes. In a partial cube the role of a coordinate is
-played by a **$\Theta$-class**: a bundle of parallel edges that, when cut, splits the
-graph into two halves — the two opposite semicubes of that class. The theory of
-semicubes and their Helly numbers extends verbatim to this world.
+Balance is not the only Helly-flavoured phenomenon lurking in these products.
+There is a classical, purely intersection-theoretic statement about semicubes:
+*if a family of semicubes of a hypercube pairwise intersect, then all of them
+share a common point.* This is the **Helly number two** property — the smallest
+Helly number possible — and it says that for these particular halfspaces,
+compatibility in pairs already forces compatibility all at once, with no need to
+check triples, quadruples, or larger clusters.
 
-Here the plot thickens in an appealing way. Suppose we do not merely hand out a family
-of demands, but *close it under opposites*: whenever a demand $(i, b)$ is present, we
-also allow its mirror image $(i, \bar b)$ to enter the conversation. Now the single
-contradictory-pair obstruction transforms into a **parity** obstruction. A coordinate
-can be sidestepped only when its two opposite semicubes are genuinely interchangeable —
-when swapping the two halves is a symmetry of the structure. That interchangeability has
-a name: **harmonic-evenness**. A partial cube is harmonic-even when every $\Theta$-class
-divides the vertices into two equal halves, and this balance persists inside every
-convex piece of the graph.
+Because a Cartesian product of two hypercubes is again a hypercube — merely one
+whose coordinates are the coordinates of the two factors laid side by side — this
+Helly-number-two property transfers to the product without any new argument. The
+product inherits it verbatim. Two rather different notions of "Helly," one about
+matching the two sides of a single cut and one about the common overlap of many
+one-sided halves, thus coexist peacefully on the same product cubes, and future
+work aims to disentangle exactly how independent they truly are.
 
-This leads to a bold conjecture that grows directly out of the cube result:
+## The bigger picture
 
-> **Conjecture.** *A Cartesian product of two partial cubes satisfies the
-> opposite-semicube Helly property — every pairwise-intersecting family that is closed
-> under passing to opposites has a common vertex — if and only if both factors are
-> harmonic-even.*
+Why should anyone care whether the halves of a cut can be matched? Because
+balance and symmetry are the quiet engines behind much of applied combinatorics.
+Harmonic-even structures are the ones on which a *sign-reversing involution*
+lives: a way to fold the world onto itself, swapping the two sides of every cut,
+that preserves size. Such involutions are the workhorses of bijective proofs, of
+cancellation arguments in algebra, and of the spectral symmetries that make
+certain networks easy to analyze. When a structure balances every cut, an
+averaging operator built from those cuts acquires a spectrum symmetric about
+zero — the discrete echo of the mean-value property that gives harmonic functions
+their name.
 
-The intuition is exactly the intuition of this article, sharpened. In the plain cube,
-distinct coordinates are free and only opposite pairs obstruct, so pairwise consistency
-suffices. Once we close families under opposites, the factors of a product can no longer
-coast: each must supply its own balance, its own harmonic-evenness, for the global
-property to hold. The single-pair obstruction of the plain theorem becomes a balance
-condition on each factor. The plain cube is the extreme case where balance is automatic
-and the Helly number collapses to two.
+The multiplicativity theorem tells us that this precious symmetry is *modular*:
+if you want a large balanced world, build it out of balanced pieces, and the
+product will look after itself. Conversely, a single unbalanced factor
+contaminates the whole product; there is no way to hide a lopsided corridor
+inside a larger structure and recover balance by multiplication. Balance is
+conserved, exactly and factor-wise, under the most fundamental way we have of
+combining discrete worlds.
 
-## Why any of this matters
-
-Beyond its elegance, "pairwise implies global" is exactly the kind of statement that
-makes computation tractable. Checking whether a huge family of constraints is jointly
-satisfiable is, in general, hard. But when the constraints are semicubes, you never have
-to look at more than two at a time: scan the pairs, confirm no coordinate is demanded in
-both directions, and read off the answer. A global question with exponentially many
-potential witnesses is settled by a handful of local checks — linear in the number of
-demands.
-
-This local-to-global principle echoes across mathematics and its applications: in
-constraint satisfaction, where the goal is to certify consistency cheaply; in
-distributed systems, where independent agents want to reach agreement without
-negotiating everything jointly; and in the geometry of "median" spaces and CAT(0) cube
-complexes, where the same halfspace structure organizes everything from phylogenetic
-trees to models of computation. The humble cube, sliced into its halves, turns out to be
-a place where consistency is astonishingly cheap — and understanding exactly *why* it is
-cheap points the way to the finer, balance-sensitive theory of products and their
-factors.
-
-The moral is one worth carrying to any problem built out of independent binary choices:
-when the only way two demands can clash is by targeting the same feature in opposite
-directions, checking pairs is not a shortcut — it is the whole story.
+From a slice of a grid-city to the spectral symmetry of a network, the thread is
+the same: perfect balance across every cut, faithfully inherited whenever we
+multiply. It is a small, sharp, and complete story — the kind mathematics is
+happiest to tell.

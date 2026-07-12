@@ -1,230 +1,204 @@
-"""
-demo.py
-=======
+"""Numerical demonstrations for:
 
-Numerical demonstrations for:
+    The opposite-semicube Helly property characterizes harmonic-evenness
+    in Cartesian products of partial cubes.
 
-    "The Helly Number of Semicubes, and the Opposite-Semicube Property
-     in Cartesian Products of Partial Cubes"
+A partial cube is represented in the *coordinate model*: a vertex is a tuple of
+booleans (its coordinates / Theta-classes), and a partial cube is a list of such
+tuples (the image of an isometric embedding into a hypercube).
 
-We work in the hypercube Q(n) whose vertices are binary strings of length n,
-encoded as frozensets of coordinates that are "true" (i.e. equal to 1).
+Key notions implemented here:
+  * semicube(V, i, b)       - vertices of V whose i-th coordinate equals b
+  * is_balanced(V, i)       - the two opposite semicubes of cut i have equal size
+  * is_harmonic_even(V)     - every cut is balanced
+  * has_osh(V)              - opposite-semicube Helly property: every cut admits a
+                              bijection between its two opposite semicubes
+  * cartesian_product(P, R) - the box product on the disjoint union of coordinates
 
-A *semicube* is a pair (i, b) with i a coordinate and b in {True, False};
-it denotes the set of all vertices whose i-th coordinate equals b.
-
-The results demonstrated here:
-
-  * Lemma 1 -- opposite semicubes (i, True) and (i, False) are disjoint.
-  * Proposition 3 -- semicubes on distinct coordinates always intersect.
-  * Theorem A -- a pairwise-intersecting family of semicubes has a common
-    vertex (Helly number 2), given by the canonical witness.
-  * Corollary B -- for a Cartesian product the family solves factorwise.
-
-Everything is self-contained; run `python demo.py`.
+The central facts demonstrated:
+  Theorem 3.1: has_osh(V) == is_harmonic_even(V)   (matchability == balance)
+  Theorem 4.3: is_harmonic_even(P box R) == (is_harmonic_even(P) and is_harmonic_even(R))
+  Theorem 4.4: main characterization, obtained by combining the two.
 """
 
 from __future__ import annotations
 
-from itertools import combinations, product
-from typing import Dict, FrozenSet, Iterable, List, Optional, Set, Tuple
+from itertools import product
+from typing import Dict, List, Optional, Tuple
 
-# A vertex of Q(n) is the frozenset of "true" coordinates.
-Vertex = FrozenSet[int]
-# A semicube is (coordinate, bit).
-Semicube = Tuple[int, bool]
+Vertex = Tuple[bool, ...]
+PartialCube = List[Vertex]
 
 
-# --------------------------------------------------------------------------
-# Basic hypercube / semicube machinery
-# --------------------------------------------------------------------------
-def all_vertices(n: int) -> List[Vertex]:
-    """All 2^n vertices of Q(n) as frozensets of coordinates in range(n)."""
-    verts: List[Vertex] = []
-    for bits in product((False, True), repeat=n):
-        verts.append(frozenset(i for i, b in enumerate(bits) if b))
+# --------------------------------------------------------------------------- #
+# Basic partial-cube constructions in the coordinate model
+# --------------------------------------------------------------------------- #
+def hypercube(n: int) -> PartialCube:
+    """Q_n: all 2**n binary vectors of length n."""
+    return [tuple(bits) for bits in product([False, True], repeat=n)]
+
+
+def path(n: int) -> PartialCube:
+    """P_n on n vertices: the staircase embedding into Q_{n-1}.
+
+    Vertex j (0 <= j < n) has its first j coordinates True, the rest False.
+    Consecutive vertices differ in exactly one coordinate.
+    """
+    return [tuple(k < j for k in range(n - 1)) for j in range(n)]
+
+
+def even_cycle(k: int) -> PartialCube:
+    """C_{2k}: standard isometric embedding into Q_k.
+
+    Vertex j (0 <= j < 2k) has coordinate i True iff i < j <= i + k (mod 2k),
+    so each coordinate flips exactly twice (antipodally) and carries exactly k
+    True's around the cycle.
+    """
+    m = 2 * k
+    verts: PartialCube = []
+    for j in range(m):
+        bits = []
+        for i in range(k):
+            # coordinate i is True on the arc (i, i+k]  (indices mod 2k)
+            offset = (j - i) % m
+            bits.append(1 <= offset <= k)
+        verts.append(tuple(bits))
     return verts
 
 
-def in_semicube(v: Vertex, sc: Semicube) -> bool:
-    """Does vertex v lie in the semicube sc = (i, b)?  (i in v) == b."""
-    i, b = sc
-    return (i in v) == b
+# --------------------------------------------------------------------------- #
+# Semicubes, balance, harmonic-evenness, and the Helly property
+# --------------------------------------------------------------------------- #
+def semicube(V: PartialCube, i: int, b: bool) -> PartialCube:
+    """Vertices of V whose i-th coordinate equals b."""
+    return [v for v in V if v[i] == b]
 
 
-def semicube_set(n: int, sc: Semicube) -> Set[Vertex]:
-    """The explicit vertex set of a semicube (used for brute-force checks)."""
-    return {v for v in all_vertices(n) if in_semicube(v, sc)}
+def num_coords(V: PartialCube) -> int:
+    return len(V[0]) if V else 0
 
 
-# --------------------------------------------------------------------------
-# The core algorithm: consistency by coordinate folding (Theorem A)
-# --------------------------------------------------------------------------
-def semicube_common_vertex(family: Iterable[Semicube]) -> Optional[Vertex]:
+def is_balanced(V: PartialCube, i: int) -> bool:
+    """Cut i is balanced iff its two opposite semicubes are equinumerous."""
+    return len(semicube(V, i, True)) == len(semicube(V, i, False))
+
+
+def is_harmonic_even(V: PartialCube) -> bool:
+    """Every cut of V is balanced."""
+    return all(is_balanced(V, i) for i in range(num_coords(V)))
+
+
+def cut_matching(V: PartialCube, i: int) -> Optional[Dict[Vertex, Vertex]]:
+    """A bijection between the two opposite semicubes of cut i, if one exists.
+
+    For finite sets a bijection exists iff the sizes are equal; when so, we
+    return the explicit index-order pairing (a witness for the Helly property).
     """
-    Decide whether a family of semicubes has a common vertex, and if so return
-    the canonical witness v = { i : (i, True) in family }.
-
-    Returns None exactly when some coordinate is demanded in both directions
-    (the unique obstruction, Lemma 1 + Lemma 2).  Runs in O(|family|).
-    """
-    assignment: Dict[int, bool] = {}
-    for i, b in family:
-        if i in assignment:
-            if assignment[i] != b:
-                return None  # opposite pair -> inconsistent
-        else:
-            assignment[i] = b
-    return frozenset(i for i, b in assignment.items() if b)
-
-
-def is_pairwise_intersecting(n: int, family: List[Semicube]) -> bool:
-    """Brute-force check that every pair of semicubes shares a vertex."""
-    for sc1, sc2 in combinations(family, 2):
-        s1, s2 = semicube_set(n, sc1), semicube_set(n, sc2)
-        if not (s1 & s2):
-            return False
-    return True
-
-
-def has_global_common_vertex(n: int, family: List[Semicube]) -> bool:
-    """Brute-force check for a vertex lying in every semicube of the family."""
-    return any(all(in_semicube(v, sc) for sc in family) for v in all_vertices(n))
-
-
-# --------------------------------------------------------------------------
-# Product decomposition (Corollary B)
-# --------------------------------------------------------------------------
-def product_common_vertex(
-    left_dim: int, right_dim: int, family: List[Semicube]
-) -> Optional[Tuple[Optional[Vertex], Optional[Vertex]]]:
-    """
-    Solve a family of semicubes in Q(left_dim) x Q(right_dim).
-
-    Coordinates 0..left_dim-1 belong to the left factor; coordinates
-    left_dim..left_dim+right_dim-1 belong to the right factor.  We split the
-    family and solve each factor independently (Corollary B).  Returns the pair
-    of witnesses, or None if either factor is inconsistent.
-    """
-    left = [(i, b) for (i, b) in family if i < left_dim]
-    right = [(i - left_dim, b) for (i, b) in family if i >= left_dim]
-    vl = semicube_common_vertex(left)
-    vr = semicube_common_vertex(right)
-    if (left and vl is None) or (right and vr is None):
+    left = semicube(V, i, True)
+    right = semicube(V, i, False)
+    if len(left) != len(right):
         return None
-    return (vl, vr)
+    return dict(zip(left, right))
 
 
-# --------------------------------------------------------------------------
-# Demonstrations
-# --------------------------------------------------------------------------
-def demo_opposite_disjoint(n: int = 3) -> None:
-    print("=" * 70)
-    print("Lemma 1: opposite semicubes are disjoint")
-    print("=" * 70)
-    for i in range(n):
-        s_true = semicube_set(n, (i, True))
-        s_false = semicube_set(n, (i, False))
-        inter = s_true & s_false
-        print(f"  coordinate {i}: |H(i,True)|={len(s_true)}, "
-              f"|H(i,False)|={len(s_false)}, intersection={len(inter)}")
-    print()
+def has_osh(V: PartialCube) -> bool:
+    """Opposite-semicube Helly property: every cut admits a matching."""
+    return all(cut_matching(V, i) is not None for i in range(num_coords(V)))
 
 
-def demo_cross_intersect(n: int = 3) -> None:
-    print("=" * 70)
-    print("Proposition 3: semicubes on distinct coordinates always intersect")
-    print("=" * 70)
-    ok = True
-    for i, j in combinations(range(n), 2):
-        for b, c in product((True, False), repeat=2):
-            inter = semicube_set(n, (i, b)) & semicube_set(n, (j, c))
-            if not inter:
-                ok = False
-            print(f"  H({i},{b}) & H({j},{c}): {len(inter)} common vertices")
-    print(f"  ALL cross pairs intersect: {ok}")
-    print()
+# --------------------------------------------------------------------------- #
+# Cartesian (box) product on the disjoint union of coordinate sets
+# --------------------------------------------------------------------------- #
+def cartesian_product(P: PartialCube, R: PartialCube) -> PartialCube:
+    """P box R: vertices are elim(a, b) = a-coords followed by b-coords."""
+    return [a + b for a in P for b in R]
 
 
-def demo_helly(n: int = 4) -> None:
-    print("=" * 70)
-    print("Theorem A: pairwise-intersecting => globally intersecting (Helly 2)")
-    print("=" * 70)
-    families = [
-        [(0, True), (1, False), (3, True)],          # consistent
-        [(0, True), (1, False), (0, True)],          # consistent (repeat)
-        [(0, True), (2, True), (0, False)],          # opposite pair -> not
+# --------------------------------------------------------------------------- #
+# Reporting helpers
+# --------------------------------------------------------------------------- #
+def cut_profile(V: PartialCube) -> List[Tuple[int, int]]:
+    """For each cut, the (#True, #False) semicube sizes."""
+    return [
+        (len(semicube(V, i, True)), len(semicube(V, i, False)))
+        for i in range(num_coords(V))
     ]
-    for fam in families:
-        pw = is_pairwise_intersecting(n, fam)
-        witness = semicube_common_vertex(fam)
-        glob = has_global_common_vertex(n, fam)
-        agree = (witness is not None) == glob == pw
-        print(f"  family {fam}")
-        print(f"    pairwise-intersecting (brute)   : {pw}")
-        print(f"    global common vertex (brute)    : {glob}")
-        print(f"    canonical witness (Theorem A)   : "
-              f"{sorted(witness) if witness is not None else None}")
-        if witness is not None:
-            print(f"    witness lies in every semicube  : "
-                  f"{all(in_semicube(witness, sc) for sc in fam)}")
-        print(f"    all three notions agree          : {agree}")
+
+
+def describe(name: str, V: PartialCube) -> None:
+    prof = cut_profile(V)
+    print(f"{name}: {len(V)} vertices, {num_coords(V)} cuts")
+    print(f"    cut (True,False) sizes : {prof}")
+    print(f"    harmonic-even          : {is_harmonic_even(V)}")
+    print(f"    opposite-semicube Helly: {has_osh(V)}")
+    assert is_harmonic_even(V) == has_osh(V), "Theorem 3.1 violated!"
+
+
+# --------------------------------------------------------------------------- #
+# Demonstrations
+# --------------------------------------------------------------------------- #
+def demo_basic_shapes() -> None:
+    print("=" * 70)
+    print("Basic partial cubes: balance vs. matchability (Theorem 3.1)")
+    print("=" * 70)
+    describe("Q_3 (hypercube)", hypercube(3))
+    describe("C_6 (even cycle)", even_cycle(3))
+    describe("P_4 (path)", path(4))
+    describe("P_2 = Q_1 (edge)", path(2))
     print()
 
 
-def demo_product() -> None:
+def demo_multiplicativity() -> None:
     print("=" * 70)
-    print("Corollary B: product Q(2) x Q(2) solves factorwise")
+    print("Multiplicativity of balance under products (Theorems 4.3 & 4.4)")
     print("=" * 70)
-    left_dim, right_dim = 2, 2
-    fam = [(0, True), (3, False)]  # coord 0 left, coord 3 right
-    res = product_common_vertex(left_dim, right_dim, fam)
-    print(f"  family {fam} in Q(2) x Q(2)")
-    if res is not None:
-        vl, vr = res
-        print(f"    left witness  : {sorted(vl) if vl is not None else set()}")
-        print(f"    right witness : "
-              f"{sorted(vr) if vr is not None else set()}")
-        # reassemble into a Q(4) vertex to cross-check
-        combined = set(vl or set()) | {i + left_dim for i in (vr or set())}
-        combined_v = frozenset(combined)
-        print(f"    combined vertex in Q(4): {sorted(combined_v)}")
-        print(f"    lies in every semicube : "
-              f"{all(in_semicube(combined_v, sc) for sc in fam)}")
-    print()
+    factors = {
+        "Q_2": hypercube(2),
+        "C_6": even_cycle(3),
+        "P_4": path(4),
+    }
+    for na, A in factors.items():
+        for nb, B in factors.items():
+            prod = cartesian_product(A, B)
+            he_prod = is_harmonic_even(prod)
+            he_both = is_harmonic_even(A) and is_harmonic_even(B)
+            osh_prod = has_osh(prod)
+            print(f"{na} box {nb}: {len(prod)} vertices")
+            print(f"    harmonic-even(product)      = {he_prod}")
+            print(f"    harmonic-even(A) and (B)    = {he_both}")
+            print(f"    opposite-semicube Helly     = {osh_prod}")
+            # Theorem 4.3 and Theorem 4.4:
+            assert he_prod == he_both, "Theorem 4.3 violated!"
+            assert osh_prod == he_both, "Theorem 4.4 violated!"
+    print("    All product identities verified.\n")
 
 
-def demo_exhaustive_verification(n: int = 4, max_family: int = 3) -> None:
-    """
-    Exhaustively verify Theorem A on Q(n): for every family (with up to
-    max_family semicubes) that is pairwise intersecting, the folding witness
-    exists and is genuinely common; and every non-pairwise family is rejected.
-    """
+def demo_cancellation() -> None:
     print("=" * 70)
-    print(f"Exhaustive check of Theorem A on Q({n}), families up to size "
-          f"{max_family}")
+    print("The cancellation step of Theorem 4.3 made explicit")
     print("=" * 70)
-    all_scs: List[Semicube] = [(i, b) for i in range(n) for b in (True, False)]
-    checked = 0
-    for k in range(1, max_family + 1):
-        for fam in combinations(all_scs, k):
-            fam_list = list(fam)
-            pw = is_pairwise_intersecting(n, fam_list)
-            witness = semicube_common_vertex(fam_list)
-            glob = has_global_common_vertex(n, fam_list)
-            # Theorem A: pairwise <=> global <=> witness found
-            assert pw == glob == (witness is not None), fam_list
-            if witness is not None:
-                assert all(in_semicube(witness, sc) for sc in fam_list)
-            checked += 1
-    print(f"  verified {checked} families; Theorem A holds in every case.")
-    print()
+    P, R = path(4), hypercube(2)
+    prod = cartesian_product(P, R)
+    print(f"|R| = |Q_2| = {len(R)}")
+    for i in range(num_coords(P)):
+        pt, pf = len(semicube(P, i, True)), len(semicube(P, i, False))
+        # coordinate i of P sits at index i of the product
+        qt = len(semicube(prod, i, True))
+        qf = len(semicube(prod, i, False))
+        print(
+            f"  P-cut {i}: ({pt},{pf})  ->  product ({qt},{qf})  "
+            f"=  ({pt}*{len(R)},{pf}*{len(R)});  divide by {len(R)} -> ({qt // len(R)},{qf // len(R)})"
+        )
+        assert (qt, qf) == (pt * len(R), pf * len(R))
+    print("    Product-cut sizes are factor-cut sizes times |R|.\n")
+
+
+def main() -> None:
+    demo_basic_shapes()
+    demo_multiplicativity()
+    demo_cancellation()
+    print("All demonstrations completed successfully.")
 
 
 if __name__ == "__main__":
-    demo_opposite_disjoint(n=3)
-    demo_cross_intersect(n=3)
-    demo_helly(n=4)
-    demo_product()
-    demo_exhaustive_verification(n=4, max_family=3)
-    print("All demonstrations completed successfully.")
+    main()
