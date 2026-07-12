@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6e208619",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Balancing ratios of circular partitions\n\nThis cycle established two structural pillars for the balancing ratio sequence of\na cyclic partition: windowing never worsens balance (`μ",
-      "quality_score": 0.78,
-      "sorry_count": 5,
-      "theorem_count": 27,
-      "timestamp": "2026-07-11T06:39:37",
-      "title": "Upper bound conjecture for the cake balancing ratio sequence"
-    },
-    {
       "cycle_id": "493ee817",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThese conjectures grow directly out of the present cycle, in which the factorial\nnumber system was shown to be a single point in the parameterized family of\nmixed-radix positional",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-12T00:29:28",
       "title": "Rucker: Spacetime Donuts — Topology of the Universe"
+    },
+    {
+      "cycle_id": "47a54792",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThe cycle established a compact algebraic core for four-dimensional geometry: a\nsingle sum-of-squares identity, `(a+b)² = 4ab +",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-12T00:29:46",
+      "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "242f16a7",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Generalized Honeymoon Oberwolfach Schedules\n\nSetting. Two `n` newlywed couples must be seated over several nights. Every night the `2n`\nguests are split among tables whose sizes",
-      "quality_score": 0.79104,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-04T15:19:42",
-      "title": "Sufficiency of obvious necessary conditions for the generalized honeymoon Oberwolfach problem with m"
-    },
     {
       "cycle_id": "605be963",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-12T00:29:28",
       "title": "Rucker: Spacetime Donuts — Topology of the Universe"
+    },
+    {
+      "cycle_id": "47a54792",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThe cycle established a compact algebraic core for four-dimensional geometry: a\nsingle sum-of-squares identity, `(a+b)² = 4ab +",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-12T00:29:46",
+      "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2bd85c25",
-      "domain": "Novelty",
-      "name": "S_le_pow",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "8fb1d399",
-      "domain": "Applications",
-      "name": "recursiveIn_cut",
-      "quality": 0.72
-    },
     {
       "cycle_id": "8fb1d399",
       "domain": "Applications",
@@ -2803,9 +2791,21 @@
       "domain": "Shared",
       "name": "asserts",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "47a54792",
+      "domain": "NumberTheory",
+      "name": "volume_ball_dim_four",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "47a54792",
+      "domain": "NumberTheory",
+      "name": "rot4_isometry",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T00:29:28",
+  "last_updated": "2026-07-12T00:29:46",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "5a8a4bbe",
-        "quality": 0.6805899999999999,
-        "theorems": 14,
-        "title": "Improved Constant for Domination in Cartesian Product of Graphs"
-      },
-      {
         "cycle_id": "5e4735e1",
         "quality": 0.68521,
         "theorems": 12,
@@ -3699,6 +3693,12 @@
         "quality": 0.82,
         "theorems": 16,
         "title": "Isomorphisms of Meaning: When Structures Collide"
+      },
+      {
+        "cycle_id": "47a54792",
+        "quality": 0.82,
+        "theorems": 21,
+        "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
       }
     ],
     "Physics": [
