@@ -2083,7 +2083,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61c22649",
     "description": "A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
     "domains": [
       "Bridges"
@@ -2092,7 +2092,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31468v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:13:48.357153+00:00",
     "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partial cubes"
   },
@@ -4620,20 +4620,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-08T05:03:44.362244+00:00",
     "title": "Bipartite {-1,0,1}-diagonalizable graphs are complete bipartite"
-  },
-  {
-    "consumed_by_exp_id": "0bd39924",
-    "description": "For all positive integers k \u2265 2, n \u2265 1, and 1 \u2264 j \u2264 n, the symmetric function \u0394_{e_j} G(k,n) is Schur positive (i.e., expands with nonnegative coefficients in \u2115[q,t] in the Schur basis) if and only if k divides n, where G(k,n) = \u03a3_{\u03bb\u22a2n, \u03bb\u2081<k} m_\u03bb is the Petrie symmetric function and \u0394_{e_j} is the Bergeron\u2013Garsia delta operator applied to e_j. This extends the paper's main result for \u2207 = \u0394_{e_n} (and its iterates \u2207^r) to all elementary symmetric function inputs of the delta operator, establishing that the divisibility criterion governs Schur positivity uniformly across the entire family of delta operators.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0631",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06351v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T05:37:42.644235+00:00",
-    "title": "Delta-Petrie Schur Positivity"
   },
   {
     "consumed_by_exp_id": "",
@@ -7321,6 +7307,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T17:38:37.563802+00:00",
     "title": "This project studies *\"causal loops\"* in category theory: structures where compo"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Delta-Petrie Divisibility and Positivity\n\nThe Petrie block `\ud835\udd2d_k = 1 + x + \u22ef + x^{k-1}` divides `x\u207f \u2212 1` exactly when `k \u2223 n`.\nThis cyclotomic criterion is the arithmetic skeleton of the positivity dichotomy for\nthe delta-operator family `\u0394_{e_j} G(k,n)`. The following conjectures push the\nskeleton toward the full multivariate statement.\n\n## Conjecture 1 \u2014 Uniform delta-operator dichotomy\nFor all `k \u2265 2`, `n \u2265 1`, and `1 \u2264 j \u2264 n`, the symmetric function `\u0394_{e_j} G(k,n)`\nis Schur positive if and only if `k \u2223 n`.\n**The key insight is** that the divisibility line does not depend on the elementary\ninput `e_j`: the same `k \u2223 n` threshold that makes `\ud835\udd2d_k` divide `x\u207f \u2212 1` also controls\nthe sign pattern of the entire delta family, so `j` is a spectator variable.\n**Why now?** The `\u2207 = \u0394_{e_n}` case and its iterates are already settled; isolating the\ncyclotomic mechanism shows the argument never used `j = n`, making the uniform version\nthe natural next target.\n\n## Conjecture 2 \u2014 Roots-of-unity certificate for Schur positivity\nThe failure of Schur positivity of `\u0394_{e_j} G(k,n)` when `k \u2224 n` is detected by a single\nevaluation at a primitive `k`-th root of unity: some Schur coefficient changes sign in\nlockstep with `\ud835\udd2d_k(\u03b6) = 0`.\n**The key insight is** that positivity obstructions are localized at nontrivial `k`-th\nroots of unity, so a finite root-of-unity test certifies (non)positivity without\nexpanding the whole Schur basis.\n**Why now?** The proven block-vanishing lemma turns an infinite positivity check into a\nfinite spectral one, which is exactly the kind of certificate modern symmetric-function\nsoftware can verify at scale.\n\n## Conjecture 3 \u2014 Cyclotomic factorization of the Petrie function\nIn the Schur basis, `G(k,n)` factors through the cyclotomic divisors `\u03a6_d` of `\ud835\udd2d_k`, and\nthe `{\u22121,0,1}` Petrie coefficients are governed by which `\u03a6_d` survive after applying\n`\u0394_{e_j}`.\n**The key insight is** that the three-valued Petrie coefficients are shadows of the\nsquarefree cyclotomic factorization `\ud835\udd2d_k = \u220f_{d\u2223k, d>1} \u03a6_d`, so coefficient signs are\ndetermined divisor-by-divisor.\n**Why now?** With the divisor structure of `\ud835\udd2d_k` made explicit, the coefficient bound\nbecomes a statement about products of cyclotomics, a setting with mature tools.\n\n## Conjecture 4 \u2014 Iterated `\u2207^r` sharpening\nFor the iterate `\u2207^r G(k,n)`, Schur positivity holds if and only if `k \u2223 n`, independent\nof `r \u2265 1`.\n**The key insight is** that iterating the delta operator preserves the `k \u2223 n` threshold\nbecause each application rescales coefficients by factors that vanish precisely at the\nsame roots of unity.\n**Why now?** The single-application uniform result (Conjecture 1) provides the base case;\nthe roots-of-unity certificate (Conjecture 2) supplies the inductive step.\n\n## Conjecture 5 \u2014 Word-count normalization\nThe principal specialization `P(k,N;1) = k^N` is the unique normalization under which the\n`\u0394_{e_j}`-images of `G(k,n)` have integer Schur content summing to a `k`-power exactly when\n`k \u2223 n`.\n**The key insight is** that the word-count `k^N` is the \"total mass\" whose `k`-divisibility\nmirrors the Schur-positivity threshold, tying enumeration directly to positivity.\n**Why now?** The specialization identity is now proven, so the enumerative side of the\ncorrespondence is on firm ground and ready to be matched against Schur data.\n",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_1153",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0bd39924",
+    "status": "available",
+    "timestamp": "2026-07-12T17:55:56.488317+00:00",
+    "title": "The Petrie block `\ud835\udd2d_k = 1 + x + \u22ef + x^{k-1}` divides `x\u207f \u2212 1` exactly when `k \u2223 "
   },
   {
     "consumed_by_exp_id": "",

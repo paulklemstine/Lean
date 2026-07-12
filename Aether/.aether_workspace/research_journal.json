@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b4ccc3c5",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nThis project formalizes the elementary algebraic backbone of the Atkin–Lehner theory\nunderlying the Giampietro–Darmon factorization program:\n\n* `Pythagorean/AtkinLehnerGroup.lean`",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 47,
-      "timestamp": "2026-07-12T00:29:52",
-      "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
-    },
-    {
       "cycle_id": "453f48e6",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — I Am a Strange Loop, Formalized\n\nThis project formalizes the structural core of Hofstadter's *I Am a Strange\nLoop* via three self-contained Lean files:\n\n- `Combinatorics/StrangeL",
@@ -499,19 +489,19 @@
       "theorem_count": 39,
       "timestamp": "2026-07-12T17:38:45",
       "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory: when comp"
+    },
+    {
+      "cycle_id": "0bd39924",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Delta-Petrie Divisibility and Positivity\n\nThe Petrie block `𝔭_k = 1 + x + ⋯ + x^{k-1}` divides `xⁿ − 1` exactly when `k ∣ n`.\nThis cyclotomic criterion is the arithmetic skeleton",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T17:56:02",
+      "title": "Delta-Petrie Schur Positivity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "55f141e7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The L-Function Universe\n\n## What is proved\n\n`Census.lean` builds a self-contained chain culminating in:\n\n* **Countability.** `instCountableSelbergDatum` : the universe of L-funct",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-09T22:16:17",
-      "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-    },
     {
       "cycle_id": "643186e8",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 39,
       "timestamp": "2026-07-12T17:38:45",
       "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory: when comp"
+    },
+    {
+      "cycle_id": "0bd39924",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Delta-Petrie Divisibility and Positivity\n\nThe Petrie block `𝔭_k = 1 + x + ⋯ + x^{k-1}` divides `xⁿ − 1` exactly when `k ∣ n`.\nThis cyclotomic criterion is the arithmetic skeleton",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T17:56:02",
+      "title": "Delta-Petrie Schur Positivity"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0930ae42",
-      "domain": "Novelty",
-      "name": "alexanderTorusPoly_five",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0930ae42",
-      "domain": "Novelty",
-      "name": "trefoil_eq_cyclotomic_six",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "25c7a40e",
-      "domain": "Novelty",
-      "name": "forces",
-      "quality": 0.83
-    },
     {
       "cycle_id": "25c7a40e",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "flatten_node",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "0bd39924",
+      "domain": "Novelty",
+      "name": "petrieBlock_mul",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0bd39924",
+      "domain": "Novelty",
+      "name": "petrieBlock_dvd",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0bd39924",
+      "domain": "Novelty",
+      "name": "petrieBlock_eval_one",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-12T17:38:45",
+  "last_updated": "2026-07-12T17:56:02",
   "open_questions": [
     {
       "context": "+To keep this file free of `sorry` while remaining faithful, we prove the composite; -    sorry; +as an open conjecture rather than prove it with `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0930ae42",
-        "quality": 0.82,
-        "theorems": 16,
-        "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
-      },
-      {
         "cycle_id": "25c7a40e",
         "quality": 0.83,
         "theorems": 33,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 23,
         "title": "The cycle established a compact algebraic core for four-dimensional geometry: a"
+      },
+      {
+        "cycle_id": "0bd39924",
+        "quality": 0.72,
+        "theorems": 9,
+        "title": "Delta-Petrie Schur Positivity"
       }
     ],
     "NumberTheory": [

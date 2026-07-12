@@ -3074,7 +3074,7 @@
       "Djoković-Winkler theorem",
       "Polat's theorem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61c22649",
     "description": "A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
     "domain_bridges": [
       "Cartesian product of partial cubes",
@@ -3089,7 +3089,7 @@
     "proof_strategy": "Analyze the Helly property in Cartesian products by decomposing opposite semicubes into factors and leveraging harmonic-even embeddings in each component.",
     "research_mode": "team",
     "source_exp_id": "2606.31468v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:13:48.357153+00:00",
     "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partial cubes"
   },
@@ -7917,35 +7917,6 @@
     "title": "Bipartite {-1,0,1}-diagonalizable graphs are complete bipartite"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Bergeron-Garsia delta operators",
-      "Macdonald polynomials",
-      "Compositional shuffle conjecture",
-      "Petrie symmetric functions (Grinberg)",
-      "LLT polynomials"
-    ],
-    "consumed_by_exp_id": "0bd39924",
-    "description": "For all positive integers k ≥ 2, n ≥ 1, and 1 ≤ j ≤ n, the symmetric function Δ_{e_j} G(k,n) is Schur positive (i.e., expands with nonnegative coefficients in ℕ[q,t] in the Schur basis) if and only if k divides n, where G(k,n) = Σ_{λ⊢n, λ₁<k} m_λ is the Petrie symmetric function and Δ_{e_j} is the Bergeron–Garsia delta operator applied to e_j. This extends the paper's main result for ∇ = Δ_{e_n} (and its iterates ∇^r) to all elementary symmetric function inputs of the delta operator, establishing that the divisibility criterion governs Schur positivity uniformly across the entire family of delta operators.",
-    "domain_bridges": [
-      "Representation theory of symmetric groups (Schur positivity ↔ graded module existence)",
-      "Diagonal harmonics and nabla operator theory",
-      "Modified Hall-Littlewood polynomials"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0631",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "For the forward direction (k∣n ⟹ Schur positivity): decompose G(k,n) into creation operator images C_α when k∣n, then apply the compositional shuffle theorem framework to express Δ_{e_j} C_α as a positively weighted sum of vertical LLT polynomials, leveraging Grojnowski–Haiman Schur positivity of LLT polynomials. For the converse (k∤n ⟹ not Schur positive): extend the sign-analysis techniques from the paper's nabla case to general Δ_{e_j} by tracking the leading negative Schur coefficients in the Macdonald polynomial expansion of G(k,n) under the delta eigenvalue action, showing that the divisibility obstruction propagates through all delta operators.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06351v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T05:37:42.644235+00:00",
-    "title": "Delta-Petrie Schur Positivity"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.GT",
@@ -12154,6 +12125,26 @@
     "status": "available",
     "timestamp": "2026-07-12T17:38:37.563802+00:00",
     "title": "This project studies *\"causal loops\"* in category theory: structures where compo"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Delta-Petrie Divisibility and Positivity\n\nThe Petrie block `𝔭_k = 1 + x + ⋯ + x^{k-1}` divides `xⁿ − 1` exactly when `k ∣ n`.\nThis cyclotomic criterion is the arithmetic skeleton of the positivity dichotomy for\nthe delta-operator family `Δ_{e_j} G(k,n)`. The following conjectures push the\nskeleton toward the full multivariate statement.\n\n## Conjecture 1 — Uniform delta-operator dichotomy\nFor all `k ≥ 2`, `n ≥ 1`, and `1 ≤ j ≤ n`, the symmetric function `Δ_{e_j} G(k,n)`\nis Schur positive if and only if `k ∣ n`.\n**The key insight is** that the divisibility line does not depend on the elementary\ninput `e_j`: the same `k ∣ n` threshold that makes `𝔭_k` divide `xⁿ − 1` also controls\nthe sign pattern of the entire delta family, so `j` is a spectator variable.\n**Why now?** The `∇ = Δ_{e_n}` case and its iterates are already settled; isolating the\ncyclotomic mechanism shows the argument never used `j = n`, making the uniform version\nthe natural next target.\n\n## Conjecture 2 — Roots-of-unity certificate for Schur positivity\nThe failure of Schur positivity of `Δ_{e_j} G(k,n)` when `k ∤ n` is detected by a single\nevaluation at a primitive `k`-th root of unity: some Schur coefficient changes sign in\nlockstep with `𝔭_k(ζ) = 0`.\n**The key insight is** that positivity obstructions are localized at nontrivial `k`-th\nroots of unity, so a finite root-of-unity test certifies (non)positivity without\nexpanding the whole Schur basis.\n**Why now?** The proven block-vanishing lemma turns an infinite positivity check into a\nfinite spectral one, which is exactly the kind of certificate modern symmetric-function\nsoftware can verify at scale.\n\n## Conjecture 3 — Cyclotomic factorization of the Petrie function\nIn the Schur basis, `G(k,n)` factors through the cyclotomic divisors `Φ_d` of `𝔭_k`, and\nthe `{−1,0,1}` Petrie coefficients are governed by which `Φ_d` survive after applying\n`Δ_{e_j}`.\n**The key insight is** that the three-valued Petrie coefficients are shadows of the\nsquarefree cyclotomic factorization `𝔭_k = ∏_{d∣k, d>1} Φ_d`, so coefficient signs are\ndetermined divisor-by-divisor.\n**Why now?** With the divisor structure of `𝔭_k` made explicit, the coefficient bound\nbecomes a statement about products of cyclotomics, a setting with mature tools.\n\n## Conjecture 4 — Iterated `∇^r` sharpening\nFor the iterate `∇^r G(k,n)`, Schur positivity holds if and only if `k ∣ n`, independent\nof `r ≥ 1`.\n**The key insight is** that iterating the delta operator preserves the `k ∣ n` threshold\nbecause each application rescales coefficients by factors that vanish precisely at the\nsame roots of unity.\n**Why now?** The single-application uniform result (Conjecture 1) provides the base case;\nthe roots-of-unity certificate (Conjecture 2) supplies the inductive step.\n\n## Conjecture 5 — Word-count normalization\nThe principal specialization `P(k,N;1) = k^N` is the unique normalization under which the\n`Δ_{e_j}`-images of `G(k,n)` have integer Schur content summing to a `k`-power exactly when\n`k ∣ n`.\n**The key insight is** that the word-count `k^N` is the \"total mass\" whose `k`-divisibility\nmirrors the Schur-positivity threshold, tying enumeration directly to positivity.\n**Why now?** The specialization identity is now proven, so the enumerative side of the\ncorrespondence is on firm ground and ready to be matched against Schur data.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_1153",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0bd39924",
+    "status": "available",
+    "timestamp": "2026-07-12T17:55:56.488317+00:00",
+    "title": "The Petrie block `𝔭_k = 1 + x + ⋯ + x^{k-1}` divides `xⁿ − 1` exactly when `k ∣ "
   },
   {
     "ambition_level": "extension",
