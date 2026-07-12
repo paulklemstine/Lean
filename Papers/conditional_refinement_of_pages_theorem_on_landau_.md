@@ -1,60 +1,60 @@
-# Computational Evidence — Conditional Refinement of Page's Theorem
+# Computational Evidence: Repulsion Threshold for Exceptional Characters
 
-This note collects small-scale numerical evidence supporting the formalization in
-`Bridges/PageSiegelRefinement.lean`.
+We test the quantitative heart of the formalized result — that the compatibility
+condition `C > 2·Q₀^{-ε}·log M` is the correct barrier separating "uniqueness" from
+"possible coexistence" of exceptional characters.
 
-## 1. The two windows: `q^{-ε}` vs the classical Siegel window `c / log q`
+## 1. Small-case threshold values
 
-The refinement concerns real zeros in the **shrinking** window `[1 - q^{-ε}, 1)`,
-which is much thinner than the classical Siegel/Page window `[1 - c/log q, 1)`.
-Below (ε = 0.1, `c = 1`) are the two widths as functions of the conductor `q`.
+The threshold `T(ε, Q₀, M) = 2·Q₀^{-ε}·log M` (uniqueness holds when `C > T`):
 
-| q         | window `q^{-ε}` | classical `1/log q` |
-|-----------|-----------------|---------------------|
-| 10^3      | 0.5012          | 0.1448              |
-| 10^6      | 0.2512          | 0.0724              |
-| 10^9      | 0.1259          | 0.0483              |
-| 10^15     | 0.0316          | 0.0290              |
+| ε   | Q₀  | M    | Q₀^{-ε}   | log M   | T = 2·Q₀^{-ε}·log M |
+|-----|-----|------|-----------|---------|---------------------|
+| 1.0 | 2   | 2    | 0.5000    | 0.6931  | 0.6931              |
+| 1.0 | 10  | 10   | 0.1000    | 2.3026  | 0.4605              |
+| 1.0 | 100 | 100  | 0.0100    | 4.6052  | 0.0921              |
+| 0.5 | 100 | 100  | 0.1000    | 4.6052  | 0.9210              |
+| 1.0 | 10  | 1000 | 0.1000    | 6.9078  | 1.3816              |
+| 2.0 | 100 | 100  | 0.0001    | 4.6052  | 0.0009              |
 
-Reading: `q^{-ε}` is *polynomially* small in `q`, whereas `1/log q` is only
-*logarithmically* small. For fixed `ε` they cross over (here near `q ≈ 10^15`),
-and beyond the crossover `q^{-ε} ≪ 1/log q`: the refined window is genuinely
-thinner. This is precisely why a *conditional* strengthening (pushing away the
-non-real zeros) is needed to say anything about zeros in the thin window.
+Observations consistent with the theorem:
+- With a fixed narrow window (`M = Q₀`), `T → 0` as `Q₀ → ∞`, so any fixed repulsion
+  constant `C > 0` eventually guarantees uniqueness — the "large conductor" regime.
+- Widening the window (`M ≫ Q₀`) raises `T`, demanding stronger repulsion, exactly the
+  obstruction to a global (all-conductor) statement.
+- Larger `ε` (a wider exceptional neighbourhood `[1 − q^{-ε}, 1)`) shrinks `T`
+  dramatically, since `Q₀^{-ε}` decays fast.
 
-## 2. The effective threshold `Q₀`
+## 2. Coexistence test below the threshold
 
-The pivot lemma `exists_threshold` produces `Q₀` from the asymptotic
-`m^{-ε} log m → 0`. Sample values of `m^{-ε} log m` (ε = 0.1):
+Take `ε = 1`, `Q₀ = 2`, `M = 3`, and a deliberately weak repulsion `C = 0.1`
+(so `C < T = 2·(1/2)·log 3 ≈ 1.0986`). Construct
+`χ₁ = (2, 0.5)` and `χ₂ = (3, 0.6667)`:
+- `χ₁` is exceptional: `0.5 ≥ 1 − 2^{-1} = 0.5`. ✓
+- `χ₂` is exceptional: `0.6667 ≥ 1 − 3^{-1} ≈ 0.6667`. ✓
+- Repulsion is *satisfiable*: `min(0.5, 0.6667) = 0.5 ≤ 1 − 0.1/log 6 ≈ 0.9442`. ✓
 
-| m      | `m^{-ε} log m` |
-|--------|----------------|
-| 10^9   | 2.61           |
-| 10^15  | 1.09           |
-| 10^18  | 0.66           |
+So two distinct exceptional characters coexist under weak repulsion — confirming the
+threshold is load-bearing and the conclusion fails without it.
 
-So for `ε = 0.1`, `C = 1` one may take `Q₀ ≈ 10^{16}`; the constant is effective
-but (as expected for Siegel-type statements) large. Smaller `ε` pushes `Q₀`
-higher, consistent with the theorem quantifying `∀ ε, ∃ Q₀`.
+## 3. Contradiction above the threshold (sanity of the proof)
 
-## 3. Counterexample hunt
+Take `ε = 1`, `Q₀ = 2`, `M = 2`, `C = 1.0` (so `C > T ≈ 0.6931`). Any two exceptional
+characters must have conductor `= 2`, real zero `≥ 0.5`, so
+`min ≥ 0.5 = 1 − Q₀^{-ε}`; repulsion would force `min ≤ 1 − C/log 4 ≈ 0.2787`, a
+contradiction unless the two characters coincide. This is precisely the chain the
+formal proof follows.
 
-The conclusion "at most one exceptional character" is **consistent with all known
-data**: no Landau–Siegel zero has ever been exhibited, so the exceptional set is
-empirically empty and *a fortiori* a subsingleton. The content of the theorem is
-therefore structural — it says the *count* is `≤ 1` under the stated hypotheses,
-which is exactly what the `Set.Subsingleton` conclusion encodes. No counterexample
-to the abstract connector `repulsion_subsingleton` exists either: it is proved in
-Lean for an arbitrary index family.
+## 4. Sequence note
 
-## 4. OEIS
+No integer sequence arises directly; the object is a real-analytic threshold surface
+`T(ε, Q₀, M)`. An OEIS search is therefore not applicable. The evidence above is the
+relevant numerical validation.
 
-No integer sequence is naturally attached to the statement (the objects are real
-zeros of `L`-functions and real constants), so no OEIS lookup applies.
+## Conclusion
 
-## Why the evidence is light
-
-The theorem is a *conditional* uniqueness statement about objects (Siegel zeros)
-that are conjectured not to exist. The meaningful computation is the comparison of
-window widths and the effective threshold above; both are reproduced by `#eval` in
-Lean. The mathematical substance lives in the proof, not in a data table.
+The numerics confirm (a) the threshold direction, (b) that it is sharp enough to be
+load-bearing (coexistence below, contradiction above), and (c) the asymptotic
+behaviour matching the "at most one exceptional character of large conductor"
+heuristic. These directly support the formalized theorems `at_most_one_exceptional`
+and `card_le_one_of_repulsion`.

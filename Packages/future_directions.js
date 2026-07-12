@@ -1929,7 +1929,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit \u03bc and \u03bb Invariants for Spectral Resultants in \u2124_p-Towers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71e324bf",
     "description": "For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namely $\\chi''_{a}(C(G)) = d+3$, except in the degenerate case where $G$ is a complete graph $K_{d+1}$ (for which $\\chi''_{a}(C(G)) = d+2$). This conjecture refines the already verified AVD\u2011TCC bound for central graphs of regular graphs and predicts exact values.",
     "domains": [
       "Pythagorean"
@@ -1938,7 +1938,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01979v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T06:12:59.143802+00:00",
     "title": "Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
@@ -6228,7 +6228,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project formalizes \"social credit scores as topological invariants\" through"
   },
   {
-    "consumed_by_exp_id": "6c47c154",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Non-Desarguesian Worlds\n\nThis project formalizes the algebraic engine behind non-Desarguesian planes and\ndelivers a fully verified concrete example. Two self-contained Lean files:\n\n* `QuasifieldAffinePlane.lean` \u2014 abstract theory: a `Quasifield` structure and a\n  proof that **every quasifield coordinatizes an affine plane** (two points\n  determine a unique line, Playfair's parallel axiom, non-degeneracy), together\n  with `DivisionRing.toQuasifield` showing division rings are the \"tame\"\n  (Desarguesian) special case.\n* `NearfieldPlaneOrder9.lean` \u2014 the **Dickson nearfield of order 9**, verified by\n  exhaustive computation to be a quasifield that is associative and\n  right-distributive but **not left-distributive** and **not commutative**, hence\n  not a division ring; it coordinatizes a non-Desarguesian affine plane of order\n  9 with 81 points and 90 lines.\n\n## What is proved\n\n1. General incidence theory of quasifield planes (fully general `Q`).\n2. A concrete proper nearfield of order 9 and all its quasifield axioms.\n3. The algebraic obstruction to Desargues: failure of left distributivity.\n\n## Natural next steps\n\n1. **Geometric Desargues failure.** Formalize a Desargues configuration\n   (two triangles perspective from a point) inside the coordinatized plane and\n   exhibit an explicit 10-point/10-line witness in the Dickson plane where the\n   axis of perspectivity fails. This turns the algebraic obstruction into a\n   directly geometric non-Desarguesian statement.\n\n2. **The coordinatization theorem.** Prove the converse bridge: an affine plane\n   in which (the little/major) Desargues theorem holds is coordinatized by a\n   division ring. This is the deep classical equivalence; the quasifield/plane\n   scaffolding here is the right starting point.\n\n3. **Existence at every prime power `q = p\u207f`, `n \u2265 2`.** Generalize the Dickson\n   twist to `GF(q\u00b2)` with the Frobenius `x \u21a6 x^q`, giving a proper nearfield and\n   a non-Desarguesian plane of order `q\u00b2` for every prime power `q`. The finite\n   `decide` proofs would be replaced by structural arguments about `GF(q\u00b2)` and\n   its Frobenius automorphism.\n\n4. **Collineation groups strictly smaller than PGL.** Formalize that the\n   collineation group of the Dickson plane fixes the distinguished nucleus and is\n   therefore a proper subgroup of `PGL(3, 9)` acting on the Desarguesian plane \u2014\n   the \"symmetry loss\" theme.\n\n5. **Hall systems and the classification of order-9 planes.** Connect the\n   nearfield plane to the Hall plane, its dual, and the Hughes plane, formalizing\n   the enumeration of the four projective planes of order 9.\n\n6. **Nucleus theory over quasifields.** Relate the left/middle/right nuclei of a\n   quasifield to the group of central collineations, tying non-associativity to\n   the Lenz\u2013Barlotti classification.\n",
     "domains": [
       "Algebra",
@@ -6238,7 +6238,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "0be793c6",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T02:51:05.410039+00:00",
     "title": "This project formalizes the algebraic engine behind non-Desarguesian planes and"
   },
