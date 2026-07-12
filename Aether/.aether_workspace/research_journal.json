@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7473e6ed",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself —\n`T ≈ Π (x : T), P x`, equivalently `T ≃ (T → Prop)`",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 14,
-      "timestamp": "2026-07-11T22:13:56",
-      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-    },
-    {
       "cycle_id": "29aa9d96",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field\norder parameter `m = tanh(β m)` undergoes a sharp, continuous (second-order)\nphase transition at t",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T15:03:08",
       "title": "Asymptotic Clique-to-Clique Density Bound"
+    },
+    {
+      "cycle_id": "3dfad72d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Summary of what was proved / disproved\n\nFile: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`,\naxioms: `propext`, `Classical.choice`, `Quot.sound` on",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-07-12T15:03:14",
+      "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c4017799",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Self-Improving Proofs\n\nThe file `Catalog/NumberTheory/SelfImprovingProofs.lean` formalizes a proof\nrefinement calculus and proves the mission's core claims by isolating their\nmat",
-      "quality_score": 0.5808559999999999,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-09T08:55:50",
-      "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-    },
     {
       "cycle_id": "6b4ee47d",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T15:03:08",
       "title": "Asymptotic Clique-to-Clique Density Bound"
+    },
+    {
+      "cycle_id": "3dfad72d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Summary of what was proved / disproved\n\nFile: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`,\naxioms: `propext`, `Classical.choice`, `Quot.sound` on",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-07-12T15:03:14",
+      "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b88b4225",
-      "domain": "Applications",
-      "name": "qform_even",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b88b4225",
-      "domain": "Applications",
-      "name": "det_scaledGram",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b88b4225",
-      "domain": "Applications",
-      "name": "det_NeronSeveri",
-      "quality": 0.82
-    },
     {
       "cycle_id": "62dd551b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "clique_subset_count",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "3dfad72d",
+      "domain": "Applications",
+      "name": "hasseGraph_adj",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "3dfad72d",
+      "domain": "Applications",
+      "name": "diamond_not_isAcyclic",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "3dfad72d",
+      "domain": "Applications",
+      "name": "diamond_not_isTree",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-12T15:03:08",
+  "last_updated": "2026-07-12T15:03:14",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "077d3a2b",
-        "quality": 0.62,
-        "theorems": 15,
-        "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
-      },
-      {
         "cycle_id": "6a70bc30",
         "quality": 0.72,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.79,
         "theorems": 9,
         "title": "Asymptotic Clique-to-Clique Density Bound"
+      },
+      {
+        "cycle_id": "3dfad72d",
+        "quality": 0.7,
+        "theorems": 31,
+        "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
       }
     ],
     "Bridges": [

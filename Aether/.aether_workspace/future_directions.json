@@ -31319,11 +31319,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ddbb821f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31336,7 +31336,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1140",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T15:03:28.028857+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31351,7 +31351,7 @@
       "source": "",
       "source_exp_id": "f8254dbf",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f8254dbf",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_1894f5a1",
       "timestamp": "2026-07-12T14:10:44.528569+00:00",
       "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
@@ -36964,7 +36964,6 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
@@ -36978,6 +36977,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
+    "abduction_followup",
     "abduction_followup"
   ]
 }

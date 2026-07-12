@@ -4717,31 +4717,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "Jung 1989",
-      "Jung-Tix 1998"
-    ],
-    "consumed_by_exp_id": "3dfad72d",
-    "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
-    "domain_bridges": [
-      "finite-binary-channel coding",
-      "probabilistic chains"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0332",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Constructive separation with two clear obstruction layers",
-    "research_mode": "team",
-    "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T03:01:13.702884+00:00",
-    "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "Aharoni-Korman conjecture",
       "saturated chains",
       "co-wellfounded posets",
@@ -12018,7 +11993,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddbb821f",
     "description": "# Future Directions — The Topology of Argumentation (V): Stable Extensions\n\nThis cycle deepens the formalization of Dung's abstract argumentation theory and\nthe conflict-free complex `K(AF)` by adding the **stable extension** — the\nstrongest of the classical extension-based semantics — and placing it inside the\nfull semantic hierarchy and the Euler/semantics bridge.\n\nNew self-contained file: `Catalog/Novelty/ArgumentationStable.lean`.\n\n## What is proved\n\nA set `S` of arguments is a **stable extension** when it is conflict-free and it\n*attacks every argument it does not contain*:\n`Stable R S := ConflictFree R S ∧ ∀ a ∉ S, ∃ b ∈ S, R b a`.\nThese are the \"no abstention\" positions: every argument is accepted or defeated.\n\n### The stable hierarchy (general frameworks)\n\nEach result feeds the next, forming a chain\n`stable ⟹ preferred ⟹ complete ⟹ admissible ⟹ conflict-free`:\n\n* `stable_defends` — a stable set defends each of its members.\n* `stable_admissible` — every stable extension is admissible.\n* `stable_complete` — every stable extension is complete (closed under defense).\n* `stable_preferred` — every stable extension is preferred (maximal admissible).\n* `stable_maximalConflictFree` — every stable extension is a *facet* of `K(AF)`.\n* `groundedExt_subset_stable` — the grounded (skeptical) extension lies inside\n  every stable extension.\n\n### The symmetric collapse\n\nFor **symmetric irreflexive** frameworks (mutual disagreement without\nself-attack) the top of the hierarchy collapses:\n\n* `maximalConflictFree_stable_of_symmetric` — every facet is stable.\n* `stable_iff_preferred_of_symmetric_irrefl` —\n  **stable ⇔ preferred ⇔ facet of `K(AF)`**.\n\n### The stable Euler bridge\n\nFor the complete conflict graph `completeAF n` (symmetric and irreflexive):\n\n* `stable_completeAF_iff` — the stable extensions are exactly the singletons.\n* `stable_completeAF_ncard` — there are exactly `n` of them.\n* `euler_completeAF` — the Euler characteristic of `K(AF)` is `n`.\n* `euler_eq_stable_completeAF` — **`χ(K(AF)) = #{stable extensions}`** for `n ≥ 1`.\n\nThis extends the Euler/semantics bridge of `ArgumentationSymmetric` (previously\nstated for preferred extensions) to stable extensions.\n\nAll results compile under Lean 4 / Mathlib (`v4.28.0`) with no `sorry` and depend\nonly on the standard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n## Open directions\n\n* **General symmetric frameworks.** Extend `stable_iff_preferred_of_symmetric_irrefl`\n  and the Euler bridge from the complete conflict graph to arbitrary symmetric\n  irreflexive frameworks, expressing `χ(K(AF))` via the independence complex of\n  the conflict graph.\n* **Existence gap.** Unlike preferred extensions, stable extensions need not\n  exist. Characterize the frameworks that admit at least one stable extension\n  (e.g. formalize that finite frameworks whose conflict graph is symmetric always\n  do, via maximal independent sets).\n* **Full homology.** Replace the Euler characteristic by the reduced homology of\n  `K(AF)` and relate its Betti numbers to the fine structure of the semantics.\n",
     "domain_bridges": [],
     "domains": [
@@ -12031,7 +12006,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f8254dbf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T14:10:44.528569+00:00",
     "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
   },
@@ -12074,6 +12049,26 @@
     "status": "available",
     "timestamp": "2026-07-12T15:02:53.060049+00:00",
     "title": "Unconditional *upper* comparison of clique counts,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Summary of what was proved / disproved\n\nFile: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`,\naxioms: `propext`, `Classical.choice`, `Quot.sound` only).\n\nWe work with the combinatorial shadow of the Jung–Tix characterization: a finite\nposet `P` is **RB-shaped** when it has a least element and its undirected Hasse\ngraph is a tree (`RBShape P := HasLeast P ∧ (hasseGraph P).IsTree`). The\ngenuinely domain-theoretic notions (probabilistic valuations, probabilistic\npowerdomain, RB = retract-of-bifinite) are outside Mathlib; `RBShape` is exactly\nthe two-conjunct condition the characterization attributes to such posets.\n\n**Reusable core (proved).**\n- `diamond_not_isAcyclic`: any poset containing a covering diamond\n  `a ⋖ b, a ⋖ c, b ⋖ d, c ⋖ d` with `b ≠ c` has a **non-acyclic** Hasse graph.\n  Proof: the two length-2 paths `a–b–d` and `a–c–d` are distinct paths with equal\n  endpoints, contradicting acyclicity's unique-path criterion.\n- Corollaries `diamond_not_isTree`, `diamond_not_rbShape`.\n\n**Conjecture A — refuted.** *\"A finite poset with a least element is RB-shaped.\"*\n- `least_not_sufficient_for_rbShape`: the diamond `Bool × Bool` (the `2×2`\n  Boolean lattice) has least element `(false,false)` but is **not** RB-shaped,\n  because its Hasse graph carries the covering diamond above (a 4-cycle). This is\n  the classical **Jung–Tix diamond obstruction** in combinatorial form: a least\n  element alone does not deliver the tree structure.\n\n**Conjecture B — refuted.** *\"A finite poset whose Hasse graph is acyclic (a\nforest) has a least element.\"*\n- `forest_not_sufficient_for_hasLeast`: the two-element antichain `Anti2` has an\n  edgeless (hence acyclic) Hasse graph but **no** least element.\n\n**Conjecture B — sharpened to a genuine tree (proved).** *\"Even a Hasse graph\nthat is a genuine tree (connected and acyclic), not merely a forest, has a least\nelement.\"* Also refuted.\n- `tree_not_sufficient_for_hasLeast`: the three-element **\"V\" poset** `V3`\n  (`a, b` incomparable minimal, both covered by a top `c`) has Hasse graph the\n  path `a – c – b`, which is a genuine tree (`v3_hasseGraph_isTree`:\n  `SimpleGraph.IsTree`, i.e. connected *and* acyclic), yet `V3` has no least\n  element (`v3_not_hasLeast`). This strengthens\n  `forest_not_sufficient_for_hasLeast` from \"forest\" to \"tree\", closing the\n  former open direction #1.\n\n**Positive sanity check (proved).**\n- `bool_rbShape`: the two-element chain `Bool` **is** RB-shaped, so `RBShape` is\n  not vacuous and both conjuncts are simultaneously realizable.\n\nNet contrarian message: neither conjunct of the RB-shape condition implies the\nother, and neither alone implies RB-shape — the diamond and the antichain are\nthe minimal witnesses for the two independent failures.\n\n## Open directions\n\n1. **Connected tree without a least element — DONE.** The \"V\"/Λ poset (`a, b < c`,\n   with `a, b` incomparable) has a Hasse graph that is a *genuine tree*\n   (connected, 2 edges on 3 vertices) yet has no least element. This is now\n   formalized as `tree_not_sufficient_for_hasLeast` / `v3_hasseGraph_isTree`.\n   Rather than the Euler edge-count route (blocked because\n   `SimpleGraph.edgeFinset` is non-computable), acyclicity is discharged\n   structurally via `SimpleGraph.isAcyclic_iff_forall_adj_isBridge` together with\n   `SimpleGraph.isBridge_iff` and `decide` on the finite adjacency, and\n   connectivity via `SimpleGraph.connected_iff_exists_forall_reachable`.\n\n2. **General chains.** Prove that *every* nonempty finite linear order is\n   RB-shaped (connectivity follows from the least element; acyclicity needs the\n   monotone-path uniqueness argument). Only the 2-chain is formalized here.\n\n3. **Tree ⇔ diamond-free (finite posets).** Conjecture: for a finite poset with\n   a least element, the Hasse graph is a tree **iff** the poset is\n   *diamond-free* (no covering diamond `a ⋖ b, a ⋖ c, b ⋖ d, c ⋖ d`, `b ≠ c`).\n   The \"not diamond-free ⇒ not tree\" direction is exactly `diamond_not_isTree`;\n   the converse (a shortest Hasse cycle in a poset with `⊥` forces a diamond)\n   is the interesting open half.\n\n4. **A lattice with tree Hasse graph is a chain.** Conjecture: a finite lattice\n   whose Hasse graph is a tree must be totally ordered. Two incomparable\n   elements would produce a diamond via their meet/join, closing a cycle.\n\n5. **Bridging to the actual powerdomain.** The above are combinatorial shadows.\n   A genuine formalization of the Jung–Tix result requires developing\n   probabilistic valuations, the probabilistic powerdomain, and RB-domains in\n   Lean — substantial infrastructure not yet present in Mathlib.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1143",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3dfad72d",
+    "status": "available",
+    "timestamp": "2026-07-12T15:03:11.200266+00:00",
+    "title": "File: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`"
   },
   {
     "ambition_level": "extension",
