@@ -241,7 +241,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "167b800e",
     "description": "Building on cycle 0fe20e26 (Q=0.820), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 823f5582 (Q=0.820) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination",
     "domains": [
       "Novelty"
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "0fe20e26",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T18:30:57.788818+00:00",
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
   },
@@ -449,20 +449,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:19:31.875554+00:00",
     "title": "Deepening: Lower bounds on clique densities using generalized inverses"
-  },
-  {
-    "consumed_by_exp_id": "91f941b6",
-    "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_e7035fce_bd8c0405",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "e7035fce",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T00:21:21.581372+00:00",
-    "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
     "consumed_by_exp_id": "",
@@ -7338,6 +7324,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T18:30:48.733558+00:00",
     "title": "The results of this cycle sharpen the qualitative \"every homology class of a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Elements as Eigenvalues of an Operator\n\nThis cycle formalizes a cross-domain *connector* in\n`Catalog/Bridges/PeriodicTableEigenvalues.lean`: the periodic table of the first\n`n` elements is realized as the **spectrum** of a self-adjoint operator (the\n\"nuclear Hamiltonian\"), bridging spectral / linear algebra with elementary number\ntheory.\n\n## What was proved\n\nLet `H n` be the diagonal operator on `Fin n \u2192 \u211d` with entries the atomic numbers\n`1, 2, \u2026, n` (`nuclearHamiltonian n = diagonal (fun i => (i : \u211d) + 1)`).\n\n* `nuclearHamiltonian_isHermitian` \u2014 `H n` is self-adjoint (a genuine observable).\n* `spectrum_eq_range` \u2014 the spectrum equals **exactly** the set of atomic numbers\n  (both inclusions), via `hasEigenvalue_atomicNumber` and\n  `eigenvalue_imp_atomicNumber`.\n* `range_atomicNumber` \u2014 those eigenvalues are precisely the integers `1, \u2026, n`.\n* `trace_nuclearHamiltonian` \u2014 trace (sum of eigenvalues) `= n(n+1)/2`\n  (Gauss triangular number).\n* `trace_pow_nuclearHamiltonian` \u2014 the trace of the `k`-th power of `H n` equals\n  the `k`-th power sum `\u2211 (atomicNumber i)^k`, a full power-sum ladder generalizing\n  the trace bridge.\n* `det_nuclearHamiltonian` \u2014 determinant (product of eigenvalues) `= n!`.\n* `charpoly_nuclearHamiltonian` \u2014 characteristic polynomial factors as\n  `\u220f (X - atomicNumber i)`.\n\n## Natural extensions\n\n1. **Complex / infinite dimensional.** Move from `Fin n \u2192 \u211d` to a separable\n   Hilbert space and treat the operator as a (possibly unbounded) self-adjoint\n   operator, recovering the spectrum as a closed subset of `\u211d`.\n\n2. **Non-diagonal Hamiltonians.** Add off-diagonal \"coupling\" terms (e.g. a\n   tridiagonal Jacobi matrix) and study how the spectrum deforms; prove interlacing\n   (Cauchy) bounds relating the perturbed spectrum to the atomic numbers.\n\n3. **Isotope multiplicities.** Weight each eigenvalue by the number of stable\n   isotopes, giving a self-adjoint operator on a space whose dimension is the total\n   isotope count, and connect the trace to observed isotope statistics.\n\n4. **Spectral zeta / partition function.** Study `\u2211 1/(atomicNumber i)^s` and\n   `\u2211 exp(-\u03b2 \u00b7 atomicNumber i)` (heat trace), linking to `\u03b6`-values and to the\n   thermodynamics of the model.\n\n5. **Power-sum invariants.** The power-sum ladder is now realized by\n   `trace_pow_nuclearHamiltonian` (`trace (H\u207f ^ k) = \u2211 (atomicNumber i)^k`). A\n   natural next step is to connect these power sums back to the elementary\n   symmetric functions (trace, \u2026, determinant) via Newton's identities, closing\n   the loop between the spectral moments and the coefficients of the\n   characteristic polynomial.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1156",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "91f941b6",
+    "status": "available",
+    "timestamp": "2026-07-12T18:31:00.752574+00:00",
+    "title": "This cycle formalizes a cross-domain *connector* in"
   },
   {
     "consumed_by_exp_id": "",

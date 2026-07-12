@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4b34e974",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Megastructure Mathematics\n\nBold, testable conjectures distilled from this cycle's study of Dyson-scale\ngeometry, thermodynamics, and computation.\n\n## 1. The optimal collector geo",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-12T01:53:42",
-      "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
-    },
-    {
       "cycle_id": "fb4de3e5",
       "domain": "Tropical",
       "key_insight": "# Future Directions — Analogy as a Mathematical Operation\n\nThis project formalizes Hofstadter's notion (from *Fluid Concepts and Creative\nAnalogies*) of an **analogy** between structures `A` and `B` a",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-12T18:30:57",
       "title": "Close Proofs: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
+    },
+    {
+      "cycle_id": "91f941b6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Elements as Eigenvalues of an Operator\n\nThis cycle formalizes a cross-domain *connector* in\n`Catalog/Bridges/PeriodicTableEigenvalues.lean`: the periodic table of the first\n`n` e",
+      "quality_score": 0.78,
+      "sorry_count": 5,
+      "theorem_count": 12,
+      "timestamp": "2026-07-12T18:31:13",
+      "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3716954d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes, in Lean 4, the cardinality dichotomy behind the \"cosmic\ncensus of L-functions\": the naive space of Dirichlet series is uncountable, but\nevery arithmetical",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-09T23:44:05",
-      "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-    },
     {
       "cycle_id": "7e60f6c2",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-12T18:30:57",
       "title": "Close Proofs: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
+    },
+    {
+      "cycle_id": "91f941b6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Elements as Eigenvalues of an Operator\n\nThis cycle formalizes a cross-domain *connector* in\n`Catalog/Bridges/PeriodicTableEigenvalues.lean`: the periodic table of the first\n`n` e",
+      "quality_score": 0.78,
+      "sorry_count": 5,
+      "theorem_count": 12,
+      "timestamp": "2026-07-12T18:31:13",
+      "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "16e4b1d9",
-      "domain": "Applications",
-      "name": "singleton_notMem_nhds",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "16e4b1d9",
-      "domain": "Applications",
-      "name": "isNowhereDense_singleton",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "f3dfcf44",
-      "domain": "Applications",
-      "name": "hasDerivAt_tanh",
-      "quality": 0.82
-    },
     {
       "cycle_id": "f3dfcf44",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "pin",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "91f941b6",
+      "domain": "Novelty",
+      "name": "nuclearHamiltonian_isHermitian",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "91f941b6",
+      "domain": "Novelty",
+      "name": "hasEigenvalue_atomicNumber",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "91f941b6",
+      "domain": "Novelty",
+      "name": "eigenvalue_imp_atomicNumber",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-12T18:30:57",
+  "last_updated": "2026-07-12T18:31:13",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "dac5bc28",
-      "domain": "MachineLearning",
-      "sorry_count": 4,
-      "timestamp": "2026-07-11T18:37:17"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "c37c01fa",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-12T18:30:57"
+    },
+    {
+      "context": "-    sorry; +  · sorry  -- Carmichael's theorem, infinite tail (cyclotomic Fibonacci bounds); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "91f941b6",
+      "domain": "Novelty",
+      "sorry_count": 5,
+      "timestamp": "2026-07-12T18:31:13"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "73c84a79",
-        "quality": 0.82,
-        "theorems": 20,
-        "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
-      },
-      {
         "cycle_id": "f8254dbf",
         "quality": 0.83,
         "theorems": 34,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 17,
         "title": "Close Proofs: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Deci"
+      },
+      {
+        "cycle_id": "91f941b6",
+        "quality": 0.78,
+        "theorems": 12,
+        "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
       }
     ],
     "NumberTheory": [
