@@ -839,7 +839,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: Tangled Hierarchies in Type Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b281557",
     "description": "Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed point. Show: the grandfather paradox (kill your ancestor) violates self-consistency \u2014 prove it's impossible. Conjecture: every closed timelike curve in a G\u00f6del universe is self-consistent. Explore: formalize branching timelines (many-worlds time travel) \u2014 prove the traveler creates a new branch, not a paradox.",
     "domains": [
       "Novelty",
@@ -849,7 +849,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:46:18.365871+00:00",
     "title": "Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
   },
