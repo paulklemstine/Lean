@@ -73,7 +73,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a6691c84",
     "description": "Building on cycle 39669115 (Q=0.830), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / ",
     "domains": [
       "Applications"
@@ -82,7 +82,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "39669115",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T08:22:03.393022+00:00",
     "title": "Deepening: The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
   },
@@ -1953,20 +1953,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T05:55:02.614614+00:00",
     "title": "Explicit \u03bc and \u03bb Invariants for Spectral Resultants in \u2124_p-Towers"
-  },
-  {
-    "consumed_by_exp_id": "71e324bf",
-    "description": "For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namely $\\chi''_{a}(C(G)) = d+3$, except in the degenerate case where $G$ is a complete graph $K_{d+1}$ (for which $\\chi''_{a}(C(G)) = d+2$). This conjecture refines the already verified AVD\u2011TCC bound for central graphs of regular graphs and predicts exact values.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0129",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01979v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T06:12:59.143802+00:00",
-    "title": "Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -6974,6 +6960,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:19:23.888023+00:00",
     "title": "This cycle isolated a single local inequality \u2014 the *inclusion\u2013exclusion inverse"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThis project formalises, self-contained on top of Mathlib, a small theory of total\ncolourings and adjacent-vertex-distinguishing (AVD) total colourings, and applies\nit to central graphs `C(G)`. The chain of results (each theorem building on the\nprevious) is:\n\n1. `star_pairwise` / `card_starIdx` \u2014 the closed star of a vertex `w` is a clique\n   of size `deg w + 1` in the total graph `T(H)`.\n2. `degree_add_one_le_chromatic` \u2014 hence `deg w + 1 \u2264 \u03c7''(H)`.\n3. `star_comp_injective` / `colorSet_eq_univ_of_card` \u2014 a proper total colouring\n   with exactly `deg w + 1` colours uses the whole palette at `w`.\n4. `not_isAVD_of_adjacent_eqdeg` \u2014 two adjacent equal-degree vertices force\n   `\u03c7''\u2090 \u2265 \u0394 + 2`.\n5. `central_degree_inr` (`= 2`), `central_degree_inl` (`+1 = |V|`) \u2014 degree\n   structure of `C(G)`.\n6. `central_chromatic_ge`, `central_no_avd_of_not_complete` \u2014 total- and\n   AVD-lower bounds for `C(G)`.\n7. `central_complete_inl_indep`, `cycle5_no_avd_five_colors` \u2014 the complete-graph\n   structural exception, and a verified counterexample to the literal conjecture.\n\n## What we found about the conjecture\n\nThe mission conjecture (`\u03c7''\u2090(C(G)) = d + 3` for `d`-regular non-complete `G`) is\n**not** correct in general: every original vertex of `C(G)` has degree `n \u2212 1`\n(`n = |V(G)|`), and any two of them are adjacent iff non-adjacent in `G`, giving\nthe unconditional bound `\u03c7''\u2090(C(G)) \u2265 n + 1`. This exceeds `d + 3` whenever\n`n > d + 2`; the value `d + 3` is only right at the boundary `n = d + 2`.\n`cycle5_no_avd_five_colors` is a machine-checked instance (`d = 2`, `n = 5`,\n`\u03c7''\u2090 \u2265 6 > 5`).\n\n## Natural next steps\n\n* **Exact value `= n + 1` for non-complete regular `G`.** Prove the matching upper\n  bound by exhibiting an explicit AVD total colouring of `C(G)` with `n + 1`\n  colours. This needs a constructive colouring and the Behzad/Vizing-style\n  total-colouring machinery, none of which is yet in Mathlib.\n* **The complete case `C(K\u2099)`.** Determine `\u03c7''\u2090(C(K\u2099))` exactly (the mission's\n  `d + 2 = n + 1` claim for `K\u2099 = K_{d+1}`); the independent-set structure of the\n  maximum-degree vertices proved here (`central_complete_inl_indep`) is the key\n  input, but the tight value again requires an explicit colouring.\n* **General total-colouring API in Mathlib.** The total graph `T(H)`, total\n  chromatic number, the AVD colour-set predicate, and the Total Colouring\n  Conjecture (`\u03c7'' \u2264 \u0394 + 2`) would be reusable additions; this file provides a\n  usable nucleus (`totalGraph`, `colorSet`, `IsAVD`).\n* **Upper bounds via edge/total colourings.** Formalise `\u03c7''(H) \u2264 \u0394 + 2` for\n  specific graph classes to complement the lower bounds proved here.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1118",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "71e324bf",
+    "status": "available",
+    "timestamp": "2026-07-12T07:36:31.774478+00:00",
+    "title": "This project formalises, self-contained on top of Mathlib, a small theory of tot"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_71e324bf_13fece62",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "71e324bf",
+    "status": "available",
+    "timestamp": "2026-07-12T07:36:38.107204+00:00",
+    "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
   {
     "consumed_by_exp_id": "",

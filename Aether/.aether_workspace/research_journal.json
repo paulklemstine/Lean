@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fb4f44b5",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThis project formalises the exact Seidel spectrum and Seidel energy of complete\nbipartite graphs and their single-edge deletions, and settles the sharp threshold\nfor the energy in",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 38,
-      "timestamp": "2026-07-11T11:08:40",
-      "title": "Sharp threshold characterization for Seidel energy increase in complete bipartite graphs under edge "
-    },
-    {
       "cycle_id": "d4a0469f",
       "domain": "Applications",
       "key_insight": "# Future Directions — Counterfactual (random) number theory\n\nThis cycle added a **cross-domain connector**\n(`CounterfactualRandomPrimesBorelCantelli.lean`) linking\n\n* **probability / measure theory**",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T07:19:31",
       "title": "Lower bounds on clique densities using generalized inverses"
+    },
+    {
+      "cycle_id": "71e324bf",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThis project formalises, self-contained on top of Mathlib, a small theory of total\ncolourings and adjacent-vertex-distinguishing (AVD) total colourings, and applies\nit to central",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 855,
+      "timestamp": "2026-07-12T07:36:38",
+      "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e50512ae",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures emerging from this cycle's study of set families that avoid a\nthree-petal sunflower (three distinct sets with a common pairwise intersection) and the",
-      "quality_score": 0.74264,
-      "sorry_count": 7,
-      "theorem_count": 15,
-      "timestamp": "2026-07-06T09:42:26",
-      "title": "Optimality of the polynomial factor in the Naslund–Sawin bound for sunflower‑free families"
-    },
     {
       "cycle_id": "2058237b",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T07:19:31",
       "title": "Lower bounds on clique densities using generalized inverses"
+    },
+    {
+      "cycle_id": "71e324bf",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThis project formalises, self-contained on top of Mathlib, a small theory of total\ncolourings and adjacent-vertex-distinguishing (AVD) total colourings, and applies\nit to central",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 855,
+      "timestamp": "2026-07-12T07:36:38",
+      "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7b741692",
-      "domain": "Cryptography",
-      "name": "factorial_value_unique_via_mixed",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "de167401",
-      "domain": "Bridges",
-      "name": "PersonEquiv",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "de167401",
-      "domain": "Bridges",
-      "name": "PersonEquiv",
-      "quality": 0.78
-    },
     {
       "cycle_id": "de167401",
       "domain": "Bridges",
@@ -2803,17 +2785,28 @@
       "domain": "MachineLearning",
       "name": "adj_of_mem_codeg",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "71e324bf",
+      "domain": "Applications",
+      "name": "shatter_k_ge_four",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "71e324bf",
+      "domain": "Applications",
+      "name": "adj_of_pat",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "71e324bf",
+      "domain": "Applications",
+      "name": "shatter_containsCycle",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-12T07:19:31",
+  "last_updated": "2026-07-12T07:36:38",
   "open_questions": [
-    {
-      "context": "+work-in-progress `sorry` below; every other declaration in this file is complete.; sorry; **Analysis.**  What survived: all seven theorems, sorry-free.  The unifying",
-      "cycle_id": "0981cb8f",
-      "domain": "Probability",
-      "sorry_count": 6,
-      "timestamp": "2026-07-11T00:40:03"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "4d0c820d",
@@ -3016,6 +3009,13 @@
       "domain": "MachineLearning",
       "sorry_count": 5,
       "timestamp": "2026-07-12T07:19:31"
+    },
+    {
+      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.",
+      "cycle_id": "71e324bf",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-12T07:36:38"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8fb1d399",
-        "quality": 0.72,
-        "theorems": 22,
-        "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
-      },
-      {
         "cycle_id": "f6949247",
         "quality": 0.72,
         "theorems": 28,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 2828,
         "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+      },
+      {
+        "cycle_id": "71e324bf",
+        "quality": 0.7,
+        "theorems": 855,
+        "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
       }
     ],
     "Bridges": [
