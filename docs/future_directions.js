@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0664586a (Q=0.830), which proved 18 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_0664586a_e3e30712",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "0664586a",
+    "status": "available",
+    "timestamp": "2026-07-12T03:21:37.717161+00:00",
+    "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domains": [
       "Probability"
@@ -925,7 +939,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ac2b7d4",
     "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
     "domains": [
       "Novelty",
@@ -935,7 +949,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T23:55:18.527910+00:00",
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
@@ -982,6 +996,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T20:52:48.400479+00:00",
     "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 0664586a (Q=0.830) proved 18 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in ",
+    "domains": [
+      "Computation"
+    ],
+    "id": "sorry_fill_0664586a_f93bf9ae",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "0664586a",
+    "status": "available",
+    "timestamp": "2026-07-12T03:21:37.797608+00:00",
+    "title": "Close Proofs: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
     "consumed_by_exp_id": "",
@@ -1402,21 +1430,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T17:13:54.266169+00:00",
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-  },
-  {
-    "consumed_by_exp_id": "0664586a",
-    "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_1090",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T00:12:11.403450+00:00",
-    "title": "Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
     "consumed_by_exp_id": "",
@@ -6845,6 +6858,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T03:02:16.050839+00:00",
     "title": "Bold, testable conjectures distilled from this cycle's central finding: a level"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Alien Number Systems\n\nBold, falsifiable conjectures distilled from this cycle's study of negative,\ncomplex, and irrational bases.\n\n## 1. A uniform bijection theorem for every base `b \u2264 -2`\n\n**Conjecture.** For every integer base `b \u2264 -2`, the map sending a canonical digit\nstring (digits in `{0,1,\u2026,|b|-1}`, no trailing zero) to its value is a bijection\nonto all of `\u2124`.\n\n*The key insight is* that the entire argument for base `-2` rested on two\nbase-agnostic facts: the least-significant digit is pinned down by the residue of\nthe value modulo `|b|`, and a single interleaving measure on `\u2124` strictly decreases\nunder the base-`b` successor step. Neither fact used `b = -2` in any essential way.\n\n*Why now?* The base-`-2` case is now settled with a fully explicit, self-contained\nproof whose only base-specific input is the termination measure; generalizing the\nmeasure to arbitrary negative `b` is the natural and immediate next step.\n\n## 2. Gaussian integers in base `i \u2212 1`\n\n**Conjecture.** Every Gaussian integer has a unique representation in base `i \u2212 1`\nusing the binary digits `{0,1}`, mirroring the negabinary bijection but over `\u2124[i]`\ninstead of `\u2124`.\n\n*The key insight is* that `(i-1)` has norm `2`, so reduction modulo `i-1` leaves\nexactly the two residues `{0,1}`; the same \"residue fixes the next digit, quotient\nshrinks\" recursion should carry over verbatim once the interleaving measure on `\u2124`\nis replaced by the complex norm.\n\n*Why now?* The negabinary proof is structured precisely as \"residue + shrinking\nmeasure\", a template that transplants to any Euclidean-like base; base `i-1` is the\nsmallest genuinely two-dimensional test of that template.\n\n## 3. Base `\u03c6` is the unique irrational base with the no-consecutive-digit law\n\n**Conjecture.** Among real bases `\u03b2 > 1`, the golden ratio is the *only* one for\nwhich the greedy digit expansion of every real in `[0,1)` avoids the pattern `11`\nwhile using digits `{0,1}`; equivalently, `\u03b2 = \u03c6` is forced by demanding that the\ncollapse identity `\u03b2\u207f + \u03b2\u207f\u207a\u00b9 = \u03b2\u207f\u207a\u00b2` hold.\n\n*The key insight is* that the collapse identity is literally `\u03b2\u00b2 = \u03b2 + 1`, whose only\nroot greater than `1` is `\u03c6`; the no-consecutive-`1`s phenomenon is therefore not a\nlucky feature of `\u03c6` but its defining algebraic signature.\n\n*Why now?* We have already isolated the collapse rule `\u03c6\u207f + \u03c6\u207f\u207a\u00b9 = \u03c6\u207f\u207a\u00b2` as the sole\nengine behind the digit restriction, turning a qualitative folklore statement into a\nprecise uniqueness claim about roots of `X\u00b2 \u2212 X \u2212 1`.\n\n## 4. Fibonacci-coordinate integrality criterion in base `\u03c6`\n\n**Conjecture.** A finite base-`\u03c6` value with non-negative exponents, `\u03a3_{i\u2208S} \u03c6\u2071`, is\nan integer if and only if the Fibonacci coordinate `\u03a3_{i\u2208S} F_i` (the coefficient of\n`\u03c6`) vanishes; and the only way to realize a nonzero integer with digits `{0,1}` is\nto admit negative exponents in a symmetric (Lucas) pattern.\n\n*The key insight is* that every such value lands in `\u2124 + \u2124\u00b7\u03c6` with coordinates that\nare Fibonacci sums, and irrationality of `\u03c6` forces the `\u03c6`-coordinate to be `0` for\nthe value to be rational.\n\n*Why now?* Both halves of the mechanism are already in hand \u2014 the Fibonacci-sum\ncoordinate formula and coordinate uniqueness from irrationality \u2014 so the criterion\nis a direct synthesis waiting to be proved.\n\n## 5. A base tuned to prime patterns\n\n**Conjecture.** There is no integer base `b` in which the set of primes is eventually\nperiodic in its least-significant digits beyond the constraints already imposed by\nresidues modulo small numbers; any \"Ulam-spiral-like\" regularity of primes in a base\n`b` is fully explained by coprimality to `b`, not by the base itself.\n\n*The key insight is* that a base only reorganizes residue information already present\nin `\u2124/b\u2124`, so genuine new prime structure cannot be manufactured by a change of\nradix \u2014 the apparent patterns are shadows of Dirichlet's theorem on primes in\narithmetic progressions.\n\n*Why now?* Framing the \"alien prime base\" dream as a rigorous non-existence statement\nconverts a vague search into a testable claim about residue classes, sharply focusing\nwhere (if anywhere) real structure could hide.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1107",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0664586a",
+    "status": "available",
+    "timestamp": "2026-07-12T03:21:31.072030+00:00",
+    "title": "Bold, falsifiable conjectures distilled from this cycle's study of negative,"
   },
   {
     "consumed_by_exp_id": "",

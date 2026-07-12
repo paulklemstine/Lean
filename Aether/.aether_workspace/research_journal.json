@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c99af430",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Paradoxes as Theorems\n\nThis cycle reduced the Liar, Russell, and Berry paradoxes to a single algebraic\nphenomenon — a *designated fixed point of negation* — and built a finite,\ns",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-11T08:51:37",
-      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-    },
-    {
       "cycle_id": "21228762",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Counterfactual Number Theory\n\nThis cycle isolated a clean dividing line inside a deformed arithmetic. Modelling\n\"counterfactual primes\" by the irreducibles of the Hilbert monoid",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-12T03:02:25",
       "title": "Hofstadter: Tangled Hierarchies in Type Theory"
+    },
+    {
+      "cycle_id": "0664586a",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Alien Number Systems\n\nBold, falsifiable conjectures distilled from this cycle's study of negative,\ncomplex, and irrational bases.\n\n## 1. A uniform bijection theorem for every bas",
+      "quality_score": 0.83,
+      "sorry_count": 3,
+      "theorem_count": 18,
+      "timestamp": "2026-07-12T03:21:37",
+      "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a7402c18",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Second Neighborhoods in Oriented Graphs\n\nThese conjectures are derived from a study of Seymour's Second Neighborhood\nConjecture, which asserts that every finite oriented graph (a",
-      "quality_score": 0.6096,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-05T20:41:25",
-      "title": "Seymour's second neighborhood conjecture for oriented graphs"
-    },
     {
       "cycle_id": "1da6d023",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-12T03:02:25",
       "title": "Hofstadter: Tangled Hierarchies in Type Theory"
+    },
+    {
+      "cycle_id": "0664586a",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Alien Number Systems\n\nBold, falsifiable conjectures distilled from this cycle's study of negative,\ncomplex, and irrational bases.\n\n## 1. A uniform bijection theorem for every bas",
+      "quality_score": 0.83,
+      "sorry_count": 3,
+      "theorem_count": 18,
+      "timestamp": "2026-07-12T03:21:37",
+      "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8e111703",
-      "domain": "Novelty",
-      "name": "no_enumeration_of_oracles",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "8e111703",
-      "domain": "Novelty",
-      "name": "diagonal_ne",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "8e111703",
-      "domain": "Novelty",
-      "name": "diagonal_not_mem_range",
-      "quality": 0.83
-    },
     {
       "cycle_id": "7473e6ed",
       "domain": "Physics",
@@ -2803,17 +2785,28 @@
       "domain": "Logic",
       "name": "tangled_not_asymmetric",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "0664586a",
+      "domain": "Computation",
+      "name": "phiPow_carry",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "0664586a",
+      "domain": "Computation",
+      "name": "phi_coord_unique",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "0664586a",
+      "domain": "Computation",
+      "name": "phiSum_fib",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-12T03:02:25",
+  "last_updated": "2026-07-12T03:21:37",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "f0772bca",
-      "domain": "Novelty",
-      "sorry_count": 3,
-      "timestamp": "2026-07-10T20:20:23"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "0643b2b3",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 4,
       "timestamp": "2026-07-12T00:29:28"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "0664586a",
+      "domain": "Computation",
+      "sorry_count": 3,
+      "timestamp": "2026-07-12T03:21:37"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "ddab9e68",
-        "quality": 0.63296,
-        "theorems": 5,
-        "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
-      },
-      {
         "cycle_id": "8875d434",
         "quality": 0.7476214285714285,
         "theorems": 14,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 7,
         "title": "Deepening: Conjecture on Leading Term Cancellation"
+      },
+      {
+        "cycle_id": "0664586a",
+        "quality": 0.83,
+        "theorems": 18,
+        "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
       }
     ],
     "Cryptography": [

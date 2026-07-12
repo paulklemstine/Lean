@@ -944,7 +944,7 @@
         "extremal graph theory",
         "combinatorial optimization"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -1419,7 +1419,7 @@
         "Stochastic approximation methods",
         "Limit theorems for combinatorial structures"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation"
       ],
@@ -4338,7 +4338,7 @@
         "algorithmic number theory",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -4911,7 +4911,7 @@
         "math.CO",
         "math.PR"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -10608,7 +10608,7 @@
         "Algorithms",
         "Reconfiguration Theory"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -11384,7 +11384,7 @@
         "Probability Theory",
         "Analytic Number Theory"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -12064,7 +12064,7 @@
         "math.CO",
         "cs.IT"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation"
       ],
@@ -12505,7 +12505,7 @@
         "Quantum Gravity",
         "Statistical Mechanics"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -12850,7 +12850,7 @@
         "polyhedral combinatorics (matching polytope)",
         "combinatorial optimization (edge coloring algorithms)"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -12901,7 +12901,7 @@
         "quantum_gravity_microstate_counts",
         "conformal_field_theory_operator_counts"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -19062,7 +19062,7 @@
         "Lean 4 formalization",
         "Plane trees"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -19157,7 +19157,7 @@
         "induced packing treewidth",
         "tree decomposition-based parameters"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -19306,7 +19306,7 @@
         "Probabilistic combinatorics",
         "Algebraic algorithms"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -20040,7 +20040,7 @@
         "computability_theory",
         "geometric_measure_theory"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -20430,7 +20430,7 @@
         "Erdős–Pósa Property",
         "Parameterized Algorithms"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -26247,7 +26247,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Self-Modifying Halting ⟷ Lawvere/Cantor Bridge\n\nThis cycle contributes `Catalog/Computation/SelfModifyingLawvereBridge.lean`, a\nself-contained cross-domain bridge connecting **fixed-point theory / set theory**\n(Lawvere's theorem, Cantor's theorem) with the **computability of\nself-modifying code** (halting problem, Kleene's recursion theorem).\n\n## What was proved\n\n* `lawvere_fixed_point` — Lawvere's fixed-point theorem (point-surjective form).\n* `no_point_surjection`, `cantor_bool`, `cantor_powerset` — Cantor's theorem in\n  Boolean and power-set form, as the fixed-point-free contrapositive of Lawvere.\n* `diagonal_no_decider` — the diagonalization engine, derived directly from\n  `cantor_bool` (halting-style diagonalization is a face of Cantor's theorem).\n* Self-modifying machine model (`SelfModMachine`, `run`, `halts`, `toStd`) plus\n  `selfmod_run_eq_std_run` and `selfmod_halts_iff_standard`: self-modification\n  adds no computational power over its fixed-program simulation.\n* `diagMachine`, `diag_run`, `diag_halts_iff`: an explicit self-modifying\n  machine whose halting predicate equals `Nat.Partrec.Code`'s halting problem.\n* `selfmod_halting_undecidable` and `selfmod_std_halting_undecidable` — a\n  **genuine, non-vacuous** proof that the self-modifying halting predicate is not\n  computable, by reduction to `ComputablePred.halting_problem`.\n* `selfmod_behavior_fixed_point` — Kleene's recursion theorem: no computable\n  self-modification rule can change the behavior of *every* program.\n* `lawvere_halting_bridge` — packages the set-theoretic and computational\n  impossibilities over one configuration space.\n\nA notable observation: the earlier cycle's `diagonal_no_decider`\n(`Catalog/Computation/SelfModifyingHalt.lean`) carries a `Surjective enum`\nhypothesis on `enum : α → (α → Bool)`, which Cantor's theorem makes\nunsatisfiable — so that statement is vacuously true. The new\n`selfmod_halting_undecidable` avoids this by reducing to Mathlib's honest\nhalting problem over `Nat.Partrec.Code`, giving a non-vacuous result.\n\n## Open directions\n\n1. **Strictly-modifying instances.** `diagMachine` never rewrites its program.\n   Build a self-modifying machine that provably changes its program infinitely\n   often yet still realizes the halting problem, quantifying \"self-modification\n   depth\" and relating it to the arithmetical hierarchy.\n\n2. **Turing degree of self-modifying halting.** Prove the self-modifying halting\n   set is `Σ⁰₁`-complete (many-one equivalent to `∅'`), formalizing that\n   self-modification is *equivalent* to, not strictly harder than, classical\n   halting.\n\n3. **Quantitative recursion theorem.** Strengthen `selfmod_behavior_fixed_point`\n   to a *uniform* fixed point (an index for the quine computable from the rule),\n   and connect to explicit quine constructions.\n\n4. **Lawvere in an internal category.** Re-derive the halting undecidability as\n   an instance of Lawvere's theorem in the category of computable maps, making\n   the bridge functorial rather than by parallel corollaries.\n\n5. **Topology of the halting set.** Equip `Code` with a topology and show the\n   halting configuration set is open (`Σ⁰₁`) but not closed, matching the\n   classical picture and adding a third area (point-set topology) to the bridge.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges",
         "Computation"
@@ -26944,7 +26944,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` — the positive theory:\n\n* **`erasedBits`** — information erased by a proof step `f : α → β`, as the entropy drop\n  `log₂(card α) − log₂|image f|`, with `landauerCost bits kB T = bits · kB · T · ln 2`.\n* **`erasedBits_nonneg`** — erasure is never negative.\n* **`erasedBits_eq_zero_iff_injective`** — a step erases zero bits **iff** it is injective\n  (logically reversible): the reversibility criterion.\n* **`landauerCost_pos_of_not_injective`** — Landauer's principle: any irreversible step\n  dissipates strictly positive entropy at positive temperature.\n* **`erasedBits_lower_bound`** — erasing into a `card β`-state register costs at least\n  `log₂(card α) − log₂(card β)`.\n* **`erasedBits_mono_comp`** — a data-processing inequality: erasure only accumulates along a\n  proof pipeline; it cannot be undone downstream.\n* **`erasedBits_bennett`** — Bennett's reversible embedding `x ↦ (x, f x)` erases zero bits,\n  so computation *per se* is free; only logical irreversibility costs energy.\n* **`erasedBits_collapse = n`, `erasedBits_bigCollapse = 2^m`,\n  `exponential_erasure_separation`** — explicit families whose verification erases linearly\n  resp. exponentially many bits; the erasure is unbounded.\n* **`incompressible`** — a Kolmogorov counting bound: the `2ⁿ` Boolean predicates on `n` bits\n  cannot be injectively coded by the `2ⁿ − 1` programs of length `< n`, so some predicate has\n  no proof shorter than `n` bits, and erasing its truth table costs `≥ n · kB T ln 2`.\n\n`ThermodynamicsOfProofContrarian.lean` — bold conjectures adjudicated:\n\n* **Refuted** \"every non-identity step erases\" (`exists_reversible_nontrivial_step`, the NOT\n  gate).\n* **Confirmed** the textbook AND-gate erasure of exactly one bit (`erasedBits_andGate`).\n* **Refuted** additivity of erasure under composition (`erasedBits_not_additive`); the correct\n  law is sub-additivity/monotonicity.\n* **Confirmed** every bijection is free (`erasedBits_bijective_zero`).\n\n## Open directions\n\n1. **Genuine creation vs. erasure ledger.** Extend the model with an explicit *creation*\n   primitive (allocating ancilla / writing bits) and a *cost functional* over full proofs\n   (lists of create/erase steps).  Conjecture: for every function there is a reversible\n   dilation with zero net erasure (Bennett), but the *minimal simultaneous* creation and\n   erasure of a proof of a fixed predicate obey a trade-off `create + erase ≥ K(predicate)`.\n\n2. **Kolmogorov complexity proper.** Replace the counting proxy `incompressible` with a real\n   prefix/plain Kolmogorov complexity `K` (a universal machine formalized in Lean) and prove\n   the *thermodynamic verification bound*: verifying `x` from a shortest certificate erases\n   `≥ K(x) − O(1)` bits, hence dissipates `≥ (K(x) − O(1)) · kB T ln 2`.\n\n3. **Exponential proof-vs-answer gap.** Formalize a concrete decision problem where the\n   shortest checkable certificate is exponentially longer than the answer's description\n   (`bigCollapse` is a toy witness), tying the erasure separation to proof-complexity lower\n   bounds.\n\n4. **Second-law / monotone entropy for proof DAGs.** Generalize `erasedBits_mono_comp` from\n   linear pipelines to arbitrary proof DAGs and formulate a Clausius-style inequality for the\n   total dissipated entropy of a derivation.\n\n5. **Landauer efficiency of specific calculi.** Compute the erasure cost of standard inference\n   rules (resolution, modus ponens, cut) and compare calculi by their intrinsic erasure per\n   derived consequence.\n\n\n# Future Directions — Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` — the positive theory:\n\n* **`erasedBits`** — information erased by a proof step `f : α → β`, as the entropy drop\n  `log₂(card α) − log₂|image f|`, with `landauerCost bits kB T = bits · kB · T · ln 2`.\n* **`erasedBits_nonneg`** — erasure is never negative.\n* **`erasedBits_eq_zero_iff_injective`** — a step erases zero bits **iff** it is injective\n  (logically reversible): the reversibility criterion.\n* **`landauerCost_pos_of_not_injective`** — Landauer's principle: any irreversible step\n  dissipates strictly positive entropy at positive temperature.\n* **`erasedBits_lower_bound`** — erasing into a `card β`-state register costs at least\n  `log₂(card α) − log₂(card β)`.\n* **`erasedBits_mono_comp`** — a data-processing inequality: erasure only accumulates along a\n  proof pipeline; it cannot be undone downstream.\n* **`erasedBits_bennett`** — Bennett's reversible embedding `x ↦ (x, f x)` erases zero bits,\n  so computation *per se* is free; only logical irreversibility costs energy.\n* **`erasedBits_collapse = n`, `erasedBits_bigCollapse = 2^m`,\n  `exponential_erasure_separation`** — explicit families whose verification erases linearly\n  resp. exponentially many bits; the erasure is unbounded.\n* **`incompressible`** — a Kolmogorov counting bound: the `2ⁿ` Boolean predicates on `n` bits\n  cannot be injectively coded by the `2ⁿ − 1` programs of length `< n`, so some predicate has\n  no proof shorter than `n` bits, and erasing its truth table costs `≥ n · kB T ln 2`.\n\n`ThermodynamicsOfProofContrarian.lean` — bold conjectures adjudicated:\n\n* **Refuted** \"every non-identity step erases\" (`exists_reversible_nontrivial_step`, the NOT\n  gate).\n* **Confirmed** the textbook AND-gate erasure of exactly one bit (`erasedBits_andGate`).\n* **Refuted** additivity of erasure under composition (`erasedBits_not_additive`); the correct\n  law is sub-additivity/monotonicity.\n* **Confirmed** every bijection is free (`erasedBits_bijective_zero`).\n\n## Open directions\n\n1. **Genuine creation vs. erasure ledger.** Extend the model with an explicit *creation*\n   primitive (allocating ancilla / writing bits) and a *cost functional* over full proofs\n   (lists of create/erase steps).  Conjecture: for every function there is a reversible\n   dilation with zero net erasure (Bennett), but the *minimal simultaneous* creation and\n   erasure of a proof of a fixed predicate obey a trade-off `create + erase ≥ K(predicate)`.\n\n2. **Kolmogorov complexity proper.** Replace the counting proxy `incompressible` with a real\n   prefix/plain Kolmogorov complexity `K` (a universal machine formalized in Lean) and prove\n   the *thermodynamic verification bound*: verifying `x` from a shortest certificate erases\n   `≥ K(x) − O(1)` bits, hence dissipates `≥ (K(x) − O(1)) · kB T ln 2`.\n\n3. **Exponential proof-vs-answer gap.** Formalize a concrete decision problem where the\n   shortest checkable certificate is exponentially longer than the answer's description\n   (`bigCollapse` is a toy witness), tying the erasure separation to proof-complexity lower\n   bounds.\n\n4. **Second-law / monotone entropy for proof DAGs.** Generalize `erasedBits_mono_comp` from\n   linear pipelines to arbitrary proof DAGs and formulate a Clausius-style inequality for the\n   total dissipated entropy of a derivation.\n\n5. **Landauer efficiency of specific calculi.** Compute the erasure cost of standard inference\n   rules (resolution, modus ponens, cut) and compare calculi by their intrinsic erasure per\n   derived consequence.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Physics"
@@ -28459,7 +28459,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: reliable intuition as a non-computable resource\n\nThis cycle modelled Ramanujan-style intuition as a verdict map on encoded\nstatements and proved two complementary obstructions to its being computable: a\ncardinality obstruction (the space of verdict maps is not enumerable, and a\nflawless verdict map escapes any enumeration of programs) and a *quantitative*\none (accuracy on a block of `N` statements confines an oracle to a Hamming ball\nof size `∑_{k≤d} C(N,k)`, so any small pool of oracles is defeated by some truth\npattern). The following conjectures push these findings further.\n\n## 1. A sharp accuracy–enumeration tradeoff\n\n**Conjecture.** For every accuracy level `α ∈ (1/2, 1)` there is a truth\nassignment on the integers such that *no* uniformly enumerated family of oracles\nof subexponential growth attains asymptotic accuracy `α` on the length-`N`\nprefixes as `N → ∞`; and this fails exactly at `α = 1/2`, where trivial constant\noracles suffice.\n\nThe key insight is that the Hamming-ball count `∑_{k≤(1-α)N} C(N,k)` collapses\nsuper-polynomially once `α > 1/2`, so the number of oracles required to cover all\npatterns crosses from polynomial to exponential precisely at the `1/2` threshold.\n\nWhy now? The finite counting barrier proved this cycle already isolates the\ncovering threshold `2^N / ∑_{k≤d}C(N,k)`; turning the finite bound into an\nasymptotic density statement is the natural next step and needs only a limiting\nargument over growing blocks.\n\n## 2. Bi-immune truth assignments as intuition-hard instances\n\n**Conjecture.** There exist truth assignments whose length-`N` prefixes cannot be\npredicted by any single computable oracle with accuracy bounded away from `1/2`\non a set of prefixes of positive density — a robust, block-wise strengthening of\nnon-computability.\n\nThe key insight is that combining the per-block ball bound with a diagonalisation\nover programs yields functions that are not merely non-computable but\n*approximation-resistant*: every algorithm eventually performs no better than\ncoin-flipping on infinitely many blocks.\n\nWhy now? The exact ball-size formula makes the per-block failure probability\nexplicit, so the classical bi-immunity construction can be driven quantitatively\nrather than qualitatively.\n\n## 3. Intuition and the jump hierarchy\n\n**Conjecture.** Grading truth assignments by the least oracle-degree that predicts\ntheir prefixes with accuracy `α → 1` induces a strictly increasing hierarchy that\ninterleaves with the Turing-jump hierarchy: each jump level unlocks a new band of\nattainable accuracies, and no finite jump suffices for perfect prefix prediction\nof a sufficiently generic assignment.\n\nThe key insight is that the \"intuitive leap\" is not a single non-computable act\nbut a *graded* resource: higher reliability costs strictly more oracle power,\nmirroring the strict increase of the jump operator.\n\nWhy now? With the accuracy barrier established as a counting phenomenon, relativis-\ning the same count to an oracle turns each accuracy demand into a definite lower\nbound on the oracle degree required, making the hierarchy claim directly testable.\n\n## 4. A coding-theoretic dictionary for discovery\n\n**Conjecture.** The maximum number of mutually \"independent\" reliable oracles on a\nblock of size `N` equals the maximum size of a code with minimum distance\n`2(1-α)N + 1`, so classical bounds (Singleton, Hamming, Plotkin) translate into\nsharp limits on how many genuinely distinct high-accuracy intuitions can coexist.\n\nThe key insight is that two oracles disagreeing on more than `2(1-α)N` statements\ncannot both be `α`-accurate on the same truth pattern — exactly the packing\ncondition defining an error-correcting code.\n\nWhy now? This cycle already routed the whole argument through Hamming balls; the\npacking dual of a covering bound is the immediate companion result and imports a\ncentury of coding theory wholesale.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -28705,7 +28705,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field\norder parameter `m = tanh(β m)` undergoes a sharp, continuous (second-order)\nphase transition at the critical coupling `β_c = 1`:\n\n* no positive solution for `β ≤ 1` (`curieWeiss_subcritical`),\n* a positive solution for `β > 1` (`curieWeiss_supercritical`),\n* the sharp `iff` locating `β_c = 1` (`curieWeiss_phase_transition`),\n* uniqueness of the positive branch (`curieWeiss_unique_positive`),\n* boundedness `|m| < 1` and `±m` symmetry of solutions,\n* and that a positive external field destroys the sharp transition — the\n  field-driven equation `m = tanh(β m + h)` has a positive solution\n  `m ∈ (0, 1)` for *every* `β` when `h > 0`\n  (`curieWeiss_field_positive_solution`).\n\nNatural next steps:\n\n1. **Critical exponent.** Prove the quantitative onset\n   `m*(β) = sqrt(3(β−1)) + o(sqrt(β−1))` as `β → 1⁺`, extracting the mean-field\n   exponent `1/2`. The two inequalities `tanh y < y` and `y − y³/3 < tanh y`\n   already bracket the branch; a matching cubic *upper* bound\n   `tanh y < y − y³/3 + 2y⁵/15` would pin the exponent.\n\n2. **External field.** The *existence* half is now settled:\n   `curieWeiss_field_positive_solution` shows `m = tanh(β m + h)` has a positive\n   solution for every `β` when `h > 0`, so the sharp `β_c = 1` dichotomy is\n   destroyed by any positive field.  Remaining: prove *uniqueness* of the\n   solution for `h ≠ 0` (single-valued branch for all `β`), recovering the\n   standard picture of a line of first-order transitions terminating at the\n   critical point `(β_c, h) = (1, 0)`.\n\n3. **Free energy / order parameter as minimizer.** Formalize the Curie–Weiss\n   free energy `f(m) = m²/2 − (1/β) log cosh(β m)` and prove its global\n   minimizer coincides with the stable solution of the self-consistency\n   equation, giving a variational characterization of the order parameter and a\n   genuine `analytic ↦ non-analytic` statement for the minimal free energy at\n   `β_c`.\n\n4. **Continuity and monotonicity of `β ↦ m*(β)`.** Package the positive branch\n   as a function of `β` on `(1, ∞)` and prove it is continuous, strictly\n   increasing, and tends to `1` as `β → ∞`.\n\n5. **Percolation analogue.** Port the same \"order parameter is `0` below /\n   positive above threshold\" template to bond percolation on a rooted tree,\n   where the survival probability of a branching process with mean offspring\n   `μ` plays the role of the order parameter and `μ_c = 1` is the critical point\n   (an exact analogue via generating-function fixed points).\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Computation"
@@ -29033,7 +29033,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Wetware Computation\n\nThis file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as a\ndiscrete dynamical system (a step map iterated on a neural state space) and proves a\ncross-domain **connector**: the information cost of *deterministic dynamics*\n(`Θ(n log n)` bits) is asymptotically negligible next to that of arbitrary\n*connectivity* (`Θ(n²)` bits). This bridges enumerative combinatorics (the counts\n`n^n` and `2^(n²)`) with asymptotic real analysis (the `log₂ n / n → 0` limit).\n\n## What is proved\n\n- **Dynamical-system semantics**: `WetwareSystem.run`, with the flow/semigroup law\n  `run_add` (a monoid action of `(ℕ,+)`), plus `run_succ`.\n- **Finite-state universality** (`exists_wetware_computes`): every function\n  `f : X → Y` is computed by some wetware system with an encoder/decoder in one step.\n- **Dynamics ↔ finiteness** (`orbit_eventually_periodic`): on a finite state space\n  every orbit is eventually periodic (pigeonhole).\n- **Energy connector**: `wetwareEnergy_eq` (`= n·log₂n`), `siliconEnergy_eq` (`= n²`),\n  the strict separation `wetware_beats_silicon`, and the asymptotic separation\n  `energy_ratio_tendsto_zero`.\n\n## Directions\n\n1. **Full Turing-completeness (unbounded tape).** The present `exists_wetware_computes`\n   is the *finite-state* analogue. A genuine simulation of Turing machines requires an\n   unbounded state space (e.g. `ℤ`-indexed configurations, or reals encoding a stack).\n   Formalize a register/stack machine and show a wetware system on `ℕ`- or `ℝ`-valued\n   states simulates each step, recovering computational universality.\n\n2. **Sharper information bounds.** Upgrade the exact identities to a two-sided coding\n   theorem: any prefix-free encoding of transition maps needs `≥ n·log₂n` bits\n   (Kraft), and `n·⌈log₂n⌉` bits suffice, pinning `Θ(n log n)` from both sides.\n\n3. **Continuous dynamics / neural manifolds.** Replace the finite state space with a\n   smooth manifold and `step` with the time-1 flow of a vector field. Study which\n   `f : X → Y` are realizable, connecting to control theory and reachability.\n\n4. **The \"super-Turing\" hypothesis (open/speculative).** The conjecture that\n   continuous-dynamics wetware computes functions no Turing machine can (à la\n   Siegelmann's analog recurrent nets with real weights) is *not* provable for\n   standard discrete/computable models and is physically contentious. A careful\n   formalization would isolate the exact resource (unbounded real precision) that a\n   would-be super-Turing model assumes, and prove the corresponding conditional\n   separation — clarifying that any such power comes from the reals, not the biology.\n\n5. **Energy landscapes and geometry.** Tie `orbit_eventually_periodic` to attractor\n   structure: bound cycle lengths, count fixed points, and relate the geometry of the\n   state graph of `step` to computational capacity.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Geometry"
@@ -29156,7 +29156,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n\n## What is proved\n\n- `not_countable_truth`: the space of ground truths `ℕ → Bool` is uncountable.\n- `perfect_unique`: an oracle is perfect for at most one ground truth.\n- `covered_countable`, `missed_uncountable`, `countable_family_incomplete`: any\n  countable (program-enumerable) family of oracles fails to be perfect for\n  uncountably many ground truths.\n- `no_computable_oracle_scheme`, `no_universal_oracle`: the computability corollaries.\n- `countable_computable_oracles`, `exists_truth_no_computable_perfect`: the honest\n  recursion-theoretic form via Mathlib's `Computable` / `Nat.Partrec.Code` — the type\n  of computable oracles is genuinely countable, and a single ground truth defeats\n  every computable oracle.\n- `family_errs_infinitely_often`: a single ground truth defeats every oracle of a\n  countable family at infinitely many statements (block diagonalization).\n- `exists_truth_zero_hits`, `no_oracle_high_accuracy_all_worlds`: no oracle can\n  guarantee any fixed positive accuracy across all worlds.\n\n## Directions to deepen\n\n1. **Genuine recursion-theoretic computability.** *(Now realized.)* The theorems\n   `countable_computable_oracles` and `exists_truth_no_computable_perfect` replace the\n   abstract \"countable family\" model by Mathlib's `Computable` / `Nat.Partrec.Code`:\n   each computable oracle is computed by a code, distinct oracles need distinct codes,\n   and codes are countable, so the counting argument applies to the honest notion of\n   computability. A remaining refinement is to phrase the same result directly in\n   terms of `ComputablePred` / oracle Turing machines with relativized queries.\n\n2. **Undecidability, not just non-computability.** Connect to the undecidability of\n   arithmetic truth: encode the halting problem into the ground truth and show that\n   even a *many-worlds-free* single true arithmetic is not decidable.\n\n3. **Quantitative accuracy over density.** Strengthen the accuracy result from\n   \"accuracy `0` on the adversarial world\" to a density statement: for any countable\n   family, there is a world on which each oracle has upper density of errors bounded\n   below by a positive constant, using a weighted block construction.\n\n4. **Bounded-length statements.** The original framing restricts to statements of\n   length `≤ 100`, which is a *finite* set and hence trivially decidable by table\n   lookup. A faithful refinement replaces \"length `≤ 100`\" by a growing family\n   `Sₖ` of statements of length `≤ k` and studies the growth rate at which\n   computable accuracy must degrade.\n\n5. **Probabilistic oracles.** Model an oracle as a distribution over verdicts and ask\n   whether a computable randomized oracle can achieve expected accuracy bounded away\n   from `1/2` uniformly over an adversarially chosen world.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "Logic"
@@ -29187,11 +29187,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "6ac2b7d4",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29204,7 +29204,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1088",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T03:21:54.942415+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -29219,7 +29219,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-11T23:55:18.527910+00:00",
       "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
@@ -29238,7 +29238,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Lifebox: Information-Theoretic Identity\n\nThe file `LifeboxInformationIdentity.lean` formalizes and proves five claims around\nRudy Rucker's *Lifebox* thesis (identity = information, not substrate). Below: what was\nestablished, and where it can be pushed.\n\n## What was proved (all `sorry`-free, standard axioms only)\n\n1. **Person-equivalence is an equivalence relation** and coincides with function equality\n   (`personSetoid`, `personEquiv_iff_eq`).\n2. **Finite-state ⇒ decidable.** For a finite stimulus space with decidable outputs,\n   person-equivalence is decidable via the distinguishing-stimulus set\n   (`decidablePersonEquiv`, `finiteState_decidable`).\n3. **Contrarian result (disproof of a naive claim).** Over an infinite input space, *no*\n   finite battery of tests certifies person-equivalence (`no_finite_test`). This shows the\n   finiteness hypothesis in (2) is necessary, not cosmetic.\n4. **Quantum obstruction = no-cloning.** There is no linear cloning map `k² → k² ⊗ k²`\n   (`no_cloning`) — the algebraic core of the \"quantum brains cannot be duplicated/tested\"\n   claim.\n5. **Kolmogorov bound is finite.** Identities in `b` bits number exactly `2^b`\n   (`card_identities`), specialized to Rucker's `~10^15`-bit figure (`lifebox_bound`).\n\n## Directions to extend\n\n- **Genuine automaton equivalence.** Upgrade (2) from \"finite stimulus space\" to full\n  Moore/Mealy machines over `List I`, proving language equivalence decidable via the\n  product-automaton reachability construction, with the Myhill–Nerode distinguishing-string\n  bound `≤ |S₁|·|S₂|`.\n- **Quantitative no-cloning.** Strengthen (4) to fidelity bounds: an approximate cloner has\n  fidelity bounded away from 1, and generalize from `k²` to arbitrary `dim V ≥ 2` and to the\n  unitary/CPTP setting.\n- **Undecidability, formally.** Reduce the halting problem to equivalence of systems whose\n  behaviour encodes Turing machines, giving a true `¬ Decidable` statement (rather than the\n  \"no finite test\" surrogate) for the infinite/quantum regime.\n- **Kolmogorov complexity proper.** Replace the counting bound with a `K`-style shortest\n  description length over a fixed universal machine, and prove invariance and subadditivity\n  (cf. the EML Kolmogorov development in `Catalog/EML/KolmogorovComplexityBound.lean`).\n- **Substrate independence.** Formalize the Lifebox thesis directly: two systems on\n  different state spaces that are behaviourally equivalent (bisimilar) are \"the same person\",\n  i.e. person-identity factors through the behaviour quotient.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -30082,6 +30082,46 @@
       "thread_id": "",
       "timestamp": "2026-07-10T20:52:48.331838+00:00",
       "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 0664586a (Q=0.830), which proved 18 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "push_0664586a_e3e30712",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9299999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "0664586a",
+      "source_path": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-12T03:21:37.717161+00:00",
+      "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     },
     {
       "ambition_level": "extension",
@@ -32137,7 +32177,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 9af0a04a (Q=0.780), which proved 14 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize biological computation: a 'wetware' computation is a dynamical system on a neural manifold that computes a function f: X -> Y. Prove: wetware can simulate Turing machines (neural nets are Turing-complete). Show: the energy cost of a wetware computation is Theta(n * log(n)) where n is the n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry"
       ],
@@ -32297,7 +32337,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a9aa7bbf (Q=0.800), which proved 18 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible — if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry"
       ],
@@ -33322,6 +33362,46 @@
       "thread_id": "",
       "timestamp": "2026-07-10T20:52:48.400479+00:00",
       "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Cycle 0664586a (Q=0.830) proved 18 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "sorry_fill_0664586a_f93bf9ae",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "0664586a",
+      "source_path": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-12T03:21:37.797608+00:00",
+      "title": "Close Proofs: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     },
     {
       "ambition_level": "extension",
