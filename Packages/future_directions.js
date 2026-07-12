@@ -185,6 +185,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
   },
   {
+    "consumed_by_exp_id": "44b2d089",
+    "description": "Building on cycle 00880e6f (Q=0.820), which proved 23 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThe cycle established a compact algebraic core for four-dimensional geometry: a\nsingle sum-of-squares identity, `(a+b)\u00b2 = 4ab + (a-b)\u00b2`, drives the Hopf map, the\nClifford torus, and the norm-preservation of the \"rotation through",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_00880e6f_5b804bda",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "00880e6f",
+    "status": "in_progress",
+    "timestamp": "2026-07-12T17:21:08.922463+00:00",
+    "title": "Deepening: The cycle established a compact algebraic core for four-dimensional geometry: a"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 0643b2b3 (Q=0.820), which proved 11 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost r",
     "domains": [
@@ -548,6 +562,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T12:43:39.241652+00:00",
     "title": "Deepening: This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 766b6e47 (Q=0.800), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For p an odd prime, k \u2265 2 an even integer, and a_p in the algebraic closure of Q_p with v(a_p) > 0 and v(a_p) not an integer (i.e., the slope is fractional), the mod p semisimplified reduction V\u0304_{k,a_p} of the two-dimensional crystalline representation V_{k,a_p} of G_{Q_p} is irreducible. This folk",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_766b6e47_2b6fc843",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "766b6e47",
+    "status": "available",
+    "timestamp": "2026-07-12T17:21:20.503455+00:00",
+    "title": "Deepening: Irreducibility of mod p reductions of crystalline representations at fractional "
   },
   {
     "consumed_by_exp_id": "",
@@ -3531,21 +3559,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T05:23:45.839293+00:00",
     "title": "Extended 1-2-3 Conjecture for Symmetric Differences"
-  },
-  {
-    "consumed_by_exp_id": "766b6e47",
-    "description": "For p an odd prime, k \u2265 2 an even integer, and a_p in the algebraic closure of Q_p with v(a_p) > 0 and v(a_p) not an integer (i.e., the slope is fractional), the mod p semisimplified reduction V\u0304_{k,a_p} of the two-dimensional crystalline representation V_{k,a_p} of G_{Q_p} is irreducible. This folklore conjecture is partially established in the paper for fractional slopes less than p-2 and sufficiently large even weights k under a slope assumption on bad congruence classes of k mod p.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0430",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00930v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T05:41:57.869825+00:00",
-    "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weight"
   },
   {
     "consumed_by_exp_id": "",
@@ -6559,21 +6572,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "These conjectures are distilled from the flat-torus study of closed geodesics"
   },
   {
-    "consumed_by_exp_id": "00880e6f",
-    "description": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThe cycle established a compact algebraic core for four-dimensional geometry: a\nsingle sum-of-squares identity, `(a+b)\u00b2 = 4ab + (a-b)\u00b2`, drives the Hopf map, the\nClifford torus, and the norm-preservation of the \"rotation through the fourth\ndimension\", while an odd-dimensional eigenvalue obstruction explains why that\nrotation is fixed-point-free. The following conjectures extend those findings.\n\n## 1. Every fixed-point-free isometry of an odd sphere is a complex (or quaternionic) structure up to conjugacy\n\nOn `S^{2n-1}` a linear isometry without fixed points must have `-1`-free real\nspectrum only in the sense that it has no eigenvalue `1`; we conjecture that the\ngeneric such isometry is orthogonally conjugate to a block-diagonal sum of planar\nrotations, and that the *canonical* fixed-point-free representative is exactly a\ncomplex structure `J` with `J\u00b2 = -I`.\n\nThe key insight is that fixed-point freeness on the sphere is equivalent to the\nabsence of the eigenvalue `1`, and among all such maps the complex structures are\nthe unique isometries whose square is central. Why now? The `4`-dimensional case\nis fully settled here by an explicit `J`, giving a concrete anchor from which the\n`2n`-dimensional classification can be bootstrapped one rotation block at a time.\n\n## 2. The Clifford torus is the unique flat torus on `S\u00b3` with balanced coordinate radii\n\nAmong all embeddings of the flat `2`-torus into `S\u00b3` of the form\n`(\u03b8,\u03c6) \u21a6 (r\u2081cos\u03b8, r\u2081sin\u03b8, r\u2082cos\u03c6, r\u2082sin\u03c6)` with `r\u2081\u00b2 + r\u2082\u00b2 = 1`, the Clifford\ntorus `r\u2081 = r\u2082 = 1/\u221a2` is conjectured to be the unique critical point of the area\nfunctional, and simultaneously the unique one invariant under the Hopf circle\naction.\n\nThe key insight is that the balance condition `r\u2081\u00b2 = r\u2082\u00b2 = 1/2` proved here is\nequivalent to invariance under the diagonal circle action, which is precisely the\nEuler\u2013Lagrange condition for the area. Why now? The balanced-radius identity is\nalready available in exact form, so the variational uniqueness reduces to a\none-parameter optimisation over `r\u2081\u00b2 \u2208 (0,1)`.\n\n## 3. The alternating face count `1 - (-1)\u207f` characterises the Euler characteristic of every convex `n`-polytope boundary\n\nThe identity `\u2211\u2096 (-1)\u1d4f C(n,k) 2\u207f\u207b\u1d4f = 1` yields boundary Euler characteristic\n`1 - (-1)\u207f` for the `n`-cube. We conjecture the same value governs the boundary of\n*every* simple `n`-polytope, independent of combinatorial type, via a\ndeformation to the cube's face lattice.\n\nThe key insight is that the alternating face sum is a topological invariant of the\nboundary sphere `S^{n-1}`, so it cannot depend on the polytope's fine\ncombinatorics. Why now? The cube case is proved from the binomial theorem alone,\nexposing the invariant in its simplest possible form and inviting a\ndeformation-invariance argument.\n\n## 4. The Hopf circle action is the maximal symmetry preserving all Hopf fibres\n\nHaving shown the Hopf map is constant on the orbits `(z,w) \u21a6 (\u03bbz, \u03bbw)`, we\nconjecture that the diagonal circle is the *largest* connected subgroup of `SO(4)`\nacting freely on `S\u00b3` with the Hopf fibres as its orbits, so the Hopf fibration is\nrigid: no larger continuous symmetry preserves the whole fibre family.\n\nThe key insight is that any fibre-preserving isometry must commute with the\ncomplex structure realising the action, and the centraliser of a complex structure\nin `SO(4)` is exactly the unitary group `U(2)`, whose center is that circle. Why\nnow? The invariance identity pins the action down explicitly, turning the rigidity\nquestion into a centraliser computation.\n\n## 5. The `(\u03c0\u00b2/2)r\u2074` volume law is the extremal case of a dimension-`4` isoperimetric hierarchy\n\nThe `4`-ball volume `(\u03c0\u00b2/2)r\u2074` and the `3`-sphere it bounds should saturate a\nsharp four-dimensional isoperimetric inequality: among all regions of `\u211d\u2074` with a\nfixed `3`-dimensional boundary measure, the ball uniquely maximises volume, with\nthe constant `\u03c0\u00b2/2` appearing as the extremal ratio.\n\nThe key insight is that the Gamma-function volume constant `\u03c0\u00b2/2 = \u03c0\u00b2/2!` is\nexactly the value that makes the isoperimetric ratio scale-invariant in dimension\nfour. Why now? The exact volume constant is established, so the remaining step is\nto match it against the surface-area constant of `S\u00b3` and verify the extremal\nratio directly.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_1092",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "47a54792",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T00:29:32.040516+00:00",
-    "title": "The cycle established a compact algebraic core for four-dimensional geometry: a"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThis project formalizes the elementary algebraic backbone of the Atkin\u2013Lehner theory\nunderlying the Giampietro\u2013Darmon factorization program:\n\n* `Pythagorean/AtkinLehnerGroup.lean` \u2014 the Atkin\u2013Lehner group of a squarefree level\n  `N` as an elementary abelian 2-group `(\u2124/2)^{\u03c9(N)}` (`ALG`, `ALG.two_torsion`,\n  `ALG.card_ALG`), the arithmetic realization `d \u22c6 e = d\u00b7e/gcd(d,e)\u00b2` as symmetric\n  difference of prime supports (`AtkinLehner.alMul_prod`), the order formula `2^{\u03c9(N)}`\n  (`AtkinLehner.card_divisors_squarefree`, `AtkinLehner.AL_group_order`), and the\n  M\u00f6bius/parity characterization of the \"even number of prime factors\" hypothesis\n  (`AtkinLehner.moebius_eq_one_iff_even`, `AtkinLehner.genusZeroExamples`).\n\n* `Pythagorean/AtkinLehnerEquiv.lean` \u2014 the divisor\u2013subset picture: the explicit\n  bijection `AtkinLehner.divisorsEquivPowerset` between the divisors of a squarefree\n  `N` and the subsets of its prime factors, the order formula reproved through it\n  (`AtkinLehner.card_divisors_eq`), closure of the composition law on divisors\n  (`AtkinLehner.alMul_dvd`), and the group-isomorphism content\n  (`AtkinLehner.alMul_realizes_symmDiff`): under the bijection, `d \u22c6 e` is exactly the\n  symmetric difference of prime supports.\n\n* `Pythagorean/AtkinLehnerBundled.lean` \u2014 the fully bundled group picture: the divisors\n  of a squarefree `N` are endowed with an `AddCommGroup` structure whose addition is\n  *literally* the Atkin\u2013Lehner law `\u22c6` (`AtkinLehner.instAddCommGroupALDiv`,\n  `AtkinLehner.ALDiv_add_val`), the group is shown to be `2`-torsion\n  (`AtkinLehner.ALDiv_two_torsion`), and the bijection is promoted to a bundled\n  isomorphism `AtkinLehner.toAbstractALG : ALDiv N \u2243+ ALG {p // p \u2208 N.primeFactors}`\n  onto the abstract elementary abelian `2`-group.\n\nAll results carry complete Lean 4 proofs (0 sorries) and depend only on the standard\naxioms `propext`, `Classical.choice`, `Quot.sound`.\n\nNatural next steps, in increasing order of difficulty:\n\n1. **Action on divisors and fixed points.** Formalize the Atkin\u2013Lehner involutions as an\n   action of `(\u2124/2)^{\u03c9(N)}` on the set of CM points / divisors, and count orbits and\n   fixed loci (relevant to the ramification of the quotient maps `X_N \u2192 X_N/w_p`).\n\n2. **Genus formulas.** Formalize the genus of Shimura curves `X_N` and of Atkin\u2013Lehner\n   quotients `X_N / w_p` via the arithmetic of the quaternion order (mass formula,\n   elliptic point counts), and characterize `genus(X_N/w_p) = 0`. This is the geometric\n   hypothesis of the extended theorem.\n\n3. **The cross-ratio infinite product.** Define the p-adic cross-ratio of CM points and\n   its infinite product over the Cerednik\u2013Drinfeld / Mumford uniformization, and state\n   the norm factorization formula whose validity is asserted under the genus-zero\n   hypothesis.\n\n4. **Full main theorem.** Combine the above to state and (eventually) prove the extended\n   Giampietro\u2013Darmon factorization under the `genus(X_N/w_p) = 0` criterion.\n",
     "domains": [
@@ -7292,6 +7290,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T16:46:36.733332+00:00",
     "title": "This cycle (contrarian mode) attacks the **existence gap** left open by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Algebraic Core of Four-Dimensional Geometry\n\nThis cycle isolated two identities \u2014 the continuous sum-of-squares identity\n`(a+b)\u00b2 = 4ab + (a\u2212b)\u00b2` and the discrete binomial identity\n`\u2211\u2096 (\u22121)\u1d4f C(n,k) 2\u207f\u207b\u1d4f = 1` \u2014 and showed that between them they organize the\ncomplex structure on `\u211d\u2074`, the Hopf map, the Clifford torus balance, the cube\nEuler characteristic, and the volume/surface relation for the four-ball. The\nfollowing conjectures push each strand further.\n\n## 1. Every block-diagonal quarter-turn structure is the canonical fixed-point-free isometry of its odd sphere\n\nThe map `J` on `\u211d\u2074` squares to `\u2212I`, preserves the norm, and fixes only the\norigin. We conjecture that on `\u211d^{2n}` the analogous coordinate-pairing\nquarter-turn is, up to orthogonal conjugacy, the *unique* isometry whose square is\ncentral and which acts freely on `S^{2n\u22121}`, and that every fixed-point-free linear\nisometry of an odd sphere is orthogonally conjugate to a block sum of planar\nrotations.\n\nThe key insight is that fixed-point freeness on the sphere is exactly the absence\nof the eigenvalue `1`, and among such maps the ones squaring to a scalar are\nforced to be quarter-turns block by block. Why now? The four-dimensional case is\nsettled here by an explicit `J` with a one-line fixed-point argument, giving a\nconcrete base case from which the block induction can proceed.\n\n## 2. The balanced torus is the unique area extremum on every radius simplex\n\nOn the constraint `\u2211 r\u1d62\u00b2 = 1` the product controlling the flat-torus area equals\n`1 \u2212 \u03a3(r\u1d62\u00b2 \u2212 r\u0304\u00b2)`-type deviations, and this cycle proved the two-radius case:\n`4 r\u2081\u00b2 r\u2082\u00b2 = 1 \u2212 (r\u2081\u00b2 \u2212 r\u2082\u00b2)\u00b2`, maximal exactly at `r\u2081\u00b2 = r\u2082\u00b2 = \u00bd`. We conjecture\nthat on `S^{2m\u22121}` the symmetric point `r\u1d62\u00b2 = 1/m` is the unique critical point of\nthe product functional, and the unique embedding invariant under the diagonal\ncircle action.\n\nThe key insight is that the balance condition is algebraically equivalent to the\nvanishing of every pairwise squared deviation, which is precisely the\nEuler\u2013Lagrange condition for the area under the sphere constraint. Why now? The\nexact balance identity is available in closed form, reducing the variational\nuniqueness to a symmetric-function optimization.\n\n## 3. The alternating face sum computes the Euler characteristic of every simple polytope boundary\n\nThe `n`-cube boundary has Euler characteristic `1 \u2212 (\u22121)\u207f`, obtained here by\ndeleting the single top cell from a contractible alternating sum equal to `1`. We\nconjecture the same value governs the boundary of *every* simple `n`-polytope,\nindependent of combinatorial type, through a deformation to the cube's face\nlattice.\n\nThe key insight is that the alternating face sum is a homotopy invariant of the\nboundary sphere `S^{n\u22121}`, so it cannot depend on the polytope's fine\ncombinatorics. Why now? The cube case is proved from the binomial theorem alone,\nexposing the invariant in its simplest possible form and inviting a\ndeformation-invariance argument.\n\n## 4. Differentiating the volume law recovers the entire sphere-area hierarchy\n\nThis cycle proved `d/dr [(\u03c0\u00b2/2) r\u2074] = 2\u03c0\u00b2 r\u00b3`, i.e. the derivative of the\nfour-ball volume is exactly the three-sphere surface measure. We conjecture the\nfull coarea tower `d/dr Vol_n(r) = Area_{n\u22121}(r)` holds dimension by dimension,\nwith the Gamma-function constants `\u03c0^{n/2}/\u0393(n/2+1)` linked across dimensions by a\nsingle differentiation, and that the four-dimensional case saturates a sharp\nisoperimetric ratio with extremal constant `\u03c0\u00b2/2`.\n\nThe key insight is that the volume constant `\u03c0\u00b2/2 = \u03c0\u00b2/2!` is exactly the value\nthat makes the isoperimetric ratio scale-invariant in dimension four, and\ndifferentiation transports this scaling to the surface constant. Why now? The\nexact volume constant and its derivative are established here, so the remaining\nstep is to match the constants against the surface measure across dimensions.\n\n## 5. The Hopf sphere identity is the shadow of a norm-multiplicativity law\n\nThe Hopf image lies on the sphere of radius `|z|\u00b2 + |w|\u00b2` because\n`|2z\\bar w|\u00b2 + (|z|\u00b2 \u2212 |w|\u00b2)\u00b2 = (|z|\u00b2 + |w|\u00b2)\u00b2`, a direct instance of the core\nidentity. We conjecture this is the degree-two case of a family of\nnorm-multiplicative \"sum-of-squares\" compositions (the Hurwitz\u2013Radon phenomenon),\nwith the four-dimensional Hopf map corresponding to quaternionic norm\nmultiplicativity and the eight-dimensional analogue to the octonionic one.\n\nThe key insight is that the sphere identity is precisely `\u2016x\u0233\u2016 = \u2016x\u2016\u2016y\u2016` written\nin real coordinates, so the Hopf fibration inherits its structure from the\nnormed division algebras. Why now? The core identity and the sphere-landing\nstatement are both available in exact form, making the bridge to composition\nalgebras a direct coordinate computation.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1150",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "00880e6f",
+    "status": "available",
+    "timestamp": "2026-07-12T17:21:01.699614+00:00",
+    "title": "This cycle isolated two identities \u2014 the continuous sum-of-squares identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Fractional-slope reductions of crystalline representations\n\nThese conjectures are distilled from the arithmetic/linear-algebra decomposition\nestablished in this cycle: a fractional Frobenius slope is a purely valuation-theoretic\nobstruction to reducibility, decoupled from the residual squareness criterion.\n\n## Conjecture 1 \u2014 Slope-parity refinement of irreducibility\n\nFor odd `p`, even `k \u2265 2`, and `a_p` with `0 < v(a_p) < (k\u22121)/2` and denominator of\n`v(a_p)` coprime to `p`, the semisimplified reduction is irreducible, and its restriction\nto inertia is a fundamental character of level equal to the denominator of the slope.\n\nThe key insight is that the denominator of the Newton slope, not merely its\nnon-integrality, controls the tame level of the residual representation, so\nirreducibility is refined into a precise inertial type prediction.\n\nWhy now? The Newton-slope pair and its non-integrality propagation are now pinned down\nexactly, isolating the denominator as the single arithmetic invariant left to interpret\non the Galois side.\n\n## Conjecture 2 \u2014 Uniform bound removing the \"bad congruence class\" hypothesis\n\nFor every fractional slope `< p \u2212 2` there is an explicit weight bound `k\u2080(p, v(a_p))`,\npolynomial in `p`, above which irreducibility holds for *all* even `k \u2265 k\u2080` with no\nexceptional congruence classes of `k mod p`.\n\nThe key insight is that the exceptional classes arise only from the balanced Newton\ncase `v(a_p) \u2248 (k\u22121)/2`, which the strict sub-balanced bound excludes uniformly once\n`k` is large relative to the slope.\n\nWhy now? The distinctness of the two slopes was shown to depend solely on the strict\nbound `2\u00b7v(a_p) < k\u22121`, suggesting the exceptional classes are an artefact of proximity\nto the balanced point rather than a genuine arithmetic obstruction.\n\n## Conjecture 3 \u2014 Discriminant non-square density on the residual line\n\nAs `k` ranges over even residues mod `2(p\u22121)` with fixed fractional slope, the residual\nFrobenius traces equidistribute, and the proportion yielding an irreducible reduction\ntends to `(p\u22121)/(2p)`, the density of quadratic non-residues in `\ud835\udd3d_p`.\n\nThe key insight is that once the integral (Wach) structure fixes the slope, the residual\nrepresentation behaves like a random quadratic over `\ud835\udd3d_p`, so irreducibility frequency is\ngoverned by non-residue density rather than by the crystalline data.\n\nWhy now? The cross-domain bridge proved here \u2014 roots exist iff the discriminant is a\nsquare \u2014 makes the residual side a clean quadratic-residue question, ready for an\nequidistribution statement.\n\n## Conjecture 4 \u2014 Cross-slope rigidity\n\nTwo crystalline data of the same even weight `k` whose fractional slopes have different\ndenominators can never have isomorphic semisimplified reductions.\n\nThe key insight is that the slope denominator is an isomorphism invariant of the residual\nrepresentation (via its inertial level), so distinct denominators force distinct reductions\nregardless of the traces `a_p`.\n\nWhy now? With the slope pair and its integrality behaviour fully characterised, the\ndenominator emerges as a candidate complete invariant, inviting a rigidity test.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1151",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "766b6e47",
+    "status": "available",
+    "timestamp": "2026-07-12T17:21:13.444308+00:00",
+    "title": "These conjectures are distilled from the arithmetic/linear-algebra decomposition"
   },
   {
     "consumed_by_exp_id": "",

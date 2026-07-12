@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "de167401",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Lifebox: Information-Theoretic Identity\n\nThe file `LifeboxInformationIdentity.lean` formalizes and proves five claims around\nRudy Rucker's *Lifebox* thesis (identity = informatio",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-11T23:55:51",
-      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
-    },
-    {
-      "cycle_id": "319bd9f6",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Topology of a Donut-Shaped Universe\n\nThese conjectures are distilled from the flat-torus study of closed geodesics\nand the wrapping lattice. Each is bold, falsifiable, and phrased",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 13,
-      "timestamp": "2026-07-12T00:29:28",
-      "title": "Rucker: Spacetime Donuts — Topology of the Universe"
-    },
-    {
       "cycle_id": "47a54792",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThe cycle established a compact algebraic core for four-dimensional geometry: a\nsingle sum-of-squares identity, `(a+b)² = 4ab +",
@@ -499,29 +479,29 @@
       "theorem_count": 25,
       "timestamp": "2026-07-12T16:46:42",
       "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
+    },
+    {
+      "cycle_id": "00880e6f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The Algebraic Core of Four-Dimensional Geometry\n\nThis cycle isolated two identities — the continuous sum-of-squares identity\n`(a+b)² = 4ab + (a−b)²` and the discrete binomial iden",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-12T17:21:08",
+      "title": "The cycle established a compact algebraic core for four-dimensional geometry: a"
+    },
+    {
+      "cycle_id": "766b6e47",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Fractional-slope reductions of crystalline representations\n\nThese conjectures are distilled from the arithmetic/linear-algebra decomposition\nestablished in this cycle: a fraction",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-12T17:21:20",
+      "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weigh"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c2c03fe8",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities\n\nThis cycle established a tensor-amplification engine for Sidorenko-type inequalities on weighted\ngraphs",
-      "quality_score": 0.63,
-      "sorry_count": 3,
-      "theorem_count": 25,
-      "timestamp": "2026-07-09T21:05:47",
-      "title": "Tensor Amplification and Spectral Transfer for Sidorenko-Type Inequalities"
-    },
-    {
-      "cycle_id": "00f256fb",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Gödel's Casino\n\nThe file `Casino.lean` formalises *Gödel's Casino* as a betting game over the sentences\nof an abstract formal theory `T` and proves a guaranteed-win strategy for",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-07-09T21:23:40",
-      "title": "Godel's Casino: Incomplete but Winnable Games"
-    },
     {
       "cycle_id": "c38e66e4",
       "domain": "NumberTheory",
@@ -2501,27 +2481,29 @@
       "theorem_count": 25,
       "timestamp": "2026-07-12T16:46:42",
       "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
+    },
+    {
+      "cycle_id": "00880e6f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The Algebraic Core of Four-Dimensional Geometry\n\nThis cycle isolated two identities — the continuous sum-of-squares identity\n`(a+b)² = 4ab + (a−b)²` and the discrete binomial iden",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-12T17:21:08",
+      "title": "The cycle established a compact algebraic core for four-dimensional geometry: a"
+    },
+    {
+      "cycle_id": "766b6e47",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Fractional-slope reductions of crystalline representations\n\nThese conjectures are distilled from the arithmetic/linear-algebra decomposition\nestablished in this cycle: a fraction",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-12T17:21:20",
+      "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weigh"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "53945fe2",
-      "domain": "Novelty",
-      "name": "in",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "53945fe2",
-      "domain": "Novelty",
-      "name": "card_filter_superset",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "e618ea1a",
-      "domain": "Novelty",
-      "name": "charF_mono",
-      "quality": 0.82
-    },
     {
       "cycle_id": "e618ea1a",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "exists_maximalConflictFree",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "00880e6f",
+      "domain": "Novelty",
+      "name": "with",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "00880e6f",
+      "domain": "Novelty",
+      "name": "sum_of_squares_core",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "00880e6f",
+      "domain": "Novelty",
+      "name": "J4_sq_eq_neg",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T16:46:42",
+  "last_updated": "2026-07-12T17:21:20",
   "open_questions": [
     {
       "context": "+To keep this file free of `sorry` while remaining faithful, we prove the composite; -    sorry; +as an open conjecture rather than prove it with `sorry`.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "16e4b1d9",
-        "quality": 0.8,
-        "theorems": 15,
-        "title": "This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
-      },
-      {
         "cycle_id": "f3dfcf44",
         "quality": 0.82,
         "theorems": 17,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 0,
         "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+      },
+      {
+        "cycle_id": "766b6e47",
+        "quality": 0.8,
+        "theorems": 17,
+        "title": "Irreducibility of mod p reductions of crystalline representations at fractional "
       }
     ],
     "Bridges": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "e618ea1a",
-        "quality": 0.82,
-        "theorems": 29,
-        "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
-      },
-      {
         "cycle_id": "0930ae42",
         "quality": 0.82,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 25,
         "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
+      },
+      {
+        "cycle_id": "00880e6f",
+        "quality": 0.82,
+        "theorems": 23,
+        "title": "The cycle established a compact algebraic core for four-dimensional geometry: a"
       }
     ],
     "NumberTheory": [
