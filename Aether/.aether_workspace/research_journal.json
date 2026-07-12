@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "08eba531",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Formal Limits of Molecular Computing\n\nThis project formalizes, in Lean 4 / Mathlib, three pillars of the \"nanotechnology\ncomputation\" moonshot, each stated as fully proved theorem",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-07-12T03:38:43",
-      "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
-    },
-    {
       "cycle_id": "e6201bf5",
       "domain": "Logic",
       "key_insight": "# Future Directions: Objective Reduction and the Limits of Computable Cognition\n\nThe results of this cycle pin down the quantitative skeleton of the objective\nreduction proposal for conscious events a",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-12T20:32:01",
       "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
+    },
+    {
+      "cycle_id": "61c22649",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the study of the opposite-semicube Helly property on Cartesian\nproducts of partial cubes and its equivalence with harmonic-evenness.\n\n## 1. Harmonic-evenness is a mul",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 29,
+      "timestamp": "2026-07-12T20:49:46",
+      "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partia"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4de79d68",
-      "domain": "Logic",
-      "key_insight": "# Hilbert's Hotel for Primes — deepening: future directions\n\nThis cycle deepens the earlier work in `Novelty/PrimeHotelRearrangement.lean` (well-behaved\nprime-hotel rearrangements: displacement ratio",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-07-10T01:48:49",
-      "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-    },
     {
       "cycle_id": "14000bf9",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-12T20:32:01",
       "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
+    },
+    {
+      "cycle_id": "61c22649",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the study of the opposite-semicube Helly property on Cartesian\nproducts of partial cubes and its equivalence with harmonic-evenness.\n\n## 1. Harmonic-evenness is a mul",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 29,
+      "timestamp": "2026-07-12T20:49:46",
+      "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partia"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-12T20:32:01",
+  "last_updated": "2026-07-12T20:49:46",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "0a5d3cfa",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-11T20:17:57"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "7473e6ed",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 7,
       "timestamp": "2026-07-12T20:14:26"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "61c22649",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-12T20:49:46"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "919ceb1f",
-        "quality": 0.83,
-        "theorems": 18,
-        "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
-      },
-      {
         "cycle_id": "494cab2e",
         "quality": 0.82,
         "theorems": 21,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 28,
         "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
+      },
+      {
+        "cycle_id": "61c22649",
+        "quality": 0.78,
+        "theorems": 29,
+        "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
       }
     ],
     "NumberTheory": [

@@ -565,7 +565,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Proofs of Classical Theorems"
   },
   {
-    "consumed_by_exp_id": "faa76f28",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
     "domains": [
       "Cryptography"
@@ -574,7 +574,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "3a52b537",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T19:32:10.856151+00:00",
     "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
@@ -676,6 +676,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T03:38:30.661331+00:00",
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 61c22649 (Q=0.780), which proved 29 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_61c22649_7d11f433",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "61c22649",
+    "status": "available",
+    "timestamp": "2026-07-12T20:49:46.145056+00:00",
+    "title": "Deepening: The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
   },
   {
     "consumed_by_exp_id": "",
@@ -1265,6 +1279,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T00:29:28.312612+00:00",
     "title": "Close Proofs: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
+  },
+  {
+    "consumed_by_exp_id": "0242f406",
+    "description": "Cycle 61c22649 (Q=0.780) proved 29 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_61c22649_98608cb9",
+    "priority_score": 0.8300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "61c22649",
+    "status": "in_progress",
+    "timestamp": "2026-07-12T20:49:46.245430+00:00",
+    "title": "Close Proofs: The opposite-semicube Helly property characterizes harmonic-evenness i"
   },
   {
     "consumed_by_exp_id": "",
@@ -1982,20 +2010,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T17:32:19.384043+00:00",
     "title": "Error Bound Conjecture for Corrected Prime Count Estimator"
-  },
-  {
-    "consumed_by_exp_id": "61c22649",
-    "description": "A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0159",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31468v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T18:13:48.357153+00:00",
-    "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partial cubes"
   },
   {
     "consumed_by_exp_id": "",
@@ -4495,7 +4509,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "208b1ca5",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4504,7 +4518,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
@@ -7343,6 +7357,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T20:31:50.282993+00:00",
     "title": "This file records the enumerative layer of the *\"Recursive decomposition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from the study of the opposite-semicube Helly property on Cartesian\nproducts of partial cubes and its equivalence with harmonic-evenness.\n\n## 1. Harmonic-evenness is a multiplicative invariant of arbitrary products\n\n**Conjecture.** For any finite family of partial cubes, the Cartesian product is\nharmonic-even if and only if every factor is harmonic-even; moreover the class of\nharmonic-even partial cubes is closed under Cartesian product and contains all\neven cycles and all hypercubes.\n\nThe key insight is that harmonic-evenness is a *coordinate-local* property and the\ncoordinate (\u0398-class) set of a Cartesian product is the disjoint union of the\nfactors' coordinate sets, so balance of a cut in the product reduces to balance of\nthe corresponding cut in exactly one factor after cancelling the (positive)\ncardinality of the complementary factors.\n\nWhy now? The two-factor case is settled and its proof is entirely\ncancellation-based, so it extends verbatim to associative iterated products once\nthe disjoint-union bookkeeping of coordinates is made uniform \u2014 the remaining work\nis organisational rather than conceptual.\n\n## 2. A metric dichotomy: opposite-semicube Helly vs. global Helly number\n\n**Conjecture.** The opposite-semicube Helly property and the classical\nHelly-number-2 property for semicubes are logically independent: there are partial\ncubes satisfying one but not the other, and their conjunction characterises a\nstrictly smaller, product-closed subclass.\n\nThe key insight is that the two properties speak about *different* incidence\nstructures \u2014 the Helly-number-2 property constrains pairwise-intersecting families\nof same-side semicubes, whereas the opposite-semicube property constrains the\nsymmetry between the two sides of a single cut \u2014 so balancing each cut neither\nimplies nor is implied by pairwise intersection patterns.\n\nWhy now? The classical Helly-number-2 statement is already available for the\ndisjoint-union coordinate type, so both properties can be compared on the very\nsame product cubes without new foundational machinery.\n\n## 3. Balance forces spectral symmetry of the cut-transposition operator\n\n**Conjecture.** A partial cube is harmonic-even if and only if, for every\n\u0398-class, the transposition swapping the two opposite semicubes extends to a\nmeasure-preserving involution of the vertex set; consequently the associated\ncut-averaging operator has symmetric spectrum about zero.\n\nThe key insight is that equinumerosity of the two sides of every cut is exactly\nthe combinatorial precondition for a sign-reversing involution, which is the\ndiscrete shadow of a harmonic (mean-value) symmetry \u2014 hence the name\nharmonic-even.\n\nWhy now? The equivalence between the matching (Helly) formulation and the\ncardinality (balance) formulation is now established, providing the bridge from a\npurely existential statement about bijections to a quantitative statement about an\noperator.\n\n## 4. Forbidden-factor characterisation of non-harmonic products\n\n**Conjecture.** A Cartesian product of partial cubes fails the opposite-semicube\nHelly property if and only if it contains, as a factor, a partial cube with an\nodd cut (a \u0398-class whose two sides differ in size), and the minimal such\nobstructions are exactly the odd-order stars.\n\nThe key insight is that failure of the product property is inherited from a single\nunbalanced factor coordinate, so the search for obstructions localises to the\nfactors and to their individual cuts rather than to the (exponentially larger)\nproduct.\n\nWhy now? The two-factor equivalence isolates the exact place where the hypothesis\nis used \u2014 a single unbalanced coordinate in one factor \u2014 turning the global\nquestion into a finite per-factor test amenable to enumeration.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1162",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "61c22649",
+    "status": "available",
+    "timestamp": "2026-07-12T20:49:37.176664+00:00",
+    "title": "Derived from the study of the opposite-semicube Helly property on Cartesian"
   },
   {
     "consumed_by_exp_id": "",
