@@ -938,7 +938,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
   {
-    "consumed_by_exp_id": "6ac2b7d4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
     "domains": [
       "Novelty",
@@ -948,7 +948,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T23:55:18.527910+00:00",
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
@@ -3970,7 +3970,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alternating Hurwitz\u2013Ramanujan Identity with Euler Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49f67430",
     "description": "The paper proves that for k \u2265 3 and sufficiently large n, the maximum number of points in an n \u00d7 n grid with no k+1 collinear points equals kn. This conjecture asserts that 'sufficiently large' can be replaced by the explicit threshold n \u2265 k. Note that for n \u2264 k the whole grid has no k+1 collinear points so f_k(n) = n\u00b2, and for n = k we get f_k(k) = k\u00b2 = k\u00b7k, making n \u2265 k the natural boundary. The conjecture predicts that for all k \u2265 3 and n \u2265 k, the trivial upper bound kn is always achievable.",
     "domains": [
       "Pythagorean"
@@ -3979,7 +3979,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05255v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T06:16:15.118766+00:00",
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
   },

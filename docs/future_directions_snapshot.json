@@ -1267,7 +1267,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6ac2b7d4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
     "domain_bridges": [],
     "domains": [
@@ -1280,7 +1280,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T23:55:18.527910+00:00",
     "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
   },
@@ -6729,7 +6729,7 @@
       "math.CO",
       "math.MG"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49f67430",
     "description": "The paper proves that for k ≥ 3 and sufficiently large n, the maximum number of points in an n × n grid with no k+1 collinear points equals kn. This conjecture asserts that 'sufficiently large' can be replaced by the explicit threshold n ≥ k. Note that for n ≤ k the whole grid has no k+1 collinear points so f_k(n) = n², and for n = k we get f_k(k) = k² = k·k, making n ≥ k the natural boundary. The conjecture predicts that for all k ≥ 3 and n ≥ k, the trivial upper bound kn is always achievable.",
     "domain_bridges": [
       "discrete_geometry",
@@ -6745,7 +6745,7 @@
     "proof_strategy": "The paper's approach splits into: (1) handling 'heavy' lines via pseudorandom hypergraph matchings (Ehard-Glock-Joos), (2) crude deletion for remaining violations, (3) randomized switching to recover near-optimal size. To push 'sufficiently large n' down to n ≥ k, one would need to make each step effective with explicit bounds. The hypergraph matching step likely requires the most careful analysis for small n. A computer-verified case analysis for small n (up to some explicit bound) combined with the asymptotic argument for larger n could work. The key is determining whether the o(n) deletion/swinging losses can be controlled when n is close to k.",
     "research_mode": "team",
     "source_exp_id": "2607.05255v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T06:16:15.118766+00:00",
     "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k ≥ 3 and n ≥ k"
   },
