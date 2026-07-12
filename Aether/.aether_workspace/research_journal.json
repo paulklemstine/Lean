@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0664586a",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Alien Number Systems\n\nBold, falsifiable conjectures distilled from this cycle's study of negative,\ncomplex, and irrational bases.\n\n## 1. A uniform bijection theorem for every bas",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 18,
-      "timestamp": "2026-07-12T03:21:37",
-      "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-    },
-    {
       "cycle_id": "538f30a2",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to t",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-12T19:56:51",
       "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
+    },
+    {
+      "cycle_id": "d95af58e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Anti-Mathematics\n\nThis cycle deepened the anti-Infinity strand (the Ackermann model of the\nhereditarily finite sets `HF = V_ω`) with three new self-contained files:\n\n- `Ackermann",
+      "quality_score": 0.82,
+      "sorry_count": 7,
+      "theorem_count": 28,
+      "timestamp": "2026-07-12T20:14:26",
+      "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "90ef345f",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — The Quadratic Recurrence and Its Hidden Arithmetic\n\nThese conjectures are distilled from the current cycle, which paired an analytic\nescape estimate for `z ↦ z² + c` with the ari",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 751,
-      "timestamp": "2026-07-10T01:14:02",
-      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-    },
     {
       "cycle_id": "7ca0f553",
       "domain": "Pythagorean",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-12T19:56:51",
       "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
+    },
+    {
+      "cycle_id": "d95af58e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Anti-Mathematics\n\nThis cycle deepened the anti-Infinity strand (the Ackermann model of the\nhereditarily finite sets `HF = V_ω`) with three new self-contained files:\n\n- `Ackermann",
+      "quality_score": 0.82,
+      "sorry_count": 7,
+      "theorem_count": 28,
+      "timestamp": "2026-07-12T20:14:26",
+      "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T19:56:51",
+  "last_updated": "2026-07-12T20:14:26",
   "open_questions": [
-    {
-      "context": "+  -- `sorry` (no `axiom`, no `@[implemented_by]`, no vacuous restatement).; +  sorry; -    sorry",
-      "cycle_id": "c67deafc",
-      "domain": "Tropical",
-      "sorry_count": 6,
-      "timestamp": "2026-07-11T19:27:26"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "0a5d3cfa",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-12T19:56:34"
+    },
+    {
+      "context": "-    sorry; +   a `sorry`.  We remove the unprovable tail rather than leave a `sorry`, and; collision ⇒ Merkle–Damgård hash collision, all constructive and `sorry`-free.",
+      "cycle_id": "d95af58e",
+      "domain": "Novelty",
+      "sorry_count": 7,
+      "timestamp": "2026-07-12T20:14:26"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f8254dbf",
-        "quality": 0.83,
-        "theorems": 34,
-        "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, t"
-      },
-      {
         "cycle_id": "919ceb1f",
         "quality": 0.83,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 12,
         "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+      },
+      {
+        "cycle_id": "d95af58e",
+        "quality": 0.82,
+        "theorems": 28,
+        "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
       }
     ],
     "NumberTheory": [

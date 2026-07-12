@@ -26934,11 +26934,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "eb025541",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -26951,7 +26951,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1019",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T20:14:43.130898+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -26966,7 +26966,7 @@
       "source": "",
       "source_exp_id": "8e65b62c",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8e65b62c",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_9d66d6ad",
       "timestamp": "2026-07-11T10:14:40.485913+00:00",
       "title": "`ThermodynamicsOfProof.lean` — the positive theory:"
@@ -37344,7 +37344,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "9d307529",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37371,7 +37371,7 @@
       "source": "",
       "source_exp_id": "b77ed1ec",
       "source_path": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?",
-      "status": "in_progress",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-07-10T16:20:42.486105+00:00",
       "title": "Close Proofs: The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
@@ -37897,7 +37897,6 @@
     "yields": 1
   },
   "selection_log": [
-    "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
     "abduction_followup",
@@ -37916,6 +37915,7 @@
     "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "abduction_followup"
   ]
 }
