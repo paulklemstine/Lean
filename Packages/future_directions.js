@@ -185,7 +185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Reflective Type Theory: Proving Things About Proving Things"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c016fced",
     "description": "Building on cycle 0ba9c9ed (Q=0.820), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domains": [
       "Probability"
@@ -194,7 +194,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "0ba9c9ed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:40:08.941885+00:00",
     "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
@@ -3821,21 +3821,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
   },
   {
-    "consumed_by_exp_id": "b4ccc3c5",
-    "description": "The main theorem of the paper: Let N > 1 be a squarefree integer with an even number of prime factors, and let p be a prime divisor of N. The factorization formula for the norm of the p-adic cross-ratio infinite product of CM points on the Shimura curve X_N holds if the Atkin-Lehner quotient X_N / w_p has genus 0. This extends the original Giampietro-Darmon conjecture, which required the Shimura curve X_N itself to have genus 0 (a condition only satisfied for N in {6, 10, 22}).",
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_0498",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02306v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T22:20:36.514194+00:00",
-    "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every symmetric edge polytope of dimension at most 35 has a \u03b3-positive Ehrhart h*-polynomial. Equivalently, 36 is the minimum dimension of a symmetric edge polytope whose Ehrhart h*-polynomial fails to be \u03b3-positive. This would sharpen the paper's existence result by establishing the exact threshold, confirming that no smaller counterexamples to the Ohsugi\u2013Tsuchiya conjecture exist.",
     "domains": [
@@ -6656,6 +6641,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T00:29:32.040516+00:00",
     "title": "The cycle established a compact algebraic core for four-dimensional geometry: a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the elementary algebraic backbone of the Atkin\u2013Lehner theory\nunderlying the Giampietro\u2013Darmon factorization program:\n\n* `Pythagorean/AtkinLehnerGroup.lean` \u2014 the Atkin\u2013Lehner group of a squarefree level\n  `N` as an elementary abelian 2-group `(\u2124/2)^{\u03c9(N)}` (`ALG`, `ALG.two_torsion`,\n  `ALG.card_ALG`), the arithmetic realization `d \u22c6 e = d\u00b7e/gcd(d,e)\u00b2` as symmetric\n  difference of prime supports (`AtkinLehner.alMul_prod`), the order formula `2^{\u03c9(N)}`\n  (`AtkinLehner.card_divisors_squarefree`, `AtkinLehner.AL_group_order`), and the\n  M\u00f6bius/parity characterization of the \"even number of prime factors\" hypothesis\n  (`AtkinLehner.moebius_eq_one_iff_even`, `AtkinLehner.genusZeroExamples`).\n\n* `Pythagorean/AtkinLehnerEquiv.lean` \u2014 the divisor\u2013subset picture: the explicit\n  bijection `AtkinLehner.divisorsEquivPowerset` between the divisors of a squarefree\n  `N` and the subsets of its prime factors, the order formula reproved through it\n  (`AtkinLehner.card_divisors_eq`), closure of the composition law on divisors\n  (`AtkinLehner.alMul_dvd`), and the group-isomorphism content\n  (`AtkinLehner.alMul_realizes_symmDiff`): under the bijection, `d \u22c6 e` is exactly the\n  symmetric difference of prime supports.\n\n* `Pythagorean/AtkinLehnerBundled.lean` \u2014 the fully bundled group picture: the divisors\n  of a squarefree `N` are endowed with an `AddCommGroup` structure whose addition is\n  *literally* the Atkin\u2013Lehner law `\u22c6` (`AtkinLehner.instAddCommGroupALDiv`,\n  `AtkinLehner.ALDiv_add_val`), the group is shown to be `2`-torsion\n  (`AtkinLehner.ALDiv_two_torsion`), and the bijection is promoted to a bundled\n  isomorphism `AtkinLehner.toAbstractALG : ALDiv N \u2243+ ALG {p // p \u2208 N.primeFactors}`\n  onto the abstract elementary abelian `2`-group.\n\nAll results carry complete Lean 4 proofs (0 sorries) and depend only on the standard\naxioms `propext`, `Classical.choice`, `Quot.sound`.\n\nNatural next steps, in increasing order of difficulty:\n\n1. **Action on divisors and fixed points.** Formalize the Atkin\u2013Lehner involutions as an\n   action of `(\u2124/2)^{\u03c9(N)}` on the set of CM points / divisors, and count orbits and\n   fixed loci (relevant to the ramification of the quotient maps `X_N \u2192 X_N/w_p`).\n\n2. **Genus formulas.** Formalize the genus of Shimura curves `X_N` and of Atkin\u2013Lehner\n   quotients `X_N / w_p` via the arithmetic of the quaternion order (mass formula,\n   elliptic point counts), and characterize `genus(X_N/w_p) = 0`. This is the geometric\n   hypothesis of the extended theorem.\n\n3. **The cross-ratio infinite product.** Define the p-adic cross-ratio of CM points and\n   its infinite product over the Cerednik\u2013Drinfeld / Mumford uniformization, and state\n   the norm factorization formula whose validity is asserted under the genus-zero\n   hypothesis.\n\n4. **Full main theorem.** Combine the above to state and (eventually) prove the extended\n   Giampietro\u2013Darmon factorization under the `genus(X_N/w_p) = 0` criterion.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1093",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b4ccc3c5",
+    "status": "available",
+    "timestamp": "2026-07-12T00:29:49.147107+00:00",
+    "title": "This project formalizes the elementary algebraic backbone of the Atkin\u2013Lehner th"
   },
   {
     "consumed_by_exp_id": "",
