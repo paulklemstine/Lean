@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2bd85c25",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Theorems as Phase Transitions in Proof Space\n\nThis project formalizes, in Lean 4 (Mathlib), a rigorous mathematical skeleton\nfor the speculative picture of *proof space* as a sta",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-11T16:23:18",
-      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-    },
-    {
       "cycle_id": "8fb1d399",
       "domain": "Applications",
       "key_insight": "# Future Directions: The Oracle's Burden\n\n## What was proved (this project)\n\nTwo self-contained Lean 4 files, built on Mathlib's `Computability.TuringDegree` / `RecursiveIn`.\n\n### `Catalog/Computation",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T11:53:23",
       "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
+    },
+    {
+      "cycle_id": "16e4b1d9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n`Bridges/RamanujanBaireBridge.lean` builds a cross-domain bridge for the Ramanujan\noracle program: it recasts the **counting/diagonalization** obstruction to computable\noracles as",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T12:43:39",
+      "title": "This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ea22db3c",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Semicubes, Helly numbers, and Cartesian products\n\nThis cycle established three anchors: semicubes of a hypercube have the Helly property\nwith Helly number `2`, the only obstructi",
-      "quality_score": 0.40624133333333334,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-07T22:10:09",
-      "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partia"
-    },
     {
       "cycle_id": "44d92b62",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T11:53:23",
       "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
+    },
+    {
+      "cycle_id": "16e4b1d9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n`Bridges/RamanujanBaireBridge.lean` builds a cross-domain bridge for the Ramanujan\noracle program: it recasts the **counting/diagonalization** obstruction to computable\noracles as",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T12:43:39",
+      "title": "This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "538f30a2",
-      "domain": "Tropical",
-      "name": "possiblyTrue_of_multiverseTrue",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "538f30a2",
-      "domain": "Tropical",
-      "name": "not_multiverseTrue_of_independent",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "08eba531",
-      "domain": "Applications",
-      "name": "Reaction",
-      "quality": 0.7
-    },
     {
       "cycle_id": "08eba531",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "underlying",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "16e4b1d9",
+      "domain": "Applications",
+      "name": "perfect_unique",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "16e4b1d9",
+      "domain": "Applications",
+      "name": "singleton_notMem_nhds",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "16e4b1d9",
+      "domain": "Applications",
+      "name": "isNowhereDense_singleton",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-12T11:53:23",
+  "last_updated": "2026-07-12T12:43:39",
   "open_questions": [
     {
       "context": "+  range `13 ≤ n ≤ 10000` and carries no `sorry`: the structural reduction is; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "245dd564",
-        "quality": 0.72,
-        "theorems": 44,
-        "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
-      },
-      {
         "cycle_id": "c016fced",
         "quality": 0.83,
         "theorems": 1745,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 22,
         "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
+      },
+      {
+        "cycle_id": "16e4b1d9",
+        "quality": 0.8,
+        "theorems": 15,
+        "title": "This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
       }
     ],
     "Bridges": [
