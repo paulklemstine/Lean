@@ -326,6 +326,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0fe20e26 (Q=0.820), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 823f5582 (Q=0.820) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_0fe20e26_72979793",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0fe20e26",
+    "status": "available",
+    "timestamp": "2026-07-12T18:30:57.788818+00:00",
+    "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domain_bridges": [],
     "domains": [
@@ -1530,25 +1549,6 @@
     "status": "available",
     "timestamp": "2026-07-10T00:21:09.997327+00:00",
     "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "0fe20e26",
-    "description": "Cycle 823f5582 (Q=0.820) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surfa",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_823f5582_048a7cd6",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "823f5582",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T21:41:40.242627+00:00",
-    "title": "Close Proofs: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
   },
   {
     "ambition_level": "extension",
@@ -12146,6 +12146,26 @@
     "status": "available",
     "timestamp": "2026-07-12T18:13:25.206194+00:00",
     "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Algebraic Cycles in Piecewise-Linear Decision Surfaces\n\nThe results of this cycle sharpen the qualitative \"every homology class of a\nrectified-linear decision surface is a rational combination of algebraic cells\"\ninto an *exact* dimensional accounting: the middle Betti number equals\n`dim C₁ − rank d₁ − rank d₂`, and it is bounded by the monotone, multiplicative\nactivation-pattern count `∏ᵢ 2^{wᵢ}`. The following conjectures push this exact\naccounting toward a full bigraded and functorial theory.\n\n## Conjecture 1 — A bigraded (Hodge-type) refinement of the width bound\n\nFor a network with input-adjacent width `w₁` and output-adjacent width `w_L`,\neach mixed Betti number of the decision surface should satisfy a *product* bound\nof the form `h^{p,q} ≤ C(w₁, p) · C(w_L, q) · ∏ᵢ wᵢ`, refining the single\nexponential bound into a bigraded pyramid indexed by the two boundary layers.\n\nThe key insight is that the two boundary layers of a network play asymmetric\nroles — the first controls how cells are cut and the last how they are glued —\nso the homology should split along a bidegree that reads the input and output\nwidths separately rather than collapsing them into one total count.\n\nWhy now? The exact identity `dim H = dim C₁ − rank d₁ − rank d₂` isolates\nhomology as the part of the chain group seen by neither differential; this makes\nit possible, for the first time, to attribute each surviving dimension to a\nspecific pair of boundary directions instead of to the aggregate width.\n\n## Conjecture 2 — Sharpness of the activation-pattern bound\n\nThe width bound `dim H ≤ ∏ᵢ 2^{wᵢ}` is asymptotically tight: for every width\nprofile there exists a network whose decision surface realises a Betti number\nthat is a fixed positive fraction of the bound, so the exponential growth in\ntotal width cannot be improved to a subexponential rate.\n\nThe key insight is that generic hyperplane arrangements already realise a\nconstant fraction of all sign-cells, and a decision surface can be engineered so\nthat a constant fraction of those cells contribute independent homology classes.\n\nWhy now? The multiplicative and monotone calculus of the pattern count\n(`card_activationPattern_append`, `card_activationPattern_mono`) provides exactly\nthe compositional tools needed to build large-homology examples layer by layer\nand to certify that concatenation multiplies the achievable complexity.\n\n## Conjecture 3 — Homology is subadditive under network composition\n\nIf a deep network factors as a composition of two sub-networks, the Betti\nnumbers of its decision surface are bounded by a convolution of the Betti\nnumbers of the parts: composition can only mix and cancel classes, never create\nmore than the product-count of the factors permits.\n\nThe key insight is that composition of piecewise-linear maps corresponds to a\nrefinement of activation regions, and refinement of a cell decomposition can\nmerge homology classes but cannot manufacture classes unaccounted for by the\nfiner decomposition.\n\nWhy now? The concatenation law for activation-pattern counts already shows the\ncombinatorial side is multiplicative; the exact rank formula supplies the\nmatching topological ledger, so the two can finally be compared term by term.\n\n## Conjecture 4 — An Euler-characteristic law for decision surfaces\n\nThe alternating sum of the Betti numbers of a rectified-linear decision surface\nis a signed count of activation regions weighted by their local dimension, giving\na closed-form Euler characteristic determined entirely by the network's width\nprofile and the combinatorics of its region adjacency graph.\n\nThe key insight is that the local Euler relation `dim H + rank d₁ + rank d₂ =\ndim C₁` telescopes across the full cellular complex, so global Euler\ncharacteristic must be expressible purely through cell counts, independent of the\nparticular weights.\n\nWhy now? With the middle-degree identity established as an exact equality rather\nthan an inequality, the telescoping cancellation that defines the Euler\ncharacteristic becomes available at every degree simultaneously.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1155",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0fe20e26",
+    "status": "available",
+    "timestamp": "2026-07-12T18:30:48.733558+00:00",
+    "title": "The results of this cycle sharpen the qualitative \"every homology class of a"
   },
   {
     "ambition_level": "extension",
