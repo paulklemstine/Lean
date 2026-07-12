@@ -573,6 +573,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e618ea1a (Q=0.820), which proved 29 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological structure of\nthe conflict-free complex `K(AF)`. Three self-contained files:\n\n* `ArgumentationCore.le",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_e618ea1a_b25033ab",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e618ea1a",
+    "status": "available",
+    "timestamp": "2026-07-12T11:18:27.403225+00:00",
+    "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
     "domain_bridges": [],
     "domains": [
@@ -10218,7 +10237,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d019c88a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Qₙ` (`n ≥ 2`), the homological code\n`HQECC(Qₙ)` has minimum distance equal to the girth of `Qₙ`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n ≥ 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `β₁(Qₙ) = 2ⁿ⁻¹(n−2)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 − (V−1)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `β₀ − β₁ = V − E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k ≤ n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n − rank d₁ − rank d₂` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n − k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d₁ / im d₂`\nand the `Z`-logical space `ker d₂ᵀ / im d₁ᵀ` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
     "domain_bridges": [],
     "domains": [
@@ -10231,7 +10250,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "207fb5b4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T09:26:14.435602+00:00",
     "title": "Exact dictionary \"logical qubits = middle homology\""
   },
@@ -10414,26 +10433,6 @@
     "status": "available",
     "timestamp": "2026-07-10T17:24:11.930193+00:00",
     "title": "This cycle deepened the study of the **square of the Eulerian triangle**, whose "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e618ea1a",
-    "description": "# Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological structure of\nthe conflict-free complex `K(AF)`. Three self-contained files:\n\n* `ArgumentationCore.lean` — conflict-freeness, defense, admissibility, the\n  characteristic (defense) operator, its monotonicity, its preservation of\n  conflict-freeness, downward closure of conflict-free sets, and **Dung's\n  Fundamental Lemma**.\n* `ArgumentationExtensions.lean` — preferred and complete extensions, existence\n  of preferred extensions via **Zorn's Lemma**, the theorem **every preferred\n  extension is complete**, and the grounded extension as the least fixed point\n  of the defense operator, contained in every preferred extension.\n* `ArgumentationSimplicial.lean` — the **abstract simplicial complex** `K(AF)`,\n  the Euler characteristic, the contractibility of the full simplex\n  (`chi = 1`), and an **explicit refutation** of the conjectured identity\n  `chi(K(AF)) = |preferred| − |grounded|`.\n\n## What was established (theorems, not sketches)\n\n1. `K(AF)` is a bona fide simplicial complex: conflict-free sets are downward\n   closed. The correct carrier of the topology is the *conflict-free* family,\n   not the (non-downward-closed) family of preferred extensions.\n2. The defense operator `charF` is monotone and preserves conflict-freeness;\n   admissibility is exactly \"conflict-free and below `charF`\".\n3. Fundamental Lemma ⇒ preferred = complete; preferred extensions always exist.\n4. The grounded extension refines every preferred extension (skeptical ⊆\n   credulous).\n5. The literal Euler = semantics conjecture is false, with a one-argument\n   witness and a supporting numerical survey (`ComputationalEvidence.md`).\n\n## Promising next steps\n\n### A. A *correct* Euler/semantics bridge\nThe naive identity fails, but the survey suggests structured relationships worth\nformalizing:\n- For the **complete conflict graph** (mutual attacks everywhere), `K(AF)` is\n  `n` isolated points and `chi = n = #(preferred extensions)`. Conjecture and\n  prove: for *symmetric, irreflexive* frameworks, `chi(K(AF))` equals the number\n  of preferred extensions, and more precisely the preferred extensions are\n  exactly the maximal independent sets (the facets of `K(AF)`).\n- Relate `H_0(K(AF))` (connected components of the conflict graph) to the\n  decomposition of an AF into independent sub-debates, and prove semantics\n  distribute over connected components.\n\n### B. Homology, not just Euler characteristic\nDefine simplicial chains/boundaries over `K(AF)` and its (reduced) homology\n`H_n`. Mathlib now has enough homological algebra to define the chain complex of\nan abstract simplicial complex. Targets:\n- `H_0` counts connected components of the conflict graph.\n- Identify `H_1` generators with induced cycles in the conflict graph\n  (\"circular disagreements\"), making precise the informal \"circular arguments\n  are 1-holes\".\n- The Euler–Poincaré formula `chi = Σ (-1)^n dim H_n` as a theorem, linking the\n  combinatorial `eulerChar` here to Betti numbers.\n\n### C. Independence-complex machinery\n`K(AF)` is the independence complex of the symmetric closure of the attack\ngraph. Porting standard results (e.g. shellability/contractibility criteria,\nthe fold lemma) would give homotopy-type computations of `K(AF)` directly from\ngraph structure.\n\n### D. Further Dung semantics\n- Formalize stable and ideal semantics and their inclusions among\n  grounded ⊆ ideal ⊆ preferred.\n- Prove the grounded extension is itself conflict-free/complete in the finite\n  case by induction on the iterates of `charF` (the general transfinite case\n  needs a chain-continuity argument beyond `OrderHom.lfp_induction`).\n- Coincidence theorems: for well-founded (acyclic) frameworks, grounded =\n  preferred = stable is the unique extension.\n\n### E. Quantitative topology of real debates\nWith the homology API in place, compute `H_*` for argument graphs extracted from\ndebate corpora and study which topological invariants correlate with rhetorical\nphenomena (deadlock ↔ nontrivial `H_1`, fragmentation ↔ large `H_0`).\n",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0929",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "00abb0ac",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T18:12:01.549366+00:00",
-    "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
   },
   {
     "ambition_level": "extension",
@@ -11834,6 +11833,26 @@
     "status": "available",
     "timestamp": "2026-07-12T10:44:16.610995+00:00",
     "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Topology of Symmetric Argumentation\n\nThis cycle established the *correct* Euler/semantics bridge on the symmetric side\nof Dung's theory: in a symmetric framework every conflict-free set is admissible,\nso the preferred extensions are exactly the facets (maximal faces) of the\nconflict-free complex `K(AF)`, and for the complete conflict graph the Euler\ncharacteristic counts them exactly. The following conjectures push this bridge\ntoward its natural general form.\n\n## Conjecture 1 — Facet theorem for all symmetric irreflexive frameworks\n\n*For every symmetric, irreflexive framework, the preferred extensions are exactly\nthe maximal independent sets of the attack graph, and the Euler characteristic of\n`K(AF)` equals the alternating sum `∑_k (-1)^(k+1) f_{k}` where `f_k` is the number\nof independent sets of size `k`.*\n\nThe key insight is that symmetric self-defense removes admissibility as an\nobstruction, so the *semantic* lattice of extensions is literally the *face\nlattice* of the independence complex; the Euler characteristic then becomes a\npurely graph-theoretic invariant.\n\nWhy now? The facet identification and the complete-graph instance are already in\nhand; the remaining step is a general alternating-count over independent sets,\nfor which the finite combinatorial machinery is fully available.\n\n## Conjecture 2 — Connected-component decomposition of semantics\n\n*If the conflict graph of a symmetric framework is a disjoint union of induced\nsubgraphs `G_1, …, G_m`, then the preferred extensions are exactly the unions of\none preferred extension from each `G_i`, and `χ(K(AF)) = ∏_i χ(K(G_i))`\n(reduced), while the number of preferred extensions is `∏_i (#preferred of G_i)`.*\n\nThe key insight is that independent sets factor over connected components, so both\nthe semantics and the topology of `K(AF)` are multiplicative across the\nindependent \"sub-debates\" of the framework.\n\nWhy now? The building block — that conflict-freeness is a local, downward-closed\nproperty — is already formalized, and component decomposition of finite graphs is\nstandard, making the product formula directly attainable.\n\n## Conjecture 3 — `H_0` counts the debate fragments\n\n*The rank of the zeroth reduced homology of `K(AF)` equals one less than the\nnumber of connected components of the conflict graph; equivalently, `K(AF)` is\nconnected iff the mutual-attack graph is connected (for at least two arguments).*\n\nThe key insight is that the conflict-free complex contains every edge of the\nnon-attack (agreement) graph, so its connectivity is governed by that graph's\ncomponents, turning \"fragmentation of a debate\" into a computable topological\ninvariant.\n\nWhy now? With the complex `K(AF)` and its faces already defined, the only missing\ningredient is a chain complex in degrees 0 and 1, which the existing homological\nalgebra toolkit supplies.\n\n## Conjecture 4 — Circular disagreements are 1-cycles\n\n*An induced odd cycle in the symmetric attack graph contributes a nontrivial class\nto `H_1(K(AF))`; in particular a framework whose conflict graph is a single odd\ncycle has `K(AF)` homotopy-equivalent to a circle, so `χ = 0` and `H_1` has rank\none.*\n\nThe key insight is that a \"circular disagreement\" — a chain of mutually attacking\narguments closing on itself — is precisely a topological 1-hole, making the\ninformal slogan \"circular arguments are loops\" a precise homological statement.\n\nWhy now? The independence complex of a cycle is a classical, explicitly known\nspace, so this is the first concrete test case where a rhetorical phenomenon maps\nonto a computed nonzero Betti number.\n\n## Conjecture 5 — Grounded = isolated, sharpened to a homotopy retraction\n\n*Removing the isolated (unattacked) arguments from a symmetric framework changes\n`K(AF)` only by a join with a simplex on those vertices; consequently the grounded\nextension is a cone point set and `K(AF)` deformation-retracts onto the complex of\nthe non-isolated part.*\n\nThe key insight is that unattacked arguments are contained in every extension and\nare topological cone points, so they carry no homology and can be stripped without\nchanging the homotopy type — cleanly separating the \"forced\" part of a debate\n(grounded) from its genuinely contested core.\n\nWhy now? This cycle already proved grounded = unattacked for symmetric\nframeworks; upgrading that set-level identity to a homotopy statement is the\nnatural next rung and connects the skeptical semantics directly to the topology.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1130",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e618ea1a",
+    "status": "available",
+    "timestamp": "2026-07-12T11:18:20.184666+00:00",
+    "title": "*correct* Euler/semantics bridge on the symmetric sid"
   },
   {
     "ambition_level": "extension",

@@ -573,6 +573,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e618ea1a (Q=0.820), which proved 29 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological structure of\nthe conflict-free complex `K(AF)`. Three self-contained files:\n\n* `ArgumentationCore.le",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_e618ea1a_b25033ab",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e618ea1a",
+    "status": "available",
+    "timestamp": "2026-07-12T11:18:27.403225+00:00",
+    "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
     "domain_bridges": [],
     "domains": [
@@ -10098,26 +10117,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0930ae42",
-    "description": "# Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four smallest knots. Natural extensions:\n\n1. **Cyclotomic identification.**  Prove `trefoilPoly = cyclotomic 6 ℤ` and\n   `cinquefoilPoly = cyclotomic 10 ℤ` directly in Mathlib (rather than only proving\n   the individual root facts). This would make the \"roots are exactly the primitive\n   n-th roots of unity\" statement complete, including the *converse* (no spurious\n   roots) via `Polynomial.roots_cyclotomic`.\n\n2. **Torus-knot family.**  The trefoil and cinquefoil are the `(2, 3)` and `(2, 5)`\n   torus knots, with `Δ_{(2,2k+1)}(t) = (t^{2k+1} + 1)/(t + 1)`. Formalize the general\n   torus-knot Alexander polynomial and show its roots are the `(4k+2)`-th roots of\n   unity that are not `(2k+1)`-th roots — a uniform generalization of the two cases\n   proved here.\n\n3. **General reciprocity and `Δ(1) = ±1`.**  State and prove the reciprocity law\n   `t^{2g} Δ(1/t) = Δ(t)` and the normalization `Δ(1) = ±1` from an abstract\n   axiomatization of Alexander polynomials (e.g. via Seifert matrices `V`,\n   `Δ(t) = det(V − t Vᵀ)`), instead of case by case.\n\n4. **Knot determinant as `|Δ(−1)|`.**  Connect the numbers `3, 5, 5` proved here to\n   the determinant defined through a Goeritz or Seifert matrix, and to\n   `p`-colorability (`3`-colorable ⇔ `3 ∣ det`).\n\n5. **Off-circle roots and the golden ratio.**  Generalize the figure-eight\n   observation: characterize which knots have all Alexander roots on the unit circle\n   (a necessary condition for genuine root-of-unity OAM quantization). The\n   figure-eight, with roots `φ^{±2}`, is the smallest knot violating this.\n",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Pythagorean"
-    ],
-    "id": "fd_0835",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7a9dcf2f",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T02:59:09.669263+00:00",
-    "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: The Geometry and Universal Structure of Surprise\n\nThis cycle established two complementary pillars. First, *surprise* — the gap between\nthe most conservative and most divergent resolution of a setup — is a genuine\ngeometric invariant equal to the diameter of the resolution configuration\n(nonnegative, vanishing exactly on constant setups, monotone under refinement, and\nattained). Second, when a *canonical* (terminal) resolution exists, it is unique in the\nstrongest possible sense: up to a unique, coherent isomorphism, and it is rigid. The\nfollowing conjectures push both pillars further.\n\n## 1. Surprise as a genuine metric diameter in higher dimensions\n\n**Conjecture.** For a finite configuration of resolutions embedded in a Euclidean space\nof any dimension, the natural surprise invariant equals the metric diameter of the\nconfiguration's convex hull, and it remains monotone under enrichment and subadditive\nunder overlays of setups.\n\n**The key insight is** that the one-dimensional identity \"surprise = range = greatest\npairwise distance\" is not special to the line: it is a shadow of the general fact that\nthe extreme spread of a compact configuration is realised on its boundary.\n\n**Why now?** The one-dimensional case is fully settled here with an attained diameter\ncharacterisation, giving an exact template — extremal witnesses plus a uniform bound —\nthat generalises verbatim once \"endpoints\" are replaced by \"hull vertices.\"\n\n## 2. A vanishing dichotomy separating puns from absurdism\n\n**Conjecture.** The surprise invariant admits a sharp threshold: below it, every setup\nis equivalent (after normalisation) to a near-constant configuration; above it, setups\nnecessarily contain two resolutions in \"different categories\" that no refinement can\nreconcile.\n\n**The key insight is** that the zero-surprise characterisation is not merely a boundary\ncase but the base of a stratification: distance from the constant locus measures how\nfar a setup has escaped its expected resolution.\n\n**Why now?** We have proven the exact vanishing locus (surprise `0` iff all resolutions\ncoincide) and that surprise is monotone; a stratification by surprise value is the\nimmediate next quantitative refinement.\n\n## 3. Universal resolutions as limits of refinement chains\n\n**Conjecture.** Every setup whose resolutions form a directed refinement system admits a\nuniversal resolution, obtained as the colimit of the refinement chain, and this colimit\nis automatically rigid.\n\n**The key insight is** that terminality — proven here to force unique, coherent,\nrigidity-witnessing structure — is exactly the property a well-behaved colimit inherits,\nso existence of the canonical resolution reduces to directedness of refinements.\n\n**Why now?** The abstract uniqueness and rigidity of terminal resolutions are already in\nhand; the only missing ingredient for a general existence theorem is a construction, and\ndirected colimits supply the standard one.\n\n## 4. Sharp stability of surprise under perturbation\n\n**Status.** The basic stability estimate is now settled: perturbing every resolution of\na setup by at most `ε` changes its surprise by at most `2ε`. This confirms that surprise\nis a robust invariant — small changes in how each resolution is read cannot produce a\nlarge change in humor.\n\n**Conjecture (next step).** The factor `2` is optimal, and more is true: surprise is a\ncontraction under any reinterpretation that is itself a contraction of the resolution\naxis, and the estimate composes — a chain of `k` perturbations of sizes `ε₁, …, ε_k`\nmoves surprise by at most `2(ε₁ + ⋯ + ε_k)`, with equality achieved on suitably\n\"stretched\" two-point setups.\n\n**The key insight is** that surprise is built from two extremal selectors, each of which\nmoves by at most the perturbation size, so their difference is controlled — and that the\nworst case is realised precisely when the two extremes are pushed apart in opposite\ndirections, which pins down the sharp constant.\n\n**Why now?** The extremal (`IsGreatest`/`IsLeast`) characterisations of the two canonical\nresolutions, together with the just-established `2ε` stability bound, are exactly the\ningredients needed to identify the extremal configurations that make the constant sharp.\n",
     "domain_bridges": [],
@@ -10218,7 +10217,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d019c88a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Qₙ` (`n ≥ 2`), the homological code\n`HQECC(Qₙ)` has minimum distance equal to the girth of `Qₙ`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n ≥ 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `β₁(Qₙ) = 2ⁿ⁻¹(n−2)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 − (V−1)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `β₀ − β₁ = V − E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k ≤ n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n − rank d₁ − rank d₂` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n − k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d₁ / im d₂`\nand the `Z`-logical space `ker d₂ᵀ / im d₁ᵀ` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
     "domain_bridges": [],
     "domains": [
@@ -10231,7 +10230,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "207fb5b4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T09:26:14.435602+00:00",
     "title": "Exact dictionary \"logical qubits = middle homology\""
   },
@@ -10414,26 +10413,6 @@
     "status": "available",
     "timestamp": "2026-07-10T17:24:11.930193+00:00",
     "title": "This cycle deepened the study of the **square of the Eulerian triangle**, whose "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e618ea1a",
-    "description": "# Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological structure of\nthe conflict-free complex `K(AF)`. Three self-contained files:\n\n* `ArgumentationCore.lean` — conflict-freeness, defense, admissibility, the\n  characteristic (defense) operator, its monotonicity, its preservation of\n  conflict-freeness, downward closure of conflict-free sets, and **Dung's\n  Fundamental Lemma**.\n* `ArgumentationExtensions.lean` — preferred and complete extensions, existence\n  of preferred extensions via **Zorn's Lemma**, the theorem **every preferred\n  extension is complete**, and the grounded extension as the least fixed point\n  of the defense operator, contained in every preferred extension.\n* `ArgumentationSimplicial.lean` — the **abstract simplicial complex** `K(AF)`,\n  the Euler characteristic, the contractibility of the full simplex\n  (`chi = 1`), and an **explicit refutation** of the conjectured identity\n  `chi(K(AF)) = |preferred| − |grounded|`.\n\n## What was established (theorems, not sketches)\n\n1. `K(AF)` is a bona fide simplicial complex: conflict-free sets are downward\n   closed. The correct carrier of the topology is the *conflict-free* family,\n   not the (non-downward-closed) family of preferred extensions.\n2. The defense operator `charF` is monotone and preserves conflict-freeness;\n   admissibility is exactly \"conflict-free and below `charF`\".\n3. Fundamental Lemma ⇒ preferred = complete; preferred extensions always exist.\n4. The grounded extension refines every preferred extension (skeptical ⊆\n   credulous).\n5. The literal Euler = semantics conjecture is false, with a one-argument\n   witness and a supporting numerical survey (`ComputationalEvidence.md`).\n\n## Promising next steps\n\n### A. A *correct* Euler/semantics bridge\nThe naive identity fails, but the survey suggests structured relationships worth\nformalizing:\n- For the **complete conflict graph** (mutual attacks everywhere), `K(AF)` is\n  `n` isolated points and `chi = n = #(preferred extensions)`. Conjecture and\n  prove: for *symmetric, irreflexive* frameworks, `chi(K(AF))` equals the number\n  of preferred extensions, and more precisely the preferred extensions are\n  exactly the maximal independent sets (the facets of `K(AF)`).\n- Relate `H_0(K(AF))` (connected components of the conflict graph) to the\n  decomposition of an AF into independent sub-debates, and prove semantics\n  distribute over connected components.\n\n### B. Homology, not just Euler characteristic\nDefine simplicial chains/boundaries over `K(AF)` and its (reduced) homology\n`H_n`. Mathlib now has enough homological algebra to define the chain complex of\nan abstract simplicial complex. Targets:\n- `H_0` counts connected components of the conflict graph.\n- Identify `H_1` generators with induced cycles in the conflict graph\n  (\"circular disagreements\"), making precise the informal \"circular arguments\n  are 1-holes\".\n- The Euler–Poincaré formula `chi = Σ (-1)^n dim H_n` as a theorem, linking the\n  combinatorial `eulerChar` here to Betti numbers.\n\n### C. Independence-complex machinery\n`K(AF)` is the independence complex of the symmetric closure of the attack\ngraph. Porting standard results (e.g. shellability/contractibility criteria,\nthe fold lemma) would give homotopy-type computations of `K(AF)` directly from\ngraph structure.\n\n### D. Further Dung semantics\n- Formalize stable and ideal semantics and their inclusions among\n  grounded ⊆ ideal ⊆ preferred.\n- Prove the grounded extension is itself conflict-free/complete in the finite\n  case by induction on the iterates of `charF` (the general transfinite case\n  needs a chain-continuity argument beyond `OrderHom.lfp_induction`).\n- Coincidence theorems: for well-founded (acyclic) frameworks, grounded =\n  preferred = stable is the unique extension.\n\n### E. Quantitative topology of real debates\nWith the homology API in place, compute `H_*` for argument graphs extracted from\ndebate corpora and study which topological invariants correlate with rhetorical\nphenomena (deadlock ↔ nontrivial `H_1`, fragmentation ↔ large `H_0`).\n",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0929",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "00abb0ac",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T18:12:01.549366+00:00",
-    "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
   },
   {
     "ambition_level": "extension",
@@ -11834,6 +11813,46 @@
     "status": "available",
     "timestamp": "2026-07-12T10:44:16.610995+00:00",
     "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Topology of Symmetric Argumentation\n\nThis cycle established the *correct* Euler/semantics bridge on the symmetric side\nof Dung's theory: in a symmetric framework every conflict-free set is admissible,\nso the preferred extensions are exactly the facets (maximal faces) of the\nconflict-free complex `K(AF)`, and for the complete conflict graph the Euler\ncharacteristic counts them exactly. The following conjectures push this bridge\ntoward its natural general form.\n\n## Conjecture 1 — Facet theorem for all symmetric irreflexive frameworks\n\n*For every symmetric, irreflexive framework, the preferred extensions are exactly\nthe maximal independent sets of the attack graph, and the Euler characteristic of\n`K(AF)` equals the alternating sum `∑_k (-1)^(k+1) f_{k}` where `f_k` is the number\nof independent sets of size `k`.*\n\nThe key insight is that symmetric self-defense removes admissibility as an\nobstruction, so the *semantic* lattice of extensions is literally the *face\nlattice* of the independence complex; the Euler characteristic then becomes a\npurely graph-theoretic invariant.\n\nWhy now? The facet identification and the complete-graph instance are already in\nhand; the remaining step is a general alternating-count over independent sets,\nfor which the finite combinatorial machinery is fully available.\n\n## Conjecture 2 — Connected-component decomposition of semantics\n\n*If the conflict graph of a symmetric framework is a disjoint union of induced\nsubgraphs `G_1, …, G_m`, then the preferred extensions are exactly the unions of\none preferred extension from each `G_i`, and `χ(K(AF)) = ∏_i χ(K(G_i))`\n(reduced), while the number of preferred extensions is `∏_i (#preferred of G_i)`.*\n\nThe key insight is that independent sets factor over connected components, so both\nthe semantics and the topology of `K(AF)` are multiplicative across the\nindependent \"sub-debates\" of the framework.\n\nWhy now? The building block — that conflict-freeness is a local, downward-closed\nproperty — is already formalized, and component decomposition of finite graphs is\nstandard, making the product formula directly attainable.\n\n## Conjecture 3 — `H_0` counts the debate fragments\n\n*The rank of the zeroth reduced homology of `K(AF)` equals one less than the\nnumber of connected components of the conflict graph; equivalently, `K(AF)` is\nconnected iff the mutual-attack graph is connected (for at least two arguments).*\n\nThe key insight is that the conflict-free complex contains every edge of the\nnon-attack (agreement) graph, so its connectivity is governed by that graph's\ncomponents, turning \"fragmentation of a debate\" into a computable topological\ninvariant.\n\nWhy now? With the complex `K(AF)` and its faces already defined, the only missing\ningredient is a chain complex in degrees 0 and 1, which the existing homological\nalgebra toolkit supplies.\n\n## Conjecture 4 — Circular disagreements are 1-cycles\n\n*An induced odd cycle in the symmetric attack graph contributes a nontrivial class\nto `H_1(K(AF))`; in particular a framework whose conflict graph is a single odd\ncycle has `K(AF)` homotopy-equivalent to a circle, so `χ = 0` and `H_1` has rank\none.*\n\nThe key insight is that a \"circular disagreement\" — a chain of mutually attacking\narguments closing on itself — is precisely a topological 1-hole, making the\ninformal slogan \"circular arguments are loops\" a precise homological statement.\n\nWhy now? The independence complex of a cycle is a classical, explicitly known\nspace, so this is the first concrete test case where a rhetorical phenomenon maps\nonto a computed nonzero Betti number.\n\n## Conjecture 5 — Grounded = isolated, sharpened to a homotopy retraction\n\n*Removing the isolated (unattacked) arguments from a symmetric framework changes\n`K(AF)` only by a join with a simplex on those vertices; consequently the grounded\nextension is a cone point set and `K(AF)` deformation-retracts onto the complex of\nthe non-isolated part.*\n\nThe key insight is that unattacked arguments are contained in every extension and\nare topological cone points, so they carry no homology and can be stripped without\nchanging the homotopy type — cleanly separating the \"forced\" part of a debate\n(grounded) from its genuinely contested core.\n\nWhy now? This cycle already proved grounded = unattacked for symmetric\nframeworks; upgrading that set-level identity to a homotopy statement is the\nnatural next rung and connects the skeptical semantics directly to the topology.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1130",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e618ea1a",
+    "status": "available",
+    "timestamp": "2026-07-12T11:18:20.184666+00:00",
+    "title": "*correct* Euler/semantics bridge on the symmetric sid"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Cyclotomic Geometry of Knotted-Light OAM Spectra\n\nThis cycle established that, for every odd prime `p`, the `T(2, p)` torus-knot\nAlexander polynomial *is* the `2p`-th cyclotomic polynomial, that its complex roots\nare **exactly** the primitive `2p`-th roots of unity (no spurious roots), that its\ndegree — the number of orbital-angular-momentum channels — is `p − 1 = φ(2p)`, that it\nis irreducible over the rationals, and that its determinant is `p` with the knot being\n`3`-colorable iff it is the trefoil. The following conjectures push past the prime case.\n\n## Conjecture 1 — The composite factorization law\n\nFor every odd `n`, the `T(2, n)` Alexander polynomial factors as\n`A_n = ∏_{d | 2n, d ∤ n} Φ_d`, so its root set is the union of primitive `d`-th roots\nof unity over exactly the divisors `d` of `2n` that are not divisors of `n`.\n\n*The key insight is* that `(X + 1)·A_n = X^n + 1 = ∏_{d | 2n, d ∤ n} Φ_d`, and dividing\nby the single factor `Φ_2 = X + 1` removes precisely the divisor `d = 2`, leaving a\nsquarefree product of cyclotomics. The prime case collapses this product to one term.\n\n*Why now?* The exact prime-case root theorem and the fundamental identity\n`(X+1)·A_n = X^n + 1` are already in hand; the composite case needs only the\ndivisor-set bookkeeping `{d : d | 2n} ∖ {d : d | n}`, which is a finite, checkable\ncombinatorial step rather than new algebra.\n\n## Conjecture 2 — The crystalline/metallic frontier\n\nA knot has all Alexander roots on the unit circle if and only if its Alexander\npolynomial is a product of cyclotomic polynomials; among alternating knots the\nsmallest violator is the figure-eight, whose roots are `φ^{±2}`.\n\n*The key insight is* that \"all roots on the unit circle\" for a monic reciprocal integer\npolynomial is equivalent, by Kronecker's theorem, to being a product of cyclotomics\n(and monomials); the figure-eight fails because `X² − 3X + 1` has discriminant `5 > 0`\nplacing its roots off the circle.\n\n*Why now?* The quadratic dichotomy `b² < 4 ⇔ roots on circle` for `X² − bX + 1` is\nalready isolated, and the torus-knot family supplies an infinite crystalline reference\nclass against which off-circle behaviour can be measured.\n\n## Conjecture 3 — Determinant equals the torsion order\n\nFor `T(2, n)` the knot determinant `|Δ(−1)| = n` equals the order of the first homology\nof the double cover of `S³` branched over the knot, and `q | det` characterizes\n`q`-colorability for every prime `q`.\n\n*The key insight is* that `A_n(−1) = Σ (−(−1))^i = Σ 1 = n`, turning the determinant\ninto a plain channel count, and that `q`-colorability is governed by the reduction of\nthe Alexander module mod `q`, i.e. by `q | Δ(−1)`.\n\n*Why now?* The identity `A_n(−1) = n` is proved, and the `3`-colorability equivalence\n`3 | det ⇔ p = 3` is a proved special case; generalizing to arbitrary prime `q` needs\nonly the divisibility criterion `q | n`.\n\n## Conjecture 4 — Reciprocity from a single symmetry\n\nEvery torus-knot Alexander polynomial satisfies the palindromic reciprocity\n`X^{deg} · A_n(1/X) = A_n(X)`, and this is the polynomial shadow of the Seifert-form\nduality `Δ(t) = det(V − tVᵀ)` with `V − Vᵀ` unimodular.\n\n*The key insight is* that the coefficient symmetry `[X^i] = [X^{n−1−i}]` (a proved fact)\nis exactly the statement that the coefficient vector is fixed by reversal, which is the\nfunctional equation after clearing denominators.\n\n*Why now?* The coefficient-level palindromicity is already proved for the whole family;\nlifting it to the functional equation `X^{deg} A(1/X) = A(X)` is a single reindexing,\nand connecting it to an abstract Seifert matrix `V` would make reciprocity uniform\nacross all knots rather than case-by-case.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1131",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0930ae42",
+    "status": "available",
+    "timestamp": "2026-07-12T11:18:29.979381+00:00",
+    "title": "That, for every odd prime `p`, the `T(2, p)` torus-knot"
   },
   {
     "ambition_level": "extension",

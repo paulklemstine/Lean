@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dfaaa130",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Mega-Sphere\n\nThis project formalizes the rigorous algebraic skeleton behind the \"mega-sphere\"\nfantasy — a single object recovering every finite stage of a tower at once — in",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-07-11T14:28:08",
-      "title": "The Mega-Sphere: All Dimensions at Once"
-    },
-    {
       "cycle_id": "e480cbbd",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThe results established here place the box-counting dimension of a natural \"truth\nset\" strictly inside the unit interval and expose i",
@@ -499,19 +489,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-12T10:44:26",
       "title": "Deepening: The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+    },
+    {
+      "cycle_id": "e618ea1a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Symmetric Argumentation\n\nThis cycle established the *correct* Euler/semantics bridge on the symmetric side\nof Dung's theory: in a symmetric framework every confli",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-12T11:18:27",
+      "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "eb8019d8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Pell-indexed symmetric designs from equidistant codes\n\nDerived from the analysis of the family\n`v = 12u²+8u+2`, `k = 6u²+u`, `λ = 3u²−u`, order `k−λ = u(3u+2)`,\nwhose admissible",
-      "quality_score": 0.49735784528301885,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-07T05:04:32",
-      "title": "Existence of Optimal Equidistant Codes for n ≡ 2 mod 4 with Unidentified Subcase Structure"
-    },
     {
       "cycle_id": "5156da6e",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-12T10:44:26",
       "title": "Deepening: The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+    },
+    {
+      "cycle_id": "e618ea1a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Symmetric Argumentation\n\nThis cycle established the *correct* Euler/semantics bridge on the symmetric side\nof Dung's theory: in a symmetric framework every confli",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-12T11:18:27",
+      "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4b281557",
-      "domain": "Probability",
-      "name": "is",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4b281557",
-      "domain": "Probability",
-      "name": "selfConsistent_iff_fixedPoint",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4b281557",
-      "domain": "Probability",
-      "name": "traverse_zero",
-      "quality": 0.82
-    },
     {
       "cycle_id": "f6622907",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "card_filter_superset",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "e618ea1a",
+      "domain": "Novelty",
+      "name": "charF_mono",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "e618ea1a",
+      "domain": "Novelty",
+      "name": "charF_empty",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "e618ea1a",
+      "domain": "Novelty",
+      "name": "defends_self_of_symmetric",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T10:44:26",
+  "last_updated": "2026-07-12T11:18:27",
   "open_questions": [
     {
       "context": "+  range `13 ≤ n ≤ 10000` and carries no `sorry`: the structural reduction is; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c67f6099",
-        "quality": 0.82,
-        "theorems": 21,
-        "title": "Speculative: Mathematics as a Phase Transition"
-      },
-      {
         "cycle_id": "2bd85c25",
         "quality": 0.72,
         "theorems": 22,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 27,
         "title": "Deepening: The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
+      },
+      {
+        "cycle_id": "e618ea1a",
+        "quality": 0.82,
+        "theorems": 29,
+        "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
       }
     ],
     "NumberTheory": [
