@@ -622,6 +622,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b35b4ce5 (Q=0.790), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any integers 2 \u2264 s < t and any n-vertex graph G, the t-clique density of G is bounded below by the composition of the Lov\u00e1sz-Simonovits t-clique density function evaluated at the generalized inverse of the s-clique density function applied to the s-clique density of G. Specifically, k_t(G) / n^t",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_b35b4ce5_c4a76537",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "b35b4ce5",
+    "status": "available",
+    "timestamp": "2026-07-12T15:03:08.446949+00:00",
+    "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domains": [
       "Novelty",
@@ -1203,6 +1217,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T13:00:55.354878+00:00",
     "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle b35b4ce5 (Q=0.790) proved 9 theorems in Applications but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For any integers 2 \u2264 s < t and any n-vertex graph G, the t-clique density of G is bounded below by the composition of the Lov\u00e1sz-Simonovits t-clique density function evaluated at the generalized inver",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_b35b4ce5_a303b36d",
+    "priority_score": 0.8400000000000001,
+    "research_mode": "team",
+    "source_exp_id": "b35b4ce5",
+    "status": "available",
+    "timestamp": "2026-07-12T15:03:08.532920+00:00",
+    "title": "Close Proofs: Asymptotic Clique-to-Clique Density Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -3617,20 +3645,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T10:02:54.029274+00:00",
     "title": "Springer Isomorphism Characterization via Centralizer Smoothness"
-  },
-  {
-    "consumed_by_exp_id": "b35b4ce5",
-    "description": "For any integers 2 \u2264 s < t and any n-vertex graph G, the t-clique density of G is bounded below by the composition of the Lov\u00e1sz-Simonovits t-clique density function evaluated at the generalized inverse of the s-clique density function applied to the s-clique density of G. Specifically, k_t(G) / n^t \u2265 F_t(F_s^{-1}(k_s(G) / n^s)). This encompasses Reiher's clique density theorem as a special case when s=2.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0445",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31967v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T10:47:05.613055+00:00",
-    "title": "Asymptotic Clique-to-Clique Density Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -7216,6 +7230,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T15:02:42.971449+00:00",
     "title": "General divisor factorization of the `T(2,n)` Alexand"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Clique Densities\n\nThis cycle established the unconditional *upper* comparison of clique counts,\n`C(t,s)\u00b7k_t(G) \u2264 C(n-s,t-s)\u00b7k_s(G)`, its tightness on the complete graph, and the\nresulting antitonicity of the normalized clique density `k_r(G)/C(n,r)`. These\nfindings sharpen the picture of how clique counts of different orders constrain one\nanother and motivate the following bold, testable conjectures.\n\n## 1. The sharp clique-to-clique lower bound\n\nFor all integers `2 \u2264 s < t` and every `n`-vertex graph `G`,\n`k_t(G)/n^t \u2265 F_t(F_s^{-1}(k_s(G)/n^s))`,\nwhere `F_r` is the Lov\u00e1sz\u2013Simonovits function tracing the minimum `r`-clique density\nalong the sequence of balanced complete multipartite graphs, and `F_s^{-1}` is its\ngeneralized inverse. The case `s = 2` is Reiher's clique density theorem.\n\n**The key insight is** that while the *upper* comparison is governed by the complete\ngraph (a single clique), the matching *lower* bound is governed by complete\nmultipartite graphs, so the extremal transition from `s`-cliques to `t`-cliques is\ncaptured exactly by composing the two piecewise-linear/convex density profiles.\n\n**Why now?** The unconditional upper bound and its tightness certificate isolate the\ncomplete graph as the only equality case, cleanly separating the two extremal\nregimes; this separation is precisely the structural hypothesis needed to attack the\nlower bound by an averaging-and-symmetrization argument over multipartite parts.\n\n## 2. Stability of the antitone density profile\n\nIf `k_t(G)/C(n,t)` is within `\u03b5` of `k_s(G)/C(n,s)` for some `s < t`, then `G` is\n`o(1)`-close (in edit distance per vertex pair) to a disjoint union of cliques.\n\n**The key insight is** that equality in the normalized-density antitonicity forces\nevery `s`-clique to extend to the full number `C(n-s,t-s)` of `t`-cliques, which can\nonly happen if the neighborhoods align into complete blocks.\n\n**Why now?** The exact equality analysis of the count bound already pins down the\ncomplete graph; a robust, quantitative version is the natural next step and would\ngive a clique-decomposition analogue of the triangle-removal phenomenon.\n\n## 3. Weighted and fractional clique densities\n\nThe antitonicity `k_t/C(n,t) \u2264 k_s/C(n,s)` extends to weighted graphons: for a\nsymmetric measurable `W : [0,1]^2 \u2192 [0,1]`, the homomorphism densities `t(K_r, W)`\nsatisfy a corresponding monotone relation after normalization by the clique moments.\n\n**The key insight is** that the finite double-counting incidence identity has a\ncontinuous avatar as a Fubini exchange between the `s`-fold and `t`-fold clique\nintegrals of `W`, so the discrete inequality survives the limit.\n\n**Why now?** Graphon limits make the `n \u2192 \u221e` behavior of the density profile a\nfirst-class object, and the exact finite identity proved here transfers verbatim,\nproviding an immediately checkable continuous conjecture.\n\n## 4. Beyond cliques: monotone density profiles for general subgraphs\n\nFor a fixed graph `H` and its `r`-vertex \"blow-up truncations\" `H_r`, the normalized\nsubgraph-count profile `hom(H_r, G)/hom(H_r, K_n)` is antitone in `r` whenever the\n`H_r` form a subset-closed tower.\n\n**The key insight is** that the only property of cliques used in the count bound is\nthat a sub-object of a clique is again a clique; any subset-closed family of dense\npatterns inherits the same incidence double count.\n\n**Why now?** Subset-closedness is exactly the combinatorial hypothesis that the\npresent proof isolates, so generalizing away from cliques is a matter of identifying\nthe right closed towers rather than inventing new machinery.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1142",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b35b4ce5",
+    "status": "available",
+    "timestamp": "2026-07-12T15:02:53.060049+00:00",
+    "title": "Unconditional *upper* comparison of clique counts,"
   },
   {
     "consumed_by_exp_id": "",

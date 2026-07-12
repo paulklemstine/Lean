@@ -841,6 +841,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b35b4ce5 (Q=0.790), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any integers 2 ≤ s < t and any n-vertex graph G, the t-clique density of G is bounded below by the composition of the Lovász-Simonovits t-clique density function evaluated at the generalized inverse of the s-clique density function applied to the s-clique density of G. Specifically, k_t(G) / n^t",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_b35b4ce5_c4a76537",
+    "lineage_refs": [],
+    "priority_score": 0.89,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b35b4ce5",
+    "status": "available",
+    "timestamp": "2026-07-12T15:03:08.446949+00:00",
+    "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious — it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
     "domain_bridges": [],
     "domains": [
@@ -1625,6 +1644,25 @@
     "status": "available",
     "timestamp": "2026-07-12T13:00:55.354878+00:00",
     "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle b35b4ce5 (Q=0.790) proved 9 theorems in Applications but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For any integers 2 ≤ s < t and any n-vertex graph G, the t-clique density of G is bounded below by the composition of the Lovász-Simonovits t-clique density function evaluated at the generalized inver",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_b35b4ce5_a303b36d",
+    "lineage_refs": [],
+    "priority_score": 0.8400000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b35b4ce5",
+    "status": "available",
+    "timestamp": "2026-07-12T15:03:08.532920+00:00",
+    "title": "Close Proofs: Asymptotic Clique-to-Clique Density Bound"
   },
   {
     "ambition_level": "extension",
@@ -12036,6 +12074,26 @@
     "status": "available",
     "timestamp": "2026-07-12T15:02:53.060049+00:00",
     "title": "Unconditional *upper* comparison of clique counts,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Summary of what was proved / disproved\n\nFile: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`,\naxioms: `propext`, `Classical.choice`, `Quot.sound` only).\n\nWe work with the combinatorial shadow of the Jung–Tix characterization: a finite\nposet `P` is **RB-shaped** when it has a least element and its undirected Hasse\ngraph is a tree (`RBShape P := HasLeast P ∧ (hasseGraph P).IsTree`). The\ngenuinely domain-theoretic notions (probabilistic valuations, probabilistic\npowerdomain, RB = retract-of-bifinite) are outside Mathlib; `RBShape` is exactly\nthe two-conjunct condition the characterization attributes to such posets.\n\n**Reusable core (proved).**\n- `diamond_not_isAcyclic`: any poset containing a covering diamond\n  `a ⋖ b, a ⋖ c, b ⋖ d, c ⋖ d` with `b ≠ c` has a **non-acyclic** Hasse graph.\n  Proof: the two length-2 paths `a–b–d` and `a–c–d` are distinct paths with equal\n  endpoints, contradicting acyclicity's unique-path criterion.\n- Corollaries `diamond_not_isTree`, `diamond_not_rbShape`.\n\n**Conjecture A — refuted.** *\"A finite poset with a least element is RB-shaped.\"*\n- `least_not_sufficient_for_rbShape`: the diamond `Bool × Bool` (the `2×2`\n  Boolean lattice) has least element `(false,false)` but is **not** RB-shaped,\n  because its Hasse graph carries the covering diamond above (a 4-cycle). This is\n  the classical **Jung–Tix diamond obstruction** in combinatorial form: a least\n  element alone does not deliver the tree structure.\n\n**Conjecture B — refuted.** *\"A finite poset whose Hasse graph is acyclic (a\nforest) has a least element.\"*\n- `forest_not_sufficient_for_hasLeast`: the two-element antichain `Anti2` has an\n  edgeless (hence acyclic) Hasse graph but **no** least element.\n\n**Conjecture B — sharpened to a genuine tree (proved).** *\"Even a Hasse graph\nthat is a genuine tree (connected and acyclic), not merely a forest, has a least\nelement.\"* Also refuted.\n- `tree_not_sufficient_for_hasLeast`: the three-element **\"V\" poset** `V3`\n  (`a, b` incomparable minimal, both covered by a top `c`) has Hasse graph the\n  path `a – c – b`, which is a genuine tree (`v3_hasseGraph_isTree`:\n  `SimpleGraph.IsTree`, i.e. connected *and* acyclic), yet `V3` has no least\n  element (`v3_not_hasLeast`). This strengthens\n  `forest_not_sufficient_for_hasLeast` from \"forest\" to \"tree\", closing the\n  former open direction #1.\n\n**Positive sanity check (proved).**\n- `bool_rbShape`: the two-element chain `Bool` **is** RB-shaped, so `RBShape` is\n  not vacuous and both conjuncts are simultaneously realizable.\n\nNet contrarian message: neither conjunct of the RB-shape condition implies the\nother, and neither alone implies RB-shape — the diamond and the antichain are\nthe minimal witnesses for the two independent failures.\n\n## Open directions\n\n1. **Connected tree without a least element — DONE.** The \"V\"/Λ poset (`a, b < c`,\n   with `a, b` incomparable) has a Hasse graph that is a *genuine tree*\n   (connected, 2 edges on 3 vertices) yet has no least element. This is now\n   formalized as `tree_not_sufficient_for_hasLeast` / `v3_hasseGraph_isTree`.\n   Rather than the Euler edge-count route (blocked because\n   `SimpleGraph.edgeFinset` is non-computable), acyclicity is discharged\n   structurally via `SimpleGraph.isAcyclic_iff_forall_adj_isBridge` together with\n   `SimpleGraph.isBridge_iff` and `decide` on the finite adjacency, and\n   connectivity via `SimpleGraph.connected_iff_exists_forall_reachable`.\n\n2. **General chains.** Prove that *every* nonempty finite linear order is\n   RB-shaped (connectivity follows from the least element; acyclicity needs the\n   monotone-path uniqueness argument). Only the 2-chain is formalized here.\n\n3. **Tree ⇔ diamond-free (finite posets).** Conjecture: for a finite poset with\n   a least element, the Hasse graph is a tree **iff** the poset is\n   *diamond-free* (no covering diamond `a ⋖ b, a ⋖ c, b ⋖ d, c ⋖ d`, `b ≠ c`).\n   The \"not diamond-free ⇒ not tree\" direction is exactly `diamond_not_isTree`;\n   the converse (a shortest Hasse cycle in a poset with `⊥` forces a diamond)\n   is the interesting open half.\n\n4. **A lattice with tree Hasse graph is a chain.** Conjecture: a finite lattice\n   whose Hasse graph is a tree must be totally ordered. Two incomparable\n   elements would produce a diamond via their meet/join, closing a cycle.\n\n5. **Bridging to the actual powerdomain.** The above are combinatorial shadows.\n   A genuine formalization of the Jung–Tix result requires developing\n   probabilistic valuations, the probabilistic powerdomain, and RB-domains in\n   Lean — substantial infrastructure not yet present in Mathlib.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1143",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3dfad72d",
+    "status": "available",
+    "timestamp": "2026-07-12T15:03:11.200266+00:00",
+    "title": "File: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`"
   },
   {
     "ambition_level": "extension",
