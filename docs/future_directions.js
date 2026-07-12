@@ -143,20 +143,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
-    "consumed_by_exp_id": "4d87b490",
-    "description": "Building on cycle eb025541 (Q=0.830), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` \u2014 the positive theory:\n\n* **`erasedBits`** \u2014 information erased by a proof step `f : \u03b1 \u2192 \u03b2`, as the entropy drop\n  `log\u2082(card \u03b1) \u2212 log\u2082|image f|`, wit",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_eb025541_904a3964",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "eb025541",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T21:41:30.513742+00:00",
-    "title": "Deepening: `ThermodynamicsOfProof.lean` \u2014 the positive theory:"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domains": [
@@ -211,20 +197,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T14:11:15.793499+00:00",
     "title": "Deepening: Reflective Type Theory: Proving Things About Proving Things"
-  },
-  {
-    "consumed_by_exp_id": "00319e93",
-    "description": "Building on cycle 0c4e7ae8 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis cycle deepens the probabilistic-method development (Erd\u0151s Ramsey lower bound, first-moment\nprinciple, and the Lov\u00e1sz Local Lemma chain rule) by formalising a *second* pillar of the\nprobabilistic method: **Property B**, the two-colourability of sparse hypergraphs\n(`m(k) \u2265 2^",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_0c4e7ae8_a15d8e6c",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "0c4e7ae8",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T21:59:33.338083+00:00",
-    "title": "Deepening: This cycle deepens the probabilistic-method development (Erd\u0151s Ramsey lower boun"
   },
   {
     "consumed_by_exp_id": "",
@@ -7473,6 +7445,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T23:12:37.266150+00:00",
     "title": "This cycle (Builder mode) established a single connected chain of results around"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Kernel Law for the Thermodynamics of Proof\n\nThe kernel law established in this cycle says that a structure-preserving reasoning step\n`f : G \u2192 H` dissipates exactly `log\u2082|ker f|` bits: the irreversibility of an inference is\nliterally the logarithm of the group of differences it renders invisible downstream. From this\nexact algebraic reading of Landauer's principle several bold, testable conjectures follow.\n\n## 1. The length law: dissipation equals a composition-series word length\n\n**Conjecture.** For a finite solvable group, the minimal total dissipation of any pipeline of\nhomomorphic steps that collapses `G` to the trivial group equals `log\u2082|G|`, and this bound is\nrealized *step-by-step* by a composition series: each factor `G_i / G_{i+1}` contributes exactly\n`log\u2082|G_i / G_{i+1}|` bits, and the contributions sum to `log\u2082|G|` regardless of the series\nchosen.\n\nThe key insight is that the kernel law turns the Jordan\u2013H\u00f6lder theorem into a conservation law:\nbecause the logarithms of the composition factors are basis-independent, the dissipated heat of\nfully reducing a structure is an invariant of the structure, not of the route taken to reduce it.\nWhy now? The exact additivity along surjective pipelines proved in this cycle is precisely the\ntelescoping mechanism a composition series needs; the remaining step is to show no shorter route\nundercuts the series bound.\n\n## 2. The spectral gap of erasure: kernels of powers of an endomorphism\n\n**Conjecture.** For an endomorphism `f : G \u2192 G` of a finite group, the sequence\n`log\u2082|ker f\u207f|` is nondecreasing, concave, and eventually constant, with the eventual value equal\nto `log\u2082` of the size of the \"eventual kernel\" (the stable part under iteration); the first index\nat which it stabilizes is the nilpotency length of `f` on the collapsing part.\n\nThe key insight is that iterating a reasoning step cannot erase information already erased, so the\nper-iteration marginal dissipation `log\u2082|ker f\u207f\u207a\u00b9| \u2212 log\u2082|ker f\u207f|` is a nonincreasing, summable\n\"spectrum\" of the endomorphism. Why now? The data-processing monotonicity of the base theory plus\nthe kernel law give the monotonicity of the sequence for free; concavity is the natural next\ntarget and would characterize how quickly repeated reasoning saturates.\n\n## 3. Short exact sequences balance the ledger\n\n**Conjecture.** For every short exact sequence `1 \u2192 N \u2192 G \u2192 Q \u2192 1` of finite groups, the\ndissipation of the surjection `G \u2192 Q` plus the capacity created by the injection `N \u2192 G` equals\n`log\u2082|G|`; more strongly, the erasure/creation ledger is *exactly closed* around any short exact\nsequence, with no slack.\n\nThe key insight is that quotient cost (`log\u2082|N|`) and Bennett-style ancilla creation are two\nreadings of the same subgroup, so a short exact sequence is a closed thermodynamic cycle rather\nthan a lossy one. Why now? This cycle proved both halves in isolation \u2014 quotient cost and the\ncreation ledger \u2014 so the conjecture is the assertion that they compose without loss, a directly\ncheckable identity on the full lattice of finite groups.\n\n## 4. Non-abelian sub-additivity is strict exactly at non-normal overlaps\n\n**Conjecture.** For composable homomorphic steps `f`, `g`, the additivity defect\n`log\u2082|ker f| + log\u2082|ker g| \u2212 log\u2082|ker(g\u2218f)|` is zero iff `f` is surjective onto the subgroup that\n`g` sees, and its size measures the failure of the relevant subgroups to be complementary.\n\nThe key insight is that the surjective additivity theorem is the boundary case of a general\ninclusion\u2013exclusion for kernels, so the \"wasted\" dissipation in a non-exact pipeline is a\nmeasurable geometric quantity, not mere inefficiency. Why now? Having pinned down the exact\n(surjective) case, the defect term is now well-defined and isolated, ready to be computed on\nexplicit non-exact pipelines.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1169",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4d87b490",
+    "status": "available",
+    "timestamp": "2026-07-12T23:30:57.379974+00:00",
+    "title": "The kernel law established in this cycle says that a structure-preserving reason"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle adds a **second pillar of the probabilistic method** to the Novelty catalog,\nalongside the Erd\u0151s counting lower bound for diagonal Ramsey numbers\n(`Novelty.RamseyProbabilisticLowerBound`): **Property B**, the two-colourability of sparse\nhypergraphs, with the classical Erd\u0151s bound `m(k) \u2265 2^{k-1}`.\n\n## What was proved (`Novelty/PropertyBSparseHypergraph.lean`)\n\nA `k`-uniform hypergraph on a finite vertex type `V` is a family `H : Finset (Finset V)` of\n`k`-element edges. A colouring is a red vertex set `R : Finset V`; an edge is *monochromatic*\niff it is all-red (`e \u2286 R`) or all-blue (`Disjoint e R`); the colouring is *proper* iff no\nedge is monochromatic (`IsProperColoring`); `H` is *two-colourable* (`TwoColorable`) iff a\nproper colouring exists.\n\nThe results form a chain, each building on the previous:\n\n1. `card_filter_superset`, `card_filter_disjoint` \u2014 Boolean-lattice interval counts\n   `#{R : S \u2286 R} = #{R : Disjoint S R} = 2^{|Gr|-|S|}` (shared with the Ramsey development).\n2. `card_monochromatic_le` \u2014 for one edge, at most `2\u00b72^{N-k}` colourings make it monochromatic.\n3. `twoColorable_of_card_lt` \u2014 **Property B**: `|H| < 2^{k-1}` \u21d2 `H` is two-colourable\n   (union bound over the edges beats the total colouring count).\n4. `card_ge_of_not_twoColorable` \u2014 the contrapositive `m(k) \u2265 2^{k-1}`.\n5. `twoColorable_single_edge`, `twoColorable_of_three_uniform_card_lt_four` \u2014 concrete\n   witnesses (a size-`\u22652` edge is 2-colourable; every 3-uniform hypergraph with `\u2264 3` edges\n   is 2-colourable, i.e. `m(3) \u2265 4`).\n\nAll theorems compile with only the standard axioms `propext, Classical.choice, Quot.sound`,\nand the file is self-contained (`import Mathlib` only).\n\n## Natural next steps\n\n* **Sharpen the bound.** Prove the Radhakrishnan\u2013Srinivasan improvement\n  `m(k) = \u03a9(2^k \u221a(k/ln k))` via the random recolouring argument, or the easier\n  `m(k) \u2265 2^{k-1}\u00b7(something)` via alteration (delete a vertex from each bad edge).\n* **Non-uniform Property B.** Generalise `twoColorable_of_card_lt` to hypergraphs where\n  edges may have different sizes, with the weighted condition `\u2211_{e\u2208H} 2^{1-|e|} < 1`.\n* **Lov\u00e1sz Local Lemma route.** Combine with the existing LLL chain rule to get\n  Property B under a *degree* condition (each edge meets few others) rather than a global\n  edge-count condition \u2014 the symmetric LLL gives 2-colourability when each edge intersects\n  at most `2^{k-3}` others.\n* **Upper bounds / constructions.** Formalise the Fano plane as the extremal\n  non-two-colourable 3-uniform hypergraph (`m(3) = 7`), matching the lower bound direction.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1170",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "00319e93",
+    "status": "available",
+    "timestamp": "2026-07-12T23:31:38.667709+00:00",
+    "title": "This cycle adds a **second pillar of the probabilistic method** to the Novelty c"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "71e324bf",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThis project formalises, self-contained on top of Mathlib, a small theory of total\ncolourings and adjacent-vertex-distinguishing (AVD) total colourings, and applies\nit to central",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 855,
-      "timestamp": "2026-07-12T07:36:38",
-      "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
-    },
-    {
       "cycle_id": "b88b4225",
       "domain": "Applications",
       "key_insight": "# Future Directions — quantum binomial characters and plethystic filtrations\n\nThis cycle established the character-level backbone of the conjectured\nfield-independent filtration of `Δ^{(n,m)} Sym^d E`",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-12T23:31:30",
       "title": "Deepening: `ThermodynamicsOfProof.lean` — the positive theory:"
+    },
+    {
+      "cycle_id": "00319e93",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle adds a **second pillar of the probabilistic method** to the Novelty catalog,\nalongside the Erdős counting lower bound for diagonal Ramsey numbers\n(`Novelty.RamseyProbab",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T23:31:48",
+      "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dd8b10c1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: the arithmetic backbone of decorated-surface moduli\n\nThis cycle isolated the exact integer identity behind the dimension of the moduli of genus-`g`\nsurfaces with `n` marked featur",
-      "quality_score": 0.72,
-      "sorry_count": 6,
-      "theorem_count": 54,
-      "timestamp": "2026-07-10T05:18:18",
-      "title": "The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
-    },
     {
       "cycle_id": "4d30d98b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-12T23:31:30",
       "title": "Deepening: `ThermodynamicsOfProof.lean` — the positive theory:"
+    },
+    {
+      "cycle_id": "00319e93",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle adds a **second pillar of the probabilistic method** to the Novelty catalog,\nalongside the Erdős counting lower bound for diagonal Ramsey numbers\n(`Novelty.RamseyProbab",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T23:31:48",
+      "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3cdfbb0e",
-      "domain": "Novelty",
-      "name": "kernelMap_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3cdfbb0e",
-      "domain": "Novelty",
-      "name": "self_mem_kKernel",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c81fdc47",
-      "domain": "Applications",
-      "name": "about",
-      "quality": 0.82
-    },
     {
       "cycle_id": "ddbb821f",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "erasedBits_monoidHom",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "00319e93",
+      "domain": "Novelty",
+      "name": "of",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "00319e93",
+      "domain": "Novelty",
+      "name": "card_filter_superset",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "00319e93",
+      "domain": "Novelty",
+      "name": "card_filter_disjoint",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T23:31:30",
+  "last_updated": "2026-07-12T23:31:48",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "867d1ba2",
-        "quality": 0.83,
-        "theorems": 19,
-        "title": "Deepening: This cycle deepens the formalization of Dung's abstract argumentation"
-      },
-      {
         "cycle_id": "0fe20e26",
         "quality": 0.82,
         "theorems": 17,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 26,
         "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path s"
+      },
+      {
+        "cycle_id": "00319e93",
+        "quality": 0.82,
+        "theorems": 9,
+        "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey"
       }
     ],
     "NumberTheory": [
