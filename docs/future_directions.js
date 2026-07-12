@@ -553,6 +553,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 319bd9f6 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. E",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_319bd9f6_03c48825",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "319bd9f6",
+    "status": "available",
+    "timestamp": "2026-07-12T00:29:28.233896+00:00",
+    "title": "Deepening: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 6e208619 (Q=0.780), which proved 27 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minimum sizes of r consecutive pieces, and define \\mu_r(a) = limsup_{n\\to\\infty} \\mu^r_n(a). For any fixe",
     "domains": [
       "Applications"
@@ -1134,6 +1148,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 319bd9f6 (Q=0.780) proved 13 theorems in Shared but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the funda",
+    "domains": [
+      "Shared"
+    ],
+    "id": "sorry_fill_319bd9f6_c95d702f",
+    "priority_score": 0.8300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "319bd9f6",
+    "status": "available",
+    "timestamp": "2026-07-12T00:29:28.312612+00:00",
+    "title": "Close Proofs: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 6e208619 (Q=0.780) proved 27 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minim",
     "domains": [
       "Applications"
@@ -1276,21 +1304,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T17:13:54.266169+00:00",
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-  },
-  {
-    "consumed_by_exp_id": "319bd9f6",
-    "description": "Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. Explore: what is the minimal volume complete hyperbolic 3-manifold? Conjecture: the Weeks manifold (volume ~0.94) is minimal. Connect to Rucker's vision of donut-shaped spacetime.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_1071",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T21:23:45.507233+00:00",
-    "title": "Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
   {
     "consumed_by_exp_id": "",
@@ -6614,6 +6627,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T23:55:41.687288+00:00",
     "title": "The file `LifeboxInformationIdentity.lean` formalizes and proves five claims aro"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Topology of a Donut-Shaped Universe\n\nThese conjectures are distilled from the flat-torus study of closed geodesics\nand the wrapping lattice. Each is bold, falsifiable, and phrased to be tested\neither by further structural proof or by explicit computation.\n\n## 1. Systolic wrapping spectrum of the flat torus\n\n**Conjecture.** For the flat torus `\u211d\u00b3 / L` defined by a lattice `L`, the set of\nlengths of primitive closed geodesics is exactly the set of norms of primitive\nvectors of `L`, and the shortest such length (the systole) equals the minimal\nnorm of a nonzero lattice vector. Consequently the \"wrapping spectrum\" is a\ncomplete isometry invariant up to finitely many exceptions.\n\n*The key insight is* that closed geodesics are indexed by conjugacy classes of\nthe fundamental group `L`, which is abelian, so each class is a single lattice\nvector and its length is that vector's norm \u2014 turning a dynamical question into a\nlattice-counting one.\n\n*Why now?* The covering-translation lattice and the geodesic-to-direction\ndictionary are now pinned down precisely (`ker_proj_eq_range`, `geo_class`), so\nthe length spectrum can be attacked by importing existing lattice-geometry\nmachinery rather than by hand.\n\n## 2. Three-family rigidity of `\u03c0\u2081`\n\n**Conjecture.** Any closed flat 3-manifold whose fundamental group is generated\nby exactly three independent commuting families of loops is finitely covered by\nthe 3-torus, and the number of independent families is a homeomorphism\ninvariant equal to the first Betti number.\n\n*The key insight is* that the three independent generators produced by\n`standard_basis_indep` are not an artifact of coordinates but the rank of the\nfree abelian covering group, which is a topological invariant.\n\n*Why now?* With `\u03c0\u2081(\ud835\udd4b\u00b3) \u2245 \u2124\u00b3` established at the covering-translation level, the\nrank-counts-families principle can be stated cleanly and compared against the\nBieberbach classification of flat manifolds.\n\n## 3. Closed timelike curves from a temporal wrapping factor\n\n**Conjecture.** Endowing the donut universe with a product Lorentzian structure\nthat adds one more circular factor `\u211d/\u03c4\u2124` in the time direction forces the\nexistence of closed timelike geodesics whose homotopy classes are exactly the\ntimelike vectors of the extended lattice `\u2124\u00b3 \u00d7 \u2124`.\n\n*The key insight is* that the same integer-direction-closes-up mechanism proved\nhere for spatial loops applies verbatim to a compactified time coordinate, so\ncausal pathology is a purely lattice-theoretic phenomenon.\n\n*Why now?* The spatial case is fully formalized; extending the projection and\nperiod arguments to a fourth compact coordinate is a direct structural\ngeneralization rather than new theory.\n\n## 4. Minimality of the Weeks manifold\n\n**Conjecture.** Among all closed orientable hyperbolic 3-manifolds, the Weeks\nmanifold uniquely attains the minimal volume `\u2248 0.9427073627769277`, and no\nclosed orientable hyperbolic 3-manifold has volume below `0.94`.\n\n*The key insight is* that a rigorous lower bound on volume follows from packing\nestimates around the shortest geodesic (a Margulis-tube volume bound), reducing\na global minimization to a local tube-geometry inequality.\n\n*Why now?* Interval-arithmetic tube-volume bounds are exactly the kind of finite\nnumeric certificate that can be checked rigorously, making a once-heroic result\napproachable as a controlled computation.\n\n## 5. Density dichotomy for geodesic wrapping\n\n**Conjecture.** On the flat torus a geodesic in direction `v` is closed iff `v`\nis proportional to an integer vector, and otherwise its image is equidistributed\n(dense with uniform time averages). There is no intermediate behavior.\n\n*The key insight is* that the rational/irrational dichotomy of the direction is\ninherited coordinatewise from the circle, so the global orbit is either a finite\nloop or an equidistributing line with nothing in between.\n\n*Why now?* The closed case is proved (`geo_periodic`, `geo_nontrivial`); the\nopen half is a clean application of Weyl equidistribution already present in the\nstandard analytic toolkit.\n",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_1091",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "319bd9f6",
+    "status": "available",
+    "timestamp": "2026-07-12T00:29:22.068223+00:00",
+    "title": "These conjectures are distilled from the flat-torus study of closed geodesics"
   },
   {
     "consumed_by_exp_id": "",

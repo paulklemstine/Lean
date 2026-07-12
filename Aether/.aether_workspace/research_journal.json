@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "46d2d021",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Self-Modifying Halting ⟷ Lawvere/Cantor Bridge\n\nThis cycle contributes `Catalog/Computation/SelfModifyingLawvereBridge.lean`, a\nself-contained cross-domain bridge connecting **fi",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-11T06:06:45",
-      "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
-    },
-    {
       "cycle_id": "6e208619",
       "domain": "Applications",
       "key_insight": "# Future Directions — Balancing ratios of circular partitions\n\nThis cycle established two structural pillars for the balancing ratio sequence of\na cyclic partition: windowing never worsens balance (`μ",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-11T23:55:51",
       "title": "Rucker: The Lifebox — Information-Theoretic Identity"
+    },
+    {
+      "cycle_id": "319bd9f6",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Topology of a Donut-Shaped Universe\n\nThese conjectures are distilled from the flat-torus study of closed geodesics\nand the wrapping lattice. Each is bold, falsifiable, and phrased",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 13,
+      "timestamp": "2026-07-12T00:29:28",
+      "title": "Rucker: Spacetime Donuts — Topology of the Universe"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "244691c2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nDerived from the study of the stabilizer of a regular unipotent conjugacy class\nunder the center of the simply connected cover, modeled on `SL₂ → PGL₂` and its\ncharacteristic-`p`",
-      "quality_score": 0.8009580000000001,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-04T15:14:21",
-      "title": "Scheme-theoretic stabilizer of regular unipotent conjugacy classes under the center of the simply co"
-    },
     {
       "cycle_id": "242f16a7",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-11T23:55:51",
       "title": "Rucker: The Lifebox — Information-Theoretic Identity"
+    },
+    {
+      "cycle_id": "319bd9f6",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Topology of a Donut-Shaped Universe\n\nThese conjectures are distilled from the flat-torus study of closed geodesics\nand the wrapping lattice. Each is bold, falsifiable, and phrased",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 13,
+      "timestamp": "2026-07-12T00:29:28",
+      "title": "Rucker: Spacetime Donuts — Topology of the Universe"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f8dd2b6a",
-      "domain": "Applications",
-      "name": "hom_ext",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "2bd85c25",
-      "domain": "Novelty",
-      "name": "S_closed_form",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "2bd85c25",
-      "domain": "Novelty",
-      "name": "pow_le_S",
-      "quality": 0.72
-    },
     {
       "cycle_id": "2bd85c25",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Bridges",
       "name": "PersonEquiv",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "319bd9f6",
+      "domain": "Shared",
+      "name": "primPart_check",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "319bd9f6",
+      "domain": "Shared",
+      "name": "fib_carmichael_composite",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "319bd9f6",
+      "domain": "Shared",
+      "name": "asserts",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-11T23:55:51",
+  "last_updated": "2026-07-12T00:29:28",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "cd868ba0",
-      "domain": "Logic",
-      "sorry_count": 4,
-      "timestamp": "2026-07-10T20:20:14"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "f0772bca",
@@ -3016,6 +3009,13 @@
       "domain": "Cryptography",
       "sorry_count": 3,
       "timestamp": "2026-07-11T23:38:59"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "319bd9f6",
+      "domain": "Shared",
+      "sorry_count": 4,
+      "timestamp": "2026-07-12T00:29:28"
     }
   ],
   "research_threads": {
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "44e772b7",
-        "quality": 0.69522,
-        "theorems": 12,
-        "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and "
-      },
-      {
         "cycle_id": "e8c93c85",
         "quality": 0.6236999999999999,
         "theorems": 15,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 11,
         "title": "Deepening: Speculative: Mathematics as a Phase Transition"
+      },
+      {
+        "cycle_id": "319bd9f6",
+        "quality": 0.78,
+        "theorems": 13,
+        "title": "Rucker: Spacetime Donuts — Topology of the Universe"
       }
     ],
     "Tropical": [
