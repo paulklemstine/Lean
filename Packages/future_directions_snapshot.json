@@ -1759,7 +1759,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0664586a",
     "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
     "domain_bridges": [],
     "domains": [
@@ -1772,7 +1772,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:12:11.403450+00:00",
     "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
   },

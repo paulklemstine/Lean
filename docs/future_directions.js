@@ -1116,7 +1116,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb4de3e5",
     "description": "Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some metric). Show: the 'copycat' analogy (Hofstadter's model) is a special case where A = B = the concept lattice. Conjecture: every creative mathematical insight can be decomposed into a sequence of analogy operations. Explore: can we formalize 'making a good analogy' as an optimization problem?",
     "domains": [
       "Novelty",
@@ -1126,7 +1126,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T23:04:45.695664+00:00",
     "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
   },
@@ -1305,7 +1305,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0664586a",
     "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
     "domains": [
       "Novelty",
@@ -1315,7 +1315,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:12:11.403450+00:00",
     "title": "Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
