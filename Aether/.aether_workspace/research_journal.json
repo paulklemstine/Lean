@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2cd42066",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Repulsion, Sparsity, and Exceptional Zeros\n\nThese conjectures are distilled from the present cycle, whose central finding is that\nthe \"at most one exceptional character\" phenomeno",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-12T06:11:40",
-      "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
-    },
-    {
       "cycle_id": "e2c082ff",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: clique densities from the inclusion–exclusion inverse\n\nThis cycle isolated a single local inequality — the *inclusion–exclusion inverse*\n`deg(u) + deg(v) ≤ n + codeg(u,v)` — and s",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-12T23:12:33",
       "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
+    },
+    {
+      "cycle_id": "26646791",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle (Builder mode) established a single connected chain of results around the\nFuss–Catalan numbers `fc m n = C((m+1)·n, n)/(m·n+1)` and their `m = 1` (Catalan)\nspecializati",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 26,
+      "timestamp": "2026-07-12T23:12:48",
+      "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path struc"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "298c68ef",
-      "domain": "Applications",
-      "key_insight": "# Gödel's Casino — Results and Future Directions\n\n## What was proved (`Catalog/Logic/GodelCasino.lean`)\n\nWe formalize a self-contained betting game (\"Gödel's Casino\") over a finite space of\nmodels `Ω`",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-07-10T04:25:48",
-      "title": "Godel's Casino: Incomplete but Winnable Games"
-    },
     {
       "cycle_id": "73d4b43b",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-12T23:12:33",
       "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
+    },
+    {
+      "cycle_id": "26646791",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle (Builder mode) established a single connected chain of results around the\nFuss–Catalan numbers `fc m n = C((m+1)·n, n)/(m·n+1)` and their `m = 1` (Catalan)\nspecializati",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 26,
+      "timestamp": "2026-07-12T23:12:48",
+      "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path struc"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "919ceb1f",
-      "domain": "Novelty",
-      "name": "card_fiber",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "919ceb1f",
-      "domain": "Novelty",
-      "name": "card_strictMinAt",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "494cab2e",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.82
-    },
     {
       "cycle_id": "494cab2e",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "sigma3_hecke_prime_pow",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "26646791",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "26646791",
+      "domain": "Novelty",
+      "name": "below",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "26646791",
+      "domain": "Novelty",
+      "name": "fc_zero",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-12T23:12:33",
+  "last_updated": "2026-07-12T23:12:48",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "7b741692",
-      "domain": "Cryptography",
-      "sorry_count": 3,
-      "timestamp": "2026-07-11T23:38:59"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "319bd9f6",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-12T23:12:33"
+    },
+    {
+      "context": "Every theorem below has a complete, `sorry`-free proof and the file compiles",
+      "cycle_id": "26646791",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-12T23:12:48"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0bd39924",
-        "quality": 0.72,
-        "theorems": 9,
-        "title": "Delta-Petrie Schur Positivity"
-      },
-      {
         "cycle_id": "867d1ba2",
         "quality": 0.83,
         "theorems": 19,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 17,
         "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
+      },
+      {
+        "cycle_id": "26646791",
+        "quality": 0.72,
+        "theorems": 26,
+        "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path s"
       }
     ],
     "NumberTheory": [

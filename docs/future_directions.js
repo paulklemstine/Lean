@@ -1219,7 +1219,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Combinatorics of Compiler Optimization: Register Allocation as Gra"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a098803",
     "description": "Cycle f3dfcf44 (Q=0.820) proved 17 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field\norder parameter `m = tanh(\u03b2 m)` undergoes a sharp, continuous (second-order)\nphase transition at t",
     "domains": [
       "Applications"
@@ -1228,7 +1228,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "f3dfcf44",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T13:00:55.354878+00:00",
     "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss "
   },
@@ -5990,7 +5990,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Two structural results about rectifier networks:"
   },
   {
-    "consumed_by_exp_id": "b9e8de36",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Stone Duality for Neural Networks\n\nThe file `StoneDualityNeuralNetworks.lean` formalizes the finite-Boolean-algebra core of Stone\nduality for a single ReLU-type layer evaluated on a finite input sample. The proved chain is:\n\n1. `linearRegions_card_le_pow` \u2014 at most `2^n` linear regions (bounded by the syntax `Fin n \u2192 Bool`).\n2. `linearRegions_card_le_card` \u2014 at most `|X|` linear regions (bounded by the sample).\n3. `linearRegions_card_le_min` \u2014 the combined bound (built from 1 and 2).\n4. `decisionRegion_union / inter / empty / univ / subset` \u2014 the syntax\u2192semantics map\n   `S \u21a6 {x | act x \u2208 S}` is a Boolean-algebra homomorphism.\n5. `decisionRegion_inter_linearRegions` \u2014 decision regions depend only on realized patterns.\n6. `decisionAlgebra_eq_image_powerset_linearRegions` \u2014 restricting to realized patterns loses\n   no decision region.\n7. `decisionRegion_injOn_linearRegions` \u2014 the atoms of the algebra are exactly the linear regions.\n8. `decisionAlgebra_card` \u2014 **Stone duality**: `|decisionAlgebra| = 2 ^ (#linear regions)`.\n9. `decisionAlgebra_card_le`, `card_le_of_shatters` \u2014 capacity consequences (a VC-style bound:\n   shattering a sample of size `m` needs `m \u2264 2^n`).\n10. `neuronActivation`, `sampleActivation`, and their corollaries \u2014 an explicit real-weight ReLU\n    layer to which the whole chain specializes.\n\n## On the mission's VC-dimension conjecture (refuted)\n\nThe mission text conjectures `VC dim(f) = #atoms = #linear regions`. This equality is **false**\nin general: an affine neuron on `\u211d^d` has VC dimension `d + 1`, unrelated to the number of linear\nregions. We therefore do **not** assert it; instead we prove the correct structural facts (atoms =\nlinear regions, `|algebra| = 2^{#atoms}`) and the genuine capacity bound `card_le_of_shatters`.\n\n## Natural next steps\n\n* **Stone space as a topological object.** Package `decisionAlgebra` as a concrete\n  `BooleanAlgebra` and build its Stone space via `Mathlib`'s `Topology.Category.Profinite` /\n  spectrum-of-a-Boolean-algebra machinery, proving it is the finite discrete space on the linear\n  regions and that clopen sets \u2194 decision regions.\n* **Multilayer composition.** Extend `act` to `L` layers with widths `w_1,\u2026,w_L`; show the\n  layerwise pattern map factors and bound the total regions by `2^{w_1+\u00b7\u00b7\u00b7+w_L}`.\n* **Sauer\u2013Shelah / growth function.** Relate `|decisionAlgebra|` restricted to subsamples to the\n  growth function and derive the true VC bound for halfspace-based classes.\n* **Geometric linear regions.** Replace the finite sample by an arrangement of hyperplanes in\n  `\u211d^d` and connect `#linear regions` to the Zaslavsky region-counting formula.\n",
     "domains": [
       "Algebra",
@@ -6000,7 +6000,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "a6f348ea",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T21:08:57.881447+00:00",
     "title": "The file `StoneDualityNeuralNetworks.lean` formalizes the finite-Boolean-algebra"
   },
@@ -7446,6 +7446,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle (Builder mode) established a single connected chain of results around the\nFuss\u2013Catalan numbers `fc m n = C((m+1)\u00b7n, n)/(m\u00b7n+1)` and their `m = 1` (Catalan)\nspecialization, culminating in the \"planar trees \u2194 Dyck paths\" identity that is the\nbase layer of the greedy `m`-Tamari / `(m+1)`-constellation programme. See\n`Catalog/output-final_aristotle/Novelty/FussCatalanDyckChain.lean` (the arithmetic\nchain) and its companion `Catalog/output-final_aristotle/Novelty/GreedyTamariPlaneTreeBridge.lean`\n(the explicit plane tree \u2194 binary tree \u2194 Dyck path bijections). Both files compile\nstandalone against `import Mathlib` and are `sorry`-free, depending only on the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n## What is proved\n- `fc m 0 = 1`, `fc m 1 = 1` for all `m` (empty and root-only trees).\n- `fc 1 n = catalan n` (base layer), with exactness `(n+1)\u00b7fc 1 n = C(2n,n)`,\n  positivity, the recursive Catalan-convolution decomposition, monotonicity, and a\n  lower bound.\n- `fc 1 n` counts Dyck paths of semilength `n`, binary trees with `n` internal\n  nodes, and (via the Knuth left-child/right-sibling bijection built from scratch)\n  plane (planar) trees with `n+1` nodes; hence plane trees \u2194 Dyck paths.\n\n## Open directions\n1. **General-`m` integrality.** Prove `(m\u00b7n+1) \u2223 C((m+1)\u00b7n, n)`, giving\n   `(m\u00b7n+1)\u00b7fc m n = C((m+1)\u00b7n, n)` for all `m`. The standard route is the\n   cycle lemma (Dvoretzky\u2013Motzkin); Mathlib currently has this only for `m = 1`\n   (`Nat.succ_dvd_centralBinom`).\n2. **General-`m` recursive decomposition.** Establish the `(m+1)`-fold\n   self-convolution `fc m (n+1) = \u03a3 fc m k\u2081 \u22ef fc m k_{m+1}` over compositions of `n`,\n   the arithmetic shadow of the functional equation `A = 1 + x\u00b7A^{m+1}` for\n   `(m+1)`-ary trees.\n3. **`(m+1)`-ary plane trees.** Generalize the `PlaneTree`/Knuth bijection to an\n   enumeration of `(m+1)`-ary plane trees by internal nodes, proving their count is\n   `fc m n` (bijection to `m`-Dyck paths).\n4. **The greedy `m`-Tamari interval bijection.** Build the recursive-decomposition\n   isomorphism between greedy `m`-Tamari intervals in a planar `(m+1)`-constellation\n   and maximal planar trees with `m` internally labeled vertices, refining the\n   equinumerosity to the tracked statistics (valleys / active sites). The\n   generating-tree layer of this correspondence is developed in the companion\n   `MTamariConstellationGeneralM` files; the missing piece is identifying the common\n   counting sequence with the Fuss\u2013Catalan numbers proved here.\n",
+    "domains": [
+      "Bridges",
+      "Pythagorean"
+    ],
+    "id": "fd_1168",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "26646791",
+    "status": "available",
+    "timestamp": "2026-07-12T23:12:37.266150+00:00",
+    "title": "This cycle (Builder mode) established a single connected chain of results around"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
     "domains": [
       "Applications"
@@ -7457,20 +7472,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:36:38.107204+00:00",
     "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
-  },
-  {
-    "consumed_by_exp_id": "26646791",
-    "description": "Cycle bcff067f (Q=0.700) proved 20 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: This conjecture posits that the number of maximal greedy Tamari intervals in a planar $(m+1)$-constellation equals the number of maximal planar trees with $m$ internally labeled vertices, under a bije",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_bcff067f_2a707e6a",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "bcff067f",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T21:41:37.868938+00:00",
-    "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path struc"
   },
   {
     "consumed_by_exp_id": "",
