@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7b741692",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 22,
-      "timestamp": "2026-07-11T23:38:59",
-      "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-    },
-    {
       "cycle_id": "de167401",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Lifebox: Information-Theoretic Identity\n\nThe file `LifeboxInformationIdentity.lean` formalizes and proves five claims around\nRudy Rucker's *Lifebox* thesis (identity = informatio",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-12T16:46:33",
       "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+    },
+    {
+      "cycle_id": "ddbb821f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Argumentation (VI): the existence gap for stable extensions\n\nThis cycle (contrarian mode) attacks the **existence gap** left open by the\nprevious cycle's `Catalog",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-07-12T16:46:42",
+      "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6b9c675a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Self-Improving Proofs\n\nThe file `SelfImprovingProofs.lean` formalises a proof-refinement system for a\nfixed target proposition `T`: an abstract type of candidate proofs, a\n`ℕ`-va",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-09T20:48:01",
-      "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-    },
     {
       "cycle_id": "c2c03fe8",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-12T16:46:33",
       "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+    },
+    {
+      "cycle_id": "ddbb821f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Argumentation (VI): the existence gap for stable extensions\n\nThis cycle (contrarian mode) attacks the **existence gap** left open by the\nprevious cycle's `Catalog",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-07-12T16:46:42",
+      "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b290e3a0",
-      "domain": "Applications",
-      "name": "windowSum_pos",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b290e3a0",
-      "domain": "Applications",
-      "name": "minArc_pos",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "53945fe2",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.82
-    },
     {
       "cycle_id": "53945fe2",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "about",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "ddbb821f",
+      "domain": "Novelty",
+      "name": "conflictFree_admissible_of_symmetric",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "ddbb821f",
+      "domain": "Novelty",
+      "name": "maximalConflictFree_stable_of_symmetric",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "ddbb821f",
+      "domain": "Novelty",
+      "name": "exists_maximalConflictFree",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T16:46:33",
+  "last_updated": "2026-07-12T16:46:42",
   "open_questions": [
     {
       "context": "+To keep this file free of `sorry` while remaining faithful, we prove the composite; -    sorry; +as an open conjecture rather than prove it with `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a6691c84",
-        "quality": 0.82,
-        "theorems": 27,
-        "title": "Deepening: The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-      },
-      {
         "cycle_id": "e618ea1a",
         "quality": 0.82,
         "theorems": 29,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 26,
         "title": "Deepening: Automatic Sequences and the Halting Problem: When Is a Sequence Compu"
+      },
+      {
+        "cycle_id": "ddbb821f",
+        "quality": 0.82,
+        "theorems": 25,
+        "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
       }
     ],
     "NumberTheory": [
