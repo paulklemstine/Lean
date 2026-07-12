@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T08:27:49.209864+00:00",
+  "last_updated": "2026-07-12T09:01:56.686384+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -8150,6 +8150,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T08:27:49.179041+00:00",
       "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 31,
+      "domain": "MachineLearning",
+      "duration_seconds": 2061.2292308807373,
+      "end_time": 1783846898.1982417,
+      "files_integrated": 4,
+      "job_id": "e978b5fe",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783844836.9690108,
+      "strategy_count": 0,
+      "theorem_count": 1210,
+      "theorem_novelty_disproof": 24,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 934,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T09:01:56.653345+00:00",
+      "title": "White's Quadratic Exchange Conjecture (Part 3)"
     }
   ]
 }

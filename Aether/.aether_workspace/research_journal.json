@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c06d8e8c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Geometry Between the Dimensions\n\nThis cycle established that \"infinite Hausdorff dimension\" (`dimH = ⊤`) is the\ncorrect rigorous surrogate for the informal notion of a surface who",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-11T12:48:37",
-      "title": "Aleph-1 Surface: Geometry Between Dimensions"
-    },
-    {
       "cycle_id": "f6b0dfd4",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-12T08:27:47",
       "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "cycle_id": "e978b5fe",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: White's Quadratic Exchange Conjecture\n\nThis cycle isolated the *element-census invariant* as the exact obstruction that\nquadratic exchange moves preserve, verified that every symm",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 1210,
+      "timestamp": "2026-07-12T09:01:53",
+      "title": "White's Quadratic Exchange Conjecture (Part 3)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "048b9775",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nFive falsifiable conjectures growing out of the study of the characteristic-two\ncup-product form of a pro-2 Demushkin group and its canonical (Kummer/orientation) class.\n\n## 1. Th",
-      "quality_score": 0.7059866666666667,
-      "sorry_count": 4,
-      "theorem_count": 18,
-      "timestamp": "2026-07-06T15:29:27",
-      "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
-    },
     {
       "cycle_id": "c1fb9afb",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-12T08:27:47",
       "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "cycle_id": "e978b5fe",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: White's Quadratic Exchange Conjecture\n\nThis cycle isolated the *element-census invariant* as the exact obstruction that\nquadratic exchange moves preserve, verified that every symm",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 1210,
+      "timestamp": "2026-07-12T09:01:53",
+      "title": "White's Quadratic Exchange Conjecture (Part 3)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b4ccc3c5",
-      "domain": "Pythagorean",
-      "name": "alMul_dvd",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "b4ccc3c5",
-      "domain": "Pythagorean",
-      "name": "alMul_realizes_symmDiff",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "b4ccc3c5",
-      "domain": "Pythagorean",
-      "name": "ALDiv_zero_val",
-      "quality": 0.7
-    },
     {
       "cycle_id": "453f48e6",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "hilbertCube_secondCountable",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "e978b5fe",
+      "domain": "MachineLearning",
+      "name": "qform_even",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e978b5fe",
+      "domain": "MachineLearning",
+      "name": "det_scaledGram",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e978b5fe",
+      "domain": "MachineLearning",
+      "name": "det_NeronSeveri",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-12T08:27:47",
+  "last_updated": "2026-07-12T09:01:53",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "89d6c3ef",
-        "quality": 0.6913,
-        "theorems": 12,
-        "title": "ML-guided theorem discovery via adaptive proof distillation (NeuralProofMining)"
-      },
-      {
         "cycle_id": "9bec4051",
         "quality": 0.4398394666666667,
         "theorems": 8,
@@ -3575,6 +3569,12 @@
         "quality": 0.82,
         "theorems": 9,
         "title": "Lower bounds on clique densities using generalized inverses"
+      },
+      {
+        "cycle_id": "e978b5fe",
+        "quality": 0.78,
+        "theorems": 1210,
+        "title": "White's Quadratic Exchange Conjecture (Part 3)"
       }
     ],
     "Novelty": [

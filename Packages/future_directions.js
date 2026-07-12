@@ -325,7 +325,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
   },
   {
-    "consumed_by_exp_id": "af45590a",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4b34e974 (Q=0.820), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
     "domains": [
       "Probability"
@@ -334,7 +334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "4b34e974",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:53:42.878360+00:00",
     "title": "Deepening: Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
@@ -520,20 +520,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T07:12:19.970065+00:00",
     "title": "Categorical Physics: The Shape of a Theory of Everything"
-  },
-  {
-    "consumed_by_exp_id": "053b0731",
-    "description": "Building on cycle 9ca5466b (Q=0.800), which proved 40 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hyperco",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_9ca5466b_a1bd971c",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "9ca5466b",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T08:51:48.793508+00:00",
-    "title": "Deepening: Computational Complexity of Alien Civilizations"
   },
   {
     "consumed_by_exp_id": "",
@@ -819,6 +805,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e978b5fe (Q=0.780), which proved 1210 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: While White's conjecture on symmetric exchanges (Part 2) is false, the weaker Part 3 remains open: for any matroid M and any two multisets of bases B and B' with the same multiset union of elements, it is possible to obtain B' from B by repeatedly replacing two bases with any two other bases having ",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_e978b5fe_056674f1",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "e978b5fe",
+    "status": "available",
+    "timestamp": "2026-07-12T09:01:53.417824+00:00",
+    "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle fb4de3e5 (Q=0.780), which proved 23 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some met",
     "domains": [
       "Tropical"
@@ -995,7 +995,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e9cf2c9",
     "description": "Cycle 0981cb8f (Q=0.830) proved 20 theorems in Probability but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian",
     "domains": [
       "Probability"
@@ -1004,7 +1004,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "0981cb8f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:40:03.218809+00:00",
     "title": "Close Proofs: Consciousness as Emergent Fixed Point"
   },
@@ -1627,7 +1627,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "6a70bc30",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -1636,7 +1636,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -5390,7 +5390,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality Conditions for the Fishburn Inequality for Linear Extensions of Posets"
   },
   {
-    "consumed_by_exp_id": "afe03036",
+    "consumed_by_exp_id": "",
     "description": "For each fixed y \u2208 \u2115, the lim sup of (W(x,y) log log x)/log x as x\u2192\u221e equals 1, where W(x,y) = \u2211_{j=1}^y \u03c9(x+j) and \u03c9(n) counts distinct prime divisors of n.",
     "domains": [
       "Pythagorean"
@@ -5399,7 +5399,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07641v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-09T14:37:11.657340+00:00",
     "title": "Growth Bound for the Sum of Distinct Prime Divisors in Arithmetic Progressions"
   },
@@ -6574,7 +6574,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entire"
   },
   {
-    "consumed_by_exp_id": "b4c3531e",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Wetware Computation\n\nThis file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as a\ndiscrete dynamical system (a step map iterated on a neural state space) and proves a\ncross-domain **connector**: the information cost of *deterministic dynamics*\n(`\u0398(n log n)` bits) is asymptotically negligible next to that of arbitrary\n*connectivity* (`\u0398(n\u00b2)` bits). This bridges enumerative combinatorics (the counts\n`n^n` and `2^(n\u00b2)`) with asymptotic real analysis (the `log\u2082 n / n \u2192 0` limit).\n\n## What is proved\n\n- **Dynamical-system semantics**: `WetwareSystem.run`, with the flow/semigroup law\n  `run_add` (a monoid action of `(\u2115,+)`), plus `run_succ`.\n- **Finite-state universality** (`exists_wetware_computes`): every function\n  `f : X \u2192 Y` is computed by some wetware system with an encoder/decoder in one step.\n- **Dynamics \u2194 finiteness** (`orbit_eventually_periodic`): on a finite state space\n  every orbit is eventually periodic (pigeonhole).\n- **Energy connector**: `wetwareEnergy_eq` (`= n\u00b7log\u2082n`), `siliconEnergy_eq` (`= n\u00b2`),\n  the strict separation `wetware_beats_silicon`, and the asymptotic separation\n  `energy_ratio_tendsto_zero`.\n\n## Directions\n\n1. **Full Turing-completeness (unbounded tape).** The present `exists_wetware_computes`\n   is the *finite-state* analogue. A genuine simulation of Turing machines requires an\n   unbounded state space (e.g. `\u2124`-indexed configurations, or reals encoding a stack).\n   Formalize a register/stack machine and show a wetware system on `\u2115`- or `\u211d`-valued\n   states simulates each step, recovering computational universality.\n\n2. **Sharper information bounds.** Upgrade the exact identities to a two-sided coding\n   theorem: any prefix-free encoding of transition maps needs `\u2265 n\u00b7log\u2082n` bits\n   (Kraft), and `n\u00b7\u2308log\u2082n\u2309` bits suffice, pinning `\u0398(n log n)` from both sides.\n\n3. **Continuous dynamics / neural manifolds.** Replace the finite state space with a\n   smooth manifold and `step` with the time-1 flow of a vector field. Study which\n   `f : X \u2192 Y` are realizable, connecting to control theory and reachability.\n\n4. **The \"super-Turing\" hypothesis (open/speculative).** The conjecture that\n   continuous-dynamics wetware computes functions no Turing machine can (\u00e0 la\n   Siegelmann's analog recurrent nets with real weights) is *not* provable for\n   standard discrete/computable models and is physically contentious. A careful\n   formalization would isolate the exact resource (unbounded real precision) that a\n   would-be super-Turing model assumes, and prove the corresponding conditional\n   separation \u2014 clarifying that any such power comes from the reals, not the biology.\n\n5. **Energy landscapes and geometry.** Tie `orbit_eventually_periodic` to attractor\n   structure: bound cycle lengths, count fixed points, and relate the geometry of the\n   state graph of `step` to computational capacity.\n",
     "domains": [
       "Algebra",
@@ -6584,7 +6584,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "9af0a04a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-11T23:05:08.003015+00:00",
     "title": "This file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as "
   },
@@ -6992,6 +6992,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T08:27:34.627801+00:00",
     "title": "Hilbert cube `Q = \u2115 \u2192 [0,1]` as the canonical \"surfac"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: White's Quadratic Exchange Conjecture\n\nThis cycle isolated the *element-census invariant* as the exact obstruction that\nquadratic exchange moves preserve, verified that every symmetric exchange of\nmatroid theory is a legal quadratic move, and confirmed White's third conjecture\non the smallest nontrivial uniform matroid `U_{2,4}`. From these findings we\ndistill the following bold, testable conjectures.\n\n## 1. Census-completeness for base-orderable matroids\n\n**Conjecture.** For every strongly base-orderable matroid, two multisets of bases\nare connected by quadratic exchange moves if and only if they have the same\nmultiset union of ground-set elements.\n\nThe key insight is that base-orderability supplies a *global bijection* between\nany two bases that simultaneously realizes all the pairwise swaps, so the local\nelement-census invariant can be upgraded to a global connectivity certificate one\ntransposition at a time. Why now? The single-swap building block\n(`uniform_symmExchange_rqmove`) is exactly the atomic move a base-ordering\ncomposes, so the remaining work is purely a bookkeeping induction on the number\nof disagreeing elements \u2014 a concrete, finite descent rather than an open-ended\nsearch.\n\n## 2. Bounded exchange distance\n\n**Conjecture.** If two configurations of `m` bases of rank `r` share their\nmultiset union, they can be connected using at most `m\u00b7r` quadratic moves.\n\nThe key insight is that each quadratic move can strictly decrease a potential\nfunction counting element-ownership mismatches against a fixed target\nconfiguration, and that potential is bounded by the total number of\nelement-slots `m\u00b7r`. Why now? The invariants `reachable_preserves_card` and\n`reachable_preserves_count` already pin down the two quantities `m` and the\nelement census, giving a ready-made, monotone potential to run the descent\nargument against.\n\n## 3. Symmetric-exchange deficiency is a rank-3 phenomenon\n\n**Conjecture.** The failure of the symmetric-exchange (stronger) variant while\nthe quadratic variant survives first occurs at rank 3; all rank-\u22642 matroids\nsatisfy the symmetric-exchange property outright.\n\nThe key insight is that in rank 2 every basis is a pair, so a single swap always\nreturns two pairs, forcing symmetric exchanges to close every move; only from\nrank 3 onward can a required swap be blocked by a circuit that a *non-symmetric*\nquadratic move can still route around. Why now? The `U_{2,4}` instance shows the\nquadratic and symmetric pictures coincide in rank 2, sharpening the search for\nthe exact rank where they diverge into a finite, enumerable question.\n\n## 4. Toric grading detects the exchange components\n\n**Conjecture.** The connected components of the quadratic-exchange graph on\nconfigurations of a matroid are in bijection with the fibers of the multiset-union\n(degree) map; equivalently, the degree map is a *complete* invariant exactly when\nWhite's conjecture holds.\n\nThe key insight is that `reachable_preserves_union` already proves the degree map\nis constant on components, so completeness of the invariant is logically\nequivalent to the conjecture \u2014 turning a hard connectivity statement into a\nquestion about a single graded linear map. Why now? Framing White's conjecture as\ncompleteness of an explicit grading makes it amenable to homological tools\n(syzygies of the toric ideal), which is precisely where recent progress on\nmatroid toric ideals has concentrated.\n\n## 5. Transversal matroids as the next verified family\n\n**Conjecture.** Transversal matroids satisfy the quadratic-exchange connectivity\nproperty, with an explicit algorithm building the exchange sequence from any\nsystem of distinct representatives.\n\nThe key insight is that a transversal matroid's bases are systems of distinct\nrepresentatives, and swapping one representative along an augmenting path is a\nsymmetric exchange, so an augmenting-path argument produces the exchange sequence\ndirectly. Why now? The verified uniform case is the transversal matroid of a\ncomplete bipartite incidence; generalizing the incidence structure from complete\nto arbitrary bipartite graphs is the natural, well-scoped next step.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1123",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e978b5fe",
+    "status": "available",
+    "timestamp": "2026-07-12T09:01:45.385563+00:00",
+    "title": "This cycle isolated the *element-census invariant* as the exact obstruction that"
   },
   {
     "consumed_by_exp_id": "",

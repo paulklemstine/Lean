@@ -18381,7 +18381,7 @@
         "Computability theory in metric geometry",
         "Quantitative topology in Lean 4"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "MachineLearning"
       ],
@@ -22065,7 +22065,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four smallest knots. Natural extensions:\n\n1. **Cyclotomic identification.**  Prove `trefoilPoly = cyclotomic 6 ℤ` and\n   `cinquefoilPoly = cyclotomic 10 ℤ` directly in Mathlib (rather than only proving\n   the individual root facts). This would make the \"roots are exactly the primitive\n   n-th roots of unity\" statement complete, including the *converse* (no spurious\n   roots) via `Polynomial.roots_cyclotomic`.\n\n2. **Torus-knot family.**  The trefoil and cinquefoil are the `(2, 3)` and `(2, 5)`\n   torus knots, with `Δ_{(2,2k+1)}(t) = (t^{2k+1} + 1)/(t + 1)`. Formalize the general\n   torus-knot Alexander polynomial and show its roots are the `(4k+2)`-th roots of\n   unity that are not `(2k+1)`-th roots — a uniform generalization of the two cases\n   proved here.\n\n3. **General reciprocity and `Δ(1) = ±1`.**  State and prove the reciprocity law\n   `t^{2g} Δ(1/t) = Δ(t)` and the normalization `Δ(1) = ±1` from an abstract\n   axiomatization of Alexander polynomials (e.g. via Seifert matrices `V`,\n   `Δ(t) = det(V − t Vᵀ)`), instead of case by case.\n\n4. **Knot determinant as `|Δ(−1)|`.**  Connect the numbers `3, 5, 5` proved here to\n   the determinant defined through a Goeritz or Seifert matrix, and to\n   `p`-colorability (`3`-colorable ⇔ `3 ∣ det`).\n\n5. **Off-circle roots and the golden ratio.**  Generalize the figure-eight\n   observation: characterize which knots have all Alexander roots on the unit circle\n   (a necessary condition for genuine root-of-unity OAM quantization). The\n   figure-eight, with roots `φ^{±2}`, is the smallest knot violating this.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning",
         "Pythagorean"
@@ -26739,7 +26739,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Unreasonable Effectiveness of Wrong Theories\n\nThis deepening (`WrongTheoriesDeepening.lean`) adds, on top of the earlier\nmetric/perturbative and single-phenomenon results:\n\n- prediction errors are globally controlled by wrongness (Cauchy–Schwarz);\n- perturbative convergence propagates to *every* fixed phenomenon;\n- an **explicit** quantitative single-rival meta-theorem (gap `= ‖orthogonal\n  component‖²`);\n- the **flagship generalization**: a wrong theory beats *any finite family* of\n  rivals simultaneously on a single phenomenon, via a linear-algebra core lemma\n  (`exists_inner_ne_zero_list`) about avoiding finitely many hyperplanes.\n\n## Natural next steps\n\n1. **Countably many rivals.** Extend `wrong_theory_beats_finite_rivals` to a\n   countable family of rivals whose orthogonalized errors are, say, uniformly\n   bounded below, using a Baire-category argument in a complete space (the set of\n   good phenomena is a dense Gδ).\n\n2. **Measure of good phenomena.** Show the set of phenomena on which `A` beats a\n   fixed rival `B` is \"large\": it is the complement of a proper subspace\n   (measure zero / meager), so generic phenomena favour the wrong theory once its\n   error is non-parallel.\n\n3. **Quantitative multi-rival gap.** Give an explicit lower bound on\n   `min_B predErr truth B u` for the constructed `u` in the finite-rivals theorem,\n   in terms of the Gram matrix of the orthogonalized rival errors.\n\n4. **Best wrong theory in a model class.** For a closed subspace `M ⊆ E` of\n   admissible theories, relate the minimal achievable wrongness to the orthogonal\n   projection of `truth` onto `M`, and characterize on which phenomena the\n   projected theory is exact.\n\n5. **Normed (non-inner-product) theory-space.** Replace the inner product by a\n   general dual pairing / Banach setting and identify which results survive\n   (Hahn–Banach replaces Gram–Schmidt for the separation statements).\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -32193,7 +32193,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients ∏_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "MachineLearning"
       ],
@@ -32433,7 +32433,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7a9dcf2f (Q=0.780), which proved 81 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' — beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -33433,7 +33433,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle d0bff55a (Q=0.780), which proved 20 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "MachineLearning"
       ],
@@ -33593,7 +33593,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e2c082ff (Q=0.820), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -33778,6 +33778,46 @@
       "thread_id": "",
       "timestamp": "2026-07-10T00:21:21.581372+00:00",
       "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle e978b5fe (Q=0.780), which proved 1210 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: While White's conjecture on symmetric exchanges (Part 2) is false, the weaker Part 3 remains open: for any matroid M and any two multisets of bases B and B' with the same multiset union of elements, it is possible to obtain B' from B by repeatedly replacing two bases with any two other bases having ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "MachineLearning"
+      ],
+      "github_issue": 0,
+      "id": "push_e978b5fe_056674f1",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.88,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e978b5fe",
+      "source_path": "White's Quadratic Exchange Conjecture (Part 3)",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-12T09:01:53.417824+00:00",
+      "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
     },
     {
       "ambition_level": "extension",
@@ -34303,11 +34343,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0e9cf2c9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34319,7 +34359,7 @@
       ],
       "github_issue": 0,
       "id": "sorry_fill_0981cb8f_5eeca554",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T09:02:11.364857+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -34334,7 +34374,7 @@
       "source": "",
       "source_exp_id": "0981cb8f",
       "source_path": "Consciousness as Emergent Fixed Point",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-11T00:40:03.218809+00:00",
       "title": "Close Proofs: Consciousness as Emergent Fixed Point"
@@ -34913,7 +34953,7 @@
       "depth_estimate": 3,
       "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' — beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -35353,7 +35393,7 @@
       "depth_estimate": 3,
       "description": "Cycle e2c082ff (Q=0.820) proved 9 theorems in MachineLearning but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a f",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
