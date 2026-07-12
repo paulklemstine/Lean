@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "997ab258",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Infinite Games Against Death — Immortality Strategies\n\nThe formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a\ntransfinite survival game between **Mortal**",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-11T13:38:26",
-      "title": "Infinite Games Against Death: Immortality Strategies"
-    },
-    {
       "cycle_id": "1e86ff35",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle deepens *\"Paradoxes as Theorems: Liar, Berry, and Russell Made\nConsistent\"* into a single **cross-domain bridge** and proves it in Lean 4 with\nno `sorry` and only the s",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T09:36:18",
       "title": "Deepening: That the zero-dimensional persistent homology of the prim"
+    },
+    {
+      "cycle_id": "6a70bc30",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes the mathematical core of the descendant limit law for random\nrecursive `d`-DAGs: `|D_n| / n^{1/d} ⟶ Gamma(d, 1)` (Janson 2023). Two self-contained\nLean fil",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T10:09:53",
+      "title": "Limit Distribution of Descendants in Random d-DAGs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "935491ef",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n## 1. Unimodality is not enough: the persistent gamma-gap of flat symmetric sequences\n\n**Conjecture.** For every degree `n ≥ 2`, the all-ones symmetric polynomial\n`1 + t + t^2 + ⋯",
-      "quality_score": 0.70296,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-06T19:50:56",
-      "title": "Minimal dimension of non-γ-positive symmetric edge polytopes"
-    },
     {
       "cycle_id": "7e56c098",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-12T09:36:18",
       "title": "Deepening: That the zero-dimensional persistent homology of the prim"
+    },
+    {
+      "cycle_id": "6a70bc30",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes the mathematical core of the descendant limit law for random\nrecursive `d`-DAGs: `|D_n| / n^{1/d} ⟶ Gamma(d, 1)` (Janson 2023). Two self-contained\nLean fil",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T10:09:53",
+      "title": "Limit Distribution of Descendants in Random d-DAGs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "453f48e6",
-      "domain": "Combinatorics",
-      "name": "is",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "453f48e6",
-      "domain": "Combinatorics",
-      "name": "conscious_forces_fixedPoints",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "453f48e6",
-      "domain": "Combinatorics",
-      "name": "no_conscious_bool_model",
-      "quality": 0.83
-    },
     {
       "cycle_id": "acce14cf",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "det_NeronSeveri",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "6a70bc30",
+      "domain": "Applications",
+      "name": "descProduct_zero",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6a70bc30",
+      "domain": "Applications",
+      "name": "descProduct_succ",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6a70bc30",
+      "domain": "Applications",
+      "name": "descProduct_gamma_closed_form",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-12T09:36:18",
+  "last_updated": "2026-07-12T10:09:53",
   "open_questions": [
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "b6492bf5",
-        "quality": 0.72,
-        "theorems": 15,
-        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-      },
-      {
         "cycle_id": "08eba531",
         "quality": 0.7,
         "theorems": 30,
@@ -3141,6 +3135,12 @@
         "quality": 0.62,
         "theorems": 15,
         "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
+      },
+      {
+        "cycle_id": "6a70bc30",
+        "quality": 0.72,
+        "theorems": 15,
+        "title": "Limit Distribution of Descendants in Random d-DAGs"
       }
     ],
     "Bridges": [

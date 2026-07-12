@@ -579,7 +579,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Proofs of Classical Theorems"
   },
   {
-    "consumed_by_exp_id": "53945fe2",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
     "domains": [
       "Cryptography"
@@ -588,7 +588,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "3a52b537",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T19:32:10.856151+00:00",
     "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
@@ -5780,7 +5780,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0930ae42",
     "description": "# Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four smallest knots. Natural extensions:\n\n1. **Cyclotomic identification.**  Prove `trefoilPoly = cyclotomic 6 \u2124` and\n   `cinquefoilPoly = cyclotomic 10 \u2124` directly in Mathlib (rather than only proving\n   the individual root facts). This would make the \"roots are exactly the primitive\n   n-th roots of unity\" statement complete, including the *converse* (no spurious\n   roots) via `Polynomial.roots_cyclotomic`.\n\n2. **Torus-knot family.**  The trefoil and cinquefoil are the `(2, 3)` and `(2, 5)`\n   torus knots, with `\u0394_{(2,2k+1)}(t) = (t^{2k+1} + 1)/(t + 1)`. Formalize the general\n   torus-knot Alexander polynomial and show its roots are the `(4k+2)`-th roots of\n   unity that are not `(2k+1)`-th roots \u2014 a uniform generalization of the two cases\n   proved here.\n\n3. **General reciprocity and `\u0394(1) = \u00b11`.**  State and prove the reciprocity law\n   `t^{2g} \u0394(1/t) = \u0394(t)` and the normalization `\u0394(1) = \u00b11` from an abstract\n   axiomatization of Alexander polynomials (e.g. via Seifert matrices `V`,\n   `\u0394(t) = det(V \u2212 t V\u1d40)`), instead of case by case.\n\n4. **Knot determinant as `|\u0394(\u22121)|`.**  Connect the numbers `3, 5, 5` proved here to\n   the determinant defined through a Goeritz or Seifert matrix, and to\n   `p`-colorability (`3`-colorable \u21d4 `3 \u2223 det`).\n\n5. **Off-circle roots and the golden ratio.**  Generalize the figure-eight\n   observation: characterize which knots have all Alexander roots on the unit circle\n   (a necessary condition for genuine root-of-unity OAM quantization). The\n   figure-eight, with roots `\u03c6^{\u00b12}`, is the smallest knot violating this.\n",
     "domains": [
       "MachineLearning",
@@ -5790,7 +5790,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "7a9dcf2f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T02:59:09.669263+00:00",
     "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
   },
@@ -6500,21 +6500,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "That a type which fully quantifies over itself \u2014"
   },
   {
-    "consumed_by_exp_id": "f3dfcf44",
-    "description": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field\norder parameter `m = tanh(\u03b2 m)` undergoes a sharp, continuous (second-order)\nphase transition at the critical coupling `\u03b2_c = 1`:\n\n* no positive solution for `\u03b2 \u2264 1` (`curieWeiss_subcritical`),\n* a positive solution for `\u03b2 > 1` (`curieWeiss_supercritical`),\n* the sharp `iff` locating `\u03b2_c = 1` (`curieWeiss_phase_transition`),\n* uniqueness of the positive branch (`curieWeiss_unique_positive`),\n* boundedness `|m| < 1` and `\u00b1m` symmetry of solutions,\n* and that a positive external field destroys the sharp transition \u2014 the\n  field-driven equation `m = tanh(\u03b2 m + h)` has a positive solution\n  `m \u2208 (0, 1)` for *every* `\u03b2` when `h > 0`\n  (`curieWeiss_field_positive_solution`).\n\nNatural next steps:\n\n1. **Critical exponent.** Prove the quantitative onset\n   `m*(\u03b2) = sqrt(3(\u03b2\u22121)) + o(sqrt(\u03b2\u22121))` as `\u03b2 \u2192 1\u207a`, extracting the mean-field\n   exponent `1/2`. The two inequalities `tanh y < y` and `y \u2212 y\u00b3/3 < tanh y`\n   already bracket the branch; a matching cubic *upper* bound\n   `tanh y < y \u2212 y\u00b3/3 + 2y\u2075/15` would pin the exponent.\n\n2. **External field.** The *existence* half is now settled:\n   `curieWeiss_field_positive_solution` shows `m = tanh(\u03b2 m + h)` has a positive\n   solution for every `\u03b2` when `h > 0`, so the sharp `\u03b2_c = 1` dichotomy is\n   destroyed by any positive field.  Remaining: prove *uniqueness* of the\n   solution for `h \u2260 0` (single-valued branch for all `\u03b2`), recovering the\n   standard picture of a line of first-order transitions terminating at the\n   critical point `(\u03b2_c, h) = (1, 0)`.\n\n3. **Free energy / order parameter as minimizer.** Formalize the Curie\u2013Weiss\n   free energy `f(m) = m\u00b2/2 \u2212 (1/\u03b2) log cosh(\u03b2 m)` and prove its global\n   minimizer coincides with the stable solution of the self-consistency\n   equation, giving a variational characterization of the order parameter and a\n   genuine `analytic \u21a6 non-analytic` statement for the minimal free energy at\n   `\u03b2_c`.\n\n4. **Continuity and monotonicity of `\u03b2 \u21a6 m*(\u03b2)`.** Package the positive branch\n   as a function of `\u03b2` on `(1, \u221e)` and prove it is continuous, strictly\n   increasing, and tends to `1` as `\u03b2 \u2192 \u221e`.\n\n5. **Percolation analogue.** Port the same \"order parameter is `0` below /\n   positive above threshold\" template to bond percolation on a rooted tree,\n   where the survival probability of a branching process with mean offspring\n   `\u03bc` plays the role of the order parameter and `\u03bc_c = 1` is the critical point\n   (an exact analogue via generating-function fixed points).\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_1076",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "29aa9d96",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T22:30:47.487400+00:00",
-    "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Negative-Dimensional Topology\n\nThis cycle extends the self-contained theory of negative-dimensional (virtual\ngraded) spaces modelled by the Laurent-polynomial ring\n`VS = \u2124[T; T\u207b\u00b9] = AddMonoidAlgebra \u2124 \u2124`, with Euler characteristic the ring\nhomomorphism `\u03c7 : T \u21a6 -1`.\n\n## What is proved in `Core.lean`\n\nA single, self-contained file (`import Mathlib`) building one chain of results,\neach using the previous ones.\n\n**Euler characteristic and its values.**\n`chi` (ring hom `T \u21a6 -1`); `chi_T`, `chi_C`, `chi_T_nat`, `chi_T_neg_nat`\ncompute it on monomials.\n\n**Ring-homomorphism structure.**\n`chi_one` (point has `\u03c7 = 1`), `chi_add` (disjoint union), `chi_mul` (K\u00fcnneth),\n`chi_surjective` (every integer is a `\u03c7`), and `chi_ker_witness` (`\u03c7(T+1) = 0`,\nthe degree-`1` witness for the ideal `ker \u03c7 = (T+1)`).\n\n**Euler characteristic in negative dimensions (main formula).**\n`chi_pureSpace`, `chi_dim_neg_one` (a `k`-component `(-1)`-space has `\u03c7 = -k`),\n`chi_pure_neg` (`\u03c7 = (-1)\u207f \u00b7 |\u03c0\u2080|` in dimension `-n`).\n\n**Suspension / desuspension.**\n`susp_desusp`, `desusp_susp` (mutually inverse); `chi_susp`, `chi_desusp`,\n`chi_suspIter` (sign flips of `\u03c7`).\n\n**Spanier\u2013Whitehead duality (new).**\n`dual : T\u1d48 \u21a6 T\u207b\u1d48` as an involutive ring automorphism (`dual_T`, `dual_C`,\n`dual_involutive`), exchanging suspension and desuspension (`dual_susp`,\n`dual_desusp`), compatible with the ring structure (`dual_mul`, `dual_add`),\nand **preserving the Euler characteristic**: `chi_dual : \u03c7(DX) = \u03c7(X)` \u2014 a\nPoincar\u00e9-duality statement in negative degrees.\n\n**A refined invariant (new).**\n`topDim` (top occupied dimension) with `topDim_T`, and\n`refined_separates_collision`: it distinguishes `T\u2070` from `T\u00b2`, a pair `\u03c7`\ncannot separate (`disproof_chi_not_injective`), so it strictly refines `\u03c7`.\n\n**Contrarian results.**\n`disproof_all_neg_chi` (even codimensions give `\u03c7 > 0`);\n`disproof_chi_not_injective` (`\u03c7` forgets the dimension).\n\nThe theorems use only the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`; there are no `sorry`s.\n\n## Directions to extend further\n\n1. **Full Poincar\u00e9 series as an injective invariant.**  Promote `topDim` to the\n   entire graded object (the `t`-graded Euler characteristic valued in\n   `\u2124[T;T\u207b\u00b9]`) and prove it is injective, recovering both `\u03c7` and the dimension.\n2. **Kernel of `\u03c7` and the Grothendieck ring.**  With `chi_ker_witness` in hand\n   (`T + 1 \u2208 ker \u03c7`), identify `ker \u03c7` as the *full* ideal `(T + 1)` and study\n   which integers arise as `\u03c7` of a genuine (nonnegative-cell) space versus a\n   virtual one.\n3. **Interaction of duality with the product.**  `dual_mul` / `dual_add` show\n   duality respects the ring structure; a next step is\n   `D(susp^[m] X) = desusp^[m] (DX)`, packaging duality as a symmetric monoidal\n   involution on the Grothendieck ring.\n4. **Genuine coefficients / chain complexes.**  Replace `\u2124` coefficients by\n   graded `\u2124`-modules and recover `\u03c7` as the alternating sum of ranks.\n5. **A topological (pro-)space model.**  Attach an actual spectrum whose `\u03c0\u2080`\n   matches the degree-count used here, tightening the interpretation of the main\n   theorem.\n",
     "domains": [
@@ -7023,6 +7008,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T09:36:08.749429+00:00",
     "title": "This cycle deepens `Shared/PrimeBarcodeInvariants.lean` and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the mathematical core of the descendant limit law for random\nrecursive `d`-DAGs: `|D_n| / n^{1/d} \u27f6 Gamma(d, 1)` (Janson 2023). Two self-contained\nLean files are provided.\n\n## What is proved\n\n`DDAG/GammaLimitLaw.lean` \u2014 the target distribution Gamma`(d, 1)`:\n- `gammaDensity_integral`: the density `e^{-x} x^{d-1}/\u0393(d)` integrates to `1` on `(0,\u221e)`.\n- `gammaMoment_eq_integral`: its `p`-th moment equals `\u0393(d+p)/\u0393(d)`.\n- `gammaMoment_succ`: the moment recurrence `m_{p+1} = (d+p) m_p`.\n- `gammaMoment_nat_eq_prod`: integer moments are rising factorials `\u220f_{i<k}(d+i)`.\n- `gammaMoment_one`, `gammaMoment_two`, `gamma_variance`: mean `= d`, variance `= d`.\n\n`DDAG/DescendantScaling.lean` \u2014 the `n^{1/d}` normalization:\n- `descProduct_gamma_closed_form`: `P_n(a) = \u0393(n+1+a)/(\u0393(1+a)\u00b7n!)`.\n- `descProduct_eq_gammaSeq`: link to Mathlib's `Real.GammaSeq`.\n- `descProduct_div_rpow_tendsto`: `P_n(a)/n^a \u27f6 1/\u0393(1+a)`.\n- `ddag_descProduct_scaling`: with `a = 1/d`, the scaling exponent is exactly `1/d`.\n\n`DDAG/RandomRecursiveTree.lean` \u2014 the `d = 1` case (random recursive trees):\n- `descProductOne_eq`: the exact identity `P_n(1) = n + 1`.\n- `descProductOne_div_tendsto`: `P_n(1) / n \u27f6 1`, i.e. linear descendant growth with\n  scaling exponent `1`, the `d = 1` value of `1/d`.\n\n## Natural next steps\n\n1. **The random model.** Define the random `d`-DAG `G_n` on `[n]` (each vertex `> d`\n   picks `d` earlier parents uniformly) as a `PMF`/`Measure`, define the descendant set\n   `D_n`, and prove `E[|D_n|]` satisfies the recurrence whose solution is `P_n(1/d)`\n   up to constants. This connects the combinatorial product proved here to the actual\n   expectation.\n\n2. **Method of moments.** Prove `E[(|D_n|/n^{1/d})^k] \u27f6 \u0393(d+k)/\u0393(d)` for every `k`,\n   then invoke a moment-determinacy criterion (Gamma laws are determined by their\n   moments via Carleman's condition) to upgrade convergence of moments to convergence\n   in distribution. The moment side is already fully available here.\n\n3. **Carleman / moment-determinacy in Lean.** Mathlib does not yet have a general\n   \"moments determine a law\" theorem for sub-Gaussian/analytic MGF cases; formalizing\n   Carleman's condition (or the simpler analytic-MGF criterion, which Gamma satisfies)\n   would be reusable well beyond this problem.\n\n4. **`d = 1` (random recursive trees).** The closed form `P_n(1) = n+1` and the linear\n   scaling `P_n(1)/n \u27f6 1` are now formalized in `DDAG/RandomRecursiveTree.lean`. The\n   remaining step is the exponential limit law for the fluctuations (Drmota 2009).\n\n5. **Sharper asymptotics.** Prove the second-order term `P_n(a) = n^a/\u0393(1+a) \u00b7 (1 +\n   O(1/n))`, matching the numerics in `ComputationalEvidence.md`.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1126",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6a70bc30",
+    "status": "available",
+    "timestamp": "2026-07-12T10:09:46.446983+00:00",
+    "title": "This project formalizes the mathematical core of the descendant limit law for ra"
   },
   {
     "consumed_by_exp_id": "",
