@@ -790,7 +790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ffec372c",
     "description": "Building on cycle bb33d4fa (Q=0.780), which proved 13 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A \u2286 E(G) where r\u2081(A) + r\u2082(E\\A) < t, and this failure is strict for no other subset.",
     "domains": [
       "NumberTheory"
@@ -799,7 +799,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "bb33d4fa",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T14:32:43.571596+00:00",
     "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
   },
