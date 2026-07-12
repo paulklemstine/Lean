@@ -11997,7 +11997,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "bollobas1976complete",
         "lovasz1983limits",
@@ -12005,7 +12005,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b35b4ce5",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12021,7 +12021,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0445",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T11:36:27.959777+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem clique_to_clique_density_bound\n    {s t : ℕ} (hs : 2 ≤ s) (hst : s < t)\n    {V : Type*} [Fintype V] [DecidableEq V]\n    (G : SimpleGraph V) (n : ℕ) (hcard : Fintype.card V = n) :\n    k t G / (n : ℝ) ^ t ≥ F t (F_inv s (k s G / (n : ℝ) ^ s))",
       "lineage_refs": [],
@@ -12036,7 +12036,7 @@
       "source": "",
       "source_exp_id": "2606.31967v1",
       "source_path": "http://arxiv.org/abs/2606.31967v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-06T10:47:05.613055+00:00",
       "title": "Asymptotic Clique-to-Clique Density Bound"
@@ -23084,7 +23084,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d019c88a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -23112,7 +23112,7 @@
       "source": "",
       "source_exp_id": "207fb5b4",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/207fb5b4",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_c942ee26",
       "timestamp": "2026-07-10T09:26:14.435602+00:00",
       "title": "Exact dictionary \"logical qubits = middle homology\""
@@ -36108,7 +36108,6 @@
     "±1`.**": 1
   },
   "selection_log": [
-    "cross_domain_bridge",
     "famous_subtask",
     "famous_subtask",
     "cross_domain_bridge",
@@ -36127,6 +36126,7 @@
     "abduction_followup",
     "abduction_followup",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
