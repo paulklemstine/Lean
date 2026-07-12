@@ -838,7 +838,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6622907",
     "description": "Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent \u2014 formalize this in Lean.",
     "domains": [
       "Novelty",
@@ -848,7 +848,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T23:21:34.321577+00:00",
     "title": "Hofstadter: Tangled Hierarchies in Type Theory"
   },
