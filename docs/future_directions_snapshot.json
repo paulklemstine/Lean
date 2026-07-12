@@ -478,6 +478,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_acce14cf_1f13713e",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "acce14cf",
+    "status": "available",
+    "timestamp": "2026-07-12T01:03:33.365633+00:00",
+    "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle c06d8e8c (Q=0.820), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domain_bridges": [],
     "domains": [
@@ -1015,6 +1034,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show: the multiverse is closed under forcing (every universe has forcing extensions). Conjecture: there is no 'true' CH — the question is meaningless without specifying which universe. Explore: formalize 'multiverse truth' — a statement is multiverse-true if it holds in all universes. Prove: ZFC is multiverse-true, CH is not.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1097",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-12T01:03:10.209659+00:00",
+    "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' — a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities — they form a continuous family, and the hat is just one point on the spectrum.",
     "domain_bridges": [],
     "domains": [
@@ -1054,27 +1093,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "acce14cf",
-    "description": "Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension). Show: the parallel postulate is NOT universal (non-Euclidean geometries exist). Conjecture: the Riemann Hypothesis IS universal (every sufficiently rich arithmetic system proves it or its negation). Explore: what would alien number theory look like? Would aliens discover primes?",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1075",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T22:30:19.797682+00:00",
-    "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "79f5af13",
+    "consumed_by_exp_id": "",
     "description": "Formalize the GEB thesis: deep isomorphisms connect Gödel's incompleteness, Escher's visual paradoxes, and Bach's fugues. Define: a 'GEB isomorphism' is a structure-preserving map between three domains: (1) a formal system, (2) a visual art form, (3) a musical form. Prove: the self-reference in Gödel's theorem, Escher's 'Drawing Hands,' and Bach's 'Crab Canon' all instantiate the same fixed-point construction (Lawvere's fixed point theorem). Show: every GEB isomorphism factors through the Y combinator.",
     "domain_bridges": [],
     "domains": [
@@ -1087,7 +1106,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T22:47:23.766775+00:00",
     "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
   },
@@ -1524,7 +1543,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "245dd564",
     "description": "Formalize the concept of 'mind tools' — mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by Gödel's incompleteness — there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
     "domain_bridges": [],
     "domains": [
@@ -1537,7 +1556,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T20:34:25.825368+00:00",
     "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
   },
@@ -11433,6 +11452,26 @@
     "status": "available",
     "timestamp": "2026-07-12T00:46:37.867248+00:00",
     "title": "This project formalizes the structural core of Hofstadter's *I Am a Strange"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Universal Mathematics\n\nThis mission formalizes a semantic notion of **universal mathematics**: the\ntheorems any sufficiently expressive, consistent reasoner must accept, modeled as\nsentences entailed by every consistent extension of a base theory. The Lean\ndevelopment lives in:\n\n* `Catalog/Logic/UniversalMathematics.lean` — the framework and metatheorems.\n* `Catalog/Logic/AlienArithmetic.lean` — primes as a definitional invariant.\n\n## What is proved (0 sorries, only standard axioms)\n\n* **Peano-style universality = monotonicity.** `entails_mono`: every theorem of a\n  theory survives in every extension; `universal_iff_entails`: over a consistent\n  base theory, *universal = provable*. This is the exact content of \"a base\n  theory's theorems are a subset of the theorems of every consistent extension\".\n* **The parallel postulate is not universal.** `independent_not_universal`:\n  a sentence with both a model and a countermodel is not universal, and neither is\n  its negation. Instantiated by `commutativity_not_universal` (abelian vs.\n  non-abelian groups), the algebraic mirror of Euclidean vs. non-Euclidean\n  geometry — while `commutativity_universal_over_abelian` shows the same sentence\n  becomes universal once adopted as an axiom.\n* **The Riemann-Hypothesis reduction.** `universal_or_iff_decided`: over a\n  consistent theory, \"φ or ¬φ is universal\" is equivalent to \"the theory decides\n  φ\". Read arithmetically, \"RH is universal\" ⇔ \"arithmetic decides RH\" — an open\n  problem, so RH universality is left as a genuine conjecture, never asserted.\n* **Aliens discover primes.** `prime_iff_divisibility`, `prime_iff_indecomposable`,\n  `prime_iff_algebraic`: primes are pinned down by the divisibility order, by\n  multiplicative indecomposability, and by the abstract `Prime`/`Irreducible`\n  notions valid in any commutative monoid. `minFac_is_prime` gives the canonical\n  prime-finder, and `infinitude_of_primes` + `factorization_exists`/`_unique`\n  give Euclid's theorem and the Fundamental Theorem of Arithmetic.\n\n## Natural next steps\n\n1. **Syntactic side and soundness/completeness.** The current model is purely\n   semantic (`⊨`). Add a Hilbert- or sequent-style provability relation `⊢` and\n   prove soundness (`⊢ → ⊨`) and, for propositional or first-order fragments,\n   completeness (`⊨ → ⊢`), tying \"universal\" to genuine derivability.\n\n2. **Gödel incompleteness as a universality obstruction.** Formalize (or connect\n   to a formalization of) the first incompleteness theorem to exhibit sentences\n   that are *decided in no recursively axiomatized consistent extension* of\n   arithmetic — the sharpest possible failure of universality. Mathlib now has\n   substantial first-order logic infrastructure to build on.\n\n3. **A real geometry instance.** Replace the group analogue with an actual\n   incidence/betweenness model of the parallel postulate: exhibit a model where\n   the Euclidean parallel axiom holds and one where it fails, feeding both into\n   `independent_not_universal`.\n\n4. **Lindenbaum and completeness of extensions.** Prove that every consistent\n   theory extends to a complete one, sharpening `universal_or_iff_decided` into a\n   statement about maximal consistent theories deciding every sentence.\n\n5. **The Riemann Hypothesis.** The genuinely open item. Either a proof of RH would\n   make it universal over arithmetic, or an independence result would make it a\n   second \"parallel postulate\". The framework here is agnostic and simply records\n   the equivalence.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_1098",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "acce14cf",
+    "status": "available",
+    "timestamp": "2026-07-12T01:03:25.927555+00:00",
+    "title": "This mission formalizes a semantic notion of **universal mathematics**: the"
   },
   {
     "ambition_level": "extension",
