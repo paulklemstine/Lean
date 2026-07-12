@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f85e4d43",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Graded Connectomes and the Combinatorics of Merged Minds\n\nThe results just established fix the exact description-length law for graded\nsynapses (`log₂(w^slots) = slots · log₂ w`)",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-11T09:58:05",
-      "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
-    },
-    {
       "cycle_id": "f9466ee5",
       "domain": "Applications",
       "key_insight": "# Future Directions — Finiteness of representations of ramified fundamental groups\n\nThis cycle isolated the group-theoretic engine behind the finiteness of\nsemisimple geometric representations of a ra",
@@ -499,19 +489,19 @@
       "theorem_count": 44,
       "timestamp": "2026-07-12T04:46:27",
       "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
+    },
+    {
+      "cycle_id": "c016fced",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Winning on the Hilbert Board\n\nThis cycle established that the lone-rook fortress on the infinite plane is not a\nplanar accident: the king's one-step escape, its infinite escape ru",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 1745,
+      "timestamp": "2026-07-12T05:03:54",
+      "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4591bde2",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Kernel-cover geometry of weighted Davenport constants\n\n## 1. Kernel-cover formula for finite abelian `p`-groups\n\nFor a finite abelian `p`-group `G = ⊕_j ℤ/p^{e_j}` with weight se",
-      "quality_score": 0.5155438642611684,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-06T01:26:11",
-      "title": "Kernel‑cover characterisation of the weighted Davenport constant"
-    },
     {
       "cycle_id": "e545fdf8",
       "domain": "Combinatorics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 44,
       "timestamp": "2026-07-12T04:46:27",
       "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
+    },
+    {
+      "cycle_id": "c016fced",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Winning on the Hilbert Board\n\nThis cycle established that the lone-rook fortress on the infinite plane is not a\nplanar accident: the king's one-step escape, its infinite escape ru",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 1745,
+      "timestamp": "2026-07-12T05:03:54",
+      "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b6492bf5",
-      "domain": "Applications",
-      "name": "dependency",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "b6492bf5",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.72
-    },
     {
       "cycle_id": "b6492bf5",
       "domain": "Applications",
@@ -2803,17 +2791,22 @@
       "domain": "Applications",
       "name": "of",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "c016fced",
+      "domain": "Applications",
+      "name": "eval_const",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "c016fced",
+      "domain": "Applications",
+      "name": "eval_var",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-12T04:46:27",
+  "last_updated": "2026-07-12T05:03:54",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "0643b2b3",
-      "domain": "Combinatorics",
-      "sorry_count": 4,
-      "timestamp": "2026-07-10T20:52:48"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "823f5582",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 3,
       "timestamp": "2026-07-12T03:21:37"
+    },
+    {
+      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; necessary.  All main theorems are `sorry`-free and use genuine arguments; -    sorry",
+      "cycle_id": "c016fced",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-12T05:03:54"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c06d8e8c",
-        "quality": 0.82,
-        "theorems": 9,
-        "title": "Aleph-1 Surface: Geometry Between Dimensions"
-      },
-      {
         "cycle_id": "f8dd2b6a",
         "quality": 0.83,
         "theorems": 40,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 44,
         "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
+      },
+      {
+        "cycle_id": "c016fced",
+        "quality": 0.83,
+        "theorems": 1745,
+        "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
       }
     ],
     "Bridges": [

@@ -287,25 +287,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c016fced",
-    "description": "Building on cycle 0ba9c9ed (Q=0.820), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_0ba9c9ed_db8ddf0c",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0ba9c9ed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:40:08.941885+00:00",
-    "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 0faef071 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domain_bridges": [],
@@ -1498,6 +1479,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Cycle c016fced (Q=0.830) proved 1745 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 0ba9c9ed (Q=0.820), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general sett",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_c016fced_2b7b5712",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c016fced",
+    "status": "available",
+    "timestamp": "2026-07-12T05:03:54.350424+00:00",
+    "title": "Close Proofs: Infinite-Dimensional Chess: Winning on the Hilbert Board"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle f0772bca (Q=0.830) proved 18 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocati",
     "domain_bridges": [],
     "domains": [
@@ -2156,7 +2156,7 @@
       "khadziivanov1978",
       "bollobas1976complete"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e2c082ff",
     "description": "This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
     "domain_bridges": [
       "extremal graph theory",
@@ -2172,7 +2172,7 @@
     "proof_strategy": "inductive construction leveraging Turán extremal bounds",
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T11:32:25.412615+00:00",
     "title": "Lower bounds on clique densities using generalized inverses"
   },
@@ -11685,6 +11685,26 @@
     "status": "available",
     "timestamp": "2026-07-12T04:46:19.776308+00:00",
     "title": "This project formalizes Rudy Rucker's notion of a **mind tool** (a formal system"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Winning on the Hilbert Board\n\nThis cycle established that the lone-rook fortress on the infinite plane is not a\nplanar accident: the king's one-step escape, its infinite escape run, and the\ntransfinite *inaccessibility* of its position all survive verbatim on the\n`d`-dimensional board `ℤ^{d+2}` for every `d`, while collapsing in a single\ndimension. The following conjectures push the theory further.\n\n## 1. The exact material threshold grows with dimension\n\n**Conjecture.** On `ℤ^{d+2}` the least number of rooks that can force checkmate\nis a strictly increasing function `m(d)` of the dimension, with `m(0) = 3` and\n`m(d) → ∞`.\n\nThe key insight is that a checkmate must simultaneously cover the king's square\nand all `3^{d+2} - 1` neighbours using axis-lines, and each additional dimension\nboth multiplies the number of neighbours to cover and supplies the king with a\nfresh direction of flight; the covering problem is therefore governed by a\nline-cover number of a Hamming-like ball that provably diverges. Why now? The\npresent cycle pins the *lower* threshold exactly (two rooks never mate in any\ndimension, three suffice on the line), so the machinery to track the covering\ncount coordinate-by-coordinate is already in place.\n\n## 2. Ordinal game values are realised in every dimension\n\n**Conjecture.** For every countable ordinal `α` below `ω^ω` there is a finite\npiece configuration on `ℤ^{d+2}` whose forced-mate game value is exactly `α`, and\nthe map from configurations to values is surjective onto an initial segment of\nthe ordinals independent of `d ≥ 0`.\n\nThe key insight is that the abstract winning-tree calculus (single forced moves\ngenerate `+1`, countably branching defender moves generate suprema) is\ndimension-agnostic, so the ordinal hierarchy is a property of the *game tree*\nrather than of the board; the board only has to be rich enough to host a\ncountably branching defender choice, which two axes already provide. Why now?\nThe inaccessibility result shows the honest invariant of these endgames is an\nordinal rank, making the realisability of each rank the natural next question.\n\n## 3. Genuinely infinite-dimensional boards keep the fortress\n\n**Conjecture.** On the board of finitely-supported integer sequences (an\ninfinite-dimensional Hilbert board), any finite rook army still leaves\ninfinitely many unattacked squares, and a lone rook can never checkmate.\n\nThe key insight is that all covering obstructions in this cycle used only the\nexistence of *two* distinct coordinate axes off which a safe square can be built;\nfiniteness of the army, not finiteness of the dimension, is what makes the lines\nsparse. Why now? Having isolated \"two distinct axes\" as the sole structural\nhypothesis, the passage from `Fin (d+2)` to an arbitrary index set of size at\nleast two is the immediate and most faithful reading of \"infinite-dimensional\nchess\".\n\n## 4. Escape complexity as a growth rate\n\n**Conjecture.** Against an army of `n` rooks positioned adversarially, the king\non `ℤ^{d+2}` can guarantee reaching a permanently safe region within a number of\nmoves bounded by a polynomial in `n` whose degree depends only on `d`.\n\nThe key insight is that the explicit escape map moves every coordinate\nsimultaneously, so the king's distance from any given attacked line grows\nlinearly in time while only finitely many lines exist; a potential-function\nargument should convert \"finitely many lines miss the board\" into a quantitative\nescape time. Why now? The qualitative infinite-run theorem already exhibits a\nconcrete, computable strategy, so the remaining step is to measure it.\n\n## 5. Draw-by-fortress is a topological invariant\n\n**Conjecture.** The set of drawn (inaccessible) positions for the lone-rook\npursuit is exactly the complement of a well-founded core, and its\naccessibility-rank stratification is preserved by every board automorphism\n(translations and axis permutations).\n\nThe key insight is that accessibility rank is defined purely from the pursuit\nrelation, which is equivariant under the symmetry group of the board; hence the\ntransfinite stratification of positions is a genuine invariant rather than an\nartifact of coordinates. Why now? With inaccessibility of the lone-rook king now\nproved uniformly in the dimension, the structure of the *accessible* part —\nwhere finite mates live — becomes the sharp object of study.\n\n\n# Future Directions: Winning on the Hilbert Board\n\nThis cycle established that the lone-rook fortress on the infinite plane is not a\nplanar accident: the king's one-step escape, its infinite escape run, and the\ntransfinite *inaccessibility* of its position all survive verbatim on the\n`d`-dimensional board `ℤ^{d+2}` for every `d`, while collapsing in a single\ndimension. The following conjectures push the theory further.\n\n## 1. The exact material threshold grows with dimension\n\n**Conjecture.** On `ℤ^{d+2}` the least number of rooks that can force checkmate\nis a strictly increasing function `m(d)` of the dimension, with `m(0) = 3` and\n`m(d) → ∞`.\n\nThe key insight is that a checkmate must simultaneously cover the king's square\nand all `3^{d+2} - 1` neighbours using axis-lines, and each additional dimension\nboth multiplies the number of neighbours to cover and supplies the king with a\nfresh direction of flight; the covering problem is therefore governed by a\nline-cover number of a Hamming-like ball that provably diverges. Why now? The\npresent cycle pins the *lower* threshold exactly (two rooks never mate in any\ndimension, three suffice on the line), so the machinery to track the covering\ncount coordinate-by-coordinate is already in place.\n\n## 2. Ordinal game values are realised in every dimension\n\n**Conjecture.** For every countable ordinal `α` below `ω^ω` there is a finite\npiece configuration on `ℤ^{d+2}` whose forced-mate game value is exactly `α`, and\nthe map from configurations to values is surjective onto an initial segment of\nthe ordinals independent of `d ≥ 0`.\n\nThe key insight is that the abstract winning-tree calculus (single forced moves\ngenerate `+1`, countably branching defender moves generate suprema) is\ndimension-agnostic, so the ordinal hierarchy is a property of the *game tree*\nrather than of the board; the board only has to be rich enough to host a\ncountably branching defender choice, which two axes already provide. Why now?\nThe inaccessibility result shows the honest invariant of these endgames is an\nordinal rank, making the realisability of each rank the natural next question.\n\n## 3. Genuinely infinite-dimensional boards keep the fortress\n\n**Conjecture.** On the board of finitely-supported integer sequences (an\ninfinite-dimensional Hilbert board), any finite rook army still leaves\ninfinitely many unattacked squares, and a lone rook can never checkmate.\n\nThe key insight is that all covering obstructions in this cycle used only the\nexistence of *two* distinct coordinate axes off which a safe square can be built;\nfiniteness of the army, not finiteness of the dimension, is what makes the lines\nsparse. Why now? Having isolated \"two distinct axes\" as the sole structural\nhypothesis, the passage from `Fin (d+2)` to an arbitrary index set of size at\nleast two is the immediate and most faithful reading of \"infinite-dimensional\nchess\".\n\n## 4. Escape complexity as a growth rate\n\n**Conjecture.** Against an army of `n` rooks positioned adversarially, the king\non `ℤ^{d+2}` can guarantee reaching a permanently safe region within a number of\nmoves bounded by a polynomial in `n` whose degree depends only on `d`.\n\nThe key insight is that the explicit escape map moves every coordinate\nsimultaneously, so the king's distance from any given attacked line grows\nlinearly in time while only finitely many lines exist; a potential-function\nargument should convert \"finitely many lines miss the board\" into a quantitative\nescape time. Why now? The qualitative infinite-run theorem already exhibits a\nconcrete, computable strategy, so the remaining step is to measure it.\n\n## 5. Draw-by-fortress is a topological invariant\n\n**Conjecture.** The set of drawn (inaccessible) positions for the lone-rook\npursuit is exactly the complement of a well-founded core, and its\naccessibility-rank stratification is preserved by every board automorphism\n(translations and axis permutations).\n\nThe key insight is that accessibility rank is defined purely from the pursuit\nrelation, which is equivariant under the symmetry group of the board; hence the\ntransfinite stratification of positions is a genuine invariant rather than an\nartifact of coordinates. Why now? With inaccessibility of the lone-rook king now\nproved uniformly in the dimension, the structure of the *accessible* part —\nwhere finite mates live — becomes the sharp object of study.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1112",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c016fced",
+    "status": "available",
+    "timestamp": "2026-07-12T05:03:46.935153+00:00",
+    "title": "That the lone-rook fortress on the infinite plane is not"
   },
   {
     "ambition_level": "extension",
