@@ -325,7 +325,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97b9c756",
     "description": "Building on cycle 208b1ca5 (Q=0.820), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240·σ₃(n), where σ₃(n) = Σ_{d|n} d³. This is the foundational special case of the classical ",
     "domain_bridges": [],
     "domains": [
@@ -337,7 +337,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "208b1ca5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T23:12:33.294402+00:00",
     "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
   },
