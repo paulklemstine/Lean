@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f8dd2b6a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Causal Loops in Category Theory\n\nThe results of this cycle established that a *controlled* failure of associativity — where\n`(f · g) · h` and `f · (g · h)` are distinct but unique",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 40,
-      "timestamp": "2026-07-11T15:33:31",
-      "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
-    },
-    {
       "cycle_id": "2bd85c25",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Theorems as Phase Transitions in Proof Space\n\nThis project formalizes, in Lean 4 (Mathlib), a rigorous mathematical skeleton\nfor the speculative picture of *proof space* as a sta",
@@ -499,19 +489,19 @@
       "theorem_count": 33,
       "timestamp": "2026-07-12T11:36:00",
       "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+    },
+    {
+      "cycle_id": "812631ed",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Robust Neural Coding\n\nThis cycle added the **Singleton bound** and its **robust-capacity** corollary to\nthe neural-coding theory, complementing the earlier sphere-packing (Hammin",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T11:53:23",
+      "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "236b0246",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = ∑_k H_d(n,k)`: the `d = 1` totals `2^n` are infinite",
-      "quality_score": 0.4996542252252253,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-07T17:01:19",
-      "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
-    },
     {
       "cycle_id": "ea22db3c",
       "domain": "Bridges",
@@ -2501,15 +2491,19 @@
       "theorem_count": 33,
       "timestamp": "2026-07-12T11:36:00",
       "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+    },
+    {
+      "cycle_id": "812631ed",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Robust Neural Coding\n\nThis cycle added the **Singleton bound** and its **robust-capacity** corollary to\nthe neural-coding theory, complementing the earlier sphere-packing (Hammin",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T11:53:23",
+      "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "538f30a2",
-      "domain": "Tropical",
-      "name": "is",
-      "quality": 0.78
-    },
     {
       "cycle_id": "538f30a2",
       "domain": "Tropical",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "dbl_bijective_of_odd",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "812631ed",
+      "domain": "Novelty",
+      "name": "underlying",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T11:36:00",
+  "last_updated": "2026-07-12T11:53:23",
   "open_questions": [
     {
       "context": "+  range `13 ≤ n ≤ 10000` and carries no `sorry`: the structural reduction is; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8e111703",
-        "quality": 0.83,
-        "theorems": 12,
-        "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-      },
-      {
         "cycle_id": "ef2405bd",
         "quality": 0.82,
         "theorems": 1185,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 33,
         "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and P"
+      },
+      {
+        "cycle_id": "812631ed",
+        "quality": 0.82,
+        "theorems": 9,
+        "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
       }
     ],
     "NumberTheory": [

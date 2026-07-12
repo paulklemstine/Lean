@@ -458,6 +458,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "bc831bad",
+    "description": "Building on cycle 812631ed (Q=0.820), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Neural Coding Theorems\n\n`NeuralCoding.lean` builds a self-contained chain of neural-coding results:\ncapacity `2^N`, its tightness and the per-neuron doubling law, the average dense\nenergy `N/2`, exact sparse (weight-`k`) counts `C(N,k)`, the population-coding\n`1/√N` precision l",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_812631ed_03ecd274",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "812631ed",
+    "status": "in_progress",
+    "timestamp": "2026-07-12T11:53:23.418050+00:00",
+    "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 823f5582 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology cla",
     "domain_bridges": [],
@@ -10217,7 +10236,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d019c88a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Qₙ` (`n ≥ 2`), the homological code\n`HQECC(Qₙ)` has minimum distance equal to the girth of `Qₙ`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n ≥ 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `β₁(Qₙ) = 2ⁿ⁻¹(n−2)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 − (V−1)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `β₀ − β₁ = V − E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k ≤ n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n − rank d₁ − rank d₂` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n − k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d₁ / im d₂`\nand the `Z`-logical space `ker d₂ᵀ / im d₁ᵀ` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
     "domain_bridges": [],
     "domains": [
@@ -10230,7 +10249,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "207fb5b4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T09:26:14.435602+00:00",
     "title": "Exact dictionary \"logical qubits = middle homology\""
   },
@@ -11477,26 +11496,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "812631ed",
-    "description": "# Future Directions — Neural Coding Theorems\n\n`NeuralCoding.lean` builds a self-contained chain of neural-coding results:\ncapacity `2^N`, its tightness and the per-neuron doubling law, the average dense\nenergy `N/2`, exact sparse (weight-`k`) counts `C(N,k)`, the population-coding\n`1/√N` precision law, the `Θ(log N)` bits-per-spike advantage of sparse coding,\nand a rank bound realizing the neural-manifold hypothesis. Natural extensions:\n\n## Capacity and codes\n- **Error-correcting neural codes.** Introduce a Hamming metric on `NeuralCode N`\n  and prove Singleton / sphere-packing bounds relating minimum distance,\n  redundancy, and the number of reliably distinguishable concepts under noise.\n- **Robust capacity.** Quantify how capacity `2^N` degrades to `2^{N - r}` when\n  codewords must be pairwise distance `≥ 2r+1` apart (noise tolerance).\n\n## Sparse coding\n- **Optimal sparsity.** Maximize `log₂ C(N,k) / k` (bits per spike) over `k`;\n  prove the optimum is at `k = 1` for the one-hot regime and characterize the\n  bits/energy frontier `log₂ C(N,k)/k` as a function of the sparsity `k/N`.\n- **Entropy formulation.** Replace `log₂ C(N,k)` by the binary-entropy\n  approximation `N · H(k/N)` and prove the standard `C(N,k) ≥ 2^{N H(k/N)}/(N+1)`\n  bound, tightening the efficiency comparison.\n\n## Population coding\n- **Probabilistic grounding.** Re-derive `popVariance = v/N` from Mathlib's\n  `ProbabilityTheory.variance` for independent identically distributed neuron\n  estimates, turning the algebraic model into a theorem about random variables.\n- **Fisher information / Cramér–Rao.** Show the `1/√N` precision is optimal by a\n  Cramér–Rao bound: no unbiased estimator from `N` neurons beats `√v/√N`.\n\n## Neural manifold hypothesis\n- **Nonlinear manifolds.** Upgrade `neural_manifold_dim_le_dof` from linear maps\n  to smooth immersions/submersions, bounding the manifold dimension by the\n  behavioural DOF via the constant-rank theorem.\n- **Intrinsic dimension.** Relate the manifold dimension to PCA/covariance rank\n  of recorded activity, connecting the theorem to the empirical \"dimensionality\"\n  measured in systems neuroscience.\n\n## Cross-links in the catalog\n- Connect to `MindEncodingBounds.lean` (connectome description length): combine\n  the per-code capacity here with the quadratic slot count there to bound total\n  representational capacity of a wired network, not just an activity pattern.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_1113",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ef2405bd",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T05:20:46.630314+00:00",
-    "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet is countably infinite, whereas any physically\nrealizable enumerator has a finite operation budget, so the *fraction* of statements\nit can ever exhibit tends to zero — and even holographic (area-law) storage, which\nscales with the square of a black hole's mass, cannot change that asymptotic verdict.\n\n## 1. Density-graded inexhaustibility\n**Conjecture.** For every productive deductive system there is a length-graded\nenumeration in which the discoverable fraction decays no faster than the reciprocal\nof the enumeration index, and this rate is optimal across all enumerations.\n*The key insight is* that finiteness of the budget, not the growth law of the\nresource, controls the asymptotic density, so the decay rate is an invariant of the\ncounting order rather than of the physics. *Why now?* Length-graded complexity\nmeasures for formal languages are now precise enough to pin the exact reciprocal\nrate, turning a qualitative \"measure zero\" statement into a sharp asymptotic law.\n\n## 2. Area-law optimality of holographic memory\n**Conjecture.** Among all monotone storage laws bounded by the surface area of a\nregion, the quadratic-in-mass Bekenstein–Hawking law is the unique maximizer of\ntotal storable information at fixed enclosed energy.\n*The key insight is* that the horizon area, not the enclosed volume, is the true\ncapacity variable, so any volume-scaling proposal violates the entropy bound and\nthe quadratic law is forced. *Why now?* Entropy bounds for gravitating systems have\nmatured to the point where the extremal characterization can be stated as a clean\noptimization over admissible capacity functions.\n\n## 3. Quadratic-beats-linear crossover is a phase boundary\n**Conjecture.** The crossover mass at which area-law storage overtakes any fixed\nlinear budget marks a genuine threshold: below it, discovery is budget-limited;\nabove it, discovery is enumeration-limited, and the two regimes have distinct\nscaling exponents for the number of statements exhibited per unit energy.\n*The key insight is* that the ratio of quadratic to linear capacity crosses one at a\nmass determined solely by the linear coefficient and the geometric constant, giving a\nsharp, computable boundary. *Why now?* The dominance inequality is already established\nin closed form, so the crossover mass is explicit and its two-sided behavior is testable.\n\n## 4. Robustness of fraction-zero under super-polynomial storage\n**Conjecture.** Replacing the area law by any storage law that is finite for every\nfinite mass — including hypothetical super-polynomial laws — leaves the discoverable\nfraction tending to zero; the fraction is positive only if storage becomes actually\ninfinite at some finite mass.\n*The key insight is* that the dichotomy is finite-versus-infinite, not slow-versus-fast,\nso the entire hierarchy of realizable storage laws collapses to a single asymptotic\nclass. *Why now?* With the finite-budget squeeze argument in hand, the conjecture\nreduces to characterizing exactly which growth laws remain finite pointwise.\n\n## 5. Countability transfer across formal systems\n**Conjecture.** The bijection between the theorems of one productive system and the\nnatural numbers can be made to commute with translation maps between systems, so that\nrelative discovery rates between two theories are governed by a single comparison\nfunction independent of either system's internal syntax.\n*The key insight is* that countability is a structural, syntax-free property, so\ninter-theory discovery comparisons factor through the shared enumeration of the\nnaturals. *Why now?* Uniform translation frameworks between formal systems are now\nstandard, making the commuting-bijection statement precise and checkable.\n",
     "domain_bridges": [],
@@ -11873,6 +11872,26 @@
     "status": "available",
     "timestamp": "2026-07-12T11:35:52.517221+00:00",
     "title": "Three self-contained Lean 4 files formalise a coherent slice of the number theor"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Robust Neural Coding\n\nThis cycle added the **Singleton bound** and its **robust-capacity** corollary to\nthe neural-coding theory, complementing the earlier sphere-packing (Hamming)\nceiling. Two independent obstructions to noise-tolerant capacity are now in hand:\na *packing* obstruction (each codeword owns a Hamming ball) and a *projection*\nobstruction (large minimum distance makes a few coordinates determine every\ncodeword). The following conjectures push the theory forward.\n\n## 1. Perfect neural codes sit exactly where the two bounds coincide\n\n**Conjecture.** A noise-tolerant neural codebook meets the sphere-packing bound\nwith equality if and only if it is a *perfect* code, and every such code also\nsatisfies the Singleton bound strictly unless it is a repetition or full code.\n\n**The key insight is** that the packing ceiling and the projection ceiling are\nextremal for opposite reasons — packing is tight when balls tile the cube with no\ngaps, projection is tight when the code is maximally spread — so the codes that\nsaturate *both* are exactly the degenerate endpoints (distance `1` and distance\n`N`), and everything in between saturates at most one.\n\n**Why now?** With both ceilings formalized over the same pattern space\n`Fin N → Bool`, their simultaneous equality conditions can be compared directly\nrather than through separate ad-hoc arguments, making the \"perfect ⇒ one bound,\nnot both\" dichotomy precisely stateable.\n\n## 2. Metabolic sparsity and error tolerance trade off linearly\n\n**Conjecture.** Among weight-`k` (sparse) neural codebooks, achievable minimum\ndistance is capped by `d ≤ 2k`, and the resulting capacity obeys a combined\nsparse-Singleton law `|C| ≤ min(C(N,k), 2^(N+1−d))`.\n\n**The key insight is** that two sparse patterns differ in at most `2k` neurons, so\nmetabolic budget `k` (spikes per concept) directly limits how far apart codewords\ncan be pushed, coupling energy efficiency to noise tolerance in a single\ninequality.\n\n**Why now?** The exact sparse counts `C(N,k)` and the distance-based Singleton\nceiling are both available; multiplying the two constraints turns the informal\n\"sparse codes are cheap but fragile\" intuition into a sharp frontier.\n\n## 3. Population averaging and minimum distance give the same precision law\n\n**Conjecture.** The `1/√N` precision of population averaging and the error\ntolerance `⌊(d−1)/2⌋` of a distance-`d` code are two faces of one estimator: the\nminimum-distance decoder attains mean-squared error `Θ(1/d)`, matching the\nvariance-of-the-mean `v/N` when `d ∝ N`.\n\n**The key insight is** that both mechanisms fight noise by redundancy — averaging\nspreads a stimulus across many neurons, distance spreads a concept across many\nflippable coordinates — and their error rates should coincide once redundancy is\nmeasured in the same units.\n\n**Why now?** The population-variance law `v/N` and the distance-based correction\nradius are now formal theorems over comparable models, so a unifying estimator\nthat specializes to both is within reach rather than merely analogical.\n\n## 4. The projection argument lifts to graded (non-binary) neural alphabets\n\n**Conjecture.** Replacing binary neurons by `q`-level firing rates yields a\n`q`-ary Singleton bound `|C| ≤ q^(N+1−d)`, and the neural-manifold rank bound\nbecomes its continuous limit as `q → ∞`.\n\n**The key insight is** that the puncturing/projection proof never used the\ntwo-element structure of `Bool` — only that agreement off a `(d−1)`-set forces\ndistance `< d` — so it transfers verbatim to any finite alphabet and, in the\nlimit, to the linear-rank ceiling of the manifold hypothesis.\n\n**Why now?** The proof here is already alphabet-agnostic in spirit; isolating the\none place binariness is used shows it is inessential, opening a direct bridge from\ndiscrete coding bounds to the continuous neural-manifold dimension bound.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1133",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "812631ed",
+    "status": "available",
+    "timestamp": "2026-07-12T11:53:13.954702+00:00",
+    "title": "This cycle added the **Singleton bound** and its **robust-capacity** corollary t"
   },
   {
     "ambition_level": "extension",
