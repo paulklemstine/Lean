@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c37c01fa",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThis cycle proved that the box-counting dimension of a periodic density theory\nequals the asymptotic density of its information-beari",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 30,
-      "timestamp": "2026-07-11T18:54:06",
-      "title": "Deepening: The Fractal Dimension of Mathematical Truth"
-    },
-    {
       "cycle_id": "7669ab26",
       "domain": "Applications",
       "key_insight": "# Future Directions: Topological Quantum Codes from Homology\n\nThis cycle established, as exact theorems, that the number of logical qubits of a\nCSS code equals the first Betti number of its underlying",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-12T13:53:38",
       "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
+    },
+    {
+      "cycle_id": "d019c88a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Homological Quantum Codes — Cycle 1 results\n\nThread `th_c942ee26`, root direction `fd_0859`. The previous cycle established\nthe exact dictionary **\"logical qubits = middle homolog",
+      "quality_score": 0.88,
+      "sorry_count": 1,
+      "theorem_count": 30,
+      "timestamp": "2026-07-12T14:10:41",
+      "title": "Exact dictionary \"logical qubits = middle homology\""
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cbe7147b",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Arithmetic on the Möbius Band\n\nThis project formalizes the honest mathematical core of the \"Möbius arithmetic\"\nproposal in `Algebra/MoebiusArithmetic.lean`, and shows precisely wh",
-      "quality_score": 0.5326040000000001,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-08T18:11:11",
-      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
-    },
     {
       "cycle_id": "0c573935",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-12T13:53:38",
       "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
+    },
+    {
+      "cycle_id": "d019c88a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Homological Quantum Codes — Cycle 1 results\n\nThread `th_c942ee26`, root direction `fd_0859`. The previous cycle established\nthe exact dictionary **\"logical qubits = middle homolog",
+      "quality_score": 0.88,
+      "sorry_count": 1,
+      "theorem_count": 30,
+      "timestamp": "2026-07-12T14:10:41",
+      "title": "Exact dictionary \"logical qubits = middle homology\""
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ef2405bd",
-      "domain": "Novelty",
-      "name": "det_scaledGram",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ef2405bd",
-      "domain": "Novelty",
-      "name": "det_NeronSeveri",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "2cd42066",
-      "domain": "Novelty",
-      "name": "on",
-      "quality": 0.74
-    },
     {
       "cycle_id": "2cd42066",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "card_active_pair",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "d019c88a",
+      "domain": "Applications",
+      "name": "parity_adj",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "d019c88a",
+      "domain": "Applications",
+      "name": "hypercube_walk_length_parity",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "d019c88a",
+      "domain": "Applications",
+      "name": "hypercube_closed_walk_even",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-07-12T13:53:38",
+  "last_updated": "2026-07-12T14:10:41",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "1c874912",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-11T09:25:07"
-    },
     {
       "context": "-    sorry; +  · sorry  -- Zsygmondy / Carmichael tail: not available in Mathlib; +This is the honest, `sorry`-free version of `fib_carmichael_composite`: the",
       "cycle_id": "d4a0469f",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-12T13:53:38"
+    },
+    {
+      "context": "-Everything is elementary and `sorry`-free.",
+      "cycle_id": "d019c88a",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-12T14:10:41"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "27e75405",
-        "quality": 0.62,
-        "theorems": 865,
-        "title": "Product Hilton-Milner theorem for large n"
-      },
-      {
         "cycle_id": "b88b4225",
         "quality": 0.82,
         "theorems": 848,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 7,
         "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding re"
+      },
+      {
+        "cycle_id": "d019c88a",
+        "quality": 0.88,
+        "theorems": 30,
+        "title": "Exact dictionary \"logical qubits = middle homology\""
       }
     ],
     "Bridges": [

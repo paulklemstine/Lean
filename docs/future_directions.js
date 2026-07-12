@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle d019c88a (Q=0.880), which proved 30 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hyper",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_d019c88a_ffbd2c7d",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "d019c88a",
+    "status": "available",
+    "timestamp": "2026-07-12T14:10:41.329355+00:00",
+    "title": "Deepening: Exact dictionary \"logical qubits = middle homology\""
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0664586a (Q=0.830), which proved 18 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
     "domains": [
       "Computation"
@@ -1164,6 +1178,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle d019c88a (Q=0.880) proved 30 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logi",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_d019c88a_ee4fa76d",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "d019c88a",
+    "status": "available",
+    "timestamp": "2026-07-12T14:10:41.417442+00:00",
+    "title": "Close Proofs: Exact dictionary \"logical qubits = middle homology\""
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle e2c082ff (Q=0.820) proved 9 theorems in MachineLearning but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a f",
     "domains": [
       "MachineLearning"
@@ -1653,20 +1681,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
-  },
-  {
-    "consumed_by_exp_id": "c81fdc47",
-    "description": "For the natural bijection \u03c6 from the set of B-orbits on B_n \u00d7 P^(n-1) to its image in W_(n+1) \u00d7 W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O\u2081 \u2286 O\u0305\u2082 iff \u03c6(O\u2081) \u2264 \u03c6(O\u2082) in (W_(n+1), \u2264_Bruhat) \u00d7 (W_(n+1), \u2264_Bruhat).",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0042",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30478v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T18:30:28.722983+00:00",
-    "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
     "consumed_by_exp_id": "",
@@ -7171,6 +7185,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T13:53:31.839050+00:00",
     "title": "The present cycle upgraded the neural-coding chain from *first-moment* facts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Homological Quantum Codes \u2014 Cycle 1 results\n\nThread `th_c942ee26`, root direction `fd_0859`. The previous cycle established\nthe exact dictionary **\"logical qubits = middle homology\"** for the length-two\nchain-complex model of CSS codes (`CSSComplex.numLogical_add`,\n`CSSComplex.euler`) and used it to refute the folklore \"one qubit\" law for the\nhypercube *graph* (`Hypercube.betti1_closed`, `betti1_eq_one_iff`).\n\nThis cycle settles **all four** stated conjectures with complete Lean 4\nproofs. Conjectures 2\u20134 are field-agnostic and use the additive form of\nrank\u2013nullity (no truncated \u2115-subtraction); see `LogicalDimension.lean`.\nConjecture 1 (distance = girth = 4) is settled in `HypercubeGirth.lean`.\n\n## Results proved this cycle\n\n### Conjecture 3 \u2014 Realizability of every logical/physical pair \u2714 PROVED\n- `ChainCplx.realizable_pair` : for every field `K` and all `p k : \u2115`, there is a\n  length-two complex with `dim B = p + k` and logical dimension **exactly** `k`.\n- `ChainCplx.realizable_le` : for every field `K` and every `k \u2264 n`, a complex\n  with physical dimension exactly `n` and logical dimension exactly `k` exists \u2014\n  every `(n, k)` pair is realized.\n- `ChainCplx.realizable_ranks` (refined form matching the conjecture's insight):\n  for all `r s m : \u2115` there is a complex with `dim B = r + s + m`,\n  `rank d\u2081 = r`, `rank d\u2082 = s`, and logical dimension exactly `m`. This turns the\n  exact accounting `k = dim B \u2212 rank d\u2081 \u2212 rank d\u2082` into a rank-prescription\n  construction (`B = K\u02b3 \u00d7 K\u02e2 \u00d7 K\u1d50`, `d\u2081 = fst`, `d\u2082 = inclusion of the middle\n  factor`).\n\n### Conjecture 4 \u2014 Cohomological / CSS self-duality \u2714 PROVED\n- `ChainCplx.dual` : the transposed complex `C* --d\u2081\u1d40--> B* --d\u2082\u1d40--> A*`.\n- `ChainCplx.numLogical_dual` : `X.dual.numLogical = X.numLogical`. The\n  `X`-logical space `ker d\u2081 / im d\u2082` and the `Z`-logical space\n  `ker d\u2082\u1d40 / im d\u2081\u1d40` always have equal dimension. The proof is exactly the\n  rank symmetry `rank f\u1d40 = rank f` (`LinearMap.finrank_range_dualMap_eq_finrank_range`)\n  fed through the dimension formula, plus `dim B* = dim B` for finite spaces.\n\n### Conjecture 2 \u2014 Euler characteristic as a code rate \u2714 PROVED (formula + endpoints)\n- `ChainCplx.graph_count` : for a connected graph complex (`d\u2082 = 0`, `\u03b2\u2080 = 1`)\n  with `V = dim C`, `E = dim B`, one has `k + V = E + 1`.\n- `ChainCplx.rate_eq` : the code rate `k / E` equals `1 \u2212 (V\u22121)/E` (for `E > 0`).\n- `ChainCplx.rate_tree` : a tree (`E = V \u2212 1`) has `k = 0`, rate `0`.\n- `ChainCplx.rate_bouquet` : a one-vertex bouquet (`V = 1`) has `k = E`, rate `1`.\n  These pin the extremes of the rate; the endpoints are exactly the trees\n  (minimum) and bouquets (maximum) named in the conjecture.\n\n### Conjecture 1 \u2014 distance = girth = 4 \u2714 PROVED\nFormalized in `HypercubeGirth.lean`. The hypercube graph `Q\u2099` is modelled as the\nMathlib `SimpleGraph` on vertex set `Fin n \u2192 ZMod 2` with adjacency \"differ in\nexactly one coordinate\" (`HomQECC.hypercube`). For a one-dimensional (graph)\ncomplex the homological minimum distance is the length of a shortest nontrivial\ncycle, i.e. the graph **girth**, so Conjecture 1 reduces to `girth Q\u2099 = 4`.\n\n- `HomQECC.parity` / `HomQECC.parity_adj` : the coordinate-sum parity is a proper\n  2-colouring \u2014 adjacent vertices differ in parity.\n- `HomQECC.hypercube_walk_length_parity` : along any walk the endpoint parity is\n  the start parity plus the walk length (`Q\u2099` is bipartite).\n- `HomQECC.hypercube_closed_walk_even` / `HomQECC.hypercube_triangle_free` : every\n  closed walk has even length, so there is no `3`-cycle (girth `\u2265 4`).\n- `HomQECC.hypercube_has_four_cycle` : for `n \u2265 2` the explicit square\n  `0 \u2192 e\u2080 \u2192 e\u2080+e\u2081 \u2192 e\u2081 \u2192 0` is a `4`-cycle (girth `\u2264 4`).\n- `HomQECC.hypercube_girth` : `girth Q\u2099 = 4` for all `n \u2265 2`, independent of `n`.\n- `HomQECC.singleton_gap` : `4 < 2^{n/2}` (as a real power) for `n \u2265 5`, so the\n  constant girth distance `4` is strictly below the quantum Singleton value\n  `2^{n/2}`; the hypercube homological code does **not** achieve the quantum\n  Singleton bound for `n \u2265 5`.\n\nAll theorems in `HypercubeGirth.lean` depend only on `propext`,\n`Classical.choice`, `Quot.sound`.\n\n## Notes\n- `HypercubeGirth.lean` is self-contained (`import Mathlib` only) and models `Q\u2099`\n  directly on `Fin n \u2192 ZMod 2` via Mathlib's `SimpleGraph`/`girth`.\n- `LogicalDimension.lean` is self-contained (`import Mathlib` only) and reproves\n  the core dimension identities in its own namespace `HomQECC` so it compiles\n  independently of the previous cycle's `CSSHomology.lean` / `HypercubeCode.lean`.\n- All headline theorems depend only on `propext`, `Classical.choice`, `Quot.sound`.\n\n\n# Future Directions: Homological Quantum Codes \u2014 Cycle 1 results\n\nThread `th_c942ee26`, root direction `fd_0859`. The previous cycle established\nthe exact dictionary **\"logical qubits = middle homology\"** for the length-two\nchain-complex model of CSS codes (`CSSComplex.numLogical_add`,\n`CSSComplex.euler`) and used it to refute the folklore \"one qubit\" law for the\nhypercube *graph* (`Hypercube.betti1_closed`, `betti1_eq_one_iff`).\n\nThis cycle settles **all four** stated conjectures with complete Lean 4\nproofs. Conjectures 2\u20134 are field-agnostic and use the additive form of\nrank\u2013nullity (no truncated \u2115-subtraction); see `LogicalDimension.lean`.\nConjecture 1 (distance = girth = 4) is settled in `HypercubeGirth.lean`.\n\n## Results proved this cycle\n\n### Conjecture 3 \u2014 Realizability of every logical/physical pair \u2714 PROVED\n- `ChainCplx.realizable_pair` : for every field `K` and all `p k : \u2115`, there is a\n  length-two complex with `dim B = p + k` and logical dimension **exactly** `k`.\n- `ChainCplx.realizable_le` : for every field `K` and every `k \u2264 n`, a complex\n  with physical dimension exactly `n` and logical dimension exactly `k` exists \u2014\n  every `(n, k)` pair is realized.\n- `ChainCplx.realizable_ranks` (refined form matching the conjecture's insight):\n  for all `r s m : \u2115` there is a complex with `dim B = r + s + m`,\n  `rank d\u2081 = r`, `rank d\u2082 = s`, and logical dimension exactly `m`. This turns the\n  exact accounting `k = dim B \u2212 rank d\u2081 \u2212 rank d\u2082` into a rank-prescription\n  construction (`B = K\u02b3 \u00d7 K\u02e2 \u00d7 K\u1d50`, `d\u2081 = fst`, `d\u2082 = inclusion of the middle\n  factor`).\n\n### Conjecture 4 \u2014 Cohomological / CSS self-duality \u2714 PROVED\n- `ChainCplx.dual` : the transposed complex `C* --d\u2081\u1d40--> B* --d\u2082\u1d40--> A*`.\n- `ChainCplx.numLogical_dual` : `X.dual.numLogical = X.numLogical`. The\n  `X`-logical space `ker d\u2081 / im d\u2082` and the `Z`-logical space\n  `ker d\u2082\u1d40 / im d\u2081\u1d40` always have equal dimension. The proof is exactly the\n  rank symmetry `rank f\u1d40 = rank f` (`LinearMap.finrank_range_dualMap_eq_finrank_range`)\n  fed through the dimension formula, plus `dim B* = dim B` for finite spaces.\n\n### Conjecture 2 \u2014 Euler characteristic as a code rate \u2714 PROVED (formula + endpoints)\n- `ChainCplx.graph_count` : for a connected graph complex (`d\u2082 = 0`, `\u03b2\u2080 = 1`)\n  with `V = dim C`, `E = dim B`, one has `k + V = E + 1`.\n- `ChainCplx.rate_eq` : the code rate `k / E` equals `1 \u2212 (V\u22121)/E` (for `E > 0`).\n- `ChainCplx.rate_tree` : a tree (`E = V \u2212 1`) has `k = 0`, rate `0`.\n- `ChainCplx.rate_bouquet` : a one-vertex bouquet (`V = 1`) has `k = E`, rate `1`.\n  These pin the extremes of the rate; the endpoints are exactly the trees\n  (minimum) and bouquets (maximum) named in the conjecture.\n\n### Conjecture 1 \u2014 distance = girth = 4 \u2714 PROVED\nFormalized in `HypercubeGirth.lean`. The hypercube graph `Q\u2099` is modelled as the\nMathlib `SimpleGraph` on vertex set `Fin n \u2192 ZMod 2` with adjacency \"differ in\nexactly one coordinate\" (`HomQECC.hypercube`). For a one-dimensional (graph)\ncomplex the homological minimum distance is the length of a shortest nontrivial\ncycle, i.e. the graph **girth**, so Conjecture 1 reduces to `girth Q\u2099 = 4`.\n\n- `HomQECC.parity` / `HomQECC.parity_adj` : the coordinate-sum parity is a proper\n  2-colouring \u2014 adjacent vertices differ in parity.\n- `HomQECC.hypercube_walk_length_parity` : along any walk the endpoint parity is\n  the start parity plus the walk length (`Q\u2099` is bipartite).\n- `HomQECC.hypercube_closed_walk_even` / `HomQECC.hypercube_triangle_free` : every\n  closed walk has even length, so there is no `3`-cycle (girth `\u2265 4`).\n- `HomQECC.hypercube_has_four_cycle` : for `n \u2265 2` the explicit square\n  `0 \u2192 e\u2080 \u2192 e\u2080+e\u2081 \u2192 e\u2081 \u2192 0` is a `4`-cycle (girth `\u2264 4`).\n- `HomQECC.hypercube_girth` : `girth Q\u2099 = 4` for all `n \u2265 2`, independent of `n`.\n- `HomQECC.singleton_gap` : `4 < 2^{n/2}` (as a real power) for `n \u2265 5`, so the\n  constant girth distance `4` is strictly below the quantum Singleton value\n  `2^{n/2}`; the hypercube homological code does **not** achieve the quantum\n  Singleton bound for `n \u2265 5`.\n\nAll theorems in `HypercubeGirth.lean` depend only on `propext`,\n`Classical.choice`, `Quot.sound`.\n\n## Notes\n- `HypercubeGirth.lean` is self-contained (`import Mathlib` only) and models `Q\u2099`\n  directly on `Fin n \u2192 ZMod 2` via Mathlib's `SimpleGraph`/`girth`.\n- `LogicalDimension.lean` is self-contained (`import Mathlib` only) and reproves\n  the core dimension identities in its own namespace `HomQECC` so it compiles\n  independently of the previous cycle's `CSSHomology.lean` / `HypercubeCode.lean`.\n- All headline theorems depend only on `propext`, `Classical.choice`, `Quot.sound`.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1139",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d019c88a",
+    "status": "available",
+    "timestamp": "2026-07-12T14:10:29.687835+00:00",
+    "title": "Thread `th_c942ee26`, root direction `fd_0859`. The previous cycle established"
   },
   {
     "consumed_by_exp_id": "",
