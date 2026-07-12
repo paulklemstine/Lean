@@ -59,7 +59,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f9ea620",
     "description": "Building on cycle 26d2653d (Q=0.830), which proved 2828 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computa",
     "domains": [
       "Applications"
@@ -68,7 +68,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "26d2653d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T06:11:35.916587+00:00",
     "title": "Deepening: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
@@ -1135,7 +1135,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0fe20e26",
     "description": "Cycle 823f5582 (Q=0.820) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surfa",
     "domains": [
       "Applications"
@@ -1144,7 +1144,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "823f5582",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T21:41:40.242627+00:00",
     "title": "Close Proofs: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
   },
