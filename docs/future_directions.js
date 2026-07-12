@@ -4495,7 +4495,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "208b1ca5",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4504,7 +4504,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
@@ -6850,7 +6850,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact algebra of the balancing-ratio functional for a"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c4e7ae8",
     "description": "# Future Directions\n\nThis cycle deepens the probabilistic-method development (Erd\u0151s Ramsey lower bound, first-moment\nprinciple, and the Lov\u00e1sz Local Lemma chain rule) by formalising a *second* pillar of the\nprobabilistic method: **Property B**, the two-colourability of sparse hypergraphs\n(`m(k) \u2265 2^{k-1}`, Erd\u0151s 1963). The result is in `Catalog/Cryptography/PropertyBTwoColoring.lean`.\n\n## What was proved\n\n- `PropertyB.exists_proper_two_coloring` \u2014 sharp form: if every edge of a hypergraph on `Fin N`\n  has `\u2265 k \u2265 1` vertices and there are fewer than `2^{k-1}` edges, then some red/blue vertex\n  colouring makes every edge bichromatic. Proof: finite union bound over the `2^N` colourings,\n  reusing the Boolean-lattice interval counts `card_filter_superset` / `card_filter_disjoint`.\n- `PropertyB.property_B` \u2014 the classical `k`-uniform statement (special case).\n- `PropertyB.two_colorable_of_lt` \u2014 the same, phrased as \"every edge meets and misses the red\n  set\".\n- Concrete corollaries: `single_edge_two_colorable`, `property_B_three_edges_three_uniform`.\n- `PropertyB.IsNonTwoColorable` and `PropertyB.card_ge_of_nonTwoColorable` /\n  `card_ge_of_nonTwoColorable_uniform` \u2014 the extremal-function lower bound `2^{k-1} \u2264 m(k)`:\n  every non-2-colourable hypergraph whose edges each have `\u2265 k \u2265 1` vertices has at least\n  `2^{k-1}` edges (the contrapositive packaging of the main theorem).\n- `PropertyB.triangleGraph`, `triangleGraph_card`, `triangleGraph_two_uniform`,\n  `triangleGraph_nonTwoColorable`, and `exists_nonTwoColorable_two_uniform_three_edges` \u2014 a\n  concrete extremal *witness* for `k = 2`: the triangle is a non-2-colourable `2`-uniform\n  hypergraph with exactly `3` edges, giving the matching upper bound `m(2) \u2264 3` (checked over\n  the `2^3` colourings). Combined with the lower bound this pins the configuration `m(2) = 3`\n  down to an explicit realiser.\n\n## Natural next steps\n\n1. **Extremal function `m(k)`.** The lower bound `2^{k-1} \u2264 m(k)` is now formalised as\n   `PropertyB.card_ge_of_nonTwoColorable`, and the upper-bound witness `m(2) \u2264 3` is realised\n   concretely by `PropertyB.exists_nonTwoColorable_two_uniform_three_edges` (the triangle). The\n   remaining work is to formalise the further matching bounds \u2014 notably `m(3)=7` (Fano plane) \u2014\n   the sharp *lower* bound `m(2) \u2265 3` (every 2-edge graph is bipartite), and to package `m(k)`\n   itself as an explicit extremal number (e.g. via `Nat.find` over non-2-colourable\n   configurations).\n\n2. **Random / alteration improvement.** Upgrade the lower bound to the Radhakrishnan\u2013Srinivasan\n   `m(k) = \u03a9(2^k \u221a(k/log k))` via the semi-random (Lov\u00e1sz-Local-Lemma-assisted) colouring, using\n   the existing `LovaszLocalLemmaChain` backbone.\n\n3. **LLL two-colourability.** Combine `ProbMethod` (the chain-rule LLL positivity) with a bounded\n   edge-intersection hypothesis to get the LLL version of Property B: a `k`-uniform hypergraph in\n   which each edge meets fewer than `2^{k-3}` others is 2-colourable. The remaining work is to\n   verify the conditional-avoidability hypothesis of `measure_iInter_compl_pos_of_cond_lt` from a\n   dependency-degree bound `e\u00b7p\u00b7(d+1) \u2264 1`.\n\n4. **Weighted / list colourings.** Extend to `r`-colourings (`m_r(k) \u2265 r^{k-1}/\u2026`) by replacing\n   the Boolean powerset count with an `r`-ary function count.\n\n5. **Bridge to Ramsey.** Both `RamseyProbabilisticLowerBound` and this file share the identical\n   double-count `#{A \u2286 Gr : S \u2286 A} = 2^{|Gr|-|S|}`; a shared `Shared/` counting module would let\n   the two theorems (and the Tur\u00e1n bound) be derived from a single first-moment lemma.\n",
     "domains": [
       "Algebra",
@@ -6860,7 +6860,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "53945fe2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T10:27:03.898881+00:00",
     "title": "This cycle deepens the probabilistic-method development (Erd\u0151s Ramsey lower boun"
   },
