@@ -298,6 +298,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4b34e974 (Q=0.820), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_4b34e974_bd94178e",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "4b34e974",
+    "status": "available",
+    "timestamp": "2026-07-12T01:53:42.878360+00:00",
+    "title": "Deepening: Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7473e6ed (Q=0.820), which proved 14 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations cor",
     "domains": [
       "Physics"
@@ -764,7 +778,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "538f30a2",
     "description": "Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show: the multiverse is closed under forcing (every universe has forcing extensions). Conjecture: there is no 'true' CH \u2014 the question is meaningless without specifying which universe. Explore: formalize 'multiverse truth' \u2014 a statement is multiverse-true if it holds in all universes. Prove: ZFC is multiverse-true, CH is not.",
     "domains": [
       "Novelty",
@@ -774,7 +788,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T01:03:10.209659+00:00",
     "title": "Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
@@ -869,7 +883,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
   {
-    "consumed_by_exp_id": "cb7a11a2",
+    "consumed_by_exp_id": "",
     "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n \u2192 T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
     "domains": [
       "Novelty",
@@ -879,7 +893,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T19:27:06.982863+00:00",
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
@@ -1187,21 +1201,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-11T23:04:45.695664+00:00",
     "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
-  },
-  {
-    "consumed_by_exp_id": "4b34e974",
-    "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts \u2014 enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_1086",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T23:38:26.558598+00:00",
-    "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
   {
     "consumed_by_exp_id": "",
@@ -6759,6 +6758,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T01:03:25.927555+00:00",
     "title": "This mission formalizes a semantic notion of **universal mathematics**: the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Megastructure Mathematics\n\nBold, testable conjectures distilled from this cycle's study of Dyson-scale\ngeometry, thermodynamics, and computation.\n\n## 1. The optimal collector geometry minimizes peak temperature at fixed capture\n\n**Conjecture.** Among all closed collector configurations that intercept a fixed\nfraction of a star's luminosity, the equilibrium peak temperature is minimized\nprecisely by the maximally divided (two-faced-radiator) swarm, and the minimum\npeak temperature scales as `(fraction)^{1/4}` times the monolithic value.\n\nThe key insight is that Stefan\u2013Boltzmann equilibrium temperature is a strictly\nantitone function of radiating area, so any geometry that increases radiating area\nper unit captured power strictly lowers temperature \u2014 the extremal case being\nindependent collectors that radiate from both faces.\n\nWhy now? The area-antitonicity of the fourth-root temperature law is now pinned\ndown as an exact monotonicity, turning a qualitative engineering intuition (\"swarms\nrun cooler\") into a sharp variational statement ripe for an isoperimetric-style\noptimality proof.\n\n## 2. A universal temperature-capacity duality governs storage limits\n\n**Conjecture.** For every megastructure the product (stored-bit capacity) \u00d7\n(operating temperature) is invariant along the energy budget, so halving the\ntemperature exactly doubles the reachable information content \u2014 a hyperbolic\nstorage-temperature duality with no free parameters.\n\nThe key insight is that Landauer's cost `k_B T ln 2` enters bit capacity purely\nmultiplicatively through `T`, making capacity an exact reciprocal of temperature at\nfixed energy \u2014 the same reciprocal structure that governs the radiating-area law.\n\nWhy now? With the per-bit cost fixed as an exact identity rather than a bound, the\ncapacity law becomes an equality, exposing the duality as a genuine conservation\nstatement rather than an inequality to be optimized.\n\n## 3. Thermal and computational ceilings share one monotonicity skeleton\n\n**Conjecture.** The Stefan\u2013Boltzmann temperature law, the Landauer storage law, and\nthe Margolus\u2013Levitin operation-rate law are three instances of a single\norder-isomorphism class: each is a strictly monotone one-parameter power law in its\ndriving resource, and their composition yields a strictly monotone map from\nintercepted stellar power to total computational throughput.\n\nThe key insight is that positivity plus strict monotonicity in the driving resource\nis the common structural backbone \u2014 capture, cooling, storage, and computation are\nall governed by the same monotone-family template.\n\nWhy now? Having the three laws expressed in a uniform positive/monotone form makes\ntheir composition transparent, so the end-to-end \"power in, computation out\" map can\nbe assembled and shown strictly increasing without any new physics.\n\n## 4. The swarm advantage is scale-invariant\n\n**Conjecture.** The temperature ratio between a swarm and an equal-area shell is the\ndimensionless constant `(1/2)^{1/4}` regardless of stellar luminosity, orbital\nradius, or radiative constant, making it a true universal of megastructure design.\n\nThe key insight is that the ratio depends only on the geometric doubling of\nradiating area and cancels every physical scale in the fourth-root law.\n\nWhy now? The exact factorization of the temperature law isolates this ratio as a\npure number, inviting a search for analogous scale-invariant constants in other\nmegastructure trade-offs (e.g. radiative shielding, waste-heat cascades).\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1101",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4b34e974",
+    "status": "available",
+    "timestamp": "2026-07-12T01:53:35.453944+00:00",
+    "title": "Bold, testable conjectures distilled from this cycle's study of Dyson-scale"
   },
   {
     "consumed_by_exp_id": "",
