@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f6949247",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Chromatic Sum Complexity Dichotomy\n\n## Mission and what was formalised\n\nThe mission conjectures a **complexity dichotomy** for the Chromatic Sum\nproblem on `H`-free graphs: polyn",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-11T18:04:15",
-      "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
-    },
-    {
       "cycle_id": "dac5bc28",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Reflective Type Theory\n\n`ReflectiveTypeTheory.lean` gives a self-contained Kripke semantics for a\nprovability modality `□` and establishes, among others:\n\n- `godelian_satisfiable",
@@ -499,19 +489,19 @@
       "theorem_count": 120,
       "timestamp": "2026-07-12T13:18:12",
       "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
+    },
+    {
+      "cycle_id": "73c84a79",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Tightness of the Isolation Lemma bound\n\nThe exact count established for the singleton hypergraph shows that the global\nlower bound `n · ∑_{j=0}^{d-1} j^{n-1}` on the number of is",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 20,
+      "timestamp": "2026-07-12T13:35:34",
+      "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "55b8bae9",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Long Nontrivial Cycles in Hamiltonian Graphs\n\nThis cycle established that a single chord in a Hamiltonian graph of minimum\ndegree three forces a second cycle of length exactly hal",
-      "quality_score": 0.69272,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-08T02:37:32",
-      "title": "Girão-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
-    },
     {
       "cycle_id": "d9ca63e8",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 120,
       "timestamp": "2026-07-12T13:18:12",
       "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
+    },
+    {
+      "cycle_id": "73c84a79",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Tightness of the Isolation Lemma bound\n\nThe exact count established for the singleton hypergraph shows that the global\nlower bound `n · ∑_{j=0}^{d-1} j^{n-1}` on the number of is",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 20,
+      "timestamp": "2026-07-12T13:35:34",
+      "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "245dd564",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "245dd564",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "c016fced",
-      "domain": "Applications",
-      "name": "eval_const",
-      "quality": 0.83
-    },
     {
       "cycle_id": "c016fced",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "tanh_lt_id",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "73c84a79",
+      "domain": "Novelty",
+      "name": "below",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "73c84a79",
+      "domain": "Novelty",
+      "name": "isIsolating_iff_hasStrictMin",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "73c84a79",
+      "domain": "Novelty",
+      "name": "card_gt",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T13:18:12",
+  "last_updated": "2026-07-12T13:35:34",
   "open_questions": [
-    {
-      "context": "-    sorry; +below appealed to a `sorry`ed general composite lemma; we therefore restrict the; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "0250199a",
-      "domain": "Applications",
-      "sorry_count": 5,
-      "timestamp": "2026-07-11T08:02:43"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "c99af430",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 7,
       "timestamp": "2026-07-12T13:18:12"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "73c84a79",
+      "domain": "Novelty",
+      "sorry_count": 5,
+      "timestamp": "2026-07-12T13:35:34"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ef2405bd",
-        "quality": 0.82,
-        "theorems": 1185,
-        "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-      },
-      {
         "cycle_id": "2cd42066",
         "quality": 0.74,
         "theorems": 28,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 9,
         "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
+      },
+      {
+        "cycle_id": "73c84a79",
+        "quality": 0.82,
+        "theorems": 20,
+        "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
       }
     ],
     "NumberTheory": [

@@ -311,6 +311,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
   {
+    "consumed_by_exp_id": "919ceb1f",
+    "description": "Building on cycle 73c84a79 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every inclusion-free hypergraph H on n vertices, there exists an edge offset function f : H \u2192 \u211d such that the number of isolating weight assignments w \u2208 [d]^n equals the lower bound n * \u2211_{j=0}^{d-1} j^{n-1}. This would show that the bound proved in the paper is not only globally tight (achieved",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_73c84a79_2cf3972c",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "73c84a79",
+    "status": "in_progress",
+    "timestamp": "2026-07-12T13:35:34.495525+00:00",
+    "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7473e6ed (Q=0.820), which proved 14 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations cor",
     "domains": [
@@ -1077,6 +1091,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T05:35:47.121314+00:00",
     "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 73c84a79 (Q=0.820) proved 20 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every inclusion-free hypergraph H on n vertices, there exists an edge offset function f : H \u2192 \u211d such that the number of isolating weight assignments w \u2208 [d]^n equals the lower bound n * \u2211_{j=0}^{d",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_73c84a79_e8bc7db1",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "73c84a79",
+    "status": "available",
+    "timestamp": "2026-07-12T13:35:34.607424+00:00",
+    "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
   },
   {
     "consumed_by_exp_id": "",
@@ -4883,20 +4911,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on (d-2)-Connectivity of the Cone-Colorful Carath\u00e9odory Support Complex"
   },
   {
-    "consumed_by_exp_id": "73c84a79",
-    "description": "For every inclusion-free hypergraph H on n vertices, there exists an edge offset function f : H \u2192 \u211d such that the number of isolating weight assignments w \u2208 [d]^n equals the lower bound n * \u2211_{j=0}^{d-1} j^{n-1}. This would show that the bound proved in the paper is not only globally tight (achieved by the singleton hypergraph with f = 0) but also tight for each individual hypergraph when the offsets are chosen appropriately.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0666",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06171v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T21:19:13.121622+00:00",
-    "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "We conjecture that for every uniformity r\u22652 the extremal \\u03c7\u2080^r_F(d) (the maximum minimum number of colors needed for an \\u03c6\u2011coloring of an r\u2011uniform hypergraph of maximum degree d, where \\u03c6 is the family consisting of all balanced triangles as defined in the paper) satisfies the tight asymptotic bound\n\n    C1 \u00b7 (d^3/ln d)^{1/(3r\u20114)} \u2264 \u03c7^r_F(d) \u2264 C2 \u00b7 (d^3/ln d)^{1/(3r\u20114)}\n\nfor all sufficiently large d and some absolute constants C1, C2 > 0.  In particular the lower bound proved in the paper is optimal up to constant factors.",
     "domains": [
@@ -5883,7 +5897,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The linear analysis established here recasts the onset of Turing patterns as"
   },
   {
-    "consumed_by_exp_id": "d019c88a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Q\u2099` (`n \u2265 2`), the homological code\n`HQECC(Q\u2099)` has minimum distance equal to the girth of `Q\u2099`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n \u2265 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `\u03b2\u2081(Q\u2099) = 2\u207f\u207b\u00b9(n\u22122)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 \u2212 (V\u22121)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `\u03b2\u2080 \u2212 \u03b2\u2081 = V \u2212 E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k \u2264 n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n \u2212 rank d\u2081 \u2212 rank d\u2082` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n \u2212 k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d\u2081 / im d\u2082`\nand the `Z`-logical space `ker d\u2082\u1d40 / im d\u2081\u1d40` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
     "domains": [
       "Algebra",
@@ -5893,7 +5907,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "207fb5b4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T09:26:14.435602+00:00",
     "title": "Exact dictionary \"logical qubits = middle homology\""
   },
@@ -7141,6 +7155,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T13:18:02.602080+00:00",
     "title": "This file (`Catalog/Mandelbrot/EscapeRadius.lean`) formalizes the elementary dyn"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Tightness of the Isolation Lemma bound\n\nThe exact count established for the singleton hypergraph shows that the global\nlower bound `n \u00b7 \u2211_{j=0}^{d-1} j^{n-1}` on the number of isolating weight\nassignments is attained on the nose by a concrete inclusion-free hypergraph.\nThis pins down the extremal value and motivates the following bold, testable\nconjectures.\n\n## Conjecture 1 \u2014 Per-hypergraph tightness under offsets\n\nFor every inclusion-free hypergraph `H` on `n` vertices there is an edge offset\nfunction `f` so that the number of isolating assignments in `[d]^n` equals\nexactly `n \u00b7 \u2211_{j=0}^{d-1} j^{n-1}`.\n\nThe key insight is that a generic offset flattens the hypergraph's internal\ncomparisons so that isolation is governed solely by a single controlling vertex\nper assignment, reproducing the singleton-hypergraph count. Why now? The exact\nsingleton identity supplies the precise target value and the vertex-argmin\ndecomposition needed to transport the count to arbitrary Sperner families.\n\n## Conjecture 2 \u2014 Rigidity of the extremizers\n\nThe offsets `f` achieving the exact minimum count form a positive-measure,\npolyhedrally described region of offset space, and every extremizer induces the\nsame argmin-partition statistics as the singleton hypergraph.\n\nThe key insight is that attaining the bound forces a unique-minimum structure\nalmost everywhere, which is a closed linear condition on the offsets. Why now?\nHaving the exact extremal value converts \"is the bound tight?\" into a concrete\npolytope-nonemptiness question amenable to explicit description.\n\n## Conjecture 3 \u2014 A strict gap away from Sperner families\n\nIf `H` fails to be inclusion-free, then for every offset `f` the number of\nisolating assignments is strictly less than `n \u00b7 \u2211_{j=0}^{d-1} j^{n-1}` for all\nsufficiently large `d`.\n\nThe key insight is that a containment `S \u228a T` permanently couples two edges'\nweights, destroying the independence that the extremal count relies on. Why now?\nThe proved identity isolates exactly which structural feature (incomparability)\nthe extremal count uses, making the failure mode precise and falsifiable.\n\n## Conjecture 4 \u2014 Refined power-sum decomposition\n\nFor every `n`, the extremal count `n \u00b7 \u2211_{j<d} j^{n-1}`, viewed as a polynomial\nin `d`, has all of its nonnegative-integer roots at `d = 0, 1`, and its leading\nbehaviour `n \u00b7 d^n / n = d^n / 1` reflects a clean bijective decomposition of\nisolating assignments by (argmin vertex, minimum value).\n\nThe key insight is that the term `\u2211_{j<d} j^{n-1}` is the exact fiber size over a\nfixed argmin, so the polynomial's arithmetic mirrors the combinatorial fibering.\nWhy now? The verified fiberwise count makes the polynomial identity a direct\ncorollary rather than a numerical coincidence.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1137",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "73c84a79",
+    "status": "available",
+    "timestamp": "2026-07-12T13:35:22.195750+00:00",
+    "title": "The exact count established for the singleton hypergraph shows that the global"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T13:18:13.847363+00:00",
+  "last_updated": "2026-07-12T13:35:36.463028+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -8752,6 +8752,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T13:18:13.812175+00:00",
       "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 56,
+      "domain": "Novelty",
+      "duration_seconds": 1032.9478838443756,
+      "end_time": 1783863310.4234972,
+      "files_integrated": 4,
+      "job_id": "73c84a79",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "sorry_density": 0.25,
+      "start_time": 1783862277.4756134,
+      "strategy_count": 0,
+      "theorem_count": 20,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T13:35:36.414195+00:00",
+      "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
     }
   ]
 }
