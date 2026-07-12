@@ -16282,7 +16282,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT",
         "Landau-Siegel zeros",
@@ -16292,7 +16292,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2cd42066",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16308,7 +16308,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0605",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T04:46:39.898871+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conditional_page_refinement {ε : ℝ} (hε : ε > 0) :\n  ∃ C > 0, ∃ Q₀ > 0, (∀ q ≥ Q₀, ∀ χ : DirichletCharacter q, χ.IsQuadratic → χ.IsPrimitive →\n    ∀ ρ : ℂ, IsZeroOfDirichletLFn ρ χ → ρ.im ≠ 0 → ρ.re ≤ 1 - C / Real.log q) →\n  (∃! χ : Σ q, DirichletCharacter q, χ.2.IsQuadratic ∧ χ.2.IsPrimitive ∧ χ.1 ≥ Q₀ ∧\n    ∃ β : ℝ, β ∈ Set.Icc (1 - (χ.1 : ℝ) ^ (-ε)) 1 ∧ IsZeroOfDirichletLFn (β : ℂ) χ.2) ∨\n  (¬∃ χ : Σ q, DirichletCharacter q, χ.2.IsQuadratic ∧ χ.2.IsPrimitive ∧ χ.1 ≥ Q₀ ∧\n    ∃ β : ℝ, β ∈ Set.Icc (1 - (χ.1 : ℝ) ^ (-ε)) 1 ∧ IsZeroOfDirichletLFn (β : ℂ) χ.2) := by\n  sorry",
       "lineage_refs": [],
@@ -16323,7 +16323,7 @@
       "source": "",
       "source_exp_id": "2607.06433v1",
       "source_path": "http://arxiv.org/abs/2607.06433v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T05:36:19.999905+00:00",
       "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
@@ -31861,7 +31861,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7669ab26 (Q=0.820), which proved 24 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -32461,7 +32461,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a0852bd7 (Q=0.800), which proved 45 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are c",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -32741,7 +32741,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle c06d8e8c (Q=0.820), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -33341,7 +33341,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f9466ee5 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For a normal geometrically connected variety X over a finite field k, a compactification \\(\\overline{X}\\), an effective Cartier divisor D with support in \\(Z = \\overline{X} \\setminus X\\), and an algebraically closed field F of characteristic p with discrete topology, the set of isomorphism classes o",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Applications"
       ],
@@ -33461,7 +33461,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle fb4f44b5 (Q=0.830), which proved 38 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the complete bipartite graph K_{m,n} with parts of sizes m and n, the Seidel energy strictly increases under any edge deletion if and only if both m,n ≥ 3. This conjecture claims that the threshold conditions (m,n) ≥ (3,6), (6,3), (2,15), (15,2) and (4,4) established in the paper are not sharp f",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Applications"
       ],
@@ -34141,7 +34141,7 @@
       "depth_estimate": 3,
       "description": "Cycle 7669ab26 (Q=0.820) proved 24 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-comple",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -34816,6 +34816,7 @@
     "famous_subtask",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }

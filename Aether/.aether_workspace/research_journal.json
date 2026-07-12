@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ea473918",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Unreasonable Effectiveness of Wrong Theories\n\nThis deepening (`WrongTheoriesDeepening.lean`) adds, on top of the earlier\nmetric/perturbative and single-phenomenon results:\n\n-",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-11T09:25:12",
-      "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
-    },
-    {
       "cycle_id": "f85e4d43",
       "domain": "Applications",
       "key_insight": "# Future Directions — Graded Connectomes and the Combinatorics of Merged Minds\n\nThe results just established fix the exact description-length law for graded\nsynapses (`log₂(w^slots) = slots · log₂ w`)",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-12T04:29:00",
       "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
+    },
+    {
+      "cycle_id": "245dd564",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Mind Tools: Mathematics as Cognitive Extension\n\nThis project formalizes Rudy Rucker's notion of a **mind tool** (a formal system\nthat extends what a cognitive agent can directly",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-07-12T04:46:27",
+      "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d01d52df",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Monochromatic Cycles, Rainbow Forests, and Colour-Class Structure\n\nThese conjectures grow directly out of the finding that the minimal edge-colored\ngraphs failing to decompose in",
-      "quality_score": 0.642,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-05T22:48:10",
-      "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
-    },
     {
       "cycle_id": "4591bde2",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-12T04:29:00",
       "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
+    },
+    {
+      "cycle_id": "245dd564",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Mind Tools: Mathematics as Cognitive Extension\n\nThis project formalizes Rudy Rucker's notion of a **mind tool** (a formal system\nthat extends what a cognitive agent can directly",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-07-12T04:46:27",
+      "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a06d4115",
-      "domain": "Algebra",
-      "name": "chi_T",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "a06d4115",
-      "domain": "Algebra",
-      "name": "chi_C",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "a06d4115",
-      "domain": "Algebra",
-      "name": "chi_T_nat",
-      "quality": 0.72
-    },
     {
       "cycle_id": "b6492bf5",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "Reaction",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "245dd564",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "245dd564",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "245dd564",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-12T04:29:00",
+  "last_updated": "2026-07-12T04:46:27",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a0852bd7",
-        "quality": 0.8,
-        "theorems": 45,
-        "title": "Anti-Mathematics: What If All Axioms Were Negated?"
-      },
-      {
         "cycle_id": "c06d8e8c",
         "quality": 0.82,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.7,
         "theorems": 30,
         "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
+      },
+      {
+        "cycle_id": "245dd564",
+        "quality": 0.72,
+        "theorems": 44,
+        "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
       }
     ],
     "Bridges": [

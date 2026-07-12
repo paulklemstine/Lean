@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
 import Novelty.CertifiedNovelty
-import Applications.MachineLearning.NoveltyRegions
+import Novelty.NoveltyRegions
 
 /-!
 # Set-Level Novelty and Hausdorff Stability of the Birth Time

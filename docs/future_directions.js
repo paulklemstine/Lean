@@ -1212,21 +1212,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
   },
   {
-    "consumed_by_exp_id": "245dd564",
-    "description": "Formalize the concept of 'mind tools' \u2014 mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by G\u00f6del's incompleteness \u2014 there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1069",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T20:34:25.825368+00:00",
-    "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
-  },
-  {
     "consumed_by_exp_id": "26d2653d",
     "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations \u2014 enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
     "domains": [
@@ -4441,7 +4426,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polylogarithmic Paucity of Square Products of Shifted Squares"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2cd42066",
     "description": "For any \u03b5 > 0, there exist effectively computable constants C(\u03b5) > 0 and Q\u2080(\u03b5) > 0 such that: if for every primitive quadratic Dirichlet character \u03c7 with conductor q \u2265 Q\u2080(\u03b5), all non-real zeros \u03c1 of L(s,\u03c7) satisfy Re(\u03c1) \u2264 1 - C(\u03b5)/log(q), then there is at most one such character \u03c7 whose associated L-function has a real zero \u03b2 in the interval [1 - q^(-\u03b5), 1). This formalizes the paper's main result that excluding non-real zeros from a shrinking neighborhood of s=1 allows a significant refinement of Page's theorem.",
     "domains": [
       "Bridges"
@@ -4450,7 +4435,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T05:36:19.999905+00:00",
     "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
@@ -6887,6 +6872,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T04:28:52.868273+00:00",
     "title": "The results of this cycle pin down the quantitative skeleton of the objective"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Mind Tools: Mathematics as Cognitive Extension\n\nThis project formalizes Rudy Rucker's notion of a **mind tool** (a formal system\nthat extends what a cognitive agent can directly apprehend) as an extensional\nmodel: a `FormalSystem` is its set of provable `Statement`s, statements are\npredicates on `\u2115`, and \"directly apprehensible\" is modelled by `Enumerable`\n(theorems listable by `\u2115 \u2192 Statement`). Cognitive power is the extension order\n`\u227c` (subset of theorem-sets), with `\u227a` its strict part.\n\n## What was proved\n\n**`Basic.lean`** \u2014 the model and its order theory: `\u227c` is a partial order, `\u227a` a\nstrict order, `IsMindTool` transitive and irreflexive.\n\n**`Incompleteness.lean`** \u2014 the G\u00f6del-flavoured core, grounded in Cantor:\n* `complete_not_enumerable`, `enumerable_incomplete`, `enumerable_ne_complete` \u2014\n  no enumerable system is complete; each misses some statement.\n* `enumerable_has_unprovable_truth` \u2014 every enumerable system has a\n  true-but-unprovable statement (abstract G\u00f6del sentence).\n* `exists_mindTool_of_enumerable` \u2014 every enumerable brain admits a strictly\n  stronger enumerable mind tool.\n* `zfc_is_mind_tool` \u2014 ZFC (as an enumerable system strictly extending a brain)\n  is a mind tool, exhibits a theorem the brain lacks, and is itself still\n  incomplete.\n\n**`Hierarchy.lean`** \u2014 the **contrarian disproof** of the well-ordering\nconjecture *for the theorem-power order*:\n* `power_not_total` \u2014 incomparable systems exist (not a linear order).\n* `exists_infinite_descending_chain`, `power_order_not_wellFounded` \u2014 an infinite\n  strictly descending chain exists (not well-founded).\n\n**`Universality.lean`** \u2014 category theory as a strictly stronger mind tool:\n* `catLevel_proves_all`, `setLevel_proves_iff`, `setLevel_ssubset_catLevel`,\n  `catLevel_is_mind_tool`, `no_finite_setLevel_matches_catLevel` \u2014 one universal\n  categorical theorem settles an infinite family that no finite instance-by-\n  instance set-level effort matches.\n\nAll proofs are complete and use only `propext`, `Classical.choice`, `Quot.sound`.\n\n## Status of the mission's conjecture\n\n> *The hierarchy of mind tools is well-ordered by proof-theoretic ordinal.*\n\nUnder the **natural theorem-power order** this is **false** on two independent\ncounts (non-totality and non-well-foundedness), proved in `Hierarchy.lean`. This\ndoes not settle the *refined* conjecture, which lives on a different order.\n\n## Open directions\n\n1. **The refined ordinal conjecture.** Restrict to a canonical sub-collection of\n   theories (the ones amenable to ordinal analysis: PA, ACA\u2080, ATR\u2080, \u03a0\u00b9\u2081-CA\u2080, \u2026)\n   and order them by proof-theoretic ordinal (\u03b5\u2080, \u0393\u2080, \u2026). Formalize this coarser\n   order and ask whether *that* sub-hierarchy is well-ordered. This requires\n   proof-theoretic ordinals, essentially absent from Mathlib, so a substantial\n   build-out (ordinal notation systems, the ordinal of a theory) is the real\n   prize here.\n\n2. **Genuine provability.** Replace the extensional `FormalSystem` by an actual\n   deduction relation (Mathlib's `FirstOrder` language, or a G\u00f6del-numbered\n   proof predicate) and re-derive `enumerable_incomplete` as the honest first\n   incompleteness theorem, connecting the Cantor core to syntactic provability.\n\n3. **Consistency and soundness.** Add a `Truth` set and `Sound F := F.Thm \u2286 Truth`,\n   `Consistent F`. Study mind tools that are sound extensions and whether sound\n   enumerable extensions form a directed system.\n\n4. **Quantifying leverage.** In `Universality.lean`, make \"one proof, many\n   consequences\" quantitative: a proof-length / description-length measure under\n   which a single categorical generator has bounded cost while the matching\n   set-level knowledge has unbounded cost \u2014 a compression statement about\n   universality.\n\n5. **Directed joins of mind tools.** Show the enumerable mind tools above a fixed\n   brain form an unbounded (but not complete) upward-directed family, and\n   characterize the sense in which their union approaches \u2014 but never reaches \u2014\n   the complete ceiling system.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1111",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "245dd564",
+    "status": "available",
+    "timestamp": "2026-07-12T04:46:19.776308+00:00",
+    "title": "This project formalizes Rudy Rucker's notion of a **mind tool** (a formal system"
   },
   {
     "consumed_by_exp_id": "",

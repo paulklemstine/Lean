@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T04:29:02.121659+00:00",
+  "last_updated": "2026-07-12T04:46:28.208514+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -7634,6 +7634,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T04:29:02.084126+00:00",
       "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 22,
+      "domain": "Applications",
+      "duration_seconds": 1036.96671128273,
+      "end_time": 1783831562.112631,
+      "files_integrated": 4,
+      "job_id": "245dd564",
+      "outcome_quality": 0.72,
+      "phase": "complete",
+      "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783830525.1459198,
+      "strategy_count": 0,
+      "theorem_count": 44,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 30,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T04:46:28.169213+00:00",
+      "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
     }
   ]
 }

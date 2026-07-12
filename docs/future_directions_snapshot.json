@@ -1636,26 +1636,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "245dd564",
-    "description": "Formalize the concept of 'mind tools' — mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by Gödel's incompleteness — there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1069",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T20:34:25.825368+00:00",
-    "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "26d2653d",
     "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations — enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
     "domain_bridges": [],
@@ -7633,7 +7613,7 @@
       "Dirichlet L-functions",
       "zero-free regions"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2cd42066",
     "description": "For any ε > 0, there exist effectively computable constants C(ε) > 0 and Q₀(ε) > 0 such that: if for every primitive quadratic Dirichlet character χ with conductor q ≥ Q₀(ε), all non-real zeros ρ of L(s,χ) satisfy Re(ρ) ≤ 1 - C(ε)/log(q), then there is at most one such character χ whose associated L-function has a real zero β in the interval [1 - q^(-ε), 1). This formalizes the paper's main result that excluding non-real zeros from a shrinking neighborhood of s=1 allows a significant refinement of Page's theorem.",
     "domain_bridges": [
       "complex_analysis",
@@ -7649,7 +7629,7 @@
     "proof_strategy": "The proof requires establishing: (1) effective zero-free regions for Dirichlet L-functions excluding the Landau-Siegel possibility; (2) a translation mechanism from lower bounds on L(1,χ) to upper bounds on exceptional real zeros β; (3) a counting argument showing that the hypothesis on non-real zeros (lying outside σ ≥ 1 - C/log(q)) prevents the distortion that would allow multiple exceptional characters. Key ingredients include logarithmic derivative estimates for L-functions, the Deuring-Heilbronn phenomenon, and effective bounds from the geometry of the zeros. Formalization would proceed by first establishing the effective constants, then the conditional zero-free region, and finally the uniqueness of the exceptional zero.",
     "research_mode": "team",
     "source_exp_id": "2607.06433v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T05:36:19.999905+00:00",
     "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
   },
@@ -11685,6 +11665,26 @@
     "status": "available",
     "timestamp": "2026-07-12T04:28:52.868273+00:00",
     "title": "The results of this cycle pin down the quantitative skeleton of the objective"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Mind Tools: Mathematics as Cognitive Extension\n\nThis project formalizes Rudy Rucker's notion of a **mind tool** (a formal system\nthat extends what a cognitive agent can directly apprehend) as an extensional\nmodel: a `FormalSystem` is its set of provable `Statement`s, statements are\npredicates on `ℕ`, and \"directly apprehensible\" is modelled by `Enumerable`\n(theorems listable by `ℕ → Statement`). Cognitive power is the extension order\n`≼` (subset of theorem-sets), with `≺` its strict part.\n\n## What was proved\n\n**`Basic.lean`** — the model and its order theory: `≼` is a partial order, `≺` a\nstrict order, `IsMindTool` transitive and irreflexive.\n\n**`Incompleteness.lean`** — the Gödel-flavoured core, grounded in Cantor:\n* `complete_not_enumerable`, `enumerable_incomplete`, `enumerable_ne_complete` —\n  no enumerable system is complete; each misses some statement.\n* `enumerable_has_unprovable_truth` — every enumerable system has a\n  true-but-unprovable statement (abstract Gödel sentence).\n* `exists_mindTool_of_enumerable` — every enumerable brain admits a strictly\n  stronger enumerable mind tool.\n* `zfc_is_mind_tool` — ZFC (as an enumerable system strictly extending a brain)\n  is a mind tool, exhibits a theorem the brain lacks, and is itself still\n  incomplete.\n\n**`Hierarchy.lean`** — the **contrarian disproof** of the well-ordering\nconjecture *for the theorem-power order*:\n* `power_not_total` — incomparable systems exist (not a linear order).\n* `exists_infinite_descending_chain`, `power_order_not_wellFounded` — an infinite\n  strictly descending chain exists (not well-founded).\n\n**`Universality.lean`** — category theory as a strictly stronger mind tool:\n* `catLevel_proves_all`, `setLevel_proves_iff`, `setLevel_ssubset_catLevel`,\n  `catLevel_is_mind_tool`, `no_finite_setLevel_matches_catLevel` — one universal\n  categorical theorem settles an infinite family that no finite instance-by-\n  instance set-level effort matches.\n\nAll proofs are complete and use only `propext`, `Classical.choice`, `Quot.sound`.\n\n## Status of the mission's conjecture\n\n> *The hierarchy of mind tools is well-ordered by proof-theoretic ordinal.*\n\nUnder the **natural theorem-power order** this is **false** on two independent\ncounts (non-totality and non-well-foundedness), proved in `Hierarchy.lean`. This\ndoes not settle the *refined* conjecture, which lives on a different order.\n\n## Open directions\n\n1. **The refined ordinal conjecture.** Restrict to a canonical sub-collection of\n   theories (the ones amenable to ordinal analysis: PA, ACA₀, ATR₀, Π¹₁-CA₀, …)\n   and order them by proof-theoretic ordinal (ε₀, Γ₀, …). Formalize this coarser\n   order and ask whether *that* sub-hierarchy is well-ordered. This requires\n   proof-theoretic ordinals, essentially absent from Mathlib, so a substantial\n   build-out (ordinal notation systems, the ordinal of a theory) is the real\n   prize here.\n\n2. **Genuine provability.** Replace the extensional `FormalSystem` by an actual\n   deduction relation (Mathlib's `FirstOrder` language, or a Gödel-numbered\n   proof predicate) and re-derive `enumerable_incomplete` as the honest first\n   incompleteness theorem, connecting the Cantor core to syntactic provability.\n\n3. **Consistency and soundness.** Add a `Truth` set and `Sound F := F.Thm ⊆ Truth`,\n   `Consistent F`. Study mind tools that are sound extensions and whether sound\n   enumerable extensions form a directed system.\n\n4. **Quantifying leverage.** In `Universality.lean`, make \"one proof, many\n   consequences\" quantitative: a proof-length / description-length measure under\n   which a single categorical generator has bounded cost while the matching\n   set-level knowledge has unbounded cost — a compression statement about\n   universality.\n\n5. **Directed joins of mind tools.** Show the enumerable mind tools above a fixed\n   brain form an unbounded (but not complete) upward-directed family, and\n   characterize the sense in which their union approaches — but never reaches —\n   the complete ceiling system.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1111",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "245dd564",
+    "status": "available",
+    "timestamp": "2026-07-12T04:46:19.776308+00:00",
+    "title": "This project formalizes Rudy Rucker's notion of a **mind tool** (a formal system"
   },
   {
     "ambition_level": "extension",
