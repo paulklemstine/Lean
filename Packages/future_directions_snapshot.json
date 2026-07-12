@@ -7963,7 +7963,7 @@
       "math.CO",
       "05D05"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27e75405",
     "description": "For integers n, k, ℓ with n > 100·ℓ·k² and 3 ≤ ℓ < k, if F ⊆ ([n] choose k) and G ⊆ ([n] choose ℓ) are non-trivial cross-intersecting families (i.e., ⋂_{F∈F} F = ∅ and ⋂_{G∈G} G = ∅, and F ∩ G ≠ ∅ for all F ∈ F, G ∈ G), then |F|·|G| ≤ h(n,k)·(n-1 choose ℓ-1), where h(n,k) = (n-1 choose k-1) - (n-k-1 choose k-1) + 1 is the Hilton-Milner bound.",
     "domain_bridges": [
       "finite_set_theory",
@@ -7979,7 +7979,7 @@
     "proof_strategy": "First formalize the classical Hilton-Milner theorem as a lemma. Then formalize the notion of cross-intersecting families and non-triviality. The key structural insight from the paper is analyzing 2-cover graphs of cross-intersecting families and bounding the size of families with small minimal covers. The proof proceeds by case analysis on the structure of minimal covers of F and G, showing that non-HM-type configurations yield strictly smaller products when n > 100ℓk².",
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T03:16:37.289057+00:00",
     "title": "Product Hilton-Milner theorem for large n"
   },

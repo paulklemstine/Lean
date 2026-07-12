@@ -4610,7 +4610,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27e75405",
     "description": "For integers n, k, \u2113 with n > 100\u00b7\u2113\u00b7k\u00b2 and 3 \u2264 \u2113 < k, if F \u2286 ([n] choose k) and G \u2286 ([n] choose \u2113) are non-trivial cross-intersecting families (i.e., \u22c2_{F\u2208F} F = \u2205 and \u22c2_{G\u2208G} G = \u2205, and F \u2229 G \u2260 \u2205 for all F \u2208 F, G \u2208 G), then |F|\u00b7|G| \u2264 h(n,k)\u00b7(n-1 choose \u2113-1), where h(n,k) = (n-1 choose k-1) - (n-k-1 choose k-1) + 1 is the Hilton-Milner bound.",
     "domains": [
       "Bridges"
@@ -4619,7 +4619,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06443v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T03:16:37.289057+00:00",
     "title": "Product Hilton-Milner theorem for large n"
   },
