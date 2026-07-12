@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a06d4115",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThis cycle extends the self-contained theory of negative-dimensional (virtual\ngraded) spaces modelled by the Laurent-polynomial ring\n`VS = ℤ[T; T⁻¹",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-07-11T22:47:58",
-      "title": "This project builds a self-contained, machine-checked theory of negative-dimensi"
-    },
-    {
       "cycle_id": "b6492bf5",
       "domain": "Applications",
       "key_insight": "# Future Directions — Anti-Gravity Mathematics\n\nThis mission formalizes a finite model of theorem dependency graphs and proves the\nrobust combinatorial core of the \"anti-gravity theorems\" theme, while",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-12T15:20:37",
       "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+    },
+    {
+      "cycle_id": "494cab2e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nMission: *\"Causal Loops in Category Theory: when composition loops back\"* — a tensor\nproduct whose associativity fails **on the nose** but is rep",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-12T15:37:53",
+      "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "52557551",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThis project formalises a **local-to-global principle for coordinate influences**\n— the engine behind local-to-global KKL theorems for simplicial complexes and\nhigh-dimensional ex",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-09T19:54:59",
-      "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
-    },
     {
       "cycle_id": "8202f9a7",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-12T15:20:37",
       "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+    },
+    {
+      "cycle_id": "494cab2e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nMission: *\"Causal Loops in Category Theory: when composition loops back\"* — a tensor\nproduct whose associativity fails **on the nose** but is rep",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-12T15:37:53",
+      "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e978b5fe",
-      "domain": "MachineLearning",
-      "name": "qform_even",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e978b5fe",
-      "domain": "MachineLearning",
-      "name": "det_scaledGram",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e978b5fe",
-      "domain": "MachineLearning",
-      "name": "det_NeronSeveri",
-      "quality": 0.78
-    },
     {
       "cycle_id": "6a70bc30",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "card_strictMinAt",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "494cab2e",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "494cab2e",
+      "domain": "Novelty",
+      "name": "flatten_nil",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "494cab2e",
+      "domain": "Novelty",
+      "name": "flatten_leaf",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T15:20:37",
+  "last_updated": "2026-07-12T15:37:53",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "62dd551b",
-        "quality": 0.82,
-        "theorems": 22,
-        "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
-      },
-      {
         "cycle_id": "53945fe2",
         "quality": 0.82,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 18,
         "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+      },
+      {
+        "cycle_id": "494cab2e",
+        "quality": 0.82,
+        "theorems": 21,
+        "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
       }
     ],
     "NumberTheory": [

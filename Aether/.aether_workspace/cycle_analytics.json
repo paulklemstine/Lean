@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T15:20:39.570201+00:00",
+  "last_updated": "2026-07-12T15:37:54.589357+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -9096,6 +9096,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T15:20:39.526593+00:00",
       "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 68,
+      "domain": "Novelty",
+      "duration_seconds": 1031.341358423233,
+      "end_time": 1783870656.7846403,
+      "files_integrated": 4,
+      "job_id": "494cab2e",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783869625.443282,
+      "strategy_count": 0,
+      "theorem_count": 21,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 4,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T15:37:54.552126+00:00",
+      "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
     }
   ]
 }

@@ -382,6 +382,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "6fce3466",
+    "description": "Building on cycle 494cab2e (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby a canonical invertible `2`-cell, with coherence holding automatically.\n\n## What was proved\n\n**`Caus",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_494cab2e_17acf3db",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "494cab2e",
+    "status": "in_progress",
+    "timestamp": "2026-07-12T15:37:53.223010+00:00",
+    "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory: when comp"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 4b281557 (Q=0.820), which proved 19 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed ",
     "domain_bridges": [],
@@ -10834,26 +10853,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "494cab2e",
-    "description": "# Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby a canonical invertible `2`-cell, with coherence holding automatically.\n\n## What was proved\n\n**`CausalLoops/ThinMonoidal.lean` — coherence from thinness.**\n- `ThinCategory`: categories with at most one morphism between objects.\n- `monoidalOfThin`: *any* `MonoidalCategoryStruct` on a thin category is a genuine\n  `MonoidalCategory` — pentagon, triangle and all naturality squares hold for free.\n- `ThinCategory.subsingleton_iso`, `pentagon_eq`, `triangle_eq`, `associator_loop`: the\n  \"causal loop\" chases the associator around the pentagon and back to the identity.\n\n**`CausalLoops/ParenTree.lean` — a concrete non-strict monoidal category.**\n- `PTree α`: binary trees = formal bracketings, with `⊗ = node`, unit `nil`.\n- `instThinCategory`, `instIsIso`: the reassociation category is a thin groupoid.\n- `instMonoidalCategory`: `PTree α` is a monoidal category (coherence via `monoidalOfThin`).\n- `tensor_assoc_ne`, `not_strict`: `(a⊗b)⊗c` and `a⊗(b⊗c)` are genuinely distinct objects;\n  the category is not strict.\n- `associator_unique`: the associator is the unique iso between its endpoints.\n\n**`CausalLoops/Strictification.lean` — collapsing the loops.**\n- `normalize`, `iso_iff`: every bracketing is canonically isomorphic to its right-nested\n  normal form; two bracketings are isomorphic iff they have the same leaf-word (Mac Lane\n  coherence, concrete form).\n- `flattenFunctor`, `flattenFunctor_map_associator`: strictification collapses the\n  associator to an identity.\n- `strictify`: `PTree α ≌ Discrete (List α)` — the non-strict structure is equivalent to\n  its strict skeleton.\n\n## Directions to extend\n\n1. **Monoidal strictification.** Upgrade `strictify` to a *monoidal* equivalence: equip\n   `Discrete (List α)` with concatenation as tensor and show `flattenFunctor` is a strong\n   monoidal functor. This turns the categorical equivalence into the full statement of\n   Mac Lane's strictification theorem for this family.\n\n2. **Unitors and a coherent unit.** `PTree α` here uses `nil` as a strict-ish unit whose\n   unitors are non-identity isos (`node nil x` vs `x`). One can analyse the unit\n   coherence loops (`triangle`) in the same thin framework and compare with the\n   Saavedra/Kelly redundancy of unit axioms.\n\n3. **Bicategorical version.** Promote the delooping: a one-object bicategory is a monoidal\n   category (Mathlib's `EndMonoidal` / `MonoidalSingleObj`). Feeding `PTree α` through the\n   delooping yields an explicit one-object bicategory whose horizontal composition is\n   non-associative on the nose — a direct model of the mission's \"almost-category\".\n\n4. **Non-thin obstructions.** The clean coherence here is *because* the category is thin.\n   A natural sequel: exhibit a non-thin `MonoidalCategoryStruct` where the pentagon fails,\n   quantifying how thinness is exactly the boundary between free and obstructed coherence.\n\n5. **Free monoidal category.** Relate `PTree α` to Mathlib's `FreeMonoidalCategory`:\n   `PTree α` is the free monoidal category on the discrete category `α` *quotiented by\n   coherence*, and `strictify` exhibits its skeleton.\n\n\n# Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby a canonical invertible `2`-cell, with coherence holding automatically.\n\n## What was proved\n\n**`CausalLoops/ThinMonoidal.lean` — coherence from thinness.**\n- `ThinCategory`: categories with at most one morphism between objects.\n- `monoidalOfThin`: *any* `MonoidalCategoryStruct` on a thin category is a genuine\n  `MonoidalCategory` — pentagon, triangle and all naturality squares hold for free.\n- `ThinCategory.subsingleton_iso`, `pentagon_eq`, `triangle_eq`, `associator_loop`: the\n  \"causal loop\" chases the associator around the pentagon and back to the identity.\n\n**`CausalLoops/ParenTree.lean` — a concrete non-strict monoidal category.**\n- `PTree α`: binary trees = formal bracketings, with `⊗ = node`, unit `nil`.\n- `instThinCategory`, `instIsIso`: the reassociation category is a thin groupoid.\n- `instMonoidalCategory`: `PTree α` is a monoidal category (coherence via `monoidalOfThin`).\n- `tensor_assoc_ne`, `not_strict`: `(a⊗b)⊗c` and `a⊗(b⊗c)` are genuinely distinct objects;\n  the category is not strict.\n- `associator_unique`: the associator is the unique iso between its endpoints.\n\n**`CausalLoops/Strictification.lean` — collapsing the loops.**\n- `normalize`, `iso_iff`: every bracketing is canonically isomorphic to its right-nested\n  normal form; two bracketings are isomorphic iff they have the same leaf-word (Mac Lane\n  coherence, concrete form).\n- `flattenFunctor`, `flattenFunctor_map_associator`: strictification collapses the\n  associator to an identity.\n- `strictify`: `PTree α ≌ Discrete (List α)` — the non-strict structure is equivalent to\n  its strict skeleton.\n\n## Directions to extend\n\n1. **Monoidal strictification.** Upgrade `strictify` to a *monoidal* equivalence: equip\n   `Discrete (List α)` with concatenation as tensor and show `flattenFunctor` is a strong\n   monoidal functor. This turns the categorical equivalence into the full statement of\n   Mac Lane's strictification theorem for this family.\n\n2. **Unitors and a coherent unit.** `PTree α` here uses `nil` as a strict-ish unit whose\n   unitors are non-identity isos (`node nil x` vs `x`). One can analyse the unit\n   coherence loops (`triangle`) in the same thin framework and compare with the\n   Saavedra/Kelly redundancy of unit axioms.\n\n3. **Bicategorical version.** Promote the delooping: a one-object bicategory is a monoidal\n   category (Mathlib's `EndMonoidal` / `MonoidalSingleObj`). Feeding `PTree α` through the\n   delooping yields an explicit one-object bicategory whose horizontal composition is\n   non-associative on the nose — a direct model of the mission's \"almost-category\".\n\n4. **Non-thin obstructions.** The clean coherence here is *because* the category is thin.\n   A natural sequel: exhibit a non-thin `MonoidalCategoryStruct` where the pentagon fails,\n   quantifying how thinness is exactly the boundary between free and obstructed coherence.\n\n5. **Free monoidal category.** Relate `PTree α` to Mathlib's `FreeMonoidalCategory`:\n   `PTree α` is the free monoidal category on the discrete category `α` *quotiented by\n   coherence*, and `strictify` exhibits its skeleton.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "fd_1038",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f6b0dfd4",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T13:21:38.622606+00:00",
-    "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Dreamtime Algebra, Deepened\n\nThe file `DreamtimeKinshipGL.lean` develops the group theory of Australian\nAboriginal kinship systems uniformly over the elementary abelian 2-group\n`Kin n := Fin n → ℤ/2`, extending the earlier four-section (`ℤ/2 × ℤ/2`) and\neight-subsection (`(ℤ/2)³`) results to arbitrary rank `n`, and proves the\n**symmetry theorem**: the automorphism group of the kinship system is\n`GL(n, 𝔽₂)`, of order `∏ᵢ (2ⁿ − 2ⁱ)`. In particular the four-section symmetry\ngroup has order `6 = 3! = |S₃|` (`GL(2, 𝔽₂) ≅ S₃`).\n\nPossible next steps:\n\n1. **`GL(2, 𝔽₂) ≅ S₃` as an explicit group isomorphism.** We proved the\n   cardinalities agree (`karieraSymmetry_card`). Constructing the explicit\n   `MulEquiv` — the action on the three nonzero sections / marriage rules —\n   would upgrade equality of orders to a full isomorphism.\n\n2. **The affine symmetry group.** The full symmetry group of the *labelled*\n   kinship diagram (relabellings that need not fix a distinguished section) is\n   the affine group `AGL(n, 𝔽₂) = 𝔽₂ⁿ ⋊ GL(n, 𝔽₂)`, of order\n   `2ⁿ · ∏ᵢ (2ⁿ − 2ⁱ)`. Formalizing this semidirect product and its order is a\n   natural extension of `card_addAut`.\n\n3. **Marriage rules as linear functionals.** Each choice of moiety corresponds to\n   a nonzero linear functional `Kin n → 𝔽₂`; there are `2ⁿ − 1` of them, matching\n   `card_kinshipSpectrum` by self-duality of `𝔽₂ⁿ`. Making this duality explicit\n   would connect the spectrum count to the hyperplane (moiety) count.\n\n4. **General extensions / towers.** `subsectionQuotIso` and `kerIso` exhibit\n   `Kin (n+1)` as a `ℤ/2`-extension of `Kin n`. Iterating gives the full tower\n   `Kin 0 ⊂ Kin 1 ⊂ ⋯`; one could formalize the composition series and show every\n   quotient is `ℤ/2`, recovering that `Kin n` is elementary abelian of length `n`.\n\n5. **Beyond `𝔽₂`.** Some kinship systems use more than two moiety values. Working\n   over `ℤ/m` (or `Fin n → ℤ/m`) and identifying the symmetry group as\n   `GL(n, ℤ/m)` would generalize the whole development.\n",
     "domain_bridges": [],
@@ -12070,6 +12069,26 @@
     "status": "available",
     "timestamp": "2026-07-12T15:20:30.569302+00:00",
     "title": "This cycle deepened the singleton-hypergraph tightness result of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Causal Loops in Category Theory\n\nMission: *\"Causal Loops in Category Theory: when composition loops back\"* — a tensor\nproduct whose associativity fails **on the nose** but is repaired by a canonical\ninvertible `2`-cell (the associator), with coherence holding automatically.\n\n## What this cycle adds\n\n**`Catalog/Novelty/MonoidalStrictification.lean` — the monoidal strictification\ntheorem for the parenthesization category.**\n\nThis is the natural next step of Direction 1 from the previous cycle (\"upgrade\n`strictify` to a *monoidal* equivalence\"). The file is fully self-contained\n(`import Mathlib` only) and re-establishes the thin-category engine and the\nparenthesization category before carrying out the monoidal upgrade. It builds a single\nchain of results, each using the previous one:\n\n1. `ThinCategory`, `monoidalOfThin` — coherence is free on a thin category.\n2. `PTree`, `flatten` (valued in `FreeMonoid α`), `instMonoidalCategory` — the\n   non-strict parenthesization monoidal category.\n3. `flatten_tensor`, `flatten_unit` — flattening strictly respects tensor and unit\n   (both by `rfl`).\n4. `flattenFunctor`, `flattenCore`, `instFlattenMonoidal` — flattening is a **strong\n   monoidal functor** into `Discrete (FreeMonoid α)` (Mathlib's `Discrete.monoidal`,\n   concatenation as tensor).\n5. `strictify` — the underlying categorical equivalence\n   `PTree α ≌ Discrete (FreeMonoid α)`.\n6. `strictify_functor_monoidal`, `strictify_inverse_monoidal`, `strictify_isMonoidal`\n   — **the monoidal strictification theorem**: `PTree α` is *monoidally* equivalent to\n   its strict skeleton. The inverse's monoidal structure and the compatibility\n   (`IsMonoidal`) are obtained via Mathlib's `Equivalence.inverseMonoidal`.\n7. `flatten_associator_to_id` — under strictification the associator loop becomes an\n   identity-type morphism: the causal loop is contracted.\n\nAll main results are checked to depend only on the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`) and contain no `sorry`.\n\nThis realizes, for this concrete family, the full statement of **Mac Lane's\nstrictification theorem**: a coherent (loop-tolerant) monoidal structure is monoidally\nequivalent to a strict (loop-free) one.\n\n## Remaining directions to extend\n\n1. **Braided / symmetric layer.** `Discrete (FreeMonoid α)` is not braided in general\n   (concatenation is noncommutative), but `Discrete (Multiset α)` /\n   `Discrete (List α)`-with-a-braiding gives a symmetric target; study whether the\n   flattening functor can be promoted to a braided monoidal functor onto a commutative\n   quotient.\n\n2. **Unitors and a coherent unit.** Analyse the unit-coherence loops (`triangle`) in the\n   same thin framework and compare with the Saavedra/Kelly redundancy of the unit axioms.\n\n3. **Bicategorical version.** Feed `PTree α` through the delooping\n   (`EndMonoidal` / `MonoidalSingleObj`) to produce an explicit one-object bicategory\n   whose horizontal composition is non-associative on the nose, then transport the\n   monoidal strictification to a bicategorical strictification.\n\n4. **Non-thin obstructions.** Exhibit a non-thin `MonoidalCategoryStruct` where the\n   pentagon fails, quantifying how thinness is exactly the boundary between free and\n   obstructed coherence.\n\n5. **Free monoidal category.** Relate `PTree α` to Mathlib's `FreeMonoidalCategory`:\n   `PTree α` is the free monoidal category on the discrete category `α` *quotiented by\n   coherence*, and the monoidal `strictify` above exhibits its strict skeleton.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_1145",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "494cab2e",
+    "status": "available",
+    "timestamp": "2026-07-12T15:37:46.107641+00:00",
+    "title": "Mission: *\"Causal Loops in Category Theory: when composition loops back\"* — a te"
   },
   {
     "ambition_level": "extension",
