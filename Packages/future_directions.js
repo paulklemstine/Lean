@@ -479,20 +479,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
-    "consumed_by_exp_id": "c1de826b",
-    "description": "Building on cycle ef2405bd (Q=0.820), which proved 1185 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent co",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_ef2405bd_7f998260",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "ef2405bd",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T05:20:57.685879+00:00",
-    "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle f6622907 (Q=0.820), which proved 20 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT",
     "domains": [
@@ -1655,7 +1641,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "6a70bc30",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -1664,7 +1650,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -6990,6 +6976,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:53:32.904194+00:00",
     "title": "Character-level backbone of the conjectured"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Neural Coding Theorems\n\nThis cycle deepened the neural-coding development by adding a self-contained\ntheory of **error-correcting neural codes** in\n`Catalog/Novelty/NeuralErrorCorrection.lean`, culminating in the\n**sphere-packing (Hamming) bound**\n\n    |C| \u00b7 (\u2211_{k=0}^{t} C(N,k)) \u2264 2^N\n\nfor any codebook `C` on `N` binary neurons that corrects `t` neuron misfires\n(pairwise Hamming distance `\u2265 2t+1`). This subsumes the earlier raw-capacity\nresult (`2^N` patterns) as the zero-error (`t=0`) special case, and quantifies\nthe capacity cost of noise tolerance (`|C|\u00b7(N+1) \u2264 2^N` for single-error\ncorrection).\n\n## Proven chain (this file)\n\n1. `hammingDist_false_eq_weight`, `card_weight_eq`, `sum_choose_weight` \u2014 weight,\n   sparse counts, and partition of the pattern space.\n2. `hammingDist_xor`, `ball_card_center_indep`, `ball_silent_card`, `ball_card` \u2014\n   Hamming balls are translation invariant and have volume `\u2211_{k\u2264r} C(N,k)`.\n3. `balls_pairwiseDisjoint`, `hamming_bound` \u2014 disjoint packing and the main bound.\n4. `hamming_bound_capacity`, `singleton_error_correct_card` \u2014 consequences.\n\n## Natural next steps\n\n- **Gilbert\u2013Varshamov lower bound.** Prove existence of a codebook with\n  `|C| \u2265 2^N / V(N, 2t)` by a greedy/maximal-code argument. This complements the\n  Hamming upper bound and brackets the optimal code size.\n- **Singleton bound.** `|C| \u2264 2^(N - d + 1)` for minimum distance `d`, via\n  injectivity of the projection onto `N - d + 1` coordinates. Then define MDS\n  neural codes (Singleton equality).\n- **Perfect codes.** Formalize the notion of a perfect code (Hamming bound met\n  with equality) and verify the Hamming(7,4) code is perfect, connecting to the\n  computational evidence table.\n- **Plotkin / linear-programming bounds** for the high-noise regime\n  (`d > N/2`), and the asymptotic rate\u2013distance tradeoff.\n- **Metric structure.** Package `hammingDist` on `NeuralCode N` as a genuine\n  `MetricSpace`/`PseudoMetricSpace` instance to reuse Mathlib's ball API.\n- **Bridge to energy.** Combine with the sparse-coding energy results of\n  `NeuralCoding.lean` and the description-length bounds of\n  `MindEncodingBounds.lean` to study energy-optimal *robust* codes.\n\n## Status\n\nThe neural-coding chain of this cycle is complete and compiles with no `sorry`:\n`NeuralCoding.lean` (raw capacity `2^N`) and `NeuralErrorCorrection.lean`\n(sphere-packing / Hamming bound and its `t = 0` capacity corollary) both\nelaborate cleanly and use only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`). The items above are genuinely\nopen extensions, not gaps in the present development.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1121",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c1de826b",
+    "status": "available",
+    "timestamp": "2026-07-12T08:27:22.398056+00:00",
+    "title": "This cycle deepened the neural-coding development by adding a self-contained"
   },
   {
     "consumed_by_exp_id": "",

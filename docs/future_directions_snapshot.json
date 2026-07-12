@@ -648,25 +648,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c1de826b",
-    "description": "Building on cycle ef2405bd (Q=0.820), which proved 1185 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent co",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_ef2405bd_7f998260",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ef2405bd",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T05:20:57.685879+00:00",
-    "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle f6622907 (Q=0.820), which proved 20 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize tangled hierarchies — levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT",
     "domain_bridges": [],
@@ -2310,7 +2291,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "6a70bc30",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -2326,7 +2307,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -11760,6 +11741,26 @@
     "status": "available",
     "timestamp": "2026-07-12T07:53:32.904194+00:00",
     "title": "Character-level backbone of the conjectured"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Neural Coding Theorems\n\nThis cycle deepened the neural-coding development by adding a self-contained\ntheory of **error-correcting neural codes** in\n`Catalog/Novelty/NeuralErrorCorrection.lean`, culminating in the\n**sphere-packing (Hamming) bound**\n\n    |C| · (∑_{k=0}^{t} C(N,k)) ≤ 2^N\n\nfor any codebook `C` on `N` binary neurons that corrects `t` neuron misfires\n(pairwise Hamming distance `≥ 2t+1`). This subsumes the earlier raw-capacity\nresult (`2^N` patterns) as the zero-error (`t=0`) special case, and quantifies\nthe capacity cost of noise tolerance (`|C|·(N+1) ≤ 2^N` for single-error\ncorrection).\n\n## Proven chain (this file)\n\n1. `hammingDist_false_eq_weight`, `card_weight_eq`, `sum_choose_weight` — weight,\n   sparse counts, and partition of the pattern space.\n2. `hammingDist_xor`, `ball_card_center_indep`, `ball_silent_card`, `ball_card` —\n   Hamming balls are translation invariant and have volume `∑_{k≤r} C(N,k)`.\n3. `balls_pairwiseDisjoint`, `hamming_bound` — disjoint packing and the main bound.\n4. `hamming_bound_capacity`, `singleton_error_correct_card` — consequences.\n\n## Natural next steps\n\n- **Gilbert–Varshamov lower bound.** Prove existence of a codebook with\n  `|C| ≥ 2^N / V(N, 2t)` by a greedy/maximal-code argument. This complements the\n  Hamming upper bound and brackets the optimal code size.\n- **Singleton bound.** `|C| ≤ 2^(N - d + 1)` for minimum distance `d`, via\n  injectivity of the projection onto `N - d + 1` coordinates. Then define MDS\n  neural codes (Singleton equality).\n- **Perfect codes.** Formalize the notion of a perfect code (Hamming bound met\n  with equality) and verify the Hamming(7,4) code is perfect, connecting to the\n  computational evidence table.\n- **Plotkin / linear-programming bounds** for the high-noise regime\n  (`d > N/2`), and the asymptotic rate–distance tradeoff.\n- **Metric structure.** Package `hammingDist` on `NeuralCode N` as a genuine\n  `MetricSpace`/`PseudoMetricSpace` instance to reuse Mathlib's ball API.\n- **Bridge to energy.** Combine with the sparse-coding energy results of\n  `NeuralCoding.lean` and the description-length bounds of\n  `MindEncodingBounds.lean` to study energy-optimal *robust* codes.\n\n## Status\n\nThe neural-coding chain of this cycle is complete and compiles with no `sorry`:\n`NeuralCoding.lean` (raw capacity `2^N`) and `NeuralErrorCorrection.lean`\n(sphere-packing / Hamming bound and its `t = 0` capacity corollary) both\nelaborate cleanly and use only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`). The items above are genuinely\nopen extensions, not gaps in the present development.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1121",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c1de826b",
+    "status": "available",
+    "timestamp": "2026-07-12T08:27:22.398056+00:00",
+    "title": "This cycle deepened the neural-coding development by adding a self-contained"
   },
   {
     "ambition_level": "extension",

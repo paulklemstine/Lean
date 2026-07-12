@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a0852bd7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Anti-Mathematics\n\nThis project formalises three of the ZFC \"anti-axioms\" from the mission via\nexplicit, fully verified models, built as a chain of results.\n\n## What is proved\n\n**",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 45,
-      "timestamp": "2026-07-11T11:59:05",
-      "title": "Anti-Mathematics: What If All Axioms Were Negated?"
-    },
-    {
       "cycle_id": "2c395553",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Dreamtime Algebra\n\nThe file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge\nbetween Australian Aboriginal kinship systems and finite group theory: the\nfour-s",
@@ -499,19 +489,19 @@
       "theorem_count": 848,
       "timestamp": "2026-07-12T07:53:41",
       "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
+    },
+    {
+      "cycle_id": "c1de826b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Neural Coding Theorems\n\nThis cycle deepened the neural-coding development by adding a self-contained\ntheory of **error-correcting neural codes** in\n`Catalog/Novelty/NeuralErrorCo",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 33,
+      "timestamp": "2026-07-12T08:27:31",
+      "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "70354b52",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nDerived from the study of `σ₅(n)`, the minimal absolute value of a non-vanishing sum of\n`n` fifth roots of unity: its monotonicity along residue classes modulo 5 and the\ncharacter",
-      "quality_score": 0.63344,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-06T13:52:43",
-      "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
-    },
     {
       "cycle_id": "ecf65bf0",
       "domain": "Geometry",
@@ -2501,6 +2491,16 @@
       "theorem_count": 848,
       "timestamp": "2026-07-12T07:53:41",
       "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
+    },
+    {
+      "cycle_id": "c1de826b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Neural Coding Theorems\n\nThis cycle deepened the neural-coding development by adding a self-contained\ntheory of **error-correcting neural codes** in\n`Catalog/Novelty/NeuralErrorCo",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 33,
+      "timestamp": "2026-07-12T08:27:31",
+      "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T07:53:41",
+  "last_updated": "2026-07-12T08:27:31",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "4d0c820d",
-      "domain": "Novelty",
-      "sorry_count": 3,
-      "timestamp": "2026-07-11T04:13:20"
-    },
     {
       "context": "+    -- WORK-IN-PROGRESS (single documented `sorry`).  Reducing this to `1 < primPart n`; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "39ced9f7",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-12T07:36:38"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "c1de826b",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-12T08:27:31"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c695f186",
-        "quality": 0.68,
-        "theorems": 10,
-        "title": "Speculative: Topological Data Analysis of Theorem Networks"
-      },
-      {
         "cycle_id": "0a5d3cfa",
         "quality": 0.78,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 848,
         "title": "Categorifying the quantum binomial product rule via filtrations of plethystic mo"
+      },
+      {
+        "cycle_id": "c1de826b",
+        "quality": 0.82,
+        "theorems": 33,
+        "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theore"
       }
     ],
     "Bridges": [
