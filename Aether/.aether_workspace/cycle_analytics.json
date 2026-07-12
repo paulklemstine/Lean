@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T07:02:26.464631+00:00",
+  "last_updated": "2026-07-12T07:19:33.665199+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -7863,6 +7863,7 @@
       "outcome_quality": 0.62,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -7891,6 +7892,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T07:02:26.424769+00:00",
       "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 35,
+      "domain": "MachineLearning",
+      "duration_seconds": 1018.0614414215088,
+      "end_time": 1783840751.9114163,
+      "files_integrated": 4,
+      "job_id": "e2c082ff",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "sorry_density": 0.5555555555555556,
+      "start_time": 1783839733.8499749,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 8,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T07:19:33.623796+00:00",
+      "title": "Lower bounds on clique densities using generalized inverses"
     }
   ]
 }

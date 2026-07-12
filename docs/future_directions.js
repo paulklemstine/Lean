@@ -438,6 +438,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e2c082ff (Q=0.820), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_e2c082ff_dcfe5098",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "e2c082ff",
+    "status": "available",
+    "timestamp": "2026-07-12T07:19:31.875554+00:00",
+    "title": "Deepening: Lower bounds on clique densities using generalized inverses"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
     "domains": [
       "Applications"
@@ -1136,6 +1150,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle e2c082ff (Q=0.820) proved 9 theorems in MachineLearning but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a f",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "sorry_fill_e2c082ff_dd78638a",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "e2c082ff",
+    "status": "available",
+    "timestamp": "2026-07-12T07:19:31.986954+00:00",
+    "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle f0772bca (Q=0.830) proved 18 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocati",
     "domains": [
       "Novelty"
@@ -1569,21 +1597,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T11:14:08.155742+00:00",
     "title": "Infinite Color Wheels: No Nontrivial Neighbor\u2011Blend Colorings"
-  },
-  {
-    "consumed_by_exp_id": "e2c082ff",
-    "description": "This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0026",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31967v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T11:32:25.412615+00:00",
-    "title": "Lower bounds on clique densities using generalized inverses"
   },
   {
     "consumed_by_exp_id": "",
@@ -6078,7 +6091,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle deepened the study of the **square of the Eulerian triangle**, whose "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e618ea1a",
     "description": "# Future Directions \u2014 The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological structure of\nthe conflict-free complex `K(AF)`. Three self-contained files:\n\n* `ArgumentationCore.lean` \u2014 conflict-freeness, defense, admissibility, the\n  characteristic (defense) operator, its monotonicity, its preservation of\n  conflict-freeness, downward closure of conflict-free sets, and **Dung's\n  Fundamental Lemma**.\n* `ArgumentationExtensions.lean` \u2014 preferred and complete extensions, existence\n  of preferred extensions via **Zorn's Lemma**, the theorem **every preferred\n  extension is complete**, and the grounded extension as the least fixed point\n  of the defense operator, contained in every preferred extension.\n* `ArgumentationSimplicial.lean` \u2014 the **abstract simplicial complex** `K(AF)`,\n  the Euler characteristic, the contractibility of the full simplex\n  (`chi = 1`), and an **explicit refutation** of the conjectured identity\n  `chi(K(AF)) = |preferred| \u2212 |grounded|`.\n\n## What was established (theorems, not sketches)\n\n1. `K(AF)` is a bona fide simplicial complex: conflict-free sets are downward\n   closed. The correct carrier of the topology is the *conflict-free* family,\n   not the (non-downward-closed) family of preferred extensions.\n2. The defense operator `charF` is monotone and preserves conflict-freeness;\n   admissibility is exactly \"conflict-free and below `charF`\".\n3. Fundamental Lemma \u21d2 preferred = complete; preferred extensions always exist.\n4. The grounded extension refines every preferred extension (skeptical \u2286\n   credulous).\n5. The literal Euler = semantics conjecture is false, with a one-argument\n   witness and a supporting numerical survey (`ComputationalEvidence.md`).\n\n## Promising next steps\n\n### A. A *correct* Euler/semantics bridge\nThe naive identity fails, but the survey suggests structured relationships worth\nformalizing:\n- For the **complete conflict graph** (mutual attacks everywhere), `K(AF)` is\n  `n` isolated points and `chi = n = #(preferred extensions)`. Conjecture and\n  prove: for *symmetric, irreflexive* frameworks, `chi(K(AF))` equals the number\n  of preferred extensions, and more precisely the preferred extensions are\n  exactly the maximal independent sets (the facets of `K(AF)`).\n- Relate `H_0(K(AF))` (connected components of the conflict graph) to the\n  decomposition of an AF into independent sub-debates, and prove semantics\n  distribute over connected components.\n\n### B. Homology, not just Euler characteristic\nDefine simplicial chains/boundaries over `K(AF)` and its (reduced) homology\n`H_n`. Mathlib now has enough homological algebra to define the chain complex of\nan abstract simplicial complex. Targets:\n- `H_0` counts connected components of the conflict graph.\n- Identify `H_1` generators with induced cycles in the conflict graph\n  (\"circular disagreements\"), making precise the informal \"circular arguments\n  are 1-holes\".\n- The Euler\u2013Poincar\u00e9 formula `chi = \u03a3 (-1)^n dim H_n` as a theorem, linking the\n  combinatorial `eulerChar` here to Betti numbers.\n\n### C. Independence-complex machinery\n`K(AF)` is the independence complex of the symmetric closure of the attack\ngraph. Porting standard results (e.g. shellability/contractibility criteria,\nthe fold lemma) would give homotopy-type computations of `K(AF)` directly from\ngraph structure.\n\n### D. Further Dung semantics\n- Formalize stable and ideal semantics and their inclusions among\n  grounded \u2286 ideal \u2286 preferred.\n- Prove the grounded extension is itself conflict-free/complete in the finite\n  case by induction on the iterates of `charF` (the general transfinite case\n  needs a chain-continuity argument beyond `OrderHom.lfp_induction`).\n- Coincidence theorems: for well-founded (acyclic) frameworks, grounded =\n  preferred = stable is the unique extension.\n\n### E. Quantitative topology of real debates\nWith the homology API in place, compute `H_*` for argument graphs extracted from\ndebate corpora and study which topological invariants correlate with rhetorical\nphenomena (deadlock \u2194 nontrivial `H_1`, fragmentation \u2194 large `H_0`).\n",
     "domains": [
       "Geometry",
@@ -6088,7 +6101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "00abb0ac",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T18:12:01.549366+00:00",
     "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
   },
@@ -6946,6 +6959,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:02:17.521516+00:00",
     "title": "Points live in the `n \u00d7 n` integer grid `grid n = {0,\u2026,n-1}\u00b2`. Collinearity is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: clique densities from the inclusion\u2013exclusion inverse\n\nThis cycle isolated a single local inequality \u2014 the *inclusion\u2013exclusion inverse*\n`deg(u) + deg(v) \u2264 n + codeg(u,v)` \u2014 and showed it simultaneously forces triangles,\nconstrains extremal triangle-free graphs, and, once summed, reproduces the global triangle count.\nThe directions below push this codegree-centred viewpoint outward.\n\n## 1. A codegree tensor inverse for `K_{r}` densities\n**Conjecture.** For every `r \u2265 3` there is an `(r-1)`-linear \"inverse\" bounding the number of\ncommon neighbours of an `(r-1)`-clique below by an alternating sum of its sub-clique degrees, so\nthat the number of `K_r`'s is pinned between two symmetric functions of the codegree tensor.\n*The key insight is* that the pairwise inclusion\u2013exclusion inverse is the `r = 3` slice of a\nhigher inclusion\u2013exclusion identity on the intersection lattice of neighbourhoods, and the\nalternating signs are exactly the M\u00f6bius function of that lattice.\n*Why now?* The `r = 3` slice is now fully pinned down (existence, extremal light-edge structure,\nand exact counting all follow from one inequality), giving a concrete base case whose algebraic\nshape dictates the higher-arity generalization.\n\n## 2. Stability of the forced-triangle threshold\n**Conjecture.** If a graph has *no* triangle yet some edge with `deg(u) + deg(v) = n` (the extremal\nequality), then it is within a bounded edit distance of a complete bipartite graph; the number of\n\"saturating\" edges controls that distance quantitatively.\n*The key insight is* that equality in the inverse forces `N(u) \u222a N(v)` to cover every vertex, so a\ntriangle-free graph living on the equality locus must route all adjacencies across a single cut.\n*Why now?* The equality case has been identified exactly (complete and complete-bipartite graphs),\nso the extremal configuration is known and only its robustness under perturbation remains open.\n\n## 3. Codegree-weighted Goodman bound is tight along a spectral family\n**Conjecture.** The global codegree lower bound on triangle count is attained, up to lower-order\nterms, precisely by quasi-random graphs whose degree sequence is near-regular and whose codegrees\nconcentrate; the deficit in the bound is a positive multiple of the variance of the degree\nsequence.\n*The key insight is* that the only slack in the summed inverse comes from the gap\n`n - |N(u) \u222a N(v)|`, which vanishes on average exactly when neighbourhoods overlap as a random\ngraph's would.\n*Why now?* The exact identity converting the codegree sum into six times the triangle count makes\nthe deficit an explicit, analysable quantity rather than an asymptotic remainder.\n\n## 4. Threshold cascades for higher cliques\n**Conjecture.** A degree-sum overshoot at a single edge that is iterated across a nested family of\ncommon neighbourhoods forces not just a triangle but a `K_r` whose order grows with the size of the\novershoot, giving an effective \"book\" lower bound: an edge in many triangles lies in a large clique.\n*The key insight is* that the forced-triangle step can be re-applied inside the common\nneighbourhood of an edge, turning a single threshold crossing into a recursion whose depth is\ngoverned by how far the degrees exceed `n`.\n*Why now?* With the base forced-triangle step proved with an exact, non-asymptotic threshold, the\nrecursion has a rigorous first rung to stand on.\n\n## 5. Fractional and weighted analogues\n**Conjecture.** Replacing vertex counts by a probability measure and codegrees by expected overlap\nyields a measurable-graph inverse `d(u) + d(v) \u2264 1 + c(u,v)` whose integrated form is the triangle\ndensity lower bound in the graph-limit (graphon) setting, matching the extremal profile of the\nclique-density problem at its lower boundary.\n*The key insight is* that the finite inverse is scale-free \u2014 it never references `n` except as the\ntotal measure \u2014 so it should survive verbatim under normalization to a graphon.\n*Why now?* The finite statement is already phrased purely through unions and intersections of\nneighbourhoods, the exact objects that pass to limits, so the translation to the continuous setting\nis immediate rather than speculative.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1117",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e2c082ff",
+    "status": "available",
+    "timestamp": "2026-07-12T07:19:23.888023+00:00",
+    "title": "This cycle isolated a single local inequality \u2014 the *inclusion\u2013exclusion inverse"
   },
   {
     "consumed_by_exp_id": "",
