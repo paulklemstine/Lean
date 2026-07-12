@@ -3590,7 +3590,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "abs/2305.06330",
         "AbramskyJung1994",
@@ -3601,7 +3601,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "077d3a2b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3617,7 +3617,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0127",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T07:53:56.338062+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem prob_powerdomain_rb_domain {P : FinitePoset} : is_rb_domain (Vone P)  <-> P.has_least && hasse_graph_tree P",
       "lineage_refs": [],
@@ -3632,7 +3632,7 @@
       "source": "",
       "source_exp_id": "2607.02231v1",
       "source_path": "http://arxiv.org/abs/2607.02231v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T04:55:55.366539+00:00",
       "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
@@ -31070,7 +31070,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 26d2653d (Q=0.830), which proved 2828 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computa",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -32270,7 +32270,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7669ab26 (Q=0.820), which proved 24 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-complex. Show that the distance of the code equals the systole of the underlying manifold. Predict: codes ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -32870,7 +32870,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a0852bd7 (Q=0.800), which proved 45 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are c",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Applications"
       ],
@@ -33055,6 +33055,46 @@
       "thread_id": "",
       "timestamp": "2026-07-11T04:29:37.981147+00:00",
       "title": "Deepening: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle b88b4225 (Q=0.820), which proved 848 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: We conjecture that for any field F and integers n ≥ m ≥ 0, d ≥ 0, the field‑independent filtration of Δ^(n,m)Sym^dE described in the paper yields graded pieces whose characters are exactly the quantum binomial coefficients appearing in the product rule (Rel2) for Lusztig’s quantum Cartan elements. I",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "push_b88b4225_c43bd99e",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "b88b4225",
+      "source_path": "Categorifying the quantum binomial product rule via filtrations of plethystic mo",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-12T07:53:41.275291+00:00",
+      "title": "Deepening: Categorifying the quantum binomial product rule via filtrations of plethystic mo"
     },
     {
       "ambition_level": "extension",
@@ -34230,7 +34270,7 @@
       "depth_estimate": 3,
       "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -34590,7 +34630,7 @@
       "depth_estimate": 3,
       "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$‑regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD‑total chromatic number, namel",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -34710,7 +34750,7 @@
       "depth_estimate": 3,
       "description": "Cycle 7669ab26 (Q=0.820) proved 24 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-comple",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -35030,7 +35070,7 @@
       "depth_estimate": 3,
       "description": "Cycle c016fced (Q=0.830) proved 1745 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 0ba9c9ed (Q=0.820), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general sett",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -35472,6 +35512,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }

@@ -409,6 +409,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b88b4225 (Q=0.820), which proved 848 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: We conjecture that for any field F and integers n \u2265 m \u2265 0, d \u2265 0, the field\u2011independent filtration of \u0394^(n,m)Sym^dE described in the paper yields graded pieces whose characters are exactly the quantum binomial coefficients appearing in the product rule (Rel2) for Lusztig\u2019s quantum Cartan elements. I",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_b88b4225_c43bd99e",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "b88b4225",
+    "status": "available",
+    "timestamp": "2026-07-12T07:53:41.275291+00:00",
+    "title": "Deepening: Categorifying the quantum binomial product rule via filtrations of plethystic mo"
+  },
+  {
     "consumed_by_exp_id": "62dd551b",
     "description": "Building on cycle c06d8e8c (Q=0.820), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domains": [
@@ -1926,7 +1940,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "077d3a2b",
     "description": "We classify the finite posets whose probabilistic powerdomain is an RB-domain by proving that a finite poset P has this property if and only if it has a least element and its undirected Hasse graph is a tree.",
     "domains": [
       "Bridges"
@@ -1935,7 +1949,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T04:55:55.366539+00:00",
     "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
   },
@@ -4595,20 +4609,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "27e75405",
-    "description": "For integers n, k, \u2113 with n > 100\u00b7\u2113\u00b7k\u00b2 and 3 \u2264 \u2113 < k, if F \u2286 ([n] choose k) and G \u2286 ([n] choose \u2113) are non-trivial cross-intersecting families (i.e., \u22c2_{F\u2208F} F = \u2205 and \u22c2_{G\u2208G} G = \u2205, and F \u2229 G \u2260 \u2205 for all F \u2208 F, G \u2208 G), then |F|\u00b7|G| \u2264 h(n,k)\u00b7(n-1 choose \u2113-1), where h(n,k) = (n-1 choose k-1) - (n-k-1 choose k-1) + 1 is the Hilton-Milner bound.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0627",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06443v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T03:16:37.289057+00:00",
-    "title": "Product Hilton-Milner theorem for large n"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
@@ -5227,21 +5227,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T08:56:45.426505+00:00",
     "title": "Existence of a bijection between c\u2011balanced Dyck paths and (c+1)-ary trees with prescribed leaf count"
-  },
-  {
-    "consumed_by_exp_id": "b88b4225",
-    "description": "We conjecture that for any field F and integers n \u2265 m \u2265 0, d \u2265 0, the field\u2011independent filtration of \u0394^(n,m)Sym^dE described in the paper yields graded pieces whose characters are exactly the quantum binomial coefficients appearing in the product rule (Rel2) for Lusztig\u2019s quantum Cartan elements. In particular, the i\u2011th quotient is isomorphic to \u0394^(n\u2011i,m\u2011i)Sym^(d\u2011i)E and its formal character equals s_(n\u2011i,m\u2011i) \u2218 s_(d\u2011i).",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0727",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06749v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T11:04:03.670117+00:00",
-    "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
   },
   {
     "consumed_by_exp_id": "",
@@ -6975,6 +6960,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:36:31.774478+00:00",
     "title": "This project formalises, self-contained on top of Mathlib, a small theory of tot"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 Product Hilton\u2013Milner theorem\n\nThe file `Catalog/Novelty/ProductHiltonMilnerLarge.lean` develops, fully and with\n0 `sorry`s, the structure surrounding the product Hilton\u2013Milner theorem:\n\n* `crossIntersecting_prod_le` \u2014 the elementary **mixed-uniformity** cross-intersecting\n  product bound `|F|\u00b7|G| \u2264 (C(n,k)-C(n-\u2113,k))\u00b7(C(n,\u2113)-C(n-k,\u2113))`.\n* `intersecting_prod_le` \u2014 the **Erd\u0151s\u2013Ko\u2013Rado** product bound\n  `|F|\u00b7|G| \u2264 C(n-1,k-1)\u00b7C(n-1,\u2113-1)` (sharp in the trivial/star regime), built on\n  Mathlib's `Finset.erdos_ko_rado`.\n* `card_hiltonMilnerFamily` \u2014 the exact size `h(n,k)` of the canonical\n  Hilton\u2013Milner family, and `exists_nonTrivial_intersecting_uniform_card_eq_hm`,\n  which packages it as: a non-trivial, intersecting, `k`-uniform family of size\n  exactly `h(n,k)` exists.\n\n## The remaining gap to the sharp bound\n\nThe sharp product Hilton\u2013Milner bound is\n`|F|\u00b7|G| \u2264 h(n,k)\u00b7C(n-1,\u2113-1)` for `n > 100\u00b7\u2113\u00b7k\u00b2`, `3 \u2264 \u2113 < k`.  Closing the gap\nbetween the elementary bounds above and this bound requires two deep ingredients:\n\n1. **The Hilton\u2013Milner theorem itself** \u2014 the sharp upper bound `h(n,k)` on a\n   non-trivial intersecting `k`-uniform family.  This is *not* currently in\n   Mathlib.  `card_hiltonMilnerFamily` supplies the extremal *lower* witness;\n   the matching *upper* bound (via shifting / the Frankl kernel method, or the\n   Daykin/Frankl arguments) is the missing piece.\n\n2. **A structural reduction** showing that in the large-`n` regime a non-trivial\n   family `G` that is cross-intersecting with `F` forces `F` to be (essentially)\n   intersecting and non-trivial, and `G` to be (essentially) intersecting, so\n   that ingredient 1 and Erd\u0151s\u2013Ko\u2013Rado apply factor-by-factor.\n\nNatural next steps, in increasing order of difficulty:\n\n* Formalise the **Hilton\u2013Milner upper bound** for large `n` as a standalone\n  result; combined with `card_hiltonMilnerFamily` this pins the extremal number.\n* Formalise the **cross-intersecting sum bound** (Frankl\u2013Tokushige) as an\n  intermediate tool.\n* Assemble the large-`n` reduction to obtain the sharp product bound.\n\nEach of these is a substantial development; the present file provides the\nreusable definitional framework (`IsUniform`, `CrossIntersecting`, `NonTrivial`,\n`hm`, `hiltonMilnerFamily`) and the extremal-family arithmetic they will build on.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1119",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "27e75405",
+    "status": "available",
+    "timestamp": "2026-07-12T07:53:20.629776+00:00",
+    "title": "The file `Catalog/Novelty/ProductHiltonMilnerLarge.lean` develops, fully and wit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 quantum binomial characters and plethystic filtrations\n\nThis cycle established the character-level backbone of the conjectured\nfield-independent filtration of `\u0394^{(n,m)} Sym^d E`: the Gaussian binomial\ncoefficients `[n,k]_q` satisfy two complementary Pascal recurrences, are\nself-dual under `k \u21a6 n-k` (Hermite reciprocity), specialise to the ordinary\nbinomial coefficients, and their single-step splitting realises the categorified\nproduct rule. From these findings we extract the following bold, falsifiable\nconjectures.\n\n## 1. The full multi-step filtration is a telescoping of self-dual pieces\n\n**Conjecture.** For all `n \u2265 m \u2265 0` and `d \u2265 0`, the `i`-th graded piece of the\nfiltration of `\u0394^{(n,m)} Sym^d E` has character `[d, i]_q` times the character\nof `\u0394^{(n-i,m-i)} Sym^{d-i} E`, and the total character telescopes as a single\nalternating-free sum of self-dual Gaussian polynomials.\n\n*The key insight is* that the two dual Pascal recurrences we isolated are not\nindependent accidents but the two boundary maps of one exact complex, so the\nwhole filtration is generated by iterating a single self-dual splitting.\n*Why now?* The absorption identity `[N,k+1](1-q^{k+1}) = [N,k](1-q^{N-k})`\npins down the ratio of adjacent pieces exactly, giving a closed recursion for\nevery graded layer rather than only the top one.\n\n## 2. Absorption is the shadow of a Wronskian pairing\n\n**Conjecture.** The absorption identity is the principal specialisation of a\nperfect pairing between the `i`-th filtration piece and the `(d-i)`-th piece\ninduced by the Wronskian isomorphism, so the filtration is self-dual as a\nfiltered complex and its graded pieces come in Poincar\u00e9-dual pairs.\n\n*The key insight is* that the factor `(1-q^{k+1})` measuring the failure of the\nsingle Pascal rule is exactly the Euler factor of a degree-shift, i.e. the\ndeterminant of a Wronskian-type pairing on one graded layer. *Why now?* We have\nshown reciprocity provably requires this factor; interpreting it as a pairing\nturns a combinatorial obstruction into a duality theorem.\n\n## 3. Lusztig's Rel2 associativity is a trinomial reciprocity\n\n**Conjecture.** The associativity of the divided-power product\n`E^{(a)}E^{(b)} = [a+b,a]_q E^{(a+b)}` is equivalent to the trinomial\nreciprocity `[a+b+c,a]_q [b+c,b]_q = [a+b+c,c]_q [a+b,a]_q`, and this identity\nholds field-independently over `\u2124[q]` with no denominators.\n\n*The key insight is* that the binary reciprocity `[a+b,a]=[a+b,b]` proved here is\nthe `c=0` edge of a genuinely three-parameter symmetry governing nested\nsubspace filtrations. *Why now?* With the binary case and the absorption engine\nin hand, the trinomial case reduces to two applications of the dual recurrence,\nmaking it directly attackable.\n\n## 4. Characteristic-independence is exact, not merely generic\n\n**Conjecture.** Every structure constant of the filtration lies in `\u2124[q]` with\nunit content, so the graded pieces have the same dimension in every\ncharacteristic; in particular no prime divides any transition coefficient of the\nfiltration.\n\n*The key insight is* that all our recurrences preserve integrality and the\nconstant term is always `1`, forcing the leading and trailing coefficients of\neach `[n,k]_q` to be units. *Why now?* The field-independent recurrence has been\nverified to stay inside `\u2124[q]` at every step, so integral (not just rational)\ncontrol of the filtration is within reach.\n\n## 5. Palindromicity upgrades reciprocity to a hard-Lefschetz statement\n\n**Conjecture.** Each `[n,k]_q` is a palindromic polynomial of degree `k(n-k)`\nwhose coefficient sequence is unimodal, and this unimodality is the numerical\ntrace of a hard-Lefschetz operator acting on `Sym^k Sym^{n-k} E`.\n\n*The key insight is* that self-duality `[n,k]=[n,n-k]` combined with the\ndegree-shift structure of the filtration forces the coefficient vector to be\nsymmetric, the first half of a Lefschetz decomposition. *Why now?* Reciprocity\nis now a theorem, so the remaining unimodality claim is the last combinatorial\ninput needed to certify a Lefschetz action at the level of characters.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1120",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b88b4225",
+    "status": "available",
+    "timestamp": "2026-07-12T07:53:32.904194+00:00",
+    "title": "Character-level backbone of the conjectured"
   },
   {
     "consumed_by_exp_id": "",

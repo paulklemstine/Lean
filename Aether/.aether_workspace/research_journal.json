@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d4a0469f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Counterfactual (random) number theory\n\nThis cycle added a **cross-domain connector**\n(`CounterfactualRandomPrimesBorelCantelli.lean`) linking\n\n* **probability / measure theory**",
-      "quality_score": 0.82,
-      "sorry_count": 9,
-      "theorem_count": 8,
-      "timestamp": "2026-07-11T11:42:29",
-      "title": "Deepening: Counterfactual Number Theory: What If Primes Were Random?"
-    },
-    {
       "cycle_id": "a0852bd7",
       "domain": "Applications",
       "key_insight": "# Future Directions — Anti-Mathematics\n\nThis project formalises three of the ZFC \"anti-axioms\" from the mission via\nexplicit, fully verified models, built as a chain of results.\n\n## What is proved\n\n**",
@@ -499,19 +489,19 @@
       "theorem_count": 855,
       "timestamp": "2026-07-12T07:36:38",
       "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
+    },
+    {
+      "cycle_id": "b88b4225",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — quantum binomial characters and plethystic filtrations\n\nThis cycle established the character-level backbone of the conjectured\nfield-independent filtration of `Δ^{(n,m)} Sym^d E`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 848,
+      "timestamp": "2026-07-12T07:53:41",
+      "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a793b4d3",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Chain Covers in the Boolean Lattice\n\nFive bold, falsifiable conjectures growing out of this cycle's findings on the\nminimum number of chains needed to cover the lattice of subset",
-      "quality_score": 0.5242404210526316,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-06T11:53:24",
-      "title": "Chain Covers in the Boolean Lattice"
-    },
     {
       "cycle_id": "70354b52",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 865,
       "timestamp": "2026-07-12T07:53:28",
       "title": "Product Hilton-Milner theorem for large n"
+    },
+    {
+      "cycle_id": "b88b4225",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — quantum binomial characters and plethystic filtrations\n\nThis cycle established the character-level backbone of the conjectured\nfield-independent filtration of `Δ^{(n,m)} Sym^d E`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 848,
+      "timestamp": "2026-07-12T07:53:41",
+      "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "de167401",
-      "domain": "Bridges",
-      "name": "PersonEquiv",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "319bd9f6",
-      "domain": "Shared",
-      "name": "primPart_check",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "319bd9f6",
-      "domain": "Shared",
-      "name": "fib_carmichael_composite",
-      "quality": 0.78
-    },
     {
       "cycle_id": "319bd9f6",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "shatter_containsCycle",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "b88b4225",
+      "domain": "Applications",
+      "name": "qform_even",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b88b4225",
+      "domain": "Applications",
+      "name": "det_scaledGram",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b88b4225",
+      "domain": "Applications",
+      "name": "det_NeronSeveri",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T07:53:28",
+  "last_updated": "2026-07-12T07:53:41",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "7669ab26",
-        "quality": 0.82,
-        "theorems": 24,
-        "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-      },
-      {
         "cycle_id": "c695f186",
         "quality": 0.68,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.62,
         "theorems": 865,
         "title": "Product Hilton-Milner theorem for large n"
+      },
+      {
+        "cycle_id": "b88b4225",
+        "quality": 0.82,
+        "theorems": 848,
+        "title": "Categorifying the quantum binomial product rule via filtrations of plethystic mo"
       }
     ],
     "Bridges": [
