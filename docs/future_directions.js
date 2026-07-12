@@ -283,20 +283,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
   {
-    "consumed_by_exp_id": "6fce3466",
-    "description": "Building on cycle 494cab2e (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby a canonical invertible `2`-cell, with coherence holding automatically.\n\n## What was proved\n\n**`Caus",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_494cab2e_17acf3db",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "494cab2e",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T15:37:53.223010+00:00",
-    "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory: when comp"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 4b281557 (Q=0.820), which proved 19 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed ",
     "domains": [
@@ -592,7 +578,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Computational Complexity of Alien Civilizations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d95af58e",
     "description": "Building on cycle a0852bd7 (Q=0.800), which proved 45 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are c",
     "domains": [
       "Applications"
@@ -601,7 +587,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "a0852bd7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T11:59:05.893508+00:00",
     "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
   },
@@ -7320,6 +7306,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T17:21:13.444308+00:00",
     "title": "These conjectures are distilled from the arithmetic/linear-algebra decomposition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Causal Loops in Category Theory\n\nThis project studies *\"causal loops\"* in category theory: structures where composition\n(or a tensor product) fails to be associative **on the nose** but is repaired by a\ncanonical invertible `2`-cell, with coherence holding automatically.\n\n## What is now proved\n\n### Prior cycles\n* `CausalLoopsBicategory.lean` \u2014 coherence is free in a thin category (`monoidalOfThin`),\n  the parenthesization category `PTree \u03b1` as a concrete non-strict monoidal category, and\n  the Catalan census of bracketings.\n* `CausalLoops.lean` \u2014 the associator-defect calculus, the pentagon obstruction for\n  subtraction, almost-monoids, and loop rotation invariance.\n\n### This cycle \u2014 `CausalLoopsStrictification.lean`\nThe new, deeper result is a genuine **strictification theorem** phrased as an equivalence\nof categories:\n\n* **`strictify : PTree \u03b1 \u224c Discrete (List \u03b1)`** \u2014 the reassociation groupoid `PTree \u03b1` is\n  categorically equivalent to the *discrete* category on words. This makes precise the\n  slogan \"when composition loops back, its skeleton is the free monoid `(List \u03b1, ++, [])`\":\n  all the invertible `2`-cells recording how associativity loops back are collapsed, and\n  what remains is exactly the underlying word.\n\nSupporting and surrounding results:\n\n* `PTree.iso_iff` \u2014 two bracketings are isomorphic iff they share an underlying word\n  (coherence = connectedness);\n* `PTree.instIsIso` \u2014 `PTree \u03b1` is a groupoid;\n* `F_full`, `F_faithful`, `F_essSurj`, `F_isEquivalence` \u2014 the flattening functor is fully\n  faithful and essentially surjective, an independent construction of the equivalence via\n  the standard criterion;\n* `flatten_tensor`, `ofList_append` \u2014 the equivalence carries the (non-strict) tensor\n  `node` to concatenation of words, exhibiting the free monoid as the skeleton;\n* `Shape.card_bracketings` / `card_bracketings_succ` \u2014 the census of loops: the number of\n  bracketings of `n + 1` factors is `catalan n`, obeying the Segner convolution recurrence;\n* `Shape.iso_of_leaves_eq` \u2014 bracketings with equally many factors are isomorphic objects.\n\n## Directions not yet pursued\n\n1. **Monoidal strictification.** Upgrade `strictify` from an equivalence of categories to a\n   *monoidal* equivalence, with `Discrete (List \u03b1)` given its strict monoidal structure from\n   `++`. Thinness should again make all coherence data automatic.\n2. **Bicategorical form.** Package `PTree` families over a base as a genuine bicategory and\n   prove a `2`-categorical strictification.\n3. **Tamari lattice.** Refine the discrete groupoid `PTree \u03b1` to the Tamari order by keeping\n   only right-rotations, and relate the resulting poset to the associahedron.\n4. **Beyond thinness.** Replace the thin hypothesis by a weaker \"unique-associator\" axiom\n   and identify exactly when coherence still holds.\n",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_1152",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6fce3466",
+    "status": "available",
+    "timestamp": "2026-07-12T17:38:37.563802+00:00",
+    "title": "This project studies *\"causal loops\"* in category theory: structures where compo"
   },
   {
     "consumed_by_exp_id": "",

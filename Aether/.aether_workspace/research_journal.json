@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "47a54792",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThe cycle established a compact algebraic core for four-dimensional geometry: a\nsingle sum-of-squares identity, `(a+b)² = 4ab +",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-12T00:29:46",
-      "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
-    },
-    {
       "cycle_id": "b4ccc3c5",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\nThis project formalizes the elementary algebraic backbone of the Atkin–Lehner theory\nunderlying the Giampietro–Darmon factorization program:\n\n* `Pythagorean/AtkinLehnerGroup.lean`",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-12T17:21:20",
       "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weigh"
+    },
+    {
+      "cycle_id": "6fce3466",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nThis project studies *\"causal loops\"* in category theory: structures where composition\n(or a tensor product) fails to be associative **on the nos",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 39,
+      "timestamp": "2026-07-12T17:38:45",
+      "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory: when comp"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c38e66e4",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Power-of-Two Matching Counts\n\nThis cycle established a clean multiplicative law for perfect matchings of *block\ngraphs* — superpositions of identical gadgets with no edges between",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-09T21:23:45",
-      "title": "Power‑of‑Two Perfect Matching Count in Class B Graphs"
-    },
     {
       "cycle_id": "55f141e7",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-12T17:21:20",
       "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weigh"
+    },
+    {
+      "cycle_id": "6fce3466",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nThis project studies *\"causal loops\"* in category theory: structures where composition\n(or a tensor product) fails to be associative **on the nos",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 39,
+      "timestamp": "2026-07-12T17:38:45",
+      "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory: when comp"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e618ea1a",
-      "domain": "Novelty",
-      "name": "charF_empty",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "e618ea1a",
-      "domain": "Novelty",
-      "name": "defends_self_of_symmetric",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0930ae42",
-      "domain": "Novelty",
-      "name": "alexanderTorusPoly_three",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0930ae42",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "J4_sq_eq_neg",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "6fce3466",
+      "domain": "Applications",
+      "name": "flatten_nil",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "6fce3466",
+      "domain": "Applications",
+      "name": "flatten_leaf",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "6fce3466",
+      "domain": "Applications",
+      "name": "flatten_node",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-12T17:21:20",
+  "last_updated": "2026-07-12T17:38:45",
   "open_questions": [
     {
       "context": "+To keep this file free of `sorry` while remaining faithful, we prove the composite; -    sorry; +as an open conjecture rather than prove it with `sorry`.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f3dfcf44",
-        "quality": 0.82,
-        "theorems": 17,
-        "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field"
-      },
-      {
         "cycle_id": "8cebc683",
         "quality": 0.72,
         "theorems": 120,
@@ -3141,6 +3135,12 @@
         "quality": 0.8,
         "theorems": 17,
         "title": "Irreducibility of mod p reductions of crystalline representations at fractional "
+      },
+      {
+        "cycle_id": "6fce3466",
+        "quality": 0.83,
+        "theorems": 39,
+        "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory"
       }
     ],
     "Bridges": [

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T17:21:21.926769+00:00",
+  "last_updated": "2026-07-12T17:38:47.218924+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -9397,6 +9397,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T17:21:21.893130+00:00",
       "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weigh"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 73,
+      "domain": "Applications",
+      "duration_seconds": 1049.1186373233795,
+      "end_time": 1783877906.0444844,
+      "files_integrated": 4,
+      "job_id": "6fce3466",
+      "outcome_quality": 0.83,
+      "phase": "complete",
+      "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.83,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5485,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.83,
+        "novelty": 0.83,
+        "proof_depth": 0.83,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783876856.925847,
+      "strategy_count": 0,
+      "theorem_count": 39,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T17:38:47.174325+00:00",
+      "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory: when comp"
     }
   ]
 }
