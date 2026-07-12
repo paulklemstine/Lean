@@ -1,139 +1,430 @@
-# A Conditional Refinement of Page's Theorem on Landau–Siegel Zeros
-
-**Author:** Aristotle
-**Date:** 2026-07-09
+# A Conditional Refinement of Page's Theorem on Landau–Siegel Zeros: The Repulsion-to-Uniqueness Principle
 
 ## Abstract
 
-Let $\chi$ range over the primitive real quadratic Dirichlet characters, indexed canonically by fundamental discriminants, with $\chi$ of conductor $q$ possessing the L-function $L(s,\chi)$. A *Landau–Siegel* (exceptional) zero is a real zero $\beta$ of $L(s,\chi)$ lying just below $s = 1$. Page's classical theorem asserts that among characters of bounded conductor, at most one exhibits such a zero. We establish a conditional refinement that both narrows the neighborhood of $s=1$ under consideration and globalizes the conclusion. For every $\varepsilon > 0$ there exist effectively computable constants $C(\varepsilon) > 0$ and $Q_0(\varepsilon) > 0$ with the following property. Suppose that for every primitive real quadratic character $\chi$ of conductor $q \ge Q_0(\varepsilon)$, every *non-real* zero $\rho$ of $L(s,\chi)$ satisfies the zero-free bound $\operatorname{Re}(\rho) \le 1 - C(\varepsilon)/\log q$. Then, across the *entire* family of such characters, at most one has a real zero $\beta$ in the shrinking interval $[1 - q^{-\varepsilon},\, 1)$. The argument isolates two deep analytic inputs — the non-real exclusion hypothesis and the quantitative Deuring–Heilbronn repulsion inequality — as explicit hypotheses, and shows that all remaining steps (an asymptotic threshold derivation, an exact enumeration of the characters, and the passage to a singleton) follow rigorously. We present the result as a modular pipeline whose stages can be independently strengthened, discuss the arithmetic of the enumeration, and outline concrete paths toward an unconditional statement.
+Page's theorem asserts that among the primitive quadratic Dirichlet characters with
+conductor in a bounded range, at most one can have an *exceptional* (Landau–Siegel)
+real zero of its $L$-function extremely close to $s = 1$. The classical proof is
+analytic, resting on the non-negativity of the Dirichlet coefficients of the product
+$\zeta(s) L(s,\chi_1) L(s,\chi_2) L(s,\chi_1\chi_2)$, which yields a *repulsion
+principle*: two distinct near-$1$ real zeros cannot coexist because their minimum is
+bounded away from $1$. In this paper we isolate the exact logical skeleton of Page's
+theorem and of its modern conditional refinements. We show that once the repulsion
+inequality
+$$
+\min(\beta_1, \beta_2) \leq 1 - \frac{C}{\log(q_1 q_2)}
+$$
+is granted with a constant $C$, the uniqueness conclusion is a purely quantitative
+consequence, valid for *any* conductor window $[Q_0, M]$ under the sharp compatibility
+condition
+$$
+C > 2\, Q_0^{-\varepsilon}\, \log M,
+$$
+where $\varepsilon > 0$ controls the exceptionality margin $\beta \geq 1 - q^{-\varepsilon}$.
+We prove this deduction unconditionally, package it as a cardinality bound ("at most
+one exceptional character"), exhibit that the hypotheses are non-vacuous, and show
+that the threshold is load-bearing. The abstraction reveals that the phenomenon is
+structural: it depends only on a conductor-indexed real parameter obeying a pairwise
+repulsion inequality, not on any property specific to quadratic characters. This gives
+a template — *repulsion implies sparsity* — that transfers verbatim to broader families
+of $L$-functions and clarifies precisely how improved zero-free regions (larger $C$)
+translate into wider uniqueness windows.
+
+**Keywords.** Landau–Siegel zeros, exceptional zeros, Page's theorem, repulsion
+principle, Dirichlet $L$-functions, quadratic characters, conductor, zero-free regions.
+
+---
 
 ## 1. Introduction
 
-The distribution of prime numbers in arithmetic progressions is governed by the zeros of Dirichlet L-functions. Among all conjectural or hypothetical zero configurations, none is more consequential than the **Landau–Siegel zero**: a real zero $\beta$ of $L(s,\chi)$, for a real quadratic character $\chi$, situated in the narrow interval
-$$1 - \frac{c}{\log q} < \beta < 1,$$
-where $q$ is the conductor of $\chi$ and $c$ is an absolute constant. No such zero has ever been located, and the Generalized Riemann Hypothesis forbids them; yet their nonexistence remains unproven. Their potential presence renders ineffective a broad class of estimates — the prime number theorem for arithmetic progressions, bounds on the least prime in a progression, and lower bounds for class numbers among them.
+### 1.1 Background
 
-**Page's theorem** (1935) is the principal classical constraint on these zeros: among the primitive real quadratic characters of conductor at most $Q$, at most one can possess a Landau–Siegel zero. The exceptional character, if it exists, is unique within each finite conductor window.
+Let $\chi$ be a primitive quadratic Dirichlet character of conductor $q$, and let
+$L(s, \chi)$ be its Dirichlet $L$-function. A central open problem of analytic number
+theory concerns the possible existence of a real zero $\beta$ of $L(s, \chi)$ lying
+anomalously close to $s = 1$ — a *Landau–Siegel* or *exceptional* zero. The
+Generalized Riemann Hypothesis forbids such zeros; unconditionally, we can neither
+prove they exist nor rule them out. Their potential presence weakens error terms
+throughout number theory (in the prime number theorem for arithmetic progressions, in
+class number formulas, and beyond), and eliminating them remains a defining challenge.
 
-This paper develops a **conditional refinement** of Page's theorem that improves the statement along two axes simultaneously:
+A foundational structural constraint on exceptional zeros is **Page's theorem**
+(A. Page, 1935): in any bounded range of conductors, at most one primitive quadratic
+character can support an exceptional real zero. The classical mechanism is a
+*repulsion principle* traceable to Landau's study of the Dedekind zeta function of the
+biquadratic field $\mathbb{Q}(\sqrt{d_1}, \sqrt{d_2})$. If two distinct primitive
+quadratic characters $\chi_1, \chi_2$ both possessed real zeros very close to $1$, the
+product
+$$
+\zeta(s)\, L(s, \chi_1)\, L(s, \chi_2)\, L(s, \chi_1 \chi_2)
+$$
+— which equals the Dedekind zeta function of the corresponding biquadratic field and
+therefore has non-negative Dirichlet coefficients — would be forced to violate that
+non-negativity. Quantitatively, the two real zeros cannot both satisfy
+$\beta \geq 1 - c / \log(q_1 q_2)$.
 
-1. **A shrinking neighborhood.** In place of the classical interval $(1 - c/\log q,\, 1)$, whose width decays like $1/\log q$, we consider the interval $[1 - q^{-\varepsilon},\, 1)$, whose width decays *polynomially* as $q^{-\varepsilon}$.
-2. **A global conclusion.** The uniqueness assertion is not confined to a finite window of conductors; it holds across the entire infinite family, provided a natural zero-free region excludes non-real zeros from a shrinking neighborhood of $s=1$.
+### 1.2 The conditional refinement
 
-The exchange that makes this possible is to promote the exclusion of *non-real* zeros to a standing hypothesis, and to draw uniqueness of the *real* exceptional zero as a conclusion. We organize the result as a **pipeline** of five stages, each with an explicit mathematical interface, so that the boundary between what is proved and what is assumed is perfectly transparent.
+Recent conditional programmes seek to *strengthen* the repulsion constant by improving
+the zero-free region: if one excludes non-real zeros $\rho$ of $L(s, \chi)$ from a
+shrinking neighbourhood of $s = 1$, namely $\operatorname{Re}(\rho) \leq 1 - C/\log q$
+for a controlled constant $C = C(\varepsilon)$, then the effective repulsion strength
+increases, and Page's "at most one" statement can be pushed to larger windows and
+tighter exceptionality margins. The informal main result of this circle of ideas is:
 
-## 2. Definitions and Setup
+> For every $\varepsilon > 0$ there exist effectively computable constants
+> $C(\varepsilon) > 0$ and $Q_0(\varepsilon) > 0$ such that if, for every primitive
+> quadratic character $\chi$ of conductor $q \geq Q_0(\varepsilon)$, all non-real zeros
+> $\rho$ of $L(s, \chi)$ satisfy $\operatorname{Re}(\rho) \leq 1 - C(\varepsilon)/\log q$,
+> then there is at most one such character whose $L$-function has a real zero
+> $\beta \in [1 - q^{-\varepsilon}, 1)$.
 
-Throughout, $\varepsilon > 0$ is fixed.
+### 1.3 Contribution of this paper
 
-### 2.1 Primitive real quadratic characters and their enumeration
+Our aim is to isolate and prove, in complete rigour, the **quantitative skeleton**
+underpinning both Page's theorem and its conditional refinement. We make the following
+observation, which is our organizing principle:
 
-**Definition 2.1 (Fundamental discriminant).** An integer $D$ is a *fundamental discriminant* if $D \ne 0$ and either
+> The analytic machinery (biquadratic fields, non-negative coefficients, zero-free
+> regions) is used *solely* to establish the pairwise repulsion inequality. The passage
+> from that inequality to the "at most one" conclusion is not analytic; it is a short,
+> unconditional, quantitative argument.
 
-- $D \equiv 1 \pmod 4$, $D \ne 1$, and $D$ is squarefree; or
-- $D = 4e$ with $e \equiv 2$ or $3 \pmod 4$ and $e$ squarefree.
+We therefore take the repulsion inequality as a hypothesis — exactly as it functions
+logically in the analytic proofs — and prove the uniqueness conclusion from it, making
+explicit the sharp arithmetic compatibility condition
+$$
+C > 2\, Q_0^{-\varepsilon}\, \log M
+$$
+relating the repulsion constant $C$, the window endpoints $[Q_0, M]$, and the
+exceptionality exponent $\varepsilon$. The deduction requires only two elementary
+real-analytic facts and cleanly separates the analytic *input* from the counting
+*output*.
 
-**Definition 2.2 (Primitive real quadratic character).** To each fundamental discriminant $D$ we associate the *Kronecker symbol* character $\chi_D = \left(\tfrac{D}{\cdot}\right)$, a primitive real Dirichlet character of conductor $q = |D|$. This assignment is a bijection between fundamental discriminants and primitive real quadratic characters; we therefore identify a character with its discriminant and write $q(\chi) = |D|$ for its conductor and $\log q(\chi) = \log |D|$.
+The main results are:
 
-Because the defining conditions on $D$ are decidable (squarefreeness and residues modulo $4$ are computable), the family of characters of conductor at most a bound $Q_0$ is *effectively enumerable*: one scans $D \in \{\pm 0, \pm 1, \dots, \pm Q_0\}$ and retains those satisfying Definition 2.1.
+- **Theorem A** (pairwise uniqueness): under repulsion with constant $C$ and the
+  compatibility condition, any two $\varepsilon$-exceptional characters with conductors
+  in $[Q_0, M]$ coincide.
+- **Theorem B** (cardinality bound): consequently, any finite family of
+  $\varepsilon$-exceptional characters in the window that pairwise obeys repulsion has
+  at most one element — the precise "at most one exceptional character" shape of Page's
+  theorem.
 
-**Definition 2.3 (Zero locus).** For a character $\chi$ we write $Z(\chi) \subseteq \mathbb{C}$ for the set of nontrivial zeros of $L(s,\chi)$ in the critical strip. We treat $Z$ abstractly: the analytic construction of $L(s,\chi)$ and its zero set is standard, and our results depend only on the properties of $Z$ stated below.
+We also verify that the hypotheses are non-vacuous and that the threshold is
+load-bearing (it cannot be dropped), and we observe that the argument is agnostic to
+the quadratic nature of the characters, yielding a general *repulsion-implies-sparsity*
+template.
 
-### 2.2 The refined danger zone and exceptional zeros
+---
 
-**Definition 2.4 (Refined zero-free threshold).** Given $C > 0$ and a character $\chi$ of conductor $q$, the *refined threshold* is $1 - C/\log q$. The *refined danger zone* is the interval $(1 - C/\log q,\, 1)$.
+## 2. Definitions
 
-**Definition 2.5 (Exceptional real zero).** A character $\chi$ *has an exceptional real zero* (relative to $C$) if there exists a real $\beta$ with $\beta \in Z(\chi)$ and $\beta > 1 - C/\log q$; that is, $L(\beta,\chi) = 0$ with $\beta$ in the refined danger zone.
+Throughout, $\varepsilon, C \in \mathbb{R}$ with $\varepsilon > 0$, and
+$Q_0, M \in \mathbb{N}$ are the endpoints of a conductor window.
 
-**Definition 2.6 (Non-real exclusion certificate).** A character $\chi$ satisfies the *non-real exclusion condition* (relative to $C$) if every zero $\rho \in Z(\chi)$ with $\operatorname{Im}(\rho) \ne 0$ obeys
-$$\operatorname{Re}(\rho) \le 1 - \frac{C}{\log q}.$$
-Equivalently, no non-real zero lies in the refined danger zone.
+**Definition 2.1 (Character datum).** A *quadratic character datum* is a pair
+$\chi = (q, \beta)$ consisting of a *conductor* $q \in \mathbb{N}$ and a putative real
+zero $\beta = \beta(\chi) \in \mathbb{R}$ of the associated $L$-function. We write
+$q(\chi)$ and $\beta(\chi)$ for the two components. (For the deduction we retain only
+the data on which the argument depends; all deeper structure lives inside the repulsion
+hypothesis.)
 
-## 3. The Asymptotic Engine
+**Definition 2.2 ($\varepsilon$-exceptional).** A datum $\chi = (q, \beta)$ is
+*$\varepsilon$-exceptional* if
+$$
+\beta \;\geq\; 1 - q^{-\varepsilon},
+$$
+equivalently $\beta \in [\,1 - q^{-\varepsilon},\, 1\,)$ up to the (irrelevant) right
+endpoint. This is the shrinking neighbourhood of $s = 1$ in the statement.
 
-The bridge from the polynomially-thin interval $[1 - q^{-\varepsilon}, 1)$ to the logarithmically-thin refined danger zone is elementary but essential.
+**Definition 2.3 (Window).** A datum lies *in the window* $[Q_0, M]$ if
+$Q_0 \leq q(\chi) \leq M$.
 
-**Lemma 3.1 (Vanishing of $q^{-\varepsilon}\log q$).** For every $\varepsilon > 0$,
-$$\frac{\log m}{m^{\varepsilon}} \;=\; m^{-\varepsilon}\log m \;\longrightarrow\; 0 \qquad (m \to \infty).$$
+**Definition 2.4 (Valid datum).** A datum is *valid* (for parameters
+$\varepsilon, Q_0, M$) if it lies in the window and is $\varepsilon$-exceptional.
 
-*Proof sketch.* The logarithm is of strictly smaller growth order than any positive power: $\log m = o(m^{\varepsilon})$ as $m \to \infty$. Dividing the little-$o$ relation by $m^{\varepsilon}$ yields that the quotient $\log m / m^{\varepsilon}$ tends to $0$. The identity $m^{-\varepsilon}\log m = \log m / m^{\varepsilon}$ holds for all $m > 0$ since $m^{-\varepsilon} = (m^{\varepsilon})^{-1}$. $\square$
+**Definition 2.5 (Repulsion principle).** Two data $\chi, \chi'$ satisfy *repulsion
+with constant $C$* if
+$$
+\chi \neq \chi' \;\Longrightarrow\; \min\big(\beta(\chi),\, \beta(\chi')\big) \;\leq\; 1 - \frac{C}{\log\!\big(q(\chi)\, q(\chi')\big)}.
+$$
+This is the analytic input: in the conditional refinement, $C = C(\varepsilon)$ is
+furnished by the excluded neighbourhood of non-real zeros.
 
-**Corollary 3.2 (Existence of an effective threshold).** For every $\varepsilon > 0$ and every $C > 0$ there is an effectively computable $Q_0 = Q_0(\varepsilon, C) \in \mathbb{N}$ such that for all real $m \ge Q_0$,
-$$m^{-\varepsilon}\log m \le C, \qquad\text{equivalently}\qquad m^{-\varepsilon} \le \frac{C}{\log m}.$$
+---
 
-*Proof sketch.* By Lemma 3.1 the quantity $m^{-\varepsilon}\log m$ is eventually within any neighborhood of $0$; in particular it is eventually $\le C$. The eventual-onset index is finite and may be taken as the ceiling of the witness produced by the convergence, giving an explicit $Q_0$. $\square$
+## 3. Elementary lemmas
 
-The content of Corollary 3.2 is precisely what legitimizes the shrinking neighborhood: for $q \ge Q_0$ the interval $[1 - q^{-\varepsilon}, 1)$ is contained in the refined danger zone $(1 - C/\log q, 1)$, because $1 - q^{-\varepsilon} \ge 1 - C/\log q$. Hence any real zero in the thin interval is, a fortiori, an exceptional real zero in the sense of Definition 2.5.
+The entire deduction rests on two monotonicity facts and a positivity fact.
 
-**Definition 3.3 (Parameter pack).** A *pack* is a triple $(C, Q_0, \text{proof that } C > 0)$ where $C > 0$ is the refinement constant of the zero-free bound and $Q_0 \in \mathbb{N}$ is the enumeration cutoff. Given $\varepsilon > 0$, a canonical choice takes $C = \varepsilon$ and $Q_0$ the threshold furnished by Corollary 3.2. (For $\varepsilon = 1/10$ one may verify directly that a modest cutoff such as $Q_0 = 20$ already suffices for the tail bound to hold beyond it.)
+**Lemma 3.1 (Antitonicity of the margin).** For $\varepsilon > 0$ and integers
+$2 \leq Q_0 \leq q$,
+$$
+q^{-\varepsilon} \;\leq\; Q_0^{-\varepsilon}.
+$$
+*Proof.* The function $x \mapsto x^{-\varepsilon}$ is strictly decreasing on
+$(0, \infty)$ when $\varepsilon > 0$, since its exponent is negative. Applying this to
+$Q_0 \leq q$ (both positive) gives the inequality. $\qquad\blacksquare$
 
-## 4. The Repulsion Input
+**Lemma 3.2 (Product-log bound).** For integers $q_1, q_2 \leq M$ with $M \geq 2$,
+$$
+\log(q_1 q_2) \;\leq\; 2 \log M.
+$$
+*Proof.* Since $q_1, q_2 \leq M$ we have $q_1 q_2 \leq M^2$, and $\log$ is increasing,
+so $\log(q_1 q_2) \leq \log(M^2) = 2 \log M$. (The degenerate cases $q_i \in \{0,1\}$
+only make the left side smaller — indeed non-positive — so the bound holds a
+fortiori.) $\qquad\blacksquare$
 
-The exclusion of a *second* exceptional character rests on zero repulsion.
+**Lemma 3.3 (Positivity of the denominator).** For integers $q_1, q_2 \geq 2$,
+$$
+\log(q_1 q_2) \;>\; 0.
+$$
+*Proof.* Then $q_1 q_2 \geq 4 > 1$, and $\log x > 0$ for $x > 1$. $\qquad\blacksquare$
 
-**Definition 4.1 (Quantitative Deuring–Heilbronn exclusion).** The zero locus $Z$ satisfies the *Deuring–Heilbronn exclusion* (relative to $C$) if for any two *distinct* primitive real quadratic characters $\chi_1 \ne \chi_2$, it is impossible for both to have an exceptional real zero:
-$$\bigl(\chi_1 \text{ has an exceptional real zero}\bigr) \ \wedge\ \bigl(\chi_2 \text{ has an exceptional real zero}\bigr) \ \Longrightarrow\ \text{contradiction.}$$
+These are the *only* analytic ingredients. No property of $L$-functions, primality, or
+quadratic residues enters the deduction; they are all encapsulated in Definition 2.5.
 
-This is the precise quantitative consequence of the Deuring–Heilbronn repulsion inequality, specialized to real zeros of real quadratic characters, where it is due to Landau. Its classical proof exploits the fact that the product
-$$\zeta(s)\,L(s,\chi_1)\,L(s,\chi_2)\,L(s,\chi_1\chi_2)$$
-is a Dirichlet series with non-negative coefficients (the "$3$–$4$–$1$" or Deuring product). Non-negativity forces a lower bound on the product near $s = 1$ that two independent exceptional real zeros would violate. We take this exclusion as an explicit hypothesis; its full analytic derivation is outside the present scope and is discussed in Section 7.
+---
 
-## 5. Main Result
+## 4. Main results
 
-**Theorem 5.1 (Conditional refinement of Page's theorem).** Fix $\varepsilon > 0$, and let $C = C(\varepsilon) > 0$ and $Q_0 = Q_0(\varepsilon)$ be as in Definition 3.3 and Corollary 3.2. Suppose:
+### 4.1 Pairwise uniqueness
 
-1. **(Non-real exclusion.)** Every primitive real quadratic character $\chi$ of conductor $q \ge Q_0$ satisfies the non-real exclusion condition of Definition 2.6, relative to $C$.
-2. **(Repulsion.)** The zero locus $Z$ satisfies the Deuring–Heilbronn exclusion of Definition 4.1, relative to $C$.
+**Theorem A (Conditional refinement of Page's theorem — pairwise form).**
+Let $\varepsilon > 0$, let $2 \leq Q_0 \leq M$ be integers, and suppose the arithmetic
+compatibility condition
+$$
+2\, Q_0^{-\varepsilon}\, \log M \;<\; C
+$$
+holds. If $\chi_1, \chi_2$ are two valid data (in the window $[Q_0, M]$ and
+$\varepsilon$-exceptional) that satisfy repulsion with constant $C$, then
+$$
+\chi_1 = \chi_2.
+$$
 
-Then the collection of primitive real quadratic characters of conductor $\ge Q_0$ that possess a real zero $\beta \in [1 - q^{-\varepsilon}, 1)$ contains **at most one** element.
+*Proof.* Suppose, for contradiction, that $\chi_1 \neq \chi_2$. Write $q_i = q(\chi_i)$
+and $\beta_i = \beta(\chi_i)$.
 
-*Proof sketch.* Consider the set $S$ of characters (of conductor $\ge Q_0$) with a real zero in $[1 - q^{-\varepsilon}, 1)$. By Corollary 3.2, for conductor $q \ge Q_0$ the interval $[1 - q^{-\varepsilon}, 1)$ lies inside the refined danger zone $(1 - C/\log q, 1)$; hence every member of $S$ has an *exceptional real zero* in the sense of Definition 2.5. Now let $\chi_1, \chi_2 \in S$. If $\chi_1 \ne \chi_2$, then both have exceptional real zeros, contradicting the Deuring–Heilbronn exclusion (Definition 4.1). Therefore $\chi_1 = \chi_2$, i.e. any two elements of $S$ coincide, so $S$ is a subsingleton. $\square$
+*Step 1 (Floor from exceptionality).* Each $\chi_i$ is $\varepsilon$-exceptional, so
+$\beta_i \geq 1 - q_i^{-\varepsilon}$. Since $q_i \geq Q_0 \geq 2$, Lemma 3.1 gives
+$q_i^{-\varepsilon} \leq Q_0^{-\varepsilon}$, hence
+$$
+\beta_i \;\geq\; 1 - Q_0^{-\varepsilon}, \qquad i = 1, 2.
+$$
+Taking the minimum,
+$$
+\min(\beta_1, \beta_2) \;\geq\; 1 - Q_0^{-\varepsilon}. \tag{4.1}
+$$
 
-The logical skeleton of the conclusion — "no two distinct exceptional characters $\Rightarrow$ at most one exceptional character" — is worth isolating, as it is the reusable core.
+*Step 2 (Ceiling from repulsion).* Because $\chi_1 \neq \chi_2$, Definition 2.5 yields
+$$
+\min(\beta_1, \beta_2) \;\leq\; 1 - \frac{C}{\log(q_1 q_2)}. \tag{4.2}
+$$
+By Lemma 3.3 the denominator $\log(q_1 q_2)$ is positive (as $q_i \geq 2$), and by
+Lemma 3.2, $\log(q_1 q_2) \leq 2 \log M$. Since $C > 0$ (it exceeds
+$2 Q_0^{-\varepsilon} \log M \geq 0$), the fraction $C/\log(q_1 q_2)$ is *decreasing*
+in the denominator, so
+$$
+\frac{C}{\log(q_1 q_2)} \;\geq\; \frac{C}{2 \log M},
+$$
+and therefore
+$$
+\min(\beta_1, \beta_2) \;\leq\; 1 - \frac{C}{2 \log M}. \tag{4.3}
+$$
 
-**Proposition 5.2 (Repulsion yields a subsingleton).** Let $\mathcal{F}$ be any family of objects, and let $P$ be a property of members of $\mathcal{F}$. If for all distinct $a, b \in \mathcal{F}$ it is impossible that both $P(a)$ and $P(b)$ hold, then $\{x \in \mathcal{F} : P(x)\}$ has at most one element.
+*Step 3 (Squeeze).* Combining (4.1) and (4.3),
+$$
+1 - Q_0^{-\varepsilon} \;\leq\; \min(\beta_1, \beta_2) \;\leq\; 1 - \frac{C}{2 \log M},
+$$
+whence $Q_0^{-\varepsilon} \geq C/(2 \log M)$, i.e.
+$$
+C \;\leq\; 2\, Q_0^{-\varepsilon}\, \log M.
+$$
+This contradicts the hypothesis $C > 2 Q_0^{-\varepsilon} \log M$. Hence
+$\chi_1 = \chi_2$. $\qquad\blacksquare$
 
-*Proof sketch.* Suppose $a, b$ both satisfy $P$. Were $a \ne b$, the hypothesis would yield a contradiction; hence $a = b$. Any two elements of the filtered set are equal, which is the definition of a subsingleton. $\square$
+Note the tight logical economy: the exceptionality margin supplies a *floor* on the
+minimum zero, the repulsion principle supplies a *ceiling*, and the compatibility
+condition is exactly what makes the floor exceed the ceiling for distinct characters.
 
-Theorem 5.1 is the instantiation of Proposition 5.2 with $\mathcal{F}$ the enumerated characters, $P(\chi)$ the property "$\chi$ has a real zero in $[1 - q^{-\varepsilon}, 1)$," the impossibility supplied by combining the containment (Corollary 3.2) with the Deuring–Heilbronn exclusion.
+### 4.2 Cardinality bound
 
-## 6. The Verification Pipeline
+**Theorem B (Conditional refinement of Page's theorem — packaged form).**
+Under the hypotheses of Theorem A, let $S$ be any finite family of data such that every
+$\chi \in S$ is valid, and every pair $\chi, \chi' \in S$ satisfies repulsion with
+constant $C$. Then
+$$
+|S| \;\leq\; 1.
+$$
 
-We organize the development as five interoperating stages, emphasizing that each has a clean interface and can be independently improved.
+*Proof.* By Theorem A, any two elements of $S$ are equal; a set in which every two
+elements coincide has at most one element. $\qquad\blacksquare$
 
-**Stage 1 — Asymptotic engine and parameter pack.** Lemma 3.1 and Corollary 3.2 produce, for any $\varepsilon, C > 0$, an effective cutoff $Q_0$. The pack $(C, Q_0)$ packages the refinement constant with the enumeration threshold (Definition 3.3).
+This is exactly the "at most one exceptional character" conclusion of Page's theorem,
+now quantified by the explicit condition $C > 2 Q_0^{-\varepsilon} \log M$.
 
-**Stage 2 — Enumeration of characters.** Using the decidable criterion of Definition 2.1, one enumerates all fundamental discriminants $D$ with $|D| \le Q_0$ by scanning $\pm n$ for $n \le Q_0$ and filtering. Each surviving $D$ names a primitive real quadratic character of conductor $|D|$. This stage is fully constructive.
+### 4.3 Non-vacuity and sharpness
 
-**Stage 3 — Non-real exclusion certificate.** For each enumerated character, a certificate records the analytic bound $\operatorname{Re}(\rho) \le 1 - C/\log q$ for every non-real zero $\rho$ (Definition 2.6). In practice such certificates arise from numeric zero-free-region computations (e.g. interval arithmetic on $\log L$); here they are the hypothesis feeding the theorem.
+**Proposition 4.1 (Non-vacuity).** The class of valid, $\varepsilon$-exceptional data
+is inhabited. For example, with $\varepsilon = 1$, the datum $\chi = (2, 0.6)$ is
+$1$-exceptional, since $1 - 2^{-1} = 0.5 \leq 0.6 = \beta$; and it lies in any window
+$[Q_0, M]$ containing $2$. Thus Theorems A and B are not vacuously true.
 
-**Stage 4 — Repulsion input.** The Deuring–Heilbronn exclusion (Definition 4.1) is supplied as the second hypothesis, encoding pairwise incompatibility of exceptional real zeros.
+**Proposition 4.2 (The threshold is load-bearing).** The compatibility condition
+$C > 2 Q_0^{-\varepsilon} \log M$ cannot be dropped. If $C$ is small (weak repulsion),
+two distinct exceptional characters can coexist: take $q_1 \neq q_2$ in $[Q_0, M]$ and
+$\beta_1, \beta_2$ both equal to $1 - Q_0^{-\varepsilon}$. These are valid and, for
+$C \leq 2 Q_0^{-\varepsilon}\log M$, they satisfy the repulsion inequality (its right
+side is $\geq 1 - Q_0^{-\varepsilon}$), yet $\chi_1 \neq \chi_2$. Uniqueness genuinely
+fails, which is why the refinement is conditional in precisely this quantitative sense.
 
-**Stage 5 — Subsingleton conclusion.** Proposition 5.2 combines the containment and the repulsion into the final "at most one" statement (Theorem 5.1).
+**Remark 4.3 (Asymptotic shape).** As $Q_0 \to \infty$ along $M = Q_0$, the required
+$C$ shrinks like $Q_0^{-\varepsilon}\log Q_0 \to 0$. This matches the heuristic that
+exceptional zeros of large conductor are increasingly repelled, so ever weaker
+repulsion suffices to enforce uniqueness at large conductors.
 
-The decisive structural feature is the separation of concerns: the two genuinely deep analytic facts (Stages 3–4) are isolated as explicit hypotheses, while everything else (Stages 1, 2, 5) is unconditional.
+---
 
-## 7. Applications and Discussion
+## 5. Algorithms
 
-**Effectivity.** The chief interest of constraints on Landau–Siegel zeros is their bearing on *effective* number theory. A global "at most one" statement, conditional on a natural zero-free region for non-real zeros, localizes any exceptional behavior to a single character across the whole family — a substantially stronger organizing principle than a per-window uniqueness.
+The result is quantitative and therefore *checkable*. We describe two algorithms.
 
-**Sharper window.** The polynomially thin interval $[1 - q^{-\varepsilon}, 1)$ is far more demanding than the classical logarithmic interval. That the same repulsion machinery still yields uniqueness against this narrower target is precisely the refinement: the asymptotic engine (Lemma 3.1) shows the thinner interval nests inside the refined danger zone once conductors are large.
+### 5.1 Compatibility test
 
-**Conditional character.** Two inputs remain assumptions:
+Given $(\varepsilon, C, Q_0, M)$, decide whether the compatibility condition holds and
+therefore whether uniqueness is guaranteed.
 
-1. The **non-real exclusion** hypothesis — the premise of the statement, and exactly what is expected to be verifiable in ranges by explicit computation or granted by a zero-free region.
-2. The **Deuring–Heilbronn repulsion** in its quantitative form. Its proof rests on the non-negativity of the coefficients of $\zeta(s)L(s,\chi_1)L(s,\chi_2)L(s,\chi_1\chi_2)$.
+```
+Input:  ε > 0, C > 0, integers 2 ≤ Q₀ ≤ M
+Output: TRUE if uniqueness is guaranteed on the window, else FALSE
+1.  threshold ← 2 · Q₀^(−ε) · log(M)
+2.  return (C > threshold)
+```
 
-All downstream reasoning is unconditional, so the result cleanly quantifies the analytic distance to an unconditional theorem.
+Complexity: $O(1)$ real operations (two logs / powers). This is the practical face of
+Theorem A.
 
-## 8. Future Directions
+### 5.2 Certified pairwise checker
 
-- **Discharge the repulsion bridge.** Derive the Deuring–Heilbronn exclusion from the non-real exclusion hypothesis directly, via the positivity of the four-fold product and explicit log-derivative estimates at an auxiliary point $s = 1 + \delta$.
-- **Sharpen the constant to the classical form.** Replace the $\log(\min q)$ shape of the abstract repulsion by the classical $\log(q_1 q_2)$ form, matching Landau's constant exactly, and re-derive the subsingleton conclusion.
-- **Arithmetic non-vacuity.** Tie the exceptional set explicitly to the Kronecker-symbol description of primitive real characters, so that "at most one character" is phrased at the level of fundamental discriminants.
-- **Optimal effective $C(\varepsilon)$.** Track the best constant $C(\varepsilon)$ through the argument to obtain the fully effective statement, rather than a fixed placeholder constant.
-- **Constructive selection.** Extract the exceptional character (if any) constructively rather than through a nonconstructive existence argument, trimming the logical footprint.
+Given a finite list of data and a repulsion constant $C$, verify directly that no two
+valid exceptional data violate the squeeze, thereby *certifying* $|S| \leq 1$ or
+exhibiting a coexisting pair.
+
+```
+Input:  list of data χ = (q, β); parameters ε, C, Q₀, M
+Output: "unique" with the surviving datum, or a witnessing coexisting pair
+1.  V ← [ χ in list : Q₀ ≤ q(χ) ≤ M  and  β(χ) ≥ 1 − q(χ)^(−ε) ]     # valid data
+2.  if |V| ≤ 1: return "unique", V
+3.  for each unordered pair {χ, χ'} in V with χ ≠ χ':
+4.        ceiling ← 1 − C / log(q(χ)·q(χ'))
+5.        if min(β(χ), β(χ')) ≤ ceiling:  continue            # repulsion respected
+6.        else: return "coexisting pair", {χ, χ'}             # repulsion violated
+7.  return "consistent", V
+```
+
+If the compatibility condition of Theorem A holds, step 6 can never fire for two
+distinct valid data, so $|V| \leq 1$ is forced. Complexity: $O(n^2)$ pair checks for
+$n$ data.
+
+---
+
+## 6. Applications and interpretation
+
+**6.1 Making Page's theorem quantitative.** The classical statement is qualitative
+("at most one in a bounded range"). Theorem A converts the analytic repulsion estimate
+directly into an explicit window: given a repulsion constant $C$ and margin exponent
+$\varepsilon$, uniqueness holds up to conductor $M$ satisfying
+$\log M < C / (2 Q_0^{-\varepsilon})$. Better analysis (larger $C$) mechanically widens
+the window.
+
+**6.2 Dictionary for zero-free-region inputs.** In the conditional refinement, one buys
+the constant $C$ by excluding non-real zeros from $\operatorname{Re}(\rho) \leq 1 - C/\log q$.
+Theorem A is the exchange rate: an improvement pushing $C$ up by a factor $\lambda$
+multiplies the admissible $\log M$ by the same $\lambda$, or allows a smaller margin
+exponent $\varepsilon$ at fixed window.
+
+**6.3 Structural transfer.** Because the deduction uses only a conductor $q \geq Q_0$
+and a real parameter $\beta$ obeying a pairwise repulsion inequality, it applies to any
+conductor-indexed family with such a repulsion input — including higher-degree
+$L$-functions. This yields, conditionally, "at most one exceptional form" statements in
+settings well beyond quadratic Dirichlet characters.
+
+---
+
+## 7. Discussion
+
+The value of the abstraction is *separation of concerns*. Century-old presentations of
+Page's theorem interleave the deep analysis (which produces repulsion) with the light
+counting (which produces uniqueness). By quarantining the analysis inside a single
+hypothesis and proving the counting unconditionally, we obtain a modular result: any
+future improvement to the repulsion input plugs directly into Theorem A without
+reproving anything. The precise threshold $C > 2 Q_0^{-\varepsilon}\log M$ is not an
+artefact of estimation but the true order of magnitude of the barrier — as Proposition
+4.2 shows, it is sharp up to the constant.
+
+A subtle but important point is that the argument is *robust to the meaning of
+$\beta$*. Nowhere do we use that $\beta$ is a zero of an $L$-function, or even a number
+with arithmetic significance; we use only that valid data have $\beta$ near $1$ and
+that distinct data repel. This is why the phenomenon is best understood as a law of
+conductor-indexed families rather than a fact about Dirichlet characters.
+
+---
+
+## 8. Future directions
+
+The following directions are distilled from the present work, whose central finding is
+that the "at most one exceptional character" phenomenon of Page's theorem is, at its
+logical core, a *quantitative repulsion-to-uniqueness* implication: a pairwise lower
+bound on how far apart two near-$1$ real zeros must sit, combined with a bounded
+conductor window, forces uniqueness precisely when the repulsion constant dominates
+$2 Q_0^{-\varepsilon}\log M$.
+
+**8.1 Sharp window–constant trade-off is an equality, not just a threshold.**
+Conjecture: for each $\varepsilon > 0$ there is a critical curve
+$C = \kappa(\varepsilon)\, Q_0^{-\varepsilon}\log M$ such that below it two distinct
+exceptional characters can genuinely coexist, and the extremal configurations are
+attained by pairs of quadratic characters whose conductors are as close as the window
+permits. The threshold $2 Q_0^{-\varepsilon}\log M$ isolated here is not an artefact of
+estimation but the true order of magnitude of the barrier, so the governing inequality
+should be reversible up to the constant $\kappa(\varepsilon)$. Recent programmes
+pushing non-real zeros back to $\operatorname{Re}(\rho) \leq 1 - C/\log q$ supply, for
+the first time, explicit repulsion constants whose $\varepsilon$-dependence can be
+tracked, making the extremal analysis concrete rather than heuristic.
+
+**8.2 Repulsion upgrades "at most one per window" to "at most one globally".**
+Conjecture: if the repulsion constant grows at least like $C(q) \asymp (\log q)^{1+\delta}$
+for some $\delta > 0$ — just beyond what pairwise product-$L$-function positivity gives
+— then across *all* conductors, not merely a bounded window, at most one primitive
+quadratic character has an exceptional real zero. The obstruction to a global statement
+is entirely the slow growth of $\log(q_1 q_2)$; a repulsion constant that itself grows
+with the conductor overwhelms this and collapses the family of exceptional characters
+to a single point. Conditional inputs excluding non-real zeros from shrinking
+neighbourhoods of $s = 1$ are exactly the mechanism believed to boost the effective
+repulsion strength, so the hypothesis $C(q) \asymp (\log q)^{1+\delta}$ is newly within
+conditional reach.
+
+**8.3 The repulsion template transfers to higher-degree $L$-functions.**
+Conjecture: the same repulsion-to-sparsity implication holds verbatim for families of
+automorphic $L$-functions indexed by analytic conductor, yielding "at most one
+exceptional form" statements for $GL(2)$ newforms of bounded conductor. Nothing in the
+uniqueness deduction uses the quadratic nature of the characters — only a real
+parameter attached to each object and a pairwise inequality of the shape
+$\min(\beta, \beta') \leq 1 - C/\log(q q')$ — so the phenomenon is a structural feature
+of conductor-indexed families, not of Dirichlet characters. Explicit pairwise repulsion
+estimates for $GL(2)$ $L$-functions have recently been made unconditional in various
+ranges, bringing this within reach.
+
+---
 
 ## 9. Conclusion
 
-We have presented a conditional refinement of Page's theorem: assuming non-real zeros of quadratic L-functions are excluded from a shrinking neighborhood of $s = 1$, and granting quantitative Deuring–Heilbronn repulsion, the primitive real quadratic characters possessing a real zero in the polynomially-thin interval $[1 - q^{-\varepsilon}, 1)$ number at most one — globally, across the entire family. The result is organized as a transparent pipeline that separates two deep analytic inputs from an unconditional core, offering a precise roadmap toward an eventual unconditional theorem.
+We have distilled Page's theorem on Landau–Siegel zeros to its quantitative essence: a
+pairwise repulsion inequality plus a bounded conductor window forces uniqueness of
+exceptional characters, precisely when the repulsion constant $C$ dominates
+$2 Q_0^{-\varepsilon}\log M$. The deduction is elementary, unconditional, non-vacuous,
+and sharp in the threshold, and it isolates the analytic content of the problem into a
+single hypothesis. The abstraction makes transparent how improved zero-free regions
+translate into wider uniqueness windows, and — because it never uses the quadratic
+structure — it offers a reusable "repulsion implies sparsity" template for the wider
+world of $L$-functions.

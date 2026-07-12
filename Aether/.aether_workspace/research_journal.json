@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8e65b62c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` — the positive theory:\n\n* **`erasedBits`** — infor",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-07-11T10:14:43",
-      "title": "Thermodynamics of Mathematical Proof"
-    },
-    {
       "cycle_id": "1978e429",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nTwo self-contained Lean files (each importing only Mathlib) realize the mission\n\"Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent\":\n\n- `Catalog/Logic/ParadoxesConsi",
@@ -499,19 +489,19 @@
       "theorem_count": 1185,
       "timestamp": "2026-07-12T05:20:57",
       "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+    },
+    {
+      "cycle_id": "26d2653d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet",
+      "quality_score": 0.83,
+      "sorry_count": 6,
+      "theorem_count": 2828,
+      "timestamp": "2026-07-12T06:11:35",
+      "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e29ffbac",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Maniplexes and tetravalent structures\n\n## 1. Characterising which tetravalent graphs are flag graphs of maniplexes\n\nA tetravalent graph is the flag graph of a rank‑4 maniplex pre",
-      "quality_score": 0.3793292235294118,
-      "sorry_count": 0,
-      "theorem_count": 2,
-      "timestamp": "2026-07-06T03:05:27",
-      "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
-    },
     {
       "cycle_id": "e92fe2c1",
       "domain": "Shared",
@@ -2501,6 +2491,16 @@
       "theorem_count": 1185,
       "timestamp": "2026-07-12T05:20:57",
       "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+    },
+    {
+      "cycle_id": "26d2653d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet",
+      "quality_score": 0.83,
+      "sorry_count": 6,
+      "theorem_count": 2828,
+      "timestamp": "2026-07-12T06:11:35",
+      "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T05:20:57",
+  "last_updated": "2026-07-12T06:11:35",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "823f5582",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-10T21:41:40"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "0faef071",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-12T05:03:54"
+    },
+    {
+      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; necessary.  All main theorems are `sorry`-free and use genuine arguments; -    sorry",
+      "cycle_id": "26d2653d",
+      "domain": "Applications",
+      "sorry_count": 6,
+      "timestamp": "2026-07-12T06:11:35"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f8dd2b6a",
-        "quality": 0.83,
-        "theorems": 40,
-        "title": "Deepening: Causal Loops in Category Theory: When Composition Loops Back"
-      },
-      {
         "cycle_id": "8fb1d399",
         "quality": 0.72,
         "theorems": 22,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 1745,
         "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
+      },
+      {
+        "cycle_id": "26d2653d",
+        "quality": 0.83,
+        "theorems": 2828,
+        "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
       }
     ],
     "Bridges": [

@@ -60,6 +60,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 26d2653d (Q=0.830), which proved 2828 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computa",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_26d2653d_886fa28d",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "26d2653d",
+    "status": "available",
+    "timestamp": "2026-07-12T06:11:35.916587+00:00",
+    "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
     "domain_bridges": [],
     "domains": [
@@ -1364,6 +1383,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_26d2653d_74542bee",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "26d2653d",
+    "status": "available",
+    "timestamp": "2026-07-12T06:11:35.997237+00:00",
+    "title": "Close Proofs: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 48961a11 (Q=0.830) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a were",
     "domain_bridges": [],
     "domains": [
@@ -1631,26 +1669,6 @@
     "status": "failed",
     "timestamp": "2026-07-11T19:27:07.217097+00:00",
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "26d2653d",
-    "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations — enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_1103",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T02:10:10.312629+00:00",
-    "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
   },
   {
     "ambition_level": "extension",
@@ -11724,6 +11742,26 @@
     "status": "available",
     "timestamp": "2026-07-12T05:20:46.630314+00:00",
     "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet is countably infinite, whereas any physically\nrealizable enumerator has a finite operation budget, so the *fraction* of statements\nit can ever exhibit tends to zero — and even holographic (area-law) storage, which\nscales with the square of a black hole's mass, cannot change that asymptotic verdict.\n\n## 1. Density-graded inexhaustibility\n**Conjecture.** For every productive deductive system there is a length-graded\nenumeration in which the discoverable fraction decays no faster than the reciprocal\nof the enumeration index, and this rate is optimal across all enumerations.\n*The key insight is* that finiteness of the budget, not the growth law of the\nresource, controls the asymptotic density, so the decay rate is an invariant of the\ncounting order rather than of the physics. *Why now?* Length-graded complexity\nmeasures for formal languages are now precise enough to pin the exact reciprocal\nrate, turning a qualitative \"measure zero\" statement into a sharp asymptotic law.\n\n## 2. Area-law optimality of holographic memory\n**Conjecture.** Among all monotone storage laws bounded by the surface area of a\nregion, the quadratic-in-mass Bekenstein–Hawking law is the unique maximizer of\ntotal storable information at fixed enclosed energy.\n*The key insight is* that the horizon area, not the enclosed volume, is the true\ncapacity variable, so any volume-scaling proposal violates the entropy bound and\nthe quadratic law is forced. *Why now?* Entropy bounds for gravitating systems have\nmatured to the point where the extremal characterization can be stated as a clean\noptimization over admissible capacity functions.\n\n## 3. Quadratic-beats-linear crossover is a phase boundary\n**Conjecture.** The crossover mass at which area-law storage overtakes any fixed\nlinear budget marks a genuine threshold: below it, discovery is budget-limited;\nabove it, discovery is enumeration-limited, and the two regimes have distinct\nscaling exponents for the number of statements exhibited per unit energy.\n*The key insight is* that the ratio of quadratic to linear capacity crosses one at a\nmass determined solely by the linear coefficient and the geometric constant, giving a\nsharp, computable boundary. *Why now?* The dominance inequality is already established\nin closed form, so the crossover mass is explicit and its two-sided behavior is testable.\n\n## 4. Robustness of fraction-zero under super-polynomial storage\n**Conjecture.** Replacing the area law by any storage law that is finite for every\nfinite mass — including hypothetical super-polynomial laws — leaves the discoverable\nfraction tending to zero; the fraction is positive only if storage becomes actually\ninfinite at some finite mass.\n*The key insight is* that the dichotomy is finite-versus-infinite, not slow-versus-fast,\nso the entire hierarchy of realizable storage laws collapses to a single asymptotic\nclass. *Why now?* With the finite-budget squeeze argument in hand, the conjecture\nreduces to characterizing exactly which growth laws remain finite pointwise.\n\n## 5. Countability transfer across formal systems\n**Conjecture.** The bijection between the theorems of one productive system and the\nnatural numbers can be made to commute with translation maps between systems, so that\nrelative discovery rates between two theories are governed by a single comparison\nfunction independent of either system's internal syntax.\n*The key insight is* that countability is a structural, syntax-free property, so\ninter-theory discovery comparisons factor through the shared enumeration of the\nnaturals. *Why now?* Uniform translation frameworks between formal systems are now\nstandard, making the commuting-bijection statement precise and checkable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1114",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "26d2653d",
+    "status": "available",
+    "timestamp": "2026-07-12T06:11:26.567700+00:00",
+    "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
   },
   {
     "ambition_level": "extension",

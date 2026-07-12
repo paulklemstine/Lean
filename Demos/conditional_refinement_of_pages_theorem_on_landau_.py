@@ -1,184 +1,180 @@
 """
-Numerical demonstrations for:
+Numerical demonstrations of the repulsion-to-uniqueness principle underlying a
+conditional refinement of Page's theorem on Landau-Siegel zeros.
 
-    A Conditional Refinement of Page's Theorem on Landau-Siegel Zeros
+Setting.  A "character datum" is a pair (conductor q, putative real zero beta).
+It is EPS-EXCEPTIONAL if  beta >= 1 - q^(-eps).  Two DISTINCT data satisfy the
+REPULSION PRINCIPLE with constant C if
 
-This self-contained script illustrates, with concrete numbers, the three
-mathematical pillars behind the refinement:
+        min(beta, beta') <= 1 - C / log(q * q').
 
-  1. Enumeration of primitive real quadratic characters via fundamental
-     discriminants (the Kronecker-symbol correspondence).
-  2. The asymptotic engine  q^{-eps} * log q -> 0,  which certifies an
-     effective threshold Q0 beyond which the polynomially-thin interval
-     [1 - q^{-eps}, 1) nests inside the refined danger zone (1 - C/log q, 1).
-  3. The subsingleton / "at most one" conclusion produced by pairwise
-     zero-repulsion (Deuring-Heilbronn).
+Main theorem (pairwise form).  If eps > 0, integers 2 <= Q0 <= M, and
 
-No external dependencies are required (standard library only).
+        C > 2 * Q0^(-eps) * log(M)            (the compatibility threshold)
+
+then any two valid (in-window, eps-exceptional) data obeying repulsion coincide;
+hence at most one exceptional character exists in the window [Q0, M].
+
+This script demonstrates:
+  1. the compatibility threshold and when it forces uniqueness,
+  2. the squeeze argument (floor from exceptionality vs ceiling from repulsion),
+  3. that the threshold is load-bearing (coexistence below it),
+  4. the asymptotic shrinking of the required C as Q0 -> infinity.
+
+Self-contained; requires only the standard library.
 """
 
 from __future__ import annotations
 
-import math
-from typing import Iterable
+from dataclasses import dataclass
+from math import log
+from itertools import combinations
 
 
-# ---------------------------------------------------------------------------
-# Stage 2 : enumeration of primitive real quadratic characters
-# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class CharacterDatum:
+    """A primitive quadratic character datum: conductor and putative real zero."""
+    conductor: int
+    real_zero: float
 
-def is_squarefree(n: int) -> bool:
-    """Return True iff |n| is squarefree (has no repeated prime factor)."""
-    n = abs(n)
-    if n == 0:
-        return False
-    if n == 1:
-        return True
-    d = 2
-    while d * d <= n:
-        if n % (d * d) == 0:
-            return False
-        if n % d == 0:
-            n //= d
+
+def exceptionality_margin(conductor: int, eps: float) -> float:
+    """The margin q^(-eps); an eps-exceptional zero lies within it of 1."""
+    return float(conductor) ** (-eps)
+
+
+def is_exceptional(chi: CharacterDatum, eps: float) -> bool:
+    """True iff beta >= 1 - q^(-eps)."""
+    return chi.real_zero >= 1.0 - exceptionality_margin(chi.conductor, eps)
+
+
+def in_window(chi: CharacterDatum, q0: int, m: int) -> bool:
+    """True iff Q0 <= conductor <= M."""
+    return q0 <= chi.conductor <= m
+
+
+def is_valid(chi: CharacterDatum, eps: float, q0: int, m: int) -> bool:
+    """True iff in-window and eps-exceptional."""
+    return in_window(chi, q0, m) and is_exceptional(chi, eps)
+
+
+def compatibility_threshold(eps: float, q0: int, m: int) -> float:
+    """The threshold 2 * Q0^(-eps) * log(M)."""
+    return 2.0 * (float(q0) ** (-eps)) * log(float(m))
+
+
+def uniqueness_guaranteed(eps: float, c: float, q0: int, m: int) -> bool:
+    """True iff C exceeds the compatibility threshold (Theorem A hypothesis)."""
+    return c > compatibility_threshold(eps, q0, m)
+
+
+def repulsion_ceiling(chi: CharacterDatum, chi2: CharacterDatum, c: float) -> float:
+    """The repulsion ceiling 1 - C / log(q * q')."""
+    return 1.0 - c / log(float(chi.conductor) * float(chi2.conductor))
+
+
+def repulsion_respected(chi: CharacterDatum, chi2: CharacterDatum, c: float) -> bool:
+    """True iff min(beta, beta') <= repulsion ceiling (distinct data)."""
+    return min(chi.real_zero, chi2.real_zero) <= repulsion_ceiling(chi, chi2, c)
+
+
+def certify_uniqueness(
+    data: list[CharacterDatum], eps: float, c: float, q0: int, m: int
+) -> tuple[str, object]:
+    """
+    Certified pairwise checker (Algorithm 5.2 of the paper).
+
+    Returns ("unique", V) if at most one valid datum exists; ("coexisting pair",
+    (chi, chi')) if two distinct valid data violate repulsion; ("consistent", V)
+    otherwise.
+    """
+    valid = [chi for chi in data if is_valid(chi, eps, q0, m)]
+    if len(valid) <= 1:
+        return "unique", valid
+    for chi, chi2 in combinations(valid, 2):
+        if not repulsion_respected(chi, chi2, c):
+            return "coexisting pair", (chi, chi2)
+    return "consistent", valid
+
+
+# --------------------------------------------------------------------------- #
+# Demonstrations
+# --------------------------------------------------------------------------- #
+
+def demo_threshold() -> None:
+    print("=" * 70)
+    print("DEMO 1  --  The compatibility threshold C > 2 * Q0^(-eps) * log(M)")
+    print("=" * 70)
+    eps, q0, m = 0.25, 10, 1000
+    tau = compatibility_threshold(eps, q0, m)
+    print(f"eps = {eps},  Q0 = {q0},  M = {m}")
+    print(f"threshold tau = 2 * Q0^(-eps) * log(M) = {tau:.6f}")
+    for c in (0.5 * tau, tau, 1.5 * tau):
+        ok = uniqueness_guaranteed(eps, c, q0, m)
+        print(f"  C = {c:8.4f}  ->  uniqueness guaranteed: {ok}")
+    print()
+
+
+def demo_squeeze() -> None:
+    print("=" * 70)
+    print("DEMO 2  --  The squeeze: floor (exceptionality) vs ceiling (repulsion)")
+    print("=" * 70)
+    eps, q0, m = 0.25, 10, 1000
+    c = 1.5 * compatibility_threshold(eps, q0, m)
+    floor = 1.0 - exceptionality_margin(q0, eps)          # 1 - Q0^(-eps)
+    chi1 = CharacterDatum(37, 1.0 - exceptionality_margin(37, eps))
+    chi2 = CharacterDatum(211, 1.0 - exceptionality_margin(211, eps))
+    ceiling = repulsion_ceiling(chi1, chi2, c)
+    mn = min(chi1.real_zero, chi2.real_zero)
+    print(f"C = {c:.4f}  (above threshold)")
+    print(f"floor   1 - Q0^(-eps)              = {floor:.6f}   (from exceptionality)")
+    print(f"actual  min(beta1, beta2)          = {mn:.6f}")
+    print(f"ceiling 1 - C/log(q1 q2)           = {ceiling:.6f}   (from repulsion)")
+    print("Distinct exceptional data would need floor <= min <= ceiling, but")
+    print(f"floor ({floor:.6f}) > ceiling ({ceiling:.6f}): impossible => must coincide.")
+    print()
+
+
+def demo_load_bearing() -> None:
+    print("=" * 70)
+    print("DEMO 3  --  The threshold is load-bearing: coexistence for small C")
+    print("=" * 70)
+    eps, q0, m = 0.25, 10, 20
+    # Two distinct genuinely valid data, each exactly at its own boundary
+    # beta = 1 - q^(-eps), with conductors inside the (small) window.
+    chi1 = CharacterDatum(10, 1.0 - exceptionality_margin(10, eps))
+    chi2 = CharacterDatum(20, 1.0 - exceptionality_margin(20, eps))
+    assert is_valid(chi1, eps, q0, m) and is_valid(chi2, eps, q0, m)
+    tau = compatibility_threshold(eps, q0, m)
+    print(f"eps = {eps},  Q0 = {q0},  M = {m},  threshold tau = {tau:.4f}")
+    for label, c in (("weak repulsion   C < tau", 0.5 * tau),
+                     ("strong repulsion C > tau", 1.5 * tau)):
+        respected = repulsion_respected(chi1, chi2, c)
+        if respected:
+            verdict = "repulsion HOLDS for the distinct pair -> they COEXIST"
         else:
-            d += 1
-    return True
+            verdict = "repulsion FAILS for the distinct pair -> uniqueness forced"
+        print(f"  {label}:  C = {c:6.4f}  ->  {verdict}")
+    print("  (Below the threshold two distinct exceptional characters coexist;")
+    print("   above it they cannot -- the threshold cannot be dropped.)")
+    print()
 
 
-def is_fundamental_discriminant(D: int) -> bool:
-    """
-    Test whether the integer D is a fundamental discriminant, i.e. the
-    discriminant of a quadratic field. These are in bijection with the
-    primitive real quadratic Dirichlet characters (via Kronecker symbols).
-
-    D is fundamental iff either
-      * D == 1 (mod 4), D != 1, and D squarefree, or
-      * D == 4 e with e == 2 or 3 (mod 4) and e squarefree.
-    """
-    if D == 0:
-        return False
-    if D % 4 == 1:
-        return D != 1 and is_squarefree(D)
-    if D % 4 == 0:
-        e = D // 4
-        return (e % 4 in (2, 3)) and is_squarefree(e)
-    return False
-
-
-def enumerate_quadratic_characters(Q0: int) -> list[int]:
-    """
-    Enumerate the fundamental discriminants D with |D| <= Q0.  Each such D
-    names a primitive real quadratic character of conductor q = |D|.
-    """
-    found: list[int] = []
-    for n in range(Q0 + 1):
-        for D in (n, -n):
-            if is_fundamental_discriminant(D):
-                found.append(D)
-    return sorted(set(found), key=lambda d: (abs(d), d))
-
-
-# ---------------------------------------------------------------------------
-# Stage 1 : the asymptotic engine and the effective threshold
-# ---------------------------------------------------------------------------
-
-def log_over_rpow(eps: float, m: float) -> float:
-    """log(m) / m^eps  =  m^{-eps} * log(m)  (the quantity that -> 0)."""
-    return math.log(m) / (m ** eps)
-
-
-def effective_threshold(eps: float, C: float, search_limit: int = 100_000_000) -> int:
-    """
-    Smallest Q0 such that for all integers m >= Q0 we have
-        m^{-eps} * log m <= C.
-    Because the function is eventually decreasing, we scan upward until the
-    bound first holds and then remains stable over a safety margin.
-    """
-    m = 2
-    while m < search_limit:
-        if log_over_rpow(eps, m) <= C:
-            # confirm it stays below C for a margin (function is decreasing here)
-            if all(log_over_rpow(eps, k) <= C for k in range(m, m + 50)):
-                return m
-        m += 1
-    raise RuntimeError("threshold not found within search_limit")
-
-
-def interval_nested(eps: float, C: float, q: float) -> bool:
-    """
-    Check that the thin interval [1 - q^{-eps}, 1) is contained in the
-    refined danger zone (1 - C/log q, 1), i.e. q^{-eps} <= C / log q.
-    """
-    return q ** (-eps) <= C / math.log(q)
-
-
-# ---------------------------------------------------------------------------
-# Stage 5 : the subsingleton ("at most one") conclusion under repulsion
-# ---------------------------------------------------------------------------
-
-def exceptional_set_is_subsingleton(
-    exceptional_characters: Iterable[int],
-    repulsion_forbids_pair: bool = True,
-) -> bool:
-    """
-    Model of the final conclusion.  Given the set of characters flagged as
-    possessing an exceptional real zero, and the Deuring-Heilbronn repulsion
-    principle (which forbids any two distinct such characters), the set has
-    at most one element.
-    """
-    chars = list(exceptional_characters)
-    if not repulsion_forbids_pair:
-        return len(chars) <= 1
-    # Repulsion collapses any two distinct exceptional characters.
-    return len(set(chars)) <= 1
-
-
-# ---------------------------------------------------------------------------
-# Driver
-# ---------------------------------------------------------------------------
-
-def main() -> None:
+def demo_asymptotics() -> None:
     print("=" * 70)
-    print("Conditional Refinement of Page's Theorem on Landau-Siegel Zeros")
+    print("DEMO 4  --  Required C shrinks like Q0^(-eps) log(Q0) as Q0 -> infinity")
     print("=" * 70)
-
-    # --- Stage 2 : enumeration ------------------------------------------------
-    Q0 = 20
-    chars = enumerate_quadratic_characters(Q0)
-    print(f"\n[Stage 2] Fundamental discriminants with |D| <= {Q0}:")
-    print(f"          {chars}")
-    print(f"          count = {len(chars)}")
-
-    # --- Stage 1 : asymptotic engine -----------------------------------------
-    # Illustrative parameters giving a modest, human-scale threshold.
-    # (For very small eps and C the threshold is astronomically large, since
-    #  log q / q^eps decays extremely slowly; the theorem only needs its
-    #  existence, which the asymptotic guarantees for every eps, C > 0.)
-    eps = 0.5
-    C = 0.5
-    print(f"\n[Stage 1] Asymptotic engine  log(q)/q^eps -> 0  (eps = {eps})")
-    for q in (10, 100, 10_000, 10**8, 10**12):
-        print(f"          q = {q:>14}:  log(q)/q^eps = {log_over_rpow(eps, q):.6e}")
-
-    Q0_thresh = effective_threshold(eps, C)
-    print(f"\n          Effective threshold Q0 with m^(-eps) log m <= C={C}:")
-    print(f"          Q0 = {Q0_thresh}")
-
-    print("\n          Containment  [1 - q^-eps, 1)  ⊆  (1 - C/log q, 1):")
-    for q in (5, 50, Q0_thresh, Q0_thresh * 10):
-        ok = interval_nested(eps, C, q)
-        print(f"          q = {q:>10}:  nested = {ok}")
-
-    # --- Stage 5 : subsingleton conclusion -----------------------------------
-    print("\n[Stage 5] 'At most one' under Deuring-Heilbronn repulsion:")
-    for candidate in ([], [5], [5, -3]):
-        ok = exceptional_set_is_subsingleton(candidate, repulsion_forbids_pair=True)
-        print(f"          exceptional set {candidate!s:>10} -> subsingleton = {ok}")
-    print("          (a two-element flagged set can never survive repulsion:")
-    print("           the pair is forbidden, so at most one truly persists.)")
-
-    print("\nDone.")
+    eps = 0.25
+    print(f"eps = {eps},  window M = Q0")
+    for q0 in (10, 100, 1000, 10_000, 100_000):
+        tau = compatibility_threshold(eps, q0, q0)
+        print(f"  Q0 = M = {q0:8d}  ->  required C > {tau:.6f}")
+    print("  The barrier weakens with conductor: larger conductors are more repelled.")
+    print()
 
 
 if __name__ == "__main__":
-    main()
+    demo_threshold()
+    demo_squeeze()
+    demo_load_bearing()
+    demo_asymptotics()

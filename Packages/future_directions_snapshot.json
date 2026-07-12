@@ -60,6 +60,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 26d2653d (Q=0.830), which proved 2828 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computa",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_26d2653d_886fa28d",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "26d2653d",
+    "status": "available",
+    "timestamp": "2026-07-12T06:11:35.916587+00:00",
+    "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
     "domain_bridges": [],
     "domains": [
@@ -1364,6 +1383,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_26d2653d_74542bee",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "26d2653d",
+    "status": "available",
+    "timestamp": "2026-07-12T06:11:35.997237+00:00",
+    "title": "Close Proofs: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 48961a11 (Q=0.830) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a were",
     "domain_bridges": [],
     "domains": [
@@ -1631,26 +1669,6 @@
     "status": "failed",
     "timestamp": "2026-07-11T19:27:07.217097+00:00",
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "26d2653d",
-    "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations — enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_1103",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T02:10:10.312629+00:00",
-    "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
   },
   {
     "ambition_level": "extension",
@@ -7604,35 +7622,6 @@
     "title": "Polylogarithmic Paucity of Square Products of Shifted Squares"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.NT",
-      "Landau-Siegel zeros",
-      "Page's theorem",
-      "Dirichlet L-functions",
-      "zero-free regions"
-    ],
-    "consumed_by_exp_id": "2cd42066",
-    "description": "For any ε > 0, there exist effectively computable constants C(ε) > 0 and Q₀(ε) > 0 such that: if for every primitive quadratic Dirichlet character χ with conductor q ≥ Q₀(ε), all non-real zeros ρ of L(s,χ) satisfy Re(ρ) ≤ 1 - C(ε)/log(q), then there is at most one such character χ whose associated L-function has a real zero β in the interval [1 - q^(-ε), 1). This formalizes the paper's main result that excluding non-real zeros from a shrinking neighborhood of s=1 allows a significant refinement of Page's theorem.",
-    "domain_bridges": [
-      "complex_analysis",
-      "analytic_number_theory",
-      "computational_number_theory"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0605",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The proof requires establishing: (1) effective zero-free regions for Dirichlet L-functions excluding the Landau-Siegel possibility; (2) a translation mechanism from lower bounds on L(1,χ) to upper bounds on exceptional real zeros β; (3) a counting argument showing that the hypothesis on non-real zeros (lying outside σ ≥ 1 - C/log(q)) prevents the distortion that would allow multiple exceptional characters. Key ingredients include logarithmic derivative estimates for L-functions, the Deuring-Heilbronn phenomenon, and effective bounds from the geometry of the zeros. Formalization would proceed by first establishing the effective constants, then the conditional zero-free region, and finally the uniqueness of the exceptional zero.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06433v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T05:36:19.999905+00:00",
-    "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "Catalan numbers",
@@ -11724,6 +11713,46 @@
     "status": "available",
     "timestamp": "2026-07-12T05:20:46.630314+00:00",
     "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet is countably infinite, whereas any physically\nrealizable enumerator has a finite operation budget, so the *fraction* of statements\nit can ever exhibit tends to zero — and even holographic (area-law) storage, which\nscales with the square of a black hole's mass, cannot change that asymptotic verdict.\n\n## 1. Density-graded inexhaustibility\n**Conjecture.** For every productive deductive system there is a length-graded\nenumeration in which the discoverable fraction decays no faster than the reciprocal\nof the enumeration index, and this rate is optimal across all enumerations.\n*The key insight is* that finiteness of the budget, not the growth law of the\nresource, controls the asymptotic density, so the decay rate is an invariant of the\ncounting order rather than of the physics. *Why now?* Length-graded complexity\nmeasures for formal languages are now precise enough to pin the exact reciprocal\nrate, turning a qualitative \"measure zero\" statement into a sharp asymptotic law.\n\n## 2. Area-law optimality of holographic memory\n**Conjecture.** Among all monotone storage laws bounded by the surface area of a\nregion, the quadratic-in-mass Bekenstein–Hawking law is the unique maximizer of\ntotal storable information at fixed enclosed energy.\n*The key insight is* that the horizon area, not the enclosed volume, is the true\ncapacity variable, so any volume-scaling proposal violates the entropy bound and\nthe quadratic law is forced. *Why now?* Entropy bounds for gravitating systems have\nmatured to the point where the extremal characterization can be stated as a clean\noptimization over admissible capacity functions.\n\n## 3. Quadratic-beats-linear crossover is a phase boundary\n**Conjecture.** The crossover mass at which area-law storage overtakes any fixed\nlinear budget marks a genuine threshold: below it, discovery is budget-limited;\nabove it, discovery is enumeration-limited, and the two regimes have distinct\nscaling exponents for the number of statements exhibited per unit energy.\n*The key insight is* that the ratio of quadratic to linear capacity crosses one at a\nmass determined solely by the linear coefficient and the geometric constant, giving a\nsharp, computable boundary. *Why now?* The dominance inequality is already established\nin closed form, so the crossover mass is explicit and its two-sided behavior is testable.\n\n## 4. Robustness of fraction-zero under super-polynomial storage\n**Conjecture.** Replacing the area law by any storage law that is finite for every\nfinite mass — including hypothetical super-polynomial laws — leaves the discoverable\nfraction tending to zero; the fraction is positive only if storage becomes actually\ninfinite at some finite mass.\n*The key insight is* that the dichotomy is finite-versus-infinite, not slow-versus-fast,\nso the entire hierarchy of realizable storage laws collapses to a single asymptotic\nclass. *Why now?* With the finite-budget squeeze argument in hand, the conjecture\nreduces to characterizing exactly which growth laws remain finite pointwise.\n\n## 5. Countability transfer across formal systems\n**Conjecture.** The bijection between the theorems of one productive system and the\nnatural numbers can be made to commute with translation maps between systems, so that\nrelative discovery rates between two theories are governed by a single comparison\nfunction independent of either system's internal syntax.\n*The key insight is* that countability is a structural, syntax-free property, so\ninter-theory discovery comparisons factor through the shared enumeration of the\nnaturals. *Why now?* Uniform translation frameworks between formal systems are now\nstandard, making the commuting-bijection statement precise and checkable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1114",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "26d2653d",
+    "status": "available",
+    "timestamp": "2026-07-12T06:11:26.567700+00:00",
+    "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Repulsion, Sparsity, and Exceptional Zeros\n\nThese conjectures are distilled from the present cycle, whose central finding is that\nthe \"at most one exceptional character\" phenomenon of Page's theorem is, at its logical\ncore, a *quantitative repulsion-to-uniqueness* implication: a pairwise lower bound on\nhow far apart two near-`1` real zeros must sit, combined with a bounded conductor\nwindow, forces uniqueness precisely when the repulsion constant dominates\n`2·Q₀^{-ε}·log M`.\n\n## 1. Sharp window–constant trade-off is an equality, not just a threshold\n\n**Conjecture.** For each `ε > 0` there is a critical curve `C = κ(ε)·Q₀^{-ε}·log M`\nsuch that below it two distinct exceptional characters can genuinely coexist, and the\nextremal configurations are attained by pairs of quadratic characters whose conductors\nare as close as the window permits.\n\nThe key insight is that the threshold `2·Q₀^{-ε}·log M` isolated in this cycle is not\nan artefact of the estimation but the true order of magnitude of the barrier, so the\ninequality governing uniqueness should be reversible up to the constant `κ(ε)`.\n\nWhy now? The recent programme of pushing non-real zeros back to `Re ρ ≤ 1 − C/log q`\nsupplies, for the first time, explicit repulsion constants whose dependence on `ε` can\nbe tracked, making the extremal analysis concrete rather than heuristic.\n\n## 2. Repulsion upgrades \"at most one per window\" to \"at most one globally\"\n\n**Conjecture.** If the repulsion constant grows at least like `C(q) ≍ (log q)^{1+δ}`\nfor some `δ > 0` — a strength just beyond what pairwise product-`L`-function positivity\ngives — then across *all* conductors, not merely a bounded window, at most one\nprimitive quadratic character has an exceptional real zero.\n\nThe key insight is that the obstruction to a global statement is entirely the slow\ngrowth of `log(q₁q₂)`; a repulsion constant that itself grows with the conductor\noverwhelms this and collapses the family of exceptional characters to a single point.\n\nWhy now? Conditional inputs excluding non-real zeros from shrinking neighbourhoods of\n`s = 1` are exactly the mechanism believed to boost the effective repulsion strength,\nso the hypothesis `C(q) ≍ (log q)^{1+δ}` is newly within conditional reach.\n\n## 3. The repulsion template transfers to higher-degree L-functions\n\n**Conjecture.** The same repulsion-to-sparsity implication holds verbatim for families\nof automorphic `L`-functions indexed by analytic conductor, yielding \"at most one\nexceptional form\" statements for `GL(2)` newforms of bounded conductor.\n\nThe key insight is that nothing in the uniqueness deduction uses the quadratic nature\nof the characters — only a real parameter attached to each object and a pairwise\ninequality of the shape `min(β, β') ≤ 1 − C/log(q q')` — so the phenomenon is a\nstructural feature of conductor-indexed families, not of Dirichlet characters.\n\nWhy now? Explicit pairwise repulsion estimates for `GL(2)` `L`-functions have recently\nbeen made unconditional in several ranges, so the abstract template can be instantiated\nwithout waiting for a full zero-density theory.\n\n## 4. Exceptional moduli are a genuinely sparse set with a computable exponent\n\n**Conjecture.** Under the conditional non-real-zero exclusion, the number of conductors\n`q ≤ X` carrying an exceptional real zero is `O((log X)^{A})` for an effectively\ncomputable `A = A(ε)`, and in fact bounded by a constant once the window analysis is\niterated dyadically.\n\nThe key insight is that the window result of this cycle can be chained across a dyadic\ndecomposition of `[1, X]`, and the per-window bound of `1` accumulates only through the\nnumber of windows, which is logarithmic.\n\nWhy now? Effective, ε-explicit constants `C(ε)`, `Q₀(ε)` are precisely what the recent\nconditional refinements provide, turning a qualitative \"rare\" into a quantitative count.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1115",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2cd42066",
+    "status": "available",
+    "timestamp": "2026-07-12T06:11:38.559922+00:00",
+    "title": "These conjectures are distilled from the present cycle, whose central finding is"
   },
   {
     "ambition_level": "extension",
