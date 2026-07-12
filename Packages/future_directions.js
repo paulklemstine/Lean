@@ -423,7 +423,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "867d1ba2",
     "description": "Building on cycle ddbb821f (Q=0.820), which proved 25 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The Topology of Argumentation (V): Stable Extensions\n\nThis cycle deepens the formalization of Dung's abstract argumentation theory and\nthe conflict-free complex `K(AF)` by adding the **stable extension** \u2014 the\nstrongest of the classical extension-based semantics \u2014 and placing i",
     "domains": [
       "Novelty"
@@ -432,7 +432,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "ddbb821f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T16:46:42.411610+00:00",
     "title": "Deepening: This cycle deepens the formalization of Dung's abstract argumentation theory and"
   },
@@ -4623,7 +4623,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bipartite {-1,0,1}-diagonalizable graphs are complete bipartite"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bd39924",
     "description": "For all positive integers k \u2265 2, n \u2265 1, and 1 \u2264 j \u2264 n, the symmetric function \u0394_{e_j} G(k,n) is Schur positive (i.e., expands with nonnegative coefficients in \u2115[q,t] in the Schur basis) if and only if k divides n, where G(k,n) = \u03a3_{\u03bb\u22a2n, \u03bb\u2081<k} m_\u03bb is the Petrie symmetric function and \u0394_{e_j} is the Bergeron\u2013Garsia delta operator applied to e_j. This extends the paper's main result for \u2207 = \u0394_{e_n} (and its iterates \u2207^r) to all elementary symmetric function inputs of the delta operator, establishing that the divisibility criterion governs Schur positivity uniformly across the entire family of delta operators.",
     "domains": [
       "Bridges"
@@ -4632,7 +4632,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T05:37:42.644235+00:00",
     "title": "Delta-Petrie Schur Positivity"
   },

@@ -572,7 +572,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "867d1ba2",
     "description": "Building on cycle ddbb821f (Q=0.820), which proved 25 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation (V): Stable Extensions\n\nThis cycle deepens the formalization of Dung's abstract argumentation theory and\nthe conflict-free complex `K(AF)` by adding the **stable extension** — the\nstrongest of the classical extension-based semantics — and placing i",
     "domain_bridges": [],
     "domains": [
@@ -584,7 +584,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ddbb821f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T16:46:42.411610+00:00",
     "title": "Deepening: This cycle deepens the formalization of Dung's abstract argumentation theory and"
   },
@@ -7934,7 +7934,7 @@
       "Petrie symmetric functions (Grinberg)",
       "LLT polynomials"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bd39924",
     "description": "For all positive integers k ≥ 2, n ≥ 1, and 1 ≤ j ≤ n, the symmetric function Δ_{e_j} G(k,n) is Schur positive (i.e., expands with nonnegative coefficients in ℕ[q,t] in the Schur basis) if and only if k divides n, where G(k,n) = Σ_{λ⊢n, λ₁<k} m_λ is the Petrie symmetric function and Δ_{e_j} is the Bergeron–Garsia delta operator applied to e_j. This extends the paper's main result for ∇ = Δ_{e_n} (and its iterates ∇^r) to all elementary symmetric function inputs of the delta operator, establishing that the divisibility criterion governs Schur positivity uniformly across the entire family of delta operators.",
     "domain_bridges": [
       "Representation theory of symmetric groups (Schur positivity ↔ graded module existence)",
@@ -7950,7 +7950,7 @@
     "proof_strategy": "For the forward direction (k∣n ⟹ Schur positivity): decompose G(k,n) into creation operator images C_α when k∣n, then apply the compositional shuffle theorem framework to express Δ_{e_j} C_α as a positively weighted sum of vertical LLT polynomials, leveraging Grojnowski–Haiman Schur positivity of LLT polynomials. For the converse (k∤n ⟹ not Schur positive): extend the sign-analysis techniques from the paper's nabla case to general Δ_{e_j} by tracking the leading negative Schur coefficients in the Macdonald polynomial expansion of G(k,n) under the delta eigenvalue action, showing that the divisibility obstruction propagates through all delta operators.",
     "research_mode": "team",
     "source_exp_id": "2607.06351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T05:37:42.644235+00:00",
     "title": "Delta-Petrie Schur Positivity"
   },
