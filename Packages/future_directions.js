@@ -6006,7 +6006,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Two structural results about rectifier networks:"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b9e8de36",
     "description": "# Future Directions: Stone Duality for Neural Networks\n\nThe file `StoneDualityNeuralNetworks.lean` formalizes the finite-Boolean-algebra core of Stone\nduality for a single ReLU-type layer evaluated on a finite input sample. The proved chain is:\n\n1. `linearRegions_card_le_pow` \u2014 at most `2^n` linear regions (bounded by the syntax `Fin n \u2192 Bool`).\n2. `linearRegions_card_le_card` \u2014 at most `|X|` linear regions (bounded by the sample).\n3. `linearRegions_card_le_min` \u2014 the combined bound (built from 1 and 2).\n4. `decisionRegion_union / inter / empty / univ / subset` \u2014 the syntax\u2192semantics map\n   `S \u21a6 {x | act x \u2208 S}` is a Boolean-algebra homomorphism.\n5. `decisionRegion_inter_linearRegions` \u2014 decision regions depend only on realized patterns.\n6. `decisionAlgebra_eq_image_powerset_linearRegions` \u2014 restricting to realized patterns loses\n   no decision region.\n7. `decisionRegion_injOn_linearRegions` \u2014 the atoms of the algebra are exactly the linear regions.\n8. `decisionAlgebra_card` \u2014 **Stone duality**: `|decisionAlgebra| = 2 ^ (#linear regions)`.\n9. `decisionAlgebra_card_le`, `card_le_of_shatters` \u2014 capacity consequences (a VC-style bound:\n   shattering a sample of size `m` needs `m \u2264 2^n`).\n10. `neuronActivation`, `sampleActivation`, and their corollaries \u2014 an explicit real-weight ReLU\n    layer to which the whole chain specializes.\n\n## On the mission's VC-dimension conjecture (refuted)\n\nThe mission text conjectures `VC dim(f) = #atoms = #linear regions`. This equality is **false**\nin general: an affine neuron on `\u211d^d` has VC dimension `d + 1`, unrelated to the number of linear\nregions. We therefore do **not** assert it; instead we prove the correct structural facts (atoms =\nlinear regions, `|algebra| = 2^{#atoms}`) and the genuine capacity bound `card_le_of_shatters`.\n\n## Natural next steps\n\n* **Stone space as a topological object.** Package `decisionAlgebra` as a concrete\n  `BooleanAlgebra` and build its Stone space via `Mathlib`'s `Topology.Category.Profinite` /\n  spectrum-of-a-Boolean-algebra machinery, proving it is the finite discrete space on the linear\n  regions and that clopen sets \u2194 decision regions.\n* **Multilayer composition.** Extend `act` to `L` layers with widths `w_1,\u2026,w_L`; show the\n  layerwise pattern map factors and bound the total regions by `2^{w_1+\u00b7\u00b7\u00b7+w_L}`.\n* **Sauer\u2013Shelah / growth function.** Relate `|decisionAlgebra|` restricted to subsamples to the\n  growth function and derive the true VC bound for halfspace-based classes.\n* **Geometric linear regions.** Replace the finite sample by an arrangement of hyperplanes in\n  `\u211d^d` and connect `#linear regions` to the Zaslavsky region-counting formula.\n",
     "domains": [
       "Algebra",
@@ -6016,7 +6016,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "a6f348ea",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T21:08:57.881447+00:00",
     "title": "The file `StoneDualityNeuralNetworks.lean` formalizes the finite-Boolean-algebra"
   },
