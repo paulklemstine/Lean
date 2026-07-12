@@ -409,7 +409,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62dd551b",
     "description": "Building on cycle c06d8e8c (Q=0.820), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domains": [
       "Applications"
@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "c06d8e8c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T12:48:37.547989+00:00",
     "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
   },
@@ -907,7 +907,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
   },
   {
-    "consumed_by_exp_id": "52c07a98",
+    "consumed_by_exp_id": "",
     "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (G\u00f6del). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
     "domains": [
       "Novelty",
@@ -917,7 +917,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T02:10:10.157510+00:00",
     "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
