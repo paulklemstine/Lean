@@ -665,6 +665,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 538f30a2 (Q=0.780), which proved 47 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_538f30a2_1577da50",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "538f30a2",
+    "status": "available",
+    "timestamp": "2026-07-12T03:38:30.661331+00:00",
+    "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 6e208619 (Q=0.780), which proved 27 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minimum sizes of r consecutive pieces, and define \\mu_r(a) = limsup_{n\\to\\infty} \\mu^r_n(a). For any fixe",
     "domains": [
       "Applications"
@@ -832,21 +846,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T22:47:23.412172+00:00",
     "title": "Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
-  },
-  {
-    "consumed_by_exp_id": "538f30a2",
-    "description": "Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show: the multiverse is closed under forcing (every universe has forcing extensions). Conjecture: there is no 'true' CH \u2014 the question is meaningless without specifying which universe. Explore: formalize 'multiverse truth' \u2014 a statement is multiverse-true if it holds in all universes. Prove: ZFC is multiverse-true, CH is not.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1097",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T01:03:10.209659+00:00",
-    "title": "Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
   {
     "consumed_by_exp_id": "",
@@ -6873,6 +6872,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T03:21:31.072030+00:00",
     "title": "Bold, falsifiable conjectures distilled from this cycle's study of negative,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multiverse` is a nonempty collection of universes, a type of statements, and a\ntruth relation `holds`. On top of it:\n`MultiverseTrue` (holds everywhere), `MultiverseFalse`, `PossiblyTrue`,\n`Independent`, `Undetermined`. Central structural theorem\n`independent_iff_undetermined`: a statement is independent **iff** it has no\nmultiverse truth value.\n\n**`Concrete.lean` \u2014 a concrete 3-universe multiverse** (`L`, a Cohen extension, a\nmeasurable-cardinal universe) over the statements `ZFC`, `CH`, `V=L`,\n`LargeCardinal`. Proves: ZFC is multiverse-true; CH, V=L and large cardinals are\nindependent hence undetermined (`no_true_CH`); and `V=L` is incompatible with a\nlarge cardinal in every single universe.\n\n**`Forcing.lean` \u2014 closure under forcing.**\n`ForcingClosedFor M s` says every universe has a forcing extension flipping `s`.\nMain theorem `undetermined_of_forcingClosedFor`: forcing closure alone forces `s`\nto be undetermined \u2014 the precise sense of \"there is no true CH\". CH is verified\nforcing-closed in the concrete multiverse; ZFC is verified *not* forcing-closed.\n\n**`TropicalBridge.lean` \u2014 the connector.**\n`boolToTrop : Bool \u2192 Tropical (WithTop \u2115)` (`true \u21a6 1`, `false \u21a6 0`) is shown to\nbe a semiring homomorphism from the Boolean semiring to the tropical semiring\n(`boolToTrop_or`: `\u2228 \u21a6 min`; `boolToTrop_and`: `\u2227 \u21a6 +`). Consequently\nexistential quantification over a finite multiverse is a tropical **sum**\n(`possiblyTrue_iff_tropSum`) and universal quantification is a tropical\n**product** (`multiverseTrue_iff_tropProd`). CH's independence then has the\ntropical signature `\u03a3 = 1 \u2227 \u03a0 \u2260 1` (`ch_tropical_signature`).\n\n## Natural extensions\n\n1. **Real-coefficient degrees of truth.** Replace `WithTop \u2115` by `WithTop \u211d` and\n   let per-universe values be forcing \"costs\" or measure-theoretic weights; the\n   tropical sum then computes a *cheapest* witnessing universe (a shortest-path /\n   Viterbi reading of possibility).\n\n2. **Modal logic bridge.** `MultiverseTrue`/`PossiblyTrue` are exactly `\u25a1`/`\u25c7` for\n   the total accessibility relation. Formalize a general Kripke frame on the\n   universes and recover the tropical big-operator correspondence over the\n   accessible set, connecting modal necessity/possibility to min-plus matrix\n   powers (reachability = tropical matrix closure).\n\n3. **Genuine ZFC models.** Replace the abstract `holds` by satisfaction in real\n   structures (`FirstOrder.Language.Structure`), and connect `Independent` to\n   actual relative-consistency/forcing results, keeping the tropical bridge as the\n   quantitative layer on top.\n\n4. **Boolean-valued models.** Hamkins' forcing naturally produces Boolean-valued\n   models; generalize `boolToTrop` to a homomorphism out of an arbitrary complete\n   Boolean algebra and study which target semirings make `\u2203`/`\u2200` into `\u2211`/`\u220f`.\n\n5. **Larger multiverses.** Extend to `n` universes / a `Fintype` of forcing\n   iterations and study the tropical signature of a statement as an invariant of\n   its independence pattern across the whole multiverse.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_1108",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "538f30a2",
+    "status": "available",
+    "timestamp": "2026-07-12T03:38:22.248590+00:00",
+    "title": "This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
   {
     "consumed_by_exp_id": "",
