@@ -143,7 +143,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d87b490",
     "description": "Building on cycle eb025541 (Q=0.830), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` \u2014 the positive theory:\n\n* **`erasedBits`** \u2014 information erased by a proof step `f : \u03b1 \u2192 \u03b2`, as the entropy drop\n  `log\u2082(card \u03b1) \u2212 log\u2082|image f|`, wit",
     "domains": [
       "Novelty"
@@ -152,7 +152,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "eb025541",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T21:41:30.513742+00:00",
     "title": "Deepening: `ThermodynamicsOfProof.lean` \u2014 the positive theory:"
   },
@@ -4508,7 +4508,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "208b1ca5",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4517,7 +4517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
