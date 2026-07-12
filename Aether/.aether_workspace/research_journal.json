@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0250199a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.**",
-      "quality_score": 0.83,
-      "sorry_count": 5,
-      "theorem_count": 36,
-      "timestamp": "2026-07-11T08:02:43",
-      "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
-    },
-    {
       "cycle_id": "1d01ef4b",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThis project formalizes a model of hypercomputation, the physical-precision\nbarrier, and the accidentally/essentially computable distinction. Natural\nextensions:\n\n## Deepening the",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-12T02:10:54",
       "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Operation"
+    },
+    {
+      "cycle_id": "4b281557",
+      "domain": "Probability",
+      "key_insight": "# Future Directions: Time-Travel Logic and Causal Consistency\n\nThe file `Catalog/Probability/TimeTravelCausalConsistency.lean` develops a single\nchain of results modelling closed timelike curves (CTCs",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-12T02:28:00",
+      "title": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "054477b4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThese conjectures are distilled from a single finding: on a finite, strongly\nconnected, edge-weighted digraph whose outgoing weights form probability\ndistributions, the only verte",
-      "quality_score": 0.4514887166666668,
-      "sorry_count": 1,
-      "theorem_count": 10,
-      "timestamp": "2026-07-04T22:19:10",
-      "title": "Non‑existence of non‑constant colorings satisfying the blend condition on finite strongly connected "
-    },
     {
       "cycle_id": "bdd384c4",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-12T02:10:54",
       "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Operation"
+    },
+    {
+      "cycle_id": "4b281557",
+      "domain": "Probability",
+      "key_insight": "# Future Directions: Time-Travel Logic and Causal Consistency\n\nThe file `Catalog/Probability/TimeTravelCausalConsistency.lean` develops a single\nchain of results modelling closed timelike curves (CTCs",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-12T02:28:00",
+      "title": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c37c01fa",
-      "domain": "Algebra",
-      "name": "logb_count_le",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "c37c01fa",
-      "domain": "Algebra",
-      "name": "dimEstimate_nonneg",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "7669ab26",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.82
-    },
     {
       "cycle_id": "7669ab26",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "adjointAnalogy_stable_kernel",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "4b281557",
+      "domain": "Probability",
+      "name": "is",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "4b281557",
+      "domain": "Probability",
+      "name": "selfConsistent_iff_fixedPoint",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "4b281557",
+      "domain": "Probability",
+      "name": "traverse_zero",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T02:10:54",
+  "last_updated": "2026-07-12T02:28:00",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "e4796c8c",
-        "quality": 0.6757399999999999,
-        "theorems": 5,
-        "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
-      },
-      {
         "cycle_id": "aad22603",
         "quality": 0.8748400000000001,
         "theorems": 9,
@@ -3823,6 +3817,12 @@
         "quality": 0.82,
         "theorems": 16,
         "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+      },
+      {
+        "cycle_id": "4b281557",
+        "quality": 0.82,
+        "theorems": 19,
+        "title": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
       }
     ],
     "Pythagorean": [

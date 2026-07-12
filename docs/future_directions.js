@@ -298,6 +298,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4b281557 (Q=0.820), which proved 19 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed ",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_4b281557_3e945946",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "4b281557",
+    "status": "available",
+    "timestamp": "2026-07-12T02:28:00.464705+00:00",
+    "title": "Deepening: Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4b34e974 (Q=0.820), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
     "domains": [
       "Probability"
@@ -867,22 +881,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: Tangled Hierarchies in Type Theory"
   },
   {
-    "consumed_by_exp_id": "4b281557",
-    "description": "Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed point. Show: the grandfather paradox (kill your ancestor) violates self-consistency \u2014 prove it's impossible. Conjecture: every closed timelike curve in a G\u00f6del universe is self-consistent. Explore: formalize branching timelines (many-worlds time travel) \u2014 prove the traveler creates a new branch, not a paradox.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1095",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T00:46:18.365871+00:00",
-    "title": "Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52c07a98",
     "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (G\u00f6del). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
     "domains": [
       "Novelty",
@@ -892,7 +891,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T02:10:10.157510+00:00",
     "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
@@ -6817,6 +6816,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T02:10:44.625143+00:00",
     "title": "This project formalizes Hofstadter's notion (from *Fluid Concepts and Creative"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Time-Travel Logic and Causal Consistency\n\nThe file `Catalog/Probability/TimeTravelCausalConsistency.lean` develops a single\nchain of results modelling closed timelike curves (CTCs) by their *loop map*\n`evolve : S \u2192 S`, with Novikov self-consistency identified with a fixed point.\nEstablished results, each used by a later one:\n\n1. `selfConsistent_iff_fixedPoint` / `selfConsistent_iff_closedHistory` \u2014 Novikov\n   self-consistency \u21d4 existence of a closed timelike history of the discrete loop.\n2. `paradoxical_not_selfConsistent`, `grandfather_paradoxical`,\n   `grandfather_not_selfConsistent` \u2014 the grandfather paradox is genuinely\n   impossible (no self-consistent single-timeline history).\n3. `monotone_selfConsistent` \u2014 monotone loops on a complete lattice are always\n   self-consistent (Knaster\u2013Tarski).\n4. `continuous_selfConsistent` \u2014 continuous loops on a phase interval `[0,1]` are\n   self-consistent (1-D Brouwer via IVT); a toy model of the G\u00f6del-universe\n   conjecture.\n5. `involutive_odd_selfConsistent` \u2014 involutive loops on an odd-sized state space\n   are self-consistent.\n6. `branch_creates_new_branch`, `branch_history`, `branching_resolves_paradox`,\n   `grandfather_branches` \u2014 the many-worlds resolution: any paradoxical action\n   admits a consistent branching history although it has no single-timeline fixed\n   point.\n\n## Natural next steps\n\n- **Full Brouwer in higher dimensions.** Replace the 1-D interval model in\n  `continuous_selfConsistent` by a continuous self-map of a nonempty compact convex\n  subset of `\u211d\u207f` (or a simplex), giving self-consistency for higher-dimensional\n  CTC phase spaces. This needs Brouwer's fixed point theorem, which would first\n  have to be developed at the level of generality required.\n\n- **G\u00f6del universe, honestly.** Formalize the G\u00f6del metric and its timelike\n  geodesics, define a CTC intrinsically, and derive the loop map `evolve` from the\n  geometry so that `continuous_selfConsistent` (or its `\u211d\u207f` upgrade) applies. The\n  conjecture \"every CTC in a G\u00f6del universe is self-consistent\" would then become a\n  corollary rather than a modelled instance.\n\n- **Quantitative Novikov / measure of consistent histories.** Put a probability\n  measure on the state space `S` and study the measure of the fixed-point set \u2014\n  formalizing the physics folklore that \"consistent histories have probability 1\".\n  For contractions this connects to Banach fixed points (uniqueness), for measure\n  preserving loops to Poincar\u00e9 recurrence.\n\n- **Branching as a category / tree.** Model the multiverse as a rooted tree of\n  branches and show the branching evolution is an injective, acyclic dynamical\n  system; prove there is never a cycle (no CTC across branches), formalizing why\n  many-worlds time travel cannot produce paradoxes in principle, not just for the\n  action-iteration histories used here.\n\n- **General fixed-point-free \u21d2 inconsistency spectrum.** Classify which loop maps\n  on a finite `S` are self-consistent purely from cycle structure (a permutation\n  loop is self-consistent iff it has a fixed point; general endomaps iff their\n  functional graph has a self-loop), giving a decidable criterion.\n\n- **Composition of loops.** Study how self-consistency behaves under composing or\n  nesting CTCs (`evolve\u2081 \u2218 evolve\u2082`), and whether consistency of parts forces\n  consistency of the whole.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1105",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4b281557",
+    "status": "available",
+    "timestamp": "2026-07-12T02:27:52.929276+00:00",
+    "title": "The file `Catalog/Probability/TimeTravelCausalConsistency.lean` develops a singl"
   },
   {
     "consumed_by_exp_id": "",

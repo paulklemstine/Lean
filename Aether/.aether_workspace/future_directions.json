@@ -29761,11 +29761,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "52c07a98",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29778,7 +29778,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1102",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T02:28:13.472071+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -29793,7 +29793,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-12T02:10:10.157510+00:00",
       "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
@@ -29894,7 +29894,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Time-Travel Logic and Causal Consistency\n\nThe file `Catalog/Probability/TimeTravelCausalConsistency.lean` develops a single\nchain of results modelling closed timelike curves (CTCs) by their *loop map*\n`evolve : S → S`, with Novikov self-consistency identified with a fixed point.\nEstablished results, each used by a later one:\n\n1. `selfConsistent_iff_fixedPoint` / `selfConsistent_iff_closedHistory` — Novikov\n   self-consistency ⇔ existence of a closed timelike history of the discrete loop.\n2. `paradoxical_not_selfConsistent`, `grandfather_paradoxical`,\n   `grandfather_not_selfConsistent` — the grandfather paradox is genuinely\n   impossible (no self-consistent single-timeline history).\n3. `monotone_selfConsistent` — monotone loops on a complete lattice are always\n   self-consistent (Knaster–Tarski).\n4. `continuous_selfConsistent` — continuous loops on a phase interval `[0,1]` are\n   self-consistent (1-D Brouwer via IVT); a toy model of the Gödel-universe\n   conjecture.\n5. `involutive_odd_selfConsistent` — involutive loops on an odd-sized state space\n   are self-consistent.\n6. `branch_creates_new_branch`, `branch_history`, `branching_resolves_paradox`,\n   `grandfather_branches` — the many-worlds resolution: any paradoxical action\n   admits a consistent branching history although it has no single-timeline fixed\n   point.\n\n## Natural next steps\n\n- **Full Brouwer in higher dimensions.** Replace the 1-D interval model in\n  `continuous_selfConsistent` by a continuous self-map of a nonempty compact convex\n  subset of `ℝⁿ` (or a simplex), giving self-consistency for higher-dimensional\n  CTC phase spaces. This needs Brouwer's fixed point theorem, which would first\n  have to be developed at the level of generality required.\n\n- **Gödel universe, honestly.** Formalize the Gödel metric and its timelike\n  geodesics, define a CTC intrinsically, and derive the loop map `evolve` from the\n  geometry so that `continuous_selfConsistent` (or its `ℝⁿ` upgrade) applies. The\n  conjecture \"every CTC in a Gödel universe is self-consistent\" would then become a\n  corollary rather than a modelled instance.\n\n- **Quantitative Novikov / measure of consistent histories.** Put a probability\n  measure on the state space `S` and study the measure of the fixed-point set —\n  formalizing the physics folklore that \"consistent histories have probability 1\".\n  For contractions this connects to Banach fixed points (uniqueness), for measure\n  preserving loops to Poincaré recurrence.\n\n- **Branching as a category / tree.** Model the multiverse as a rooted tree of\n  branches and show the branching evolution is an injective, acyclic dynamical\n  system; prove there is never a cycle (no CTC across branches), formalizing why\n  many-worlds time travel cannot produce paradoxes in principle, not just for the\n  action-iteration histories used here.\n\n- **General fixed-point-free ⇒ inconsistency spectrum.** Classify which loop maps\n  on a finite `S` are self-consistent purely from cycle structure (a permutation\n  loop is self-consistent iff it has a fixed point; general endomaps iff their\n  functional graph has a self-loop), giving a decidable criterion.\n\n- **Composition of loops.** Study how self-consistency behaves under composing or\n  nesting CTCs (`evolve₁ ∘ evolve₂`), and whether consistency of parts forces\n  consistency of the whole.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Algebra"
@@ -30055,7 +30055,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Probability"
       ],
@@ -31093,9 +31093,49 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "Building on cycle 4b34e974 (Q=0.820), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
+      "description": "Building on cycle 4b281557 (Q=0.820), which proved 19 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed ",
       "domain_bridges": [],
       "domain_quality_penalty": 0.0,
+      "domains": [
+        "Probability"
+      ],
+      "github_issue": 0,
+      "id": "push_4b281557_3e945946",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4b281557",
+      "source_path": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-12T02:28:00.464705+00:00",
+      "title": "Deepening: Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 4b34e974 (Q=0.820), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Probability"
       ],
@@ -31855,7 +31895,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 90ef345f (Q=0.830), which proved 751 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci seq",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Probability"
       ],
@@ -33215,7 +33255,7 @@
       "depth_estimate": 3,
       "description": "Cycle 0981cb8f (Q=0.830) proved 20 theorems in Probability but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Probability"
       ],
@@ -33895,7 +33935,7 @@
       "depth_estimate": 3,
       "description": "Cycle 90ef345f (Q=0.830) proved 751 theorems in Probability but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Probability"
       ],
