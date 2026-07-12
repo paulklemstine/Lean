@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T09:19:11.159347+00:00",
+  "last_updated": "2026-07-12T09:36:20.449195+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -8207,6 +8207,7 @@
       "outcome_quality": 0.62,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -8235,6 +8236,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T09:19:11.118475+00:00",
       "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 39,
+      "domain": "MachineLearning",
+      "duration_seconds": 1025.2303717136383,
+      "end_time": 1783848962.386183,
+      "files_integrated": 4,
+      "job_id": "c3fe1d06",
+      "outcome_quality": 0.83,
+      "phase": "complete",
+      "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.83,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5485,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.83,
+        "novelty": 0.83,
+        "proof_depth": 0.83,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "sorry_density": 0.4444444444444444,
+      "start_time": 1783847937.1558113,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T09:36:20.411341+00:00",
+      "title": "Deepening: That the zero-dimensional persistent homology of the prim"
     }
   ]
 }

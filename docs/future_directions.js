@@ -283,20 +283,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
   },
   {
-    "consumed_by_exp_id": "c3fe1d06",
-    "description": "Building on cycle 3d209fc8 (Q=0.820), which proved 32 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent homology of the prime\npoint cloud is a genuine persistence module whose entire structure \u2014 functorial\nmerging, total persistence, global merge scale, unbounded bars, and Betti number \u2014\nis re",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_3d209fc8_9d341f45",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "3d209fc8",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T17:56:03.370905+00:00",
-    "title": "Deepening: That the zero-dimensional persistent homology of the prim"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domains": [
@@ -593,7 +579,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Proofs of Classical Theorems"
   },
   {
-    "consumed_by_exp_id": "53945fe2",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3a52b537 (Q=0.790), which proved 22 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is indep",
     "domains": [
       "Cryptography"
@@ -602,7 +588,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "3a52b537",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T19:32:10.856151+00:00",
     "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
@@ -1641,7 +1627,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "6a70bc30",
+    "consumed_by_exp_id": "",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -1650,7 +1636,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -6514,7 +6500,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That a type which fully quantifies over itself \u2014"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3dfcf44",
     "description": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field\norder parameter `m = tanh(\u03b2 m)` undergoes a sharp, continuous (second-order)\nphase transition at the critical coupling `\u03b2_c = 1`:\n\n* no positive solution for `\u03b2 \u2264 1` (`curieWeiss_subcritical`),\n* a positive solution for `\u03b2 > 1` (`curieWeiss_supercritical`),\n* the sharp `iff` locating `\u03b2_c = 1` (`curieWeiss_phase_transition`),\n* uniqueness of the positive branch (`curieWeiss_unique_positive`),\n* boundedness `|m| < 1` and `\u00b1m` symmetry of solutions,\n* and that a positive external field destroys the sharp transition \u2014 the\n  field-driven equation `m = tanh(\u03b2 m + h)` has a positive solution\n  `m \u2208 (0, 1)` for *every* `\u03b2` when `h > 0`\n  (`curieWeiss_field_positive_solution`).\n\nNatural next steps:\n\n1. **Critical exponent.** Prove the quantitative onset\n   `m*(\u03b2) = sqrt(3(\u03b2\u22121)) + o(sqrt(\u03b2\u22121))` as `\u03b2 \u2192 1\u207a`, extracting the mean-field\n   exponent `1/2`. The two inequalities `tanh y < y` and `y \u2212 y\u00b3/3 < tanh y`\n   already bracket the branch; a matching cubic *upper* bound\n   `tanh y < y \u2212 y\u00b3/3 + 2y\u2075/15` would pin the exponent.\n\n2. **External field.** The *existence* half is now settled:\n   `curieWeiss_field_positive_solution` shows `m = tanh(\u03b2 m + h)` has a positive\n   solution for every `\u03b2` when `h > 0`, so the sharp `\u03b2_c = 1` dichotomy is\n   destroyed by any positive field.  Remaining: prove *uniqueness* of the\n   solution for `h \u2260 0` (single-valued branch for all `\u03b2`), recovering the\n   standard picture of a line of first-order transitions terminating at the\n   critical point `(\u03b2_c, h) = (1, 0)`.\n\n3. **Free energy / order parameter as minimizer.** Formalize the Curie\u2013Weiss\n   free energy `f(m) = m\u00b2/2 \u2212 (1/\u03b2) log cosh(\u03b2 m)` and prove its global\n   minimizer coincides with the stable solution of the self-consistency\n   equation, giving a variational characterization of the order parameter and a\n   genuine `analytic \u21a6 non-analytic` statement for the minimal free energy at\n   `\u03b2_c`.\n\n4. **Continuity and monotonicity of `\u03b2 \u21a6 m*(\u03b2)`.** Package the positive branch\n   as a function of `\u03b2` on `(1, \u221e)` and prove it is continuous, strictly\n   increasing, and tends to `1` as `\u03b2 \u2192 \u221e`.\n\n5. **Percolation analogue.** Port the same \"order parameter is `0` below /\n   positive above threshold\" template to bond percolation on a rooted tree,\n   where the survival probability of a branching process with mean offspring\n   `\u03bc` plays the role of the order parameter and `\u03bc_c = 1` is the critical point\n   (an exact analogue via generating-function fixed points).\n",
     "domains": [
       "Algebra",
@@ -6524,7 +6510,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "29aa9d96",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T22:30:47.487400+00:00",
     "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field"
   },
@@ -7022,6 +7008,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T09:19:00.267512+00:00",
     "title": "We formalize the *combinatorial characterizing condition* of the Jung\u2013Tix"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Arithmetic (continued)\n\nThis cycle deepens `Shared/PrimeBarcodeInvariants.lean` and\n`Novelty/PrimePersistentHomology.lean`, which established that the zero-dimensional\nVietoris\u2013Rips barcode of the prime point cloud `P n = p_n = nth Nat.Prime n` is\ngoverned by the prime gap sequence, with the Betti staircase\n\n```\nbettiZero P \u03b5 n = 1 + #{ i < n : \u03b5 < p_{i+1} \u2212 p_i }.\n```\n\nThose results are *finite-`n`* statements.  The new file\n`Shared/PrimeBarcodeUnbounded.lean` studies the **asymptotics in `n` at a fixed\nresolution `\u03b5`**, and links the topology of the prime cloud to the classical\nelementary fact that prime gaps are unbounded.\n\n## What was proved this cycle (no `sorry`, standard axioms only)\n\n1. `factorial_add_not_prime` \u2014 the composite-run lemma: `N! + j` is composite for\n   `2 \u2264 j \u2264 N`.  Runs of arbitrarily many consecutive composites exist.\n\n2. `exists_large_primeGap` \u2014 **prime gaps are unbounded, infinitely often**: for all\n   `B, M` there is `n \u2265 M` with `B < primeGap n`.  (The composite run is placed past\n   `nth Prime M`, forcing a large gap at a large index.)\n\n3. `setOf_primeGap_gt_infinite` \u2014 `{n : c < primeGap n}` is infinite for every `c`.\n\n4. `bettiZero_mono_n` \u2014 the Betti number is monotone in the point count `n`.\n\n5. `gapCount_unbounded` \u2014 the count of gaps exceeding `c` among the first `n` indices\n   is unbounded.\n\n6. `prime_bettiZero_unbounded`, `prime_bettiZero_tendsto_atTop` \u2014 **the prime Betti\n   curve tends to `+\u221e` at every fixed resolution `\u03b5`**: no matter how coarse the\n   scale, the number of `\u03b5`-connected components of the prime cloud grows without\n   bound as primes are added.\n\n7. `prime_eventually_disconnected` \u2014 the negative global-merge theorem: for every `\u03b5`\n   there is an `n` with `bettiZero P \u03b5 n > 1`; no single scale keeps the infinite\n   prime cloud connected.\n\n8. `prime_totalPersistence_tendsto_atTop` \u2014 total persistence `p_n \u2212 2` diverges.\n\n## Interpretation\n\nThe `PrimeBarcodeInvariants` cycle read off the barcode of a fixed prefix of the\nprimes.  Here the limit picture emerges: as an observer, at any fixed measuring\nresolution, watches more and more primes appear, the cloud does not settle into a\nfixed number of clusters \u2014 it *shatters* into ever more components, and there is no\nglobal merge scale for the complete infinite cloud.  The single input driving all of\nthis is the unboundedness of prime gaps (Euclid's factorial run), so the topological\ndivergence is exactly the arithmetic divergence of gaps.\n\n## Open directions\n\n* **Rate of growth.**  Prime Number Theorem heuristics predict\n  `#{i < n : \u03b5 < gap_i}` grows like `n` for fixed `\u03b5` (a positive proportion of gaps\n  exceed any fixed bound once `n` is large), giving a linear lower bound on\n  `bettiZero P \u03b5 n`.  Formalizing even a weak explicit lower bound (e.g. via the\n  average gap `p_n / n \u2192 \u221e`) would quantify the shattering.\n\n* **Twin bar (conjectural).**  Dually, `twinPrime_iff_infinitely_many_gap_two` recasts\n  the twin prime conjecture as \"infinitely many bars of length `2`\".  Combined with\n  `prime_bettiZero_tendsto_atTop`, the barcode is conjectured to have both infinitely\n  many short (length-2) bars and infinitely many arbitrarily long bars.\n\n* **Higher dimensions / other clouds.**  The single-linkage machinery\n  (`line_component_iff`) is generic for strictly monotone clouds on `\u211d`; the growth\n  results transfer to any cloud whose gap sequence is unbounded infinitely often.\n",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_1125",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c3fe1d06",
+    "status": "available",
+    "timestamp": "2026-07-12T09:36:08.749429+00:00",
+    "title": "This cycle deepens `Shared/PrimeBarcodeInvariants.lean` and"
   },
   {
     "consumed_by_exp_id": "",

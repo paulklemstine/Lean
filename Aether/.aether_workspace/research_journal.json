@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f6b0dfd4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-11T13:21:45",
-      "title": "Causal Loops in Category Theory: When Composition Loops Back"
-    },
-    {
       "cycle_id": "997ab258",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Infinite Games Against Death — Immortality Strategies\n\nThe formalization lives in `Catalog/Novelty/ImmortalityGame.lean`. It models a\ntransfinite survival game between **Mortal**",
@@ -499,19 +489,19 @@
       "theorem_count": 1210,
       "timestamp": "2026-07-12T09:01:53",
       "title": "White's Quadratic Exchange Conjecture (Part 3)"
+    },
+    {
+      "cycle_id": "c3fe1d06",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — The Topology of Arithmetic (continued)\n\nThis cycle deepens `Shared/PrimeBarcodeInvariants.lean` and\n`Novelty/PrimePersistentHomology.lean`, which established that the zero-dimens",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T09:36:18",
+      "title": "Deepening: That the zero-dimensional persistent homology of the prim"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c7c6cf29",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: powers of the Eulerian triangle and real-rootedness\n\nThese conjectures grew out of a study of the square of the Eulerian triangle,\nwhose `n`-th row generating polynomial `S_n(x) =",
-      "quality_score": 0.43457572380952386,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-06T19:31:57",
-      "title": "Real-rootedness of the square of the Eulerian triangle"
-    },
     {
       "cycle_id": "935491ef",
       "domain": "Probability",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-12T09:19:09",
       "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
+    },
+    {
+      "cycle_id": "c3fe1d06",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — The Topology of Arithmetic (continued)\n\nThis cycle deepens `Shared/PrimeBarcodeInvariants.lean` and\n`Novelty/PrimePersistentHomology.lean`, which established that the zero-dimens",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T09:36:18",
+      "title": "Deepening: That the zero-dimensional persistent homology of the prim"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-12T09:19:09",
+  "last_updated": "2026-07-12T09:36:18",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "fec9de1f",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-11T05:18:16"
-    },
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "6e208619",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-12T08:27:47"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "c3fe1d06",
+      "domain": "MachineLearning",
+      "sorry_count": 4,
+      "timestamp": "2026-07-12T09:36:18"
     }
   ],
   "research_threads": {
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "9bec4051",
-        "quality": 0.4398394666666667,
-        "theorems": 8,
-        "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
-      },
-      {
         "cycle_id": "1da6d023",
         "quality": 0.5940000000000001,
         "theorems": 20,
@@ -3575,6 +3569,12 @@
         "quality": 0.78,
         "theorems": 1210,
         "title": "White's Quadratic Exchange Conjecture (Part 3)"
+      },
+      {
+        "cycle_id": "c3fe1d06",
+        "quality": 0.83,
+        "theorems": 9,
+        "title": "Deepening: That the zero-dimensional persistent homology of the prim"
       }
     ],
     "Novelty": [
