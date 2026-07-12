@@ -917,25 +917,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b290e3a0",
-    "description": "Building on cycle 6e208619 (Q=0.780), which proved 27 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minimum sizes of r consecutive pieces, and define \\mu_r(a) = limsup_{n\\to\\infty} \\mu^r_n(a). For any fixe",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_6e208619_c801c829",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6e208619",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T06:39:37.464758+00:00",
-    "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 73d4b43b (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a s",
     "domain_bridges": [],
@@ -10136,26 +10117,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0930ae42",
-    "description": "# Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four smallest knots. Natural extensions:\n\n1. **Cyclotomic identification.**  Prove `trefoilPoly = cyclotomic 6 ℤ` and\n   `cinquefoilPoly = cyclotomic 10 ℤ` directly in Mathlib (rather than only proving\n   the individual root facts). This would make the \"roots are exactly the primitive\n   n-th roots of unity\" statement complete, including the *converse* (no spurious\n   roots) via `Polynomial.roots_cyclotomic`.\n\n2. **Torus-knot family.**  The trefoil and cinquefoil are the `(2, 3)` and `(2, 5)`\n   torus knots, with `Δ_{(2,2k+1)}(t) = (t^{2k+1} + 1)/(t + 1)`. Formalize the general\n   torus-knot Alexander polynomial and show its roots are the `(4k+2)`-th roots of\n   unity that are not `(2k+1)`-th roots — a uniform generalization of the two cases\n   proved here.\n\n3. **General reciprocity and `Δ(1) = ±1`.**  State and prove the reciprocity law\n   `t^{2g} Δ(1/t) = Δ(t)` and the normalization `Δ(1) = ±1` from an abstract\n   axiomatization of Alexander polynomials (e.g. via Seifert matrices `V`,\n   `Δ(t) = det(V − t Vᵀ)`), instead of case by case.\n\n4. **Knot determinant as `|Δ(−1)|`.**  Connect the numbers `3, 5, 5` proved here to\n   the determinant defined through a Goeritz or Seifert matrix, and to\n   `p`-colorability (`3`-colorable ⇔ `3 ∣ det`).\n\n5. **Off-circle roots and the golden ratio.**  Generalize the figure-eight\n   observation: characterize which knots have all Alexander roots on the unit circle\n   (a necessary condition for genuine root-of-unity OAM quantization). The\n   figure-eight, with roots `φ^{±2}`, is the smallest knot violating this.\n",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Pythagorean"
-    ],
-    "id": "fd_0835",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7a9dcf2f",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T02:59:09.669263+00:00",
-    "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: The Geometry and Universal Structure of Surprise\n\nThis cycle established two complementary pillars. First, *surprise* — the gap between\nthe most conservative and most divergent resolution of a setup — is a genuine\ngeometric invariant equal to the diameter of the resolution configuration\n(nonnegative, vanishing exactly on constant setups, monotone under refinement, and\nattained). Second, when a *canonical* (terminal) resolution exists, it is unique in the\nstrongest possible sense: up to a unique, coherent isomorphism, and it is rigid. The\nfollowing conjectures push both pillars further.\n\n## 1. Surprise as a genuine metric diameter in higher dimensions\n\n**Conjecture.** For a finite configuration of resolutions embedded in a Euclidean space\nof any dimension, the natural surprise invariant equals the metric diameter of the\nconfiguration's convex hull, and it remains monotone under enrichment and subadditive\nunder overlays of setups.\n\n**The key insight is** that the one-dimensional identity \"surprise = range = greatest\npairwise distance\" is not special to the line: it is a shadow of the general fact that\nthe extreme spread of a compact configuration is realised on its boundary.\n\n**Why now?** The one-dimensional case is fully settled here with an attained diameter\ncharacterisation, giving an exact template — extremal witnesses plus a uniform bound —\nthat generalises verbatim once \"endpoints\" are replaced by \"hull vertices.\"\n\n## 2. A vanishing dichotomy separating puns from absurdism\n\n**Conjecture.** The surprise invariant admits a sharp threshold: below it, every setup\nis equivalent (after normalisation) to a near-constant configuration; above it, setups\nnecessarily contain two resolutions in \"different categories\" that no refinement can\nreconcile.\n\n**The key insight is** that the zero-surprise characterisation is not merely a boundary\ncase but the base of a stratification: distance from the constant locus measures how\nfar a setup has escaped its expected resolution.\n\n**Why now?** We have proven the exact vanishing locus (surprise `0` iff all resolutions\ncoincide) and that surprise is monotone; a stratification by surprise value is the\nimmediate next quantitative refinement.\n\n## 3. Universal resolutions as limits of refinement chains\n\n**Conjecture.** Every setup whose resolutions form a directed refinement system admits a\nuniversal resolution, obtained as the colimit of the refinement chain, and this colimit\nis automatically rigid.\n\n**The key insight is** that terminality — proven here to force unique, coherent,\nrigidity-witnessing structure — is exactly the property a well-behaved colimit inherits,\nso existence of the canonical resolution reduces to directedness of refinements.\n\n**Why now?** The abstract uniqueness and rigidity of terminal resolutions are already in\nhand; the only missing ingredient for a general existence theorem is a construction, and\ndirected colimits supply the standard one.\n\n## 4. Sharp stability of surprise under perturbation\n\n**Status.** The basic stability estimate is now settled: perturbing every resolution of\na setup by at most `ε` changes its surprise by at most `2ε`. This confirms that surprise\nis a robust invariant — small changes in how each resolution is read cannot produce a\nlarge change in humor.\n\n**Conjecture (next step).** The factor `2` is optimal, and more is true: surprise is a\ncontraction under any reinterpretation that is itself a contraction of the resolution\naxis, and the estimate composes — a chain of `k` perturbations of sizes `ε₁, …, ε_k`\nmoves surprise by at most `2(ε₁ + ⋯ + ε_k)`, with equality achieved on suitably\n\"stretched\" two-point setups.\n\n**The key insight is** that surprise is built from two extremal selectors, each of which\nmoves by at most the perturbation size, so their difference is controlled — and that the\nworst case is realised precisely when the two extremes are pushed apart in opposite\ndirections, which pins down the sharp constant.\n\n**Why now?** The extremal (`IsGreatest`/`IsLeast`) characterisations of the two canonical\nresolutions, together with the just-established `2ε` stability bound, are exactly the\ningredients needed to identify the extremal configurations that make the constant sharp.\n",
     "domain_bridges": [],
@@ -11812,6 +11773,46 @@
     "status": "available",
     "timestamp": "2026-07-12T10:09:46.446983+00:00",
     "title": "This project formalizes the mathematical core of the descendant limit law for ra"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Cake-Balancing Ratio\n\nThis cycle established the exact algebra of the balancing-ratio functional for a\nsingle circular dissection and proved that the repeated-bisection sequence keeps\nthe long-run ratio `μ_r` below `2` for every window length `r`.  Two structural\nfacts drove everything: aggregation of consecutive pieces never increases the\nimbalance (`μ_r ≤ μ_1`), and a dissection using only two piece lengths in ratio\n`2` has balancing ratio at most `2`.  The following conjectures push past the\ncrude constant `2`.\n\n## Conjecture A — The optimal window-1 constant is strictly below 2\n\nFor window length `r = 1`, there is an infinite cutting sequence whose long-run\nratio satisfies `μ_1 < 2`; in fact the infimum of `μ_1` over all sequences is a\nspecific constant in the open interval `(1, 2)`.\n\nThe key insight is that the bisection scheme wastes balance: immediately after a\npower-of-two stage the next insertions create a size-`2` gap that a smarter,\nstaggered insertion order can dilute, because the *order* in which equal-length\npieces are split is a free parameter that the factor-`2` bound ignores entirely.\n\nWhy now? The single-dissection theory is complete (extremal-window sandwiching,\nscale invariance, equipartition optimality), so the remaining freedom is purely\ncombinatorial — the insertion order — which is exactly the variable this\nconjecture isolates.\n\n## Conjecture B — Aggregation strictly improves the constant\n\nThe long-run constant is strictly monotone in the window length on an initial\nrange: for the optimal sequence, `μ_{r+1} < μ_r` until the windows become large\nenough to wrap a constant fraction of the cake.\n\nThe key insight is that overlapping windows share most of their pieces, so a\nsingle oversized piece is amortised across `r` windows; the larger `r` is, the\nsmaller the relative contribution of any one piece, which the finite identity\n`r·minArc ≤ window ≤ r·maxArc` already hints at but does not yet make strict.\n\nWhy now? The comparison `μ_r ≤ μ_1` is proved and non-vacuous (two-valued\ndissections give strict inequality for `r ≥ 2`), so quantifying the *gap* is the\nnatural next step rather than a leap.\n\n## Conjecture C — Low-discrepancy sequences realise the optimum\n\nThe cutting sequence generated by inserting the `n`-th point at the fractional\npart of `n·α` for a badly approximable `α` (e.g. the golden ratio) achieves the\noptimal `μ_1`, and its value is governed by the continued-fraction expansion of\n`α`.\n\nThe key insight is that the three-gap phenomenon forces such a sequence to use at\nmost three piece lengths at every stage, with the extreme ratio controlled by the\npartial quotients — tying the balancing constant to the arithmetic of `α` exactly\nas badly approximable numbers control classical Diophantine ratios.\n\nWhy now? This connects the balancing ratio to the same badly-approximable /\ncontinued-fraction machinery already developed elsewhere in this project for\nLagrange constants, suggesting a shared extremal principle across the two\nfunctionals.\n\n## Conjecture D — A dual lower bound: no sequence balances perfectly\n\nEvery infinite cutting sequence has `μ_1 > 1`; more strongly, there is a\nuniversal constant `c > 1` with `μ_1 ≥ c` for all sequences, so perfect long-run\nbalance is impossible.\n\nThe key insight is that inserting one point splits a single arc into two, so a\nnewly created short piece must coexist for many stages with the long pieces\nelsewhere on the circle, forcing a persistent gap that cannot be driven to `1`.\n\nWhy now? The upper side (`μ_1 ≤ 2`) is settled constructively; pinning the\nmatching lower bound is what would turn the interval `(1, 2)` into a genuine\nextremal problem with a determined answer.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1127",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b290e3a0",
+    "status": "available",
+    "timestamp": "2026-07-12T10:26:54.180209+00:00",
+    "title": "Exact algebra of the balancing-ratio functional for a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle deepens the probabilistic-method development (Erdős Ramsey lower bound, first-moment\nprinciple, and the Lovász Local Lemma chain rule) by formalising a *second* pillar of the\nprobabilistic method: **Property B**, the two-colourability of sparse hypergraphs\n(`m(k) ≥ 2^{k-1}`, Erdős 1963). The result is in `Catalog/Cryptography/PropertyBTwoColoring.lean`.\n\n## What was proved\n\n- `PropertyB.exists_proper_two_coloring` — sharp form: if every edge of a hypergraph on `Fin N`\n  has `≥ k ≥ 1` vertices and there are fewer than `2^{k-1}` edges, then some red/blue vertex\n  colouring makes every edge bichromatic. Proof: finite union bound over the `2^N` colourings,\n  reusing the Boolean-lattice interval counts `card_filter_superset` / `card_filter_disjoint`.\n- `PropertyB.property_B` — the classical `k`-uniform statement (special case).\n- `PropertyB.two_colorable_of_lt` — the same, phrased as \"every edge meets and misses the red\n  set\".\n- Concrete corollaries: `single_edge_two_colorable`, `property_B_three_edges_three_uniform`.\n- `PropertyB.IsNonTwoColorable` and `PropertyB.card_ge_of_nonTwoColorable` /\n  `card_ge_of_nonTwoColorable_uniform` — the extremal-function lower bound `2^{k-1} ≤ m(k)`:\n  every non-2-colourable hypergraph whose edges each have `≥ k ≥ 1` vertices has at least\n  `2^{k-1}` edges (the contrapositive packaging of the main theorem).\n- `PropertyB.triangleGraph`, `triangleGraph_card`, `triangleGraph_two_uniform`,\n  `triangleGraph_nonTwoColorable`, and `exists_nonTwoColorable_two_uniform_three_edges` — a\n  concrete extremal *witness* for `k = 2`: the triangle is a non-2-colourable `2`-uniform\n  hypergraph with exactly `3` edges, giving the matching upper bound `m(2) ≤ 3` (checked over\n  the `2^3` colourings). Combined with the lower bound this pins the configuration `m(2) = 3`\n  down to an explicit realiser.\n\n## Natural next steps\n\n1. **Extremal function `m(k)`.** The lower bound `2^{k-1} ≤ m(k)` is now formalised as\n   `PropertyB.card_ge_of_nonTwoColorable`, and the upper-bound witness `m(2) ≤ 3` is realised\n   concretely by `PropertyB.exists_nonTwoColorable_two_uniform_three_edges` (the triangle). The\n   remaining work is to formalise the further matching bounds — notably `m(3)=7` (Fano plane) —\n   the sharp *lower* bound `m(2) ≥ 3` (every 2-edge graph is bipartite), and to package `m(k)`\n   itself as an explicit extremal number (e.g. via `Nat.find` over non-2-colourable\n   configurations).\n\n2. **Random / alteration improvement.** Upgrade the lower bound to the Radhakrishnan–Srinivasan\n   `m(k) = Ω(2^k √(k/log k))` via the semi-random (Lovász-Local-Lemma-assisted) colouring, using\n   the existing `LovaszLocalLemmaChain` backbone.\n\n3. **LLL two-colourability.** Combine `ProbMethod` (the chain-rule LLL positivity) with a bounded\n   edge-intersection hypothesis to get the LLL version of Property B: a `k`-uniform hypergraph in\n   which each edge meets fewer than `2^{k-3}` others is 2-colourable. The remaining work is to\n   verify the conditional-avoidability hypothesis of `measure_iInter_compl_pos_of_cond_lt` from a\n   dependency-degree bound `e·p·(d+1) ≤ 1`.\n\n4. **Weighted / list colourings.** Extend to `r`-colourings (`m_r(k) ≥ r^{k-1}/…`) by replacing\n   the Boolean powerset count with an `r`-ary function count.\n\n5. **Bridge to Ramsey.** Both `RamseyProbabilisticLowerBound` and this file share the identical\n   double-count `#{A ⊆ Gr : S ⊆ A} = 2^{|Gr|-|S|}`; a shared `Shared/` counting module would let\n   the two theorems (and the Turán bound) be derived from a single first-moment lemma.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_1128",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "53945fe2",
+    "status": "available",
+    "timestamp": "2026-07-12T10:27:03.898881+00:00",
+    "title": "This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
   },
   {
     "ambition_level": "extension",

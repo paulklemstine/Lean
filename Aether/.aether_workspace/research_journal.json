@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1e86ff35",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle deepens *\"Paradoxes as Theorems: Liar, Berry, and Russell Made\nConsistent\"* into a single **cross-domain bridge** and proves it in Lean 4 with\nno `sorry` and only the s",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-11T13:38:31",
-      "title": "Deepening: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-    },
-    {
       "cycle_id": "094010ae",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Reflective Type Theory\n\nThe reflective calculus interprets propositions as sets of proof stages and\nattaches a provability modality `□` to a step relation `R`. Three structural\nfi",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-12T10:09:53",
       "title": "Limit Distribution of Descendants in Random d-DAGs"
+    },
+    {
+      "cycle_id": "b290e3a0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Cake-Balancing Ratio\n\nThis cycle established the exact algebra of the balancing-ratio functional for a\nsingle circular dissection and proved that the repeated-bisection seque",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 22,
+      "timestamp": "2026-07-12T10:27:01",
+      "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7e56c098",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the study of colorful Carathéodory-type\ntheorems over joins of spanning complexes.\n\n## 1. Nearest-point descent for the higher-dimension",
-      "quality_score": 0.30634774285714284,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-07-06T21:41:33",
-      "title": "Colorful Carathéodory Theorem for Spanning k-trees"
-    },
     {
       "cycle_id": "92285bf9",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-12T10:09:53",
       "title": "Limit Distribution of Descendants in Random d-DAGs"
+    },
+    {
+      "cycle_id": "b290e3a0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Cake-Balancing Ratio\n\nThis cycle established the exact algebra of the balancing-ratio functional for a\nsingle circular dissection and proved that the repeated-bisection seque",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 22,
+      "timestamp": "2026-07-12T10:27:01",
+      "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "acce14cf",
-      "domain": "Combinatorics",
-      "name": "prime_iff_divisibility",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "acce14cf",
-      "domain": "Combinatorics",
-      "name": "prime_iff_indecomposable",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "acce14cf",
-      "domain": "Combinatorics",
-      "name": "prime_iff_algebraic",
-      "quality": 0.82
-    },
     {
       "cycle_id": "fb4de3e5",
       "domain": "Tropical",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "descProduct_gamma_closed_form",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "b290e3a0",
+      "domain": "Applications",
+      "name": "windowSum_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b290e3a0",
+      "domain": "Applications",
+      "name": "windowSum_pos",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b290e3a0",
+      "domain": "Applications",
+      "name": "minArc_pos",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T10:09:53",
+  "last_updated": "2026-07-12T10:27:01",
   "open_questions": [
-    {
-      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "6e208619",
-      "domain": "Applications",
-      "sorry_count": 5,
-      "timestamp": "2026-07-11T06:39:37"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "493ee817",
@@ -3016,6 +3009,13 @@
       "domain": "MachineLearning",
       "sorry_count": 4,
       "timestamp": "2026-07-12T09:36:18"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "b290e3a0",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-12T10:27:01"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "08eba531",
-        "quality": 0.7,
-        "theorems": 30,
-        "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
-      },
-      {
         "cycle_id": "245dd564",
         "quality": 0.72,
         "theorems": 44,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 15,
         "title": "Limit Distribution of Descendants in Random d-DAGs"
+      },
+      {
+        "cycle_id": "b290e3a0",
+        "quality": 0.82,
+        "theorems": 22,
+        "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
       }
     ],
     "Bridges": [
