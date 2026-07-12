@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7669ab26",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Topological Quantum Codes from Homology\n\nThis cycle established, as exact theorems, that the number of logical qubits of a\nCSS code equals the first Betti number of its underlying",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 24,
-      "timestamp": "2026-07-11T19:10:40",
-      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-    },
-    {
       "cycle_id": "0a5d3cfa",
       "domain": "Applications",
       "key_insight": "# Future Directions: Mathematics as a Phase Transition\n\nThis cycle closed the outstanding placeholder results connecting the factorial\nnumber system to the general mixed-radix theory, and distilled th",
@@ -499,19 +489,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-12T14:10:41",
       "title": "Exact dictionary \"logical qubits = middle homology\""
+    },
+    {
+      "cycle_id": "f8254dbf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Argumentation (V): Stable Extensions\n\nThis cycle deepens the formalization of Dung's abstract argumentation theory and\nthe conflict-free complex `K(AF)` by adding",
+      "quality_score": 0.83,
+      "sorry_count": 7,
+      "theorem_count": 34,
+      "timestamp": "2026-07-12T14:10:49",
+      "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0c573935",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Surreal Topology\n\n## What was proved\n\nThe surreal-topology deliverable establishes a cross-domain bridge between\nConway's surreal numbers (combinatorial game theory / set theory)",
-      "quality_score": 0.7426819999999998,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-08T20:32:40",
-      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-    },
     {
       "cycle_id": "492f9d48",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-12T14:10:41",
       "title": "Exact dictionary \"logical qubits = middle homology\""
+    },
+    {
+      "cycle_id": "f8254dbf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Argumentation (V): Stable Extensions\n\nThis cycle deepens the formalization of Dung's abstract argumentation theory and\nthe conflict-free complex `K(AF)` by adding",
+      "quality_score": 0.83,
+      "sorry_count": 7,
+      "theorem_count": 34,
+      "timestamp": "2026-07-12T14:10:49",
+      "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2cd42066",
-      "domain": "Novelty",
-      "name": "asserts",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "2cd42066",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "e2c082ff",
-      "domain": "MachineLearning",
-      "name": "and",
-      "quality": 0.82
-    },
     {
       "cycle_id": "e2c082ff",
       "domain": "MachineLearning",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "hypercube_closed_walk_even",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "f8254dbf",
+      "domain": "Novelty",
+      "name": "defends_mono",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "f8254dbf",
+      "domain": "Novelty",
+      "name": "charF_mono",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "f8254dbf",
+      "domain": "Novelty",
+      "name": "stable_defends",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-12T14:10:41",
+  "last_updated": "2026-07-12T14:10:49",
   "open_questions": [
-    {
-      "context": "-    sorry; +  · sorry  -- Zsygmondy / Carmichael tail: not available in Mathlib; +This is the honest, `sorry`-free version of `fib_carmichael_composite`: the",
-      "cycle_id": "d4a0469f",
-      "domain": "Applications",
-      "sorry_count": 9,
-      "timestamp": "2026-07-11T11:42:29"
-    },
     {
       "context": "Critique (Critic).  Every main theorem is sorry-free and none is vacuous:; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "094010ae",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-12T14:10:41"
+    },
+    {
+      "context": "+infinite tail as an unproved `sorry`, we state and prove the theorem *in full* on; +This is proved completely (no `sorry`) by combining the bridge lemma with the; -    sorry",
+      "cycle_id": "f8254dbf",
+      "domain": "Novelty",
+      "sorry_count": 7,
+      "timestamp": "2026-07-12T14:10:49"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2cd42066",
-        "quality": 0.74,
-        "theorems": 28,
-        "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
-      },
-      {
         "cycle_id": "49f67430",
         "quality": 0.62,
         "theorems": 22,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 20,
         "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+      },
+      {
+        "cycle_id": "f8254dbf",
+        "quality": 0.83,
+        "theorems": 34,
+        "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, t"
       }
     ],
     "NumberTheory": [

@@ -17066,7 +17066,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "quant-ph",
@@ -17075,7 +17075,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "79619920",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17092,7 +17092,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0630",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T14:11:02.239298+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bipartite_neg1_0_1_diag_is_complete_bipartite {n : ℕ} (G : SimpleGraph (Fin n)) (h_conn : Connected G) (h_bip : IsBipartite G) (h_diag : NegOneZeroOneDiagonalizable G) : IsCompleteBipartite G ∧ ∃ m, n = 2 * m ∧ IsCompleteBipartiteOn G m m := by\n  sorry",
       "lineage_refs": [],
@@ -17107,7 +17107,7 @@
       "source": "",
       "source_exp_id": "2607.06336v1",
       "source_path": "http://arxiv.org/abs/2607.06336v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T05:03:44.362244+00:00",
       "title": "Bipartite {-1,0,1}-diagonalizable graphs are complete bipartite"
@@ -36756,7 +36756,6 @@
     "≤_bruhat": 1
   },
   "selection_log": [
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -36773,6 +36772,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"

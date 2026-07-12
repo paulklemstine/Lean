@@ -451,20 +451,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Lower bounds on clique densities using generalized inverses"
   },
   {
-    "consumed_by_exp_id": "f8254dbf",
-    "description": "Building on cycle e618ea1a (Q=0.820), which proved 29 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological structure of\nthe conflict-free complex `K(AF)`. Three self-contained files:\n\n* `ArgumentationCore.le",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_e618ea1a_b25033ab",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "e618ea1a",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T11:18:27.403225+00:00",
-    "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle e7035fce (Q=0.820), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^",
     "domains": [
@@ -4637,7 +4623,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "79619920",
     "description": "Every connected bipartite {-1,0,1}-diagonalizable graph on n vertices is a complete bipartite graph K_{n/2, n/2}. This strengthens the paper's theorem that every bipartite {-1,0,1}-diagonalizable graph is regular, and if true, would provide a complete structural characterization connecting the {-1,0,1}-diagonalizability property to classical complete bipartite graph structure.",
     "domains": [
       "Bridges"
@@ -4646,7 +4632,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T05:03:44.362244+00:00",
     "title": "Bipartite {-1,0,1}-diagonalizable graphs are complete bipartite"
   },
@@ -7200,6 +7186,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T14:10:29.687835+00:00",
     "title": "Thread `th_c942ee26`, root direction `fd_0859`. The previous cycle established"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Argumentation (V): Stable Extensions\n\nThis cycle deepens the formalization of Dung's abstract argumentation theory and\nthe conflict-free complex `K(AF)` by adding the **stable extension** \u2014 the\nstrongest of the classical extension-based semantics \u2014 and placing it inside the\nfull semantic hierarchy and the Euler/semantics bridge.\n\nNew self-contained file: `Catalog/Novelty/ArgumentationStable.lean`.\n\n## What is proved\n\nA set `S` of arguments is a **stable extension** when it is conflict-free and it\n*attacks every argument it does not contain*:\n`Stable R S := ConflictFree R S \u2227 \u2200 a \u2209 S, \u2203 b \u2208 S, R b a`.\nThese are the \"no abstention\" positions: every argument is accepted or defeated.\n\n### The stable hierarchy (general frameworks)\n\nEach result feeds the next, forming a chain\n`stable \u27f9 preferred \u27f9 complete \u27f9 admissible \u27f9 conflict-free`:\n\n* `stable_defends` \u2014 a stable set defends each of its members.\n* `stable_admissible` \u2014 every stable extension is admissible.\n* `stable_complete` \u2014 every stable extension is complete (closed under defense).\n* `stable_preferred` \u2014 every stable extension is preferred (maximal admissible).\n* `stable_maximalConflictFree` \u2014 every stable extension is a *facet* of `K(AF)`.\n* `groundedExt_subset_stable` \u2014 the grounded (skeptical) extension lies inside\n  every stable extension.\n\n### The symmetric collapse\n\nFor **symmetric irreflexive** frameworks (mutual disagreement without\nself-attack) the top of the hierarchy collapses:\n\n* `maximalConflictFree_stable_of_symmetric` \u2014 every facet is stable.\n* `stable_iff_preferred_of_symmetric_irrefl` \u2014\n  **stable \u21d4 preferred \u21d4 facet of `K(AF)`**.\n\n### The stable Euler bridge\n\nFor the complete conflict graph `completeAF n` (symmetric and irreflexive):\n\n* `stable_completeAF_iff` \u2014 the stable extensions are exactly the singletons.\n* `stable_completeAF_ncard` \u2014 there are exactly `n` of them.\n* `euler_completeAF` \u2014 the Euler characteristic of `K(AF)` is `n`.\n* `euler_eq_stable_completeAF` \u2014 **`\u03c7(K(AF)) = #{stable extensions}`** for `n \u2265 1`.\n\nThis extends the Euler/semantics bridge of `ArgumentationSymmetric` (previously\nstated for preferred extensions) to stable extensions.\n\nAll results compile under Lean 4 / Mathlib (`v4.28.0`) with no `sorry` and depend\nonly on the standard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n## Open directions\n\n* **General symmetric frameworks.** Extend `stable_iff_preferred_of_symmetric_irrefl`\n  and the Euler bridge from the complete conflict graph to arbitrary symmetric\n  irreflexive frameworks, expressing `\u03c7(K(AF))` via the independence complex of\n  the conflict graph.\n* **Existence gap.** Unlike preferred extensions, stable extensions need not\n  exist. Characterize the frameworks that admit at least one stable extension\n  (e.g. formalize that finite frameworks whose conflict graph is symmetric always\n  do, via maximal independent sets).\n* **Full homology.** Replace the Euler characteristic by the reduced homology of\n  `K(AF)` and relate its Betti numbers to the fine structure of the semantics.\n",
+    "domains": [
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "fd_1140",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f8254dbf",
+    "status": "available",
+    "timestamp": "2026-07-12T14:10:44.528569+00:00",
+    "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
   },
   {
     "consumed_by_exp_id": "",
