@@ -1,134 +1,184 @@
 """
-Recursive Decomposition Isomorphism for General m-Tamari Intervals
-and Planar (m+1)-Constellations
-==================================================================
+Numerical demonstrations for:
 
-This self-contained script demonstrates, numerically, the central
-results of the accompanying paper:
+    The Enumerative Layer of the m-Tamari / (m+1)-Constellation Correspondence:
+    Fuss-Catalan Element Counts and Bousquet-Melou-Chapoton Interval Numbers
 
-  * The "active-sites" succession rule  S_m(k) = [1, 2, ..., m*k + 1]
-    (rooted at label 1), natural on the m-Tamari / m-Dyck side.
+This self-contained script demonstrates, with exact integer / rational arithmetic:
 
-  * The "shifted" succession rule       T_m(k) = [2, 3, ..., m*(k-1) + 2]
-    (rooted at label 2), natural on the planar (m+1)-constellation side.
+  1. Fuss-Catalan numbers   Cat_m(n) = C((m+1)n, n) - m*C((m+1)n, n-1)
+     as a manifest non-negative integer, and the closed form
+         (m*n + 1) * Cat_m(n) = C((m+1)n, n),
+     hence the divisibility  (m*n + 1) | C((m+1)n, n).
 
-  * The single relabelling  phi(k) = k + 1  intertwines the two rules
-    for EVERY m >= 1:  T_m(phi(a)) = phi( S_m(a) ) elementwise.
+  2. Recovery of the ordinary Catalan numbers at m = 1, small values,
+     and non-triviality (Cat_m(2) = m + 1).
 
-From that one identity we obtain, for all m:
-  - equal level-by-level counting sequences (equi-enumeration);
-  - equal REFINED counts (any statistic carried by the labels is
-    distributed identically at every level);
-  - a growth bound  levelCount(k) >= 2^k  (nothing is vacuous).
+  3. Bousquet-Melou-Chapoton interval numbers
+         Int_m(n) = (m+1) / (n*(m*n+1)) * C((m+1)^2 * n + m, n-1),
+     their classical values (1,3,13,68 for m=1; 1,6,58 for m=2),
+     the fact that intervals strictly outnumber elements, the n-factor
+     divisibility, and the reduced (m*n+1) divisibility.
 
-Counting sequences reproduced here:
-    m = 1 :  1, 2, 5, 14, 42, ...      (Catalan numbers, A000108)
-    m = 2 :  1, 3, 15, 113, 1273, ...
-    m = 3 :  1, 4, 34, 586, 21721, ...
+  4. Two disproved conjectures: (m,n)-symmetry and the m-free two-term formula.
+
+Everything uses Python's arbitrary-precision integers and the Fraction type;
+no third-party libraries are required.
 """
 
 from __future__ import annotations
 
-from typing import Callable, List
+from fractions import Fraction
+from math import comb, gcd
+from typing import List
 
 
-# --------------------------------------------------------------------------
-# The two concrete succession rules, uniform in the arity m.
-# --------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# 1. Fuss-Catalan numbers
+# ---------------------------------------------------------------------------
 
-def sites_rule(m: int, k: int) -> List[int]:
-    """Active-sites rule: a node with label k has children 1, 2, ..., m*k + 1."""
-    return list(range(1, m * k + 2))
+def fuss_catalan(m: int, n: int) -> int:
+    """Fuss-Catalan number Cat_m(n) via the two-term binomial difference.
 
-
-def shifted_rule(m: int, k: int) -> List[int]:
-    """Shifted rule: a node with label k has children 2, 3, ..., m*(k-1) + 2."""
-    # length is m*k - m + 1 = m*(k-1) + 1, starting at 2
-    return list(range(2, (m * k - m + 1) + 2))
-
-
-def relabel(k: int) -> int:
-    """The label bijection phi(k) = k + 1 realising the isomorphism."""
-    return k + 1
+    Cat_m(0) = 1, and for n >= 1,
+        Cat_m(n) = C((m+1)n, n) - m * C((m+1)n, n-1).
+    This is a manifest non-negative integer (no division).
+    """
+    if n == 0:
+        return 1
+    return comb((m + 1) * n, n) - m * comb((m + 1) * n, n - 1)
 
 
-# --------------------------------------------------------------------------
-# Generating-tree machinery: level label lists and level counts.
-# --------------------------------------------------------------------------
-
-def level_labels(succ: Callable[[int], List[int]], root: int, depth: int) -> List[int]:
-    """Ordered list of labels appearing at a given depth of the generating tree."""
-    labels = [root]
-    for _ in range(depth):
-        nxt: List[int] = []
-        for lab in labels:
-            nxt.extend(succ(lab))
-        labels = nxt
-    return labels
+def fuss_catalan_closed_form_lhs(m: int, n: int) -> int:
+    """Left-hand side of the closed form: (m*n + 1) * Cat_m(n)."""
+    return (m * n + 1) * fuss_catalan(m, n)
 
 
-def level_count(succ: Callable[[int], List[int]], root: int, depth: int) -> int:
-    """Number of nodes at a given depth (the counting sequence)."""
-    return len(level_labels(succ, root, depth))
+def fuss_catalan_closed_form_rhs(m: int, n: int) -> int:
+    """Right-hand side of the closed form: C((m+1)n, n)."""
+    return comb((m + 1) * n, n)
 
 
-# --------------------------------------------------------------------------
-# Demonstrations of the three headline results.
-# --------------------------------------------------------------------------
+def catalan(n: int) -> int:
+    """Ordinary Catalan number C_n = C(2n, n) / (n+1)."""
+    return comb(2 * n, n) // (n + 1)
 
-def demo_intertwining(max_m: int = 4, max_a: int = 8) -> None:
-    """Verify T_m(phi(a)) = phi(S_m(a)) elementwise for many m, a."""
-    print("=== Intertwining identity: T_m(a+1) = (S_m(a)) mapped by (+1) ===")
-    ok = True
+
+# ---------------------------------------------------------------------------
+# 2. Interval numbers (Bousquet-Melou-Chapoton)
+# ---------------------------------------------------------------------------
+
+def interval_number(m: int, n: int) -> Fraction:
+    """Int_m(n) = (m+1) / (n*(m*n+1)) * C((m+1)^2 * n + m, n-1), exactly."""
+    numerator_binom = comb((m + 1) ** 2 * n + m, n - 1)
+    return Fraction(m + 1) * Fraction(numerator_binom, n * (m * n + 1))
+
+
+def interval_numerator(m: int, n: int) -> int:
+    """The integer numerator (m+1) * C((m+1)^2 * n + m, n-1)."""
+    return (m + 1) * comb((m + 1) ** 2 * n + m, n - 1)
+
+
+# ---------------------------------------------------------------------------
+# Demonstration routines
+# ---------------------------------------------------------------------------
+
+def demo_closed_form_and_divisibility(max_m: int = 4, max_n: int = 8) -> None:
+    print("=" * 70)
+    print("1. Fuss-Catalan closed form and divisibility")
+    print("=" * 70)
+    print("Checking  (m*n + 1) * Cat_m(n) == C((m+1)n, n)  and  (m*n+1) | C((m+1)n, n)")
+    all_ok = True
     for m in range(1, max_m + 1):
-        for a in range(0, max_a + 1):
-            lhs = shifted_rule(m, relabel(a))
-            rhs = [relabel(x) for x in sites_rule(m, a)]
-            if lhs != rhs:
-                ok = False
-                print(f"  MISMATCH  m={m} a={a}: {lhs} != {rhs}")
-    print(f"  all sampled (m,a) satisfy the identity: {ok}\n")
-
-
-def demo_counting_sequences(max_m: int = 3, depth: int = 4) -> None:
-    """Print the counting sequences for m = 1, 2, 3 from both encodings."""
-    print("=== Counting sequences (both encodings agree) ===")
+        for n in range(0, max_n + 1):
+            lhs = fuss_catalan_closed_form_lhs(m, n)
+            rhs = fuss_catalan_closed_form_rhs(m, n)
+            ok = (lhs == rhs) and (rhs % (m * n + 1) == 0)
+            all_ok = all_ok and ok
+    print(f"  All identities hold for 1<=m<={max_m}, 0<=n<={max_n}: {all_ok}")
+    print("\n  Fuss-Catalan triangle Cat_m(n):")
+    header = "   m\\n |" + "".join(f"{n:>8}" for n in range(0, 7))
+    print(header)
+    print("  " + "-" * (len(header) - 2))
     for m in range(1, max_m + 1):
-        sites_seq = [level_count(lambda k: sites_rule(m, k), 1, d) for d in range(depth + 1)]
-        shift_seq = [level_count(lambda k: shifted_rule(m, k), 2, d) for d in range(depth + 1)]
-        assert sites_seq == shift_seq, (m, sites_seq, shift_seq)
-        print(f"  m = {m}:  {sites_seq}   (equal for both rules: {sites_seq == shift_seq})")
-    print()
+        row = "".join(f"{fuss_catalan(m, n):>8}" for n in range(0, 7))
+        print(f"   {m:>3} |{row}")
 
 
-def demo_refined_counts(m: int = 2, depth: int = 3) -> None:
-    """Show that any label statistic is distributed identically at each level."""
-    print(f"=== Refined equinumerosity (m = {m}) ===")
-    print("  statistic 'label' histogram at each level; shifted = sites shifted by +1")
-    for d in range(depth + 1):
-        sites = sorted(level_labels(lambda k: sites_rule(m, k), 1, d))
-        shift = sorted(level_labels(lambda k: shifted_rule(m, k), 2, d))
-        shifted_from_sites = sorted(relabel(x) for x in sites)
-        assert shift == shifted_from_sites
-        print(f"  level {d}:  sites={sites}")
-        print(f"            shift={shift}  (= sites + 1: {shift == shifted_from_sites})")
-    print()
+def demo_catalan_recovery(max_n: int = 10) -> None:
+    print("\n" + "=" * 70)
+    print("2. Recovery of Catalan numbers at m = 1, small values")
+    print("=" * 70)
+    row_fc = [fuss_catalan(1, n) for n in range(max_n + 1)]
+    row_cat = [catalan(n) for n in range(max_n + 1)]
+    print(f"  Cat_1(n) : {row_fc}")
+    print(f"  catalan  : {row_cat}")
+    print(f"  Equal    : {row_fc == row_cat}")
+    print("\n  Small-value laws:")
+    print(f"  Cat_m(0) = 1 for all m: {all(fuss_catalan(m, 0) == 1 for m in range(6))}")
+    print(f"  Cat_m(1) = 1 for all m: {all(fuss_catalan(m, 1) == 1 for m in range(6))}")
+    print(f"  Cat_m(2) = m+1        : "
+          f"{all(fuss_catalan(m, 2) == m + 1 for m in range(6))}")
 
 
-def demo_growth_bound(max_m: int = 3, depth: int = 5) -> None:
-    """Confirm the level count dominates 2^k for m >= 1."""
-    print("=== Growth bound: levelCount(k) >= 2^k ===")
-    for m in range(1, max_m + 1):
-        row = []
-        for d in range(depth + 1):
-            c = level_count(lambda k: sites_rule(m, k), 1, d)
-            row.append(f"{c}>={2**d}:{c >= 2**d}")
-        print(f"  m = {m}:  " + "  ".join(row))
-    print()
+def demo_interval_numbers() -> None:
+    print("\n" + "=" * 70)
+    print("3. Interval numbers, excess over elements, and integrality")
+    print("=" * 70)
+    print("  m = 1 sequence (expect 1, 3, 13, 68, 399):")
+    seq1 = [interval_number(1, n) for n in range(1, 6)]
+    print(f"    {[int(x) for x in seq1]}")
+    print("  m = 2 sequence (expect 1, 6, 58):")
+    seq2 = [interval_number(2, n) for n in range(1, 4)]
+    print(f"    {[int(x) for x in seq2]}")
+
+    print("\n  Intervals vs. elements (Int_m(n) > Cat_m(n)):")
+    for m in range(1, 4):
+        for n in range(1, 5):
+            el = fuss_catalan(m, n)
+            iv = interval_number(m, n)
+            flag = "  <-- strictly more" if iv > el else ""
+            print(f"    m={m}, n={n}:  elements={el:>6}   intervals={int(iv):>8}{flag}")
+
+    print("\n  Integrality diagnostics of Int_m(n):")
+    print("    n | mn+1 coprime | n | numerator | (mn+1) | numerator | Int integer")
+    for m in range(1, 4):
+        for n in range(1, 6):
+            num = interval_numerator(m, n)
+            coprime = gcd(n, m * n + 1) == 1
+            n_div = num % n == 0
+            mn_div = num % (m * n + 1) == 0
+            is_int = interval_number(m, n).denominator == 1
+            print(f"    m={m} n={n} | coprime={coprime} | "
+                  f"n|num={n_div} | (mn+1)|num={mn_div} | integer={is_int}")
+
+
+def demo_disproofs() -> None:
+    print("\n" + "=" * 70)
+    print("4. Disproved conjectures")
+    print("=" * 70)
+    # Symmetry fails.
+    a, b = fuss_catalan(1, 2), fuss_catalan(2, 1)
+    print(f"  Symmetry Cat_1(2) == Cat_2(1)?  {a} == {b} -> {a == b}  (FALSE, as claimed)")
+
+    # m-free two-term formula fails.
+    def m_free(m: int, n: int) -> int:
+        return comb((m + 1) * n, n) - comb((m + 1) * n, n - 1)
+
+    true_val = fuss_catalan(2, 2)
+    wrong_val = m_free(2, 2)
+    print(f"  m-free formula at m=2,n=2:  {wrong_val}  vs true Cat_2(2) = {true_val}"
+          f"  -> equal? {wrong_val == true_val}  (FALSE, as claimed)")
+    print("  The multiplier m on the second binomial is essential.")
+
+
+def main() -> None:
+    demo_closed_form_and_divisibility()
+    demo_catalan_recovery()
+    demo_interval_numbers()
+    demo_disproofs()
+    print("\nAll demonstrations completed.")
 
 
 if __name__ == "__main__":
-    demo_intertwining()
-    demo_counting_sequences()
-    demo_refined_counts()
-    demo_growth_bound()
+    main()

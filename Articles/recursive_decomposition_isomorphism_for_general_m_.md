@@ -1,215 +1,92 @@
-# One Rule to Count Them All: How a Simple Shift Unites Two Families of Combinatorial Objects
+# Counting the Uncountable-Looking: Fuss–Catalan Numbers and the Hidden Order of $m$-Tamari Intervals
 
-## A tale of two catalogues
+## A number that refuses to be a fraction
 
-Imagine two great libraries, built in different centuries, in different
-countries, by people who never met. The first catalogues a family of geometric
-staircases — jagged mountain profiles drawn on graph paper, each one a legal
-"lattice path" that never dips below the diagonal. The second catalogues a family
-of maps — planar drawings, like the borders of countries stitched together on a
-sphere, obeying a strict coloring discipline. The two libraries have nothing
-obviously in common. And yet, when a mathematician finally sits down and counts
-the books on the shelves, an eerie coincidence emerges: shelf for shelf, the two
-libraries hold *exactly* the same number of volumes.
+Here is a small miracle you may have met without noticing. Take the number of ways to arrange $2n$ objects into two equal piles — the central binomial coefficient $\binom{2n}{n}$. Now divide it by $n+1$. You might expect a ragged fraction. Instead you always get a whole number:
 
-This is the kind of coincidence that combinatorics lives for. When two families
-of objects are counted by the same numbers, it is almost never an accident. There
-is usually a hidden dictionary — a *bijection* — translating each object of one
-kind into a unique object of the other. Finding that dictionary is the real
-prize, because it explains *why* the numbers agree, and it lets any fact about
-one family be carried over, verbatim, to the other.
+$$C_n \;=\; \frac{1}{n+1}\binom{2n}{n} \;=\; 1,\,1,\,2,\,5,\,14,\,42,\,132,\,\dots$$
 
-The two families in our story are the **$m$-Tamari intervals** and the **planar
-$(m+1)$-constellations**. This article tells how a single, almost embarrassingly
-simple idea — add one to a label — reveals that the recursive skeletons of these
-two families are, for *every* value of $m$, one and the same tree.
+These are the **Catalan numbers**, and they are among the most ubiquitous integers in mathematics. They count the ways to correctly nest parentheses, the triangulations of a polygon, the binary trees on $n$ nodes, the paths that stay above a diagonal, and — the hero of this story — the elements of the **Tamari lattice**, a beautiful structure that organizes all the different ways of parenthesizing a product.
 
-## The Tamari staircase and its intervals
+That a division should *always* land exactly on an integer is not an accident. It is a signal that something is being counted, and behind every such "coincidence" there is a combinatorial reason. This article is about what happens when you turn a single dial — replacing the number $2$ by a general parameter $m+1$ — and watch the entire edifice of Catalan combinatorics reappear in a richer, layered form.
 
-Start with the humble **Dyck path**: a staircase that begins at the origin, takes
-unit steps up and to the right, ends on the diagonal, and never crosses below it.
-For a fixed size these paths can be organized into a beautiful partial order
-called the **Tamari lattice**, where one path sits below another if you can slide
-it upward by a sequence of elementary local moves. An **interval** in this
-lattice is simply a pair of paths, a lower one and an upper one, with the lower
-below the upper — the set of everything "between" them.
+## Turning the dial: from Tamari to $m$-Tamari
 
-The **$m$-Tamari lattice** is a parameterized generalization discovered while
-studying deep structures in algebra. Here $m$ is a positive integer: $m = 1$
-gives the classical Tamari lattice, and larger $m$ produces richer, taller
-lattices built on $m$-Dyck paths (staircases that stay above a line of slope
-$1/m$). The intervals of these lattices — the pairs $[P, Q]$ with $P \le Q$ —
-turn out to be counted by strikingly clean formulas, and they connect to the
-representation theory of certain algebras of diagonal harmonics. For $m = 1$ the
-interval counts are $1, 3, 13, 68, 399, \dots$; for each $m$ there is an
-analogous, explicit sequence.
+The Tamari lattice is a way of laying out the parenthesizations of an expression so that "moving one pair of parentheses to the right" becomes a step upward. It is a lattice: any two arrangements have a well-defined meeting point below and joining point above. Its elements are counted by the Catalan numbers.
 
-## Constellations: maps with a coloring discipline
+Now generalize. Fix an integer $m \ge 1$. The **$m$-Tamari lattice** of size $n$ plays the same organizing role, but for a wider world of objects: $(m+1)$-ary trees with $n$ internal nodes, or equivalently lattice paths that stay above a line of slope $m$. When $m=1$ we recover the classical Tamari lattice. As $m$ grows, the objects branch more and the lattice swells.
 
-Now cross to the other library. A **planar constellation** is a certain kind of
-map drawn on the sphere. Loosely, an $(m+1)$-constellation is a bipartite planar
-map whose faces and vertices satisfy a strict divisibility-and-coloring rule
-governed by the parameter $m+1$. These objects arose from the study of
-factorizations of permutations and of ramified coverings of the sphere — genuinely
-different mathematics from lattice paths. But their counting sequences have long
-been suspected to match those of the $m$-Tamari world, and for $m = 1$ this match
-is a proven theorem.
+Two questions immediately present themselves:
 
-So we have the coincidence. The question is: **is there one uniform reason it
-holds for every $m$ at once?** That is the story here.
+1. **How many elements** does the $m$-Tamari lattice of size $n$ have?
+2. **How many intervals** — pairs (bottom, top) with bottom $\le$ top — does it contain?
 
-## Generating trees: the DNA of a counting sequence
+The answers are governed by two families of numbers, and the deep and still partly conjectural story is that the second family also counts something that looks utterly different: the **planar $(m+1)$-constellations**, a class of maps drawn on the sphere. This article makes the two counting families precise, proves the exact arithmetic that makes them integers, and explains what the numbers are trying to tell us about the bridge to constellations.
 
-The bridge between the two libraries is a device called a **generating tree**. It
-is the mathematical DNA of a recursively-built family.
+## The element count: Fuss–Catalan numbers
 
-Here is the idea. Suppose every object in your family can be built from a smaller
-one by a well-understood "growth" step, and suppose you can attach to each object
-a single number — a **label** — that tells you *exactly how many ways* it can
-grow, and *what the labels of its offspring will be*. Then the entire family is
-encoded by two pieces of data: a **root label** (the starting object) and a
-**succession rule** (a function taking a label to the list of labels of its
-children). Unrolling this rule level by level produces an infinite rooted tree in
-which the number of nodes at depth $k$ is precisely the number of objects of
-size $k$. The counting sequence is literally the census of the tree, floor by
-floor.
+The number of elements of the $m$-Tamari lattice of size $n$ is the **Fuss–Catalan number**
 
-Two families that grow by the *same* tree are automatically equinumerous. And if
-the labels themselves carry combinatorial meaning — say, the number of "valleys"
-in a staircase, or the number of hyperedges of a given color in a map — then a
-matching of trees transports those statistics too, giving a far stronger,
-*refined* equality.
+$$\mathrm{Cat}_m(n) \;=\; \frac{1}{mn+1}\binom{(m+1)n}{n}.$$
 
-## Two rules, one tree
+Set $m=1$ and you get $\frac{1}{n+1}\binom{2n}{n}$ — the Catalan numbers, exactly as promised. These generalized numbers were studied by Nicolaus Fuss, a student and collaborator of Euler, more than two centuries ago, and they count the $(m+1)$-ary trees on $n$ internal nodes just as Catalan numbers count binary trees.
 
-Each of our libraries comes with its own natural succession rule.
+But writing $\mathrm{Cat}_m(n)$ as a fraction hides the very fact that makes it interesting: it is an integer. To *prove* that, we take a different route. Define the number not by a division but by an honest **difference of two whole numbers**:
 
-On the $m$-Tamari / staircase side, the natural bookkeeping is by **active
-sites** — the places where the next piece of staircase may be grafted. A node
-carrying label $k$ (it has $k$ active sites) produces one child for each way of
-performing the graft, and a short combinatorial analysis shows the children's
-labels are exactly
-$$
-S_m(k) = [\,1, 2, 3, \dots, m k + 1\,].
-$$
-The whole tree starts from the root label $1$. So a node with $k$ active sites has
-$mk + 1$ children.
+$$\mathrm{Cat}_m(n) \;=\; \binom{(m+1)n}{n} \;-\; m\binom{(m+1)n}{n-1}.$$
 
-On the $(m+1)$-constellation side, the recursive decomposition is naturally
-recorded by a **shifted** rule. Here the root already carries one extra site, so
-it starts at label $2$, and a node with label $k$ produces children with labels
-$$
-T_m(k) = [\,2, 3, \dots, m(k-1) + 2\,].
-$$
+This expression is manifestly a non-negative integer — no division in sight. The first theorem below shows the two descriptions agree.
 
-These two rules genuinely look different. One starts at $1$, the other at $2$; one
-node of label $k$ has $mk+1$ children, the other has $m(k-1)+1$. At first glance
-there is no reason they should build the same tree.
+> **Theorem (Closed form).** For all $m,n \ge 0$,
+> $$(mn+1)\,\Big[\binom{(m+1)n}{n} - m\binom{(m+1)n}{n-1}\Big] \;=\; \binom{(m+1)n}{n}.$$
+> In words: the integer-valued difference formula, multiplied by $mn+1$, reproduces the central binomial coefficient. Hence the two descriptions of $\mathrm{Cat}_m(n)$ coincide, and in particular $\mathrm{Cat}_m(n)$ is always a whole number.
 
-## The one-line miracle
+The proof is a single, clean cancellation. The binomial coefficients satisfy the elementary recurrence
+$$n\binom{N}{n} = (N-n+1)\binom{N}{n-1},$$
+and when $N=(m+1)n$ the factor $N-n+1$ becomes exactly $mn+1$. Feed this into the difference formula and everything collapses to the identity above. From it we get a genuine arithmetic fact for free:
 
-Consider the utterly simple relabelling
-$$
-\varphi(k) = k + 1.
-$$
-Add one. That's it. The claim is that $\varphi$ is a perfect dictionary between
-the two rules — an **intertwining** — meaning: if you take a node's children under
-the active-sites rule and add one to every label, you get *exactly* the list of
-children that the shifted rule assigns to the relabelled parent. In symbols, for
-every arity $m$ and every label $a$,
-$$
-T_m(\varphi(a)) \;=\; \varphi\bigl(S_m(a)\bigr),
-$$
-where $\varphi$ acts on a list by adding one to each entry.
+> **Corollary (Divisibility).** For all $m,n$, the quantity $mn+1$ divides $\binom{(m+1)n}{n}$.
 
-Why is this true? It is a clean arithmetic identity about consecutive integers.
-The active-sites children of $a$ are the run $1, 2, \dots, ma + 1$. Adding one
-gives $2, 3, \dots, ma + 2$. Meanwhile the shifted rule applied to $\varphi(a) =
-a+1$ produces the run starting at $2$ of length $m(a+1) - m + 1 = ma + 1$, which
-is $2, 3, \dots, ma + 2$. The two runs coincide, on the nose, for every $m$ and
-every $a$. The shift $\varphi$ works uniformly; a *wrong* shift would fail, which
-is exactly why the identity has content.
+For $m=1$ this is the classical statement that $n+1$ divides $\binom{2n}{n}$ — the reason the Catalan numbers are integers. Our result is its full $m$-generalization, and it comes not from a counting bijection but from a two-line binomial manipulation.
 
-Because the relabelling intertwines the *rules*, an easy induction propagates it
-up the entire tree: at every depth $k$, the list of labels produced by the
-shifted rule is precisely the list produced by the active-sites rule with one
-added to each entry. The two trees are the same tree wearing two different name
-tags.
+A few sanity checks confirm the sequence behaves. We find $\mathrm{Cat}_m(0)=1$, $\mathrm{Cat}_m(1)=1$, and $\mathrm{Cat}_m(2)=m+1$. That last value is a small delight: it shows the sequence genuinely depends on $m$ (for $m\ge 1$ it already exceeds $1$ at $n=2$), so the Fuss–Catalan family really is a one-parameter deformation, not a disguise for a single sequence. And at $m=1$ the difference formula reproduces the ordinary Catalan numbers term for term.
 
-## What the shift buys us
+## The interval count: the Bousquet-Mélou–Chapoton numbers
 
-Once the trees are identified, three consequences follow immediately — and they
-hold for **every** $m \ge 1$.
+Counting *elements* is only half the story. The richer invariant is the number of **intervals** — the pairs of comparable elements. Mireille Bousquet-Mélou and Frédéric Chapoton discovered a strikingly clean formula for it:
 
-**Equal counts.** Adding one to a label never creates or destroys a node. So the
-number of nodes at each depth is identical in the two encodings. The $m$-Tamari
-and $(m+1)$-constellation families are equinumerous, level by level, in these
-encodings. Computing the census reproduces the sequences
-$$
-\begin{aligned}
-m = 1:&\quad 1,\ 2,\ 5,\ 14,\ 42, \dots \quad (\text{the Catalan numbers}),\\
-m = 2:&\quad 1,\ 3,\ 15,\ 113,\ 1273, \dots,\\
-m = 3:&\quad 1,\ 4,\ 34,\ 586,\ 21721, \dots.
-\end{aligned}
-$$
-The first floor already holds $m+1$ nodes, so the trees are genuinely different
-for different $m$ — this is not one sequence in disguise, but a whole family, each
-member matched to its constellation partner.
+$$\mathrm{Int}_m(n) \;=\; \frac{m+1}{n(mn+1)}\binom{(m+1)^2 n + m}{\,n-1\,}.$$
 
-**Equal refined counts.** Because the dictionary is a clean shift, *any* statistic
-you can read off a label is transported perfectly. Pick any way of scoring a label
-and any property you want to test; the number of nodes at a given level whose
-score has that property is the same on both sides (up to the harmless shift). No
-statistic is lost in translation. This is the "refined" equinumerosity that makes
-a bijective proof so much more valuable than a bare count.
+For $m=1$ this produces the sequence
+$$1,\;3,\;13,\;68,\;399,\;\dots$$
+These are exactly the numbers that count intervals in the classical Tamari lattice — and, remarkably, also the number of planar triangulations of certain types. For $m=2$ the sequence begins
+$$1,\;6,\;58,\;\dots$$
 
-**Genuine growth.** None of this is a vacuous game with empty trees. Every label
-in the active-sites tree is at least $1$, so — for $m \ge 1$ — every node has at
-least $mk + 1 \ge 2$ children. Each floor is therefore at least twice as populous
-as the one below it, and the census grows at least as fast as $2^k$. The trees
-really do branch and blossom.
+Two features of these numbers are worth pausing on.
 
-## Why the simplicity is the point
+**Intervals vastly outnumber elements.** Already at $m=1,\ n=2$, the lattice has $\mathrm{Cat}_1(2)=2$ elements but $\mathrm{Int}_1(2)=3$ intervals. This is the qualitative fingerprint the whole theory must respect: any bijection linking the $m$-Tamari world to constellations cannot be a correspondence between *elements* — it has to live at the level of *intervals*. The intervals are where the real information hides.
 
-It would be easy to undersell a result whose proof is "add one." But the surprise
-is precisely that a single, arity-independent gesture does all the work. Earlier
-understanding handled the classical case $m = 1$ — the Catalan layer, where the
-count is the most famous sequence in combinatorics. What was missing was a reason
-the correspondence should survive as $m$ grows and both families become
-dramatically more complicated. The intertwining shift supplies exactly that
-reason. It shows the two recursive decompositions are not merely *analogous*
-across arities but are, structurally, the same object viewed through a constant
-change of coordinates.
+**Why is $\mathrm{Int}_m(n)$ an integer?** The formula has a denominator $n(mn+1)$, and it is not at all obvious that it always divides the binomial coefficient on top. The two factors $n$ and $mn+1$ are coprime — they share no common divisor, since any common factor of $n$ and $mn+1$ would have to divide $1$. So integrality splits cleanly into two independent divisibility questions, one for each factor.
 
-This is the classic pattern of a good bijection: it collapses an apparent
-coincidence into an identity, and it does so with a mechanism so uniform that it
-scales without effort. The branching multiplicity $mk+1$ — the number of children
-of a node — is not arbitrary; it counts the ways to graft the next active site in
-an $m$-Dyck decomposition. That the same multiplicity, viewed with a
-pre-loaded root, is what the constellation side demands is the combinatorial heart
-of the matter.
+We settle the first one completely.
 
-## The road ahead
+> **Theorem ($n$ divides the numerator).** For every $m$ and every $n\ge 1$,
+> $$n \;\big|\; (m+1)\binom{(m+1)^2 n + m}{\,n-1\,}.$$
 
-The result proved here is the *generating-tree layer*: it establishes that the
-two recursive skeletons coincide, uniformly in $m$, and that all label-borne
-statistics transport. Several tantalizing questions remain.
+The proof, once again, is a single binomial absorption identity. Write $N=(m+1)^2 n + m$. The recurrence $n\binom{N}{n} = (N-n+1)\binom{N}{n-1}$ has $N-n+1 = m(m+2)n + (m+1)$ in this case, which rearranges to express $(m+1)\binom{N}{n-1}$ as $n$ times an explicit integer. Because $n$ and $mn+1$ are coprime, this reduces the full integrality of $\mathrm{Int}_m(n)$ to a *single* remaining question: does $mn+1$ divide the same numerator? That is the frontier — and unlike the $n$-factor, it resists a one-step absorption argument, because the index $n-1$ and the target modulus $mn+1$ are not directly related. It appears to demand a cycle-lemma or Lagrange-inversion argument, the same circle of ideas behind the Fuss–Catalan divisibility.
 
-The most natural is to pin down the exact interval numbers. The active-sites tree
-produces an explicit $m$-indexed sequence, and there is strong reason to believe
-that, after a suitable regrading by size, it matches the known closed-form
-enumeration of greedy $m$-Tamari intervals term for term — turning an empirical
-match in small cases into a theorem. A second direction is to name the transported
-statistic precisely: it should be the number of valleys on the staircase side and
-a fixed-color hyperedge count on the map side, so that two bivariate generating
-functions become literally equal. A third asks how the counts vary with the arity
-$m$: the tree of arity $m$ appears to embed, level by level, inside the tree of
-arity $m+1$, suggesting the counts strictly increase with $m$. And a fourth
-brings in the heavy analytic machinery: encoding the decomposition as a functional
-equation for a generating function should reveal a square-root singularity and the
-universal $n^{-3/2}$ correction that signals a "tree-like" universality class.
+## Two tempting shortcuts that fail
 
-Each of these is a thread leading deeper into the same tapestry. But the loom is
-now built: two libraries, once thought merely to share a curious numerical
-coincidence, turn out to be catalogues of the same tree — and the key that unlocks
-the whole correspondence, for every $m$ at once, is simply to add one.
+Part of doing mathematics honestly is testing the guesses that *look* right and reporting when they are wrong. Two natural conjectures about the Fuss–Catalan numbers turn out to be false, and each failure is instructive.
+
+**"Surely the numbers are symmetric in $m$ and $n$."** They are not. We have $\mathrm{Cat}_1(2)=2$ but $\mathrm{Cat}_2(1)=1$. Swapping the two roles changes the answer. The parameter $m$ (how much the trees branch) and the parameter $n$ (how big they are) play genuinely different roles.
+
+**"Surely the extra factor of $m$ in the difference formula is a typo."** The clean-looking formula $\binom{(m+1)n}{n} - \binom{(m+1)n}{n-1}$ — with no $m$ multiplying the second term — is exactly the shape of the classical Catalan number when $m=1$, so it is tempting to believe it works in general. It does not. At $m=2,\ n=2$ it evaluates to $9$, whereas the true value is $\mathrm{Cat}_2(2)=3$. The multiplier $m$ on the second binomial is essential — and its presence is precisely what the cancellation in the closed-form proof relies on. What looks like a blemish on the formula is the load-bearing beam.
+
+## Why this matters
+
+Zoom out. The Catalan numbers are a hub where dozens of combinatorial families meet. The $m$-Tamari story is the discovery that this hub is really a *slice* of a larger, parameterized landscape — one where trees branch more, lattices grow taller, and a second, richer sequence (the interval numbers) emerges alongside the first. The conjecture driving the whole program is that these interval numbers count planar $(m+1)$-constellations: intricate maps drawn on the sphere, objects that arise in the study of factorizations of permutations and in mathematical physics' matrix models. That a lattice of parenthesizations and a family of surface maps should be counted by the *same* integers is the kind of coincidence that, historically, has always concealed a bijection waiting to be found.
+
+The arithmetic proved here is the enumerative bedrock of that bridge. It pins down exactly which integers are in play, proves the non-obvious fact that they *are* integers, isolates precisely the one divisibility step that remains open, and clears away two plausible-but-false shortcuts that would otherwise send searchers down blind alleys. The elements are counted by Fuss–Catalan numbers; the intervals, more numerous, by the Bousquet-Mélou–Chapoton numbers; and the space between them is where a beautiful, still-unfinished correspondence lives.
+
+Sometimes the deepest way to understand a structure is to count it — and then to ask, with genuine curiosity, *what else* is counted by the very same numbers.
