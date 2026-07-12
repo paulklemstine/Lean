@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f9466ee5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Finiteness of representations of ramified fundamental groups\n\nThis cycle isolated the group-theoretic engine behind the finiteness of\nsemisimple geometric representations of a ra",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-11T10:14:37",
-      "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental "
-    },
-    {
       "cycle_id": "8e65b62c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` — the positive theory:\n\n* **`erasedBits`** — infor",
@@ -499,19 +489,19 @@
       "theorem_count": 1745,
       "timestamp": "2026-07-12T05:03:54",
       "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
+    },
+    {
+      "cycle_id": "ef2405bd",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Neural Coding Theorems\n\n`NeuralCoding.lean` builds a self-contained chain of neural-coding results:\ncapacity `2^N`, its tightness and the per-neuron doubling law, the average den",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 1185,
+      "timestamp": "2026-07-12T05:20:57",
+      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e545fdf8",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's findings on the joint descendants of the last `k` vertices in random\n`d`-DAGs: the product-of-Beta limit collapses under an additive chain condition, the",
-      "quality_score": 0.3599485585714286,
-      "sorry_count": 1,
-      "theorem_count": 7,
-      "timestamp": "2026-07-06T02:02:58",
-      "title": "Joint descendants of the last k vertices in random d-DAGs"
-    },
     {
       "cycle_id": "e29ffbac",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 1745,
       "timestamp": "2026-07-12T05:03:54",
       "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
+    },
+    {
+      "cycle_id": "ef2405bd",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Neural Coding Theorems\n\n`NeuralCoding.lean` builds a self-contained chain of neural-coding results:\ncapacity `2^N`, its tightness and the per-neuron doubling law, the average den",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 1185,
+      "timestamp": "2026-07-12T05:20:57",
+      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b6492bf5",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "4f5260f0",
-      "domain": "Bridges",
-      "name": "in",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "4f5260f0",
-      "domain": "Bridges",
-      "name": "cantorTower_zero",
-      "quality": 0.83
-    },
     {
       "cycle_id": "4f5260f0",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "eval_var",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "ef2405bd",
+      "domain": "Novelty",
+      "name": "qform_even",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "ef2405bd",
+      "domain": "Novelty",
+      "name": "det_scaledGram",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "ef2405bd",
+      "domain": "Novelty",
+      "name": "det_NeronSeveri",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T05:03:54",
+  "last_updated": "2026-07-12T05:20:57",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "997ab258",
-        "quality": 0.72,
-        "theorems": 19,
-        "title": "Infinite Games Against Death: Immortality Strategies"
-      },
-      {
         "cycle_id": "1e86ff35",
         "quality": 0.83,
         "theorems": 25,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 12,
         "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+      },
+      {
+        "cycle_id": "ef2405bd",
+        "quality": 0.82,
+        "theorems": 1185,
+        "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
       }
     ],
     "NumberTheory": [

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T05:03:55.685940+00:00",
+  "last_updated": "2026-07-12T05:20:59.284263+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -7720,6 +7720,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T05:03:55.651520+00:00",
       "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 29,
+      "domain": "Novelty",
+      "duration_seconds": 1016.8242785930634,
+      "end_time": 1783833638.0103652,
+      "files_integrated": 4,
+      "job_id": "ef2405bd",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783832621.1860867,
+      "strategy_count": 0,
+      "theorem_count": 1185,
+      "theorem_novelty_disproof": 25,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 921,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T05:20:59.252474+00:00",
+      "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
     }
   ]
 }

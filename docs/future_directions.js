@@ -437,6 +437,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
+    "consumed_by_exp_id": "c1de826b",
+    "description": "Building on cycle ef2405bd (Q=0.820), which proved 1185 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent co",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_ef2405bd_7f998260",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "ef2405bd",
+    "status": "in_progress",
+    "timestamp": "2026-07-12T05:20:57.685879+00:00",
+    "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle f6622907 (Q=0.820), which proved 20 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT",
     "domains": [
@@ -937,21 +951,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-11T23:55:18.527910+00:00",
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
-  },
-  {
-    "consumed_by_exp_id": "ef2405bd",
-    "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_1100",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T01:20:01.077895+00:00",
-    "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
   },
   {
     "consumed_by_exp_id": "",
@@ -6902,6 +6901,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T05:03:46.935153+00:00",
     "title": "That the lone-rook fortress on the infinite plane is not"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Neural Coding Theorems\n\n`NeuralCoding.lean` builds a self-contained chain of neural-coding results:\ncapacity `2^N`, its tightness and the per-neuron doubling law, the average dense\nenergy `N/2`, exact sparse (weight-`k`) counts `C(N,k)`, the population-coding\n`1/\u221aN` precision law, the `\u0398(log N)` bits-per-spike advantage of sparse coding,\nand a rank bound realizing the neural-manifold hypothesis. Natural extensions:\n\n## Capacity and codes\n- **Error-correcting neural codes.** Introduce a Hamming metric on `NeuralCode N`\n  and prove Singleton / sphere-packing bounds relating minimum distance,\n  redundancy, and the number of reliably distinguishable concepts under noise.\n- **Robust capacity.** Quantify how capacity `2^N` degrades to `2^{N - r}` when\n  codewords must be pairwise distance `\u2265 2r+1` apart (noise tolerance).\n\n## Sparse coding\n- **Optimal sparsity.** Maximize `log\u2082 C(N,k) / k` (bits per spike) over `k`;\n  prove the optimum is at `k = 1` for the one-hot regime and characterize the\n  bits/energy frontier `log\u2082 C(N,k)/k` as a function of the sparsity `k/N`.\n- **Entropy formulation.** Replace `log\u2082 C(N,k)` by the binary-entropy\n  approximation `N \u00b7 H(k/N)` and prove the standard `C(N,k) \u2265 2^{N H(k/N)}/(N+1)`\n  bound, tightening the efficiency comparison.\n\n## Population coding\n- **Probabilistic grounding.** Re-derive `popVariance = v/N` from Mathlib's\n  `ProbabilityTheory.variance` for independent identically distributed neuron\n  estimates, turning the algebraic model into a theorem about random variables.\n- **Fisher information / Cram\u00e9r\u2013Rao.** Show the `1/\u221aN` precision is optimal by a\n  Cram\u00e9r\u2013Rao bound: no unbiased estimator from `N` neurons beats `\u221av/\u221aN`.\n\n## Neural manifold hypothesis\n- **Nonlinear manifolds.** Upgrade `neural_manifold_dim_le_dof` from linear maps\n  to smooth immersions/submersions, bounding the manifold dimension by the\n  behavioural DOF via the constant-rank theorem.\n- **Intrinsic dimension.** Relate the manifold dimension to PCA/covariance rank\n  of recorded activity, connecting the theorem to the empirical \"dimensionality\"\n  measured in systems neuroscience.\n\n## Cross-links in the catalog\n- Connect to `MindEncodingBounds.lean` (connectome description length): combine\n  the per-code capacity here with the quadratic slot count there to bound total\n  representational capacity of a wired network, not just an activity pattern.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1113",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ef2405bd",
+    "status": "available",
+    "timestamp": "2026-07-12T05:20:46.630314+00:00",
+    "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
   },
   {
     "consumed_by_exp_id": "",
