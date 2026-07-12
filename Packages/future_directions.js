@@ -73,20 +73,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
   {
-    "consumed_by_exp_id": "a6691c84",
-    "description": "Building on cycle 39669115 (Q=0.830), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sudoku is a constraint satisfaction problem (CSP). Random Sudoku instances exhibit a phase transition: for n^2 x n^2 grids, the probability of having a solution drops from ~1 to ~0 around a critical density of pre-filled cells. Conjecture: the phase transition occurs at density d_c(n) = (n^2 - 1) / ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_39669115_b97c8d44",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "39669115",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T08:22:03.393022+00:00",
-    "title": "Deepening: The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 453f48e6 (Q=0.830), which proved 30 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself \u2014 the halting problem ",
     "domains": [
@@ -1093,7 +1079,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8cebc683",
     "description": "Cycle 90ef345f (Q=0.830) proved 751 theorems in Probability but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/",
     "domains": [
       "Probability"
@@ -1102,7 +1088,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "90ef345f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T01:14:02.439834+00:00",
     "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
   },
@@ -5856,7 +5842,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The linear analysis established here recasts the onset of Turing patterns as"
   },
   {
-    "consumed_by_exp_id": "d019c88a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Q\u2099` (`n \u2265 2`), the homological code\n`HQECC(Q\u2099)` has minimum distance equal to the girth of `Q\u2099`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n \u2265 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `\u03b2\u2081(Q\u2099) = 2\u207f\u207b\u00b9(n\u22122)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 \u2212 (V\u22121)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `\u03b2\u2080 \u2212 \u03b2\u2081 = V \u2212 E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k \u2264 n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n \u2212 rank d\u2081 \u2212 rank d\u2082` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n \u2212 k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d\u2081 / im d\u2082`\nand the `Z`-logical space `ker d\u2082\u1d40 / im d\u2081\u1d40` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
     "domains": [
       "Algebra",
@@ -5866,7 +5852,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "207fb5b4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T09:26:14.435602+00:00",
     "title": "Exact dictionary \"logical qubits = middle homology\""
   },
@@ -7054,6 +7040,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T10:27:03.898881+00:00",
     "title": "This cycle deepens the probabilistic-method development (Erd\u0151s Ramsey lower boun"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and that\nan `n\u00b2 \u00d7 n\u00b2` Sudoku grid sits exactly on it. The following conjectures push that\npicture toward the random, multi-constraint, and quantitative regimes.\n\n## 1. A sharp clue-density threshold for random puzzles\n\n**Conjecture.** Fix the order `n` and generate a partial `n\u00b2 \u00d7 n\u00b2` grid by\nrevealing each cell independently with probability `p`, filling it with a symbol\nconsistent so far. There is a critical clue density `p_c(n)` such that below it a\ncompletion exists with probability tending to `1`, and above it with probability\ntending to `0`, with the transition window shrinking as the grid grows.\n\n*The key insight is* that satisfiability is a monotone event in the revealed\nclues \u2014 once a clue set is contradictory it stays contradictory under further\nrevelation \u2014 so the transition must be a single up-set boundary, exactly the\norder-theoretic skeleton proved here, now lifted to a random ensemble.\n\n*Why now?* The deterministic boundary (satisfiable iff each line stays at or\nbelow its balance point) is now pinned down exactly; the only missing ingredient\nis the probabilistic concentration that turns a monotone boundary into a sharp\nthreshold, which modern sharp-threshold technology is built to supply.\n\n## 2. Boxes strictly lower the critical density below Latin squares\n\n**Conjecture.** The full Sudoku CSP (rows, columns, and boxes) has a strictly\nsmaller critical clue density than its row-and-column relaxation (Latin squares):\nthe box constraints move the transition to lower density, and the gap is bounded\nbelow uniformly in the order `n`.\n\n*The key insight is* that the explicit cyclic solution `L(i,j) = i + j` solves\nrows and columns but provably fails the box constraint, so the box demands are\nnot implied by the line demands \u2014 they are genuinely new constraints that must\ntighten the feasible region.\n\n*Why now?* We can already exhibit a closed-form witness for the relaxation and\ncertify that it violates the box demand; quantifying how much the extra demand\ncosts is the natural next measurement.\n\n## 3. The vanishing partition function as an analytic order parameter\n\n**Conjecture.** The proper-assignment count of a constraint block, viewed as a\nfalling-factorial partition function, admits an analytic continuation in the\nalphabet size whose real zeros accumulate exactly at the critical demand count,\nso that the location of the transition can be read off from the zero set alone.\n\n*The key insight is* that the partition function is strictly positive in the\nsatisfiable phase and identically zero beyond criticality; the boundary between\nthese regimes is precisely the largest zero of the falling factorial, turning a\ncombinatorial threshold into a zero-counting problem.\n\n*Why now?* The exact identification of the partition function with the falling\nfactorial removes all guesswork about its zeros, so the analytic-continuation\nprogram can be carried out on a fully explicit object.\n\n## 4. A list-colouring (defective-clue) threshold\n\n**Conjecture.** If each Sudoku cell is given a private list of allowed symbols of\nsize `L`, completion is possible once `L` exceeds a critical value `L_c(n)` that\nis strictly smaller than the naive `n\u00b2`, and equals it only in the worst case.\n\n*The key insight is* that the CSP is exactly a proper colouring of a union of\ncomplete graphs, so the powerful gap between chromatic number and list-chromatic\nnumber for structured graphs should manifest as a strictly easier list version of\nSudoku.\n\n*Why now?* The equivalence between the AllDifferent atom and complete-graph\ncolouring is now on firm footing, so the list-colouring refinement can be stated\nand attacked with existing colouring machinery.\n\n## 5. Width of the transition window scales polynomially\n\n**Conjecture.** The clue-density interval over which the completion probability\nfalls from `0.99` to `0.01` shrinks like a fixed negative power of the grid side\n`n\u00b2`, so the transition becomes discontinuous in the infinite-order limit.\n\n*The key insight is* that criticality is scale-invariant \u2014 every order sits at\ndensity `1` for the line constraints \u2014 so the only room for scaling lives in the\nfluctuations, and those are governed by second-moment behaviour of the number of\ncompletions.\n\n*Why now?* With the first moment (the partition function) computed exactly, a\nsecond-moment estimate is the single remaining step to control the window width.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1129",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a6691c84",
+    "status": "available",
+    "timestamp": "2026-07-12T10:44:16.610995+00:00",
+    "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
   },
   {
     "consumed_by_exp_id": "",
