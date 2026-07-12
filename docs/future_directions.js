@@ -466,6 +466,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f3dfcf44 (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field\norder parameter `m = tanh(\u03b2 m)` undergoes a sharp, continuous (second-order)\nphase transition at the critical coupling `\u03b2_c = 1`:\n\n* no positive solution for `\u03b2 \u2264 1` (`curieWeiss_subcritical`),\n* a ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_f3dfcf44_e015b9dc",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "f3dfcf44",
+    "status": "available",
+    "timestamp": "2026-07-12T13:00:55.269515+00:00",
+    "title": "Deepening: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f6622907 (Q=0.820), which proved 20 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT",
     "domains": [
       "Logic"
@@ -1175,6 +1189,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T20:20:23.650892+00:00",
     "title": "Close Proofs: The Combinatorics of Compiler Optimization: Register Allocation as Gra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle f3dfcf44 (Q=0.820) proved 17 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field\norder parameter `m = tanh(\u03b2 m)` undergoes a sharp, continuous (second-order)\nphase transition at t",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_f3dfcf44_23db64c7",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "f3dfcf44",
+    "status": "available",
+    "timestamp": "2026-07-12T13:00:55.354878+00:00",
+    "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss "
   },
   {
     "consumed_by_exp_id": "",
@@ -2899,7 +2927,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the tree structure of T(S) for subsets of the projective line"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3dfad72d",
     "description": "This paper investigates the structural constraints under which a finite poset admits a probabilistic powerdomain isomorphic to an RB-domain. The key claim is that such a domain must inherit a least element and possess a tree-like Hasse graph structure.",
     "domains": [
       "Bridges"
@@ -2908,7 +2936,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T03:01:13.702884+00:00",
     "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
   },
@@ -5869,7 +5897,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The linear analysis established here recasts the onset of Turing patterns as"
   },
   {
-    "consumed_by_exp_id": "d019c88a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Q\u2099` (`n \u2265 2`), the homological code\n`HQECC(Q\u2099)` has minimum distance equal to the girth of `Q\u2099`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n \u2265 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `\u03b2\u2081(Q\u2099) = 2\u207f\u207b\u00b9(n\u22122)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 \u2212 (V\u22121)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `\u03b2\u2080 \u2212 \u03b2\u2081 = V \u2212 E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k \u2264 n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n \u2212 rank d\u2081 \u2212 rank d\u2082` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n \u2212 k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d\u2081 / im d\u2082`\nand the `Z`-logical space `ker d\u2082\u1d40 / im d\u2081\u1d40` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
     "domains": [
       "Algebra",
@@ -5879,7 +5907,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "207fb5b4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T09:26:14.435602+00:00",
     "title": "Exact dictionary \"logical qubits = middle homology\""
   },
@@ -6482,21 +6510,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T22:13:49.788424+00:00",
     "title": "That a type which fully quantifies over itself \u2014"
-  },
-  {
-    "consumed_by_exp_id": "f3dfcf44",
-    "description": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field\norder parameter `m = tanh(\u03b2 m)` undergoes a sharp, continuous (second-order)\nphase transition at the critical coupling `\u03b2_c = 1`:\n\n* no positive solution for `\u03b2 \u2264 1` (`curieWeiss_subcritical`),\n* a positive solution for `\u03b2 > 1` (`curieWeiss_supercritical`),\n* the sharp `iff` locating `\u03b2_c = 1` (`curieWeiss_phase_transition`),\n* uniqueness of the positive branch (`curieWeiss_unique_positive`),\n* boundedness `|m| < 1` and `\u00b1m` symmetry of solutions,\n* and that a positive external field destroys the sharp transition \u2014 the\n  field-driven equation `m = tanh(\u03b2 m + h)` has a positive solution\n  `m \u2208 (0, 1)` for *every* `\u03b2` when `h > 0`\n  (`curieWeiss_field_positive_solution`).\n\nNatural next steps:\n\n1. **Critical exponent.** Prove the quantitative onset\n   `m*(\u03b2) = sqrt(3(\u03b2\u22121)) + o(sqrt(\u03b2\u22121))` as `\u03b2 \u2192 1\u207a`, extracting the mean-field\n   exponent `1/2`. The two inequalities `tanh y < y` and `y \u2212 y\u00b3/3 < tanh y`\n   already bracket the branch; a matching cubic *upper* bound\n   `tanh y < y \u2212 y\u00b3/3 + 2y\u2075/15` would pin the exponent.\n\n2. **External field.** The *existence* half is now settled:\n   `curieWeiss_field_positive_solution` shows `m = tanh(\u03b2 m + h)` has a positive\n   solution for every `\u03b2` when `h > 0`, so the sharp `\u03b2_c = 1` dichotomy is\n   destroyed by any positive field.  Remaining: prove *uniqueness* of the\n   solution for `h \u2260 0` (single-valued branch for all `\u03b2`), recovering the\n   standard picture of a line of first-order transitions terminating at the\n   critical point `(\u03b2_c, h) = (1, 0)`.\n\n3. **Free energy / order parameter as minimizer.** Formalize the Curie\u2013Weiss\n   free energy `f(m) = m\u00b2/2 \u2212 (1/\u03b2) log cosh(\u03b2 m)` and prove its global\n   minimizer coincides with the stable solution of the self-consistency\n   equation, giving a variational characterization of the order parameter and a\n   genuine `analytic \u21a6 non-analytic` statement for the minimal free energy at\n   `\u03b2_c`.\n\n4. **Continuity and monotonicity of `\u03b2 \u21a6 m*(\u03b2)`.** Package the positive branch\n   as a function of `\u03b2` on `(1, \u221e)` and prove it is continuous, strictly\n   increasing, and tends to `1` as `\u03b2 \u2192 \u221e`.\n\n5. **Percolation analogue.** Port the same \"order parameter is `0` below /\n   positive above threshold\" template to bond percolation on a rooted tree,\n   where the survival probability of a branching process with mean offspring\n   `\u03bc` plays the role of the order parameter and `\u03bc_c = 1` is the critical point\n   (an exact analogue via generating-function fixed points).\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_1076",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "29aa9d96",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T22:30:47.487400+00:00",
-    "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field"
   },
   {
     "consumed_by_exp_id": "",
@@ -7112,6 +7125,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T12:43:31.451249+00:00",
     "title": "`Bridges/RamanujanBaireBridge.lean` builds a cross-domain bridge for the Ramanuj"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle unified two threshold phenomena \u2014 mean-field magnetic ordering\n(`m = tanh(\u03b2 m)`) and branching-process survival (`q = 1 - exp(-\u03bc q)`) \u2014 under a\nsingle abstract criterion: a concave increasing map through the origin acquires a\npositive fixed point exactly when its origin-slope crosses `1`. The abstract\nexistence lemma generates both ordered phases, and the *symmetry* of the update\nmap was shown to control the critical exponent (`1/2` for the odd magnetic map,\n`1` for the asymmetric offspring map). The following conjectures extend this\nprogramme.\n\n## 1. A symmetry\u2013exponent dictionary for order parameters\n\n**Conjecture.** For an order parameter obeying `x = F(x)` with `F` smooth,\nincreasing, concave on `[0, \u221e)`, `F(0) = 0`, and origin-slope `1 + \u03b5`, the onset\nexponent is `1/2` precisely when `F` is odd (so the leading correction is cubic)\nand `1` when `F` has a nonzero quadratic term; more generally, if the first\nnonvanishing correction beyond the linear term is of order `k`, the exponent is\n`1/(k-1)`.\n\nThe key insight is that the onset exponent is not a property of the physical\nmodel but of the lowest surviving Taylor coefficient of the fixed-point map, so\na single Taylor-coefficient bookkeeping predicts every mean-field exponent at\nonce.\n\nWhy now? Both endpoints of the dictionary (`k = 3` giving `1/2`, `k = 2` giving\n`1`) are now established in the same framework with matching two-sided algebraic\nbounds, so the intermediate cases are within reach of the identical\nbracketing technique.\n\n## 2. Sharp two-sided asymptotics for branching survival\n\n**Conjecture.** The Poisson branching survival probability satisfies\n`q*(\u03bc) = 2(\u03bc - 1) - (8/3)(\u03bc - 1)\u00b2 + o((\u03bc - 1)\u00b2)` as `\u03bc \u2192 1\u207a`, and `q*` is a\nreal-analytic, strictly increasing function of `\u03bc` on `(1, \u221e)` with\n`q*(\u03bc) \u2192 1` as `\u03bc \u2192 \u221e`.\n\nThe key insight is that the quadratic and cubic exponential bounds already used\nfor the linear lower bound can be iterated to pin the second-order coefficient,\nturning a one-sided estimate into a full local expansion.\n\nWhy now? The linear coefficient `2` is confirmed numerically to four digits and\nthe required exponential inequalities (`x - x\u00b2/2 < 1 - e^{-x}` and its cubic\nrefinement) are elementary and already in hand.\n\n## 3. Uniqueness of the field-perturbed branch\n\n**Conjecture.** For the externally-driven equations `m = tanh(\u03b2 m + h)` and the\nimmigration-perturbed survival equation `q = 1 - exp(-(\u03bc q + h))` with `h > 0`,\nthe positive solution is unique for every coupling, so the sharp threshold is\nreplaced by a single analytic branch and a line of first-order transitions that\nterminates at the critical point `(coupling, h) = (1, 0)`.\n\nThe key insight is that a strictly positive field turns the fixed-point map into\na strict contraction on the relevant interval, so uniqueness follows from the\nsame mean-value argument that already yields uniqueness of the zero-field\npositive branch.\n\nWhy now? Existence under a positive field is already settled for the magnetic\nmodel, and the branching model shares the identical concavity structure, so only\nthe contraction estimate remains.\n\n## 4. Percolation on regular trees\n\n**Conjecture.** Bond percolation with retention probability `p` on the rooted\n`d`-ary tree has a giant (infinite) cluster from the root with positive\nprobability if and only if `p d > 1`, and the survival probability obeys the same\nabstract fixed-point dichotomy with coupling `\u03bc = p d`, hence the same universal\ncritical value and the same linear onset exponent.\n\nThe key insight is that the root-cluster survival probability is exactly the\nsurvival probability of a binomial branching process, so the tree percolation\nthreshold is a direct instance of the branching dichotomy rather than a separate\ntheorem.\n\nWhy now? The Poisson case is fully established here, and the binomial offspring\nmap `1 - (1 - p q)^d` satisfies the identical hypotheses (concave, increasing,\norigin-slope `pd`), so it plugs directly into the abstract existence lemma.\n\n## 5. Variational characterization via free energy\n\n**Conjecture.** The stable order parameter of each model is the global minimizer\nof an associated free-energy functional \u2014 `m\u00b2/2 - \u03b2\u207b\u00b9 log cosh(\u03b2 m)` for the\nmagnet and a Kullback\u2013Leibler-type rate function for the branching survival \u2014\nand the minimal free energy is analytic in the coupling away from the critical\nvalue and non-analytic exactly at it.\n\nThe key insight is that both self-consistency equations are the stationarity\nconditions of a convex-minus-linear functional, so the fixed-point dichotomy is\nthe shadow of a genuine change in the geometry of the minimizer set.\n\nWhy now? The fixed-point side is completely characterized (existence,\nuniqueness, quantitative onset), which supplies precisely the critical-point data\nneeded to control the minimizer and locate the single point of non-analyticity.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1135",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f3dfcf44",
+    "status": "available",
+    "timestamp": "2026-07-12T13:00:48.154611+00:00",
+    "title": "This cycle unified two threshold phenomena \u2014 mean-field magnetic ordering"
   },
   {
     "consumed_by_exp_id": "",

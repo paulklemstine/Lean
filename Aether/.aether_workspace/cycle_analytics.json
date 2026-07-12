@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T12:43:40.686979+00:00",
+  "last_updated": "2026-07-12T13:00:56.709514+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -8666,6 +8666,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-12T12:43:40.651312+00:00",
       "title": "This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 51,
+      "domain": "Applications",
+      "duration_seconds": 1027.9877862930298,
+      "end_time": 1783861234.6462142,
+      "files_integrated": 4,
+      "job_id": "f3dfcf44",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19a",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19a",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "sorry_density": 0.23529411764705882,
+      "start_time": 1783860206.658428,
+      "strategy_count": 0,
+      "theorem_count": 17,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 16,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-12T13:00:56.673449+00:00",
+      "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field"
     }
   ]
 }
