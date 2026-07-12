@@ -28645,7 +28645,7 @@
       "source": "",
       "source_exp_id": "7473e6ed",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7473e6ed",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "th_1d24d8a7",
       "timestamp": "2026-07-11T22:13:49.788424+00:00",
       "title": "That a type which fully quantifies over itself —"
