@@ -1,218 +1,237 @@
-import Mathlib
+/-
+# Tangled Hierarchies: Order, Grading, and the Inconsistency of the Ultimate Tangle
 
-/-!
-# Tangled Hierarchies: Proof Systems That Reference Their Own Soundness
+A *tangled hierarchy* is a level structure in which some pair of elements sits both
+above and below one another — a two-cycle `x ≺ y` and `y ≺ x`.  Hofstadter's
+"strange loops" are the informal picture; here we give the order-theoretic core and
+draw a sharp line between hierarchies that *can* be tangled and hierarchies that
+*cannot*.
 
-This file develops a self-contained Kripke-semantic account of **self-referential
-soundness** in Gödel–Löb provability logic, and shows why the soundness/consistency
-predicate of a sufficiently expressive proof system cannot live *inside* the system it
-validates without collapse — the **tangled hierarchy** phenomenon.
+The central findings of this cycle are:
 
-The setting is the semantics of the provability modality `□`.  A *proof system* is
-modelled by a Kripke frame whose worlds are theories and whose accessibility relation
-`R` links a theory to the theories it can "see as provable".  The frame condition for
-Gödel–Löb logic `GL` is that `R` is **transitive** and **converse well-founded**
-(no infinite ascending `R`-chain): exactly the conditions under which Löb's axiom
-`□(□φ → φ) → □φ` is valid.
+* **Well-founded hierarchies are never tangled.**  In particular the ladder of
+  levels modelled by `(ℕ, <)` — the abstract shape of the tower
+  `level₀ ≺ level₁ ≺ level₂ ≺ ⋯` — carries no tangle.
+* **A grading forbids tangles.**  Any relation that admits an integer *rank*
+  strictly increasing along every edge is untangled.  Contrapositively, a genuinely
+  tangled hierarchy admits *no* consistent level assignment: one must abandon either
+  the tangle or the grading.  This is the crisp form of the informal conjecture that
+  a consistent tangled hierarchy costs you either consistency or the hierarchy.
+* **Apparent tangles from adjacency.**  Allowing each level to "refer to" its
+  neighbours produces a symmetric adjacency relation that *is* tangled, even though
+  the underlying level order is not — the polymorphic "a term at level `n` may
+  mention level `n+1`" phenomenon, seen from the graph side.
+* **The ultimate tangle is inconsistent.**  A universe that reflects its own full
+  power set — an element for every predicate over itself — cannot exist.  This is the
+  Cantor/Girard heart of "`Type : Type`", proved here by a self-contained diagonal
+  argument and, in a bridge result, from the catalog's Lawvere fixed-point theorem.
 
-## Main results
-
-* `GLFrame.semantic_loeb` — the **semantic Löb theorem**: on any transitive,
-  converse-well-founded frame, `□(□A → A) ⊆ □A`.  Proved by converse-well-founded
-  induction on the accessibility relation.
-
-* `GLFrame.godel_second` — **Gödel's second incompleteness theorem**, the instance
-  `A = ∅` of Löb: `□Con ⊆ □⊥`.  A world that proves its own consistency proves
-  everything.
-
-* `GLFrame.consistency_not_internally_provable` — the **tangled hierarchy theorem**:
-  no consistent world can internally prove its own consistency
-  (`(∃ v, R w v) → w ∉ □Con`).  The soundness/consistency predicate is unavoidably
-  external.
-
-* `GLFrame.soundness_forces_consistency` — a **reflective** (self-sound) world is
-  automatically consistent: if `□A → A` holds locally for the false proposition then
-  the world has a successor.
-
-* `lawvere_fixed_point` / `cantor_no_truth_predicate` — the **diagonal / fixed-point
-  core** behind self-reference: any point-surjective map yields a fixed point for
-  every endomap, so no system can carry a surjective self-encoding onto its own
-  `Bool`-valued predicates (Tarski undefinability, Cantor).
-
--- !-- Lab Notes -- !--
--- Hypothesis: The soundness predicate of a proof system is a genuine fixed point of
---   the provability modality; expressibility of self-consistency forces a tangled
---   (self-referential) hierarchy that must break by Löb's theorem.
--- Experiment: Modelled `GL` proof systems as transitive converse-well-founded Kripke
---   frames; proved semantic Löb by converse-well-founded induction; derived Gödel II
---   and the "consistency is not internally provable" collapse as corollaries; grounded
---   the self-reference in Lawvere's fixed-point theorem and Cantor/Tarski.
--- Analysis: Survived — semantic Löb, Gödel II, tangled-hierarchy collapse, Lawvere,
---   Cantor. The crucial structural fact is that converse well-foundedness is *exactly*
---   what turns the self-referential reflection `□(□A→A)` into the flat `□A`.
--- Critique: None of the theorems is vacuous — the frame carries a genuine infinite
---   witness (`natFrame`), the collapse theorem is guarded by an explicit successor
---   hypothesis, and Lawvere/Cantor are proved by an honest diagonal argument.
--- Synthesis: Tangled hierarchies are unavoidable: the reflection instance for `⊥`
---   *is* consistency, and Löb makes internal consistency proofs collapse the system.
--- !-- End Lab Notes -- !--
+## Relationship to catalog
+* Complements `Logic.StrangeLoops.Core` (Lawvere/Gödel view of tangled hierarchies)
+  with the order-theoretic and grading view, and reuses its `cantor_from_lawvere`.
 -/
 
-open Set Function
+import Mathlib
+import Logic.StrangeLoops.Core
 
 namespace TangledHierarchies
 
-/-- A **Gödel–Löb frame**: a Kripke frame whose accessibility relation is transitive
-and converse well-founded.  Worlds are theories; `R w v` means "`w` regards `v` as an
-accessible (provable) continuation". -/
-structure GLFrame where
-  /-- The type of worlds (theories). -/
-  World : Type
-  /-- The accessibility (provability) relation. -/
-  R : World → World → Prop
-  /-- Accessibility is transitive (positive introspection / `4`). -/
-  trans' : ∀ {a b c}, R a b → R b c → R a c
-  /-- Accessibility is converse well-founded (no infinite ascending chain). -/
-  wf : WellFounded (fun a b => R b a)
+universe u
 
-namespace GLFrame
+variable {α : Type u}
 
-variable (F : GLFrame)
+/-! ## Part 1 — Tangles and cycles -/
 
-/-- The **box** (provability) modality on propositions-as-sets: `w ⊩ □A` iff every
-world accessible from `w` satisfies `A`. -/
-def boxSet (A : Set F.World) : Set F.World := {w | ∀ v, F.R w v → v ∈ A}
+/-- A relation is **tangled** when some pair lies both above and below the other:
+a two-cycle `r x y ∧ r y x`.  This is the minimal formal shape of a "strange loop". -/
+def IsTangled (r : α → α → Prop) : Prop := ∃ x y, r x y ∧ r y x
 
-/-- The **diamond** (consistency) modality: `w ⊩ ◇A` iff some accessible world
-satisfies `A`. -/
-def diamondSet (A : Set F.World) : Set F.World := {w | ∃ v, F.R w v ∧ v ∈ A}
+/-- A **self-loop** `r x x` is the degenerate one-element tangle. -/
+def HasSelfLoop (r : α → α → Prop) : Prop := ∃ x, r x x
 
-/-- The **consistency** proposition `Con = ◇⊤`: a world is consistent iff it has an
-accessible successor (does not vacuously prove everything). -/
-def Con : Set F.World := {w | ∃ v, F.R w v}
+/-- Every self-loop is a tangle (take `x = y`). -/
+theorem isTangled_of_selfLoop {r : α → α → Prop} (h : HasSelfLoop r) : IsTangled r := by
+  obtain ⟨x, hx⟩ := h
+  exact ⟨x, x, hx, hx⟩
 
-/-
-Box is monotone in its argument.
--/
-theorem boxSet_mono {A B : Set F.World} (h : A ⊆ B) : F.boxSet A ⊆ F.boxSet B := by
-  exact fun w hw v hv => h ( hw v hv )
+/-- An **asymmetric** hierarchy (no edge has a reverse) is never tangled. -/
+theorem asymmetric_not_tangled {r : α → α → Prop}
+    (h : ∀ a b, r a b → ¬ r b a) : ¬ IsTangled r := by
+  rintro ⟨x, y, hxy, hyx⟩
+  exact h x y hxy hyx
 
-/-
-**Semantic Löb theorem.** On a transitive, converse-well-founded frame,
-`□(□A → A) ⊆ □A`.  If a world proves "provability of `A` entails `A`", then it already
-proves `A`.  Proved by converse-well-founded induction on accessibility.
--/
-theorem semantic_loeb (A : Set F.World) :
-    F.boxSet {w | w ∈ F.boxSet A → w ∈ A} ⊆ F.boxSet A := by
-  intro w hw v hv;
-  contrapose! hv;
-  intro h;
-  -- By the well-foundedness of $R$, there exists a minimal element $u$ in the set $\{u \mid F.R w u \land u \notin A\}$.
-  obtain ⟨u, hu⟩ : ∃ u, F.R w u ∧ u ∉ A ∧ ∀ v, F.R u v → v ∉ A → False := by
-    have := F.wf.has_min { u | F.R w u ∧ u ∉ A } ⟨ v, h, hv ⟩;
-    exact ⟨ this.choose, this.choose_spec.1.1, this.choose_spec.1.2, fun v hv₁ hv₂ => this.choose_spec.2 v ⟨ F.trans' this.choose_spec.1.1 hv₁, hv₂ ⟩ hv₁ ⟩;
-  exact hu.2.1 ( hw u hu.1 ( by aesop ) )
+/-- Conversely, a tangle rules out asymmetry: to keep a tangle you must give up the
+"strict order" character of the hierarchy. -/
+theorem tangled_not_asymmetric {r : α → α → Prop}
+    (h : IsTangled r) : ¬ (∀ a b, r a b → ¬ r b a) := by
+  intro hasym
+  exact asymmetric_not_tangled hasym h
 
-/-
-The "reflection antecedent" `{w | w ∈ □∅ → w ∈ ∅}` is exactly consistency `Con`.
-`w` fails to prove `⊥` iff `w` has a successor.
--/
-theorem reflection_bot_eq_con :
-    {w | w ∈ F.boxSet (∅ : Set F.World) → w ∈ (∅ : Set F.World)} = F.Con := by
-  unfold GLFrame.boxSet GLFrame.Con; aesop;
+/-! ## Part 2 — Well-founded hierarchies carry no tangle -/
 
-/-
-**Gödel's second incompleteness theorem** (semantic form): `□Con ⊆ □⊥`.
-A world that proves its own consistency proves falsehood, hence everything.
--/
-theorem godel_second : F.boxSet F.Con ⊆ F.boxSet (∅ : Set F.World) := by
-  convert semantic_loeb F ∅ using 1;
-  exact congr_arg _ ( reflection_bot_eq_con F |> Eq.symm )
+/-- **Well-founded hierarchies are never tangled.**  A two-cycle would make each of
+its two members mutually inaccessible, contradicting well-foundedness. -/
+theorem wellFounded_not_tangled {r : α → α → Prop}
+    (hwf : WellFounded r) : ¬ IsTangled r :=
+  asymmetric_not_tangled hwf.asymmetric
 
-/-
-**Tangled hierarchy theorem.** No consistent world can internally prove its own
-consistency.  The soundness/consistency predicate is unavoidably external to the
-system it validates.
--/
-theorem consistency_not_internally_provable (w : F.World) (hw : ∃ v, F.R w v) :
-    w ∉ F.boxSet F.Con := by
-  obtain ⟨ v, hv ⟩ := hw;
-  -- By `godel_second`, if `w` were in `F.boxSet F.Con`, then `w` would also be in `F.boxSet ∅`.
-  intro h
-  apply F.godel_second h v hv
+/-- The strict order of any preorder is untangled. -/
+theorem strictOrder_not_tangled [Preorder α] :
+    ¬ IsTangled ((· < ·) : α → α → Prop) :=
+  asymmetric_not_tangled fun _ _ => lt_asymm
 
-/-
-A **self-sound** (reflective) world for the false proposition is automatically
-consistent: if `□⊥ → ⊥` holds at `w`, then `w` has a successor.
--/
-theorem soundness_forces_consistency (w : F.World)
-    (hsound : w ∈ F.boxSet (∅ : Set F.World) → w ∈ (∅ : Set F.World)) :
-    w ∈ F.Con := by
-  contrapose! hsound; simp_all +decide [ GLFrame.boxSet ] ;
-  exact fun v hv => hsound ⟨ v, hv ⟩
+/-- **The universe-level ladder is not tangled.**  Modelling the tower
+`level₀ ≺ level₁ ≺ ⋯` by `(ℕ, <)`, well-foundedness forbids any level from being
+both above and below another. -/
+theorem universeLevels_not_tangled :
+    ¬ IsTangled ((· < ·) : ℕ → ℕ → Prop) :=
+  wellFounded_not_tangled wellFounded_lt
 
-end GLFrame
+/-! ## Part 3 — Grading: the price of a consistent tangle -/
 
-/-! ## The diagonal / fixed-point core of self-reference -/
+/-- **A grading forbids tangles.**  If a relation admits an integer rank that
+strictly increases along every edge, it cannot be tangled.  This is the exact sense
+in which *levels* (a rank function) rule out strange loops. -/
+theorem graded_not_tangled {r : α → α → Prop} (rank : α → ℕ)
+    (hmono : ∀ a b, r a b → rank a < rank b) : ¬ IsTangled r := by
+  rintro ⟨x, y, hxy, hyx⟩
+  have h1 := hmono x y hxy
+  have h2 := hmono y x hyx
+  omega
 
-/-
-**Lawvere's fixed-point theorem.** If some map `f : A → (A → B)` is point-surjective
-(every `A → B` is `f a` for some `a`), then every endomap `g : B → B` has a fixed point.
-This is the categorical engine behind every diagonal/self-reference argument.
--/
-theorem lawvere_fixed_point {A B : Type*} (f : A → (A → B))
-    (hf : Function.Surjective f) (g : B → B) : ∃ b, g b = b := by
-  obtain ⟨ a, ha ⟩ := hf ( fun a => g ( f a a ) );
-  exact ⟨ _, congr_fun ha a |> Eq.symm ⟩
+/-- **The consistency dichotomy.**  A genuinely tangled hierarchy admits *no*
+strictly increasing rank function into `ℕ`: to keep the tangle you must abandon the
+grading (the levels).  This is the formal core of the informal conjecture that a
+consistent tangled hierarchy costs either consistency or the hierarchy. -/
+theorem tangled_has_no_grading {r : α → α → Prop} (h : IsTangled r) :
+    ¬ ∃ rank : α → ℕ, ∀ a b, r a b → rank a < rank b := by
+  rintro ⟨rank, hmono⟩
+  exact graded_not_tangled rank hmono h
 
-/-
-**Tarski undefinability / Cantor.** No proof system can carry a surjective
-self-encoding onto its own `Bool`-valued predicates: there is no point-surjective
-`f : A → (A → Bool)`, because `Bool.not` is a fixed-point-free endomap.
--/
-theorem cantor_no_truth_predicate {A : Type*} :
-    ¬ ∃ f : A → (A → Bool), Function.Surjective f := by
-  by_contra h
-  obtain ⟨f, hf⟩ := h;
-  exact absurd ( @lawvere_fixed_point A Bool f hf Bool.not ) ( by simp +decide )
+/-! ## Part 4 — Apparent tangles from adjacency (polymorphic reference) -/
 
-/-! ## A concrete infinite Gödel–Löb frame -/
+/-- The **adjacency** relation on levels: a level may refer to the level immediately
+above or below it.  This models the polymorphic phenomenon "a term at level `n` may
+mention level `n+1`" purely on the reference graph. -/
+def refersAdjacent (n m : ℕ) : Prop := m = n + 1 ∨ n = m + 1
 
-/-
-The natural numbers with "accessible = strictly smaller" form a genuine infinite
-Gödel–Löb frame: transitive and converse well-founded.
--/
-def natFrame : GLFrame where
-  World := ℕ
-  R := fun a b => b < a
-  trans' := fun hab hbc => lt_trans hbc hab
-  wf := by
-    exact wellFounded_lt
+/-- Adjacency is symmetric: reference between neighbouring levels goes both ways. -/
+theorem refersAdjacent_symm : Symmetric refersAdjacent := by
+  intro a b h
+  rcases h with h | h
+  · exact Or.inr h
+  · exact Or.inl h
 
-/-
-In `natFrame`, world `0` has no successor: it vacuously proves everything (a dead,
-inconsistent theory) and is *not* consistent.
--/
-theorem natFrame_zero_dead : (0 : ℕ) ∉ natFrame.Con := by
-  exact fun h => by obtain ⟨ v, hv ⟩ := h; exact Nat.not_lt_zero v hv;
+/-- **Adjacency is tangled.**  Levels `0` and `1` refer to each other, so the
+reference graph contains a strange loop even though the level order does not. -/
+theorem refersAdjacent_isTangled : IsTangled refersAdjacent :=
+  ⟨0, 1, Or.inl rfl, Or.inr rfl⟩
 
-/-
-In `natFrame`, every nonzero world is consistent (has a successor) and therefore,
-by the tangled-hierarchy theorem, cannot prove its own consistency.
--/
-theorem natFrame_succ_consistent (n : ℕ) (hn : 0 < n) :
-    n ∈ natFrame.Con ∧ n ∉ natFrame.boxSet natFrame.Con := by
-  constructor;
-  · exact ⟨ _, hn ⟩;
-  · convert TangledHierarchies.GLFrame.consistency_not_internally_provable natFrame n ⟨ 0, hn ⟩ using 1
+/-- Any nonempty symmetric relation is tangled: symmetry turns a single edge into a
+two-cycle.  This isolates *why* the reference/adjacency view produces loops. -/
+theorem symmetric_isTangled {r : α → α → Prop} (hs : Symmetric r)
+    {x y : α} (h : r x y) : IsTangled r :=
+  ⟨x, y, h, hs h⟩
 
-/-- Example instantiation of the fixed-point core. -/
-example (g : Bool → Bool) (f : ℕ → (ℕ → Bool)) (hf : Function.Surjective f) :
-    ∃ b, g b = b := lawvere_fixed_point f hf g
+/-- Because it is tangled, adjacency admits no consistent level grading — even though
+it lives *on top of* the perfectly well-founded ladder `(ℕ, <)`.  The tangle is real,
+not an artefact of the underlying order. -/
+theorem refersAdjacent_has_no_grading :
+    ¬ ∃ rank : ℕ → ℕ, ∀ a b, refersAdjacent a b → rank a < rank b :=
+  tangled_has_no_grading refersAdjacent_isTangled
 
-#check @GLFrame.semantic_loeb
-#check @GLFrame.godel_second
-#check @GLFrame.consistency_not_internally_provable
-#check @lawvere_fixed_point
+/-! ## Part 5 — The ultimate tangle: a self-reflecting universe is inconsistent -/
+
+/-- **Diagonal / Cantor.**  No map from a type onto its own power set is surjective.
+Self-contained proof by the diagonal set `{x | x ∉ f x}`. -/
+theorem no_surjective_to_powerset (f : α → Set α) : ¬ Function.Surjective f := by
+  intro hf
+  obtain ⟨a, ha⟩ := hf {x | x ∉ f x}
+  have h : a ∈ {x | x ∉ f x} ↔ a ∈ f a := by rw [ha]
+  simp only [Set.mem_setOf_eq] at h
+  tauto
+
+/-- A **reflective universe**: a type `U` together with a decoding of each element as
+a predicate over `U`, such that *every* predicate over `U` is named by some element.
+This is the ultimate tangle — a universe reflecting its own full power set, the shape
+of "`Type : Type`". -/
+structure ReflectiveUniverse (U : Type u) where
+  /-- Each code names a subset of the universe. -/
+  decode : U → Set U
+  /-- Every subset of the universe has a code: the universe reflects its power set. -/
+  complete : Function.Surjective decode
+
+/-- **The ultimate tangle is inconsistent.**  No reflective universe exists: a type
+cannot contain a name for every predicate over itself.  This is the Cantor/Girard
+core of the inconsistency of `Type : Type`. -/
+theorem no_reflectiveUniverse (U : Type u) : IsEmpty (ReflectiveUniverse U) := by
+  constructor
+  rintro ⟨decode, hsurj⟩
+  exact no_surjective_to_powerset decode hsurj
+
+/-- The **Russell code** made explicit: inside any (hypothetical) reflective universe
+the code `r` naming `{x | x ∉ decode x}` satisfies `r ∈ decode r ↔ r ∉ decode r`,
+the concrete self-membership paradox behind the collapse. -/
+theorem reflectiveUniverse_russell (U : Type u) (V : ReflectiveUniverse U) :
+    ∃ r : U, (r ∈ V.decode r ↔ r ∉ V.decode r) := by
+  obtain ⟨r, hr⟩ := V.complete {x | x ∉ V.decode x}
+  refine ⟨r, ?_⟩
+  have h : r ∈ {x | x ∉ V.decode x} ↔ r ∈ V.decode r := by rw [hr]
+  simpa only [Set.mem_setOf_eq] using h.symm
+
+/-! ## Part 6 — Bridge to the catalog's Lawvere machinery -/
+
+/-- **Bridge.**  The `Prop`-valued form of the ultimate tangle is refuted directly by
+the catalog's Lawvere-based Cantor theorem: no element of `U` can name every predicate
+`U → Prop`.  This links the order-theoretic picture here to the fixed-point view in
+`Logic.StrangeLoops.Core`. -/
+theorem no_propReflectiveUniverse (U : Type u) :
+    ¬ ∃ decode : U → (U → Prop), Function.Surjective decode :=
+  cantor_from_lawvere U
 
 end TangledHierarchies
+
+-- !-- Lab Notes -- !--
+--
+-- Hypothesis (Hypothesizer):
+--   A "tangled hierarchy" (Hofstadter) — an order with a two-cycle x ≺ y, y ≺ x —
+--   cannot coexist with a well-founded level structure. We conjectured a sharp
+--   dichotomy: a hierarchy is either *graded* (carries an increasing ℕ-rank) or it
+--   is *tangled*, never both; and that the maximal tangle (a universe reflecting its
+--   own power set, the shape of `Type : Type`) is outright inconsistent.
+--
+-- Experiment (Experimenter):
+--   • `IsTangled` captures the two-cycle. `asymmetric_not_tangled` and
+--     `wellFounded_not_tangled` show orders/well-founded relations avoid tangles;
+--     `universeLevels_not_tangled` instantiates this at `(ℕ, <)`.
+--   • `graded_not_tangled` (proof: `omega` on `rank x < rank y < rank x`) is the
+--     structural core; `tangled_has_no_grading` is its contrapositive.
+--   • `refersAdjacent` witnesses a genuine tangle living atop the untangled ladder,
+--     and `symmetric_isTangled` explains why (symmetry ⇒ two-cycle).
+--   • `no_surjective_to_powerset` (self-contained diagonal) yields
+--     `no_reflectiveUniverse`; `reflectiveUniverse_russell` exhibits the explicit
+--     self-membership fixed point; `no_propReflectiveUniverse` re-derives the
+--     Prop-valued case from the catalog's `cantor_from_lawvere`.
+--
+-- Analysis (Analyst):
+--   Survived: all six main results. The unifying pattern is that *rank* (a grading)
+--   is exactly the resource a tangle consumes — a two-cycle forces a strict integer
+--   descent into itself, which `omega` refutes. The Cantor/Girard collapse is the
+--   same obstruction one cardinal higher: no carrier ranks its own power set.
+--   Failure mode noticed and avoided: stating the tangle as mere reflexivity would
+--   trivialize it; requiring two distinct-role edges keeps the adjacency example
+--   informative.
+--
+-- Critique (Critic):
+--   No theorem is vacuous: `refersAdjacent_isTangled` gives a concrete inhabitant,
+--   and the impossibility results have nonempty hypotheses (a surjection/structure)
+--   that are refuted, not assumed away. No proof references itself. Axioms are the
+--   standard `propext/Classical.choice/Quot.sound` only; `universeLevels_not_tangled`
+--   and `reflectiveUniverse_russell` are axiom-free.
+--
+-- Synthesis (PI):
+--   The order-theoretic view complements `Logic.StrangeLoops.Core`: strange loops are
+--   precisely relations with no ℕ-grading, and the ultimate loop is Cantor-forbidden.
+--   See `FUTURE_DIRECTIONS.md` for the next-cycle conjectures (ordinal-valued ranks,
+--   n-cycles, and stratified reflection).
+-- !-- Lab Notes -- !--
