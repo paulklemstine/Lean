@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2058237b",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of this cycle's study of chains,\nantichains, co-wellfoundedness, and direct sums.\n\n## 1. The two-sided failure of welded co-wellfounded c",
-      "quality_score": 0.49753964866339334,
-      "sorry_count": 4,
-      "theorem_count": 10,
-      "timestamp": "2026-07-06T11:04:35",
-      "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
-    },
-    {
       "cycle_id": "a793b4d3",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Chain Covers in the Boolean Lattice\n\nFive bold, falsifiable conjectures growing out of this cycle's findings on the\nminimum number of chains needed to cover the lattice of subset",
@@ -2501,6 +2491,16 @@
       "theorem_count": 855,
       "timestamp": "2026-07-12T07:36:38",
       "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
+    },
+    {
+      "cycle_id": "27e75405",
+      "domain": "Applications",
+      "key_insight": "# Future directions — Product Hilton–Milner theorem\n\nThe file `Catalog/Novelty/ProductHiltonMilnerLarge.lean` develops, fully and with\n0 `sorry`s, the structure surrounding the product Hilton–Milner t",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 865,
+      "timestamp": "2026-07-12T07:53:28",
+      "title": "Product Hilton-Milner theorem for large n"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-12T07:36:38",
+  "last_updated": "2026-07-12T07:53:28",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f6949247",
-        "quality": 0.72,
-        "theorems": 28,
-        "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
-      },
-      {
         "cycle_id": "7669ab26",
         "quality": 0.82,
         "theorems": 24,
@@ -3141,6 +3135,12 @@
         "quality": 0.7,
         "theorems": 855,
         "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
+      },
+      {
+        "cycle_id": "27e75405",
+        "quality": 0.62,
+        "theorems": 865,
+        "title": "Product Hilton-Milner theorem for large n"
       }
     ],
     "Bridges": [
