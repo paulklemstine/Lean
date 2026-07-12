@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b6492bf5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Anti-Gravity Mathematics\n\nThis mission formalizes a finite model of theorem dependency graphs and proves the\nrobust combinatorial core of the \"anti-gravity theorems\" theme, while",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-11T22:48:11",
-      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-    },
-    {
       "cycle_id": "4f5260f0",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Rucker: Infinity and the Mind\n\nThis project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entirely\ninside ZFC as available in Mathlib, a coherent slice of Cantor's",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-12T15:37:53",
       "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
+    },
+    {
+      "cycle_id": "3cdfbb0e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Automatic Sequences and the Kernel Criterion\n\nThis cycle established the finite-kernel criterion for automatic sequences as a\nself-contained, characteristic-free foundation: deci",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 26,
+      "timestamp": "2026-07-12T15:55:11",
+      "title": "Deepening: Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8202f9a7",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nFile: `Bridges/PageSiegelRefinement.lean`\n\n## What is proved\n\nThe file formalizes, and proves in full (no `sorry`, only the standard axioms\n`propext`, `Classical.choice`, `Quot.so",
-      "quality_score": 0.6749863157894737,
-      "sorry_count": 2,
-      "theorem_count": 19,
-      "timestamp": "2026-07-09T19:55:16",
-      "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
-    },
     {
       "cycle_id": "26e5c4d5",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-12T15:37:53",
       "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
+    },
+    {
+      "cycle_id": "3cdfbb0e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Automatic Sequences and the Kernel Criterion\n\nThis cycle established the finite-kernel criterion for automatic sequences as a\nself-contained, characteristic-free foundation: deci",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 26,
+      "timestamp": "2026-07-12T15:55:11",
+      "title": "Deepening: Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6a70bc30",
-      "domain": "Applications",
-      "name": "descProduct_zero",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "6a70bc30",
-      "domain": "Applications",
-      "name": "descProduct_succ",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "6a70bc30",
-      "domain": "Applications",
-      "name": "descProduct_gamma_closed_form",
-      "quality": 0.72
-    },
     {
       "cycle_id": "b290e3a0",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "flatten_leaf",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "3cdfbb0e",
+      "domain": "Novelty",
+      "name": "here",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3cdfbb0e",
+      "domain": "Novelty",
+      "name": "kernelMap_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3cdfbb0e",
+      "domain": "Novelty",
+      "name": "self_mem_kKernel",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T15:37:53",
+  "last_updated": "2026-07-12T15:55:11",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "c67f6099",
-      "domain": "Novelty",
-      "sorry_count": 3,
-      "timestamp": "2026-07-11T15:33:24"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "f8dd2b6a",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 7,
       "timestamp": "2026-07-12T15:03:08"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "3cdfbb0e",
+      "domain": "Novelty",
+      "sorry_count": 5,
+      "timestamp": "2026-07-12T15:55:11"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "53945fe2",
-        "quality": 0.82,
-        "theorems": 15,
-        "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
-      },
-      {
         "cycle_id": "a6691c84",
         "quality": 0.82,
         "theorems": 27,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 21,
         "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
+      },
+      {
+        "cycle_id": "3cdfbb0e",
+        "quality": 0.82,
+        "theorems": 26,
+        "title": "Deepening: Automatic Sequences and the Halting Problem: When Is a Sequence Compu"
       }
     ],
     "NumberTheory": [
