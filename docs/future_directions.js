@@ -749,6 +749,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle fb4de3e5 (Q=0.780), which proved 23 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some met",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_fb4de3e5_e932d229",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "fb4de3e5",
+    "status": "available",
+    "timestamp": "2026-07-12T02:10:54.368732+00:00",
+    "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Op"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domains": [
       "Novelty",
@@ -763,7 +777,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
-    "consumed_by_exp_id": "a19fb2c8",
+    "consumed_by_exp_id": "",
     "description": "Formalize 'strange loops' \u2014 hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: G\u00f6del's incompleteness theorem IS a strange loop (the G\u00f6del sentence G says 'G is not provable'). Show: Tarski's undefinability of truth is a stronger strange loop (no formula can assert its own truth). Conjecture: every sufficiently expressive formal system contains infinitely many distinct strange loops. Explore: can we formalize the 'tangled hierarchy' where level N refers to level N-1 which refers to level N?",
     "domains": [
       "Novelty",
@@ -773,7 +787,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T22:47:23.412172+00:00",
     "title": "Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
   },
@@ -866,6 +880,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-12T00:46:18.365871+00:00",
     "title": "Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (G\u00f6del). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1102",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-12T02:10:10.157510+00:00",
+    "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
   {
     "consumed_by_exp_id": "",
@@ -1188,22 +1217,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
   },
   {
-    "consumed_by_exp_id": "fb4de3e5",
-    "description": "Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some metric). Show: the 'copycat' analogy (Hofstadter's model) is a special case where A = B = the concept lattice. Conjecture: every creative mathematical insight can be decomposed into a sequence of analogy operations. Explore: can we formalize 'making a good analogy' as an optimization problem?",
-    "domains": [
-      "Novelty",
-      "Bridges"
-    ],
-    "id": "fd_1083",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T23:04:45.695664+00:00",
-    "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08eba531",
     "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' \u2014 can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
     "domains": [
       "Novelty",
@@ -1213,9 +1227,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T01:20:00.907387+00:00",
     "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations \u2014 enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_1103",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-12T02:10:10.312629+00:00",
+    "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -6773,6 +6802,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T01:53:35.453944+00:00",
     "title": "Bold, testable conjectures distilled from this cycle's study of Dyson-scale"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Analogy as a Mathematical Operation\n\nThis project formalizes Hofstadter's notion (from *Fluid Concepts and Creative\nAnalogies*) of an **analogy** between structures `A` and `B` as a pair of maps\n`F : A \u2192 B`, `G : B \u2192 A` with `G \u2218 F` approximating the identity, and studies\nthe \"best analogy\" as an optimization problem, with an explicit tropical\n(min-plus) reading of the optimization.\n\n## What was proved\n\n### `AnalogyCore.lean` \u2014 metric theory of analogies\n- `Analogy.id_fidelity`: the copycat (identity) analogy has zero distortion.\n- `Analogy.fidelity_mono`, `Analogy.fidelity_nonneg`: basic order structure of\n  distortion; `0` is the optimum.\n- `Analogy.fidelity_zero_iff`: zero distortion characterises `G \u2218 F = id_A`.\n- `Analogy.comp_fidelity`: **good analogies compose** \u2014 distortion is\n  subadditive, `dist \u2264 \u03b5f + L\u00b7\u03b5g`, a triangle inequality for analogies. This is\n  the formal core of the conjecture that *creative insight decomposes into a\n  sequence of analogy operations with controlled accumulated error*.\n- `Analogy.exists_perfect_oneSided_not_equiv`: **DISPROOF** of the bold\n  conjecture \"a perfect one-sided analogy is an equivalence\". A retraction gives\n  `G \u2218 F = id_A` while `F \u2218 G \u2260 id_B`.\n\n### `AnalogyConceptLattice.lean` \u2014 the adjoint (Galois) model\n- `AdjointAnalogy` := a Galois connection between concept (pre)orders.\n- `adjointAnalogy_extensive`, `adjointAnalogy_stable_closure`,\n  `adjointAnalogy_stable_kernel`, `adjointAnalogy_monotone`: the analogical\n  round trips are monotone idempotent closure/kernel operators \u2014 the \"best\"\n  analogies are exactly the stable ones.\n- `adjoint_unique`: **the backward map of an adjoint analogy is unique** (so the\n  optimal inverse is determined by the forward map).\n- `copycat_isAdjoint`, `copycat_adjoint_unique`: Hofstadter's copycat (`A = B` =\n  a single concept lattice) is a self-dual adjoint analogy, and it is rigid.\n\n### `AnalogyOptimization.lean` \u2014 making a good analogy as tropical optimization\n- `best_analogy_attained`: the optimum over a finite pool exists.\n- `tropicalScore` and `tropicalScore_eq_inf`: aggregating candidate costs by\n  **tropical addition equals taking their minimum**.\n- `tropicalScore_le`, `tropicalScore_attained`, `tropicalScore_isBest`: the\n  tropical sum of candidate scores *is* the best analogy's cost \u2014 a single\n  tropical operation solves \"make the best analogy\".\n\n## Open threads and conjectures to attack next\n\n1. **Sharp composition constant.** `comp_fidelity` gives `\u03b5f + L\u00b7\u03b5g`. Is this\n   optimal over all metric spaces, and what is the tight constant when both\n   backward maps are Lipschitz (a two-sided bound)?\n\n2. **Two-sided analogies and the isomorphism gap.** Quantify the failure found\n   in `exists_perfect_oneSided_not_equiv`: define a *bidirectional* distortion\n   `max(sup dist a (G F a), sup dist b (F G b))` and characterise when it is\n   `0` (genuine isometric analogy) versus one-sidedly `0`.\n\n3. **Existence of an optimal analogy over infinite pools.** `best_analogy_attained`\n   is finite. For a compact space of candidate analogies and a continuous\n   distortion functional, prove existence of a minimizer (a Weierstrass-type\n   theorem for analogy-making).\n\n4. **Tropical polytope of analogies.** The `tropicalScore` viewpoint suggests\n   the set of achievable score vectors forms a tropical convex set. Formalize\n   the tropical convexity of the analogy pool and characterise the Pareto-optimal\n   analogies as tropical vertices.\n\n5. **Decomposition of insight (Hofstadter's conjecture).** Strengthen\n   `comp_fidelity` into a statement that any analogy of distortion `\u2264 \u03b5` between\n   `A` and `C` factors through a chain of \"atomic\" analogies, each of distortion\n   `\u2264 \u03b4`, with total accumulated bound controlled \u2014 a formal analogue of\n   decomposing a creative leap into small steps.\n\n6. **Galois \u21c4 metric bridge.** Relate the adjoint model to the metric model:\n   equip a concept lattice with a metric (e.g. via the lattice's height or a\n   valuation) and show that Galois connections are exactly the zero-distortion\n   monotone analogies.\n\n\n# Future Directions \u2014 Analogy as a Mathematical Operation\n\nThis project formalizes Hofstadter's notion (from *Fluid Concepts and Creative\nAnalogies*) of an **analogy** between structures `A` and `B` as a pair of maps\n`F : A \u2192 B`, `G : B \u2192 A` with `G \u2218 F` approximating the identity, and studies\nthe \"best analogy\" as an optimization problem, with an explicit tropical\n(min-plus) reading of the optimization.\n\n## What was proved\n\n### `AnalogyCore.lean` \u2014 metric theory of analogies\n- `Analogy.id_fidelity`: the copycat (identity) analogy has zero distortion.\n- `Analogy.fidelity_mono`, `Analogy.fidelity_nonneg`: basic order structure of\n  distortion; `0` is the optimum.\n- `Analogy.fidelity_zero_iff`: zero distortion characterises `G \u2218 F = id_A`.\n- `Analogy.comp_fidelity`: **good analogies compose** \u2014 distortion is\n  subadditive, `dist \u2264 \u03b5f + L\u00b7\u03b5g`, a triangle inequality for analogies. This is\n  the formal core of the conjecture that *creative insight decomposes into a\n  sequence of analogy operations with controlled accumulated error*.\n- `Analogy.exists_perfect_oneSided_not_equiv`: **DISPROOF** of the bold\n  conjecture \"a perfect one-sided analogy is an equivalence\". A retraction gives\n  `G \u2218 F = id_A` while `F \u2218 G \u2260 id_B`.\n\n### `AnalogyConceptLattice.lean` \u2014 the adjoint (Galois) model\n- `AdjointAnalogy` := a Galois connection between concept (pre)orders.\n- `adjointAnalogy_extensive`, `adjointAnalogy_stable_closure`,\n  `adjointAnalogy_stable_kernel`, `adjointAnalogy_monotone`: the analogical\n  round trips are monotone idempotent closure/kernel operators \u2014 the \"best\"\n  analogies are exactly the stable ones.\n- `adjoint_unique`: **the backward map of an adjoint analogy is unique** (so the\n  optimal inverse is determined by the forward map).\n- `copycat_isAdjoint`, `copycat_adjoint_unique`: Hofstadter's copycat (`A = B` =\n  a single concept lattice) is a self-dual adjoint analogy, and it is rigid.\n\n### `AnalogyOptimization.lean` \u2014 making a good analogy as tropical optimization\n- `best_analogy_attained`: the optimum over a finite pool exists.\n- `tropicalScore` and `tropicalScore_eq_inf`: aggregating candidate costs by\n  **tropical addition equals taking their minimum**.\n- `tropicalScore_le`, `tropicalScore_attained`, `tropicalScore_isBest`: the\n  tropical sum of candidate scores *is* the best analogy's cost \u2014 a single\n  tropical operation solves \"make the best analogy\".\n\n## Open threads and conjectures to attack next\n\n1. **Sharp composition constant.** `comp_fidelity` gives `\u03b5f + L\u00b7\u03b5g`. Is this\n   optimal over all metric spaces, and what is the tight constant when both\n   backward maps are Lipschitz (a two-sided bound)?\n\n2. **Two-sided analogies and the isomorphism gap.** Quantify the failure found\n   in `exists_perfect_oneSided_not_equiv`: define a *bidirectional* distortion\n   `max(sup dist a (G F a), sup dist b (F G b))` and characterise when it is\n   `0` (genuine isometric analogy) versus one-sidedly `0`.\n\n3. **Existence of an optimal analogy over infinite pools.** `best_analogy_attained`\n   is finite. For a compact space of candidate analogies and a continuous\n   distortion functional, prove existence of a minimizer (a Weierstrass-type\n   theorem for analogy-making).\n\n4. **Tropical polytope of analogies.** The `tropicalScore` viewpoint suggests\n   the set of achievable score vectors forms a tropical convex set. Formalize\n   the tropical convexity of the analogy pool and characterise the Pareto-optimal\n   analogies as tropical vertices.\n\n5. **Decomposition of insight (Hofstadter's conjecture).** Strengthen\n   `comp_fidelity` into a statement that any analogy of distortion `\u2264 \u03b5` between\n   `A` and `C` factors through a chain of \"atomic\" analogies, each of distortion\n   `\u2264 \u03b4`, with total accumulated bound controlled \u2014 a formal analogue of\n   decomposing a creative leap into small steps.\n\n6. **Galois \u21c4 metric bridge.** Relate the adjoint model to the metric model:\n   equip a concept lattice with a metric (e.g. via the lattice's height or a\n   valuation) and show that Galois connections are exactly the zero-distortion\n   monotone analogies.\n",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_1104",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fb4de3e5",
+    "status": "available",
+    "timestamp": "2026-07-12T02:10:44.625143+00:00",
+    "title": "This project formalizes Hofstadter's notion (from *Fluid Concepts and Creative"
   },
   {
     "consumed_by_exp_id": "",

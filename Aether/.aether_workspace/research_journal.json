@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5e3f6a63",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Unreasonable Effectiveness of Wrong Theories\n\n`WrongTheories.lean` formalizes theory-space as a real inner-product space `E`\nwith a distinguished `truth`, wrongness `‖T − tru",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-11T07:46:01",
-      "title": "The Unreasonable Effectiveness of Wrong Theories"
-    },
-    {
       "cycle_id": "0250199a",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.**",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-12T01:53:42",
       "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+    },
+    {
+      "cycle_id": "fb4de3e5",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Analogy as a Mathematical Operation\n\nThis project formalizes Hofstadter's notion (from *Fluid Concepts and Creative\nAnalogies*) of an **analogy** between structures `A` and `B` a",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-12T02:10:54",
+      "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Operation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0a41cc78",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — 2-adic valuation of shifted Perrin numbers\n\nDerived from this cycle's findings: the Perrin sequence `R` (`R0=3, R1=0, R2=2`,\n`R(n+3)=R(n+1)+R(n)`) has `R mod 2^k` periodic with p",
-      "quality_score": 0.7258007692307691,
-      "sorry_count": 3,
-      "theorem_count": 13,
-      "timestamp": "2026-07-04T22:07:22",
-      "title": "Explicit Formula for 2-adic Valuation of Shifted Perrin Numbers"
-    },
     {
       "cycle_id": "054477b4",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-12T01:53:42",
       "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+    },
+    {
+      "cycle_id": "fb4de3e5",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Analogy as a Mathematical Operation\n\nThis project formalizes Hofstadter's notion (from *Fluid Concepts and Creative\nAnalogies*) of an **analogy** between structures `A` and `B` a",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-12T02:10:54",
+      "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Operation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "dac5bc28",
-      "domain": "MachineLearning",
-      "name": "sat_and",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "dac5bc28",
-      "domain": "MachineLearning",
-      "name": "sat_dia",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c37c01fa",
-      "domain": "Algebra",
-      "name": "count_le_pow",
-      "quality": 0.83
-    },
     {
       "cycle_id": "c37c01fa",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "prime_iff_algebraic",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "fb4de3e5",
+      "domain": "Tropical",
+      "name": "adjointAnalogy_extensive",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "fb4de3e5",
+      "domain": "Tropical",
+      "name": "adjointAnalogy_stable_closure",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "fb4de3e5",
+      "domain": "Tropical",
+      "name": "adjointAnalogy_stable_kernel",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-12T01:53:42",
+  "last_updated": "2026-07-12T02:10:54",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "f2499c75",
-        "quality": 0.68192,
-        "theorems": 15,
-        "title": "Idempotent Probability: Large Deviations"
-      },
-      {
         "cycle_id": "e6cf72d1",
         "quality": 0.65752,
         "theorems": 18,
@@ -4009,6 +4003,12 @@
         "quality": 0.6,
         "theorems": 0,
         "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
+      },
+      {
+        "cycle_id": "fb4de3e5",
+        "quality": 0.78,
+        "theorems": 23,
+        "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
       }
     ]
   }
