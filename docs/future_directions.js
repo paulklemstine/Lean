@@ -438,6 +438,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f6622907 (Q=0.820), which proved 20 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_f6622907_cd5c469d",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "f6622907",
+    "status": "available",
+    "timestamp": "2026-07-12T03:02:25.082422+00:00",
+    "title": "Deepening: Hofstadter: Tangled Hierarchies in Type Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f9466ee5 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For a normal geometrically connected variety X over a finite field k, a compactification \\(\\overline{X}\\), an effective Cartier divisor D with support in \\(Z = \\overline{X} \\setminus X\\), and an algebraically closed field F of characteristic p with discrete topology, the set of isomorphism classes o",
     "domains": [
       "Applications"
@@ -866,21 +880,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
   },
   {
-    "consumed_by_exp_id": "f6622907",
-    "description": "Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent \u2014 formalize this in Lean.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1085",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T23:21:34.321577+00:00",
-    "title": "Hofstadter: Tangled Hierarchies in Type Theory"
-  },
-  {
     "consumed_by_exp_id": "52c07a98",
     "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (G\u00f6del). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
     "domains": [
@@ -956,7 +955,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef2405bd",
     "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
     "domains": [
       "Novelty",
@@ -966,7 +965,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T01:20:01.077895+00:00",
     "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
   },
@@ -6831,6 +6830,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T02:27:52.929276+00:00",
     "title": "The file `Catalog/Probability/TimeTravelCausalConsistency.lean` develops a singl"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Tangled Hierarchies\n\nBold, testable conjectures distilled from this cycle's central finding: a level\nstructure is *graded* exactly when it is free of strange loops, and the maximal loop \u2014\na universe reflecting its own totality \u2014 is forbidden by a diagonal obstruction.\n\n## 1. Ordinal grading characterizes acyclicity in full generality\n**Conjecture.** A binary relation admits an ordinal-valued rank strictly increasing\nalong every edge if and only if it is well-founded; equivalently, a relation is\n*tangle-free at every finite depth* (no cycle of any length) precisely when it embeds\ninto a well-order by its rank.\n\nThe key insight is that the integer rank used here for two-cycles is only the\nfinite-depth shadow of the ordinal rank of a well-founded relation, so replacing `\u2115`\nby the ordinals should upgrade the \"no grading \u21d2 tangle\" dichotomy from two-cycles to\narbitrary loops. Why now? The two-cycle case is already sharp and axiom-light, and the\nordinal machinery needed to close the gap is standard and stable, making the general\nstatement an immediate and decisive next target.\n\n## 2. Longer loops cost strictly more grading room\n**Conjecture.** A relation containing an `n`-cycle but no shorter cycle admits a rank\ninto `\u2124/n\u2124` but into no linearly ordered monoid; the minimal cycle length is an exact\ninvariant measuring \"how tangled\" a hierarchy is, refining the binary graded/tangled\nsplit into a graded spectrum.\n\nThe key insight is that a cycle of length `n` is consistent with cyclic (modular)\ngrading but destroys any strict linear grading, so the shortest cycle length behaves\nlike a torsion order for hierarchies. Why now? The present file already separates the\ntwo-cycle from the acyclic ladder; introducing the cycle-length invariant turns that\nqualitative gap into a computable numeric one, testable on small explicit reference\ngraphs.\n\n## 3. Stratified reflection is the exact boundary of consistency\n**Conjecture.** A universe may consistently reflect *all predicates of strictly lower\nrank* (predicative, stratified reflection) but reflecting predicates of its own rank\ncollapses; the transition from consistent to inconsistent reflection occurs exactly at\nthe diagonal fixed point exhibited by the Russell code.\n\nThe key insight is that the impossibility of a fully reflective universe is not about\nsize alone but about self-inclusion at equal level, so a rank-stratified reflection map\nshould evade the diagonal while an equal-level one cannot. Why now? The self-membership\nfixed point isolated in this cycle pinpoints the single offending equation, so guarding\nit by a rank stratification is a concrete, falsifiable construction rather than a vague\nhope.\n\n## 4. Symmetric reference graphs are universally ungradable\n**Conjecture.** Any reference relation that is symmetric and has at least one edge is\ntangled, and therefore no consistent level assignment exists for a symmetric\ncommunication or citation network unless it is edgeless; directed acyclicity is not\nmerely sufficient but necessary for gradability of such networks.\n\nThe key insight is that symmetry manufactures a two-cycle from every single edge, so\nmutual reference and strict layering are mutually exclusive. Why now? The adjacency\nexample already demonstrates this on the integers; generalizing it classifies an entire\nfamily of real reference structures by a one-line criterion.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_1106",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f6622907",
+    "status": "available",
+    "timestamp": "2026-07-12T03:02:16.050839+00:00",
+    "title": "Bold, testable conjectures distilled from this cycle's central finding: a level"
   },
   {
     "consumed_by_exp_id": "",

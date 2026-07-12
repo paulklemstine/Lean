@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1d01ef4b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes a model of hypercomputation, the physical-precision\nbarrier, and the accidentally/essentially computable distinction. Natural\nextensions:\n\n## Deepening the",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-11T08:51:26",
-      "title": "Hypercomputation: Computing the Uncomputable"
-    },
-    {
       "cycle_id": "c99af430",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Paradoxes as Theorems\n\nThis cycle reduced the Liar, Russell, and Berry paradoxes to a single algebraic\nphenomenon — a *designated fixed point of negation* — and built a finite,\ns",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-12T02:28:00",
       "title": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
+    },
+    {
+      "cycle_id": "f6622907",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Tangled Hierarchies\n\nBold, testable conjectures distilled from this cycle's central finding: a level\nstructure is *graded* exactly when it is free of strange loops, and the maxim",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-12T03:02:25",
+      "title": "Hofstadter: Tangled Hierarchies in Type Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bdd384c4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThese conjectures are distilled from a study of *phantom topologies*: a \"reality\" is\nthe topology all observers agree on (the common open sets of a family of finer observer\ntopolo",
-      "quality_score": 0.83176,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-04T22:25:53",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
     {
       "cycle_id": "a7402c18",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-12T02:28:00",
       "title": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
+    },
+    {
+      "cycle_id": "f6622907",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Tangled Hierarchies\n\nBold, testable conjectures distilled from this cycle's central finding: a level\nstructure is *graded* exactly when it is free of strange loops, and the maxim",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-12T03:02:25",
+      "title": "Hofstadter: Tangled Hierarchies in Type Theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7669ab26",
-      "domain": "Applications",
-      "name": "removePrimesOf_dvd",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "7669ab26",
-      "domain": "Applications",
-      "name": "fib_carmichael_large",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0a5d3cfa",
-      "domain": "Applications",
-      "name": "fib_mul_binom",
-      "quality": 0.78
-    },
     {
       "cycle_id": "8e111703",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "traverse_zero",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "f6622907",
+      "domain": "Logic",
+      "name": "isTangled_of_selfLoop",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f6622907",
+      "domain": "Logic",
+      "name": "asymmetric_not_tangled",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f6622907",
+      "domain": "Logic",
+      "name": "tangled_not_asymmetric",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T02:28:00",
+  "last_updated": "2026-07-12T03:02:25",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "4ab1c862",
-        "quality": 0.5380114482758622,
-        "theorems": 10,
-        "title": "GeneralizedPeriod Relation for Betti-Whittaker Periods and Contragredient Repres"
-      },
-      {
         "cycle_id": "9e1a2820",
         "quality": 0.52704,
         "theorems": 20,
@@ -3513,6 +3507,12 @@
         "quality": 0.72,
         "theorems": 35,
         "title": "Hypergraph Ramsey Theory: Beyond Graphs"
+      },
+      {
+        "cycle_id": "f6622907",
+        "quality": 0.82,
+        "theorems": 20,
+        "title": "Hofstadter: Tangled Hierarchies in Type Theory"
       }
     ],
     "MachineLearning": [
