@@ -1392,7 +1392,7 @@
       "source": "",
       "source_exp_id": "2606.30478v1",
       "source_path": "http://arxiv.org/abs/2606.30478v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T18:30:28.722983+00:00",
       "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
@@ -27547,11 +27547,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "494cab2e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -27564,7 +27564,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1038",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T14:11:12.674764+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -27579,7 +27579,7 @@
       "source": "",
       "source_exp_id": "f6b0dfd4",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f6b0dfd4",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_f6c1996b",
       "timestamp": "2026-07-11T13:21:38.622606+00:00",
       "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
@@ -36756,7 +36756,6 @@
     "≤_bruhat": 1
   },
   "selection_log": [
-    "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -36775,6 +36774,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "abduction_followup"
   ]
 }
