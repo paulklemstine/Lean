@@ -28613,11 +28613,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "86966da0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -28630,7 +28630,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1074",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T22:17:32.696453+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -28645,7 +28645,7 @@
       "source": "",
       "source_exp_id": "7473e6ed",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7473e6ed",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_1d24d8a7",
       "timestamp": "2026-07-11T22:13:49.788424+00:00",
       "title": "That a type which fully quantifies over itself —"
@@ -29027,7 +29027,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "48fc054e",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29055,7 +29055,7 @@
       "source": "",
       "source_exp_id": "9af0a04a",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/9af0a04a",
-      "status": "in_progress",
+      "status": "failed",
       "thread_id": "th_ed1b1bbc",
       "timestamp": "2026-07-11T23:05:08.003015+00:00",
       "title": "This file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as "
@@ -38384,7 +38384,6 @@
   },
   "selection_log": [
     "abduction_followup",
-    "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
@@ -38402,6 +38401,7 @@
     "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "abduction_followup"
   ]
 }
