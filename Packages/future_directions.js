@@ -1365,7 +1365,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5922885f",
     "description": "Cycle 6e208619 (Q=0.780) proved 27 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minim",
     "domains": [
       "Applications"
@@ -1374,7 +1374,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "6e208619",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T06:39:37.539189+00:00",
     "title": "Close Proofs: Upper bound conjecture for the cake balancing ratio sequence"
   },
