@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "094010ae",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Reflective Type Theory\n\nThe reflective calculus interprets propositions as sets of proof stages and\nattaches a provability modality `□` to a step relation `R`. Three structural\nfi",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 21,
-      "timestamp": "2026-07-11T14:11:15",
-      "title": "Reflective Type Theory: Proving Things About Proving Things"
-    },
-    {
       "cycle_id": "c3787823",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Dreamtime Algebra, Deepened\n\nThe file `DreamtimeKinshipGL.lean` develops the group theory of Australian\nAboriginal kinship systems uniformly over the elementary abelian 2-group\n`K",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-12T10:27:01",
       "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
+    },
+    {
+      "cycle_id": "53945fe2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle deepens the probabilistic-method development (Erdős Ramsey lower bound, first-moment\nprinciple, and the Lovász Local Lemma chain rule) by formalising a *second* pillar",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T10:27:15",
+      "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "92285bf9",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Sharp Threshold Constant for Cycle Games\n\nThis cycle established the quantitative envelope of the sharp threshold constant\n\n    c_k = ((k-1)·(2(k-1)/k)^{k-2})^{1/(k-1)}\n\nfor the",
-      "quality_score": 0.57296,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-07T01:48:47",
-      "title": "Sharp Threshold Constant for Cycle Games"
-    },
     {
       "cycle_id": "4231f6a2",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-12T10:27:01",
       "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
+    },
+    {
+      "cycle_id": "53945fe2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle deepens the probabilistic-method development (Erdős Ramsey lower bound, first-moment\nprinciple, and the Lovász Local Lemma chain rule) by formalising a *second* pillar",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T10:27:15",
+      "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fb4de3e5",
-      "domain": "Tropical",
-      "name": "adjointAnalogy_extensive",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "fb4de3e5",
-      "domain": "Tropical",
-      "name": "adjointAnalogy_stable_closure",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "fb4de3e5",
-      "domain": "Tropical",
-      "name": "adjointAnalogy_stable_kernel",
-      "quality": 0.78
-    },
     {
       "cycle_id": "4b281557",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "minArc_pos",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "53945fe2",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "53945fe2",
+      "domain": "Novelty",
+      "name": "in",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "53945fe2",
+      "domain": "Novelty",
+      "name": "card_filter_superset",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T10:27:01",
+  "last_updated": "2026-07-12T10:27:15",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "dfaaa130",
-        "quality": 0.8,
-        "theorems": 30,
-        "title": "The Mega-Sphere: All Dimensions at Once"
-      },
-      {
         "cycle_id": "e480cbbd",
         "quality": 0.83,
         "theorems": 64,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 22,
         "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
+      },
+      {
+        "cycle_id": "53945fe2",
+        "quality": 0.82,
+        "theorems": 15,
+        "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
       }
     ],
     "NumberTheory": [

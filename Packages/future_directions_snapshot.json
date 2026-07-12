@@ -11497,7 +11497,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "812631ed",
     "description": "# Future Directions — Neural Coding Theorems\n\n`NeuralCoding.lean` builds a self-contained chain of neural-coding results:\ncapacity `2^N`, its tightness and the per-neuron doubling law, the average dense\nenergy `N/2`, exact sparse (weight-`k`) counts `C(N,k)`, the population-coding\n`1/√N` precision law, the `Θ(log N)` bits-per-spike advantage of sparse coding,\nand a rank bound realizing the neural-manifold hypothesis. Natural extensions:\n\n## Capacity and codes\n- **Error-correcting neural codes.** Introduce a Hamming metric on `NeuralCode N`\n  and prove Singleton / sphere-packing bounds relating minimum distance,\n  redundancy, and the number of reliably distinguishable concepts under noise.\n- **Robust capacity.** Quantify how capacity `2^N` degrades to `2^{N - r}` when\n  codewords must be pairwise distance `≥ 2r+1` apart (noise tolerance).\n\n## Sparse coding\n- **Optimal sparsity.** Maximize `log₂ C(N,k) / k` (bits per spike) over `k`;\n  prove the optimum is at `k = 1` for the one-hot regime and characterize the\n  bits/energy frontier `log₂ C(N,k)/k` as a function of the sparsity `k/N`.\n- **Entropy formulation.** Replace `log₂ C(N,k)` by the binary-entropy\n  approximation `N · H(k/N)` and prove the standard `C(N,k) ≥ 2^{N H(k/N)}/(N+1)`\n  bound, tightening the efficiency comparison.\n\n## Population coding\n- **Probabilistic grounding.** Re-derive `popVariance = v/N` from Mathlib's\n  `ProbabilityTheory.variance` for independent identically distributed neuron\n  estimates, turning the algebraic model into a theorem about random variables.\n- **Fisher information / Cramér–Rao.** Show the `1/√N` precision is optimal by a\n  Cramér–Rao bound: no unbiased estimator from `N` neurons beats `√v/√N`.\n\n## Neural manifold hypothesis\n- **Nonlinear manifolds.** Upgrade `neural_manifold_dim_le_dof` from linear maps\n  to smooth immersions/submersions, bounding the manifold dimension by the\n  behavioural DOF via the constant-rank theorem.\n- **Intrinsic dimension.** Relate the manifold dimension to PCA/covariance rank\n  of recorded activity, connecting the theorem to the empirical \"dimensionality\"\n  measured in systems neuroscience.\n\n## Cross-links in the catalog\n- Connect to `MindEncodingBounds.lean` (connectome description length): combine\n  the per-code capacity here with the quadratic slot count there to bound total\n  representational capacity of a wired network, not just an activity pattern.\n",
     "domain_bridges": [],
     "domains": [
@@ -11510,7 +11510,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ef2405bd",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T05:20:46.630314+00:00",
     "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
   },
