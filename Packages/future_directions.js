@@ -200,6 +200,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0930ae42 (Q=0.820), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four smallest knots. Natural extensions:\n\n1. **Cyclotomic identification.**  Prove `trefoilPoly = cycloto",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_0930ae42_e466b35b",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "0930ae42",
+    "status": "available",
+    "timestamp": "2026-07-12T11:18:43.276515+00:00",
+    "title": "Deepening: The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
     "domains": [
       "Novelty"
@@ -981,7 +995,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "0e9cf2c9",
+    "consumed_by_exp_id": "",
     "description": "Cycle 0981cb8f (Q=0.830) proved 20 theorems in Probability but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian",
     "domains": [
       "Probability"
@@ -990,7 +1004,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "0981cb8f",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T00:40:03.218809+00:00",
     "title": "Close Proofs: Consciousness as Emergent Fixed Point"
   },
@@ -4841,7 +4855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on (d-2)-Connectivity of the Cone-Colorful Carath\u00e9odory Support Complex"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "73c84a79",
     "description": "For every inclusion-free hypergraph H on n vertices, there exists an edge offset function f : H \u2192 \u211d such that the number of isolating weight assignments w \u2208 [d]^n equals the lower bound n * \u2211_{j=0}^{d-1} j^{n-1}. This would show that the bound proved in the paper is not only globally tight (achieved by the singleton hypergraph with f = 0) but also tight for each individual hypergraph when the offsets are chosen appropriately.",
     "domains": [
       "Bridges"
@@ -4850,7 +4864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06171v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T21:19:13.121622+00:00",
     "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
   },
@@ -5764,21 +5778,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-07T17:01:12.860686+00:00",
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
-  },
-  {
-    "consumed_by_exp_id": "0930ae42",
-    "description": "# Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four smallest knots. Natural extensions:\n\n1. **Cyclotomic identification.**  Prove `trefoilPoly = cyclotomic 6 \u2124` and\n   `cinquefoilPoly = cyclotomic 10 \u2124` directly in Mathlib (rather than only proving\n   the individual root facts). This would make the \"roots are exactly the primitive\n   n-th roots of unity\" statement complete, including the *converse* (no spurious\n   roots) via `Polynomial.roots_cyclotomic`.\n\n2. **Torus-knot family.**  The trefoil and cinquefoil are the `(2, 3)` and `(2, 5)`\n   torus knots, with `\u0394_{(2,2k+1)}(t) = (t^{2k+1} + 1)/(t + 1)`. Formalize the general\n   torus-knot Alexander polynomial and show its roots are the `(4k+2)`-th roots of\n   unity that are not `(2k+1)`-th roots \u2014 a uniform generalization of the two cases\n   proved here.\n\n3. **General reciprocity and `\u0394(1) = \u00b11`.**  State and prove the reciprocity law\n   `t^{2g} \u0394(1/t) = \u0394(t)` and the normalization `\u0394(1) = \u00b11` from an abstract\n   axiomatization of Alexander polynomials (e.g. via Seifert matrices `V`,\n   `\u0394(t) = det(V \u2212 t V\u1d40)`), instead of case by case.\n\n4. **Knot determinant as `|\u0394(\u22121)|`.**  Connect the numbers `3, 5, 5` proved here to\n   the determinant defined through a Goeritz or Seifert matrix, and to\n   `p`-colorability (`3`-colorable \u21d4 `3 \u2223 det`).\n\n5. **Off-circle roots and the golden ratio.**  Generalize the figure-eight\n   observation: characterize which knots have all Alexander roots on the unit circle\n   (a necessary condition for genuine root-of-unity OAM quantization). The\n   figure-eight, with roots `\u03c6^{\u00b12}`, is the smallest knot violating this.\n",
-    "domains": [
-      "MachineLearning",
-      "Pythagorean"
-    ],
-    "id": "fd_0835",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7a9dcf2f",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T02:59:09.669263+00:00",
-    "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
   },
   {
     "consumed_by_exp_id": "",
@@ -7069,6 +7068,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T11:18:20.184666+00:00",
     "title": "*correct* Euler/semantics bridge on the symmetric sid"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Cyclotomic Geometry of Knotted-Light OAM Spectra\n\nThis cycle established that, for every odd prime `p`, the `T(2, p)` torus-knot\nAlexander polynomial *is* the `2p`-th cyclotomic polynomial, that its complex roots\nare **exactly** the primitive `2p`-th roots of unity (no spurious roots), that its\ndegree \u2014 the number of orbital-angular-momentum channels \u2014 is `p \u2212 1 = \u03c6(2p)`, that it\nis irreducible over the rationals, and that its determinant is `p` with the knot being\n`3`-colorable iff it is the trefoil. The following conjectures push past the prime case.\n\n## Conjecture 1 \u2014 The composite factorization law\n\nFor every odd `n`, the `T(2, n)` Alexander polynomial factors as\n`A_n = \u220f_{d | 2n, d \u2224 n} \u03a6_d`, so its root set is the union of primitive `d`-th roots\nof unity over exactly the divisors `d` of `2n` that are not divisors of `n`.\n\n*The key insight is* that `(X + 1)\u00b7A_n = X^n + 1 = \u220f_{d | 2n, d \u2224 n} \u03a6_d`, and dividing\nby the single factor `\u03a6_2 = X + 1` removes precisely the divisor `d = 2`, leaving a\nsquarefree product of cyclotomics. The prime case collapses this product to one term.\n\n*Why now?* The exact prime-case root theorem and the fundamental identity\n`(X+1)\u00b7A_n = X^n + 1` are already in hand; the composite case needs only the\ndivisor-set bookkeeping `{d : d | 2n} \u2216 {d : d | n}`, which is a finite, checkable\ncombinatorial step rather than new algebra.\n\n## Conjecture 2 \u2014 The crystalline/metallic frontier\n\nA knot has all Alexander roots on the unit circle if and only if its Alexander\npolynomial is a product of cyclotomic polynomials; among alternating knots the\nsmallest violator is the figure-eight, whose roots are `\u03c6^{\u00b12}`.\n\n*The key insight is* that \"all roots on the unit circle\" for a monic reciprocal integer\npolynomial is equivalent, by Kronecker's theorem, to being a product of cyclotomics\n(and monomials); the figure-eight fails because `X\u00b2 \u2212 3X + 1` has discriminant `5 > 0`\nplacing its roots off the circle.\n\n*Why now?* The quadratic dichotomy `b\u00b2 < 4 \u21d4 roots on circle` for `X\u00b2 \u2212 bX + 1` is\nalready isolated, and the torus-knot family supplies an infinite crystalline reference\nclass against which off-circle behaviour can be measured.\n\n## Conjecture 3 \u2014 Determinant equals the torsion order\n\nFor `T(2, n)` the knot determinant `|\u0394(\u22121)| = n` equals the order of the first homology\nof the double cover of `S\u00b3` branched over the knot, and `q | det` characterizes\n`q`-colorability for every prime `q`.\n\n*The key insight is* that `A_n(\u22121) = \u03a3 (\u2212(\u22121))^i = \u03a3 1 = n`, turning the determinant\ninto a plain channel count, and that `q`-colorability is governed by the reduction of\nthe Alexander module mod `q`, i.e. by `q | \u0394(\u22121)`.\n\n*Why now?* The identity `A_n(\u22121) = n` is proved, and the `3`-colorability equivalence\n`3 | det \u21d4 p = 3` is a proved special case; generalizing to arbitrary prime `q` needs\nonly the divisibility criterion `q | n`.\n\n## Conjecture 4 \u2014 Reciprocity from a single symmetry\n\nEvery torus-knot Alexander polynomial satisfies the palindromic reciprocity\n`X^{deg} \u00b7 A_n(1/X) = A_n(X)`, and this is the polynomial shadow of the Seifert-form\nduality `\u0394(t) = det(V \u2212 tV\u1d40)` with `V \u2212 V\u1d40` unimodular.\n\n*The key insight is* that the coefficient symmetry `[X^i] = [X^{n\u22121\u2212i}]` (a proved fact)\nis exactly the statement that the coefficient vector is fixed by reversal, which is the\nfunctional equation after clearing denominators.\n\n*Why now?* The coefficient-level palindromicity is already proved for the whole family;\nlifting it to the functional equation `X^{deg} A(1/X) = A(X)` is a single reindexing,\nand connecting it to an abstract Seifert matrix `V` would make reciprocity uniform\nacross all knots rather than case-by-case.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1131",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0930ae42",
+    "status": "available",
+    "timestamp": "2026-07-12T11:18:29.979381+00:00",
+    "title": "That, for every odd prime `p`, the `T(2, p)` torus-knot"
   },
   {
     "consumed_by_exp_id": "",

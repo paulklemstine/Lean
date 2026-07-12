@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e480cbbd",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThe results established here place the box-counting dimension of a natural \"truth\nset\" strictly inside the unit interval and expose i",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 64,
-      "timestamp": "2026-07-11T15:33:11",
-      "title": "The Fractal Dimension of Mathematical Truth"
-    },
-    {
       "cycle_id": "c67f6099",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis project formalizes the **order-parameter / phase-transition** picture behind\nthe speculative theme *\"mathematics as a phase transition\"*. Rather than model a\nsociological pro",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-12T11:18:27",
       "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
+    },
+    {
+      "cycle_id": "0930ae42",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Cyclotomic Geometry of Knotted-Light OAM Spectra\n\nThis cycle established that, for every odd prime `p`, the `T(2, p)` torus-knot\nAlexander polynomial *is* the `2p`-th cycloto",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-12T11:18:43",
+      "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5156da6e",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — the Aharoni–Korman property beyond finiteness\n\nThe finite case establishes an *explicit* Aharoni–Korman witness built from the height\nfunction. The following conjectures push the",
-      "quality_score": 0.5183991264367817,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-07T06:15:43",
-      "title": "The Aharoni-Korman Conjecture for Well-Founded FAC Posets"
-    },
     {
       "cycle_id": "3b621fb7",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-12T11:18:27",
       "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
+    },
+    {
+      "cycle_id": "0930ae42",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Cyclotomic Geometry of Knotted-Light OAM Spectra\n\nThis cycle established that, for every odd prime `p`, the `T(2, p)` torus-knot\nAlexander polynomial *is* the `2p`-th cycloto",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-12T11:18:43",
+      "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f6622907",
-      "domain": "Logic",
-      "name": "isTangled_of_selfLoop",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f6622907",
-      "domain": "Logic",
-      "name": "asymmetric_not_tangled",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f6622907",
-      "domain": "Logic",
-      "name": "tangled_not_asymmetric",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0664586a",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "defends_self_of_symmetric",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "0930ae42",
+      "domain": "Novelty",
+      "name": "alexanderTorusPoly_three",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0930ae42",
+      "domain": "Novelty",
+      "name": "alexanderTorusPoly_five",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0930ae42",
+      "domain": "Novelty",
+      "name": "trefoil_eq_cyclotomic_six",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T11:18:27",
+  "last_updated": "2026-07-12T11:18:43",
   "open_questions": [
     {
       "context": "+  range `13 ≤ n ≤ 10000` and carries no `sorry`: the structural reduction is; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2bd85c25",
-        "quality": 0.72,
-        "theorems": 22,
-        "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-      },
-      {
         "cycle_id": "4eef1c33",
         "quality": 0.83,
         "theorems": 27,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 29,
         "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
+      },
+      {
+        "cycle_id": "0930ae42",
+        "quality": 0.82,
+        "theorems": 16,
+        "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
       }
     ],
     "NumberTheory": [
