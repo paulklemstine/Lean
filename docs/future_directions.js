@@ -953,21 +953,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
   {
-    "consumed_by_exp_id": "e6201bf5",
-    "description": "Formalize the Penrose-Hameroff Orch OR hypothesis: consciousness arises from quantum coherence in microtubules. Define: a 'conscious event' is the collapse of a superposition in a microtubule, with timing ~500 ms (the gamma synchrony). Prove: the Penrose objective reduction (OR) threshold is E ~ h/(t * sqrt(N)) where N is the number of tubulins. Show: for N ~ 10^11 tubulins, the coherence time is ~10^-33 s \u2014 too short for room temperature. Conjecture: if quantum consciousness exists, it requires a warm-coherent mechanism not yet formalized. Explore: formalize 'non-computable consciousness' \u2014 does the brain compute beyond Turing?",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_1094",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T00:46:17.919558+00:00",
-    "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
-  },
-  {
     "consumed_by_exp_id": "ef2405bd",
     "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
     "domains": [
@@ -5276,7 +5261,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a bijection between c\u2011balanced Dyck paths and (c+1)-ary trees with prescribed leaf count"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b88b4225",
     "description": "We conjecture that for any field F and integers n \u2265 m \u2265 0, d \u2265 0, the field\u2011independent filtration of \u0394^(n,m)Sym^dE described in the paper yields graded pieces whose characters are exactly the quantum binomial coefficients appearing in the product rule (Rel2) for Lusztig\u2019s quantum Cartan elements. In particular, the i\u2011th quotient is isomorphic to \u0394^(n\u2011i,m\u2011i)Sym^(d\u2011i)E and its formal character equals s_(n\u2011i,m\u2011i) \u2218 s_(d\u2011i).",
     "domains": [
       "Algebra",
@@ -5286,7 +5271,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06749v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T11:04:03.670117+00:00",
     "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
   },
@@ -6887,6 +6872,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T03:38:33.136082+00:00",
     "title": "This project formalizes, in Lean 4 / Mathlib, three pillars of the \"nanotechnolo"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Objective Reduction and the Limits of Computable Cognition\n\nThe results of this cycle pin down the quantitative skeleton of the objective\nreduction proposal for conscious events and expose exactly where it strains. The\nenergy\u2013time reciprocity law is internally consistent and the inverse\nsquare-root tubulin scaling is exact, but together they force the sustainable\ncoherence time toward zero at whole-organism scale, while the space of network\nconfigurations resists any enumeration by its own elements. The conjectures\nbelow are the sharpest testable questions these findings raise.\n\n## 1. The warm-coherence functional law\n\n**Conjecture.** No coherence-time law of the separable form\n`t(N) = f(environment) \u00b7 g(N)` with `g` monotonically decreasing and unbounded\nbelow can keep a whole-organism superposition alive across the gamma-synchrony\nwindow; any viable mechanism must make the environmental factor grow with `N`\nfaster than the decoherence factor decays.\n\nThe key insight is that the decoherence catastrophe is *structural*, not a\nmatter of tuning constants: it follows purely from the divergence of the tubulin\ncount, so rescuing macroscopic coherence demands a genuinely different\nfunctional dependence, not a larger prefactor.\n\nWhy now? Room-temperature quantum effects in biological pigment\u2013protein\ncomplexes are now measurable on femtosecond scales, so the shape of the\n`N`-dependence \u2014 separable or not \u2014 is becoming an empirical question rather\nthan a theoretical stipulation.\n\n## 2. Non-enumerability as an obstruction to computational cognition\n\n**Conjecture.** If mental states are modeled as distinguishable configurations of\na substrate (subsets of its microstates), then no fixed countable indexing \u2014 in\nparticular no single deterministic program's state list \u2014 can realize every\nmental state, and this obstruction is invariant under any faithful re-encoding of\nthe substrate.\n\nThe key insight is that the barrier is the same diagonal argument that defeats\nself-naming systems: the configuration \"those microstates absent from the\nconfiguration that names them\" is never itself named, independent of the\nsubstrate's physical details.\n\nWhy now? Large-scale connectome data make it tempting to identify cognition with\na finite state machine over neural variables; the diagonal obstruction marks a\nprecise boundary that such identifications cannot cross.\n\n## 3. Reciprocity as a conservation principle for discrete events\n\n**Conjecture.** Any theory positing discrete, energy-thresholded mental events\nmust obey an exact energy\u2013duration reciprocity `E \u00b7 t = const`; consequently the\ndistribution of event durations and the distribution of threshold energies are\nreflections of one another under an order-reversing involution.\n\nThe key insight is that reciprocity is an involution on the positive reals, so\nstatistical predictions about event *timing* translate directly and without loss\ninto predictions about event *energetics*.\n\nWhy now? High-density electrophysiology yields empirical distributions of\ngamma-band event durations, which \u2014 via reciprocity \u2014 become falsifiable\npredictions about the energetic thresholds of the underlying collapses.\n\n## 4. Scaling signatures in graded networks\n\n**Conjecture.** In a family of substrates whose active-unit counts grow\ngeometrically, the coherence times form a geometric sequence with ratio fixed by\nthe inverse square-root scaling; deviations from this ratio are a direct measure\nof cooperative (non-independent) coherence among units.\n\nThe key insight is that the exact `t(k\u00b2N) = t(N)/k` scaling makes the *ratio* of\ncoherence times across a size series a parameter-free prediction, so any measured\ndeparture isolates genuine collective effects.\n\nWhy now? Engineered assemblies with controllable unit counts make a geometric\nsize series experimentally accessible, turning the scaling exponent into a\ndirectly testable quantity.\n",
+    "domains": [
+      "Physics",
+      "Pythagorean"
+    ],
+    "id": "fd_1110",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e6201bf5",
+    "status": "available",
+    "timestamp": "2026-07-12T04:28:52.868273+00:00",
+    "title": "The results of this cycle pin down the quantitative skeleton of the objective"
   },
   {
     "consumed_by_exp_id": "",

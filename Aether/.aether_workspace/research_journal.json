@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1c874912",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Information Cost of Encoding a Mind\n\nThis cycle established that the wiring diagram of `n` neurons carries an intrinsic,\nquadratic, and unbeatable information cost of `C(n,2)`",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 13,
-      "timestamp": "2026-07-11T09:25:07",
-      "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
-    },
-    {
       "cycle_id": "ea473918",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Unreasonable Effectiveness of Wrong Theories\n\nThis deepening (`WrongTheoriesDeepening.lean`) adds, on top of the earlier\nmetric/perturbative and single-phenomenon results:\n\n-",
@@ -499,19 +489,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-12T03:38:43",
       "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
+    },
+    {
+      "cycle_id": "e6201bf5",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Objective Reduction and the Limits of Computable Cognition\n\nThe results of this cycle pin down the quantitative skeleton of the objective\nreduction proposal for conscious events a",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-12T04:29:00",
+      "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "59aff0ea",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThese conjectures grow out of a study of how the coefficients of a power series\nbehave when their large-index asymptotics are governed by an oscillatory term\nattached to a root of",
-      "quality_score": 0.8076800000000002,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-05T21:35:39",
-      "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
-    },
     {
       "cycle_id": "d01d52df",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 30,
       "timestamp": "2026-07-12T03:38:43",
       "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
+    },
+    {
+      "cycle_id": "e6201bf5",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Objective Reduction and the Limits of Computable Cognition\n\nThe results of this cycle pin down the quantitative skeleton of the objective\nreduction proposal for conscious events a",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-12T04:29:00",
+      "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-12T03:38:43",
+  "last_updated": "2026-07-12T04:29:00",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "9e1a2820",
-        "quality": 0.52704,
-        "theorems": 20,
-        "title": "Generalized Gawron–Miska–Ulas unboundedness for arbitrary integer bases"
-      },
-      {
         "cycle_id": "c69c4ab9",
         "quality": 0.4328038727272727,
         "theorems": 7,
@@ -3513,6 +3507,12 @@
         "quality": 0.82,
         "theorems": 20,
         "title": "Hofstadter: Tangled Hierarchies in Type Theory"
+      },
+      {
+        "cycle_id": "e6201bf5",
+        "quality": 0.74,
+        "theorems": 14,
+        "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
       }
     ],
     "MachineLearning": [
