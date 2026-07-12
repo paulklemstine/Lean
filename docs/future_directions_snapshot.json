@@ -7753,7 +7753,7 @@
       "Eisenstein series",
       "Theta series"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "208b1ca5",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240·σ₃(n), where σ₃(n) = Σ_{d|n} d³. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of θ_L coincide with those of E₄.",
     "domain_bridges": [
       "Lattice theory and quadratic forms",
@@ -7769,7 +7769,7 @@
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
   },
@@ -10935,7 +10935,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "48fc054e",
     "description": "# Future Directions — Wetware Computation\n\nThis file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as a\ndiscrete dynamical system (a step map iterated on a neural state space) and proves a\ncross-domain **connector**: the information cost of *deterministic dynamics*\n(`Θ(n log n)` bits) is asymptotically negligible next to that of arbitrary\n*connectivity* (`Θ(n²)` bits). This bridges enumerative combinatorics (the counts\n`n^n` and `2^(n²)`) with asymptotic real analysis (the `log₂ n / n → 0` limit).\n\n## What is proved\n\n- **Dynamical-system semantics**: `WetwareSystem.run`, with the flow/semigroup law\n  `run_add` (a monoid action of `(ℕ,+)`), plus `run_succ`.\n- **Finite-state universality** (`exists_wetware_computes`): every function\n  `f : X → Y` is computed by some wetware system with an encoder/decoder in one step.\n- **Dynamics ↔ finiteness** (`orbit_eventually_periodic`): on a finite state space\n  every orbit is eventually periodic (pigeonhole).\n- **Energy connector**: `wetwareEnergy_eq` (`= n·log₂n`), `siliconEnergy_eq` (`= n²`),\n  the strict separation `wetware_beats_silicon`, and the asymptotic separation\n  `energy_ratio_tendsto_zero`.\n\n## Directions\n\n1. **Full Turing-completeness (unbounded tape).** The present `exists_wetware_computes`\n   is the *finite-state* analogue. A genuine simulation of Turing machines requires an\n   unbounded state space (e.g. `ℤ`-indexed configurations, or reals encoding a stack).\n   Formalize a register/stack machine and show a wetware system on `ℕ`- or `ℝ`-valued\n   states simulates each step, recovering computational universality.\n\n2. **Sharper information bounds.** Upgrade the exact identities to a two-sided coding\n   theorem: any prefix-free encoding of transition maps needs `≥ n·log₂n` bits\n   (Kraft), and `n·⌈log₂n⌉` bits suffice, pinning `Θ(n log n)` from both sides.\n\n3. **Continuous dynamics / neural manifolds.** Replace the finite state space with a\n   smooth manifold and `step` with the time-1 flow of a vector field. Study which\n   `f : X → Y` are realizable, connecting to control theory and reachability.\n\n4. **The \"super-Turing\" hypothesis (open/speculative).** The conjecture that\n   continuous-dynamics wetware computes functions no Turing machine can (à la\n   Siegelmann's analog recurrent nets with real weights) is *not* provable for\n   standard discrete/computable models and is physically contentious. A careful\n   formalization would isolate the exact resource (unbounded real precision) that a\n   would-be super-Turing model assumes, and prove the corresponding conditional\n   separation — clarifying that any such power comes from the reals, not the biology.\n\n5. **Energy landscapes and geometry.** Tie `orbit_eventually_periodic` to attractor\n   structure: bound cycle lengths, count fixed points, and relate the geometry of the\n   state graph of `step` to computational capacity.\n",
     "domain_bridges": [],
     "domains": [
@@ -10948,7 +10948,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "9af0a04a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T23:05:08.003015+00:00",
     "title": "This file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as "
   },

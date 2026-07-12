@@ -4510,7 +4510,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "208b1ca5",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4519,7 +4519,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
@@ -6415,7 +6415,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entire"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "48fc054e",
     "description": "# Future Directions \u2014 Wetware Computation\n\nThis file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as a\ndiscrete dynamical system (a step map iterated on a neural state space) and proves a\ncross-domain **connector**: the information cost of *deterministic dynamics*\n(`\u0398(n log n)` bits) is asymptotically negligible next to that of arbitrary\n*connectivity* (`\u0398(n\u00b2)` bits). This bridges enumerative combinatorics (the counts\n`n^n` and `2^(n\u00b2)`) with asymptotic real analysis (the `log\u2082 n / n \u2192 0` limit).\n\n## What is proved\n\n- **Dynamical-system semantics**: `WetwareSystem.run`, with the flow/semigroup law\n  `run_add` (a monoid action of `(\u2115,+)`), plus `run_succ`.\n- **Finite-state universality** (`exists_wetware_computes`): every function\n  `f : X \u2192 Y` is computed by some wetware system with an encoder/decoder in one step.\n- **Dynamics \u2194 finiteness** (`orbit_eventually_periodic`): on a finite state space\n  every orbit is eventually periodic (pigeonhole).\n- **Energy connector**: `wetwareEnergy_eq` (`= n\u00b7log\u2082n`), `siliconEnergy_eq` (`= n\u00b2`),\n  the strict separation `wetware_beats_silicon`, and the asymptotic separation\n  `energy_ratio_tendsto_zero`.\n\n## Directions\n\n1. **Full Turing-completeness (unbounded tape).** The present `exists_wetware_computes`\n   is the *finite-state* analogue. A genuine simulation of Turing machines requires an\n   unbounded state space (e.g. `\u2124`-indexed configurations, or reals encoding a stack).\n   Formalize a register/stack machine and show a wetware system on `\u2115`- or `\u211d`-valued\n   states simulates each step, recovering computational universality.\n\n2. **Sharper information bounds.** Upgrade the exact identities to a two-sided coding\n   theorem: any prefix-free encoding of transition maps needs `\u2265 n\u00b7log\u2082n` bits\n   (Kraft), and `n\u00b7\u2308log\u2082n\u2309` bits suffice, pinning `\u0398(n log n)` from both sides.\n\n3. **Continuous dynamics / neural manifolds.** Replace the finite state space with a\n   smooth manifold and `step` with the time-1 flow of a vector field. Study which\n   `f : X \u2192 Y` are realizable, connecting to control theory and reachability.\n\n4. **The \"super-Turing\" hypothesis (open/speculative).** The conjecture that\n   continuous-dynamics wetware computes functions no Turing machine can (\u00e0 la\n   Siegelmann's analog recurrent nets with real weights) is *not* provable for\n   standard discrete/computable models and is physically contentious. A careful\n   formalization would isolate the exact resource (unbounded real precision) that a\n   would-be super-Turing model assumes, and prove the corresponding conditional\n   separation \u2014 clarifying that any such power comes from the reals, not the biology.\n\n5. **Energy landscapes and geometry.** Tie `orbit_eventually_periodic` to attractor\n   structure: bound cycle lengths, count fixed points, and relate the geometry of the\n   state graph of `step` to computational capacity.\n",
     "domains": [
       "Algebra",
@@ -6425,7 +6425,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "9af0a04a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T23:05:08.003015+00:00",
     "title": "This file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as "
   },
