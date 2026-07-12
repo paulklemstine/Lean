@@ -28727,7 +28727,7 @@
       "source": "",
       "source_exp_id": "29aa9d96",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/29aa9d96",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "th_a3d87fda",
       "timestamp": "2026-07-11T22:30:47.487400+00:00",
       "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field"
