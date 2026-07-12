@@ -3533,7 +3533,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extended 1-2-3 Conjecture for Symmetric Differences"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "766b6e47",
     "description": "For p an odd prime, k \u2265 2 an even integer, and a_p in the algebraic closure of Q_p with v(a_p) > 0 and v(a_p) not an integer (i.e., the slope is fractional), the mod p semisimplified reduction V\u0304_{k,a_p} of the two-dimensional crystalline representation V_{k,a_p} of G_{Q_p} is irreducible. This folklore conjecture is partially established in the paper for fractional slopes less than p-2 and sufficiently large even weights k under a slope assumption on bad congruence classes of k mod p.",
     "domains": [
       "Algebra",
@@ -3543,7 +3543,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T05:41:57.869825+00:00",
     "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weight"
   },
@@ -4609,7 +4609,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
   {
-    "consumed_by_exp_id": "79619920",
+    "consumed_by_exp_id": "",
     "description": "Every connected bipartite {-1,0,1}-diagonalizable graph on n vertices is a complete bipartite graph K_{n/2, n/2}. This strengthens the paper's theorem that every bipartite {-1,0,1}-diagonalizable graph is regular, and if true, would provide a complete structural characterization connecting the {-1,0,1}-diagonalizability property to classical complete bipartite graph structure.",
     "domains": [
       "Bridges"
@@ -4618,7 +4618,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06336v1",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-08T05:03:44.362244+00:00",
     "title": "Bipartite {-1,0,1}-diagonalizable graphs are complete bipartite"
   },
