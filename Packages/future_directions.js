@@ -692,7 +692,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b290e3a0",
     "description": "Building on cycle 6e208619 (Q=0.780), which proved 27 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Let a = (a_i)_{i=1}^\\infty be an infinite sequence of points on a circle, where the first n points cut the circle into n pieces. For r \\geq 1, let \\mu^r_n(a) be the ratio between the maximum and minimum sizes of r consecutive pieces, and define \\mu_r(a) = limsup_{n\\to\\infty} \\mu^r_n(a). For any fixe",
     "domains": [
       "Applications"
@@ -701,7 +701,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "6e208619",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T06:39:37.464758+00:00",
     "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
   },
@@ -3983,20 +3983,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alternating Hurwitz\u2013Ramanujan Identity with Euler Polynomials"
   },
   {
-    "consumed_by_exp_id": "49f67430",
-    "description": "The paper proves that for k \u2265 3 and sufficiently large n, the maximum number of points in an n \u00d7 n grid with no k+1 collinear points equals kn. This conjecture asserts that 'sufficiently large' can be replaced by the explicit threshold n \u2265 k. Note that for n \u2264 k the whole grid has no k+1 collinear points so f_k(n) = n\u00b2, and for n = k we get f_k(k) = k\u00b2 = k\u00b7k, making n \u2265 k the natural boundary. The conjecture predicts that for all k \u2265 3 and n \u2265 k, the trivial upper bound kn is always achievable.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0519",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05255v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T06:16:15.118766+00:00",
-    "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k \u2265 3 and n \u2265 k"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every d \u2265 3, the supremum of normalized surface measures of zero-sum-free measurable subsets of the unit sphere S^{d-1} in \u211d^d equals exactly 1/2. Equivalently, every measurable zero-sum-free A \u2286 S^{d-1} satisfies \u03c3_{d-1}(A) \u2264 1/2, with equality achieved (only) by open hemispheres. The paper establishes the asymptotic bound m_d \u2264 1/2 + O(1/d), but the exact value m_d = 1/2 remains open.",
     "domains": [
@@ -6945,6 +6931,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T06:11:38.559922+00:00",
     "title": "These conjectures are distilled from the present cycle, whose central finding is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Explicit threshold for no-(k+1)-in-line\n\n## What is proved (`Geometry/NoKPlus1InLine.lean`)\n\nPoints live in the `n \u00d7 n` integer grid `grid n = {0,\u2026,n-1}\u00b2`. Collinearity is\nthe integer determinant test `Collinear3 p q r`, and a finite set is\n`NoKp1 k` when every line through two of its points carries at most `k` of its\npoints. `fk k n` is the maximum size of a `NoKp1 k` subset of `grid n`.\n\n* `card_le` \u2014 **trivial upper bound**: any `NoKp1 k` set in `grid n` has at most\n  `k \u00b7 n` points (column pigeonhole: each column is a line, hence has `\u2264 k`\n  points, and there are `n` columns). Holds for all `k \u2265 1, n`.\n* `fk_le` \u2014 hence `f_k(n) \u2264 k \u00b7 n`.\n* `line_inter_grid_le` \u2014 a line through two distinct integer points meets\n  `grid n` in at most `n` points.\n* `grid_NoKp1`, `fk_eq_sq` \u2014 **trivial regime**: for `n \u2264 k` the whole grid is\n  admissible, so `f_k(n) = n\u00b2`; `fk_diag` gives the boundary case\n  `f_k(k) = k\u00b2 = k\u00b7k`.\n* `f3_4` \u2014 **first non-trivial instance** (`n = 4 > k = 3`): `f_3(4) = 12 = 3\u00b74`,\n  combining the upper bound with an explicit, kernel-checked 12-point\n  configuration `T`.\n\nAll results depend only on `propext`, `Classical.choice`, `Quot.sound`.\n\n## The remaining hard direction\n\nThe conjecture `f_k(n) = kn` for `k \u2265 3, n \u2265 k` reduces (given `card_le`) to the\n**achievability / lower bound** `f_k(n) \u2265 kn`: for every `k \u2265 3` and `n \u2265 k`,\nexhibit `kn` points in `grid n` with no `k+1` collinear. This is the genuinely\ndifficult part and is open in the explicit-threshold form; only the\n\"sufficiently large `n`\" version is known in the literature.\n\nConcrete next steps toward it:\n\n1. **Modular / algebraic-curve constructions.** For prime `p`, graphs of\n   low-degree polynomials `y \u2261 g(x) (mod p)` meet any line in a bounded number of\n   points. Understanding, for a target of exactly `k` points per line, which\n   unions of `\u230ak/2\u230b`-ish such curves stay within the per-line budget is the key\n   quantitative question. Formalizing \"a degree-`d` curve mod `p` meets a line in\n   `\u2264 d` points\" (a B\u00e9zout-type bound over `ZMod p`) would be a reusable lemma.\n\n2. **Perturbed lattice / greedy constructions** achieving `kn` for all `n \u2265 k`\n   with an *explicit* description, whose no-`(k+1)`-in-line property can be\n   checked by a finite/inductive argument rather than case-by-case `decide`.\n\n3. **Scaling up the verified base cases.** `f3_4` was verified by kernel\n   `decide` on the decidable predicate `NoKp1`. The same infrastructure verifies\n   `f_k(n) = kn` for any *fixed* small `(k, n)` once an explicit optimal set is\n   supplied; assembling a family of such witnesses (e.g. `f_3(n)` for a range of\n   `n`) would give more evidence and possibly reveal a uniform pattern to\n   formalize.\n\n4. **A general upper-bound refinement.** `card_le` only uses vertical lines. For\n   some `(k, n)` the true maximum is below `kn`; a sharper counting argument that\n   also uses rows and diagonals could establish `f_k(n) < kn` in regimes outside\n   `n \u2265 k`, complementing the conjecture's stated range.\n\n## Reusable pieces\n\n`Collinear3`, its `Decidable` instance, `grid`, `NoKp1` (with a `Decidable`\ninstance), and `line_inter_grid_le` are stated generically over `\u2124 \u00d7 \u2124` and can\nbe reused for any lattice no-`(k+1)`-in-line / no-three-in-line development.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1116",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "49f67430",
+    "status": "available",
+    "timestamp": "2026-07-12T07:02:17.521516+00:00",
+    "title": "Points live in the `n \u00d7 n` integer grid `grid n = {0,\u2026,n-1}\u00b2`. Collinearity is"
   },
   {
     "consumed_by_exp_id": "",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1e8c0c26",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's finding: the balanced complete bipartite graph\n`K_{t,t}` on `n = 2t` vertices is `C_d`-free for odd `d`, packs `n²/4` edges, and\nrequires at least `cd·n`",
-      "quality_score": 0.420858,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-07-06T07:50:50",
-      "title": "Tightness of Edge Deletion Bound in Hyperstability Extension of Erdős-Gallai Theorem"
-    },
-    {
       "cycle_id": "24d6d8b7",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from this cycle's study of the discrete\nfundamental group of quasisymmetric cubical sets — the group presented by the\nedges of the 1-skeleton",
@@ -2501,6 +2491,16 @@
       "theorem_count": 28,
       "timestamp": "2026-07-12T06:11:40",
       "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
+    },
+    {
+      "cycle_id": "49f67430",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Explicit threshold for no-(k+1)-in-line\n\n## What is proved (`Geometry/NoKPlus1InLine.lean`)\n\nPoints live in the `n × n` integer grid `grid n = {0,…,n-1}²`. Collinearity is\nthe int",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-12T07:02:25",
+      "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k ≥ 3 and n ≥ k"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-12T06:11:40",
+  "last_updated": "2026-07-12T07:02:25",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "094010ae",
-        "quality": 0.82,
-        "theorems": 21,
-        "title": "Reflective Type Theory: Proving Things About Proving Things"
-      },
-      {
         "cycle_id": "c3787823",
         "quality": 0.83,
         "theorems": 37,
@@ -3637,6 +3631,12 @@
         "quality": 0.74,
         "theorems": 28,
         "title": "Conditional Refinement of Page's Theorem on Landau-Siegel Zeros"
+      },
+      {
+        "cycle_id": "49f67430",
+        "quality": 0.62,
+        "theorems": 22,
+        "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k ≥ 3 and n ≥ k"
       }
     ],
     "NumberTheory": [
