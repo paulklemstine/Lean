@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0a5d3cfa",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Mathematics as a Phase Transition\n\nThis cycle closed the outstanding placeholder results connecting the factorial\nnumber system to the general mixed-radix theory, and distilled th",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 13,
-      "timestamp": "2026-07-11T20:17:57",
-      "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
-    },
-    {
       "cycle_id": "8e111703",
       "domain": "Novelty",
       "key_insight": "# Future directions: reliable intuition as a non-computable resource\n\nThis cycle modelled Ramanujan-style intuition as a verdict map on encoded\nstatements and proved two complementary obstructions to",
@@ -499,19 +489,19 @@
       "theorem_count": 34,
       "timestamp": "2026-07-12T14:10:49",
       "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
+    },
+    {
+      "cycle_id": "edd57dbd",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Divisor-Stratified OAM Spectra of Torus Knots\n\nThis cycle established the general divisor factorization of the `T(2,n)` Alexander\npolynomial: for every odd `n`,\n\n  A_n(X) = ∏_{d",
+      "quality_score": 0.86,
+      "sorry_count": 1,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T15:02:50",
+      "title": "Deepening: The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "492f9d48",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Split Geometry\n\nThe file `Algebra/SplitGeometry.lean` formalizes, with complete proofs and no\n`sorry`, the algebraic/analytic skeleton of the Split Geometry:\n\n* the metric `ds² =",
-      "quality_score": 0.8151999999999999,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-08T21:35:42",
-      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-    },
     {
       "cycle_id": "8d243e81",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 34,
       "timestamp": "2026-07-12T14:10:49",
       "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
+    },
+    {
+      "cycle_id": "edd57dbd",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Divisor-Stratified OAM Spectra of Torus Knots\n\nThis cycle established the general divisor factorization of the `T(2,n)` Alexander\npolynomial: for every odd `n`,\n\n  A_n(X) = ∏_{d",
+      "quality_score": 0.86,
+      "sorry_count": 1,
+      "theorem_count": 9,
+      "timestamp": "2026-07-12T15:02:50",
+      "title": "Deepening: The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e2c082ff",
-      "domain": "MachineLearning",
-      "name": "codeg_comm",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "e2c082ff",
-      "domain": "MachineLearning",
-      "name": "adj_of_mem_codeg",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "71e324bf",
-      "domain": "Applications",
-      "name": "shatter_k_ge_four",
-      "quality": 0.7
-    },
     {
       "cycle_id": "71e324bf",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "stable_defends",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "edd57dbd",
+      "domain": "Applications",
+      "name": "odd_of_dvd_odd",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "edd57dbd",
+      "domain": "Applications",
+      "name": "divisors_two_mul_eq_union",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "edd57dbd",
+      "domain": "Applications",
+      "name": "divisors_two_mul_odd_disjoint",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-07-12T14:10:49",
+  "last_updated": "2026-07-12T15:02:50",
   "open_questions": [
-    {
-      "context": "Critique (Critic).  Every main theorem is sorry-free and none is vacuous:; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "094010ae",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-11T14:11:15"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "e480cbbd",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 7,
       "timestamp": "2026-07-12T14:10:49"
+    },
+    {
+      "context": "-Everything is elementary and `sorry`-free.",
+      "cycle_id": "edd57dbd",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-12T15:02:50"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "b88b4225",
-        "quality": 0.82,
-        "theorems": 848,
-        "title": "Categorifying the quantum binomial product rule via filtrations of plethystic mo"
-      },
-      {
         "cycle_id": "c1de826b",
         "quality": 0.82,
         "theorems": 33,
@@ -3141,6 +3135,12 @@
         "quality": 0.88,
         "theorems": 30,
         "title": "Exact dictionary \"logical qubits = middle homology\""
+      },
+      {
+        "cycle_id": "edd57dbd",
+        "quality": 0.86,
+        "theorems": 9,
+        "title": "Deepening: The Lean development `Catalog/MachineLearning/KnottedLightAlexander.l"
       }
     ],
     "Bridges": [

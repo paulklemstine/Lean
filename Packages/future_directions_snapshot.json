@@ -268,25 +268,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "edd57dbd",
-    "description": "Building on cycle 0930ae42 (Q=0.820), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four smallest knots. Natural extensions:\n\n1. **Cyclotomic identification.**  Prove `trefoilPoly = cycloto",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_0930ae42_e466b35b",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0930ae42",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T11:18:43.276515+00:00",
-    "title": "Deepening: The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
     "domain_bridges": [],
@@ -5994,33 +5975,6 @@
     "status": "available",
     "timestamp": "2026-07-06T10:02:54.029274+00:00",
     "title": "Springer Isomorphism Characterization via Centralizer Smoothness"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "bollobas1976complete",
-      "lovasz1983limits",
-      "reiher2020clique"
-    ],
-    "consumed_by_exp_id": "b35b4ce5",
-    "description": "For any integers 2 ≤ s < t and any n-vertex graph G, the t-clique density of G is bounded below by the composition of the Lovász-Simonovits t-clique density function evaluated at the generalized inverse of the s-clique density function applied to the s-clique density of G. Specifically, k_t(G) / n^t ≥ F_t(F_s^{-1}(k_s(G) / n^s)). This encompasses Reiher's clique density theorem as a special case when s=2.",
-    "domain_bridges": [
-      "graph theory",
-      "real analysis",
-      "convex optimization"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0445",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "First, formalize Turán graphs and compute their s-clique and r-clique counts to establish the critical points. Define the piecewise linear function L_{s,r} and prove Bollobás's original piecewise-linear interpolation bound. Define the Lovász-Simonovits clique density function F_r and its generalized inverse F_s^{-1}. Finally, formalize the inductive proof strategy presented in the paper, showing that the piecewise-linear bound is superseded by the continuous bound involving F_t and F_s^{-1}.",
-    "research_mode": "team",
-    "source_exp_id": "2606.31967v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T10:47:05.613055+00:00",
-    "title": "Asymptotic Clique-to-Clique Density Bound"
   },
   {
     "ambition_level": "extension",
@@ -12042,6 +11996,46 @@
     "status": "available",
     "timestamp": "2026-07-12T14:10:44.528569+00:00",
     "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Divisor-Stratified OAM Spectra of Torus Knots\n\nThis cycle established the general divisor factorization of the `T(2,n)` Alexander\npolynomial: for every odd `n`,\n\n  A_n(X) = ∏_{d ∣ n, d > 1} Φ_{2d}(X),\n\nso the orbital-angular-momentum (OAM) spectrum of a `T(2,n)` knotted-light beam is a\ndisjoint union of primitive-root layers, one layer of primitive `2d`-th roots of unity\nfor each nontrivial divisor `d ∣ n`. The total channel count is `n − 1` and the number\nof layers is `τ(n) − 1`; a single layer occurs exactly when `n` is prime. The following\nconjectures are natural, bold, and testable continuations.\n\n## 1. Galois-orbit stratification is a spectral fingerprint\n\n**Conjecture.** Two `T(2,m)` and `T(2,n)` beams have OAM spectra related by a field\nautomorphism if and only if `m` and `n` have the same multiset of nontrivial divisors,\ni.e. `m = n`. Consequently the unordered layer list `{2d : d ∣ n, d > 1}` is a complete\ninvariant of the beam within the `T(2,·)` family.\n\nThe key insight is that each layer is an *irreducible* Galois orbit (a cyclotomic\nfactor), so the spectrum decomposes canonically into indivisible pieces indexed by the\ndivisor lattice, and the lattice of `n` is recoverable from the layer degrees `φ(2d)`.\n\nWhy now? The exact, no-spurious-roots description of each layer as the primitive\n`2d`-th roots of unity makes the orbit decomposition rigorous, turning a heuristic\n\"spectral fingerprint\" into a precise reconstruction problem.\n\n## 2. The metallic exception is intrinsically non-cyclotomic\n\n**Conjecture.** Among all knots whose Alexander polynomial is monic with unit constant\nterm and degree ≤ 2, the figure-eight `4₁` is the unique one whose roots avoid the unit\ncircle; equivalently, `X² − 3X + 1` is the only such polynomial whose roots are a\nmetallic pair `(φ², φ^{-2})` rather than a cyclotomic pair.\n\nThe key insight is that the quadratic palindrome `X² − bX + 1` is crystalline (roots on\nthe unit circle) exactly when `|b| ≤ 1` and metallic (real reciprocal roots) exactly\nwhen `|b| ≥ 2`, with no intermediate regime; `b = 3` for `4₁` sits strictly in the\nmetallic zone while every `T(2,p)` sits at `b = 1`.\n\nWhy now? The divisor factorization pins the torus family entirely on the unit circle,\nsharpening the contrast with `4₁` into a clean dichotomy that can be scanned across\nlarger knot tables.\n\n## 3. Prime-power beams are self-similar under harmonic zoom\n\n**Conjecture.** For an odd prime `p`, the `T(2, p^{k+1})` OAM spectrum is obtained from\nthe `T(2, p^k)` spectrum by adjoining a single new outer layer of primitive\n`2p^{k+1}`-th roots of unity, and the map `ζ ↦ ζ^p` carries layer `j+1` onto layer `j`.\nHence the spectrum is exactly self-similar under a `p`-fold angular rescaling.\n\nThe key insight is that the divisors of `p^k` form a chain `1 ∣ p ∣ p² ∣ ⋯ ∣ p^k`, so\nthe factorization is a nested tower `Φ_{2p}, Φ_{2p²}, …` rather than an unstructured\nproduct, and the Frobenius-type map `ζ ↦ ζ^p` realises the tower's shift.\n\nWhy now? With the prime-power stratification made explicit, the shift map becomes a\nconcrete construction on the finite layer set instead of an asymptotic statement.\n\n## 4. Channel capacity is additive over coprime knot connect-sums\n\n**Conjecture.** If `m` and `n` are coprime odd integers, the OAM layer set of the beam\nassociated to `mn` is the union of the layer sets attached to the divisor lattices of\n`m` and `n`, glued along their shared \"mixed\" divisors, and the total channel count\nsatisfies `deg A_{mn} = mn − 1`, strictly larger than `(m − 1) + (n − 1)`.\n\nThe key insight is that the divisor lattice of a product of coprimes is the product of\nthe lattices, so layers multiply combinatorially; the excess `mn − 1 − (m−1) − (n−1) =\n(m−1)(n−1)` measures the genuinely new \"cross\" layers `Φ_{2d}` for `d` a nontrivial\nmixed divisor.\n\nWhy now? The factorization is indexed by divisors, so coprime multiplicativity of the\ndivisor function immediately predicts the new layers, giving a falsifiable count that\ncan be checked against any tabulated connect-sum invariant.\n\n## 5. Determinant growth tracks the smallest prime factor\n\n**Conjecture.** The knot determinant `|A_n(−1)| = n` of `T(2,n)` is divisible by `3` if\nand only if the trefoil layer `Φ₆` is present, i.e. if and only if `3 ∣ n`; more\ngenerally, for each odd prime `q`, the layer `Φ_{2q}` is present exactly when `q ∣ n`,\nso the layer set reads off the prime factorization of the determinant.\n\nThe key insight is that `A_n(−1) = n` is a plain alternating count, while the layer set\nis indexed by divisors of `n`, so primality tests on the determinant translate directly\ninto presence/absence of specific cyclotomic layers.\n\nWhy now? With both the determinant formula and the divisor-indexed layer set proven for\nthe whole family, the correspondence between arithmetic of the determinant and the\ngeometry of the spectrum is exact and immediately checkable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1141",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "edd57dbd",
+    "status": "available",
+    "timestamp": "2026-07-12T15:02:42.971449+00:00",
+    "title": "General divisor factorization of the `T(2,n)` Alexand"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Clique Densities\n\nThis cycle established the unconditional *upper* comparison of clique counts,\n`C(t,s)·k_t(G) ≤ C(n-s,t-s)·k_s(G)`, its tightness on the complete graph, and the\nresulting antitonicity of the normalized clique density `k_r(G)/C(n,r)`. These\nfindings sharpen the picture of how clique counts of different orders constrain one\nanother and motivate the following bold, testable conjectures.\n\n## 1. The sharp clique-to-clique lower bound\n\nFor all integers `2 ≤ s < t` and every `n`-vertex graph `G`,\n`k_t(G)/n^t ≥ F_t(F_s^{-1}(k_s(G)/n^s))`,\nwhere `F_r` is the Lovász–Simonovits function tracing the minimum `r`-clique density\nalong the sequence of balanced complete multipartite graphs, and `F_s^{-1}` is its\ngeneralized inverse. The case `s = 2` is Reiher's clique density theorem.\n\n**The key insight is** that while the *upper* comparison is governed by the complete\ngraph (a single clique), the matching *lower* bound is governed by complete\nmultipartite graphs, so the extremal transition from `s`-cliques to `t`-cliques is\ncaptured exactly by composing the two piecewise-linear/convex density profiles.\n\n**Why now?** The unconditional upper bound and its tightness certificate isolate the\ncomplete graph as the only equality case, cleanly separating the two extremal\nregimes; this separation is precisely the structural hypothesis needed to attack the\nlower bound by an averaging-and-symmetrization argument over multipartite parts.\n\n## 2. Stability of the antitone density profile\n\nIf `k_t(G)/C(n,t)` is within `ε` of `k_s(G)/C(n,s)` for some `s < t`, then `G` is\n`o(1)`-close (in edit distance per vertex pair) to a disjoint union of cliques.\n\n**The key insight is** that equality in the normalized-density antitonicity forces\nevery `s`-clique to extend to the full number `C(n-s,t-s)` of `t`-cliques, which can\nonly happen if the neighborhoods align into complete blocks.\n\n**Why now?** The exact equality analysis of the count bound already pins down the\ncomplete graph; a robust, quantitative version is the natural next step and would\ngive a clique-decomposition analogue of the triangle-removal phenomenon.\n\n## 3. Weighted and fractional clique densities\n\nThe antitonicity `k_t/C(n,t) ≤ k_s/C(n,s)` extends to weighted graphons: for a\nsymmetric measurable `W : [0,1]^2 → [0,1]`, the homomorphism densities `t(K_r, W)`\nsatisfy a corresponding monotone relation after normalization by the clique moments.\n\n**The key insight is** that the finite double-counting incidence identity has a\ncontinuous avatar as a Fubini exchange between the `s`-fold and `t`-fold clique\nintegrals of `W`, so the discrete inequality survives the limit.\n\n**Why now?** Graphon limits make the `n → ∞` behavior of the density profile a\nfirst-class object, and the exact finite identity proved here transfers verbatim,\nproviding an immediately checkable continuous conjecture.\n\n## 4. Beyond cliques: monotone density profiles for general subgraphs\n\nFor a fixed graph `H` and its `r`-vertex \"blow-up truncations\" `H_r`, the normalized\nsubgraph-count profile `hom(H_r, G)/hom(H_r, K_n)` is antitone in `r` whenever the\n`H_r` form a subset-closed tower.\n\n**The key insight is** that the only property of cliques used in the count bound is\nthat a sub-object of a clique is again a clique; any subset-closed family of dense\npatterns inherits the same incidence double count.\n\n**Why now?** Subset-closedness is exactly the combinatorial hypothesis that the\npresent proof isolates, so generalizing away from cliques is a matter of identifying\nthe right closed towers rather than inventing new machinery.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1142",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b35b4ce5",
+    "status": "available",
+    "timestamp": "2026-07-12T15:02:53.060049+00:00",
+    "title": "Unconditional *upper* comparison of clique counts,"
   },
   {
     "ambition_level": "extension",

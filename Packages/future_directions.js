@@ -199,20 +199,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
   {
-    "consumed_by_exp_id": "edd57dbd",
-    "description": "Building on cycle 0930ae42 (Q=0.820), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formalizes\nthe exact algebra behind the \"knotted light\" OAM/Alexander-polynomial conjecture for\nthe four smallest knots. Natural extensions:\n\n1. **Cyclotomic identification.**  Prove `trefoilPoly = cycloto",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_0930ae42_e466b35b",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "0930ae42",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T11:18:43.276515+00:00",
-    "title": "Deepening: The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
     "domains": [
@@ -7215,6 +7201,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T14:10:44.528569+00:00",
     "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Divisor-Stratified OAM Spectra of Torus Knots\n\nThis cycle established the general divisor factorization of the `T(2,n)` Alexander\npolynomial: for every odd `n`,\n\n  A_n(X) = \u220f_{d \u2223 n, d > 1} \u03a6_{2d}(X),\n\nso the orbital-angular-momentum (OAM) spectrum of a `T(2,n)` knotted-light beam is a\ndisjoint union of primitive-root layers, one layer of primitive `2d`-th roots of unity\nfor each nontrivial divisor `d \u2223 n`. The total channel count is `n \u2212 1` and the number\nof layers is `\u03c4(n) \u2212 1`; a single layer occurs exactly when `n` is prime. The following\nconjectures are natural, bold, and testable continuations.\n\n## 1. Galois-orbit stratification is a spectral fingerprint\n\n**Conjecture.** Two `T(2,m)` and `T(2,n)` beams have OAM spectra related by a field\nautomorphism if and only if `m` and `n` have the same multiset of nontrivial divisors,\ni.e. `m = n`. Consequently the unordered layer list `{2d : d \u2223 n, d > 1}` is a complete\ninvariant of the beam within the `T(2,\u00b7)` family.\n\nThe key insight is that each layer is an *irreducible* Galois orbit (a cyclotomic\nfactor), so the spectrum decomposes canonically into indivisible pieces indexed by the\ndivisor lattice, and the lattice of `n` is recoverable from the layer degrees `\u03c6(2d)`.\n\nWhy now? The exact, no-spurious-roots description of each layer as the primitive\n`2d`-th roots of unity makes the orbit decomposition rigorous, turning a heuristic\n\"spectral fingerprint\" into a precise reconstruction problem.\n\n## 2. The metallic exception is intrinsically non-cyclotomic\n\n**Conjecture.** Among all knots whose Alexander polynomial is monic with unit constant\nterm and degree \u2264 2, the figure-eight `4\u2081` is the unique one whose roots avoid the unit\ncircle; equivalently, `X\u00b2 \u2212 3X + 1` is the only such polynomial whose roots are a\nmetallic pair `(\u03c6\u00b2, \u03c6^{-2})` rather than a cyclotomic pair.\n\nThe key insight is that the quadratic palindrome `X\u00b2 \u2212 bX + 1` is crystalline (roots on\nthe unit circle) exactly when `|b| \u2264 1` and metallic (real reciprocal roots) exactly\nwhen `|b| \u2265 2`, with no intermediate regime; `b = 3` for `4\u2081` sits strictly in the\nmetallic zone while every `T(2,p)` sits at `b = 1`.\n\nWhy now? The divisor factorization pins the torus family entirely on the unit circle,\nsharpening the contrast with `4\u2081` into a clean dichotomy that can be scanned across\nlarger knot tables.\n\n## 3. Prime-power beams are self-similar under harmonic zoom\n\n**Conjecture.** For an odd prime `p`, the `T(2, p^{k+1})` OAM spectrum is obtained from\nthe `T(2, p^k)` spectrum by adjoining a single new outer layer of primitive\n`2p^{k+1}`-th roots of unity, and the map `\u03b6 \u21a6 \u03b6^p` carries layer `j+1` onto layer `j`.\nHence the spectrum is exactly self-similar under a `p`-fold angular rescaling.\n\nThe key insight is that the divisors of `p^k` form a chain `1 \u2223 p \u2223 p\u00b2 \u2223 \u22ef \u2223 p^k`, so\nthe factorization is a nested tower `\u03a6_{2p}, \u03a6_{2p\u00b2}, \u2026` rather than an unstructured\nproduct, and the Frobenius-type map `\u03b6 \u21a6 \u03b6^p` realises the tower's shift.\n\nWhy now? With the prime-power stratification made explicit, the shift map becomes a\nconcrete construction on the finite layer set instead of an asymptotic statement.\n\n## 4. Channel capacity is additive over coprime knot connect-sums\n\n**Conjecture.** If `m` and `n` are coprime odd integers, the OAM layer set of the beam\nassociated to `mn` is the union of the layer sets attached to the divisor lattices of\n`m` and `n`, glued along their shared \"mixed\" divisors, and the total channel count\nsatisfies `deg A_{mn} = mn \u2212 1`, strictly larger than `(m \u2212 1) + (n \u2212 1)`.\n\nThe key insight is that the divisor lattice of a product of coprimes is the product of\nthe lattices, so layers multiply combinatorially; the excess `mn \u2212 1 \u2212 (m\u22121) \u2212 (n\u22121) =\n(m\u22121)(n\u22121)` measures the genuinely new \"cross\" layers `\u03a6_{2d}` for `d` a nontrivial\nmixed divisor.\n\nWhy now? The factorization is indexed by divisors, so coprime multiplicativity of the\ndivisor function immediately predicts the new layers, giving a falsifiable count that\ncan be checked against any tabulated connect-sum invariant.\n\n## 5. Determinant growth tracks the smallest prime factor\n\n**Conjecture.** The knot determinant `|A_n(\u22121)| = n` of `T(2,n)` is divisible by `3` if\nand only if the trefoil layer `\u03a6\u2086` is present, i.e. if and only if `3 \u2223 n`; more\ngenerally, for each odd prime `q`, the layer `\u03a6_{2q}` is present exactly when `q \u2223 n`,\nso the layer set reads off the prime factorization of the determinant.\n\nThe key insight is that `A_n(\u22121) = n` is a plain alternating count, while the layer set\nis indexed by divisors of `n`, so primality tests on the determinant translate directly\ninto presence/absence of specific cyclotomic layers.\n\nWhy now? With both the determinant formula and the divisor-indexed layer set proven for\nthe whole family, the correspondence between arithmetic of the determinant and the\ngeometry of the spectrum is exact and immediately checkable.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1141",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "edd57dbd",
+    "status": "available",
+    "timestamp": "2026-07-12T15:02:42.971449+00:00",
+    "title": "General divisor factorization of the `T(2,n)` Alexand"
   },
   {
     "consumed_by_exp_id": "",
