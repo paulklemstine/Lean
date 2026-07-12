@@ -23084,7 +23084,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d019c88a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -23112,7 +23112,7 @@
       "source": "",
       "source_exp_id": "207fb5b4",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/207fb5b4",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_c942ee26",
       "timestamp": "2026-07-10T09:26:14.435602+00:00",
       "title": "Exact dictionary \"logical qubits = middle homology\""
