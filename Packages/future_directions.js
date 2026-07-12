@@ -157,7 +157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "25c7a40e",
     "description": "Building on cycle 90ef345f (Q=0.830), which proved 751 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci seq",
     "domains": [
       "Probability"
@@ -166,7 +166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "90ef345f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T01:14:02.362998+00:00",
     "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },
@@ -1924,20 +1924,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T01:56:10.723921+00:00",
     "title": "Alternating Sign Conjecture for Andrews' q-Series Families"
-  },
-  {
-    "consumed_by_exp_id": "077d3a2b",
-    "description": "We classify the finite posets whose probabilistic powerdomain is an RB-domain by proving that a finite poset P has this property if and only if it has a least element and its undirected Hasse graph is a tree.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0127",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02231v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T04:55:55.366539+00:00",
-    "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
   },
   {
     "consumed_by_exp_id": "",
@@ -7021,6 +7007,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T09:01:45.385563+00:00",
     "title": "This cycle isolated the *element-census invariant* as the exact obstruction that"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 RB-shaped finite posets\n\n## What is formalized (`RBDomainPosets.lean`)\n\nWe formalize the *combinatorial characterizing condition* of the Jung\u2013Tix\nclassification of finite posets whose probabilistic powerdomain is an RB-domain,\nnamely:\n\n> a finite poset `P` is **RB-shaped** iff it has a least element and its\n> undirected Hasse graph is a tree.\n\nThe file develops, as a self-contained chain:\n\n1. `hasseGraph P` \u2014 the undirected Hasse graph (`a ~ b` iff one covers the other).\n2. `HasLeast`, `RBShape` \u2014 the definitions.\n3. `least_unique` \u2014 uniqueness of a least element.\n4. `exists_lower_cover` \u2014 every non-minimal element of a finite poset has a lower cover.\n5. `reachable_of_least` \u2014 from a least element every vertex is reachable in the Hasse graph.\n6. `hasseGraph_connected_of_hasLeast` \u2014 a least element \u21d2 connected Hasse graph.\n7. `rbShape_edge_count` \u2014 an RB-shaped poset has exactly `|P| \u2212 1` Hasse edges.\n8. `rbShape_iff_hasLeast_and_edgeCount` \u2014 the capstone: RB-shape is equivalent to\n   *least element + Euler edge count* (`#edges + 1 = |P|`), i.e. connectivity comes\n   for free, so only an edge count must be verified.\n\nThe last theorem turns the \"tree\" condition into a single arithmetic check once a\nleast element is known, which is the practically useful form of the criterion.\n\nTwo further results make the criterion concretely usable:\n\n9. `linearOrder_hasLeast` \u2014 every nonempty finite linear order (chain) has a least\n   element, so the `HasLeast` conjunct holds automatically for chains.\n10. `decidableHasLeast` \u2014 a `Decidable (HasLeast P)` instance for a finite poset\n    with decidable order, making the left conjunct of the criterion checkable.\n11. `decidableRBShape` \u2014 a `Decidable (RBShape P)` instance for a finite poset\n    with decidable order, obtained from `rbShape_iff_hasLeast_and_edgeCount`\n    (marked `noncomputable` only because the edge count is phrased with\n    `Nat.card`, which has no executable code).\n12. `decidableCovBy`, `decidableHasseAdj` \u2014 decidability of the covering relation\n    and of Hasse-graph adjacency for a finite poset with a decidable strict order,\n    which in turn make the Hasse edge finset computable.\n13. `rbShape_iff_hasLeast_and_edgeFinset` \u2014 the same criterion as (8) but phrased\n    with the executable `(hasseGraph P).edgeFinset.card` and `Fintype.card`.\n14. `decidableRBShapeComputable` \u2014 a **genuinely computable** `Decidable (RBShape P)`\n    instance built from (13): the decision reduces to a `Finset.card` edge count\n    together with the decidable least-element test, with no `noncomputable` marker.\n\n## Explicitly out of scope\n\nThe **domain-theoretic** side of the Jung\u2013Tix theorem \u2014 probabilistic\npowerdomains, RB-domains (retracts of bifinite domains), and the actual\nequivalence between that property and the poset shape \u2014 is not formalized. Those\nobjects are absent from Mathlib and would require a substantial independent\ndevelopment. We formalize the poset-combinatorial half on which the\nclassification rests, and do not claim the powerdomain equivalence itself.\n\n## Natural next steps\n\n* Complete the `RBShape` instance for finite linear orders by also proving the\n  Hasse graph is a path (the `HasLeast` half is now `linearOrder_hasLeast`), and\n  refute `RBShape` for the \"\u039b\" poset (two minimal elements below a common top),\n  which is a tree with **no** least element \u2014 witnessing that the two conjuncts of\n  `RBShape` are independent.\n* Begin a Mathlib-style development of continuous/bifinite domains and the\n  probabilistic powerdomain functor, aiming eventually at the full Jung\u2013Tix\n  equivalence.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1124",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "077d3a2b",
+    "status": "available",
+    "timestamp": "2026-07-12T09:19:00.267512+00:00",
+    "title": "We formalize the *combinatorial characterizing condition* of the Jung\u2013Tix"
   },
   {
     "consumed_by_exp_id": "",

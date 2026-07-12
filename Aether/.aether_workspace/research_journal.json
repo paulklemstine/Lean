@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c1fb9afb",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures derived from this cycle's findings on the joint\ndescendants of the last `k` vertices in growing random directed acyclic graphs.\n\n## 1. A universal te",
-      "quality_score": 0.45366952380952386,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-06T18:37:44",
-      "title": "Joint descendants of the last k vertices in random d-DAGs"
-    },
-    {
       "cycle_id": "c7c6cf29",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions: powers of the Eulerian triangle and real-rootedness\n\nThese conjectures grew out of a study of the square of the Eulerian triangle,\nwhose `n`-th row generating polynomial `S_n(x) =",
@@ -2501,6 +2491,16 @@
       "theorem_count": 1210,
       "timestamp": "2026-07-12T09:01:53",
       "title": "White's Quadratic Exchange Conjecture (Part 3)"
+    },
+    {
+      "cycle_id": "077d3a2b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — RB-shaped finite posets\n\n## What is formalized (`RBDomainPosets.lean`)\n\nWe formalize the *combinatorial characterizing condition* of the Jung–Tix\nclassification of finite posets",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-12T09:19:09",
+      "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-12T09:01:53",
+  "last_updated": "2026-07-12T09:19:09",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0a5d3cfa",
-        "quality": 0.78,
-        "theorems": 13,
-        "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
-      },
-      {
         "cycle_id": "b6492bf5",
         "quality": 0.72,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 33,
         "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theore"
+      },
+      {
+        "cycle_id": "077d3a2b",
+        "quality": 0.62,
+        "theorems": 15,
+        "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
       }
     ],
     "Bridges": [
