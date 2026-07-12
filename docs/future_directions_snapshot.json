@@ -572,25 +572,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "867d1ba2",
-    "description": "Building on cycle ddbb821f (Q=0.820), which proved 25 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation (V): Stable Extensions\n\nThis cycle deepens the formalization of Dung's abstract argumentation theory and\nthe conflict-free complex `K(AF)` by adding the **stable extension** — the\nstrongest of the classical extension-based semantics — and placing i",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_ddbb821f_fc8bde0a",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ddbb821f",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T16:46:42.411610+00:00",
-    "title": "Deepening: This cycle deepens the formalization of Dung's abstract argumentation theory and"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle e2c082ff (Q=0.820), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
     "domain_bridges": [],
@@ -10031,7 +10012,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9d307529",
     "description": "Cycle b77ed1ec (Q=0.720) proved 24 theorems in Tropical but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elus",
     "domain_bridges": [],
     "domains": [
@@ -10043,7 +10024,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "b77ed1ec",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T16:20:42.486105+00:00",
     "title": "Close Proofs: The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
@@ -12145,6 +12126,26 @@
     "status": "available",
     "timestamp": "2026-07-12T17:55:56.488317+00:00",
     "title": "The Petrie block `𝔭_k = 1 + x + ⋯ + x^{k-1}` divides `xⁿ − 1` exactly when `k ∣ "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation semantics: conflict-free\nsets, the characteristic (defense) operator `charF`, admissible / complete /\npreferred / stable extensions, the grounded extension as the least fixed point\n`OrderHom.lfp (charF)`, and the symmetric/Euler bridges\n(`ArgumentationCore`, `ArgumentationExtensions`, `ArgumentationStable`,\n`ArgumentationStableGap`, `ArgumentationSymmetric`, `ArgumentationSimplicial`).\n\nThose files *define* the grounded extension and prove it lies below every\ncomplete extension, but they never establish that the grounded extension is\nitself a genuine extension. This cycle closes exactly that gap, in the new\nself-contained file **`ArgumentationGrounded.lean`**:\n\n- `conflictFree_charF` — the defense operator preserves conflict-freeness.\n- `conflictFree_of_directed` — a directed (chain) union of conflict-free sets is\n  conflict-free.\n- `lfpApprox_conflictFree` — **every ordinal approximant of the least fixed point\n  is conflict-free** (transfinite induction along `OrdinalApprox.lfpApprox`).\n- `groundedExt_conflictFree` — **the grounded extension is conflict-free.**\n- `groundedExt_fixed` — it is a fixed point of `charF`.\n- `groundedExt_admissible`, `groundedExt_complete` — **it is admissible and\n  complete.**\n- `groundedExt_subset_complete` — it is contained in every complete extension.\n- `groundedExt_least_complete` — **the grounded extension is the least complete\n  extension** (Dung's characterization of grounded semantics).\n- `complete_iff_conflictFree_fixed` — a set is complete iff it is a conflict-free\n  fixed point of `charF`.\n\nEach result is used by the next, forming a single chain culminating in\n`groundedExt_least_complete`.\n\n## Why the proof is non-trivial\n\nConflict-freeness is **not** a consequence of the fixed-point equation\n`charF S = S` alone: `ComputationalEvidence.md` exhibits a framework with a\nnon-least fixed point that is a conflict (case 4). Conflict-freeness holds for\nthe *least* fixed point specifically. Since `charF` is not ω-continuous in\ngeneral, the least fixed point is reached only by transfinite iteration, so the\nproof runs a transfinite induction over `OrdinalApprox.lfpApprox` and uses that a\nchain of conflict-free sets has a conflict-free union.\n\n## Where to go next\n\n- **Grounded = intersection of complete extensions.** Combine\n  `groundedExt_least_complete` with completeness of preferred extensions to show\n  the grounded extension equals `⋂` of all complete (equivalently, all preferred)\n  extensions when they are directed downward, or characterize when equality holds.\n- **Uniqueness of grounded via well-foundedness.** For frameworks whose attack\n  relation is well-founded, prove the grounded extension is the unique complete\n  extension (coincidence of grounded, preferred, and stable).\n- **Labelling correspondence.** Formalize complete labellings (in/out/undec) and\n  prove the bijection with complete extensions, then transport\n  `groundedExt_least_complete` to the least complete labelling.\n- **Continuity / Kleene reachability.** Identify a class of frameworks (e.g.\n  finitary) where the grounded extension is reached at stage `ω`, giving an\n  explicit `⋃ₙ charF^[n] ∅` description.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_1154",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "867d1ba2",
+    "status": "available",
+    "timestamp": "2026-07-12T18:13:25.206194+00:00",
+    "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
   },
   {
     "ambition_level": "extension",
