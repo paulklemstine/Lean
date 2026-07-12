@@ -572,7 +572,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "867d1ba2",
     "description": "Building on cycle ddbb821f (Q=0.820), which proved 25 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation (V): Stable Extensions\n\nThis cycle deepens the formalization of Dung's abstract argumentation theory and\nthe conflict-free complex `K(AF)` by adding the **stable extension** — the\nstrongest of the classical extension-based semantics — and placing i",
     "domain_bridges": [],
     "domains": [
@@ -584,7 +584,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ddbb821f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T16:46:42.411610+00:00",
     "title": "Deepening: This cycle deepens the formalization of Dung's abstract argumentation theory and"
   },
