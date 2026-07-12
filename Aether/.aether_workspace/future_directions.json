@@ -12932,7 +12932,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "White1980Bases",
         "Blasiak2007Toric",
@@ -12940,7 +12940,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e978b5fe",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12957,7 +12957,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0482",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T03:38:57.108632+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def quadratic_exchange_rel {α : Type*} [DecidableEq α] (M : Matroid α) \n    (B1 B2 : Multiset (Finset α)) : Prop :=\n  ∃ (X Y X' Y' : Finset α) (B_rest : Multiset (Finset α)),\n    M.IsBasis (X : Set α) ∧ M.IsBasis (Y : Set α) ∧ \n    M.IsBasis (X' : Set α) ∧ M.IsBasis (Y' : Set α) ∧\n    X.val + Y.val = X'.val + Y'.val ∧\n    B1 = B_rest + {X, Y} ∧ B2 = B_rest + {X', Y'}\n\ntheorem whites_quadratic_exchange_conjecture {α : Type*} [Fintype α] [DecidableEq α] (M : Matroid α) \n    (B B' : Multiset (Finset α)) \n    (hB : ∀ b ∈ B, M.IsBasis (b : Set α)) \n    (hB' : ∀ b ∈ B', M.IsBasis (b : Set α))\n    (h_union : B.bind Finset.val = B'.bind Finset.val) :\n    Relation.ReflTransGen (quadratic_exchange_rel M) B B' := \n  sorry",
       "lineage_refs": [],
@@ -12972,7 +12972,7 @@
       "source": "",
       "source_exp_id": "2607.02208v1",
       "source_path": "http://arxiv.org/abs/2607.02208v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-06T20:31:12.049704+00:00",
       "title": "White's Quadratic Exchange Conjecture (Part 3)"
@@ -34731,6 +34731,7 @@
     "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
