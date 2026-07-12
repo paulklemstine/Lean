@@ -143,20 +143,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
   {
-    "consumed_by_exp_id": "25c7a40e",
-    "description": "Building on cycle 90ef345f (Q=0.830), which proved 751 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci seq",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_90ef345f_41ee9d14",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "90ef345f",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T01:14:02.362998+00:00",
-    "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domains": [
@@ -522,7 +508,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   {
-    "consumed_by_exp_id": "053b0731",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 9ca5466b (Q=0.800), which proved 40 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hyperco",
     "domains": [
       "Applications"
@@ -531,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "9ca5466b",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-11T08:51:48.793508+00:00",
     "title": "Deepening: Computational Complexity of Alien Civilizations"
   },
@@ -5855,7 +5841,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The linear analysis established here recasts the onset of Turing patterns as"
   },
   {
-    "consumed_by_exp_id": "d019c88a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Q\u2099` (`n \u2265 2`), the homological code\n`HQECC(Q\u2099)` has minimum distance equal to the girth of `Q\u2099`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n \u2265 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `\u03b2\u2081(Q\u2099) = 2\u207f\u207b\u00b9(n\u22122)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 \u2212 (V\u22121)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `\u03b2\u2080 \u2212 \u03b2\u2081 = V \u2212 E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k \u2264 n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n \u2212 rank d\u2081 \u2212 rank d\u2082` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n \u2212 k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d\u2081 / im d\u2082`\nand the `Z`-logical space `ker d\u2082\u1d40 / im d\u2081\u1d40` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
     "domains": [
       "Algebra",
@@ -5865,7 +5851,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "207fb5b4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T09:26:14.435602+00:00",
     "title": "Exact dictionary \"logical qubits = middle homology\""
   },
@@ -6545,7 +6531,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "16e4b1d9",
     "description": "# Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" \u2014 a device deciding number-theoretic statements \u2014 cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n\n## What is proved\n\n- `not_countable_truth`: the space of ground truths `\u2115 \u2192 Bool` is uncountable.\n- `perfect_unique`: an oracle is perfect for at most one ground truth.\n- `covered_countable`, `missed_uncountable`, `countable_family_incomplete`: any\n  countable (program-enumerable) family of oracles fails to be perfect for\n  uncountably many ground truths.\n- `no_computable_oracle_scheme`, `no_universal_oracle`: the computability corollaries.\n- `countable_computable_oracles`, `exists_truth_no_computable_perfect`: the honest\n  recursion-theoretic form via Mathlib's `Computable` / `Nat.Partrec.Code` \u2014 the type\n  of computable oracles is genuinely countable, and a single ground truth defeats\n  every computable oracle.\n- `family_errs_infinitely_often`: a single ground truth defeats every oracle of a\n  countable family at infinitely many statements (block diagonalization).\n- `exists_truth_zero_hits`, `no_oracle_high_accuracy_all_worlds`: no oracle can\n  guarantee any fixed positive accuracy across all worlds.\n\n## Directions to deepen\n\n1. **Genuine recursion-theoretic computability.** *(Now realized.)* The theorems\n   `countable_computable_oracles` and `exists_truth_no_computable_perfect` replace the\n   abstract \"countable family\" model by Mathlib's `Computable` / `Nat.Partrec.Code`:\n   each computable oracle is computed by a code, distinct oracles need distinct codes,\n   and codes are countable, so the counting argument applies to the honest notion of\n   computability. A remaining refinement is to phrase the same result directly in\n   terms of `ComputablePred` / oracle Turing machines with relativized queries.\n\n2. **Undecidability, not just non-computability.** Connect to the undecidability of\n   arithmetic truth: encode the halting problem into the ground truth and show that\n   even a *many-worlds-free* single true arithmetic is not decidable.\n\n3. **Quantitative accuracy over density.** Strengthen the accuracy result from\n   \"accuracy `0` on the adversarial world\" to a density statement: for any countable\n   family, there is a world on which each oracle has upper density of errors bounded\n   below by a positive constant, using a weighted block construction.\n\n4. **Bounded-length statements.** The original framing restricts to statements of\n   length `\u2264 100`, which is a *finite* set and hence trivially decidable by table\n   lookup. A faithful refinement replaces \"length `\u2264 100`\" by a growing family\n   `S\u2096` of statements of length `\u2264 k` and studies the growth rate at which\n   computable accuracy must degrade.\n\n5. **Probabilistic oracles.** Model an oracle as a distribution over verdicts and ask\n   whether a computable randomized oracle can achieve expected accuracy bounded away\n   from `1/2` uniformly over an adversarially chosen world.\n",
     "domains": [
       "Computation",
@@ -6555,7 +6541,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "7b741692",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T23:38:51.082809+00:00",
     "title": "This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
   },
@@ -7083,6 +7069,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T11:18:29.979381+00:00",
     "title": "That, for every odd prime `p`, the `T(2, p)` torus-knot"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was proved (this cycle)\n\nThree self-contained Lean 4 files formalise a coherent slice of the number theory hiding inside\nthe quadratic recurrence `z_{n+1} = z_n^2 + c` and the Mandelbrot set.\n\n### `MandelbrotQuadraticEscape.lean` \u2014 quantitative escape dynamics\n- `qmap_norm_lower`: reverse-triangle bound `\u2016z\u2016\u00b2 - \u2016c\u2016 \u2264 \u2016z\u00b2+c\u2016`.\n- `critOrbit_growth`: geometric lower bound `\u2016c\u2016\u00b7(\u2016c\u2016-1)^n \u2264 \u2016f_c^{(n+1)}(0)\u2016` when `\u2016c\u2016 > 2`.\n- `critOrbit_tendsto_atTop`: the critical orbit diverges to `\u221e` for `\u2016c\u2016 > 2`.\n- `mandelbrot_subset_closedBall`: **`M \u2286 {\u2016c\u2016 \u2264 2}`** (the classical escape-radius bound).\n- Concrete membership: `0, -1 \u2208 M`, `3 \u2209 M`.\n\n### `MandelbrotDoublingNumberTheory.lean` \u2014 external angles & the doubling map\n- `dbl_iterate`: the `n`-th doubling is multiplication by `2^n` on `\u2124/q\u2124`.\n- `dbl_bijective_of_odd` / `dbl_not_injective_of_even`: periodicity of the angle `p/q` under\n  doubling **iff `q` is odd**.\n- `dbl_period_one`: period of `1/q` `= orderOf(2 : ZMod q)`.\n- `dvd_two_pow_order_sub_one`: Mersenne-type divisibility `q \u2223 2^{period} - 1`.\n- `order_two_dvd_sub_one`: for odd prime `q`, the bulb period **divides `q-1`** (Fermat).\n- Contrarian disproofs: `2` is not always a primitive root (`q=7`), the period is not always\n  prime (`q=5`).\n\n### `MandelbrotFareyFibonacci.lean` \u2014 Farey/Fibonacci bulb ordering\n- `fib_mediant`: consecutive Fibonacci ratios are related by the Farey mediant operation.\n- `fib_cassini` + `fib_farey_neighbor`: Cassini's identity gives the unimodular Farey-neighbour\n  relation between adjacent bulbs.\n- `fib_coprime`, `fib_denominator_strictMono`: lowest-terms and shrinking denominators.\n\n## Natural next steps\n1. **Landing of external rays.** Formalise that the rational angle `p/q` corresponds to a genuine\n   root/hyperbolic component of `M` (needs B\u00f6ttcher coordinates / conformal theory \u2014 a large\n   Mathlib gap).\n2. **Period vs. order refinement.** Prove `dbl_period_one`-style results for general `p/q`\n   (period `= ord_{q/gcd}(2)`), and characterise the full pre-period for even denominators.\n3. **Primitive roots / Artin.** Relate maximal bulb period (`ord_q(2) = q-1`) to Artin's\n   conjecture on `2` as a primitive root; formalise density statements where tractable.\n4. **Sharper escape geometry.** Upgrade `mandelbrot_subset_closedBall` to the connectedness locus\n   and the `1/4`-cardioid bound `|c + 1| \u2264 1/4`-type interior estimates.\n5. **Golden-mean rotation number.** Connect the Fibonacci mediant path to the continued-fraction\n   expansion of the golden mean and the accumulation of satellite bulbs.\n",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_1132",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "25c7a40e",
+    "status": "available",
+    "timestamp": "2026-07-12T11:35:52.517221+00:00",
+    "title": "Three self-contained Lean 4 files formalise a coherent slice of the number theor"
   },
   {
     "consumed_by_exp_id": "",

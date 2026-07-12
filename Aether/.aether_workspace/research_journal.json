@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c67f6099",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalizes the **order-parameter / phase-transition** picture behind\nthe speculative theme *\"mathematics as a phase transition\"*. Rather than model a\nsociological pro",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 21,
-      "timestamp": "2026-07-11T15:33:24",
-      "title": "Speculative: Mathematics as a Phase Transition"
-    },
-    {
       "cycle_id": "f8dd2b6a",
       "domain": "Applications",
       "key_insight": "# Future Directions: Causal Loops in Category Theory\n\nThe results of this cycle established that a *controlled* failure of associativity — where\n`(f · g) · h` and `f · (g · h)` are distinct but unique",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-12T11:18:43",
       "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
+    },
+    {
+      "cycle_id": "25c7a40e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was proved (this cycle)\n\nThree self-contained Lean 4 files formalise a coherent slice of the number theory hiding inside\nthe quadratic recurrence `z_{n+1} = z_n^2 + c` and",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-07-12T11:36:00",
+      "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3b621fb7",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThese conjectures grow out of the observation that the octahedron `\\overline{3K₂}` is the\nsmallest obstruction to the Helly property for cliques, and that the implication\n\"heredit",
-      "quality_score": 0.39727681,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-07T11:35:28",
-      "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
-    },
     {
       "cycle_id": "236b0246",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-12T11:18:43",
       "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
+    },
+    {
+      "cycle_id": "25c7a40e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was proved (this cycle)\n\nThree self-contained Lean 4 files formalise a coherent slice of the number theory hiding inside\nthe quadratic recurrence `z_{n+1} = z_n^2 + c` and",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-07-12T11:36:00",
+      "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0664586a",
-      "domain": "Computation",
-      "name": "phiPow_carry",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "0664586a",
-      "domain": "Computation",
-      "name": "phi_coord_unique",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "0664586a",
-      "domain": "Computation",
-      "name": "phiSum_fib",
-      "quality": 0.83
-    },
     {
       "cycle_id": "538f30a2",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "trefoil_eq_cyclotomic_six",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "25c7a40e",
+      "domain": "Novelty",
+      "name": "forces",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "25c7a40e",
+      "domain": "Novelty",
+      "name": "dbl_iterate",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "25c7a40e",
+      "domain": "Novelty",
+      "name": "dbl_bijective_of_odd",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-12T11:18:43",
+  "last_updated": "2026-07-12T11:36:00",
   "open_questions": [
     {
       "context": "+  range `13 ≤ n ≤ 10000` and carries no `sorry`: the structural reduction is; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4eef1c33",
-        "quality": 0.83,
-        "theorems": 27,
-        "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
-      },
-      {
         "cycle_id": "8e111703",
         "quality": 0.83,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 16,
         "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
+      },
+      {
+        "cycle_id": "25c7a40e",
+        "quality": 0.83,
+        "theorems": 33,
+        "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and P"
       }
     ],
     "NumberTheory": [
