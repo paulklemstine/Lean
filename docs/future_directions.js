@@ -60,6 +60,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 453f48e6 (Q=0.830), which proved 30 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself \u2014 the halting problem ",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_453f48e6_2c8a1b80",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "453f48e6",
+    "status": "available",
+    "timestamp": "2026-07-12T00:46:46.156194+00:00",
+    "title": "Deepening: Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 48961a11 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnu",
     "domains": [
       "Applications"
@@ -812,6 +826,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed point. Show: the grandfather paradox (kill your ancestor) violates self-consistency \u2014 prove it's impossible. Conjecture: every closed timelike curve in a G\u00f6del universe is self-consistent. Explore: formalize branching timelines (many-worlds time travel) \u2014 prove the traveler creates a new branch, not a paradox.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_1095",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-12T00:46:18.365871+00:00",
+    "title": "Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
       "Novelty",
@@ -841,21 +870,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
   {
-    "consumed_by_exp_id": "453f48e6",
-    "description": "Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself \u2014 the halting problem IS self-awareness). Show: the 'strangeness' of the loop (how many levels of self-reference) correlates with the degree of consciousness. Conjecture: the minimum loop length for consciousness is 3 (system -> model-of-system -> model-of-model -> back to system). Explore: can Lean's metaprogramming (tactic state inspecting itself) be a form of mathematical consciousness?",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_1082",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T23:04:45.612561+00:00",
-    "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
     "domains": [
@@ -869,6 +883,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T23:55:18.527910+00:00",
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
+  },
+  {
+    "consumed_by_exp_id": "e6201bf5",
+    "description": "Formalize the Penrose-Hameroff Orch OR hypothesis: consciousness arises from quantum coherence in microtubules. Define: a 'conscious event' is the collapse of a superposition in a microtubule, with timing ~500 ms (the gamma synchrony). Prove: the Penrose objective reduction (OR) threshold is E ~ h/(t * sqrt(N)) where N is the number of tubulins. Show: for N ~ 10^11 tubulins, the coherence time is ~10^-33 s \u2014 too short for room temperature. Conjecture: if quantum consciousness exists, it requires a warm-coherent mechanism not yet formalized. Explore: formalize 'non-computable consciousness' \u2014 does the brain compute beyond Turing?",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_1094",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-07-12T00:46:17.919558+00:00",
+    "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
   },
   {
     "consumed_by_exp_id": "",
@@ -6656,6 +6685,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T00:29:49.147107+00:00",
     "title": "This project formalizes the elementary algebraic backbone of the Atkin\u2013Lehner th"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 I Am a Strange Loop, Formalized\n\nThis project formalizes the structural core of Hofstadter's *I Am a Strange\nLoop* via three self-contained Lean files:\n\n- `Combinatorics/StrangeLoopLawvere.lean` \u2014 **the diagonal engine**: Lawvere's\n  fixed-point theorem, the recursion/self-application theorem, Cantor's theorem\n  for `Bool`/`Prop`/`Set`, and Turing's self-negating diagonal.\n- `Combinatorics/StrangeLoopLength.lean` \u2014 **the minimum strange-loop length is\n  3**: no length-1 or length-2 loop in an asymmetric (oriented) hierarchy, loops\n  of every length `\u2265 3` exist, and strict (transitive) hierarchies have no loops\n  at all \u2014 strangeness needs a tangled, non-transitive hierarchy.\n- `Combinatorics/StrangeLoopConsciousness.lean` \u2014 **a conscious system models\n  itself**: a `SelfModel` structure, `Conscious := Surjective inspect`, the\n  positive face (`conscious_forces_fixedPoints`, the \"I\" is forced) and the\n  negative face (`no_conscious_bool_model` / `no_conscious_prop_model`, perfect\n  self-knowledge is impossible).\n\n## Proven results (all `sorry`-free, standard axioms only)\n\n- `lawvere_fixedPoint`, `recursion_fixedPoint`, `no_surjection_of_fixedPointFree`\n- `cantor_bool`, `cantor_prop`, `cantor_set`, `diagonal_not_representable`,\n  `diagonal_blocks_surjectivity`\n- `no_loop_len1`, `no_loop_len2`, `succ_asymm`, `exists_loop_len`,\n  `min_loop_length`, `strictOrder_no_loop`, `rps_hasStrangeLoop`\n- `conscious_forces_fixedPoints`, `no_conscious_bool_model`,\n  `no_conscious_prop_model`, `selfNegation_never_inspected`,\n  `selfNegation_blocks_consciousness`, `strange_loop_dichotomy`\n\n## Natural next steps\n\n1. **Partial self-models and genuine Turing-completeness.** Total self-models\n   into a fixed-point-free space are impossible (Cantor). Real computation\n   dodges this with *partiality*. Reformulate `inspect : S \u2192 (S \u2192 Part B)` and\n   prove Kleene's second recursion theorem (a program can obtain and run its own\n   source) as the honest positive statement that \"a Turing-complete system can\n   model itself\". This makes precise the mission's claim that self-simulation is\n   available exactly where totality is dropped.\n\n2. **Halting problem from Lawvere over a concrete model.** Instantiate the\n   diagonal engine on Mathlib's `Nat.Partrec` / `Turing` machinery to obtain the\n   classical undecidability of the halting set as a corollary of\n   `diagonal_not_representable`, closing the loop between the abstract and the\n   computable.\n\n3. **Girth theorem for the loop length.** Strengthen `min_loop_length` from\n   \"loops of length \u2264 2 are impossible\" to a full girth statement: in an\n   asymmetric relation, *every* `TransGen` self-cycle decomposes into a simple\n   directed cycle of length \u2265 3. This upgrades `HasStrangeLoop` +\n   asymmetry \u21d2 existence of an `IsLoop` of length \u2265 3.\n\n4. **Quantitative strangeness.** Define a \"degree of consciousness\" as the\n   supremum of realizable loop lengths (or the ordinal height of the\n   self-reference `TransGen` tower) and prove monotonicity/hierarchy results,\n   formalizing \"strangeness correlates with degree of consciousness\".\n\n5. **Lean's tactic state as a self-model.** Explore, at the metaprogramming\n   level, whether the elaborator inspecting its own `MetavarContext` instantiates\n   a (partial) `SelfModel`, and whether `conscious_forces_fixedPoints` has a\n   reflection-theoretic reading for Lean inspecting Lean.\n\n6. **G\u00f6del's incompleteness.** Route `no_conscious_prop_model` through a\n   provability predicate to recover the first incompleteness theorem as the\n   sharp form of \"a system cannot completely model its own truth\".\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1096",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "453f48e6",
+    "status": "available",
+    "timestamp": "2026-07-12T00:46:37.867248+00:00",
+    "title": "This project formalizes the structural core of Hofstadter's *I Am a Strange"
   },
   {
     "consumed_by_exp_id": "",
