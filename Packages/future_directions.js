@@ -59,20 +59,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
-    "consumed_by_exp_id": "1f9ea620",
-    "description": "Building on cycle 26d2653d (Q=0.830), which proved 2828 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computa",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_26d2653d_886fa28d",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "26d2653d",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T06:11:35.916587+00:00",
-    "title": "Deepening: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
     "domains": [
@@ -1868,7 +1854,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "465c6137",
     "description": "For every m \u2265 1, the greedy m-Tamari intervals admit a recursive decomposition structure isomorphic to that of planar (m+1)-constellations, establishing a refined bijection preserving key combinatorial statistics such as the number of valleys, peaks, and component sizes. This conjecture generalizes the m=1 case proven in the paper and implies equi-enumeration with planar (m+1)-constellations.",
     "domains": [
       "Pythagorean",
@@ -1878,7 +1864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:37:32.513498+00:00",
     "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
   },
@@ -7339,6 +7325,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T18:31:00.752574+00:00",
     "title": "This cycle formalizes a cross-domain *connector* in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Arithmetic of the Discoverable\n\nThe cycle established a clean split between two notions of \"finite\": every\nindividual theorem of an infinitely-proving system is reached at a finite\nenumeration index, yet no finite budget of enumeration steps ever exhausts the\ntheorems. The following conjectures push this finite/infinite scissor further.\n\n## 1. The frontier grows without a positive density floor\n\n**Conjecture.** For a fixed enumeration of all statements and any formal system\nwhose theorem set has natural (upper) density zero, the fraction of the first\n`N` enumerated statements that are theorems tends to `0`, yet the count of\ndiscovered theorems still tends to infinity.\n\n*The key insight is* that \"discovered infinitely often\" and \"discovered with\npositive frequency\" are independent properties, so a system can be exhaustively\nenumerable in the limit while being ever more sparsely represented at each\nfinite horizon.\n\n*Why now?* We have separated per-theorem finiteness from collective\nnon-exhaustibility; density is the natural next quantitative refinement, turning\na qualitative gap into a measurable rate.\n\n## 2. Optimal enumerations minimize worst-case discovery time\n\n**Conjecture.** Among all enumerations of the statement space, the shortlex\norder minimizes the index at which the *last* statement of each length is first\nseen; equivalently, it is optimal for the worst-case \"time to discover\neverything up to length n\".\n\n*The key insight is* that length is the only monotone complexity measure\ncompatible with the finiteness of every length class, so ordering by length\nfirst is forced for any minimax-optimal discovery schedule.\n\n*Why now?* Having shown discovery indices exist and are unique, the remaining\nquestion is which enumeration discovers a given finite target region soonest \u2014 a\nwell-posed optimization over the space of bijections.\n\n## 3. Two-system interleaving preserves non-exhaustibility\n\n**Conjecture.** If two formal systems each prove infinitely many statements,\nthen the union, intersection (when infinite), and any fair interleaving of their\ntheorem sets remain countably infinite and non-exhaustible by any finite budget;\nmoreover the interleaved discovery frontier of the union is, up to a bounded\nfactor, the better of the two individual frontiers.\n\n*The key insight is* that non-exhaustibility is closed under the Boolean\noperations that preserve infinitude, so combining theories cannot rescue a\nfinite process \u2014 but it can accelerate discovery by a constant factor.\n\n*Why now?* The single-system obstruction is settled; the realistic setting of\nmathematics is many interacting theories, and the natural question is whether\ncooperation changes the asymptotics.\n\n## 4. A resource-bounded incompleteness gap\n\n**Conjecture.** For every function `B : \u2115 \u2192 \u2115` modeling an energy budget that\nallows `B(t)` enumeration steps by time `t`, and every infinitely-proving\nsystem, the set of theorems never discovered by time `t` is infinite for all\n`t`; and if `B` is eventually constant (the heat-death regime) the undiscovered\nset is *cofinite* in the theorem set.\n\n*The key insight is* that a bounded total budget freezes the frontier at a\nfinite image, so all but finitely many theorems are permanently lost \u2014 a sharp,\nresource-indexed form of \"the last theorem\".\n\n*Why now?* Physical computation is resource-bounded; formalizing the budget as\nan explicit schedule connects the abstract enumeration result to the concrete\nscenario that motivated the cycle.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1157",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1f9ea620",
+    "status": "available",
+    "timestamp": "2026-07-12T18:48:58.182750+00:00",
+    "title": "The cycle established a clean split between two notions of \"finite\": every"
   },
   {
     "consumed_by_exp_id": "",

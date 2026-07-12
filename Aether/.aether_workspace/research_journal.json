@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fb4de3e5",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Analogy as a Mathematical Operation\n\nThis project formalizes Hofstadter's notion (from *Fluid Concepts and Creative\nAnalogies*) of an **analogy** between structures `A` and `B` a",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-12T02:10:54",
-      "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Operation"
-    },
-    {
       "cycle_id": "4b281557",
       "domain": "Probability",
       "key_insight": "# Future Directions: Time-Travel Logic and Causal Consistency\n\nThe file `Catalog/Probability/TimeTravelCausalConsistency.lean` develops a single\nchain of results modelling closed timelike curves (CTCs",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-12T18:31:13",
       "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+    },
+    {
+      "cycle_id": "1f9ea620",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Arithmetic of the Discoverable\n\nThe cycle established a clean split between two notions of \"finite\": every\nindividual theorem of an infinitely-proving system is reached at a f",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 119,
+      "timestamp": "2026-07-12T18:49:09",
+      "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7e60f6c2",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Fractal Dimension of Proof Search\n\nThis cycle established, for uniform self-similar search spaces, the exact identity\n`succ = total^D` with `D = log s / log b ∈ [0,1]`, reinterpr",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 23,
-      "timestamp": "2026-07-10T00:21:09",
-      "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
-    },
     {
       "cycle_id": "c05d7abb",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-12T18:31:13",
       "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
+    },
+    {
+      "cycle_id": "1f9ea620",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Arithmetic of the Discoverable\n\nThe cycle established a clean split between two notions of \"finite\": every\nindividual theorem of an infinitely-proving system is reached at a f",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 119,
+      "timestamp": "2026-07-12T18:49:09",
+      "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-12T18:31:13",
+  "last_updated": "2026-07-12T18:49:09",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "c37c01fa",
-      "domain": "Algebra",
-      "sorry_count": 4,
-      "timestamp": "2026-07-11T18:54:06"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "7669ab26",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-12T18:31:13"
+    },
+    {
+      "context": "necessary.  All main theorems are `sorry`-free and use genuine arguments; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "1f9ea620",
+      "domain": "Applications",
+      "sorry_count": 5,
+      "timestamp": "2026-07-12T18:49:09"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8cebc683",
-        "quality": 0.72,
-        "theorems": 120,
-        "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence an"
-      },
-      {
         "cycle_id": "bc831bad",
         "quality": 0.83,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 39,
         "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory"
+      },
+      {
+        "cycle_id": "1f9ea620",
+        "quality": 0.82,
+        "theorems": 119,
+        "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematic"
       }
     ],
     "Bridges": [
