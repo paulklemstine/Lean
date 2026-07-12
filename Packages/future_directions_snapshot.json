@@ -477,25 +477,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "bc831bad",
-    "description": "Building on cycle 812631ed (Q=0.820), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Neural Coding Theorems\n\n`NeuralCoding.lean` builds a self-contained chain of neural-coding results:\ncapacity `2^N`, its tightness and the per-neuron doubling law, the average dense\nenergy `N/2`, exact sparse (weight-`k`) counts `C(N,k)`, the population-coding\n`1/√N` precision l",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_812631ed_03ecd274",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "812631ed",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T11:53:23.418050+00:00",
-    "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 823f5582 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology cla",
     "domain_bridges": [],
@@ -1477,7 +1458,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b6e3f70d",
     "description": "Cycle 73c84a79 (Q=0.820) proved 20 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every inclusion-free hypergraph H on n vertices, there exists an edge offset function f : H → ℝ such that the number of isolating weight assignments w ∈ [d]^n equals the lower bound n * ∑_{j=0}^{d",
     "domain_bridges": [],
     "domains": [
@@ -1489,7 +1470,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "73c84a79",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T13:35:34.607424+00:00",
     "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
   },
@@ -10286,7 +10267,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d019c88a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hypercube *graph*. The following conjectures extend those findings.\n\n## 1. The distance of the hypercube homological code\n\n**Conjecture.** For the hypercube graph `Qₙ` (`n ≥ 2`), the homological code\n`HQECC(Qₙ)` has minimum distance equal to the girth of `Qₙ`, namely `4`,\nindependent of `n`; consequently it does **not** achieve the quantum Singleton\nbound `d = 2^{n/2}` for `n ≥ 5`.\n\nThe key insight is that in a one-dimensional complex the shortest nontrivial\ncycle is a shortest graph cycle, and every hypercube contains a 4-cycle while\ncontaining no triangle. Distance is therefore a girth invariant, decoupled from\nthe exponentially large number of encoded qubits computed in this cycle.\n\nWhy now? The present cycle pins down the encoded dimension `β₁(Qₙ) = 2ⁿ⁻¹(n−2)+1`\nexactly; the natural next parameter is the distance, and the girth heuristic is\ndirectly testable on the same family that already contradicted the qubit count.\n\n## 2. Euler characteristic as a code-rate obstruction\n\n**Conjecture.** For any connected graph complex, the code rate `k/n` of its\nhomological code equals `1 − (V−1)/E`, and among all connected graphs on a fixed\nnumber of edges the rate is maximized precisely by graphs with a single vertex\nof many loops (bouquets) and minimized by trees (rate `0`).\n\nThe key insight is that the Euler identity `β₀ − β₁ = V − E`, proved this cycle,\nturns the rate into a purely combinatorial ratio; extremizing it is a discrete\nisoperimetric problem on the vertex/edge counts.\n\nWhy now? The Euler identity was just established in full additive generality over\nan arbitrary field, so the rate formula is an immediate corollary awaiting an\nextremal analysis.\n\n## 3. Every finite-dimensional homology group is a logical space\n\n**Conjecture.** For every field `K` and every pair of natural numbers `k ≤ n`\nthere is a length-two chain complex over `K` with middle space of dimension `n`\nwhose homology has dimension exactly `k`; hence every logical/physical dimension\npair `(k, n)` is realized by some CSS chain complex.\n\nThe key insight is that the dimension formula `k = n − rank d₁ − rank d₂` proved\nthis cycle is not just an inequality but an exact accounting, so realizability\nreduces to choosing two maps with prescribed ranks summing to `n − k`.\n\nWhy now? With the exact dimension theorem in hand, the realizability question\nbecomes a rank-prescription problem in linear algebra rather than a homological\nmystery.\n\n## 4. Cohomological duality of the two check families\n\n**Conjecture.** For a CSS chain complex the `X`-logical space `ker d₁ / im d₂`\nand the `Z`-logical space `ker d₂ᵀ / im d₁ᵀ` have equal dimension, and this common\ndimension is a self-dual topological invariant of the complex.\n\nThe key insight is that transposition exchanges kernels and cokernels while\npreserving ranks, so the dimension formula forces the two homologies to match;\nCSS self-duality is thus a shadow of rank symmetry.\n\nWhy now? The additive rank-nullity backbone developed this cycle applies verbatim\nto the transposed complex, making the duality statement a direct next theorem\nrather than a separate development.\n",
     "domain_bridges": [],
     "domains": [
@@ -10299,7 +10280,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "207fb5b4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-10T09:26:14.435602+00:00",
     "title": "Exact dictionary \"logical qubits = middle homology\""
   },
@@ -11982,6 +11963,26 @@
     "status": "available",
     "timestamp": "2026-07-12T13:35:22.195750+00:00",
     "title": "The exact count established for the singleton hypergraph shows that the global"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Neural Coding: from Averages to Concentration\n\nThe present cycle upgraded the neural-coding chain from *first-moment* facts\n(capacity `2^N`, average energy `N/2`, sparse counts `C(N,k)`, population\nprecision `1/√N`) to a *full concentration* statement: the metabolic weight of a\ndense code has variance exactly `N/4`, and at least three quarters of all codes\nlie within `√N` of the mean `N/2`. The weight is a Binomial(N, 1/2) in disguise,\nso the population energy obeys a law of large numbers. The following conjectures\npush this \"moments → concentration → geometry\" programme further.\n\n## 1. Sub-Gaussian (exponential) energy concentration\n\n**Conjecture.** The fraction of codes whose weight deviates from `N/2` by at\nleast `t` decays like `exp(−2t²/N)`, not merely `N/(4t²)`; consequently, for any\nfixed `ε > 0`, all but an exponentially small fraction of codes have weight in\n`[(1/2−ε)N, (1/2+ε)N]`.\n\nThe key insight is that the coordinates of a binary code are independent bounded\ncontributions, so the weight is not just a variance-`N/4` variable but a genuine\nsum of independent `±` increments, and the exponential moment — not the second\nmoment — is the sharp instrument. Chebyshev sees only the second moment; the\ncorrect object is the log-moment-generating function of a single neuron.\n\nWhy now? The exact second moment established this cycle is the first term of the\ncumulant expansion; having pinned it down, the natural next step is to control\nthe whole cumulant sequence and convert the polynomial tail into an exponential\none, which immediately sharpens every downstream capacity estimate.\n\n## 2. Energy–distance trade-off for noise-tolerant codebooks\n\n**Conjecture.** Any codebook with minimum Hamming distance `d` whose codewords\nall have weight near `N/2` (within `o(√N)`) satisfies a strictly stronger size\nbound than the generic Singleton ceiling `2^(N+1−d)`; concentrating the energy\nbudget forces the codewords into a thin equatorial shell whose limited volume\ncaps the codebook.\n\nThe key insight is that the concentration result says the overwhelming majority\nof patterns already live near the equator, so a large-distance codebook cannot\nalso be energy-balanced without competing for the *same* scarce shell that\ncarries most of the mass — packing and balancing pull against each other.\n\nWhy now? With both the Singleton projection ceiling and the exact weight\nconcentration in hand, the two constraints can finally be imposed\nsimultaneously, turning a qualitative tension into a quantitative shell-volume\nbound.\n\n## 3. Concentration of the population-coding error\n\n**Conjecture.** When `N` neurons independently estimate a stimulus, not only\ndoes the mean squared error scale like `1/N`, but the *realised* error\nconcentrates around its mean: the probability that the population estimate is off\nby more than `c/√N` decays polynomially in `N` for every constant `c`, so the\n`1/√N` precision law holds pattern-by-pattern, not only on average.\n\nThe key insight is that the same variance-of-the-mean algebra that produced the\n`1/√N` law also controls the fourth moment of the averaged estimate, and a\nsecond-moment bound on the *squared* error upgrades an average guarantee into a\nhigh-probability one.\n\nWhy now? The population-precision law and the weight-variance computation share\none algebraic engine — the independence of the `N` contributions — so the\nconcentration machinery just proved for weights transfers directly to the\nestimator error.\n\n## 4. Dimension of the concentrated neural manifold\n\n**Conjecture.** If population activity is driven by `d` behavioural degrees of\nfreedom through a generic bounded map, then not only is the neural manifold's\ndimension at most `d`, but the reachable activity concentrates on an\n`d`-dimensional shell of radius `Θ(√N)`; the effective, energy-weighted\ndimension is exactly `d` even though the ambient space has dimension `N`.\n\nThe key insight is that concentration of the raw activity (weights near `N/2`)\nand the linear-algebraic dimension cap combine: the manifold is not merely\nlow-dimensional but sits at a fixed metabolic radius, so its \"thickness\" in the\nenergy direction vanishes relative to `√N`.\n\nWhy now? The dimension bound and the energy concentration were proved\nseparately; overlaying them is the natural synthesis, and it predicts a testable\ngeometric signature — a fixed-radius, low-dimensional activity shell — for\nrecorded population data.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1138",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bc831bad",
+    "status": "available",
+    "timestamp": "2026-07-12T13:53:31.839050+00:00",
+    "title": "The present cycle upgraded the neural-coding chain from *first-moment* facts"
   },
   {
     "ambition_level": "extension",

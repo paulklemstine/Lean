@@ -31688,7 +31688,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 16e4b1d9 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -31888,7 +31888,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 26d2653d (Q=0.830), which proved 2828 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computa",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -33968,7 +33968,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b88b4225 (Q=0.820), which proved 848 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: We conjecture that for any field F and integers n ≥ m ≥ 0, d ≥ 0, the field‑independent filtration of Δ^(n,m)Sym^dE described in the paper yields graded pieces whose characters are exactly the quantum binomial coefficients appearing in the product rule (Rel2) for Lusztig’s quantum Cartan elements. I",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],
@@ -34728,7 +34728,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f3dfcf44 (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field\norder parameter `m = tanh(β m)` undergoes a sharp, continuous (second-order)\nphase transition at the critical coupling `β_c = 1`:\n\n* no positive solution for `β ≤ 1` (`curieWeiss_subcritical`),\n* a ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -35288,7 +35288,7 @@
       "depth_estimate": 3,
       "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -35648,7 +35648,7 @@
       "depth_estimate": 3,
       "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$‑regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD‑total chromatic number, namel",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -35678,11 +35678,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b6e3f70d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35694,7 +35694,7 @@
       ],
       "github_issue": 0,
       "id": "sorry_fill_73c84a79_e8bc7db1",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-12T13:53:53.967144+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35709,7 +35709,7 @@
       "source": "",
       "source_exp_id": "73c84a79",
       "source_path": "Tightness of the Isolation Lemma bound for arbitrary edge offsets",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-12T13:35:34.607424+00:00",
       "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
@@ -36128,7 +36128,7 @@
       "depth_estimate": 3,
       "description": "Cycle c016fced (Q=0.830) proved 1745 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 0ba9c9ed (Q=0.820), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general sett",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications"
       ],
@@ -36408,7 +36408,7 @@
       "depth_estimate": 3,
       "description": "Cycle f3dfcf44 (Q=0.820) proved 17 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field\norder parameter `m = tanh(β m)` undergoes a sharp, continuous (second-order)\nphase transition at t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],

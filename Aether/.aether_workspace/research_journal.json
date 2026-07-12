@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dac5bc28",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Reflective Type Theory\n\n`ReflectiveTypeTheory.lean` gives a self-contained Kripke semantics for a\nprovability modality `□` and establishes, among others:\n\n- `godelian_satisfiable",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 26,
-      "timestamp": "2026-07-11T18:37:17",
-      "title": "Close Proofs: Reflective Type Theory: Proving Things About Proving Things"
-    },
-    {
       "cycle_id": "c37c01fa",
       "domain": "Algebra",
       "key_insight": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThis cycle proved that the box-counting dimension of a periodic density theory\nequals the asymptotic density of its information-beari",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-12T13:35:34",
       "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+    },
+    {
+      "cycle_id": "bc831bad",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Neural Coding: from Averages to Concentration\n\nThe present cycle upgraded the neural-coding chain from *first-moment* facts\n(capacity `2^N`, average energy `N/2`, sparse counts `",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 7,
+      "timestamp": "2026-07-12T13:53:38",
+      "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d9ca63e8",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Tropical Hashing on the Min-Plus Semiring\n\nThis cycle established three facts about the tropical digest\n`TSHA(h, m) = min_i (m_i + h_i)`: it is sharply `1`-Lipschitz in the suprem",
-      "quality_score": 0.4666111,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-08T05:35:56",
-      "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
-    },
     {
       "cycle_id": "cbe7147b",
       "domain": "Algebra",
@@ -2501,21 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-12T13:35:34",
       "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
+    },
+    {
+      "cycle_id": "bc831bad",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Neural Coding: from Averages to Concentration\n\nThe present cycle upgraded the neural-coding chain from *first-moment* facts\n(capacity `2^N`, average energy `N/2`, sparse counts `",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 7,
+      "timestamp": "2026-07-12T13:53:38",
+      "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c016fced",
-      "domain": "Applications",
-      "name": "eval_var",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "ef2405bd",
-      "domain": "Novelty",
-      "name": "qform_even",
-      "quality": 0.82
-    },
     {
       "cycle_id": "ef2405bd",
       "domain": "Novelty",
@@ -2803,17 +2791,22 @@
       "domain": "Novelty",
       "name": "card_gt",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "bc831bad",
+      "domain": "Applications",
+      "name": "weight_eq_sum_indicator",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "bc831bad",
+      "domain": "Applications",
+      "name": "card_active_pair",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-12T13:35:34",
+  "last_updated": "2026-07-12T13:53:38",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "c99af430",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-11T08:51:37"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "1c874912",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-12T13:35:34"
+    },
+    {
+      "context": "-Everything is elementary and `sorry`-free.",
+      "cycle_id": "bc831bad",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-12T13:53:38"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "71e324bf",
-        "quality": 0.7,
-        "theorems": 855,
-        "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
-      },
-      {
         "cycle_id": "27e75405",
         "quality": 0.62,
         "theorems": 865,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 120,
         "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence an"
+      },
+      {
+        "cycle_id": "bc831bad",
+        "quality": 0.83,
+        "theorems": 7,
+        "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding re"
       }
     ],
     "Bridges": [
