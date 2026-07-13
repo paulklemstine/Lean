@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d31b185d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The Diagonal as a Single Organising Principle\n\nThis cycle established, from one structural root, that no type can fully quantify\nover itself: a type `T` equivalent to its own pred",
-      "quality_score": 0.83,
-      "sorry_count": 5,
-      "theorem_count": 16,
-      "timestamp": "2026-07-13T08:26:17",
-      "title": "Deepening: That a type which fully quantifies over itself —"
-    },
-    {
       "cycle_id": "1a598f10",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved the\nroot-number reciprocity law only in *identity form*\n`W(χ)·W(χ⁻¹)·Λ(χ,s) = Λ(χ,s)`, avoiding any",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-13T23:31:45",
       "title": "Deepening: Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
+    },
+    {
+      "cycle_id": "17340490",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T23:31:53",
+      "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0250199a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.**",
-      "quality_score": 0.83,
-      "sorry_count": 5,
-      "theorem_count": 36,
-      "timestamp": "2026-07-11T08:02:43",
-      "title": "Close Proofs: Digital Immortality: Can a Mind Be Encoded?"
-    },
     {
       "cycle_id": "1d01ef4b",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-13T23:31:45",
       "title": "Deepening: Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
+    },
+    {
+      "cycle_id": "17340490",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T23:31:53",
+      "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "adcea684",
-      "domain": "Applications",
-      "name": "combining",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "adcea684",
-      "domain": "Applications",
-      "name": "sumset_nonempty",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "adcea684",
-      "domain": "Applications",
-      "name": "iterated_cauchy_davenport",
-      "quality": 0.7
-    },
     {
       "cycle_id": "b222c758",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "traj_periodic",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "17340490",
+      "domain": "Novelty",
+      "name": "oamPhase_zero",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "17340490",
+      "domain": "Novelty",
+      "name": "oamPhase_mul",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "17340490",
+      "domain": "Novelty",
+      "name": "oamPhase_opposite",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-13T23:31:45",
+  "last_updated": "2026-07-13T23:31:53",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a71dcffe",
-        "quality": 0.78,
-        "theorems": 14,
-        "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
-      },
-      {
         "cycle_id": "2aaaa5f9",
         "quality": 0.82,
         "theorems": 23,
@@ -3637,6 +3631,12 @@
         "quality": 0.62,
         "theorems": 21,
         "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
+      },
+      {
+        "cycle_id": "17340490",
+        "quality": 0.83,
+        "theorems": 15,
+        "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
       }
     ],
     "NumberTheory": [
