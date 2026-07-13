@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b35b4ce5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Clique Densities\n\nThis cycle established the unconditional *upper* comparison of clique counts,\n`C(t,s)·k_t(G) ≤ C(n-s,t-s)·k_s(G)`, its tightness on the complete graph, and the",
-      "quality_score": 0.79,
-      "sorry_count": 7,
-      "theorem_count": 9,
-      "timestamp": "2026-07-12T15:03:08",
-      "title": "Asymptotic Clique-to-Clique Density Bound"
-    },
-    {
       "cycle_id": "3dfad72d",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## Summary of what was proved / disproved\n\nFile: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`,\naxioms: `propext`, `Classical.choice`, `Quot.sound` on",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-13T05:20:20",
       "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
+    },
+    {
+      "cycle_id": "291fcce1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Orbit enumeration of Boolean cubic forms\n\nThis cycle established a sharp two-sided window for the number of nonzero\n`GL(10,2)`-orbits of Boolean cubic forms in ten variables. The",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-13T05:54:34",
+      "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "25448d9e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Turing's Flowers: Morphogenesis as Algebraic Geometry\n\nThe file `Catalog/Novelty/TuringFlowersAlgebraicGeometry.lean` establishes the\ndegree/Chebyshev correspondence and the boun",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-10T11:50:51",
-      "title": "Close Proofs: Turing's Flowers: Morphogenesis as Algebraic Geometry"
-    },
     {
       "cycle_id": "df72d5fe",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-13T05:20:20",
       "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
+    },
+    {
+      "cycle_id": "291fcce1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Orbit enumeration of Boolean cubic forms\n\nThis cycle established a sharp two-sided window for the number of nonzero\n`GL(10,2)`-orbits of Boolean cubic forms in ten variables. The",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-13T05:54:34",
+      "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4d87b490",
-      "domain": "Applications",
-      "name": "imageCard_mul_card_ker",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "4d87b490",
-      "domain": "Applications",
-      "name": "erasedBits_monoidHom",
-      "quality": 0.83
-    },
     {
       "cycle_id": "00319e93",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "shift_sum",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "291fcce1",
+      "domain": "Novelty",
+      "name": "uses",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "291fcce1",
+      "domain": "Novelty",
+      "name": "card_le_nu",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-13T05:20:20",
+  "last_updated": "2026-07-13T05:54:34",
   "open_questions": [
     {
       "context": "-Everything is elementary and `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "909a0259",
-        "quality": 0.83,
-        "theorems": 0,
-        "title": "Deepening: The opposite-semicube Helly property characterizes harmonic-evenness "
-      },
-      {
         "cycle_id": "97b9c756",
         "quality": 0.83,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 13,
         "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
+      },
+      {
+        "cycle_id": "291fcce1",
+        "quality": 0.72,
+        "theorems": 10,
+        "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
       }
     ],
     "NumberTheory": [

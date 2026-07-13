@@ -687,25 +687,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "291fcce1",
-    "description": "Building on cycle 7362296f (Q=0.800), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 82394822 (Q=0.720) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_7362296f_3b9a9df8",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7362296f",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T02:21:43.025993+00:00",
-    "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 766b6e47 (Q=0.800), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For p an odd prime, k ≥ 2 an even integer, and a_p in the algebraic closure of Q_p with v(a_p) > 0 and v(a_p) not an integer (i.e., the slope is fractional), the mod p semisimplified reduction V̄_{k,a_p} of the two-dimensional crystalline representation V_{k,a_p} of G_{Q_p} is irreducible. This folk",
     "domain_bridges": [],
@@ -936,7 +917,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5e439c47",
     "description": "Building on cycle 319bd9f6 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. E",
     "domain_bridges": [],
     "domains": [
@@ -948,7 +929,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "319bd9f6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:29:28.233896+00:00",
     "title": "Deepening: Rucker: Spacetime Donuts — Topology of the Universe"
   },
@@ -12463,6 +12444,26 @@
     "status": "available",
     "timestamp": "2026-07-13T05:19:12.299252+00:00",
     "title": "This project formalizes the **character-free skeleton** of the conjectured"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Orbit enumeration of Boolean cubic forms\n\nThis cycle established a sharp two-sided window for the number of nonzero\n`GL(10,2)`-orbits of Boolean cubic forms in ten variables. The pigeonhole\n(orbit-counting) bound gives at least `3 627 409` nonzero orbits, and the proposed\nexact count `3 691 560` lies just `1.77%` above it. Several bold, testable\nconjectures follow.\n\n## Conjecture 1 — Asymptotic regularity of cubic forms\n\nAs `n → ∞`, the fraction of nonzero Boolean cubic forms in `n` variables whose\nstabiliser in `GL(n,2)` is trivial tends to `1`, and consequently\n\n```\n(number of nonzero orbits) / ( (2^{C(n,3)} - 1) / |GL(n,2)| )  →  1.\n```\n\n**The key insight is** that the `1.77%` gap between the pigeonhole bound and the\nexact count at `n = 10` is a measure of the total mass of non-regular orbits, and\nthis mass is dominated by forms of low \"rank\" whose relative count decays as the\nambient dimension grows. **Why now?** The `n = 10` data point provides the first\nregime where the gap is small enough to extrapolate a limit, and the exact group\norder and form count are available in closed form for every `n`, making the ratio\ndirectly computable.\n\n## Conjecture 2 — Monotone tightening of the pigeonhole ratio\n\nThe ratio `(exact orbit count) / (pigeonhole bound)` is strictly decreasing in `n`\nfor `n ≥ 7`, converging monotonically to `1`.\n\n**The key insight is** that adding a variable multiplies the group order by roughly\n`2^{2n}` while multiplying the form count by only `2^{C(n-1,2)}`, so free orbits\nproliferate faster than constrained ones and the ratio is squeezed toward unity.\n**Why now?** With one exact ratio (`1.0177` at `n = 10`) pinned down, a second data\npoint at `n = 11` or `n = 12` would immediately confirm or refute monotonicity.\n\n## Conjecture 3 — Stabiliser spectrum controls the defect\n\nThe excess of the exact orbit count over the pigeonhole bound equals\n`∑_{forms f} (1 - 1/|orbit of f|)` restricted to non-regular forms, and this \"defect\"\nis a polynomial in `2` whose degree is governed by the maximal proper stabiliser\ndimension. For `n = 10` the defect is exactly `64 151`.\n\n**The key insight is** that the orbit-counting identity turns the orbit total into a\nweighted sum over stabiliser sizes, so the entire deviation from the pigeonhole bound\nis an explicit character sum over conjugacy classes of stabilisers. **Why now?** The\ndefect `64 151` is small and fully factorable, inviting a direct match against the\nlow-dimensional stabiliser classes of `GL(10,2)`.\n\n## Conjecture 4 — Universality of the counting method across degrees\n\nThe same pigeonhole window, `[ceil((2^{C(n,d)} - 1)/|GL(n,2)|), 2^{C(n,d)} - 1]`,\ncaptures the orbit count of Boolean *degree-`d`* forms within `O(1/n)` relative error\nfor every fixed `d ≥ 3`, with the leading correction determined solely by degree-`d`\nforms of corank one.\n\n**The key insight is** that the orbit-counting bound is agnostic to the degree `d`:\nonly the two cardinalities `2^{C(n,d)}` and `|GL(n,2)|` enter, so the method transfers\nverbatim and the error term isolates a single geometric family. **Why now?** Cubics\n(`d = 3`) are the first non-quadratic case where classification is hard, and having a\nproven cubic window lets one calibrate the constant before attacking quartics.\n\n## Conjecture 5 — A closed form for the cubic orbit count\n\nThe number of nonzero `GL(n,2)`-orbits of Boolean cubic forms is a quasi-polynomial\nin `2^n` for `n ≥ n_0`, and evaluating it at `n = 10` returns exactly `3 691 560`.\n\n**The key insight is** that orbit counts of forms of bounded degree over a fixed\nfinite field are governed, via Burnside's lemma, by fixed-point counts of unipotent\nand semisimple classes, each of which is polynomial in `2^n`, so the total is\nquasi-polynomial. **Why now?** The exact value at `n = 10`, combined with the proven\nlower bound, supplies a hard constraint that any candidate closed form must satisfy,\nsharply narrowing the search.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1193",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "291fcce1",
+    "status": "available",
+    "timestamp": "2026-07-13T05:54:26.143525+00:00",
+    "title": "Sharp two-sided window for the number of nonzero"
   },
   {
     "ambition_level": "extension",

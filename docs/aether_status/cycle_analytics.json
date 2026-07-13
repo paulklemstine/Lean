@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T05:20:23.022034+00:00",
+  "last_updated": "2026-07-13T05:54:36.283932+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -11160,6 +11160,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-13T05:20:22.975459+00:00",
       "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 116,
+      "domain": "Novelty",
+      "duration_seconds": 993.0738830566406,
+      "end_time": 1783922060.7019,
+      "files_integrated": 4,
+      "job_id": "291fcce1",
+      "outcome_quality": 0.72,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19b",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783921067.628017,
+      "strategy_count": 0,
+      "theorem_count": 10,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 8,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-13T05:54:36.239451+00:00",
+      "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
     }
   ]
 }
