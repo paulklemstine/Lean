@@ -1853,7 +1853,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e89241b",
     "description": "The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
     "domains": [
       "Pythagorean"
@@ -1862,7 +1862,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:16:17.133115+00:00",
     "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
@@ -2238,21 +2238,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-04T15:52:09.764829+00:00",
     "title": "Every $\u03c4_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges for $n \u2265 2k+2$"
-  },
-  {
-    "consumed_by_exp_id": "5b1ced03",
-    "description": "Let \u03c4 = (\u221a5 + 1)/2 be the golden ratio. For the threshold value T = \u03c4^(1/2) + \u03c4^(-1/2), there exists a countable set S \u2286 [\u2212T, T] such that S is exactly the set of limit points of largest matching roots \u03bc(G) for graphs G. Specifically, S consists of algebraic numbers arising from the spectrum of certain infinite families of graphs constructed via recursive operations on Dynkin diagrams of types A_n and D_n, with gaps precisely at the transcendental values in (\u2212T, T) \\ S. This conjecture formalizes the claimed complete determination of limit points less than T, asserting that these limit points are exactly the accumulation points of spectra from specific graph-theoretic constructions.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0208",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28162v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T16:55:54.714925+00:00",
-    "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Matching Roots"
   },
   {
     "consumed_by_exp_id": "",
@@ -7569,6 +7554,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T02:41:41.790649+00:00",
     "title": "Working purely from the four matroid rank axioms (`IsMatroidRank`), on the objec"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes, from scratch and with no `sorry`, the cleanest\nconcrete instance of the \"limit points of largest matching roots below the\ngolden-ratio threshold\" picture: the **path family**. The file\n`Catalog/Novelty/MatchingRootGoldenThreshold.lean` proves that the largest\nmatching roots of paths `P\u2099` form a strictly increasing sequence\n`2cos(\u03c0/(n+2)) \u2197 2`, that `2` is a genuine accumulation point (`AccPt`) of\nthese values, and that `2` lies strictly below the threshold\n`T = \u221a\u03c4 + 1/\u221a\u03c4 = \u221a(2+\u221a5)`.\n\n## What is proved\n\n* `pathMatch` \u2014 matching polynomial of `P\u2099` via edge\u2013deletion recurrence;\n  `pathMatch_monic`, `pathMatch_natDegree`, `pathMatch_eval_two`.\n* `pathMatch_eval_cos` \u2014 the exact trigonometric evaluation\n  `\u03bc(P\u2099)(2cos\u03b8)\u00b7sin\u03b8 = sin((n+1)\u03b8)`.\n* `pathMatch_isGreatest_root` \u2014 the greatest root of `\u03bc(P\u2099)` is `2cos(\u03c0/(n+1))`,\n  by proving the `n` explicit numbers `2cos(k\u03c0/(n+1))` are *all* the roots.\n* `mu_strictMono`, `mu_lt_two`, `mu_tendsto_two` \u2014 the largest-root sequence.\n* `goldenThreshold_eq_sqrt_tau`, `two_lt_goldenThreshold` \u2014 threshold arithmetic.\n* `largest_matching_root_accumulates_at_two`, `two_isAccPt_matching_roots` \u2014 the\n  capstone accumulation results.\n* `mu_three_eq_tau` \u2014 the largest matching root of `P\u2085` is exactly the golden\n  ratio.\n\n## Natural next steps\n\n1. **Cycles `C\u2099`.** The matching polynomial of the cycle satisfies\n   `\u03bc(C\u2099) = \u03bc(P\u2099) \u2212 \u03bc(P\u2099\u208b\u2082)` and evaluates to `2cos(n\u03b8)` in disguise; its\n   largest root is `2cos(\u03c0/n) \u2192 2` as well. Formalizing this gives a second\n   family accumulating at `2` and a good warm-up for products/unions of graphs.\n\n2. **The `D\u2099` family and values in `(2, T)`.** The genuinely new content of the\n   research concept lives *between* `2` and `T`: limit points there come from\n   the `D\u2099`/`E`-type recursive constructions (Shearer/Hoffman-style \"internal\n   path subdivision\"). A tractable milestone is to build a single explicit\n   family whose largest matching roots converge to a value in `(2, T)`, e.g. via\n   trees obtained by attaching a fixed gadget to a growing path.\n\n3. **General matching polynomial API.** Presently `pathMatch` is defined by the\n   path recurrence. A reusable development would define the matching polynomial\n   of an arbitrary finite (simple) graph as\n   `\u2211\u2096 (\u22121)\u1d4f m(G,k) x^{n\u22122k}` where `m(G,k)` counts `k`-matchings, prove the\n   edge-deletion recurrence `\u03bc(G) = \u03bc(G\u2212e) \u2212 \u03bc(G\u2212u\u2212v)`, and specialize to paths\n   (recovering `pathMatch`) and to forests (matching polynomial = characteristic\n   polynomial, hence matching roots = adjacency eigenvalues). This connects\n   `\u03bc(G)` to spectral graph theory and to Smith's theorem.\n\n4. **Reality and interlacing.** Heilmann\u2013Lieb: all matching roots are real and\n   lie in `[\u22122\u221a(\u0394\u22121), 2\u221a(\u0394\u22121)]` for maximum degree `\u0394`. Formalizing the real-\n   rootedness of `\u03bc(G)` (via the recurrence and Sturm/interlacing) would make\n   \"largest matching root\" well-defined for all graphs and put the accumulation\n   statements on a fully general footing.\n\n5. **Countability / gap structure.** The concept asserts the set `S` of limit\n   points below `T` is countable with gaps at transcendental values. A formal\n   target: show the closure of `{2cos(\u03c0/n) : n}` together with the `D\u2099`-limits\n   is countable, and exhibit an explicit transcendental value in `(\u2212T,T)\\S`\n   (e.g. via a Baker-type argument on `2cos\u03b8` with `\u03b8/\u03c0` transcendental).\n\n6. **Threshold sharpness.** Prove that no largest matching root of any graph in\n   the studied families exceeds `T`, i.e. `T` really is the barrier \u2014 the\n   converse direction of the characterization.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1184",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5b1ced03",
+    "status": "available",
+    "timestamp": "2026-07-13T02:42:14.681965+00:00",
+    "title": "This project formalizes, from scratch and with no `sorry`, the cleanest"
   },
   {
     "consumed_by_exp_id": "",

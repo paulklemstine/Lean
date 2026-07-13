@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "812631ed",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Robust Neural Coding\n\nThis cycle added the **Singleton bound** and its **robust-capacity** corollary to\nthe neural-coding theory, complementing the earlier sphere-packing (Hammin",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-12T11:53:23",
-      "title": "`NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
-    },
-    {
       "cycle_id": "16e4b1d9",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n`Bridges/RamanujanBaireBridge.lean` builds a cross-domain bridge for the Ramanujan\noracle program: it recasts the **counting/diagonalization** obstruction to computable\noracles as",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-13T02:42:03",
       "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
+    },
+    {
+      "cycle_id": "5b1ced03",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalizes, from scratch and with no `sorry`, the cleanest\nconcrete instance of the \"limit points of largest matching roots below the\ngolden-ratio threshold\" picture:",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-13T02:42:37",
+      "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Matching Roots"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "207fb5b4",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logi",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-10T09:26:16",
-      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
-    },
     {
       "cycle_id": "8b2bab35",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-13T02:42:03",
       "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
+    },
+    {
+      "cycle_id": "5b1ced03",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalizes, from scratch and with no `sorry`, the cleanest\nconcrete instance of the \"limit points of largest matching roots below the\ngolden-ratio threshold\" picture:",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-13T02:42:37",
+      "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Matching Roots"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "465c6137",
-      "domain": "Applications",
-      "name": "fussCatalan_closedForm",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "eb025541",
-      "domain": "Novelty",
-      "name": "logb2_le",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "eb025541",
-      "domain": "Novelty",
-      "name": "compose_nil",
-      "quality": 0.83
-    },
     {
       "cycle_id": "eb025541",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "rainbow_forest_inequality",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "5b1ced03",
+      "domain": "Novelty",
+      "name": "pathMatch_zero",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "5b1ced03",
+      "domain": "Novelty",
+      "name": "pathMatch_one",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "5b1ced03",
+      "domain": "Novelty",
+      "name": "pathMatch_succ_succ",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-13T02:42:03",
+  "last_updated": "2026-07-13T02:42:37",
   "open_questions": [
     {
       "context": "-Everything is elementary and `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "26646791",
-        "quality": 0.72,
-        "theorems": 26,
-        "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path s"
-      },
-      {
         "cycle_id": "00319e93",
         "quality": 0.82,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 12,
         "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+      },
+      {
+        "cycle_id": "5b1ced03",
+        "quality": 0.7,
+        "theorems": 22,
+        "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Ma"
       }
     ],
     "NumberTheory": [

@@ -3097,7 +3097,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Andrews, G. E. (1986). On the number of partitions of n into distinct parts. Bull. Amer. Math. Soc.",
         "Hardy, G. H. & Ramanujan, S. (1918). Asymptotic formulae in combinatory analysis. Proc. London Math. Soc.",
@@ -3106,7 +3106,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8e89241b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3124,7 +3124,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0111",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T02:44:09.205833+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_alternating_sign_v2 : ∀ ε > 0, ∃ N, ∀ n ≥ N, ∃ S : set ℕ, density S = 0 ∧ ∀ n ∉ S, (-1)^n * V₂ n > 0\n\n theorem asymptotic_alternating_sign_v3 : ∀ ε > 0, ∃ N, ∀ n ≥ N, ∃ S : set ℕ, density S = 0 ∧ ∀ n ∉ S, (-1)^n * V₃ n > 0\n\n theorem asymptotic_alternating_sign_v4 : ∀ ε > 0, ∃ N, ∀ n ≥ N, ∃ S : set ℕ, density S = 0 ∧ ∀ n ∉ S, (-1)^n * V₄ n > 0",
       "lineage_refs": [],
@@ -3139,7 +3139,7 @@
       "source": "",
       "source_exp_id": "2607.01210v1",
       "source_path": "http://arxiv.org/abs/2607.01210v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T00:16:17.133115+00:00",
       "title": "Asymptotic alternating sign conjecture for Andrews q-series v₂(q), v₃(q), v₄(q)"
@@ -39482,7 +39482,6 @@
   },
   "selection_log": [
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "abduction_followup",
     "abduction_followup",
     "abduction_followup",
@@ -39499,6 +39498,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"
   ]
