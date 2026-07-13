@@ -6239,6 +6239,31 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.CO",
+      "math.SP"
+    ],
+    "consumed_by_exp_id": "ad71c64c",
+    "description": "For any simple graph G with n vertices and m edges, and for any 1 ≤ k ≤ n-1, the sum of the k largest Laplacian eigenvalues s_k(G) equals m + binom(k+1, 2) if and only if G is a threshold graph with clique number k+1.",
+    "domain_bridges": [
+      "Linear Algebra",
+      "Graph Theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0531",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
+    "research_mode": "team",
+    "source_exp_id": "2607.03388v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-07T03:55:00.492813+00:00",
+    "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.CO"
     ],
     "consumed_by_exp_id": "",
@@ -7840,7 +7865,7 @@
       "Homotopy interleavings",
       "Doubling dimension in metric geometry"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64d4f5fe",
     "description": "There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-approximation to the Vietoris-Rips filtration VR(Xₙ) requires at least 2^(γ·n) simplices, and moreover γ can be taken to satisfy γ = γ(c) with lim_{c→√2⁻} γ(c) = 0.",
     "domain_bridges": [
       "Formal verification of persistent homology algorithms",
@@ -7856,7 +7881,7 @@
     "proof_strategy": "1. Construct an explicit infinite family of finite metric spaces Xₙ (e.g., using ℓ₁-spheres or Hamming cube constructions) with controlled geometric properties. 2. Prove that these spaces have unbounded doubling dimension. 3. Use combinatorial arguments to show that any c-approximation must encode sufficient information to distinguish between exponentially many distinct metric configurations. 4. Establish the quantitative bound on γ(c) by analyzing the homomorphism density needed in the approximation maps. 5. Verify the limit behavior as c approaches √2 from below using asymptotic analysis.",
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T17:01:42.923851+00:00",
     "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
   },
@@ -8808,7 +8833,7 @@
       "Pellegrino's characterization of unimodular surfaces",
       "Computer algebra results on small unimodular matrices"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e8b8d594",
     "description": "For every integer k ≥ 1, the maximum determinant of any 4×4 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shifted appropriately.",
     "domain_bridges": [
       "Integer programming and branch-and-bound algorithms",
@@ -8826,7 +8851,7 @@
     "proof_strategy": "Establish the conjecture by (1) proving the upper bound using elementary divisor bounds and Hadamard's inequality; (2) constructing explicit extremal matrices via a parametric family; (3) verifying via symbolic computation that these matrices achieve the claimed determinant and are unimodular; (4) ruling out larger determinants through case analysis of possible Smith normal forms. The key insight is that near-singular behavior occurs when the matrix approaches a rank-deficient configuration over ℤ, forcing severe constraints on the possible Smith normal forms.",
     "research_mode": "team",
     "source_exp_id": "2607.07688v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T14:37:40.968742+00:00",
     "title": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
   },
