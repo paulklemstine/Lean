@@ -3027,20 +3027,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Matching Lower Bound for Generalized Erd\u0151s\u2013Rogers Functions"
   },
   {
-    "consumed_by_exp_id": "d10b5095",
-    "description": "The minimal absolute value \u03c3\u2085(n) of a non-vanishing sum of n fifth roots of unity is monotone non-increasing over congruence classes of n modulo 5. Furthermore, a strict decrease \u03c3\u2085(n) > \u03c3\u2085(n+5) occurs if and only if n+5 is of the form 5F\u2098, L\u2098, or 2L\u2098 for some positive integer m, where F\u2098 and L\u2098 denote the m-th Fibonacci and Lucas numbers, respectively.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0378",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00825v2",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T06:18:12.080116+00:00",
-    "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For the morphisms $\\phi$ (where $\\phi(a)=abc, \\phi(b)=ac, \\phi(c)=b$) and $\\mu$ (where $\\mu(a)=a, \\mu(b)=b, \\mu(c)=cbbbc$), let $x'_k = \\phi^k(a)$ and $x_k = \\mu(x'_k)$. The conjecture states that for any $k \\ge 0$, if a $3^+$-parameterized square $w = uv$ with $|u|=|v| \\ge 3$ exists as a subword of $x_k$, then $u=v$, meaning there are no non-standard $3^+$-parameterized squares.",
     "domains": [
@@ -3562,7 +3548,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Overfull Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24c0b42e",
     "description": "The maximum of the logarithm of the absolute value of the Riemann zeta function on the critical line over the interval [T, 2T], defined as M_T = max_{t \u2208 [T, 2T]} log|\u03b6(1/2 + it)|, satisfies the convergence in distribution: M_T - log(log(T)) + (3/2)log(log(log(T))) converges to the sum of two independent Gumbel random variables as T \u2192 \u221e. This captures the extreme value statistics of the number-theoretic analogue to the black hole microstate counts proposed in the paper.",
     "domains": [
       "Pythagorean",
@@ -3572,7 +3558,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T17:00:53.781526+00:00",
     "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
   },
@@ -7966,6 +7952,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T14:34:32.838369+00:00",
     "title": "That the E\u2088 vector-count sequence `240\u00b7\u03c3\u2083(n)` behaves in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What is proved\n\nThe file `Catalog/Novelty/FifthRootsGoldenBridge.lean` establishes, fully formally and\nwith only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`), the exact\nalgebraic bridge between fifth roots of unity and Fibonacci/Lucas numbers via the\ngolden ratio.  For every primitive fifth root of unity `\u03b6`, with Gaussian periods\n`p \u03b6 = \u03b6 + \u03b6\u2074` and `q \u03b6 = \u03b6\u00b2 + \u03b6\u00b3`:\n\n* `periods_sum_prod`      : `p \u03b6 + q \u03b6 = -1` and `p \u03b6 \u00b7 q \u03b6 = -1`.\n* `periods_golden`        : `{p \u03b6, q \u03b6} = {-\u03c6, -\u03c8}` (the golden ratio and its conjugate).\n* `lucas_binet`           : `L\u2099 = \u03c6\u207f + \u03c8\u207f` (Binet's formula for Lucas numbers).\n* `fifthRoots_lucas_bridge` : `(\u03b6+\u03b6\u2074)\u207f + (\u03b6\u00b2+\u03b6\u00b3)\u207f = (-1)\u207f \u00b7 L\u2099`.\n* `fifthRoots_fib_bridge`   : `((\u03b6+\u03b6\u2074)\u207f \u2212 (\u03b6\u00b2+\u03b6\u00b3)\u207f)\u00b2 = 5 \u00b7 F\u2099\u00b2`.\n* `golden_ratio_is_modulus` : `{\u2016p \u03b6\u2016, \u2016q \u03b6\u2016} = {\u03c6, \u03c6\u207b\u00b9}`.\n* `two_term_modulus_ge`   : `\u03c6\u207b\u00b9 \u2264 \u2016\u03b6^i + \u03b6^j\u2016` for all `i, j` (lower bound for every\n  two-term sum).\n* `sigma5_two`            : `IsLeast {\u2016\u03b6^i + \u03b6^j\u2016 | i j} \u03c6\u207b\u00b9`, i.e. `\u03c3\u2085(2) = \u03c6\u207b\u00b9`.\n\nThe last two theorems give the concrete link to `\u03c3\u2085`: the smaller modulus `\u03c6\u207b\u00b9` is\nexactly `\u03c3\u2085(2)`, the minimal modulus of a non-vanishing sum of two fifth roots of unity,\nnow proved formally as a least-element statement.  (Because `5` is odd, a two-term sum\n`\u03b6^i + \u03b6^j` can never vanish, so no non-vanishing side condition is needed for `n = 2`.)\n\n## The full conjecture\n\nThe originating research statement is:\n\n> `\u03c3\u2085(n)` is monotone non-increasing over each residue class of `n` modulo 5, and a\n> strict decrease `\u03c3\u2085(n) > \u03c3\u2085(n+5)` occurs iff `n + 5 \u2208 {5F\u2098, L\u2098, 2L\u2098}` for some\n> `m \u2265 1`.\n\nComputational evidence (see `ComputationalEvidence.md`) supports both halves.  Proving\nit in full requires substantial additional infrastructure that is currently absent\nfrom Mathlib:\n\n1. **A formal definition of `\u03c3\u2085(n)`.**  Define the set of `n`-term sums of fifth roots\n   of unity as the image of the map `f : Fin n \u2192 Fin 5 \u21a6 \u2211 \u03b6^{f i}`, restrict to the\n   nonzero ones, and take the (finite) minimum modulus.  Prove basic well-definedness\n   and independence of the chosen primitive root.  The case `n = 2` is already handled\n   fully formally by `sigma5_two` (`IsLeast \u2026 \u03c6\u207b\u00b9`), which can serve as the base case\n   and template for the general `IsLeast`-based definition.\n\n2. **Reduction to the ring `\u2124[\u03b6\u2085]` and its real subfield `\u2124[\u03c6]`.**  Because\n   `1+\u03b6+\u03b6\u00b2+\u03b6\u00b3+\u03b6\u2074 = 0`, an `n`-term sum is determined by a vector `(a\u2080,\u2026,a\u2084) \u2208 \u2115\u2075`\n   modulo the all-ones vector; minimizing `|\u2211 a\u2096 \u03b6^k|` becomes a lattice/geometry of\n   numbers problem in the golden field.  The Gaussian-period identities proved here are\n   the algebraic core of this reduction.\n\n3. **The extremal structure.**  Show that the minimizers are `\u03c6`-power multiples of the\n   periods, so that `\u03c3\u2085` values are (up to the residue class) of the form `\u03c6^{-k}`\n   times a bounded factor \u2014 which is why Fibonacci/Lucas numbers, being the integer\n   coefficients in `\u03c6\u207f = F\u2099\u03c6 + F\u2099\u208b\u2081` and `\u03c6\u207f + \u03c8\u207f = L\u2099`, control the jumps.\n\n4. **The jump locations.**  Prove that the \"budget\" `n` needed to realize the next\n   golden power drops exactly at `5F\u2098, L\u2098, 2L\u2098`, using norm computations\n   `N(\u03c6^m) = (-1)^m` and the identities `L\u2098 = F\u2098\u208b\u2081 + F\u2098\u208a\u2081`, `L\u2082\u2098 = L\u2098\u00b2 \u2212 2(-1)^m`.\n\n## Generalizations\n\n* Replace `5` by another prime `p`; the analogous periods generate the real subfield of\n  `\u211a(\u03b6_p)`, and for `p = 5` this is `\u211a(\u221a5)`.  For general `p` the relevant units are no\n  longer governed by a single quadratic recurrence, so the clean Fibonacci/Lucas picture\n  is special to `p = 5` (and, via `\u221a5`, to the golden ratio).\n* Formalize `\u03c3_p(n)` and study which recurrence sequences govern its jumps for small `p`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1226",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d10b5095",
+    "status": "available",
+    "timestamp": "2026-07-13T14:34:51.070111+00:00",
+    "title": "The file `Catalog/Novelty/FifthRootsGoldenBridge.lean` establishes, fully formal"
   },
   {
     "consumed_by_exp_id": "",
