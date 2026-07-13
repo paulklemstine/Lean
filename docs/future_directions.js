@@ -4554,20 +4554,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
   },
   {
-    "consumed_by_exp_id": "e3aaa465",
-    "description": "For any k \u22653 and 1\u2264\u2113<k, and any two accumulation points \u03b1, \u03b2 in \u03a0^k_\u2113, there exists a transfer function f such that f(\u03b1) = \u03b2.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0661",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06518v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T19:01:40.311474+00:00",
-    "title": "Universality of Transfer Functions Among Accumulation Points"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any quadratic polynomial P \u2208 \u2124[x] with positive leading coefficient that is not a constant times the square of a linear polynomial, the number of quadruples (n\u2081, n\u2082, n\u2083, n\u2084) \u2208 [1, N]\u2074 such that P(n\u2081)P(n\u2082)P(n\u2083)P(n\u2084) is a perfect square is asymptotic to c_P N\u00b2 (log N)\u00b2 as N \u2192 \u221e, where c_P > 0 is a constant depending on P. This conjecture captures the paucity phenomenon where diagonal solutions (pairwise products forming squares) dominate, and the (log N)\u00b2 factor arises from the rich structure of Pell\u2013Fermat equations associated with P.",
     "domains": [
@@ -7965,6 +7951,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T14:34:23.354840+00:00",
     "title": "This cycle contributes `Catalog/Novelty/VietorisRipsCliqueBridge.lean`, a self-c"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Siegel\u2013Weil for the E\u2088 theta series\n\nThis cycle established that the E\u2088 vector-count sequence `240\u00b7\u03c3\u2083(n)` behaves in\nevery measurable arithmetic respect like the Fourier coefficient system of the\nweight-4 Eisenstein series: it is Hecke-multiplicative, it inverts against the\ndivisor lattice to return pure cubes, it has the Eisenstein Euler factor as its\nprime-power closed form, and it carries a strictly nonzero eigenform defect at\nprime squares. The following conjectures push outward from those findings.\n\n## 1. The self-convolution square is the weight-8 Eisenstein coefficient system\n\n**Conjecture.** For every `n \u2265 1`,\n`\u03c3\u2087(n) = \u03c3\u2083(n) + 120 \u00b7 \u03a3_{k=1}^{n-1} \u03c3\u2083(k)\u00b7\u03c3\u2083(n\u2212k)`.\n\nThe key insight is that squaring the E\u2088 theta series counts the vectors of the\nrank-16 lattice E\u2088 \u2295 E\u2088, whose theta series must again be an Eisenstein series of\nweight 8; matching constant and linear coefficients forces the convolution law\nabove. Why now? The Hecke-eigenform backbone and the divisor-power closed forms\nproved this cycle give both sides of the identity a fully arithmetic description,\nso the remaining content is a single finite convolution rather than an analytic\nstatement about modular forms.\n\n## 2. A congruence fingerprint separating E\u2088 from every rank-8 competitor\n\n**Conjecture.** The representation numbers `r(n) = 240\u00b7\u03c3\u2083(n)` satisfy\n`r(n) \u2261 240\u00b7n\u00b3 (mod 504)` for all `n`, and no completely multiplicative\ncorrection can reproduce this residue pattern.\n\nThe key insight is that M\u00f6bius inversion recovers `n\u00b3` exactly from the divisor\nsum, so the residues of `r(n)` modulo the Ramanujan modulus 504 are locked to the\nresidues of `240\u00b7n\u00b3`, a rigidity that a mere character would violate. Why now?\nThe M\u00f6bius-inversion identity established this cycle expresses `n\u00b3` as an explicit\nsigned sum of the counts themselves, turning the congruence into a finite check\nper residue class.\n\n## 3. Uniqueness of the eigenform defect across weights\n\n**Conjecture.** Among all divisor-power sums `\u03c3_s`, the map `s \u21a6 (\u03c3_s(p\u00b2)/\u03c3_s(p)\u00b2)`\nis strictly increasing in `s` for each fixed prime `p`, and its deviation from 1\nmeasures exactly the failure of the weight-`(s+1)` Eisenstein series to be a\ncompletely multiplicative character.\n\nThe key insight is that the quadratic correction `\u03c3_s(p\u00b2) = \u03c3_s(p)\u00b2 \u2212 p^s` isolates\nthe defect term `p^s`, whose relative size grows with `s`; the eigenform therefore\nbecomes \"less character-like\" as the weight increases. Why now? The correction\nidentity and its strict-inequality corollary proved this cycle give the defect a\nclosed algebraic form, making the monotonicity claim a manipulable inequality\nrather than an asymptotic heuristic.\n\n## 4. Local Euler factors force the global genus to be a singleton\n\n**Conjecture.** Any even positive-definite unimodular lattice of rank 8 whose\nrepresentation numbers satisfy the division-free closed form\n`\u03c1(p\u02b3)\u00b7(p\u00b3 \u2212 1) = 240\u00b7(p^{3(r+1)} \u2212 1)` at every prime `p` is isometric to E\u2088.\n\nThe key insight is that the closed product form pins every local factor of the\nassociated Dirichlet series to that of \u03b6(w)\u00b7\u03b6(w\u22123), and a genus with matching\nlocal data in rank 8 has a single class. Why now? The division-free Euler-factor\nidentity proved this cycle supplies exactly the local rigidity needed to state the\nuniqueness as a coefficient-matching problem rather than a lattice-classification\none.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1225",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "162989ab",
+    "status": "available",
+    "timestamp": "2026-07-13T14:34:32.838369+00:00",
+    "title": "That the E\u2088 vector-count sequence `240\u00b7\u03c3\u2083(n)` behaves in"
   },
   {
     "consumed_by_exp_id": "",

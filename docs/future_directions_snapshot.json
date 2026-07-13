@@ -7823,33 +7823,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "FurediSurvey",
-      "KeevashSurvey",
-      "SidorenkoSurvey",
-      "ConlonSchulke"
-    ],
-    "consumed_by_exp_id": "e3aaa465",
-    "description": "For any k ≥3 and 1≤ℓ<k, and any two accumulation points α, β in Π^k_ℓ, there exists a transfer function f such that f(α) = β.",
-    "domain_bridges": [
-      "Algebraic Combinatorics",
-      "Spectral Graph Theory"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0661",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct a tree suspension parameterized to target specific densities, demonstrating that tree structures can interpolate between any pair of accumulation points.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06518v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T19:01:40.311474+00:00",
-    "title": "Universality of Transfer Functions Among Accumulation Points"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "arXiv:2401.12345 (hypothetical)",
       "Hooley (1967) on Pell equations",
       "Evertse–Silverman (1991) on S-unit equations",
@@ -12857,6 +12830,26 @@
     "status": "available",
     "timestamp": "2026-07-13T14:34:23.354840+00:00",
     "title": "This cycle contributes `Catalog/Novelty/VietorisRipsCliqueBridge.lean`, a self-c"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Siegel–Weil for the E₈ theta series\n\nThis cycle established that the E₈ vector-count sequence `240·σ₃(n)` behaves in\nevery measurable arithmetic respect like the Fourier coefficient system of the\nweight-4 Eisenstein series: it is Hecke-multiplicative, it inverts against the\ndivisor lattice to return pure cubes, it has the Eisenstein Euler factor as its\nprime-power closed form, and it carries a strictly nonzero eigenform defect at\nprime squares. The following conjectures push outward from those findings.\n\n## 1. The self-convolution square is the weight-8 Eisenstein coefficient system\n\n**Conjecture.** For every `n ≥ 1`,\n`σ₇(n) = σ₃(n) + 120 · Σ_{k=1}^{n-1} σ₃(k)·σ₃(n−k)`.\n\nThe key insight is that squaring the E₈ theta series counts the vectors of the\nrank-16 lattice E₈ ⊕ E₈, whose theta series must again be an Eisenstein series of\nweight 8; matching constant and linear coefficients forces the convolution law\nabove. Why now? The Hecke-eigenform backbone and the divisor-power closed forms\nproved this cycle give both sides of the identity a fully arithmetic description,\nso the remaining content is a single finite convolution rather than an analytic\nstatement about modular forms.\n\n## 2. A congruence fingerprint separating E₈ from every rank-8 competitor\n\n**Conjecture.** The representation numbers `r(n) = 240·σ₃(n)` satisfy\n`r(n) ≡ 240·n³ (mod 504)` for all `n`, and no completely multiplicative\ncorrection can reproduce this residue pattern.\n\nThe key insight is that Möbius inversion recovers `n³` exactly from the divisor\nsum, so the residues of `r(n)` modulo the Ramanujan modulus 504 are locked to the\nresidues of `240·n³`, a rigidity that a mere character would violate. Why now?\nThe Möbius-inversion identity established this cycle expresses `n³` as an explicit\nsigned sum of the counts themselves, turning the congruence into a finite check\nper residue class.\n\n## 3. Uniqueness of the eigenform defect across weights\n\n**Conjecture.** Among all divisor-power sums `σ_s`, the map `s ↦ (σ_s(p²)/σ_s(p)²)`\nis strictly increasing in `s` for each fixed prime `p`, and its deviation from 1\nmeasures exactly the failure of the weight-`(s+1)` Eisenstein series to be a\ncompletely multiplicative character.\n\nThe key insight is that the quadratic correction `σ_s(p²) = σ_s(p)² − p^s` isolates\nthe defect term `p^s`, whose relative size grows with `s`; the eigenform therefore\nbecomes \"less character-like\" as the weight increases. Why now? The correction\nidentity and its strict-inequality corollary proved this cycle give the defect a\nclosed algebraic form, making the monotonicity claim a manipulable inequality\nrather than an asymptotic heuristic.\n\n## 4. Local Euler factors force the global genus to be a singleton\n\n**Conjecture.** Any even positive-definite unimodular lattice of rank 8 whose\nrepresentation numbers satisfy the division-free closed form\n`ρ(pʳ)·(p³ − 1) = 240·(p^{3(r+1)} − 1)` at every prime `p` is isometric to E₈.\n\nThe key insight is that the closed product form pins every local factor of the\nassociated Dirichlet series to that of ζ(w)·ζ(w−3), and a genus with matching\nlocal data in rank 8 has a single class. Why now? The division-free Euler-factor\nidentity proved this cycle supplies exactly the local rigidity needed to state the\nuniqueness as a coefficient-matching problem rather than a lattice-classification\none.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1225",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "162989ab",
+    "status": "available",
+    "timestamp": "2026-07-13T14:34:32.838369+00:00",
+    "title": "That the E₈ vector-count sequence `240·σ₃(n)` behaves in"
   },
   {
     "ambition_level": "extension",

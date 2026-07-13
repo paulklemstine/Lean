@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "86966da0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Reflective Tower after Cross-Level Separation\n\nThis cycle sharpened the reflective tower `L(0) = Bool`, `L(n+1) = L(n) → Bool`\nfrom a locally strict chain into a *globally ri",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 11,
-      "timestamp": "2026-07-12T23:52:10",
-      "title": "That a type which fully quantifies over itself —"
-    },
-    {
       "cycle_id": "909a0259",
       "domain": "Novelty",
       "key_insight": "# Future Directions: harmonic-balance and the opposite-semicube Helly property\n\nThis cycle established that the opposite-semicube Helly property of a partial cube\nis governed by a single *harmonic-bal",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-13T14:34:30",
       "title": "Deepening: Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
+    },
+    {
+      "cycle_id": "162989ab",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Siegel–Weil for the E₈ theta series\n\nThis cycle established that the E₈ vector-count sequence `240·σ₃(n)` behaves in\nevery measurable arithmetic respect like the Fourier coeffici",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T14:34:47",
+      "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c2b68f4a",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nThe file `QuantumWalkCayley.lean` establishes the spectral backbone of random walks\non Cayley graphs of finite abelian groups: characters diagonalize every\ntranslation-invariant (",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-10T23:50:32",
-      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-    },
     {
       "cycle_id": "0faef071",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-13T14:34:30",
       "title": "Deepening: Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
+    },
+    {
+      "cycle_id": "162989ab",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Siegel–Weil for the E₈ theta series\n\nThis cycle established that the E₈ vector-count sequence `240·σ₃(n)` behaves in\nevery measurable arithmetic respect like the Fourier coeffici",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T14:34:47",
+      "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1a598f10",
-      "domain": "Novelty",
-      "name": "gaussSum_mul_gaussSum_inv_stdAddChar",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "0557da65",
-      "domain": "Applications",
-      "name": "the",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0557da65",
-      "domain": "Applications",
-      "name": "card_lt_powerset",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0557da65",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "mem_allCliques",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "162989ab",
+      "domain": "Novelty",
+      "name": "uses",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "162989ab",
+      "domain": "Novelty",
+      "name": "sigma_prime_pow",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "162989ab",
+      "domain": "Novelty",
+      "name": "sigma_prime",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T14:34:30",
+  "last_updated": "2026-07-13T14:34:47",
   "open_questions": [
-    {
-      "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.; Everything is elementary and `sorry`-free.; necessary.  All main theorems are `sorry`-free and use genuine arguments",
-      "cycle_id": "0242f406",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-12T23:51:57"
-    },
     {
       "context": "+--   · sorry   -- infinite tail: composite n > 10000 (Carmichael's analytic core); -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "86966da0",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-13T13:44:00"
+    },
+    {
+      "context": "+`sorry`-free.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "162989ab",
+      "domain": "Novelty",
+      "sorry_count": 5,
+      "timestamp": "2026-07-13T14:34:47"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "1a598f10",
-        "quality": 0.8,
-        "theorems": 7,
-        "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
-      },
-      {
         "cycle_id": "9da8e56c",
         "quality": 0.72,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 23,
         "title": "Deepening: Explicit exponential lower bound for Vietoris-Rips approximations bel"
+      },
+      {
+        "cycle_id": "162989ab",
+        "quality": 0.82,
+        "theorems": 15,
+        "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
       }
     ],
     "NumberTheory": [

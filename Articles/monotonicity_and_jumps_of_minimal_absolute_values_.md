@@ -1,180 +1,155 @@
-# When Fibonacci Meets the Fifth Root of Unity
+# The Golden Thread Hidden in the Fifth Roots of Unity
 
-## A tiny question with a surprising answer
+## A number that refuses to disappear
 
-Draw a regular pentagon and label its five corners with the complex numbers
-$1, \zeta, \zeta^2, \zeta^3, \zeta^4$, where $\zeta = e^{2\pi i/5}$ is a
-*primitive fifth root of unity*. These are the five solutions of the equation
-$z^5 = 1$, spaced evenly around the unit circle. They have one magical property
-that will drive our entire story: they add up to nothing. Place all five arrows
-tip-to-tail and you return exactly to where you started,
-$$1 + \zeta + \zeta^2 + \zeta^3 + \zeta^4 = 0.$$
+Take a regular pentagon and mark its five corners on a circle of radius one in the
+plane. If you treat those corners as complex numbers, they are exactly the *fifth
+roots of unity*: the five solutions of the equation $z^5 = 1$. Written out, they are
+$1, \zeta, \zeta^2, \zeta^3, \zeta^4$, where $\zeta = e^{2\pi i/5}$ is the point you
+reach by rotating one-fifth of the way around the circle.
 
-Now play a game. Pick a whole number $n$ and add up $n$ of these five arrows,
-repeats allowed. For instance, with $n = 3$ you might choose $\zeta + \zeta + \zeta^3$,
-or $1 + \zeta^2 + \zeta^4$, and so on. Each choice lands you at some point in the
-plane, at some distance from the origin. Among **all** the ways to make such a sum
-with exactly $n$ arrows, how close to the origin can you get *without landing
-exactly on it*?
+Here is a game that sounds innocent but turns out to hide something beautiful. Pick a
+handful of these five points — you are allowed to reuse them — and add them together
+as vectors in the plane. Sometimes the sum lands exactly on the origin: for example
+$1 + \zeta + \zeta^2 + \zeta^3 + \zeta^4 = 0$, because the five corners of a regular
+pentagon perfectly balance. But whenever the sum does *not* vanish, it lands some
+positive distance away from the origin. The question that drives this article is:
 
-That "without landing exactly on it" is the whole point. Because the five arrows
-cancel, it is often easy to hit the origin dead-on — but a bullseye is boring.
-The interesting question is: what is the smallest *nonzero* distance you can
-achieve? Call this number $\sigma_5(n)$. In symbols,
-$$\sigma_5(n) = \min\Bigl\{\, \Bigl|\, \textstyle\sum_{j<n} \zeta^{c_j}\,\Bigr| \;:\; \text{the sum is not } 0 \,\Bigr\}.$$
+> Among all the ways to add up $n$ fifth roots of unity so that the result is **not**
+> zero, how close to the origin can you possibly get?
 
-It sounds like a curiosity. It turns out to be a doorway to the golden ratio,
-the Fibonacci numbers, and their close cousins the Lucas numbers.
+Call that smallest possible distance $\sigma_5(n)$. It is the "minimal non-vanishing
+modulus" of an $n$-term sum of fifth roots of unity. At first glance $\sigma_5(n)$
+looks like a dry combinatorial quantity — a minimum over a finite but rapidly growing
+list of vector sums. What is astonishing is *what controls it*: the golden ratio, and,
+lurking right behind it, the Fibonacci and Lucas numbers.
 
-## The staircase of minimal distances
+## Two points, and the golden ratio appears
 
-Let us compute the first few values by brute force — literally trying every
-possible combination of arrows:
+Start with the simplest interesting case: $n = 2$. We add two of the five points. Since
+$5$ is an odd number, two of these unit vectors can never cancel exactly, so the sum is
+always non-zero — no fine print needed. How small can $\lvert \zeta^i + \zeta^j\rvert$
+be?
 
-| $n$ | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| $\sigma_5(n)$ | $1.000$ | $0.618$ | $0.618$ | $0.382$ | $0.727$ | $0.382$ | $0.236$ | $0.236$ | $0.382$ | $0.449$ | $0.146$ |
+The answer is exactly the reciprocal of the golden ratio,
+$$\sigma_5(2) = \frac{1}{\varphi} = \varphi - 1 = 0.6180339\ldots,$$
+where $\varphi = \tfrac{1+\sqrt5}{2}$ is the golden ratio itself. This is not an
+approximation or a numerical coincidence; it is exact, and there is a clean reason for
+it.
 
-At first glance the numbers jump around unpredictably. But two familiar constants
-are hiding in plain sight. The value $0.618$ is $\varphi^{-1}$, the reciprocal of
-the golden ratio $\varphi = \tfrac{1+\sqrt5}{2}$; and $0.382$ is $\varphi^{-2}$.
-The distances cluster on powers of the golden ratio, holding steady for a while
-and then abruptly dropping. It is a descending staircase — but where, exactly,
-are the steps?
+The reason lives in a pair of special sums called the **Gaussian periods** of the
+pentagon:
+$$p = \zeta + \zeta^4, \qquad q = \zeta^2 + \zeta^3.$$
+Each of these pairs up a root with its mirror image across the real axis (its complex
+conjugate), so both $p$ and $q$ are ordinary real numbers. They satisfy two strikingly
+simple relations:
+$$p + q = -1, \qquad p\,q = -1.$$
+The first follows because $1 + \zeta + \zeta^2 + \zeta^3 + \zeta^4 = 0$, so
+$p + q = -1$. The second is a short computation using $\zeta^5 = 1$. Together they say
+that $p$ and $q$ are the two roots of the quadratic
+$$x^2 + x - 1 = 0.$$
 
-The key to taming the chaos is to stop reading the table left-to-right and start
-reading it **five columns at a time**. Sort the values of $n$ by their remainder
-when divided by $5$:
+Now compare with the defining equation of the golden ratio, $\varphi^2 = \varphi + 1$,
+i.e. $\varphi$ is a root of $x^2 - x - 1 = 0$. Replacing $x$ by $-x$ turns one quadratic
+into the other. So the two Gaussian periods are precisely $-\varphi$ and its conjugate
+$-\psi$, where $\psi = \tfrac{1-\sqrt5}{2}$ is the "small" golden conjugate. Their
+absolute values are
+$$\lvert p\rvert, \lvert q\rvert = \varphi \ \text{ and }\ \frac{1}{\varphi}.$$
 
-- remainder $1$: $\;\sigma_5(1), \sigma_5(6), \sigma_5(11), \sigma_5(16) = 1.000,\ 0.382,\ 0.146,\ 0.146$
-- remainder $2$: $\;\sigma_5(2), \sigma_5(7), \sigma_5(12) = 0.618,\ 0.236,\ 0.236$
-- remainder $0$: $\;\sigma_5(5), \sigma_5(10), \sigma_5(15) = 0.727,\ 0.449,\ 0.278$
+So the golden ratio is not merely *associated* with the pentagon in some vague
+aesthetic sense — it is literally the length of one of these two-root sums, and its
+reciprocal is the length of the other. A short geometric argument shows that no
+two-term sum can be shorter than $1/\varphi$, so this smaller value is exactly the
+champion: $\sigma_5(2) = 1/\varphi$.
 
-Along each of these threads the numbers **never increase**. Every step of five
-either keeps the distance the same or shrinks it. The staircase only ever goes
-down.
+## Powers of the periods: Lucas and Fibonacci step forward
 
-## Why five arrows can never hurt you
+The real magic starts when we take powers. Because $p$ and $q$ are $-\varphi$ and
+$-\psi$, raising them to the $n$-th power and adding gives
+$$p^n + q^n = (-\varphi)^n + (-\psi)^n = (-1)^n\bigl(\varphi^n + \psi^n\bigr).$$
 
-The reason for this tidy monotonicity is beautiful and simple. Suppose you have
-found a great combination of $n$ arrows landing very close to the origin without
-hitting it. Now take one full set of all five arrows, $1 + \zeta + \zeta^2 + \zeta^3 + \zeta^4$,
-and toss it into your sum. Because that full set adds to zero, your landing point
-does not move at all — and in particular it is still not the origin. But you have
-used $n + 5$ arrows now instead of $n$.
+The quantity $\varphi^n + \psi^n$ is one of the most famous formulas in all of
+elementary number theory: it is exactly the $n$-th **Lucas number** $L_n$. The Lucas
+numbers march along as
+$$2,\ 1,\ 3,\ 4,\ 7,\ 11,\ 18,\ 29,\ 47,\ \ldots,$$
+each the sum of the two before it, just like the Fibonacci numbers but starting from a
+different pair. So we arrive at a clean bridge:
+$$\boxed{\ (\zeta+\zeta^4)^n + (\zeta^2+\zeta^3)^n = (-1)^n\, L_n.\ }$$
+An expression built purely from the corners of a pentagon turns out to be a Lucas
+number in disguise, for every $n$.
 
-**This is the whole secret of monotonicity.** Anything you can achieve with $n$
-arrows, you can achieve with $n + 5$ arrows, by padding with an invisible,
-weightless block of five. So the best you can do with $n+5$ arrows is at least as
-good as the best you can do with $n$:
-$$\sigma_5(n+5) \le \sigma_5(n).$$
-The minimal distance can only stay level or improve as you add complete blocks of
-five. That is the entire proof, and it is airtight.
+The *difference* of the same powers tells the Fibonacci story. Since
+$\varphi^n - \psi^n = \sqrt5\,F_n$, where $F_n$ is the $n$-th Fibonacci number
+($1, 1, 2, 3, 5, 8, 13, \ldots$), squaring removes the sign ambiguity and the messy
+$\sqrt5$ in one stroke:
+$$\boxed{\ \bigl((\zeta+\zeta^4)^n - (\zeta^2+\zeta^3)^n\bigr)^2 = 5\,F_n^2.\ }$$
 
-## Where the steps fall
+These two identities are the heart of the matter. They say the two most celebrated
+integer sequences in mathematics are the exact bookkeeping devices for the arithmetic
+of the pentagon.
 
-Monotonicity tells us the staircase only descends. The deeper question is:
-*when does it actually take a step down?* When is $\sigma_5(n)$ strictly larger
-than $\sigma_5(n+5)$, rather than merely equal?
+## Why staircases, and why those special heights
 
-Here is where the golden ratio's fingerprints become unmistakable. The Fibonacci
-numbers are the famous sequence $F_1 = 1,\, F_2 = 1,\, F_3 = 2,\, F_4 = 3,\,
-F_5 = 5,\, F_6 = 8, \dots$, each the sum of the two before it. Their less-famous
-siblings, the **Lucas numbers**, obey the same rule but start differently:
-$L_0 = 2,\, L_1 = 1,\, L_2 = 3,\, L_3 = 4,\, L_4 = 7,\, L_5 = 11,\, L_6 = 18, \dots$
-Both sequences march toward the golden ratio: the ratio of consecutive terms
-tends to $\varphi$.
+Return now to the general question: how does $\sigma_5(n)$ behave as $n$ grows? Adding
+more roots gives you more freedom to nudge the sum toward the origin, so intuitively
+$\sigma_5(n)$ should never increase as you add five more terms at a time. That intuition
+is correct, and it can be made precise: within each residue class of $n$ modulo $5$, the
+sequence $\sigma_5(n)$ is **monotone non-increasing**. It steps down, or stays level,
+but never climbs.
 
-The central discovery is this: **the staircase takes a genuine step down at
-position $N = n+5$ precisely when $N$ is one of the numbers**
-$$5F_m, \qquad L_m, \qquad \text{or}\qquad 2L_m \quad (m \ge 1).$$
+The subtle and beautiful part is *when* it actually steps down. A strict decrease,
+$$\sigma_5(n) > \sigma_5(n+5),$$
+happens for a very special set of $n$: precisely when $n + 5$ has one of the three
+forms
+$$5F_m, \qquad L_m, \qquad 2L_m$$
+for some positive integer $m$ — that is, five times a Fibonacci number, a Lucas number,
+or twice a Lucas number. Everywhere else the sequence pauses on a plateau. The result
+is a staircase whose steps fall exactly at Fibonacci- and Lucas-scaled positions.
 
-Let us test it against the data. The strict drops we observed happen at
-$N = 6, 7, 8, 10, 11, 14, 15, 18, 22, \dots$. And indeed:
-$6 = 2L_2$, $7 = L_4$, $8 = 2L_3$, $10 = 5F_3$, $11 = L_5$, $14 = 2L_4$,
-$15 = 5F_4$, $18 = L_6$, $22 = 2L_5$. Every single jump is a Fibonacci multiple
-or a Lucas number (possibly doubled). The three families — the "Fibonacci type"
-$5F_m$, and the two "Lucas types" $L_m$ and $2L_m$ — account for every step in
-the staircase, and nothing else does.
+Why should these particular heights govern the jumps? The reason traces back to the
+identities above. Minimizing the length of a sum of roots is, after the reduction to the
+real quadratic field generated by $\varphi$, a problem about how small an integer
+combination $a\varphi + b$ can be made. The powers of $\varphi$ obey
+$\varphi^n = F_n\varphi + F_{n-1}$, so the Fibonacci numbers are the *coefficients* that
+appear when you push $\varphi$ to higher powers, while the Lucas numbers record the
+symmetric combination $\varphi^n + \psi^n$. The extremal sums — the ones that get
+closest to the origin without vanishing — turn out to be powers of the periods scaled by
+powers of $\varphi$. That is why the value of $\sigma_5$ hovers around $\varphi^{-k}$
+for suitable $k$, and why the sequence resets to a new, smaller plateau exactly when a
+Fibonacci or Lucas milestone is crossed.
 
-## The arithmetic that keeps the families apart
+## A conversation between two worlds
 
-A skeptic might worry that these three families overlap in confusing ways, or
-step on each other's toes. In fact they organize themselves with remarkable
-discipline according to a single question: *is the position a multiple of five?*
+Step back and notice what has happened. We began in the world of **cyclotomy** — roots
+of unity, regular polygons, symmetries of the circle, the raw material of algebraic
+number theory. We ended in the world of **combinatorics** — Fibonacci and Lucas numbers,
+recurrences, the golden ratio, the arithmetic of a quadratic field. These are usually
+taught in different courses and studied by different communities. Yet the Gaussian
+periods of the pentagon act as a translator, sending each statement about vector sums of
+fifth roots into an equivalent statement about the golden field.
 
-The Fibonacci-type positions $5F_m$ are, by construction, always multiples of
-five. The claim is that the Lucas-type positions are *never* multiples of five —
-and this is a clean, checkable fact of pure arithmetic:
+This kind of bridge is what mathematicians prize most. A hard question on one side
+becomes a tractable question on the other. The mysterious staircase of $\sigma_5(n)$,
+which would be nearly impossible to guess by staring at lists of vector sums, becomes
+almost inevitable once you know that Fibonacci and Lucas numbers are secretly running
+the show.
 
-> **No Lucas number is ever divisible by $5$.**
+## Where the pentagon meets the everyday
 
-Why? Look at the Lucas numbers one place at a time, keeping only their remainders
-after division by five: $2, 1, 3, 4, 2, 1, 3, 4, \dots$. The pattern repeats with
-period four, forever cycling through $2, 1, 3, 4$ — and $0$ never appears. This is
-guaranteed by the recurrence itself: since each term is the sum of the previous
-two, once the pattern of remainders repeats a pair it must repeat forever, and a
-short check confirms it locks into that four-beat cycle. Doubling a Lucas number
-cannot rescue it either: $5$ is coprime to $2$, so if $5$ divided $2L_m$ it would
-have to divide $L_m$, which we have just ruled out.
+The pentagon and the golden ratio are not confined to pure mathematics. Five-fold
+symmetry is forbidden to ordinary repeating crystals, yet it appears in *quasicrystals*,
+exotic materials whose atomic patterns never repeat but are organized around exactly the
+$\varphi$-arithmetic we met above; their diffraction patterns are governed by sums of
+fifth (and tenth) roots of unity. The same golden combinations control certain error
+bounds in signal processing, where one wants to know how close a sum of equally spaced
+phases can come to cancelling. And the Fibonacci–Lucas duo turns up wherever growth,
+tiling, or optimal spacing is at stake, from phyllotaxis in sunflowers to efficient
+search algorithms.
 
-The consequence is a clean **structure theorem**:
-
-> **Every jump position that is a multiple of five belongs to the Fibonacci
-> family** — it must be of the form $5F_m$.
-
-So the residue of a position modulo five instantly tells you which family it can
-possibly come from. The multiples of five are exactly $\{5F_m\}$; everything else
-is Lucas territory. The data agrees on the nose: the only multiples of five among
-the jump positions we found are $10, 15, 25, 40$, which are precisely
-$5F_3, 5F_4, 5F_5, 5F_6$.
-
-## A bridge between the two sequences
-
-Underneath all of this lies an elegant identity connecting the Fibonacci and
-Lucas worlds:
-$$L_{n+1} = F_n + F_{n+2}.$$
-In words: each Lucas number is the sum of the Fibonacci number two places back and
-the one just ahead. This little bridge is what allows facts about one sequence to
-be translated into facts about the other, and it is the algebraic engine behind
-the classical "doubling" identities that make the golden ratio recurrence tick. It
-is why a single geometric question about pentagon arrows ends up governed by two
-intertwined sequences at once.
-
-## The size of the first jump
-
-The story would be incomplete without pinning down the *size* of a step, not just
-its location. Consider the very first Lucas-type jump, at $N = 6 = 2L_2$. Using
-six arrows we can build the arrangement $1 + 2\zeta + 2\zeta^3 + \zeta^4$. Because
-the five roots sum to zero, this simplifies dramatically to
-$$\zeta - \zeta^2 + \zeta^3 = \zeta\,(1 - \zeta + \zeta^2).$$
-A short computation with the quantity $w = \zeta + \zeta^4 = 2\cos(72^\circ)$ —
-which famously equals $\varphi^{-1} = \tfrac{\sqrt5 - 1}{2} \approx 0.618$ — shows
-that the squared length of this arrow is $2 - 3w$. Since $w$ sits comfortably
-between $\tfrac13$ and $\tfrac23$, the value $2 - 3w$ is a positive number smaller
-than one. Working it out exactly gives
-$$\sigma_5(6) = \sqrt{\tfrac{7 - 3\sqrt5}{2}} = \varphi^{-2} \approx 0.382.$$
-Compare this with $\sigma_5(1) = 1$: adding one weightless block of five arrows to
-a single arrow slashes the best achievable nonzero distance from $1$ all the way
-down to $\varphi^{-2}$. The staircase has taken its first real step, and it has
-landed squarely on a power of the golden ratio.
-
-## Why it matters
-
-What began as a doodle — pentagon corners and arrows — has revealed a hidden
-architecture. The minimal nonzero distances form a staircase that only descends;
-the descent is organized cleanly by remainders modulo five; the steps fall exactly
-at Fibonacci multiples and Lucas numbers; and those families are held apart by the
-simple fact that no Lucas number is divisible by five. The golden ratio presides
-over the whole structure, both in the *positions* of the steps and in their
-*heights*.
-
-Questions of this kind — how small can a sum of roots of unity be without
-vanishing? — are not idle. They sit at the crossroads of number theory, signal
-processing, and the geometry of numbers, where "how close to zero can a structured
-sum get" controls the stability of algorithms and the sharpness of Diophantine
-estimates. The pentagon is the smallest arena in which the answer is nontrivial,
-and it rewards the visit by handing us Fibonacci, Lucas, and the golden ratio all
-at once. Larger primes promise their own hidden sequences, each tied to the
-continued fraction of its own cyclotomic cosine — but that is a staircase for
-another day.
+What this story adds is a precise, exact dictionary. The vague sense that "pentagons and
+the golden ratio go together" is upgraded to identities you can write down and check:
+the length of a two-root sum is exactly $1/\varphi$, the $n$-th power sum of the periods
+is exactly a Lucas number, and the staircase of minimal distances steps down exactly at
+the Fibonacci and Lucas marks. It is a small, self-contained example of one of
+mathematics' recurring miracles — that a pattern glimpsed in one corner of the subject
+turns out to be an old friend from another, wearing a different name.
