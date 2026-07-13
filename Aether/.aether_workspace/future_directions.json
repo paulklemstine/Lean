@@ -18649,7 +18649,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Csorba's theorem: B0(G) ≃_{Z2} S(B(G))",
         "Borsuk–Ulam theorem",
@@ -18658,7 +18658,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d31b8b8b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -18674,7 +18674,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0686",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T16:33:03.674281+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_excess (d c : ℕ) (hd : d ≥ 2) (hc : 1 ≤ c ∧ c ≤ d) : ∃ (K : FreeZ2SimplicialComplex) (hdim : dim K = d) (hco : coind K = c) (hsusp : coind (suspension K) = d + 1), True := sorry",
       "lineage_refs": [],
@@ -18689,7 +18689,7 @@
       "source": "",
       "source_exp_id": "2607.06061v1",
       "source_path": "http://arxiv.org/abs/2607.06061v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T23:14:12.131922+00:00",
       "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
@@ -33994,7 +33994,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## What was proved\n\nThe file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-free\nformalization of the `P^K = Hilb` identity of the mission specialised to the\n**Boolean matroid** `B_n` (the free matroid on `n` elements) with its maximal\nFeichtner–Yuzvinsky building set, whose wonderful compactification is the\n**permutohedral toric variety** `X_n = X(B_n)` of dimension `n - 1`.\n\nFor this matroid the graded Betti numbers of the Chow ring `A*(B_n)` (the Hilbert\nfunction) are the **Eulerian numbers** `⟨n,k⟩` — they are the `h`-vector of the\npermutohedron.  We define the Eulerian numbers by their triangle recurrence and\nprove:\n\n| Lean name | Statement | Geometric meaning |\n|---|---|---|\n| `eulerian_symm` | `⟨n,k⟩ = ⟨n, n-1-k⟩` | **Poincaré duality** of `A*(B_n)` (palindromic Hilbert series) |\n| `eulerian_row_sum` | `∑_k ⟨n,k⟩ = n!` | `dim_ℚ A*(B_n) = n!` = value of Hilbert series at `1` |\n| `worpitzky` | `mⁿ = ∑_k ⟨n,k⟩ · C(m+k, n)` | Riemann–Roch generating-function bridge (χ(X, Lᵐ) ↔ Hilbert data) |\n| `eulerian_explicit` | `⟨n,k⟩ = ∑_j (-1)ʲ C(n+1,j) (k+1-j)ⁿ` | **alternating Euler-characteristic (K-theory) formula = dimension count** |\n| `tangentKPoly_eq_hilbChow` | `tangentKPoly n = hilbChow n` in `ℤ[t]` | **the `P^K = Hilb` identity** |\n| `hilbChow_eval_one`, `hilbChow_palindrome` | evaluation / palindromicity | Poincaré-duality consequences on the Hilbert polynomial |\n\nThe flagship `tangentKPoly_eq_hilbChow` equates two polynomials that are defined\nby genuinely different formulas: `hilbChow` from the nonnegative dimension counts\n`⟨n,k⟩`, and `tangentKPoly` from the manifestly *alternating* Euler-characteristic\ncoefficients `∑_j (-1)ʲ C(n+1,j)(k+1-j)ⁿ`.  Their equality is a concrete instance\nof the paper's Theorem A, property 2.\n\nAll theorems depend only on the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`.\n\n## Natural next steps\n\n1. **General matroids.** Replace the Boolean matroid by an arbitrary loopless\n   matroid `M` and an arbitrary building set `G ∋ E`.  This requires formalizing\n   the lattice of flats, the Feichtner–Yuzvinsky nested-set basis of the Chow\n   ring `A*(M,G)`, and the resulting Hilbert function.  The `P^K = Hilb` identity\n   should then be stated for the corresponding K-class `T^Z_{M,G}`.\n\n2. **The Chow ring itself.** Here `A*(B_n)` is treated only through its numerical\n   invariant (the Hilbert series / Eulerian polynomial).  A deeper formalization\n   would construct the Feichtner–Yuzvinsky presentation of `A*(M,G)` as a quotient\n   of a polynomial ring, prove it is a Poincaré-duality algebra, and derive\n   `eulerian_symm` from that structure rather than from the recurrence.\n\n3. **The integral K-theory `K_Z(M,G)`.** The mission's `T^Z` lives in an integral\n   K-group.  Formalizing `K_Z(M,G)` and its natural basis, then *defining* the\n   tangent class and computing its K-polynomial, would turn `tangentKPoly` from a\n   combinatorially-defined stand-in into the genuine K-theoretic object.\n\n4. **Ehrhart / lattice-point interpretation.** `worpitzky` already exposes the\n   `mⁿ = χ(X_n, Lᵐ)` side.  Connecting it to the Ehrhart theory of the\n   (hypersimplices / permutohedron) and to `hilbChow` via the rational generating\n   function `∑_m mⁿ tᵐ = (t · hilbChow n)/(1-t)^{n+1}` would make the\n   Riemann–Roch content explicit as a power-series identity.\n\n5. **Other named matroid families.** Uniform matroids `U_{r,n}` and graphic\n   matroids have explicit Chow-ring Hilbert series; formalizing those and their\n   `P^K = Hilb` identities would broaden the evidence base and stress-test the\n   general framework.\n\n6. **`γ`-positivity and unimodality.** The Eulerian polynomials are `γ`-positive,\n   hence unimodal; formalizing this would give quantitative refinements of the\n   Poincaré-duality symmetry `eulerian_symm`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -34445,7 +34445,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Edge-Spectral Supersaturation for Triangles\n\nFile: `Catalog/Novelty/EdgeSpectralSupersaturationTriangles.lean`\n\n## What is proved\n\nThe file establishes a **cross-domain bridge** between spectral linear algebra and\nextremal graph theory (triangle counting), all `sorry`-free and using only the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`:\n\n* `cube_lower`, `eigen_supersat`, `eigen_supersat_general` — the pointwise and summed\n  power-trace inequalities driving the method.\n* `triangle_count_lower` — spectral supersaturation with constant `1/3`: `λ q ≤ 3 t`.\n* `triangle_count_lower_sqrt` — the `√m`-scaled form `√m · q ≤ 3 t`.\n* `nosal` — the triangle-free endpoint `λ² ≤ m` (Nosal's inequality).\n* `trace_pow_eq_sum_pow_eigenvalues` — the linear-algebra bridge `tr(Aᵏ) = ∑ μᵢᵏ`\n  for a real symmetric matrix, obtained from Mathlib's spectral theorem.\n* `matrix_eigen_supersat` — the supersaturation inequality proved *directly* for the\n  traces of powers of a real symmetric matrix, discharging the abstract hypotheses.\n* `K3_supersaturation_example` — a non-vacuous concrete instance (`K₃`).\n\n## Open directions\n\n1. **Sharp constant `B = 1` for triangles.** The power-trace method here is lossy by\n   exactly a factor of 3 relative to the conjectured `t ≳ q√m`. Closing the gap for\n   `χ(F) = 3` (triangles) is the open problem; the `χ(F) ≥ 4` case is known. A\n   promising route is to combine the eigenvalue estimate with a stability argument\n   that rules out the near-tight bipartite-like negative spectrum.\n\n2. **Full graph-theoretic instantiation.** Connect `trace_pow_eq_sum_pow_eigenvalues`\n   to `SimpleGraph.adjMatrix`, proving `tr(A²) = 2·(#edges)` and\n   `tr(A³) = 6·(#triangles)` inside Mathlib's `SimpleGraph` API, so that\n   `matrix_eigen_supersat` reads literally as a triangle-counting theorem about a\n   graph rather than about an abstract symmetric matrix.\n\n3. **General `Kᵣ` supersaturation.** Extend the power-trace method from the third\n   moment (triangles) to higher moments `tr(Aᵏ)` to obtain spectral supersaturation\n   bounds for `Kᵣ` and other color-critical `F`.\n\n4. **Weighted / signed adjacency matrices.** The eigenvalue-level results already\n   apply to any real symmetric matrix; exploring signed graphs and weighted graphs\n   could give new supersaturation phenomena.\n\n5. **Perron–Frobenius as a theorem, not a hypothesis.** Replace the domination\n   hypothesis `|μᵢ| ≤ λ` with the Perron–Frobenius theorem for nonnegative symmetric\n   matrices, making the adjacency-matrix specialization fully unconditional.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -34732,7 +34732,7 @@
       "depth_estimate": 3,
       "description": "# Future directions — edge-spectral supersaturation for triangles\n\n## What this cycle added\n\nThe file `Novelty/EdgeSpectralSupersaturationGraphBridge.lean` closes the gap left by\n`EdgeSpectralSupersaturationTriangles.lean`, which stated the trace identities\n`tr(A²) = 2m` and `tr(A³) = 6t` as *hypotheses*.  We now **prove** both for a genuine\nfinite simple graph's real adjacency matrix, and feed them into the eigenvalue\ninequality to obtain supersaturation bounds phrased entirely in the graph's own\ncombinatorial invariants:\n\n* `trace_sq_adjMatrix_eq_two_mul_edges`        : `tr(A²) = 2 · #edges`.\n* `trace_cube_adjMatrix_eq_six_mul_triangles`  : `tr(A³) = 6 · #(cliqueFinset 3)` — the\n  cross-domain connector between linear algebra and extremal combinatorics.\n* `card_ordered_triples`                       : the graph-free `3! = 6` count.\n* `graph_triangle_supersaturation`             : `λ·q ≤ 3·t`.\n* `graph_triangle_supersaturation_sqrt`        : `√m·q ≤ 3·t`.\n* `graph_nosal`                                : triangle-free ⇒ `λ² ≤ m`.\n\nAll are sorry-free and self-contained (`import Mathlib`).\n\n## Natural next steps\n\n1. **Discharge Perron–Frobenius.**  The domination hypothesis `∀ i, |μ i| ≤ λ` is\n   currently assumed.  For a nonnegative symmetric matrix the spectral radius is a real\n   eigenvalue attaining the max modulus; formalizing this for `adjMatrix ℝ G` would\n   remove `hbound`/`hlam` in favour of `λ = spectral radius`, making the bounds fully\n   unconditional.\n\n2. **Sharpen the constant.**  The method yields constant `1/3`; the conjectured sharp\n   constant is `1` (`t ≳ q√m`).  Closing the factor-3 gap requires controlling the\n   negative spectrum (the slack `Σ_{i≥2} μᵢ³ ≥ -λ Σ_{i≥2} μᵢ²` is tight only in a\n   bipartite-like configuration incompatible with many triangles).\n\n3. **General `K_{r+1}` / color-critical `F`.**  Extend `tr(Aᵏ) = (2k')·#(k-cliques)`\n   style bridges to higher cliques via closed `k`-walks, targeting the `χ(F) ≥ 4`\n   regime where the sharp constant `B_F` is known.\n\n4. **Walk-count reformulation.**  `card_cyclic_triples_eq_six_mul_triangles` could be\n   restated via Mathlib's `adjMatrix_pow_apply_eq_card_walk`, linking closed-walk\n   counts to clique counts as a reusable lemma for other trace-method results.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Bridges"
@@ -34773,7 +34773,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis cycle contributes `Catalog/Novelty/VietorisRipsCliqueBridge.lean`, a self-contained\n**cross-domain bridge** (\"Connector\" mission) linking:\n\n* **metric geometry / topological data analysis** (Vietoris–Rips complexes),\n* **extremal graph theory** (clique complexes and the maximal clique count `2^n`),\n* **information theory** (bit-complexity / description length via `Nat.clog`),\n\nall meeting at the combinatorial core of the √2-threshold exponential lower bound for\nVietoris–Rips approximations.  It deepens the earlier\n`Catalog/Novelty/VietorisRipsSqrt2LowerBound.lean` result by re-expressing the exponential\ncount as a clique-count and situating it inside extremal graph theory and information\ntheory.\n\n## What was proved\n\n* `VRcomplex_eq_allCliques_proxGraph` — the VR complex is *exactly* the clique complex of\n  the proximity graph (the flag/clique-complex identity), a rigorous geometry ↔ graph\n  theory dictionary.\n* `allCliques_card_le`, `allCliques_top`, `card_allCliques_top`, `allCliques_card_le_top`\n  — the number of cliques of any graph on `n` vertices is `≤ 2^n`, maximised by the\n  complete graph.  (Extremal graph theory.)\n* `proxGraph_equiD_top`, `card_VRcliqueSet_equiD` — the equidistant configuration's\n  proximity graph above the gap is the complete graph, hitting the extremal maximum.\n* `card_le_two_pow_bitComplexity`, `bitComplexity_ge_of_pow_le`,\n  `approx_bitComplexity_lower_bound` — the information-theoretic side: every\n  `c`-approximation stores a level of `≥ n` bits.\n* `vietorisRips_clique_information_bridge` — the headline theorem tying all three\n  viewpoints together for the √2-equidistant configuration, and recording that the\n  effective exponent `γ(c) = ½ − log₂ c` is positive throughout `[1, √2)`.\n\n## Natural next steps\n\n1. **Homological refinement.** Replace the multiplicative interleaving of *complexes*\n   with an interleaving of *persistence modules* and derive the lower bound at the level\n   of barcodes / interleaving distance, not just simplex counts.\n\n2. **Beyond the equidistant instance.** The equidistant family gives a uniform `2^n`\n   bound but does not *witness* the degradation of `γ(c)` near `√2`.  Construct a family\n   (e.g. spherical codes, or perturbed simplices realising Jung's constant\n   `√(2n/(n+1)) → √2`) whose optimal approximation size is genuinely `2^{γ(c)·n}` with\n   `γ(c) → 0`, making the exponent sharp rather than merely a lower bound.\n\n3. **Extremal graph theory, quantitatively.** Strengthen `allCliques_card_le` to the\n   Moon–Moser / Kruskal–Katona regime: bound the clique count in terms of edge count or\n   forbidden subgraphs, transporting classical extremal results into the TDA setting via\n   the proximity-graph dictionary.\n\n4. **Information theory, entropically.** Upgrade `bitComplexity` (worst-case description\n   length) to a Shannon-entropy statement: the uniform distribution over the `2^n`\n   simplices has entropy exactly `n` bits, giving an average-case / coding-theoretic form\n   of the lower bound and a Kraft-inequality obstruction to compact encodings.\n\n5. **Coding-theoretic bridge.** The √2 threshold coincides with the orthogonality\n   (Plotkin) threshold for spherical/binary codes.  Formalising this correspondence would\n   connect VR approximation hardness to the Plotkin bound, a fourth area.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Bridges"
@@ -34855,7 +34855,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## What is proved\n\nThe file `Catalog/Novelty/FifthRootsGoldenBridge.lean` establishes, fully formally and\nwith only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`), the exact\nalgebraic bridge between fifth roots of unity and Fibonacci/Lucas numbers via the\ngolden ratio.  For every primitive fifth root of unity `ζ`, with Gaussian periods\n`p ζ = ζ + ζ⁴` and `q ζ = ζ² + ζ³`:\n\n* `periods_sum_prod`      : `p ζ + q ζ = -1` and `p ζ · q ζ = -1`.\n* `periods_golden`        : `{p ζ, q ζ} = {-φ, -ψ}` (the golden ratio and its conjugate).\n* `lucas_binet`           : `Lₙ = φⁿ + ψⁿ` (Binet's formula for Lucas numbers).\n* `fifthRoots_lucas_bridge` : `(ζ+ζ⁴)ⁿ + (ζ²+ζ³)ⁿ = (-1)ⁿ · Lₙ`.\n* `fifthRoots_fib_bridge`   : `((ζ+ζ⁴)ⁿ − (ζ²+ζ³)ⁿ)² = 5 · Fₙ²`.\n* `golden_ratio_is_modulus` : `{‖p ζ‖, ‖q ζ‖} = {φ, φ⁻¹}`.\n* `two_term_modulus_ge`   : `φ⁻¹ ≤ ‖ζ^i + ζ^j‖` for all `i, j` (lower bound for every\n  two-term sum).\n* `sigma5_two`            : `IsLeast {‖ζ^i + ζ^j‖ | i j} φ⁻¹`, i.e. `σ₅(2) = φ⁻¹`.\n\nThe last two theorems give the concrete link to `σ₅`: the smaller modulus `φ⁻¹` is\nexactly `σ₅(2)`, the minimal modulus of a non-vanishing sum of two fifth roots of unity,\nnow proved formally as a least-element statement.  (Because `5` is odd, a two-term sum\n`ζ^i + ζ^j` can never vanish, so no non-vanishing side condition is needed for `n = 2`.)\n\n## The full conjecture\n\nThe originating research statement is:\n\n> `σ₅(n)` is monotone non-increasing over each residue class of `n` modulo 5, and a\n> strict decrease `σ₅(n) > σ₅(n+5)` occurs iff `n + 5 ∈ {5Fₘ, Lₘ, 2Lₘ}` for some\n> `m ≥ 1`.\n\nComputational evidence (see `ComputationalEvidence.md`) supports both halves.  Proving\nit in full requires substantial additional infrastructure that is currently absent\nfrom Mathlib:\n\n1. **A formal definition of `σ₅(n)`.**  Define the set of `n`-term sums of fifth roots\n   of unity as the image of the map `f : Fin n → Fin 5 ↦ ∑ ζ^{f i}`, restrict to the\n   nonzero ones, and take the (finite) minimum modulus.  Prove basic well-definedness\n   and independence of the chosen primitive root.  The case `n = 2` is already handled\n   fully formally by `sigma5_two` (`IsLeast … φ⁻¹`), which can serve as the base case\n   and template for the general `IsLeast`-based definition.\n\n2. **Reduction to the ring `ℤ[ζ₅]` and its real subfield `ℤ[φ]`.**  Because\n   `1+ζ+ζ²+ζ³+ζ⁴ = 0`, an `n`-term sum is determined by a vector `(a₀,…,a₄) ∈ ℕ⁵`\n   modulo the all-ones vector; minimizing `|∑ aₖ ζ^k|` becomes a lattice/geometry of\n   numbers problem in the golden field.  The Gaussian-period identities proved here are\n   the algebraic core of this reduction.\n\n3. **The extremal structure.**  Show that the minimizers are `φ`-power multiples of the\n   periods, so that `σ₅` values are (up to the residue class) of the form `φ^{-k}`\n   times a bounded factor — which is why Fibonacci/Lucas numbers, being the integer\n   coefficients in `φⁿ = Fₙφ + Fₙ₋₁` and `φⁿ + ψⁿ = Lₙ`, control the jumps.\n\n4. **The jump locations.**  Prove that the \"budget\" `n` needed to realize the next\n   golden power drops exactly at `5Fₘ, Lₘ, 2Lₘ`, using norm computations\n   `N(φ^m) = (-1)^m` and the identities `Lₘ = Fₘ₋₁ + Fₘ₊₁`, `L₂ₘ = Lₘ² − 2(-1)^m`.\n\n## Generalizations\n\n* Replace `5` by another prime `p`; the analogous periods generate the real subfield of\n  `ℚ(ζ_p)`, and for `p = 5` this is `ℚ(√5)`.  For general `p` the relevant units are no\n  longer governed by a single quadratic recurrence, so the clean Fibonacci/Lucas picture\n  is special to `p = 5` (and, via `√5`, to the golden ratio).\n* Formalize `σ_p(n)` and study which recurrence sequences govern its jumps for small `p`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -38620,6 +38620,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle ac37e9f5 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Geometry of the Logistic–Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin²(πt/2)` of the unit int",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 0,
+      "id": "push_ac37e9f5_bbb8db69",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "ac37e9f5",
+      "source_path": "Exact topological conjugacy between the smooth logisti",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-13T16:32:48.088789+00:00",
+      "title": "Deepening: Exact topological conjugacy between the smooth logisti"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
       "domain_bridges": [],
       "domain_quality_penalty": 0.0,
@@ -40896,7 +40936,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "951fa653",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40923,7 +40963,7 @@
       "source": "",
       "source_exp_id": "64d4f5fe",
       "source_path": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres",
-      "status": "in_progress",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-07-13T12:17:27.828410+00:00",
       "title": "Close Proofs: Explicit exponential lower bound for Vietoris-Rips approximations belo"
@@ -42298,6 +42338,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }

@@ -340,6 +340,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ac37e9f5 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Geometry of the Logistic\u2013Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin\u00b2(\u03c0t/2)` of the unit int",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_ac37e9f5_bbb8db69",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "ac37e9f5",
+    "status": "available",
+    "timestamp": "2026-07-13T16:32:48.088789+00:00",
+    "title": "Deepening: Exact topological conjugacy between the smooth logisti"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -1309,7 +1323,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
   {
-    "consumed_by_exp_id": "951fa653",
+    "consumed_by_exp_id": "",
     "description": "Cycle 64d4f5fe (Q=0.780) proved 16 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-appr",
     "domains": [
       "Novelty"
@@ -1318,7 +1332,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "64d4f5fe",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-13T12:17:27.828410+00:00",
     "title": "Close Proofs: Explicit exponential lower bound for Vietoris-Rips approximations belo"
   },
@@ -4639,7 +4653,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "All exotic Diophantine triples in $\\mathbb{R}[X]$ containing 1 are of the form $\\{k^2-1, (k+1)^2-1, 1\\}$ for some nonconstant $k \\in \\mathbb{R}[X]$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d31b8b8b",
     "description": "For every integers d \u2265 2 and c with 1 \u2264 c \u2264 d, there exists a finite free simplicial Z2-complex K of dimension d such that coind(K) = c and coind(suspension K) = d + 1. This generalizes the paper's result (which proves the case c = 1 for all d \u2265 2) and would show that the upper bound coind(S(K)) \u2264 dim(K)+1 is sharp for every possible starting co-index c, achieving maximal excess d - c.",
     "domains": [
       "Geometry"
@@ -4648,7 +4662,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06061v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T23:14:12.131922+00:00",
     "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
   },
@@ -5614,21 +5628,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T14:16:24.434577+00:00",
     "title": "That a rectified-linear classifier's decision boundary is"
-  },
-  {
-    "consumed_by_exp_id": "ac37e9f5",
-    "description": "# Future Directions: Geometry of the Logistic\u2013Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin\u00b2(\u03c0t/2)` of the unit interval.\nFixed points, a period-two orbit, and the intertwining of all iterates transfer\nverbatim between the two systems. The following conjectures push the same\ngeometric bridge further.\n\n## 1. Every period is realised, and the count is exponential\n\n**Conjecture.** For each `n \u2265 1` the logistic map has exactly `2\u207f` points of period\ndividing `n` in the unit interval, and it possesses points of *exact* period `n`\nfor every `n`.\n\nThe key insight is that the conjugacy reduces counting logistic periodic points to\ncounting tent periodic points, and the tent map's `n`-fold iterate is a sawtooth\nwith `2\u207f` full ramps, each crossing the diagonal exactly once. Why now? The exact\nconjugacy `f\u207f = h \u2218 T\u207f \u2218 h\u207b\u00b9` and the bijectivity of `h` are already in hand, so\nthe transcendental fixed-point count for `f` becomes a purely combinatorial count\nof sawtooth crossings.\n\n## 2. Density of periodic seeds and topological transitivity\n\n**Conjecture.** The periodic points of the logistic map are dense in `[0,1]`, and\nthe map is topologically transitive; together with sensitive dependence this\ncertifies Devaney chaos on the whole interval.\n\nThe key insight is that a homeomorphism preserves density and transitivity, so it\nsuffices to prove them for the tent map, where periodic seeds are the dyadic-type\nrationals `k/(2\u207f\u00b11)` and are manifestly dense. Why now? With `h` proven to be a\nhomeomorphism, every topological property of the tent map \u2014 the transparent model\n\u2014 transfers directly to the logistic map without any smooth analysis.\n\n## 3. Invariant density and the arcsine law\n\n**Conjecture.** The logistic map preserves the arcsine measure with density\n`1 / (\u03c0 \u221a(x(1-x)))`, which is exactly the pushforward under `h` of the uniform\n(Lebesgue) measure preserved by the tent map.\n\nThe key insight is that `h` conjugates the uniform-preserving tent map to the\nlogistic map, so the invariant density of `f` must be the image of the flat density\nunder the change of variables `x = sin\u00b2(\u03c0t/2)`, whose Jacobian produces the arcsine\nweight. Why now? The explicit, differentiable conjugating map `h` makes the\nchange-of-variables computation elementary, turning a statement about a smooth\nchaotic system into a one-line pushforward of Lebesgue measure.\n\n## 4. Cryptographic fragility is coordinate-independent\n\n**Conjecture.** Any invariant an attacker can compute from a logistic keystream\n(bias, autocorrelation, algebraic degree of seed recovery) has an exact tent-map\ncounterpart obtainable by applying `h\u207b\u00b9`; hence the \"chaos cipher\" offers no\nsecurity beyond its piecewise-linear shadow.\n\nThe key insight is that a keystream masked by logistic iterates is, in the `h`\ncoordinate, masked by tent iterates \u2014 a binary shift map whose bits are read\ndirectly off the seed. Why now? The exact conjugacy makes \"look how complicated\nthe parabola orbit is\" quantifiable: complexity claimed in the smooth coordinate\nevaporates in the conjugate linear coordinate, giving a rigorous no-go statement\nfor logistic-map stream ciphers.\n\n\n# Future Directions: Geometry of the Logistic\u2013Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin\u00b2(\u03c0t/2)` of the unit interval.\nFixed points, a period-two orbit, and the intertwining of all iterates transfer\nverbatim between the two systems. The following conjectures push the same\ngeometric bridge further.\n\n## 1. Every period is realised, and the count is exponential\n\n**Conjecture.** For each `n \u2265 1` the logistic map has exactly `2\u207f` points of period\ndividing `n` in the unit interval, and it possesses points of *exact* period `n`\nfor every `n`.\n\nThe key insight is that the conjugacy reduces counting logistic periodic points to\ncounting tent periodic points, and the tent map's `n`-fold iterate is a sawtooth\nwith `2\u207f` full ramps, each crossing the diagonal exactly once. Why now? The exact\nconjugacy `f\u207f = h \u2218 T\u207f \u2218 h\u207b\u00b9` and the bijectivity of `h` are already in hand, so\nthe transcendental fixed-point count for `f` becomes a purely combinatorial count\nof sawtooth crossings.\n\n## 2. Density of periodic seeds and topological transitivity\n\n**Conjecture.** The periodic points of the logistic map are dense in `[0,1]`, and\nthe map is topologically transitive; together with sensitive dependence this\ncertifies Devaney chaos on the whole interval.\n\nThe key insight is that a homeomorphism preserves density and transitivity, so it\nsuffices to prove them for the tent map, where periodic seeds are the dyadic-type\nrationals `k/(2\u207f\u00b11)` and are manifestly dense. Why now? With `h` proven to be a\nhomeomorphism, every topological property of the tent map \u2014 the transparent model\n\u2014 transfers directly to the logistic map without any smooth analysis.\n\n## 3. Invariant density and the arcsine law\n\n**Conjecture.** The logistic map preserves the arcsine measure with density\n`1 / (\u03c0 \u221a(x(1-x)))`, which is exactly the pushforward under `h` of the uniform\n(Lebesgue) measure preserved by the tent map.\n\nThe key insight is that `h` conjugates the uniform-preserving tent map to the\nlogistic map, so the invariant density of `f` must be the image of the flat density\nunder the change of variables `x = sin\u00b2(\u03c0t/2)`, whose Jacobian produces the arcsine\nweight. Why now? The explicit, differentiable conjugating map `h` makes the\nchange-of-variables computation elementary, turning a statement about a smooth\nchaotic system into a one-line pushforward of Lebesgue measure.\n\n## 4. Cryptographic fragility is coordinate-independent\n\n**Conjecture.** Any invariant an attacker can compute from a logistic keystream\n(bias, autocorrelation, algebraic degree of seed recovery) has an exact tent-map\ncounterpart obtainable by applying `h\u207b\u00b9`; hence the \"chaos cipher\" offers no\nsecurity beyond its piecewise-linear shadow.\n\nThe key insight is that a keystream masked by logistic iterates is, in the `h`\ncoordinate, masked by tent iterates \u2014 a binary shift map whose bits are read\ndirectly off the seed. Why now? The exact conjugacy makes \"look how complicated\nthe parabola orbit is\" quantifiable: complexity claimed in the smooth coordinate\nevaporates in the conjugate linear coordinate, giving a rigorous no-go statement\nfor logistic-map stream ciphers.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0913",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "9d20b474",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T16:20:31.431352+00:00",
-    "title": "Exact topological conjugacy between the smooth logisti"
   },
   {
     "consumed_by_exp_id": "",
@@ -7999,6 +7998,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T16:32:22.257026+00:00",
     "title": "`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Periodic Orbits through the Logistic\u2013Tent Conjugacy\n\nThis cycle transported the periodic-orbit skeleton of the tent map\n`T(t) = 1 - |2t - 1|` onto the smooth logistic map `f(x) = 4x(1 - x)` through the\nstrictly increasing homeomorphism `h(t) = sin\u00b2(\u03c0t/2)`. We proved that `h` is an\nexact bijection between the period-`n` points of the two maps, that consequently\ntheir period-`n` point sets have equal cardinality, that the logistic fixed set is\nexactly `{0, 3/4}` (cardinality `2 = 2\u00b9`), and that a concrete tent `3`-cycle\ntransports to a genuine period-three logistic orbit. The following conjectures\npush the same bridge further.\n\n## 1. The exact exponential count\n\n**Conjecture.** For every `n \u2265 1` the tent map \u2014 and hence the logistic map \u2014 has\nexactly `2\u207f` points of period dividing `n` in the unit interval.\n\nThe key insight is that the `n`-fold iterate of the tent map is a sawtooth of `2\u207f`\nfull ramps, each running monotonically across the whole interval and therefore\ncrossing the diagonal exactly once; the conjugacy bijection then hands the same\ncount to the logistic map for free. Why now? The cardinality of the two period-`n`\nsets has already been shown equal, so the transcendental count for the parabola is\nnow *defined* to be the crossing count of a piecewise-linear graph \u2014 a finite,\ncombinatorial quantity ready for an inductive ramp-counting argument.\n\n## 2. Exact period `n` for every `n`\n\n**Conjecture.** For each `n` the tent map possesses a point of *exact* period `n`,\nand its image under `h` is a point of exact period `n` for the logistic map.\n\nThe key insight is that exactness is preserved by an injective conjugacy: a seed of\nexact period `n` for the tent map cannot collapse to a shorter logistic period\nwithout violating injectivity of `h`. Why now? We have already certified exact\nperiod three by exhibiting the `3`-cycle `2/7 \u2192 4/7 \u2192 6/7 \u2192 2/7`; the same\nmechanism, applied to the dyadic-type rationals `k/(2\u207f \u00b1 1)`, should manufacture an\nexact-period-`n` seed uniformly in `n`.\n\n## 3. Density of periodic seeds and topological transitivity\n\n**Conjecture.** The periodic points of the logistic map are dense in `[0,1]`, and\nthe map is topologically transitive; together with sensitive dependence this\ncertifies chaos on the whole interval.\n\nThe key insight is that a homeomorphism preserves both density and transitivity, so\nit suffices to establish them for the tent map, whose periodic seeds are the\nmanifestly dense dyadic-type rationals. Why now? With `h` proven to be a bijection\nof `[0,1]` that carries periodic points to periodic points, every topological\nfeature of the transparent linear model transfers verbatim, with no smooth analysis\nrequired.\n\n## 4. The arcsine invariant measure\n\n**Conjecture.** The logistic map preserves the arcsine measure with density\n`1 / (\u03c0 \u221a(x(1 - x)))`, which is exactly the pushforward under `h` of the uniform\nmeasure preserved by the tent map.\n\nThe key insight is that `h` conjugates the uniform-preserving tent map to the\nlogistic map, so the invariant density of `f` is the image of the flat density\nunder the change of variables `x = sin\u00b2(\u03c0t/2)`, whose Jacobian produces the arcsine\nweight. Why now? The explicit, differentiable conjugating map makes the\nchange-of-variables computation elementary, turning a statement about a smooth\nchaotic system into a one-line pushforward of the uniform measure.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1232",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ac37e9f5",
+    "status": "available",
+    "timestamp": "2026-07-13T16:32:33.808293+00:00",
+    "title": "This cycle transported the periodic-orbit skeleton of the tent map"
   },
   {
     "consumed_by_exp_id": "",

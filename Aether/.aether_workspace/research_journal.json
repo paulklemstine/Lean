@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3959b92d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Bayesian Werewolf ↔ Combinatorics bridge\n\nThe file `BayesianWerewolfHypergeometric.lean` establishes that the elementary\nprobabilistic moments of the hypergeometric \"werewolves-i",
-      "quality_score": 0.82,
-      "sorry_count": 1,
-      "theorem_count": 9,
-      "timestamp": "2026-07-13T01:25:17",
-      "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-    },
-    {
       "cycle_id": "48b25c91",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Thermodynamic Horizon of Discovery\n\nThis cycle turns the informal \"heat death of mathematics\" picture into a small\ncollection of fully proved Lean 4 theorems (see `Thermodyna",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-13T16:32:30",
       "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
+    },
+    {
+      "cycle_id": "ac37e9f5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Periodic Orbits through the Logistic–Tent Conjugacy\n\nThis cycle transported the periodic-orbit skeleton of the tent map\n`T(t) = 1 - |2t - 1|` onto the smooth logistic map `f(x) =",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-13T16:32:48",
+      "title": "Exact topological conjugacy between the smooth logisti"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fd7d55eb",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Chordal register allocation\n\nThis work deepens the interval-graph analysis of register allocation\n(`RegisterAllocationInterval.lean`) to the full **chordal** (SSA) setting.\n\n## Wh",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-11T01:12:18",
-      "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
-    },
     {
       "cycle_id": "2ca6565f",
       "domain": "Applications",
@@ -2501,15 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-13T16:32:30",
       "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
+    },
+    {
+      "cycle_id": "ac37e9f5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Periodic Orbits through the Logistic–Tent Conjugacy\n\nThis cycle transported the periodic-orbit skeleton of the tent map\n`T(t) = 1 - |2t - 1|` onto the smooth logistic map `f(x) =",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-13T16:32:48",
+      "title": "Exact topological conjugacy between the smooth logisti"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "167aed7f",
-      "domain": "Applications",
-      "name": "not_multiverseTrue_of_independent",
-      "quality": 0.82
-    },
     {
       "cycle_id": "02ff061d",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "gumbelCDF_lt_one",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "ac37e9f5",
+      "domain": "Novelty",
+      "name": "tent_maps_unitInterval",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T16:32:30",
+  "last_updated": "2026-07-13T16:32:48",
   "open_questions": [
     {
       "context": "+--   · sorry   -- infinite tail: composite n > 10000 (Carmichael's analytic core); -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3f303e8a",
-        "quality": 0.72,
-        "theorems": 0,
-        "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collec"
-      },
-      {
         "cycle_id": "02ff061d",
         "quality": 0.7,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 19,
         "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
+      },
+      {
+        "cycle_id": "ac37e9f5",
+        "quality": 0.82,
+        "theorems": 20,
+        "title": "Exact topological conjugacy between the smooth logisti"
       }
     ],
     "NumberTheory": [

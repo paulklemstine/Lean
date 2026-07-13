@@ -459,6 +459,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ac37e9f5 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Geometry of the Logistic–Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin²(πt/2)` of the unit int",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_ac37e9f5_bbb8db69",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ac37e9f5",
+    "status": "available",
+    "timestamp": "2026-07-13T16:32:48.088789+00:00",
+    "title": "Deepening: Exact topological conjugacy between the smooth logisti"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domain_bridges": [],
     "domains": [
@@ -1768,7 +1787,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "951fa653",
+    "consumed_by_exp_id": "",
     "description": "Cycle 64d4f5fe (Q=0.780) proved 16 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-appr",
     "domain_bridges": [],
     "domains": [
@@ -1780,7 +1799,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "64d4f5fe",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-13T12:17:27.828410+00:00",
     "title": "Close Proofs: Explicit exponential lower bound for Vietoris-Rips approximations belo"
   },
@@ -8007,7 +8026,7 @@
       "Lovász's box complex lower bound χ(G) ≥ coind(B(G))+2",
       "Simonyi–Tardos–Vrécica question on co-index growth under suspension"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d31b8b8b",
     "description": "For every integers d ≥ 2 and c with 1 ≤ c ≤ d, there exists a finite free simplicial Z2-complex K of dimension d such that coind(K) = c and coind(suspension K) = d + 1. This generalizes the paper's result (which proves the case c = 1 for all d ≥ 2) and would show that the upper bound coind(S(K)) ≤ dim(K)+1 is sharp for every possible starting co-index c, achieving maximal excess d - c.",
     "domain_bridges": [
       "free Z2-simplicial complexes",
@@ -8023,7 +8042,7 @@
     "proof_strategy": "Use the paper's explicit construction of K_n (dim n, coind 1, coind of suspension n+1) as a base block. For a given c, take the join of K_{d-c+1} with an antipodal sphere S^{c-2} (which has coind c-2 and dimension c-2). The join of free Z2-complexes satisfies dim(X*Y)=dim(X)+dim(Y)+1 and coind(X*Y) ≥ coind(X)+coind(Y)+1, yielding a complex of dimension d and coind at least c. Show by induction on the simplicial structure that equality holds and that suspension of the join realizes coind d+1, possibly via an equivariant homeomorphism Σ(X*Y) ≅ ΣX * ΣY and the known coind of ΣK_{d-c+1}=d-c+2 and ΣS^{c-2}=S^{c-1} (coind c-1). The resulting lower bound gives coind ≥ d+1, and dimension bounds force equality. Formalize simplicial join and suspension in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "2607.06061v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T23:14:12.131922+00:00",
     "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
   },
