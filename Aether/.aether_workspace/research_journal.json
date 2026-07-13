@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d4192a75",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Oddomorphisms and Split-Off Minors\n\nThis project formalizes the algebraic backbone of **oddomorphisms** between finite\ngraphs, defined as functions `φ : V(F) → V(G)` whose `0/1` f",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-07-13T03:38:44",
-      "title": "Equivalence of Oddomorphism and Split-Off Minor"
-    },
-    {
       "cycle_id": "53d4816b",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle deepened the \"Cellular Automata as Algebraic Geometry\" line by proving\na sharp **cross-domain equivalence** in\n`Catalog/Novelty/CANilpotencyScheme.lean`:\n\n> The additiv",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-13T17:59:25",
       "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+    },
+    {
+      "cycle_id": "d31b8b8b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Sharp excess of ℤ₂-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free ℤ₂-complexes: sus",
+      "quality_score": 0.74,
+      "sorry_count": 5,
+      "theorem_count": 27,
+      "timestamp": "2026-07-13T18:50:07",
+      "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3399a930",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThis project builds a self-contained, machine-checked theory of negative-dimensional\nspaces in `Core.lean`.  We model virtual graded spaces as the",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-11T02:34:51",
-      "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
-    },
     {
       "cycle_id": "0be793c6",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-13T17:59:25",
       "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+    },
+    {
+      "cycle_id": "d31b8b8b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Sharp excess of ℤ₂-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free ℤ₂-complexes: sus",
+      "quality_score": 0.74,
+      "sorry_count": 5,
+      "theorem_count": 27,
+      "timestamp": "2026-07-13T18:50:07",
+      "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a1dac228",
-      "domain": "Novelty",
-      "name": "cube_lower",
-      "quality": 0.82
-    },
     {
       "cycle_id": "ad71c64c",
       "domain": "Applications",
@@ -2803,17 +2797,16 @@
       "domain": "Applications",
       "name": "IsAcyclic",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "d31b8b8b",
+      "domain": "Novelty",
+      "name": "yields",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-13T17:59:25",
+  "last_updated": "2026-07-13T18:50:07",
   "open_questions": [
-    {
-      "context": "+Everything is elementary and `sorry`-free.",
-      "cycle_id": "1abce342",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-13T01:06:08"
-    },
     {
       "context": "+Everything is elementary and `sorry`-free.",
       "cycle_id": "97b9c756",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-13T17:09:44"
+    },
+    {
+      "context": "proved with no `sorry`.; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "d31b8b8b",
+      "domain": "Novelty",
+      "sorry_count": 5,
+      "timestamp": "2026-07-13T18:50:07"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a1dac228",
-        "quality": 0.82,
-        "theorems": 10,
-        "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
-      },
-      {
         "cycle_id": "290f55e0",
         "quality": 0.83,
         "theorems": 33,
@@ -3637,6 +3631,12 @@
         "quality": 0.7,
         "theorems": 19,
         "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+      },
+      {
+        "cycle_id": "d31b8b8b",
+        "quality": 0.74,
+        "theorems": 27,
+        "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-i"
       }
     ],
     "NumberTheory": [

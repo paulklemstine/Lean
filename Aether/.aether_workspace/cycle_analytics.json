@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T17:59:27.313135+00:00",
+  "last_updated": "2026-07-13T18:50:09.055472+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -13009,6 +13009,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-13T17:59:27.263796+00:00",
       "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 172,
+      "domain": "Novelty",
+      "duration_seconds": 999.0611066818237,
+      "end_time": 1783968533.3150916,
+      "files_integrated": 4,
+      "job_id": "d31b8b8b",
+      "outcome_quality": 0.74,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19a",
+      "phase_a_quality_score": 0.74,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19a",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.508,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.74,
+        "novelty": 0.74,
+        "proof_depth": 0.74,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.74,
+      "sorry_count": 5,
+      "sorry_density": 0.18518518518518517,
+      "start_time": 1783967534.253985,
+      "strategy_count": 0,
+      "theorem_count": 27,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 12,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-13T18:50:08.998862+00:00",
+      "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
     }
   ]
 }

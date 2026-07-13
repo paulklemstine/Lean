@@ -1710,20 +1710,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cographs are generalized spectrally closed"
   },
   {
-    "consumed_by_exp_id": "d31b8b8b",
-    "description": "For every integers d \u2265 2 and c with 1 \u2264 c \u2264 d, there exists a finite free simplicial Z2-complex K of dimension d such that coind(K) = c and coind(suspension K) = d + 1. This generalizes the paper's result (which proves the case c = 1 for all d \u2265 2) and would show that the upper bound coind(S(K)) \u2264 dim(K)+1 is sharp for every possible starting co-index c, achieving maximal excess d - c.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0686",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06061v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T23:14:12.131922+00:00",
-    "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let Sh_G be a Shimura variety of Hodge type with \u03bc-ordinary Mantovan Igusa variety Ig_\u03bc. Let D = \u2295_{i=1}^n D_i be the graded algebra of rank one Maass--Shimura differential operators on Ig_\u03bc. Conjecture: There exists an explicit n-dimensional commutative formal group F_D such that the action of D integrates to an action of F_D on Ig_\u03bc, and the coordinate ring of F_D is canonically isomorphic to the symmetric algebra Sym(D) equipped with a specific coproduct structure determined by the Hodge embedding data. Moreover, this isomorphism is equivariant for the natural action of the derived Hecke algebra H^*(K_p, G) where K_p is a hyperspecial maximal subgroup.",
     "domains": [
@@ -1810,6 +1796,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T10:39:03.033786+00:00",
     "title": "Close Proofs: The mission asked to interrogate the claim:"
+  },
+  {
+    "consumed_by_exp_id": "49ddee39",
+    "description": "Cycle d31b8b8b (Q=0.740) proved 27 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integers d \u2265 2 and c with 1 \u2264 c \u2264 d, there exists a finite free simplicial Z2-complex K of dimension d such that coind(K) = c and coind(suspension K) = d + 1. This generalizes the paper's re",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_d31b8b8b_5f73fb61",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "d31b8b8b",
+    "status": "in_progress",
+    "timestamp": "2026-07-13T18:50:07.324365+00:00",
+    "title": "Close Proofs: Sharp maximal excess of co-index under suspension for all feasible sta"
   },
   {
     "consumed_by_exp_id": "",
@@ -1986,6 +1986,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T17:59:19.257093+00:00",
     "title": "This cycle deepened the \"Proofs as DAGs\" line by developing the *topological"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Sharp excess of \u2124\u2082-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free \u2124\u2082-complexes: suspension raises the co-index by at\nleast one (`coind_suspension`), the octahedral tower realises the diagonal\n`coind(S\u207f) = n` (`coind_Oct_self`), and the Borsuk\u2013Ulam base case shows the model\nalready detects the fundamental obstruction \u2014 there is no dimension-dropping\nequivariant simplicial map from a sphere to `S\u2070` (`borsuk_ulam_base`). The following\nconjectures are the natural next escalation.\n\n## 1. Maximal excess for every feasible starting co-index\n\n**Conjecture.** For all integers `d \u2265 2` and `c` with `1 \u2264 c \u2264 d`, there is a finite\nfree \u2124\u2082-complex `K` of dimension `d` with co-index exactly `c` whose suspension has\nco-index exactly `d + 1`, achieving the maximal possible excess `d \u2212 c`.\n\n**The key insight is** that the jump in co-index under a single suspension is *not*\ngoverned by the one new apex coordinate but by the global equivariant connectivity of\nthe complex: a complex can be \"co-index poor\" yet \"suspension-rich\" because\nsuspension repairs exactly the equivariant homotopical defect that suppresses the\nco-index, and that defect can be engineered to be as large as the ambient dimension\nallows.\n\n**Why now?** The constructive `+1` bound and the octahedral realisation of the\ndiagonal are in hand, so the only missing ingredient is a family of complexes whose\nco-index is pinned *below* their dimension while their suspension is forced *up* to\n`d + 1`; the octahedral spheres provide the exact upper-bound certificates\n(`Oct_face_card_le`) needed to measure `dim` and the target co-index simultaneously.\n\n## 2. A purely combinatorial Borsuk\u2013Ulam for octahedral spheres\n\n**Conjecture.** There is no equivariant simplicial map `Oct m \u2192 Oct n` whenever\n`m > n`; equivalently the co-index of `Oct n` equals `n` on the nose.\n\n**The key insight is** that antipodal-pair-freeness of faces already encodes the\nparity obstruction underlying Borsuk\u2013Ulam, so the non-existence should follow from a\ndiscrete degree/parity count on the top-dimensional antipodal face pairs rather than\nfrom any continuous argument.\n\n**Why now?** The base case `n = 1 \u2192 0` is proved and isolates the exact mechanism (an\nequivariant map is forced to collapse an antipodal pair); promoting it to all `n`\nturns the co-index lower bounds of this cycle into exact values, closing the gap\nbetween `HasCoindGe` and the topological co-index.\n\n## 3. Suspension defect and the Lov\u00e1sz chromatic bound\n\n**Conjecture.** The excess `coind(S(K)) \u2212 coind(K) \u2212 1` of a box complex `B(G)`\ncontrols a strengthening of the Lov\u00e1sz bound `\u03c7(G) \u2265 coind(B(G)) + 2`: graphs whose\nbox complex has large suspension excess admit chromatic lower bounds strictly beyond\nthe Lov\u00e1sz value.\n\n**The key insight is** that Csorba's identity `B\u2080(G) \u2243 S(B(G))` converts the\nsuspension excess into a directly graph-theoretic quantity, so a large excess is a\ncertificate that the topological lower bound is *loose* and can be sharpened.\n\n**Why now?** With the suspension operation and its co-index behaviour formalised, the\nCsorba bridge becomes a concrete transfer principle from topological excess to\nchromatic slack, making the conjecture testable on explicit graph families.\n\n## 4. Iterated suspension and the co-index growth spectrum\n\n**Conjecture.** For every non-decreasing sequence `c \u2264 c\u2081 \u2264 c\u2082 \u2264 \u2026` with each step at\nleast `+1`, there is a complex whose iterated suspensions realise exactly that\nco-index sequence; in particular the \"growth spectrum\" of a free \u2124\u2082-complex is an\narbitrary super-linear staircase subject only to the dimension ceiling.\n\n**The key insight is** that each suspension both raises dimension by one and can be\ntuned to raise co-index by any amount up to the new dimension, so the growth sequence\ndecouples into independently controllable single-step jumps.\n\n**Why now?** The functoriality of suspension (`EqSimpMap.susp`) and the explicit\n`S\u207f\u207a\u00b9 \u2245 S(S\u207f)` map established here give the algebraic scaffolding to iterate the\nconstruction and track co-index and dimension in lockstep.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1238",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d31b8b8b",
+    "status": "available",
+    "timestamp": "2026-07-13T18:49:54.528672+00:00",
+    "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
   },
   {
     "consumed_by_exp_id": "",
