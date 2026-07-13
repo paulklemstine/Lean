@@ -12488,14 +12488,14 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Fyodorov_Hiary_Keating_2012",
         "Arguin_Belius_Harper_2017"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "24c0b42e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12512,7 +12512,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0462",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T14:35:06.489135+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Probability.Notation\nimport Mathlib.Analysis.SpecialFunctions.PowDeriv\n\n-- FHK Conjecture: The centered maximum of log|ζ(1/2 + it)| converges in distribution\n-- to the sum of two independent Gumbel random variables.\naxiom Fyodorov_Hiary_Keating_conjecture :\n    Filter.Tendsto (fun T : ℝ => \n      (sSup { Real.log (Complex.abs (riemannZeta (1/2 + Complex.I * t))) | t ∈ Set.Icc T (2 * T) } \n        - Real.log (Real.log T) + (3 / 2) * Real.log (Real.log (Real.log T)))) \n    Filter.atTop \n    (MeasureTheory.vagueConvergence (Gumbel 0 1 + Gumbel 0 1))",
       "lineage_refs": [],
@@ -12527,7 +12527,7 @@
       "source": "",
       "source_exp_id": "2607.02233v1",
       "source_path": "http://arxiv.org/abs/2607.02233v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-06T17:00:53.781526+00:00",
       "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
@@ -42006,6 +42006,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"
   ]
