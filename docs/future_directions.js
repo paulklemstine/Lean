@@ -1267,7 +1267,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "223b6ab0",
     "description": "Cycle 319bd9f6 (Q=0.780) proved 13 theorems in Shared but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the funda",
     "domains": [
       "Shared"
@@ -1276,7 +1276,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "319bd9f6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:29:28.312612+00:00",
     "title": "Close Proofs: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
@@ -7617,7 +7617,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
   {
-    "consumed_by_exp_id": "71f07e7f",
+    "consumed_by_exp_id": "",
     "description": "Cycle cbbd1369 (Q=0.700) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Giampietro-Darmon factorization formula for the norm of $p$-adic cross-ratios of CM points on Atkin-Lehner quotients of Shimura curves, currently proven only for genus 0 quotients, holds unconditi",
     "domains": [
       "Novelty"
@@ -7626,7 +7626,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "cbbd1369",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-13T01:24:57.427672+00:00",
     "title": "Close Proofs: Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
   },
