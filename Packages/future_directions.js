@@ -270,6 +270,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5b802ccf (Q=0.820), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation semantics: conflict-free\nsets, the characteristic (defense) operator `charF`, admissible / complete /\np",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_5b802ccf_fd81a556",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "5b802ccf",
+    "status": "available",
+    "timestamp": "2026-07-13T06:26:53.802498+00:00",
+    "title": "Deepening: Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7473e6ed (Q=0.820), which proved 14 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations cor",
     "domains": [
       "Physics"
@@ -4467,7 +4481,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "t-Perfect Graph 4-Colorability Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9da8e56c",
     "description": "For every loopless matroid M on finite ground set E and every Feichtner\u2013Yuzvinsky building set G containing the top flat E, the K-polynomial of the integral tangent class T^Z_{M,G} \u2208 K_Z(M,G) equals the Hilbert series of the Chow ring A*(M,G). Concretely, P^K(T^Z_{M,G}, t) = Hilb(A*(M,G), t) as polynomials in Z[t]. This is the central P^K=Hilb identity (Theorem A, property 2) of the paper, connecting the K-theoretic tangent class to the cohomological Hilbert series.",
     "domains": [
       "Algebra",
@@ -4477,7 +4491,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05835v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T11:32:34.706786+00:00",
     "title": "Hirzebruch\u2013Riemann\u2013Roch Identity for the Integral Tangent Class of Matroids"
   },
@@ -7036,21 +7050,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Petrie block `\ud835\udd2d_k = 1 + x + \u22ef + x^{k-1}` divides `x\u207f \u2212 1` exactly when `k \u2223 "
   },
   {
-    "consumed_by_exp_id": "5b802ccf",
-    "description": "# Future Directions \u2014 The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation semantics: conflict-free\nsets, the characteristic (defense) operator `charF`, admissible / complete /\npreferred / stable extensions, the grounded extension as the least fixed point\n`OrderHom.lfp (charF)`, and the symmetric/Euler bridges\n(`ArgumentationCore`, `ArgumentationExtensions`, `ArgumentationStable`,\n`ArgumentationStableGap`, `ArgumentationSymmetric`, `ArgumentationSimplicial`).\n\nThose files *define* the grounded extension and prove it lies below every\ncomplete extension, but they never establish that the grounded extension is\nitself a genuine extension. This cycle closes exactly that gap, in the new\nself-contained file **`ArgumentationGrounded.lean`**:\n\n- `conflictFree_charF` \u2014 the defense operator preserves conflict-freeness.\n- `conflictFree_of_directed` \u2014 a directed (chain) union of conflict-free sets is\n  conflict-free.\n- `lfpApprox_conflictFree` \u2014 **every ordinal approximant of the least fixed point\n  is conflict-free** (transfinite induction along `OrdinalApprox.lfpApprox`).\n- `groundedExt_conflictFree` \u2014 **the grounded extension is conflict-free.**\n- `groundedExt_fixed` \u2014 it is a fixed point of `charF`.\n- `groundedExt_admissible`, `groundedExt_complete` \u2014 **it is admissible and\n  complete.**\n- `groundedExt_subset_complete` \u2014 it is contained in every complete extension.\n- `groundedExt_least_complete` \u2014 **the grounded extension is the least complete\n  extension** (Dung's characterization of grounded semantics).\n- `complete_iff_conflictFree_fixed` \u2014 a set is complete iff it is a conflict-free\n  fixed point of `charF`.\n\nEach result is used by the next, forming a single chain culminating in\n`groundedExt_least_complete`.\n\n## Why the proof is non-trivial\n\nConflict-freeness is **not** a consequence of the fixed-point equation\n`charF S = S` alone: `ComputationalEvidence.md` exhibits a framework with a\nnon-least fixed point that is a conflict (case 4). Conflict-freeness holds for\nthe *least* fixed point specifically. Since `charF` is not \u03c9-continuous in\ngeneral, the least fixed point is reached only by transfinite iteration, so the\nproof runs a transfinite induction over `OrdinalApprox.lfpApprox` and uses that a\nchain of conflict-free sets has a conflict-free union.\n\n## Where to go next\n\n- **Grounded = intersection of complete extensions.** Combine\n  `groundedExt_least_complete` with completeness of preferred extensions to show\n  the grounded extension equals `\u22c2` of all complete (equivalently, all preferred)\n  extensions when they are directed downward, or characterize when equality holds.\n- **Uniqueness of grounded via well-foundedness.** For frameworks whose attack\n  relation is well-founded, prove the grounded extension is the unique complete\n  extension (coincidence of grounded, preferred, and stable).\n- **Labelling correspondence.** Formalize complete labellings (in/out/undec) and\n  prove the bijection with complete extensions, then transport\n  `groundedExt_least_complete` to the least complete labelling.\n- **Continuity / Kleene reachability.** Identify a class of frameworks (e.g.\n  finitary) where the grounded extension is reached at stage `\u03c9`, giving an\n  explicit `\u22c3\u2099 charF^[n] \u2205` description.\n",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "fd_1154",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "867d1ba2",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T18:13:25.206194+00:00",
-    "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Algebraic Cycles in Piecewise-Linear Decision Surfaces\n\nThe results of this cycle sharpen the qualitative \"every homology class of a\nrectified-linear decision surface is a rational combination of algebraic cells\"\ninto an *exact* dimensional accounting: the middle Betti number equals\n`dim C\u2081 \u2212 rank d\u2081 \u2212 rank d\u2082`, and it is bounded by the monotone, multiplicative\nactivation-pattern count `\u220f\u1d62 2^{w\u1d62}`. The following conjectures push this exact\naccounting toward a full bigraded and functorial theory.\n\n## Conjecture 1 \u2014 A bigraded (Hodge-type) refinement of the width bound\n\nFor a network with input-adjacent width `w\u2081` and output-adjacent width `w_L`,\neach mixed Betti number of the decision surface should satisfy a *product* bound\nof the form `h^{p,q} \u2264 C(w\u2081, p) \u00b7 C(w_L, q) \u00b7 \u220f\u1d62 w\u1d62`, refining the single\nexponential bound into a bigraded pyramid indexed by the two boundary layers.\n\nThe key insight is that the two boundary layers of a network play asymmetric\nroles \u2014 the first controls how cells are cut and the last how they are glued \u2014\nso the homology should split along a bidegree that reads the input and output\nwidths separately rather than collapsing them into one total count.\n\nWhy now? The exact identity `dim H = dim C\u2081 \u2212 rank d\u2081 \u2212 rank d\u2082` isolates\nhomology as the part of the chain group seen by neither differential; this makes\nit possible, for the first time, to attribute each surviving dimension to a\nspecific pair of boundary directions instead of to the aggregate width.\n\n## Conjecture 2 \u2014 Sharpness of the activation-pattern bound\n\nThe width bound `dim H \u2264 \u220f\u1d62 2^{w\u1d62}` is asymptotically tight: for every width\nprofile there exists a network whose decision surface realises a Betti number\nthat is a fixed positive fraction of the bound, so the exponential growth in\ntotal width cannot be improved to a subexponential rate.\n\nThe key insight is that generic hyperplane arrangements already realise a\nconstant fraction of all sign-cells, and a decision surface can be engineered so\nthat a constant fraction of those cells contribute independent homology classes.\n\nWhy now? The multiplicative and monotone calculus of the pattern count\n(`card_activationPattern_append`, `card_activationPattern_mono`) provides exactly\nthe compositional tools needed to build large-homology examples layer by layer\nand to certify that concatenation multiplies the achievable complexity.\n\n## Conjecture 3 \u2014 Homology is subadditive under network composition\n\nIf a deep network factors as a composition of two sub-networks, the Betti\nnumbers of its decision surface are bounded by a convolution of the Betti\nnumbers of the parts: composition can only mix and cancel classes, never create\nmore than the product-count of the factors permits.\n\nThe key insight is that composition of piecewise-linear maps corresponds to a\nrefinement of activation regions, and refinement of a cell decomposition can\nmerge homology classes but cannot manufacture classes unaccounted for by the\nfiner decomposition.\n\nWhy now? The concatenation law for activation-pattern counts already shows the\ncombinatorial side is multiplicative; the exact rank formula supplies the\nmatching topological ledger, so the two can finally be compared term by term.\n\n## Conjecture 4 \u2014 An Euler-characteristic law for decision surfaces\n\nThe alternating sum of the Betti numbers of a rectified-linear decision surface\nis a signed count of activation regions weighted by their local dimension, giving\na closed-form Euler characteristic determined entirely by the network's width\nprofile and the combinatorics of its region adjacency graph.\n\nThe key insight is that the local Euler relation `dim H + rank d\u2081 + rank d\u2082 =\ndim C\u2081` telescopes across the full cellular complex, so global Euler\ncharacteristic must be expressible purely through cell counts, independent of the\nparticular weights.\n\nWhy now? With the middle-degree identity established as an exact equality rather\nthan an inequality, the telescoping cancellation that defines the Euler\ncharacteristic becomes available at every degree simultaneously.\n",
     "domains": [
@@ -7634,6 +7633,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T05:54:26.143525+00:00",
     "title": "Sharp two-sided window for the number of nonzero"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Argumentation (VIII)\n\nThis cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving that\na **well-founded** Dung argumentation framework has a **unique complete\nextension** \u2014 the grounded extension \u2014 which is also stable and preferred, and\nthat the grounded extension is always the intersection of all complete\nextensions. Key results:\n\n- `stable_complete` \u2014 every stable extension is complete (no hypothesis).\n- `groundedExt_eq_sInter_complete` \u2014 grounded = \u22c2 of all complete extensions.\n- `groundedExt_stable_of_wf` \u2014 grounded is stable under well-foundedness.\n- `complete_eq_grounded_of_wf`, `grounded_unique_complete_of_wf` \u2014 uniqueness.\n- `stable_unique_of_wf`, `grounded_preferred_of_wf` \u2014 coincidence of\n  grounded/stable/preferred semantics on well-founded frameworks.\n\n## Where to go next\n\n- **Kleene reachability for finitary frameworks.** For frameworks in which every\n  argument has finitely many attackers, `charF` is \u03c9-continuous, so\n  `groundedExt = \u22c3\u2099 charF^[n] \u2205`. Formalize the \u03c9-continuity and derive the\n  explicit union description, then re-prove `groundedExt_stable_of_wf` for\n  *finitary well-founded* frameworks by ordinary (\u2115-indexed) induction.\n\n- **Preferred \u21d2 complete in general.** Prove the classical result that every\n  preferred (maximal admissible) extension is complete, without well-foundedness.\n  Combined with `grounded_preferred_of_wf` this would upgrade uniqueness to\n  \"grounded = preferred = stable = complete\" purely from the extension calculus.\n\n- **Labelling correspondence.** Introduce complete labellings (in/out/undec) and\n  the bijection with complete extensions; transport `grounded_unique_complete_of_wf`\n  to \"the unique complete labelling has no `undec` label\" on well-founded frameworks.\n\n- **Quantitative well-foundedness.** Relate the ordinal rank of the attack\n  relation to the least stage at which `lfpApprox` stabilizes, giving an ordinal\n  bound on the convergence of the grounded construction.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1194",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5b802ccf",
+    "status": "available",
+    "timestamp": "2026-07-13T06:26:46.082939+00:00",
+    "title": "This cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving tha"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3dfad72d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## Summary of what was proved / disproved\n\nFile: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`,\naxioms: `propext`, `Classical.choice`, `Quot.sound` on",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-07-12T15:03:14",
-      "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
-    },
-    {
       "cycle_id": "919ceb1f",
       "domain": "Novelty",
       "key_insight": "# Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLe",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-13T05:54:34",
       "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+    },
+    {
+      "cycle_id": "5b802ccf",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Topology of Argumentation (VIII)\n\nThis cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving that\na **well-founded** Dung argumentation framework has a **un",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-13T06:26:53",
+      "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "df72d5fe",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Topology of Arithmetic\n\nThis cycle established that the zero-dimensional persistent homology of the prime\npoint cloud is a genuine persistence module whose entire structure —",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-10T12:07:09",
-      "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-    },
     {
       "cycle_id": "2c002c80",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-13T05:54:34",
       "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+    },
+    {
+      "cycle_id": "5b802ccf",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Topology of Argumentation (VIII)\n\nThis cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving that\na **well-founded** Dung argumentation framework has a **un",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-07-13T06:26:53",
+      "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "00319e93",
-      "domain": "Novelty",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "00319e93",
-      "domain": "Novelty",
-      "name": "card_filter_superset",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "00319e93",
-      "domain": "Novelty",
-      "name": "card_filter_disjoint",
-      "quality": 0.82
-    },
     {
       "cycle_id": "82394822",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "card_le_nu",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "5b802ccf",
+      "domain": "Applications",
+      "name": "mem_charF",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5b802ccf",
+      "domain": "Applications",
+      "name": "defends_mono",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5b802ccf",
+      "domain": "Applications",
+      "name": "charF_mono",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T05:54:34",
+  "last_updated": "2026-07-13T06:26:53",
   "open_questions": [
     {
       "context": "-Everything is elementary and `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "86966da0",
-        "quality": 0.82,
-        "theorems": 11,
-        "title": "That a type which fully quantifies over itself —"
-      },
-      {
         "cycle_id": "28bb3270",
         "quality": 0.83,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.7,
         "theorems": 16,
         "title": "Factorization of Cyclotomic Gauss Sum Matrix"
+      },
+      {
+        "cycle_id": "5b802ccf",
+        "quality": 0.82,
+        "theorems": 29,
+        "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
       }
     ],
     "Bridges": [

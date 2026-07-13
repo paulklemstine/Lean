@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T05:54:36.283932+00:00",
+  "last_updated": "2026-07-13T06:26:55.650947+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -11203,6 +11203,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-13T05:54:36.239451+00:00",
       "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 128,
+      "domain": "Applications",
+      "duration_seconds": 951.0466978549957,
+      "end_time": 1783923992.7050805,
+      "files_integrated": 4,
+      "job_id": "5b802ccf",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783923041.6583827,
+      "strategy_count": 0,
+      "theorem_count": 29,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 21,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-13T06:26:55.599838+00:00",
+      "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
     }
   ]
 }
