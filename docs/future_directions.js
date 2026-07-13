@@ -339,7 +339,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0577eb2",
     "description": "Building on cycle ac37e9f5 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Geometry of the Logistic\u2013Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin\u00b2(\u03c0t/2)` of the unit int",
     "domains": [
       "Novelty"
@@ -348,12 +348,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "ac37e9f5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T16:32:48.088789+00:00",
     "title": "Deepening: Exact topological conjugacy between the smooth logisti"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b222c758",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -362,7 +362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -706,7 +706,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddc0d02e",
     "description": "Building on cycle 73d4b43b (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a s",
     "domains": [
       "Applications"
@@ -715,7 +715,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "73d4b43b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T05:00:51.739107+00:00",
     "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
