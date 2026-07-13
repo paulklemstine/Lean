@@ -14051,7 +14051,7 @@
       "source": "",
       "source_exp_id": "2607.03388v1",
       "source_path": "http://arxiv.org/abs/2607.03388v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-07T03:55:00.492813+00:00",
       "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
@@ -18371,7 +18371,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "64d4f5fe",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -18402,7 +18402,7 @@
       "source": "",
       "source_exp_id": "2607.06524v1",
       "source_path": "http://arxiv.org/abs/2607.06524v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T17:01:42.923851+00:00",
       "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
@@ -20264,7 +20264,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Hadamard's maximal determinant problem",
         "Ehlich-Wojtas bounds for ternary matrices",
@@ -20274,7 +20274,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e8b8d594",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -20292,7 +20292,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0765",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T11:12:46.946873+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_det_4x4_unimodular_bound (k : ℕ) (hk : k ≥ 1) :\n  ∃ M : matrix (fin 4) (fin 4) ℤ,\n    (∀ i j, |M i j| ≤ 2*k - 1) ∧\n    det M = ((2*k - 1)^4 - 2*(2*k - 1)^2 + 1) ∧\n    (det M).coprime (unimodular_unit_group).\n\nlemma det_bound_implies_smith_constraints (k : ℕ) :\n  ∀ M : matrix (fin 4) (fin 4) ℤ,\n    (∀ i j, |M i j| ≤ 2*k - 1) →\n    (prime_struct.prime p) → (p ∣ det M) →\n    (∃ d, d ∣ (det M) ∧ d ≥ p^(k+1)) →\n    False",
       "lineage_refs": [],
@@ -20307,7 +20307,7 @@
       "source": "",
       "source_exp_id": "2607.07688v1",
       "source_path": "http://arxiv.org/abs/2607.07688v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-09T14:37:40.968742+00:00",
       "title": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
@@ -41066,6 +41066,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }

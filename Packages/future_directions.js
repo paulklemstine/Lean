@@ -3713,6 +3713,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Engel's Interval Packing Theorem"
   },
   {
+    "consumed_by_exp_id": "ad71c64c",
+    "description": "For any simple graph G with n vertices and m edges, and for any 1 \u2264 k \u2264 n-1, the sum of the k largest Laplacian eigenvalues s_k(G) equals m + binom(k+1, 2) if and only if G is a threshold graph with clique number k+1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0531",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.03388v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-07T03:55:00.492813+00:00",
+    "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The number of lozenge tilings of the triangular region T_n equals the product over all 1 \u2264 a < b \u2264 3n+2 with (a,b) \u2260 (n+1,2n+2) of |1 + \u03b6^a + \u03b6^b|^(1/3), where \u03b6 = exp(2\u03c0i/(3n+3)).",
     "domains": [
@@ -4528,7 +4542,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact asymptotic growth of \\u03c7^r_F(d) for the balanced\u2011triangle family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64d4f5fe",
     "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
     "domains": [
       "MachineLearning"
@@ -4537,7 +4551,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T17:01:42.923851+00:00",
     "title": "Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 threshold"
   },
@@ -5034,7 +5048,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Growth Bound for the Sum of Distinct Prime Divisors in Arithmetic Progressions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e8b8d594",
     "description": "For every integer k \u2265 1, the maximum determinant of any 4\u00d74 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shifted appropriately.",
     "domains": [
       "Bridges"
@@ -5043,7 +5057,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07688v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T14:37:40.968742+00:00",
     "title": "Maximum Determinant Bound for 4\u00d74 Unimodular Matrices with Bounded Entries"
   },
