@@ -353,6 +353,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
+    "consumed_by_exp_id": "0568e201",
+    "description": "Building on cycle a1dac228 (Q=0.820), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 02ff061d (Q=0.700) proved 6 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F)",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_a1dac228_f89a2246",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "a1dac228",
+    "status": "in_progress",
+    "timestamp": "2026-07-13T12:17:35.369624+00:00",
+    "title": "Deepening: Edge-Spectral Supersaturation for Triangles"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
@@ -690,6 +704,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T03:38:30.661331+00:00",
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 64d4f5fe (Q=0.780), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_64d4f5fe_6a2c3f5e",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "64d4f5fe",
+    "status": "available",
+    "timestamp": "2026-07-13T12:17:27.704617+00:00",
+    "title": "Deepening: Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 thres"
   },
   {
     "consumed_by_exp_id": "",
@@ -1251,6 +1279,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T01:06:09.210691+00:00",
     "title": "Close Proofs: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 64d4f5fe (Q=0.780) proved 16 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-appr",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_64d4f5fe_baf811fa",
+    "priority_score": 0.8300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "64d4f5fe",
+    "status": "available",
+    "timestamp": "2026-07-13T12:17:27.828410+00:00",
+    "title": "Close Proofs: Explicit exponential lower bound for Vietoris-Rips approximations belo"
   },
   {
     "consumed_by_exp_id": "",
@@ -1895,20 +1937,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
-  },
-  {
-    "consumed_by_exp_id": "477f7787",
-    "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique\u2011matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique\u2011Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3\u03052K2). This extends the result of [arXiv:xxxx] from distance\u2011hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0146",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00730v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T13:24:03.491700+00:00",
-    "title": "Conjecture: Balanced graphs coincide with hereditary clique\u2011Helly graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -7806,18 +7834,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "New Lean file: `IsolationLemmaAsymptoticDensity.lean`."
   },
   {
-    "consumed_by_exp_id": "a1dac228",
-    "description": "Cycle 02ff061d (Q=0.700) proved 6 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Exponential barriers for Vietoris\u2013Rips approximation\n\nThe results here isolate a sharp threshold: the equidistant configuration on `n` points,\nrealised by the standard basis of Euclidean space with pairwise distance `\u221a2`, forces\nevery multiplicative `c`-approximation of its Vietoris\u2013Rips filtration to carry at least\n`2^(\u03b3(c)\u00b7n)` simplices, with the explicit exponent `\u03b3(c) = \u00bd \u2212 log\u2082 c` positive on\n`[1, \u221a2)` and vanishing at the threshold. The following conjectures push beyond this\nwitness.\n\n## 1. A degradation-tight family\n\n**Conjecture.** There is a family of finite metric spaces `{Y\u2099}` for which the *minimum*\nsize of a `c`-approximation is `\u0398(2^(\u03b3(c)\u00b7n))` \u2014 matching the lower bound from *below* as\nwell as above, so that as `c \u2192 \u221a2\u207b` sub-exponential approximations genuinely appear.\n\nThe key insight is that the equidistant gap is *too rigid*: it forces the full `2\u207f`\ncount uniformly in `c`, so it cannot exhibit the degradation of the exponent near the\nthreshold. A multi-scale construction, with geometrically spaced gaps at ratios\napproaching `\u221a2`, should let a coarse interleaving skip alternate gaps, trading\nresolution for size in exactly the ratio `\u03b3(c)` predicts.\n\nWhy now? The single-gap lower bound pins the exact exponent whose limit is `0`;\nthe natural next step is a construction that *saturates* it, converting an existential\nlower bound into a tight complexity characterisation.\n\n## 2. Homological, not merely combinatorial, hardness\n\n**Conjecture.** The exponential barrier persists at the level of persistent homology:\nbelow `\u221a2`, any `c`-interleaved persistence module approximating `VR(X\u2099)` must have total\nbar-count exponential in `n`, not just an exponential number of simplices.\n\nThe key insight is that simplex count is an *upper* proxy for homological complexity, yet\nthe equidistant gap creates a maximal collapse of `H\u2080` at a single scale; distributing\nindependent gaps across dimensions should force exponentially many bars that no\n`c`-interleaving can merge.\n\nWhy now? Interleaving distance gives a clean metric on persistence modules, so an\nexponential lower bound on bar-count is a well-posed strengthening of the present\nsimplex-count bound and connects the barrier directly to what practitioners measure.\n\n## 3. The doubling-dimension dividend\n\n**Conjecture.** If `X\u2099` has doubling dimension bounded by a constant, then above `\u221a2` a\n`c`-approximation of size polynomial in `n` always exists; below `\u221a2` the exponential\nbarrier survives even under bounded doubling dimension.\n\nThe key insight is that Jung's constant `\u221a(2n/(n+1)) \u2192 \u221a2` marks precisely where net- and\n\u010cech-based sparsifications become available, so `\u221a2` should be the exact doubling-dimension\nphase boundary between polynomial and exponential approximability.\n\nWhy now? Doubling dimension is the standard tameness hypothesis under which TDA\nsparsifiers are analysed, and locating the phase boundary at `\u221a2` would explain why\nexisting approximation schemes stall exactly there.\n\n## 4. Sharpness of the exponent constant\n\n**Conjecture.** The exponent `\u03b3(c) = \u00bd \u2212 log\u2082 c` is optimal: no `c`-approximation scheme\nachieves size `2^(\u03b3'(c)\u00b7n)` for any `\u03b3' > \u03b3` valid on a neighbourhood of `\u221a2`.\n\nThe key insight is that `log\u2082 c` measures how many equidistant gaps a factor-`c`\ninterleaving can bridge, and the `\u00bd` is the base-2 logarithm of the `\u221a2` gap itself; any\nlarger exponent would require bridging strictly more gaps than the interleaving permits.\n\nWhy now? With the lower bound exponent made explicit, its optimality becomes a concrete,\nfalsifiable target rather than an asymptotic slogan.\n",
     "domains": [
-      "Novelty"
+      "Algebra",
+      "Geometry"
     ],
-    "id": "sorry_fill_02ff061d_ee78904e",
+    "id": "fd_1215",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "02ff061d",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T10:55:35.400379+00:00",
-    "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
+    "source_exp_id": "64d4f5fe",
+    "status": "available",
+    "timestamp": "2026-07-13T12:17:19.082256+00:00",
+    "title": "The results here isolate a sharp threshold: the equidistant configuration on `n`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Edge-Spectral Supersaturation for Triangles\n\nFile: `Catalog/Novelty/EdgeSpectralSupersaturationTriangles.lean`\n\n## What is proved\n\nThe file establishes a **cross-domain bridge** between spectral linear algebra and\nextremal graph theory (triangle counting), all `sorry`-free and using only the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`:\n\n* `cube_lower`, `eigen_supersat`, `eigen_supersat_general` \u2014 the pointwise and summed\n  power-trace inequalities driving the method.\n* `triangle_count_lower` \u2014 spectral supersaturation with constant `1/3`: `\u03bb q \u2264 3 t`.\n* `triangle_count_lower_sqrt` \u2014 the `\u221am`-scaled form `\u221am \u00b7 q \u2264 3 t`.\n* `nosal` \u2014 the triangle-free endpoint `\u03bb\u00b2 \u2264 m` (Nosal's inequality).\n* `trace_pow_eq_sum_pow_eigenvalues` \u2014 the linear-algebra bridge `tr(A\u1d4f) = \u2211 \u03bc\u1d62\u1d4f`\n  for a real symmetric matrix, obtained from Mathlib's spectral theorem.\n* `matrix_eigen_supersat` \u2014 the supersaturation inequality proved *directly* for the\n  traces of powers of a real symmetric matrix, discharging the abstract hypotheses.\n* `K3_supersaturation_example` \u2014 a non-vacuous concrete instance (`K\u2083`).\n\n## Open directions\n\n1. **Sharp constant `B = 1` for triangles.** The power-trace method here is lossy by\n   exactly a factor of 3 relative to the conjectured `t \u2273 q\u221am`. Closing the gap for\n   `\u03c7(F) = 3` (triangles) is the open problem; the `\u03c7(F) \u2265 4` case is known. A\n   promising route is to combine the eigenvalue estimate with a stability argument\n   that rules out the near-tight bipartite-like negative spectrum.\n\n2. **Full graph-theoretic instantiation.** Connect `trace_pow_eq_sum_pow_eigenvalues`\n   to `SimpleGraph.adjMatrix`, proving `tr(A\u00b2) = 2\u00b7(#edges)` and\n   `tr(A\u00b3) = 6\u00b7(#triangles)` inside Mathlib's `SimpleGraph` API, so that\n   `matrix_eigen_supersat` reads literally as a triangle-counting theorem about a\n   graph rather than about an abstract symmetric matrix.\n\n3. **General `K\u1d63` supersaturation.** Extend the power-trace method from the third\n   moment (triangles) to higher moments `tr(A\u1d4f)` to obtain spectral supersaturation\n   bounds for `K\u1d63` and other color-critical `F`.\n\n4. **Weighted / signed adjacency matrices.** The eigenvalue-level results already\n   apply to any real symmetric matrix; exploring signed graphs and weighted graphs\n   could give new supersaturation phenomena.\n\n5. **Perron\u2013Frobenius as a theorem, not a hypothesis.** Replace the domination\n   hypothesis `|\u03bc\u1d62| \u2264 \u03bb` with the Perron\u2013Frobenius theorem for nonnegative symmetric\n   matrices, making the adjacency-matrix specialization fully unconditional.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1216",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a1dac228",
+    "status": "available",
+    "timestamp": "2026-07-13T12:17:31.680193+00:00",
+    "title": "File: `Catalog/Novelty/EdgeSpectralSupersaturationTriangles.lean`"
   },
   {
     "consumed_by_exp_id": "",

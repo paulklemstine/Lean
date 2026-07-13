@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "eb025541",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — A Second Law for Mathematical Derivations\n\nThis cycle promoted the single-step Landauer theory of proof to a *pipeline* theory: an entire\nderivation, viewed as a sequence of step",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-12T21:41:30",
-      "title": "`ThermodynamicsOfProof.lean` — the positive theory:"
-    },
-    {
-      "cycle_id": "bcff067f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What was proved\n\nThe file `Catalog/Novelty/GreedyTamariPlaneTreeBridge.lean` builds a constructive\n**cross-domain bridge** between three combinatorial families, one of which\n(p",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 20,
-      "timestamp": "2026-07-12T21:41:37",
-      "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
-    },
-    {
       "cycle_id": "82155f74",
       "domain": "Applications",
       "key_insight": "# Future Directions: Stability of the Sharp Diagonal Spectral Correlation Inequality\n\nThis cycle resolved the *diagonal* case of the correlation-stability problem for\nincreasing Boolean functions with",
@@ -499,29 +479,29 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T12:01:03",
       "title": "This cycle deepened the singleton-hypergraph tightness result of"
+    },
+    {
+      "cycle_id": "64d4f5fe",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Exponential barriers for Vietoris–Rips approximation\n\nThe results here isolate a sharp threshold: the equidistant configuration on `n` points,\nrealised by the standard basis of E",
+      "quality_score": 0.78,
+      "sorry_count": 5,
+      "theorem_count": 16,
+      "timestamp": "2026-07-13T12:17:27",
+      "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
+    },
+    {
+      "cycle_id": "a1dac228",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Edge-Spectral Supersaturation for Triangles\n\nFile: `Catalog/Novelty/EdgeSpectralSupersaturationTriangles.lean`\n\n## What is proved\n\nThe file establishes a **cross-domain bridge**",
+      "quality_score": 0.82,
+      "sorry_count": 1,
+      "theorem_count": 10,
+      "timestamp": "2026-07-13T12:17:35",
+      "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "90792fe8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Algebraic Geometry of ReLU Decision Boundaries\n\nThis cycle established two structural results about rectifier networks:\n\n1. **A depth-free characterization.** A real-valued functi",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 29,
-      "timestamp": "2026-07-10T19:15:53",
-      "title": "Deepening: Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
-    },
-    {
-      "cycle_id": "3a52b537",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThis project formalizes the constructive core of the probabilistic method around three\nErdős-flavoured results. What is proved and what remains:\n\n## What is proved (0 sorries)\n\n##",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-10T19:32:10",
-      "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
-    },
     {
       "cycle_id": "cd868ba0",
       "domain": "Logic",
@@ -2501,33 +2481,29 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T12:01:03",
       "title": "This cycle deepened the singleton-hypergraph tightness result of"
+    },
+    {
+      "cycle_id": "64d4f5fe",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Exponential barriers for Vietoris–Rips approximation\n\nThe results here isolate a sharp threshold: the equidistant configuration on `n` points,\nrealised by the standard basis of E",
+      "quality_score": 0.78,
+      "sorry_count": 5,
+      "theorem_count": 16,
+      "timestamp": "2026-07-13T12:17:27",
+      "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
+    },
+    {
+      "cycle_id": "a1dac228",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Edge-Spectral Supersaturation for Triangles\n\nFile: `Catalog/Novelty/EdgeSpectralSupersaturationTriangles.lean`\n\n## What is proved\n\nThe file establishes a **cross-domain bridge**",
+      "quality_score": 0.82,
+      "sorry_count": 1,
+      "theorem_count": 10,
+      "timestamp": "2026-07-13T12:17:35",
+      "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5b802ccf",
-      "domain": "Applications",
-      "name": "charF_mono",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "05e37ec1",
-      "domain": "Novelty",
-      "name": "card_patternSpace",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "05e37ec1",
-      "domain": "Novelty",
-      "name": "patternSpace_compact",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "05e37ec1",
-      "domain": "Novelty",
-      "name": "patternSpace_t2",
-      "quality": 0.82
-    },
     {
       "cycle_id": "111bebcc",
       "domain": "Applications",
@@ -2803,24 +2779,34 @@
       "domain": "Applications",
       "name": "card_fiber",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "64d4f5fe",
+      "domain": "Novelty",
+      "name": "rather",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "64d4f5fe",
+      "domain": "Novelty",
+      "name": "equiD_triangle",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a1dac228",
+      "domain": "Novelty",
+      "name": "states",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a1dac228",
+      "domain": "Novelty",
+      "name": "cube_lower",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T12:01:03",
+  "last_updated": "2026-07-13T12:17:35",
   "open_questions": [
-    {
-      "context": "Every proof below is complete and `sorry`-free; the file compiles standalone.",
-      "cycle_id": "bcff067f",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-12T21:41:37"
-    },
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "208b1ca5",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-12T23:12:33"
-    },
     {
       "context": "Every theorem below has a complete, `sorry`-free proof and the file compiles",
       "cycle_id": "26646791",
@@ -3016,6 +3002,20 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-13T11:12:05"
+    },
+    {
+      "context": "+    -- sequences), so this branch is left as a single documented `sorry`.; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "64d4f5fe",
+      "domain": "Novelty",
+      "sorry_count": 5,
+      "timestamp": "2026-07-13T12:17:27"
+    },
+    {
+      "context": "-- Synthesis (PI): constant-`1/3` supersaturation + Nosal endpoint, all sorry-free.",
+      "cycle_id": "a1dac228",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T12:17:35"
     }
   ],
   "research_threads": {
@@ -3579,18 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "291fcce1",
-        "quality": 0.72,
-        "theorems": 10,
-        "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-      },
-      {
-        "cycle_id": "05e37ec1",
-        "quality": 0.82,
-        "theorems": 27,
-        "title": "Deepening: Stone Duality for Machine Learning: Neural Networks as Geometric Real"
-      },
-      {
         "cycle_id": "02c1616a",
         "quality": 0.8,
         "theorems": 8,
@@ -3637,6 +3625,18 @@
         "quality": 0.7,
         "theorems": 6,
         "title": "Edge-Spectral Supersaturation for Triangles"
+      },
+      {
+        "cycle_id": "64d4f5fe",
+        "quality": 0.78,
+        "theorems": 16,
+        "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
+      },
+      {
+        "cycle_id": "a1dac228",
+        "quality": 0.82,
+        "theorems": 10,
+        "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
       }
     ],
     "NumberTheory": [
