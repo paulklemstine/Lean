@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "111bebcc",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Congruences for Labeled Partial Orders\n\nThe number `P(n)` of partial orders on `n` labeled points is known to be odd for\nevery `n`, and this parity is explained structurally: orde",
-      "quality_score": 0.72,
-      "sorry_count": 4,
-      "theorem_count": 24,
-      "timestamp": "2026-07-13T07:01:18",
-      "title": "Constant residue of labeled poset counts modulo 4"
-    },
-    {
       "cycle_id": "02c1616a",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Functional Equations and the Primitivity of Coefficients\n\nThis cycle established, in fully verified form, two complementary faces of a single\nprinciple: the completed `L`-function",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-13T21:24:35",
       "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
+    },
+    {
+      "cycle_id": "5d81b714",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Colorful Carathéodory for Convex Cones\n\nThe results established here treat the origin as the distinguished point, exploit\nthe homogeneity that collapses conical and convex repres",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T22:35:58",
+      "title": "Cone Colorful Carathéodory Theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "493ee817",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThese conjectures grow directly out of the present cycle, in which the factorial\nnumber system was shown to be a single point in the parameterized family of\nmixed-radix positional",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 9,
-      "timestamp": "2026-07-11T06:39:50",
-      "title": "Close Proofs: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-    },
     {
       "cycle_id": "f0c42e84",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-13T22:16:33",
       "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
+    },
+    {
+      "cycle_id": "5d81b714",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Colorful Carathéodory for Convex Cones\n\nThe results established here treat the origin as the distinguished point, exploit\nthe homogeneity that collapses conical and convex repres",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T22:35:58",
+      "title": "Cone Colorful Carathéodory Theorem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5acf2050",
-      "domain": "Applications",
-      "name": "normSq_identity",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5acf2050",
-      "domain": "Applications",
-      "name": "dist_sq_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "e3aaa465",
-      "domain": "Applications",
-      "name": "zero_mem_Pi",
-      "quality": 0.78
-    },
     {
       "cycle_id": "e3aaa465",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "humor_union_ge_right",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "5d81b714",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5d81b714",
+      "domain": "Applications",
+      "name": "and",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5d81b714",
+      "domain": "Applications",
+      "name": "in",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T22:16:33",
+  "last_updated": "2026-07-13T22:35:58",
   "open_questions": [
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ee7062d3",
-        "quality": 0.82,
-        "theorems": 20,
-        "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
-      },
-      {
         "cycle_id": "ddc0d02e",
         "quality": 0.8,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.8,
         "theorems": 9,
         "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
+      },
+      {
+        "cycle_id": "5d81b714",
+        "quality": 0.82,
+        "theorems": 9,
+        "title": "Cone Colorful Carathéodory Theorem"
       }
     ],
     "Bridges": [
