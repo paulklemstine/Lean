@@ -1,178 +1,179 @@
-# When the Small Picture Decides the Big One: A Local-to-Global Law for Influence
+# When Every Neighborhood Has a Loud Voice, So Does the Whole Room
 
-## A vote, a coin flip, and a surprising kind of power
+## A small local law with a big global consequence
 
-Imagine a committee of $n$ people who must reach a single yes-or-no decision. Each
-member holds one vote — a bit, $0$ or $1$ — and the committee's verdict is
-computed by some fixed rule from all $n$ votes. That rule is just a function
-$f$ that takes an assignment of votes and returns the collective answer.
+Imagine a very large committee that must reach a single yes-or-no verdict on
+every possible way of filling a slate of offices. There are $n$ offices to fill,
+and for each office there are $m$ candidates. A *slate* is one choice of
+candidate per office — a tuple $x = (x_1, x_2, \dots, x_n)$, where $x_i$ names the
+person chosen for office $i$. The committee's collective opinion is a rule $f$
+that assigns to every slate a single verdict, "approve" or "reject."
 
-A natural question is: *how much power does any single member wield?* Not power in
-the sense of persuasion, but raw mathematical leverage: in how many situations
-would flipping *only that member's vote* change the committee's decision? This
-quantity has a name — the **influence** of a coordinate — and it is one of the
-central objects in the analysis of Boolean functions, with deep consequences in
-theoretical computer science, the design of error-correcting codes, hardness of
-approximation, and the mathematics behind cryptographic robustness.
+Now ask a natural question about power. **How much does any one office matter?**
+If we hold every other office fixed and swap out only the candidate for office
+$i$, does the committee's verdict ever flip? If it does, office $i$ has real
+influence over the outcome. If swapping candidates for office $i$ never changes a
+single verdict, then that office is, in effect, a rubber stamp.
 
-The celebrated Kahn–Kalai–Linial (KKL) theorem, proved in 1988, says something
-counterintuitive and beautiful about influence. It guarantees that in any
-reasonably "balanced" voting rule, *somebody* must be surprisingly powerful:
-there is always a coordinate whose influence is at least on the order of
-$\log n / n$ — much larger than the naive average of $1/n$ you might expect if
-power were spread evenly. Democracy, it turns out, cannot be perfectly flat.
+This is the modern, combinatorial face of a classical idea. In 1988, Jeff Kahn,
+Gil Kalai, and Nathan Linial proved a celebrated theorem about Boolean functions
+— rules that take $n$ yes/no inputs and return a single yes/no answer. Their
+KKL theorem says, roughly, that a "balanced" rule cannot spread its sensitivity
+evenly and thinly across all its inputs: *some* input must be surprisingly
+influential. Influence, it turns out, refuses to stay uniformly diluted.
 
-This article is about a different, and in some ways more structural, side of the
-influence story. We ask a **local-to-global** question:
+The story told here is about lifting that principle from the humble two-candidate
+world ($m = 2$, the Boolean cube) to a far richer stage: an arbitrary number of
+candidates per office, arranged as a *partite complex*. And the punchline is a
+clean **local-to-global law**: if influence is guaranteed to be loud in every
+small neighborhood of the structure, then it is provably loud in the structure as
+a whole.
 
-> If we only understand influence on *small pieces* of a system, what can we say
-> about influence on the *whole* system?
+## The geometry hiding in the committee
 
-The answer we develop is a clean averaging law — the engine that powers
-local-to-global theorems across modern combinatorics and high-dimensional
-expansion. It says that global power is literally the sum of the power visible in
-the pieces, and that a lower bound on every piece forces a genuinely powerful
-coordinate to exist globally.
+There is a beautiful piece of geometry underneath the committee metaphor. Group
+the candidates by office: office $1$ has its own pool of $m$ people, office $2$
+has another pool of $m$ people, and so on, with $n$ pools in total and no person
+serving two offices. A valid slate picks exactly one person from each pool. In
+the language of geometry, the pools are the *color classes* of a
+**complete $n$-partite complex**, and the slates are its top-dimensional cells,
+called **facets** or **transversals**: one vertex chosen from each color.
 
-## The geometry of votes: the cube and its slices
+Two slates are **$i$-adjacent** when they are identical in every office except
+office $i$, where they disagree. Picture all slates as points and draw an edge
+between every $i$-adjacent pair; you get the $i$-th "direction" of a giant
+generalized grid. The **influence of office $i$**, written $\mathrm{Inf}(f, i)$,
+is simply the number of these $i$-direction edges across which the verdict flips:
 
-Let us make the picture concrete. The set of all possible vote profiles is the
-**Boolean cube** $\{0,1\}^n$: each vertex is one assignment of votes, and two
-vertices are joined by an edge when they differ in exactly one coordinate. An
-edge "in direction $i$" connects two profiles that agree everywhere except at
-member $i$.
+$$\mathrm{Inf}(f, i) = \#\bigl\{(x, y) : x_k = y_k \text{ for all } k \neq i,\; x_i \neq y_i,\; f(x) \neq f(y)\bigr\}.$$
 
-The influence of member $i$ is then simply a count of edges:
+The more edges of direction $i$ are "sensitive," the more that office matters.
 
-$$\mathrm{Inf}(f, i) = \#\{\text{edges in direction } i \text{ on which } f \text{ changes value}\}.$$
+When $m = 2$ — two candidates per office — a slate is nothing but a string of
+bits, the grid is the ordinary Boolean hypercube, and $\mathrm{Inf}(f, i)$ is the
+classical edge-boundary influence of the $i$-th bit. So everything below contains
+the familiar Boolean cube as its simplest special case.
 
-Each such edge is a moment where member $i$ is decisive. The **total influence**
-is the sum over all members, $\mathrm{TotInf}(f) = \sum_i \mathrm{Inf}(f, i)$, a
-global measure of how "sensitive" the whole rule is.
+## Links: zooming in on a neighborhood
 
-Now comes the local structure. Pick one member $j$ and freeze their vote to a
-value $b \in \{0,1\}$. What remains is a smaller committee — everyone except $j$ —
-deciding under the rule $f$ with $j$'s vote nailed down. Geometrically, freezing
-$j = b$ slices the cube into a **facet**: a copy of the $(n-1)$-dimensional cube.
-In the language of complexes, this facet is a **link** of the frozen vertex.
+The heart of local-to-global reasoning is the idea of a **link**. Fix one office
+$j$ and pin it to a specific candidate $b$. Now look only at the slates that
+choose $b$ for office $j$. This slice is the **link of the vertex $(j, b)$** —
+a smaller copy of the same kind of structure, with one office removed and one
+candidate locked in place.
 
-Inside that link we can again ask how decisive each remaining member $i$ is. The
-**link influence** $\mathrm{InfSub}(f, j, b, i)$ counts the direction-$i$ edges on
-which $f$ changes *while $j = b$*. These are exactly the decisive edges of member
-$i$ that happen to live in this particular slice.
+Each vertex $(j, b)$ has its own link, and since office $j$ has $m$ candidates,
+office $j$ generates exactly $m$ links. Inside a single link we can measure
+influence just as before, but confined to the slice. We write
+$\mathrm{InfSub}(f, j, b, i)$ for the number of sensitive $i$-edges that lie
+entirely within the link of $(j, b)$:
 
-## The bridge: influence is the sum of its slices
+$$\mathrm{InfSub}(f, j, b, i) = \#\bigl\{(x, y) : x_k = y_k \text{ for } k \neq i,\; x_i \neq y_i,\; f(x) \neq f(y),\; x_j = b\bigr\}.$$
 
-Here is the single fact that makes everything work. Take any member $i \ne j$.
-Every direction-$i$ edge lies entirely inside one of the two slices $j = 0$ or
-$j = 1$ — because moving along direction $i$ does not touch coordinate $j$. So the
-decisive $i$-edges of the whole cube split cleanly, with no overlap and nothing
-left out, between the two links. In symbols:
+This is the *local* view: influence as seen from inside one neighborhood of the
+complex.
 
-$$\mathrm{Inf}(f, i) = \mathrm{InfSub}(f, j, 0, i) + \mathrm{InfSub}(f, j, 1, i).$$
+## The bridge: influence is exactly self-averaging
 
-We call this the **influence self-averaging** identity, or simply *the bridge*.
-It is almost embarrassingly simple, yet it is the whole ballgame: it says a
-coordinate's global power is *exactly* the sum of the power it displays in the two
-halves of the world obtained by freezing $j$.
+Here is the identity that makes everything work — simple to state, and
+surprisingly powerful:
 
-Summing the bridge over all members $i \ne j$ gives the total-influence version.
-If we write the **link total influence** as
-$\mathrm{LinkTotInf}(f, j, b) = \sum_{i \ne j} \mathrm{InfSub}(f, j, b, i)$, then
+> **The Self-Averaging Bridge.** For any office $j$ and any office $i$, the global
+> influence of $i$ is exactly the sum of its link influences across the $m$ links
+> of $j$:
+> $$\mathrm{Inf}(f, i) = \sum_{b=1}^{m} \mathrm{InfSub}(f, j, b, i).$$
 
-$$\sum_{i \ne j} \mathrm{Inf}(f, i) = \mathrm{LinkTotInf}(f, j, 0) + \mathrm{LinkTotInf}(f, j, 1).$$
+Why is this true? Every sensitive $i$-edge connects two slates $x$ and $y$ that
+agree everywhere except office $i$. In particular they agree at office $j$, so
+they belong to *one and the same* link — the link of whatever candidate they
+both chose for office $j$. Thus the $m$ links of office $j$ partition the
+sensitive $i$-edges into disjoint groups, with no edge lost and none
+double-counted. Add the groups back up and you recover the whole. This is not an
+approximation, an inequality, or an averaging bound with error terms; it is an
+exact bookkeeping equality. That exactness is precisely what lets us see effects
+— like the dependence on the alphabet size $m$ — that fuzzier arguments miss.
 
-The global sensitivity (ignoring the frozen member) is the sum of the two slices'
-sensitivities. Nothing is created or destroyed by slicing.
+Two immediate consequences fall out. First, every link influence is at most the
+global influence, $\mathrm{InfSub}(f, j, b, i) \le \mathrm{Inf}(f, i)$, because a
+single non-negative summand never exceeds the total. So **a coordinate that is
+influential in even one neighborhood is at least that influential in the whole
+complex**. Second, summing the bridge over all offices $i \neq j$ shows that the
+total influence of the complex (excluding the pinned office) equals the sum, over
+the $m$ links of $j$, of the influence living inside each link.
 
-## From "every slice is busy" to "someone is powerful"
+## From loud neighborhoods to a loud room
 
-The bridge combines with an old friend — the pigeonhole principle — to yield the
-flagship result. Suppose we have a *local* guarantee: **each** of the two slices
-of member $j$ carries total influence at least $T$. Perhaps we know this because
-each slice is itself a non-degenerate voting rule and some KKL-type lower bound
-applies to it. What does this force globally?
+Now the payoff. Suppose we have a *local* guarantee: every one of the $m$ links
+of office $j$ is influential, in the sense that the total influence living inside
+each link is at least some threshold $T$. This is exactly the kind of hypothesis
+a KKL-type theorem provides *on each link* — a promise that no neighborhood is
+silent.
 
-By the total-influence bridge, the global sensitivity across the $n-1$ remaining
-members is at least $2T$. But if $n-1$ numbers add up to at least $2T$, the
-largest of them must be at least the average, $2T/(n-1)$. Hence:
+Summing the bridge, the total influence of the complex (over the offices other
+than $j$) is at least $m \cdot T$: the $m$ neighborhoods each contribute at least
+$T$, and their contributions add without overlap. There are only $n - 1$ offices
+other than $j$ to share this total among, so by the pigeonhole principle *some*
+office $i \neq j$ must carry at least the average:
 
-> **Local-to-Global KKL (cube form).** Fix a member $j$ of an $n$-member committee
-> with $n \ge 2$. If both slices of $j$ carry total influence at least $T$, then
-> some other member $i \ne j$ has influence at least $2T/(n-1)$; equivalently,
-> $(n-1)\,\mathrm{Inf}(f, i) \ge 2T$.
+> **Local-to-Global KKL Theorem (partite form).** Fix an office $j$ in the
+> complete $n$-partite complex with $n \ge 2$ offices and $m$ candidates each. If
+> every one of the $m$ links of $j$ carries total influence at least $T$, then
+> some office $i \neq j$ has global influence at least the average
+> $\dfrac{mT}{\,n-1\,}$.
 
-A uniform lower bound on every *piece* is upgraded, for free, into the existence
-of a genuinely influential coordinate in the *whole*. This is the local-to-global
-paradigm in miniature: control the links, and you control the complex.
+A local promise repeated across $m$ neighborhoods becomes a global existence
+statement: *there is a genuinely influential coordinate.* This is the
+local-to-global phenomenon in its cleanest form, and it is exactly the shape of
+argument that powers modern high-dimensional expander theory, where global
+behavior is repeatedly deduced from the behavior of links.
 
-## The abstract engine behind the curtain
+Notice what the alphabet size $m$ does. Enlarging the candidate pool multiplies
+the number of links of a single office, and because the bridge is an *exact* sum,
+each new link pours strictly more sensitive edges into the global tally rather
+than merely reshuffling a fixed budget. The guaranteed global influence
+$mT/(n-1)$ grows linearly in $m$. In the two-candidate world this dependence is
+invisible; only with an arbitrary alphabet, and only with an exact identity, does
+it come into view.
 
-The cube is vivid, but the argument never really used the cube. It used three
-ingredients: a family of *pieces*, each with non-negative weight; a notion of
-influence on each piece; and the bridge saying that global influence is a weighted
-average of piece influences. Distilling this gives a machine that runs on any
-weighted family of links.
+## The sharp boundary of triviality
 
-Let the coordinates be indexed by a set, and let the pieces (links) be indexed by
-another set $\kappa$, each link $\ell$ carrying a weight $w_\ell \ge 0$. Suppose
-the global influence $I(i)$ of coordinate $i$ and the local influences
-$I_\ell(i)$ satisfy the **bridge**
+Every theorem about "something must be large" needs to know when the conclusion
+could be vacuous. Here the boundary is astonishingly crisp:
 
-$$I(i) = \sum_{\ell} w_\ell \, I_\ell(i),$$
+> **The Degeneracy Dichotomy.** If every office has zero influence — that is, no
+> single-office swap ever changes the verdict — then the committee's rule is
+> constant: it returns the same verdict on every slate.
 
-and suppose the **local KKL hypothesis** holds: every link $\ell$ has an
-influential coordinate, some $i$ with $I_\ell(i) \ge \tau$. Then a two-line
-averaging computation yields the **global total influence bound**
+There is no murky middle ground. A rule is either *globally degenerate* (constant,
+with the KKL conclusion vacuously empty) or it has a coordinate that swings some
+verdict, and then the local-to-global machinery has something real to grip. The
+KKL conclusion fails to say anything only in the single most boring case
+imaginable — the committee that has already made up its mind.
 
-$$\sum_i I(i) \;\ge\; \tau \cdot \sum_\ell w_\ell.$$
+## Why the argument is really about averages, not cubes
 
-And since the maximum is at least the average, some single global coordinate $i$
-satisfies $|\text{coords}| \cdot I(i) \ge \tau \sum_\ell w_\ell$ — a globally
-influential coordinate, produced purely from local ones.
+Strip away the combinatorial scenery and the engine is pure arithmetic of
+non-negative weights. We have a collection of $m$ non-negative quantities (the
+link contributions), each bounded below by $T$; their sum is at least $mT$; and
+distributing that sum among $n - 1$ recipients forces one recipient to receive at
+least the average. Nothing here needed the objects to be Boolean, or even to be a
+cube. That abstraction is the reason the same skeleton transfers verbatim to
+weighted, non-uniform, and higher-codimension settings — the natural next chapters
+of the story.
 
-The Boolean cube is then revealed to be *literally an instance*: take exactly two
-links (the slices $j=0$ and $j=1$), each of weight one, and the abstract bridge
-becomes the concrete identity $\mathrm{Inf}(f,i) = \mathrm{InfSub}(f,j,0,i) +
-\mathrm{InfSub}(f,j,1,i)$. The general engine reproduces $2T \le \mathrm{TotInf}(f)$
-with no extra work.
+## Where this points
 
-Two refinements round out the picture. First, a **faithful KKL conditional**: if
-the local guarantee is stated in its true conditional form — *a link that is
-non-degenerate (its variance proxy exceeds a threshold) must have an influential
-coordinate* — then assuming every link is non-degenerate recovers the same global
-bound. Second, an **exact law for regular systems**: if every link has the same
-total influence $A$ and every weight is one, the global total influence is exactly
-$|\kappa| \cdot A$, with no slack at all.
+The exact self-averaging identity is a small lemma with a long reach. Because it
+is exact rather than approximate, it opens questions that were previously
+invisible: How does guaranteed influence scale as the alphabet grows? What happens
+when the $m$ links are weighted unequally — some neighborhoods more important than
+others — and each weighted link satisfies its own influence bound? What if we pin
+*two* offices at once, carving out higher-codimension links, and ask how the
+influence of a third office decomposes across that finer partition? Each of these
+is a variation on the same theme: local information, exactly aggregated, becomes
+global insight.
 
-## Why anyone should care
-
-The reason this simple averaging law matters is that it is the reusable heart of a
-sweeping modern program: **high-dimensional expanders** and local-to-global
-theorems. The dream of that program is to prove strong global properties of vast
-combinatorial objects by checking only their tiny local neighborhoods — the links.
-Expansion, mixing, sampling, and error-correction properties have all been shown
-to propagate from links to the whole complex. Influence is one more citizen of
-this world, and the bridge identity is its passport.
-
-There is a concrete cryptographic resonance too. Influence measures how sensitive
-an output is to any single input bit — precisely the kind of quantity one wants to
-control when reasoning about the robustness of a function against tampering, the
-diffusion of a hash or cipher, or the resilience of a shared-randomness protocol.
-A local-to-global law says: to certify that no coordinate is *too* influential —
-or to guarantee that *some* coordinate carries enough sensitivity to detect
-tampering — it can suffice to understand the restricted sub-functions one obtains
-by freezing individual bits.
-
-Finally, the result is honest about its own limits, and that honesty points to the
-horizon. The global conclusion here is an *averaging* bound: the best coordinate is
-at least the average. The full KKL theorem promises far more — an influential
-coordinate of size $\Omega(\mathrm{Var}(f)\,\log n / n)$, a genuine logarithmic
-boost — even when the total influence is small. Reaching that peak requires the
-heavier artillery of Fourier analysis on the cube and the hypercontractive
-Bonami–Beckner inequality. Extending the local-to-global bridge all the way to the
-logarithmic KKL bound, and onto true simplicial complexes and expanders, is the
-grand open road ahead.
-
-But the first, decisive step is the one told here: **global power is the sum of
-local power, and a floor on every piece raises the ceiling of the whole.**
+The moral is one that echoes far beyond committees and complexes. In a structure
+where sensitivity is guaranteed to be present in every neighborhood, sensitivity
+cannot vanish from the whole. When every corner of the room has a loud voice, the
+room itself is never silent.
