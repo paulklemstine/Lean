@@ -4000,7 +4000,7 @@
     "catalog_references": [
       "Pairwise Reflection Symmetry in Generalized Latin Rectangles (arXiv:2406.xxxxx)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59a15132",
     "description": "Conjecture that a generalized Latin rectangle of size n×n (i.e., λ = 1) possessing pairwise reflection symmetry—where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns—exists if and only if n is a power of two.",
     "domain_bridges": [
       "group theory",
@@ -4015,7 +4015,7 @@
     "proof_strategy": "Construct explicit examples for n = 2^k using group actions (e.g., cyclic or dihedral groups) to satisfy the symmetry condition, and prove non‑existence for other n by analysing the cycle structure of the column permutations and applying parity constraints derived from the pairwise balance condition.",
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T16:39:06.146756+00:00",
     "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
   },

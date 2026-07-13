@@ -2528,7 +2528,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of \u03b3\u2011Golomb Rulers with Maximal \u221a\u03b3 Density"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59a15132",
     "description": "Conjecture that a generalized Latin rectangle of size n\u00d7n (i.e., \u03bb = 1) possessing pairwise reflection symmetry\u2014where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns\u2014exists if and only if n is a power of two.",
     "domains": [
       "Pythagorean"
@@ -2537,7 +2537,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T16:39:06.146756+00:00",
     "title": "Power-of-Two Characterisation of \u03bb=1 Pairwise Reflection Symmetric Latin Rectangles"
   },
