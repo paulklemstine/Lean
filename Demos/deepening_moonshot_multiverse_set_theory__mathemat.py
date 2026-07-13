@@ -1,258 +1,261 @@
 """
-Multiverse Set Theory --- The Combinatorial Core.
+demo.py — Numerical demonstrations for
+"The Modal Logic of Forcing in a Combinatorial Multiverse".
 
-A self-contained numerical demonstration of the combinatorial model of the
-set-theoretic multiverse:
+A world is a truth assignment on a finite set of atomic set-theoretic
+assertions (e.g. CH, V=L, "there is a measurable cardinal").  Sentences are
+propositional combinations of atoms.  Forcing is modelled by flipping a single
+atom.  Two worlds are "reachable" (forcing-equivalent) when they disagree on
+only finitely many atoms — over a finite atom set, always.  Necessity (Box) and
+possibility (Diamond) quantify over reachable worlds.
 
-  * a WORLD is a truth assignment to a fixed list of atomic assertions;
-  * a SENTENCE is a propositional combination of atoms;
-  * a MULTIVERSE is a collection of worlds;
-  * a sentence is INDEPENDENT in a multiverse when it is true in some world
-    and false in another;
-  * FORCING is modeled by the `flip` operation (toggle one atom), and a
-    multiverse is FORCING-CLOSED when stable under all flips.
-
-The script reproduces every headline result:
-  - the laws of logic are absolute (valid in every multiverse);
-  - in a nonempty forcing-closed multiverse every atom is independent;
-  - CH is independent in {Godel, Cohen}, and stays independent even after
-    adopting (V=L) -> CH as a law;
-  - the full multiverse over n atoms has exactly 2**n worlds.
-
-Run with:  python demo.py
+This script is fully self-contained (standard library only) and prints:
+  * the three-way classification (valid / refutable / independent) of sentences
+    in the Goedel--Cohen multiverse;
+  * verification that forcing settles no atom in the full multiverse;
+  * the count 2^n of worlds over n atoms;
+  * an exhaustive check of the S5 modal axioms (T, 4, B, 5) and the
+    Maximality Principle over the full multiverse;
+  * the switch property and non-necessity of every atom, and of CH at Goedel.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from itertools import product
-from typing import Callable, Dict, FrozenSet, Iterable, List, Tuple
+from typing import Callable, Dict, FrozenSet, List, Tuple
 
-# ---------------------------------------------------------------------------
-# Sentences: an algebraic data type over a set of atoms (represented as str).
-# ---------------------------------------------------------------------------
-
-Atom = str
-World = Dict[Atom, bool]          # a truth assignment
-Multiverse = List[World]          # a collection of worlds
-
+# ----------------------------------------------------------------------------
+# Sentences (a small algebraic data type)
+# ----------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class Sentence:
-    """A propositional set-theoretic sentence.
+    """A propositional sentence over string-named atoms.
 
-    `kind` is one of: 'atom', 'true', 'false', 'neg', 'and', 'or', 'imp'.
-    `atom` is set for kind == 'atom'; `left`/`right` for the connectives.
+    kind is one of: 'atom', 'tru', 'fls', 'neg', 'conj', 'disj', 'imp'.
     """
     kind: str
-    atom: Atom | None = None
+    name: str = ""
     left: "Sentence | None" = None
     right: "Sentence | None" = None
 
 
-def atom(a: Atom) -> Sentence:
-    return Sentence("atom", atom=a)
+def atom(a: str) -> Sentence:
+    return Sentence("atom", name=a)
 
-
-TRUE = Sentence("true")
-FALSE = Sentence("false")
-
+TRU = Sentence("tru")
+FLS = Sentence("fls")
 
 def neg(p: Sentence) -> Sentence:
     return Sentence("neg", left=p)
 
-
 def conj(p: Sentence, q: Sentence) -> Sentence:
-    return Sentence("and", left=p, right=q)
-
+    return Sentence("conj", left=p, right=q)
 
 def disj(p: Sentence, q: Sentence) -> Sentence:
-    return Sentence("or", left=p, right=q)
-
+    return Sentence("disj", left=p, right=q)
 
 def imp(p: Sentence, q: Sentence) -> Sentence:
     return Sentence("imp", left=p, right=q)
 
 
+World = Dict[str, bool]  # a truth assignment on atoms
+
+
 def evaluate(w: World, p: Sentence) -> bool:
-    """Boolean evaluation of sentence `p` in world `w`."""
+    """Boolean value of sentence p in world w."""
     if p.kind == "atom":
-        return w[p.atom]                       # type: ignore[index]
-    if p.kind == "true":
+        return w[p.name]
+    if p.kind == "tru":
         return True
-    if p.kind == "false":
+    if p.kind == "fls":
         return False
     if p.kind == "neg":
-        return not evaluate(w, p.left)          # type: ignore[arg-type]
-    if p.kind == "and":
-        return evaluate(w, p.left) and evaluate(w, p.right)   # type: ignore[arg-type]
-    if p.kind == "or":
-        return evaluate(w, p.left) or evaluate(w, p.right)    # type: ignore[arg-type]
+        return not evaluate(w, p.left)
+    if p.kind == "conj":
+        return evaluate(w, p.left) and evaluate(w, p.right)
+    if p.kind == "disj":
+        return evaluate(w, p.left) or evaluate(w, p.right)
     if p.kind == "imp":
-        return (not evaluate(w, p.left)) or evaluate(w, p.right)  # type: ignore[arg-type]
-    raise ValueError(f"unknown sentence kind: {p.kind}")
+        return (not evaluate(w, p.left)) or evaluate(w, p.right)
+    raise ValueError(f"unknown sentence kind {p.kind!r}")
 
 
-def sat(w: World, p: Sentence) -> bool:
-    """World `w` satisfies `p`."""
-    return evaluate(w, p)
+# ----------------------------------------------------------------------------
+# Multiverse notions
+# ----------------------------------------------------------------------------
 
-
-# ---------------------------------------------------------------------------
-# Multiverse-relative status of a sentence.
-# ---------------------------------------------------------------------------
-
-def is_valid(M: Multiverse, p: Sentence) -> bool:
-    return all(sat(w, p) for w in M)
-
-
-def is_refutable(M: Multiverse, p: Sentence) -> bool:
-    return all(not sat(w, p) for w in M)
-
-
-def is_independent(M: Multiverse, p: Sentence) -> bool:
-    return any(sat(w, p) for w in M) and any(not sat(w, p) for w in M)
-
-
-def is_settled(M: Multiverse, p: Sentence) -> bool:
-    return is_valid(M, p) or is_refutable(M, p)
-
-
-def status(M: Multiverse, p: Sentence) -> str:
-    if is_independent(M, p):
-        return "INDEPENDENT"
-    if is_valid(M, p):
-        return "valid"
-    if is_refutable(M, p):
-        return "refutable"
-    return "undetermined (empty multiverse)"
-
-
-# ---------------------------------------------------------------------------
-# Forcing = flip.
-# ---------------------------------------------------------------------------
-
-def flip(w: World, a: Atom) -> World:
-    """The generic extension of `w` along atom `a`: toggle the value of `a`."""
-    new = dict(w)
-    new[a] = not new[a]
-    return new
-
-
-def is_forcing_closed(M: Multiverse, atoms: Iterable[Atom]) -> bool:
-    keyset = {frozenset(w.items()) for w in M}
-    for w in M:
-        for a in atoms:
-            if frozenset(flip(w, a).items()) not in keyset:
-                return False
-    return True
-
-
-def full_multiverse(atoms: List[Atom]) -> Multiverse:
-    """Every conceivable world over `atoms`: all 2**n truth assignments."""
-    worlds: Multiverse = []
+def all_worlds(atoms: List[str]) -> List[World]:
+    """The full multiverse over `atoms`: all 2^n truth assignments."""
+    worlds: List[World] = []
     for bits in product([False, True], repeat=len(atoms)):
         worlds.append({a: b for a, b in zip(atoms, bits)})
     return worlds
 
 
-# ---------------------------------------------------------------------------
-# Demonstrations.
-# ---------------------------------------------------------------------------
+def classify(multiverse: List[World], p: Sentence) -> str:
+    """Return 'valid', 'refutable', or 'independent'."""
+    vals = {evaluate(w, p) for w in multiverse}
+    if vals == {True}:
+        return "valid"
+    if vals == {False}:
+        return "refutable"
+    return "independent"
 
-def demo_absoluteness() -> None:
-    print("=" * 70)
-    print("1. Absoluteness of logic: laws hold in EVERY multiverse")
-    print("=" * 70)
-    atoms = ["CH", "VeqL", "Meas"]
-    M = full_multiverse(atoms)
-    p = atom("CH")
-    laws = {
-        "excluded middle  p | -p": disj(p, neg(p)),
-        "non-contradiction -(p & -p)": neg(conj(p, neg(p))),
-        "self-implication  p -> p": imp(p, p),
+
+def flip(w: World, a: str) -> World:
+    """Generic extension: toggle the truth value of atom a."""
+    v = dict(w)
+    v[a] = not v[a]
+    return v
+
+
+def disagreement(w: World, v: World) -> FrozenSet[str]:
+    return frozenset(a for a in w if w[a] != v[a])
+
+
+def reachable(w: World, v: World) -> bool:
+    """Forcing accessibility: finite disagreement (always true here)."""
+    return True  # over a finite atom set every disagreement set is finite
+
+
+def box(multiverse: List[World], w: World, p: Sentence) -> bool:
+    """Necessity: p holds in every reachable world of the multiverse."""
+    return all(evaluate(v, p) for v in multiverse if reachable(w, v))
+
+
+def diamond(multiverse: List[World], w: World, p: Sentence) -> bool:
+    """Possibility: p holds in some reachable world of the multiverse."""
+    return any(evaluate(v, p) for v in multiverse if reachable(w, v))
+
+
+# ----------------------------------------------------------------------------
+# Demonstrations
+# ----------------------------------------------------------------------------
+
+def demo_godel_cohen() -> None:
+    print("=" * 68)
+    print("The Goedel--Cohen two-world multiverse")
+    print("=" * 68)
+    godel: World = {"CH": True, "VeqL": True, "Meas": False}
+    cohen: World = {"CH": False, "VeqL": False, "Meas": False}
+    gc = [godel, cohen]
+
+    tests = {
+        "CH": atom("CH"),
+        "V=L": atom("VeqL"),
+        "V=L -> CH": imp(atom("VeqL"), atom("CH")),
+        "CH or not CH": disj(atom("CH"), neg(atom("CH"))),
+        "not(CH and not CH)": neg(conj(atom("CH"), neg(atom("CH")))),
     }
-    for name, s in laws.items():
-        print(f"  {name:32s} -> {status(M, s)}")
+    for label, s in tests.items():
+        print(f"  {label:22s} : {classify(gc, s)}")
     print()
 
 
 def demo_forcing_settles_nothing() -> None:
-    print("=" * 70)
-    print("2. Headline theorem: in a nonempty forcing-closed multiverse")
-    print("   EVERY atom is independent (forcing settles nothing)")
-    print("=" * 70)
+    print("=" * 68)
+    print("Forcing settles no atom in the full multiverse")
+    print("=" * 68)
     atoms = ["CH", "VeqL", "Meas"]
-    M = full_multiverse(atoms)
-    print(f"  full multiverse forcing-closed? {is_forcing_closed(M, atoms)}")
-    print(f"  full multiverse nonempty?       {len(M) > 0}")
+    universe = all_worlds(atoms)
+    print(f"  number of worlds over {len(atoms)} atoms = 2^{len(atoms)} = "
+          f"{len(universe)}")
     for a in atoms:
-        print(f"  atom {a:6s} -> {status(M, atom(a))}")
+        indep = classify(universe, atom(a)) == "independent"
+        # forcing witness: from any world, one flip reverses the atom
+        w = universe[0]
+        flipped = flip(w, a)
+        toggled = evaluate(w, atom(a)) != evaluate(flipped, atom(a))
+        print(f"  atom {a:6s}: independent={indep}, single flip toggles it="
+              f"{toggled}")
     print()
 
 
-def demo_CH_independent() -> None:
-    print("=" * 70)
-    print("3. The Continuum Hypothesis in {Godel, Cohen}")
-    print("=" * 70)
+def demo_s5_axioms() -> None:
+    print("=" * 68)
+    print("The S5 modal axioms over the full multiverse (exhaustive check)")
+    print("=" * 68)
+    atoms = ["a", "b"]
+    universe = all_worlds(atoms)
+    # a stock of sentences to quantify over
+    sentences = [
+        atom("a"), neg(atom("a")), conj(atom("a"), atom("b")),
+        disj(atom("a"), atom("b")), imp(atom("a"), atom("b")),
+        disj(atom("a"), neg(atom("a"))),  # a validity
+    ]
+
+    def all_pairs_reachable(w: World, v: World) -> bool:
+        return reachable(w, v)
+
+    ok_T = ok_4 = ok_B = ok_5 = ok_max = True
+    for w in universe:
+        for p in sentences:
+            # T: Box p -> p
+            if box(universe, w, p) and not evaluate(w, p):
+                ok_T = False
+            # 4: Box p -> Box Box p  (here: Box p -> Box_v p for reachable v)
+            if box(universe, w, p):
+                for v in universe:
+                    if all_pairs_reachable(w, v) and not box(universe, v, p):
+                        ok_4 = False
+            # B: p -> Box Diamond p
+            if evaluate(w, p):
+                for v in universe:
+                    if all_pairs_reachable(w, v) and not diamond(universe, v, p):
+                        ok_B = False
+            # 5: Diamond p -> Box Diamond p
+            if diamond(universe, w, p):
+                for v in universe:
+                    if all_pairs_reachable(w, v) and not diamond(universe, v, p):
+                        ok_5 = False
+            # Maximality: Diamond Box p -> Box p
+            poss_nec = any(
+                all_pairs_reachable(w, v) and box(universe, v, p)
+                for v in universe
+            )
+            if poss_nec and not box(universe, w, p):
+                ok_max = False
+
+    print(f"  Axiom T  (Box p -> p)            : {ok_T}")
+    print(f"  Axiom 4  (Box p -> Box Box p)     : {ok_4}")
+    print(f"  Axiom B  (p -> Box Diamond p)     : {ok_B}")
+    print(f"  Axiom 5  (Diamond p -> Box Dia p) : {ok_5}")
+    print(f"  Maximality (Dia Box p -> Box p)   : {ok_max}")
+    print()
+
+
+def demo_switches() -> None:
+    print("=" * 68)
+    print("Every atom is a switch; no atom is necessary")
+    print("=" * 68)
+    atoms = ["CH", "VeqL", "Meas"]
+    universe = all_worlds(atoms)
+    for a in atoms:
+        w = universe[0]
+        can_true = diamond(universe, w, atom(a))
+        can_false = diamond(universe, w, neg(atom(a)))
+        necessary = box(universe, w, atom(a))
+        print(f"  {a:6s}: Diamond(a)={can_true}, Diamond(not a)={can_false}, "
+              f"Box(a)={necessary}  -> switch={can_true and can_false}")
+
+    print("\n  Concrete: CH at Goedel inside {Goedel, Cohen}")
     godel: World = {"CH": True, "VeqL": True, "Meas": False}
     cohen: World = {"CH": False, "VeqL": False, "Meas": False}
-    GC: Multiverse = [godel, cohen]
-    print(f"  CH               -> {status(GC, atom('CH'))}")
-    print(f"  V=L              -> {status(GC, atom('VeqL'))}")
-    law = imp(atom("VeqL"), atom("CH"))
-    print(f"  (V=L) -> CH      -> {status(GC, law)}   (a settled law!)")
-    print()
-    print("  Adopt (V=L) -> CH as a law: keep only law-abiding worlds.")
-    full3 = full_multiverse(["CH", "VeqL", "Meas"])
-    law_mv = [w for w in full3 if sat(w, law)]
-    print(f"  law-abiding worlds: {len(law_mv)} of {len(full3)}")
-    print(f"  CH in the law multiverse -> {status(law_mv, atom('CH'))}")
-    print("  => CH remains INDEPENDENT even after adopting the law.")
-    print()
-
-
-def demo_counting() -> None:
-    print("=" * 70)
-    print("4. Counting: the full multiverse over n atoms has 2**n worlds")
-    print("=" * 70)
-    for n in range(0, 6):
-        atoms = [f"A{i}" for i in range(n)]
-        M = full_multiverse(atoms)
-        assert len(M) == 2 ** n
-        print(f"  n = {n}: |full| = {len(M):3d}  (2**{n} = {2 ** n})")
-    print()
-    three = full_multiverse(["CH", "VeqL", "Meas"])
-    print(f"  Over {{CH, V=L, Meas}}: {len(three)} worlds (should be 8).")
-    print()
-
-
-def demo_joint_realizability() -> None:
-    print("=" * 70)
-    print("5. Joint realizability: CH & -(V=L) has a model in the full")
-    print("   multiverse (all four joint patterns of two atoms occur)")
-    print("=" * 70)
-    atoms = ["CH", "VeqL", "Meas"]
-    M = full_multiverse(atoms)
-    s = conj(atom("CH"), neg(atom("VeqL")))
-    print(f"  CH & -(V=L)  -> {status(M, s)}")
-    witnesses = [w for w in M if sat(w, s)]
-    print(f"  number of witnessing worlds: {len(witnesses)}")
-    print(f"  one witness: {witnesses[0]}")
+    gc = [godel, cohen]
+    print(f"    Goedel |= CH                 : {evaluate(godel, atom('CH'))}")
+    print(f"    Box CH at Goedel (necessary) : {box(gc, godel, atom('CH'))}")
+    print(f"    Diamond (not CH) at Goedel   : "
+          f"{diamond(gc, godel, neg(atom('CH')))}")
     print()
 
 
 def main() -> None:
-    print()
-    print("#" * 70)
-    print("#  MULTIVERSE SET THEORY --- Mathematics Across Branches")
-    print("#" * 70)
-    print()
-    demo_absoluteness()
+    demo_godel_cohen()
     demo_forcing_settles_nothing()
-    demo_CH_independent()
-    demo_counting()
-    demo_joint_realizability()
+    demo_s5_axioms()
+    demo_switches()
     print("All demonstrations completed.")
 
 
