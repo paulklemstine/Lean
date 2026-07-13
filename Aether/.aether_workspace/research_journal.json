@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5b1ced03",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalizes, from scratch and with no `sorry`, the cleanest\nconcrete instance of the \"limit points of largest matching roots below the\ngolden-ratio threshold\" picture:",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-13T02:42:37",
-      "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Matching Roots"
-    },
-    {
       "cycle_id": "32285b55",
       "domain": "Applications",
       "key_insight": "# Future Directions — γ-positivity for series–parallel symmetric edge polytopes\n\nThese conjectures are distilled from the present cycle: the algebraic structure of\nthe γ-positive cone (closure under n",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-13T17:09:44",
       "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
+    },
+    {
+      "cycle_id": "37818bd9",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `μ` and `λ` of a characteristic element, realised",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-13T17:26:19",
+      "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0bde247f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes \"social credit scores as topological invariants\" through\nthree self-contained Lean 4 files under `Applications/SocialCredit/`:\n\n* `FixedPoint.lean` — extre",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-11T02:34:32",
-      "title": "Social Credit Scores as Topological Invariants"
-    },
     {
       "cycle_id": "75fb79ca",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-13T17:09:44",
       "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
+    },
+    {
+      "cycle_id": "37818bd9",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `μ` and `λ` of a characteristic element, realised",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-13T17:26:19",
+      "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "191c7579",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "191c7579",
-      "domain": "Applications",
-      "name": "card_gt",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "191c7579",
-      "domain": "Applications",
-      "name": "card_fiber",
-      "quality": 0.83
-    },
     {
       "cycle_id": "64d4f5fe",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "InfSub_le_Inf",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "37818bd9",
+      "domain": "Novelty",
+      "name": "writes",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "37818bd9",
+      "domain": "Novelty",
+      "name": "reduce_mul",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "37818bd9",
+      "domain": "Novelty",
+      "name": "reduce_primPart_ne_zero",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-13T17:09:44",
+  "last_updated": "2026-07-13T17:26:19",
   "open_questions": [
     {
       "context": "+Everything is elementary and `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "64d4f5fe",
-        "quality": 0.78,
-        "theorems": 16,
-        "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
-      },
-      {
         "cycle_id": "a1dac228",
         "quality": 0.82,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 29,
         "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
+      },
+      {
+        "cycle_id": "37818bd9",
+        "quality": 0.7,
+        "theorems": 19,
+        "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
       }
     ],
     "NumberTheory": [
