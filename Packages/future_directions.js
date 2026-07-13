@@ -367,7 +367,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Edge-Spectral Supersaturation for Triangles"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b222c758",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -376,7 +376,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -4380,7 +4380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "162989ab",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4389,7 +4389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
