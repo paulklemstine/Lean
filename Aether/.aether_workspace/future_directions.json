@@ -7473,11 +7473,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a0f7e73c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7490,7 +7490,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0567",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T19:08:01.122496+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -7505,7 +7505,7 @@
       "source": "",
       "source_exp_id": "236b0246",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/236b0246_retry3",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_c09a34af",
       "timestamp": "2026-07-07T17:01:12.860686+00:00",
       "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
@@ -42873,6 +42873,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "abduction_followup"
   ]
 }
