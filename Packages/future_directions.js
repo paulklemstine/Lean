@@ -339,7 +339,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53d4816b",
     "description": "Building on cycle 84ab5171 (Q=0.820), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
     "domains": [
       "Applications"
@@ -348,7 +348,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "84ab5171",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T22:51:37.493006+00:00",
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
@@ -7554,7 +7554,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71f07e7f",
     "description": "Cycle cbbd1369 (Q=0.700) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Giampietro-Darmon factorization formula for the norm of $p$-adic cross-ratios of CM points on Atkin-Lehner quotients of Shimura curves, currently proven only for genus 0 quotients, holds unconditi",
     "domains": [
       "Novelty"
@@ -7563,7 +7563,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "cbbd1369",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T01:24:57.427672+00:00",
     "title": "Close Proofs: Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
   },
