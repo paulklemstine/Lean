@@ -936,7 +936,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2aaaa5f9",
     "description": "Building on cycle 64d4f5fe (Q=0.780), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-approximation to the Vietoris-Rips filtration VR(Xₙ) requires at least 2^(γ·n) simplices, and moreover γ",
     "domain_bridges": [],
     "domains": [
@@ -948,7 +948,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "64d4f5fe",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T12:17:27.704617+00:00",
     "title": "Deepening: Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
   },
@@ -8228,7 +8228,7 @@
       "p-adic analysis",
       "formal groups"
     ],
-    "consumed_by_exp_id": "ec133ab6",
+    "consumed_by_exp_id": "",
     "description": "Let Sh_G be a Shimura variety of Hodge type with μ-ordinary Mantovan Igusa variety Ig_μ. Let D = ⊕_{i=1}^n D_i be the graded algebra of rank one Maass--Shimura differential operators on Ig_μ. Conjecture: There exists an explicit n-dimensional commutative formal group F_D such that the action of D integrates to an action of F_D on Ig_μ, and the coordinate ring of F_D is canonically isomorphic to the symmetric algebra Sym(D) equipped with a specific coproduct structure determined by the Hodge embedding data. Moreover, this isomorphism is equivariant for the natural action of the derived Hecke algebra H^*(K_p, G) where K_p is a hyperspecial maximal subgroup.",
     "domain_bridges": [
       "Automorphic forms",
@@ -8245,7 +8245,7 @@
     "proof_strategy": "Construct the formal group via the universal property of the tangent space of Ig_μ, use the Hodge type embedding to identify the differential operators with components of the logarithm map, then prove the coproduct compatibility by analyzing the group structure on Ig_μ via p-adic Fourier theory and the Mantovan correspondence.",
     "research_mode": "team",
     "source_exp_id": "2607.07427v1",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-09T02:13:23.534305+00:00",
     "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
   },
@@ -11036,7 +11036,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a71dcffe",
     "description": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and that\nan `n² × n²` Sudoku grid sits exactly on it. The following conjectures push that\npicture toward the random, multi-constraint, and quantitative regimes.\n\n## 1. A sharp clue-density threshold for random puzzles\n\n**Conjecture.** Fix the order `n` and generate a partial `n² × n²` grid by\nrevealing each cell independently with probability `p`, filling it with a symbol\nconsistent so far. There is a critical clue density `p_c(n)` such that below it a\ncompletion exists with probability tending to `1`, and above it with probability\ntending to `0`, with the transition window shrinking as the grid grows.\n\n*The key insight is* that satisfiability is a monotone event in the revealed\nclues — once a clue set is contradictory it stays contradictory under further\nrevelation — so the transition must be a single up-set boundary, exactly the\norder-theoretic skeleton proved here, now lifted to a random ensemble.\n\n*Why now?* The deterministic boundary (satisfiable iff each line stays at or\nbelow its balance point) is now pinned down exactly; the only missing ingredient\nis the probabilistic concentration that turns a monotone boundary into a sharp\nthreshold, which modern sharp-threshold technology is built to supply.\n\n## 2. Boxes strictly lower the critical density below Latin squares\n\n**Conjecture.** The full Sudoku CSP (rows, columns, and boxes) has a strictly\nsmaller critical clue density than its row-and-column relaxation (Latin squares):\nthe box constraints move the transition to lower density, and the gap is bounded\nbelow uniformly in the order `n`.\n\n*The key insight is* that the explicit cyclic solution `L(i,j) = i + j` solves\nrows and columns but provably fails the box constraint, so the box demands are\nnot implied by the line demands — they are genuinely new constraints that must\ntighten the feasible region.\n\n*Why now?* We can already exhibit a closed-form witness for the relaxation and\ncertify that it violates the box demand; quantifying how much the extra demand\ncosts is the natural next measurement.\n\n## 3. The vanishing partition function as an analytic order parameter\n\n**Conjecture.** The proper-assignment count of a constraint block, viewed as a\nfalling-factorial partition function, admits an analytic continuation in the\nalphabet size whose real zeros accumulate exactly at the critical demand count,\nso that the location of the transition can be read off from the zero set alone.\n\n*The key insight is* that the partition function is strictly positive in the\nsatisfiable phase and identically zero beyond criticality; the boundary between\nthese regimes is precisely the largest zero of the falling factorial, turning a\ncombinatorial threshold into a zero-counting problem.\n\n*Why now?* The exact identification of the partition function with the falling\nfactorial removes all guesswork about its zeros, so the analytic-continuation\nprogram can be carried out on a fully explicit object.\n\n## 4. A list-colouring (defective-clue) threshold\n\n**Conjecture.** If each Sudoku cell is given a private list of allowed symbols of\nsize `L`, completion is possible once `L` exceeds a critical value `L_c(n)` that\nis strictly smaller than the naive `n²`, and equals it only in the worst case.\n\n*The key insight is* that the CSP is exactly a proper colouring of a union of\ncomplete graphs, so the powerful gap between chromatic number and list-chromatic\nnumber for structured graphs should manifest as a strictly easier list version of\nSudoku.\n\n*Why now?* The equivalence between the AllDifferent atom and complete-graph\ncolouring is now on firm footing, so the list-colouring refinement can be stated\nand attacked with existing colouring machinery.\n\n## 5. Width of the transition window scales polynomially\n\n**Conjecture.** The clue-density interval over which the completion probability\nfalls from `0.99` to `0.01` shrinks like a fixed negative power of the grid side\n`n²`, so the transition becomes discontinuous in the infinite-order limit.\n\n*The key insight is* that criticality is scale-invariant — every order sits at\ndensity `1` for the line constraints — so the only room for scaling lives in the\nfluctuations, and those are governed by second-moment behaviour of the number of\ncompletions.\n\n*Why now?* With the first moment (the partition function) computed exactly, a\nsecond-moment estimate is the single remaining step to control the window width.\n",
     "domain_bridges": [],
     "domains": [
@@ -11049,7 +11049,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a6691c84",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T10:44:16.610995+00:00",
     "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
   },

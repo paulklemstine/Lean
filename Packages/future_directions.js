@@ -3755,20 +3755,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Engel's Interval Packing Theorem"
   },
   {
-    "consumed_by_exp_id": "ad71c64c",
-    "description": "For any simple graph G with n vertices and m edges, and for any 1 \u2264 k \u2264 n-1, the sum of the k largest Laplacian eigenvalues s_k(G) equals m + binom(k+1, 2) if and only if G is a threshold graph with clique number k+1.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0531",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.03388v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T03:55:00.492813+00:00",
-    "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The number of lozenge tilings of the triangular region T_n equals the product over all 1 \u2264 a < b \u2264 3n+2 with (a,b) \u2260 (n+1,2n+2) of |1 + \u03b6^a + \u03b6^b|^(1/3), where \u03b6 = exp(2\u03c0i/(3n+3)).",
     "domains": [
@@ -4755,7 +4741,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized spectral closedness of cographs (Forb(P4))"
   },
   {
-    "consumed_by_exp_id": "ec133ab6",
+    "consumed_by_exp_id": "",
     "description": "Let Sh_G be a Shimura variety of Hodge type with \u03bc-ordinary Mantovan Igusa variety Ig_\u03bc. Let D = \u2295_{i=1}^n D_i be the graded algebra of rank one Maass--Shimura differential operators on Ig_\u03bc. Conjecture: There exists an explicit n-dimensional commutative formal group F_D such that the action of D integrates to an action of F_D on Ig_\u03bc, and the coordinate ring of F_D is canonically isomorphic to the symmetric algebra Sym(D) equipped with a specific coproduct structure determined by the Hodge embedding data. Moreover, this isomorphism is equivariant for the natural action of the derived Hecke algebra H^*(K_p, G) where K_p is a hyperspecial maximal subgroup.",
     "domains": [
       "Algebra",
@@ -4765,7 +4751,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07427v1",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-09T02:13:23.534305+00:00",
     "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
   },
@@ -6604,7 +6590,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact algebra of the balancing-ratio functional for a"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a71dcffe",
     "description": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and that\nan `n\u00b2 \u00d7 n\u00b2` Sudoku grid sits exactly on it. The following conjectures push that\npicture toward the random, multi-constraint, and quantitative regimes.\n\n## 1. A sharp clue-density threshold for random puzzles\n\n**Conjecture.** Fix the order `n` and generate a partial `n\u00b2 \u00d7 n\u00b2` grid by\nrevealing each cell independently with probability `p`, filling it with a symbol\nconsistent so far. There is a critical clue density `p_c(n)` such that below it a\ncompletion exists with probability tending to `1`, and above it with probability\ntending to `0`, with the transition window shrinking as the grid grows.\n\n*The key insight is* that satisfiability is a monotone event in the revealed\nclues \u2014 once a clue set is contradictory it stays contradictory under further\nrevelation \u2014 so the transition must be a single up-set boundary, exactly the\norder-theoretic skeleton proved here, now lifted to a random ensemble.\n\n*Why now?* The deterministic boundary (satisfiable iff each line stays at or\nbelow its balance point) is now pinned down exactly; the only missing ingredient\nis the probabilistic concentration that turns a monotone boundary into a sharp\nthreshold, which modern sharp-threshold technology is built to supply.\n\n## 2. Boxes strictly lower the critical density below Latin squares\n\n**Conjecture.** The full Sudoku CSP (rows, columns, and boxes) has a strictly\nsmaller critical clue density than its row-and-column relaxation (Latin squares):\nthe box constraints move the transition to lower density, and the gap is bounded\nbelow uniformly in the order `n`.\n\n*The key insight is* that the explicit cyclic solution `L(i,j) = i + j` solves\nrows and columns but provably fails the box constraint, so the box demands are\nnot implied by the line demands \u2014 they are genuinely new constraints that must\ntighten the feasible region.\n\n*Why now?* We can already exhibit a closed-form witness for the relaxation and\ncertify that it violates the box demand; quantifying how much the extra demand\ncosts is the natural next measurement.\n\n## 3. The vanishing partition function as an analytic order parameter\n\n**Conjecture.** The proper-assignment count of a constraint block, viewed as a\nfalling-factorial partition function, admits an analytic continuation in the\nalphabet size whose real zeros accumulate exactly at the critical demand count,\nso that the location of the transition can be read off from the zero set alone.\n\n*The key insight is* that the partition function is strictly positive in the\nsatisfiable phase and identically zero beyond criticality; the boundary between\nthese regimes is precisely the largest zero of the falling factorial, turning a\ncombinatorial threshold into a zero-counting problem.\n\n*Why now?* The exact identification of the partition function with the falling\nfactorial removes all guesswork about its zeros, so the analytic-continuation\nprogram can be carried out on a fully explicit object.\n\n## 4. A list-colouring (defective-clue) threshold\n\n**Conjecture.** If each Sudoku cell is given a private list of allowed symbols of\nsize `L`, completion is possible once `L` exceeds a critical value `L_c(n)` that\nis strictly smaller than the naive `n\u00b2`, and equals it only in the worst case.\n\n*The key insight is* that the CSP is exactly a proper colouring of a union of\ncomplete graphs, so the powerful gap between chromatic number and list-chromatic\nnumber for structured graphs should manifest as a strictly easier list version of\nSudoku.\n\n*Why now?* The equivalence between the AllDifferent atom and complete-graph\ncolouring is now on firm footing, so the list-colouring refinement can be stated\nand attacked with existing colouring machinery.\n\n## 5. Width of the transition window scales polynomially\n\n**Conjecture.** The clue-density interval over which the completion probability\nfalls from `0.99` to `0.01` shrinks like a fixed negative power of the grid side\n`n\u00b2`, so the transition becomes discontinuous in the infinite-order limit.\n\n*The key insight is* that criticality is scale-invariant \u2014 every order sits at\ndensity `1` for the line constraints \u2014 so the only room for scaling lives in the\nfluctuations, and those are governed by second-moment behaviour of the number of\ncompletions.\n\n*Why now?* With the first moment (the partition function) computed exactly, a\nsecond-moment estimate is the single remaining step to control the window width.\n",
     "domains": [
       "Algebra",
@@ -6614,7 +6600,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "a6691c84",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T10:44:16.610995+00:00",
     "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
   },
@@ -7877,6 +7863,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T12:34:34.297005+00:00",
     "title": "This cycle settled the combinatorial status of the \"Alexander polynomial as a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Brouwer Laplacian Equality Characterization\n\nThe results established here pin down the exact, unconditional spine of Brouwer's\nequality problem: the total spectral sum is the edge invariant `2m`, the partial\nsums `s_k` are monotone and bounded by `2m`, and the extremal family of threshold\ngraphs is described by creation sequences with clean boundary behaviour. The\nfollowing conjectures extend that spine toward the full characterization.\n\n## Conjecture 1 \u2014 Conjugate-degree spectrum of threshold graphs\nFor every threshold graph, the multiset of Laplacian eigenvalues equals the\nconjugate (transpose) of its degree partition.\n\nThe key insight is that the creation-sequence construction turns each\n\"dominating\" step into a uniform additive shift of the spectrum, so the spectrum\nis read off the Ferrers diagram of the degree sequence rather than from any\nmatrix computation. Why now? The creation-sequence model isolated here makes the\ninductive shift explicit for the first time, converting an eigenvalue question\ninto a partition-combinatorics question that is amenable to direct induction.\n\n## Conjecture 2 \u2014 Saturation only at the clique boundary\nAmong all graphs on `n` vertices with `m` edges, `s_k` attains the value\n`m + C(k+1, 2)` exactly when the graph is a threshold graph whose clique number\nis `k+1`.\n\nThe key insight is that both sides of the identity are majorization extremes:\n`s_k` is the top-`k` Schur sum of the Laplacian spectrum, and `m + C(k+1,2)` is\nthe top-`k` sum of the conjugate degree sequence, so equality forces the spectrum\nto be exactly conjugate \u2014 the defining property of threshold graphs. Why now? The\nmonotonicity and ceiling results proven here supply the two inequalities that\nsqueeze the equality case, leaving only the majorization-tightness step.\n\n## Conjecture 3 \u2014 Strict slack away from the extremal family\nFor any non-threshold graph and any `1 \u2264 k \u2264 n-1`, the Brouwer gap\n`m + C(k+1,2) - s_k` is bounded below by a positive quantity depending only on\nthe number of induced obstructions (`P4`, `C4`, `2K2`).\n\nThe key insight is that each forbidden induced subgraph perturbs the Laplacian\naway from the conjugate-degree extreme by a controllable rank-one amount, so the\ngap accumulates additively over obstructions. Why now? With the empty-graph\nboundary computation showing the gap can be as large as `C(k+1,2)`, a\nquantitative lower bound becomes the natural next measurement.\n\n## Conjecture 4 \u2014 Edge-invariant rigidity of the total sum\nThe identity `s_n = 2m` is the unique linear spectral functional that is a graph\nedge-invariant; every other top-`k` sum genuinely depends on graph structure\nbeyond `m` for `1 \u2264 k \u2264 n-1`.\n\nThe key insight is that the trace is the only symmetric function of the spectrum\nthat collapses to the diagonal, and the diagonal of the Laplacian is exactly the\ndegree sequence whose total is `2m`. Why now? The trace identity is proven here\nunconditionally, so the rigidity claim \u2014 that no shorter partial sum shares this\nproperty \u2014 is the sharp converse worth testing.\n\n## Conjecture 5 \u2014 Threshold graphs maximize every partial sum at fixed `m`\nFixing `n` and `m`, the threshold graph with those parameters simultaneously\nmaximizes `s_k` for all `k` at once.\n\nThe key insight is that the conjugate-degree spectrum majorizes every other\nspectrum with the same edge count, and majorization implies domination of all\ntop-`k` sums simultaneously. Why now? The simultaneous-monotonicity result proven\nhere shows the `s_k` form a coherent chain, so a single extremal graph dominating\nthe whole chain is the economical hypothesis.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1218",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ad71c64c",
+    "status": "available",
+    "timestamp": "2026-07-13T12:35:10.185836+00:00",
+    "title": "The results established here pin down the exact, unconditional spine of Brouwer'"
   },
   {
     "consumed_by_exp_id": "",
