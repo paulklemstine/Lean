@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6e208619",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Balancing ratios of circular partitions\n\nThis cycle established two structural pillars for the balancing ratio sequence of\na cyclic partition: windowing never worsens balance (`μ",
-      "quality_score": 0.78,
-      "sorry_count": 5,
-      "theorem_count": 27,
-      "timestamp": "2026-07-11T06:39:37",
-      "title": "Upper bound conjecture for the cake balancing ratio sequence"
-    },
-    {
       "cycle_id": "493ee817",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThese conjectures grow directly out of the present cycle, in which the factorial\nnumber system was shown to be a single point in the parameterized family of\nmixed-radix positional",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-13T21:24:35",
       "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
+    },
+    {
+      "cycle_id": "6d984d02",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis project formalizes the **one-dimensional case** of the Infinite Pachner\nTheorem: any two locally finite triangulations of the real line `ℝ` are related\nby a locally finite se",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-13T22:16:33",
+      "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-13T21:24:35",
+  "last_updated": "2026-07-13T22:16:33",
   "open_questions": [
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9f2f3b13",
-        "quality": 0.85,
-        "theorems": 27,
-        "title": "That the geometry surrounding the Hopf fibration is"
-      },
-      {
         "cycle_id": "a71dcffe",
         "quality": 0.78,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.74,
         "theorems": 21,
         "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
+      },
+      {
+        "cycle_id": "6d984d02",
+        "quality": 0.62,
+        "theorems": 21,
+        "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
       }
     ],
     "NumberTheory": [

@@ -879,7 +879,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7547cdb0",
     "description": "Building on cycle 538f30a2 (Q=0.780), which proved 47 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show",
     "domain_bridges": [],
     "domains": [
@@ -891,7 +891,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "538f30a2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T03:38:30.661331+00:00",
     "title": "Deepening: Moonshot: Multiverse Set Theory — Mathematics Across Branches"
   },
@@ -2041,31 +2041,6 @@
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.GT",
-      "math.CO"
-    ],
-    "consumed_by_exp_id": "6d984d02",
-    "description": "Let $M$ be a piecewise-linear manifold of dimension $d \\ge 1$. If $S$ and $T$ are two locally finite triangulations of $M$, then $S$ and $T$ are related by a locally finite sequence of bistellar moves (Pachner moves).",
-    "domain_bridges": [
-      "Geometric Topology",
-      "Combinatorics"
-    ],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0422",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Utilize the paper's result that two triangulations with a common subdivision have a common $\\omega$-stellar subdivision. Then, show that the $\\omega$-stellar subdivision can be reached from the original triangulations via locally finite sequences of bistellar moves, extending Pachner's theorem to infinite complexes by controlling the locality of the inverse stellar moves.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01349v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T03:06:43.829580+00:00",
-    "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "cs.IT",
@@ -2883,6 +2858,26 @@
     "status": "available",
     "timestamp": "2026-07-13T21:24:28.676426+00:00",
     "title": "This work develops surprise (humor) as a genuine algebraic/categorical invariant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the **one-dimensional case** of the Infinite Pachner\nTheorem: any two locally finite triangulations of the real line `ℝ` are related\nby a locally finite sequence of bistellar (Pachner) moves. The development is in\n`Geometry/InfinitePachner.lean` and is fully proved (no `sorry`; axioms\n`propext`, `Classical.choice`, `Quot.sound` only).\n\n## What is proved (the chain)\n\n1. `subdiv_iff_weld` — a subdivision is the inverse of a weld.\n2. `move_symm` — the bistellar-move relation is symmetric (built on 1).\n3. `move_preserves_isTri` — a move sends a triangulation to a triangulation.\n4. `pachner_symm`, `pachner_equivalence` — Pachner-equivalence is an equivalence\n   relation (built on 2).\n5. `symmDiff_card_move` / `symmDiff_finite_move` — **finite Pachner**: vertex sets\n   with finite symmetric difference are joined by finitely many moves, by\n   induction on `(S △ T).ncard` (each move drops the count by one).\n6. `milestone`, `milestone_symmDiff_finite`, `milestone_step`,\n   `milestone_stabilizes` — the window-truncation triangulations, each pair\n   connected by a *finite* block of moves (built on 5), stabilizing on every\n   bounded window.\n7. `infinite_pachner` — **infinite Pachner (dimension 1)**: a sequence starting\n   at `S`, with consecutive terms joined by finite move blocks, stabilizing to\n   `T` on every bounded window (built on 6).\n\n## Natural next steps\n\n### Strengthen the dimension-1 statement\n* **Single-move chain.** Replace the \"finite block between milestones\" formulation\n  by a genuine `ℕ`-indexed sequence `f` with `Move (f n) (f (n+1))` for every `n`\n  (toggling `S △ T` one point at a time via a good enumeration). The key missing\n  lemma is: *every locally finite `A ⊆ ℝ` admits a filtration `p : ℕ → Set ℝ`\n  with `p 0 = ∅`, `(p (n+1) \\ p n).Subsingleton`, `⋃ p n = A`, and window\n  stabilization.* This \"good filtration\" lemma is the crux of the single-move\n  refinement.\n* **Triangulation-valued chain.** Promote the milestones from vertex sets to the\n  `IsTri` structure, showing each milestone is itself a locally finite\n  triangulation (the ingredients are already in `move_preserves_isTri`).\n* **Order model.** Encode triangulations as strictly monotone `v : ℤ → ℝ` tending\n  to `±∞`, matching the geometric picture of edges `[v i, v (i+1)]`, and relate it\n  to the vertex-set model.\n\n### Higher dimensions\n* **Abstract simplicial complexes.** Define bistellar moves on abstract\n  simplicial complexes (a `0 ≤ i ≤ d` move replaces the star of an `i`-face by\n  the complementary configuration) and re-prove reversibility, symmetry, and the\n  equivalence-relation structure at that level of generality.\n* **Finite Pachner (Pachner 1991).** Formalize that two triangulations of a\n  closed PL `d`-manifold are bistellarly equivalent. This is a substantial\n  undertaking requiring shellability and the theory of PL manifolds.\n* **Infinite Pachner in dimension `d`.** With finite Pachner in hand, the\n  window-exhaustion strategy used here (`milestone` + `milestone_stabilizes`)\n  should generalize: exhaust the manifold by compact submanifolds, apply finite\n  Pachner on each, and assemble a locally finite move sequence. The local\n  finiteness argument is exactly the `milestone_stabilizes` mechanism.\n\n### Infrastructure Mathlib could gain\n* Local finiteness of a set in `ℝ` (or a metric space): closure under subsets,\n  finite unions, and symmetric differences (proved here as\n  `locallyFinite_symmDiff`).\n* Reversible move relations and their reflexive–transitive closures as\n  equivalence relations (the `pachner_equivalence` pattern).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1249",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6d984d02",
+    "status": "available",
+    "timestamp": "2026-07-13T22:15:53.246630+00:00",
+    "title": "This project formalizes the **one-dimensional case** of the Infinite Pachner"
   },
   {
     "ambition_level": "extension",

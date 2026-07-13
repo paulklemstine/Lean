@@ -650,7 +650,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp maximal excess of co-index under suspension for all feasible sta"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7547cdb0",
     "description": "Building on cycle 538f30a2 (Q=0.780), which proved 47 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show",
     "domains": [
       "Tropical"
@@ -659,7 +659,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "538f30a2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T03:38:30.661331+00:00",
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
@@ -1486,20 +1486,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
   {
-    "consumed_by_exp_id": "6d984d02",
-    "description": "Let $M$ be a piecewise-linear manifold of dimension $d \\ge 1$. If $S$ and $T$ are two locally finite triangulations of $M$, then $S$ and $T$ are related by a locally finite sequence of bistellar moves (Pachner moves).",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0422",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01349v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T03:06:43.829580+00:00",
-    "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The main result establishing the exact exponential growth rate of the \u03c1-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly \u03c1(1-R) relative to the unconstrained Ar\u0131kan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary R\u00e9nyi entropy.",
     "domains": [
@@ -2037,6 +2023,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T21:24:28.676426+00:00",
     "title": "This work develops surprise (humor) as a genuine algebraic/categorical invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the **one-dimensional case** of the Infinite Pachner\nTheorem: any two locally finite triangulations of the real line `\u211d` are related\nby a locally finite sequence of bistellar (Pachner) moves. The development is in\n`Geometry/InfinitePachner.lean` and is fully proved (no `sorry`; axioms\n`propext`, `Classical.choice`, `Quot.sound` only).\n\n## What is proved (the chain)\n\n1. `subdiv_iff_weld` \u2014 a subdivision is the inverse of a weld.\n2. `move_symm` \u2014 the bistellar-move relation is symmetric (built on 1).\n3. `move_preserves_isTri` \u2014 a move sends a triangulation to a triangulation.\n4. `pachner_symm`, `pachner_equivalence` \u2014 Pachner-equivalence is an equivalence\n   relation (built on 2).\n5. `symmDiff_card_move` / `symmDiff_finite_move` \u2014 **finite Pachner**: vertex sets\n   with finite symmetric difference are joined by finitely many moves, by\n   induction on `(S \u25b3 T).ncard` (each move drops the count by one).\n6. `milestone`, `milestone_symmDiff_finite`, `milestone_step`,\n   `milestone_stabilizes` \u2014 the window-truncation triangulations, each pair\n   connected by a *finite* block of moves (built on 5), stabilizing on every\n   bounded window.\n7. `infinite_pachner` \u2014 **infinite Pachner (dimension 1)**: a sequence starting\n   at `S`, with consecutive terms joined by finite move blocks, stabilizing to\n   `T` on every bounded window (built on 6).\n\n## Natural next steps\n\n### Strengthen the dimension-1 statement\n* **Single-move chain.** Replace the \"finite block between milestones\" formulation\n  by a genuine `\u2115`-indexed sequence `f` with `Move (f n) (f (n+1))` for every `n`\n  (toggling `S \u25b3 T` one point at a time via a good enumeration). The key missing\n  lemma is: *every locally finite `A \u2286 \u211d` admits a filtration `p : \u2115 \u2192 Set \u211d`\n  with `p 0 = \u2205`, `(p (n+1) \\ p n).Subsingleton`, `\u22c3 p n = A`, and window\n  stabilization.* This \"good filtration\" lemma is the crux of the single-move\n  refinement.\n* **Triangulation-valued chain.** Promote the milestones from vertex sets to the\n  `IsTri` structure, showing each milestone is itself a locally finite\n  triangulation (the ingredients are already in `move_preserves_isTri`).\n* **Order model.** Encode triangulations as strictly monotone `v : \u2124 \u2192 \u211d` tending\n  to `\u00b1\u221e`, matching the geometric picture of edges `[v i, v (i+1)]`, and relate it\n  to the vertex-set model.\n\n### Higher dimensions\n* **Abstract simplicial complexes.** Define bistellar moves on abstract\n  simplicial complexes (a `0 \u2264 i \u2264 d` move replaces the star of an `i`-face by\n  the complementary configuration) and re-prove reversibility, symmetry, and the\n  equivalence-relation structure at that level of generality.\n* **Finite Pachner (Pachner 1991).** Formalize that two triangulations of a\n  closed PL `d`-manifold are bistellarly equivalent. This is a substantial\n  undertaking requiring shellability and the theory of PL manifolds.\n* **Infinite Pachner in dimension `d`.** With finite Pachner in hand, the\n  window-exhaustion strategy used here (`milestone` + `milestone_stabilizes`)\n  should generalize: exhaust the manifold by compact submanifolds, apply finite\n  Pachner on each, and assemble a locally finite move sequence. The local\n  finiteness argument is exactly the `milestone_stabilizes` mechanism.\n\n### Infrastructure Mathlib could gain\n* Local finiteness of a set in `\u211d` (or a metric space): closure under subsets,\n  finite unions, and symmetric differences (proved here as\n  `locallyFinite_symmDiff`).\n* Reversible move relations and their reflexive\u2013transitive closures as\n  equivalence relations (the `pachner_equivalence` pattern).\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1249",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6d984d02",
+    "status": "available",
+    "timestamp": "2026-07-13T22:15:53.246630+00:00",
+    "title": "This project formalizes the **one-dimensional case** of the Infinite Pachner"
   },
   {
     "consumed_by_exp_id": "",
