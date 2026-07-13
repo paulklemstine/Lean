@@ -45,6 +45,11 @@ dominates its spectrum.
 * `triangle_count_lower_sqrt` — `√m · q ≤ 3 t`.
 * `nosal`             — triangle-free (`∑ μᵢ³ = 0`) forces `λ² ≤ m`.
 * `K3_supersaturation_example` — the complete graph `K₃` as a concrete instance.
+* `trace_pow_eq_sum_pow_eigenvalues` — the linear-algebra bridge `tr(Aᵏ) = ∑ μᵢᵏ`
+  for a real symmetric matrix, discharging the trace hypotheses from the spectral
+  theorem.
+* `matrix_eigen_supersat` — the eigenvalue supersaturation inequality proved
+  directly for the traces of powers of a real symmetric matrix.
 
 ## Relation to the catalog
 
@@ -178,5 +183,66 @@ theorem K3_supersaturation_example :
     intro i; fin_cases i <;> norm_num [muK3]
   exact triangle_count_lower muK3 0 2 3 1 1 (by norm_num [muK3]) hbound hS2 hS3
     (by norm_num)
+
+/-! ### The linear-algebra bridge: from the spectral theorem to matrix traces
+
+The results above are stated at the level of an abstract eigenvalue vector, with the
+trace identities `∑ μᵢ² = tr(A²)` and `∑ μᵢ³ = tr(A³)` supplied as hypotheses.  We now
+*discharge* those hypotheses for a genuine real symmetric (Hermitian) matrix, turning
+the combinatorial estimate into a theorem of linear algebra.  The engine is Mathlib's
+spectral theorem `Matrix.IsHermitian.spectral_theorem`, which diagonalises `A` by a
+unitary conjugation; since the trace is invariant under conjugation and a power of a
+conjugation is the conjugation of the power, `tr(Aᵏ)` collapses to `∑ μᵢᵏ`. -/
+
+/-- **Eigenvalue supersaturation over an arbitrary finite index.**  The eigenvalue
+supersaturation inequality holds for a spectrum indexed by any finite type, not just
+`Fin n`; this is the form consumed by the matrix bridge below. -/
+theorem eigen_supersat_general {ι : Type*} [Fintype ι] (μ : ι → ℝ) (j : ι) (lam : ℝ)
+    (hlam : lam = μ j) (hbound : ∀ i, |μ i| ≤ lam) :
+    2 * lam ^ 3 - lam * (∑ i, (μ i) ^ 2) ≤ ∑ i, (μ i) ^ 3 := by
+  have key : ∀ i, (0 : ℝ) ≤ (μ i) ^ 3 + lam * (μ i) ^ 2 := fun i => by
+    have := cube_lower (μ i) lam (hbound i); linarith
+  have hsum : (μ j) ^ 3 + lam * (μ j) ^ 2 ≤ ∑ i, ((μ i) ^ 3 + lam * (μ i) ^ 2) :=
+    Finset.single_le_sum (f := fun i => (μ i) ^ 3 + lam * (μ i) ^ 2)
+      (fun i _ => key i) (Finset.mem_univ j)
+  have hsplit : ∑ i, ((μ i) ^ 3 + lam * (μ i) ^ 2)
+      = (∑ i, (μ i) ^ 3) + lam * (∑ i, (μ i) ^ 2) := by
+    rw [Finset.sum_add_distrib, Finset.mul_sum]
+  rw [hsplit, ← hlam] at hsum
+  nlinarith [hsum]
+
+open Matrix in
+/-- **Trace of a matrix power equals the power sum of its eigenvalues.**  For a real
+symmetric (Hermitian) matrix `A`, the trace of `Aᵏ` is `∑ᵢ μᵢᵏ`, where the `μᵢ` are the
+(real) eigenvalues.  This is the exact arithmetic content of the trace identities
+`tr(A²) = ∑ μᵢ²` and `tr(A³) = ∑ μᵢ³` that power the supersaturation method. -/
+theorem trace_pow_eq_sum_pow_eigenvalues {n : Type*} [Fintype n] [DecidableEq n]
+    (A : Matrix n n ℝ) (hA : A.IsHermitian) (k : ℕ) :
+    (A ^ k).trace = ∑ i, (hA.eigenvalues i) ^ k := by
+  have := hA.spectral_theorem;
+  conv_lhs => rw [ this, ← map_pow ];
+  simp +decide [ Matrix.trace_mul_comm, Matrix.mul_assoc ];
+  simp +decide [ Matrix.trace, Matrix.diagonal_pow ]
+
+open Matrix in
+/-- **Spectral supersaturation for a real symmetric matrix.**  Combining the spectral
+theorem bridge with the eigenvalue inequality: if every eigenvalue of a real symmetric
+matrix `A` is dominated in absolute value by a distinguished top eigenvalue
+`lam = μ j` (the Perron–Frobenius situation for an adjacency matrix), then the traces
+of the second and third powers obey
+
+  `2·lam³ − lam·tr(A²) ≤ tr(A³)`.
+
+Specialised to a graph adjacency matrix this reads `6t ≥ 2λ³ − 2λm`, i.e. the
+triangle supersaturation bound, now proved *from* the matrix rather than assumed. -/
+theorem matrix_eigen_supersat {n : Type*} [Fintype n] [DecidableEq n]
+    (A : Matrix n n ℝ) (hA : A.IsHermitian) (j : n) (lam : ℝ)
+    (hlam : lam = hA.eigenvalues j) (hbound : ∀ i, |hA.eigenvalues i| ≤ lam) :
+    2 * lam ^ 3 - lam * (A ^ 2).trace ≤ (A ^ 3).trace := by
+  have h2 := trace_pow_eq_sum_pow_eigenvalues A hA 2
+  have h3 := trace_pow_eq_sum_pow_eigenvalues A hA 3
+  have H := eigen_supersat_general (hA.eigenvalues) j lam hlam hbound
+  rw [h2, h3]
+  exact H
 
 end Catalog.Novelty.EdgeSpectralSupersaturationTriangles
