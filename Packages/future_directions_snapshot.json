@@ -12604,7 +12604,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1dac228",
     "description": "Cycle 02ff061d (Q=0.700) proved 6 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi",
     "domain_bridges": [],
     "domains": [
@@ -12616,7 +12616,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "02ff061d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T10:55:35.400379+00:00",
     "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
   },
