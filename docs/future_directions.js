@@ -115,20 +115,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "0557da65",
-    "description": "Building on cycle 4f5260f0 (Q=0.830), which proved 19 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formali",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_4f5260f0_690694e8",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "4f5260f0",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T22:48:17.286043+00:00",
-    "title": "Deepening: Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients \u220f_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
     "domains": [
@@ -241,7 +227,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e1dd178",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domains": [
       "NumberTheory"
@@ -250,7 +236,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "47a54792",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:29:46.239053+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
@@ -678,7 +664,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
-    "consumed_by_exp_id": "5e439c47",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 319bd9f6 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. E",
     "domains": [
       "Shared"
@@ -687,7 +673,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "319bd9f6",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T00:29:28.233896+00:00",
     "title": "Deepening: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
@@ -7681,6 +7667,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T08:07:20.584913+00:00",
     "title": "The mission asked to interrogate the claim:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Multiverse Set Theory\n\n`Catalog/Novelty/MultiverseSetTheory.lean` formalizes the combinatorial core of\nHamkins' set-theoretic multiverse: worlds as truth assignments, a multiverse as a\ncollection of worlds, propositional set-theoretic sentences, independence, and a\n`flip`-based abstraction of forcing. The headline results are:\n\n- `forcingClosed_atom_independent`: in any nonempty forcing-closed multiverse\n  every atomic sentence is independent \u2014 forcing settles nothing;\n- `CH_independent` and `CH_independent_under_VeqL_imp_CH`: `CH` is independent in\n  `{G\u00f6del, Cohen}`, and remains independent even after adopting `V = L \u2192 CH` as a\n  law of the multiverse;\n- `absolute_em`, `absolute_noncontradiction`, `absolute_self_imp`: logical\n  validities are absolute across all branches, unlike `CH`;\n- `card_worlds` / `card_full_Claim`: the full multiverse over `n` atoms has `2^n`\n  worlds.\n\n## Natural next steps\n\n1. **Quantified sentences over a signature.** Replace the atomic-assertion type by\n   a genuine first-order language and interpret worlds as `Structure`s, recovering\n   the propositional layer as the atomic-diagram fragment. This lets independence\n   be stated for actual first-order sentences.\n\n2. **A Boolean/Heyting algebra of multiverse truth values.** Map each sentence to\n   the set of worlds satisfying it; validity/refutability/independence become the\n   top/bottom/proper-nontrivial elements of a Boolean algebra of \"multiverse\n   propositions\". Prove the assignment is a Boolean homomorphism \u2014 a first step\n   toward Boolean-valued models.\n\n3. **Forcing posets, not just single flips.** Generalize `flip` to a partial order\n   of finite conditions with a genericity notion, and prove a discrete\n   Rasiowa\u2013Sikorski\u2013style existence lemma. This bridges the abstraction to real\n   forcing.\n\n4. **Consistency-strength ordering.** Introduce a preorder on worlds/theories by\n   interpretability and study the multiverse as an ordered structure (large-cardinal\n   hierarchy). Prove that the \"settled\" sentences form a filter closed under modus\n   ponens.\n\n5. **Dependence relations.** Formalize when one sentence's truth constrains\n   another's across a multiverse (as `V = L \u2192 CH` does), and characterize the\n   settled fragment as the deductive closure of the multiverse's shared theory.\n\n6. **Modal logic of forcing.** Interpret \"forceable\" as a modality on the\n   forcing-closed multiverse and identify the resulting propositional modal logic\n   (Hamkins\u2013L\u00f6we show it is `S4.2` for actual forcing); test which modal schemes\n   hold in the abstract `flip` model.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1200",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "57f58be0",
+    "status": "available",
+    "timestamp": "2026-07-13T08:07:51.560786+00:00",
+    "title": "`Catalog/Novelty/MultiverseSetTheory.lean` formalizes the combinatorial core of"
   },
   {
     "consumed_by_exp_id": "",

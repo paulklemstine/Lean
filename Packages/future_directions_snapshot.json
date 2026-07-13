@@ -306,7 +306,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e1dd178",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domain_bridges": [],
     "domains": [
@@ -318,7 +318,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "47a54792",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:29:46.239053+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
@@ -668,7 +668,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d694c4b",
     "description": "Building on cycle 16e4b1d9 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n",
     "domain_bridges": [],
     "domains": [
@@ -680,7 +680,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "16e4b1d9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T12:43:39.241652+00:00",
     "title": "Deepening: This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
   },
@@ -898,7 +898,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5e439c47",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 319bd9f6 (Q=0.780), which proved 13 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. E",
     "domain_bridges": [],
     "domains": [
@@ -910,7 +910,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "319bd9f6",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T00:29:28.233896+00:00",
     "title": "Deepening: Rucker: Spacetime Donuts — Topology of the Universe"
   },
