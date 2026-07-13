@@ -4628,7 +4628,7 @@
       "math.CO",
       "math.SP"
     ],
-    "consumed_by_exp_id": "02ff061d",
+    "consumed_by_exp_id": "",
     "description": "The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi(F) = 3$, most notably for triangles ($K_3$). The conjecture states that for every $\\epsilon > 0$, there exist $\\delta > 0$ and $M$ such that for all $m \\ge M$ and $0 < q \\le \\delta \\sqrt{m}$, any graph $G$ with $m$ edges and $\\lambda^2(G) \\ge m + q$ contains at least $(1 - \\epsilon) q \\sqrt{m}$ triangles, corresponding to the sharp constant $B_{K_3} = 1$.",
     "domain_bridges": [
       "spectral_graph_theory",
@@ -4644,7 +4644,7 @@
     "proof_strategy": "Adapt the spectral stability methods used for $\\chi(F) \\ge 4$ to the $\\chi(F)=3$ case. This requires establishing spectral stability for near-bipartite graphs, then applying supersaturation counting arguments within the bipartite structure to find the requisite number of triangles. The bipartite case $r=2$ might require different spectral inequalities or combinatorial reductions since the Li-Liu-Zhang bound was only for $r \\ge 3$.",
     "research_mode": "team",
     "source_exp_id": "2607.01073v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T04:22:22.147668+00:00",
     "title": "Edge-Spectral Supersaturation for Triangles"
   },
@@ -6242,7 +6242,7 @@
       "math.CO",
       "math.SP"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad71c64c",
     "description": "For any simple graph G with n vertices and m edges, and for any 1 ≤ k ≤ n-1, the sum of the k largest Laplacian eigenvalues s_k(G) equals m + binom(k+1, 2) if and only if G is a threshold graph with clique number k+1.",
     "domain_bridges": [
       "Linear Algebra",
@@ -6257,7 +6257,7 @@
     "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T03:55:00.492813+00:00",
     "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
   },
@@ -9252,35 +9252,6 @@
     "status": "available",
     "timestamp": "2026-07-09T17:02:33.023554+00:00",
     "title": "Characterizing reflected bounded‑growth tuples in type B"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Mertens function",
-      "Möbius function",
-      "Möbius inversion",
-      "combinatorial number theory",
-      "arithmetic functions"
-    ],
-    "consumed_by_exp_id": "2f683b2c",
-    "description": "For all integers x ≥ 2 and integers u satisfying ⌊√x⌋ < u < x, the Mertens function M(x) = ∑_{n≤x} μ(n) satisfies the recursive identity M(x) = ∑_{k=1}^{⌊x/u⌋} μ(k) S(⌊x/k⌋, u), where S(y, u) = 1 - ∑_{n=⌊y/u⌋+1}^{κ_y} M(⌊y/n⌋) + κ_y M(⌊√y⌋) - ∑_{n=1}^{⌊√y⌋} ⌊y/n⌋ μ(n) and κ_y = ⌊y/(⌊√y⌋+1)⌋. This formalizes Theorem 1 of the paper with the standard split point ν_y = ⌊√y⌋ and explicit floor operations.",
-    "domain_bridges": [
-      "computational number theory",
-      "formal verification",
-      "algorithm verification"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0785",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Start from the identity ∑_{n≤y} M(⌊y/n⌋) = 1. Split the sum at n = ⌊√y⌋ using summation by parts to express ∑_{n≤κ_y} M(⌊y/n⌋) in terms of M(⌊√y⌋) and a sum involving μ(n). Define S(y,u) by isolating the terms with n ≤ ⌊y/u⌋. Verify that ∑_{k≤y/u} M(⌊y/k⌋) = S(y,u) when ⌊√y⌋ < u. Apply the generalized Möbius inversion formula ∑_{k≤x} μ(k) G(⌊x/k⌋) = F(x) where G(y) = ∑_{k≤y/u} F(⌊y/k⌋) to obtain the result.",
-    "research_mode": "team",
-    "source_exp_id": "2607.07566v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T17:29:41.664378+00:00",
-    "title": "Generalized Mertens Function Recursion Identity"
   },
   {
     "ambition_level": "grand_challenge",
@@ -12609,6 +12580,45 @@
     "status": "available",
     "timestamp": "2026-07-13T10:55:04.758913+00:00",
     "title": "This cycle promoted the qualitative multiverse/tropical bridge (existence ↦"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes **Theorem 1** — a generalized recursion identity for the Mertens\nfunction `M(x) = ∑_{n≤x} μ(n)` — as a self-contained chain of results in\n`MertensRecursion.lean`. Natural extensions:\n\n## Immediate generalizations\n* **Arbitrary split point `ν`.** We used the standard `ν_y = ⌊√y⌋`. The underlying\n  hyperbola argument (`hyperbola_split`) works for any `1 ≤ ν ≤ y` with the paired\n  `κ = ⌊y/(ν+1)⌋`; abstracting the split point would yield a family of identities and\n  expose the balance that makes `ν = ⌊√y⌋` computationally optimal.\n* **General Dirichlet convolutions.** `mertens_fundamental` is the case `μ ∗ 1 = δ`.\n  The reindexing lemmas (`sum_pairs_eq_sum_antidiagonal`, `sum_Icc_div_eq_filter`) are\n  convolution-agnostic and can drive analogous recursions for `∑ f(⌊x/k⌋)` for any\n  arithmetic function `f`, e.g. summatory Liouville `L(x)` or `∑ φ(n)`.\n\n## Analytic / algorithmic consequences\n* **Complexity statement.** Formalize that evaluating `M(x)` through this recursion costs\n  `O(x^{2/3})` (or the sharper bounds in the literature) — a genuine correctness proof\n  for a sublinear Mertens algorithm.\n* **Executable version.** Provide a `@[csimp]`-backed computable implementation and prove\n  it equals `mertens`, turning the identity into a verified fast evaluator.\n\n## Deeper number theory\n* Connect `M(x)` to explicit bounds (`|M(x)| ≤ ...`) and, aspirationally, to the\n  Riemann-hypothesis-equivalent statement `M(x) = O(x^{1/2+ε})`.\n* Extend to the Mertens function of arithmetic progressions and to the Möbius function\n  twisted by Dirichlet characters.\n\n## Reusable infrastructure produced here\n* `sum_pairs_eq_sum_antidiagonal` — sum over `{(k,j) : kj ≤ w}` reorganized by product.\n* `sum_Icc_div_eq_filter` — iterated `∑_k ∑_{m ≤ y/k}` as a hyperbola-region sum.\n* `sum_mu_divisors` — `∑_{d|n} μ(d) = [n=1]`.\nThese are broadly useful for divisor-sum / hyperbola-method formalizations.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_1211",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2f683b2c",
+    "status": "available",
+    "timestamp": "2026-07-13T10:55:16.445347+00:00",
+    "title": "This project formalizes **Theorem 1** — a generalized recursion identity for the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 02ff061d (Q=0.700) proved 6 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_02ff061d_ee78904e",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "02ff061d",
+    "status": "available",
+    "timestamp": "2026-07-13T10:55:35.400379+00:00",
+    "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
   },
   {
     "ambition_level": "extension",

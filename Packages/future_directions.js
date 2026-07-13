@@ -2871,7 +2871,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Colorful Carath\u00e9odory theorem for spanning k-trees admits a polynomial-size witness"
   },
   {
-    "consumed_by_exp_id": "02ff061d",
+    "consumed_by_exp_id": "",
     "description": "The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi(F) = 3$, most notably for triangles ($K_3$). The conjecture states that for every $\\epsilon > 0$, there exist $\\delta > 0$ and $M$ such that for all $m \\ge M$ and $0 < q \\le \\delta \\sqrt{m}$, any graph $G$ with $m$ edges and $\\lambda^2(G) \\ge m + q$ contains at least $(1 - \\epsilon) q \\sqrt{m}$ triangles, corresponding to the sharp constant $B_{K_3} = 1$.",
     "domains": [
       "Pythagorean",
@@ -2881,7 +2881,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01073v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T04:22:22.147668+00:00",
     "title": "Edge-Spectral Supersaturation for Triangles"
   },
@@ -3713,7 +3713,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Engel's Interval Packing Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad71c64c",
     "description": "For any simple graph G with n vertices and m edges, and for any 1 \u2264 k \u2264 n-1, the sum of the k largest Laplacian eigenvalues s_k(G) equals m + binom(k+1, 2) if and only if G is a threshold graph with clique number k+1.",
     "domains": [
       "Pythagorean"
@@ -3722,7 +3722,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03388v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T03:55:00.492813+00:00",
     "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
   },
@@ -5262,20 +5262,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T17:02:33.023554+00:00",
     "title": "Characterizing reflected bounded\u2011growth tuples in type\u202fB"
-  },
-  {
-    "consumed_by_exp_id": "2f683b2c",
-    "description": "For all integers x \u2265 2 and integers u satisfying \u230a\u221ax\u230b < u < x, the Mertens function M(x) = \u2211_{n\u2264x} \u03bc(n) satisfies the recursive identity M(x) = \u2211_{k=1}^{\u230ax/u\u230b} \u03bc(k) S(\u230ax/k\u230b, u), where S(y, u) = 1 - \u2211_{n=\u230ay/u\u230b+1}^{\u03ba_y} M(\u230ay/n\u230b) + \u03ba_y M(\u230a\u221ay\u230b) - \u2211_{n=1}^{\u230a\u221ay\u230b} \u230ay/n\u230b \u03bc(n) and \u03ba_y = \u230ay/(\u230a\u221ay\u230b+1)\u230b. This formalizes Theorem 1 of the paper with the standard split point \u03bd_y = \u230a\u221ay\u230b and explicit floor operations.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0785",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.07566v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T17:29:41.664378+00:00",
-    "title": "Generalized Mertens Function Recursion Identity"
   },
   {
     "consumed_by_exp_id": "",
@@ -7759,6 +7745,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T10:55:04.758913+00:00",
     "title": "This cycle promoted the qualitative multiverse/tropical bridge (existence \u21a6"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes **Theorem 1** \u2014 a generalized recursion identity for the Mertens\nfunction `M(x) = \u2211_{n\u2264x} \u03bc(n)` \u2014 as a self-contained chain of results in\n`MertensRecursion.lean`. Natural extensions:\n\n## Immediate generalizations\n* **Arbitrary split point `\u03bd`.** We used the standard `\u03bd_y = \u230a\u221ay\u230b`. The underlying\n  hyperbola argument (`hyperbola_split`) works for any `1 \u2264 \u03bd \u2264 y` with the paired\n  `\u03ba = \u230ay/(\u03bd+1)\u230b`; abstracting the split point would yield a family of identities and\n  expose the balance that makes `\u03bd = \u230a\u221ay\u230b` computationally optimal.\n* **General Dirichlet convolutions.** `mertens_fundamental` is the case `\u03bc \u2217 1 = \u03b4`.\n  The reindexing lemmas (`sum_pairs_eq_sum_antidiagonal`, `sum_Icc_div_eq_filter`) are\n  convolution-agnostic and can drive analogous recursions for `\u2211 f(\u230ax/k\u230b)` for any\n  arithmetic function `f`, e.g. summatory Liouville `L(x)` or `\u2211 \u03c6(n)`.\n\n## Analytic / algorithmic consequences\n* **Complexity statement.** Formalize that evaluating `M(x)` through this recursion costs\n  `O(x^{2/3})` (or the sharper bounds in the literature) \u2014 a genuine correctness proof\n  for a sublinear Mertens algorithm.\n* **Executable version.** Provide a `@[csimp]`-backed computable implementation and prove\n  it equals `mertens`, turning the identity into a verified fast evaluator.\n\n## Deeper number theory\n* Connect `M(x)` to explicit bounds (`|M(x)| \u2264 ...`) and, aspirationally, to the\n  Riemann-hypothesis-equivalent statement `M(x) = O(x^{1/2+\u03b5})`.\n* Extend to the Mertens function of arithmetic progressions and to the M\u00f6bius function\n  twisted by Dirichlet characters.\n\n## Reusable infrastructure produced here\n* `sum_pairs_eq_sum_antidiagonal` \u2014 sum over `{(k,j) : kj \u2264 w}` reorganized by product.\n* `sum_Icc_div_eq_filter` \u2014 iterated `\u2211_k \u2211_{m \u2264 y/k}` as a hyperbola-region sum.\n* `sum_mu_divisors` \u2014 `\u2211_{d|n} \u03bc(d) = [n=1]`.\nThese are broadly useful for divisor-sum / hyperbola-method formalizations.\n",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_1211",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2f683b2c",
+    "status": "available",
+    "timestamp": "2026-07-13T10:55:16.445347+00:00",
+    "title": "This project formalizes **Theorem 1** \u2014 a generalized recursion identity for the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 02ff061d (Q=0.700) proved 6 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_02ff061d_ee78904e",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "02ff061d",
+    "status": "available",
+    "timestamp": "2026-07-13T10:55:35.400379+00:00",
+    "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
   },
   {
     "consumed_by_exp_id": "",

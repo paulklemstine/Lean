@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "167b800e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Euler–Poincaré theory of decision surfaces\n\n`EulerCharacteristic.lean` deepens the Hodge/Betti theory of piecewise-linear\ndecision surfaces `V(f)` of ReLU networks (`DecisionSurf",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-12T19:56:51",
-      "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
-    },
-    {
       "cycle_id": "d95af58e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Anti-Mathematics\n\nThis cycle deepened the anti-Infinity strand (the Ackermann model of the\nhereditarily finite sets `HF = V_ω`) with three new self-contained files:\n\n- `Ackermann",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-07-13T10:55:13",
       "title": "This project formalizes an abstract, model-agnostic version of Hamkins'"
+    },
+    {
+      "cycle_id": "02ff061d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Edge-Spectral Supersaturation for Triangles\n\nThe power-trace method yields an unconditional triangle count `t ≥ (λq)/3` in terms\nof the spectral excess `q = λ² − m`, with the endp",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 6,
+      "timestamp": "2026-07-13T10:55:35",
+      "title": "Edge-Spectral Supersaturation for Triangles"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3d209fc8",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Quantitative Invariants of the Prime Barcode\n\nThis cycle turned the qualitative statement \"the zero-dimensional barcode of the\nprime point cloud is governed by the gap sequence\"",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-07-10T17:56:03",
-      "title": "That the zero-dimensional persistent homology of the prim"
-    },
     {
       "cycle_id": "17fb4d11",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 64,
       "timestamp": "2026-07-13T10:55:13",
       "title": "This project formalizes an abstract, model-agnostic version of Hamkins'"
+    },
+    {
+      "cycle_id": "02ff061d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Edge-Spectral Supersaturation for Triangles\n\nThe power-trace method yields an unconditional triangle count `t ≥ (λq)/3` in terms\nof the spectral excess `q = λ² − m`, with the endp",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 6,
+      "timestamp": "2026-07-13T10:55:35",
+      "title": "Edge-Spectral Supersaturation for Triangles"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4bfb0f7c",
-      "domain": "Novelty",
-      "name": "flux_strictAnti",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "8e89241b",
-      "domain": "Applications",
-      "name": "eventually_altPos_of_dominant",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ca370926",
-      "domain": "Applications",
-      "name": "Wmat_symm",
-      "quality": 0.7
-    },
     {
       "cycle_id": "ca370926",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "not_multiverseTrue_of_independent",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "02ff061d",
+      "domain": "Novelty",
+      "name": "states",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "02ff061d",
+      "domain": "Novelty",
+      "name": "cube_lower",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "02ff061d",
+      "domain": "Novelty",
+      "name": "eigen_supersat",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-13T10:55:13",
+  "last_updated": "2026-07-13T10:55:35",
   "open_questions": [
-    {
-      "context": "-    sorry; +   a `sorry`.  We remove the unprovable tail rather than leave a `sorry`, and; collision ⇒ Merkle–Damgård hash collision, all constructive and `sorry`-free.",
-      "cycle_id": "d95af58e",
-      "domain": "Novelty",
-      "sorry_count": 7,
-      "timestamp": "2026-07-12T20:14:26"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "61c22649",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-13T10:39:02"
+    },
+    {
+      "context": "-- Synthesis (PI): constant-`1/3` supersaturation + Nosal endpoint, all sorry-free.",
+      "cycle_id": "02ff061d",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T10:55:35"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "96ae8e1e",
-        "quality": 0.72,
-        "theorems": 13,
-        "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
-      },
-      {
         "cycle_id": "291fcce1",
         "quality": 0.72,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 0,
         "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collec"
+      },
+      {
+        "cycle_id": "02ff061d",
+        "quality": 0.7,
+        "theorems": 6,
+        "title": "Edge-Spectral Supersaturation for Triangles"
       }
     ],
     "NumberTheory": [
