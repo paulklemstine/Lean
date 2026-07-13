@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cbbd1369",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Generalized Giampietro–Darmon Factorization\n\n## Summary of what was proved / disproved\n\nThis project formalizes a self-contained arithmetic model of the structural core\nof the Gi",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T01:24:57",
-      "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
-    },
-    {
       "cycle_id": "3959b92d",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Bayesian Werewolf ↔ Combinatorics bridge\n\nThe file `BayesianWerewolfHypergeometric.lean` establishes that the elementary\nprobabilistic moments of the hypergeometric \"werewolves-i",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T16:16:08",
       "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
+    },
+    {
+      "cycle_id": "24c0b42e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the\nFyodorov–Hiary–Keating (FHK) conjecture: the standard Gumbel law\n`G(x) = exp(-exp(-x))` as a genuine probabilit",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-13T16:32:30",
+      "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0ba9c9ed",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Infinite-Dimensional Chess\n\nBold, falsifiable conjectures emerging from this cycle's study of chess on the\nboundless board `ℤ × ℤ`.\n\n## 1. The exact material threshold for mating",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-11T00:40:08",
-      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-    },
     {
       "cycle_id": "fd7d55eb",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T16:16:08",
       "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
+    },
+    {
+      "cycle_id": "24c0b42e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the\nFyodorov–Hiary–Keating (FHK) conjecture: the standard Gumbel law\n`G(x) = exp(-exp(-x))` as a genuine probabilit",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-13T16:32:30",
+      "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "86e0e034",
-      "domain": "Applications",
-      "name": "card_edgeConst",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "167aed7f",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "167aed7f",
-      "domain": "Applications",
-      "name": "possiblyTrue_of_multiverseTrue",
-      "quality": 0.82
-    },
     {
       "cycle_id": "167aed7f",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "hadamardMat_entry_abs",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "24c0b42e",
+      "domain": "Novelty",
+      "name": "that",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "24c0b42e",
+      "domain": "Novelty",
+      "name": "gumbelCDF_pos",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "24c0b42e",
+      "domain": "Novelty",
+      "name": "gumbelCDF_lt_one",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-13T16:16:08",
+  "last_updated": "2026-07-13T16:32:30",
   "open_questions": [
     {
       "context": "+--   · sorry   -- infinite tail: composite n > 10000 (Carmichael's analytic core); -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9da8e56c",
-        "quality": 0.72,
-        "theorems": 15,
-        "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of Matroids"
-      },
-      {
         "cycle_id": "3f303e8a",
         "quality": 0.72,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 15,
         "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
+      },
+      {
+        "cycle_id": "24c0b42e",
+        "quality": 0.72,
+        "theorems": 19,
+        "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
       }
     ],
     "NumberTheory": [

@@ -458,7 +458,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domain_bridges": [],
     "domains": [
@@ -470,7 +470,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
   },
@@ -5807,33 +5807,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "Fyodorov_Hiary_Keating_2012",
-      "Arguin_Belius_Harper_2017"
-    ],
-    "consumed_by_exp_id": "24c0b42e",
-    "description": "The maximum of the logarithm of the absolute value of the Riemann zeta function on the critical line over the interval [T, 2T], defined as M_T = max_{t ∈ [T, 2T]} log|ζ(1/2 + it)|, satisfies the convergence in distribution: M_T - log(log(T)) + (3/2)log(log(log(T))) converges to the sum of two independent Gumbel random variables as T → ∞. This captures the extreme value statistics of the number-theoretic analogue to the black hole microstate counts proposed in the paper.",
-    "domain_bridges": [
-      "Random Matrix Theory",
-      "Quantum Gravity",
-      "Statistical Mechanics"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0462",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Model the Riemann zeta function as the characteristic polynomial of a random unitary matrix, establish a Gaussian multiplicative chaos representation for the field, and extend the Circular Unitary Ensemble (CUE) maximum theorem to the number theory setting using correlations of zeros.",
-    "research_mode": "team",
-    "source_exp_id": "2607.02233v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T17:00:53.781526+00:00",
-    "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "math.NT",
       "math.AG"
     ],
@@ -9721,26 +9694,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ac37e9f5",
-    "description": "# Future Directions: Geometry of the Logistic–Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin²(πt/2)` of the unit interval.\nFixed points, a period-two orbit, and the intertwining of all iterates transfer\nverbatim between the two systems. The following conjectures push the same\ngeometric bridge further.\n\n## 1. Every period is realised, and the count is exponential\n\n**Conjecture.** For each `n ≥ 1` the logistic map has exactly `2ⁿ` points of period\ndividing `n` in the unit interval, and it possesses points of *exact* period `n`\nfor every `n`.\n\nThe key insight is that the conjugacy reduces counting logistic periodic points to\ncounting tent periodic points, and the tent map's `n`-fold iterate is a sawtooth\nwith `2ⁿ` full ramps, each crossing the diagonal exactly once. Why now? The exact\nconjugacy `fⁿ = h ∘ Tⁿ ∘ h⁻¹` and the bijectivity of `h` are already in hand, so\nthe transcendental fixed-point count for `f` becomes a purely combinatorial count\nof sawtooth crossings.\n\n## 2. Density of periodic seeds and topological transitivity\n\n**Conjecture.** The periodic points of the logistic map are dense in `[0,1]`, and\nthe map is topologically transitive; together with sensitive dependence this\ncertifies Devaney chaos on the whole interval.\n\nThe key insight is that a homeomorphism preserves density and transitivity, so it\nsuffices to prove them for the tent map, where periodic seeds are the dyadic-type\nrationals `k/(2ⁿ±1)` and are manifestly dense. Why now? With `h` proven to be a\nhomeomorphism, every topological property of the tent map — the transparent model\n— transfers directly to the logistic map without any smooth analysis.\n\n## 3. Invariant density and the arcsine law\n\n**Conjecture.** The logistic map preserves the arcsine measure with density\n`1 / (π √(x(1-x)))`, which is exactly the pushforward under `h` of the uniform\n(Lebesgue) measure preserved by the tent map.\n\nThe key insight is that `h` conjugates the uniform-preserving tent map to the\nlogistic map, so the invariant density of `f` must be the image of the flat density\nunder the change of variables `x = sin²(πt/2)`, whose Jacobian produces the arcsine\nweight. Why now? The explicit, differentiable conjugating map `h` makes the\nchange-of-variables computation elementary, turning a statement about a smooth\nchaotic system into a one-line pushforward of Lebesgue measure.\n\n## 4. Cryptographic fragility is coordinate-independent\n\n**Conjecture.** Any invariant an attacker can compute from a logistic keystream\n(bias, autocorrelation, algebraic degree of seed recovery) has an exact tent-map\ncounterpart obtainable by applying `h⁻¹`; hence the \"chaos cipher\" offers no\nsecurity beyond its piecewise-linear shadow.\n\nThe key insight is that a keystream masked by logistic iterates is, in the `h`\ncoordinate, masked by tent iterates — a binary shift map whose bits are read\ndirectly off the seed. Why now? The exact conjugacy makes \"look how complicated\nthe parabola orbit is\" quantifiable: complexity claimed in the smooth coordinate\nevaporates in the conjugate linear coordinate, giving a rigorous no-go statement\nfor logistic-map stream ciphers.\n\n\n# Future Directions: Geometry of the Logistic–Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin²(πt/2)` of the unit interval.\nFixed points, a period-two orbit, and the intertwining of all iterates transfer\nverbatim between the two systems. The following conjectures push the same\ngeometric bridge further.\n\n## 1. Every period is realised, and the count is exponential\n\n**Conjecture.** For each `n ≥ 1` the logistic map has exactly `2ⁿ` points of period\ndividing `n` in the unit interval, and it possesses points of *exact* period `n`\nfor every `n`.\n\nThe key insight is that the conjugacy reduces counting logistic periodic points to\ncounting tent periodic points, and the tent map's `n`-fold iterate is a sawtooth\nwith `2ⁿ` full ramps, each crossing the diagonal exactly once. Why now? The exact\nconjugacy `fⁿ = h ∘ Tⁿ ∘ h⁻¹` and the bijectivity of `h` are already in hand, so\nthe transcendental fixed-point count for `f` becomes a purely combinatorial count\nof sawtooth crossings.\n\n## 2. Density of periodic seeds and topological transitivity\n\n**Conjecture.** The periodic points of the logistic map are dense in `[0,1]`, and\nthe map is topologically transitive; together with sensitive dependence this\ncertifies Devaney chaos on the whole interval.\n\nThe key insight is that a homeomorphism preserves density and transitivity, so it\nsuffices to prove them for the tent map, where periodic seeds are the dyadic-type\nrationals `k/(2ⁿ±1)` and are manifestly dense. Why now? With `h` proven to be a\nhomeomorphism, every topological property of the tent map — the transparent model\n— transfers directly to the logistic map without any smooth analysis.\n\n## 3. Invariant density and the arcsine law\n\n**Conjecture.** The logistic map preserves the arcsine measure with density\n`1 / (π √(x(1-x)))`, which is exactly the pushforward under `h` of the uniform\n(Lebesgue) measure preserved by the tent map.\n\nThe key insight is that `h` conjugates the uniform-preserving tent map to the\nlogistic map, so the invariant density of `f` must be the image of the flat density\nunder the change of variables `x = sin²(πt/2)`, whose Jacobian produces the arcsine\nweight. Why now? The explicit, differentiable conjugating map `h` makes the\nchange-of-variables computation elementary, turning a statement about a smooth\nchaotic system into a one-line pushforward of Lebesgue measure.\n\n## 4. Cryptographic fragility is coordinate-independent\n\n**Conjecture.** Any invariant an attacker can compute from a logistic keystream\n(bias, autocorrelation, algebraic degree of seed recovery) has an exact tent-map\ncounterpart obtainable by applying `h⁻¹`; hence the \"chaos cipher\" offers no\nsecurity beyond its piecewise-linear shadow.\n\nThe key insight is that a keystream masked by logistic iterates is, in the `h`\ncoordinate, masked by tent iterates — a binary shift map whose bits are read\ndirectly off the seed. Why now? The exact conjugacy makes \"look how complicated\nthe parabola orbit is\" quantifiable: complexity claimed in the smooth coordinate\nevaporates in the conjugate linear coordinate, giving a rigorous no-go statement\nfor logistic-map stream ciphers.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0913",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "9d20b474",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T16:20:31.431352+00:00",
-    "title": "Exact topological conjugacy between the smooth logisti"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — The 3n+1 Map: Tropical Dynamics and the Logic of Halting\n\nThis cycle established the elementary but rigorous scaffolding around the Collatz\nmap: orbit-invariance of the halting predicate, the exact stopping time of powers\nof two, the decidable bounded halting predicate, the precise logical shape of a\nrefutation, and a min-plus (tropical) recurrence for the total stopping time. The\nfollowing conjectures grow directly out of those findings.\n\n## Conjecture 1 — The stopping time is the unique fixed point of a tropical operator\n\nDefine, on the min-plus semiring `(ℕ ∪ {∞}, min, +)`, the Bellman operator\n`(Φ f)(1) = 0` and `(Φ f)(n) = 1 + f(T n)` for `n ≠ 1`. Then the total stopping\ntime is the least fixed point of `Φ`, and `Φ` is a contraction in the natural\ngraph metric on halting orbits.\n\nThe key insight is that halting-time functions for the `3n+1` map are exactly the\nfixed points of a tropical shortest-path operator, so Collatz becomes a statement\nabout global reachability in a min-plus dynamical system rather than about integer\narithmetic. Why now? The recurrence `σ(n) = 1 + σ(T n)` is already isolated and\nverified here; upgrading it to a uniqueness-of-fixed-point theorem only requires a\nwell-founded measure on the halting set, which the orbit-invariance lemmas supply.\n\n## Conjecture 2 — No uniform certificate bound is provable in a weak base theory\n\nFor each `N`, the statement \"every `n ≤ N` reaches `1`\" is decidable and provable\nby finite search. The conjecture is that there is **no** primitive-recursive\nfunction `B(N)` with a low-complexity proof that every `n ≤ N` halts within `B(N)`\nsteps; equivalently, the certified stopping-time bound outgrows every provably\ntotal function of the base theory.\n\nThe key insight is that the halting predicate factors as a countable union of\ndecidable bounded predicates with no uniform bound, which is exactly the signature\nof a statement whose totality is unprovable in weak arithmetic. Why now? The\ndecomposition `Reaches n ↔ ∃ b, ReachesWithin b n` is formalized here, pinning the\nopen content to the growth rate of the bound `b` — the precise quantity an\nindependence argument must control.\n\n## Conjecture 3 — Collatz is Π₂-complete relative to the accelerated map\n\nLet `T'` be the accelerated (odd-step) map `n ↦ (3n+1)/2`. The conjecture is that\nthe halting problems for `T` and `T'` are interreducible by primitive-recursive\ntranslations preserving stopping-time parity, so that any independence phenomenon\nfor one transfers to the other.\n\nThe key insight is that acceleration only reparametrizes the orbit graph, leaving\nthe min-plus reachability structure invariant, so undecidability is a property of\nthe graph and not of the particular step function. Why now? The orbit-invariance\nlemmas (`reaches_iff_collatz`) already show the halting predicate is stable under\nsingle-step reparametrization; extending stability to the accelerated map is the\nnatural next reduction.\n\n## Conjecture 4 — Cycle exclusion is equivalent to a tropical eigenvalue bound\n\nA nontrivial Collatz cycle would be a closed walk in the orbit graph with net\nmultiplier `< 1` in the tropical sense. The conjecture is that the absence of such\ncycles is equivalent to a strict inequality between the tropical (min-plus)\neigenvalue of the odd-step operator and `0`, giving a spectral criterion for the\ncycle half of the conjecture.\n\nThe key insight is that cyclic counterexamples are precisely tropical\neigenvectors, so ruling them out is a statement about the min-plus spectrum rather\nthan about individual integers. Why now? The stopping-time recurrence identifies\nthe map with a shortest-path operator, and min-plus spectral theory provides exactly\nthe eigenvalue machinery needed to phrase cycle exclusion.\n",
     "domain_bridges": [],
@@ -12877,6 +12830,46 @@
     "status": "available",
     "timestamp": "2026-07-13T16:16:00.912350+00:00",
     "title": "This cycle established, for `4 × 4` integer matrices with entries in the symmetr"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the\nFyodorov–Hiary–Keating (FHK) conjecture: the standard Gumbel law\n`G(x) = exp(-exp(-x))` as a genuine probability distribution, its exact\nmax-stability, and the Fisher–Tippett–Gnedenko convergence of recentered\nmaxima of i.i.d. `Exp(1)` variables to `G`. It also now includes the full\ntwo-parameter **location–scale Gumbel family** `G_{μ,β}(x) = exp(-exp(-(x-μ)/β))`\n(`gumbelCDFLS`), with positivity, boundedness, strict monotonicity, continuity,\nthe shift–rescale identity `gumbelCDFLS_eq`, and the exact max-stability\n`G_{μ,β}(x + β log n)^n = G_{μ,β}(x)` (`gumbel_max_stableLS`). The full FHK\nstatement for the Riemann zeta function is open and out of current reach; below\nare tractable extensions that build directly on what is proved here.\n\n## Completed in this file\n\n0. **Location–scale Gumbel family.** `G_{μ,β}(x) = exp(-exp(-(x-μ)/β))` is now\n   formalized (`gumbelCDFLS`) with positivity (`gumbelCDFLS_pos`), boundedness\n   (`gumbelCDFLS_lt_one`), strict monotonicity for `β > 0`\n   (`gumbelCDFLS_strictMono`), continuity (`gumbelCDFLS_continuous`), the\n   reduction to the standard law (`gumbelCDFLS_eq`), and max-stability\n   `G_{μ,β}(x + β log n)^n = G_{μ,β}(x)` (`gumbel_max_stableLS`). Remaining for a\n   full treatment: the density, its integral, and the `±∞` limits of the family\n   (each an immediate transfer through `gumbelCDFLS_eq`).\n\n## Immediate extensions (self-contained, likely formalizable now)\n\n2. **General domain of attraction of the Gumbel law.** Generalize\n   `tendsto_expMax_gumbel` from `Exp(1)` to any CDF `F` with\n   `n(1 - F(a_n + b_n x)) → e^{-x}`; conclude `F(a_n + b_n x)^n → G(x)`. The\n   `Exp(1)` case is the special instance `a_n = log n`, `b_n = 1`.\n\n3. **Gaussian maxima → Gumbel.** With the classical normalizing constants\n   `b_n = √(2 log n)`, `a_n = b_n - (log log n + log 4π)/(2 b_n)`, prove\n   `Φ(a_n + x/b_n)^n → G(x)`. This is the extreme-value form directly relevant to\n   log-correlated Gaussian fields (the model underlying FHK).\n\n4. **Quantile function and further moments.** Prove the quantile\n   `G^{-1}(p) = -log(-log p)`, and (harder) that the Gumbel mean equals the\n   Euler–Mascheroni constant `γ` and the variance equals `π²/6`.\n\n## Toward the FHK statement itself\n\n5. **Sum of two independent Gumbels.** Formalize the convolution law\n   `(g ⋆ g)(x) = ∫ g(s) g(x-s) ds` as the density of the sum of two independent\n   Gumbel variables, and prove it is again a probability density\n   (nonnegative, integrates to 1). This is the exact limiting law predicted by\n   FHK. A natural intermediate lemma: the convolution of two probability\n   densities is a probability density (Tonelli/Fubini).\n\n6. **Log-correlated field / branching random walk model.** Formalize the\n   two-level (hierarchical) Gaussian model whose maximum exhibits the\n   `m_N = log N - (3/2) log log N` centering — the finite-`N` analogue of the FHK\n   centering `log log T - (3/2) log log log T`. Prove the recentered maximum\n   converges to a randomly shifted Gumbel, the discrete prototype of the\n   two-Gumbel structure.\n\n7. **Selberg CLT interface.** State (and, where Mathlib permits, prove pieces of)\n   the input from Selberg's central limit theorem: `log|ζ(1/2+it)|` is\n   approximately Gaussian with variance `½ log log T`, the starting point that\n   feeds the extreme-value machinery formalized here.\n\n## Infrastructure gaps in Mathlib\n\n- No general Fisher–Tippett–Gnedenko / extreme-value theorem; item 2 would be a\n  reusable contribution.\n- No Gumbel distribution in `Mathlib.Probability.Distributions`; the definitions\n  here (CDF, PDF, normalization, max-stability) could seed one.\n- Weak convergence (convergence in distribution) of measures is available in\n  Mathlib and would let items 2–3 be phrased at the level of measures rather than\n  pointwise CDFs.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1231",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "24c0b42e",
+    "status": "available",
+    "timestamp": "2026-07-13T16:32:22.257026+00:00",
+    "title": "`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Periodic Orbits through the Logistic–Tent Conjugacy\n\nThis cycle transported the periodic-orbit skeleton of the tent map\n`T(t) = 1 - |2t - 1|` onto the smooth logistic map `f(x) = 4x(1 - x)` through the\nstrictly increasing homeomorphism `h(t) = sin²(πt/2)`. We proved that `h` is an\nexact bijection between the period-`n` points of the two maps, that consequently\ntheir period-`n` point sets have equal cardinality, that the logistic fixed set is\nexactly `{0, 3/4}` (cardinality `2 = 2¹`), and that a concrete tent `3`-cycle\ntransports to a genuine period-three logistic orbit. The following conjectures\npush the same bridge further.\n\n## 1. The exact exponential count\n\n**Conjecture.** For every `n ≥ 1` the tent map — and hence the logistic map — has\nexactly `2ⁿ` points of period dividing `n` in the unit interval.\n\nThe key insight is that the `n`-fold iterate of the tent map is a sawtooth of `2ⁿ`\nfull ramps, each running monotonically across the whole interval and therefore\ncrossing the diagonal exactly once; the conjugacy bijection then hands the same\ncount to the logistic map for free. Why now? The cardinality of the two period-`n`\nsets has already been shown equal, so the transcendental count for the parabola is\nnow *defined* to be the crossing count of a piecewise-linear graph — a finite,\ncombinatorial quantity ready for an inductive ramp-counting argument.\n\n## 2. Exact period `n` for every `n`\n\n**Conjecture.** For each `n` the tent map possesses a point of *exact* period `n`,\nand its image under `h` is a point of exact period `n` for the logistic map.\n\nThe key insight is that exactness is preserved by an injective conjugacy: a seed of\nexact period `n` for the tent map cannot collapse to a shorter logistic period\nwithout violating injectivity of `h`. Why now? We have already certified exact\nperiod three by exhibiting the `3`-cycle `2/7 → 4/7 → 6/7 → 2/7`; the same\nmechanism, applied to the dyadic-type rationals `k/(2ⁿ ± 1)`, should manufacture an\nexact-period-`n` seed uniformly in `n`.\n\n## 3. Density of periodic seeds and topological transitivity\n\n**Conjecture.** The periodic points of the logistic map are dense in `[0,1]`, and\nthe map is topologically transitive; together with sensitive dependence this\ncertifies chaos on the whole interval.\n\nThe key insight is that a homeomorphism preserves both density and transitivity, so\nit suffices to establish them for the tent map, whose periodic seeds are the\nmanifestly dense dyadic-type rationals. Why now? With `h` proven to be a bijection\nof `[0,1]` that carries periodic points to periodic points, every topological\nfeature of the transparent linear model transfers verbatim, with no smooth analysis\nrequired.\n\n## 4. The arcsine invariant measure\n\n**Conjecture.** The logistic map preserves the arcsine measure with density\n`1 / (π √(x(1 - x)))`, which is exactly the pushforward under `h` of the uniform\nmeasure preserved by the tent map.\n\nThe key insight is that `h` conjugates the uniform-preserving tent map to the\nlogistic map, so the invariant density of `f` is the image of the flat density\nunder the change of variables `x = sin²(πt/2)`, whose Jacobian produces the arcsine\nweight. Why now? The explicit, differentiable conjugating map makes the\nchange-of-variables computation elementary, turning a statement about a smooth\nchaotic system into a one-line pushforward of the uniform measure.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1232",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ac37e9f5",
+    "status": "available",
+    "timestamp": "2026-07-13T16:32:33.808293+00:00",
+    "title": "This cycle transported the periodic-orbit skeleton of the tent map"
   },
   {
     "ambition_level": "extension",

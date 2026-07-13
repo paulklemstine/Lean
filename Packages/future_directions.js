@@ -339,7 +339,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -348,7 +348,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -3518,21 +3518,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T16:19:33.206670+00:00",
     "title": "Overfull Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "24c0b42e",
-    "description": "The maximum of the logarithm of the absolute value of the Riemann zeta function on the critical line over the interval [T, 2T], defined as M_T = max_{t \u2208 [T, 2T]} log|\u03b6(1/2 + it)|, satisfies the convergence in distribution: M_T - log(log(T)) + (3/2)log(log(log(T))) converges to the sum of two independent Gumbel random variables as T \u2192 \u221e. This captures the extreme value statistics of the number-theoretic analogue to the black hole microstate counts proposed in the paper.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0462",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02233v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T17:00:53.781526+00:00",
-    "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
   },
   {
     "consumed_by_exp_id": "",
@@ -7999,6 +7984,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T16:16:00.912350+00:00",
     "title": "This cycle established, for `4 \u00d7 4` integer matrices with entries in the symmetr"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the\nFyodorov\u2013Hiary\u2013Keating (FHK) conjecture: the standard Gumbel law\n`G(x) = exp(-exp(-x))` as a genuine probability distribution, its exact\nmax-stability, and the Fisher\u2013Tippett\u2013Gnedenko convergence of recentered\nmaxima of i.i.d. `Exp(1)` variables to `G`. It also now includes the full\ntwo-parameter **location\u2013scale Gumbel family** `G_{\u03bc,\u03b2}(x) = exp(-exp(-(x-\u03bc)/\u03b2))`\n(`gumbelCDFLS`), with positivity, boundedness, strict monotonicity, continuity,\nthe shift\u2013rescale identity `gumbelCDFLS_eq`, and the exact max-stability\n`G_{\u03bc,\u03b2}(x + \u03b2 log n)^n = G_{\u03bc,\u03b2}(x)` (`gumbel_max_stableLS`). The full FHK\nstatement for the Riemann zeta function is open and out of current reach; below\nare tractable extensions that build directly on what is proved here.\n\n## Completed in this file\n\n0. **Location\u2013scale Gumbel family.** `G_{\u03bc,\u03b2}(x) = exp(-exp(-(x-\u03bc)/\u03b2))` is now\n   formalized (`gumbelCDFLS`) with positivity (`gumbelCDFLS_pos`), boundedness\n   (`gumbelCDFLS_lt_one`), strict monotonicity for `\u03b2 > 0`\n   (`gumbelCDFLS_strictMono`), continuity (`gumbelCDFLS_continuous`), the\n   reduction to the standard law (`gumbelCDFLS_eq`), and max-stability\n   `G_{\u03bc,\u03b2}(x + \u03b2 log n)^n = G_{\u03bc,\u03b2}(x)` (`gumbel_max_stableLS`). Remaining for a\n   full treatment: the density, its integral, and the `\u00b1\u221e` limits of the family\n   (each an immediate transfer through `gumbelCDFLS_eq`).\n\n## Immediate extensions (self-contained, likely formalizable now)\n\n2. **General domain of attraction of the Gumbel law.** Generalize\n   `tendsto_expMax_gumbel` from `Exp(1)` to any CDF `F` with\n   `n(1 - F(a_n + b_n x)) \u2192 e^{-x}`; conclude `F(a_n + b_n x)^n \u2192 G(x)`. The\n   `Exp(1)` case is the special instance `a_n = log n`, `b_n = 1`.\n\n3. **Gaussian maxima \u2192 Gumbel.** With the classical normalizing constants\n   `b_n = \u221a(2 log n)`, `a_n = b_n - (log log n + log 4\u03c0)/(2 b_n)`, prove\n   `\u03a6(a_n + x/b_n)^n \u2192 G(x)`. This is the extreme-value form directly relevant to\n   log-correlated Gaussian fields (the model underlying FHK).\n\n4. **Quantile function and further moments.** Prove the quantile\n   `G^{-1}(p) = -log(-log p)`, and (harder) that the Gumbel mean equals the\n   Euler\u2013Mascheroni constant `\u03b3` and the variance equals `\u03c0\u00b2/6`.\n\n## Toward the FHK statement itself\n\n5. **Sum of two independent Gumbels.** Formalize the convolution law\n   `(g \u22c6 g)(x) = \u222b g(s) g(x-s) ds` as the density of the sum of two independent\n   Gumbel variables, and prove it is again a probability density\n   (nonnegative, integrates to 1). This is the exact limiting law predicted by\n   FHK. A natural intermediate lemma: the convolution of two probability\n   densities is a probability density (Tonelli/Fubini).\n\n6. **Log-correlated field / branching random walk model.** Formalize the\n   two-level (hierarchical) Gaussian model whose maximum exhibits the\n   `m_N = log N - (3/2) log log N` centering \u2014 the finite-`N` analogue of the FHK\n   centering `log log T - (3/2) log log log T`. Prove the recentered maximum\n   converges to a randomly shifted Gumbel, the discrete prototype of the\n   two-Gumbel structure.\n\n7. **Selberg CLT interface.** State (and, where Mathlib permits, prove pieces of)\n   the input from Selberg's central limit theorem: `log|\u03b6(1/2+it)|` is\n   approximately Gaussian with variance `\u00bd log log T`, the starting point that\n   feeds the extreme-value machinery formalized here.\n\n## Infrastructure gaps in Mathlib\n\n- No general Fisher\u2013Tippett\u2013Gnedenko / extreme-value theorem; item 2 would be a\n  reusable contribution.\n- No Gumbel distribution in `Mathlib.Probability.Distributions`; the definitions\n  here (CDF, PDF, normalization, max-stability) could seed one.\n- Weak convergence (convergence in distribution) of measures is available in\n  Mathlib and would let items 2\u20133 be phrased at the level of measures rather than\n  pointwise CDFs.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1231",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "24c0b42e",
+    "status": "available",
+    "timestamp": "2026-07-13T16:32:22.257026+00:00",
+    "title": "`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the"
   },
   {
     "consumed_by_exp_id": "",
