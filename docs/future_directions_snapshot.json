@@ -269,6 +269,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` — abstract multiverse.**\nA `Multivers",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_167aed7f_544125ba",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "167aed7f",
+    "status": "available",
+    "timestamp": "2026-07-13T10:55:13.373867+00:00",
+    "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domain_bridges": [],
     "domains": [
@@ -4038,7 +4057,7 @@
     "catalog_references": [
       "Pairwise Reflection Symmetry in Generalized Latin Rectangles (arXiv:2406.xxxxx)"
     ],
-    "consumed_by_exp_id": "59a15132",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a generalized Latin rectangle of size n×n (i.e., λ = 1) possessing pairwise reflection symmetry—where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns—exists if and only if n is a power of two.",
     "domain_bridges": [
       "group theory",
@@ -4053,7 +4072,7 @@
     "proof_strategy": "Construct explicit examples for n = 2^k using group actions (e.g., cyclic or dihedral groups) to satisfy the symmetry condition, and prove non‑existence for other n by analysing the cycle structure of the column permutations and applying parity constraints derived from the pairwise balance condition.",
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T16:39:06.146756+00:00",
     "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
   },
@@ -7846,7 +7865,7 @@
       "Homotopy interleavings",
       "Doubling dimension in metric geometry"
     ],
-    "consumed_by_exp_id": "64d4f5fe",
+    "consumed_by_exp_id": "",
     "description": "There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-approximation to the Vietoris-Rips filtration VR(Xₙ) requires at least 2^(γ·n) simplices, and moreover γ can be taken to satisfy γ = γ(c) with lim_{c→√2⁻} γ(c) = 0.",
     "domain_bridges": [
       "Formal verification of persistent homology algorithms",
@@ -7862,7 +7881,7 @@
     "proof_strategy": "1. Construct an explicit infinite family of finite metric spaces Xₙ (e.g., using ℓ₁-spheres or Hamming cube constructions) with controlled geometric properties. 2. Prove that these spaces have unbounded doubling dimension. 3. Use combinatorial arguments to show that any c-approximation must encode sufficient information to distinguish between exponentially many distinct metric configurations. 4. Establish the quantitative bound on γ(c) by analyzing the homomorphism density needed in the approximation maps. 5. Verify the limit behavior as c approaches √2 from below using asymptotic analysis.",
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T17:01:42.923851+00:00",
     "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
   },
@@ -10674,26 +10693,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "167aed7f",
-    "description": "# Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` — abstract multiverse.**\nA `Multiverse` is a nonempty collection of universes, a type of statements, and a\ntruth relation `holds`. On top of it:\n`MultiverseTrue` (holds everywhere), `MultiverseFalse`, `PossiblyTrue`,\n`Independent`, `Undetermined`. Central structural theorem\n`independent_iff_undetermined`: a statement is independent **iff** it has no\nmultiverse truth value.\n\n**`Concrete.lean` — a concrete 3-universe multiverse** (`L`, a Cohen extension, a\nmeasurable-cardinal universe) over the statements `ZFC`, `CH`, `V=L`,\n`LargeCardinal`. Proves: ZFC is multiverse-true; CH, V=L and large cardinals are\nindependent hence undetermined (`no_true_CH`); and `V=L` is incompatible with a\nlarge cardinal in every single universe.\n\n**`Forcing.lean` — closure under forcing.**\n`ForcingClosedFor M s` says every universe has a forcing extension flipping `s`.\nMain theorem `undetermined_of_forcingClosedFor`: forcing closure alone forces `s`\nto be undetermined — the precise sense of \"there is no true CH\". CH is verified\nforcing-closed in the concrete multiverse; ZFC is verified *not* forcing-closed.\n\n**`TropicalBridge.lean` — the connector.**\n`boolToTrop : Bool → Tropical (WithTop ℕ)` (`true ↦ 1`, `false ↦ 0`) is shown to\nbe a semiring homomorphism from the Boolean semiring to the tropical semiring\n(`boolToTrop_or`: `∨ ↦ min`; `boolToTrop_and`: `∧ ↦ +`). Consequently\nexistential quantification over a finite multiverse is a tropical **sum**\n(`possiblyTrue_iff_tropSum`) and universal quantification is a tropical\n**product** (`multiverseTrue_iff_tropProd`). CH's independence then has the\ntropical signature `Σ = 1 ∧ Π ≠ 1` (`ch_tropical_signature`).\n\n## Natural extensions\n\n1. **Real-coefficient degrees of truth.** Replace `WithTop ℕ` by `WithTop ℝ` and\n   let per-universe values be forcing \"costs\" or measure-theoretic weights; the\n   tropical sum then computes a *cheapest* witnessing universe (a shortest-path /\n   Viterbi reading of possibility).\n\n2. **Modal logic bridge.** `MultiverseTrue`/`PossiblyTrue` are exactly `□`/`◇` for\n   the total accessibility relation. Formalize a general Kripke frame on the\n   universes and recover the tropical big-operator correspondence over the\n   accessible set, connecting modal necessity/possibility to min-plus matrix\n   powers (reachability = tropical matrix closure).\n\n3. **Genuine ZFC models.** Replace the abstract `holds` by satisfaction in real\n   structures (`FirstOrder.Language.Structure`), and connect `Independent` to\n   actual relative-consistency/forcing results, keeping the tropical bridge as the\n   quantitative layer on top.\n\n4. **Boolean-valued models.** Hamkins' forcing naturally produces Boolean-valued\n   models; generalize `boolToTrop` to a homomorphism out of an arbitrary complete\n   Boolean algebra and study which target semirings make `∃`/`∀` into `∑`/`∏`.\n\n5. **Larger multiverses.** Extend to `n` universes / a `Fintype` of forcing\n   iterations and study the tropical signature of a statement as an invariant of\n   its independence pattern across the whole multiverse.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_1108",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "538f30a2",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T03:38:22.248590+00:00",
-    "title": "This project formalizes an abstract, model-agnostic version of Hamkins'"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Formal Limits of Molecular Computing\n\nThis project formalizes, in Lean 4 / Mathlib, three pillars of the \"nanotechnology\ncomputation\" moonshot, each stated as fully proved theorems (no `sorry`, only the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`).\n\n## What was proved\n\n### `ChemicalReactionNetworks.lean` — discrete mass-action CRNs\n- **Strong monotonicity** (`Reaction.fire_add`, `Reaction.fire_mono`): surplus\n  molecules ride along untouched through any reaction.\n- **Translation invariance of reachability** (`step_shift`, `reach_shift`) and\n  **upward-monotone coverability** (`coverable_mono`) — the structural signature of\n  Petri-net / vector-addition dynamics.\n- **Conservation laws** (`mass_fire`, `mass_reach`): any balanced linear functional\n  (mass, charge, atom count) is invariant along every reachable trajectory.\n- **The fundamental limit** (`no_zero_test`): monotonicity makes it *impossible*\n  for a reaction to detect the *absence* of a species. This is the exact obstruction\n  to Turing-completeness of the exact discrete model — a register machine's zero-test\n  cannot be implemented.\n\n### `MolecularParallelism.lean` — no exponential speedup\n- **Work–time bound** (`work_time_bound`): `W ≤ T · p`.\n- **Speedup ≤ p** (`speedup_at_most_p`) and **volume-capped speedup**\n  (`volume_bounded_speedup`).\n- **No exponential speedup** (`no_exponential_speedup`,\n  `parallel_time_exponential`): with fixed volume and exponential work, parallel\n  time is unbounded — molecular parallelism is a constant-factor win, not an\n  exponential one.\n\n### `StorageCapacity.lean` — information-theoretic limits\n- **Storage capacity** (`storage_capacity`): `k` two-state molecules ⇒ ≤ `2^k`\n  configurations; **bit lower bound** (`bits_lower_bound`): distinguishing `N`\n  inputs needs ≥ `log₂ N` bits.\n- **Kolmogorov-style volume bound** (`kolmogorov_volume_lower_bound`): description\n  length (≈ volume) ≥ `log₂(#behaviors)`.\n- **Density sanity check** (`dna_density_bound`, `dna_density_needs_more`):\n  `2^59 < 10^18 ≤ 2^60`.\n\n## Natural next steps\n\n1. **Turing-completeness with error.** The `no_zero_test` obstruction is exactly why\n   *exact* CRNs are only as strong as Petri nets (decidable coverability). Formalize\n   the Soloveichik–Cook–Winfree–Bruck construction: stochastic CRNs that simulate a\n   register machine with unbounded time and vanishing error probability recover full\n   Turing power. This requires a probabilistic/continuous-time layer on top of the\n   present discrete semantics.\n\n2. **Decidability of coverability.** Prove Karp–Miller / the well-quasi-order\n   (Dickson's lemma, already in Mathlib) implies coverability of the CRN model is\n   decidable — a positive counterpart to `no_zero_test`.\n\n3. **Reachability invariants via conservation.** Use `mass_reach` to derive\n   non-reachability certificates (Farkas-style): if no nonnegative combination of\n   conserved functionals separates source from target, additional siphon/trap\n   invariants are needed.\n\n4. **Tight time hierarchy.** Strengthen `no_exponential_speedup` to a genuine\n   time–volume tradeoff `T(n) · V ≥ c · W(n)`, and connect `W(n)` to circuit or\n   Turing-machine complexity of the target function.\n\n5. **Kolmogorov complexity proper.** Replace the counting surrogate in\n   `kolmogorov_volume_lower_bound` with a formal prefix-free Kolmogorov complexity\n   (an incompressibility development), giving a literal \"minimum CRN volume ≥ K(f)\".\n\n6. **Mass-action ODE limit.** Bridge the discrete model to deterministic\n   mass-action ODEs and formalize the classical result that the deficiency-zero\n   networks have well-behaved (complex-balanced) steady states.\n",
     "domain_bridges": [],
@@ -12590,6 +12589,26 @@
     "status": "available",
     "timestamp": "2026-07-13T10:38:56.311697+00:00",
     "title": "Thread `th_25156375` studies the `Lᵖ` relaxation of the KNRS/Sidorenko lower bou"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — a min-plus shortest-path calculus for the multiverse\n\nThis cycle promoted the qualitative multiverse/tropical bridge (existence ↦\ntropical sum, universality ↦ tropical product) to a **quantitative** one: each\nuniverse carries a real cost, and the tropical sum computes the *cheapest\nwitnessing universe* while the tropical product computes the *aggregate cost of a\nstatement true everywhere*. The Boolean theory is recovered as the zero-cost\nslice. The results below are the bold, testable conjectures this suggests.\n\n## Conjecture 1 — Independence has a strictly positive optimality gap\n\nFor a statement that is independent across a costed multiverse, the cheapest cost\nof the statement and the cheapest cost of its negation are both finite, and their\nmaximum is a genuine numerical invariant — the *independence price* — that is\ninvariant under cost-preserving isomorphisms of the multiverse.\n\n**The key insight is...** that independence is not merely the coexistence of a\ntrue and a false universe, but the coexistence of two *finite* min-plus witnesses,\nso the phenomenon lives naturally in the min-plus semiring where it acquires a\nscalar magnitude rather than a yes/no answer.\n\n**Why now?** The weighted bridge already shows possibility equals finiteness of a\ncheapest cost and that this cost is attained at an explicit witness; pairing a\nstatement with its negation upgrades qualitative independence into a two-sided\noptimisation problem whose value is now well defined.\n\n## Conjecture 2 — Modal accessibility is tropical matrix reachability\n\nReplace the total accessibility relation by a Kripke frame on the universes with\nedge costs. Then necessity/possibility over the accessible set are entries of\nmin-plus matrix powers of the weighted adjacency matrix, and the reachability\nclosure (`◇` iterated) equals the tropical matrix star.\n\n**The key insight is...** that `□` and `◇` are min-plus matrix–vector products, so\niterating modalities is iterating a min-plus matrix, making the Kleene star of\ntropical linear algebra the exact semantics of \"eventually accessible\".\n\n**Why now?** The present file establishes the single-step correspondence\n(quantifier ↦ big operator) over the total frame; the only missing ingredient for\nthe multi-step version is indexing the sum by an accessibility relation, which the\nmin-plus matrix formalism supplies directly.\n\n## Conjecture 3 — The cheapest-witness map is a valuation, not just monotone\n\nThe assignment sending a costed statement to its cheapest witnessing cost is a\nmin-plus *valuation*: the cost of a disjunction is the minimum of the costs, and\nthe cost of a conjunction is bounded below by their maximum, with equality\ncharacterised by a shared optimal universe.\n\n**The key insight is...** that the Boolean-to-tropical homomorphism laws\n(`∨ ↦ min`, `∧ ↦ +`) survive weighting in a one-sided form, turning the truth\nfunctor into a submodular-style cost functor whose failure of exactness measures\nhow far two statements are from sharing a cheapest universe.\n\n**Why now?** With `cheapest_mono` and the attained-witness theorem in hand, the\ndisjunction law is immediate and only the conjunction inequality and its equality\ncase remain, making this the natural next lemma to settle.\n\n## Conjecture 4 — Real-valued degrees interpolate the Boolean and metric worlds\n\nAllowing negative and unbounded costs, the cheapest-cost functional extends to a\nLipschitz map from cost profiles to `WithTop ℝ`, and the zero-cost fibre is\nexactly the classical Boolean multiverse while generic fibres realise arbitrary\nshortest-path / Viterbi decoding problems.\n\n**The key insight is...** that a single min-plus functional simultaneously encodes\nset-theoretic independence (at cost zero) and dynamic-programming optimality (at\ngeneric costs), so results proved once transfer between the two readings.\n\n**Why now?** The zero-cost collapse to the Boolean bridge is already proved; the\nLipschitz/stability half is a direct consequence of the monotonicity principle and\nwould formally unify the logical and algorithmic interpretations.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_1210",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "167aed7f",
+    "status": "available",
+    "timestamp": "2026-07-13T10:55:04.758913+00:00",
+    "title": "This cycle promoted the qualitative multiverse/tropical bridge (existence ↦"
   },
   {
     "ambition_level": "extension",
