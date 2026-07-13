@@ -451,20 +451,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Finiteness conjecture for semisimple geometric representations of Hiranouchi's r"
   },
   {
-    "consumed_by_exp_id": "4cfd5e43",
-    "description": "Building on cycle f9bf2df0 (Q=0.820), which proved 16 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture fo",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_f9bf2df0_573b41a7",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "f9bf2df0",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T22:14:15.019602+00:00",
-    "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
     "domains": [
@@ -4542,7 +4528,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact asymptotic growth of \\u03c7^r_F(d) for the balanced\u2011triangle family"
   },
   {
-    "consumed_by_exp_id": "64d4f5fe",
+    "consumed_by_exp_id": "",
     "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
     "domains": [
       "MachineLearning"
@@ -4551,7 +4537,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T17:01:42.923851+00:00",
     "title": "Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 threshold"
   },
@@ -7760,6 +7746,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T10:55:16.445347+00:00",
     "title": "This project formalizes **Theorem 1** \u2014 a generalized recursion identity for the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Isomorphisms of Meaning: When Structures Collide\n\nThis cycle established a truth/meaning dichotomy in two settings \u2014 the group of\nself-symmetries of a set and the monoid of divisibility-preserving sequences \u2014 and\nidentified a single mechanism: *truth* is the part of an object fixed by an acting\nisomorphism (its orbit invariants), while *meaning* is the residual choice of\nrepresentative that the isomorphism is free to move. The following conjectures push\nthat mechanism further.\n\n## Conjecture 1 \u2014 Meaning-rigidity of complete invariants\nFor a finite structure, the *number of distinct meanings sharing a fixed truth* is\nexactly the size of the automorphism orbit of a representative, so an object is\n\"meaning-rigid\" (truth determines meaning) precisely when its stabilizer is the\nwhole automorphism group.\n- **The key insight is** that the gap between truth and meaning is not a defect of\n  our invariants but a group-orbit whose cardinality is itself computable from the\n  automorphism group, turning a philosophical slogan into an exact counting law.\n- **Why now?** The three-point collision shows the orbit is nontrivial already at\n  the smallest scale; the orbit-counting tools needed to make this quantitative are\n  fully in hand, so the general statement is immediately testable on symmetric and\n  cyclic groups.\n\n## Conjecture 2 \u2014 No invariant refines cycle type\nFor finite permutations, every function that is constant on relabeling-classes\n(i.e. every \"truth\") factors through the cycle type; consequently no additional\ninvariant can separate the colliding transpositions of this cycle without\nappealing to the labels themselves.\n- **The key insight is** that cycle type is not merely *an* invariant but the\n  *terminal* invariant \u2014 the universal truth through which all others factor \u2014 so\n  the collision we exhibited is not an artifact of a weak invariant list but a hard\n  ceiling.\n- **Why now?** We have verified agreement on three independent invariants\n  simultaneously; the natural next step is to prove the ceiling result that makes\n  further invariant-hunting provably futile.\n\n## Conjecture 3 \u2014 Divisibility meaning-morphisms form a rigid family\nAmong integer sequences preserving the divisibility structure, the *pattern of\napparition indices* (the first index at which each prime appears) is a complete\ntruth, and two such sequences share it iff one is obtained from the other by a\nvalue-relabeling that fixes divisibility \u2014 yet infinitely many share every finite\ninitial apparition pattern while differing in value.\n- **The key insight is** that Fibonacci and Mersenne are not isolated curiosities\n  but two points of a large family whose common \"truth\" is an apparition pattern,\n  reframing strong divisibility sequences as meanings attached to one structural\n  skeleton.\n- **Why now?** The apparition/counting machinery for strong divisibility sequences\n  is already developed, so the family and its shared skeleton can be probed\n  directly rather than sequence-by-sequence.\n\n## Conjecture 4 \u2014 Iterated isomorphisms and a meaning hierarchy\nRelabeling can itself be relabeled: the \"isomorphism of isomorphisms\" is one rung\nof an infinite tower, and at every finite rung truth is preserved while a strictly\npositive amount of meaning is created, giving a graded hierarchy whose rank\nmeasures how far meaning can drift from truth.\n- **The key insight is** that the functoriality of `permCongr` is the first step of\n  a tower `Iso \u21d2 Iso(Iso) \u21d2 \u2026` in which each level exports the invariants of the\n  level below while adding fresh, undetectable meaning.\n- **Why now?** The base case (functoriality and invariant transport) is settled\n  this cycle, so the inductive step defining the tower is the clear next target.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1212",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4cfd5e43",
+    "status": "available",
+    "timestamp": "2026-07-13T11:11:55.904509+00:00",
+    "title": "Truth/meaning dichotomy in two settings \u2014 the group of"
   },
   {
     "consumed_by_exp_id": "a1dac228",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d95af58e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Anti-Mathematics\n\nThis cycle deepened the anti-Infinity strand (the Ackermann model of the\nhereditarily finite sets `HF = V_ω`) with three new self-contained files:\n\n- `Ackermann",
-      "quality_score": 0.82,
-      "sorry_count": 7,
-      "theorem_count": 28,
-      "timestamp": "2026-07-12T20:14:26",
-      "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
-    },
-    {
       "cycle_id": "465c6137",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThis file records the enumerative layer of the *\"Recursive decomposition\nisomorphism for general `m`-Tamari intervals and planar `(m+1)`-constellations\"*\nprogram. It complements t",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-13T10:55:35",
       "title": "Edge-Spectral Supersaturation for Triangles"
+    },
+    {
+      "cycle_id": "4cfd5e43",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Isomorphisms of Meaning: When Structures Collide\n\nThis cycle established a truth/meaning dichotomy in two settings — the group of\nself-symmetries of a set and the monoid of divis",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T11:12:05",
+      "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "17fb4d11",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Automatic Sequences and Decidability\n\nThe file `AutomaticSequences.lean` establishes, for an arbitrary DFA `M` over a\nfinite alphabet with finitely many states:\n\n* `accepts_nonem",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-10T17:56:08",
-      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
-    },
     {
       "cycle_id": "00abb0ac",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-13T10:55:35",
       "title": "Edge-Spectral Supersaturation for Triangles"
+    },
+    {
+      "cycle_id": "4cfd5e43",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Isomorphisms of Meaning: When Structures Collide\n\nThis cycle established a truth/meaning dichotomy in two settings — the group of\nself-symmetries of a set and the monoid of divis",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T11:12:05",
+      "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ca370926",
-      "domain": "Applications",
-      "name": "Amat_symm",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "ca370926",
-      "domain": "Applications",
-      "name": "A_factor",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "96ae8e1e",
-      "domain": "Novelty",
-      "name": "euclid",
-      "quality": 0.72
-    },
     {
       "cycle_id": "96ae8e1e",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "eigen_supersat",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "4cfd5e43",
+      "domain": "Applications",
+      "name": "permCongrHom_comp",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "4cfd5e43",
+      "domain": "Applications",
+      "name": "orderOf_permCongr",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "4cfd5e43",
+      "domain": "Applications",
+      "name": "sign_permCongr",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-13T10:55:35",
+  "last_updated": "2026-07-13T11:12:05",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "61c22649",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-12T20:49:46"
-    },
     {
       "context": "Every proof below is complete and `sorry`-free; the file compiles standalone.",
       "cycle_id": "bcff067f",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-13T10:55:35"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "4cfd5e43",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-13T11:12:05"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ca370926",
-        "quality": 0.7,
-        "theorems": 16,
-        "title": "Factorization of Cyclotomic Gauss Sum Matrix"
-      },
-      {
         "cycle_id": "5b802ccf",
         "quality": 0.82,
         "theorems": 29,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 64,
         "title": "This project formalizes an abstract, model-agnostic version of Hamkins'"
+      },
+      {
+        "cycle_id": "4cfd5e43",
+        "quality": 0.83,
+        "theorems": 9,
+        "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
       }
     ],
     "Bridges": [
