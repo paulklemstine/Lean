@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8c745e9f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Real-rootedness under squaring of combinatorial triangles\n\nThese conjectures grow out of an explicit study of the square of the Eulerian triangle,\nwhose `(n, k)` entry is `C(n, k)",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-10T15:04:38",
-      "title": "Real-rootedness of the square of the Eulerian triangle"
-    },
-    {
       "cycle_id": "f5358691",
       "domain": "Computation",
       "key_insight": "# Future directions — Persistent Cycles in Randomized Graphs\n\n## What was established\n\nThe mission target — *for every `ε>0` there is `K` such that for `d ≥ K` and\n`p ∈ [εd/log n, d/log n]`, `G_p` a.a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 29,
       "timestamp": "2026-07-13T08:43:50",
       "title": "Deepening: Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
+    },
+    {
+      "cycle_id": "223b6ab0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Topology and Causal Structure of Closed Universes\n\nBold, testable conjectures growing out of the study of the flat donut universe:\nthe closed torus model, its winding lattice, an",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-13T08:59:49",
+      "title": "Close Proofs: Rucker: Spacetime Donuts — Topology of the Universe"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T08:43:50",
+  "last_updated": "2026-07-13T08:59:49",
   "open_questions": [
     {
       "context": "-    sorry; +  · sorry  -- Carmichael's theorem, infinite tail (cyclotomic Fibonacci bounds); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ffec372c",
-        "quality": 0.8,
-        "theorems": 18,
-        "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest "
-      },
-      {
         "cycle_id": "32285b55",
         "quality": 0.83,
         "theorems": 19,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 29,
         "title": "Deepening: Rucker: Infinity and the Mind — Formalizing Different Sizes of Infini"
+      },
+      {
+        "cycle_id": "223b6ab0",
+        "quality": 0.55,
+        "theorems": 18,
+        "title": "Close Proofs: Rucker: Spacetime Donuts — Topology of the Universe"
       }
     ],
     "Bridges": [
