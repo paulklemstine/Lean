@@ -2557,7 +2557,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb7fe841",
     "description": "Cycle d954b0de (Q=0.740) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every Turán graph T(n, r) with r ≥ 4 and n ≥ 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) − e) > E_S(T(n, r)). This is Theorem 1.2 of the pa",
     "domain_bridges": [],
     "domains": [
@@ -2569,7 +2569,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "d954b0de",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T19:07:10.963972+00:00",
     "title": "Close Proofs: Seidel energy strictly increases under edge deletion in Turán graphs"
   },
