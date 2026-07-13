@@ -480,20 +480,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   {
-    "consumed_by_exp_id": "1a598f10",
-    "description": "Building on cycle 02c1616a (Q=0.800), which proved 8 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture asserts that functional equations for Dirichlet L-functions, under mild assumptions, necessitate the coefficient function to be a primitive Dirichlet character.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_02c1616a_44029820",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "02c1616a",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T07:01:34.223078+00:00",
-    "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
-  },
-  {
     "consumed_by_exp_id": "3d694c4b",
     "description": "Building on cycle 16e4b1d9 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" \u2014 a device deciding number-theoretic statements \u2014 cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n",
     "domains": [
@@ -7654,7 +7640,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Base camp for a quantitative stability theory of the"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86e0e034",
     "description": "# Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there is a \u03c1-locally dense graphon `W` with\n> `\u2016W_F\u2016_{L\u1d56} < \u03c1^{e(F)}`.\n\nWorking in the finite step-graphon model (uniform measure on `Fin N`, so every\nintegral is a finite average \u2014 fully rigorous), we obtained both a **proof** and a\n**disproof**, sharpening the picture.\n\n### Proved\n\n- `EdgeThreshold.edgeLp_ge_rho`: for `p \u2265 1`, **no** \u03c1-locally dense counterexample\n  exists for the single edge \u2014 `\u2016W_{K\u2082}\u2016_{L\u1d56} \u2265 \u03c1` (power-mean inequality).\n- `EdgeThreshold.blockW_edgeLp_lt`: for `0 < p < 1`, the explicit two-block\n  graphon `blockW \u03c1` is a genuine counterexample: \u03c1-locally dense, valued in\n  `[0,1]`, with `\u2016W_{K\u2082}\u2016_{L\u1d56} < \u03c1`.\n- `EdgeThreshold.single_edge_threshold_sharp`: combining the two, the single-edge\n  threshold is **exactly** `p = 1 = C(2,2)/1`. Here the conjecture is correct and\n  sharp.\n- `MatchingDisproof.homLpM2_eq`: the 2-edge matching functional factorizes,\n  `\u2016W_{M\u2082}\u2016_{L\u1d56} = \u2016W_{K\u2082}\u2016_{L\u1d56}\u00b2`.\n- `MatchingDisproof.matching_counterexample_below_one`: for `0 < p < 1`, `M\u2082` has a\n  genuine counterexample.\n\n### Disproved (the headline contrarian finding)\n\n- `MatchingDisproof.matching_no_counterexample`: for the 2-edge matching `M\u2082`\n  (`n = 4`, `m = 2`, `e(F) = 2`, so `C(4,2)/2 = 3`) and **every** `p \u2265 1` \u2014 in\n  particular `p = 2 < 3` \u2014 every \u03c1-locally dense nonnegative graphon satisfies\n  `\u2016W_{M\u2082}\u2016_{L\u1d56} \u2265 \u03c1\u00b2`. So no counterexample exists on `1 \u2264 p < 3`, and the\n  literal `C(n,2)/m` threshold is **false**.\n\nThe true threshold for `M\u2082` is `1`, not `3`. More generally the value reachable by\nblock constructions is `(n - c)/m` (with `c` the number of connected components),\nand `(n - c)/m \u2264 C(n,2)/m` with the gap unbounded over the matching family.\n\n## Open directions\n\n1. **Determine the exact threshold `p*(F)`.** We have the general lower bound\n   (constructions exist for) `p < (n - c)/m` and, for matchings, a matching upper\n   bound `p* = 1`. Is `p*(F) = (n - c)/m` for all `F`? A natural first test is the\n   triangle `K\u2083` (`n = 3, m = 3, c = 1`): block constructions give `p < 2/3`; does\n   a counterexample exist for `2/3 \u2264 p < 1`, and is there any counterexample for\n   `p \u2265 1`? Formalizing the triangle homomorphism functional and either a smarter\n   construction or a Sidorenko-type lower bound would settle this.\n\n2. **Rank-one (positive semidefinite) perturbations.** Kernels of the form\n   `W = \u03c1 + c\u00b7\u03c6(x)\u03c6(y)` with `c \u2265 0` are automatically \u03c1-locally dense\n   (`\u222b_{S\u00d7S} W = \u03c1|S|\u00b2 + c(\u222b_S \u03c6)\u00b2 \u2265 \u03c1|S|\u00b2`). These are far more flexible than\n   block kernels and are the natural candidate for beating `(n - c)/m`. Formalizing\n   this family and computing its `L\u1d56` functional is a concrete next step.\n\n3. **General block-kernel theorem.** Prove the closed form\n   `(1/N^n) \u03a3_\u03c6 \u220f_{edges} W(\u03c6)^p = k^{c - n + mp} \u03c1^{mp}` for the `k`-block kernel\n   and a general graph `F`, giving `p < (n - c)/m \u21d2 counterexample` in full\n   generality. The combinatorial heart is counting monochromatic vertex-colourings\n   (`= k^c`), i.e. relating to the number of connected components.\n\n4. **Continuum bridge.** Lift the finite-model results to genuine graphons on\n   `[0,1]\u00b2` (Bochner/`lintegral` over `Measure.pi`), and prove that for\n   block-constant kernels the worst-case local-density set is a union of blocks, so\n   that the finite check is equivalent to the continuum condition.\n\n5. **Relation to Sidorenko / KNRS.** The `p = 1` case of `\u2016W_F\u2016_{L\u00b9} \u2265 \u03c1^{e(F)}`\n   for \u03c1-locally dense hosts is exactly the KNRS lower bound; clarifying for which\n   `F` the `L\u1d56` inequality persists for some `p > 1` (as it does for matchings, up\n   to `p = 1` being the boundary of counterexamples) would connect this threshold\n   question to Sidorenko's conjecture.\n",
     "domains": [
       "Algebra",
@@ -7664,7 +7650,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "b08004d1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T08:07:20.584913+00:00",
     "title": "The mission asked to interrogate the claim:"
   },
@@ -7697,6 +7683,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T08:25:52.863156+00:00",
     "title": "This cycle established, from one structural root, that no type can fully quantif"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved the\nroot-number reciprocity law only in *identity form*\n`W(\u03c7)\u00b7W(\u03c7\u207b\u00b9)\u00b7\u039b(\u03c7,s) = \u039b(\u03c7,s)`, avoiding any non-vanishing input.  The new file\n`FunctionalEquationPrimitivityDeep.lean` upgrades it to the **genuine equality**\n`W(\u03c7)\u00b7W(\u03c7\u207b\u00b9) = 1` for a nontrivial Dirichlet character `\u03c7` of **prime** modulus `p`, and\nderives several consequences.\n\n## What was proved (all `sorry`-free, self-contained, `import Mathlib`)\n\n1. `inv_even_iff` \u2014 inversion preserves parity of a Dirichlet character (`\u03c7.Even \u2194 \u03c7\u207b\u00b9.Even`).\n2. `gaussSum_mul_gaussSum_inv_stdAddChar` \u2014 the same-character Gauss-sum product\n   `gaussSum \u03c7 e \u00b7 gaussSum \u03c7\u207b\u00b9 e = \u03c7(-1)\u00b7p` for prime `p`, obtained from the field-case\n   product `gaussSum \u03c7 e \u00b7 gaussSum \u03c7\u207b\u00b9 e\u207b\u00b9 = #(\u2124/p)` and additive-character inversion.\n3. `rootNumber_mul_rootNumber_inv` \u2014 **genuine reciprocity** `W(\u03c7)\u00b7W(\u03c7\u207b\u00b9) = 1`.\n4. `rootNumber_ne_zero` \u2014 `W(\u03c7) \u2260 0`.\n5. `rootNumber_inv_eq_inv` \u2014 `W(\u03c7\u207b\u00b9) = W(\u03c7)\u207b\u00b9`.\n6. `rootNumber_sq_self_dual` \u2014 for a nontrivial real (quadratic) character, `W(\u03c7)\u00b2 = 1`.\n7. `completedLFunction_inv_eq` \u2014 the reflection identity solved for `\u039b(\u03c7\u207b\u00b9, s)` using the\n   genuine reciprocity: `\u039b(\u03c7\u207b\u00b9, s) = p^{-(s-1/2)}\u00b7W(\u03c7\u207b\u00b9)\u00b7\u039b(\u03c7, 1-s)`.\n\n## Contrarian note (what does *not* generalise, and why)\n\nThe naive \"prime\" hypothesis is not cosmetic.  The engine\n`gaussSum \u03c7 e \u00b7 gaussSum \u03c7\u207b\u00b9 e\u207b\u00b9 = #(\u2124/N)` holds in Mathlib only when `\u2124/N` is a field.\nFor composite `N`, an *imprimitive* character can have a **vanishing** Gauss sum (the\n\"Gauss-sum enforcement of primitivity\" of the companion file), so `W(\u03c7)` is junk and\nreciprocity in the stated form fails.  The honest general statement must restrict to\nprimitive characters \u2014 the very rigidity the guiding conjecture predicts.\n\n## Natural next steps\n\n* **Absolute value.** Prove `\u2016W(\u03c7)\u2016 = 1` for prime modulus.  The missing ingredient is a\n  conjugation lemma `conj (gaussSum \u03c7 e) = gaussSum \u03c7\u207b\u00b9 e\u207b\u00b9` (not currently in Mathlib);\n  with it, `\u2016gaussSum \u03c7 e\u2016\u00b2 = gaussSum \u03c7 e \u00b7 gaussSum \u03c7\u207b\u00b9 e\u207b\u00b9 = p`, hence `\u2016W(\u03c7)\u2016 = 1`.\n* **General primitive modulus.** Extend `gaussSum_mul_gaussSum_inv_stdAddChar` and the\n  reciprocity to arbitrary primitive characters mod `N`, developing the primitive-character\n  Gauss-sum absolute-value theory for non-field `\u2124/N` (currently absent from Mathlib).\n* **Explicit sign for real characters.** Refine `rootNumber_sq_self_dual` to the exact value\n  `W(\u03c7) = +1` (real quadratic characters have root number `+1`), matching the small-case\n  evidence.\n* **Converse rigidity.** Formalise a converse: a coefficient function whose completed series\n  satisfies the clean reflection identity with `|W| = 1` must be a primitive character \u2014\n  the full statement of the guiding conjecture.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1202",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1a598f10",
+    "status": "available",
+    "timestamp": "2026-07-13T08:26:25.625420+00:00",
+    "title": "This cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved "
   },
   {
     "consumed_by_exp_id": "",

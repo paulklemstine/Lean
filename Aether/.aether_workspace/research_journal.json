@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "766b6e47",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Fractional-slope reductions of crystalline representations\n\nThese conjectures are distilled from the arithmetic/linear-algebra decomposition\nestablished in this cycle: a fraction",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-12T17:21:20",
-      "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weigh"
-    },
-    {
       "cycle_id": "6fce3466",
       "domain": "Applications",
       "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nThis project studies *\"causal loops\"* in category theory: structures where composition\n(or a tensor product) fails to be associative **on the nos",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T08:26:17",
       "title": "Deepening: That a type which fully quantifies over itself —"
+    },
+    {
+      "cycle_id": "1a598f10",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved the\nroot-number reciprocity law only in *identity form*\n`W(χ)·W(χ⁻¹)·Λ(χ,s) = Λ(χ,s)`, avoiding any",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-13T08:26:56",
+      "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "34e9f39c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Knots, Lattices, and Signed Enumeration\n\nThis cycle settled the naive \"Alexander polynomial = lattice-path count\"\nconjecture in the negative and isolated the correct signed object",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-10T14:32:36",
-      "title": "Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
-    },
     {
       "cycle_id": "bb33d4fa",
       "domain": "NumberTheory",
@@ -2501,21 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T08:26:17",
       "title": "Deepening: That a type which fully quantifies over itself —"
+    },
+    {
+      "cycle_id": "1a598f10",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved the\nroot-number reciprocity law only in *identity form*\n`W(χ)·W(χ⁻¹)·Λ(χ,s) = Λ(χ,s)`, avoiding any",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-13T08:26:56",
+      "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7362296f",
-      "domain": "Novelty",
-      "name": "from",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "7362296f",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.8
-    },
     {
       "cycle_id": "ffec372c",
       "domain": "Applications",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "lawvere_fixed_point",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "1a598f10",
+      "domain": "Novelty",
+      "name": "inv_even_iff",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "1a598f10",
+      "domain": "Novelty",
+      "name": "gaussSum_mul_gaussSum_inv_stdAddChar",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-13T08:26:17",
+  "last_updated": "2026-07-13T08:26:56",
   "open_questions": [
     {
       "context": "+    -- complete and `sorry`-free.; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5b1ced03",
-        "quality": 0.7,
-        "theorems": 22,
-        "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Ma"
-      },
-      {
         "cycle_id": "53d4816b",
         "quality": 0.82,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 16,
         "title": "Deepening: That a type which fully quantifies over itself —"
+      },
+      {
+        "cycle_id": "1a598f10",
+        "quality": 0.8,
+        "theorems": 7,
+        "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
       }
     ],
     "NumberTheory": [
