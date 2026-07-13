@@ -1108,6 +1108,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e3aaa465 (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any k ≥3 and 1≤ℓ<k, and any two accumulation points α, β in Π^k_ℓ, there exists a transfer function f such that f(α) = β.",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e3aaa465_d0779996",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e3aaa465",
+    "status": "available",
+    "timestamp": "2026-07-13T15:24:17.196126+00:00",
+    "title": "Deepening: Universality of Transfer Functions Among Accumulation Points"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e978b5fe (Q=0.780), which proved 1210 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: While White's conjecture on symmetric exchanges (Part 2) is false, the weaker Part 3 remains open: for any matroid M and any two multisets of bases B and B' with the same multiset union of elements, it is possible to obtain B' from B by repeatedly replacing two bases with any two other bases having ",
     "domain_bridges": [],
     "domains": [
@@ -7298,7 +7317,7 @@
       "Mat08",
       "Hatley-Ray"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37818bd9",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D ≡1 mod 4, the difference in sharp/flat λ-invariants under quadratic twist by D should include a term proportional to the μ-invariant when μ ≠ 0.",
     "domain_bridges": [
       "2-adic L-functions",
@@ -7314,7 +7333,7 @@
     "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T01:05:41.844138+00:00",
     "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
   },
@@ -7746,33 +7765,6 @@
     "status": "available",
     "timestamp": "2026-07-08T18:40:30.271481+00:00",
     "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "FurediSurvey",
-      "KeevashSurvey",
-      "SidorenkoSurvey",
-      "ConlonSchulke"
-    ],
-    "consumed_by_exp_id": "e3aaa465",
-    "description": "For any k ≥3 and 1≤ℓ<k, and any two accumulation points α, β in Π^k_ℓ, there exists a transfer function f such that f(α) = β.",
-    "domain_bridges": [
-      "Algebraic Combinatorics",
-      "Spectral Graph Theory"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0661",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct a tree suspension parameterized to target specific densities, demonstrating that tree structures can interpolate between any pair of accumulation points.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06518v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T19:01:40.311474+00:00",
-    "title": "Universality of Transfer Functions Among Accumulation Points"
   },
   {
     "ambition_level": "grand_challenge",
@@ -12864,6 +12856,26 @@
     "status": "available",
     "timestamp": "2026-07-13T14:51:33.072594+00:00",
     "title": "Hermitian-inner-product \"witness\" from the first Hopf"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe file `Applications/TransferUniversality.lean` formalizes a universality/transitivity\ntheorem for transfer functions among accumulation points, modeling `Π^k_ℓ` as the dense\nadditive subgroup `ℓ·ℤ[1/k] ⊆ ℝ`. Natural extensions:\n\n1. **Richer transfer semigroup.** We proved `Π^k_ℓ` is invariant under `x ↦ k·x`\n   (`smul_k_mem_Pi`). One could enlarge `IsTransfer` to the affine maps\n   `x ↦ k^j·x + c` (`j ∈ ℤ`, `c ∈ Π^k_ℓ`) and show they still preserve `Π^k_ℓ`,\n   obtaining a solvable group acting on the set and studying its orbits on non-members.\n\n2. **Simple transitivity as a group isomorphism.** `transfer_unique` shows the translation\n   action is simply transitive. This could be packaged as a group isomorphism between the\n   group of transfer functions (under composition) and `(Π^k_ℓ, +)`.\n\n3. **Topological invariants.** Prove `Π^k_ℓ` is a perfect, totally disconnected-free dense\n   set of measure zero and characterize its closure and its induced-order type; relate the\n   `ℓ`-indexed family by inclusions and index computations.\n\n4. **Toward the combinatorial `Π^k_ℓ`.** The mission's `Π^k_ℓ` ultimately refers to sets of\n   hypergraph Turán densities (cf. the Füredi/Keevash/Sidorenko/Conlon–Schülke surveys).\n   A long-term goal is to formalize the relevant density sets and their accumulation\n   (jump) structure in Lean and to identify which density-preserving operations play the\n   role of transfer functions there.\n\n5. **General perfect subgroups.** Abstract the argument: any dense additive subgroup `G` of\n   a metric group without isolated points is perfect, and its own translations act simply\n   transitively on it. This generalizes the present result beyond `ℤ[1/k]`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1229",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e3aaa465",
+    "status": "available",
+    "timestamp": "2026-07-13T15:23:56.684450+00:00",
+    "title": "The file `Applications/TransferUniversality.lean` formalizes a universality/tran"
   },
   {
     "ambition_level": "extension",

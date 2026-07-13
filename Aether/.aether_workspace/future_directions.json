@@ -16869,7 +16869,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Spr12",
         "Pol03",
@@ -16878,7 +16878,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "37818bd9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16894,7 +16894,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0625",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T15:25:15.276638+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem: If μ²(E, ω^i) ≠ 0, then λ²*(E^D, ω^i) = λ²*(E, ω^i) + Σ_{ℓ|D} [terms] + c ⋅ μ²(E, ω^i) for some constant c ∈ Z_2.",
       "lineage_refs": [],
@@ -16909,7 +16909,7 @@
       "source": "",
       "source_exp_id": "2607.05305v1",
       "source_path": "http://arxiv.org/abs/2607.05305v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T01:05:41.844138+00:00",
       "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
@@ -34978,7 +34978,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe file `Applications/TransferUniversality.lean` formalizes a universality/transitivity\ntheorem for transfer functions among accumulation points, modeling `Π^k_ℓ` as the dense\nadditive subgroup `ℓ·ℤ[1/k] ⊆ ℝ`. Natural extensions:\n\n1. **Richer transfer semigroup.** We proved `Π^k_ℓ` is invariant under `x ↦ k·x`\n   (`smul_k_mem_Pi`). One could enlarge `IsTransfer` to the affine maps\n   `x ↦ k^j·x + c` (`j ∈ ℤ`, `c ∈ Π^k_ℓ`) and show they still preserve `Π^k_ℓ`,\n   obtaining a solvable group acting on the set and studying its orbits on non-members.\n\n2. **Simple transitivity as a group isomorphism.** `transfer_unique` shows the translation\n   action is simply transitive. This could be packaged as a group isomorphism between the\n   group of transfer functions (under composition) and `(Π^k_ℓ, +)`.\n\n3. **Topological invariants.** Prove `Π^k_ℓ` is a perfect, totally disconnected-free dense\n   set of measure zero and characterize its closure and its induced-order type; relate the\n   `ℓ`-indexed family by inclusions and index computations.\n\n4. **Toward the combinatorial `Π^k_ℓ`.** The mission's `Π^k_ℓ` ultimately refers to sets of\n   hypergraph Turán densities (cf. the Füredi/Keevash/Sidorenko/Conlon–Schülke surveys).\n   A long-term goal is to formalize the relevant density sets and their accumulation\n   (jump) structure in Lean and to identify which density-preserving operations play the\n   role of transfer functions there.\n\n5. **General perfect subgroups.** Abstract the argument: any dense additive subgroup `G` of\n   a metric group without isolated points is perfect, and its own translations act simply\n   transitively on it. This generalizes the present result beyond `ℤ[1/k]`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -35579,7 +35579,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` — abstract multiverse.**\nA `Multivers",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications"
       ],
@@ -35699,7 +35699,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -36979,7 +36979,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 59a15132 (Q=0.790), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that a generalized Latin rectangle of size n×n (i.e., λ = 1) possessing pairwise reflection symmetry—where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns—exists if and only if n is a power of two.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],
@@ -38493,7 +38493,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b222c758",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38520,7 +38520,7 @@
       "source": "",
       "source_exp_id": "acce14cf",
       "source_path": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-12T01:03:33.365633+00:00",
       "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
@@ -39139,7 +39139,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e0843845 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` placeholders. All three are now proved\n`sorry`-free, with dependencies confirmed to use only the standar",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -39244,6 +39244,46 @@
       "thread_id": "",
       "timestamp": "2026-07-10T09:26:12.203685+00:00",
       "title": "Deepening: Cryptography from Chaos: Encrypting with the Logistic Map"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle e3aaa465 (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any k ≥3 and 1≤ℓ<k, and any two accumulation points α, β in Π^k_ℓ, there exists a transfer function f such that f(α) = β.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "push_e3aaa465_d0779996",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.88,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e3aaa465",
+      "source_path": "Universality of Transfer Functions Among Accumulation Points",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-13T15:24:17.196126+00:00",
+      "title": "Deepening: Universality of Transfer Functions Among Accumulation Points"
     },
     {
       "ambition_level": "extension",
@@ -41219,7 +41259,7 @@
       "depth_estimate": 3,
       "description": "Cycle 86e0e034 (Q=0.740) proved 5 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Applications"
       ],
@@ -41739,7 +41779,7 @@
       "depth_estimate": 3,
       "description": "Cycle e0843845 (Q=0.800) proved 15 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -41859,7 +41899,7 @@
       "depth_estimate": 3,
       "description": "Cycle e8b8d594 (Q=0.820) proved 10 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integer k ≥ 1, the maximum determinant of any 4×4 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a s",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -42134,6 +42174,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }

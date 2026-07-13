@@ -339,7 +339,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -348,7 +348,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -816,6 +816,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T23:55:51.057432+00:00",
     "title": "Deepening: Rucker: The Lifebox \u2014 Information-Theoretic Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e3aaa465 (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any k \u22653 and 1\u2264\u2113<k, and any two accumulation points \u03b1, \u03b2 in \u03a0^k_\u2113, there exists a transfer function f such that f(\u03b1) = \u03b2.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e3aaa465_d0779996",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "e3aaa465",
+    "status": "available",
+    "timestamp": "2026-07-13T15:24:17.196126+00:00",
+    "title": "Deepening: Universality of Transfer Functions Among Accumulation Points"
   },
   {
     "consumed_by_exp_id": "",
@@ -4282,7 +4296,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite Twin-Width of Virtually Nilpotent Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37818bd9",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
     "domains": [
       "Geometry"
@@ -4291,7 +4305,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T01:05:41.844138+00:00",
     "title": "Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
   },
@@ -4510,20 +4524,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-08T18:40:30.271481+00:00",
     "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
-  },
-  {
-    "consumed_by_exp_id": "e3aaa465",
-    "description": "For any k \u22653 and 1\u2264\u2113<k, and any two accumulation points \u03b1, \u03b2 in \u03a0^k_\u2113, there exists a transfer function f such that f(\u03b1) = \u03b2.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0661",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06518v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T19:01:40.311474+00:00",
-    "title": "Universality of Transfer Functions Among Accumulation Points"
   },
   {
     "consumed_by_exp_id": "",
@@ -7983,6 +7983,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T14:51:33.072594+00:00",
     "title": "Hermitian-inner-product \"witness\" from the first Hopf"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe file `Applications/TransferUniversality.lean` formalizes a universality/transitivity\ntheorem for transfer functions among accumulation points, modeling `\u03a0^k_\u2113` as the dense\nadditive subgroup `\u2113\u00b7\u2124[1/k] \u2286 \u211d`. Natural extensions:\n\n1. **Richer transfer semigroup.** We proved `\u03a0^k_\u2113` is invariant under `x \u21a6 k\u00b7x`\n   (`smul_k_mem_Pi`). One could enlarge `IsTransfer` to the affine maps\n   `x \u21a6 k^j\u00b7x + c` (`j \u2208 \u2124`, `c \u2208 \u03a0^k_\u2113`) and show they still preserve `\u03a0^k_\u2113`,\n   obtaining a solvable group acting on the set and studying its orbits on non-members.\n\n2. **Simple transitivity as a group isomorphism.** `transfer_unique` shows the translation\n   action is simply transitive. This could be packaged as a group isomorphism between the\n   group of transfer functions (under composition) and `(\u03a0^k_\u2113, +)`.\n\n3. **Topological invariants.** Prove `\u03a0^k_\u2113` is a perfect, totally disconnected-free dense\n   set of measure zero and characterize its closure and its induced-order type; relate the\n   `\u2113`-indexed family by inclusions and index computations.\n\n4. **Toward the combinatorial `\u03a0^k_\u2113`.** The mission's `\u03a0^k_\u2113` ultimately refers to sets of\n   hypergraph Tur\u00e1n densities (cf. the F\u00fcredi/Keevash/Sidorenko/Conlon\u2013Sch\u00fclke surveys).\n   A long-term goal is to formalize the relevant density sets and their accumulation\n   (jump) structure in Lean and to identify which density-preserving operations play the\n   role of transfer functions there.\n\n5. **General perfect subgroups.** Abstract the argument: any dense additive subgroup `G` of\n   a metric group without isolated points is perfect, and its own translations act simply\n   transitively on it. This generalizes the present result beyond `\u2124[1/k]`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1229",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e3aaa465",
+    "status": "available",
+    "timestamp": "2026-07-13T15:23:56.684450+00:00",
+    "title": "The file `Applications/TransferUniversality.lean` formalizes a universality/tran"
   },
   {
     "consumed_by_exp_id": "",
