@@ -1768,7 +1768,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75061bf5",
     "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' — beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
     "domain_bridges": [],
     "domains": [
@@ -1780,7 +1780,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "7a9dcf2f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T02:59:14.834105+00:00",
     "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
@@ -9100,7 +9100,7 @@
       "Brundan--Kleshchev (2009) - Decomposition numbers for cyclotomic Hecke algebras",
       "Stembridge (1997) - Restricted root systems and Kazhdan-Lusztig polynomials"
     ],
-    "consumed_by_exp_id": "36372f99",
+    "consumed_by_exp_id": "",
     "description": "Every palindromic Poincaré polynomial arising from a strongly smooth element in type A_n occurs as a Poincaré polynomial P_w(q) for some element w in the principal poset Pr(L_B) under the canonical Lehmer code L_B for type B_n, where the correspondence is given by w = bot^{-1}(v) for v ∈ Sm_n.",
     "domain_bridges": [
       "Coxeter groups → Symmetric groups via restriction functors",
@@ -9118,7 +9118,7 @@
     "proof_strategy": "The proof requires establishing that the Stembridge bottom map bot: A_n → B_n induces an injection on principal elements when restricted to strongly smooth elements, i.e., if v,w ∈ Sm_n with v ≠ w then bot(v) ≠ bot(w), and additionally showing that for each v ∈ Sm_n, the element bot(v) belongs to Pr(L_B). This combines analysis of the combinatorial structure of strongly smooth elements in type A with explicit computation of the pullback of the canonical Lehmer code structure under bot.",
     "research_mode": "team",
     "source_exp_id": "2607.07659v1",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-09T16:08:00.537695+00:00",
     "title": "Palindromic Poincaré polynomial occurrence in type B via Stembridge's bottom map"
   },

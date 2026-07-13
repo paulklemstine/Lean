@@ -1309,7 +1309,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75061bf5",
     "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
     "domains": [
       "MachineLearning"
@@ -1318,7 +1318,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "7a9dcf2f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T02:59:14.834105+00:00",
     "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
@@ -5205,7 +5205,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algorithmic Induced Erd\u0151s\u2013P\u00f3sa Property for Long Thetas"
   },
   {
-    "consumed_by_exp_id": "36372f99",
+    "consumed_by_exp_id": "",
     "description": "Every palindromic Poincar\u00e9 polynomial arising from a strongly smooth element in type A_n occurs as a Poincar\u00e9 polynomial P_w(q) for some element w in the principal poset Pr(L_B) under the canonical Lehmer code L_B for type B_n, where the correspondence is given by w = bot^{-1}(v) for v \u2208 Sm_n.",
     "domains": [
       "Bridges",
@@ -5215,7 +5215,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07659v1",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-09T16:08:00.537695+00:00",
     "title": "Palindromic Poincar\u00e9 polynomial occurrence in type B via Stembridge's bottom map"
   },
