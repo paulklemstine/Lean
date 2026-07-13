@@ -367,7 +367,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
   {
-    "consumed_by_exp_id": "9fd88504",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e2c082ff (Q=0.820), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
     "domains": [
       "MachineLearning"
@@ -376,7 +376,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "e2c082ff",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T07:19:31.875554+00:00",
     "title": "Deepening: Lower bounds on clique densities using generalized inverses"
   },
@@ -1239,7 +1239,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "17340490",
     "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
     "domains": [
       "MachineLearning"
@@ -1248,7 +1248,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "7a9dcf2f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T02:59:14.834105+00:00",
     "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
