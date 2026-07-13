@@ -508,6 +508,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   {
+    "consumed_by_exp_id": "1a598f10",
+    "description": "Building on cycle 02c1616a (Q=0.800), which proved 8 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture asserts that functional equations for Dirichlet L-functions, under mild assumptions, necessitate the coefficient function to be a primitive Dirichlet character.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_02c1616a_44029820",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "02c1616a",
+    "status": "in_progress",
+    "timestamp": "2026-07-13T07:01:34.223078+00:00",
+    "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 16e4b1d9 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" \u2014 a device deciding number-theoretic statements \u2014 cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n",
     "domains": [
@@ -2426,20 +2440,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T12:57:08.370062+00:00",
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
-  },
-  {
-    "consumed_by_exp_id": "02c1616a",
-    "description": "This conjecture asserts that functional equations for Dirichlet L-functions, under mild assumptions, necessitate the coefficient function to be a primitive Dirichlet character.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0246",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00332v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T14:51:39.872882+00:00",
-    "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
     "consumed_by_exp_id": "",
@@ -7664,6 +7664,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T07:01:10.939185+00:00",
     "title": "The number `P(n)` of partial orders on `n` labeled points is known to be odd for"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Functional Equations and the Primitivity of Coefficients\n\nThis cycle established, in fully verified form, two complementary faces of a single\nprinciple: the completed `L`-function of a *primitive* Dirichlet character obeys a clean\nreflection law, and the Gauss sum \u2014 the analytic core of the root number appearing in that\nlaw \u2014 vanishes exactly when primitivity fails. Below are bold, testable conjectures that grow\ndirectly out of these findings.\n\n## 1. The reflection law characterises primitivity (converse rigidity)\n\n**Conjecture.** Let `\u03c7` be a Dirichlet character modulo `N`. If there exists a constant `W`\nwith `|W| = 1` such that the completed `L`-function satisfies\n`\u039b(\u03c7, 1 - s) = N^{s - 1/2} \u00b7 W \u00b7 \u039b(\u03c7\u207b\u00b9, s)` for all `s`, then `\u03c7` is primitive.\n\nThe key insight is that an imprimitive character differs from its primitive inductor only by\nfinitely many Euler factors, and those factors break the exact symmetry of the reflection law\nunless the modulus in the exponent is replaced by the strictly smaller conductor; demanding\nthe modulus itself forces conductor and modulus to coincide.\n\nWhy now? The forward direction and the root-number reciprocity identity `W(\u03c7)\u00b7W(\u03c7\u207b\u00b9) = 1`\nare now available unconditionally, so the missing ingredient is purely the Euler-factor\nbookkeeping that separates a character from its inductor \u2014 a self-contained, finite step.\n\n## 2. Root-number reciprocity upgrades to an equality of scalars\n\n**Conjecture.** For every primitive character `\u03c7`, `W(\u03c7) \u00b7 W(\u03c7\u207b\u00b9) = 1` as complex numbers,\nand consequently `W(\u03c7)` has modulus one; for a real (quadratic) character, `W(\u03c7) = \u00b11`.\n\nThe key insight is that the identity-form reciprocity `W(\u03c7)\u00b7W(\u03c7\u207b\u00b9)\u00b7\u039b(\u03c7,s) = \u039b(\u03c7,s)` already\nholds for all `s`, so the scalar equality follows the moment one exhibits a single argument at\nwhich the completed `L`-function is non-zero \u2014 for instance deep in the region of absolute\nconvergence, where the Euler product forbids vanishing.\n\nWhy now? The functional identity is proved; only a non-vanishing witness stands between it and\nthe sharp scalar statement, and non-vanishing in the convergent half-plane is classical.\n\n## 3. Gauss-sum modulus pins the conductor\n\n**Conjecture.** For a Dirichlet character `\u03c7` modulo `N`, the squared modulus of its Gauss sum\nagainst a primitive additive character equals the conductor of `\u03c7`, not merely `N`; in\nparticular the Gauss sum has modulus `\u221aN` if and only if `\u03c7` is primitive.\n\nThe key insight is that the Gauss sum factors through the primitive inductor, so its size is\ngoverned by the conductor; the \"defect\" `N / conductor` measures exactly how far the character\nis from primitive.\n\nWhy now? We have already isolated the qualitative statement \u2014 a Gauss sum survives against an\nimprimitive additive character precisely when `\u03c7` is imprimitive \u2014 so the natural next step is\nto make the size quantitative and turn the dichotomy into an exact conductor formula.\n\n## 4. Self-dual functional equations and the sign of the central value\n\n**Conjecture.** For a primitive real character `\u03c7` with root number `W(\u03c7) = -1`, the central\nvalue `\u039b(\u03c7, 1/2)` vanishes; for `W(\u03c7) = +1` it is real and its sign is determined by the\ncharacter's arithmetic.\n\nThe key insight is that the self-dual reflection law `\u039b(\u03c7, 1-s) = N^{s-1/2} \u00b7 W(\u03c7) \u00b7 \u039b(\u03c7, s)`\nforces `\u039b(\u03c7, 1/2)\u00b7(1 - W(\u03c7)) = 0` at the centre, so a root number of `-1` annihilates the\ncentral value outright.\n\nWhy now? The self-dual functional equation and the relation `W(\u03c7)\u00b2 acting trivially on the\nL-values` are both established here, making the central-value dichotomy an immediate and\ntestable consequence.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1197",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "02c1616a",
+    "status": "available",
+    "timestamp": "2026-07-13T07:01:22.694820+00:00",
+    "title": "This cycle established, in fully verified form, two complementary faces of a sin"
   },
   {
     "consumed_by_exp_id": "",

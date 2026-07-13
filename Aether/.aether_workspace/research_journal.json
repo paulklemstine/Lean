@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3cdfbb0e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Automatic Sequences and the Kernel Criterion\n\nThis cycle established the finite-kernel criterion for automatic sequences as a\nself-contained, characteristic-free foundation: deci",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 26,
-      "timestamp": "2026-07-12T15:55:11",
-      "title": "Deepening: Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
-    },
-    {
       "cycle_id": "c81fdc47",
       "domain": "Applications",
       "key_insight": "# Future Directions — Bruhat order and closure of orbit strata\n\nThis cycle established the order-theoretic backbone of the statement *\"Bruhat order\npreserves closure relations for orbit strata on a pr",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-13T07:01:18",
       "title": "Constant residue of labeled poset counts modulo 4"
+    },
+    {
+      "cycle_id": "02c1616a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Functional Equations and the Primitivity of Coefficients\n\nThis cycle established, in fully verified form, two complementary faces of a single\nprinciple: the completed `L`-function",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-13T07:01:34",
+      "title": "Functional Equations Enforce Primitivity of Coefficients"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6528f137",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Stochastic Galois Theory over Finite Fields\n\nThis cycle sharpened the \"random polynomial behaves like a random permutation\"\ncorrespondence over finite fields. Over the rationals a",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 8,
-      "timestamp": "2026-07-10T12:39:35",
-      "title": "Deepening: Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
-    },
     {
       "cycle_id": "92e61cee",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-13T07:01:18",
       "title": "Constant residue of labeled poset counts modulo 4"
+    },
+    {
+      "cycle_id": "02c1616a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Functional Equations and the Primitivity of Coefficients\n\nThis cycle established, in fully verified form, two complementary faces of a single\nprinciple: the completed `L`-function",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-13T07:01:34",
+      "title": "Functional Equations Enforce Primitivity of Coefficients"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1abce342",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "1abce342",
-      "domain": "Applications",
-      "name": "cubic_strictMonoOn",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "97b9c756",
-      "domain": "Novelty",
-      "name": "geom_double",
-      "quality": 0.83
-    },
     {
       "cycle_id": "97b9c756",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "dualPO_involutive",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "02c1616a",
+      "domain": "Novelty",
+      "name": "and",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "02c1616a",
+      "domain": "Novelty",
+      "name": "isPrimitive_inv",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "02c1616a",
+      "domain": "Novelty",
+      "name": "completedLFunction_central",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-13T07:01:18",
+  "last_updated": "2026-07-13T07:01:34",
   "open_questions": [
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cbbd1369",
-        "quality": 0.7,
-        "theorems": 15,
-        "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
-      },
-      {
         "cycle_id": "3959b92d",
         "quality": 0.82,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 27,
         "title": "Deepening: Stone Duality for Machine Learning: Neural Networks as Geometric Real"
+      },
+      {
+        "cycle_id": "02c1616a",
+        "quality": 0.8,
+        "theorems": 8,
+        "title": "Functional Equations Enforce Primitivity of Coefficients"
       }
     ],
     "NumberTheory": [

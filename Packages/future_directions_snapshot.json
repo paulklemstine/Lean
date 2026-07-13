@@ -687,6 +687,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "1a598f10",
+    "description": "Building on cycle 02c1616a (Q=0.800), which proved 8 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture asserts that functional equations for Dirichlet L-functions, under mild assumptions, necessitate the coefficient function to be a primitive Dirichlet character.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_02c1616a_44029820",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "02c1616a",
+    "status": "in_progress",
+    "timestamp": "2026-07-13T07:01:34.223078+00:00",
+    "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 16e4b1d9 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n",
     "domain_bridges": [],
