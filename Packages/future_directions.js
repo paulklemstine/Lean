@@ -3739,20 +3739,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
   {
-    "consumed_by_exp_id": "ca370926",
-    "description": "The cyclotomic matrix $A_k(\\chi) = [G_N(\\chi^{ki+kj})]$ involving Gauss sums over $\\mathbb{Z}/N\\mathbb{Z}$ (where $N=p^m$ and $n=\\varphi(N)/k$) can be decomposed as the matrix product $W D W^T$, where $W$ is the $n \\times n$ discrete Fourier transform matrix with entries $W_{i,a} = \\omega^{ai}$ ($\\omega$ being a primitive $n$-th root of unity) and $D$ is the diagonal matrix of the $n$ Gauss periods $\\eta_a$ corresponding to the $k$-th power residue cyclotomic cosets.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0506",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02392v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T22:55:43.909167+00:00",
-    "title": "Factorization of Cyclotomic Gauss Sum Matrix"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any graph of order n \u2265 8, if it contains strictly more than T(n) = (n^2 - 3n)/2 - \u2308n/2\u2309 + 2 edges, then every edge in the graph has strictly positive Ollivier/Lin-Lu-Yau curvature.",
     "domains": [
@@ -7631,6 +7617,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T05:18:23.194523+00:00",
     "title": "Amplitude-domination principle: a coefficient sequence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the linear-algebraic core of the cyclotomic Gauss-sum\nmatrix factorization `A = W D W\u1d40`, where `A i j = \u2211\u2090 \u03b7\u2090 \u03c9^{a(i+j)}` is the\nfinite Fourier transform of the Gauss periods `\u03b7\u2090`, `W i a = \u03c9^{ai}` is the DFT\nmatrix, and `D = diag \u03b7`. See `Catalog/Applications/GaussSumMatrixFactorization.lean`.\n\n## What is proved\n\n- `A_factor` \u2014 the factorization `A = W \u00b7 D \u00b7 W\u1d40`.\n- `Wmat_symm`, `Amat_symm` \u2014 symmetry of `W` and `A`.\n- `Wmat_eq_vandermonde`, `Wmat_det` \u2014 `W` is a Vandermonde matrix with\n  determinant `\u220f_{i<j}(\u03c9^j \u2212 \u03c9^i)`.\n- `Amat_det` \u2014 `det A = (det W)\u00b2 \u00b7 \u220f\u2090 \u03b7\u2090`.\n- `Amat_det_ne_zero_iff` \u2014 invertibility criterion over a field.\n- `Wmat_orthogonality` \u2014 DFT orthogonality: `(W\u1d40 W)_{a,b} = n\u00b7[n \u2223 a+b]`.\n- `dft_inversion`, `eta_from_matrix` \u2014 recovery of the Gauss periods from `A`.\n- `WtW_ne_scalar` \u2014 **refutation** of the tempting conjecture `W\u1d40 W = n\u00b7I`\n  (the correct value is `n` times the reversal permutation).\n\n## Natural next steps\n\n1. **Bridge to genuine Gauss sums.** Replace the abstract entries by the\n   number-theoretic Gauss sum `G_N(\u03c7^{ks})` over `\u2124/N\u2124` and prove the identity\n   `G_N(\u03c7^{ks}) = \u2211\u2090 \u03b7\u2090 \u03c9^{as}` relating a Gauss sum to the Gauss periods of the\n   `k`-th power residue cyclotomic cosets. This is the missing number-theoretic\n   input that specializes `A_factor` to `A_k(\u03c7) = [G_N(\u03c7^{k(i+j)})]`.\n\n2. **Reversal permutation, explicitly.** Package `Wmat_orthogonality` as an\n   equation `W\u1d40 W = n \u2022 P` for the permutation matrix `P` of `a \u21a6 (n\u2212a) mod n`,\n   and deduce a closed form for `A\u207b\u00b9` (over a field with `n` invertible and all\n   `\u03b7\u2090 \u2260 0`) via `A\u207b\u00b9 = (1/n\u00b2) W\u1d40 P D\u207b\u00b9 P W`.\n\n3. **Eigenstructure.** Since `W` is symmetric, interpret `A = W D W` as a\n   spectral-type decomposition and extract eigenvalue/trace identities such as\n   `tr A = \u2211\u2090 \u03b7\u2090 \u00b7 (\u2211\u1d62 \u03c9^{2ai})`.\n\n4. **Specialisation to prime-power moduli.** Instantiate with `N = p^m`,\n   `n = \u03c6(N)/k`, and a concrete primitive `n`-th root, tying `\u03b7` to the actual\n   period polynomials of the cyclotomic cosets.\n\n5. **Determinant as a discriminant.** Relate `(det W)\u00b2`, the square of the\n   Vandermonde determinant, to the discriminant of `x^n \u2212 1`, giving an\n   arithmetic interpretation of `det A`.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1191",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ca370926",
+    "status": "available",
+    "timestamp": "2026-07-13T05:18:37.769691+00:00",
+    "title": "This project formalizes the linear-algebraic core of the cyclotomic Gauss-sum"
   },
   {
     "consumed_by_exp_id": "",
