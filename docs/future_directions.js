@@ -1253,20 +1253,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
-    "consumed_by_exp_id": "5fd927d4",
-    "description": "Cycle 996ff4be (Q=0.780) proved 14 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups an",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_996ff4be_9807c88d",
-    "priority_score": 0.8300000000000001,
-    "research_mode": "team",
-    "source_exp_id": "996ff4be",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:17:30.485687+00:00",
-    "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
@@ -1570,7 +1556,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cone Colorful Carath\u00e9odory Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2800cd94",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
     "domains": [
       "Geometry"
@@ -1579,7 +1565,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.05305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T01:05:41.844138+00:00",
     "title": "Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
   },
@@ -1728,7 +1714,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The mission asked to interrogate the claim:"
   },
   {
-    "consumed_by_exp_id": "fb7fe841",
+    "consumed_by_exp_id": "",
     "description": "Cycle d954b0de (Q=0.740) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every Tur\u00e1n graph T(n, r) with r \u2265 4 and n \u2265 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) \u2212 e) > E_S(T(n, r)). This is Theorem 1.2 of the pa",
     "domains": [
       "Novelty"
@@ -1737,7 +1723,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "d954b0de",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-13T19:07:10.963972+00:00",
     "title": "Close Proofs: Seidel energy strictly increases under edge deletion in Tur\u00e1n graphs"
   },
@@ -2036,6 +2022,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T21:24:15.573588+00:00",
     "title": "Constructive, lower-bound half of the co-index theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Category Theory of Jokes\n\nThis work develops surprise (humor) as a genuine algebraic/categorical invariant of\nsetups. Three complementary threads are now formalized:\n\n* **Universal resolutions** (`UniversalJoke.lean`): the optimal resolution of a setup is\n  a terminal object, unique up to unique coherent isomorphism, and rigid.\n* **Metric geometry of surprise** (`JokeHumorMetric.lean`): surprise is the diameter of\n  the resolution configuration, nonnegative, monotone, and Lipschitz-stable.\n* **Algebra of surprise** (`JokeSurpriseAlgebra.lean`, this cycle): surprise is a\n  monotone **functor** `Setup \u2964 \u211d` from the poset of setups (ordered by refinement) to\n  the reals, inflationary under juxtaposition and **subadditive under shared context**.\n\n## Directions\n\n1. **Lax monoidal structure.** `humor_union_le_add_of_inter` is the lax structure map of\n   surprise for the \"juxtaposition with shared context\" monoidal structure on `Setup`.\n   Formalize `Setup` as a (partial) monoidal category and upgrade `surpriseFunctor` to a\n   lax monoidal functor `(Setup, \u222a) \u2964 (\u211d, +)`. The failure of unconditional\n   subadditivity (documented in `ComputationalEvidence.md`) shows it is genuinely *lax*,\n   not strong.\n\n2. **Higher-dimensional setups.** Replace `Finset \u211d` by finite configurations in `\u211d\u207f`\n   and define surprise as the diameter of the convex hull. The functoriality and\n   subadditivity statements should survive with the metric diameter in place of the\n   one-dimensional range.\n\n3. **Colimits as combination.** Interpret `\u222a` as a coproduct-flavored colimit in the\n   setup lattice and `\u2229` as the dual; recast `humor_union_ge_left/right` and\n   `humor_inter_le_left` as (co)continuity-style properties of `surpriseFunctor`.\n\n4. **Tightness and extremal setups.** Characterize exactly the pairs `(S, T)` for which\n   `humor(S\u222aT) = humor S + humor T` (equality in subadditivity). The evidence table\n   suggests this happens iff the shared pivot is an extreme of both parts.\n\n5. **Enriched / metric functoriality.** Combine the Lipschitz stability of surprise with\n   its functoriality to view `surpriseFunctor` as a functor enriched over the reals as a\n   metric-enriched category.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1248",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5fd927d4",
+    "status": "available",
+    "timestamp": "2026-07-13T21:24:28.676426+00:00",
+    "title": "This work develops surprise (humor) as a genuine algebraic/categorical invariant"
   },
   {
     "consumed_by_exp_id": "",

@@ -6690,14 +6690,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.PR",
         "math.CO"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "1bd2f770",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -6713,7 +6713,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0501",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T21:25:12.058842+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem chord_swap_spectral_gap_tight {g : ℕ} (hg : g > 0) : ∃ C₁ C₂ : ℝ, C₁ > 0 ∧ C₂ > 0 ∧ ∀ n : ℕ, n > 2 * g → let γ := spectral_gap (chordSwapChain n g); C₁ * n^(-3 : ℝ) ≤ γ ∧ γ ≤ C₂ * n^(-3 : ℝ) := by sorry",
       "lineage_refs": [],
@@ -6728,7 +6728,7 @@
       "source": "",
       "source_exp_id": "2607.02410v1",
       "source_path": "http://arxiv.org/abs/2607.02410v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-07T00:02:19.658603+00:00",
       "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
@@ -8274,7 +8274,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [
         "Spr12",
         "Pol03",
@@ -8283,7 +8283,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2800cd94",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -8299,7 +8299,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0625",
-      "last_attempt_time": "2026-07-13T15:25:15.276638+00:00",
+      "last_attempt_time": "2026-07-13T21:24:56.755214+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem: If μ²(E, ω^i) ≠ 0, then λ²*(E^D, ω^i) = λ²*(E, ω^i) + Σ_{ℓ|D} [terms] + c ⋅ μ²(E, ω^i) for some constant c ∈ Z_2.",
       "lineage_refs": [],
@@ -8314,7 +8314,7 @@
       "source": "",
       "source_exp_id": "2607.05305v1",
       "source_path": "http://arxiv.org/abs/2607.05305v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T01:05:41.844138+00:00",
       "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
@@ -23832,7 +23832,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "fb7fe841",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -23859,7 +23859,7 @@
       "source": "",
       "source_exp_id": "d954b0de",
       "source_path": "Seidel energy strictly increases under edge deletion in Turán graphs",
-      "status": "in_progress",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-07-13T19:07:10.963972+00:00",
       "title": "Close Proofs: Seidel energy strictly increases under edge deletion in Turán graphs"
@@ -43223,8 +43223,6 @@
     "π^k_ℓ": 2
   },
   "selection_log": [
-    "cross_domain_bridge",
-    "abduction_followup",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -43241,6 +43239,8 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"
   ]
