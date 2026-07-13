@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "53945fe2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle deepens the probabilistic-method development (Erdős Ramsey lower bound, first-moment\nprinciple, and the Lovász Local Lemma chain rule) by formalising a *second* pillar",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-12T10:27:15",
-      "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
-    },
-    {
-      "cycle_id": "a6691c84",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = re",
-      "quality_score": 0.82,
-      "sorry_count": 6,
-      "theorem_count": 27,
-      "timestamp": "2026-07-12T10:44:26",
-      "title": "Deepening: The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-    },
-    {
       "cycle_id": "e618ea1a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Topology of Symmetric Argumentation\n\nThis cycle established the *correct* Euler/semantics bridge on the symmetric side\nof Dung's theory: in a symmetric framework every confli",
@@ -499,29 +479,29 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T01:24:26",
       "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
+    },
+    {
+      "cycle_id": "cbbd1369",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Generalized Giampietro–Darmon Factorization\n\n## Summary of what was proved / disproved\n\nThis project formalizes a self-contained arithmetic model of the structural core\nof the Gi",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T01:24:57",
+      "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
+    },
+    {
+      "cycle_id": "3959b92d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Bayesian Werewolf ↔ Combinatorics bridge\n\nThe file `BayesianWerewolfHypergeometric.lean` establishes that the elementary\nprobabilistic moments of the hypergeometric \"werewolves-i",
+      "quality_score": 0.82,
+      "sorry_count": 1,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T01:25:17",
+      "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9696343b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalises the *algebraic skeleton* of the \"topology of Bach\"\nmission: pitch-class space as `ℤ/12ℤ`, harmonic cycles as cyclic subgroups, and\nthe circle of fifths as",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-10T08:05:57",
-      "title": "Persistent Homology of Musical Harmony: The Topology of Bach"
-    },
-    {
-      "cycle_id": "39669115",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain bridge**: Sudoku (a constraint satisfaction problem)\nis identified with proper vertex coloring (graph theory), and the shared structural i",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-10T08:22:03",
-      "title": "The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-    },
     {
       "cycle_id": "7e49f0c7",
       "domain": "Novelty",
@@ -2501,45 +2481,29 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T01:24:26",
       "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
+    },
+    {
+      "cycle_id": "cbbd1369",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Generalized Giampietro–Darmon Factorization\n\n## Summary of what was proved / disproved\n\nThis project formalizes a self-contained arithmetic model of the structural core\nof the Gi",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T01:24:57",
+      "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
+    },
+    {
+      "cycle_id": "3959b92d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Bayesian Werewolf ↔ Combinatorics bridge\n\nThe file `BayesianWerewolfHypergeometric.lean` establishes that the elementary\nprobabilistic moments of the hypergeometric \"werewolves-i",
+      "quality_score": 0.82,
+      "sorry_count": 1,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T01:25:17",
+      "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0bd39924",
-      "domain": "Novelty",
-      "name": "petrieBlock_dvd",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "0bd39924",
-      "domain": "Novelty",
-      "name": "petrieBlock_eval_one",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "867d1ba2",
-      "domain": "Novelty",
-      "name": "mem_charF",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "867d1ba2",
-      "domain": "Novelty",
-      "name": "defends_mono",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "867d1ba2",
-      "domain": "Novelty",
-      "name": "charF_mono",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "0fe20e26",
-      "domain": "Novelty",
-      "name": "pin",
-      "quality": 0.82
-    },
     {
       "cycle_id": "91f941b6",
       "domain": "Novelty",
@@ -2803,24 +2767,46 @@
       "domain": "Novelty",
       "name": "sigma_prime_pow",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "cbbd1369",
+      "domain": "Novelty",
+      "name": "sq_real_inner_le",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "cbbd1369",
+      "domain": "Novelty",
+      "name": "neronTateObstruction_nonneg",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "cbbd1369",
+      "domain": "Novelty",
+      "name": "neronTateObstruction_symm",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "3959b92d",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3959b92d",
+      "domain": "Novelty",
+      "name": "vander_range",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3959b92d",
+      "domain": "Novelty",
+      "name": "choose_absorb",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T01:24:26",
+  "last_updated": "2026-07-13T01:25:17",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "c3fe1d06",
-      "domain": "MachineLearning",
-      "sorry_count": 4,
-      "timestamp": "2026-07-12T09:36:18"
-    },
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "b290e3a0",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-12T10:27:01"
-    },
     {
       "context": "+The structural reduction is complete and `sorry`-free: the computational; +  tail is therefore left as a single, clearly documented `sorry` (a; sorry",
       "cycle_id": "a6691c84",
@@ -3016,6 +3002,20 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-13T01:24:26"
+    },
+    {
+      "context": "+Everything is elementary and `sorry`-free.",
+      "cycle_id": "cbbd1369",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T01:24:57"
+    },
+    {
+      "context": "Everything is `sorry`-free and uses only `import Mathlib`; the file compiles",
+      "cycle_id": "3959b92d",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T01:25:17"
     }
   ],
   "research_threads": {
@@ -3579,18 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "eb025541",
-        "quality": 0.83,
-        "theorems": 15,
-        "title": "`ThermodynamicsOfProof.lean` — the positive theory:"
-      },
-      {
-        "cycle_id": "bcff067f",
-        "quality": 0.7,
-        "theorems": 20,
-        "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
-      },
-      {
         "cycle_id": "0c4e7ae8",
         "quality": 0.82,
         "theorems": 20,
@@ -3637,6 +3625,18 @@
         "quality": 0.83,
         "theorems": 16,
         "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
+      },
+      {
+        "cycle_id": "cbbd1369",
+        "quality": 0.7,
+        "theorems": 15,
+        "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
+      },
+      {
+        "cycle_id": "3959b92d",
+        "quality": 0.82,
+        "theorems": 9,
+        "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
       }
     ],
     "NumberTheory": [
