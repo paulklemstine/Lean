@@ -227,7 +227,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
-    "consumed_by_exp_id": "0bc42943",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domains": [
       "NumberTheory"
@@ -236,7 +236,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "47a54792",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T00:29:46.239053+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
@@ -762,7 +762,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "117d6517",
     "description": "Building on cycle fb4de3e5 (Q=0.780), which proved 23 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some met",
     "domains": [
       "Tropical"
@@ -771,7 +771,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "fb4de3e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T02:10:54.368732+00:00",
     "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Op"
   },
@@ -1668,20 +1668,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unbounded Gap Between Co-Index of a Free Z_2-Space and Its Suspension"
   },
   {
-    "consumed_by_exp_id": "ad0affd1",
-    "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "fd_0673",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06524v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T17:01:42.923851+00:00",
-    "title": "Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 threshold"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The class of cographs (Forb(P\u2084)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spectrum), then H must also be a cograph. This extends the paper's result for threshold graphs (Forb(2K\u2082, P\u2084, C\u2084)) to the larger class of cographs.",
     "domains": [
@@ -2016,6 +2002,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T19:07:02.581945+00:00",
     "title": "Elementary spectral-moment foundations of Seidel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential lower bound for sub-\u221a2 Vietoris\u2013Rips approximations whose rate `\u03b3(c)` vanishes\nat the \u221a2 threshold.\n\n## What is proved (file `Bridges/VietorisRipsSubSqrt2LowerBound.lean`)\n\nFor each `n` we build the graded ultrametric `metricD n` on `Fin n` (non-zero distances in\n`[1, \u221a2]`, `radius(n,i) = 1 + (\u221a2\u22121)(i+1)/n`), and set\n`\u03b3(c) = (\u221a2/c \u2212 1)/(\u221a2 \u2212 1)`.\n\n* **Metric geometry.** `dist_isMetric`: `metricD n` is a genuine finite (ultra)metric\n  (symmetry, non-negativity, `d(i,i)=0`, triangle inequality).\n* **Geometry \u2192 combinatorics (the bridge).** `two_pow_card_le_card_VRcomplex`: a metric\n  clique of size `m` at scale `r` forces `2^m` Vietoris\u2013Rips simplices (its whole power\n  set), and `two_pow_activeCard_le_VRcomplex` applies this to the graded active set.\n* **The effective exponent.** `gamma_pos`, `gamma_le_one` (so `0 < \u03b3(c) \u2264 1` on `[1,\u221a2)`),\n  and `gamma_tendsto_nhdsWithin` (`\u03b3(c) \u2192 0` as `c \u2192 \u221a2\u207b`).\n* **Rate realisation.** `radius_le_iff` and `floor_gamma_le_exponent`:\n  `\u230an\u00b7\u03b3(c)\u230b \u2264 #active(\u221a2/c)`.\n* **Interleaving lower bound.** `approx_card_lower_bound`: any one-sided `c`-approximation\n  `G` (`IsCApprox`) has `2^(#active(\u221a2/c)) \u2264 |G(\u221a2)|`.\n* **Headline connector.** `subSqrt2_exponential_lower_bound`: for every `c \u2208 [1,\u221a2)`, every\n  `n>0`, and every `c`-approximation `G`,\n  `2^\u230an\u00b7\u03b3(c)\u230b \u2264 |G(\u221a2)|`, with `0 < \u03b3(c) \u2264 1` and `lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0`.\n\nThe main theorem uses only `propext`, `Classical.choice`, `Quot.sound`.\n\n## Relation to the catalog reference\n\nThe catalog file `Catalog/Novelty/VietorisRipsCliqueBridge.lean` proves a *flat* `2^n`\nbound for an equidistant configuration and defines a `\u03b3(c)` that does **not** control the\nexponent (the bound is `2^n` independent of `c`). The present work supplies the missing\n`c`-dependence demanded by the mission: an explicit `\u03b3(c)` that genuinely governs the\nexponent `\u230an\u00b7\u03b3(c)\u230b`, is positive on the whole regime `[1,\u221a2)`, and continuously degrades to\n`0` at the threshold. This is what makes the \u221a2 boundary sharp in the lower bound itself.\n\n## Directions to strengthen / extend\n\n1. **Euclidean realisability with the exact \u221a2 geometry.** The graded ultrametric is a\n   faithful finite metric, but the \"canonical\" \u221a2 phenomenon lives in Euclidean space\n   (standard basis vectors are pairwise at distance \u221a2). A worthwhile extension is to\n   realise the graded radii by an explicit point cloud in `\u211d^d` (e.g. concentric scaled\n   simplices) and re-derive the same `\u03b3(c)`, connecting to `EuclideanSpace` in Mathlib.\n\n2. **Two-sided interleavings and homotopy interleavings.** `IsCApprox` here is the\n   one-sided containment sufficient for the lower bound. Formalizing full multiplicative\n   interleavings and homotopy-interleavings (Blumberg\u2013Lesnick) and proving the same\n   simplex-count lower bound survives would tighten the link to the standard TDA notion of\n   `c`-approximation.\n\n3. **Doubling dimension.** The catalog reference \"Doubling dimension in metric geometry\"\n   suggests quantifying how the doubling dimension of `metricD n` scales with `n`, and\n   whether the exponential lower bound can be phrased purely in terms of a growth/packing\n   invariant \u2014 turning the bridge into a doubling-dimension \u21d2 complexity statement.\n\n4. **Persistent homology, not just simplex count.** Upgrade from \"many simplices\" to a\n   lower bound on the size of any interleaved *persistence module* / barcode, linking to\n   the `Catalog/.../PrimePersistentHomology.lean` line of development.\n\n5. **Optimality of `\u03b3(c)`.** Investigate whether `(\u221a2/c \u2212 1)/(\u221a2 \u2212 1)` is the best possible\n   rate for this family, and characterise the extremal metric spaces achieving a given\n   `\u03b3(c)`.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1240",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ad0affd1",
+    "status": "available",
+    "timestamp": "2026-07-13T19:07:14.716898+00:00",
+    "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
   },
   {
     "consumed_by_exp_id": "",

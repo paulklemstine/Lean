@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4bfb0f7c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Geometry of Stellar Energy Collection\n\nThis cycle established the exact optimization theory of energy collection around a\npoint source: capture factors through a single linear fu",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-13T04:13:49",
-      "title": "Deepening: Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
-    },
-    {
       "cycle_id": "b659b436",
       "domain": "Applications",
       "key_insight": "# Future Directions: The Uncanny Valley of Prime-Generating Formulas\n\nThis cycle established that no nonconstant integer polynomial takes a prime value\nat every input, and that in fact the inputs wher",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-13T19:07:10",
       "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
+    },
+    {
+      "cycle_id": "ad0affd1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ni",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-13T19:07:27",
+      "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a547c760",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis development formalises the *microscopic weighting* of a finite Euclidean\nmetric space — the small-scale (`t → 0`) limit of Leinster's magnitude weighting\n— as a **distance-ma",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 33,
-      "timestamp": "2026-07-11T02:51:23",
-      "title": "Sign Characterization of Microscopic Weighting on Euclidean Subsets"
-    },
     {
       "cycle_id": "08430233",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-13T19:07:10",
       "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
+    },
+    {
+      "cycle_id": "ad0affd1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ni",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-13T19:07:27",
+      "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e8b8d594",
-      "domain": "Applications",
-      "name": "det_fin_four",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "9f2f3b13",
-      "domain": "Novelty",
-      "name": "to",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "9f2f3b13",
-      "domain": "Novelty",
-      "name": "of",
-      "quality": 0.85
-    },
     {
       "cycle_id": "9f2f3b13",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "seidel_isSymm",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "ad0affd1",
+      "domain": "Applications",
+      "name": "radius_nonneg_gap",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "ad0affd1",
+      "domain": "Applications",
+      "name": "one_le_radius",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "ad0affd1",
+      "domain": "Applications",
+      "name": "radius_le_sqrt2",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-13T19:07:10",
+  "last_updated": "2026-07-13T19:07:27",
   "open_questions": [
     {
       "context": "+Everything is elementary and `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e8b8d594",
-        "quality": 0.82,
-        "theorems": 10,
-        "title": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
-      },
-      {
         "cycle_id": "e0843845",
         "quality": 0.8,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.8,
         "theorems": 13,
         "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+      },
+      {
+        "cycle_id": "ad0affd1",
+        "quality": 0.79,
+        "theorems": 28,
+        "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
       }
     ],
     "Bridges": [

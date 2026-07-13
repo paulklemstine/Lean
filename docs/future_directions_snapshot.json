@@ -306,7 +306,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0bc42943",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domain_bridges": [],
     "domains": [
@@ -318,7 +318,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "47a54792",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T00:29:46.239053+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
@@ -1031,7 +1031,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "117d6517",
     "description": "Building on cycle fb4de3e5 (Q=0.780), which proved 23 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some met",
     "domain_bridges": [],
     "domains": [
@@ -1043,7 +1043,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "fb4de3e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T02:10:54.368732+00:00",
     "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
   },
@@ -2363,34 +2363,6 @@
     "title": "Unbounded Gap Between Co-Index of a Free Z_2-Space and Its Suspension"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "VR filtrations and metric spaces",
-      "Approximation algorithms in TDA",
-      "Homotopy interleavings",
-      "Doubling dimension in metric geometry"
-    ],
-    "consumed_by_exp_id": "ad0affd1",
-    "description": "There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-approximation to the Vietoris-Rips filtration VR(Xₙ) requires at least 2^(γ·n) simplices, and moreover γ can be taken to satisfy γ = γ(c) with lim_{c→√2⁻} γ(c) = 0.",
-    "domain_bridges": [
-      "Formal verification of persistent homology algorithms",
-      "Computability theory in metric geometry",
-      "Quantitative topology in Lean 4"
-    ],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "fd_0673",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "1. Construct an explicit infinite family of finite metric spaces Xₙ (e.g., using ℓ₁-spheres or Hamming cube constructions) with controlled geometric properties. 2. Prove that these spaces have unbounded doubling dimension. 3. Use combinatorial arguments to show that any c-approximation must encode sufficient information to distinguish between exponentially many distinct metric configurations. 4. Establish the quantitative bound on γ(c) by analyzing the homomorphism density needed in the approximation maps. 5. Verify the limit behavior as c approaches √2 from below using asymptotic analysis.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06524v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T17:01:42.923851+00:00",
-    "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "arXiv:2407.XXXXX (this paper)",
@@ -2876,6 +2848,26 @@
     "status": "available",
     "timestamp": "2026-07-13T19:07:02.581945+00:00",
     "title": "Elementary spectral-moment foundations of Seidel"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential lower bound for sub-√2 Vietoris–Rips approximations whose rate `γ(c)` vanishes\nat the √2 threshold.\n\n## What is proved (file `Bridges/VietorisRipsSubSqrt2LowerBound.lean`)\n\nFor each `n` we build the graded ultrametric `metricD n` on `Fin n` (non-zero distances in\n`[1, √2]`, `radius(n,i) = 1 + (√2−1)(i+1)/n`), and set\n`γ(c) = (√2/c − 1)/(√2 − 1)`.\n\n* **Metric geometry.** `dist_isMetric`: `metricD n` is a genuine finite (ultra)metric\n  (symmetry, non-negativity, `d(i,i)=0`, triangle inequality).\n* **Geometry → combinatorics (the bridge).** `two_pow_card_le_card_VRcomplex`: a metric\n  clique of size `m` at scale `r` forces `2^m` Vietoris–Rips simplices (its whole power\n  set), and `two_pow_activeCard_le_VRcomplex` applies this to the graded active set.\n* **The effective exponent.** `gamma_pos`, `gamma_le_one` (so `0 < γ(c) ≤ 1` on `[1,√2)`),\n  and `gamma_tendsto_nhdsWithin` (`γ(c) → 0` as `c → √2⁻`).\n* **Rate realisation.** `radius_le_iff` and `floor_gamma_le_exponent`:\n  `⌊n·γ(c)⌋ ≤ #active(√2/c)`.\n* **Interleaving lower bound.** `approx_card_lower_bound`: any one-sided `c`-approximation\n  `G` (`IsCApprox`) has `2^(#active(√2/c)) ≤ |G(√2)|`.\n* **Headline connector.** `subSqrt2_exponential_lower_bound`: for every `c ∈ [1,√2)`, every\n  `n>0`, and every `c`-approximation `G`,\n  `2^⌊n·γ(c)⌋ ≤ |G(√2)|`, with `0 < γ(c) ≤ 1` and `lim_{c→√2⁻} γ(c) = 0`.\n\nThe main theorem uses only `propext`, `Classical.choice`, `Quot.sound`.\n\n## Relation to the catalog reference\n\nThe catalog file `Catalog/Novelty/VietorisRipsCliqueBridge.lean` proves a *flat* `2^n`\nbound for an equidistant configuration and defines a `γ(c)` that does **not** control the\nexponent (the bound is `2^n` independent of `c`). The present work supplies the missing\n`c`-dependence demanded by the mission: an explicit `γ(c)` that genuinely governs the\nexponent `⌊n·γ(c)⌋`, is positive on the whole regime `[1,√2)`, and continuously degrades to\n`0` at the threshold. This is what makes the √2 boundary sharp in the lower bound itself.\n\n## Directions to strengthen / extend\n\n1. **Euclidean realisability with the exact √2 geometry.** The graded ultrametric is a\n   faithful finite metric, but the \"canonical\" √2 phenomenon lives in Euclidean space\n   (standard basis vectors are pairwise at distance √2). A worthwhile extension is to\n   realise the graded radii by an explicit point cloud in `ℝ^d` (e.g. concentric scaled\n   simplices) and re-derive the same `γ(c)`, connecting to `EuclideanSpace` in Mathlib.\n\n2. **Two-sided interleavings and homotopy interleavings.** `IsCApprox` here is the\n   one-sided containment sufficient for the lower bound. Formalizing full multiplicative\n   interleavings and homotopy-interleavings (Blumberg–Lesnick) and proving the same\n   simplex-count lower bound survives would tighten the link to the standard TDA notion of\n   `c`-approximation.\n\n3. **Doubling dimension.** The catalog reference \"Doubling dimension in metric geometry\"\n   suggests quantifying how the doubling dimension of `metricD n` scales with `n`, and\n   whether the exponential lower bound can be phrased purely in terms of a growth/packing\n   invariant — turning the bridge into a doubling-dimension ⇒ complexity statement.\n\n4. **Persistent homology, not just simplex count.** Upgrade from \"many simplices\" to a\n   lower bound on the size of any interleaved *persistence module* / barcode, linking to\n   the `Catalog/.../PrimePersistentHomology.lean` line of development.\n\n5. **Optimality of `γ(c)`.** Investigate whether `(√2/c − 1)/(√2 − 1)` is the best possible\n   rate for this family, and characterise the extremal metric spaces achieving a given\n   `γ(c)`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1240",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ad0affd1",
+    "status": "available",
+    "timestamp": "2026-07-13T19:07:14.716898+00:00",
+    "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
   },
   {
     "ambition_level": "extension",
