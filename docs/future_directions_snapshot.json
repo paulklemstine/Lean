@@ -325,7 +325,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bc42943",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domain_bridges": [],
     "domains": [
@@ -337,7 +337,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "47a54792",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:29:46.239053+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
@@ -477,7 +477,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domain_bridges": [],
     "domains": [
@@ -489,7 +489,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
   },
@@ -2859,32 +2859,6 @@
     "status": "available",
     "timestamp": "2026-07-03T09:01:30.241791+00:00",
     "title": "Formalized Rogers–Ramanujan identities for q-Pochhammer symbols"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Becker, Ivanisvili, Krachun, Madrid (original hypercube conjecture)",
-      "related works on sumsets in convex sets"
-    ],
-    "consumed_by_exp_id": "adcea684",
-    "description": "For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|Aₙ|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on d, m, and n.",
-    "domain_bridges": [
-      "Convex Geometry",
-      "L₁ Space Analysis",
-      "Functional Inequalities"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0137",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Adapt the original proof's sup-convolution and mixed volume techniques to L₁ geometry, deriving new functional inequalities specific to the L₁ ball structure.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01458v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T09:58:51.961008+00:00",
-    "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
   },
   {
     "ambition_level": "extension",
@@ -12894,6 +12868,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ\n\n## What is proved (`Bridges/SumsetL1BallExponent.lean`)\n\nA cross-domain **connector** linking three areas around sumsets in L₁ balls\n`B_d(m) = {x ∈ ℤᵈ : ∑ᵢ |xᵢ| ≤ m}`:\n\n1. **Additive combinatorics.** `iterated_cauchy_davenport`:\n   for nonempty finite `Aⱼ ⊆ ℤᵈ`, `∑ⱼ|Aⱼ| + 1 ≤ |A₁+⋯+Aₙ| + n`, i.e.\n   `|A₁+⋯+Aₙ| ≥ ∑ⱼ|Aⱼ| − (n−1)`. Proved by induction from Mathlib's\n   torsion-free Cauchy–Davenport bound.\n2. **Multiplicative / geometric-mean form.** `sumset_prod_le_pow`,\n   `sumset_geom_mean_le`: `∏ⱼ|Aⱼ| ≤ |A₁+⋯+Aₙ|ⁿ`, i.e.\n   `|A₁+⋯+Aₙ| ≥ (∏ⱼ|Aⱼ|)^{1/n}` (the `p = n` instance of the target).\n3. **Discrete geometry.** `sumset_L1Ball_subset`: sub-sumsets of `B_d(m)` land\n   in `B_d(nm)` (triangle inequality for the L₁ norm).\n4. **Real analysis — the sharp exponent.** `pExp n m = n·log(m+1)/log(nm+1)`\n   with `one_le_pExp`, `pExp_le_n` (`1 ≤ p ≤ n`) and `pExp_sharp_equality`\n   (`(m+1)^{n/p} = nm+1`).\n5. **Sharpness.** `extremal_interval_sharp`: in `d = 1` the configuration\n   `Aⱼ = {0,…,m}` attains equality both in the additive bound and in the sharp\n   exponent bound `(∏|Aⱼ|)^{1/p} = |∑Aⱼ|`. So `p` cannot be lowered.\n6. **Packaged connector.** `L1Ball_sumset_bridge` bundles (1)–(3) for the L₁\n   ball setting.\n\n## Open problems / next steps\n\n1. **The full sharp inequality.** Prove\n   `|A₁+⋯+Aₙ| ≥ (∏ⱼ|Aⱼ|)^{1/p}` with the sharp `p ≤ n` for *arbitrary* subsets\n   of `B_d(m)` and all `d`. This is the Becker–Ivanisvili–Krachun–Madrid–style\n   conjecture; the `p = n` version proved here is a first, unconditional step.\n   A promising route is a discrete Prékopa–Leindler / Brunn–Minkowski\n   inequality on ℤᵈ, tensorizing the 1-D interval case where `p` is exact.\n\n2. **Compression / tensorization.** Formalize a \"downward compression\" reducing\n   arbitrary `Aⱼ ⊆ B_d(m)` to down-sets, then to intervals, so that the exact\n   1-D computation (`nfold_Icc`, `pExp_sharp_equality`) transfers dimension by\n   dimension. This would upgrade `sumset_geom_mean_le` from exponent `n` to\n   exponent `p`.\n\n3. **Refined exponent depending on `d`.** The problem statement allows a\n   `d`-dependent exponent. Investigate whether the volume ratio\n   `p_d = n·log V_d(m)/log V_d(nm)`, where `V_d(m) = |B_d(m)|`, is the correct\n   sharp exponent, and formalize `V_d(m) = ∑_{k} 2ᵏ C(d,k) C(m,k)` (Delannoy /\n   cross-polytope lattice-point counts).\n\n4. **Equality characterization.** Prove that equality in\n   `iterated_cauchy_davenport` forces each `Aⱼ` to be an arithmetic progression\n   with a common difference (Vosper/Freiman-type rigidity), generalizing\n   `extremal_interval_sharp`.\n\n5. **Beyond ℤᵈ.** The additive engine works in any torsion-free abelian group.\n   Explore analogues in `ℝᵈ` (Lebesgue measure, Brunn–Minkowski) and in\n   `(ℤ/Nℤ)ᵈ` (where genuine Cauchy–Davenport phenomena change the exponent).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1233",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "adcea684",
+    "status": "available",
+    "timestamp": "2026-07-13T16:51:26.804041+00:00",
+    "title": "A cross-domain **connector** linking three areas around sumsets in L₁ balls"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$‑regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD‑total chromatic number, namel",
     "domain_bridges": [],
     "domains": [
@@ -12908,6 +12902,25 @@
     "status": "available",
     "timestamp": "2026-07-12T07:36:38.107204+00:00",
     "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|Aₙ|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on ",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_adcea684_9f1d4a1c",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "adcea684",
+    "status": "available",
+    "timestamp": "2026-07-13T16:51:44.275408+00:00",
+    "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
   },
   {
     "ambition_level": "extension",

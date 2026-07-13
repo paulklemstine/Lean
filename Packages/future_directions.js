@@ -241,7 +241,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bc42943",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domains": [
       "NumberTheory"
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "47a54792",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:29:46.239053+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
@@ -353,7 +353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Exact topological conjugacy between the smooth logisti"
   },
   {
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -362,7 +362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -1965,20 +1965,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T09:01:30.241791+00:00",
     "title": "Formalized Rogers\u2013Ramanujan identities for q-Pochhammer symbols"
-  },
-  {
-    "consumed_by_exp_id": "adcea684",
-    "description": "For subsets A\u2c7c of the L\u2081 ball {x \u2208 \u2124\u1d48 : |x\u2081| + ... + |x_d| \u2264 m} in \u2124\u1d48, establish a sharp lower bound |A\u2081+\u2026+A\u2099| \u2265 (|A\u2081|\u22ef|A\u2099|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on d, m, and n.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0137",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01458v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T09:58:51.961008+00:00",
-    "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
   {
     "consumed_by_exp_id": "",
@@ -8016,6 +8002,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48\n\n## What is proved (`Bridges/SumsetL1BallExponent.lean`)\n\nA cross-domain **connector** linking three areas around sumsets in L\u2081 balls\n`B_d(m) = {x \u2208 \u2124\u1d48 : \u2211\u1d62 |x\u1d62| \u2264 m}`:\n\n1. **Additive combinatorics.** `iterated_cauchy_davenport`:\n   for nonempty finite `A\u2c7c \u2286 \u2124\u1d48`, `\u2211\u2c7c|A\u2c7c| + 1 \u2264 |A\u2081+\u22ef+A\u2099| + n`, i.e.\n   `|A\u2081+\u22ef+A\u2099| \u2265 \u2211\u2c7c|A\u2c7c| \u2212 (n\u22121)`. Proved by induction from Mathlib's\n   torsion-free Cauchy\u2013Davenport bound.\n2. **Multiplicative / geometric-mean form.** `sumset_prod_le_pow`,\n   `sumset_geom_mean_le`: `\u220f\u2c7c|A\u2c7c| \u2264 |A\u2081+\u22ef+A\u2099|\u207f`, i.e.\n   `|A\u2081+\u22ef+A\u2099| \u2265 (\u220f\u2c7c|A\u2c7c|)^{1/n}` (the `p = n` instance of the target).\n3. **Discrete geometry.** `sumset_L1Ball_subset`: sub-sumsets of `B_d(m)` land\n   in `B_d(nm)` (triangle inequality for the L\u2081 norm).\n4. **Real analysis \u2014 the sharp exponent.** `pExp n m = n\u00b7log(m+1)/log(nm+1)`\n   with `one_le_pExp`, `pExp_le_n` (`1 \u2264 p \u2264 n`) and `pExp_sharp_equality`\n   (`(m+1)^{n/p} = nm+1`).\n5. **Sharpness.** `extremal_interval_sharp`: in `d = 1` the configuration\n   `A\u2c7c = {0,\u2026,m}` attains equality both in the additive bound and in the sharp\n   exponent bound `(\u220f|A\u2c7c|)^{1/p} = |\u2211A\u2c7c|`. So `p` cannot be lowered.\n6. **Packaged connector.** `L1Ball_sumset_bridge` bundles (1)\u2013(3) for the L\u2081\n   ball setting.\n\n## Open problems / next steps\n\n1. **The full sharp inequality.** Prove\n   `|A\u2081+\u22ef+A\u2099| \u2265 (\u220f\u2c7c|A\u2c7c|)^{1/p}` with the sharp `p \u2264 n` for *arbitrary* subsets\n   of `B_d(m)` and all `d`. This is the Becker\u2013Ivanisvili\u2013Krachun\u2013Madrid\u2013style\n   conjecture; the `p = n` version proved here is a first, unconditional step.\n   A promising route is a discrete Pr\u00e9kopa\u2013Leindler / Brunn\u2013Minkowski\n   inequality on \u2124\u1d48, tensorizing the 1-D interval case where `p` is exact.\n\n2. **Compression / tensorization.** Formalize a \"downward compression\" reducing\n   arbitrary `A\u2c7c \u2286 B_d(m)` to down-sets, then to intervals, so that the exact\n   1-D computation (`nfold_Icc`, `pExp_sharp_equality`) transfers dimension by\n   dimension. This would upgrade `sumset_geom_mean_le` from exponent `n` to\n   exponent `p`.\n\n3. **Refined exponent depending on `d`.** The problem statement allows a\n   `d`-dependent exponent. Investigate whether the volume ratio\n   `p_d = n\u00b7log V_d(m)/log V_d(nm)`, where `V_d(m) = |B_d(m)|`, is the correct\n   sharp exponent, and formalize `V_d(m) = \u2211_{k} 2\u1d4f C(d,k) C(m,k)` (Delannoy /\n   cross-polytope lattice-point counts).\n\n4. **Equality characterization.** Prove that equality in\n   `iterated_cauchy_davenport` forces each `A\u2c7c` to be an arithmetic progression\n   with a common difference (Vosper/Freiman-type rigidity), generalizing\n   `extremal_interval_sharp`.\n\n5. **Beyond \u2124\u1d48.** The additive engine works in any torsion-free abelian group.\n   Explore analogues in `\u211d\u1d48` (Lebesgue measure, Brunn\u2013Minkowski) and in\n   `(\u2124/N\u2124)\u1d48` (where genuine Cauchy\u2013Davenport phenomena change the exponent).\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1233",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "adcea684",
+    "status": "available",
+    "timestamp": "2026-07-13T16:51:26.804041+00:00",
+    "title": "A cross-domain **connector** linking three areas around sumsets in L\u2081 balls"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
     "domains": [
       "Applications"
@@ -8027,6 +8028,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:36:38.107204+00:00",
     "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets A\u2c7c of the L\u2081 ball {x \u2208 \u2124\u1d48 : |x\u2081| + ... + |x_d| \u2264 m} in \u2124\u1d48, establish a sharp lower bound |A\u2081+\u2026+A\u2099| \u2265 (|A\u2081|\u22ef|A\u2099|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_adcea684_9f1d4a1c",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "adcea684",
+    "status": "available",
+    "timestamp": "2026-07-13T16:51:44.275408+00:00",
+    "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
   {
     "consumed_by_exp_id": "",

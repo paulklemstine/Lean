@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "48b25c91",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Thermodynamic Horizon of Discovery\n\nThis cycle turns the informal \"heat death of mathematics\" picture into a small\ncollection of fully proved Lean 4 theorems (see `Thermodyna",
-      "quality_score": 0.72,
-      "sorry_count": 1,
-      "theorem_count": 9,
-      "timestamp": "2026-07-13T02:02:00",
-      "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
-    },
-    {
       "cycle_id": "7362296f",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## What was done in this cycle\n\nThe target theorem file `BooleanCubicFormsBurnside.lean` was already `sorry`-free (the\nBurnside ⇄ orbit–stabilizer bridge, the division principle,",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-13T16:32:48",
       "title": "Exact topological conjugacy between the smooth logisti"
+    },
+    {
+      "cycle_id": "adcea684",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ\n\n## What is proved (`Bridges/SumsetL1BallExponent.lean`)\n\nA cross-domain **connector** linking three areas around sumsets in L₁ b",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 21,
+      "timestamp": "2026-07-13T16:51:44",
+      "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2ca6565f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Surveillance Networks and the Privacy–Utility Frontier\n\nThe results of this cycle establish a hard covering inequality linking an\nobserver's channel rate to the distortion at whi",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-11T01:28:51",
-      "title": "Surveillance Networks: Information-Theoretic Undetectability"
-    },
     {
       "cycle_id": "473442d5",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-13T16:32:48",
       "title": "Exact topological conjugacy between the smooth logisti"
+    },
+    {
+      "cycle_id": "adcea684",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ\n\n## What is proved (`Bridges/SumsetL1BallExponent.lean`)\n\nA cross-domain **connector** linking three areas around sumsets in L₁ b",
+      "quality_score": 0.7,
+      "sorry_count": 1,
+      "theorem_count": 21,
+      "timestamp": "2026-07-13T16:51:44",
+      "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "02ff061d",
-      "domain": "Novelty",
-      "name": "states",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "02ff061d",
-      "domain": "Novelty",
-      "name": "cube_lower",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "02ff061d",
-      "domain": "Novelty",
-      "name": "eigen_supersat",
-      "quality": 0.7
-    },
     {
       "cycle_id": "4cfd5e43",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "tent_maps_unitInterval",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "adcea684",
+      "domain": "Applications",
+      "name": "combining",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "adcea684",
+      "domain": "Applications",
+      "name": "sumset_nonempty",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "adcea684",
+      "domain": "Applications",
+      "name": "iterated_cauchy_davenport",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-13T16:32:48",
+  "last_updated": "2026-07-13T16:51:44",
   "open_questions": [
-    {
-      "context": "+--   · sorry   -- infinite tail: composite n > 10000 (Carmichael's analytic core); -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "86966da0",
-      "domain": "Applications",
-      "sorry_count": 5,
-      "timestamp": "2026-07-12T23:52:10"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "909a0259",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-13T14:34:47"
+    },
+    {
+      "context": "None of the statements use `sorry`.",
+      "cycle_id": "adcea684",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T16:51:44"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "59a15132",
-        "quality": 0.79,
-        "theorems": 14,
-        "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectang"
-      },
-      {
         "cycle_id": "191c7579",
         "quality": 0.83,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 16,
         "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded En"
+      },
+      {
+        "cycle_id": "adcea684",
+        "quality": 0.7,
+        "theorems": 21,
+        "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
       }
     ],
     "Bridges": [
