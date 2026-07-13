@@ -2285,7 +2285,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3903c2d7",
     "description": "Bypassed",
     "domain_bridges": [],
     "domains": [
@@ -2297,7 +2297,7 @@
     "proof_strategy": "Bypassed",
     "research_mode": "team",
     "source_exp_id": "2607.09439v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T19:58:15.016075+00:00",
     "title": "Bypassed"
   },

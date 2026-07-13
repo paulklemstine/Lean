@@ -1211,20 +1211,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "17340490",
-    "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "sorry_fill_7a9dcf2f_cb7384d6",
-    "priority_score": 0.8300000000000001,
-    "research_mode": "team",
-    "source_exp_id": "7a9dcf2f",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T02:59:14.834105+00:00",
-    "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
@@ -1615,7 +1601,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3903c2d7",
     "description": "Bypassed",
     "domains": [
       "Bridges"
@@ -1624,7 +1610,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.09439v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T19:58:15.016075+00:00",
     "title": "Bypassed"
   },
@@ -2071,6 +2057,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T23:31:41.555656+00:00",
     "title": "The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and proves it equals\nthe integer charge `\u2113`, together with quantization, charge conservation under\nsuperposition, the on-axis phase singularity, and two contrarian disproofs\n(negative charges exist; opposite vortices annihilate).\n\n## What was proved\n- `winding_oamPhase` \u2014 winding number of `exp(i\u2113\u03b8)` equals `\u2113` (contour integral).\n- `winding_quantized` \u2014 the charge is always an integer.\n- `oamPhase_mul`, `oamPhase_prod`, `winding_additive` \u2014 charge additivity/conservation.\n- `oamPhase_periodic` \u2014 single-valuedness of the phase field.\n- `beamAmp_vanishes`, `beamAmp_nonzero` \u2014 amplitude vanishes exactly on the axis iff `\u2113 \u2260 0`.\n\n## What was disproved (contrarian)\n- `winding_can_be_negative` \u2014 refutes \"charge is always nonnegative\".\n- `oam_annihilation` (+ `oam_annihilation_nonvanishing`) \u2014 refutes \"a product of\n  two vortex beams is always a vortex beam\".\n\n## Natural next steps\n1. **General winding number.** Extend `winding` to a broad class of loops\n   `\u03b3 : [0,1] \u2192 \u2102 \\ {0}` and prove homotopy invariance and additivity in full\n   generality (not just for `oamPhase`), connecting to `\u2124 = \u03c0\u2081(\u2102*)`.\n2. **Linking number of nested vortices.** Formalize the Hopf-link / linking-number\n   picture for two coaxial vortex lines and relate it to the product of charges.\n3. **Full Laguerre\u2013Gauss modes.** Include the Gaussian envelope and radial index\n   `p`, and prove the OAM per photon is `\u2113 \u210f` via the Poynting-vector integral.\n4. **Knotted field lines.** Formalize Hopf fibration constructions of genuinely\n   knotted (rather than merely linked) optical field lines and their conserved\n   helicity/linking invariant.\n5. **Stability under perturbation.** Show the charge is invariant under small\n   continuous perturbations of the field that keep the axis zero isolated\n   (topological robustness).\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1256",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "17340490",
+    "status": "available",
+    "timestamp": "2026-07-13T23:31:49.480718+00:00",
+    "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
   },
   {
     "consumed_by_exp_id": "",
