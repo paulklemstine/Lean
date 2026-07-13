@@ -477,7 +477,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b222c758",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domain_bridges": [],
     "domains": [
@@ -489,7 +489,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
   },
@@ -572,7 +572,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f347bf96",
     "description": "Building on cycle e8b8d594 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k ≥ 1, the maximum determinant of any 4×4 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shift",
     "domain_bridges": [],
     "domains": [
@@ -584,7 +584,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "e8b8d594",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T12:53:44.504671+00:00",
     "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
   },
@@ -2866,7 +2866,7 @@
       "Becker, Ivanisvili, Krachun, Madrid (original hypercube conjecture)",
       "related works on sumsets in convex sets"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "adcea684",
     "description": "For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|Aₙ|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on d, m, and n.",
     "domain_bridges": [
       "Convex Geometry",
@@ -2882,7 +2882,7 @@
     "proof_strategy": "Adapt the original proof's sup-convolution and mixed volume techniques to L₁ geometry, deriving new functional inequalities specific to the L₁ ball structure.",
     "research_mode": "team",
     "source_exp_id": "2607.01458v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
   },
@@ -7792,6 +7792,33 @@
     "status": "available",
     "timestamp": "2026-07-08T18:40:30.271481+00:00",
     "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "FurediSurvey",
+      "KeevashSurvey",
+      "SidorenkoSurvey",
+      "ConlonSchulke"
+    ],
+    "consumed_by_exp_id": "e3aaa465",
+    "description": "For any k ≥3 and 1≤ℓ<k, and any two accumulation points α, β in Π^k_ℓ, there exists a transfer function f such that f(α) = β.",
+    "domain_bridges": [
+      "Algebraic Combinatorics",
+      "Spectral Graph Theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0661",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a tree suspension parameterized to target specific densities, demonstrating that tree structures can interpolate between any pair of accumulation points.",
+    "research_mode": "team",
+    "source_exp_id": "2607.06518v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-08T19:01:40.311474+00:00",
+    "title": "Universality of Transfer Functions Among Accumulation Points"
   },
   {
     "ambition_level": "grand_challenge",

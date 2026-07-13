@@ -353,7 +353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b222c758",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -362,7 +362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -423,7 +423,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Lower bounds on clique densities using generalized inverses"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f347bf96",
     "description": "Building on cycle e8b8d594 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k \u2265 1, the maximum determinant of any 4\u00d74 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shift",
     "domains": [
       "Applications"
@@ -432,7 +432,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "e8b8d594",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T12:53:44.504671+00:00",
     "title": "Deepening: Maximum Determinant Bound for 4\u00d74 Unimodular Matrices with Bounded Entries"
   },
@@ -1967,7 +1967,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalized Rogers\u2013Ramanujan identities for q-Pochhammer symbols"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "adcea684",
     "description": "For subsets A\u2c7c of the L\u2081 ball {x \u2208 \u2124\u1d48 : |x\u2081| + ... + |x_d| \u2264 m} in \u2124\u1d48, establish a sharp lower bound |A\u2081+\u2026+A\u2099| \u2265 (|A\u2081|\u22ef|A\u2099|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on d, m, and n.",
     "domains": [
       "Bridges"
@@ -1976,7 +1976,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01458v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
@@ -4538,6 +4538,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-08T18:40:30.271481+00:00",
     "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
+  },
+  {
+    "consumed_by_exp_id": "e3aaa465",
+    "description": "For any k \u22653 and 1\u2264\u2113<k, and any two accumulation points \u03b1, \u03b2 in \u03a0^k_\u2113, there exists a transfer function f such that f(\u03b1) = \u03b2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0661",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06518v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-08T19:01:40.311474+00:00",
+    "title": "Universality of Transfer Functions Among Accumulation Points"
   },
   {
     "consumed_by_exp_id": "",
