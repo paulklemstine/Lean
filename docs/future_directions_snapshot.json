@@ -60,6 +60,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_191c7579_2c1cfe47",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "191c7579",
+    "status": "available",
+    "timestamp": "2026-07-13T12:01:03.684879+00:00",
+    "title": "Deepening: This cycle deepened the singleton-hypergraph tightness result of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 207fb5b4 (Q=0.830), which proved 24 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every C",
     "domain_bridges": [],
     "domains": [
@@ -2758,7 +2777,7 @@
     "catalog_references": [
       "https://arxiv.org/abs/xxxx"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "477f7787",
     "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique‑matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique‑Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3̅2K2). This extends the result of [arXiv:xxxx] from distance‑hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
     "domain_bridges": [
       "balanced graphs",
@@ -2776,7 +2795,7 @@
     "proof_strategy": "To prove the conjecture we would: (1) develop a decomposition of hereditary clique‑Helly graphs into distance‑hereditary components using a tree decomposition (e.g., a 2‑tree or split‑decomposition). (2) Apply the linear‑time recognition algorithm from the paper to each component to show that none can be unbalanced. (3) Demonstrate that the presence of an induced \\u03c3\\u0305K2 would contradict the hereditary clique‑Helly property, hence no such subgraph can appear. The combination yields balancedness. Formalisation in Lean would define balancedness, hereditary clique‑Helly, and induced subgraph relations, then prove the two implications.",
     "research_mode": "team",
     "source_exp_id": "2607.00730v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T13:24:03.491700+00:00",
     "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
   },
@@ -7865,7 +7884,7 @@
       "Homotopy interleavings",
       "Doubling dimension in metric geometry"
     ],
-    "consumed_by_exp_id": "64d4f5fe",
+    "consumed_by_exp_id": "",
     "description": "There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-approximation to the Vietoris-Rips filtration VR(Xₙ) requires at least 2^(γ·n) simplices, and moreover γ can be taken to satisfy γ = γ(c) with lim_{c→√2⁻} γ(c) = 0.",
     "domain_bridges": [
       "Formal verification of persistent homology algorithms",
@@ -7881,7 +7900,7 @@
     "proof_strategy": "1. Construct an explicit infinite family of finite metric spaces Xₙ (e.g., using ℓ₁-spheres or Hamming cube constructions) with controlled geometric properties. 2. Prove that these spaces have unbounded doubling dimension. 3. Use combinatorial arguments to show that any c-approximation must encode sufficient information to distinguish between exponentially many distinct metric configurations. 4. Establish the quantitative bound on γ(c) by analyzing the homomorphism density needed in the approximation maps. 5. Verify the limit behavior as c approaches √2 from below using asymptotic analysis.",
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T17:01:42.923851+00:00",
     "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
   },
@@ -11284,26 +11303,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "191c7579",
-    "description": "# Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conjecture is FALSE** (`general_tightness_fails`).\n   It is *not* true that every inclusion-free hypergraph attains the Faber–Harris\n   bound `n·∑_{j<d} j^{n-1}` for some real offset. A single-edge hypergraph makes\n   every assignment isolating, giving count `d^n` for *all* offsets `f`, strictly\n   above the bound (already `4 > 2` at `n=d=2`). Offset freedom does not repair an\n   over-counting hypergraph.\n\n2. **A new symmetric extremal witness** (`card_strictMax_eq`). The co-singleton\n   hypergraph (all `(n-1)`-edges) *also* attains the bound exactly with zero\n   offset, via a min↔max reflection duality (`hasStrictMin_iff_rev`,\n   `card_strictMax_eq_card_isolating`). Thus the bound has at least two\n   symmetric extremal witnesses (singletons and their complements).\n\n## Open questions raised\n\n- **Characterise the extremal hypergraphs.** Computation for `n=3` shows exactly\n  the singletons and the all-pairs (co-singleton) families reach the bound.\n  Conjecture: for the *offset-free* problem, an antichain attains `B(n,d)` iff it\n  is vertex-transitive and \"sum-symmetric\" (e.g. the `k`-uniform complete designs\n  for suitable `k`). A formal characterisation is open.\n\n- **Covering antichains still fail.** Even covering antichains such as\n  `{{0,1},{0,2}}` overshoot the bound for every offset (verified computationally,\n  excess ≥ 1). A formal proof of failure that quantifies over *all real offsets*\n  (not just the degenerate single-edge case) would strengthen\n  `general_tightness_fails`. The obstacle is reducing the continuum of offsets to\n  the finite set of order-types; a Lean development of that reduction is the\n  natural next step.\n\n- **Which `k`-uniform complete hypergraphs are extremal?** The singletons (`k=1`)\n  and co-singletons (`k=n-1`) are extremal. Are the complete `k`-uniform families\n  extremal for intermediate `k`? Preliminary data suggests not in general; a clean\n  criterion is open.\n\n- **Quantitative excess.** Define `excess(H) := min_f #isolating(H,f) − B(n,d) ≥ 0`.\n  Understanding `excess` as a hypergraph invariant (monotonicity, additivity under\n  disjoint unions) is an appealing direction.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1144",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "919ceb1f",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T15:20:30.569302+00:00",
-    "title": "This cycle deepened the singleton-hypergraph tightness result of"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — Causal Loops in Category Theory\n\nMission: *\"Causal Loops in Category Theory: when composition loops back\"* — a tensor\nproduct whose associativity fails **on the nose** but is repaired by a canonical\ninvertible `2`-cell (the associator), with coherence holding automatically.\n\n## What this cycle adds\n\n**`Catalog/Novelty/MonoidalStrictification.lean` — the monoidal strictification\ntheorem for the parenthesization category.**\n\nThis is the natural next step of Direction 1 from the previous cycle (\"upgrade\n`strictify` to a *monoidal* equivalence\"). The file is fully self-contained\n(`import Mathlib` only) and re-establishes the thin-category engine and the\nparenthesization category before carrying out the monoidal upgrade. It builds a single\nchain of results, each using the previous one:\n\n1. `ThinCategory`, `monoidalOfThin` — coherence is free on a thin category.\n2. `PTree`, `flatten` (valued in `FreeMonoid α`), `instMonoidalCategory` — the\n   non-strict parenthesization monoidal category.\n3. `flatten_tensor`, `flatten_unit` — flattening strictly respects tensor and unit\n   (both by `rfl`).\n4. `flattenFunctor`, `flattenCore`, `instFlattenMonoidal` — flattening is a **strong\n   monoidal functor** into `Discrete (FreeMonoid α)` (Mathlib's `Discrete.monoidal`,\n   concatenation as tensor).\n5. `strictify` — the underlying categorical equivalence\n   `PTree α ≌ Discrete (FreeMonoid α)`.\n6. `strictify_functor_monoidal`, `strictify_inverse_monoidal`, `strictify_isMonoidal`\n   — **the monoidal strictification theorem**: `PTree α` is *monoidally* equivalent to\n   its strict skeleton. The inverse's monoidal structure and the compatibility\n   (`IsMonoidal`) are obtained via Mathlib's `Equivalence.inverseMonoidal`.\n7. `flatten_associator_to_id` — under strictification the associator loop becomes an\n   identity-type morphism: the causal loop is contracted.\n\nAll main results are checked to depend only on the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`) and contain no `sorry`.\n\nThis realizes, for this concrete family, the full statement of **Mac Lane's\nstrictification theorem**: a coherent (loop-tolerant) monoidal structure is monoidally\nequivalent to a strict (loop-free) one.\n\n## Remaining directions to extend\n\n1. **Braided / symmetric layer.** `Discrete (FreeMonoid α)` is not braided in general\n   (concatenation is noncommutative), but `Discrete (Multiset α)` /\n   `Discrete (List α)`-with-a-braiding gives a symmetric target; study whether the\n   flattening functor can be promoted to a braided monoidal functor onto a commutative\n   quotient.\n\n2. **Unitors and a coherent unit.** Analyse the unit-coherence loops (`triangle`) in the\n   same thin framework and compare with the Saavedra/Kelly redundancy of the unit axioms.\n\n3. **Bicategorical version.** Feed `PTree α` through the delooping\n   (`EndMonoidal` / `MonoidalSingleObj`) to produce an explicit one-object bicategory\n   whose horizontal composition is non-associative on the nose, then transport the\n   monoidal strictification to a bicategorical strictification.\n\n4. **Non-thin obstructions.** Exhibit a non-thin `MonoidalCategoryStruct` where the\n   pentagon fails, quantifying how thinness is exactly the boundary between free and\n   obstructed coherence.\n\n5. **Free monoidal category.** Relate `PTree α` to Mathlib's `FreeMonoidalCategory`:\n   `PTree α` is the free monoidal category on the discrete category `α` *quotiented by\n   coherence*, and the monoidal `strictify` above exhibits its strict skeleton.\n",
     "domain_bridges": [],
@@ -12640,6 +12639,26 @@
     "status": "available",
     "timestamp": "2026-07-13T11:12:08.537674+00:00",
     "title": "This project formalises a **cross-domain bridge** underlying the conjecture that"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions — Isolation-Lemma density bridge (combinatorics ⇄ analysis)\n\n## What was settled this cycle\n\nNew Lean file: `IsolationLemmaAsymptoticDensity.lean`.\n\nBuilding on the exact enumerative identity of `IsolationLemmaTightness.lean`\n(`# isolating = n · ∑_{j<d} j^{n-1}` for the singleton hypergraph), this cycle\nestablishes a **cross-domain bridge** connecting that purely combinatorial count\nto real analysis:\n\n- **`isolating_density_tendsto_one`** — for every fixed `n ≥ 1`, the *density* of\n  isolating weight assignments,\n  `(# isolating(n,d)) / d^n`, tends to `1` as the weight range `d → ∞`.\n  Probabilistically: draw the `n` vertex weights uniformly and independently from\n  `{0,…,d-1}`; then the probability that some vertex is a *strict* minimum tends\n  to `1`. Ties become asymptotically negligible, so the singleton Isolation\n  Lemma is \"almost surely for free\" in the large-alphabet limit.\n\nThe proof is an elementary **telescoping sandwich**\n`d^n − n·d^{n-1} ≤ n · ∑_{j<d} j^{n-1} ≤ d^n`, obtained from the per-term\ndiscrete mean-value bounds\n`(k+1)·x^k ≤ (x+1)^{k+1} − x^{k+1} ≤ (k+1)·(x+1)^k` (`key_upper`, `key_lower`,\nproved by induction on `k`), summed via `Finset.sum_range_sub`\n(`sum_upper`, `sum_lower`), then squeezed with\n`tendsto_of_tendsto_of_tendsto_of_le_of_le'`. The discrete power sum\n`∑_{j<d} j^{n-1}` is thereby pinned to the analytic value\n`∫_0^1 x^{n-1} dx = 1/n`.\n\nAll results are `sorry`-free and depend only on\n`propext`, `Classical.choice`, `Quot.sound`.\n\n## Open questions raised\n\n- **Rate of convergence / second-order term.** We proved the fence\n  `1 − n/d ≤ R(n,d) ≤ 1`. The exact excess `1 − R(n,d)` behaves like\n  `(n-1)/(2d) + O(1/d^2)` (from the Euler–Maclaurin correction to Faulhaber). A\n  formal `1 − R(n,d) = (n-1)/(2d) + O(1/d^2)` would sharpen the bridge into a\n  quantitative Berry–Esseen-style statement.\n\n- **General hypergraphs.** Does an analogous density limit hold for the\n  isolating count of an arbitrary inclusion-free hypergraph `H` (with a fixed or\n  optimal offset)? The singleton and co-singleton families both give density\n  `→ 1`; whether *every* Sperner family isolates almost surely as `d → ∞` is\n  open, and would connect Sperner theory to a `0–1` law.\n\n- **Probabilistic formalisation.** Restate `isolating_density_tendsto_one` using\n  Mathlib's `PMF.uniformOfFintype` / `MeasureTheory` so the \"probability of a\n  strict minimum tends to 1\" reading is literal rather than a ratio of\n  cardinalities. This is the natural strengthening of the combinatorics ⇄\n  probability half of the bridge.\n\n- **Joint limit in `(n,d)`.** For scaling regimes `n = n(d) → ∞`, when does the\n  density still tend to `1` (vs. degenerate to `0`)? The fence `1 − n/d` suggests\n  a phase transition near `n ≍ d`; a precise threshold is open.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1214",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "191c7579",
+    "status": "available",
+    "timestamp": "2026-07-13T12:00:55.112138+00:00",
+    "title": "New Lean file: `IsolationLemmaAsymptoticDensity.lean`."
   },
   {
     "ambition_level": "extension",

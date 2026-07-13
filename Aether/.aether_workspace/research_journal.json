@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "61c22649",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the study of the opposite-semicube Helly property on Cartesian\nproducts of partial cubes and its equivalence with harmonic-evenness.\n\n## 1. Harmonic-evenness is a mul",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 29,
-      "timestamp": "2026-07-12T20:49:46",
-      "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partia"
-    },
-    {
       "cycle_id": "eb025541",
       "domain": "Novelty",
       "key_insight": "# Future Directions — A Second Law for Mathematical Derivations\n\nThis cycle promoted the single-step Landauer theory of proof to a *pipeline* theory: an entire\nderivation, viewed as a sequence of step",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-13T11:12:22",
       "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
+    },
+    {
+      "cycle_id": "191c7579",
+      "domain": "Applications",
+      "key_insight": "# Future directions — Isolation-Lemma density bridge (combinatorics ⇄ analysis)\n\n## What was settled this cycle\n\nNew Lean file: `IsolationLemmaAsymptoticDensity.lean`.\n\nBuilding on the exact enumerati",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-13T12:01:03",
+      "title": "This cycle deepened the singleton-hypergraph tightness result of"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "99c2e84e",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nThis project formalizes two cross-domain bridge theorems around the tropical\n(min-plus) semiring, motivated by the \"tropical cryptography\" / min-plus\nDiffie–Hellman proposal. All",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-10T18:43:44",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
     {
       "cycle_id": "90792fe8",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-13T11:12:22",
       "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
+    },
+    {
+      "cycle_id": "191c7579",
+      "domain": "Applications",
+      "key_insight": "# Future directions — Isolation-Lemma density bridge (combinatorics ⇄ analysis)\n\n## What was settled this cycle\n\nNew Lean file: `IsolationLemmaAsymptoticDensity.lean`.\n\nBuilding on the exact enumerati",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-13T12:01:03",
+      "title": "This cycle deepened the singleton-hypergraph tightness result of"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "291fcce1",
-      "domain": "Novelty",
-      "name": "card_le_nu",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "5b802ccf",
-      "domain": "Applications",
-      "name": "mem_charF",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5b802ccf",
-      "domain": "Applications",
-      "name": "defends_mono",
-      "quality": 0.82
-    },
     {
       "cycle_id": "5b802ccf",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "cayley_isIndexLeOne",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "191c7579",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "191c7579",
+      "domain": "Applications",
+      "name": "card_gt",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "191c7579",
+      "domain": "Applications",
+      "name": "card_fiber",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-13T11:12:22",
+  "last_updated": "2026-07-13T12:01:03",
   "open_questions": [
     {
       "context": "Every proof below is complete and `sorry`-free; the file compiles standalone.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "111bebcc",
-        "quality": 0.72,
-        "theorems": 24,
-        "title": "Constant residue of labeled poset counts modulo 4"
-      },
-      {
         "cycle_id": "b08004d1",
         "quality": 0.72,
         "theorems": 21,
@@ -3141,6 +3135,12 @@
         "quality": 0.79,
         "theorems": 14,
         "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectang"
+      },
+      {
+        "cycle_id": "191c7579",
+        "quality": 0.83,
+        "theorems": 16,
+        "title": "This cycle deepened the singleton-hypergraph tightness result of"
       }
     ],
     "Bridges": [
