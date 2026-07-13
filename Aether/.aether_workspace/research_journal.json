@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b08004d1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-13T08:07:45",
-      "title": "Failure of L^p Relaxation of KNRS Conjecture Below Threshold p"
-    },
-    {
       "cycle_id": "57f58be0",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Multiverse Set Theory\n\n`Catalog/Novelty/MultiverseSetTheory.lean` formalizes the combinatorial core of\nHamkins' set-theoretic multiverse: worlds as truth assignments, a multivers",
@@ -499,19 +489,19 @@
       "theorem_count": 32,
       "timestamp": "2026-07-13T23:13:45",
       "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
+    },
+    {
+      "cycle_id": "a0f7e73c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`\ndichotomy** for the *total* d-Hoggatt numbers `H_d(n) = ∑",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-13T23:31:37",
+      "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f57636f1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Topology of Impossible Objects\n\nThis cycle deepened the cohomological theory of impossible figures in two ways.\nFirst, the pointwise \"realizable iff zero holonomy\" dichotomy f",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 48,
-      "timestamp": "2026-07-11T07:29:23",
-      "title": "Deepening: The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
-    },
     {
       "cycle_id": "5e3f6a63",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 32,
       "timestamp": "2026-07-13T23:13:45",
       "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
+    },
+    {
+      "cycle_id": "a0f7e73c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`\ndichotomy** for the *total* d-Hoggatt numbers `H_d(n) = ∑",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-13T23:31:37",
+      "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f347bf96",
-      "domain": "Applications",
-      "name": "hadamardMat_det",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "f347bf96",
-      "domain": "Applications",
-      "name": "hadamardMat_entry_abs",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "24c0b42e",
-      "domain": "Novelty",
-      "name": "that",
-      "quality": 0.72
-    },
     {
       "cycle_id": "24c0b42e",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "notW_iff_all_W",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a0f7e73c",
+      "domain": "Applications",
+      "name": "LogLinear",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "a0f7e73c",
+      "domain": "Applications",
+      "name": "StrictLogConvex",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "a0f7e73c",
+      "domain": "Applications",
+      "name": "pow_two_logLinear",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-13T23:13:45",
+  "last_updated": "2026-07-13T23:31:37",
   "open_questions": [
     {
       "context": "+Everything is elementary and `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c0577eb2",
-        "quality": 0.82,
-        "theorems": 14,
-        "title": "Deepening: Exact topological conjugacy between the smooth logisti"
-      },
-      {
         "cycle_id": "6e7a2b5e",
         "quality": 0.82,
         "theorems": 19,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 32,
         "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
+      },
+      {
+        "cycle_id": "a0f7e73c",
+        "quality": 0.72,
+        "theorems": 17,
+        "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
       }
     ],
     "Bridges": [
