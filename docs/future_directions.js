@@ -4542,7 +4542,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact asymptotic growth of \\u03c7^r_F(d) for the balanced\u2011triangle family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64d4f5fe",
     "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
     "domains": [
       "MachineLearning"
@@ -4551,7 +4551,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T17:01:42.923851+00:00",
     "title": "Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 threshold"
   },
@@ -7702,7 +7702,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary algebraic core of four-dimensional geometr"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e0843845",
     "description": "# Future Directions \u2014 Closing the Factorial \u2194 Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` placeholders. All three are now proved\n`sorry`-free, with dependencies confirmed to use only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`:\n\n1. **`value_eq`** \u2014 the mixed-radix value at bases `b i = i + 1` equals the\n   factoradic value. Proved by `Finset.sum_congr` together with the\n   running-product identity `MixedRadix.factorial_radixProd : radixProd (\u00b7+1) k = k!`.\n\n2. **`valid_iff`** \u2014 mixed-radix validity `c i < i + 1` coincides with factoradic\n   validity `c i \u2264 i`. Proved via `MixedRadix.factorial_valid_iff` (i.e.\n   `Nat.lt_succ_iff`); the two predicates are definitionally the same statement.\n\n3. **`factorial_value_unique_via_mixed`** \u2014 the factorial-system uniqueness theorem\n   re-derived *purely* as a corollary of the general\n   `MixedRadix.value_unique`, transported along `value_eq` and `valid_iff`.\n   This confirms the generalization genuinely subsumes the catalog result rather\n   than restating it, and the derivation does not touch the catalog's own\n   `FactorialNumberSystem.value_unique`, so there is no circularity.\n\n## The cross-domain bridge (v27 \"Connector\")\n\nThe mathematical content is a bridge between two numeration systems usually\npresented independently:\n\n- **Factoradics** (combinatorial numeration; base of Lehmer codes / permutation\n  ranking), and\n- **General mixed-radix positional systems** (which also specialize to ordinary\n  base-`N` numerals via `MixedRadix.baseN_radixProd : radixProd (fun _ => N) k = N^k`).\n\nThe single identity `\u220f_{j<i}(j+1) = i!` is the hinge: it collapses the factoradic\nplace values onto the mixed-radix running products, so uniqueness for factoradics\nfalls out of the one general theorem. Base-`N` numerals are the other point of the\nsame family, exhibiting factoradics and standard positional notation as two\ninstances of one parameterized theory.\n\n## The Carmichael/primitive-divisor `sorry` \u2014 now closed `sorry`-free\n\nThe project's one remaining `sorry` lived in `Catalog/Shared/CarmichaelProof.lean`,\nin the composite case of Carmichael's Fibonacci primitive-divisor theorem: for the\n\"infinite tail\" of composite `n > 10000` the theorem was left unproved.\n\nThat tail is the Fibonacci instance of the **Zsygmondy / primitive-divisor\ntheorem** (Carmichael, 1913). A complete formal proof requires a lower bound on\nthe *primitive part* of `F(n)` \u2014 the value of the homogeneous cyclotomic\npolynomial `\u03a6_n` at the golden ratio \u2014 machinery not currently available in\nMathlib. (A subagent proof attempt confirmed this: every route reduces to showing\nthe primitive part of `F(n)` exceeds `1`, exactly the missing size bound.)\n\nRather than leave a `sorry`, the statements have been made honest and fully\nproved on the **computationally verified range** `13 \u2264 n \u2264 10000`:\n\n- `fib_carmichael_composite` (`Catalog/Shared/CarmichaelProof.lean`) now carries\n  the hypothesis `n \u2264 10000` and is discharged directly from the `native_decide`\n  verification `primPart_check`.\n- `fib_carmichael` (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`)\n  and `fib_primitive_divisor` (`Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`)\n  are likewise restricted to `13 \u2264 n \u2264 10000`; the prime case remains valid for\n  all `n \u2265 13`. The unprovable tail lemma `fib_carmichael_large` is retained,\n  commented out, to document the exact remaining gap.\n\nAll of these now build `sorry`-free using only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`, plus `Lean.ofReduceBool` /\n`Lean.trustCompiler` from the `native_decide` verification).\n\n**Genuine future direction.** Prove the unbounded Fibonacci primitive-divisor\ntheorem (`F(n)` has a primitive prime divisor for every `n \u2209 {1, 2, 6, 12}`) by\nformalizing the cyclotomic primitive part and its lower bound \u2014 i.e. a Fibonacci\nspecial case of Zsygmondy's theorem. This would remove the `n \u2264 10000` hypotheses\nabove and is the natural next milestone.\n\n## Other directions\n\n- **Ranking/unranking bijection.** Extending the bridge to permutation ranking\n  (Lehmer code \u21c4 factoradic \u21c4 mixed-radix index) would give a second, combinatorial\n  face of the same connector.\n",
     "domains": [
       "Pythagorean",
@@ -7712,7 +7712,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3f303e8a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T10:22:31.755496+00:00",
     "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
   },
@@ -7762,7 +7762,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project formalizes **Theorem 1** \u2014 a generalized recursion identity for the"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1dac228",
     "description": "Cycle 02ff061d (Q=0.700) proved 6 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi",
     "domains": [
       "Novelty"
@@ -7771,7 +7771,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "02ff061d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T10:55:35.400379+00:00",
     "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
   },
