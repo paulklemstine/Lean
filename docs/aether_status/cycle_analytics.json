@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T12:53:46.443800+00:00",
+  "last_updated": "2026-07-13T13:26:15.115029+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -12364,6 +12364,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-13T12:53:46.389693+00:00",
       "title": "Maximum Determinant Bound for 4\u00d74 Unimodular Matrices with Bounded Entries"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 152,
+      "domain": "Novelty",
+      "duration_seconds": 943.7688188552856,
+      "end_time": 1783949150.5655468,
+      "files_integrated": 4,
+      "job_id": "9f2f3b13",
+      "outcome_quality": 0.85,
+      "phase": "complete",
+      "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.85,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5575,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.85,
+        "novelty": 0.85,
+        "proof_depth": 0.85,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783948206.796728,
+      "strategy_count": 0,
+      "theorem_count": 27,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 24,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-13T13:26:15.068070+00:00",
+      "title": "That the geometry surrounding the Hopf fibration is"
     }
   ]
 }

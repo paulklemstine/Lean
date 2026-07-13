@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "26646791",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle (Builder mode) established a single connected chain of results around the\nFuss–Catalan numbers `fc m n = C((m+1)·n, n)/(m·n+1)` and their `m = 1` (Catalan)\nspecializati",
-      "quality_score": 0.72,
-      "sorry_count": 1,
-      "theorem_count": 26,
-      "timestamp": "2026-07-12T23:12:48",
-      "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path struc"
-    },
-    {
       "cycle_id": "4d87b490",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Kernel Law for the Thermodynamics of Proof\n\nThe kernel law established in this cycle says that a structure-preserving reasoning step\n`f : G → H` dissipates exactly `log₂|ker",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-13T12:53:44",
       "title": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
+    },
+    {
+      "cycle_id": "9f2f3b13",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nResearch thread `th_9a38994b`, Cycle 1. This cycle turns the five conjectures of\nthe \"Composition-Algebra Playground\" in",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-07-13T13:26:13",
+      "title": "That the geometry surrounding the Hopf fibration is"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a6f348ea",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Stone Duality for Neural Networks\n\nThe file `StoneDualityNeuralNetworks.lean` formalizes the finite-Boolean-algebra core of Stone\nduality for a single ReLU-type layer evaluated on",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-10T21:09:03",
-      "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-    },
     {
       "cycle_id": "523eb163",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-13T12:53:44",
       "title": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
+    },
+    {
+      "cycle_id": "9f2f3b13",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nResearch thread `th_9a38994b`, Cycle 1. This cycle turns the five conjectures of\nthe \"Composition-Algebra Playground\" in",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-07-13T13:26:13",
+      "title": "That the geometry surrounding the Hopf fibration is"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "02c1616a",
-      "domain": "Novelty",
-      "name": "isPrimitive_inv",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "02c1616a",
-      "domain": "Novelty",
-      "name": "completedLFunction_central",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "6ed40476",
-      "domain": "Novelty",
-      "name": "uses",
-      "quality": 0.83
-    },
     {
       "cycle_id": "6ed40476",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "det_fin_four",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9f2f3b13",
+      "domain": "Novelty",
+      "name": "to",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "9f2f3b13",
+      "domain": "Novelty",
+      "name": "of",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "9f2f3b13",
+      "domain": "Novelty",
+      "name": "eigen_supersat_general",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-07-13T12:53:44",
+  "last_updated": "2026-07-13T13:26:13",
   "open_questions": [
     {
       "context": "Everything is `sorry`-free and self-contained (`import Mathlib`).",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6ed40476",
-        "quality": 0.83,
-        "theorems": 30,
-        "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for m"
-      },
-      {
         "cycle_id": "57f58be0",
         "quality": 0.72,
         "theorems": 42,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 33,
         "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
+      },
+      {
+        "cycle_id": "9f2f3b13",
+        "quality": 0.85,
+        "theorems": 27,
+        "title": "That the geometry surrounding the Hopf fibration is"
       }
     ],
     "NumberTheory": [
