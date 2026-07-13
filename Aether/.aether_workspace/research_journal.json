@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "291fcce1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Orbit enumeration of Boolean cubic forms\n\nThis cycle established a sharp two-sided window for the number of nonzero\n`GL(10,2)`-orbits of Boolean cubic forms in ten variables. The",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-13T05:54:34",
-      "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-    },
-    {
       "cycle_id": "5b802ccf",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Topology of Argumentation (VIII)\n\nThis cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving that\na **well-founded** Dung argumentation framework has a **un",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-13T20:14:39",
       "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.l"
+    },
+    {
+      "cycle_id": "ce15dd8e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x³ − 3x` of Mori's uncanny-valley acceptance curv",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-13T20:48:23",
+      "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ace29f66",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Dream Logic: Coexisting Contradictions and Non-Closure of Unions\n\nThese conjectures are distilled from the present cycle, in which a four-valued\nparaconsistent algebra of \"imposs",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-07-11T04:29:37",
-      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-    },
     {
       "cycle_id": "fec9de1f",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-13T20:14:39",
       "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.l"
+    },
+    {
+      "cycle_id": "ce15dd8e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x³ − 3x` of Mori's uncanny-valley acceptance curv",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-13T20:48:23",
+      "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0568e201",
-      "domain": "Applications",
-      "name": "trace_pow_eq_sum_pow_eigenvalues",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "2aaaa5f9",
-      "domain": "Novelty",
-      "name": "tying",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "2aaaa5f9",
-      "domain": "Novelty",
-      "name": "mem_allCliques",
-      "quality": 0.82
-    },
     {
       "cycle_id": "162989ab",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "pow7_pow3_mod3",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "ce15dd8e",
+      "domain": "Applications",
+      "name": "uv_diff",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "ce15dd8e",
+      "domain": "Applications",
+      "name": "uv_peak_value",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "ce15dd8e",
+      "domain": "Applications",
+      "name": "uv_valley_value",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-13T20:14:39",
+  "last_updated": "2026-07-13T20:48:23",
   "open_questions": [
     {
       "context": "Everything is `sorry`-free and uses only `import Mathlib`; the file compiles",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e3aaa465",
-        "quality": 0.78,
-        "theorems": 14,
-        "title": "Universality of Transfer Functions Among Accumulation Points"
-      },
-      {
         "cycle_id": "f347bf96",
         "quality": 0.78,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 0,
         "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBrid"
+      },
+      {
+        "cycle_id": "ce15dd8e",
+        "quality": 0.78,
+        "theorems": 12,
+        "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
       }
     ],
     "Bridges": [

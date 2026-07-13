@@ -17075,7 +17075,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x³ − 3x` of Mori's uncanny-valley acceptance curve and proves,\nas a chain of results, that it exhibits the full ascent → peak → drop → valley →\nrecovery shape, culminating in `uncanny_valley_shape`.\n\nNatural next steps:\n\n1. **Parametric family.** Study `UV_c(x) = x³ − 3c²x` (c > 0), whose peak/valley\n   sit at ∓c with values ±2c³. Prove the valley depth `UV_c(c) < UV_c(−c)` and a\n   recovery threshold scaling linearly in c. This generalizes the whole chain.\n\n2. **General cubics.** Characterize exactly which monic cubics `x³ + px + q`\n   possess an uncanny valley: the discriminant condition `p < 0` (two real\n   critical points). Formalize \"has an uncanny valley ⟺ p < 0\".\n\n3. **Derivative-based formulation.** Re-derive the monotonicity regimes from\n   `deriv UV = 3x² − 3` using Mathlib's `StrictMonoOn`/`StrictAntiOn` and\n   `StrictMonoOn.lt_of_lt`, connecting the elementary algebra to real analysis.\n\n4. **Quantifying the depth.** Define the \"uncanny gap\" `UV(peak) − UV(valley)`\n   and study how it grows with the model's steepness; relate to a normalized\n   acceptance scale.\n\n5. **Beyond one valley.** Model higher-degree acceptance curves (e.g. degree-5)\n   admitting *multiple* valleys, and prove an alternation theorem for the signs\n   of successive turning points.\n\n6. **Smoothness / non-polynomial models.** Replace the cubic with a bounded\n   sigmoid-minus-Gaussian model and prove the same qualitative shape, moving\n   from algebraic to analytic techniques.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -18786,11 +18786,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "664b3442",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -18802,7 +18802,7 @@
       ],
       "github_issue": 0,
       "id": "push_4b281557_3e945946",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T20:48:36.552315+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -18817,7 +18817,7 @@
       "source": "",
       "source_exp_id": "4b281557",
       "source_path": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-12T02:28:00.464705+00:00",
       "title": "Deepening: Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
@@ -21156,7 +21156,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e3aaa465 (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any k ≥3 and 1≤ℓ<k, and any two accumulation points α, β in Π^k_ℓ, there exists a transfer function f such that f(α) = β.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications"
       ],
@@ -21476,7 +21476,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ee7062d3 (Q=0.820), which proved 20 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large infl",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],
@@ -23316,7 +23316,7 @@
       "depth_estimate": 3,
       "description": "Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|Aₙ|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -23956,7 +23956,7 @@
       "depth_estimate": 3,
       "description": "Cycle ee7062d3 (Q=0.820) proved 20 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],

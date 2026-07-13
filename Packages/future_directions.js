@@ -241,7 +241,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "664b3442",
     "description": "Building on cycle 4b281557 (Q=0.820), which proved 19 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed ",
     "domains": [
       "Probability"
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "4b281557",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T02:28:00.464705+00:00",
     "title": "Deepening: Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
   },
@@ -881,20 +881,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T23:55:18.527910+00:00",
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
-  },
-  {
-    "consumed_by_exp_id": "ce15dd8e",
-    "description": "Cycle 0643b2b3 (Q=0.820) proved 11 theorems in Combinatorics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "sorry_fill_0643b2b3_34f03d7e",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "0643b2b3",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T20:52:48.400479+00:00",
-    "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
   {
     "consumed_by_exp_id": "",
@@ -2020,6 +2006,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T19:25:02.043277+00:00",
     "title": "This cycle isolated and proved the arithmetic residue of the identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x\u00b3 \u2212 3x` of Mori's uncanny-valley acceptance curve and proves,\nas a chain of results, that it exhibits the full ascent \u2192 peak \u2192 drop \u2192 valley \u2192\nrecovery shape, culminating in `uncanny_valley_shape`.\n\nNatural next steps:\n\n1. **Parametric family.** Study `UV_c(x) = x\u00b3 \u2212 3c\u00b2x` (c > 0), whose peak/valley\n   sit at \u2213c with values \u00b12c\u00b3. Prove the valley depth `UV_c(c) < UV_c(\u2212c)` and a\n   recovery threshold scaling linearly in c. This generalizes the whole chain.\n\n2. **General cubics.** Characterize exactly which monic cubics `x\u00b3 + px + q`\n   possess an uncanny valley: the discriminant condition `p < 0` (two real\n   critical points). Formalize \"has an uncanny valley \u27fa p < 0\".\n\n3. **Derivative-based formulation.** Re-derive the monotonicity regimes from\n   `deriv UV = 3x\u00b2 \u2212 3` using Mathlib's `StrictMonoOn`/`StrictAntiOn` and\n   `StrictMonoOn.lt_of_lt`, connecting the elementary algebra to real analysis.\n\n4. **Quantifying the depth.** Define the \"uncanny gap\" `UV(peak) \u2212 UV(valley)`\n   and study how it grows with the model's steepness; relate to a normalized\n   acceptance scale.\n\n5. **Beyond one valley.** Model higher-degree acceptance curves (e.g. degree-5)\n   admitting *multiple* valleys, and prove an alternation theorem for the signs\n   of successive turning points.\n\n6. **Smoothness / non-polynomial models.** Replace the cubic with a bounded\n   sigmoid-minus-Gaussian model and prove the same qualitative shape, moving\n   from algebraic to analytic techniques.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1246",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ce15dd8e",
+    "status": "available",
+    "timestamp": "2026-07-13T20:48:13.997205+00:00",
+    "title": "The file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic"
   },
   {
     "consumed_by_exp_id": "",
