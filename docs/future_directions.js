@@ -1867,20 +1867,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
-    "consumed_by_exp_id": "8e89241b",
-    "description": "The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0111",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T00:16:17.133115+00:00",
-    "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for any prime r, any 1 \u2264 x \u2264 r^{0.499}, and any real q \u2208 [0,1], the average over characters modulo r of |\u2211_{n\u2264x} \u03c7(n)|^{2q} is at least (1/2)^q x^q, matching the known upper bounds and implying sharpness.",
     "domains": [
@@ -2141,7 +2127,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Failure of L^p Relaxation of KNRS Conjecture Below Threshold p"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "96ae8e1e",
     "description": "We conjecture that for any prime p >= 3, integer base b >= 2 with p not dividing b, let l be the order of b modulo p and d = (p-1)/l. For each prime q dividing d let m_q be the exponent of q in d. Then there exist Dirichlet characters \u03c7_{q,r} modulo p of order q^{m_q} (for 1 <= r <= m_q) such that the sum S of the repetend digits and the sum T of the squares of the digits satisfy S = (b-1)/2 * l + (b-1)/2 * \u03a3_{q|d} \u03a3_{r=1}^{m_q} [B_{\u03c7_{q,r}}]_0, T = (T_0 + T_1)/d + \u03a3_{q|d} \u03a3_{r=2}^{m_q} [T_{q,r}]_0 / q^{m_q - r + 1} + [T_d]_0 / 2, where the definitions of T_0,T_1,T_{q,r} are the same as in Theorem 2 with the appropriate characters. Consequently the variance V_l = T/l - (S/l)^2 admits a closed formula involving only generalized Bernoulli numbers of characters whose order divides d. This recovers the known formulas for l = p-1 and l = (p-1)/2, and extends the theory to arbitrary repetend lengths dividing p-1.",
     "domains": [
       "Pythagorean"
@@ -2150,7 +2136,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T04:45:09.367217+00:00",
     "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
   },
@@ -7584,6 +7570,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T03:01:34.157318+00:00",
     "title": "These conjectures are distilled from the present cycle: the algebraic structure "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Oddomorphisms and Split-Off Minors\n\nThis project formalizes the algebraic backbone of **oddomorphisms** between finite\ngraphs, defined as functions `\u03c6 : V(F) \u2192 V(G)` whose `0/1` function matrix intertwines\nthe adjacency matrices over `GF(2)`:\n```\nA_F \u00b7 funMatrix \u03c6 = funMatrix \u03c6 \u00b7 A_G   (over ZMod 2),\n```\nequivalently the local parity condition: the number of neighbours of `u` mapped to\n`a` is odd iff `\u03c6 u ~ a`.\n\n## What is proved (`Basic.lean`, `Examples.lean`)\n\n* **Functoriality** of the function matrix: `funMatrix \u03c6 * funMatrix \u03c8 = funMatrix (\u03c8 \u2218 \u03c6)`.\n* **Reflexivity**: the identity is an oddomorphism.\n* **Transitivity**: oddomorphisms compose (`IsOddomorphism.comp`).\n* Hence `Oddomorphic` (existence of an oddomorphism) is a **preorder** on graphs over\n  a fixed vertex type (`oddomorphicPreorder`).\n* **Isomorphisms are oddomorphisms** (`isOddomorphism_of_iso`), automorphisms are\n  self-oddomorphisms, and self-oddomorphisms form a **submonoid** of `Function.End`\n  (`oddEndSubmonoid`).\n* **Local parity characterization** (`isOddomorphism_iff_parity`).\n* A concrete **non-injective, surjective** oddomorphism `2\u00b7K\u2082 \u2192 K\u2082`\n  (`Examples.exists_noninjective_oddomorphism`), showing oddomorphisms strictly\n  extend isomorphisms and witness a minor.\n\n## Toward the full conjecture\n\nThe target equivalence is: *there is an oddomorphism `F \u2192 G` iff `G` is a split-off\nminor of `F`* (forward direction known in the literature, converse open).  Natural\nnext formalization steps:\n\n1. **Define split-off / split-off minor** in Lean (vertex splitting-off \u00e0 la Lov\u00e1sz,\n   `lovasz1967operations`) as a graph operation, and show it is closed under the\n   preorder we built.\n2. **Forward direction**: each split-off operation induces an oddomorphism; combine\n   with `IsOddomorphism.comp` to get oddomorphisms from split-off-minor witnesses.\n   The preorder/composition infrastructure here is exactly what such a proof needs.\n3. **GF(2) linear-algebra layer**: develop the kernel/rank theory of the intertwining\n   equation `A_F M = M A_G` over `GF(2)` to attack the converse; the matrix\n   reformulation (`funMatrix`) is designed to make this tractable.\n4. **Homomorphism-count connection** (`mancinska2020quantum`): relate the count of\n   oddomorphisms mod 2 to homomorphism counts mod 2 and to quantum-isomorphism\n   invariants.\n5. **Antisymmetry / equivalence classes**: investigate when `Oddomorphic F G` and\n   `Oddomorphic G F` together force `F \u2245 G` (a partial-order refinement of the\n   preorder), likely under a same-cardinality or surjectivity hypothesis.\n\n## Open computational questions\n\n* Enumerate the oddomorphism preorder on all graphs of `n \u2264 6` vertices and compare\n  its Hasse diagram with the split-off-minor order.\n* Characterize graphs `F` whose self-oddomorphism monoid strictly exceeds `Aut(F)`\n  (none among complete graphs `K_3`, per the evidence).\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1186",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d4192a75",
+    "status": "available",
+    "timestamp": "2026-07-13T03:38:36.596282+00:00",
+    "title": "This project formalizes the algebraic backbone of **oddomorphisms** between fini"
   },
   {
     "consumed_by_exp_id": "",
