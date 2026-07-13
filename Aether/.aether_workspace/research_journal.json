@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "82155f74",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Stability of the Sharp Diagonal Spectral Correlation Inequality\n\nThis cycle resolved the *diagonal* case of the correlation-stability problem for\nincreasing Boolean functions with",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-12T21:59:15",
-      "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
-    },
-    {
       "cycle_id": "0c4e7ae8",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle continues the probabilistic-method thread on **Property B** (Erdős 1963,\ntwo-colourability of sparse hypergraphs). The previous cycle proved the general lower bound\n`2^",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-13T12:17:35",
       "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
+    },
+    {
+      "cycle_id": "290f55e0",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Alexander polynomials as signed lattice-path sums\n\nThis cycle settled the combinatorial status of the \"Alexander polynomial as a\nlattice-path count\" conjecture: the *unsigned* gen",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 33,
+      "timestamp": "2026-07-13T12:34:55",
+      "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cd868ba0",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\n`Logic/ProofSearchInformation.lean` formalizes the counting core of the\ninformation-theoretic limits of encoding and proof search: no code compresses\nevery message, most messages",
-      "quality_score": 0.62,
-      "sorry_count": 4,
-      "theorem_count": 12,
-      "timestamp": "2026-07-10T20:20:14",
-      "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
-    },
     {
       "cycle_id": "f0772bca",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-13T12:17:35",
       "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
+    },
+    {
+      "cycle_id": "290f55e0",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Alexander polynomials as signed lattice-path sums\n\nThis cycle settled the combinatorial status of the \"Alexander polynomial as a\nlattice-path count\" conjecture: the *unsigned* gen",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 33,
+      "timestamp": "2026-07-13T12:34:55",
+      "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T12:17:35",
+  "last_updated": "2026-07-13T12:34:55",
   "open_questions": [
-    {
-      "context": "Every theorem below has a complete, `sorry`-free proof and the file compiles",
-      "cycle_id": "26646791",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-12T23:12:48"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "4d87b490",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-13T12:17:35"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "290f55e0",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-13T12:34:55"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "02c1616a",
-        "quality": 0.8,
-        "theorems": 8,
-        "title": "Functional Equations Enforce Primitivity of Coefficients"
-      },
-      {
         "cycle_id": "6ed40476",
         "quality": 0.83,
         "theorems": 30,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 10,
         "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
+      },
+      {
+        "cycle_id": "290f55e0",
+        "quality": 0.83,
+        "theorems": 33,
+        "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
       }
     ],
     "NumberTheory": [

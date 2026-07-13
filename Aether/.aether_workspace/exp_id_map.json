@@ -1176,5 +1176,6 @@
   "191c7579": "this_cycle_deepened_the_singleton_hypergraph_tight.json",
   "64d4f5fe": "explicit_exponential_lower_bound_for_vietoris_rips.json",
   "a1dac228": "close_proofs_edge_spectral_supersaturation_for_tri.json",
-  "290f55e0": "deepening_knots_and_lattices_the_alexander_polynom.json"
+  "290f55e0": "deepening_knots_and_lattices_the_alexander_polynom.json",
+  "ad71c64c": "full_brouwers_laplacian_conjecture_equality_charac.json"
 }
