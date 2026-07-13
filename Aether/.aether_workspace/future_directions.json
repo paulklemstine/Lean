@@ -8130,7 +8130,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.AT",
@@ -8138,7 +8138,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5d81b714",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -8154,7 +8154,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0608",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T19:25:40.818495+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cone_colorful_caratheodory {d : ℕ} {V : Type*} [Fintype V] (A : V → EuclideanSpace ℝ (Fin d)) {r : ℕ} (U : Fin r → Finset V) (hU : ∀ i j, i ≠ j → Disjoint (U i) (U j)) (hr : r ≥ d) (hcone : ∀ i, (0 : EuclideanSpace ℝ (Fin d)) ∈ convexCone (A '' (U i))) : ∃ t : Fin r → V, (∀ i, t i ∈ U i) ∧ (0 : EuclideanSpace ℝ (Fin d)) ∈ convexCone (A '' (Finset.image t Finset.univ))",
       "lineage_refs": [],
@@ -8169,7 +8169,7 @@
       "source": "",
       "source_exp_id": "2607.06172v1",
       "source_path": "http://arxiv.org/abs/2607.06172v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T07:15:41.627095+00:00",
       "title": "Cone Colorful Carathéodory Theorem"
@@ -20945,11 +20945,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9fd88504",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -20961,7 +20961,7 @@
       ],
       "github_issue": 0,
       "id": "push_e2c082ff_dcfe5098",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T19:25:58.005378+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -20976,7 +20976,7 @@
       "source": "",
       "source_exp_id": "e2c082ff",
       "source_path": "Lower bounds on clique densities using generalized inverses",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-12T07:19:31.875554+00:00",
       "title": "Deepening: Lower bounds on clique densities using generalized inverses"
@@ -42979,7 +42979,6 @@
     "σ_{d|n}": 1
   },
   "selection_log": [
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
@@ -42998,6 +42997,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
