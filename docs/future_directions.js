@@ -664,7 +664,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
-    "consumed_by_exp_id": "777d3024",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 996ff4be (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors ",
     "domains": [
       "Applications"
@@ -673,7 +673,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "996ff4be",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T07:17:30.409549+00:00",
     "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
   },
@@ -1486,7 +1486,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d984d02",
     "description": "Let $M$ be a piecewise-linear manifold of dimension $d \\ge 1$. If $S$ and $T$ are two locally finite triangulations of $M$, then $S$ and $T$ are related by a locally finite sequence of bistellar moves (Pachner moves).",
     "domains": [
       "Geometry"
@@ -1495,7 +1495,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T03:06:43.829580+00:00",
     "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
   },
