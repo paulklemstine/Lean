@@ -227,7 +227,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bc42943",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domains": [
       "NumberTheory"
@@ -236,7 +236,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "47a54792",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:29:46.239053+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
@@ -325,7 +325,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0577eb2",
     "description": "Building on cycle ac37e9f5 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Geometry of the Logistic\u2013Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin\u00b2(\u03c0t/2)` of the unit int",
     "domains": [
       "Novelty"
@@ -334,7 +334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "ac37e9f5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T16:32:48.088789+00:00",
     "title": "Deepening: Exact topological conjugacy between the smooth logisti"
   },
@@ -678,7 +678,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddc0d02e",
     "description": "Building on cycle 73d4b43b (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a s",
     "domains": [
       "Applications"
@@ -687,7 +687,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "73d4b43b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T05:00:51.739107+00:00",
     "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
@@ -706,7 +706,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "777d3024",
     "description": "Building on cycle 996ff4be (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors ",
     "domains": [
       "Applications"
@@ -715,12 +715,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "996ff4be",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:17:30.409549+00:00",
     "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "346f1862",
     "description": "Building on cycle a71dcffe (Q=0.780), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and tha",
     "domains": [
       "Novelty"
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "a71dcffe",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T13:44:35.350313+00:00",
     "title": "Deepening: The cycle established that the atomic AllDifferent constraint has a sharp"
   },
@@ -1065,7 +1065,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Exact dictionary \"logical qubits = middle homology\""
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c81e5afa",
     "description": "Cycle e0843845 (Q=0.800) proved 15 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Closing the Factorial \u2194 Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
     "domains": [
       "Applications"
@@ -1074,7 +1074,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "e0843845",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T13:44:01.104282+00:00",
     "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.l"
   },
@@ -1722,6 +1722,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-08T18:43:29.811729+00:00",
     "title": "Cographs are generalized spectrally closed"
+  },
+  {
+    "consumed_by_exp_id": "d31b8b8b",
+    "description": "For every integers d \u2265 2 and c with 1 \u2264 c \u2264 d, there exists a finite free simplicial Z2-complex K of dimension d such that coind(K) = c and coind(suspension K) = d + 1. This generalizes the paper's result (which proves the case c = 1 for all d \u2265 2) and would show that the upper bound coind(S(K)) \u2264 dim(K)+1 is sharp for every possible starting co-index c, achieving maximal excess d - c.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0686",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06061v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-08T23:14:12.131922+00:00",
+    "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
   },
   {
     "consumed_by_exp_id": "",
