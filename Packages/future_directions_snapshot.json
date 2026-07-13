@@ -439,25 +439,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d31b185d",
-    "description": "Building on cycle 86966da0 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself —\n`T ≈ Π (x : T), P x`, equivalently `T ≃ (T → Prop)` — cannot exist, for the same\ndiagonal reason underlying the theorems of Cantor, Gödel, and Tarski. ",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_86966da0_20bf6d3f",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "86966da0",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T23:52:10.953199+00:00",
-    "title": "Deepening: That a type which fully quantifies over itself —"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 8e89241b (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The coefficients V₂(n), V₃(n), V₄(n) of the q-series v₂(q), v₃(q), v₄(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alterna",
     "domain_bridges": [],
@@ -664,25 +645,6 @@
     "status": "failed",
     "timestamp": "2026-07-11T07:12:19.970065+00:00",
     "title": "Categorical Physics: The Shape of a Theory of Everything"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "1a598f10",
-    "description": "Building on cycle 02c1616a (Q=0.800), which proved 8 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture asserts that functional equations for Dirichlet L-functions, under mild assumptions, necessitate the coefficient function to be a primitive Dirichlet character.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_02c1616a_44029820",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "02c1616a",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T07:01:34.223078+00:00",
-    "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
   },
   {
     "ambition_level": "extension",
@@ -12535,6 +12497,46 @@
     "status": "available",
     "timestamp": "2026-07-13T08:07:51.560786+00:00",
     "title": "`Catalog/Novelty/MultiverseSetTheory.lean` formalizes the combinatorial core of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Diagonal as a Single Organising Principle\n\nThis cycle established, from one structural root, that no type can fully quantify\nover itself: a type `T` equivalent to its own predicate space `T → (T → Prop)`\ncannot exist. The same fixed-point argument — a point-surjective family forces\nevery self-map to have a fixed point, and negation on truth values has none — was\nthreaded through its classical incarnations: Cantor's cardinal gap, Tarski's\nundefinability of truth, and Gödel's incompleteness. The decisive discovery was\nthat Gödel and Tarski differ *only* in which predicates a system can name: negated\nprovability is nameable, negated truth is not.\n\n## Conjecture 1 — The definability gate governs the whole incompleteness spectrum\n\nBetween \"nothing internal is nameable\" (trivially consistent) and \"everything is\nnameable\" (Tarski collapse) lies a monotone lattice of naming powers, and each\nlevel realises a sharply different incompleteness phenomenon (consistency,\nessential incompleteness, ω-incompleteness, outright inconsistency).\n\nThe key insight is that consistency is not a property of the sentences a system\nproves but of the *predicates it is allowed to name*: the fixed-point operator is\nalways present, and only the definability gate decides whether its output is a\ntheorem, an undecidable sentence, or a contradiction.\n\nWhy now? The restricted-diagonal formulation isolates definability as an explicit,\nindependently variable parameter rather than an implicit feature of a fixed\nlanguage, so the whole spectrum can be studied by moving a single dial.\n\n## Conjecture 2 — Every diagonal impossibility has a quantitative cardinal shadow\n\nEach qualitative \"no self-reflecting object\" theorem is the boundary case of a\nstrict size inequality; conversely, any strict cardinal gap `#A < #(A → B)` with a\nfixed-point-free self-map of `B` yields a corresponding impossibility theorem.\n\nThe key insight is that the logical obstruction and the arithmetic gap are two\nreadings of the *same* diagonal witness: the sentence that cannot be named is\nexactly the element that cannot be hit.\n\nWhy now? Having both readings — the fixed-point theorem and the strict cardinal\ninequality — derived side by side makes the correspondence between them a concrete\ntarget rather than an analogy.\n\n## Conjecture 3 — Fixed-point-free self-maps classify which structures resist self-reference\n\nA type `B` of \"truth values\" admits a self-quantifying object built on it exactly\nwhen `B` carries *some* self-map with a fixed point for every point-surjective\nfamily; the obstruction is precisely the existence of a fixed-point-free self-map\nsuch as negation.\n\nThe key insight is that impossibility of self-reference is not about the size of\n`T` at all but about the fixed-point geometry of the value space `B`: replace\ntwo-valued logic by a structure whose every self-map has a fixed point and the\nobstruction dissolves.\n\nWhy now? Lawvere's theorem, stated with the value type fully general, makes the\nrole of the value space explicit, turning \"which logics permit self-reference?\"\ninto a precise question about fixed-point-free endomorphisms.\n\n## Conjecture 4 — Consciousness-style total self-models are impossible for the same reason\n\nAny agent whose internal state space is rich enough to represent every predicate\nabout its own states — a \"total self-model\" — is subject to the diagonal\nobstruction and cannot be complete: there is always a true self-predicate it\ncannot internally name.\n\nThe key insight is that a total self-model would be exactly a self-quantifying\ntype `T ≃ (T → Prop)`, so the impossibility proved here is not a limitation of any\nparticular architecture but a structural ceiling on complete self-representation.\n\nWhy now? With the impossibility of the self-quantifying equivalence established in\nfull generality, claims about \"complete self-awareness\" acquire a precise\nmathematical meaning against which they can finally be tested and refuted.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_1201",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d31b185d",
+    "status": "available",
+    "timestamp": "2026-07-13T08:25:52.863156+00:00",
+    "title": "This cycle established, from one structural root, that no type can fully quantif"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved the\nroot-number reciprocity law only in *identity form*\n`W(χ)·W(χ⁻¹)·Λ(χ,s) = Λ(χ,s)`, avoiding any non-vanishing input.  The new file\n`FunctionalEquationPrimitivityDeep.lean` upgrades it to the **genuine equality**\n`W(χ)·W(χ⁻¹) = 1` for a nontrivial Dirichlet character `χ` of **prime** modulus `p`, and\nderives several consequences.\n\n## What was proved (all `sorry`-free, self-contained, `import Mathlib`)\n\n1. `inv_even_iff` — inversion preserves parity of a Dirichlet character (`χ.Even ↔ χ⁻¹.Even`).\n2. `gaussSum_mul_gaussSum_inv_stdAddChar` — the same-character Gauss-sum product\n   `gaussSum χ e · gaussSum χ⁻¹ e = χ(-1)·p` for prime `p`, obtained from the field-case\n   product `gaussSum χ e · gaussSum χ⁻¹ e⁻¹ = #(ℤ/p)` and additive-character inversion.\n3. `rootNumber_mul_rootNumber_inv` — **genuine reciprocity** `W(χ)·W(χ⁻¹) = 1`.\n4. `rootNumber_ne_zero` — `W(χ) ≠ 0`.\n5. `rootNumber_inv_eq_inv` — `W(χ⁻¹) = W(χ)⁻¹`.\n6. `rootNumber_sq_self_dual` — for a nontrivial real (quadratic) character, `W(χ)² = 1`.\n7. `completedLFunction_inv_eq` — the reflection identity solved for `Λ(χ⁻¹, s)` using the\n   genuine reciprocity: `Λ(χ⁻¹, s) = p^{-(s-1/2)}·W(χ⁻¹)·Λ(χ, 1-s)`.\n\n## Contrarian note (what does *not* generalise, and why)\n\nThe naive \"prime\" hypothesis is not cosmetic.  The engine\n`gaussSum χ e · gaussSum χ⁻¹ e⁻¹ = #(ℤ/N)` holds in Mathlib only when `ℤ/N` is a field.\nFor composite `N`, an *imprimitive* character can have a **vanishing** Gauss sum (the\n\"Gauss-sum enforcement of primitivity\" of the companion file), so `W(χ)` is junk and\nreciprocity in the stated form fails.  The honest general statement must restrict to\nprimitive characters — the very rigidity the guiding conjecture predicts.\n\n## Natural next steps\n\n* **Absolute value.** Prove `‖W(χ)‖ = 1` for prime modulus.  The missing ingredient is a\n  conjugation lemma `conj (gaussSum χ e) = gaussSum χ⁻¹ e⁻¹` (not currently in Mathlib);\n  with it, `‖gaussSum χ e‖² = gaussSum χ e · gaussSum χ⁻¹ e⁻¹ = p`, hence `‖W(χ)‖ = 1`.\n* **General primitive modulus.** Extend `gaussSum_mul_gaussSum_inv_stdAddChar` and the\n  reciprocity to arbitrary primitive characters mod `N`, developing the primitive-character\n  Gauss-sum absolute-value theory for non-field `ℤ/N` (currently absent from Mathlib).\n* **Explicit sign for real characters.** Refine `rootNumber_sq_self_dual` to the exact value\n  `W(χ) = +1` (real quadratic characters have root number `+1`), matching the small-case\n  evidence.\n* **Converse rigidity.** Formalise a converse: a coefficient function whose completed series\n  satisfies the clean reflection identity with `|W| = 1` must be a primitive character —\n  the full statement of the guiding conjecture.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1202",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1a598f10",
+    "status": "available",
+    "timestamp": "2026-07-13T08:26:25.625420+00:00",
+    "title": "This cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved "
   },
   {
     "ambition_level": "extension",

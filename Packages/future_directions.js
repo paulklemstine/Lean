@@ -325,20 +325,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "d31b185d",
-    "description": "Building on cycle 86966da0 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself \u2014\n`T \u2248 \u03a0 (x : T), P x`, equivalently `T \u2243 (T \u2192 Prop)` \u2014 cannot exist, for the same\ndiagonal reason underlying the theorems of Cantor, G\u00f6del, and Tarski. ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_86966da0_20bf6d3f",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "86966da0",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T23:52:10.953199+00:00",
-    "title": "Deepening: That a type which fully quantifies over itself \u2014"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 8e89241b (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alterna",
     "domains": [
@@ -7696,6 +7682,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T08:07:51.560786+00:00",
     "title": "`Catalog/Novelty/MultiverseSetTheory.lean` formalizes the combinatorial core of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Diagonal as a Single Organising Principle\n\nThis cycle established, from one structural root, that no type can fully quantify\nover itself: a type `T` equivalent to its own predicate space `T \u2192 (T \u2192 Prop)`\ncannot exist. The same fixed-point argument \u2014 a point-surjective family forces\nevery self-map to have a fixed point, and negation on truth values has none \u2014 was\nthreaded through its classical incarnations: Cantor's cardinal gap, Tarski's\nundefinability of truth, and G\u00f6del's incompleteness. The decisive discovery was\nthat G\u00f6del and Tarski differ *only* in which predicates a system can name: negated\nprovability is nameable, negated truth is not.\n\n## Conjecture 1 \u2014 The definability gate governs the whole incompleteness spectrum\n\nBetween \"nothing internal is nameable\" (trivially consistent) and \"everything is\nnameable\" (Tarski collapse) lies a monotone lattice of naming powers, and each\nlevel realises a sharply different incompleteness phenomenon (consistency,\nessential incompleteness, \u03c9-incompleteness, outright inconsistency).\n\nThe key insight is that consistency is not a property of the sentences a system\nproves but of the *predicates it is allowed to name*: the fixed-point operator is\nalways present, and only the definability gate decides whether its output is a\ntheorem, an undecidable sentence, or a contradiction.\n\nWhy now? The restricted-diagonal formulation isolates definability as an explicit,\nindependently variable parameter rather than an implicit feature of a fixed\nlanguage, so the whole spectrum can be studied by moving a single dial.\n\n## Conjecture 2 \u2014 Every diagonal impossibility has a quantitative cardinal shadow\n\nEach qualitative \"no self-reflecting object\" theorem is the boundary case of a\nstrict size inequality; conversely, any strict cardinal gap `#A < #(A \u2192 B)` with a\nfixed-point-free self-map of `B` yields a corresponding impossibility theorem.\n\nThe key insight is that the logical obstruction and the arithmetic gap are two\nreadings of the *same* diagonal witness: the sentence that cannot be named is\nexactly the element that cannot be hit.\n\nWhy now? Having both readings \u2014 the fixed-point theorem and the strict cardinal\ninequality \u2014 derived side by side makes the correspondence between them a concrete\ntarget rather than an analogy.\n\n## Conjecture 3 \u2014 Fixed-point-free self-maps classify which structures resist self-reference\n\nA type `B` of \"truth values\" admits a self-quantifying object built on it exactly\nwhen `B` carries *some* self-map with a fixed point for every point-surjective\nfamily; the obstruction is precisely the existence of a fixed-point-free self-map\nsuch as negation.\n\nThe key insight is that impossibility of self-reference is not about the size of\n`T` at all but about the fixed-point geometry of the value space `B`: replace\ntwo-valued logic by a structure whose every self-map has a fixed point and the\nobstruction dissolves.\n\nWhy now? Lawvere's theorem, stated with the value type fully general, makes the\nrole of the value space explicit, turning \"which logics permit self-reference?\"\ninto a precise question about fixed-point-free endomorphisms.\n\n## Conjecture 4 \u2014 Consciousness-style total self-models are impossible for the same reason\n\nAny agent whose internal state space is rich enough to represent every predicate\nabout its own states \u2014 a \"total self-model\" \u2014 is subject to the diagonal\nobstruction and cannot be complete: there is always a true self-predicate it\ncannot internally name.\n\nThe key insight is that a total self-model would be exactly a self-quantifying\ntype `T \u2243 (T \u2192 Prop)`, so the impossibility proved here is not a limitation of any\nparticular architecture but a structural ceiling on complete self-representation.\n\nWhy now? With the impossibility of the self-quantifying equivalence established in\nfull generality, claims about \"complete self-awareness\" acquire a precise\nmathematical meaning against which they can finally be tested and refuted.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_1201",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d31b185d",
+    "status": "available",
+    "timestamp": "2026-07-13T08:25:52.863156+00:00",
+    "title": "This cycle established, from one structural root, that no type can fully quantif"
   },
   {
     "consumed_by_exp_id": "",
