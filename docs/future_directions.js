@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "5acf2050",
-    "description": "Building on cycle 9f2f3b13 (Q=0.850), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The Fourth Dimension as a Composition-Algebra Playground\n\nThis cycle established that the geometry surrounding the Hopf fibration is\norganised by the composition (normed division) algebras, and that a single\nalgebraic device \u2014 the Hermitian inner product of two unit vectors \u2014 r",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_9f2f3b13_9574c122",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "9f2f3b13",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T13:26:13.578901+00:00",
-    "title": "Deepening: That the geometry surrounding the Hopf fibration is"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle d019c88a (Q=0.880), which proved 30 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hyper",
     "domains": [
@@ -2554,7 +2540,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grundy Number XOR Conjecture for Three-Pile Halve Nim"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee7062d3",
     "description": "Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large influence, then the entire complex K satisfies a global KKL condition for functions on its simplices.",
     "domains": [
       "Geometry"
@@ -2563,7 +2549,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T06:47:54.813371+00:00",
     "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
   },
@@ -7982,6 +7968,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T14:51:18.710456+00:00",
     "title": "This project formalizes a **cross-domain bridge** between two areas that meet in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Composition-Algebra Playground, Deepened\n\nThis cycle extended the Hermitian-inner-product \"witness\" from the first Hopf\nfibration `S\u00b3 \u2192 S\u00b2` to the quaternionic Hopf fibration `S\u2077 \u2192 S\u2074`. A single\nalgebraic device \u2014 the inner product `\u03bb = q\u0304q' + r\u0304r'` of two unit vectors \u2014\ndetects, bounds, and *reconstructs* the fibre, with the only structural change\nbeing that noncommutativity forces the connecting phase to act on the right.\nThe following conjectures push the pattern further.\n\n## Conjecture 1 \u2014 The octonionic witness reconstructs the last Hopf fibre\n\nOver the octonions, the inner product `\u03bb = q\u0304q' + r\u0304r'` of two unit vectors in\n`\ud835\udd46\u00b2` should reconstruct the fibre of the octonionic Hopf fibration `S\u00b9\u2075 \u2192 S\u2078`,\nwith `\u2016\u03bb\u2016 \u2264 1` and equality iff the two points are proportional.\n**The key insight is** that the squared-distance defect identity\n`\u2016q' \u2212 q\u03bb\u2016\u00b2 + \u2016r' \u2212 r\u03bb\u2016\u00b2 = 1 \u2212 \u2016\u03bb\u2016\u00b2` depends only on norm-multiplicativity and\nthe conjugation antihomomorphism, both of which survive in the octonions despite\nthe loss of associativity \u2014 the projection must simply be bracketed as `q(\u03bb)`\nwith a fixed association.\n**Why now?** The complex and quaternionic cases are now settled by the same\nproof skeleton; isolating exactly which associativity uses appear pinpoints the\nminimal hypotheses and makes the nonassociative case a finite bookkeeping task.\n\n## Conjecture 2 \u2014 A Hopf-invariant one obstruction from the witness\n\nThe witness construction should exist as a norm-nonincreasing reconstruction map\nonly in dimensions `1, 2, 4, 8`. **The key insight is** that the defect identity\n`\u2016q'\u2212q\u03bb\u2016\u00b2+\u2016r'\u2212r\u03bb\u2016\u00b2 = 1\u2212\u2016\u03bb\u2016\u00b2` forces the underlying algebra to be a real\ncomposition algebra, and Hurwitz's theorem then bars every other dimension.\n**Why now?** With the witness identity proved uniformly across `\u2102` and `\u210d`, the\nidentity itself \u2014 rather than fibration topology \u2014 becomes the carrier of the\ndimensional obstruction, offering an algebraic route to a classically\ntopological fact.\n\n## Conjecture 3 \u2014 Witness transition cocycles classify the quaternionic bundle\n\nThe fibre through a fixed unit vector `a = (q,r)` is now known to be a principal\nhomogeneous space for the unit quaternions `S\u00b3` acting on the right, with\nright-multiplication and the inner-product witness mutually inverse on the\nsphere. Building on this torsor structure, the transition functions of the\nquaternionic Hopf bundle over an open cover of the base `S\u2074` should themselves be\nwitnesses evaluated on chart overlaps, and their homotopy class should realise\nthe generator of the third homotopy group of `S\u00b3`.\n**The key insight is** that once the fibre is a right `S\u00b3`-torsor and the witness\nis its exact reconstructor, the phase comparing two overlapping local\ntrivialisations is a witness-valued cocycle, so the entire bundle is encoded by a\nsingle unit-quaternion-valued gluing datum.\n**Why now?** The pointwise torsor structure is now settled, so the correspondence\ncan be promoted from a fibrewise statement to a global gluing description,\nturning a reconstruction identity into a bundle-classification tool.\n\n## Conjecture 4 \u2014 Curvature from the witness on the projective base\n\nThe imaginary part of the witness, evaluated on infinitesimally close fibres,\nshould recover the Fubini\u2013Study connection form on the quaternionic projective\nline `\u210dP\u00b9 = S\u2074`. **The key insight is** that `\u03bb` measures the phase needed to\nalign two nearby fibres, so its derivative along the base is precisely the\nhorizontal-lift defect, i.e. the connection.\n**Why now?** The witness is proved to be the exact right-phase aligning two\nfibres; differentiating a proven exact alignment is the natural next quantitative\nstep, connecting the discrete reconstruction result to gauge-theoretic geometry.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1228",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5acf2050",
+    "status": "available",
+    "timestamp": "2026-07-13T14:51:33.072594+00:00",
+    "title": "Hermitian-inner-product \"witness\" from the first Hopf"
   },
   {
     "consumed_by_exp_id": "",

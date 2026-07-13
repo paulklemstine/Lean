@@ -3946,7 +3946,7 @@
       "Gur22",
       "Gotlib23"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee7062d3",
     "description": "Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large influence, then the entire complex K satisfies a global KKL condition for functions on its simplices.",
     "domain_bridges": [
       "boolean-function-analysis",
@@ -3962,7 +3962,7 @@
     "proof_strategy": "Inductive argument over simplex dimensions, leveraging the local KKL hypothesis on links to establish global influence bounds via Fourier-analytic techniques on simplicial complexes. Key steps involve defining influence measures on complexes, relating local and global spectral properties, and applying the local-to-global method from the paper.",
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T06:47:54.813371+00:00",
     "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
   },
