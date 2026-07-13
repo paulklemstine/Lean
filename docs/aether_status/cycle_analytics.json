@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T08:26:58.369732+00:00",
+  "last_updated": "2026-07-13T08:43:52.483341+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -11590,6 +11590,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-13T08:26:58.317039+00:00",
       "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 135,
+      "domain": "Applications",
+      "duration_seconds": 1074.545488357544,
+      "end_time": 1783932213.4534435,
+      "files_integrated": 4,
+      "job_id": "0557da65",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 1,
+      "sorry_density": 0.034482758620689655,
+      "start_time": 1783931138.9079552,
+      "strategy_count": 0,
+      "theorem_count": 29,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 27,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-13T08:43:52.438384+00:00",
+      "title": "Deepening: Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
     }
   ]
 }

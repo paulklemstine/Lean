@@ -115,20 +115,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "0557da65",
-    "description": "Building on cycle 4f5260f0 (Q=0.830), which proved 19 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formali",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_4f5260f0_690694e8",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "4f5260f0",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T22:48:17.286043+00:00",
-    "title": "Deepening: Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients \u220f_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
     "domains": [
@@ -5293,7 +5279,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterizing reflected bounded\u2011growth tuples in type\u202fB"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f683b2c",
     "description": "For all integers x \u2265 2 and integers u satisfying \u230a\u221ax\u230b < u < x, the Mertens function M(x) = \u2211_{n\u2264x} \u03bc(n) satisfies the recursive identity M(x) = \u2211_{k=1}^{\u230ax/u\u230b} \u03bc(k) S(\u230ax/k\u230b, u), where S(y, u) = 1 - \u2211_{n=\u230ay/u\u230b+1}^{\u03ba_y} M(\u230ay/n\u230b) + \u03ba_y M(\u230a\u221ay\u230b) - \u2211_{n=1}^{\u230a\u221ay\u230b} \u230ay/n\u230b \u03bc(n) and \u03ba_y = \u230ay/(\u230a\u221ay\u230b+1)\u230b. This formalizes Theorem 1 of the paper with the standard split point \u03bd_y = \u230a\u221ay\u230b and explicit floor operations.",
     "domains": [
       "Bridges"
@@ -5302,7 +5288,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07566v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T17:29:41.664378+00:00",
     "title": "Generalized Mertens Function Recursion Identity"
   },
@@ -7698,6 +7684,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T08:26:25.625420+00:00",
     "title": "This cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n`Catalog/Bridges/CantorHierarchy.lean` formalizes the classical skeleton of\nCantor's transfinite hierarchy: Cantor's theorem and the absence of a largest\ncardinal, the Hartogs number, `\u2135\u2080`/`\u2135\u2081` as the least infinite/uncountable\ncardinals, the finite beth (Cantor) tower, the size of the continuum (including\n`\u211d \u2243 \ud835\udcab \u2115` and `\u211d\u00b2 \u2243 \u211d`), K\u00f6nig's uncountable-cofinality constraint on `\ud835\udd20`, and\nthe Continuum Hypothesis characterized by the absence of an intermediate\ncardinal, with `GCH \u2192 CH`.\n\n## Recently completed\n\nThe following directions from earlier drafts have now been proved in the file:\n\n* **GCH \u21d2 beth = aleph.** `beth_eq_aleph_of_GCH` proves by transfinite induction\n  (`Ordinal.limitRecOn`) that under `GCH` the beth and aleph hierarchies\n  coincide, `\u2200 o, \u2136_o = \u2135_o`. The successor step is `GCH`; the limit step matches\n  the two suprema termwise.\n\n* **K\u00f6nig's theorem in general form.** `power_cofinality_gt` generalizes\n  `continuum_cofinality_uncountable` to `\u03ba < cf((2 : Cardinal) ^ \u03ba)` for every\n  infinite `\u03ba`, so `2 ^ \u03ba` is never a `\u03ba`-indexed supremum of smaller cardinals.\n\n* **Cardinal-arithmetic absorption.** `cardinal_add_self` (`\u03ba + \u03ba = \u03ba`),\n  `cardinal_mul_self` (`\u03ba \u00b7 \u03ba = \u03ba`), and `cardinal_power_self` (`\u03ba ^ \u03ba = 2 ^ \u03ba`)\n  package the infinite-cardinal absorption laws, of which the continuum results\n  (`continuum_mul_self`, `plane_equiv_line`) are special cases.\n\n## Remaining directions\n\n1. **Beth-fixed points.** Formalize the existence of cardinals `\u03ba` with\n   `\u03ba = \u2136_\u03ba` (beth fixed points) via the normal-function fixed-point theorem,\n   exhibiting genuinely large \"self-referential\" infinities.\n\n2. **Concrete K\u00f6nig exclusions.** Use `power_cofinality_gt` to derive concrete\n   exclusions of possible values of `\ud835\udd20`, e.g. `\ud835\udd20 \u2260 \u2135_\u03c9` (since `cf(\u2135_\u03c9) = \u2135\u2080`),\n   contrasting with the values K\u00f6nig's theorem leaves open.\n\n3. **Independence, meta-level.** State (without proving, as this needs forcing)\n   that `CH` is independent of ZFC, and connect `CH` here to Mathlib's model\n   theory should a forcing/inner-model library become available.\n\n4. **Choice-free Hartogs.** Reformulate `hartogs` inside a choice-free fragment\n   to make the \"no AC needed\" content of the Hartogs construction explicit,\n   rather than relative to Mathlib's ambient choice.\n",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_1203",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0557da65",
+    "status": "available",
+    "timestamp": "2026-07-13T08:43:43.481593+00:00",
+    "title": "`Catalog/Bridges/CantorHierarchy.lean` formalizes the classical skeleton of"
   },
   {
     "consumed_by_exp_id": "",
