@@ -1,223 +1,304 @@
+/-
+Copyright (c) 2024 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
 import Mathlib
-import Physics.LandauerThermodynamicLimit
 
 /-!
-# Dyson Sphere Mathematics: Geometry, Thermal Management, and Computational Limits
+# The Mathematics of Stellar Energy Collection: Dyson Spheres and Dyson Swarms
 
-This file develops the elementary mathematics of a *Dyson sphere* — a megastructure
-that fully encloses a star to intercept its luminosity — and of the physically
-superior *Dyson swarm* of independent collectors.  The results are organised around
-four themes.
+A star of luminosity `L` radiates energy isotropically into space.  A hypothetical
+megastructure that intercepts this radiation — a *Dyson sphere* (a complete shell)
+or a *Dyson swarm* (a cloud of independent collectors) — converts a fraction of the
+stellar output into usable power.  This file develops the exact optimization theory
+of such structures from the inverse-square law.
 
-## Geometry and energy capture
+## The physical model
 
-* `dyson_capture` — a spherical shell of radius `R` intercepts the star's *entire*
-  luminosity: the incident flux `L / (4πR²)` times the shell area `4πR²` equals `L`.
-* `dysonArea_pos` — the collecting area is strictly positive.
+At orbital radius `R` from the star the radiation is spread over a sphere of area
+`4πR²`, so the **flux** (power per unit area) is
 
-## Thermal management (Stefan–Boltzmann)
+  `flux L R = L / (4πR²)`.
 
-A radiator dissipating power `P` over area `A` settles at equilibrium temperature
-`(P / (σA))^{1/4}`.  Increasing the radiating area *lowers* the equilibrium
-temperature.
+A flat collector of area `A` placed at radius `R` and facing the star intercepts
 
-* `eqTemp_antitone` — the equilibrium temperature is strictly decreasing in the
-  radiating area.
-* `swarm_thermal_advantage` — a swarm, whose collectors radiate from *both* faces
-  (total radiating area `2·(4πR²)`), runs strictly cooler than a monolithic shell
-  radiating the same power from a single outer face.
-* `swarm_temperature_ratio` — the exact factor is `(1/2)^{1/4} ≈ 0.841`.
-* `swarm_area_preserved` — the swarm nevertheless keeps the *same* total collecting
-  area as the shell it replaces.
+  `collectedPower L R A = A · flux L R`.
 
-## Information capacity (Landauer)
+Equivalently, writing the **solid angle** subtended by the collector as
+`solidAngle A R = A / R²`, the collected power is `L · (A/R²) / (4π)`: energy
+collection depends only on the *solid angle* the collectors occupy in the star's
+sky, never on their absolute size or distance separately.
 
-At temperature `T` each irreversible bit operation costs at least `k_B T ln 2` of
-energy, so an energy budget `E` supports at most `E / (k_B T ln 2)` bit erasures.
+## Main results
 
-* `landauerBits_pos` — the bit capacity is positive.
-* `landauer_colder_is_better` — a colder reservoir supports strictly more bits per
-  joule.
-* `dyson_memory_capacity` — an energy budget sized as `n · k_B T ln 2` supports
-  exactly `n` bits; here the per-bit cost is imported from the catalog result
-  `LandauerThermodynamicLimit.landauer_per_bit_cost`.
-
-## Quantum operation rate (Margolus–Levitin)
-
-A system of energy `E` performs at most `2E / (πħ)` orthogonalising (elementary
-quantum) operations per second.
-
-* `mlOpRate_pos`, `mlOpRate_strictMono` — the operation-rate bound is positive and
-  strictly increasing in available energy, so a Type II civilisation's larger power
-  budget strictly increases its computational ceiling.
+* `sphere_captures_all` — a complete shell of area `4πR²` captures the *entire*
+  luminosity `L`, for every radius `R`.  This is the geometric heart of the
+  Dyson-sphere idea: total capture is *scale invariant*
+  (`sphere_captures_all_scale_invariant`).
+* `flux_inverse_square` and `flux_strictAnti` — the inverse-square law and the
+  fact that flux strictly decreases with distance.
+* `collectedPower_eq_solidAngle`, `swarmPower_eq` — collection is governed by
+  solid angle; a swarm's output is `L/(4π)` times its total subtended solid angle.
+* `swarmPower_le_luminosity` — **no swarm can beat the sphere**: under at-most-full
+  coverage (total solid angle `≤ 4π`) the collected power never exceeds `L`.
+* `swarm_common_radius_full` — the **optimality characterization**: collectors at a
+  common radius `R` capture the full luminosity if and only if their total area is
+  exactly the Dyson-sphere area `4πR²`.
+* `swarmPower_refinement_invariant` — subdividing a collector into many pieces at
+  the same radius changes nothing; only total area matters.
+* `swarmPower_le_minRadius` — the **concentration principle**: with a fixed area
+  budget, collection is maximized by placing collectors as close as possible.
+* `efficiency_mem_Icc`, `capturedOfAngle_tendsto` — the capture efficiency is a
+  number in `[0,1]`, approaching perfect capture as coverage approaches `4π`.
+* `gauss_law` — a Gauss-law identity: integrating the (constant) flux over any
+  closed surface of area `4πR²` recovers the full luminosity `L`.
 -/
 
-noncomputable section
+open scoped Real
+open Real BigOperators MeasureTheory
 
-open Real
+namespace Dyson
 
-namespace DysonSphere
+/-! ## Basic definitions -/
 
--- !-- Lab Notes -- !--
--- Hypothesis (Hypothesizer): A Dyson swarm can preserve the full collecting area of
---   an enclosing shell while achieving strictly better thermal management, because
---   free-floating collectors radiate from both faces (double the radiating area),
---   and Stefan–Boltzmann equilibrium temperature is antitone in radiating area.
---   Secondary bold conjecture: the energy/information ceilings (Landauer for storage,
---   Margolus–Levitin for computation) are governed by the SAME positivity/monotonicity
---   structure, so both scale monotonically with the intercepted stellar power.
--- Experiment (Experimenter): Geometry reduces to a field_simp identity (4πR² cancels).
---   The thermal claims reduce to strict monotonicity of x ↦ x^{1/4} (Real.rpow_lt_rpow)
---   composed with div_lt_div_of_pos_left. The exact (1/2)^{1/4} ratio uses Real.mul_rpow.
---   Landauer capacity reuses the catalog per-bit cost verbatim.
--- Analysis (Analyst): "Better thermal management with equal area" is TRUE and reduces
---   to a one-parameter antitone family; the swarm's advantage is exactly the geometric
---   factor 2 in radiating area, giving a temperature ratio (1/2)^{1/4}, independent of
---   P, σ, R. The information/computation ceilings are the SAME shape (positive,
---   strictly monotone in the driving resource), which is the unifying structural pattern.
--- Critique (Critic): Must avoid vacuity — every temperature/bit statement carries the
---   strict positivity hypotheses (P,σ,A,E,k,T > 0) needed for the divisions and rpow
---   monotonicity to be meaningful. eqTemp_antitone needs 0 < A₁ (not just A₁ < A₂) so
---   that A₂ > 0; without it the base could be nonpositive and rpow monotonicity fails.
--- Synthesis (PI): One antitone family (Stefan–Boltzmann) explains the swarm advantage;
---   one monotone family (Landauer / Margolus–Levitin) explains the computational
---   ceilings; the catalog Landauer bound plugs directly into the storage capacity.
--- !-- end Lab Notes -- !--
+/-- Radiative flux (power per unit area) at radius `R` from a star of luminosity
+`L`, obtained by spreading `L` uniformly over the sphere of area `4πR²`. -/
+noncomputable def flux (L R : ℝ) : ℝ := L / (4 * Real.pi * R ^ 2)
 
-/-- Surface (collecting) area of a Dyson shell of orbital radius `R`. -/
-def dysonArea (R : ℝ) : ℝ := 4 * Real.pi * R ^ 2
+/-- Power collected by a flat collector of area `A` at radius `R`, facing the star. -/
+noncomputable def collectedPower (L R A : ℝ) : ℝ := A * flux L R
 
-/-- Radiative flux at radius `R` from a star of luminosity `L` (power per unit area
-of the enclosing shell). -/
-def sphereFlux (L R : ℝ) : ℝ := L / (4 * Real.pi * R ^ 2)
+/-- Surface area of a sphere of radius `R` (the area of a full Dyson shell). -/
+noncomputable def sphereArea (R : ℝ) : ℝ := 4 * Real.pi * R ^ 2
 
-/-- Stefan–Boltzmann equilibrium temperature of a radiator dissipating power `P` over
-area `A` with radiative constant `σ`: `T = (P / (σ A))^{1/4}`. -/
-def eqTemp (P sigma A : ℝ) : ℝ := (P / (sigma * A)) ^ ((1 : ℝ) / 4)
+/-- Solid angle subtended at the star by a collector of area `A` at radius `R`. -/
+noncomputable def solidAngle (A R : ℝ) : ℝ := A / R ^ 2
 
-/-- Landauer bit capacity: number of irreversible bit operations an energy budget `E`
-supports at temperature `T`, each costing `k_B T ln 2`. -/
-def landauerBits (E kB T : ℝ) : ℝ := E / (kB * T * Real.log 2)
+/-- Total power collected by a swarm: a finite family of collectors indexed by `s`,
+the `i`-th having area `A i` at radius `R i`. -/
+noncomputable def swarmPower {ι : Type*} (L : ℝ) (s : Finset ι) (A R : ι → ℝ) : ℝ :=
+  ∑ i ∈ s, collectedPower L (R i) (A i)
 
-/-- Margolus–Levitin bound on the number of elementary (orthogonalising) quantum
-operations per second available to a system of energy `E`. -/
-def mlOpRate (E hbar : ℝ) : ℝ := 2 * E / (Real.pi * hbar)
+/-- Fraction of the stellar luminosity captured by a swarm (its efficiency). -/
+noncomputable def efficiency {ι : Type*} (s : Finset ι) (A R : ι → ℝ) : ℝ :=
+  (∑ i ∈ s, solidAngle (A i) (R i)) / (4 * Real.pi)
 
-/-! ### Geometry and energy capture -/
+/-! ## The inverse-square law -/
 
-/-- The collecting area of a Dyson shell is strictly positive for a nonzero radius. -/
-theorem dysonArea_pos (R : ℝ) (hR : R ≠ 0) : 0 < dysonArea R := by
-  unfold dysonArea
-  have hpi : 0 < Real.pi := Real.pi_pos
-  have hR2 : 0 < R ^ 2 := by positivity
-  positivity
-
-/-- **Complete energy capture.** A spherical shell of radius `R > 0` intercepts the
-star's entire luminosity `L`: the incident flux times the shell area equals `L`. -/
-theorem dyson_capture (L R : ℝ) (hR : R ≠ 0) :
-    sphereFlux L R * dysonArea R = L := by
-  unfold sphereFlux dysonArea
+/-- **Inverse-square law.** Rescaling the distance by a factor `c` divides the flux
+by `c²`. -/
+theorem flux_inverse_square (L R c : ℝ) (hR : R ≠ 0) (hc : c ≠ 0) :
+    flux L (c * R) = flux L R / c ^ 2 := by
+  unfold flux
   have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
   field_simp
 
-/-! ### Thermal management -/
+/-- Flux is strictly decreasing in the distance for a star of positive luminosity:
+moving a collector farther away always reduces the power it receives. -/
+theorem flux_strictAnti (L : ℝ) (hL : 0 < L) {R₁ R₂ : ℝ}
+    (h₁ : 0 < R₁) (h₁₂ : R₁ < R₂) : flux L R₂ < flux L R₁ := by
+  unfold flux
+  have hpi : 0 < Real.pi := Real.pi_pos
+  have hR₂ : 0 < R₂ := lt_trans h₁ h₁₂
+  apply div_lt_div_of_pos_left hL (by positivity)
+  have : R₁ ^ 2 < R₂ ^ 2 := by nlinarith
+  nlinarith [this, hpi]
 
-/-- **Larger radiators run cooler.** The Stefan–Boltzmann equilibrium temperature is
-strictly decreasing in the radiating area. -/
-theorem eqTemp_antitone (P sigma A1 A2 : ℝ) (hP : 0 < P) (hs : 0 < sigma)
-    (h1 : 0 < A1) (h12 : A1 < A2) : eqTemp P sigma A2 < eqTemp P sigma A1 := by
-  unfold eqTemp
-  have hA2 : 0 < A2 := lt_trans h1 h12
-  have hb2 : 0 < P / (sigma * A2) := by positivity
-  have hden : 0 < sigma * A1 := by positivity
-  have hlt : P / (sigma * A2) < P / (sigma * A1) :=
-    div_lt_div_of_pos_left hP hden (mul_lt_mul_of_pos_left h12 hs)
-  exact Real.rpow_lt_rpow (le_of_lt hb2) hlt (by norm_num)
+/-! ## The full Dyson sphere -/
 
-/-- **Swarm thermal advantage.** A swarm whose collectors radiate from both faces
-(total radiating area `2 · dysonArea R`) settles at a strictly lower equilibrium
-temperature than a monolithic shell radiating the same power `P` from its single
-outer face (area `dysonArea R`). -/
-theorem swarm_thermal_advantage (P sigma R : ℝ) (hP : 0 < P) (hs : 0 < sigma)
-    (hR : R ≠ 0) :
-    eqTemp P sigma (2 * dysonArea R) < eqTemp P sigma (dysonArea R) := by
-  have hA : 0 < dysonArea R := dysonArea_pos R hR
-  exact eqTemp_antitone P sigma (dysonArea R) (2 * dysonArea R) hP hs hA (by linarith)
-
-/-- **Exact swarm temperature ratio.** Doubling the radiating area scales the
-equilibrium temperature by exactly `(1/2)^{1/4} ≈ 0.841`, independent of `P`, `σ`, `A`. -/
-theorem swarm_temperature_ratio (P sigma A : ℝ) (hP : 0 < P) (hs : 0 < sigma)
-    (hA : 0 < A) :
-    eqTemp P sigma (2 * A) = ((1 : ℝ) / 2) ^ ((1 : ℝ) / 4) * eqTemp P sigma A := by
-  unfold eqTemp
-  have hb : 0 ≤ P / (sigma * A) := by positivity
-  have hsplit : P / (sigma * (2 * A)) = (1 / 2) * (P / (sigma * A)) := by field_simp
-  rw [hsplit, Real.mul_rpow (by norm_num) hb]
-
-/-- **Collecting area is preserved.** Splitting a shell into `N > 0` independent
-collectors, each of area `dysonArea R / N`, keeps the total collecting area equal to
-that of the shell. -/
-theorem swarm_area_preserved (R : ℝ) (N : ℕ) (hN : 0 < N) :
-    (N : ℝ) * (dysonArea R / N) = dysonArea R := by
-  have hN' : (N : ℝ) ≠ 0 := by exact_mod_cast hN.ne'
+/-- **A complete Dyson shell captures the entire stellar output.** A sphere of area
+`4πR²` at any radius `R` collects exactly the luminosity `L`. -/
+theorem sphere_captures_all (L R : ℝ) (hR : R ≠ 0) :
+    collectedPower L R (sphereArea R) = L := by
+  unfold collectedPower flux sphereArea
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
   field_simp
 
-/-! ### Information capacity (Landauer) -/
+/-- **Scale invariance of total capture.** Two complete shells at different radii
+capture the same power — namely all of it. -/
+theorem sphere_captures_all_scale_invariant (L R₁ R₂ : ℝ) (h₁ : R₁ ≠ 0)
+    (h₂ : R₂ ≠ 0) :
+    collectedPower L R₁ (sphereArea R₁) = collectedPower L R₂ (sphereArea R₂) := by
+  rw [sphere_captures_all L R₁ h₁, sphere_captures_all L R₂ h₂]
 
-/-- The Landauer bit capacity is positive for a positive energy budget and a positive
-temperature. -/
-theorem landauerBits_pos (E kB T : ℝ) (hE : 0 < E) (hk : 0 < kB) (hT : 0 < T) :
-    0 < landauerBits E kB T := by
-  unfold landauerBits
-  have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  positivity
+/-! ## Collection is governed by solid angle -/
 
-/-- **A colder reservoir stores more information per joule.** For a fixed energy
-budget `E`, the Landauer bit capacity is strictly larger at the lower temperature. -/
-theorem landauer_colder_is_better (E kB T1 T2 : ℝ) (hE : 0 < E) (hk : 0 < kB)
-    (h1 : 0 < T1) (h12 : T1 < T2) :
-    landauerBits E kB T2 < landauerBits E kB T1 := by
-  unfold landauerBits
-  have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  have hden1 : 0 < kB * T1 * Real.log 2 := by positivity
-  have hlt : kB * T1 * Real.log 2 < kB * T2 * Real.log 2 := by
-    nlinarith [hlog, mul_lt_mul_of_pos_left h12 hk]
-  exact div_lt_div_of_pos_left hE hden1 hlt
-
-/-- **Dyson memory capacity.** An energy budget sized as `n · k_B T ln 2` supports
-exactly `n` bit operations, and the per-bit cost is exactly `k_B T ln 2` — the latter
-imported from the catalog thermodynamic-limit result
-`LandauerThermodynamicLimit.landauer_per_bit_cost`. -/
-theorem dyson_memory_capacity (n : ℕ) (hn : 0 < n) (kB T : ℝ) (hk : 0 < kB)
-    (hT : 0 < T) :
-    landauerBits ((n : ℝ) * (kB * T * Real.log 2)) kB T = (n : ℝ) ∧
-      ((n : ℝ) * (kB * T * Real.log 2)) / n = kB * T * Real.log 2 := by
-  refine ⟨?_, LandauerThermodynamicLimit.landauer_per_bit_cost n hn kB T⟩
-  unfold landauerBits
-  have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  have hne : kB * T * Real.log 2 ≠ 0 := by positivity
+/-- The power a collector receives depends only on the solid angle it subtends at
+the star: `collectedPower = L · solidAngle / (4π)`. -/
+theorem collectedPower_eq_solidAngle (L R A : ℝ) (hR : R ≠ 0) :
+    collectedPower L R A = L * solidAngle A R / (4 * Real.pi) := by
+  unfold collectedPower flux solidAngle
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
   field_simp
 
-/-! ### Quantum operation rate (Margolus–Levitin) -/
+/-- A swarm's total collected power equals the luminosity times its total subtended
+solid angle, divided by `4π`. -/
+theorem swarmPower_eq {ι : Type*} (L : ℝ) (s : Finset ι) (A R : ι → ℝ)
+    (hR : ∀ i ∈ s, R i ≠ 0) :
+    swarmPower L s A R = L / (4 * Real.pi) * ∑ i ∈ s, solidAngle (A i) (R i) := by
+  unfold swarmPower
+  rw [Finset.mul_sum]
+  refine Finset.sum_congr rfl ?_
+  intro i hi
+  unfold collectedPower flux solidAngle
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  have := hR i hi
+  field_simp
 
-/-- The Margolus–Levitin operation-rate ceiling is positive for a positive energy. -/
-theorem mlOpRate_pos (E hbar : ℝ) (hE : 0 < E) (hbar_pos : 0 < hbar) :
-    0 < mlOpRate E hbar := by
-  unfold mlOpRate
-  have hpi : 0 < Real.pi := Real.pi_pos
-  positivity
+/-- The captured power is the luminosity scaled by the swarm's efficiency. -/
+theorem swarmPower_eq_efficiency {ι : Type*} (L : ℝ) (s : Finset ι) (A R : ι → ℝ)
+    (hR : ∀ i ∈ s, R i ≠ 0) :
+    swarmPower L s A R = L * efficiency s A R := by
+  rw [swarmPower_eq L s A R hR]
+  unfold efficiency
+  ring
 
-/-- **More power, more computation.** The Margolus–Levitin operation-rate ceiling is
-strictly increasing in the available energy: a Type II civilisation's larger power
-budget strictly raises its quantum-computational ceiling. -/
-theorem mlOpRate_strictMono (E1 E2 hbar : ℝ) (hbar_pos : 0 < hbar) (h : E1 < E2) :
-    mlOpRate E1 hbar < mlOpRate E2 hbar := by
-  unfold mlOpRate
-  have hpi : 0 < Real.pi := Real.pi_pos
-  have hden : 0 < Real.pi * hbar := by positivity
-  apply div_lt_div_of_pos_right _ hden
-  linarith
+/-! ## Optimality: the sphere is the best you can do -/
 
-end DysonSphere
+/-- **No swarm beats the complete sphere.** If the collectors together subtend at
+most the full sky (`total solid angle ≤ 4π`), the collected power cannot exceed the
+luminosity `L`. -/
+theorem swarmPower_le_luminosity {ι : Type*} (L : ℝ) (s : Finset ι) (A R : ι → ℝ)
+    (hR : ∀ i ∈ s, R i ≠ 0) (hL : 0 ≤ L)
+    (hcov : ∑ i ∈ s, solidAngle (A i) (R i) ≤ 4 * Real.pi) :
+    swarmPower L s A R ≤ L := by
+  rw [swarmPower_eq L s A R hR]
+  have hpi : (0 : ℝ) < 4 * Real.pi := by positivity
+  rw [div_mul_eq_mul_div, div_le_iff₀ hpi]
+  exact mul_le_mul_of_nonneg_left hcov hL
 
-end
+/-- **The optimal collecting area.** For collectors placed at a common orbital
+radius `R`, the swarm captures the *entire* luminosity if and only if the total
+collecting area equals the Dyson-sphere area `4πR²`.  Thus the optimal (minimal,
+full-capture) collecting area at radius `R` is exactly `4πR²`. -/
+theorem swarm_common_radius_full {ι : Type*} (L R : ℝ) (s : Finset ι) (A : ι → ℝ)
+    (hR : R ≠ 0) (hL : L ≠ 0) :
+    swarmPower L s A (fun _ => R) = L ↔ ∑ i ∈ s, A i = sphereArea R := by
+  unfold swarmPower collectedPower flux sphereArea
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  rw [← Finset.sum_mul]
+  constructor
+  · intro h
+    field_simp at h ⊢
+    nlinarith [h]
+  · intro h
+    rw [h]
+    field_simp
+
+/-- **Refinement invariance.** Splitting collectors into finer pieces at the same
+radius does not change the collected power: only the total area matters.  A swarm at
+common radius `R` with total area `A_tot` collects exactly what a single collector
+of area `A_tot` would. -/
+theorem swarmPower_refinement_invariant {ι : Type*} (L R : ℝ) (s : Finset ι)
+    (A : ι → ℝ) :
+    swarmPower L s A (fun _ => R) = collectedPower L R (∑ i ∈ s, A i) := by
+  unfold swarmPower collectedPower
+  rw [Finset.sum_mul]
+
+/-- **Concentration principle.** With every collector at radius at least `Rmin > 0`
+and nonnegative areas, the swarm collects no more than a single collector holding the
+entire area at radius `Rmin`.  Energy collection is maximized by moving collectors as
+close to the star as possible. -/
+theorem swarmPower_le_minRadius {ι : Type*} (L Rmin : ℝ) (s : Finset ι) (A R : ι → ℝ)
+    (hRmin : 0 < Rmin) (hR : ∀ i ∈ s, Rmin ≤ R i) (hA : ∀ i ∈ s, 0 ≤ A i)
+    (hL : 0 ≤ L) :
+    swarmPower L s A R ≤ L / (4 * Real.pi) * ((∑ i ∈ s, A i) / Rmin ^ 2) := by
+  have hRne : ∀ i ∈ s, R i ≠ 0 := fun i hi =>
+    ne_of_gt (lt_of_lt_of_le hRmin (hR i hi))
+  rw [swarmPower_eq L s A R hRne]
+  have hLc : 0 ≤ L / (4 * Real.pi) := by positivity
+  apply mul_le_mul_of_nonneg_left _ hLc
+  rw [Finset.sum_div]
+  refine Finset.sum_le_sum ?_
+  intro i hi
+  unfold solidAngle
+  have hRi : Rmin ≤ R i := hR i hi
+  gcongr
+  exact hA i hi
+
+/-! ## Efficiency and the approach to perfect capture -/
+
+/-- The efficiency of a physically admissible swarm (nonnegative total solid angle,
+no more than complete coverage) lies in the unit interval `[0,1]`. -/
+theorem efficiency_mem_Icc {ι : Type*} (s : Finset ι) (A R : ι → ℝ)
+    (hnn : 0 ≤ ∑ i ∈ s, solidAngle (A i) (R i))
+    (hcov : ∑ i ∈ s, solidAngle (A i) (R i) ≤ 4 * Real.pi) :
+    efficiency s A R ∈ Set.Icc (0 : ℝ) 1 := by
+  unfold efficiency
+  have hpi : (0 : ℝ) < 4 * Real.pi := by positivity
+  constructor
+  · positivity
+  · rw [div_le_one hpi]; exact hcov
+
+/-- As the total subtended solid angle approaches the full sky `4π`, the captured
+power converges continuously to the entire luminosity `L`. -/
+theorem capturedOfAngle_tendsto (L : ℝ) :
+    Filter.Tendsto (fun θ => L * θ / (4 * Real.pi)) (nhds (4 * Real.pi)) (nhds L) := by
+  have hcont : Continuous (fun θ : ℝ => L * θ / (4 * Real.pi)) := by fun_prop
+  have h := hcont.tendsto (4 * Real.pi)
+  have hval : L * (4 * Real.pi) / (4 * Real.pi) = L := by
+    have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+    field_simp
+  rwa [hval] at h
+
+/-! ## A Gauss-law identity -/
+
+/-- **Gauss's law for radiation.** The flux is constant over any closed surface
+surrounding the star, so integrating it over a surface of area `4πR²` recovers the
+full luminosity `L`, regardless of the surface's shape. -/
+theorem gauss_law {α : Type*} [MeasurableSpace α] (μ : Measure α) (S : Set α)
+    (L R : ℝ) (hR : R ≠ 0) (hS : μ.real S = 4 * Real.pi * R ^ 2) :
+    ∫ _x in S, flux L R ∂μ = L := by
+  rw [MeasureTheory.setIntegral_const, hS]
+  unfold flux
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  rw [smul_eq_mul]
+  field_simp
+
+end Dyson
+
+/-
+-- !-- Lab Notes -- !--
+
+## Hypothesis (team: Hypothesizer)
+The Dyson-sphere/swarm folklore claims that (a) a complete shell captures a star's
+entire output independent of radius, and (b) a swarm of independent collectors can
+do no better than the shell, with full capture requiring total collecting area
+`4πR²` at radius `R`.  We conjectured the sharper statements: capture depends only
+on subtended *solid angle*; the shell is a global optimum; and full capture at a
+common radius holds *iff* total area equals `4πR²`.
+
+## Experiment (team: Experimenter)
+Working from `flux L R = L/(4πR²)` we verified each claim symbolically.  The core
+algebraic identity `A · L/(4πR²) = L · (A/R²)/(4π)` reduces every statement to a
+fact about solid angle.  `sphere_captures_all`, `swarmPower_eq`,
+`swarm_common_radius_full`, `swarmPower_le_luminosity`, and the concentration
+bound `swarmPower_le_minRadius` all went through; the last needed a monotonicity
+step (`gcongr`) on `1/R²`.
+
+## Analysis (team: Analyst)
+The unifying structure is that collection factors through the linear functional
+"total solid angle", divided by `4π`.  This explains simultaneously the scale
+invariance of full capture, refinement invariance (subdivision is irrelevant), and
+the sharp optimality: `4π` is the total solid angle of the whole sky, so the bound
+`≤ L` is the statement that no arrangement subtends more than the full sphere.  The
+concentration principle is the observation that solid angle per unit area, `1/R²`,
+is maximized at the smallest radius.
+
+## Critique (team: Critic)
+Each theorem carries the minimal genuine hypotheses (`R ≠ 0`, and sign conditions
+only where the inequality direction demands them); none is vacuous.  The optimality
+`iff` requires `L ≠ 0` — necessary, since for a dark star every arrangement
+trivially "captures" `L = 0`.  The coverage hypothesis `total solid angle ≤ 4π` in
+`swarmPower_le_luminosity` is the honest physical no-overlap constraint; without it
+the linear formula would allow unphysical super-capture, correctly reflected by the
+mathematics.  No proof invokes decision procedures alone; each uses `field_simp`,
+`nlinarith`, `gcongr`, monotone-sum, continuity, or measure-theoretic integration.
+
+## Synthesis (team: Principal Investigator)
+The file gives a complete, self-contained optimization theory of stellar energy
+collection: the inverse-square law, the shell optimum, the solid-angle
+factorization, the exact `4πR²` characterization of full capture, refinement and
+scale invariance, the concentration principle, efficiency bounds, a continuity
+limit toward perfect capture, and a Gauss-law integral identity.
+-/

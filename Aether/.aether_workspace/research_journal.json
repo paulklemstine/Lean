@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8cebc683",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis file (`Catalog/Mandelbrot/EscapeRadius.lean`) formalizes the elementary dynamics of\nthe Mandelbrot quadratic recurrence `z_{n+1} = z_n^2 + c` and proves:\n\n- `step_norm_lower`",
-      "quality_score": 0.72,
-      "sorry_count": 7,
-      "theorem_count": 120,
-      "timestamp": "2026-07-12T13:18:12",
-      "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
-    },
-    {
       "cycle_id": "73c84a79",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Tightness of the Isolation Lemma bound\n\nThe exact count established for the singleton hypergraph shows that the global\nlower bound `n · ∑_{j=0}^{d-1} j^{n-1}` on the number of is",
@@ -499,19 +489,19 @@
       "theorem_count": 31,
       "timestamp": "2026-07-13T03:38:44",
       "title": "Equivalence of Oddomorphism and Split-Off Minor"
+    },
+    {
+      "cycle_id": "53d4816b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle deepened the \"Cellular Automata as Algebraic Geometry\" line by proving\na sharp **cross-domain equivalence** in\n`Catalog/Novelty/CANilpotencyScheme.lean`:\n\n> The additiv",
+      "quality_score": 0.82,
+      "sorry_count": 7,
+      "theorem_count": 18,
+      "timestamp": "2026-07-13T03:57:23",
+      "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9b14e09c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Topology and Conservation Laws of Assembled Puzzles\n\nThis cycle established a conservation law for jigsaw assemblies — in any validly\nassembled row or rectangle the exposed ta",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 32,
-      "timestamp": "2026-07-10T10:45:49",
-      "title": "Deepening: The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-    },
     {
       "cycle_id": "a9aa7bbf",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 31,
       "timestamp": "2026-07-13T03:38:44",
       "title": "Equivalence of Oddomorphism and Split-Off Minor"
+    },
+    {
+      "cycle_id": "53d4816b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle deepened the \"Cellular Automata as Algebraic Geometry\" line by proving\na sharp **cross-domain equivalence** in\n`Catalog/Novelty/CANilpotencyScheme.lean`:\n\n> The additiv",
+      "quality_score": 0.82,
+      "sorry_count": 7,
+      "theorem_count": 18,
+      "timestamp": "2026-07-13T03:57:23",
+      "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "82155f74",
-      "domain": "Applications",
-      "name": "expect_const",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "82155f74",
-      "domain": "Applications",
-      "name": "cov_comm",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0c4e7ae8",
-      "domain": "Novelty",
-      "name": "card_filter_superset",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0c4e7ae8",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "funMatrix_id",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "53d4816b",
+      "domain": "Novelty",
+      "name": "sq_inj",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "53d4816b",
+      "domain": "Novelty",
+      "name": "sq_Xpow_sub",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "53d4816b",
+      "domain": "Novelty",
+      "name": "Xadd1_prime",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T03:38:44",
+  "last_updated": "2026-07-13T03:57:23",
   "open_questions": [
-    {
-      "context": "-Everything is elementary and `sorry`-free.",
-      "cycle_id": "bc831bad",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-12T13:53:38"
-    },
     {
       "context": "-Everything is elementary and `sorry`-free.",
       "cycle_id": "d019c88a",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-13T02:42:03"
+    },
+    {
+      "context": "+finite-range result rather than leave an unproved `sorry`.; -    sorry; +preserved here (commented out) rather than shipped with a `sorry`; the honest,",
+      "cycle_id": "53d4816b",
+      "domain": "Novelty",
+      "sorry_count": 7,
+      "timestamp": "2026-07-13T03:57:23"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "00319e93",
-        "quality": 0.82,
-        "theorems": 9,
-        "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey"
-      },
-      {
         "cycle_id": "82394822",
         "quality": 0.72,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.7,
         "theorems": 22,
         "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Ma"
+      },
+      {
+        "cycle_id": "53d4816b",
+        "quality": 0.82,
+        "theorems": 18,
+        "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothen"
       }
     ],
     "NumberTheory": [

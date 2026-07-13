@@ -353,20 +353,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "53d4816b",
-    "description": "Building on cycle 84ab5171 (Q=0.820), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_84ab5171_270da8dd",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "84ab5171",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T22:51:37.493006+00:00",
-    "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 86966da0 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself \u2014\n`T \u2248 \u03a0 (x : T), P x`, equivalently `T \u2243 (T \u2192 Prop)` \u2014 cannot exist, for the same\ndiagonal reason underlying the theorems of Cantor, G\u00f6del, and Tarski. ",
     "domains": [
@@ -5275,7 +5261,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algorithmic Induced Erd\u0151s\u2013P\u00f3sa Property for Long Thetas"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "36372f99",
     "description": "Every palindromic Poincar\u00e9 polynomial arising from a strongly smooth element in type A_n occurs as a Poincar\u00e9 polynomial P_w(q) for some element w in the principal poset Pr(L_B) under the canonical Lehmer code L_B for type B_n, where the correspondence is given by w = bot^{-1}(v) for v \u2208 Sm_n.",
     "domains": [
       "Bridges",
@@ -5285,7 +5271,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07659v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T16:08:00.537695+00:00",
     "title": "Palindromic Poincar\u00e9 polynomial occurrence in type B via Stembridge's bottom map"
   },
@@ -7599,6 +7585,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T03:38:36.596282+00:00",
     "title": "This project formalizes the algebraic backbone of **oddomorphisms** between fini"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle deepened the \"Cellular Automata as Algebraic Geometry\" line by proving\na sharp **cross-domain equivalence** in\n`Catalog/Novelty/CANilpotencyScheme.lean`:\n\n> The additive elementary cellular automaton `new = old + right-neighbour` on the\n> cyclic lattice `\u2124/n` is nilpotent (every configuration dies to the all-zero\n> state) **iff** `n` is a power of `2`.\n\nDynamically this is `ca_dies_iff_pow2`; algebraically it is\n`caUnit_isNilpotent_iff`, the statement that the ring element `u = 1 + X` is\nnilpotent in `\ud835\udd3d\u2082[X]/(X\u207f \u2212 1)` iff `n = 2\u1d4f`. Scheme-theoretically it says the\ngroup scheme `\u03bc\u2099 = Spec \ud835\udd3d\u2082[X]/(X\u207f \u2212 1)` is a fat (non-reduced) point exactly when\n`n` is a power of the characteristic.\n\n## Natural next steps\n\n1. **Nilpotency index / relaxation time.** When `n = 2\u1d4f` the automaton dies; the\n   exact number of steps is the least `N` with `(X+1)\u1d3a \u2261 0 mod (X\u207f \u2212 1)`, which\n   equals `n = 2\u1d4f` (since `(X+1)\u207f = X\u207f \u2212 1`). Prove `N = n` is minimal, i.e. the\n   nilpotency index of `u` is exactly `n`, connecting to the height/embedding\n   dimension of the fat point `\u03bc_{2\u1d4f}`.\n\n2. **General additive rules.** Replace `u = 1 + X` by an arbitrary Laurent\n   polynomial `p(X, X\u207b\u00b9)` (the full `\ud835\udd3d\u2082`-linear ECA family: Rules 90, 150, 60,\n   \u2026). Characterise nilpotency of `p` in `\ud835\udd3d\u2082[X]/(X\u207f \u2212 1)` via the radical of the\n   ideal, i.e. `p` nilpotent iff every irreducible factor of `X\u207f \u2212 1` divides\n   `p`. This recovers the present result as the case `p = 1 + X`.\n\n3. **Reducedness \u21c4 reversibility.** `X\u207f \u2212 1` is separable (\u03bc\u2099 \u00e9tale/reduced) iff\n   `n` is odd; relate this to the *reversibility* and cycle structure of the CA,\n   and to the factorisation of `X\u207f \u2212 1` into cyclotomic polynomials over `\ud835\udd3d\u2082`\n   (multiplicative order of `2 mod d` for `d \u2223 n`).\n\n4. **Higher characteristic.** Everything transports to `\ud835\udd3d\u209a` with the rule\n   `1 + X`: nilpotency should hold iff `n` is a power of `p`. The proof skeleton\n   (`sq_inj` \u2192 `p`-th-power injectivity, derivative parity \u2192 derivative\n   `p`-divisibility, `dvd_prime_pow`) generalises directly.\n\n5. **Two-dimensional / larger neighbourhoods.** Extend to `\ud835\udd3d\u2082[X,Y]/(X\u207f\u22121, Y\u1d50\u22121)`\n   and multivariate additive CAs, connecting nilpotency to the geometry of\n   `\u03bc\u2099 \u00d7 \u03bc\u2098`.\n\n## Status of the surrounding catalog deliverables\n\nAlongside the cellular-automata result, the deliverable aggregator\n`Catalog/Applications/CatalogDeliverables.lean` now builds end-to-end\n(`lake build Catalog.Applications.CatalogDeliverables`), and every theorem in the\ncross-domain connector files it collects is complete and free of `sorry`:\n\n* **Factorial \u2282 mixed-radix bridge**\n  (`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`).  The\n  place-value and validity identities `value_eq` / `valid_iff` and the derived\n  uniqueness theorem `factorial_value_unique_via_mixed` are now fully proved,\n  exhibiting the catalog's factorial number system as the `b i = i + 1` instance\n  of the general mixed-radix theory.\n* **Fibonacci primitive divisors (Carmichael).**  The prime case\n  (`fib_primitive_divisor_prime`) is unconditional, and the composite case is\n  proved on the verified range `13 \u2264 n \u2264 10000` (`fib_carmichael_composite_le`,\n  `fib_carmichael_le`, `fib_primitive_divisor`).\n\n### Open: the unbounded Carmichael / Zsygmondy tail\n\nThe **only** remaining gap in this catalog line is the composite tail `n > 10000`\nof Carmichael's 1913 theorem: that `F(n)` has a *primitive* prime divisor for\nevery `n \u2265 13`.  This is the Zsygmondy primitive-divisor theorem specialised to\nthe Fibonacci Lucas sequence.  A correct proof requires machinery not currently\nin Mathlib:\n\n* the factorisation `F(n) = \u220f_{d \u2223 n} \u03a6_d(\u03b1, \u03b2)` into homogenised cyclotomic\n  values, and integrality/size control of the primitive factor `\u03a6_n(\u03b1, \u03b2)`;\n* the rank-of-apparition / lifting-the-exponent bound on the multiplicity a\n  non-primitive prime can contribute to `F(n)`.\n\nA computational check shows that the naive elementary shortcut\n`F(n) \u2223 n \u00b7 \u220f_{d \u2223 n, d < n} F(d)` is **false** (already at `n = 3, 4, 6`), so a\ngenuine cyclotomic/Zsygmondy development is unavoidable.  Formalising a\nLucas-sequence Zsygmondy theorem in Mathlib is the natural next target; it would\nimmediately upgrade `fib_carmichael_le` to the unbounded statement.  Until then\nthe finite-range results above are stated honestly, and the unbounded statements\nare preserved as comments in the respective files rather than shipped with a\n`sorry`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1187",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "53d4816b",
+    "status": "available",
+    "timestamp": "2026-07-13T03:56:43.983571+00:00",
+    "title": "This cycle deepened the \"Cellular Automata as Algebraic Geometry\" line by provin"
   },
   {
     "consumed_by_exp_id": "",
