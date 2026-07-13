@@ -1626,6 +1626,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cone Colorful Carath\u00e9odory Theorem"
   },
   {
+    "consumed_by_exp_id": "d954b0de",
+    "description": "For every Tur\u00e1n graph T(n, r) with r \u2265 4 and n \u2265 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) \u2212 e) > E_S(T(n, r)). This is Theorem 1.2 of the paper, resolving a problem of Tian et al., but its formalization requires building the entire theory of Seidel matrices, Seidel energy, Tur\u00e1n graphs, and the reduced-order spectral machinery for blow-up graphs\u2014a substantial formalization undertaking.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0613",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.06095v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-08T09:55:51.506040+00:00",
+    "title": "Seidel energy strictly increases under edge deletion in Tur\u00e1n graphs"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
     "domains": [

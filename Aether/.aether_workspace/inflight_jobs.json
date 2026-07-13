@@ -527,7 +527,7 @@
     "cycle_index": 0,
     "github_issue": 0
   },
-  "ad0affd1": {
+  "50949d33-1c28-4227-a80a-bb9445b8c438": {
     "job_id": "ad0affd1",
     "cycle_n": 178,
     "concept": {
@@ -549,9 +549,9 @@
     },
     "prompt": "            # Phase A Research Mission v27: Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 threshold\n\n            ## Concept\n            **Domain**: Applications\n            **Research mode**: team\n            **Title**: Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 threshold\n            **Description**: There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.\n            **Mathematical framing**: There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.\n\n            ### Attached Catalog References (read these first)\n- `VR filtrations and metric spaces`\n- `Approximation algorithms in TDA`\n- `Homotopy interleavings`\n- `Doubling dimension in metric geometry`\n\n\n            ## v27: Connector\nFind a theorem that connects two seemingly unrelated mathematical areas.\nProve the connection. Cross-domain bridges are the most valuable results.\n\n\n            ### Guardrails (non-negotiable)\n            - No trivial theorems (True, Inhabited-only, native_decide-only, rfl-only).\n            - No circular proofs \u2014 a theorem must not reference itself in its own proof.\n            - No truncated/stubbed declarations \u2014 every theorem needs a complete `:= by ...` proof.\n            - No `sorry` in main theorems.\n            - Every file must be self-contained (compiles independently).\n\n            ### Output\n            Return `.lean` files and `FUTURE_DIRECTIONS.md` only. Focus all compute\n            on the mathematics.\n\n\n### MANDATORY PHASE A SELF-EVALUATION\nAdditionally, you MUST write a JSON file named `quality_score.json` in your output directory.\nThis file must contain a single JSON object containing your self-evaluation score (a float between 0.0 and 1.0) based on your compile correctness, proof depth, and mathematical novelty.\nExample format:\n{\n  \"self_score\": 0.85\n}\nDo NOT include any extra formatting, markdown code blocks, or text in `quality_score.json`.\n\n\n### Computational Evidence Stage (Recommended)\n\nBefore writing the formal Lean 4 proof, you are strongly encouraged to produce\ncomputational evidence for the claim. Create a file named `ComputationalEvidence.md`\nin the project directory with:\n\n1. **Small-case calculations** \u2014 compute the first several instances of the object/conjecture.\n2. **OEIS search results** \u2014 if a sequence appears, note its OEIS ID and first terms.\n3. **Counterexample hunt** \u2014 test the universal claim on a representative sample; report any counterexample found.\n4. **Plots or tables** \u2014 include any relevant visual/numerical data.\n\nIf you choose to skip this stage, you MUST explicitly justify why computational\nevidence is unnecessary or infeasible in a `SkipEvidenceJustification.md` file.\n\nDo not let the evidence stage dominate the project; keep it concise and directly\nrelevant to the theorem you intend to prove.\n",
     "project_dir": "/home/raver1975/lean/Aether/.aether_workspace/projects/ad0affd1",
-    "project_id": null,
-    "status": "preparing",
-    "dispatch_time": 0.0,
+    "project_id": "50949d33-1c28-4227-a80a-bb9445b8c438",
+    "status": "dispatched",
+    "dispatch_time": 1783963600.4314134,
     "complete_time": 0.0,
     "result_lean": null,
     "result_demo": null,
