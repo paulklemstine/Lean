@@ -1556,7 +1556,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unbounded Gap Between Co-Index of a Free Z_2-Space and Its Suspension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae9bfe48",
     "description": "The class of cographs (Forb(P\u2084)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spectrum), then H must also be a cograph. This extends the paper's result for threshold graphs (Forb(2K\u2082, P\u2084, C\u2084)) to the larger class of cographs.",
     "domains": [
       "Physics"
@@ -1565,7 +1565,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T18:43:29.811729+00:00",
     "title": "Cographs are generalized spectrally closed"
   },

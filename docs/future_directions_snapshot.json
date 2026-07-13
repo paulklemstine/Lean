@@ -2192,7 +2192,7 @@
       "arXiv:2407.XXXXX (this paper)",
       "Corneil et al. 'Cographs: recognition and applications' (1981)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae9bfe48",
     "description": "The class of cographs (Forb(P₄)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spectrum), then H must also be a cograph. This extends the paper's result for threshold graphs (Forb(2K₂, P₄, C₄)) to the larger class of cographs.",
     "domain_bridges": [
       "spectral graph theory",
@@ -2208,7 +2208,7 @@
     "proof_strategy": "Apply the paper's β-closed walk framework and linear programming approach to search for a walk-realizable {P₄}-supporter. If such a supporter exists, the LP feasibility problem will certify generalized spectral closedness. If no supporter exists, attempt to construct a counterexample by finding a cograph G and a non-cograph H with identical generalized spectra, possibly using the paper's induced-subgraph expansion formulas for β-closed walk counts.",
     "research_mode": "team",
     "source_exp_id": "2607.06455v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T18:43:29.811729+00:00",
     "title": "Cographs are generalized spectrally closed"
   },
