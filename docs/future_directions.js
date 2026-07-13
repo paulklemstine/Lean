@@ -424,6 +424,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e8b8d594 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k \u2265 1, the maximum determinant of any 4\u00d74 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shift",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e8b8d594_31f7f907",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "e8b8d594",
+    "status": "available",
+    "timestamp": "2026-07-13T12:53:44.504671+00:00",
+    "title": "Deepening: Maximum Determinant Bound for 4\u00d74 Unimodular Matrices with Bounded Entries"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f3dfcf44 (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie\u2013Weiss mean-field\norder parameter `m = tanh(\u03b2 m)` undergoes a sharp, continuous (second-order)\nphase transition at the critical coupling `\u03b2_c = 1`:\n\n* no positive solution for `\u03b2 \u2264 1` (`curieWeiss_subcritical`),\n* a ",
     "domains": [
       "Applications"
@@ -1133,6 +1147,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:19:31.986954+00:00",
     "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle e8b8d594 (Q=0.820) proved 10 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integer k \u2265 1, the maximum determinant of any 4\u00d74 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a s",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_e8b8d594_d578f187",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "e8b8d594",
+    "status": "available",
+    "timestamp": "2026-07-13T12:53:44.644238+00:00",
+    "title": "Close Proofs: Maximum Determinant Bound for 4\u00d74 Unimodular Matrices with Bounded Ent"
   },
   {
     "consumed_by_exp_id": "",
@@ -2971,7 +2999,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Matching Lower Bound for Generalized Erd\u0151s\u2013Rogers Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d10b5095",
     "description": "The minimal absolute value \u03c3\u2085(n) of a non-vanishing sum of n fifth roots of unity is monotone non-increasing over congruence classes of n modulo 5. Furthermore, a strict decrease \u03c3\u2085(n) > \u03c3\u2085(n+5) occurs if and only if n+5 is of the form 5F\u2098, L\u2098, or 2L\u2098 for some positive integer m, where F\u2098 and L\u2098 denote the m-th Fibonacci and Lucas numbers, respectively.",
     "domains": [
       "Bridges"
@@ -2980,7 +3008,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T06:18:12.080116+00:00",
     "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
   },
@@ -4296,7 +4324,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "162989ab",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4305,7 +4333,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
@@ -5074,20 +5102,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-09T14:37:11.657340+00:00",
     "title": "Growth Bound for the Sum of Distinct Prime Divisors in Arithmetic Progressions"
-  },
-  {
-    "consumed_by_exp_id": "e8b8d594",
-    "description": "For every integer k \u2265 1, the maximum determinant of any 4\u00d74 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shifted appropriately.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0765",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.07688v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T14:37:40.968742+00:00",
-    "title": "Maximum Determinant Bound for 4\u00d74 Unimodular Matrices with Bounded Entries"
   },
   {
     "consumed_by_exp_id": "",
@@ -7878,6 +7892,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T12:35:10.185836+00:00",
     "title": "The results established here pin down the exact, unconditional spine of Brouwer'"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Maximal Determinants of Small Bounded-Entry Matrices\n\nEach conjecture below is bold, falsifiable, and grows directly out of the two\nfindings of this cycle: (i) the exact achievable value for order four is\n`16\u00b7c\u2074`, realised by a scaled Hadamard matrix, and (ii) the determinant of an\norder-four sign matrix is always divisible by `8`.\n\n## 1. The sharp Hadamard constant for order four\n\n**Conjecture.** For every `4 \u00d7 4` real matrix with entries bounded by `c` in\nabsolute value, `|det M| \u2264 16\u00b7c\u2074`, with equality precisely for `c` times a\nHadamard matrix.\n\nThe key insight is that `det(M)\u00b2 = det(M M\u1d40)` turns the problem into bounding the\ndeterminant of a positive semidefinite Gram matrix by the product of its diagonal\nentries; each diagonal entry is a squared row norm, at most `4c\u00b2`, so the product\nis `(4c\u00b2)\u2074` and its square root is exactly `16c\u2074`.\n\nWhy now? The achievability half (`16c\u2074` is attained) and the crude upper half\n(`\u2264 24c\u2074`) are already in hand, so only the Gram-matrix inequality\n`det G \u2264 \u220f G\u1d62\u1d62` for positive semidefinite `G` stands between the current state\nand a fully sharp, two-sided determination of the order-four maximum.\n\n## 2. Congruence-forced gaps in the determinant spectrum\n\n**Conjecture.** For order-four sign matrices the determinant takes only values in\n`8\u00b7\u2124`, and within `[\u221216, 16]` exactly the values `{\u221216, \u22128, 0, 8, 16}` occur;\nconsequently no admissible bounded-entry matrix attains a determinant strictly\nbetween `8c\u2074` and `16c\u2074` that is not itself a multiple of `8c\u2074`.\n\nThe key insight is that the `2^{n-1}` divisibility law, already established for\n`n = 4`, is not merely an inequality constraint but a *lattice* constraint: it\nquantises the reachable determinants, so the extremal problem is really a search\nover a coarse arithmetic progression rather than a continuum.\n\nWhy now? The divisibility law `8 \u2223 det` is proved, so the spectrum is known to\nlive in `8\u00b7\u2124`; enumerating which multiples of `8` are actually hit is a finite,\nimmediately testable refinement.\n\n## 3. The `2^{n-1}` divisibility law in general order\n\n**Conjecture.** For every `n`, the determinant of an `n \u00d7 n` `\u00b11` matrix is\ndivisible by `2^{n-1}`, and this is the exact power of two forced for all `n`\n(no larger fixed power divides every such determinant).\n\nThe key insight is that subtracting the first row from the remaining `n \u2212 1` rows\nproduces `n \u2212 1` rows of even entries, and multilinearity of the determinant\nextracts one factor of `2` per such row \u2014 an argument that is uniform in `n` and\ndoes not depend on any Hadamard structure.\n\nWhy now? The order-four instance is settled by exactly this row-reduction\nargument, giving a concrete template to lift to arbitrary `n` by induction on the\nnumber of reduced rows.\n\n## 4. Separation of the extremal constant from the entry bound\n\n**Conjecture.** For each fixed order `n`, the maximal determinant with entries\nbounded by `c` equals `A\u2099 \u00b7 c\u207f` for a constant `A\u2099` independent of `c`, so the\nentire bounded-entry problem collapses to the single sign-matrix problem `c = 1`.\n\nThe key insight is homogeneity: scaling all entries by `c` scales every row by\n`c` and hence the determinant by `c\u207f`, so the optimiser's *shape* never depends on\n`c` \u2014 only the sign pattern matters.\n\nWhy now? Order four already exhibits the exact factorisation `16\u00b7c\u2074 = A\u2084\u00b7c\u2074` with\n`A\u2084 = 16`, confirming the homogeneous ansatz in the first nontrivial case and\nsuggesting `A\u2099` is precisely the order-`n` Hadamard maximal determinant.\n\n## 5. A false-normalisation diagnostic\n\n**Conjecture.** Every \"maximum determinant\" formula of the shape\n`(c\u00b2 \u2212 1)\u00b2`-type \u2014 polynomially small compared to `c\u207f` \u2014 arises from conflating\nthe covolume-`1` normalisation of unimodular lattices with the bounded-entry\nnormalisation, and can be detected purely by its failure at `c = 1`.\n\nThe key insight is that any correct order-`n` bounded-entry maximum must be a\ndegree-`n` homogeneous monomial in `c` with a positive leading constant; a\nproposed formula that vanishes or stays bounded at `c = 1` is therefore\nautomatically disqualified before any matrix is examined.\n\nWhy now? The circulating `(2k\u22121)\u2074 \u2212 2(2k\u22121)\u00b2 + 1` formula was refuted in this\ncycle by exactly this `c = 1` test, turning an ad-hoc refutation into a reusable\nsanity filter for extremal-determinant claims.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1219",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e8b8d594",
+    "status": "available",
+    "timestamp": "2026-07-13T12:53:36.403239+00:00",
+    "title": "Each conjecture below is bold, falsifiable, and grows directly out of the two"
   },
   {
     "consumed_by_exp_id": "",

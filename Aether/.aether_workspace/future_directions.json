@@ -10164,14 +10164,14 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT",
         "math.CO"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d10b5095",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -10188,7 +10188,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0378",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T12:53:59.268504+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.NumberTheory.RootsOfUnity\nimport Mathlib.Data.Nat.Fib\nimport Mathlib.Analysis.Complex.Basic\n\nopen Complex\n\n/-- A sum of n 5th roots of unity -/\ndef isFifthRootSum (n : ℕ) (s : ℂ) : Prop :=\n  ∃ a : Fin 5 → ℕ, (∑ i, (a i : ℂ)) = n ∧ \n    s = a 0 + (a 1) * exp (2 * π * I / 5) + (a 2) * exp (4 * π * I / 5) + \n        (a 3) * exp (6 * π * I / 5) + (a 4) * exp (8 * π * I / 5)\n\n/-- The minimal absolute value of a non-vanishing sum of n 5th roots of unity -/\ndef sigma_5 (n : ℕ) : ℝ :=\n  sInf { r : ℝ | ∃ s, isFifthRootSum n s ∧ s ≠ 0 ∧ r = ‖s‖ }\n\n/-- Lucas numbers -/\ndef lucas : ℕ → ℕ\n  | 0 => 2\n  | 1 => 1\n  | n + 2 => lucas n + lucas (n + 1)\n\ntheorem sigma_5_monotone_and_jumps (n : ℕ) (hn : 0 < n) :\n    sigma_5 n ≥ sigma_5 (n + 5) ∧\n    (sigma_5 n > sigma_5 (n + 5) ↔ \n      ∃ m, n + 5 = 5 * Nat.fib m ∨ n + 5 = lucas m ∨ n + 5 = 2 * lucas m) := by\n  sorry",
       "lineage_refs": [],
@@ -10203,7 +10203,7 @@
       "source": "",
       "source_exp_id": "2607.00825v2",
       "source_path": "http://arxiv.org/abs/2607.00825v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-06T06:18:12.080116+00:00",
       "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
@@ -35169,7 +35169,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` — abstract multiverse.**\nA `Multivers",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -35289,7 +35289,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -36569,7 +36569,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 59a15132 (Q=0.790), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that a generalized Latin rectangle of size n×n (i.e., λ = 1) possessing pairwise reflection symmetry—where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns—exists if and only if n is a power of two.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -38887,6 +38887,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle e8b8d594 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k ≥ 1, the maximum determinant of any 4×4 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shift",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "push_e8b8d594_31f7f907",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e8b8d594",
+      "source_path": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-13T12:53:44.504671+00:00",
+      "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle e978b5fe (Q=0.780), which proved 1210 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: While White's conjecture on symmetric exchanges (Part 2) is false, the weaker Part 3 remains open: for any matroid M and any two multisets of bases B and B' with the same multiset union of elements, it is possible to obtain B' from B by repeatedly replacing two bases with any two other bases having ",
       "domain_bridges": [],
       "domain_quality_penalty": 0.1,
@@ -39649,7 +39689,7 @@
       "depth_estimate": 3,
       "description": "Cycle 111bebcc (Q=0.720) proved 24 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For all integers n ≥ 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) ≡ 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 6460994419377",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Applications"
       ],
@@ -40649,7 +40689,7 @@
       "depth_estimate": 3,
       "description": "Cycle 86e0e034 (Q=0.740) proved 5 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -41239,6 +41279,46 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Cycle e8b8d594 (Q=0.820) proved 10 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integer k ≥ 1, the maximum determinant of any 4×4 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a s",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "sorry_fill_e8b8d594_d578f187",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.85,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e8b8d594",
+      "source_path": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-13T12:53:44.644238+00:00",
+      "title": "Close Proofs: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Ent"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -41476,6 +41556,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
