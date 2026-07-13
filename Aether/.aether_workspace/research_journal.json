@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "91f941b6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Elements as Eigenvalues of an Operator\n\nThis cycle formalizes a cross-domain *connector* in\n`Catalog/Bridges/PeriodicTableEigenvalues.lean`: the periodic table of the first\n`n` e",
-      "quality_score": 0.78,
-      "sorry_count": 5,
-      "theorem_count": 12,
-      "timestamp": "2026-07-12T18:31:13",
-      "title": "Deepening: The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
-    },
-    {
       "cycle_id": "1f9ea620",
       "domain": "Applications",
       "key_insight": "# Future Directions: The Arithmetic of the Discoverable\n\nThe cycle established a clean split between two notions of \"finite\": every\nindividual theorem of an infinitely-proving system is reached at a f",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-13T09:49:47",
       "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
+    },
+    {
+      "cycle_id": "3f303e8a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
+      "quality_score": 0.72,
+      "sorry_count": 9,
+      "theorem_count": 0,
+      "timestamp": "2026-07-13T10:22:39",
+      "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b77ed1ec",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — The 3n+1 Map: Tropical Dynamics and the Logic of Halting\n\nThis cycle established the elementary but rigorous scaffolding around the Collatz\nmap: orbit-invariance of the halting p",
-      "quality_score": 0.72,
-      "sorry_count": 5,
-      "theorem_count": 24,
-      "timestamp": "2026-07-10T16:20:42",
-      "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-    },
     {
       "cycle_id": "a1a5801c",
       "domain": "Computation",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-13T09:49:47",
       "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
+    },
+    {
+      "cycle_id": "3f303e8a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
+      "quality_score": 0.72,
+      "sorry_count": 9,
+      "theorem_count": 0,
+      "timestamp": "2026-07-13T10:22:39",
+      "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T09:49:47",
+  "last_updated": "2026-07-13T10:22:39",
   "open_questions": [
-    {
-      "context": "necessary.  All main theorems are `sorry`-free and use genuine arguments; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "1f9ea620",
-      "domain": "Applications",
-      "sorry_count": 5,
-      "timestamp": "2026-07-12T18:49:09"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "44b2d089",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-13T09:49:29"
+    },
+    {
+      "context": "+unconditionally and `sorry`-free, the composite case on the computationally; +`n ≥ 13`, with the tail `n > 10000` left as an (unproved) `sorry`.  It is; -    sorry",
+      "cycle_id": "3f303e8a",
+      "domain": "Novelty",
+      "sorry_count": 9,
+      "timestamp": "2026-07-13T10:22:39"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4bfb0f7c",
-        "quality": 0.83,
-        "theorems": 14,
-        "title": "Deepening: Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
-      },
-      {
         "cycle_id": "96ae8e1e",
         "quality": 0.72,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 15,
         "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of Matroids"
+      },
+      {
+        "cycle_id": "3f303e8a",
+        "quality": 0.72,
+        "theorems": 0,
+        "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collec"
       }
     ],
     "NumberTheory": [

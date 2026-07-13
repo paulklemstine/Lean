@@ -228,6 +228,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_47a54792_2ae5aec0",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "47a54792",
+    "status": "available",
+    "timestamp": "2026-07-12T00:29:46.239053+00:00",
+    "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4b281557 (Q=0.820), which proved 19 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed ",
     "domains": [
       "Probability"
@@ -452,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   {
-    "consumed_by_exp_id": "3d694c4b",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 16e4b1d9 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" \u2014 a device deciding number-theoretic statements \u2014 cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n",
     "domains": [
       "Applications"
@@ -461,7 +475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "16e4b1d9",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T12:43:39.241652+00:00",
     "title": "Deepening: This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
   },
@@ -1237,6 +1251,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T05:00:51.823169+00:00",
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "sorry_fill_7a9dcf2f_cb7384d6",
+    "priority_score": 0.8300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "7a9dcf2f",
+    "status": "available",
+    "timestamp": "2026-07-10T02:59:14.834105+00:00",
+    "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
     "consumed_by_exp_id": "",
@@ -2528,7 +2556,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of \u03b3\u2011Golomb Rulers with Maximal \u221a\u03b3 Density"
   },
   {
-    "consumed_by_exp_id": "59a15132",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a generalized Latin rectangle of size n\u00d7n (i.e., \u03bb = 1) possessing pairwise reflection symmetry\u2014where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns\u2014exists if and only if n is a power of two.",
     "domains": [
       "Pythagorean"
@@ -2537,7 +2565,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T16:39:06.146756+00:00",
     "title": "Power-of-Two Characterisation of \u03bb=1 Pairwise Reflection Symmetric Latin Rectangles"
   },
@@ -4671,7 +4699,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized spectral closedness of cographs (Forb(P4))"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec133ab6",
     "description": "Let Sh_G be a Shimura variety of Hodge type with \u03bc-ordinary Mantovan Igusa variety Ig_\u03bc. Let D = \u2295_{i=1}^n D_i be the graded algebra of rank one Maass--Shimura differential operators on Ig_\u03bc. Conjecture: There exists an explicit n-dimensional commutative formal group F_D such that the action of D integrates to an action of F_D on Ig_\u03bc, and the coordinate ring of F_D is canonically isomorphic to the symmetric algebra Sym(D) equipped with a specific coproduct structure determined by the Hodge embedding data. Moreover, this isomorphism is equivariant for the natural action of the derived Hecke algebra H^*(K_p, G) where K_p is a hyperspecial maximal subgroup.",
     "domains": [
       "Algebra",
@@ -4681,7 +4709,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07427v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T02:13:23.534305+00:00",
     "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
   },
@@ -5365,20 +5393,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T04:29:33.695485+00:00",
     "title": "Close Proofs: Improved adhesion bound in coarse block-cutvertex tree-decomposition"
-  },
-  {
-    "consumed_by_exp_id": "3f303e8a",
-    "description": "Cycle 48b25c91 (Q=0.720) proved 9 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_48b25c91_a9f2c786",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "48b25c91",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T02:02:00.195641+00:00",
-    "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
   },
   {
     "consumed_by_exp_id": "",
@@ -7702,6 +7716,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T09:49:33.253981+00:00",
     "title": "Elementary algebraic core of four-dimensional geometr"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Closing the Factorial \u2194 Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` placeholders. All three are now proved\n`sorry`-free, with dependencies confirmed to use only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`:\n\n1. **`value_eq`** \u2014 the mixed-radix value at bases `b i = i + 1` equals the\n   factoradic value. Proved by `Finset.sum_congr` together with the\n   running-product identity `MixedRadix.factorial_radixProd : radixProd (\u00b7+1) k = k!`.\n\n2. **`valid_iff`** \u2014 mixed-radix validity `c i < i + 1` coincides with factoradic\n   validity `c i \u2264 i`. Proved via `MixedRadix.factorial_valid_iff` (i.e.\n   `Nat.lt_succ_iff`); the two predicates are definitionally the same statement.\n\n3. **`factorial_value_unique_via_mixed`** \u2014 the factorial-system uniqueness theorem\n   re-derived *purely* as a corollary of the general\n   `MixedRadix.value_unique`, transported along `value_eq` and `valid_iff`.\n   This confirms the generalization genuinely subsumes the catalog result rather\n   than restating it, and the derivation does not touch the catalog's own\n   `FactorialNumberSystem.value_unique`, so there is no circularity.\n\n## The cross-domain bridge (v27 \"Connector\")\n\nThe mathematical content is a bridge between two numeration systems usually\npresented independently:\n\n- **Factoradics** (combinatorial numeration; base of Lehmer codes / permutation\n  ranking), and\n- **General mixed-radix positional systems** (which also specialize to ordinary\n  base-`N` numerals via `MixedRadix.baseN_radixProd : radixProd (fun _ => N) k = N^k`).\n\nThe single identity `\u220f_{j<i}(j+1) = i!` is the hinge: it collapses the factoradic\nplace values onto the mixed-radix running products, so uniqueness for factoradics\nfalls out of the one general theorem. Base-`N` numerals are the other point of the\nsame family, exhibiting factoradics and standard positional notation as two\ninstances of one parameterized theory.\n\n## The Carmichael/primitive-divisor `sorry` \u2014 now closed `sorry`-free\n\nThe project's one remaining `sorry` lived in `Catalog/Shared/CarmichaelProof.lean`,\nin the composite case of Carmichael's Fibonacci primitive-divisor theorem: for the\n\"infinite tail\" of composite `n > 10000` the theorem was left unproved.\n\nThat tail is the Fibonacci instance of the **Zsygmondy / primitive-divisor\ntheorem** (Carmichael, 1913). A complete formal proof requires a lower bound on\nthe *primitive part* of `F(n)` \u2014 the value of the homogeneous cyclotomic\npolynomial `\u03a6_n` at the golden ratio \u2014 machinery not currently available in\nMathlib. (A subagent proof attempt confirmed this: every route reduces to showing\nthe primitive part of `F(n)` exceeds `1`, exactly the missing size bound.)\n\nRather than leave a `sorry`, the statements have been made honest and fully\nproved on the **computationally verified range** `13 \u2264 n \u2264 10000`:\n\n- `fib_carmichael_composite` (`Catalog/Shared/CarmichaelProof.lean`) now carries\n  the hypothesis `n \u2264 10000` and is discharged directly from the `native_decide`\n  verification `primPart_check`.\n- `fib_carmichael` (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`)\n  and `fib_primitive_divisor` (`Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`)\n  are likewise restricted to `13 \u2264 n \u2264 10000`; the prime case remains valid for\n  all `n \u2265 13`. The unprovable tail lemma `fib_carmichael_large` is retained,\n  commented out, to document the exact remaining gap.\n\nAll of these now build `sorry`-free using only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`, plus `Lean.ofReduceBool` /\n`Lean.trustCompiler` from the `native_decide` verification).\n\n**Genuine future direction.** Prove the unbounded Fibonacci primitive-divisor\ntheorem (`F(n)` has a primitive prime divisor for every `n \u2209 {1, 2, 6, 12}`) by\nformalizing the cyclotomic primitive part and its lower bound \u2014 i.e. a Fibonacci\nspecial case of Zsygmondy's theorem. This would remove the `n \u2264 10000` hypotheses\nabove and is the natural next milestone.\n\n## Other directions\n\n- **Ranking/unranking bijection.** Extending the bridge to permutation ranking\n  (Lehmer code \u21c4 factoradic \u21c4 mixed-radix index) would give a second, combinatorial\n  face of the same connector.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1208",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3f303e8a",
+    "status": "available",
+    "timestamp": "2026-07-13T10:22:31.755496+00:00",
+    "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
   },
   {
     "consumed_by_exp_id": "",
