@@ -917,25 +917,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ddc0d02e",
-    "description": "Building on cycle 73d4b43b (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a s",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_73d4b43b_7795d9f2",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "73d4b43b",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T05:00:51.739107+00:00",
-    "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7a9dcf2f (Q=0.780), which proved 81 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' — beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
     "domain_bridges": [],
@@ -2332,7 +2313,7 @@
       "Eisenstein series",
       "Theta series"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3fa6ca4",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240·σ₃(n), where σ₃(n) = Σ_{d|n} d³. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of θ_L coincide with those of E₄.",
     "domain_bridges": [
       "Lattice theory and quadratic forms",
@@ -2348,7 +2329,7 @@
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
   },
@@ -2851,6 +2832,26 @@
     "status": "available",
     "timestamp": "2026-07-13T17:26:11.384250+00:00",
     "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Proofs as DAGs\n\nThis cycle deepened the \"Proofs as DAGs\" line by developing the *topological\nstructure* of an abstract proof-dependency relation. Starting from the existing\n`Handshaking.lean` (undirected acyclic edge bound, tree hubs), `TopologicalOrder.lean`\nbuilds a self-contained chain of results for **directed** acyclic relations, each\ntheorem using the previous one:\n\n1. `IsAcyclic.irrefl` — no self-loop.\n2. `IsAcyclic.asymm` — no 2-cycle.\n3. `IsAcyclic.transGen_asymm` — no cycle of any length.\n4. `mem_predSet_of_transGen`, `predSet_subset_of_transGen`,\n   `not_mem_predSet_self`, `predSet_ssubset_of_transGen` — the ancestor (predecessor)\n   set is strictly monotone along reachability.\n5. `IsAcyclic.exists_topological_numbering` / `exists_rank_edge` — every finite\n   proof DAG has a rank function increasing along dependencies.\n6. `IsAcyclic.exists_source` / `exists_sink` — existence of foundational (source)\n   and capstone (sink) statements.\n7. `IsAcyclic.two_mul_edgeCount_le` — sparsity: `2|E| ≤ n(n-1)`.\n\n## Natural next steps\n\n- **Antichains and Dilworth / Mirsky.** The rank function partitions the DAG into\n  layers (an antichain decomposition). Prove that the longest dependency chain\n  equals the minimum number of layers (Mirsky's theorem), quantifying \"proof depth\".\n- **Unique topological order iff Hamiltonian path.** A proof DAG has a unique\n  topological numbering exactly when its transitive closure is a total order.\n- **Transitive reduction.** Every finite DAG has a unique minimal set of edges with\n  the same reachability — the \"essential dependencies\" of a proof.\n- **Weighted / cost DAGs.** Attach proof-length weights to edges and study the\n  critical path (longest weighted chain) as a model of total verification cost.\n- **Spine / backbone conjecture.** Formalize and test the original conjecture that\n  the global DAG of mathematics concentrates on a small \"spine\" of foundational\n  hubs, connecting `exists_source` here with the hub-fragility results in\n  `Handshaking.lean`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1237",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ddc0d02e",
+    "status": "available",
+    "timestamp": "2026-07-13T17:59:19.257093+00:00",
+    "title": "This cycle deepened the \"Proofs as DAGs\" line by developing the *topological"
   },
   {
     "ambition_level": "extension",

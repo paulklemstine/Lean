@@ -8370,7 +8370,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT",
         "math.AG",
@@ -8380,7 +8380,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f3fa6ca4",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -8396,7 +8396,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0629",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T17:59:39.185911+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem siegel_weil_E8_theta_equals_E4 (L : Type) [AddCommGroup L] [Module.Free ℤ L] [Module.Finite ℤ L] (Q : L → ℤ) (hQ_quad : ∀ x y, Q (x + y) + Q (x - y) = 2 * Q x + 2 * Q y) (hL_rank : Module.Free.rank ℤ L = 8) (hL_pos_def : ∀ x ≠ 0, Q x > 0) (hL_even : ∀ x, Q x ∈ (2 : ℤ) • ⊤) (hL_unimodular : Matrix.det (gram_matrix Q) = 1) (n : ℕ) (hn : n > 0) : num_vectors_of_norm Q n = 240 * sigma 3 n := by\n  sorry",
       "lineage_refs": [],
@@ -8411,7 +8411,7 @@
       "source": "",
       "source_exp_id": "2607.06285v1",
       "source_path": "http://arxiv.org/abs/2607.06285v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T04:27:04.932052+00:00",
       "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
@@ -17429,7 +17429,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications"
       ],
@@ -18669,7 +18669,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 59a15132 (Q=0.790), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that a generalized Latin rectangle of size n×n (i.e., λ = 1) possessing pairwise reflection symmetry—where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns—exists if and only if n is a power of two.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Applications"
       ],
@@ -20669,7 +20669,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e0843845 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` placeholders. All three are now proved\n`sorry`-free, with dependencies confirmed to use only the standar",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -20789,7 +20789,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e3aaa465 (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any k ≥3 and 1≤ℓ<k, and any two accumulation points α, β in Π^k_ℓ, there exists a transfer function f such that f(α) = β.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -21109,7 +21109,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ee7062d3 (Q=0.820), which proved 20 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large infl",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -22949,7 +22949,7 @@
       "depth_estimate": 3,
       "description": "Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|Aₙ|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -23469,7 +23469,7 @@
       "depth_estimate": 3,
       "description": "Cycle e8b8d594 (Q=0.820) proved 10 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integer k ≥ 1, the maximum determinant of any 4×4 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a s",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],
@@ -23509,7 +23509,7 @@
       "depth_estimate": 3,
       "description": "Cycle ee7062d3 (Q=0.820) proved 20 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -42665,6 +42665,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
