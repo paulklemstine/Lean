@@ -1065,20 +1065,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
-    "consumed_by_exp_id": "3959b92d",
-    "description": "Cycle 48961a11 (Q=0.830) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a were",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_48961a11_4faaf9b6",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "48961a11",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T05:35:47.121314+00:00",
-    "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 7473e6ed (Q=0.820) proved 14 theorems in Physics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any su",
     "domains": [
@@ -3678,7 +3664,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Aharoni-Korman Property for Well-Founded FAC Posets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "32285b55",
     "description": "For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: for every vector a in Z_{>=1}^4, the h*-polynomial of Q_{G(a)} is gamma-positive. This would yield a complete classification of gamma-positivity for this family.",
     "domains": [
       "Pythagorean"
@@ -3687,7 +3673,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02424v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T18:40:26.791668+00:00",
     "title": "Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at most four paths"
   },
@@ -3780,21 +3766,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T20:41:09.415093+00:00",
     "title": "Simplicial Stochastic Cone Characterization of RB-Domains in Probabilistic Powerdomains"
-  },
-  {
-    "consumed_by_exp_id": "cbbd1369",
-    "description": "The Giampietro-Darmon factorization formula for the norm of $p$-adic cross-ratios of CM points on Atkin-Lehner quotients of Shimura curves, currently proven only for genus 0 quotients, holds unconditionally for all squarefree $N > 1$ with an even number of prime factors. For quotients of higher genus, the infinite product of $p$-adic cross-ratios factors into a product of local intersection multiplicities of the corresponding Heegner divisors, up to a global obstruction given by the N\u00e9ron-Tate height pairing on the Jacobian.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0494",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02306v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T21:36:16.381208+00:00",
-    "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
   },
   {
     "consumed_by_exp_id": "",
@@ -7540,6 +7511,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Generalized Giampietro\u2013Darmon Factorization\n\n## Summary of what was proved / disproved\n\nThis project formalizes a self-contained arithmetic model of the structural core\nof the Giampietro\u2013Darmon factorization of `p`-adic cross-ratios of CM points on\nAtkin\u2013Lehner quotients of Shimura curves, and its conjectural higher-genus\ngeneralization \"up to a global obstruction given by the N\u00e9ron\u2013Tate height\npairing.\" Three independent Lean files, each compiling standalone against\nMathlib, establish:\n\n**`PadicCrossRatioFactorization.lean`**\n* `crossRatio_valuation_factor` (**proved**) \u2014 the genus-0 factorization in\n  additive form: `v_p((a,b;c,d)) = m(a,c) + m(b,d) - m(a,d) - m(b,c)`, where\n  `m(x,y) = v_p(x-y)` is the local intersection multiplicity.\n* `crossRatio_inv_swap`, `crossRatio_one_sub` (**proved**) \u2014 the two generators\n  of the anharmonic (`S\u2083`) action on the cross-ratio: `\u03bb \u21a6 \u03bb\u207b\u00b9` and `\u03bb \u21a6 1-\u03bb`.\n\n**`LocalMultiplicityUltrametric.lean`**\n* `chain_additivity_fails` (**disproved conjecture**) \u2014 local intersection\n  multiplicities are *not* additive along chains; explicit counterexample\n  `m(0,2) \u2260 m(0,1)+m(1,2)` at `p=2`.\n* `localMult_ultrametric` (**proved**) \u2014 the correct replacement: the strong\n  triangle inequality `min(m(x,y),m(y,z)) \u2264 m(x,z)`.\n* `localMult_isosceles` (**proved**) \u2014 sharp equality when the inner\n  multiplicities differ.\n* `localMult_symm` (**proved**).\n\n**`HeightObstruction.lean`**\n* `sq_real_inner_le`, `neronTateObstruction_nonneg` (**proved**) \u2014 the global\n  obstruction (Gram determinant of the height pairing) is always nonnegative;\n  positivity of the N\u00e9ron\u2013Tate pairing.\n* `neronTateObstruction_of_height_zero` (**proved**) \u2014 genus-0 exactness: a\n  torsion Heegner class (height `0`) contributes no obstruction.\n* `neronTateObstruction_of_parallel`, `neronTateObstruction_symm` (**proved**).\n\n## What is a *model* here vs. the full conjecture\n\nThe full Giampietro\u2013Darmon statement lives on Shimura curves `X^D_0(N)` and their\nAtkin\u2013Lehner quotients, with CM points, Heegner divisors, and the N\u00e9ron\u2013Tate\nheight on the Jacobian. Those objects are not (yet) available in Mathlib. We\ntherefore isolate the *arithmetic skeleton* that the theorem rests on:\n\n1. the valuation of a cross-ratio is an alternating sum of valuations of\n   differences (this is genuinely the local computation, Gross\u2013Zagier style);\n2. these local terms obey an ultrametric, not additive, law \u2014 the source of the\n   higher-genus obstruction;\n3. the obstruction is the Gram determinant of a positive-semidefinite pairing.\n\n## Concrete next steps\n\n1. **Product formula / adelic assembly.** Replace the single prime `p` by the\n   full set of places of `\u211a` (or a number field) and prove that\n   `\u220f_v |(a,b;c,d)|_v = 1` for a global cross-ratio, showing the alternating sum\n   of local intersection multiplicities telescopes to the archimedean term. This\n   is the genus-0 \"no global obstruction\" statement in its true adelic form.\n\n2. **Heegner divisors and the Jacobian.** Once Mathlib gains Shimura curves /\n   quaternionic modular curves, replace the inner-product model of the height by\n   the actual N\u00e9ron\u2013Tate pairing on `J(X^D_0(N))(K\u0304) \u2297 \u211d` and identify\n   `neronTateObstruction` with the genuine Gram determinant of two Heegner\n   classes.\n\n3. **Genus as rank.** Model \"genus\" by the rank of the relevant Mordell\u2013Weil\n   lattice and prove that the obstruction vanishes identically iff that rank is\n   `0` (the genus-0 quotients), pinning down the precise scope of the exact\n   factorization.\n\n4. **Sharpening the ultrametric law.** Extend `localMult_isosceles` to a full\n   local intersection calculus (e.g. behaviour under Atkin\u2013Lehner involutions and\n   under the six-element anharmonic group already formalized here), giving a\n   combinatorial model of the local intersection matrix of a Heegner divisor.\n\n5. **Quantitative obstruction bounds.** Combine `neronTateObstruction_nonneg`\n   with height lower bounds (Lang\u2013Silverman type) to bound the deviation of the\n   higher-genus product from exact factorization.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1178",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cbbd1369",
+    "status": "available",
+    "timestamp": "2026-07-13T01:24:35.111616+00:00",
+    "title": "This project formalizes a self-contained arithmetic model of the structural core"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Bayesian Werewolf \u2194 Combinatorics bridge\n\nThe file `BayesianWerewolfHypergeometric.lean` establishes that the elementary\nprobabilistic moments of the hypergeometric \"werewolves-in-a-committee\" distribution\nare exactly classical binomial-coefficient identities:\n\n* normalization \u27fa **Vandermonde's convolution** (`vander_range`);\n* mean `t\u00b7k/n` \u27fa **binomial absorption** + Vandermonde (`choose_absorb`, `sum_j_choose`);\n* the `t = 1` corollary recovers the prior/posterior collapse `k/n` of the companion\n  file `Werewolf.BayesianOptimal`.\n\n## Natural next steps\n\n1. **Second moment / variance.** Prove\n   `\u2211_j j\u00b2 hyp n k t j` in closed form and derive the hypergeometric variance\n   `t\u00b7(k/n)\u00b7((n-k)/n)\u00b7((n-t)/(n-1))`. The combinatorial engine is the same:\n   `j\u00b2 C(k,j) = k\u00b7j\u00b7C(k-1,j-1)` and a further absorption. This would extend the\n   dictionary to \"detection confidence\" (spread of suspicion).\n\n2. **Falling-factorial moments.** Generalize to\n   `\u2211_j (j)_r \u00b7 hyp n k t j = (t)_r (k)_r / (n)_r`, unifying all moments through a\n   single `r`-fold absorption identity \u2014 a clean, fully combinatorial family.\n\n3. **Measure-theoretic upgrade.** Package `hyp` as a genuine `PMF`/`Measure` on\n   `Fin (t+1)` using `hyp_nonneg` + `hyp_sum_one`, connecting to Mathlib's\n   probability API and letting `hyp_mean` become a statement about `PMF` expectation.\n\n4. **Link to the game recursion.** The companion file's `winProb` recursion samples one\n   uniform removal per round; expressing each round's transition kernel via `hyp`\n   (with `t = 1`) would fuse the two files into a single probabilistic model of the\n   consensus-elimination game.\n\n5. **Negative hypergeometric / sampling-without-replacement variants.** The same\n   absorption+Vandermonde toolkit should give closed forms for the number of draws\n   until the first werewolf, bridging to the geometric/beta-binomial world.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1179",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3959b92d",
+    "status": "available",
+    "timestamp": "2026-07-13T01:25:08.173104+00:00",
+    "title": "The file `BayesianWerewolfHypergeometric.lean` establishes that the elementary"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
     "domains": [
       "Applications"
@@ -7551,6 +7552,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:36:38.107204+00:00",
     "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle cbbd1369 (Q=0.700) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Giampietro-Darmon factorization formula for the norm of $p$-adic cross-ratios of CM points on Atkin-Lehner quotients of Shimura curves, currently proven only for genus 0 quotients, holds unconditi",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_cbbd1369_de8395b3",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cbbd1369",
+    "status": "available",
+    "timestamp": "2026-07-13T01:24:57.427672+00:00",
+    "title": "Close Proofs: Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
   },
   {
     "consumed_by_exp_id": "",
