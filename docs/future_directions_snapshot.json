@@ -936,7 +936,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2aaaa5f9",
     "description": "Building on cycle 64d4f5fe (Q=0.780), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-approximation to the Vietoris-Rips filtration VR(Xₙ) requires at least 2^(γ·n) simplices, and moreover γ",
     "domain_bridges": [],
     "domains": [
@@ -948,7 +948,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "64d4f5fe",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T12:17:27.704617+00:00",
     "title": "Deepening: Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
   },
@@ -7354,7 +7354,7 @@
       "Eisenstein series",
       "Theta series"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "162989ab",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240·σ₃(n), where σ₃(n) = Σ_{d|n} d³. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of θ_L coincide with those of E₄.",
     "domain_bridges": [
       "Lattice theory and quadratic forms",
@@ -7370,7 +7370,7 @@
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
   },
