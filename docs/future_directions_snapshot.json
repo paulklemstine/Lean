@@ -764,6 +764,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e0843845 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` placeholders. All three are now proved\n`sorry`-free, with dependencies confirmed to use only the standar",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e0843845_888987c1",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e0843845",
+    "status": "available",
+    "timestamp": "2026-07-13T13:44:00.566539+00:00",
+    "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
     "domain_bridges": [],
     "domains": [
@@ -1549,6 +1568,25 @@
     "status": "available",
     "timestamp": "2026-07-12T14:10:41.417442+00:00",
     "title": "Close Proofs: Exact dictionary \"logical qubits = middle homology\""
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle e0843845 (Q=0.800) proved 15 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_e0843845_85271455",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e0843845",
+    "status": "available",
+    "timestamp": "2026-07-13T13:44:01.104282+00:00",
+    "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.l"
   },
   {
     "ambition_level": "extension",
@@ -7411,7 +7449,7 @@
       "Eisenstein series",
       "Theta series"
     ],
-    "consumed_by_exp_id": "162989ab",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240·σ₃(n), where σ₃(n) = Σ_{d|n} d³. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of θ_L coincide with those of E₄.",
     "domain_bridges": [
       "Lattice theory and quadratic forms",
@@ -7427,7 +7465,7 @@
     "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
   },
@@ -11062,26 +11100,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a71dcffe",
-    "description": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and that\nan `n² × n²` Sudoku grid sits exactly on it. The following conjectures push that\npicture toward the random, multi-constraint, and quantitative regimes.\n\n## 1. A sharp clue-density threshold for random puzzles\n\n**Conjecture.** Fix the order `n` and generate a partial `n² × n²` grid by\nrevealing each cell independently with probability `p`, filling it with a symbol\nconsistent so far. There is a critical clue density `p_c(n)` such that below it a\ncompletion exists with probability tending to `1`, and above it with probability\ntending to `0`, with the transition window shrinking as the grid grows.\n\n*The key insight is* that satisfiability is a monotone event in the revealed\nclues — once a clue set is contradictory it stays contradictory under further\nrevelation — so the transition must be a single up-set boundary, exactly the\norder-theoretic skeleton proved here, now lifted to a random ensemble.\n\n*Why now?* The deterministic boundary (satisfiable iff each line stays at or\nbelow its balance point) is now pinned down exactly; the only missing ingredient\nis the probabilistic concentration that turns a monotone boundary into a sharp\nthreshold, which modern sharp-threshold technology is built to supply.\n\n## 2. Boxes strictly lower the critical density below Latin squares\n\n**Conjecture.** The full Sudoku CSP (rows, columns, and boxes) has a strictly\nsmaller critical clue density than its row-and-column relaxation (Latin squares):\nthe box constraints move the transition to lower density, and the gap is bounded\nbelow uniformly in the order `n`.\n\n*The key insight is* that the explicit cyclic solution `L(i,j) = i + j` solves\nrows and columns but provably fails the box constraint, so the box demands are\nnot implied by the line demands — they are genuinely new constraints that must\ntighten the feasible region.\n\n*Why now?* We can already exhibit a closed-form witness for the relaxation and\ncertify that it violates the box demand; quantifying how much the extra demand\ncosts is the natural next measurement.\n\n## 3. The vanishing partition function as an analytic order parameter\n\n**Conjecture.** The proper-assignment count of a constraint block, viewed as a\nfalling-factorial partition function, admits an analytic continuation in the\nalphabet size whose real zeros accumulate exactly at the critical demand count,\nso that the location of the transition can be read off from the zero set alone.\n\n*The key insight is* that the partition function is strictly positive in the\nsatisfiable phase and identically zero beyond criticality; the boundary between\nthese regimes is precisely the largest zero of the falling factorial, turning a\ncombinatorial threshold into a zero-counting problem.\n\n*Why now?* The exact identification of the partition function with the falling\nfactorial removes all guesswork about its zeros, so the analytic-continuation\nprogram can be carried out on a fully explicit object.\n\n## 4. A list-colouring (defective-clue) threshold\n\n**Conjecture.** If each Sudoku cell is given a private list of allowed symbols of\nsize `L`, completion is possible once `L` exceeds a critical value `L_c(n)` that\nis strictly smaller than the naive `n²`, and equals it only in the worst case.\n\n*The key insight is* that the CSP is exactly a proper colouring of a union of\ncomplete graphs, so the powerful gap between chromatic number and list-chromatic\nnumber for structured graphs should manifest as a strictly easier list version of\nSudoku.\n\n*Why now?* The equivalence between the AllDifferent atom and complete-graph\ncolouring is now on firm footing, so the list-colouring refinement can be stated\nand attacked with existing colouring machinery.\n\n## 5. Width of the transition window scales polynomially\n\n**Conjecture.** The clue-density interval over which the completion probability\nfalls from `0.99` to `0.01` shrinks like a fixed negative power of the grid side\n`n²`, so the transition becomes discontinuous in the infinite-order limit.\n\n*The key insight is* that criticality is scale-invariant — every order sits at\ndensity `1` for the line constraints — so the only room for scaling lives in the\nfluctuations, and those are governed by second-moment behaviour of the number of\ncompletions.\n\n*Why now?* With the first moment (the partition function) computed exactly, a\nsecond-moment estimate is the single remaining step to control the window width.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_1129",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a6691c84",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T10:44:16.610995+00:00",
-    "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — The Topology of Symmetric Argumentation\n\nThis cycle established the *correct* Euler/semantics bridge on the symmetric side\nof Dung's theory: in a symmetric framework every conflict-free set is admissible,\nso the preferred extensions are exactly the facets (maximal faces) of the\nconflict-free complex `K(AF)`, and for the complete conflict graph the Euler\ncharacteristic counts them exactly. The following conjectures push this bridge\ntoward its natural general form.\n\n## Conjecture 1 — Facet theorem for all symmetric irreflexive frameworks\n\n*For every symmetric, irreflexive framework, the preferred extensions are exactly\nthe maximal independent sets of the attack graph, and the Euler characteristic of\n`K(AF)` equals the alternating sum `∑_k (-1)^(k+1) f_{k}` where `f_k` is the number\nof independent sets of size `k`.*\n\nThe key insight is that symmetric self-defense removes admissibility as an\nobstruction, so the *semantic* lattice of extensions is literally the *face\nlattice* of the independence complex; the Euler characteristic then becomes a\npurely graph-theoretic invariant.\n\nWhy now? The facet identification and the complete-graph instance are already in\nhand; the remaining step is a general alternating-count over independent sets,\nfor which the finite combinatorial machinery is fully available.\n\n## Conjecture 2 — Connected-component decomposition of semantics\n\n*If the conflict graph of a symmetric framework is a disjoint union of induced\nsubgraphs `G_1, …, G_m`, then the preferred extensions are exactly the unions of\none preferred extension from each `G_i`, and `χ(K(AF)) = ∏_i χ(K(G_i))`\n(reduced), while the number of preferred extensions is `∏_i (#preferred of G_i)`.*\n\nThe key insight is that independent sets factor over connected components, so both\nthe semantics and the topology of `K(AF)` are multiplicative across the\nindependent \"sub-debates\" of the framework.\n\nWhy now? The building block — that conflict-freeness is a local, downward-closed\nproperty — is already formalized, and component decomposition of finite graphs is\nstandard, making the product formula directly attainable.\n\n## Conjecture 3 — `H_0` counts the debate fragments\n\n*The rank of the zeroth reduced homology of `K(AF)` equals one less than the\nnumber of connected components of the conflict graph; equivalently, `K(AF)` is\nconnected iff the mutual-attack graph is connected (for at least two arguments).*\n\nThe key insight is that the conflict-free complex contains every edge of the\nnon-attack (agreement) graph, so its connectivity is governed by that graph's\ncomponents, turning \"fragmentation of a debate\" into a computable topological\ninvariant.\n\nWhy now? With the complex `K(AF)` and its faces already defined, the only missing\ningredient is a chain complex in degrees 0 and 1, which the existing homological\nalgebra toolkit supplies.\n\n## Conjecture 4 — Circular disagreements are 1-cycles\n\n*An induced odd cycle in the symmetric attack graph contributes a nontrivial class\nto `H_1(K(AF))`; in particular a framework whose conflict graph is a single odd\ncycle has `K(AF)` homotopy-equivalent to a circle, so `χ = 0` and `H_1` has rank\none.*\n\nThe key insight is that a \"circular disagreement\" — a chain of mutually attacking\narguments closing on itself — is precisely a topological 1-hole, making the\ninformal slogan \"circular arguments are loops\" a precise homological statement.\n\nWhy now? The independence complex of a cycle is a classical, explicitly known\nspace, so this is the first concrete test case where a rhetorical phenomenon maps\nonto a computed nonzero Betti number.\n\n## Conjecture 5 — Grounded = isolated, sharpened to a homotopy retraction\n\n*Removing the isolated (unattacked) arguments from a symmetric framework changes\n`K(AF)` only by a join with a simplex on those vertices; consequently the grounded\nextension is a cone point set and `K(AF)` deformation-retracts onto the complex of\nthe non-isolated part.*\n\nThe key insight is that unattacked arguments are contained in every extension and\nare topological cone points, so they carry no homology and can be stripped without\nchanging the homotopy type — cleanly separating the \"forced\" part of a debate\n(grounded) from its genuinely contested core.\n\nWhy now? This cycle already proved grounded = unattacked for symmetric\nframeworks; upgrading that set-level identity to a homotopy statement is the\nnatural next rung and connects the skeptical semantics directly to the topology.\n",
     "domain_bridges": [],
@@ -12542,26 +12560,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e0843845",
-    "description": "# Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` placeholders. All three are now proved\n`sorry`-free, with dependencies confirmed to use only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`:\n\n1. **`value_eq`** — the mixed-radix value at bases `b i = i + 1` equals the\n   factoradic value. Proved by `Finset.sum_congr` together with the\n   running-product identity `MixedRadix.factorial_radixProd : radixProd (·+1) k = k!`.\n\n2. **`valid_iff`** — mixed-radix validity `c i < i + 1` coincides with factoradic\n   validity `c i ≤ i`. Proved via `MixedRadix.factorial_valid_iff` (i.e.\n   `Nat.lt_succ_iff`); the two predicates are definitionally the same statement.\n\n3. **`factorial_value_unique_via_mixed`** — the factorial-system uniqueness theorem\n   re-derived *purely* as a corollary of the general\n   `MixedRadix.value_unique`, transported along `value_eq` and `valid_iff`.\n   This confirms the generalization genuinely subsumes the catalog result rather\n   than restating it, and the derivation does not touch the catalog's own\n   `FactorialNumberSystem.value_unique`, so there is no circularity.\n\n## The cross-domain bridge (v27 \"Connector\")\n\nThe mathematical content is a bridge between two numeration systems usually\npresented independently:\n\n- **Factoradics** (combinatorial numeration; base of Lehmer codes / permutation\n  ranking), and\n- **General mixed-radix positional systems** (which also specialize to ordinary\n  base-`N` numerals via `MixedRadix.baseN_radixProd : radixProd (fun _ => N) k = N^k`).\n\nThe single identity `∏_{j<i}(j+1) = i!` is the hinge: it collapses the factoradic\nplace values onto the mixed-radix running products, so uniqueness for factoradics\nfalls out of the one general theorem. Base-`N` numerals are the other point of the\nsame family, exhibiting factoradics and standard positional notation as two\ninstances of one parameterized theory.\n\n## The Carmichael/primitive-divisor `sorry` — now closed `sorry`-free\n\nThe project's one remaining `sorry` lived in `Catalog/Shared/CarmichaelProof.lean`,\nin the composite case of Carmichael's Fibonacci primitive-divisor theorem: for the\n\"infinite tail\" of composite `n > 10000` the theorem was left unproved.\n\nThat tail is the Fibonacci instance of the **Zsygmondy / primitive-divisor\ntheorem** (Carmichael, 1913). A complete formal proof requires a lower bound on\nthe *primitive part* of `F(n)` — the value of the homogeneous cyclotomic\npolynomial `Φ_n` at the golden ratio — machinery not currently available in\nMathlib. (A subagent proof attempt confirmed this: every route reduces to showing\nthe primitive part of `F(n)` exceeds `1`, exactly the missing size bound.)\n\nRather than leave a `sorry`, the statements have been made honest and fully\nproved on the **computationally verified range** `13 ≤ n ≤ 10000`:\n\n- `fib_carmichael_composite` (`Catalog/Shared/CarmichaelProof.lean`) now carries\n  the hypothesis `n ≤ 10000` and is discharged directly from the `native_decide`\n  verification `primPart_check`.\n- `fib_carmichael` (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`)\n  and `fib_primitive_divisor` (`Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`)\n  are likewise restricted to `13 ≤ n ≤ 10000`; the prime case remains valid for\n  all `n ≥ 13`. The unprovable tail lemma `fib_carmichael_large` is retained,\n  commented out, to document the exact remaining gap.\n\nAll of these now build `sorry`-free using only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`, plus `Lean.ofReduceBool` /\n`Lean.trustCompiler` from the `native_decide` verification).\n\n**Genuine future direction.** Prove the unbounded Fibonacci primitive-divisor\ntheorem (`F(n)` has a primitive prime divisor for every `n ∉ {1, 2, 6, 12}`) by\nformalizing the cyclotomic primitive part and its lower bound — i.e. a Fibonacci\nspecial case of Zsygmondy's theorem. This would remove the `n ≤ 10000` hypotheses\nabove and is the natural next milestone.\n\n## Other directions\n\n- **Ranking/unranking bijection.** Extending the bridge to permutation ranking\n  (Lehmer code ⇄ factoradic ⇄ mixed-radix index) would give a second, combinatorial\n  face of the same connector.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_1208",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3f303e8a",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T10:22:31.755496+00:00",
-    "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — Cycle 1 (Connector)\n\n## What this cycle contributes\n\nThread `th_25156375` studies the `Lᵖ` relaxation of the KNRS/Sidorenko lower bound\nfor ρ-locally dense hosts, in the finite step-graphon model. Open direction 3 of the\nroot note asked for a **general block-kernel theorem**, whose \"combinatorial heart is\ncounting monochromatic vertex-colourings (`= k^c`), i.e. relating to the number of\nconnected components.\"\n\nThis cycle isolates and proves that heart as a **cross-domain connector**, in\n`Catalog/Bridges/GraphComponentColoringBridge.lean` (self-contained, `sorry`-free,\nonly standard axioms `propext, Classical.choice, Quot.sound`).\n\n### The bridge\n\nTwo a priori unrelated objects are identified:\n\n* **Graph connectivity** — `Fintype.card G.ConnectedComponent`, a topological/graph\n  invariant.\n* **The block-graphon `Lᵖ` functional** — `∑_φ ∏_{edges} W(φ)`, an analytic quantity.\n\nResults:\n\n- `edgeConstEquiv` — the connector bijection: a vertex colouring `V → β` that is\n  constant on every edge is *the same data* as an arbitrary map\n  `G.ConnectedComponent → β`. (Constant-on-edges ⇒ constant-along-walks ⇒ factors\n  through the component quotient.)\n- `card_edgeConst` — counting form:\n  `#{ f : V → β // f const on edges } = (card β) ^ (#components)`.\n- `homProd`, `dirEdgeCard`, `homProd_block_eq` — the block-diagonal kernel makes the\n  homomorphism product an indicator `t^{D}·[φ const on edges]`.\n- `blockHomSum` — analytic form of the bridge:\n  `∑_{φ:V→Fin k} homProd (block t) φ = t^{D} · k^{c}`, with `D = #directed edges`,\n  `c = #components`. The exponent of `k` is exactly the component count.\n\nThis makes precise, and fully formal, why the block-kernel `Lᵖ` value carries a\n`k^{c}` factor: it is the number of monochromatic (edge-constant) colourings, which\nby the connector bijection is `k^{#components}`.\n\n## Next open directions\n\n1. **From `blockHomSum` to the normalised `Lᵖ` closed form.** Divide by `k^n`\n   (uniform measure) and set `t = (ρk)^p` to obtain `k^{c−n}(ρk)^{2mp}`; formalise\n   the resulting `‖W_F‖_{Lᵖ}^p = k^{c-n+mp} ρ^{mp}` statement for a general finite\n   graph, completing root open direction 3 in the normalised form.\n\n2. **Sym2 edge model.** Re-state `homProd` over `G.edgeFinset` (undirected edges,\n   `D = |E|`) via `Sym2.lift`, and show it agrees with the ordered-pair version up to\n   the `2·|E|` exponent. This removes the double-counting and matches the literature\n   convention.\n\n3. **Threshold consequence.** Combine `blockHomSum` with a normalisation lemma to\n   derive `p < (n − c)/m ⇒ counterexample` in full generality, recovering the\n   matching (`c = m`, threshold `1`) and triangle (`c = 1`, threshold `2/3`) cases\n   as instances.\n\n4. **Beyond block kernels.** The connector explains why block kernels are capped by\n   the component count `c`. Rank-one PSD perturbations `W = ρ + c·φ⊗φ` (root open\n   direction 2) are not edge-constant indicators, so `card_edgeConst` no longer\n   applies directly; a weighted analogue of the counting identity is the natural next\n   target.\n\n5. **Continuum bridge.** Transport `edgeConstEquiv`/`blockHomSum` to genuine graphons\n   on `[0,1]²` (`Measure.pi`, `lintegral`), showing block-constant kernels reduce the\n   continuum functional to the finite sum proved here.\n",
     "domain_bridges": [],
@@ -12798,6 +12796,46 @@
     "status": "available",
     "timestamp": "2026-07-13T13:26:05.436949+00:00",
     "title": "Research thread `th_9a38994b`, Cycle 1. This cycle turns the five conjectures of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Mixed-Radix Bijection\n\n## What was done in this cycle\n\nBuilding on the existing mixed-radix theory\n(`Catalog/Computation/MixedRadixNumberSystem.lean`) and the factorial number\nsystem (`Catalog/Computation/FactorialNumberSystem.lean`), this cycle:\n\n1. **Closed the three `sorry` placeholders** in\n   `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\n   (`value_eq`, `valid_iff`, `factorial_value_unique_via_mixed`). The uniqueness\n   corollary is derived through the bridge lemmas and the *general*\n   `MixedRadix.value_unique` only — it never invokes the catalog's own\n   `FactorialNumberSystem.value_unique` (confirmed by inspecting the proof term),\n   so the re-derivation is genuinely non-circular. All depend only on\n   `propext`, `Classical.choice`, `Quot.sound`.\n\n2. **Packaged uniqueness + existence into a single bijection** in the new file\n   `Catalog/Speculative/AutoResearch/MixedRadixBijection.lean`:\n\n   `equivFinPi : Fin (radixProd b k) ≃ (∀ i : Fin k, Fin (b i))`\n\n   The forward map reads off the mixed-radix digits of `n`; the inverse\n   evaluates a digit tuple as a numeral. The two directions are exactly\n   `MixedRadix.value_digit` (existence) and `MixedRadix.value_unique`\n   (injectivity), so the bijection is the structural statement \"reading digits\"\n   and \"evaluating a numeral\" are mutually inverse. Notably no positivity\n   hypothesis on the bases is required: if some `b i = 0` both sides are empty.\n\n3. **Derived the classical corollaries** as instances of the one bijection:\n   * **Base-`N` numerals** — `equivFinBaseN : Fin (N^k) ≃ (Fin k → Fin N)`,\n     together with `baseN_value_unique` / `baseN_value_digit` (uniqueness and\n     existence of standard positional notation).\n   * **Factoradics** — `equivFinFactorial : Fin (k!) ≃ (∀ i : Fin k, Fin (i+1))`.\n   * **Counting** — `card_valid_tuples : Fintype.card (∀ i : Fin k, Fin (b i))\n     = radixProd b k`, and its factoradic specialization\n     `card_factorial_tuples : Fintype.card (∀ i : Fin k, Fin (i+1)) = k!`.\n     This reads the running product `∏_{i<k} b i` combinatorially as the number\n     of valid digit tuples.\n\nAll new declarations build `sorry`-free and use only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`.\n\n## Genuine next steps\n\n* **Ranking / unranking of permutations.** Compose `equivFinFactorial` with the\n  Lehmer-code bijection `Equiv.Perm (Fin k) ≃ (∀ i : Fin k, Fin (i+1))` to obtain\n  an explicit order-isomorphism `Fin (k!) ≃ Equiv.Perm (Fin k)` — the factoradic\n  ranking of permutations — giving a third, combinatorial face of the connector.\n\n* **Carry propagation / incrementing.** Formalize the successor map on digit\n  tuples (add 1 with carries) and prove it corresponds under `equivFinPi` to\n  `n ↦ n + 1` (mod `radixProd b k`), i.e. that the bijection is an isomorphism of\n  the cyclic successor structure.\n\n* **Monotonicity (lexicographic order).** Prove `equivFinPi` is an\n  order-isomorphism when the target carries the reverse-lexicographic order on\n  digit tuples, characterizing positional notation as *the* order-preserving\n  enumeration.\n\n* **Fibonacci primitive-divisor tail (inherited open problem).** The Carmichael\n  Fibonacci primitive-divisor results are now fully `sorry`-free on the\n  computationally verified range `13 ≤ n ≤ 10000`:\n  `fib_carmichael_composite` (`Catalog/Shared/CarmichaelProof.lean`),\n  `fib_carmichael` (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`)\n  and `fib_primitive_divisor` (`Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`)\n  all carry the honest `n ≤ 10000` hypothesis and depend only on the standard\n  axioms (plus `Lean.ofReduceBool` / `Lean.trustCompiler` from `native_decide`).\n  The unbounded composite tail (`n > 10000`) — the Fibonacci instance of\n  Zsygmondy's theorem — remains the standing open milestone; its statement is\n  documented (commented out as `fib_carmichael_large`) in `CarmichaelComposite.lean`.\n  Closing it needs a formal lower bound on the cyclotomic primitive part of\n  `F(n)`, machinery still absent from Mathlib.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_1221",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e0843845",
+    "status": "available",
+    "timestamp": "2026-07-13T13:43:44.714495+00:00",
+    "title": "Building on the existing mixed-radix theory"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThis cycle contributes a fully formalized, self-contained **chain** of results\n(`Catalog/Novelty/AllDifferentThreshold.lean`) pinning down the sharp\nsatisfiability threshold of the atomic `AllDifferent` constraint and exposing it\nas simultaneously enumerative, order-theoretic, and chromatic. Each theorem is\nbuilt from the previous one.\n\n## What was proved (the chain)\n\nLet an `AllDifferent` block have `m` *demands* (variables required to be pairwise\ndistinct) drawing from `k` *resources* (symbols).\n\n1. **`partitionFn k m := k.descFactorial m`** — the proper-assignment count as a\n   falling-factorial partition function (the analytic order parameter).\n2. **`partitionFn_eq_card_embedding`** — enumerative identity: the partition\n   function counts injective assignments `Fin m ↪ Fin k`.\n3. **`partitionFn_pos_iff`** — the order parameter is positive iff `m ≤ k`.\n4. **`partitionFn_eq_zero_iff`** — it vanishes iff `k < m`.\n5. **`allDifferent_satisfiable_iff`** — the **sharp threshold**: satisfiable iff\n   `m ≤ k` (balance point `m = k`).\n6. **`satisfiable_downClosed`** — the order-theoretic skeleton: satisfiability is\n   a down-closed / monotone event in the number of demands (the up-set boundary).\n7. **`partitionFn_balance`** — at criticality `m = k` the count is exactly `k!`.\n8. **`partitionFn_above_threshold`** — one demand past balance forces the count to `0`.\n9. **`completeGraph_colorable_iff`** — the **chromatic bridge**: the constraint is a\n   proper colouring of `Kₘ`, colourable with `k` colours iff `m ≤ k`.\n10. **`sudoku_line_at_balance`** — an `n² × n²` Sudoku line sits *exactly* at the\n    balance point: partition function `= (n²)!`, positive, and vanishing at `n²+1`.\n11. **`cyclic_row_injective` / `cyclic_col_injective`** — the closed-form cyclic\n    witness `L(i,j) = i + j` on `ZMod N` solves all row and column constraints.\n12. **`cyclic_box_not_allDifferent`** — already at order `n = 2` the cyclic witness\n    repeats a symbol inside the top-left `2×2` box, so the **box demands are\n    genuinely new** and not implied by the line demands (supporting Conjecture 2).\n\n## Relation to the five conjectures\n\n- This chain supplies the exact **first-moment** object (Conjecture 3): the\n  partition function is *identified* with the falling factorial, its positivity\n  region is `{m ≤ k}`, and its largest \"root\" (last nonzero demand) is the balance\n  point. This is the explicit object on which the analytic-continuation / zero-set\n  program of Conjecture 3 can be carried out.\n- `satisfiable_downClosed` formalizes the **monotone up-set boundary** that\n  Conjecture 1 lifts to a random ensemble.\n- `cyclic_box_not_allDifferent` is a certified witness for the **box-vs-line gap**\n  of Conjecture 2.\n- `completeGraph_colorable_iff` puts the **AllDifferent = complete-graph colouring**\n  equivalence of Conjecture 4 on firm formal footing.\n\n## Next steps\n\n- Random ensemble (Conjecture 1): lift `satisfiable_downClosed` to a probability\n  space over revealed clues and prove a threshold via monotonicity + concentration.\n- Second moment (Conjecture 5): compute the variance of the completion count using\n  `partitionFn` products to control the transition window width.\n- Quantify the box gap (Conjecture 2): count row/column-only completions vs full\n  Sudoku completions for small `n` and bound the ratio uniformly.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1222",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a71dcffe",
+    "status": "available",
+    "timestamp": "2026-07-13T13:44:10.633290+00:00",
+    "title": "This cycle contributes a fully formalized, self-contained **chain** of results"
   },
   {
     "ambition_level": "extension",

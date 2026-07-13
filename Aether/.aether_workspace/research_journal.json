@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4d87b490",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Kernel Law for the Thermodynamics of Proof\n\nThe kernel law established in this cycle says that a structure-preserving reasoning step\n`f : G → H` dissipates exactly `log₂|ker",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 7,
-      "timestamp": "2026-07-12T23:31:30",
-      "title": "Deepening: `ThermodynamicsOfProof.lean` — the positive theory:"
-    },
-    {
       "cycle_id": "00319e93",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle adds a **second pillar of the probabilistic method** to the Novelty catalog,\nalongside the Erdős counting lower bound for diagonal Ramsey numbers\n(`Novelty.RamseyProbab",
@@ -499,19 +489,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-13T13:26:13",
       "title": "That the geometry surrounding the Hopf fibration is"
+    },
+    {
+      "cycle_id": "e0843845",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Mixed-Radix Bijection\n\n## What was done in this cycle\n\nBuilding on the existing mixed-radix theory\n(`Catalog/Computation/MixedRadixNumberSystem.lean`) and the factorial numbe",
+      "quality_score": 0.8,
+      "sorry_count": 4,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T13:44:00",
+      "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "523eb163",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Hypergraph Ramsey Theory\n\nThis project develops `r`-uniform hypergraph Ramsey theory from scratch across\nseveral self-contained Lean files. All files listed below compile with no",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-07-10T21:25:24",
-      "title": "Hypergraph Ramsey Theory: Beyond Graphs"
-    },
     {
       "cycle_id": "823f5582",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-13T13:26:13",
       "title": "That the geometry surrounding the Hopf fibration is"
+    },
+    {
+      "cycle_id": "e0843845",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Mixed-Radix Bijection\n\n## What was done in this cycle\n\nBuilding on the existing mixed-radix theory\n(`Catalog/Computation/MixedRadixNumberSystem.lean`) and the factorial numbe",
+      "quality_score": 0.8,
+      "sorry_count": 4,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T13:44:00",
+      "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6ed40476",
-      "domain": "Novelty",
-      "name": "two_pow_ne_zero",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "6ed40476",
-      "domain": "Novelty",
-      "name": "E_const",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "b08004d1",
-      "domain": "Applications",
-      "name": "edgeLpPow_nonneg",
-      "quality": 0.72
-    },
     {
       "cycle_id": "b08004d1",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "eigen_supersat_general",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "e0843845",
+      "domain": "Applications",
+      "name": "fib_carmichael_composite",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "e0843845",
+      "domain": "Applications",
+      "name": "fib_carmichael_composite",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "e0843845",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-13T13:26:13",
+  "last_updated": "2026-07-13T13:44:00",
   "open_questions": [
-    {
-      "context": "Everything is `sorry`-free and self-contained (`import Mathlib`).",
-      "cycle_id": "82394822",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-12T23:32:06"
-    },
     {
       "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.; Everything is elementary and `sorry`-free.; necessary.  All main theorems are `sorry`-free and use genuine arguments",
       "cycle_id": "0242f406",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-13T12:53:44"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "e0843845",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-13T13:44:00"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "223b6ab0",
-        "quality": 0.55,
-        "theorems": 18,
-        "title": "Close Proofs: Rucker: Spacetime Donuts — Topology of the Universe"
-      },
-      {
         "cycle_id": "75061bf5",
         "quality": 0.72,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 10,
         "title": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
+      },
+      {
+        "cycle_id": "e0843845",
+        "quality": 0.8,
+        "theorems": 15,
+        "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
       }
     ],
     "Bridges": [

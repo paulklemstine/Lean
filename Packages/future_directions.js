@@ -565,6 +565,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e0843845 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Closing the Factorial \u2194 Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` placeholders. All three are now proved\n`sorry`-free, with dependencies confirmed to use only the standar",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e0843845_888987c1",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "e0843845",
+    "status": "available",
+    "timestamp": "2026-07-13T13:44:00.566539+00:00",
+    "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
     "domains": [
       "Novelty",
@@ -1147,6 +1161,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T14:10:41.417442+00:00",
     "title": "Close Proofs: Exact dictionary \"logical qubits = middle homology\""
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle e0843845 (Q=0.800) proved 15 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Closing the Factorial \u2194 Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_e0843845_85271455",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "e0843845",
+    "status": "available",
+    "timestamp": "2026-07-13T13:44:01.104282+00:00",
+    "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.l"
   },
   {
     "consumed_by_exp_id": "",
@@ -4338,7 +4366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "162989ab",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4347,7 +4375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
@@ -7728,21 +7756,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary algebraic core of four-dimensional geometr"
   },
   {
-    "consumed_by_exp_id": "e0843845",
-    "description": "# Future Directions \u2014 Closing the Factorial \u2194 Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` placeholders. All three are now proved\n`sorry`-free, with dependencies confirmed to use only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`:\n\n1. **`value_eq`** \u2014 the mixed-radix value at bases `b i = i + 1` equals the\n   factoradic value. Proved by `Finset.sum_congr` together with the\n   running-product identity `MixedRadix.factorial_radixProd : radixProd (\u00b7+1) k = k!`.\n\n2. **`valid_iff`** \u2014 mixed-radix validity `c i < i + 1` coincides with factoradic\n   validity `c i \u2264 i`. Proved via `MixedRadix.factorial_valid_iff` (i.e.\n   `Nat.lt_succ_iff`); the two predicates are definitionally the same statement.\n\n3. **`factorial_value_unique_via_mixed`** \u2014 the factorial-system uniqueness theorem\n   re-derived *purely* as a corollary of the general\n   `MixedRadix.value_unique`, transported along `value_eq` and `valid_iff`.\n   This confirms the generalization genuinely subsumes the catalog result rather\n   than restating it, and the derivation does not touch the catalog's own\n   `FactorialNumberSystem.value_unique`, so there is no circularity.\n\n## The cross-domain bridge (v27 \"Connector\")\n\nThe mathematical content is a bridge between two numeration systems usually\npresented independently:\n\n- **Factoradics** (combinatorial numeration; base of Lehmer codes / permutation\n  ranking), and\n- **General mixed-radix positional systems** (which also specialize to ordinary\n  base-`N` numerals via `MixedRadix.baseN_radixProd : radixProd (fun _ => N) k = N^k`).\n\nThe single identity `\u220f_{j<i}(j+1) = i!` is the hinge: it collapses the factoradic\nplace values onto the mixed-radix running products, so uniqueness for factoradics\nfalls out of the one general theorem. Base-`N` numerals are the other point of the\nsame family, exhibiting factoradics and standard positional notation as two\ninstances of one parameterized theory.\n\n## The Carmichael/primitive-divisor `sorry` \u2014 now closed `sorry`-free\n\nThe project's one remaining `sorry` lived in `Catalog/Shared/CarmichaelProof.lean`,\nin the composite case of Carmichael's Fibonacci primitive-divisor theorem: for the\n\"infinite tail\" of composite `n > 10000` the theorem was left unproved.\n\nThat tail is the Fibonacci instance of the **Zsygmondy / primitive-divisor\ntheorem** (Carmichael, 1913). A complete formal proof requires a lower bound on\nthe *primitive part* of `F(n)` \u2014 the value of the homogeneous cyclotomic\npolynomial `\u03a6_n` at the golden ratio \u2014 machinery not currently available in\nMathlib. (A subagent proof attempt confirmed this: every route reduces to showing\nthe primitive part of `F(n)` exceeds `1`, exactly the missing size bound.)\n\nRather than leave a `sorry`, the statements have been made honest and fully\nproved on the **computationally verified range** `13 \u2264 n \u2264 10000`:\n\n- `fib_carmichael_composite` (`Catalog/Shared/CarmichaelProof.lean`) now carries\n  the hypothesis `n \u2264 10000` and is discharged directly from the `native_decide`\n  verification `primPart_check`.\n- `fib_carmichael` (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`)\n  and `fib_primitive_divisor` (`Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`)\n  are likewise restricted to `13 \u2264 n \u2264 10000`; the prime case remains valid for\n  all `n \u2265 13`. The unprovable tail lemma `fib_carmichael_large` is retained,\n  commented out, to document the exact remaining gap.\n\nAll of these now build `sorry`-free using only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`, plus `Lean.ofReduceBool` /\n`Lean.trustCompiler` from the `native_decide` verification).\n\n**Genuine future direction.** Prove the unbounded Fibonacci primitive-divisor\ntheorem (`F(n)` has a primitive prime divisor for every `n \u2209 {1, 2, 6, 12}`) by\nformalizing the cyclotomic primitive part and its lower bound \u2014 i.e. a Fibonacci\nspecial case of Zsygmondy's theorem. This would remove the `n \u2264 10000` hypotheses\nabove and is the natural next milestone.\n\n## Other directions\n\n- **Ranking/unranking bijection.** Extending the bridge to permutation ranking\n  (Lehmer code \u21c4 factoradic \u21c4 mixed-radix index) would give a second, combinatorial\n  face of the same connector.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_1208",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3f303e8a",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T10:22:31.755496+00:00",
-    "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Cycle 1 (Connector)\n\n## What this cycle contributes\n\nThread `th_25156375` studies the `L\u1d56` relaxation of the KNRS/Sidorenko lower bound\nfor \u03c1-locally dense hosts, in the finite step-graphon model. Open direction 3 of the\nroot note asked for a **general block-kernel theorem**, whose \"combinatorial heart is\ncounting monochromatic vertex-colourings (`= k^c`), i.e. relating to the number of\nconnected components.\"\n\nThis cycle isolates and proves that heart as a **cross-domain connector**, in\n`Catalog/Bridges/GraphComponentColoringBridge.lean` (self-contained, `sorry`-free,\nonly standard axioms `propext, Classical.choice, Quot.sound`).\n\n### The bridge\n\nTwo a priori unrelated objects are identified:\n\n* **Graph connectivity** \u2014 `Fintype.card G.ConnectedComponent`, a topological/graph\n  invariant.\n* **The block-graphon `L\u1d56` functional** \u2014 `\u2211_\u03c6 \u220f_{edges} W(\u03c6)`, an analytic quantity.\n\nResults:\n\n- `edgeConstEquiv` \u2014 the connector bijection: a vertex colouring `V \u2192 \u03b2` that is\n  constant on every edge is *the same data* as an arbitrary map\n  `G.ConnectedComponent \u2192 \u03b2`. (Constant-on-edges \u21d2 constant-along-walks \u21d2 factors\n  through the component quotient.)\n- `card_edgeConst` \u2014 counting form:\n  `#{ f : V \u2192 \u03b2 // f const on edges } = (card \u03b2) ^ (#components)`.\n- `homProd`, `dirEdgeCard`, `homProd_block_eq` \u2014 the block-diagonal kernel makes the\n  homomorphism product an indicator `t^{D}\u00b7[\u03c6 const on edges]`.\n- `blockHomSum` \u2014 analytic form of the bridge:\n  `\u2211_{\u03c6:V\u2192Fin k} homProd (block t) \u03c6 = t^{D} \u00b7 k^{c}`, with `D = #directed edges`,\n  `c = #components`. The exponent of `k` is exactly the component count.\n\nThis makes precise, and fully formal, why the block-kernel `L\u1d56` value carries a\n`k^{c}` factor: it is the number of monochromatic (edge-constant) colourings, which\nby the connector bijection is `k^{#components}`.\n\n## Next open directions\n\n1. **From `blockHomSum` to the normalised `L\u1d56` closed form.** Divide by `k^n`\n   (uniform measure) and set `t = (\u03c1k)^p` to obtain `k^{c\u2212n}(\u03c1k)^{2mp}`; formalise\n   the resulting `\u2016W_F\u2016_{L\u1d56}^p = k^{c-n+mp} \u03c1^{mp}` statement for a general finite\n   graph, completing root open direction 3 in the normalised form.\n\n2. **Sym2 edge model.** Re-state `homProd` over `G.edgeFinset` (undirected edges,\n   `D = |E|`) via `Sym2.lift`, and show it agrees with the ordered-pair version up to\n   the `2\u00b7|E|` exponent. This removes the double-counting and matches the literature\n   convention.\n\n3. **Threshold consequence.** Combine `blockHomSum` with a normalisation lemma to\n   derive `p < (n \u2212 c)/m \u21d2 counterexample` in full generality, recovering the\n   matching (`c = m`, threshold `1`) and triangle (`c = 1`, threshold `2/3`) cases\n   as instances.\n\n4. **Beyond block kernels.** The connector explains why block kernels are capped by\n   the component count `c`. Rank-one PSD perturbations `W = \u03c1 + c\u00b7\u03c6\u2297\u03c6` (root open\n   direction 2) are not edge-constant indicators, so `card_edgeConst` no longer\n   applies directly; a weighted analogue of the counting identity is the natural next\n   target.\n\n5. **Continuum bridge.** Transport `edgeConstEquiv`/`blockHomSum` to genuine graphons\n   on `[0,1]\u00b2` (`Measure.pi`, `lintegral`), showing block-constant kernels reduce the\n   continuum functional to the finite sum proved here.\n",
     "domains": [
@@ -7921,6 +7934,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T13:26:05.436949+00:00",
     "title": "Research thread `th_9a38994b`, Cycle 1. This cycle turns the five conjectures of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Mixed-Radix Bijection\n\n## What was done in this cycle\n\nBuilding on the existing mixed-radix theory\n(`Catalog/Computation/MixedRadixNumberSystem.lean`) and the factorial number\nsystem (`Catalog/Computation/FactorialNumberSystem.lean`), this cycle:\n\n1. **Closed the three `sorry` placeholders** in\n   `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\n   (`value_eq`, `valid_iff`, `factorial_value_unique_via_mixed`). The uniqueness\n   corollary is derived through the bridge lemmas and the *general*\n   `MixedRadix.value_unique` only \u2014 it never invokes the catalog's own\n   `FactorialNumberSystem.value_unique` (confirmed by inspecting the proof term),\n   so the re-derivation is genuinely non-circular. All depend only on\n   `propext`, `Classical.choice`, `Quot.sound`.\n\n2. **Packaged uniqueness + existence into a single bijection** in the new file\n   `Catalog/Speculative/AutoResearch/MixedRadixBijection.lean`:\n\n   `equivFinPi : Fin (radixProd b k) \u2243 (\u2200 i : Fin k, Fin (b i))`\n\n   The forward map reads off the mixed-radix digits of `n`; the inverse\n   evaluates a digit tuple as a numeral. The two directions are exactly\n   `MixedRadix.value_digit` (existence) and `MixedRadix.value_unique`\n   (injectivity), so the bijection is the structural statement \"reading digits\"\n   and \"evaluating a numeral\" are mutually inverse. Notably no positivity\n   hypothesis on the bases is required: if some `b i = 0` both sides are empty.\n\n3. **Derived the classical corollaries** as instances of the one bijection:\n   * **Base-`N` numerals** \u2014 `equivFinBaseN : Fin (N^k) \u2243 (Fin k \u2192 Fin N)`,\n     together with `baseN_value_unique` / `baseN_value_digit` (uniqueness and\n     existence of standard positional notation).\n   * **Factoradics** \u2014 `equivFinFactorial : Fin (k!) \u2243 (\u2200 i : Fin k, Fin (i+1))`.\n   * **Counting** \u2014 `card_valid_tuples : Fintype.card (\u2200 i : Fin k, Fin (b i))\n     = radixProd b k`, and its factoradic specialization\n     `card_factorial_tuples : Fintype.card (\u2200 i : Fin k, Fin (i+1)) = k!`.\n     This reads the running product `\u220f_{i<k} b i` combinatorially as the number\n     of valid digit tuples.\n\nAll new declarations build `sorry`-free and use only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`.\n\n## Genuine next steps\n\n* **Ranking / unranking of permutations.** Compose `equivFinFactorial` with the\n  Lehmer-code bijection `Equiv.Perm (Fin k) \u2243 (\u2200 i : Fin k, Fin (i+1))` to obtain\n  an explicit order-isomorphism `Fin (k!) \u2243 Equiv.Perm (Fin k)` \u2014 the factoradic\n  ranking of permutations \u2014 giving a third, combinatorial face of the connector.\n\n* **Carry propagation / incrementing.** Formalize the successor map on digit\n  tuples (add 1 with carries) and prove it corresponds under `equivFinPi` to\n  `n \u21a6 n + 1` (mod `radixProd b k`), i.e. that the bijection is an isomorphism of\n  the cyclic successor structure.\n\n* **Monotonicity (lexicographic order).** Prove `equivFinPi` is an\n  order-isomorphism when the target carries the reverse-lexicographic order on\n  digit tuples, characterizing positional notation as *the* order-preserving\n  enumeration.\n\n* **Fibonacci primitive-divisor tail (inherited open problem).** The Carmichael\n  Fibonacci primitive-divisor results are now fully `sorry`-free on the\n  computationally verified range `13 \u2264 n \u2264 10000`:\n  `fib_carmichael_composite` (`Catalog/Shared/CarmichaelProof.lean`),\n  `fib_carmichael` (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`)\n  and `fib_primitive_divisor` (`Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`)\n  all carry the honest `n \u2264 10000` hypothesis and depend only on the standard\n  axioms (plus `Lean.ofReduceBool` / `Lean.trustCompiler` from `native_decide`).\n  The unbounded composite tail (`n > 10000`) \u2014 the Fibonacci instance of\n  Zsygmondy's theorem \u2014 remains the standing open milestone; its statement is\n  documented (commented out as `fib_carmichael_large`) in `CarmichaelComposite.lean`.\n  Closing it needs a formal lower bound on the cyclotomic primitive part of\n  `F(n)`, machinery still absent from Mathlib.\n",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_1221",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e0843845",
+    "status": "available",
+    "timestamp": "2026-07-13T13:43:44.714495+00:00",
+    "title": "Building on the existing mixed-radix theory"
   },
   {
     "consumed_by_exp_id": "",
