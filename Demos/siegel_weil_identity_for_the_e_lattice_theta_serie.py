@@ -1,33 +1,35 @@
 """
-Numerical demonstration of the Siegel-Weil identity for the E8 lattice theta
-series: the number of E8 vectors of squared length 2n equals 240 * sigma_3(n),
-where sigma_3(n) = sum of cubes of divisors of n.
+Numerical demonstrations for the Siegel-Weil identity of the E8 theta series.
 
-This script verifies, purely arithmetically, the results of the accompanying
-paper:
+Central identity (rank-8 Siegel-Weil):
 
-  1. Prime-power closed form:  sigma_3(p^r) = sum_{i=0}^r p^{3i}.
-  2. Hecke three-term recurrence on prime powers.
-  3. Multiplicativity of sigma_3 across coprime arguments.
-  4. Global Hecke eigenform convolution identity.
-  5. The E8 shell counts 240, 2160, 6720, 17520, 30240, ...
+    r(n) = 240 * sigma_3(n),     sigma_s(n) = sum_{d | n} d^s,
 
-Run:  python demo.py
+where r(n) is the number of E8 vectors of squared length 2n.
+
+This script verifies, for the general divisor-power sum sigma_s and its E8
+specialization s = 3, the three structural fingerprints:
+
+  1. Division-free closed form:   sigma_s(p^r) * (p^s - 1) = p^(s(r+1)) - 1
+  2. Moebius inversion:           n^s = sum_{d*e=n} mu(d) * sigma_s(e)
+  3. Eigenform / Hecke defect:    sigma_s(p^2) + p^s = sigma_s(p)^2
+
+All functions are self-contained with type hints.
 """
 
 from __future__ import annotations
 
-from math import gcd
-from typing import List
+from typing import List, Tuple
 
 
-# --------------------------------------------------------------------------- #
-# Core arithmetic
-# --------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------
+# Elementary number-theoretic helpers
+# ---------------------------------------------------------------------------
+
 def divisors(n: int) -> List[int]:
-    """Return the sorted list of positive divisors of n >= 1."""
-    if n < 1:
-        raise ValueError("divisors requires n >= 1")
+    """Return the sorted list of positive divisors of n."""
+    if n <= 0:
+        raise ValueError("n must be positive")
     ds: List[int] = []
     d = 1
     while d * d <= n:
@@ -40,151 +42,114 @@ def divisors(n: int) -> List[int]:
 
 
 def sigma(s: int, n: int) -> int:
-    """Divisor-power sum sigma_s(n) = sum_{d | n} d^s, with sigma_s(0) = 0."""
-    if n == 0:
-        return 0
+    """Divisor-power sum sigma_s(n) = sum_{d | n} d^s."""
     return sum(d ** s for d in divisors(n))
 
 
-def sigma3(n: int) -> int:
-    """Sum of cubes of divisors of n."""
-    return sigma(3, n)
+def is_prime(p: int) -> bool:
+    """Simple primality test."""
+    if p < 2:
+        return False
+    i = 2
+    while i * i <= p:
+        if p % i == 0:
+            return False
+        i += 1
+    return True
+
+
+def moebius(n: int) -> int:
+    """Moebius function mu(n)."""
+    if n == 1:
+        return 1
+    result = 1
+    m = n
+    p = 2
+    while p * p <= m:
+        if m % p == 0:
+            m //= p
+            if m % p == 0:
+                return 0  # squared prime factor
+            result = -result
+        p += 1
+    if m > 1:
+        result = -result
+    return result
 
 
 def rE8(n: int) -> int:
-    """Siegel-Weil prediction for the number of E8 vectors of squared length 2n."""
-    return 240 * sigma3(n)
+    """Siegel-Weil / E4 prediction for E8 vector counts: 240 * sigma_3(n)."""
+    return 240 * sigma(3, n)
 
 
-def hecke_rhs(m: int, n: int) -> int:
-    """The Hecke convolution sum_{d | gcd(m,n)} d^3 * sigma_3(m*n / d^2)."""
-    if m == 0 or n == 0:
-        return 0
-    g = gcd(m, n)
-    total = 0
-    for d in divisors(g):
-        total += d ** 3 * sigma3(m * n // (d * d))
-    return total
+# ---------------------------------------------------------------------------
+# Demonstration 1: the Siegel-Weil identity against known shell counts
+# ---------------------------------------------------------------------------
 
-
-# --------------------------------------------------------------------------- #
-# Independent E8 vector count by brute force (small shells) for cross-check
-# --------------------------------------------------------------------------- #
-def e8_vector_count(n: int) -> int:
-    """
-    Count vectors of squared length 2n in the E8 lattice, realized as the set of
-    points in Z^8 union (Z+1/2)^8 whose coordinate sum is even. We scale by 2 to
-    work in integers: a vector has coordinates all-integer-doubled or all-odd,
-    and we search a bounded box. Only intended for small n (say n <= 3).
-    """
-    target = 2 * n  # squared length
-    # Represent E8 vectors with doubled coordinates y = 2x in Z^8, where either
-    # all y_i even (integer point) or all y_i odd (half-integer point), and
-    # (sum x_i) is even  <=>  (sum y_i) divisible by 4.
-    # squared length = (sum y_i^2) / 4 = target  =>  sum y_i^2 = 4*target.
-    s = 4 * target
-    bound = int(s ** 0.5)
-    count = 0
-
-    def rec(idx: int, remaining: int, parity: int, coord_sum: int) -> None:
-        nonlocal count
-        if idx == 8:
-            if remaining == 0 and coord_sum % 4 == 0:
-                count += 1
-            return
-        lo = -bound
-        hi = bound
-        for y in range(lo, hi + 1):
-            if y * y > remaining:
-                continue
-            if y % 2 != parity:
-                continue
-            rec(idx + 1, remaining - y * y, parity, coord_sum + y)
-
-    # parity 0: all-even coordinates (integer points); parity 1: all-odd (half pts)
-    rec(0, s, 0, 0)
-    rec(0, s, 1, 0)
-    return count
-
-
-# --------------------------------------------------------------------------- #
-# Demonstrations
-# --------------------------------------------------------------------------- #
-def demo_shell_counts() -> None:
-    print("=== E8 shell counts  r(n) = 240 * sigma_3(n) ===")
-    print(f"{'n':>3} | {'sigma_3(n)':>11} | {'r(n)':>10}")
-    print("-" * 32)
-    for n in range(1, 11):
-        print(f"{n:>3} | {sigma3(n):>11} | {rE8(n):>10}")
+def demo_siegel_weil() -> None:
+    known = {1: 240, 2: 2160, 3: 6720, 4: 17520, 5: 30240}
+    print("== Siegel-Weil identity: r(n) = 240 * sigma_3(n) ==")
+    for n, expected in known.items():
+        got = rE8(n)
+        status = "OK" if got == expected else "MISMATCH"
+        print(f"  n={n}: sigma_3={sigma(3, n):>4}  r(n)={got:>6}  known={expected:>6}  [{status}]")
     print()
 
 
-def demo_prime_power_closed_form() -> None:
-    print("=== Prime-power closed form  sigma_3(p^r) = sum p^(3i) ===")
-    for p in (2, 3, 5):
-        for r in range(0, 5):
-            lhs = sigma3(p ** r)
-            rhs = sum(p ** (3 * i) for i in range(r + 1))
-            ok = "OK" if lhs == rhs else "FAIL"
-            print(f"  sigma_3({p}^{r}) = {lhs:>10}  (geom sum {rhs:>10})  [{ok}]")
+# ---------------------------------------------------------------------------
+# Demonstration 2: division-free Euler-factor closed form
+# ---------------------------------------------------------------------------
+
+def demo_closed_form(s: int = 3, primes: Tuple[int, ...] = (2, 3, 5, 7),
+                     rmax: int = 4) -> None:
+    print("== Division-free closed form: sigma_s(p^r)*(p^s-1) = p^(s(r+1))-1 ==")
+    for p in primes:
+        for r in range(rmax + 1):
+            lhs = sigma(s, p ** r) * (p ** s - 1)
+            rhs = p ** (s * (r + 1)) - 1
+            assert lhs == rhs, (p, r)
+        print(f"  p={p}: verified for r=0..{rmax}  (s={s})")
     print()
 
 
-def demo_hecke_recurrence() -> None:
-    print("=== Hecke recurrence: sigma_3(p^(r+2)) + p^3 sigma_3(p^r) "
-          "= sigma_3(p) sigma_3(p^(r+1)) ===")
-    for p in (2, 3, 5):
-        for r in range(0, 4):
-            lhs = sigma3(p ** (r + 2)) + p ** 3 * sigma3(p ** r)
-            rhs = sigma3(p) * sigma3(p ** (r + 1))
-            ok = "OK" if lhs == rhs else "FAIL"
-            print(f"  p={p}, r={r}:  {lhs} == {rhs}  [{ok}]")
+# ---------------------------------------------------------------------------
+# Demonstration 3: Moebius inversion recovering pure powers
+# ---------------------------------------------------------------------------
+
+def demo_moebius(s: int = 3, nmax: int = 12) -> None:
+    print("== Moebius inversion: sum_{d*e=n} mu(d)*sigma_s(e) = n^s ==")
+    for n in range(1, nmax + 1):
+        total = sum(moebius(d) * sigma(s, n // d) for d in divisors(n))
+        assert total == n ** s, (n, total)
+        # E8 transport: sum mu(d) r(e) = 240 n^3  (when s == 3)
+        if s == 3:
+            e8 = sum(moebius(d) * rE8(n // d) for d in divisors(n))
+            assert e8 == 240 * n ** 3, (n, e8)
+        print(f"  n={n:>2}: sum = {total:>6} = {n}^{s}")
     print()
 
 
-def demo_multiplicativity() -> None:
-    print("=== Multiplicativity: sigma_3(mn) = sigma_3(m) sigma_3(n), gcd(m,n)=1 ===")
-    for m, n in [(2, 3), (4, 9), (5, 7), (8, 27), (3, 25)]:
-        assert gcd(m, n) == 1
-        lhs = sigma3(m * n)
-        rhs = sigma3(m) * sigma3(n)
-        ok = "OK" if lhs == rhs else "FAIL"
-        print(f"  m={m}, n={n}:  sigma_3({m*n})={lhs} == {rhs}  [{ok}]")
-    print()
+# ---------------------------------------------------------------------------
+# Demonstration 4: eigenform / Hecke defect
+# ---------------------------------------------------------------------------
 
-
-def demo_hecke_identity() -> None:
-    print("=== Global Hecke eigenform identity: "
-          "sigma_3(m) sigma_3(n) = sum_{d|gcd} d^3 sigma_3(mn/d^2) ===")
-    fails = 0
-    for m in range(1, 13):
-        for n in range(1, 13):
-            lhs = sigma3(m) * sigma3(n)
-            rhs = hecke_rhs(m, n)
-            if lhs != rhs:
-                fails += 1
-                print(f"  MISMATCH m={m}, n={n}: {lhs} != {rhs}")
-    print(f"  checked all 1<=m,n<=12: {'ALL OK' if fails == 0 else f'{fails} FAILURES'}")
-    print()
-
-
-def demo_brute_force_cross_check() -> None:
-    print("=== Cross-check: brute-force E8 vector count vs 240*sigma_3(n) ===")
-    for n in range(1, 4):
-        brute = e8_vector_count(n)
-        pred = rE8(n)
-        ok = "OK" if brute == pred else "FAIL"
-        print(f"  n={n}: brute={brute}, predicted={pred}  [{ok}]")
+def demo_eigenform_defect(s: int = 3, primes: Tuple[int, ...] = (2, 3, 5, 7, 11)) -> None:
+    print("== Eigenform defect: sigma_s(p)^2 - sigma_s(p^2) = p^s  (> 0) ==")
+    for p in primes:
+        defect = sigma(s, p) ** 2 - sigma(s, p ** 2)
+        assert defect == p ** s
+        assert sigma(s, p ** 2) < sigma(s, p) ** 2
+        print(f"  p={p:>2}: sigma_{s}(p)^2={sigma(s, p)**2:>7}  "
+              f"sigma_{s}(p^2)={sigma(s, p**2):>7}  defect={defect:>6} = {p}^{s}")
     print()
 
 
 def main() -> None:
-    demo_shell_counts()
-    demo_prime_power_closed_form()
-    demo_hecke_recurrence()
-    demo_multiplicativity()
-    demo_hecke_identity()
-    demo_brute_force_cross_check()
+    demo_siegel_weil()
+    demo_closed_form()
+    demo_moebius()
+    demo_eigenform_defect()
+    print("All structural identities verified.")
 
 
 if __name__ == "__main__":

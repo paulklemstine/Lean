@@ -1,61 +1,80 @@
-# Computational Evidence: the octahedral obstruction to clique-Helliness
+# Computational Evidence
 
-## 1. The graph under study
+All numerical facts below are additionally **machine-checked** inside
+`Catalog/Applications/BalancedHClique.lean` (the finite octahedron facts are
+proved by Lean's kernel `decide`, so this file only records the reasoning).
 
-`\overline{3K₂}` is the complement of a perfect matching on six vertices. With the
-matching taken to be `{0,1}, {2,3}, {4,5}`, two vertices are adjacent in `\overline{3K₂}`
-exactly when they lie in *different* pairs. This is the octahedron `K_{2,2,2}` (the
-`3`-part complete multipartite graph with parts of size `2`).
+## 1. The forbidden graph: complement of `3K₂`
 
-## 2. Maximal cliques
+`3K₂` is the perfect matching on `Fin 6` with edges `{0,1}, {2,3}, {4,5}`
+(vertices `i, j` adjacent iff `i ≠ j` and `⌊i/2⌋ = ⌊j/2⌋`).
 
-A set is a clique iff it contains at most one vertex from each pair. The maximal cliques are
-therefore the `2 · 2 · 2 = 8` triangles obtained by choosing one vertex from each pair:
+Its complement `(3K₂)ᶜ` has `i ~ j` iff `i ≠ j` and `⌊i/2⌋ ≠ ⌊j/2⌋`.
+This is exactly the octahedron `K_{2,2,2}` with parts `{0,1}, {2,3}, {4,5}`.
+
+The equality `(3K₂)ᶜ = Oct` is proved as `oct_eq_compl_threeK2`.
+
+## 2. Maximal cliques of the octahedron
+
+A clique of `K_{2,2,2}` picks at most one vertex from each antipodal pair,
+so the maximal cliques are exactly the `2·2·2 = 8` "transversal" triangles:
 
 ```
 {0,2,4} {0,2,5} {0,3,4} {0,3,5} {1,2,4} {1,2,5} {1,3,4} {1,3,5}
 ```
 
-Every triangle is maximal: adding any fourth vertex forces two vertices from the same pair,
-which are non-adjacent.
+Each is a maximal clique (adding a 4th vertex forces two antipodal, hence
+non-adjacent, vertices). Verified for the three triangles used below via
+`oct_maxClique_024`, `oct_maxClique_125`, `oct_maxClique_134` (kernel `decide`).
 
-## 3. Failure of the Helly property (counterexample hunt)
+## 3. The bad triple — a single obstruction in two worlds
 
-Take the three triangles
+Take the three maximal cliques
 
 ```
-T1 = {0,2,4},  T2 = {0,3,5},  T3 = {1,2,5}.
+A = {0,2,4}   B = {1,2,5}   C = {1,3,4}
 ```
 
 Pairwise intersections:
 
 ```
-T1 ∩ T2 = {0},   T1 ∩ T3 = {2},   T2 ∩ T3 = {5}.
+A ∩ B = {2}     A ∩ C = {4}     B ∩ C = {1}     A ∩ B ∩ C = ∅
 ```
 
-All three are nonempty, so the family is **pairwise intersecting**. However
+### (a) Helly obstruction (graph theory)
 
-```
-T1 ∩ T2 ∩ T3 = ∅,
-```
+`A, B, C` are three maximal cliques that pairwise intersect but have **no common
+vertex** — so the octahedron is **not clique-Helly**. This is the classical
+smallest non-clique-Helly graph. Proved as `oct_not_cliqueHelly`.
 
-so there is **no common vertex**. This is precisely a violation of the Helly property for
-the family of maximal cliques, i.e. the octahedron is not clique-Helly. This is the smallest
-such example (six vertices).
+### (b) Balancedness obstruction (0/1-matrix theory)
 
-## 4. Small-case check of the implication "hereditarily clique-Helly ⇒ `\overline{3K₂}`-free"
+Incidence of rows `A, B, C` against the columns (vertices) `2, 4, 1`:
 
-- Graphs on `≤ 5` vertices contain no induced `\overline{3K₂}` (it has six vertices), and a
-  direct enumeration confirms all of them are clique-Helly, hence hereditarily clique-Helly.
-- The octahedron on six vertices is the first graph that is *not* hereditarily clique-Helly,
-  and it is exactly an induced `\overline{3K₂}`. So the forbidden-subgraph implication is
-  tight at six vertices.
+|   | 2 | 4 | 1 |
+|---|---|---|---|
+| A | 1 | 1 | 0 |
+| B | 1 | 0 | 1 |
+| C | 0 | 1 | 1 |
 
-## 5. Note on the reverse implication
+This `3 × 3` submatrix of the clique matrix has **exactly two `1`'s in every row
+and every column** and **odd** order `3`. Hence the clique matrix is not
+balanced, and the octahedron is **not balanced**. Proved as `oct_not_balanced`.
 
-The converse ("`\overline{3K₂}`-free ⇒ hereditarily clique-Helly") is **false** in general:
-there exist `\overline{3K₂}`-free graphs that contain other minimal non-clique-Helly
-configurations (the "ocular"/Hajós graphs). A single forbidden induced subgraph does not
-characterize hereditary clique-Helliness for arbitrary graphs; the reference's equivalence
-is special to distance-hereditary graphs. This is why only the forward implication is
-established here for all graphs.
+Both (a) and (b) are read off the *same* combinatorial object, captured
+abstractly as `BadTriple` and turned into the two obstructions by
+`not_cliqueHelly_of_badTriple` and `not_balanced_of_badTriple`.
+
+## 4. Counterexample hunt for the full three-way equivalence
+
+The description's conjecture (i)⟺(ii)⟺(iii) has a subtle direction:
+*balanced ⇒ no induced octahedron*. Unlike the clique-Helly side, this does
+**not** reduce to a local transport of the bad triple, because a triangle of an
+induced octahedron need not remain a *maximal* clique in the ambient graph, and
+balancedness is a statement about the *maximal*-clique matrix. We therefore do
+**not** assert this direction; we prove the robust part
+(hereditary clique-Helly ⇒ no induced octahedron) and the concrete two-world
+obstruction on the octahedron itself. See `FUTURE_DIRECTIONS.md`.
+
+No counterexample to the proved statements was found; small cases are consistent
+with the octahedron being the minimal simultaneous obstruction.

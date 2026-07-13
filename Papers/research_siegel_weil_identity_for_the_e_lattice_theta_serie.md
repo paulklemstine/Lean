@@ -1,341 +1,148 @@
-# The Siegel–Weil Identity for the $E_8$ Theta Series and the Hecke Structure of $240\,\sigma_3$
+# The Siegel–Weil Identity for the $E_8$ Theta Series: Möbius Inversion, Closed Forms, and the Eigenform Boundary
 
 ## Abstract
 
-The theta series of an even, positive-definite, unimodular lattice of rank $8$
-coincides with the normalized weight-$4$ Eisenstein series $E_4$. Equivalently,
-writing $r(n)$ for the number of lattice vectors of squared length $2n$, one has
-$r(n) = 240\,\sigma_3(n)$ for every positive integer $n$, where
-$\sigma_3(n) = \sum_{d \mid n} d^3$. This is the foundational rank-$8$ case of the
-classical Siegel–Weil formula, which equates the average theta series of a genus
-of quadratic forms with an Eisenstein series; the genus of even unimodular
-rank-$8$ lattices has a single class, so the average degenerates to the single
-lattice $E_8$. We give a self-contained account of the arithmetic backbone of
-this identity: the coefficient system $n \mapsto 240\,\sigma_3(n)$ is not an
-arbitrary arithmetic function but the coefficient system of a Hecke eigenform.
-We establish a geometric closed form for $\sigma_3$ at prime powers, the
-three-term Hecke recurrence on prime powers, multiplicativity across coprime
-arguments and its consequence for representation numbers, and the global Hecke
-eigenform convolution identity
-$\sigma_3(m)\,\sigma_3(n) = \sum_{d \mid \gcd(m,n)} d^3\,\sigma_3(mn/d^2)$. We
-close with numerical corroboration, applications, and a program of extensions.
-
-**Keywords.** $E_8$ lattice, theta series, Eisenstein series $E_4$, Siegel–Weil
-formula, Hecke eigenform, divisor-power sum $\sigma_3$, modular forms, sphere
-packing.
-
-**MSC.** 11F27, 11F30, 11H31, 11E45.
-
----
+The Siegel–Weil identity in rank $8$ asserts that the theta series of the even unimodular lattice $E_8$ coincides with the weight-$4$ Eisenstein series $E_4$. On the level of Fourier coefficients this is the arithmetic statement
+$$r(n) = 240\,\sigma_3(n), \qquad \sigma_3(n) = \sum_{d\mid n} d^3,$$
+where $r(n)$ counts the vectors of $E_8$ of squared length $2n$. We take this identity as a starting point and develop the arithmetic structure of the coefficient system $240\,\sigma_3$ — and, more generally, of the divisor-power sum $\sigma_s$, the coefficient system of the weight-$(s+1)$ Eisenstein series. We establish three independent structural results: (1) a *division-free closed form* for $\sigma_s$ on prime powers, $\sigma_s(p^r)(p^s-1) = p^{s(r+1)}-1$, which is the coefficient shadow of the Euler-factor factorization of the Eisenstein $L$-function; (2) a *Möbius inversion* $n^s = \sum_{de=n}\mu(d)\sigma_s(e)$, recovering pure powers from the divisor sum via the incidence algebra of the divisor lattice, and its transport $\sum_{de=n}\mu(d)r(e)=240\,n^3$ to the $E_8$ counts; and (3) an *eigenform boundary* result, the Hecke correction $\sigma_s(p^2)+p^s=\sigma_s(p)^2$ and the resulting strict inequality $\sigma_s(p^2)<\sigma_s(p)^2$, exhibiting the precise defect that separates the Eisenstein coefficient system from a completely multiplicative character. All results are corroborated against the known low-order $E_8$ vector counts $240, 2160, 6720, 17520, 30240$.
 
 ## 1. Introduction
 
-### 1.1 Lattices, shells, and theta series
-
-A *lattice* $L \subset \mathbb{R}^8$ is the set of integer linear combinations of a
-basis; equipped with the standard inner product it carries an integer-valued
-quadratic form $x \mapsto \langle x, x\rangle$. The lattice is *even* if
-$\langle x, x\rangle \in 2\mathbb{Z}$ for all $x \in L$, *positive-definite* if
-$\langle x, x\rangle > 0$ for $x \neq 0$, and *unimodular* if the Gram matrix of
-any basis has determinant $\pm 1$ (equivalently $L = L^\ast$, the lattice equals
-its dual). In rank $8$ there is, up to isometry, exactly one even positive-definite
-unimodular lattice: the root lattice $E_8$.
-
-Partitioning $L$ into shells by squared length yields the *representation
-numbers*
-$$N(k) = \#\{x \in L : \langle x, x\rangle = k\}.$$
-For an even lattice $N(k) = 0$ unless $k$ is even, so it is convenient to index by
-$n$ with $k = 2n$ and write $r(n) = N(2n)$. The generating function packaging
-these counts is the *theta series*
-$$\theta_L(\tau) = \sum_{x \in L} q^{\langle x, x\rangle / 2} = \sum_{n \ge 0} r(n)\, q^n, \qquad q = e^{2\pi i \tau},\ \ \mathrm{Im}\,\tau > 0,$$
-with $r(0) = 1$ (the zero vector). A classical theorem states that for an even
-unimodular lattice of rank $m$, $\theta_L$ is a modular form of weight $m/2$ for
-the full modular group $\mathrm{SL}_2(\mathbb{Z})$.
-
-### 1.2 The Eisenstein series $E_4$
-
-For even weight $k \ge 4$, the normalized Eisenstein series is
-$$E_k(\tau) = 1 - \frac{2k}{B_k} \sum_{n \ge 1} \sigma_{k-1}(n)\, q^n,$$
-where $B_k$ is the $k$-th Bernoulli number and
-$\sigma_{k-1}(n) = \sum_{d \mid n} d^{\,k-1}$. For $k = 4$, using $B_4 = -1/30$,
-$$E_4(\tau) = 1 + 240 \sum_{n \ge 1} \sigma_3(n)\, q^n.$$
-The space $M_4(\mathrm{SL}_2(\mathbb{Z}))$ of weight-$4$ modular forms is
-one-dimensional and spanned by $E_4$; in particular there are no nonzero weight-$4$
-cusp forms.
-
-### 1.3 The Siegel–Weil identity in rank 8
-
-Since $\theta_{E_8}$ is a weight-$4$ modular form with constant term $1$, and
-$M_4$ is one-dimensional spanned by $E_4$ (also with constant term $1$), the two
-functions coincide:
-$$\boxed{\;\theta_{E_8} = E_4\;} \qquad\Longleftrightarrow\qquad r(n) = 240\,\sigma_3(n)\ \ \text{for all } n \ge 1.$$
-This is the rank-$8$ case of the **Siegel–Weil formula**: the genus-average of
-theta series equals an Eisenstein series, and here the genus is a single class,
-so the average is $\theta_{E_8}$ itself. The problem of *proving* the identity
-reduces to matching Fourier coefficients, and the arithmetic content lives
-entirely in the coefficient function
-$$\mathrm{rE8}(n) := 240\,\sigma_3(n).$$
-
-### 1.4 Contributions
-
-This paper develops the arithmetic backbone that makes $240\,\sigma_3$ the
-coefficient system of a Hecke eigenform. Concretely we prove:
-
-1. **(Prime-power closed form.)** $\sigma_3(p^r) = \sum_{i=0}^r p^{3i}$ for prime
-   $p$, and the specialization $\sigma_3(p) = 1 + p^3$.
-2. **(Hecke three-term recurrence.)**
-   $\sigma_3(p^{r+2}) + p^3\,\sigma_3(p^r) = \sigma_3(p)\,\sigma_3(p^{r+1})$.
-3. **(Multiplicativity.)** $\sigma_3(mn) = \sigma_3(m)\,\sigma_3(n)$ for coprime
-   $m, n$, and the induced quasi-multiplicativity
-   $240\,\mathrm{rE8}(mn) = \mathrm{rE8}(m)\,\mathrm{rE8}(n)$.
-4. **(Global eigenform identity.)**
-   $\sigma_3(m)\,\sigma_3(n) = \sum_{d \mid \gcd(m,n)} d^3\,\sigma_3(mn/d^2)$ for
-   all $m, n \ge 1$.
-
-Together these show that the vector counts of $E_8$ form a Hecke eigenvalue
-system, exactly as the Siegel–Weil philosophy predicts.
-
----
-
-## 2. Definitions and notation
-
-Throughout, $p$ denotes a prime, $\mathbb{N} = \{0, 1, 2, \dots\}$, and for
-$s \in \mathbb{N}$ the divisor-power sum is
-$$\sigma_s(n) = \sum_{d \mid n} d^s, \qquad n \ge 1,$$
-with the convention $\sigma_s(0) = 0$. An arithmetic function $f$ is
-*multiplicative* if $f(1) = 1$ and $f(mn) = f(m)f(n)$ whenever $\gcd(m,n) = 1$.
-The function $\sigma_s$ is multiplicative for every $s$.
-
-**Definition 2.1 (Siegel–Weil prediction).** The predicted number of $E_8$
-vectors of squared length $2n$ is
-$$\mathrm{rE8}(n) = 240\,\sigma_3(n).$$
-
-**Definition 2.2 (Hecke convolution).** For $m, n \ge 1$ define
-$$\mathrm{heckeRHS}(m, n) = \sum_{d \mid \gcd(m,n)} d^3\,\sigma_3\!\left(\frac{mn}{d^2}\right).$$
-(One sets $\mathrm{heckeRHS}(0, n) = \mathrm{heckeRHS}(m, 0) = 0$.)
-
----
-
-## 3. The arithmetic of $\sigma_3$ at prime powers
-
-### 3.1 Geometric closed form
-
-**Theorem 3.1 (Prime-power closed form).** *For a prime $p$ and $r \ge 0$,*
-$$\sigma_3(p^r) = \sum_{i=0}^{r} p^{3i} = 1 + p^3 + p^6 + \cdots + p^{3r}.$$
-
-*Proof sketch.* The divisors of $p^r$ are exactly $1, p, p^2, \dots, p^r$, so
-$$\sigma_3(p^r) = \sum_{j=0}^{r} (p^j)^3 = \sum_{j=0}^{r} p^{3j}.$$
-Reindexing $i = j$ gives the stated sum. $\qquad\blacksquare$
-
-**Corollary 3.2 (Value at a prime).** $\sigma_3(p) = 1 + p^3$.
-
-*Proof.* Take $r = 1$ in Theorem 3.1: the sum has the two terms $p^0 = 1$ and
-$p^3$. $\qquad\blacksquare$
-
-Summing the geometric series yields the useful closed form
-$$\sigma_3(p^r)\,(p^3 - 1) = p^{3(r+1)} - 1,$$
-which reduces congruence questions about $\sigma_3(p^r)$ to elementary modular
-arithmetic.
-
-### 3.2 The Hecke three-term recurrence
-
-**Theorem 3.3 (Hecke recurrence on prime powers).** *For a prime $p$ and
-$r \ge 0$,*
-$$\sigma_3(p^{r+2}) + p^3\,\sigma_3(p^r) = \sigma_3(p)\,\sigma_3(p^{r+1}).$$
-
-*Proof sketch.* Write $S_a = \sum_{i=0}^{a} p^{3i}$, so by Theorem 3.1
-$\sigma_3(p^a) = S_a$ and by Corollary 3.2 $\sigma_3(p) = 1 + p^3 = S_1$. The
-right-hand side is
-$$(1 + p^3)\,S_{r+1} = S_{r+1} + p^3 S_{r+1}.$$
-Now $p^3 S_{r+1} = \sum_{i=0}^{r+1} p^{3(i+1)} = \sum_{j=1}^{r+2} p^{3j} = S_{r+2} - 1$,
-and $S_{r+1} = S_r + p^{3(r+1)}$. Hence
-$$(1+p^3)S_{r+1} = (S_r + p^{3(r+1)}) + (S_{r+2} - 1).$$
-On the other hand the left-hand side is $S_{r+2} + p^3 S_r$. Subtracting,
-the identity is equivalent to
-$p^3 S_r = S_r + p^{3(r+1)} - 1 = S_r + (p^{3(r+1)} - 1)$, i.e.
-$(p^3 - 1)S_r = p^{3(r+1)} - 1$, which is precisely the geometric-sum identity of
-§3.1. Thus both sides agree. $\qquad\blacksquare$
-
-The number $\sigma_3(p) = 1 + p^3$ is the eigenvalue of the Hecke operator $T_p$
-acting on $E_4$; Theorem 3.3 is the coefficient-level shadow of the eigenform
-equation $T_p E_4 = (1 + p^3) E_4$.
-
----
-
-## 4. Multiplicativity and representation numbers
-
-**Theorem 4.1 (Multiplicativity of $\sigma_3$).** *If $\gcd(m, n) = 1$ then*
-$$\sigma_3(mn) = \sigma_3(m)\,\sigma_3(n).$$
-
-*Proof sketch.* When $\gcd(m,n) = 1$, every divisor $d$ of $mn$ factors uniquely
-as $d = d_1 d_2$ with $d_1 \mid m$, $d_2 \mid n$, and this correspondence is a
-bijection between $\mathrm{Div}(mn)$ and $\mathrm{Div}(m) \times \mathrm{Div}(n)$.
-Therefore
-$$\sigma_3(mn) = \sum_{d \mid mn} d^3 = \sum_{d_1 \mid m}\sum_{d_2 \mid n} (d_1 d_2)^3
-= \Big(\sum_{d_1 \mid m} d_1^3\Big)\Big(\sum_{d_2 \mid n} d_2^3\Big) = \sigma_3(m)\,\sigma_3(n).$$
-$\qquad\blacksquare$
-
-**Corollary 4.2 (Quasi-multiplicativity of representation numbers).** *For
-coprime $m, n$,*
-$$240\,\mathrm{rE8}(mn) = \mathrm{rE8}(m)\,\mathrm{rE8}(n).$$
-
-*Proof.* Expand with Definition 2.1 and apply Theorem 4.1:
-$240\,\mathrm{rE8}(mn) = 240 \cdot 240\,\sigma_3(mn)
-= (240\,\sigma_3(m))(240\,\sigma_3(n)) = \mathrm{rE8}(m)\,\mathrm{rE8}(n).$
-The stray factor $240$ reflects the normalization $\mathrm{rE8} = 240\,\sigma_3$;
-it is $\sigma_3$, not $\mathrm{rE8}$, that is genuinely multiplicative.
-$\qquad\blacksquare$
-
----
-
-## 5. The global Hecke eigenform identity
-
-We now package all of the local structure into a single global convolution law.
-
-**Theorem 5.1 (Hecke eigenform identity).** *For all $m, n \ge 1$,*
-$$\sigma_3(m)\,\sigma_3(n) = \sum_{d \,\mid\, \gcd(m,n)} d^3\,\sigma_3\!\left(\frac{mn}{d^2}\right) = \mathrm{heckeRHS}(m,n).$$
-
-*Proof sketch.* Both sides are multiplicative as functions of the pair $(m, n)$:
-if $(m,n) = (m_1 m_2, n_1 n_2)$ with $\gcd(m_1 n_1, m_2 n_2) = 1$, the left side
-factors by Theorem 4.1, and the right side factors because the divisors of
-$\gcd(m,n) = \gcd(m_1,n_1)\gcd(m_2,n_2)$ split accordingly and $\sigma_3$ is
-multiplicative. Hence it suffices to verify the identity when $m = p^a$ and
-$n = p^b$ are powers of a single prime $p$.
-
-For prime powers, $\gcd(p^a, p^b) = p^{\min(a,b)}$, so its divisors are
-$1, p, \dots, p^{\min(a,b)}$ and
-$$\mathrm{heckeRHS}(p^a, p^b) = \sum_{i=0}^{\min(a,b)} p^{3i}\,\sigma_3\!\left(p^{\,a+b-2i}\right)
-= \sum_{i=0}^{\min(a,b)} p^{3i}\sum_{l=0}^{a+b-2i} p^{3l}.$$
-Writing $q = p^3$ and using the prime-power closed form (Theorem 3.1) this is the
-purely combinatorial *geometric double-sum identity*
-$$\Big(\sum_{i=0}^{a} q^{i}\Big)\Big(\sum_{j=0}^{b} q^{j}\Big)
-= \sum_{i=0}^{\min(a,b)} q^{i}\sum_{l=0}^{\,a+b-2i} q^{l},$$
-whose left side is exactly $\sigma_3(p^a)\,\sigma_3(p^b)$. The double-sum
-identity is proved by induction on $\min(a,b)$: peeling off the diagonal term
-$i = 0$ leaves a product of two geometric sums whose ranges have shrunk, and the
-telescoping of geometric series matches the two sides term by term. This
-establishes the prime-power case, and multiplicativity lifts it to all $m, n$.
-$\qquad\blacksquare$
-
-**Remark 5.2 (Specializations).** Theorem 5.1 unifies the earlier results:
-- Taking $\gcd(m,n) = 1$, the sum has only the term $d = 1$, recovering
-  multiplicativity (Theorem 4.1).
-- Taking $m = p$, $n = p^{r+1}$, the sum over $d \mid \gcd(p, p^{r+1}) = p$ has
-  terms $d = 1$ and $d = p$, giving
-  $\sigma_3(p)\,\sigma_3(p^{r+1}) = \sigma_3(p^{r+2}) + p^3\,\sigma_3(p^r)$, the
-  Hecke recurrence (Theorem 3.3).
-
-**Remark 5.3 (Interpretation).** Theorem 5.1 is the arithmetic statement that
-$E_4$ is a simultaneous eigenform of all Hecke operators. In the Hecke algebra,
-$T_m T_n = \sum_{d \mid \gcd(m,n)} d^{k-1} T_{mn/d^2}$ in weight $k$; applied to
-$E_4$ (weight $k = 4$) with eigenvalues $\sigma_3$, this operator identity becomes
-exactly the convolution law above with $k - 1 = 3$.
-
----
-
-## 6. Numerical corroboration
-
-The first shell counts $r(n) = 240\,\sigma_3(n)$ are:
-
-| $n$ | $\sigma_3(n)$ | $r(n) = 240\,\sigma_3(n)$ |
-|----:|--------------:|--------------------------:|
-| 1   | 1             | 240                       |
-| 2   | 9             | 2160                      |
-| 3   | 28            | 6720                      |
-| 4   | 73            | 17520                     |
-| 5   | 126           | 30240                     |
-| 6   | 252           | 60480                     |
-| 7   | 344           | 82560                     |
-| 8   | 585           | 140400                    |
-
-These match the classical theta-series coefficients of $E_8$: the innermost
-shell has the famous $240$ roots, and the sequence
-$240, 2160, 6720, 17520, 30240, \dots$ is exactly $240 \cdot E_4$'s coefficient
-list. Multiplicativity is visible directly, e.g.
-$\sigma_3(6) = \sigma_3(2)\sigma_3(3) = 9 \cdot 28 = 252$, and the Hecke
-recurrence at $p = 2$, $r = 0$ reads
-$\sigma_3(4) + 8\,\sigma_3(1) = 73 + 8 = 81 = 9^2 = \sigma_3(2)^2$.
-
----
-
-## 7. Applications
-
-**7.1 Sphere packing and root systems.** The $240$ minimal vectors of $E_8$ form
-the root system of the exceptional Lie algebra $\mathfrak{e}_8$; the count
-$r(1) = 240$ is the arithmetic reflection of this. $E_8$ is the densest sphere
-packing in dimension $8$, and its exact shell counts feed directly into density
-and kissing-number computations.
-
-**7.2 Coding theory.** Even unimodular lattices underlie some of the best known
-error-correcting codes; the theta series records the weight distribution of the
-associated code. The exact formula $240\,\sigma_3$ gives closed-form access to
-these distributions in rank $8$.
-
-**7.3 Modular forms and the Langlands program.** The identity
-$\theta_{E_8} = E_4$ is a first, fully explicit instance of the correspondence
-between automorphic objects (Eisenstein series, Hecke eigenforms) and geometric
-data (lattices, quadratic forms) that the Langlands program organizes at grand
-scale.
-
----
-
-## 8. Discussion
-
-The proof strategy is a template for Siegel–Weil identities: reduce the
-analytic statement $\theta_L = E_k$ to a coefficient identity, then verify the
-coefficient identity via the local–global structure of the Hecke algebra. What
-makes rank $8$ singularly clean is the confluence of three facts: (i) the genus
-of even unimodular rank-$8$ lattices has a single class, so no averaging is
-needed; (ii) $M_4(\mathrm{SL}_2(\mathbb{Z}))$ is one-dimensional; and (iii) there
-are no weight-$4$ cusp forms, so the Eisenstein part is the *whole* story. The
-divisor-cube function $\sigma_3$ therefore carries the complete Hecke-eigenform
-structure, and every eigenform law appears as an elementary identity among
-sums of cubes of divisors.
-
-A subtle normalization point deserves emphasis: it is $\sigma_3$, and not the
-scaled count $\mathrm{rE8} = 240\,\sigma_3$, that is multiplicative. The scaling
-constant $240$ produces the corrective factor in Corollary 4.2, a reminder that
-the "clean" multiplicative object is the Hecke eigenvalue system underneath the
-geometric counts.
-
----
-
-## 9. Future directions
-
-**9.1 The weight-8 convolution identity $\sigma_7 = \sigma_3 \star \sigma_3$.**
-Squaring $\theta_{E_8}$ gives $\theta_{E_8 \oplus E_8}$, a weight-$8$ form; since
-$M_8$ is again one-dimensional, one obtains
-$$\sigma_7(n) = \sigma_3(n) + 120 \sum_{m=1}^{n-1} \sigma_3(m)\,\sigma_3(n-m).$$
-The multiplicative machinery for $\sigma_3$ is in hand; the remaining work is the
-additive convolution bookkeeping.
-
-**9.2 Uniqueness of the genus.** Any two even positive-definite unimodular
-rank-$8$ lattices have identical representation numbers and are hence isometric,
-because the genus-average equals $E_4$ while weight-$4$ cusp forms vanish, so
-every lattice in the genus shares the theta series $E_4$.
-
-**9.3 Ramanujan-type congruences.** From $\sigma_3(p) = 1 + p^3 \equiv 1 + p
-\pmod{12}$ one expects $\sigma_3(n) \equiv \sigma_1(n) \pmod{12}$, giving
-$r(n) \equiv 0 \pmod{2880}$ for prime $n$; the exact form
-$\sigma_3(p^r)(p^3 - 1) = p^{3(r+1)} - 1$ converts these into elementary modular
-arithmetic.
-
-**9.4 Hecke-eigenform rigidity.** For each odd $k$, $\sigma_k$ should be the
-unique (up to scalar) multiplicative function satisfying
-$f(m)f(n) = \sum_{d \mid \gcd(m,n)} d^k f(mn/d^2)$ together with
-$f(p) = 1 + p^k$, since the convolution law is equivalent to being a simultaneous
-Hecke eigenfunction with prescribed eigenvalues.
-
----
-
-## 10. Conclusion
-
-The number of $E_8$ vectors of squared length $2n$ is exactly $240\,\sigma_3(n)$,
-the Siegel–Weil identity $\theta_{E_8} = E_4$ in rank $8$. Beneath this equality
-lies a complete Hecke-eigenform structure, visible purely at the level of divisor
-sums: a geometric closed form and three-term recurrence on prime powers,
-multiplicativity across coprime arguments, and a single global convolution law
-that packages all Hecke relations. The vector counts of the most symmetric
-lattice in dimension $8$ are the coefficient system of a weight-$4$ Hecke
-eigenform — the arithmetic incarnation of one of the cleanest bridges between
-geometry and number theory.
+### 1.1 The $E_8$ lattice and its theta series
+
+A lattice $L \subset \mathbb{R}^n$ is **even** if $\langle x, x\rangle \in 2\mathbb{Z}$ for all $x \in L$, and **unimodular** if it equals its own dual (equivalently, its Gram determinant is $1$). Even unimodular lattices exist only in dimensions divisible by $8$, and in dimension exactly $8$ there is, up to isometry, a *unique* one: the $E_8$ lattice, the densest sphere packing in eight-dimensional space and one of the most symmetric objects in mathematics.
+
+The **theta series** of a lattice $L$ encodes its geometry as a $q$-series,
+$$\theta_L(\tau) = \sum_{x \in L} q^{\langle x,x\rangle/2}, \qquad q = e^{2\pi i \tau},$$
+so that the coefficient of $q^n$ is the number of lattice vectors of squared length $2n$. For an even unimodular lattice of rank $8$, $\theta_L$ is a modular form of weight $4$ for the full modular group $\mathrm{SL}_2(\mathbb{Z})$.
+
+### 1.2 The Siegel–Weil identity in rank 8
+
+The space of weight-$4$ modular forms for $\mathrm{SL}_2(\mathbb{Z})$ is one-dimensional, spanned by the normalized Eisenstein series
+$$E_4(\tau) = 1 + 240 \sum_{n=1}^{\infty} \sigma_3(n)\, q^n.$$
+Since $\theta_L$ has constant term $1$ (the zero vector) and lives in this one-dimensional space, it must equal $E_4$. Comparing coefficients gives the foundational special case of the Siegel–Weil formula:
+$$r(n) = 240\,\sigma_3(n), \qquad \sigma_3(n) = \sum_{d\mid n} d^3. \tag{$\star$}$$
+This identity is the ground on which the present paper builds. Rather than re-deriving $(\star)$, we investigate the *arithmetic character* of the coefficient system it produces. Our thesis is that $240\,\sigma_3$ is not merely a formula but an arithmetic object bearing three independent structural fingerprints, each of which is a coefficient-level manifestation of the fact that $\theta_{E_8} = E_4$ is a Hecke eigenform.
+
+### 1.3 The general divisor-power sum
+
+Throughout we work with the general divisor-power sum
+$$\sigma_s(n) = \sum_{d \mid n} d^s,$$
+the coefficient system of the weight-$(s+1)$ Eisenstein series. The case $s = 3$ specializes to $E_8$. Working with general $s$ makes the structural results transparent and shows they are not accidents of the specific weight.
+
+## 2. Prime-power structure and the division-free closed form
+
+Because $\sigma_s$ is multiplicative, its values are determined by its values on prime powers. We begin there.
+
+**Lemma 2.1 (Geometric form on prime powers).** *For a prime $p$ and integers $s, r \ge 0$,*
+$$\sigma_s(p^r) = \sum_{i=0}^{r} p^{s i} = 1 + p^s + p^{2s} + \cdots + p^{rs}.$$
+
+*Proof sketch.* The divisors of $p^r$ are exactly $1, p, p^2, \dots, p^r$. Summing their $s$-th powers gives $\sum_{i=0}^r (p^i)^s = \sum_{i=0}^r p^{si}$. $\qquad\blacksquare$
+
+**Corollary 2.2 (Value at a prime).** *For a prime $p$, $\sigma_s(p) = 1 + p^s$.*
+
+*Proof sketch.* Set $r = 1$ in Lemma 2.1. $\qquad\blacksquare$
+
+The geometric sum of Lemma 2.1 telescopes when multiplied by $p^s - 1$, yielding a closed form that involves no division.
+
+**Theorem 2.3 (Division-free Euler-factor closed form).** *For a prime $p$ and integers $s, r \ge 0$,*
+$$\sigma_s(p^r)\,\bigl(p^s - 1\bigr) = p^{s(r+1)} - 1.$$
+
+*Proof sketch.* By Lemma 2.1, $\sigma_s(p^r) = \sum_{i=0}^r (p^s)^i$. The elementary geometric-series identity $\bigl(\sum_{i=0}^r x^i\bigr)(x - 1) = x^{r+1} - 1$ with $x = p^s$ gives $\sigma_s(p^r)(p^s-1) = (p^s)^{r+1} - 1 = p^{s(r+1)} - 1$. $\qquad\blacksquare$
+
+**Interpretation.** Theorem 2.3 is the coefficient-level statement that the local Euler factor of the Eisenstein $L$-function at $p$ is
+$$\sum_{r=0}^{\infty} \sigma_s(p^r)\, p^{-rw} = \frac{1}{(1 - p^{-w})(1 - p^{s-w})},$$
+the shadow of the global factorization $\sum_{n\ge 1} \sigma_s(n)\,n^{-w} = \zeta(w)\,\zeta(w-s)$. The two zeta factors correspond to the two roots $p^0$ and $p^s$ of the quadratic $X^2 - \sigma_s(p) X + p^s$; the division-free form makes the cancellation explicit without ever inverting $p^s - 1$.
+
+## 3. Möbius inversion: recovering pure powers
+
+The divisor-power sum is a Dirichlet convolution of the constant function $\mathbf 1$ with the pure-power function:
+$$\sigma_s = \mathbf{1} \star \mathrm{pow}_s, \qquad \mathrm{pow}_s(n) = n^s,$$
+because $(\mathbf 1 \star \mathrm{pow}_s)(n) = \sum_{d\mid n} 1\cdot(n/d)^s = \sum_{e\mid n} e^s = \sigma_s(n)$. Since the constant function $\mathbf 1$ is invertible in the Dirichlet ring with inverse the Möbius function $\mu$ (that is, $\mathbf 1 \star \mu = \delta$, the multiplicative identity), we may solve for $\mathrm{pow}_s$.
+
+**Theorem 3.1 (Möbius inversion of the divisor-power sum).** *For every integer $n \ge 1$,*
+$$n^s = \sum_{d \cdot e = n} \mu(d)\,\sigma_s(e),$$
+*where the sum ranges over all ordered factorizations $n = d\cdot e$ into positive integers.*
+
+*Proof sketch.* The defining relation $\sigma_s(n) = \sum_{d\mid n} d^s$ says $\mathrm{pow}_s \star \mathbf 1 = \sigma_s$. Möbius inversion — equivalently, convolving both sides with $\mu$ and using $\mathbf 1 \star \mu = \delta$ — gives $\mathrm{pow}_s = \sigma_s \star \mu$, which is exactly the displayed identity. The single nonelementary ingredient is the incidence-algebra fact $\mathbf 1 \star \mu = \delta$ over the divisor lattice. $\qquad\blacksquare$
+
+**Remark.** Theorem 3.1 is the coefficient-level incarnation of *dividing* the Eisenstein $L$-function by $\zeta$: from $\sum \sigma_s(n) n^{-w} = \zeta(w)\zeta(w-s)$ one recovers $\sum n^s\, n^{-w} = \zeta(w-s)$ by dividing by $\zeta(w)$, and dividing by $\zeta$ is multiplication by $\mu$ on coefficients. Unlike the results of Section 2, this identity is genuinely non-formal: it rests on the structure of the divisor lattice rather than on geometric-series algebra.
+
+Transporting Theorem 3.1 to the $E_8$ counts via $(\star)$ gives the following.
+
+**Corollary 3.2 (Möbius inversion of the $E_8$ counts).** *For every $n \ge 1$,*
+$$\sum_{d \cdot e = n} \mu(d)\, r(e) = 240\, n^3.$$
+
+*Proof sketch.* Substitute $r(e) = 240\,\sigma_3(e)$, factor out the constant $240$, and apply Theorem 3.1 with $s = 3$. $\qquad\blacksquare$
+
+Thus a signed sum of the raw geometric vector counts reconstructs the pure cube $240\,n^3$ exactly — a rigidity that no completely multiplicative correction of the counts could reproduce.
+
+## 4. The eigenform boundary
+
+We now isolate the feature that distinguishes the Eisenstein coefficient system from a mere multiplicative character.
+
+**Theorem 4.1 (Quadratic Hecke correction).** *For every prime $p$ and integer $s \ge 0$,*
+$$\sigma_s(p^2) + p^s = \sigma_s(p)^2.$$
+
+*Proof sketch.* By Lemma 2.1, $\sigma_s(p^2) = 1 + p^s + p^{2s}$ and $\sigma_s(p) = 1 + p^s$. Then $\sigma_s(p)^2 = 1 + 2p^s + p^{2s} = \sigma_s(p^2) + p^s$. $\qquad\blacksquare$
+
+**Interpretation.** The correction term $p^s$ is the **eigenform defect**. For the weight-$k = s+1$ Eisenstein series, the Hecke operators satisfy $T_{p^2} = T_p^2 - p^{k-1}$; on Fourier coefficients this is precisely $\sigma_s(p^2) = \sigma_s(p)^2 - p^{s}$. The nonzero term $p^s$ certifies the coefficient system as a genuine Hecke eigenform rather than a completely multiplicative function.
+
+**Theorem 4.2 (The eigenform is not a character).** *For every prime $p$ and integer $s \ge 0$,*
+$$\sigma_s(p^2) < \sigma_s(p)^2.$$
+*Equivalently, $\sigma_s$ is multiplicative but strictly fails to be completely multiplicative.*
+
+*Proof sketch.* By Theorem 4.1, $\sigma_s(p)^2 - \sigma_s(p^2) = p^s \ge 1 > 0$. $\qquad\blacksquare$
+
+Transported to the $E_8$ counts, Theorems 4.1 and 4.2 read as follows.
+
+**Corollary 4.3 (Hecke correction for $E_8$).** *For every prime $p$,*
+$$240\, r(p^2) + 240^2\, p^3 = r(p)^2.$$
+
+**Corollary 4.4 (The $E_8$ counts are not completely multiplicative).** *For every prime $p$,*
+$$240\, r(p^2) < r(p)^2.$$
+
+*Proof sketches.* Substitute $r = 240\,\sigma_3$ into Theorems 4.1 and 4.2 respectively with $s = 3$, and simplify. $\qquad\blacksquare$
+
+## 5. Low-order corroboration
+
+The known vector counts of $E_8$ in the first five shells are
+$$r(1) = 240,\ r(2) = 2160,\ r(3) = 6720,\ r(4) = 17520,\ r(5) = 30240,$$
+matching $240\,\sigma_3(n)$ with $\sigma_3(1)=1$, $\sigma_3(2)=9$, $\sigma_3(3)=28$, $\sigma_3(4)=73$, $\sigma_3(5)=126$. These provide independent numerical checks of the structural theorems:
+
+- **Closed form (Theorem 2.3):** $\sigma_3(4) = \sigma_3(2^2) = 1 + 8 + 64 = 73$, and indeed $73\cdot(2^3 - 1) = 73\cdot 7 = 511 = 2^{3\cdot 3} - 1 = 512 - 1$.
+- **Hecke correction (Theorem 4.1):** $\sigma_3(2^2) + 2^3 = 73 + 8 = 81 = 9^2 = \sigma_3(2)^2$. The strict gap is $\sigma_3(2)^2 - \sigma_3(2^2) = 8 = 2^3 > 0$.
+- **Möbius inversion (Theorem 3.1):** for $n = 4$, $\sum_{de=4}\mu(d)\sigma_3(e) = \mu(1)\sigma_3(4) + \mu(2)\sigma_3(2) + \mu(4)\sigma_3(1) = 73 - 9 + 0 = 64 = 4^3$.
+
+## 6. Algorithms
+
+The structural results translate directly into computation. We highlight three procedures.
+
+**(A) Divisor-power sum by factorization.** Given the prime factorization $n = \prod_i p_i^{a_i}$, compute $\sigma_s(n) = \prod_i \sigma_s(p_i^{a_i})$ using the closed form of Theorem 2.3: $\sigma_s(p^a) = (p^{s(a+1)}-1)/(p^s - 1)$ when $p^s \ne 1$, and $a+1$ otherwise. This is exponentially faster than enumerating divisors.
+
+**(B) Möbius inversion check.** For a given $n$, enumerate the ordered factorizations $n = d\cdot e$, weight $\sigma_s(e)$ by $\mu(d)$, and verify the sum equals $n^s$ (Theorem 3.1).
+
+**(C) Eigenform-defect audit.** For each prime $p$, compute $\sigma_s(p)^2 - \sigma_s(p^2)$ and confirm it equals exactly $p^s$ (Theorem 4.1), certifying the failure of complete multiplicativity.
+
+## 7. Applications and discussion
+
+The identity $(\star)$ and its structural refinements sit at a crossroads of geometry, number theory, and physics.
+
+- **Sphere packing.** $E_8$ is the densest lattice packing in dimension $8$; the vector counts $r(n)$ are the shell-by-shell census of that packing, and $(\star)$ gives them in closed arithmetic form.
+- **Modular forms and $L$-functions.** The three fingerprints are coefficient-level manifestations of the Euler-product factorization, the $\zeta$-division, and the Hecke eigenvalue relation for $E_4$. They make concrete, at the level of integer sequences, the analytic statements about the associated $L$-function $\zeta(w)\zeta(w-3)$.
+- **Physics.** $E_8$ appears in heterotic string theory and in the classification of exceptional Lie groups; the arithmetic of its theta series governs degeneracies that recur in these settings.
+
+The conceptual payoff is that $240\,\sigma_3$ is *demonstrably* an arithmetic eigenform: it has the Eisenstein Euler factor as its prime-power closed form, it inverts against the divisor lattice to return pure cubes, and it carries a strictly nonzero eigenform defect at prime squares. These are three independent certificates of the identity $\theta_{E_8} = E_4$.
+
+## 8. Future work
+
+Several directions extend naturally from the present results.
+
+1. **Self-convolution and weight 8.** Squaring $\theta_{E_8}$ is the theta series of $E_8 \oplus E_8$, again an Eisenstein series (of weight $8$). Matching coefficients should yield an explicit convolution law expressing $\sigma_7(n)$ via a finite convolution of $\sigma_3$ against itself.
+2. **Congruence fingerprints.** Because Möbius inversion recovers $n^3$ exactly, the residues of $r(n)$ modulo classical moduli (e.g. $504$) are locked to those of $240\,n^3$, a rigidity worth developing into a full congruence characterization.
+3. **Monotonicity of the eigenform defect.** The relative defect $\sigma_s(p^2)/\sigma_s(p)^2$ should be strictly increasing in $s$, quantifying how the weight-$(s+1)$ Eisenstein series becomes "less character-like" as the weight grows.
+4. **Genus rigidity.** One expects that any even unimodular rank-$8$ lattice whose representation numbers satisfy the division-free closed form at every prime is forced to be $E_8$, turning the local Euler factors into a global uniqueness statement.
+
+## 9. Conclusion
+
+Starting from the rank-$8$ Siegel–Weil identity $r(n) = 240\,\sigma_3(n)$, we have exhibited three independent arithmetic fingerprints of the $E_8$ coefficient system: a division-free Euler-factor closed form on prime powers, a Möbius inversion recovering pure cubes from the divisor sum, and an eigenform defect $p^s$ certifying the strict failure of complete multiplicativity. Together they show that the census of the densest eight-dimensional packing is not merely computed by a divisor sum but *is*, in every measurable arithmetic respect, the Fourier coefficient system of a weight-$4$ Hecke eigenform.

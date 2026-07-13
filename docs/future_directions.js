@@ -353,7 +353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -362,7 +362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -718,20 +718,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T03:38:30.661331+00:00",
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
-  },
-  {
-    "consumed_by_exp_id": "2aaaa5f9",
-    "description": "Building on cycle 64d4f5fe (Q=0.780), which proved 16 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_64d4f5fe_6a2c3f5e",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "64d4f5fe",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T12:17:27.704617+00:00",
-    "title": "Deepening: Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 thres"
   },
   {
     "consumed_by_exp_id": "",
@@ -7964,6 +7950,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T14:01:54.465856+00:00",
     "title": "The file `Novelty/EdgeSpectralSupersaturationGraphBridge.lean` closes the gap le"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle contributes `Catalog/Novelty/VietorisRipsCliqueBridge.lean`, a self-contained\n**cross-domain bridge** (\"Connector\" mission) linking:\n\n* **metric geometry / topological data analysis** (Vietoris\u2013Rips complexes),\n* **extremal graph theory** (clique complexes and the maximal clique count `2^n`),\n* **information theory** (bit-complexity / description length via `Nat.clog`),\n\nall meeting at the combinatorial core of the \u221a2-threshold exponential lower bound for\nVietoris\u2013Rips approximations.  It deepens the earlier\n`Catalog/Novelty/VietorisRipsSqrt2LowerBound.lean` result by re-expressing the exponential\ncount as a clique-count and situating it inside extremal graph theory and information\ntheory.\n\n## What was proved\n\n* `VRcomplex_eq_allCliques_proxGraph` \u2014 the VR complex is *exactly* the clique complex of\n  the proximity graph (the flag/clique-complex identity), a rigorous geometry \u2194 graph\n  theory dictionary.\n* `allCliques_card_le`, `allCliques_top`, `card_allCliques_top`, `allCliques_card_le_top`\n  \u2014 the number of cliques of any graph on `n` vertices is `\u2264 2^n`, maximised by the\n  complete graph.  (Extremal graph theory.)\n* `proxGraph_equiD_top`, `card_VRcliqueSet_equiD` \u2014 the equidistant configuration's\n  proximity graph above the gap is the complete graph, hitting the extremal maximum.\n* `card_le_two_pow_bitComplexity`, `bitComplexity_ge_of_pow_le`,\n  `approx_bitComplexity_lower_bound` \u2014 the information-theoretic side: every\n  `c`-approximation stores a level of `\u2265 n` bits.\n* `vietorisRips_clique_information_bridge` \u2014 the headline theorem tying all three\n  viewpoints together for the \u221a2-equidistant configuration, and recording that the\n  effective exponent `\u03b3(c) = \u00bd \u2212 log\u2082 c` is positive throughout `[1, \u221a2)`.\n\n## Natural next steps\n\n1. **Homological refinement.** Replace the multiplicative interleaving of *complexes*\n   with an interleaving of *persistence modules* and derive the lower bound at the level\n   of barcodes / interleaving distance, not just simplex counts.\n\n2. **Beyond the equidistant instance.** The equidistant family gives a uniform `2^n`\n   bound but does not *witness* the degradation of `\u03b3(c)` near `\u221a2`.  Construct a family\n   (e.g. spherical codes, or perturbed simplices realising Jung's constant\n   `\u221a(2n/(n+1)) \u2192 \u221a2`) whose optimal approximation size is genuinely `2^{\u03b3(c)\u00b7n}` with\n   `\u03b3(c) \u2192 0`, making the exponent sharp rather than merely a lower bound.\n\n3. **Extremal graph theory, quantitatively.** Strengthen `allCliques_card_le` to the\n   Moon\u2013Moser / Kruskal\u2013Katona regime: bound the clique count in terms of edge count or\n   forbidden subgraphs, transporting classical extremal results into the TDA setting via\n   the proximity-graph dictionary.\n\n4. **Information theory, entropically.** Upgrade `bitComplexity` (worst-case description\n   length) to a Shannon-entropy statement: the uniform distribution over the `2^n`\n   simplices has entropy exactly `n` bits, giving an average-case / coding-theoretic form\n   of the lower bound and a Kraft-inequality obstruction to compact encodings.\n\n5. **Coding-theoretic bridge.** The \u221a2 threshold coincides with the orthogonality\n   (Plotkin) threshold for spherical/binary codes.  Formalising this correspondence would\n   connect VR approximation hardness to the Plotkin bound, a fourth area.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1224",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2aaaa5f9",
+    "status": "available",
+    "timestamp": "2026-07-13T14:34:23.354840+00:00",
+    "title": "This cycle contributes `Catalog/Novelty/VietorisRipsCliqueBridge.lean`, a self-c"
   },
   {
     "consumed_by_exp_id": "",
