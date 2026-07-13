@@ -325,7 +325,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d31b185d",
     "description": "Building on cycle 86966da0 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself \u2014\n`T \u2248 \u03a0 (x : T), P x`, equivalently `T \u2243 (T \u2192 Prop)` \u2014 cannot exist, for the same\ndiagonal reason underlying the theorems of Cantor, G\u00f6del, and Tarski. ",
     "domains": [
       "Applications"
@@ -334,7 +334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "86966da0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T23:52:10.953199+00:00",
     "title": "Deepening: That a type which fully quantifies over itself \u2014"
   },
@@ -7050,7 +7050,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Petrie block `\ud835\udd2d_k = 1 + x + \u22ef + x^{k-1}` divides `x\u207f \u2212 1` exactly when `k \u2223 "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b802ccf",
     "description": "# Future Directions \u2014 The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation semantics: conflict-free\nsets, the characteristic (defense) operator `charF`, admissible / complete /\npreferred / stable extensions, the grounded extension as the least fixed point\n`OrderHom.lfp (charF)`, and the symmetric/Euler bridges\n(`ArgumentationCore`, `ArgumentationExtensions`, `ArgumentationStable`,\n`ArgumentationStableGap`, `ArgumentationSymmetric`, `ArgumentationSimplicial`).\n\nThose files *define* the grounded extension and prove it lies below every\ncomplete extension, but they never establish that the grounded extension is\nitself a genuine extension. This cycle closes exactly that gap, in the new\nself-contained file **`ArgumentationGrounded.lean`**:\n\n- `conflictFree_charF` \u2014 the defense operator preserves conflict-freeness.\n- `conflictFree_of_directed` \u2014 a directed (chain) union of conflict-free sets is\n  conflict-free.\n- `lfpApprox_conflictFree` \u2014 **every ordinal approximant of the least fixed point\n  is conflict-free** (transfinite induction along `OrdinalApprox.lfpApprox`).\n- `groundedExt_conflictFree` \u2014 **the grounded extension is conflict-free.**\n- `groundedExt_fixed` \u2014 it is a fixed point of `charF`.\n- `groundedExt_admissible`, `groundedExt_complete` \u2014 **it is admissible and\n  complete.**\n- `groundedExt_subset_complete` \u2014 it is contained in every complete extension.\n- `groundedExt_least_complete` \u2014 **the grounded extension is the least complete\n  extension** (Dung's characterization of grounded semantics).\n- `complete_iff_conflictFree_fixed` \u2014 a set is complete iff it is a conflict-free\n  fixed point of `charF`.\n\nEach result is used by the next, forming a single chain culminating in\n`groundedExt_least_complete`.\n\n## Why the proof is non-trivial\n\nConflict-freeness is **not** a consequence of the fixed-point equation\n`charF S = S` alone: `ComputationalEvidence.md` exhibits a framework with a\nnon-least fixed point that is a conflict (case 4). Conflict-freeness holds for\nthe *least* fixed point specifically. Since `charF` is not \u03c9-continuous in\ngeneral, the least fixed point is reached only by transfinite iteration, so the\nproof runs a transfinite induction over `OrdinalApprox.lfpApprox` and uses that a\nchain of conflict-free sets has a conflict-free union.\n\n## Where to go next\n\n- **Grounded = intersection of complete extensions.** Combine\n  `groundedExt_least_complete` with completeness of preferred extensions to show\n  the grounded extension equals `\u22c2` of all complete (equivalently, all preferred)\n  extensions when they are directed downward, or characterize when equality holds.\n- **Uniqueness of grounded via well-foundedness.** For frameworks whose attack\n  relation is well-founded, prove the grounded extension is the unique complete\n  extension (coincidence of grounded, preferred, and stable).\n- **Labelling correspondence.** Formalize complete labellings (in/out/undec) and\n  prove the bijection with complete extensions, then transport\n  `groundedExt_least_complete` to the least complete labelling.\n- **Continuity / Kleene reachability.** Identify a class of frameworks (e.g.\n  finitary) where the grounded extension is reached at stage `\u03c9`, giving an\n  explicit `\u22c3\u2099 charF^[n] \u2205` description.\n",
     "domains": [
       "Bridges",
@@ -7060,7 +7060,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "867d1ba2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T18:13:25.206194+00:00",
     "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
   },
