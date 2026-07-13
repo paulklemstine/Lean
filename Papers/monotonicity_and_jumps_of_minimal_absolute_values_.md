@@ -1,72 +1,72 @@
-# Computational Evidence — Monotonicity and Jumps of `σ₅`
+# Computational Evidence
 
-`σ₅(n)` is the minimal absolute value of a **non-vanishing** sum of `n` fifth roots of
-unity. Every sum of `n` roots reduces (via `ζ⁵ = 1`) to `∑_{r<5} aᵣ ζʳ` with `aᵣ ≥ 0`,
-`∑ aᵣ = n`, so `σ₅(n)` is the minimum of `|∑ aᵣ ζʳ|` over all compositions with the sum
-nonzero. This is a finite search, computed by brute force below (`ζ = e^{2πi/5}`).
+## Object
 
-## 1. Small-case table (`n = 1..40`)
+For `n ≥ 1`, `σ₅(n)` is the minimal absolute value of a non-vanishing sum of `n`
+fifth roots of unity:
 
-| n | σ₅(n) | n | σ₅(n) | n | σ₅(n) | n | σ₅(n) |
-|---|-------|---|-------|---|-------|---|-------|
-| 1 | 1.000000 | 11 | 0.145898 | 21 | 0.145898 | 31 | 0.145898 |
-| 2 | 0.618034 | 12 | 0.236068 | 22 | 0.090170 | 32 | 0.090170 |
-| 3 | 0.618034 | 13 | 0.236068 | 23 | 0.090170 | 33 | 0.090170 |
-| 4 | 0.381966 | 14 | 0.145898 | 24 | 0.145898 | 34 | 0.055728 |
-| 5 | 0.726543 | 15 | 0.277515 | 25 | 0.171513 | 35 | 0.171513 |
-| 6 | 0.381966 | 16 | 0.145898 | 26 | 0.145898 | 36 | 0.055728 |
-| 7 | 0.236068 | 17 | 0.236068 | 27 | 0.090170 | 37 | 0.090170 |
-| 8 | 0.236068 | 18 | 0.090170 | 28 | 0.090170 | 38 | 0.090170 |
-| 9 | 0.381966 | 19 | 0.145898 | 29 | 0.055728 | 39 | 0.055728 |
-| 10 | 0.449028 | 20 | 0.277515 | 30 | 0.171513 | 40 | 0.106001 |
+```
+σ₅(n) = min { |∑_{j} ζ^{k_j}| : k_1,…,k_n ∈ {0,…,4},  ∑_j ζ^{k_j} ≠ 0 },   ζ = e^{2πi/5}.
+```
 
-Recognisable constants: `1`, `φ⁻¹ = 0.618034`, `φ⁻² = 0.381966`, where `φ = (1+√5)/2`.
-The value at the `n=6` jump is `√((7-3√5)/2) = φ⁻² = 0.381966`.
+## Small-case calculations (brute force over all multisets of n roots)
 
-## 2. Monotonicity along residue classes mod 5 (confirmed)
+| n  | σ₅(n)      | closed form           |
+|----|------------|-----------------------|
+| 1  | 1.000000   | 1                     |
+| 2  | 0.618034   | φ⁻¹                   |
+| 3  | 0.618034   | φ⁻¹                   |
+| 4  | 0.381966   | φ⁻²                   |
+| 5  | 0.726543   | (algebraic in φ)      |
+| 6  | 0.381966   | φ⁻²                   |
+| 7  | 0.236068   | φ⁻³                   |
+| 8  | 0.236068   | φ⁻³                   |
+| 9  | 0.381966   | φ⁻²                   |
+| 10 | 0.449028   | (algebraic in φ)      |
+| 11 | 0.145898   | φ⁻⁴                   |
+| 12 | 0.236068   | φ⁻³                   |
+| 13 | 0.236068   | φ⁻³                   |
+| 14 | 0.145898   | φ⁻⁴                   |
+| 15 | 0.277515   | (algebraic in φ)      |
 
-Each column below is non-increasing (the formalized statement `sigma5_residue_antitone`):
+Here `φ = (1+√5)/2 = 1.618034…`, `φ⁻¹ = 0.618034…`, `φ⁻² = 0.381966…`,
+`φ⁻³ = 0.236068…`, `φ⁻⁴ = 0.145898…`.
 
-- r=0: 5:0.7265, 10:0.4490, 15:0.2775, 20:0.2775, 25:0.1715, 30:0.1715, 35:0.1715, 40:0.1060
-- r=1: 1:1.0000, 6:0.3820, 11:0.1459, 16:0.1459, 21:0.1459, 26:0.1459, 31:0.1459, 36:0.0557
-- r=2: 2:0.6180, 7:0.2361, 12:0.2361, 17:0.2361, 22:0.0902, 27:0.0902, 32:0.0902, 37:0.0902
-- r=3: 3:0.6180, 8:0.2361, 13:0.2361, 18:0.0902, 23:0.0902, 28:0.0902, 33:0.0902, 38:0.0902
-- r=4: 4:0.3820, 9:0.3820, 14:0.1459, 19:0.1459, 24:0.1459, 29:0.0557, 34:0.0557, 39:0.0557
+**Key observation.** Every computed value of `σ₅(n)` is an algebraic number in the
+golden field `ℚ(√5)`, and along each residue class `n ≡ r (mod 5)` the values are
+monotone non-increasing.  The reciprocal golden powers `φ⁻ᵏ` appear repeatedly.  This
+is exactly the phenomenon the formalized bridge explains: the two Gaussian periods of
+`ℚ(ζ₅)` are `-φ` and `-ψ = φ⁻¹`, so the arithmetic of these sums is governed by powers
+of the golden ratio — and hence by Fibonacci and Lucas numbers.
 
-## 3. Jump positions (strict decreases `σ₅(n) > σ₅(n+5)`)
+## The n = 2 value and the formalized theorem
 
-Fibonacci `F: 0,1,1,2,3,5,8,13,…`; Lucas `L: 2,1,3,4,7,11,18,29,47,…`.
+The moduli of the two-term sums `ζ^a + ζ^b` are, for `k = b - a (mod 5)`,
+`2|cos(πk/5)| ∈ {2, φ, φ⁻¹}` (and `k = 0` gives `2`, never vanishing).  The minimum
+over non-vanishing sums is `φ⁻¹`, so `σ₅(2) = φ⁻¹`.  This matches the table and is the
+value witnessed by the theorem `golden_ratio_is_modulus` in the Lean file: the two
+Gaussian periods have moduli exactly `{φ, φ⁻¹}`.
 
-| residue | jump positions `n+5` | matched form |
-|---------|----------------------|--------------|
-| 0 | 10, 15, 25, 40 | 5F₃, 5F₄, 5F₅, 5F₆ |
-| 1 | 6, 11, 36 | 2L₂, L₅, 2L₆ |
-| 2 | 7, 22 | L₄, 2L₅ |
-| 3 | 8, 18 | 2L₃, L₆ |
-| 4 | 14, 29 | 2L₄, L₇ |
+## Monotonicity and jumps (checked numerically)
 
-Every observed jump position `n+5 ≤ 40` is exactly one of `5Fₘ, Lₘ, 2Lₘ` (`m ≥ 1`), and
-every such value in range is a jump. This confirms the characterization
-`σ₅(n) > σ₅(n+5) ⟺ n+5 ∈ {5Fₘ, Lₘ, 2Lₘ}`.
+Along `n ≡ 2 (mod 5)`: `σ₅(2) = φ⁻¹ > σ₅(7) = φ⁻³ = σ₅(12) = …`; the strict drop
+happens at `n + 5 = 7 = L₄` (a Lucas number).
 
-## 4. Residue split of the jump families (the formalized backbone)
+Along `n ≡ 0 (mod 5)`: strict drops occur at `n + 5 = 10 = 5·F₃` and `n + 5 = 15 = 5·F₄`.
 
-- `5Fₘ ≡ 0 (mod 5)` always.
-- `Lₘ mod 5 = 2,1,3,4,2,1,3,4,…` (period 4): **never 0**.
-- `2Lₘ mod 5 = 4,2,1,3,4,2,1,3,…` (period 4): **never 0**.
+These agree with the conjectured description of the jump set as `{5Fₘ, Lₘ, 2Lₘ}`
+(with `Fₘ`, `Lₘ` the Fibonacci and Lucas numbers).  A full proof of the jump
+characterization is left to future work (see `FUTURE_DIRECTIONS.md`); the formalized
+results establish the exact algebraic bridge (Gaussian periods ↔ golden ratio ↔
+Fibonacci/Lucas) that makes those integer sequences appear.
 
-Hence the only multiple-of-5 jumps come from the Fibonacci family `5Fₘ`. This is exactly
-the content of `lucasNum_not_dvd_five` and `jump_dvd_five_is_fib`
-(`FifthRootLucasJumps.lean`).
+## OEIS
 
-## 5. Counterexample hunt
+* Fibonacci numbers `Fₙ`: A000045 (`0,1,1,2,3,5,8,13,…`).
+* Lucas numbers `Lₙ`: A000032 (`2,1,3,4,7,11,18,29,…`).
 
-- Monotonicity: no violation of `σ₅(5k+r) ≥ σ₅(5(k+1)+r)` found for `n ≤ 40`.
-- Jump characterization: for `6 ≤ N ≤ 40`, the set of `N` with `σ₅(N-5) > σ₅(N)` equals
-  `{N : N = 5Fₘ ∨ N = Lₘ ∨ N = 2Lₘ, m ≥ 1}` exactly — no false positives or negatives.
+## Counterexample hunt
 
-## 6. OEIS
-
-The integer sequence `⌊1/σ₅(n)²⌋` and the jump-position sequence `10,15,25,40,…` /
-`6,7,8,11,14,18,…` are Fibonacci/Lucas-driven; the union `{5Fₘ} ∪ {Lₘ} ∪ {2Lₘ}` interleaves
-the classical Fibonacci (A000045) and Lucas (A000032) numbers.
+No counterexample was found to the two proven unconditional identities
+`(ζ+ζ⁴)ⁿ + (ζ²+ζ³)ⁿ = (-1)ⁿ Lₙ` and `((ζ+ζ⁴)ⁿ − (ζ²+ζ³)ⁿ)² = 5 Fₙ²`; both were
+checked numerically for `n ≤ 20` and are proved in Lean for all `n`.
