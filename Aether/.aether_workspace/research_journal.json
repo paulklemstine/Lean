@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "00319e93",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle adds a **second pillar of the probabilistic method** to the Novelty catalog,\nalongside the Erdős counting lower bound for diagonal Ramsey numbers\n(`Novelty.RamseyProbab",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-12T23:31:48",
-      "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
-    },
-    {
       "cycle_id": "82394822",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis project formalises the *logical core* of the classification of Boolean cubic forms in\nten variables: the Burnside ⇄ orbit–stabilizer bridge, the division principle that turns",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-13T13:44:00",
       "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
+    },
+    {
+      "cycle_id": "a71dcffe",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThis cycle contributes a fully formalized, self-contained **chain** of results\n(`Catalog/Novelty/AllDifferentThreshold.lean`) pinning",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-13T13:44:35",
+      "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "823f5582",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Algebraic Cycles in Decision Surfaces\n\nThis cycle established two independent, verified facts about the decision surface\n`V(f) = {x : f(x) = 0}` of a rectified-linear classifier:",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 16,
-      "timestamp": "2026-07-10T21:41:40",
-      "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-    },
     {
       "cycle_id": "cf42e929",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-13T13:44:00",
       "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
+    },
+    {
+      "cycle_id": "a71dcffe",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThis cycle contributes a fully formalized, self-contained **chain** of results\n(`Catalog/Novelty/AllDifferentThreshold.lean`) pinning",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-13T13:44:35",
+      "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b08004d1",
-      "domain": "Applications",
-      "name": "edgeLp_ge_rho",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "57f58be0",
-      "domain": "Novelty",
-      "name": "Sat_atom",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "57f58be0",
-      "domain": "Novelty",
-      "name": "Sat_tru",
-      "quality": 0.72
-    },
     {
       "cycle_id": "57f58be0",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "for",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "a71dcffe",
+      "domain": "Novelty",
+      "name": "partitionFn_eq_card_embedding",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a71dcffe",
+      "domain": "Novelty",
+      "name": "partitionFn_pos_iff",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a71dcffe",
+      "domain": "Novelty",
+      "name": "partitionFn_eq_zero_iff",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-13T13:44:00",
+  "last_updated": "2026-07-13T13:44:35",
   "open_questions": [
     {
       "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.; Everything is elementary and `sorry`-free.; necessary.  All main theorems are `sorry`-free and use genuine arguments",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "57f58be0",
-        "quality": 0.72,
-        "theorems": 42,
-        "title": "Deepening: Moonshot: Multiverse Set Theory — Mathematics Across Branches"
-      },
-      {
         "cycle_id": "d31b185d",
         "quality": 0.83,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 27,
         "title": "That the geometry surrounding the Hopf fibration is"
+      },
+      {
+        "cycle_id": "a71dcffe",
+        "quality": 0.78,
+        "theorems": 14,
+        "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
       }
     ],
     "NumberTheory": [
