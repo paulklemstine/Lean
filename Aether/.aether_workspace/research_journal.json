@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b290e3a0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Cake-Balancing Ratio\n\nThis cycle established the exact algebra of the balancing-ratio functional for a\nsingle circular dissection and proved that the repeated-bisection seque",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 22,
-      "timestamp": "2026-07-12T10:27:01",
-      "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
-    },
-    {
       "cycle_id": "53945fe2",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle deepens the probabilistic-method development (Erdős Ramsey lower bound, first-moment\nprinciple, and the Lovász Local Lemma chain rule) by formalising a *second* pillar",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-13T01:06:08",
       "title": "The optimal portion ratio μ₂ equals 1 + ρ"
+    },
+    {
+      "cycle_id": "97b9c756",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Siegel–Weil / E₈ theta series\n\nThe file `SiegelWeilE8ThetaDeepening.lean` deepens the earlier weight-`4`\ndevelopment in two ways: (i) it generalizes the entire Hecke-eigenform st",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 16,
+      "timestamp": "2026-07-13T01:24:26",
+      "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4936bb72",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Number Theory on Networks\n\nThis cycle established the spectral–arithmetic dictionary for the Ihara zeta function of a\n`(q+1)`-regular graph: the local factor `1 − λu + qu²` obeys",
-      "quality_score": 0.85,
-      "sorry_count": 3,
-      "theorem_count": 11,
-      "timestamp": "2026-07-10T07:49:49",
-      "title": "Deepening: The Zeta Function of a Graph: Number Theory on Networks"
-    },
     {
       "cycle_id": "9696343b",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-13T01:06:08",
       "title": "The optimal portion ratio μ₂ equals 1 + ρ"
+    },
+    {
+      "cycle_id": "97b9c756",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Siegel–Weil / E₈ theta series\n\nThe file `SiegelWeilE8ThetaDeepening.lean` deepens the earlier weight-`4`\ndevelopment in two ways: (i) it generalizes the entire Hecke-eigenform st",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 16,
+      "timestamp": "2026-07-13T01:24:26",
+      "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6fce3466",
-      "domain": "Applications",
-      "name": "flatten_node",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "0bd39924",
-      "domain": "Novelty",
-      "name": "petrieBlock_mul",
-      "quality": 0.72
-    },
     {
       "cycle_id": "0bd39924",
       "domain": "Novelty",
@@ -2803,17 +2791,22 @@
       "domain": "Applications",
       "name": "cubic_strictMonoOn",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "97b9c756",
+      "domain": "Novelty",
+      "name": "geom_double",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "97b9c756",
+      "domain": "Novelty",
+      "name": "sigma_prime_pow",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-13T01:06:08",
+  "last_updated": "2026-07-13T01:24:26",
   "open_questions": [
-    {
-      "context": "-    sorry; +      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "62dd551b",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-12T08:27:47"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "c3fe1d06",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-13T01:06:08"
+    },
+    {
+      "context": "+Everything is elementary and `sorry`-free.",
+      "cycle_id": "97b9c756",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T01:24:26"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "61c22649",
-        "quality": 0.78,
-        "theorems": 29,
-        "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
-      },
-      {
         "cycle_id": "eb025541",
         "quality": 0.83,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 0,
         "title": "Deepening: The opposite-semicube Helly property characterizes harmonic-evenness "
+      },
+      {
+        "cycle_id": "97b9c756",
+        "quality": 0.83,
+        "theorems": 16,
+        "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
       }
     ],
     "NumberTheory": [

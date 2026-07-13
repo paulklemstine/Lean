@@ -213,20 +213,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "97b9c756",
-    "description": "Building on cycle 208b1ca5 (Q=0.820), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_208b1ca5_5e9bc66d",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "208b1ca5",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T23:12:33.294402+00:00",
-    "title": "Deepening: Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domains": [
@@ -7536,6 +7522,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T01:05:54.538665+00:00",
     "title": "The algebra of the governing constant is now settled: \u03c1 is the unique real root "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Siegel\u2013Weil / E\u2088 theta series\n\nThe file `SiegelWeilE8ThetaDeepening.lean` deepens the earlier weight-`4`\ndevelopment in two ways: (i) it generalizes the entire Hecke-eigenform structure\nfrom `\u03c3\u2083` (the `E\u2084`/`E\u2088` coefficient system) to `\u03c3_s` for **every** exponent\n`s`, and (ii) it derives new global consequences \u2014 the Hecke `T_p` eigenvalue\nrelation valid for all `n`, and power lower bounds \u2014 and transports them back to\nthe `E\u2088` vector counts `rE8 n = 240\u00b7\u03c3\u2083(n)`.\n\n## What is now established (self-contained, no `sorry`, no extra axioms)\n\n- `sigma_prime_pow`, `sigma_prime`: geometric prime-power form of `\u03c3_s`.\n- `sigma_hecke_prime_pow`: the three-term Hecke recurrence at prime powers.\n- `heckeRHSg_prime_pow`, `heckeRHSg_mul`, `heckeRHSg_coprime`: the multiplicative\n  anatomy of the Hecke convolution for general weight.\n- `sigma_hecke_identity`: the global Hecke eigenform identity for `\u03c3_s`, all `s`.\n- `sigma_hecke_Tp`: the `T_p` eigenvalue relation `\u03c3_s(p)\u03c3_s(n) = \u03c3_s(pn) +\n  [p\u2223n] p^s \u03c3_s(n/p)` for **all** `n`.\n- `sigma_ge_self_pow`, `rE8_ge`, `rE8_hecke_Tp`: growth bound and the eigenvalue\n  relation transported to `E\u2088` counts.\n\n## Natural next steps\n\n1. **The \u03c3\u2087 convolution identity (E\u2084\u00b2 = E\u2088).** The rank-`16` Siegel\u2013Weil setting\n   (lattices `E\u2088 \u2295 E\u2088` and `D\u2081\u2086\u207a`) predicts the classical identity\n   `\u03c3\u2087(n) = \u03c3\u2083(n) + 120\u00b7\u2211_{m=1}^{n-1} \u03c3\u2083(m)\u00b7\u03c3\u2083(n\u2212m)`.\n   Formalizing this would require either a Lambert-series/generating-function\n   argument or the one-dimensionality of the weight-`8` modular forms space; it is\n   a substantial but well-defined target.\n\n2. **Prime-factorization closed form.** Combine `sigma_mul_coprime` with\n   `Nat.factorization` to obtain\n   `\u03c3_s(n) = \u220f_{p \u2223 n} (\u2211_{i=0}^{v_p(n)} p^{s\u00b7i})` and, over `\u211a`, the closed form\n   `(p^{s(v+1)} \u2212 1)/(p^s \u2212 1)`.\n\n3. **Dirichlet series / Euler product.** State the coefficient-level Euler\n   product `\u2211 \u03c3_s(n) n^{-w} = \u03b6(w)\u03b6(w\u2212s)` as a formal-Dirichlet-series identity,\n   making the \"L-function factorization\" of the Eisenstein series explicit.\n\n4. **Uniqueness of the genus.** The exactness of `\u03b8_{E\u2088} = E\u2084` rests on the\n   even-unimodular rank-`8` genus having a single class. Formalizing the mass\n   formula / class-number-one statement in this rank is a deep but principled goal\n   that would connect the coefficient identities here to the lattice geometry.\n\n5. **General even unimodular rank `8k`.** For `k \u2265 2` the theta series equals the\n   Eisenstein series `E_{4k}` only modulo cusp forms; capturing the cuspidal\n   correction (e.g. via the discriminant form \u0394) would generalize the identity\n   beyond the cusp-free rank-`8` case.\n",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_1177",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "97b9c756",
+    "status": "available",
+    "timestamp": "2026-07-13T01:23:54.675729+00:00",
+    "title": "The file `SiegelWeilE8ThetaDeepening.lean` deepens the earlier weight-`4`"
   },
   {
     "consumed_by_exp_id": "",
