@@ -154,6 +154,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "0557da65",
+    "description": "Building on cycle 4f5260f0 (Q=0.830), which proved 19 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formali",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_4f5260f0_690694e8",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4f5260f0",
+    "status": "in_progress",
+    "timestamp": "2026-07-11T22:48:17.286043+00:00",
+    "title": "Deepening: Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients ∏_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
     "domain_bridges": [],
@@ -668,7 +687,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d694c4b",
     "description": "Building on cycle 16e4b1d9 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a counting/diagonalization argument, together with constructive and\naccuracy-flavored strengthenings.\n",
     "domain_bridges": [],
     "domains": [
@@ -680,7 +699,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "16e4b1d9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T12:43:39.241652+00:00",
     "title": "Deepening: This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
   },
@@ -9543,7 +9562,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f303e8a",
     "description": "Cycle 48b25c91 (Q=0.720) proved 9 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet ",
     "domain_bridges": [],
     "domains": [
@@ -9555,7 +9574,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "48b25c91",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T02:02:00.195641+00:00",
     "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
   },
