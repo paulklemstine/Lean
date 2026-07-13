@@ -955,7 +955,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddc0d02e",
     "description": "Building on cycle 73d4b43b (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a s",
     "domain_bridges": [],
     "domains": [
@@ -967,7 +967,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "73d4b43b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T05:00:51.739107+00:00",
     "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
