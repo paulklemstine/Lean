@@ -269,7 +269,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4bfb0f7c",
     "description": "Building on cycle 4b34e974 (Q=0.820), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
     "domains": [
       "Probability"
@@ -278,7 +278,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "4b34e974",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T01:53:42.878360+00:00",
     "title": "Deepening: Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
@@ -3795,7 +3795,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4192a75",
     "description": "For all finite graphs F and G, there exists an oddomorphism from F to G if and only if G is a split-off minor of F. The forward direction is established in the paper; the converse remains open.",
     "domains": [
       "Bridges"
@@ -3804,7 +3804,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03405v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T02:03:09.912711+00:00",
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
   },
