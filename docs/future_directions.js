@@ -353,21 +353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "0568e201",
-    "description": "Building on cycle a1dac228 (Q=0.820), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 02ff061d (Q=0.700) proved 6 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F)",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_a1dac228_f89a2246",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "a1dac228",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T12:17:35.369624+00:00",
-    "title": "Deepening: Edge-Spectral Supersaturation for Triangles"
-  },
-  {
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -376,7 +362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -4380,7 +4366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact formula for the number of quasinecklaces"
   },
   {
-    "consumed_by_exp_id": "162989ab",
+    "consumed_by_exp_id": "",
     "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240\u00b7\u03c3\u2083(n), where \u03c3\u2083(n) = \u03a3_{d|n} d\u00b3. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of \u03b8_L coincide with those of E\u2084.",
     "domains": [
       "Cryptography"
@@ -4389,7 +4375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T04:27:04.932052+00:00",
     "title": "Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
   },
@@ -4582,7 +4568,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3aaa465",
     "description": "For any k \u22653 and 1\u2264\u2113<k, and any two accumulation points \u03b1, \u03b2 in \u03a0^k_\u2113, there exists a transfer function f such that f(\u03b1) = \u03b2.",
     "domains": [
       "Bridges"
@@ -4591,7 +4577,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06518v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T19:01:40.311474+00:00",
     "title": "Universality of Transfer Functions Among Accumulation Points"
   },
@@ -7963,6 +7949,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T13:44:10.633290+00:00",
     "title": "This cycle contributes a fully formalized, self-contained **chain** of results"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 edge-spectral supersaturation for triangles\n\n## What this cycle added\n\nThe file `Novelty/EdgeSpectralSupersaturationGraphBridge.lean` closes the gap left by\n`EdgeSpectralSupersaturationTriangles.lean`, which stated the trace identities\n`tr(A\u00b2) = 2m` and `tr(A\u00b3) = 6t` as *hypotheses*.  We now **prove** both for a genuine\nfinite simple graph's real adjacency matrix, and feed them into the eigenvalue\ninequality to obtain supersaturation bounds phrased entirely in the graph's own\ncombinatorial invariants:\n\n* `trace_sq_adjMatrix_eq_two_mul_edges`        : `tr(A\u00b2) = 2 \u00b7 #edges`.\n* `trace_cube_adjMatrix_eq_six_mul_triangles`  : `tr(A\u00b3) = 6 \u00b7 #(cliqueFinset 3)` \u2014 the\n  cross-domain connector between linear algebra and extremal combinatorics.\n* `card_ordered_triples`                       : the graph-free `3! = 6` count.\n* `graph_triangle_supersaturation`             : `\u03bb\u00b7q \u2264 3\u00b7t`.\n* `graph_triangle_supersaturation_sqrt`        : `\u221am\u00b7q \u2264 3\u00b7t`.\n* `graph_nosal`                                : triangle-free \u21d2 `\u03bb\u00b2 \u2264 m`.\n\nAll are sorry-free and self-contained (`import Mathlib`).\n\n## Natural next steps\n\n1. **Discharge Perron\u2013Frobenius.**  The domination hypothesis `\u2200 i, |\u03bc i| \u2264 \u03bb` is\n   currently assumed.  For a nonnegative symmetric matrix the spectral radius is a real\n   eigenvalue attaining the max modulus; formalizing this for `adjMatrix \u211d G` would\n   remove `hbound`/`hlam` in favour of `\u03bb = spectral radius`, making the bounds fully\n   unconditional.\n\n2. **Sharpen the constant.**  The method yields constant `1/3`; the conjectured sharp\n   constant is `1` (`t \u2273 q\u221am`).  Closing the factor-3 gap requires controlling the\n   negative spectrum (the slack `\u03a3_{i\u22652} \u03bc\u1d62\u00b3 \u2265 -\u03bb \u03a3_{i\u22652} \u03bc\u1d62\u00b2` is tight only in a\n   bipartite-like configuration incompatible with many triangles).\n\n3. **General `K_{r+1}` / color-critical `F`.**  Extend `tr(A\u1d4f) = (2k')\u00b7#(k-cliques)`\n   style bridges to higher cliques via closed `k`-walks, targeting the `\u03c7(F) \u2265 4`\n   regime where the sharp constant `B_F` is known.\n\n4. **Walk-count reformulation.**  `card_cyclic_triples_eq_six_mul_triangles` could be\n   restated via Mathlib's `adjMatrix_pow_apply_eq_card_walk`, linking closed-walk\n   counts to clique counts as a reusable lemma for other trace-method results.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1223",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0568e201",
+    "status": "available",
+    "timestamp": "2026-07-13T14:01:54.465856+00:00",
+    "title": "The file `Novelty/EdgeSpectralSupersaturationGraphBridge.lean` closes the gap le"
   },
   {
     "consumed_by_exp_id": "",

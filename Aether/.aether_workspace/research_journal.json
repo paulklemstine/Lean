@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "82394822",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalises the *logical core* of the classification of Boolean cubic forms in\nten variables: the Burnside ⇄ orbit–stabilizer bridge, the division principle that turns",
-      "quality_score": 0.72,
-      "sorry_count": 1,
-      "theorem_count": 15,
-      "timestamp": "2026-07-12T23:32:06",
-      "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-    },
-    {
       "cycle_id": "0242f406",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle closed the three positional-numeral bridge gaps connecting the general\nmixed-radix theory with the factorial number system, and it isolated the single\nremaining obstruc",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-13T13:44:35",
       "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
+    },
+    {
+      "cycle_id": "0568e201",
+      "domain": "Applications",
+      "key_insight": "# Future directions — edge-spectral supersaturation for triangles\n\n## What this cycle added\n\nThe file `Novelty/EdgeSpectralSupersaturationGraphBridge.lean` closes the gap left by\n`EdgeSpectralSupersat",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T14:02:05",
+      "title": "Deepening: Edge-Spectral Supersaturation for Triangles"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cf42e929",
-      "domain": "Algebra",
-      "key_insight": "# The Poincaré Conjecture for Data — Results and Future Directions\n\nDomain: Algebra / Topological Data Analysis. Mode: Contrarian (prove bold conjectures,\ncount disproofs). All statements are formaliz",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-10T22:14:01",
-      "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-    },
     {
       "cycle_id": "f9bf2df0",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-13T13:44:35",
       "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
+    },
+    {
+      "cycle_id": "0568e201",
+      "domain": "Applications",
+      "key_insight": "# Future directions — edge-spectral supersaturation for triangles\n\n## What this cycle added\n\nThe file `Novelty/EdgeSpectralSupersaturationGraphBridge.lean` closes the gap left by\n`EdgeSpectralSupersat",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T14:02:05",
+      "title": "Deepening: Edge-Spectral Supersaturation for Triangles"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "57f58be0",
-      "domain": "Novelty",
-      "name": "not_Sat_fls",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "d31b185d",
-      "domain": "Novelty",
-      "name": "plus",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "d31b185d",
-      "domain": "Novelty",
-      "name": "uses",
-      "quality": 0.83
-    },
     {
       "cycle_id": "d31b185d",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "partitionFn_eq_zero_iff",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "0568e201",
+      "domain": "Applications",
+      "name": "cube_lower",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "0568e201",
+      "domain": "Applications",
+      "name": "eigen_supersat",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "0568e201",
+      "domain": "Applications",
+      "name": "trace_pow_eq_sum_pow_eigenvalues",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-13T13:44:35",
+  "last_updated": "2026-07-13T14:02:05",
   "open_questions": [
     {
       "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.; Everything is elementary and `sorry`-free.; necessary.  All main theorems are `sorry`-free and use genuine arguments",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "75061bf5",
-        "quality": 0.72,
-        "theorems": 0,
-        "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
-      },
-      {
         "cycle_id": "3e1dd178",
         "quality": 0.82,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.8,
         "theorems": 15,
         "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
+      },
+      {
+        "cycle_id": "0568e201",
+        "quality": 0.83,
+        "theorems": 15,
+        "title": "Deepening: Edge-Spectral Supersaturation for Triangles"
       }
     ],
     "Bridges": [
