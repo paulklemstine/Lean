@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "18bb2fc7",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d019c88a (Q=0.880), which proved 30 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hyper",
     "domains": [
       "Applications"
@@ -12,7 +12,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "d019c88a",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T14:10:41.329355+00:00",
     "title": "Deepening: Exact dictionary \"logical qubits = middle homology\""
   },
@@ -283,20 +283,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
   },
   {
-    "consumed_by_exp_id": "4bfb0f7c",
-    "description": "Building on cycle 4b34e974 (Q=0.820), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_4b34e974_bd94178e",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "4b34e974",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T01:53:42.878360+00:00",
-    "title": "Deepening: Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7473e6ed (Q=0.820), which proved 14 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations cor",
     "domains": [
@@ -564,7 +550,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Computational Complexity of Alien Civilizations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "05e37ec1",
     "description": "Building on cycle a6f348ea (Q=0.800), which proved 20 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algeb",
     "domains": [
       "Physics"
@@ -573,7 +559,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "a6f348ea",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T21:09:03.265182+00:00",
     "title": "Deepening: Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
   },
@@ -7600,6 +7586,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T03:56:43.983571+00:00",
     "title": "This cycle deepened the \"Cellular Automata as Algebraic Geometry\" line by provin"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Geometry of Stellar Energy Collection\n\nThis cycle established the exact optimization theory of energy collection around a\npoint source: capture factors through a single linear functional (total subtended\nsolid angle), the complete shell is a scale-invariant global optimum, and full\ncapture at a common radius holds precisely when the total collecting area equals\n`4\u03c0R\u00b2`. The following conjectures push the theory into richer geometry, analysis,\nand thermodynamics.\n\n## 1. Overlap-corrected capture is submodular\n\n**Conjecture.** For collectors that may occlude one another, the captured fraction\nas a function of the chosen subset of collectors is a monotone submodular set\nfunction, and greedy selection achieves at least a `1 - 1/e` fraction of the\noptimum under any area budget.\n\n*The key insight is* that occlusion turns naive additivity of solid angle into a\nunion of spherical caps, and the measure of a union is exactly the structure that\nmakes coverage submodular \u2014 the same phenomenon that governs sensor placement and\ninfluence maximization.\n\n*Why now?* The present cycle proved that, absent occlusion, capture is linear in\nsolid angle with a sharp `4\u03c0` ceiling. That linear backbone is exactly the object\none perturbs to obtain the submodular correction, so the diminishing-returns regime\nis now precisely defined rather than heuristic.\n\n## 2. The thin-shell isoperimetric optimum\n\n**Conjecture.** Among all closed surfaces enclosing the star with a fixed material\nbudget (surface mass proportional to area \u00d7 thickness), the configuration that\nmaximizes captured power minus structural cost is the sphere, and any non-spherical\ncompetitor loses power at second order in its deviation from sphericity.\n\n*The key insight is* that captured power depends only on enclosed solid angle\n(hence is `L` for any enclosing surface), so the optimization collapses onto the\nclassical isoperimetric problem for the cost term \u2014 geometry, not radiometry,\nselects the sphere.\n\n*Why now?* We established that every enclosing surface captures exactly `L`\n(the Gauss-law identity). This removes the radiometric term entirely and exposes a\nclean isoperimetric variational problem that was previously entangled with flux.\n\n## 3. Spectral splitting raises the effective ceiling\n\n**Conjecture.** Layered collectors, each tuned to a disjoint band of the stellar\nspectrum, can exceed the single-layer captured-power-per-unit-area of any opaque\nshell while respecting the same `4\u03c0` solid-angle ceiling on total captured energy.\n\n*The key insight is* that the `4\u03c0` bound limits captured *energy*, not captured\n*area-efficiency*: transparency in complementary bands lets nested shells reuse the\nsame solid angle, decoupling energy capture from material footprint.\n\n*Why now?* The solid-angle factorization proved this cycle isolates the exact\nconserved quantity (energy through `4\u03c0` steradians), making explicit which\nresource is truly bounded and which \u2014 per-band opacity \u2014 remains free to optimize.\n\n## 4. Orbital-dynamical stability of a maximal swarm\n\n**Conjecture.** A swarm at a common radius achieving the full-capture area `4\u03c0R\u00b2`\nadmits a mutually non-colliding, dynamically stable arrangement of Keplerian\ncircular orbits if and only if the number of collectors exceeds a threshold growing\nlike the ratio of shell area to collector cross-section.\n\n*The key insight is* that the `4\u03c0R\u00b2` area characterization fixes the total occupied\nsolid angle, so stability becomes a packing problem on the sphere of orbital\ninclinations, coupling conservation of angular momentum to the geometric capture\ncondition.\n\n*Why now?* With the exact full-capture area pinned down, the dynamical question is\nno longer open-ended: the target areal density is a theorem, turning \"can it be\nbuilt\" into a precise sphere-packing-with-orbits question.\n\n## 5. Continuum limit and a capture measure\n\n**Conjecture.** As collectors are refined toward a continuum, the captured-power\nfunctional converges to the pushforward of a stellar radiation measure under the\nradial projection to the unit sphere, and total capture equals the total mass of\nthat measure \u2014 recovering `L` exactly in the isotropic case and predicting the\ncapture deficit for anisotropic (e.g. limb-darkened or rotating) stars.\n\n*The key insight is* that refinement invariance proved this cycle is the finite\nshadow of a genuine measure-theoretic identity: capture is an integral of a\nprojected radiation density, so anisotropy enters only through that density.\n\n*Why now?* We proved both refinement invariance and the Gauss-law integral for the\nisotropic case; together they identify the correct limiting object (a measure on\nthe sphere), making the anisotropic generalization a concrete, testable next step.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1188",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4bfb0f7c",
+    "status": "available",
+    "timestamp": "2026-07-13T04:13:40.642703+00:00",
+    "title": "Exact optimization theory of energy collection around"
   },
   {
     "consumed_by_exp_id": "",
