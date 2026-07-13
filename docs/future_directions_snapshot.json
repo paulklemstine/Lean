@@ -173,7 +173,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6af180ae",
     "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients ∏_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
     "domain_bridges": [],
     "domains": [
@@ -185,7 +185,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "6490730e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T03:16:46.250984+00:00",
     "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
   },
@@ -2538,7 +2538,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c923638c",
     "description": "# Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `μ` and `λ` of a characteristic element, realised on the\npolynomial ring `ℤ[X]`, and proves:\n\n1. **A cross-domain bridge (`muInv_mul`, `lambdaInv_mul`).**\n   The μ-invariant lives in `p`-adic / commutative-algebra land (it is the\n   `p`-adic valuation of the *content*, the gcd of the coefficients), while the\n   λ-invariant lives in finite-field polynomial combinatorics (it is the\n   *trailing degree* of the mod-`p` reduction of the primitive part). Both are\n   proved **additive under multiplication**:\n   * μ-additivity = Gauss's lemma (multiplicativity of content) + additivity of\n     the `p`-adic valuation;\n   * λ-additivity = additivity of trailing degree in the domain `𝔽_p[X]` +\n     multiplicativity of the primitive part.\n   This is precisely the mechanism that makes factorisations of characteristic\n   elements translate into additive relations between Iwasawa invariants.\n\n2. **A Matsuno-type twist formula (`matsuno_twist_formula`,\n   `lambdaInv_twistFactor_eq_const_mul_muInv`, `matsuno_nonvanishing_mu`).**\n   For the modelled quadratic-twist factor `twistFactor c k = C(pᵏ)·X^{c·k}`,\n   the λ-invariant satisfies `λ = c·μ`, so twisting shifts\n\n   `λ_p(f · twist) = λ_p(f) + c · μ_p(twist)`,\n\n   a correction term **literally proportional to the μ-invariant**, non-zero\n   exactly when `μ ≠ 0`. This models the mission's concept that the sharp/flat\n   λ-difference under quadratic twist should contain a μ-proportional term when\n   `μ ≠ 0`.\n\n## Relation to the cited literature\n\nThe catalog references (`Spr12` Sprung, `Pol03` Pollack, `Mat08` Matsuno,\n`Hatley–Ray`) concern the *analytic* and *arithmetic* Iwasawa theory of elliptic\ncurves with supersingular reduction: Pollack's `±` `p`-adic `L`-functions,\nSprung's sharp/flat (`♯`/`♭`) decomposition, Matsuno's comparison of\nλ-invariants under quadratic twist, and non-vanishing `μ` phenomena. The present\nfile does **not** formalise those objects; it isolates and proves the purely\nalgebraic *core* that underlies their invariant bookkeeping — the additivity of\n`μ` and `λ` and the resulting μ-proportional shift under a multiplicative twist.\n\n## Concrete next steps\n\n1. **Move from `ℤ[X]` to the Iwasawa algebra `Λ = ℤ_p[[T]]`.** Replace content\n   by the `p`-adic valuation of a power series and trailing degree by the\n   distinguished-polynomial degree from Weierstrass preparation, then reprove\n   `muInv_mul` / `lambdaInv_mul` in that setting. Mathlib already has\n   `PowerSeries`, `Polynomial.Monic`, and the tools for Weierstrass preparation\n   over complete local rings, so this is the natural first extension.\n\n2. **Model the sharp/flat pair honestly.** Introduce a two-component\n   characteristic element `(f♯, f♭)` and formalise the specific relation between\n   them coming from the logarithmic matrix of Pollack–Sprung, then derive the\n   λ-difference formula `λ♯ − λ♭` with its μ-correction as a theorem rather than\n   as an assumed twist factor.\n\n3. **Formalise the twist action on genuine characteristic ideals.** Define the\n   quadratic twist by `D ≡ 1 mod 4` at the level of Selmer groups / Λ-modules\n   and prove that it multiplies the characteristic element by an explicit factor\n   whose invariants are `(μ_D, λ_D)`, recovering `matsuno_twist_formula` with\n   number-theoretic content.\n\n4. **Generalise the proportionality constant.** The model fixes `λ = c·μ` via\n   `X^{c·k}`; a next step is to allow twist factors whose λ/μ ratio varies with\n   the twisting prime, matching the actual dependence in Matsuno's formula.\n\n5. **Explicit `E/ℚ` examples.** Once the Λ-module layer exists, instantiate the\n   framework on a curve of supersingular reduction at `2` with a non-vanishing\n   `μ`-invariant and check the twist formula against tabulated Iwasawa\n   invariants.\n",
     "domain_bridges": [],
     "domains": [
@@ -2551,7 +2551,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "37818bd9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T17:26:11.384250+00:00",
     "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
   },

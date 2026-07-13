@@ -129,7 +129,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6af180ae",
     "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients \u220f_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
     "domains": [
       "MachineLearning"
@@ -138,7 +138,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "6490730e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T03:16:46.250984+00:00",
     "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
   },
@@ -1789,7 +1789,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c923638c",
     "description": "# Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `\u03bc` and `\u03bb` of a characteristic element, realised on the\npolynomial ring `\u2124[X]`, and proves:\n\n1. **A cross-domain bridge (`muInv_mul`, `lambdaInv_mul`).**\n   The \u03bc-invariant lives in `p`-adic / commutative-algebra land (it is the\n   `p`-adic valuation of the *content*, the gcd of the coefficients), while the\n   \u03bb-invariant lives in finite-field polynomial combinatorics (it is the\n   *trailing degree* of the mod-`p` reduction of the primitive part). Both are\n   proved **additive under multiplication**:\n   * \u03bc-additivity = Gauss's lemma (multiplicativity of content) + additivity of\n     the `p`-adic valuation;\n   * \u03bb-additivity = additivity of trailing degree in the domain `\ud835\udd3d_p[X]` +\n     multiplicativity of the primitive part.\n   This is precisely the mechanism that makes factorisations of characteristic\n   elements translate into additive relations between Iwasawa invariants.\n\n2. **A Matsuno-type twist formula (`matsuno_twist_formula`,\n   `lambdaInv_twistFactor_eq_const_mul_muInv`, `matsuno_nonvanishing_mu`).**\n   For the modelled quadratic-twist factor `twistFactor c k = C(p\u1d4f)\u00b7X^{c\u00b7k}`,\n   the \u03bb-invariant satisfies `\u03bb = c\u00b7\u03bc`, so twisting shifts\n\n   `\u03bb_p(f \u00b7 twist) = \u03bb_p(f) + c \u00b7 \u03bc_p(twist)`,\n\n   a correction term **literally proportional to the \u03bc-invariant**, non-zero\n   exactly when `\u03bc \u2260 0`. This models the mission's concept that the sharp/flat\n   \u03bb-difference under quadratic twist should contain a \u03bc-proportional term when\n   `\u03bc \u2260 0`.\n\n## Relation to the cited literature\n\nThe catalog references (`Spr12` Sprung, `Pol03` Pollack, `Mat08` Matsuno,\n`Hatley\u2013Ray`) concern the *analytic* and *arithmetic* Iwasawa theory of elliptic\ncurves with supersingular reduction: Pollack's `\u00b1` `p`-adic `L`-functions,\nSprung's sharp/flat (`\u266f`/`\u266d`) decomposition, Matsuno's comparison of\n\u03bb-invariants under quadratic twist, and non-vanishing `\u03bc` phenomena. The present\nfile does **not** formalise those objects; it isolates and proves the purely\nalgebraic *core* that underlies their invariant bookkeeping \u2014 the additivity of\n`\u03bc` and `\u03bb` and the resulting \u03bc-proportional shift under a multiplicative twist.\n\n## Concrete next steps\n\n1. **Move from `\u2124[X]` to the Iwasawa algebra `\u039b = \u2124_p[[T]]`.** Replace content\n   by the `p`-adic valuation of a power series and trailing degree by the\n   distinguished-polynomial degree from Weierstrass preparation, then reprove\n   `muInv_mul` / `lambdaInv_mul` in that setting. Mathlib already has\n   `PowerSeries`, `Polynomial.Monic`, and the tools for Weierstrass preparation\n   over complete local rings, so this is the natural first extension.\n\n2. **Model the sharp/flat pair honestly.** Introduce a two-component\n   characteristic element `(f\u266f, f\u266d)` and formalise the specific relation between\n   them coming from the logarithmic matrix of Pollack\u2013Sprung, then derive the\n   \u03bb-difference formula `\u03bb\u266f \u2212 \u03bb\u266d` with its \u03bc-correction as a theorem rather than\n   as an assumed twist factor.\n\n3. **Formalise the twist action on genuine characteristic ideals.** Define the\n   quadratic twist by `D \u2261 1 mod 4` at the level of Selmer groups / \u039b-modules\n   and prove that it multiplies the characteristic element by an explicit factor\n   whose invariants are `(\u03bc_D, \u03bb_D)`, recovering `matsuno_twist_formula` with\n   number-theoretic content.\n\n4. **Generalise the proportionality constant.** The model fixes `\u03bb = c\u00b7\u03bc` via\n   `X^{c\u00b7k}`; a next step is to allow twist factors whose \u03bb/\u03bc ratio varies with\n   the twisting prime, matching the actual dependence in Matsuno's formula.\n\n5. **Explicit `E/\u211a` examples.** Once the \u039b-module layer exists, instantiate the\n   framework on a curve of supersingular reduction at `2` with a non-vanishing\n   `\u03bc`-invariant and check the twist formula against tabulated Iwasawa\n   invariants.\n",
     "domains": [
       "Algebra",
@@ -1799,7 +1799,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "37818bd9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T17:26:11.384250+00:00",
     "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
   },
