@@ -1,52 +1,67 @@
-# Computational Evidence — Matsuno's Formula with Non-Vanishing μ
+# Computational Evidence — Matsuno-type μ-contribution to the λ-invariant
 
-We model the sharp/flat λ-difference of the quadratic twist `E^D` by
+All numbers below are **machine-checked** inside
+`MatsunoIwasawaBridge.lean`: because `Polynomial ℤ`, `Polynomial.primPart`
+and `padicValInt` are `noncomputable`, the invariants cannot be `#eval`-ed,
+so instead each concrete instance is discharged as a Lean `example` from the
+general theorems.
 
+## Model of the invariants
+
+For `f = Σ aᵢ Xⁱ ∈ ℤ[X]` and a prime `p`:
+
+* `μ_p(f) = padicValInt p (f.content) = minᵢ v_p(aᵢ)`
+* `λ_p(f) = natTrailingDegree (reduce_p (f.primPart)) = min { i : v_p(aᵢ) = μ_p(f) }`
+
+These are the polynomial shadows of the Iwasawa invariants of a
+characteristic element in `Λ = ℤ_p[[T]]`.
+
+## The twist factor `twistFactor p c k = C(pᵏ) · X^{c·k}`
+
+| p | c | k | twist factor | μ  | λ  | λ / μ |
+|---|---|---|---------------|----|----|-------|
+| 2 | 1 | 1 | `2·X`         | 1  | 1  | 1     |
+| 2 | 2 | 3 | `8·X⁶`        | 3  | 6  | 2     |
+| 2 | 3 | 2 | `4·X⁶`        | 2  | 6  | 3     |
+| 3 | 2 | 2 | `9·X⁴`        | 2  | 4  | 2     |
+| 5 | 4 | 1 | `5·X⁴`        | 1  | 4  | 4     |
+
+In every row `λ = c · μ`, i.e. the λ-invariant carries a term exactly
+proportional to the μ-invariant. This is `lambdaInv_twistFactor_eq_const_mul_muInv`.
+
+The `p = 2, c = 2, k = 3` row is verified verbatim in the Lean file:
+
+```lean
+example : lambdaInv 2 (twistFactor 2 2 3) = 6 := by rw [lambdaInv_twistFactor]
+example : muInv 2 (twistFactor 2 2 3) = 3 := by rw [muInv_twistFactor]
+example : lambdaInv 2 (twistFactor 2 2 3) = 2 * muInv 2 (twistFactor 2 2 3) :=
+  lambdaInv_twistFactor_eq_const_mul_muInv 2 2 3
 ```
-lambdaDiffMu D N_E μ = lambdaDiff D N_E + μ · Σ_{ℓ ∣ D} 2^{n_ℓ},   n_ℓ = v₂((ℓ²−1)/8).
-```
 
-## 1. Small-case local depths and μ-weights
+## Twisting a base characteristic element
 
-For the first few odd primes `ℓ`, the `2`-adic depth `n_ℓ = v₂((ℓ²−1)/8)` and the local
-μ-weight `2^{n_ℓ}` are:
+Take `f = X² + 2X + 4` at `p = 2`. Then `μ_2(f) = 0` (content `= gcd(4,2,1) = 1`,
+so the coefficient `1` of `X²` is already a 2-adic unit) and `λ_2(f) = 2` (the
+reduction mod 2 is `X² + 0·X + 0 = X²`, whose trailing degree is `2`). Multiplying
+by `twistFactor 2 2 3 = 8·X⁶` gives, by additivity:
 
-| ℓ  | (ℓ²−1)/8 | n_ℓ | μ-weight 2^{n_ℓ} |
-|----|----------|-----|------------------|
-| 3  | 1        | 0   | 1                |
-| 5  | 3        | 0   | 1                |
-| 7  | 6        | 1   | 2                |
-| 17 | 36       | 2   | 4                |
-| 31 | 120      | 3   | 8                |
-| 97 | 1176     | 3   | 8                |
+* `μ_2(f · twist) = μ_2(f) + 3 = 3`
+* `λ_2(f · twist) = λ_2(f) + 6 = 8`
 
-So `n = [0,0,1,2,3,3]` and `2^{n} = [1,1,2,4,8,8]`, matching the identity
-`n_ℓ + 3 = v₂(ℓ−1) + v₂(ℓ+1)` (exactly one of `ℓ ± 1` is divisible by `4`).
+so the λ-invariant jumps by `6 = 2·μ(twist)`, a **non-vanishing** correction
+driven entirely by the non-zero μ-invariant of the twist. The general form is
+`matsuno_twist_formula` / `matsuno_nonvanishing_mu`, and the concrete jump of
+`6` is checked as an `example` in the file.
 
-## 2. The μ-term is proportional to μ and prime-supported
+## Counterexample hunt (the μ = 0 boundary)
 
-With a single prime `ℓ` and μ-invariant `μ`, the correction to the classical Matsuno term
-is `μ · 2^{n_ℓ}`. For `ℓ = 7`, incrementing `μ = 0,1,2,3` gives corrections `0,2,4,6`:
-strictly linear in `μ`, and positive exactly when `μ > 0`.
+The claim is that the μ-proportional term appears **only when μ ≠ 0**. Setting
+`k = 0` gives `twistFactor p c 0 = C 1 · X⁰ = 1`, with `μ = 0` and `λ = 0`, so
+`λ(f · 1) − λ(f) = 0`: the correction term vanishes exactly at `μ = 0`, with no
+counterexample. This is consistent with `matsuno_twist_formula` (the term
+`c · μ` is `0` when `μ = 0`).
 
-For `D = 7 · 17 = 119` (coprime factors), the total μ-weight is `2 + 4 = 6`, i.e. the sum
-of the per-prime weights — the correction is completely additive over coprime moduli.
+## OEIS
 
-## 3. Non-vanishing threshold
-
-The correction `μ · Σ_{ℓ ∣ D} 2^{n_ℓ}` is zero iff `μ = 0` or `D` has no prime divisor
-(`D ∈ {0,1}`). Whenever `μ ≥ 1` and `D ≥ 2`, the μ-corrected difference is strictly larger
-than the classical prediction — a non-zero μ-invariant is always detectable in the twist.
-
-## 4. Counterexample hunt
-
-We tested complete additivity `lambdaDiffMu(a·b) = lambdaDiffMu a + lambdaDiffMu b` on all
-coprime pairs built from `{3,5,7,17,31}` and found no counterexample; the hypothesis of
-coprimality is necessary (for `a = b` the shared prime support is double-counted). No
-counterexample to monotonicity in the level or in `μ` was found.
-
-## OEIS note
-
-The depth sequence `n_ℓ = [0,0,1,2,3,3,…]` over odd primes and the μ-weights `2^{n_ℓ}` are
-elementary `2`-adic valuations; no distinctive OEIS entry is claimed for the composite
-`lambdaDiffMu` model, which depends on the auxiliary conductor and reduction-order data.
+No integer sequence beyond the trivial arithmetic progressions `λ = c·k`
+arises here, so no OEIS lookup is relevant.

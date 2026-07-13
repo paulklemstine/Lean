@@ -4639,20 +4639,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "All exotic Diophantine triples in $\\mathbb{R}[X]$ containing 1 are of the form $\\{k^2-1, (k+1)^2-1, 1\\}$ for some nonconstant $k \\in \\mathbb{R}[X]$"
   },
   {
-    "consumed_by_exp_id": "d31b8b8b",
-    "description": "For every integers d \u2265 2 and c with 1 \u2264 c \u2264 d, there exists a finite free simplicial Z2-complex K of dimension d such that coind(K) = c and coind(suspension K) = d + 1. This generalizes the paper's result (which proves the case c = 1 for all d \u2265 2) and would show that the upper bound coind(S(K)) \u2264 dim(K)+1 is sharp for every possible starting co-index c, achieving maximal excess d - c.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0686",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06061v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T23:14:12.131922+00:00",
-    "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The paper proves that for any d-regular graph G on n vertices with d \u2264 n^{1/12-\u03b5} and any integer vector q=(q_0,\u2026,q_d) satisfying \u2211 q_i = n, \u2211 i q_i \u2261 0 (mod 2), and |q_i - n/(d+1)| \u2264 1 for all i, there exists a spanning subgraph H \u2286 G with m(H,i)=q_i exactly. We conjecture that this exact prescription holds for every d-regular graph on n vertices and every such admissible q, i.e., without the restriction d \u2264 n^{1/12-\u03b5}.",
     "domains": [
@@ -8014,6 +8000,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T16:51:26.804041+00:00",
     "title": "A cross-domain **connector** linking three areas around sumsets in L\u2081 balls"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Universal Mathematics and the Invariant Core of Theories\n\nThis cycle formalized the notion of the *universal core* of a theory \u2014 the body\nof theorems shared by every consistent extension \u2014 and established two anchors:\nthat the universal core of a consistent theory is exactly the theory itself, and\nthat, under compactness, every consistent theory completes to a maximal\nconsistent (deductively closed) one whose consistency is finitely certifiable.\nThe following conjectures push these findings toward a structural theory of\n\"observer-independent\" mathematics.\n\n## 1. The universal core is the meet in the lattice of closed theories\n\n**Conjecture.** For a compact consequence operator, the closed theories form a\ncomplete lattice, and the universal core of a consistent base is the *infimum*,\nin that lattice, of the family of maximal consistent theories extending it.\n\n*The key insight is* that consistency having finite character turns the poset of\nconsistent extensions into a well-behaved directed structure, so the\nintersection defining the universal core coincides with an order-theoretic meet\nrather than a mere set intersection.\n\n*Why now?* With the consequence operator identified as a closure operator and\nLindenbaum completions available, the lattice of closed theories is now a\nconcrete object whose meets and joins can be computed and compared to the\nuniversal core directly.\n\n## 2. Negation-completeness pins down a unique universal core across models\n\n**Conjecture.** If the underlying system carries a negation for which each\nmaximal consistent theory is *complete* (contains a statement or its negation),\nthen the universal core equals the set of statements true in every maximal\nconsistent extension, and this characterization is invariant under any\nconsequence operator inducing the same maximal consistent theories.\n\n*The key insight is* that maximal consistent theories play the role of \"points\"\n(models), so the universal core becomes the theory of a space of models, and\nnegation-completeness collapses the syntactic and semantic descriptions of that\ncore into one.\n\n*Why now?* Lindenbaum completions give the points; the only missing ingredient\nis a negation axiom, which slots cleanly into the existing `ProofSystem`\ninterface without disturbing the compactness argument.\n\n## 3. Independence phenomena measure the gap above the universal core\n\n**Conjecture.** The failure of a consistent base to be maximal is quantified by\nthe existence of *at least two* maximal consistent extensions differing on some\nstatement; moreover the collection of such \"independent\" statements forms a\nfilter-complement whose size is a monotone invariant of the base.\n\n*The key insight is* that everything a base cannot decide lives strictly above\nits universal core, so independence is precisely the discrepancy between the\ncore and the individual maximal completions.\n\n*Why now?* The strict-extension witness constructed this cycle shows the gap is\nnon-empty in concrete models; the next step is to organize those undecided\nstatements into an invariant rather than treat them one at a time.\n\n## 4. Compactness is necessary, not merely sufficient, for coherent completion\n\n**Conjecture.** There is a (necessarily non-compact) consequence operator with a\nconsistent theory that admits *no* maximal consistent extension, so that\ncompactness is not just a convenient hypothesis for Lindenbaum's theorem but a\ngenuine dividing line.\n\n*The key insight is* that without finite character, a rising chain of consistent\ntheories can converge to an inconsistent limit, blocking Zorn's lemma at exactly\nthe union step that compactness was introduced to rescue.\n\n*Why now?* The role of compactness has been isolated to a single lemma\n(the consistency of chain unions); a targeted counterexample there would show the\nhypothesis cannot be removed, sharpening the theorem from sufficient to exact.\n\n## 5. Universality is preserved by interpretations, defining a robust core across languages\n\n**Conjecture.** If one theory interprets into another by a consequence-preserving\ntranslation, the universal core of the source maps into the universal core of the\ntarget; consequently a common base shared through mutual interpretation yields a\nsingle universal core independent of the ambient language.\n\n*The key insight is* that universality is a property of the consequence structure\nalone, so any structure-preserving map between systems must carry invariant cores\nto invariant cores.\n\n*Why now?* With the universal core expressed purely through the closure operator\nand consistency \u2014 both transportable along consequence-preserving maps \u2014 the\nmachinery to state and test cross-language invariance is finally in place.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1234",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b222c758",
+    "status": "available",
+    "timestamp": "2026-07-13T17:09:25.593356+00:00",
+    "title": "This cycle formalized the notion of the *universal core* of a theory \u2014 the body"
   },
   {
     "consumed_by_exp_id": "",

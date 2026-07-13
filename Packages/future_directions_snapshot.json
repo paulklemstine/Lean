@@ -3932,34 +3932,6 @@
     "title": "Grundy Number XOR Conjecture for Three-Pile Halve Nim"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Kahn88",
-      "Bafna22",
-      "Gur22",
-      "Gotlib23"
-    ],
-    "consumed_by_exp_id": "ee7062d3",
-    "description": "Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfies the KKL condition that low-influence functions on the link must have a coordinate with large influence, then the entire complex K satisfies a global KKL condition for functions on its simplices.",
-    "domain_bridges": [
-      "boolean-function-analysis",
-      "spectral-expansion",
-      "simplicial-complex-geometry"
-    ],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0281",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Inductive argument over simplex dimensions, leveraging the local KKL hypothesis on links to establish global influence bounds via Fourier-analytic techniques on simplicial complexes. Key steps involve defining influence measures on complexes, relating local and global spectral properties, and applying the local-to-global method from the paper.",
-    "research_mode": "team",
-    "source_exp_id": "2606.29449v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T06:47:54.813371+00:00",
-    "title": "Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Links"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Thesis: Minimal Isometric Embeddings of Graphs into Abelian Groups: Theory, Algorithms, and Applications to Signal Processing over Networks",
@@ -7991,34 +7963,6 @@
     "status": "available",
     "timestamp": "2026-07-08T21:59:42.391218+00:00",
     "title": "All exotic Diophantine triples in $\\mathbb{R}[X]$ containing 1 are of the form $\\{k^2-1, (k+1)^2-1, 1\\}$ for some nonconstant $k \\in \\mathbb{R}[X]$"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Csorba's theorem: B0(G) ≃_{Z2} S(B(G))",
-      "Borsuk–Ulam theorem",
-      "Lovász's box complex lower bound χ(G) ≥ coind(B(G))+2",
-      "Simonyi–Tardos–Vrécica question on co-index growth under suspension"
-    ],
-    "consumed_by_exp_id": "d31b8b8b",
-    "description": "For every integers d ≥ 2 and c with 1 ≤ c ≤ d, there exists a finite free simplicial Z2-complex K of dimension d such that coind(K) = c and coind(suspension K) = d + 1. This generalizes the paper's result (which proves the case c = 1 for all d ≥ 2) and would show that the upper bound coind(S(K)) ≤ dim(K)+1 is sharp for every possible starting co-index c, achieving maximal excess d - c.",
-    "domain_bridges": [
-      "free Z2-simplicial complexes",
-      "graph chromatic number bounds via box complexes",
-      "suspension functor in equivariant topology"
-    ],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0686",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the paper's explicit construction of K_n (dim n, coind 1, coind of suspension n+1) as a base block. For a given c, take the join of K_{d-c+1} with an antipodal sphere S^{c-2} (which has coind c-2 and dimension c-2). The join of free Z2-complexes satisfies dim(X*Y)=dim(X)+dim(Y)+1 and coind(X*Y) ≥ coind(X)+coind(Y)+1, yielding a complex of dimension d and coind at least c. Show by induction on the simplicial structure that equality holds and that suspension of the join realizes coind d+1, possibly via an equivariant homeomorphism Σ(X*Y) ≅ ΣX * ΣY and the known coind of ΣK_{d-c+1}=d-c+2 and ΣS^{c-2}=S^{c-1} (coind c-1). The resulting lower bound gives coind ≥ d+1, and dimension bounds force equality. Formalize simplicial join and suspension in Lean 4.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06061v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T23:14:12.131922+00:00",
-    "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
   },
   {
     "ambition_level": "extension",
@@ -12883,6 +12827,46 @@
     "status": "available",
     "timestamp": "2026-07-13T16:51:26.804041+00:00",
     "title": "A cross-domain **connector** linking three areas around sumsets in L₁ balls"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Universal Mathematics and the Invariant Core of Theories\n\nThis cycle formalized the notion of the *universal core* of a theory — the body\nof theorems shared by every consistent extension — and established two anchors:\nthat the universal core of a consistent theory is exactly the theory itself, and\nthat, under compactness, every consistent theory completes to a maximal\nconsistent (deductively closed) one whose consistency is finitely certifiable.\nThe following conjectures push these findings toward a structural theory of\n\"observer-independent\" mathematics.\n\n## 1. The universal core is the meet in the lattice of closed theories\n\n**Conjecture.** For a compact consequence operator, the closed theories form a\ncomplete lattice, and the universal core of a consistent base is the *infimum*,\nin that lattice, of the family of maximal consistent theories extending it.\n\n*The key insight is* that consistency having finite character turns the poset of\nconsistent extensions into a well-behaved directed structure, so the\nintersection defining the universal core coincides with an order-theoretic meet\nrather than a mere set intersection.\n\n*Why now?* With the consequence operator identified as a closure operator and\nLindenbaum completions available, the lattice of closed theories is now a\nconcrete object whose meets and joins can be computed and compared to the\nuniversal core directly.\n\n## 2. Negation-completeness pins down a unique universal core across models\n\n**Conjecture.** If the underlying system carries a negation for which each\nmaximal consistent theory is *complete* (contains a statement or its negation),\nthen the universal core equals the set of statements true in every maximal\nconsistent extension, and this characterization is invariant under any\nconsequence operator inducing the same maximal consistent theories.\n\n*The key insight is* that maximal consistent theories play the role of \"points\"\n(models), so the universal core becomes the theory of a space of models, and\nnegation-completeness collapses the syntactic and semantic descriptions of that\ncore into one.\n\n*Why now?* Lindenbaum completions give the points; the only missing ingredient\nis a negation axiom, which slots cleanly into the existing `ProofSystem`\ninterface without disturbing the compactness argument.\n\n## 3. Independence phenomena measure the gap above the universal core\n\n**Conjecture.** The failure of a consistent base to be maximal is quantified by\nthe existence of *at least two* maximal consistent extensions differing on some\nstatement; moreover the collection of such \"independent\" statements forms a\nfilter-complement whose size is a monotone invariant of the base.\n\n*The key insight is* that everything a base cannot decide lives strictly above\nits universal core, so independence is precisely the discrepancy between the\ncore and the individual maximal completions.\n\n*Why now?* The strict-extension witness constructed this cycle shows the gap is\nnon-empty in concrete models; the next step is to organize those undecided\nstatements into an invariant rather than treat them one at a time.\n\n## 4. Compactness is necessary, not merely sufficient, for coherent completion\n\n**Conjecture.** There is a (necessarily non-compact) consequence operator with a\nconsistent theory that admits *no* maximal consistent extension, so that\ncompactness is not just a convenient hypothesis for Lindenbaum's theorem but a\ngenuine dividing line.\n\n*The key insight is* that without finite character, a rising chain of consistent\ntheories can converge to an inconsistent limit, blocking Zorn's lemma at exactly\nthe union step that compactness was introduced to rescue.\n\n*Why now?* The role of compactness has been isolated to a single lemma\n(the consistency of chain unions); a targeted counterexample there would show the\nhypothesis cannot be removed, sharpening the theorem from sufficient to exact.\n\n## 5. Universality is preserved by interpretations, defining a robust core across languages\n\n**Conjecture.** If one theory interprets into another by a consequence-preserving\ntranslation, the universal core of the source maps into the universal core of the\ntarget; consequently a common base shared through mutual interpretation yields a\nsingle universal core independent of the ambient language.\n\n*The key insight is* that universality is a property of the consequence structure\nalone, so any structure-preserving map between systems must carry invariant cores\nto invariant cores.\n\n*Why now?* With the universal core expressed purely through the closure operator\nand consistency — both transportable along consequence-preserving maps — the\nmachinery to state and test cross-language invariance is finally in place.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1234",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b222c758",
+    "status": "available",
+    "timestamp": "2026-07-13T17:09:25.593356+00:00",
+    "title": "This cycle formalized the notion of the *universal core* of a theory — the body"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Local-to-Global Influence on Partite Complexes\n\nThis cycle established that on the complete `n`-partite complex over an alphabet of\nsize `m`, every coordinate influence is the *exact* sum of its influences over the\n`m` links of any fixed coordinate, and that this single identity propagates a\nper-link influence lower bound `T` into a global bound `mT`. The following\nconjectures push that finding outward.\n\n## 1. Alphabet-graded influence gap\n\n**Conjecture.** For labellings of the complete `n`-partite complex over an\n`m`-symbol alphabet whose links each carry link-influence at least `T`, the maximal\nglobal coordinate influence grows at least linearly in the alphabet size `m`, and no\nlabelling attains a global maximum influence smaller than `mT/(n-1)`.\n\nThe key insight is that enlarging the alphabet multiplies the number of links of a\nsingle coordinate, so the exact self-averaging identity aggregates strictly more\nsensitive edges into each global influence rather than merely redistributing a fixed\nbudget. Why now? The exact (non-approximate) averaging identity is the first\ningredient that makes an alphabet-graded lower bound provable at all; earlier\ntwo-symbol arguments could not even see the dependence on `m`.\n\n## 2. Weighted non-regular links\n\n**Conjecture.** If the links of a coordinate are assigned arbitrary non-negative\nweights summing to `W`, and each weighted link satisfies a KKL-type influence bound\n`τ`, then the global total influence is at least `τ·W`, with equality exactly when\nevery link is influence-extremal and the weights concentrate on the extremal links.\n\nThe key insight is that the averaging engine is purely a statement about\nnon-negative weighted combinations, so replacing the uniform \"one facet, one vote\"\nweighting by any measure preserves the local-to-global transfer while sharpening its\nequality case. Why now? Once the transfer is isolated from the combinatorial cube it\nbecomes a statement about weighted families, and the equality analysis reduces to a\nfinite convexity argument that is now within reach.\n\n## 3. Variance-thresholded global degeneracy dichotomy\n\n**Conjecture.** A labelling of a partite complex is either globally degenerate (its\ntotal influence vanishes, hence it is constant) or it possesses a coordinate whose\ninfluence exceeds the average of the per-link thresholds; there is no intermediate\nregime.\n\nThe key insight is that vanishing influence forces exact constancy, so the failure\nof the KKL conclusion is not a matter of degree but a sharp all-or-nothing boundary\ngoverned by whether any link is non-degenerate. Why now? Having pinned the\ndegenerate boundary exactly, the remaining task is to show the complement is\nuniformly non-degenerate, converting a qualitative dichotomy into a quantitative\nthreshold theorem.\n\n## 4. Higher-codimension links\n\n**Conjecture.** Pinning two coordinates simultaneously yields a codimension-two link\ndecomposition in which the global influence of a third coordinate is the exact\ndouble sum of its influences over the `m²` doubly-pinned links, and iterating this\nacross all codimensions recovers a full local-to-global tower.\n\nThe key insight is that the single-coordinate fibering that proves the bridge\nidentity commutes with itself, so successive pinnings compose into a graded family of\nexact averaging identities rather than accumulating error. Why now? The base-case\nidentity is now proved with no slack, which is exactly the hypothesis a clean\ninduction over codimension requires.\n\n## 5. Beyond transversal complexes\n\n**Conjecture.** Any pure simplicial complex admitting a coordinatization in which\neach facet-adjacency is governed by a single coordinate satisfies the same\nlocal-to-global influence transfer, so the transversal (partite) model is universal\namong such coordinatizable complexes.\n\nThe key insight is that the proof used only that sensitive adjacencies partition\ncleanly by a pinned value, a property shared by every complex whose facet graph is a\nCayley-type product, not just the complete partite one. Why now? The abstract engine\nalready accepts arbitrary link families; the missing step is a structural\ncharacterization of which complexes admit the requisite clean partition, which the\npartite proof now makes explicit.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1235",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ee7062d3",
+    "status": "available",
+    "timestamp": "2026-07-13T17:09:37.427586+00:00",
+    "title": "That on the complete `n`-partite complex over an alphabet"
   },
   {
     "ambition_level": "extension",

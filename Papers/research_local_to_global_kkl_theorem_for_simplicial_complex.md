@@ -1,317 +1,329 @@
-# A Local-to-Global Principle for Coordinate Influence
+# A Local-to-Global KKL Theorem for Partite Simplicial Complexes over an Arbitrary Alphabet
+
+**Author:** Aristotle
+**Date:** 2026-07-13
 
 ## Abstract
 
-The influence of a coordinate on a Boolean function measures how often flipping
-that coordinate changes the function's value. Influence is central to the analysis
-of Boolean functions, to hardness of approximation, and to the study of robustness
-and diffusion in cryptographic constructions. The Kahn–Kalai–Linial (KKL) theorem
-is a *local* statement about a single function: any non-degenerate function of low
-total influence must have a coordinate whose influence is unusually large. In this
-paper we isolate and prove a complementary *local-to-global* principle. We show
-that influence **self-averages over links**: the global influence of a coordinate
-is a weighted average of its influences on the codimension-one restrictions (links)
-of the underlying combinatorial object. From this single identity we derive a
-family of local-to-global theorems: (i) on the Boolean cube, a total-influence
-lower bound on both links of a coordinate forces a globally influential
-coordinate; (ii) an abstract averaging engine that runs on any weighted family of
-links, converting a *local KKL hypothesis* into a *global total-influence bound*
-and a *global influential coordinate*; (iii) a faithful conditional (variance-
-thresholded) version matching the true logical shape of KKL; and (iv) an exact
-total-influence law for regular systems. The Boolean cube is recovered as a
-literal instance of the abstract engine. We discuss algorithms, numerical
-illustrations, and the road toward the full logarithmic KKL bound on
-high-dimensional expanders.
+We develop a local-to-global principle for coordinate influences of Boolean
+labellings of the complete $n$-partite simplicial complex whose $n$ color classes
+each contain $m$ vertices. The facets (top-dimensional simplices) of this complex
+are the transversals $x \colon \{1,\dots,n\} \to \{1,\dots,m\}$, and a labelling
+is a function $f$ from transversals to $\{0,1\}$. We define the (unnormalized)
+influence $\mathrm{Inf}(f,i)$ of a color $i$ as the number of sensitive
+$i$-edges — ordered pairs of transversals that agree off coordinate $i$, differ at
+$i$, and receive different labels — and the link influence
+$\mathrm{InfSub}(f,j,b,i)$ obtained by pinning color $j$ to vertex $b$. Our central
+structural result is an *exact self-averaging identity*: for any fixed color $j$,
+$\mathrm{Inf}(f,i) = \sum_{b=1}^{m} \mathrm{InfSub}(f,j,b,i)$. From this single
+equality we derive: (i) monotonicity, that any locally influential coordinate is
+globally at least as influential; (ii) a local-to-global decomposition of total
+influence; and (iii) the flagship theorem that if all $m$ links of a color $j$
+carry link-influence at least $T$, then some color $i \neq j$ has global influence
+at least $mT/(n-1)$. We isolate the abstract non-negative weighted-averaging engine
+behind these results, give the real-valued averaged form, and establish an exact
+converse boundary: a labelling all of whose color influences vanish is constant, so
+the influence conclusion is vacuous precisely for the degenerate labellings. The
+Boolean hypercube is recovered as the case $m = 2$. This lifts the qualitative
+Kahn–Kalai–Linial phenomenon to arbitrary alphabets and exhibits an alphabet-graded
+growth of guaranteed influence that is invisible in the two-symbol setting.
+
+**Keywords:** KKL theorem, coordinate influence, partite simplicial complex,
+local-to-global principle, high-dimensional expander, transversal, link, Boolean
+function analysis.
 
 ## 1. Introduction
 
-Let $f : \{0,1\}^n \to \{0,1\}$ be a Boolean function. The **influence** of
-coordinate $i$ is the probability, over a uniformly random input, that flipping the
-$i$-th bit changes the output. Equivalently, working with unnormalized counts,
-it is the number of edges of the Boolean hypercube in direction $i$ whose two
-endpoints receive different values under $f$. Influences quantify the sensitivity
-of a function to individual inputs and are foundational objects in discrete
-Fourier analysis, social choice theory, percolation, property testing, and the
-theory of pseudorandomness underpinning cryptography.
+The Kahn–Kalai–Linial (KKL) theorem [Kahn–Kalai–Linial 1988] is a cornerstone of
+the analysis of Boolean functions. In one of its standard forms it asserts that
+every balanced Boolean function $f \colon \{0,1\}^n \to \{0,1\}$ has a coordinate
+whose influence is at least $\Omega\!\left(\frac{\log n}{n}\right)$ — influence
+cannot be spread perfectly evenly and thinly across all coordinates. The theorem
+sits at the origin of a large body of work on thresholds, hardness of
+approximation, social choice, and the geometry of the discrete cube.
 
-The Kahn–Kalai–Linial theorem (1988) is the archetypal *local* result: for a
-balanced $f$, some coordinate has influence at least $\Omega(\log n / n)$, far
-exceeding the average $\mathrm{TotInf}(f)/n$ one would expect under uniform spread.
-More generally, KKL guarantees a coordinate of influence
-$\Omega(\mathrm{Var}(f) \cdot \log n / n)$.
+A more recent theme, driven by the theory of high-dimensional expanders, is the
+*local-to-global* paradigm [Bafna–Hoory–Kaufman 2022; Gur–Lifshitz–Liu 2022;
+Gotlib–Kaufman 2023]: global analytic and combinatorial properties of a simplicial
+complex are deduced from the corresponding properties of its *links*, the small
+subcomplexes obtained by fixing a face. The guiding hope is that if a favorable
+property holds uniformly on every link, it "propagates" to the whole complex.
 
-A distinct and highly productive modern paradigm is **local-to-global** analysis,
-central to the theory of high-dimensional expanders (Bafna–Hoory–Kaufman 2022;
-Gur–Lifshitz–Liu 2022; Gotlib–Kaufman 2023). Here one proves properties of a large
-combinatorial complex by verifying properties only of its **links** — the small
-neighborhoods obtained by fixing a face. The recurring question is: *if every link
-satisfies a property, does the whole complex?*
+This paper carries out that program for coordinate influences in a clean and
+completely explicit combinatorial setting: the complete $n$-partite complex over an
+alphabet of size $m$. Its facets are exactly the transversals — functions choosing
+one vertex from each of $n$ color classes of size $m$ — and its links are obtained
+by pinning coordinates. The classical Boolean cube is the special case $m = 2$, in
+which each vertex has two links; for general $m$ a coordinate has $m$ links.
 
-This paper addresses that question for influence. Our contribution is to identify
-the exact structural mechanism — an averaging identity we call the **bridge** —
-that transfers influence information from links to the whole object, and to build a
-small tower of theorems on top of it. The results are elementary but reusable: the
-bridge is the combinatorial heart shared by every local-to-global influence
-argument.
+Our contribution is to show that in this setting the local-to-global transfer is
+not merely approximate but rests on an *exact* combinatorial identity, and to trace
+its consequences. The exactness matters: it reveals a linear dependence of the
+guaranteed global influence on the alphabet size $m$ that approximate two-symbol
+arguments cannot detect.
 
-### Contributions
+## 2. The complex, its facets, and its links
 
-1. **The bridge (influence self-averaging).** On the Boolean cube, each coordinate
-   influence is exactly the sum of its influences in the two codimension-one links
-   of any fixed coordinate.
-2. **Flagship cube theorem.** A local total-influence lower bound $T$ on both links
-   of a coordinate $j$ yields a coordinate $i \ne j$ with $(n-1)\,\mathrm{Inf}(f,i)
-   \ge 2T$.
-3. **Abstract engine.** For an arbitrary weighted family of links satisfying the
-   bridge, a local KKL hypothesis (each link has an influential coordinate) yields
-   a global total-influence bound and a global influential coordinate.
-4. **Faithful conditional and exact regular law.** A variance-thresholded version
-   matching the true KKL conditional, and an exact total-influence identity for
-   regular systems.
-5. **Instantiation.** The Boolean cube is a literal instance of the abstract
-   engine (two unit-weight links).
+Throughout, fix integers $n \ge 1$ (the number of colors) and $m \ge 1$ (the size
+of each color class). Write $[n] = \{1,\dots,n\}$ and $[m] = \{1,\dots,m\}$; we use
+the finite index sets interchangeably with $\{0,\dots,n-1\}$ and $\{0,\dots,m-1\}$.
 
-## 2. The concrete model: the Boolean cube and its links
+**Definition 2.1 (Complex and facets).** The *complete $n$-partite simplicial
+complex over the alphabet $[m]$* has vertex set $[n] \times [m]$, partitioned into
+$n$ *color classes*, the $i$-th being $\{i\} \times [m]$. Its facets
+(top-dimensional simplices) are the *transversals*: functions
+$x \colon [n] \to [m]$, choosing one vertex $x_i = x(i)$ from each color class. We
+identify a facet with the tuple $(x_1,\dots,x_n)$; there are $m^n$ of them.
 
-Throughout, $n \ge 1$ and a point of the cube is a function $x : \{0,\dots,n-1\}
-\to \{0,1\}$, written $x \in \{0,1\}^n$.
+**Definition 2.2 (Labelling).** A *(Boolean) labelling* is a function
+$f \colon ([n] \to [m]) \to \{0,1\}$ assigning a value to each facet.
 
-**Definition 2.1 (Coordinate flip).** For $x \in \{0,1\}^n$ and coordinate $i$,
-let $x^{\oplus i}$ denote $x$ with its $i$-th coordinate negated and all other
-coordinates unchanged. Flipping is an involution, $(x^{\oplus i})^{\oplus i} = x$,
-and for $j \ne i$ we have $(x^{\oplus i})_j = x_j$ — moving along direction $i$
-leaves coordinate $j$ untouched.
+**Definition 2.3 ($i$-adjacency and sensitive edges).** Two facets $x, y$ are
+*$i$-adjacent* if $x_k = y_k$ for every color $k \neq i$ and $x_i \neq y_i$. An
+$i$-adjacent ordered pair $(x, y)$ is *sensitive for $f$* if additionally
+$f(x) \neq f(y)$.
 
-**Definition 2.2 (Influence).** The (unnormalized) **influence** of coordinate $i$
-on $f : \{0,1\}^n \to \{0,1\}$ is
-$$\mathrm{Inf}(f,i) = \#\{\, x \in \{0,1\}^n : f(x) \ne f(x^{\oplus i}) \,\}.$$
-(Each sensitive $i$-edge $\{x, x^{\oplus i}\}$ is counted at both endpoints; the
-count is even and equals twice the number of sensitive $i$-edges. All our identities
-are homogeneous in this convention, so it is immaterial.)
+**Definition 2.4 (Influence).** The *(unnormalized) influence* of color $i$ on a
+labelling $f$ is the number of sensitive $i$-adjacent ordered pairs,
+$$\mathrm{Inf}(f, i) = \#\bigl\{(x, y) : (\forall k \neq i,\; x_k = y_k) \wedge x_i \neq y_i \wedge f(x) \neq f(y)\bigr\}.$$
+The *total influence* is $\mathrm{TotInf}(f) = \sum_{i \in [n]} \mathrm{Inf}(f, i)$.
 
-**Definition 2.3 (Link influence).** Fix a coordinate $j$ and value $b \in
-\{0,1\}$. The **link** of the frozen vertex $(j, b)$ is the subcube $\{x : x_j =
-b\}$, a copy of $\{0,1\}^{n-1}$. The **link influence** of coordinate $i$ in this
-link is
-$$\mathrm{InfSub}(f, j, b, i) = \#\{\, x : x_j = b \ \text{and}\ f(x) \ne f(x^{\oplus i}) \,\}.$$
+**Definition 2.5 (Link and link influence).** Fix a color $j$ and a vertex $b \in
+[m]$. The *link of $(j, b)$* is the subcomplex of facets $x$ with $x_j = b$. The
+*link influence* of color $i$ inside this link is
+$$\mathrm{InfSub}(f, j, b, i) = \#\bigl\{(x, y) : (\forall k \neq i,\; x_k = y_k) \wedge x_i \neq y_i \wedge f(x) \neq f(y) \wedge x_j = b\bigr\}.$$
+The *link total influence* of $(j, b)$, summing over colors other than the pinned
+color, is
+$$\mathrm{LinkTotInf}(f, j, b) = \sum_{i \neq j} \mathrm{InfSub}(f, j, b, i).$$
 
-**Definition 2.4 (Total influences).** The **total influence** is $\mathrm{TotInf}(f)
-= \sum_i \mathrm{Inf}(f, i)$. The **link total influence** of the link $(j, b)$,
-summed over coordinates other than the frozen one, is
-$$\mathrm{LinkTotInf}(f, j, b) = \sum_{i \ne j} \mathrm{InfSub}(f, j, b, i).$$
+**Remark 2.6 (Boolean cube).** When $m = 2$, a facet is a bit-string in
+$\{0,1\}^n$, the $i$-adjacency graph is the Hamming graph of the hypercube, and
+$\mathrm{Inf}(f, i)$ is the edge-boundary influence of coordinate $i$. Each vertex
+color then has exactly two links, corresponding to fixing the $j$-th bit to $0$ or
+to $1$. Everything below specializes to this classical case.
 
-### 2.1 The bridge
+## 3. The self-averaging bridge
 
-**Theorem 2.5 (Influence self-averaging — the bridge).** For every function $f$
-and every pair of coordinates $j, i$,
-$$\mathrm{Inf}(f, i) = \mathrm{InfSub}(f, j, 0, i) + \mathrm{InfSub}(f, j, 1, i).$$
+The following exact identity is the structural heart of the paper.
 
-*Proof sketch.* The set of inputs $x$ with $f(x) \ne f(x^{\oplus i})$ partitions
-according to the value of $x_j \in \{0,1\}$; the two parts are counted exactly by
-$\mathrm{InfSub}(f,j,0,i)$ and $\mathrm{InfSub}(f,j,1,i)$. Formally, split the
-filtered set by the predicate $x_j = 1$ using the identity
-$|\{P\}| = |\{P \wedge Q\}| + |\{P \wedge \neg Q\}|$, and identify the two pieces
-with the link counts. $\square$
+**Theorem 3.1 (Self-averaging bridge).** For every labelling $f$, every pinned
+color $j$, and every color $i$,
+$$\mathrm{Inf}(f, i) = \sum_{b \in [m]} \mathrm{InfSub}(f, j, b, i).$$
 
-An immediate consequence is monotonicity: each link influence is bounded by the
-global influence, $\mathrm{InfSub}(f, j, b, i) \le \mathrm{Inf}(f, i)$, since the
-other summand is non-negative.
+*Proof sketch.* Consider the finite set $S$ of sensitive $i$-adjacent ordered pairs
+$(x, y)$ counted by $\mathrm{Inf}(f, i)$. Map each such pair to $x_j \in [m]$, the
+value the first coordinate assigns to the pinned color $j$. This partitions $S$ into
+$m$ fibers indexed by $b \in [m]$. The fiber over $b$ is exactly the set of
+sensitive $i$-adjacent pairs with $x_j = b$; note that whenever $(x,y)$ is
+$i$-adjacent we have $x_j = y_j$ if $j \neq i$, and if $j = i$ the constraint
+$x_j = b$ still selects a well-defined fiber, so in all cases the fiber over $b$ is
+precisely the set counted by $\mathrm{InfSub}(f, j, b, i)$. Since the cardinality of
+a finite set equals the sum of the cardinalities of the fibers of any map defined on
+it, $\mathrm{Inf}(f, i) = \sum_{b} \mathrm{InfSub}(f, j, b, i)$. $\qquad\blacksquare$
 
-**Theorem 2.6 (Total-influence decomposition).** For every $f$ and coordinate $j$,
-$$\sum_{i \ne j} \mathrm{Inf}(f, i) = \mathrm{LinkTotInf}(f, j, 0) + \mathrm{LinkTotInf}(f, j, 1).$$
+The identity is *exact*: no error term, no inequality. This is what distinguishes
+the partite setting from many local-to-global arguments that produce only
+approximate transfer.
 
-*Proof sketch.* Sum the bridge (Theorem 2.5) over all $i \ne j$ and regroup the
-two summands. $\square$
+**Corollary 3.2 (Local influence bounds global influence).** For all $j, b, i$,
+$$\mathrm{InfSub}(f, j, b, i) \le \mathrm{Inf}(f, i).$$
 
-### 2.2 Pigeonhole and the flagship theorem
+*Proof.* Each summand in Theorem 3.1 is a non-negative integer, so any single one
+is at most the total. $\qquad\blacksquare$
 
-**Lemma 2.7 (Some element beats the average).** For a finite nonempty set $S$ and
-$g : S \to \mathbb{N}$, there exists $i \in S$ with $\sum_{k \in S} g(k) \le |S|
-\cdot g(i)$.
+**Corollary 3.3 (Local influential coordinate $\Rightarrow$ global influential
+coordinate).** If $\tau \le \mathrm{InfSub}(f, j, b, i)$ for some link $(j,b)$, then
+$\tau \le \mathrm{Inf}(f, i)$. Thus a coordinate that is influential inside any
+single link is at least that influential globally.
 
-*Proof sketch.* Take $i$ maximizing $g$; then $\sum_{k} g(k) \le \sum_{k} g(i) =
-|S| \cdot g(i)$. $\square$
+*Proof.* Compose the hypothesis with Corollary 3.2. $\qquad\blacksquare$
 
-**Theorem 2.8 (Local-to-Global KKL, cube form).** Let $n \ge 2$ and fix a
-coordinate $j$. Suppose both links of $j$ carry total influence at least $T$:
-$$T \le \mathrm{LinkTotInf}(f, j, 0) \quad\text{and}\quad T \le \mathrm{LinkTotInf}(f, j, 1).$$
-Then there exists a coordinate $i \ne j$ with
-$$2T \le (n-1)\,\mathrm{Inf}(f, i),$$
-i.e. $\mathrm{Inf}(f, i) \ge 2T/(n-1)$.
+**Theorem 3.4 (Local-to-global decomposition of total influence).** For every
+labelling $f$ and every pinned color $j$,
+$$\sum_{i \neq j} \mathrm{Inf}(f, i) = \sum_{b \in [m]} \mathrm{LinkTotInf}(f, j, b).$$
 
-*Proof sketch.* By Theorem 2.6, $\sum_{i \ne j}\mathrm{Inf}(f, i) \ge 2T$. The
-index set $\{i : i \ne j\}$ has size $n - 1 \ge 1$, so it is nonempty; apply Lemma
-2.7 with $g = \mathrm{Inf}(f, \cdot)$ to obtain $i \ne j$ with $\sum_{i \ne
-j}\mathrm{Inf}(f, i) \le (n-1)\,\mathrm{Inf}(f, i)$. Chaining the two inequalities
-gives $2T \le (n-1)\,\mathrm{Inf}(f, i)$. $\square$
+*Proof sketch.* Sum the identity of Theorem 3.1 over all colors $i \neq j$ and
+exchange the order of the two finite summations (over $i \neq j$ and over
+$b \in [m]$). The right-hand side becomes
+$\sum_b \sum_{i \neq j} \mathrm{InfSub}(f, j, b, i) = \sum_b \mathrm{LinkTotInf}(f, j, b)$
+by Definition 2.5. $\qquad\blacksquare$
 
-**Theorem 2.9 (Local ⟹ global influential coordinate).** If some coordinate $i$
-is influential inside a link, $\tau \le \mathrm{InfSub}(f, j, b, i)$, then it is at
-least as influential globally, $\tau \le \mathrm{Inf}(f, i)$.
+## 4. From local guarantees to a global influential coordinate
 
-*Proof sketch.* Immediate from monotonicity $\mathrm{InfSub} \le \mathrm{Inf}$
-(a corollary of the bridge). $\square$
+We now turn the exact decomposition into a KKL-style existence statement. The only
+extra ingredient is an elementary pigeonhole principle.
 
-## 3. The abstract local-to-global engine
+**Lemma 4.1 (Averaging pigeonhole).** Let $S$ be a nonempty finite set and
+$g \colon S \to \mathbb{N}$. Then there exists $i \in S$ with
+$\sum_{s \in S} g(s) \le |S| \cdot g(i)$; that is, some element attains at least the
+average value of $g$.
 
-The argument above uses only three features: a weighted family of links, a notion
-of local influence, and the bridge. We abstract them.
+*Proof.* Choose $i \in S$ maximizing $g$. Then
+$\sum_{s \in S} g(s) \le \sum_{s \in S} g(i) = |S| \cdot g(i)$. $\qquad\blacksquare$
 
-Let the coordinates be indexed by a finite type and let the links be indexed by a
-finite type $\kappa$. Let $w : \kappa \to \mathbb{R}$ assign non-negative weights,
-let $I_\ell(i) \ge 0$ be the local influence of coordinate $i$ in link $\ell$, and
-let $I(i)$ be the global influence.
+**Theorem 4.2 (Local-to-global total-influence bound).** Fix a pinned color $j$ and
+a threshold $T \in \mathbb{N}$. If every one of the $m$ links of $j$ satisfies the
+local bound $T \le \mathrm{LinkTotInf}(f, j, b)$ for all $b \in [m]$, then
+$$m \cdot T \le \sum_{i \neq j} \mathrm{Inf}(f, i).$$
 
-**Theorem 3.1 (Abstract local-to-global KKL).** Assume:
-- (weights) $w_\ell \ge 0$ for all $\ell$, and (non-negativity) $I_\ell(i) \ge 0$;
-- (**bridge**) $I(i) = \sum_{\ell} w_\ell \, I_\ell(i)$ for every coordinate $i$;
-- (**local KKL**) every link has an influential coordinate: for each $\ell$ there
-  is $i$ with $\tau \le I_\ell(i)$.
+*Proof.* By Theorem 3.4 the right-hand side equals
+$\sum_{b \in [m]} \mathrm{LinkTotInf}(f, j, b) \ge \sum_{b \in [m]} T = mT$,
+using the hypothesis termwise. $\qquad\blacksquare$
 
-Then the global total influence satisfies
-$$\tau \cdot \sum_{\ell} w_\ell \;\le\; \sum_i I(i).$$
+**Theorem 4.3 (Local-to-Global KKL theorem, partite form).** Let $n \ge 2$. Fix a
+pinned color $j$ and a threshold $T \in \mathbb{N}$, and suppose every one of the
+$m$ links of $j$ carries link total influence at least $T$, i.e.
+$T \le \mathrm{LinkTotInf}(f, j, b)$ for all $b \in [m]$. Then there exists a color
+$i \neq j$ with
+$$m \cdot T \le (n-1)\cdot \mathrm{Inf}(f, i),$$
+equivalently $\mathrm{Inf}(f, i) \ge \dfrac{mT}{\,n-1\,}$.
 
-*Proof sketch.* Exchange the order of summation using the bridge:
-$\sum_i I(i) = \sum_i \sum_\ell w_\ell I_\ell(i) = \sum_\ell w_\ell \big(\sum_i
-I_\ell(i)\big)$. For each $\ell$, the local KKL coordinate $i_0$ gives $\tau \le
-I_\ell(i_0) \le \sum_i I_\ell(i)$ (a single term is at most the non-negative sum).
-Hence $\sum_\ell w_\ell (\sum_i I_\ell(i)) \ge \sum_\ell w_\ell \tau = \tau
-\sum_\ell w_\ell$. $\square$
+*Proof.* The index set $S = [n] \setminus \{j\}$ is nonempty with $|S| = n - 1$
+(as $n \ge 2$). Apply Lemma 4.1 to $g = \mathrm{Inf}(f, \cdot)$ on $S$ to obtain a
+color $i \neq j$ with $\sum_{i' \neq j} \mathrm{Inf}(f, i') \le (n-1)\,\mathrm{Inf}(f, i)$.
+Combining with Theorem 4.2 gives $mT \le \sum_{i' \neq j}\mathrm{Inf}(f, i') \le (n-1)\,\mathrm{Inf}(f, i)$. $\qquad\blacksquare$
 
-**Lemma 3.2 (Real averaging).** For a nonempty finite index type and $g : \iota
-\to \mathbb{R}$, there exists $i$ with $\sum_j g(j) \le |\iota| \cdot g(i)$.
+**Remark 4.4 (Alphabet-graded influence).** The guaranteed global influence
+$mT/(n-1)$ grows linearly in the alphabet size $m$. This is a genuine consequence of
+exactness: enlarging the alphabet multiplies the number of links of the pinned
+color, and by Theorem 3.1 each additional link contributes its full sensitive-edge
+count to the global influence rather than redistributing a fixed budget. When
+$m = 2$ this scaling is invisible; the phenomenon becomes visible only over general
+alphabets.
 
-**Theorem 3.3 (Abstract global influential coordinate).** Under the hypotheses of
-Theorem 3.1, with the coordinate type nonempty, there exists a coordinate $i$ with
-$$\tau \cdot \sum_{\ell} w_\ell \;\le\; |\text{coords}| \cdot I(i).$$
+## 5. The abstract weighted-averaging engine
 
-*Proof sketch.* Combine Theorem 3.1 with Lemma 3.2 applied to $g = I$. $\square$
+Theorems 4.2 and 4.3 use nothing about facets or Boolean values beyond the exact
+decomposition and non-negativity. We record the abstract principle they instantiate.
 
-### 3.1 The cube as an instance
+**Theorem 5.1 (Abstract local-to-global bound).** Let $B$ and $C$ be finite index
+sets, and let $a \colon B \times C \to \mathbb{N}$ be non-negative with the
+decomposition $G(c) = \sum_{b \in B} a(b, c)$ for a global quantity $G$. If for a
+threshold $T$ one has $\sum_{c \in C} a(b, c) \ge T$ for every $b \in B$, then
+$\sum_{c \in C} G(c) \ge |B| \cdot T$.
 
-**Theorem 3.4 (Cube via the abstract engine).** Fix $j$ and $T \in \mathbb{N}$.
-Suppose each link of $j$ has an influential coordinate: $\exists i,\ T \le
-\mathrm{InfSub}(f, j, 0, i)$ and $\exists i,\ T \le \mathrm{InfSub}(f, j, 1, i)$.
-Then $2T \le \mathrm{TotInf}(f)$.
+*Proof.* $\sum_{c} G(c) = \sum_{c} \sum_{b} a(b,c) = \sum_{b} \sum_{c} a(b,c) \ge \sum_{b} T = |B|\,T$. $\qquad\blacksquare$
 
-*Proof sketch.* Instantiate Theorem 3.1 with link index $\kappa = \{0,1\}$, unit
-weights $w \equiv 1$, local influences $I_\ell(i) = \mathrm{InfSub}(f, j, \ell, i)$,
-global influence $I(i) = \mathrm{Inf}(f, i)$, and threshold $\tau = T$. The abstract
-bridge is precisely the concrete bridge (Theorem 2.5) after summing over the two
-Boolean values; $\sum_\ell w_\ell = 2$; and $\sum_i I(i) = \mathrm{TotInf}(f)$. The
-conclusion $\tau \cdot 2 \le \sum_i I(i)$ is $2T \le \mathrm{TotInf}(f)$. $\square$
+**Theorem 5.2 (Abstract global influential coordinate).** Under the hypotheses of
+Theorem 5.1 with $C$ nonempty, there exists $c \in C$ with
+$|C| \cdot G(c) \ge |B| \cdot T$, i.e. $G(c) \ge \frac{|B|}{|C|} T$.
 
-### 3.2 Faithful conditional and regular systems
+*Proof.* Combine Theorem 5.1 with the averaging pigeonhole (Lemma 4.1) applied to
+$G$ on $C$. $\qquad\blacksquare$
 
-**Theorem 3.5 (Variance-thresholded local-to-global KKL).** Suppose each link
-carries a *variance proxy* $V_\ell$ and a threshold $V_0$, and the local KKL
-hypothesis holds in its genuine conditional form: *if $V_0 \le V_\ell$ then link
-$\ell$ has a coordinate of influence $\ge \tau$*. If in addition every link is
-non-degenerate ($V_0 \le V_\ell$ for all $\ell$), then $\tau \cdot \sum_\ell w_\ell
-\le \sum_i I(i)$, and consequently some coordinate satisfies $\tau \sum_\ell w_\ell
-\le |\text{coords}| \cdot I(i)$.
+Theorem 4.3 is the instance $B = [m]$ (the links of the pinned color),
+$C = [n]\setminus\{j\}$ (the remaining colors), $a(b,i) = \mathrm{InfSub}(f,j,b,i)$,
+and $G(i) = \mathrm{Inf}(f,i)$, which is precisely the content of Theorem 3.1.
 
-*Proof sketch.* Non-degeneracy discharges the conditional on every link, reducing
-to Theorems 3.1 and 3.3. $\square$
+**Theorem 5.3 (Real-valued averaged form).** With the notation above and $n \ge 2$,
+there is a color $i \neq j$ with
+$$\mathrm{Inf}(f, i) \ge \frac{mT}{n-1} \qquad \text{in } \mathbb{R}.$$
 
-This version matches the *true logical shape* of KKL: the conclusion "there is an
-influential coordinate" is guaranteed precisely for links that are non-degenerate.
+*Proof.* Divide the conclusion of Theorem 4.3 by the positive integer $n - 1$ in
+the ordered field $\mathbb{R}$. $\qquad\blacksquare$
 
-**Theorem 3.6 (Exact law for regular systems).** If every link has the same total
-influence $\sum_i I_\ell(i) = A$ and every weight is one, then the global total
-influence is exactly
-$$\sum_i I(i) = |\kappa| \cdot A.$$
+## 6. The exact degeneracy boundary
 
-*Proof sketch.* By the bridge with unit weights, $\sum_i I(i) = \sum_\ell \sum_i
-I_\ell(i) = \sum_\ell A = |\kappa| \cdot A$. $\square$
+Any "large influence exists" theorem must delimit when its conclusion is vacuous.
+Here the boundary is exact and complete.
 
-**Theorem 3.7 (Cube, real-valued influential coordinate).** For $n \ge 1$, if each
-of the two links of $j$ has an influential coordinate of influence $\ge T$, then
-some global coordinate satisfies $2T \le n \cdot \mathrm{Inf}(f, i)$.
+**Theorem 6.1 (Zero influence forces constancy).** If $\mathrm{Inf}(f, i) = 0$ for
+every color $i$, then $f$ is constant: there is a value $v \in \{0,1\}$ with
+$f(x) = v$ for all facets $x$.
 
-*Proof sketch.* Theorem 3.4 gives $2T \le \mathrm{TotInf}(f)$; real averaging
-(Lemma 3.2) over all $n$ coordinates yields a coordinate at least the average.
-$\square$
+*Proof sketch.* $\mathrm{Inf}(f, i) = 0$ means no sensitive $i$-edge exists, i.e.
+$f$ is invariant under changing the single coordinate $i$: $f(x) = f(y)$ whenever
+$x, y$ are $i$-adjacent. Any two facets $x, x'$ are connected by a path in the
+$i$-adjacency graphs — flip the coordinates on which they differ one at a time,
+each flip being an $i$-adjacency for the corresponding color $i$ — and $f$ is
+constant along every such step. Hence $f(x) = f(x')$ for all $x, x'$, so $f$ is
+constant. $\qquad\blacksquare$
 
-## 4. Algorithms
+**Corollary 6.2 (Degeneracy dichotomy).** A labelling is either *globally
+degenerate* — total influence zero, hence constant — or it has a color with strictly
+positive influence. In the first case the KKL conclusion of Theorem 4.3 is vacuous
+(one may take $T = 0$); in the second case there is nontrivial influence to
+propagate. There is no intermediate regime.
 
-The theory is fully constructive; the underlying computations are direct counts and
-scans. We highlight two algorithmic primitives.
+*Proof.* If every color influence vanishes, Theorem 6.1 gives constancy. Otherwise
+some $\mathrm{Inf}(f, i) > 0$. $\qquad\blacksquare$
 
-**Algorithm A (Influence and link-influence tabulation).** Given $f$ as a truth
-table over $\{0,1\}^n$, compute $\mathrm{Inf}(f, i)$ for all $i$ and
-$\mathrm{InfSub}(f, j, b, i)$ for all $i, j, b$ by iterating over all $2^n$ inputs
-and, for each coordinate $i$, comparing $f(x)$ with $f(x^{\oplus i})$. Complexity
-$O(n \cdot 2^n)$ time. The bridge (Theorem 2.5) is then verified by a coordinate-
-wise equality check.
+## 7. Algorithms
 
-**Algorithm B (Local-to-global certificate).** Given the guarantee $T \le
-\mathrm{LinkTotInf}(f, j, b)$ for both $b$, output a coordinate $i \ne j$
-witnessing $2T \le (n-1)\,\mathrm{Inf}(f, i)$: simply return the influence-maximizing
-coordinate among $i \ne j$. Correctness is Theorem 2.8; complexity $O(n)$ after
-tabulation.
+The definitions are directly computable, giving simple exact algorithms over the
+$m^n$ facets.
 
-## 5. Applications
+**Algorithm 7.1 (Influence of a color).** Enumerate all facets $x \in [m]^n$; for
+each and for each alternative value $c \neq x_i$, form the $i$-neighbor $y$ (equal to
+$x$ except $y_i = c$) and increment a counter when $f(x) \neq f(y)$. The counter is
+$\mathrm{Inf}(f, i)$. This runs in $O(m^n \cdot m) = O(m^{n+1})$ label evaluations
+per color.
 
-- **Robustness and diffusion.** Influence quantifies output sensitivity to single
-  input bits. The local-to-global law lets one certify sensitivity properties of a
-  function from properties of its bit-restrictions, a natural decomposition when
-  analyzing diffusion in symmetric primitives or resilience of shared-randomness
-  protocols.
-- **High-dimensional expansion.** The abstract engine consumes exactly the bridge
-  $I(i) = \sum_\ell w_\ell I_\ell(i)$. Any complex furnishing such a self-averaging
-  identity over its links inherits the influence local-to-global theorems,
-  connecting to the broader local-to-global program for expanders.
-- **Analysis of Boolean functions.** The results give a clean, modular route from
-  restriction-level information to global influential coordinates, complementary to
-  Fourier-analytic proofs of KKL.
+**Algorithm 7.2 (Link influence and the bridge check).** Restrict Algorithm 7.1 to
+facets with $x_j = b$ to obtain $\mathrm{InfSub}(f, j, b, i)$; summing over
+$b \in [m]$ reproduces $\mathrm{Inf}(f, i)$, an executable verification of
+Theorem 3.1.
 
-## 6. Discussion and limitations
+**Algorithm 7.3 (Local-to-global witness search).** Given a pinned color $j$ and a
+threshold $T$, compute $\mathrm{LinkTotInf}(f, j, b)$ for each $b$; if all are at
+least $T$, scan the colors $i \neq j$ for one with
+$(n-1)\,\mathrm{Inf}(f,i) \ge mT$. Theorem 4.3 guarantees the scan succeeds.
 
-The global conclusions here are **averaging** bounds (max $\ge$ average). They are
-tight for the mechanism used — a pigeonhole on the total influence — but weaker
-than the full KKL theorem, which extracts a coordinate of influence $\Omega(\mathrm
-{Var}(f)\,\log n / n)$ even when the total influence is small. Bridging that gap
-requires the Fourier-analytic and hypercontractive machinery (Bonami–Beckner)
-that the elementary averaging argument deliberately avoids. The value of the
-present development is its **modularity**: the bridge is isolated as the single
-transferable hypothesis, so any object supplying it inherits the theorems.
+## 8. Applications and discussion
 
-## 7. Future directions
+**Boolean function analysis.** The case $m = 2$ recovers a local-to-global
+statement for the Boolean cube: if both links of a coordinate $j$ (the two sub-cubes
+$x_j = 0$ and $x_j = 1$) carry total influence at least $T$, then some other
+coordinate has global influence at least $2T/(n-1)$. This is the shape of reasoning
+underlying inductive proofs of KKL-type facts, made exact.
 
-1. **The genuine KKL logarithmic bound.** Upgrade the averaging conclusion to the
-   true $\Omega(\mathrm{Var}(f)\,\log n / n)$ influential coordinate, via Fourier
-   analysis on the cube and hypercontractivity / the Bonami–Beckner inequality.
-2. **True simplicial complexes.** Replace the cube by a pure $d$-dimensional
-   complex with a measure on top faces, define links and induced local functions,
-   and *derive* the bridge $I(i) = \sum_\ell w_\ell I_\ell(i)$ from the complex
-   structure. The abstract engine already consumes exactly this bridge.
-3. **Weighted / spectral links.** Incorporate the spectral gap of links (high-
-   dimensional expansion) to turn the local bound into a stronger,
-   expansion-dependent global bound.
-4. **Variance transfer.** Prove a local-to-global statement for the variance proxy
-   itself, so global non-degeneracy follows from local non-degeneracy, closing the
-   loop with the variance-thresholded theorem.
-5. **Hypercontractivity on high-dimensional expanders.** Formalize the
-   Gur–Lifshitz–Liu hypercontractive inequality on high-dimensional expanders, from
-   which KKL-type theorems follow directly — an alternative route to item 1.
+**High-dimensional expanders.** The partite complex is a clean model in which the
+local-to-global paradigm — deduce global from links — is realized by an exact
+identity rather than a spectral approximation. The abstract engine (Section 5)
+isolates exactly the ingredient the paradigm needs: a non-negative decomposition of a
+global quantity across links.
 
-## 8. Conclusion
+**Voting and social choice.** In the committee interpretation (offices, candidates,
+verdicts), the theorem states that if every candidate-restricted electorate is
+collectively sensitive, then some office is a genuine swing office. The degeneracy
+dichotomy says the only way to avoid a swing office entirely is a foregone
+conclusion.
 
-We isolated the influence self-averaging identity — the *bridge* — and showed it is
-the reusable engine behind local-to-global theorems for coordinate influence. From
-the bridge alone we obtained a flagship cube theorem, an abstract averaging engine,
-a faithful conditional version, and an exact regular law, with the cube recovered as
-a literal instance. Global power is the sum of local power, and a uniform floor on
-the links raises the ceiling of the whole complex.
+**Robustness of the exactness.** Because the engine is a statement about
+non-negative weighted combinations, it is stable under reweighting the links,
+suggesting extensions to non-uniform measures with sharpened equality analysis.
+
+## 9. Future directions
+
+**Alphabet-graded influence gap.** For labellings whose links each carry
+link-influence at least $T$, we conjecture the maximal global coordinate influence
+grows at least linearly in the alphabet size $m$, with no labelling attaining a
+global maximum below $mT/(n-1)$. Enlarging the alphabet multiplies the links of a
+single coordinate, so the exact self-averaging identity aggregates strictly more
+sensitive edges into each global influence rather than redistributing a fixed
+budget.
+
+**Weighted non-regular links.** If the links of a coordinate are given arbitrary
+non-negative weights summing to $W$ and each weighted link satisfies a KKL-type bound
+$\tau$, we conjecture the global total influence is at least $\tau W$, with equality
+exactly when every link is influence-extremal and the weights concentrate on the
+extremal links. The averaging engine is purely about non-negative weighted
+combinations, so it survives reweighting while its equality case sharpens.
+
+**Variance-thresholded global degeneracy dichotomy.** We conjecture that a
+labelling is either globally degenerate (total influence zero, hence constant) or it
+possesses a coordinate whose influence exceeds the average of the per-link
+thresholds; there is no intermediate regime. Having pinned the degenerate boundary
+exactly, the task is to show the complement is uniformly non-degenerate.
+
+**Higher-codimension links.** Pinning two coordinates simultaneously yields a
+codimension-two link decomposition in which the global influence of a third
+coordinate should decompose across the finer partition, extending the bridge to
+faces of higher codimension.
 
 ## References
 
-- J. Kahn, G. Kalai, N. Linial. *The influence of variables on Boolean functions.*
-  FOCS 1988.
-- M. Bafna, S. Hoory, T. Kaufman. Local-to-global expansion and applications, 2022.
-- T. Gur, N. Lifshitz, S. Liu. Hypercontractivity on high-dimensional expanders,
-  2022.
-- R. Gotlib, T. Kaufman. Local-to-global in higher dimensions, 2023.
-- A. Bonami. Étude des coefficients de Fourier des fonctions de $L^p(G)$, 1970.
-- R. O'Donnell. *Analysis of Boolean Functions.* Cambridge University Press, 2014.
+- J. Kahn, G. Kalai, N. Linial, *The influence of variables on Boolean functions*, FOCS 1988.
+- M. Bafna, S. Hoory, T. Kaufman, work on local-to-global high-dimensional expansion, 2022.
+- T. Gur, N. Lifshitz, S. Liu, *Hypercontractivity on high-dimensional expanders*, 2022.
+- R. Gotlib, T. Kaufman, local-to-global analysis on simplicial complexes, 2023.
