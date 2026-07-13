@@ -306,25 +306,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3e1dd178",
-    "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_47a54792_2ae5aec0",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "47a54792",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T00:29:46.239053+00:00",
-    "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 4b281557 (Q=0.820), which proved 19 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed ",
     "domain_bridges": [],
@@ -1688,25 +1669,6 @@
     "status": "available",
     "timestamp": "2026-07-10T05:00:51.823169+00:00",
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "75061bf5",
-    "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' — beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "sorry_fill_7a9dcf2f_cb7384d6",
-    "lineage_refs": [],
-    "priority_score": 0.8300000000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7a9dcf2f",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T02:59:14.834105+00:00",
-    "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
     "ambition_level": "extension",
@@ -12530,6 +12492,46 @@
     "status": "available",
     "timestamp": "2026-07-13T08:59:54.531038+00:00",
     "title": "The file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle completed the bridge showing that the factorial number system is a\nsingle point in the one-parameter family of mixed-radix positional systems:\nplace values, digit values, and validity all transport along the identity\n`∏_{j<i}(j+1) = i!`, and factorial uniqueness follows as a corollary of the\ngeneral mixed-radix uniqueness theorem. The following conjectures grow directly\nout of that unification.\n\n## 1. Every finitely supported digit stream has a unique mixed-radix expansion for arbitrary positive bases\n\n**Conjecture.** Fix any base sequence `b : ℕ → ℕ` with `b i ≥ 1` for all `i`.\nThen the value map `c ↦ ∑_{i<k} c i · ∏_{j<i} b j` restricts to a bijection from\nvalid length-`k` digit functions onto the interval `[0, ∏_{i<k} b i)`, for every\n`k`.\n\nThe key insight is that both halves of the bijection depend only on the running\nproduct of the bases and on the local digit bound `c i < b i`, never on the\nspecific arithmetic of any one base; uniqueness comes from Euclidean division by\nthe running product, and surjectivity from greedy digit extraction. Why now?\nThe uniqueness half and the existence half are already established separately in\nthe general theory, so the remaining step is to package them as a single\ncounting bijection — the natural capstone that turns two one-sided facts into a\nstructural equivalence.\n\n## 2. Carry propagation is base-independent\n\n**Conjecture.** Incrementing a valid mixed-radix numeral by one — resolving\ncarries digit by digit against the local bases — always yields the numeral whose\nvalue is one larger, for any positive base sequence.\n\nThe key insight is that a carry at position `i` fires exactly when the digit\nreaches its local base `b i`, so the correctness of the successor operation is\ngoverned solely by the same `c i < b i` bound that governs validity, making the\nargument uniform across factorial, binary, decimal, and every mixed system in\nbetween. Why now? With place-value and value agreement between the factorial and\nmixed-radix systems now settled, successor correctness is the smallest dynamic\noperation whose base-independence can be isolated and proved cleanly, and it is\nthe gateway to base-independent addition.\n\n## 3. A mixed-radix system realizes a prescribed interval of representable integers iff its base product matches\n\n**Conjecture.** Two positive base sequences represent exactly the same set of\nintegers at every length if and only if their running products agree at every\nlength; and the representable set at length `k` is precisely `[0, ∏_{i<k} b i)`.\n\nThe key insight is that the representable set is an interval whose length is the\nrunning product alone, so all combinatorial information about \"how many numbers\nfit\" is a function of the product sequence rather than the individual bases.\nWhy now? The factorial-versus-mixed bridge already shows one nontrivial pair of\ndistinct-looking definitions that coincide because their products coincide;\npromoting this observation to an if-and-only-if characterization would explain\nprecisely when two \"alien number systems\" are interchangeable.\n\n## 4. Digit sums modulo `b i − 1` give a uniform divisibility test\n\n**Conjecture.** For a constant base `b`, an integer is divisible by `b − 1` iff\nthe sum of its base-`b` digits is; the mixed-radix generalization replaces the\nsingle modulus by a compatible family of moduli tied to the running products.\n\nThe key insight is that `∏_{j<i} b j ≡ 1 (mod b−1)` in the constant-base case,\nand the mixed-radix analogue asks for the exact congruence class of each running\nproduct, which is again determined by the product sequence rather than by any\nindividual digit. Why now? The bridge established that all arithmetic content of\nthese systems flows through the running product; casting-out-nines is the oldest\nand most testable consequence of that principle, and generalizing it is a\nconcrete, falsifiable next target.\n\n## 5. Rank of apparition pins down every primitive Fibonacci prime\n\n**Conjecture.** For every index beyond the four small exceptions `1, 2, 6, 12`,\nthe Fibonacci number `F(n)` carries a prime `p` whose *rank of apparition* — the\nleast positive index `m` with `p ∣ F(m)` — is exactly `n`; equivalently, the\ninteger obtained from `F(n)` by dividing out every common factor it shares with\nan earlier Fibonacci number is always larger than `1`.\n\nThe key insight is that primitivity is a purely local statement about the\nhomogeneous cyclotomic factor `Φ_n = ∏_{d ∣ n}(φ^d − ψ^d)^{μ(n/d)}`: this factor\nis an integer dividing `F(n)`, its logarithm equals `φ(n)·log φ` up to a bounded\nconvergent correction coming from the sub-unit conjugate root, and its only\nnon-primitive prime divisor is the largest prime factor of `n`, appearing to the\nfirst power — so once `Φ_n` exceeds `n`, a primitive prime is forced. Why now?\nThe finite range is already settled by direct computation and the whole\nexistence claim has been reduced to this single size-versus-intrinsic-prime\ninequality; separating the analytic lower bound `Φ_n > n` from the\nlifting-the-exponent bound on the intrinsic prime turns a classical\ngrand-challenge into two independently attackable estimates.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1206",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "75061bf5",
+    "status": "available",
+    "timestamp": "2026-07-13T09:49:22.314782+00:00",
+    "title": "This cycle completed the bridge showing that the factorial number system is a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThis cycle established the elementary algebraic core of four-dimensional geometry:\nthe volume law of the 4-ball, the face combinatorics and Euler characteristics of\nthe tesseract and its boundary sphere, the norm-preservation and fibre invariance\nof the Hopf map, the Clifford torus's placement on the 3-sphere, and the isometry\nand one-parameter group structure of rotations through the fourth dimension. The\nfollowing conjectures push each strand toward a deeper structural statement.\n\n## 1. The Hopf map is a Riemannian submersion with totally geodesic fibres\n\n**Conjecture.** The Hopf map from the unit 3-sphere to the 2-sphere of radius\none-half is a Riemannian submersion whose fibres are great circles, and the\nhorizontal distribution it defines is a contact structure whose Reeb flow is\nexactly the fibre circle action.\n\n*The key insight is* that the single quadratic identity `4ab + (a-b)² = (a+b)²`,\nwhich already forces the image to land on a sphere, also controls the first-order\nbehaviour of the map: differentiating the identity along the unit-scalar action\nshows the fibre directions are precisely the kernel of the differential, so the\nmetric splits orthogonally into fibre and base components.\n\n*Why now?* The norm identity and fibre invariance are already in hand as exact\nequalities; upgrading them to a statement about the differential is the natural\nnext step, and it connects the purely algebraic picture to the metric geometry\nthat makes the Hopf fibration a source of examples in geometry and physics.\n\n## 2. The alternating face vector characterises spheres among cube boundaries\n\n**Conjecture.** Among the boundaries of `n`-cubes, the vanishing of the\nalternating face count occurs exactly for even `n`, and this parity dichotomy is\nthe combinatorial shadow of the Euler characteristic of spheres: odd-dimensional\nspheres have characteristic `0`, even-dimensional spheres have characteristic `2`.\n\n*The key insight is* that the boundary Euler characteristic equals `1 - (-1)^n`,\na formula proved here by peeling the top cell off the binomial identity; its\nparity, and nothing else, decides whether the boundary sphere is odd- or\neven-dimensional.\n\n*Why now?* The general formula `1 - (-1)^n` is now available for every `n`, so\nthe dichotomy is no longer a case-by-case observation but a single closed\nexpression whose parity can be analysed uniformly.\n\n## 3. Isoclinic rotations split SO(4) into two commuting circle families\n\n**Conjecture.** The four-dimensional rotations that mix one spatial axis with the\nfourth coordinate, together with their \"dual\" rotations in the complementary\nplane, generate two commuting one-parameter families whose product realises every\nelement of the identity component of the rotation group, so that `SO(4)` is\nlocally the product of two circles' worth of rotations.\n\n*The key insight is* that the angle-addition law proved for a single mixing plane\nmakes each family a one-parameter group, and disjoint coordinate planes commute\nterm by term; the whole rotation group is assembled from these independent blocks.\n\n*Why now?* The composition law `rot(θ) ∘ rot(φ) = rot(θ+φ)` is established as an\nexact identity, giving the group law for one block; the remaining task is purely\nto combine two commuting blocks, which the coordinate independence makes routine.\n\n## 4. The 4-ball volume law extends to a monotone dimension ladder\n\n**Conjecture.** The ratio of the volume of the unit ball in dimension `n+2` to\nthat in dimension `n` equals `2π / (n+2)`, so the sequence of unit-ball volumes\nrises to a single maximum and then decreases to zero, with the four-dimensional\nvalue `π²/2` sitting just past the peak.\n\n*The key insight is* that the even-dimensional volumes `π^k / k!` and the\nodd-dimensional volumes built from double factorials both satisfy the same\ntwo-step recurrence, which turns the qualitative \"volumes eventually shrink\"\nfolklore into an exact multiplicative law.\n\n*Why now?* The `n = 4` volume is pinned down here from the general even-dimension\nformula; the same formula supplies every other dimension, so the recurrence and\nits unimodal consequence are immediately testable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1207",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3e1dd178",
+    "status": "available",
+    "timestamp": "2026-07-13T09:49:33.253981+00:00",
+    "title": "Elementary algebraic core of four-dimensional geometr"
   },
   {
     "ambition_level": "extension",

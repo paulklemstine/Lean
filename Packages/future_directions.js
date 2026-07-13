@@ -1253,20 +1253,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "75061bf5",
-    "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "sorry_fill_7a9dcf2f_cb7384d6",
-    "priority_score": 0.8300000000000001,
-    "research_mode": "team",
-    "source_exp_id": "7a9dcf2f",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T02:59:14.834105+00:00",
-    "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 996ff4be (Q=0.780) proved 14 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups an",
     "domains": [
@@ -7700,6 +7686,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T08:59:54.531038+00:00",
     "title": "The file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle completed the bridge showing that the factorial number system is a\nsingle point in the one-parameter family of mixed-radix positional systems:\nplace values, digit values, and validity all transport along the identity\n`\u220f_{j<i}(j+1) = i!`, and factorial uniqueness follows as a corollary of the\ngeneral mixed-radix uniqueness theorem. The following conjectures grow directly\nout of that unification.\n\n## 1. Every finitely supported digit stream has a unique mixed-radix expansion for arbitrary positive bases\n\n**Conjecture.** Fix any base sequence `b : \u2115 \u2192 \u2115` with `b i \u2265 1` for all `i`.\nThen the value map `c \u21a6 \u2211_{i<k} c i \u00b7 \u220f_{j<i} b j` restricts to a bijection from\nvalid length-`k` digit functions onto the interval `[0, \u220f_{i<k} b i)`, for every\n`k`.\n\nThe key insight is that both halves of the bijection depend only on the running\nproduct of the bases and on the local digit bound `c i < b i`, never on the\nspecific arithmetic of any one base; uniqueness comes from Euclidean division by\nthe running product, and surjectivity from greedy digit extraction. Why now?\nThe uniqueness half and the existence half are already established separately in\nthe general theory, so the remaining step is to package them as a single\ncounting bijection \u2014 the natural capstone that turns two one-sided facts into a\nstructural equivalence.\n\n## 2. Carry propagation is base-independent\n\n**Conjecture.** Incrementing a valid mixed-radix numeral by one \u2014 resolving\ncarries digit by digit against the local bases \u2014 always yields the numeral whose\nvalue is one larger, for any positive base sequence.\n\nThe key insight is that a carry at position `i` fires exactly when the digit\nreaches its local base `b i`, so the correctness of the successor operation is\ngoverned solely by the same `c i < b i` bound that governs validity, making the\nargument uniform across factorial, binary, decimal, and every mixed system in\nbetween. Why now? With place-value and value agreement between the factorial and\nmixed-radix systems now settled, successor correctness is the smallest dynamic\noperation whose base-independence can be isolated and proved cleanly, and it is\nthe gateway to base-independent addition.\n\n## 3. A mixed-radix system realizes a prescribed interval of representable integers iff its base product matches\n\n**Conjecture.** Two positive base sequences represent exactly the same set of\nintegers at every length if and only if their running products agree at every\nlength; and the representable set at length `k` is precisely `[0, \u220f_{i<k} b i)`.\n\nThe key insight is that the representable set is an interval whose length is the\nrunning product alone, so all combinatorial information about \"how many numbers\nfit\" is a function of the product sequence rather than the individual bases.\nWhy now? The factorial-versus-mixed bridge already shows one nontrivial pair of\ndistinct-looking definitions that coincide because their products coincide;\npromoting this observation to an if-and-only-if characterization would explain\nprecisely when two \"alien number systems\" are interchangeable.\n\n## 4. Digit sums modulo `b i \u2212 1` give a uniform divisibility test\n\n**Conjecture.** For a constant base `b`, an integer is divisible by `b \u2212 1` iff\nthe sum of its base-`b` digits is; the mixed-radix generalization replaces the\nsingle modulus by a compatible family of moduli tied to the running products.\n\nThe key insight is that `\u220f_{j<i} b j \u2261 1 (mod b\u22121)` in the constant-base case,\nand the mixed-radix analogue asks for the exact congruence class of each running\nproduct, which is again determined by the product sequence rather than by any\nindividual digit. Why now? The bridge established that all arithmetic content of\nthese systems flows through the running product; casting-out-nines is the oldest\nand most testable consequence of that principle, and generalizing it is a\nconcrete, falsifiable next target.\n\n## 5. Rank of apparition pins down every primitive Fibonacci prime\n\n**Conjecture.** For every index beyond the four small exceptions `1, 2, 6, 12`,\nthe Fibonacci number `F(n)` carries a prime `p` whose *rank of apparition* \u2014 the\nleast positive index `m` with `p \u2223 F(m)` \u2014 is exactly `n`; equivalently, the\ninteger obtained from `F(n)` by dividing out every common factor it shares with\nan earlier Fibonacci number is always larger than `1`.\n\nThe key insight is that primitivity is a purely local statement about the\nhomogeneous cyclotomic factor `\u03a6_n = \u220f_{d \u2223 n}(\u03c6^d \u2212 \u03c8^d)^{\u03bc(n/d)}`: this factor\nis an integer dividing `F(n)`, its logarithm equals `\u03c6(n)\u00b7log \u03c6` up to a bounded\nconvergent correction coming from the sub-unit conjugate root, and its only\nnon-primitive prime divisor is the largest prime factor of `n`, appearing to the\nfirst power \u2014 so once `\u03a6_n` exceeds `n`, a primitive prime is forced. Why now?\nThe finite range is already settled by direct computation and the whole\nexistence claim has been reduced to this single size-versus-intrinsic-prime\ninequality; separating the analytic lower bound `\u03a6_n > n` from the\nlifting-the-exponent bound on the intrinsic prime turns a classical\ngrand-challenge into two independently attackable estimates.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1206",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "75061bf5",
+    "status": "available",
+    "timestamp": "2026-07-13T09:49:22.314782+00:00",
+    "title": "This cycle completed the bridge showing that the factorial number system is a"
   },
   {
     "consumed_by_exp_id": "",

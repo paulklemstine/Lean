@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "867d1ba2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation sem",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-12T18:13:35",
-      "title": "Deepening: This cycle deepens the formalization of Dung's abstract argumentation theory and"
-    },
-    {
       "cycle_id": "0fe20e26",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Algebraic Cycles in Piecewise-Linear Decision Surfaces\n\nThe results of this cycle sharpen the qualitative \"every homology class of a\nrectified-linear decision surface is a ration",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-13T09:00:00",
       "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of Matroids"
+    },
+    {
+      "cycle_id": "75061bf5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis cycle completed the bridge showing that the factorial number system is a\nsingle point in the one-parameter family of mixed-radix positional systems:\nplace values, digit value",
+      "quality_score": 0.72,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-13T09:49:29",
+      "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cd5a9d7d",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Forced Structure in Symbolic Sequences\n\nThis cycle established two complementary \"forcing\" thresholds for sequences over a\nfinite alphabet: a *linear* pigeonhole threshold that fo",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 11,
-      "timestamp": "2026-07-10T15:48:57",
-      "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
-    },
     {
       "cycle_id": "9d20b474",
       "domain": "Geometry",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-13T09:00:00",
       "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of Matroids"
+    },
+    {
+      "cycle_id": "75061bf5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis cycle completed the bridge showing that the factorial number system is a\nsingle point in the one-parameter family of mixed-radix positional systems:\nplace values, digit value",
+      "quality_score": 0.72,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-13T09:49:29",
+      "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-13T09:00:00",
+  "last_updated": "2026-07-13T09:49:29",
   "open_questions": [
-    {
-      "context": "-    sorry; +  · sorry  -- Carmichael's theorem, infinite tail (cyclotomic Fibonacci bounds); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "91f941b6",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-12T18:31:13"
-    },
     {
       "context": "necessary.  All main theorems are `sorry`-free and use genuine arguments; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "1f9ea620",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-13T08:43:50"
+    },
+    {
+      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "75061bf5",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-07-13T09:49:29"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "32285b55",
-        "quality": 0.83,
-        "theorems": 19,
-        "title": "Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at "
-      },
-      {
         "cycle_id": "d4192a75",
         "quality": 0.7,
         "theorems": 31,
@@ -3141,6 +3135,12 @@
         "quality": 0.55,
         "theorems": 18,
         "title": "Close Proofs: Rucker: Spacetime Donuts — Topology of the Universe"
+      },
+      {
+        "cycle_id": "75061bf5",
+        "quality": 0.72,
+        "theorems": 0,
+        "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
       }
     ],
     "Bridges": [
