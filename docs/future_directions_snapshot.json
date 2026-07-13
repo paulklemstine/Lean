@@ -4038,7 +4038,7 @@
     "catalog_references": [
       "Pairwise Reflection Symmetry in Generalized Latin Rectangles (arXiv:2406.xxxxx)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59a15132",
     "description": "Conjecture that a generalized Latin rectangle of size n×n (i.e., λ = 1) possessing pairwise reflection symmetry—where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns—exists if and only if n is a power of two.",
     "domain_bridges": [
       "group theory",
@@ -4053,7 +4053,7 @@
     "proof_strategy": "Construct explicit examples for n = 2^k using group actions (e.g., cyclic or dihedral groups) to satisfy the symmetry condition, and prove non‑existence for other n by analysing the cycle structure of the column permutations and applying parity constraints derived from the pairwise balance condition.",
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T16:39:06.146756+00:00",
     "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
   },
@@ -7846,7 +7846,7 @@
       "Homotopy interleavings",
       "Doubling dimension in metric geometry"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64d4f5fe",
     "description": "There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-approximation to the Vietoris-Rips filtration VR(Xₙ) requires at least 2^(γ·n) simplices, and moreover γ can be taken to satisfy γ = γ(c) with lim_{c→√2⁻} γ(c) = 0.",
     "domain_bridges": [
       "Formal verification of persistent homology algorithms",
@@ -7862,7 +7862,7 @@
     "proof_strategy": "1. Construct an explicit infinite family of finite metric spaces Xₙ (e.g., using ℓ₁-spheres or Hamming cube constructions) with controlled geometric properties. 2. Prove that these spaces have unbounded doubling dimension. 3. Use combinatorial arguments to show that any c-approximation must encode sufficient information to distinguish between exponentially many distinct metric configurations. 4. Establish the quantitative bound on γ(c) by analyzing the homomorphism density needed in the approximation maps. 5. Verify the limit behavior as c approaches √2 from below using asymptotic analysis.",
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T17:01:42.923851+00:00",
     "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
   },
