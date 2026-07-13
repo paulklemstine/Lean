@@ -437,7 +437,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Finiteness conjecture for semisimple geometric representations of Hiranouchi's r"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4cfd5e43",
     "description": "Building on cycle f9bf2df0 (Q=0.820), which proved 16 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture fo",
     "domains": [
       "NumberTheory"
@@ -446,7 +446,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "f9bf2df0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T22:14:15.019602+00:00",
     "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
   },
@@ -1223,20 +1223,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T01:06:09.210691+00:00",
     "title": "Close Proofs: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
-  },
-  {
-    "consumed_by_exp_id": "223b6ab0",
-    "description": "Cycle 319bd9f6 (Q=0.780) proved 13 theorems in Shared but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the funda",
-    "domains": [
-      "Shared"
-    ],
-    "id": "sorry_fill_319bd9f6_c95d702f",
-    "priority_score": 0.8300000000000001,
-    "research_mode": "team",
-    "source_exp_id": "319bd9f6",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T00:29:28.312612+00:00",
-    "title": "Close Proofs: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
   {
     "consumed_by_exp_id": "",
@@ -4381,21 +4367,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-08T11:00:38.273301+00:00",
     "title": "t-Perfect Graph 4-Colorability Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "9da8e56c",
-    "description": "For every loopless matroid M on finite ground set E and every Feichtner\u2013Yuzvinsky building set G containing the top flat E, the K-polynomial of the integral tangent class T^Z_{M,G} \u2208 K_Z(M,G) equals the Hilbert series of the Chow ring A*(M,G). Concretely, P^K(T^Z_{M,G}, t) = Hilb(A*(M,G), t) as polynomials in Z[t]. This is the central P^K=Hilb identity (Theorem A, property 2) of the paper, connecting the K-theoretic tangent class to the cohomological Hilbert series.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0642",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05835v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T11:32:34.706786+00:00",
-    "title": "Hirzebruch\u2013Riemann\u2013Roch Identity for the Integral Tangent Class of Matroids"
   },
   {
     "consumed_by_exp_id": "",
@@ -7699,6 +7670,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T08:43:43.481593+00:00",
     "title": "`Catalog/Bridges/CantorHierarchy.lean` formalizes the classical skeleton of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Topology and Causal Structure of Closed Universes\n\nBold, testable conjectures growing out of the study of the flat donut universe:\nthe closed torus model, its winding lattice, and the arithmetic that organizes\nits closed geodesics.\n\n## 1. A unimodular tower of homotopy bases from linear recurrences\n\n**Conjecture.** For every integer linear recurrence with unit determinant (the\nFibonacci recurrence being the first example), the sequence of consecutive\n\"winding vectors\" traces out an infinite path in the modular group `GL\u2082(\u2124)`,\nand every element of `GL\u2082(\u2124)` arising with positive entries is reached by such a\ntower.\n\n*The key insight is* that Cassini's identity is not a numerical accident but the\nstatement that the one-step shift of a unit-determinant recurrence is a change of\nbasis of the fundamental group of the two-torus; iterating the recurrence walks\nthrough the automorphisms of that lattice.\n\n*Why now?* The determinant of the consecutive-Fibonacci winding matrix is now\nknown to be exactly `\u00b11` at every stage, pinning the walk to `GL\u2082(\u2124)` and making\nthe reachability question concrete and attackable.\n\n## 2. Causal genus: counting independent closed timelike loops\n\n**Conjecture.** On a flat Lorentzian `n`-torus with signature `(1, n-1)`, the\nmaximal number of homotopy-independent *timelike* closed geodesics equals `1`\nwhenever the time direction is a single circle, but jumps once two or more\ncoordinates are timelike, scaling linearly with the number of timelike circles.\n\n*The key insight is* that timelikeness is a sign condition on an integer\nquadratic form restricted to the winding lattice, so counting independent\ntimelike loops becomes counting lattice directions on which an indefinite form is\nnegative \u2014 a problem about the negative cone of an integral form.\n\n*Why now?* The existence of a closed timelike geodesic in every dimension is\nestablished via the pure-time direction; the natural next quantitative question is\nhow many genuinely distinct ones there are.\n\n## 3. Arithmetic obstructions to null closed geodesics\n\n**Conjecture.** A flat Lorentzian torus with rational metric contains a closed\n*null* geodesic (`Q(v) = 0`, `v \u2260 0` integer) if and only if the associated\nintegral quadratic form is isotropic over the rationals; equivalently, the\ndonut universe admits closed light rays exactly when a Hasse\u2013Minkowski local\ncondition holds at every prime.\n\n*The key insight is* that closed null geodesics are integer zeros of the\nMinkowski form on the winding lattice, converting a geometric existence question\ninto the classical solvability of a quadratic form over `\u211a`.\n\n*Why now?* With closed timelike and spacelike directions already exhibited\nconcretely, the borderline null case is the remaining causal type, and it is\nprecisely the one governed by isotropy of quadratic forms.\n\n## 4. Primitive winding numbers and closed geodesics without shorter subloops\n\n**Conjecture.** A closed geodesic of the flat torus is *prime* (not a repeated\nshorter loop) if and only if its integer direction vector is primitive\n(coordinatewise gcd equal to one); the count of prime closed geodesics of bounded\nlength is governed by the same density `6/\u03c0\u00b2` that controls visible lattice\npoints.\n\n*The key insight is* that repetition of a loop corresponds exactly to a common\nfactor in its winding vector, so the primitive-vector condition detects the\nshortest representative in each homotopy class.\n\n*Why now?* The winding lattice `\u2124\u207f` is identified as the fundamental group, so\n\"primitive direction\" is now a precise lattice-theoretic predicate ready for a\ndensity count.\n\n## 5. Fibonacci-directed geodesics equidistribute on the two-torus\n\n**Conjecture.** The closed geodesic on `\ud835\udd4b\u00b2` with winding direction `(F\u2099, F\u2099\u208a\u2081)`\nbecomes equidistributed as `n \u2192 \u221e`, with discrepancy decaying at the optimal rate\ndictated by the golden ratio's continued-fraction expansion `[1;1,1,...]`.\n\n*The key insight is* that the slopes `F\u2099/F\u2099\u208a\u2081` are the convergents of the most\nirrational number, so Fibonacci-directed loops are the extremal case of how\nuniformly a straight geodesic can fill the donut universe.\n\n*Why now?* The winding vectors `(F\u2099, F\u2099\u208a\u2081)` are now known to be primitive and\nunimodular at every stage, making them the canonical family on which to test\nsharp equidistribution rates.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1204",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "223b6ab0",
+    "status": "available",
+    "timestamp": "2026-07-13T08:59:42.332882+00:00",
+    "title": "Bold, testable conjectures growing out of the study of the flat donut universe:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was proved\n\nThe file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-free\nformalization of the `P^K = Hilb` identity of the mission specialised to the\n**Boolean matroid** `B_n` (the free matroid on `n` elements) with its maximal\nFeichtner\u2013Yuzvinsky building set, whose wonderful compactification is the\n**permutohedral toric variety** `X_n = X(B_n)` of dimension `n - 1`.\n\nFor this matroid the graded Betti numbers of the Chow ring `A*(B_n)` (the Hilbert\nfunction) are the **Eulerian numbers** `\u27e8n,k\u27e9` \u2014 they are the `h`-vector of the\npermutohedron.  We define the Eulerian numbers by their triangle recurrence and\nprove:\n\n| Lean name | Statement | Geometric meaning |\n|---|---|---|\n| `eulerian_symm` | `\u27e8n,k\u27e9 = \u27e8n, n-1-k\u27e9` | **Poincar\u00e9 duality** of `A*(B_n)` (palindromic Hilbert series) |\n| `eulerian_row_sum` | `\u2211_k \u27e8n,k\u27e9 = n!` | `dim_\u211a A*(B_n) = n!` = value of Hilbert series at `1` |\n| `worpitzky` | `m\u207f = \u2211_k \u27e8n,k\u27e9 \u00b7 C(m+k, n)` | Riemann\u2013Roch generating-function bridge (\u03c7(X, L\u1d50) \u2194 Hilbert data) |\n| `eulerian_explicit` | `\u27e8n,k\u27e9 = \u2211_j (-1)\u02b2 C(n+1,j) (k+1-j)\u207f` | **alternating Euler-characteristic (K-theory) formula = dimension count** |\n| `tangentKPoly_eq_hilbChow` | `tangentKPoly n = hilbChow n` in `\u2124[t]` | **the `P^K = Hilb` identity** |\n| `hilbChow_eval_one`, `hilbChow_palindrome` | evaluation / palindromicity | Poincar\u00e9-duality consequences on the Hilbert polynomial |\n\nThe flagship `tangentKPoly_eq_hilbChow` equates two polynomials that are defined\nby genuinely different formulas: `hilbChow` from the nonnegative dimension counts\n`\u27e8n,k\u27e9`, and `tangentKPoly` from the manifestly *alternating* Euler-characteristic\ncoefficients `\u2211_j (-1)\u02b2 C(n+1,j)(k+1-j)\u207f`.  Their equality is a concrete instance\nof the paper's Theorem A, property 2.\n\nAll theorems depend only on the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`.\n\n## Natural next steps\n\n1. **General matroids.** Replace the Boolean matroid by an arbitrary loopless\n   matroid `M` and an arbitrary building set `G \u220b E`.  This requires formalizing\n   the lattice of flats, the Feichtner\u2013Yuzvinsky nested-set basis of the Chow\n   ring `A*(M,G)`, and the resulting Hilbert function.  The `P^K = Hilb` identity\n   should then be stated for the corresponding K-class `T^Z_{M,G}`.\n\n2. **The Chow ring itself.** Here `A*(B_n)` is treated only through its numerical\n   invariant (the Hilbert series / Eulerian polynomial).  A deeper formalization\n   would construct the Feichtner\u2013Yuzvinsky presentation of `A*(M,G)` as a quotient\n   of a polynomial ring, prove it is a Poincar\u00e9-duality algebra, and derive\n   `eulerian_symm` from that structure rather than from the recurrence.\n\n3. **The integral K-theory `K_Z(M,G)`.** The mission's `T^Z` lives in an integral\n   K-group.  Formalizing `K_Z(M,G)` and its natural basis, then *defining* the\n   tangent class and computing its K-polynomial, would turn `tangentKPoly` from a\n   combinatorially-defined stand-in into the genuine K-theoretic object.\n\n4. **Ehrhart / lattice-point interpretation.** `worpitzky` already exposes the\n   `m\u207f = \u03c7(X_n, L\u1d50)` side.  Connecting it to the Ehrhart theory of the\n   (hypersimplices / permutohedron) and to `hilbChow` via the rational generating\n   function `\u2211_m m\u207f t\u1d50 = (t \u00b7 hilbChow n)/(1-t)^{n+1}` would make the\n   Riemann\u2013Roch content explicit as a power-series identity.\n\n5. **Other named matroid families.** Uniform matroids `U_{r,n}` and graphic\n   matroids have explicit Chow-ring Hilbert series; formalizing those and their\n   `P^K = Hilb` identities would broaden the evidence base and stress-test the\n   general framework.\n\n6. **`\u03b3`-positivity and unimodality.** The Eulerian polynomials are `\u03b3`-positive,\n   hence unimodal; formalizing this would give quantitative refinements of the\n   Poincar\u00e9-duality symmetry `eulerian_symm`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1205",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9da8e56c",
+    "status": "available",
+    "timestamp": "2026-07-13T08:59:54.531038+00:00",
+    "title": "The file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-"
   },
   {
     "consumed_by_exp_id": "",

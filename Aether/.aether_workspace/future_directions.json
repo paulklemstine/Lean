@@ -33543,7 +33543,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Topology of Argumentation (VIII)\n\nThis cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving that\na **well-founded** Dung argumentation framework has a **unique complete\nextension** — the grounded extension — which is also stable and preferred, and\nthat the grounded extension is always the intersection of all complete\nextensions. Key results:\n\n- `stable_complete` — every stable extension is complete (no hypothesis).\n- `groundedExt_eq_sInter_complete` — grounded = ⋂ of all complete extensions.\n- `groundedExt_stable_of_wf` — grounded is stable under well-foundedness.\n- `complete_eq_grounded_of_wf`, `grounded_unique_complete_of_wf` — uniqueness.\n- `stable_unique_of_wf`, `grounded_preferred_of_wf` — coincidence of\n  grounded/stable/preferred semantics on well-founded frameworks.\n\n## Where to go next\n\n- **Kleene reachability for finitary frameworks.** For frameworks in which every\n  argument has finitely many attackers, `charF` is ω-continuous, so\n  `groundedExt = ⋃ₙ charF^[n] ∅`. Formalize the ω-continuity and derive the\n  explicit union description, then re-prove `groundedExt_stable_of_wf` for\n  *finitary well-founded* frameworks by ordinary (ℕ-indexed) induction.\n\n- **Preferred ⇒ complete in general.** Prove the classical result that every\n  preferred (maximal admissible) extension is complete, without well-foundedness.\n  Combined with `grounded_preferred_of_wf` this would upgrade uniqueness to\n  \"grounded = preferred = stable = complete\" purely from the extension calculus.\n\n- **Labelling correspondence.** Introduce complete labellings (in/out/undec) and\n  the bijection with complete extensions; transport `grounded_unique_complete_of_wf`\n  to \"the unique complete labelling has no `undec` label\" on well-founded frameworks.\n\n- **Quantitative well-foundedness.** Relate the ordinal rank of the attack\n  relation to the least stage at which `lfpApprox` stabilizes, giving an ordinal\n  bound on the convergence of the grounded construction.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Bridges"
@@ -33789,7 +33789,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Multiverse Set Theory\n\n`Catalog/Novelty/MultiverseSetTheory.lean` formalizes the combinatorial core of\nHamkins' set-theoretic multiverse: worlds as truth assignments, a multiverse as a\ncollection of worlds, propositional set-theoretic sentences, independence, and a\n`flip`-based abstraction of forcing. The headline results are:\n\n- `forcingClosed_atom_independent`: in any nonempty forcing-closed multiverse\n  every atomic sentence is independent — forcing settles nothing;\n- `CH_independent` and `CH_independent_under_VeqL_imp_CH`: `CH` is independent in\n  `{Gödel, Cohen}`, and remains independent even after adopting `V = L → CH` as a\n  law of the multiverse;\n- `absolute_em`, `absolute_noncontradiction`, `absolute_self_imp`: logical\n  validities are absolute across all branches, unlike `CH`;\n- `card_worlds` / `card_full_Claim`: the full multiverse over `n` atoms has `2^n`\n  worlds.\n\n## Natural next steps\n\n1. **Quantified sentences over a signature.** Replace the atomic-assertion type by\n   a genuine first-order language and interpret worlds as `Structure`s, recovering\n   the propositional layer as the atomic-diagram fragment. This lets independence\n   be stated for actual first-order sentences.\n\n2. **A Boolean/Heyting algebra of multiverse truth values.** Map each sentence to\n   the set of worlds satisfying it; validity/refutability/independence become the\n   top/bottom/proper-nontrivial elements of a Boolean algebra of \"multiverse\n   propositions\". Prove the assignment is a Boolean homomorphism — a first step\n   toward Boolean-valued models.\n\n3. **Forcing posets, not just single flips.** Generalize `flip` to a partial order\n   of finite conditions with a genericity notion, and prove a discrete\n   Rasiowa–Sikorski–style existence lemma. This bridges the abstraction to real\n   forcing.\n\n4. **Consistency-strength ordering.** Introduce a preorder on worlds/theories by\n   interpretability and study the multiverse as an ordered structure (large-cardinal\n   hierarchy). Prove that the \"settled\" sentences form a filter closed under modus\n   ponens.\n\n5. **Dependence relations.** Formalize when one sentence's truth constrains\n   another's across a multiverse (as `V = L → CH` does), and characterize the\n   settled fragment as the deductive closure of the multiverse's shared theory.\n\n6. **Modal logic of forcing.** Interpret \"forceable\" as a modality on the\n   forcing-closed multiverse and identify the resulting propositional modal logic\n   (Hamkins–Löwe show it is `S4.2` for actual forcing); test which modal schemes\n   hold in the abstract `flip` model.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Logic"
@@ -33994,7 +33994,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## What was proved\n\nThe file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-free\nformalization of the `P^K = Hilb` identity of the mission specialised to the\n**Boolean matroid** `B_n` (the free matroid on `n` elements) with its maximal\nFeichtner–Yuzvinsky building set, whose wonderful compactification is the\n**permutohedral toric variety** `X_n = X(B_n)` of dimension `n - 1`.\n\nFor this matroid the graded Betti numbers of the Chow ring `A*(B_n)` (the Hilbert\nfunction) are the **Eulerian numbers** `⟨n,k⟩` — they are the `h`-vector of the\npermutohedron.  We define the Eulerian numbers by their triangle recurrence and\nprove:\n\n| Lean name | Statement | Geometric meaning |\n|---|---|---|\n| `eulerian_symm` | `⟨n,k⟩ = ⟨n, n-1-k⟩` | **Poincaré duality** of `A*(B_n)` (palindromic Hilbert series) |\n| `eulerian_row_sum` | `∑_k ⟨n,k⟩ = n!` | `dim_ℚ A*(B_n) = n!` = value of Hilbert series at `1` |\n| `worpitzky` | `mⁿ = ∑_k ⟨n,k⟩ · C(m+k, n)` | Riemann–Roch generating-function bridge (χ(X, Lᵐ) ↔ Hilbert data) |\n| `eulerian_explicit` | `⟨n,k⟩ = ∑_j (-1)ʲ C(n+1,j) (k+1-j)ⁿ` | **alternating Euler-characteristic (K-theory) formula = dimension count** |\n| `tangentKPoly_eq_hilbChow` | `tangentKPoly n = hilbChow n` in `ℤ[t]` | **the `P^K = Hilb` identity** |\n| `hilbChow_eval_one`, `hilbChow_palindrome` | evaluation / palindromicity | Poincaré-duality consequences on the Hilbert polynomial |\n\nThe flagship `tangentKPoly_eq_hilbChow` equates two polynomials that are defined\nby genuinely different formulas: `hilbChow` from the nonnegative dimension counts\n`⟨n,k⟩`, and `tangentKPoly` from the manifestly *alternating* Euler-characteristic\ncoefficients `∑_j (-1)ʲ C(n+1,j)(k+1-j)ⁿ`.  Their equality is a concrete instance\nof the paper's Theorem A, property 2.\n\nAll theorems depend only on the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`.\n\n## Natural next steps\n\n1. **General matroids.** Replace the Boolean matroid by an arbitrary loopless\n   matroid `M` and an arbitrary building set `G ∋ E`.  This requires formalizing\n   the lattice of flats, the Feichtner–Yuzvinsky nested-set basis of the Chow\n   ring `A*(M,G)`, and the resulting Hilbert function.  The `P^K = Hilb` identity\n   should then be stated for the corresponding K-class `T^Z_{M,G}`.\n\n2. **The Chow ring itself.** Here `A*(B_n)` is treated only through its numerical\n   invariant (the Hilbert series / Eulerian polynomial).  A deeper formalization\n   would construct the Feichtner–Yuzvinsky presentation of `A*(M,G)` as a quotient\n   of a polynomial ring, prove it is a Poincaré-duality algebra, and derive\n   `eulerian_symm` from that structure rather than from the recurrence.\n\n3. **The integral K-theory `K_Z(M,G)`.** The mission's `T^Z` lives in an integral\n   K-group.  Formalizing `K_Z(M,G)` and its natural basis, then *defining* the\n   tangent class and computing its K-polynomial, would turn `tangentKPoly` from a\n   combinatorially-defined stand-in into the genuine K-theoretic object.\n\n4. **Ehrhart / lattice-point interpretation.** `worpitzky` already exposes the\n   `mⁿ = χ(X_n, Lᵐ)` side.  Connecting it to the Ehrhart theory of the\n   (hypersimplices / permutohedron) and to `hilbChow` via the rational generating\n   function `∑_m mⁿ tᵐ = (t · hilbChow n)/(1-t)^{n+1}` would make the\n   Riemann–Roch content explicit as a power-series identity.\n\n5. **Other named matroid families.** Uniform matroids `U_{r,n}` and graphic\n   matroids have explicit Chow-ring Hilbert series; formalizing those and their\n   `P^K = Hilb` identities would broaden the evidence base and stress-test the\n   general framework.\n\n6. **`γ`-positivity and unimodality.** The Eulerian polynomials are `γ`-positive,\n   hence unimodal; formalizing this would give quantitative refinements of the\n   Poincaré-duality symmetry `eulerian_symm`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -38465,11 +38465,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "4cfd5e43",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38481,7 +38481,7 @@
       ],
       "github_issue": 0,
       "id": "push_f9bf2df0_573b41a7",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T09:00:12.486462+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -38496,7 +38496,7 @@
       "source": "",
       "source_exp_id": "f9bf2df0",
       "source_path": "Isomorphisms of Meaning: When Structures Collide",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-10T22:14:15.019602+00:00",
       "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"

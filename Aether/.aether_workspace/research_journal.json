@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0bd39924",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Delta-Petrie Divisibility and Positivity\n\nThe Petrie block `𝔭_k = 1 + x + ⋯ + x^{k-1}` divides `xⁿ − 1` exactly when `k ∣ n`.\nThis cyclotomic criterion is the arithmetic skeleton",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-12T17:56:02",
-      "title": "Delta-Petrie Schur Positivity"
-    },
-    {
       "cycle_id": "867d1ba2",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation sem",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-07-13T08:43:50",
       "title": "Deepening: Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
+    },
+    {
+      "cycle_id": "9da8e56c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was proved\n\nThe file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-free\nformalization of the `P^K = Hilb` identity of the mission specialised to t",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T09:00:00",
+      "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of Matroids"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f5358691",
-      "domain": "Computation",
-      "key_insight": "# Future directions — Persistent Cycles in Randomized Graphs\n\n## What was established\n\nThe mission target — *for every `ε>0` there is `K` such that for `d ≥ K` and\n`p ∈ [εd/log n, d/log n]`, `G_p` a.a",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-10T15:33:02",
-      "title": "Persistent Cycles in Randomized Graphs via Hyperstable Structural Constraints"
-    },
     {
       "cycle_id": "cd5a9d7d",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-13T08:59:49",
       "title": "Close Proofs: Rucker: Spacetime Donuts — Topology of the Universe"
+    },
+    {
+      "cycle_id": "9da8e56c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was proved\n\nThe file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-free\nformalization of the `P^K = Hilb` identity of the mission specialised to t",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-13T09:00:00",
+      "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of Matroids"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5b1ced03",
-      "domain": "Novelty",
-      "name": "pathMatch_zero",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "5b1ced03",
-      "domain": "Novelty",
-      "name": "pathMatch_one",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "5b1ced03",
-      "domain": "Novelty",
-      "name": "pathMatch_succ_succ",
-      "quality": 0.7
-    },
     {
       "cycle_id": "32285b55",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "no_surjection_onto_powerset",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9da8e56c",
+      "domain": "Novelty",
+      "name": "eulerian_zero_zero",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9da8e56c",
+      "domain": "Novelty",
+      "name": "eulerian_zero_succ",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9da8e56c",
+      "domain": "Novelty",
+      "name": "eulerian_succ_zero",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-13T08:59:49",
+  "last_updated": "2026-07-13T09:00:00",
   "open_questions": [
     {
       "context": "-    sorry; +  · sorry  -- Carmichael's theorem, infinite tail (cyclotomic Fibonacci bounds); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "53d4816b",
-        "quality": 0.82,
-        "theorems": 18,
-        "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothen"
-      },
-      {
         "cycle_id": "4bfb0f7c",
         "quality": 0.83,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 7,
         "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
+      },
+      {
+        "cycle_id": "9da8e56c",
+        "quality": 0.72,
+        "theorems": 15,
+        "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of Matroids"
       }
     ],
     "NumberTheory": [
