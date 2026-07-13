@@ -1700,6 +1700,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Bypassed",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_1244",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.09439v1",
+    "status": "available",
+    "timestamp": "2026-07-13T19:58:15.016075+00:00",
+    "title": "Bypassed"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
     "domains": [
       "Novelty",
@@ -2151,6 +2165,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T18:11:39.634722+00:00",
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1245",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-07-13T19:58:20.850025+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
