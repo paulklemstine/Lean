@@ -30007,11 +30007,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "167aed7f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -30024,7 +30024,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1108",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T08:27:31.793537+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -30039,7 +30039,7 @@
       "source": "",
       "source_exp_id": "538f30a2",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/538f30a2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_e0af5982",
       "timestamp": "2026-07-12T03:38:22.248590+00:00",
       "title": "This project formalizes an abstract, model-agnostic version of Hamkins'"
@@ -40460,7 +40460,6 @@
     "without": 8
   },
   "selection_log": [
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -40479,6 +40478,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
+    "abduction_followup",
     "abduction_followup"
   ]
 }
