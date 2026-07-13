@@ -3810,7 +3810,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4192a75",
     "description": "For all finite graphs F and G, there exists an oddomorphism from F to G if and only if G is a split-off minor of F. The forward direction is established in the paper; the converse remains open.",
     "domains": [
       "Bridges"
@@ -3819,7 +3819,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03405v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T02:03:09.912711+00:00",
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
   },
