@@ -31893,11 +31893,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5b802ccf",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31910,7 +31910,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1154",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T05:21:07.435955+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31925,7 +31925,7 @@
       "source": "",
       "source_exp_id": "867d1ba2",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/867d1ba2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_5c1aec88",
       "timestamp": "2026-07-12T18:13:25.206194+00:00",
       "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
@@ -39931,7 +39931,6 @@
   },
   "selection_log": [
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -39949,6 +39948,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "abduction_followup"
   ]
 }
