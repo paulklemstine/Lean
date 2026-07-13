@@ -340,6 +340,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8e89241b (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alterna",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_8e89241b_f8d3f27b",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "8e89241b",
+    "status": "available",
+    "timestamp": "2026-07-13T05:18:32.917732+00:00",
+    "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -1077,6 +1091,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T00:21:09.997327+00:00",
     "title": "Close Proofs: Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 8e89241b (Q=0.820) proved 18 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for al",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_8e89241b_bf025af6",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "8e89241b",
+    "status": "available",
+    "timestamp": "2026-07-13T05:18:33.106794+00:00",
+    "title": "Close Proofs: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083("
   },
   {
     "consumed_by_exp_id": "",
@@ -1823,20 +1851,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T23:33:27.145073+00:00",
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
-  },
-  {
-    "consumed_by_exp_id": "8e89241b",
-    "description": "The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0111",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T00:16:17.133115+00:00",
-    "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
     "consumed_by_exp_id": "",
@@ -7602,6 +7616,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T04:46:15.317936+00:00",
     "title": "That no nonconstant integer polynomial takes a prime valu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Asymptotic Alternating Signs of Andrews-type q-Series\n\nThis cycle established an amplitude-domination principle: a coefficient sequence\nof the form `V(n) = (-1)^n A(n) + E(n)`, with a positive dominant amplitude `A`\nand a subdominant error `E`, has strictly alternating signs precisely where the\namplitude beats the error, and the exceptional set is controlled by counting the\nindices where domination fails. Three model series realised the empty, finite,\nand density-zero regimes, and a boundary series showed the strict inequality\n`|E| < A` cannot be relaxed to `|E| \u2264 A` without admitting a positive-density set\nof sign violations. The following conjectures push these findings toward the\ngenuine Andrews q-series.\n\n## Conjecture 1 \u2014 Circle-method amplitude beats the tail\n\nFor each `i \u2208 {2, 3, 4}`, the Hardy\u2013Ramanujan\u2013Rademacher expansion of the\ncoefficient `V_i(n)` has a leading term of the form `(-1)^n A_i(n)` with\n`A_i(n) > 0` growing subexponentially, and a remainder `E_i(n)` bounded by a\nstrictly smaller order, so that `|E_i(n)| < A_i(n)` for all sufficiently large\n`n`. The key insight is that the oscillatory factor `(-1)^n` is not an artefact\nof small cases but the exact phase of the dominant Rademacher term, so the sign\nof `V_i(n)` is decided by a single term whose positivity is explicit. Why now?\nThe Rademacher expansion gives, in principle, effective error bounds, so the\nthreshold `N` beyond which alternation holds is computable rather than merely\nasymptotic.\n\n## Conjecture 2 \u2014 The exceptional set is not just sparse but algebraically structured\n\nThe indices `n` at which `(-1)^n V_i(n) \u2264 0` form a set of natural density zero\nwhose counting function is `O(n^{1/2})`, matching the perfect-square model `v\u2084`.\nThe key insight is that a sign violation requires two nearly equal Rademacher\nterms to cancel the leading amplitude, a resonance condition that pins `n` to a\nsparse arithmetic locus rather than a random scatter. Why now? The square-root\ncounting bound proved for the model exceptional set is exactly the shape one\nexpects from a single subdominant resonance, making the `O(n^{1/2})` prediction\ndirectly testable against tabulated coefficients.\n\n## Conjecture 3 \u2014 Sharp domination threshold and boundary phase transition\n\nThere is a critical constant `c_i` such that if the error-to-amplitude ratio\nstays below `c_i` the signs alternate off a density-zero set, while at the\ncritical balance the violation set acquires positive density. The key insight is\nthat alternation is a phase transition governed by the ratio `|E|/A`, with the\nmodel boundary series exhibiting the exact `1/2`-density failure at ratio one.\nWhy now? Combining the domination principle with explicit Rademacher error\nconstants would locate `c_i` numerically, turning a qualitative dichotomy into a\nquantitative threshold.\n\n## Conjecture 4 \u2014 Uniform principle across the Andrews family\n\nThe amplitude-domination principle applies uniformly to the entire family of\npartition-theoretic q-series studied by Andrews, not just `v\u2082, v\u2083, v\u2084`: each\nmember decomposes into an explicit oscillatory dominant term and a provably\nsmaller tail. The key insight is that the mechanism is representation-agnostic \u2014\nit needs only a signed leading term and a size bound on the remainder \u2014 so a\nsingle lemma discharges the sign behaviour of the whole family at once. Why now?\nThe abstract principle proved this cycle already holds over an arbitrary linearly\nordered ring, so extending it to new members is a matter of supplying their\nleading-term decompositions.\n\n## Conjecture 5 \u2014 Weighted density refinement\n\nEven on the exceptional set, the *logarithmic* density of sign violations of\n`V_i(n)` is zero, and the weighted sum `\u2211_{n \u2264 x, violation} 1/n` grows like\n`O(log log x)`. The key insight is that a square-root-sparse exceptional set has\na convergent-in-density tail whose logarithmic weight is doubly small, so the\nviolations are negligible even under the scale-invariant measure. Why now? The\nexplicit `O(x^{1/2})` counting bound feeds directly into a partial-summation\nestimate, making the `log log` prediction a concrete next target.\n\n\n# Future Directions \u2014 Asymptotic Alternating Signs of Andrews-type q-Series\n\nThis cycle established an amplitude-domination principle: a coefficient sequence\nof the form `V(n) = (-1)^n A(n) + E(n)`, with a positive dominant amplitude `A`\nand a subdominant error `E`, has strictly alternating signs precisely where the\namplitude beats the error, and the exceptional set is controlled by counting the\nindices where domination fails. Three model series realised the empty, finite,\nand density-zero regimes, and a boundary series showed the strict inequality\n`|E| < A` cannot be relaxed to `|E| \u2264 A` without admitting a positive-density set\nof sign violations. The following conjectures push these findings toward the\ngenuine Andrews q-series.\n\n## Conjecture 1 \u2014 Circle-method amplitude beats the tail\n\nFor each `i \u2208 {2, 3, 4}`, the Hardy\u2013Ramanujan\u2013Rademacher expansion of the\ncoefficient `V_i(n)` has a leading term of the form `(-1)^n A_i(n)` with\n`A_i(n) > 0` growing subexponentially, and a remainder `E_i(n)` bounded by a\nstrictly smaller order, so that `|E_i(n)| < A_i(n)` for all sufficiently large\n`n`. The key insight is that the oscillatory factor `(-1)^n` is not an artefact\nof small cases but the exact phase of the dominant Rademacher term, so the sign\nof `V_i(n)` is decided by a single term whose positivity is explicit. Why now?\nThe Rademacher expansion gives, in principle, effective error bounds, so the\nthreshold `N` beyond which alternation holds is computable rather than merely\nasymptotic.\n\n## Conjecture 2 \u2014 The exceptional set is not just sparse but algebraically structured\n\nThe indices `n` at which `(-1)^n V_i(n) \u2264 0` form a set of natural density zero\nwhose counting function is `O(n^{1/2})`, matching the perfect-square model `v\u2084`.\nThe key insight is that a sign violation requires two nearly equal Rademacher\nterms to cancel the leading amplitude, a resonance condition that pins `n` to a\nsparse arithmetic locus rather than a random scatter. Why now? The square-root\ncounting bound proved for the model exceptional set is exactly the shape one\nexpects from a single subdominant resonance, making the `O(n^{1/2})` prediction\ndirectly testable against tabulated coefficients.\n\n## Conjecture 3 \u2014 Sharp domination threshold and boundary phase transition\n\nThere is a critical constant `c_i` such that if the error-to-amplitude ratio\nstays below `c_i` the signs alternate off a density-zero set, while at the\ncritical balance the violation set acquires positive density. The key insight is\nthat alternation is a phase transition governed by the ratio `|E|/A`, with the\nmodel boundary series exhibiting the exact `1/2`-density failure at ratio one.\nWhy now? Combining the domination principle with explicit Rademacher error\nconstants would locate `c_i` numerically, turning a qualitative dichotomy into a\nquantitative threshold.\n\n## Conjecture 4 \u2014 Uniform principle across the Andrews family\n\nThe amplitude-domination principle applies uniformly to the entire family of\npartition-theoretic q-series studied by Andrews, not just `v\u2082, v\u2083, v\u2084`: each\nmember decomposes into an explicit oscillatory dominant term and a provably\nsmaller tail. The key insight is that the mechanism is representation-agnostic \u2014\nit needs only a signed leading term and a size bound on the remainder \u2014 so a\nsingle lemma discharges the sign behaviour of the whole family at once. Why now?\nThe abstract principle proved this cycle already holds over an arbitrary linearly\nordered ring, so extending it to new members is a matter of supplying their\nleading-term decompositions.\n\n## Conjecture 5 \u2014 Weighted density refinement\n\nEven on the exceptional set, the *logarithmic* density of sign violations of\n`V_i(n)` is zero, and the weighted sum `\u2211_{n \u2264 x, violation} 1/n` grows like\n`O(log log x)`. The key insight is that a square-root-sparse exceptional set has\na convergent-in-density tail whose logarithmic weight is doubly small, so the\nviolations are negligible even under the scale-invariant measure. Why now? The\nexplicit `O(x^{1/2})` counting bound feeds directly into a partial-summation\nestimate, making the `log log` prediction a concrete next target.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1190",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8e89241b",
+    "status": "available",
+    "timestamp": "2026-07-13T05:18:23.194523+00:00",
+    "title": "Amplitude-domination principle: a coefficient sequence"
   },
   {
     "consumed_by_exp_id": "",
