@@ -1051,20 +1051,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "28bb3270",
-    "description": "Cycle 208b1ca5 (Q=0.820) proved 17 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E\u2084. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_208b1ca5_c71875cb",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "208b1ca5",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T23:12:33.413229+00:00",
-    "title": "Close Proofs: Siegel-Weil Identity for the E\u2088 Lattice Theta Series"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domains": [
@@ -2268,7 +2254,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Every $\u03c4_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges for $n \u2265 2k+2$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b1ced03",
     "description": "Let \u03c4 = (\u221a5 + 1)/2 be the golden ratio. For the threshold value T = \u03c4^(1/2) + \u03c4^(-1/2), there exists a countable set S \u2286 [\u2212T, T] such that S is exactly the set of limit points of largest matching roots \u03bc(G) for graphs G. Specifically, S consists of algebraic numbers arising from the spectrum of certain infinite families of graphs constructed via recursive operations on Dynkin diagrams of types A_n and D_n, with gaps precisely at the transcendental values in (\u2212T, T) \\ S. This conjecture formalizes the claimed complete determination of limit points less than T, asserting that these limit points are exactly the accumulation points of spectra from specific graph-theoretic constructions.",
     "domains": [
       "Algebra",
@@ -2278,7 +2264,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T16:55:54.714925+00:00",
     "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Matching Roots"
   },
@@ -7506,6 +7492,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T00:09:50.389973+00:00",
     "title": "That the opposite-semicube Helly property of a partial cu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 E\u2088 / Siegel\u2013Weil theta series\n\n## Context\n\n`SiegelWeilE8Theta.lean` proves that the E\u2088 vector counts `rE8 n = 240\u00b7\u03c3\u2083(n)`\ncarry the full Hecke-eigenform structure of `E\u2084` (geometric prime-power form,\nthree-term Hecke recurrence, multiplicativity, and the global Hecke convolution\nidentity `\u03c3\u2083(m)\u03c3\u2083(n) = \u2211_{d \u2223 gcd(m,n)} d\u00b3\u00b7\u03c3\u2083(mn/d\u00b2)`).\n\n`SiegelWeilE8ThetaContrarian.lean` adds contrarian results:\n\n* **Proved:** the congruence `\u03c3\u2083(n) \u2261 \u03c3\u2081(n) (mod 6)`; the lower bounds\n  `n\u00b3 \u2264 \u03c3\u2083(n)` and `n\u00b3+1 \u2264 \u03c3\u2083(n)`; the primality characterization\n  `\u03c3\u2083(n) = n\u00b3+1 \u2194 n prime` (for `n \u2265 2`); and `240\u00b7n\u00b3 \u2264 rE8 n`.\n* **Disproved:** `rE8` is not multiplicative (`(m,n)=(2,3)`); the Hecke\n  three-term recurrence fails at a composite base (`p=6`).\n\n## Open target 1 (flagship): `E\u2084\u00b2 = E\u2088`\n\nThe identity of Fourier coefficients equivalent to the one-dimensionality of the\nspace of weight-8 modular forms for `SL\u2082(\u2124)`:\n\n```\n\u03c3\u2087(n) = \u03c3\u2083(n) + 120 \u00b7 \u2211_{m=1}^{n-1} \u03c3\u2083(m)\u00b7\u03c3\u2083(n\u2212m),   for all n \u2265 1.\n```\n\nNumerically verified in `ComputationalEvidence.md` for `n = 1..7`. A formal\nproof needs one of:\n\n1. the theory of modular forms and a dimension count `dim M\u2088 = 1` (heavy);\n2. an elementary Lambert-series / divisor-convolution manipulation\n   (Ramanujan-style), which is self-contained but intricate.\n\nThis is the natural next milestone: it upgrades the *single-lattice* Siegel\u2013Weil\nstatement to a genuine product identity among Eisenstein coefficients.\n\n## Open target 2: diagonal Hecke identity as a standalone lemma\n\n```\n\u03c3\u2083(n)\u00b2 = \u2211_{d \u2223 n} d\u00b3 \u00b7 \u03c3\u2083(n\u00b2/d\u00b2).\n```\n\nThis is the `m = n` diagonal of the global Hecke identity already proved in\n`SiegelWeilE8Theta.lean`; numerically verified here for `n = 1..7`. Packaging it\nas a reusable standalone lemma (specializing `sigma3_hecke_identity`) would make\nthe \"sum-of-squares\" Hecke relation directly citable.\n\n## Open target 3: sharper congruences\n\n`\u03c3\u2083(n) \u2261 \u03c3\u2081(n) (mod 6)` is proved. Candidate strengthenings to investigate:\nRamanujan-type congruences for `240\u00b7\u03c3\u2083(n)` modulo small primes and prime powers,\nand their interaction with the multiplicative structure.\n\n## Open target 4: full theta-series statement\n\nThe truly geometric statement \u2014 that *every* even unimodular positive-definite\nrank-8 lattice `L` has `#{x \u2208 L : \u27e8x,x\u27e9 = 2n} = 240\u00b7\u03c3\u2083(n)` \u2014 requires\nformalizing even unimodular lattices, the finiteness/uniqueness of the genus in\nrank 8 (a single class, `E\u2088`), and the modularity of the theta series. This is a\nlong-term program built on top of the coefficient-level results here.\n",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_1175",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "28bb3270",
+    "status": "available",
+    "timestamp": "2026-07-13T00:44:50.407876+00:00",
+    "title": "`SiegelWeilE8Theta.lean` proves that the E\u2088 vector counts `rE8 n = 240\u00b7\u03c3\u2083(n)`"
   },
   {
     "consumed_by_exp_id": "",
