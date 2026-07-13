@@ -2556,7 +2556,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of \u03b3\u2011Golomb Rulers with Maximal \u221a\u03b3 Density"
   },
   {
-    "consumed_by_exp_id": "59a15132",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a generalized Latin rectangle of size n\u00d7n (i.e., \u03bb = 1) possessing pairwise reflection symmetry\u2014where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns\u2014exists if and only if n is a power of two.",
     "domains": [
       "Pythagorean"
@@ -2565,7 +2565,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-04T16:39:06.146756+00:00",
     "title": "Power-of-Two Characterisation of \u03bb=1 Pairwise Reflection Symmetric Latin Rectangles"
   },
@@ -4528,7 +4528,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact asymptotic growth of \\u03c7^r_F(d) for the balanced\u2011triangle family"
   },
   {
-    "consumed_by_exp_id": "64d4f5fe",
+    "consumed_by_exp_id": "",
     "description": "There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-approximation to the Vietoris-Rips filtration VR(X\u2099) requires at least 2^(\u03b3\u00b7n) simplices, and moreover \u03b3 can be taken to satisfy \u03b3 = \u03b3(c) with lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0.",
     "domains": [
       "MachineLearning"
@@ -4537,7 +4537,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06524v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T17:01:42.923851+00:00",
     "title": "Explicit exponential lower bound for Vietoris-Rips approximations below \u221a2 threshold"
   },
@@ -5335,6 +5335,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T01:28:27.766817+00:00",
     "title": "Flatland Catastrophe: When 2D Physics Breaks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 86e0e034 (Q=0.740) proved 5 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_86e0e034_0664c54a",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "86e0e034",
+    "status": "available",
+    "timestamp": "2026-07-13T10:39:03.033786+00:00",
+    "title": "Close Proofs: The mission asked to interrogate the claim:"
   },
   {
     "consumed_by_exp_id": "",
@@ -6773,7 +6787,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "File: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "191c7579",
     "description": "# Future directions \u2014 Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conjecture is FALSE** (`general_tightness_fails`).\n   It is *not* true that every inclusion-free hypergraph attains the Faber\u2013Harris\n   bound `n\u00b7\u2211_{j<d} j^{n-1}` for some real offset. A single-edge hypergraph makes\n   every assignment isolating, giving count `d^n` for *all* offsets `f`, strictly\n   above the bound (already `4 > 2` at `n=d=2`). Offset freedom does not repair an\n   over-counting hypergraph.\n\n2. **A new symmetric extremal witness** (`card_strictMax_eq`). The co-singleton\n   hypergraph (all `(n-1)`-edges) *also* attains the bound exactly with zero\n   offset, via a min\u2194max reflection duality (`hasStrictMin_iff_rev`,\n   `card_strictMax_eq_card_isolating`). Thus the bound has at least two\n   symmetric extremal witnesses (singletons and their complements).\n\n## Open questions raised\n\n- **Characterise the extremal hypergraphs.** Computation for `n=3` shows exactly\n  the singletons and the all-pairs (co-singleton) families reach the bound.\n  Conjecture: for the *offset-free* problem, an antichain attains `B(n,d)` iff it\n  is vertex-transitive and \"sum-symmetric\" (e.g. the `k`-uniform complete designs\n  for suitable `k`). A formal characterisation is open.\n\n- **Covering antichains still fail.** Even covering antichains such as\n  `{{0,1},{0,2}}` overshoot the bound for every offset (verified computationally,\n  excess \u2265 1). A formal proof of failure that quantifies over *all real offsets*\n  (not just the degenerate single-edge case) would strengthen\n  `general_tightness_fails`. The obstacle is reducing the continuum of offsets to\n  the finite set of order-types; a Lean development of that reduction is the\n  natural next step.\n\n- **Which `k`-uniform complete hypergraphs are extremal?** The singletons (`k=1`)\n  and co-singletons (`k=n-1`) are extremal. Are the complete `k`-uniform families\n  extremal for intermediate `k`? Preliminary data suggests not in general; a clean\n  criterion is open.\n\n- **Quantitative excess.** Define `excess(H) := min_f #isolating(H,f) \u2212 B(n,d) \u2265 0`.\n  Understanding `excess` as a hypergraph invariant (monotonicity, additivity under\n  disjoint unions) is an appealing direction.\n",
     "domains": [
       "Algebra",
@@ -6783,7 +6797,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "919ceb1f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T15:20:30.569302+00:00",
     "title": "This cycle deepened the singleton-hypergraph tightness result of"
   },
@@ -7583,21 +7597,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Base camp for a quantitative stability theory of the"
   },
   {
-    "consumed_by_exp_id": "86e0e034",
-    "description": "# Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there is a \u03c1-locally dense graphon `W` with\n> `\u2016W_F\u2016_{L\u1d56} < \u03c1^{e(F)}`.\n\nWorking in the finite step-graphon model (uniform measure on `Fin N`, so every\nintegral is a finite average \u2014 fully rigorous), we obtained both a **proof** and a\n**disproof**, sharpening the picture.\n\n### Proved\n\n- `EdgeThreshold.edgeLp_ge_rho`: for `p \u2265 1`, **no** \u03c1-locally dense counterexample\n  exists for the single edge \u2014 `\u2016W_{K\u2082}\u2016_{L\u1d56} \u2265 \u03c1` (power-mean inequality).\n- `EdgeThreshold.blockW_edgeLp_lt`: for `0 < p < 1`, the explicit two-block\n  graphon `blockW \u03c1` is a genuine counterexample: \u03c1-locally dense, valued in\n  `[0,1]`, with `\u2016W_{K\u2082}\u2016_{L\u1d56} < \u03c1`.\n- `EdgeThreshold.single_edge_threshold_sharp`: combining the two, the single-edge\n  threshold is **exactly** `p = 1 = C(2,2)/1`. Here the conjecture is correct and\n  sharp.\n- `MatchingDisproof.homLpM2_eq`: the 2-edge matching functional factorizes,\n  `\u2016W_{M\u2082}\u2016_{L\u1d56} = \u2016W_{K\u2082}\u2016_{L\u1d56}\u00b2`.\n- `MatchingDisproof.matching_counterexample_below_one`: for `0 < p < 1`, `M\u2082` has a\n  genuine counterexample.\n\n### Disproved (the headline contrarian finding)\n\n- `MatchingDisproof.matching_no_counterexample`: for the 2-edge matching `M\u2082`\n  (`n = 4`, `m = 2`, `e(F) = 2`, so `C(4,2)/2 = 3`) and **every** `p \u2265 1` \u2014 in\n  particular `p = 2 < 3` \u2014 every \u03c1-locally dense nonnegative graphon satisfies\n  `\u2016W_{M\u2082}\u2016_{L\u1d56} \u2265 \u03c1\u00b2`. So no counterexample exists on `1 \u2264 p < 3`, and the\n  literal `C(n,2)/m` threshold is **false**.\n\nThe true threshold for `M\u2082` is `1`, not `3`. More generally the value reachable by\nblock constructions is `(n - c)/m` (with `c` the number of connected components),\nand `(n - c)/m \u2264 C(n,2)/m` with the gap unbounded over the matching family.\n\n## Open directions\n\n1. **Determine the exact threshold `p*(F)`.** We have the general lower bound\n   (constructions exist for) `p < (n - c)/m` and, for matchings, a matching upper\n   bound `p* = 1`. Is `p*(F) = (n - c)/m` for all `F`? A natural first test is the\n   triangle `K\u2083` (`n = 3, m = 3, c = 1`): block constructions give `p < 2/3`; does\n   a counterexample exist for `2/3 \u2264 p < 1`, and is there any counterexample for\n   `p \u2265 1`? Formalizing the triangle homomorphism functional and either a smarter\n   construction or a Sidorenko-type lower bound would settle this.\n\n2. **Rank-one (positive semidefinite) perturbations.** Kernels of the form\n   `W = \u03c1 + c\u00b7\u03c6(x)\u03c6(y)` with `c \u2265 0` are automatically \u03c1-locally dense\n   (`\u222b_{S\u00d7S} W = \u03c1|S|\u00b2 + c(\u222b_S \u03c6)\u00b2 \u2265 \u03c1|S|\u00b2`). These are far more flexible than\n   block kernels and are the natural candidate for beating `(n - c)/m`. Formalizing\n   this family and computing its `L\u1d56` functional is a concrete next step.\n\n3. **General block-kernel theorem.** Prove the closed form\n   `(1/N^n) \u03a3_\u03c6 \u220f_{edges} W(\u03c6)^p = k^{c - n + mp} \u03c1^{mp}` for the `k`-block kernel\n   and a general graph `F`, giving `p < (n - c)/m \u21d2 counterexample` in full\n   generality. The combinatorial heart is counting monochromatic vertex-colourings\n   (`= k^c`), i.e. relating to the number of connected components.\n\n4. **Continuum bridge.** Lift the finite-model results to genuine graphons on\n   `[0,1]\u00b2` (Bochner/`lintegral` over `Measure.pi`), and prove that for\n   block-constant kernels the worst-case local-density set is a union of blocks, so\n   that the finite check is equivalent to the continuum condition.\n\n5. **Relation to Sidorenko / KNRS.** The `p = 1` case of `\u2016W_F\u2016_{L\u00b9} \u2265 \u03c1^{e(F)}`\n   for \u03c1-locally dense hosts is exactly the KNRS lower bound; clarifying for which\n   `F` the `L\u1d56` inequality persists for some `p > 1` (as it does for matchings, up\n   to `p = 1` being the boundary of counterexamples) would connect this threshold\n   question to Sidorenko's conjecture.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1199",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "b08004d1",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T08:07:20.584913+00:00",
-    "title": "The mission asked to interrogate the claim:"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Multiverse Set Theory\n\n`Catalog/Novelty/MultiverseSetTheory.lean` formalizes the combinatorial core of\nHamkins' set-theoretic multiverse: worlds as truth assignments, a multiverse as a\ncollection of worlds, propositional set-theoretic sentences, independence, and a\n`flip`-based abstraction of forcing. The headline results are:\n\n- `forcingClosed_atom_independent`: in any nonempty forcing-closed multiverse\n  every atomic sentence is independent \u2014 forcing settles nothing;\n- `CH_independent` and `CH_independent_under_VeqL_imp_CH`: `CH` is independent in\n  `{G\u00f6del, Cohen}`, and remains independent even after adopting `V = L \u2192 CH` as a\n  law of the multiverse;\n- `absolute_em`, `absolute_noncontradiction`, `absolute_self_imp`: logical\n  validities are absolute across all branches, unlike `CH`;\n- `card_worlds` / `card_full_Claim`: the full multiverse over `n` atoms has `2^n`\n  worlds.\n\n## Natural next steps\n\n1. **Quantified sentences over a signature.** Replace the atomic-assertion type by\n   a genuine first-order language and interpret worlds as `Structure`s, recovering\n   the propositional layer as the atomic-diagram fragment. This lets independence\n   be stated for actual first-order sentences.\n\n2. **A Boolean/Heyting algebra of multiverse truth values.** Map each sentence to\n   the set of worlds satisfying it; validity/refutability/independence become the\n   top/bottom/proper-nontrivial elements of a Boolean algebra of \"multiverse\n   propositions\". Prove the assignment is a Boolean homomorphism \u2014 a first step\n   toward Boolean-valued models.\n\n3. **Forcing posets, not just single flips.** Generalize `flip` to a partial order\n   of finite conditions with a genericity notion, and prove a discrete\n   Rasiowa\u2013Sikorski\u2013style existence lemma. This bridges the abstraction to real\n   forcing.\n\n4. **Consistency-strength ordering.** Introduce a preorder on worlds/theories by\n   interpretability and study the multiverse as an ordered structure (large-cardinal\n   hierarchy). Prove that the \"settled\" sentences form a filter closed under modus\n   ponens.\n\n5. **Dependence relations.** Formalize when one sentence's truth constrains\n   another's across a multiverse (as `V = L \u2192 CH` does), and characterize the\n   settled fragment as the deductive closure of the multiverse's shared theory.\n\n6. **Modal logic of forcing.** Interpret \"forceable\" as a modality on the\n   forcing-closed multiverse and identify the resulting propositional modal logic\n   (Hamkins\u2013L\u00f6we show it is `S4.2` for actual forcing); test which modal schemes\n   hold in the abstract `flip` model.\n",
     "domains": [
@@ -7731,6 +7730,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T10:22:31.755496+00:00",
     "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Cycle 1 (Connector)\n\n## What this cycle contributes\n\nThread `th_25156375` studies the `L\u1d56` relaxation of the KNRS/Sidorenko lower bound\nfor \u03c1-locally dense hosts, in the finite step-graphon model. Open direction 3 of the\nroot note asked for a **general block-kernel theorem**, whose \"combinatorial heart is\ncounting monochromatic vertex-colourings (`= k^c`), i.e. relating to the number of\nconnected components.\"\n\nThis cycle isolates and proves that heart as a **cross-domain connector**, in\n`Catalog/Bridges/GraphComponentColoringBridge.lean` (self-contained, `sorry`-free,\nonly standard axioms `propext, Classical.choice, Quot.sound`).\n\n### The bridge\n\nTwo a priori unrelated objects are identified:\n\n* **Graph connectivity** \u2014 `Fintype.card G.ConnectedComponent`, a topological/graph\n  invariant.\n* **The block-graphon `L\u1d56` functional** \u2014 `\u2211_\u03c6 \u220f_{edges} W(\u03c6)`, an analytic quantity.\n\nResults:\n\n- `edgeConstEquiv` \u2014 the connector bijection: a vertex colouring `V \u2192 \u03b2` that is\n  constant on every edge is *the same data* as an arbitrary map\n  `G.ConnectedComponent \u2192 \u03b2`. (Constant-on-edges \u21d2 constant-along-walks \u21d2 factors\n  through the component quotient.)\n- `card_edgeConst` \u2014 counting form:\n  `#{ f : V \u2192 \u03b2 // f const on edges } = (card \u03b2) ^ (#components)`.\n- `homProd`, `dirEdgeCard`, `homProd_block_eq` \u2014 the block-diagonal kernel makes the\n  homomorphism product an indicator `t^{D}\u00b7[\u03c6 const on edges]`.\n- `blockHomSum` \u2014 analytic form of the bridge:\n  `\u2211_{\u03c6:V\u2192Fin k} homProd (block t) \u03c6 = t^{D} \u00b7 k^{c}`, with `D = #directed edges`,\n  `c = #components`. The exponent of `k` is exactly the component count.\n\nThis makes precise, and fully formal, why the block-kernel `L\u1d56` value carries a\n`k^{c}` factor: it is the number of monochromatic (edge-constant) colourings, which\nby the connector bijection is `k^{#components}`.\n\n## Next open directions\n\n1. **From `blockHomSum` to the normalised `L\u1d56` closed form.** Divide by `k^n`\n   (uniform measure) and set `t = (\u03c1k)^p` to obtain `k^{c\u2212n}(\u03c1k)^{2mp}`; formalise\n   the resulting `\u2016W_F\u2016_{L\u1d56}^p = k^{c-n+mp} \u03c1^{mp}` statement for a general finite\n   graph, completing root open direction 3 in the normalised form.\n\n2. **Sym2 edge model.** Re-state `homProd` over `G.edgeFinset` (undirected edges,\n   `D = |E|`) via `Sym2.lift`, and show it agrees with the ordered-pair version up to\n   the `2\u00b7|E|` exponent. This removes the double-counting and matches the literature\n   convention.\n\n3. **Threshold consequence.** Combine `blockHomSum` with a normalisation lemma to\n   derive `p < (n \u2212 c)/m \u21d2 counterexample` in full generality, recovering the\n   matching (`c = m`, threshold `1`) and triangle (`c = 1`, threshold `2/3`) cases\n   as instances.\n\n4. **Beyond block kernels.** The connector explains why block kernels are capped by\n   the component count `c`. Rank-one PSD perturbations `W = \u03c1 + c\u00b7\u03c6\u2297\u03c6` (root open\n   direction 2) are not edge-constant indicators, so `card_edgeConst` no longer\n   applies directly; a weighted analogue of the counting identity is the natural next\n   target.\n\n5. **Continuum bridge.** Transport `edgeConstEquiv`/`blockHomSum` to genuine graphons\n   on `[0,1]\u00b2` (`Measure.pi`, `lintegral`), showing block-constant kernels reduce the\n   continuum functional to the finite sum proved here.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1209",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "86e0e034",
+    "status": "available",
+    "timestamp": "2026-07-13T10:38:56.311697+00:00",
+    "title": "Thread `th_25156375` studies the `L\u1d56` relaxation of the KNRS/Sidorenko lower bou"
   },
   {
     "consumed_by_exp_id": "",

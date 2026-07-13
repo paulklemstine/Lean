@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1f9ea620",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Arithmetic of the Discoverable\n\nThe cycle established a clean split between two notions of \"finite\": every\nindividual theorem of an infinitely-proving system is reached at a f",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 119,
-      "timestamp": "2026-07-12T18:49:09",
-      "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
-    },
-    {
       "cycle_id": "44b2d089",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nThis cycle established that the geometry surrounding the Hopf fibration is\norganised by the composition (normed division",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-13T10:22:39",
       "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
+    },
+    {
+      "cycle_id": "86e0e034",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cycle 1 (Connector)\n\n## What this cycle contributes\n\nThread `th_25156375` studies the `Lᵖ` relaxation of the KNRS/Sidorenko lower bound\nfor ρ-locally dense hosts, in the finite s",
+      "quality_score": 0.74,
+      "sorry_count": 1,
+      "theorem_count": 5,
+      "timestamp": "2026-07-13T10:39:02",
+      "title": "The mission asked to interrogate the claim:"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a1a5801c",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Categorification of Entropy\n\nThe file `FunctorialEntropy.lean` develops the information loss of a functor as the\nconditional entropy of the domain object given its image, for fun",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 13,
-      "timestamp": "2026-07-10T16:36:47",
-      "title": "Categorification of Entropy: The Information Loss of Functors"
-    },
     {
       "cycle_id": "5125e235",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-13T10:22:39",
       "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
+    },
+    {
+      "cycle_id": "86e0e034",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cycle 1 (Connector)\n\n## What this cycle contributes\n\nThread `th_25156375` studies the `Lᵖ` relaxation of the KNRS/Sidorenko lower bound\nfor ρ-locally dense hosts, in the finite s",
+      "quality_score": 0.74,
+      "sorry_count": 1,
+      "theorem_count": 5,
+      "timestamp": "2026-07-13T10:39:02",
+      "title": "The mission asked to interrogate the claim:"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d4192a75",
-      "domain": "Applications",
-      "name": "funMatrix_mul",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "d4192a75",
-      "domain": "Applications",
-      "name": "funMatrix_id",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "53d4816b",
-      "domain": "Novelty",
-      "name": "sq_inj",
-      "quality": 0.82
-    },
     {
       "cycle_id": "53d4816b",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "tesseract_vertices",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "86e0e034",
+      "domain": "Applications",
+      "name": "linking",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "86e0e034",
+      "domain": "Applications",
+      "name": "const_on_walk",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "86e0e034",
+      "domain": "Applications",
+      "name": "card_edgeConst",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-13T10:22:39",
+  "last_updated": "2026-07-13T10:39:02",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "44b2d089",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-12T19:56:34"
-    },
     {
       "context": "-    sorry; +   a `sorry`.  We remove the unprovable tail rather than leave a `sorry`, and; collision ⇒ Merkle–Damgård hash collision, all constructive and `sorry`-free.",
       "cycle_id": "d95af58e",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 9,
       "timestamp": "2026-07-13T10:22:39"
+    },
+    {
+      "context": "All statements are fully finite and rigorous; no `sorry`, no extra axioms.",
+      "cycle_id": "86e0e034",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T10:39:02"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "b659b436",
-        "quality": 0.83,
-        "theorems": 24,
-        "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-      },
-      {
         "cycle_id": "8e89241b",
         "quality": 0.82,
         "theorems": 18,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 15,
         "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
+      },
+      {
+        "cycle_id": "86e0e034",
+        "quality": 0.74,
+        "theorems": 5,
+        "title": "The mission asked to interrogate the claim:"
       }
     ],
     "Bridges": [
