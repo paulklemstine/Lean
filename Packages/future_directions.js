@@ -255,7 +255,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e7a2b5e",
     "description": "Building on cycle 5b802ccf (Q=0.820), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation semantics: conflict-free\nsets, the characteristic (defense) operator `charF`, admissible / complete /\np",
     "domains": [
       "Applications"
@@ -264,7 +264,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "5b802ccf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T06:26:53.802498+00:00",
     "title": "Deepening: Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
   },
@@ -720,7 +720,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
   },
   {
-    "consumed_by_exp_id": "346f1862",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle a71dcffe (Q=0.780), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and tha",
     "domains": [
       "Novelty"
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "a71dcffe",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-13T13:44:35.350313+00:00",
     "title": "Deepening: The cycle established that the atomic AllDifferent constraint has a sharp"
   },
