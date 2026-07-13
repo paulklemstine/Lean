@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b6e3f70d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Tightness of the Isolation Lemma under edge offsets\n\nThis cycle established, for the singleton hypergraph with an arbitrary integer\nedge offset, an exact product–sum formula for",
-      "quality_score": 0.83,
-      "sorry_count": 5,
-      "theorem_count": 0,
-      "timestamp": "2026-07-12T16:46:33",
-      "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
-    },
-    {
       "cycle_id": "ddbb821f",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Topology of Argumentation (VI): the existence gap for stable extensions\n\nThis cycle (contrarian mode) attacks the **existence gap** left open by the\nprevious cycle's `Catalog",
@@ -499,19 +489,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-13T07:18:16",
       "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
+    },
+    {
+      "cycle_id": "b08004d1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-13T08:07:45",
+      "title": "Failure of L^p Relaxation of KNRS Conjecture Below Threshold p"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0884751e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Borsuk–Ulam and Social Choice\n\n## What was proved (file `BorsukUlamArrow.lean`, no `sorry`, standard axioms only)\n\n**Part I — the genuine topological kernel.**\n- `borsuk_ulam_1d`:",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-10T13:11:44",
-      "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
-    },
     {
       "cycle_id": "6c565e60",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-13T07:18:16",
       "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
+    },
+    {
+      "cycle_id": "b08004d1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-13T08:07:45",
+      "title": "Failure of L^p Relaxation of KNRS Conjecture Below Threshold p"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cbbd1369",
-      "domain": "Novelty",
-      "name": "neronTateObstruction_symm",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "3959b92d",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.82
-    },
     {
       "cycle_id": "3959b92d",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "E_const",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "b08004d1",
+      "domain": "Applications",
+      "name": "edgeLpPow_nonneg",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "b08004d1",
+      "domain": "Applications",
+      "name": "edgeLp_ge_rho",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-13T07:18:16",
+  "last_updated": "2026-07-13T08:07:45",
   "open_questions": [
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1abce342",
-        "quality": 0.78,
-        "theorems": 19,
-        "title": "The optimal portion ratio μ₂ equals 1 + ρ"
-      },
-      {
         "cycle_id": "48b25c91",
         "quality": 0.72,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 24,
         "title": "Constant residue of labeled poset counts modulo 4"
+      },
+      {
+        "cycle_id": "b08004d1",
+        "quality": 0.72,
+        "theorems": 21,
+        "title": "Failure of L^p Relaxation of KNRS Conjecture Below Threshold p"
       }
     ],
     "Bridges": [

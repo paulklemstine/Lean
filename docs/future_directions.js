@@ -2085,20 +2085,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Berge-Tight Cycles in R-Graphs with Positive Minimum r-Degree"
   },
   {
-    "consumed_by_exp_id": "b08004d1",
-    "description": "For a graph F with m edges and n non-isolated vertices, if p < (n choose 2)/m, there exists a \u03c1-locally dense graphon W such that ||W_F||_{L^p} < \u03c1^{e(F)}.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0181",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30010v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T04:04:19.585983+00:00",
-    "title": "Failure of L^p Relaxation of KNRS Conjecture Below Threshold p"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The conjecture asserts that for all n \u2265 1, the positive anti-Wick density satisfies the required conditions in the finite-core reduction, directly contradicting the paper's claim of obstruction.",
     "domains": [
@@ -7680,6 +7666,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T07:18:10.109606+00:00",
     "title": "Base camp for a quantitative stability theory of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there is a \u03c1-locally dense graphon `W` with\n> `\u2016W_F\u2016_{L\u1d56} < \u03c1^{e(F)}`.\n\nWorking in the finite step-graphon model (uniform measure on `Fin N`, so every\nintegral is a finite average \u2014 fully rigorous), we obtained both a **proof** and a\n**disproof**, sharpening the picture.\n\n### Proved\n\n- `EdgeThreshold.edgeLp_ge_rho`: for `p \u2265 1`, **no** \u03c1-locally dense counterexample\n  exists for the single edge \u2014 `\u2016W_{K\u2082}\u2016_{L\u1d56} \u2265 \u03c1` (power-mean inequality).\n- `EdgeThreshold.blockW_edgeLp_lt`: for `0 < p < 1`, the explicit two-block\n  graphon `blockW \u03c1` is a genuine counterexample: \u03c1-locally dense, valued in\n  `[0,1]`, with `\u2016W_{K\u2082}\u2016_{L\u1d56} < \u03c1`.\n- `EdgeThreshold.single_edge_threshold_sharp`: combining the two, the single-edge\n  threshold is **exactly** `p = 1 = C(2,2)/1`. Here the conjecture is correct and\n  sharp.\n- `MatchingDisproof.homLpM2_eq`: the 2-edge matching functional factorizes,\n  `\u2016W_{M\u2082}\u2016_{L\u1d56} = \u2016W_{K\u2082}\u2016_{L\u1d56}\u00b2`.\n- `MatchingDisproof.matching_counterexample_below_one`: for `0 < p < 1`, `M\u2082` has a\n  genuine counterexample.\n\n### Disproved (the headline contrarian finding)\n\n- `MatchingDisproof.matching_no_counterexample`: for the 2-edge matching `M\u2082`\n  (`n = 4`, `m = 2`, `e(F) = 2`, so `C(4,2)/2 = 3`) and **every** `p \u2265 1` \u2014 in\n  particular `p = 2 < 3` \u2014 every \u03c1-locally dense nonnegative graphon satisfies\n  `\u2016W_{M\u2082}\u2016_{L\u1d56} \u2265 \u03c1\u00b2`. So no counterexample exists on `1 \u2264 p < 3`, and the\n  literal `C(n,2)/m` threshold is **false**.\n\nThe true threshold for `M\u2082` is `1`, not `3`. More generally the value reachable by\nblock constructions is `(n - c)/m` (with `c` the number of connected components),\nand `(n - c)/m \u2264 C(n,2)/m` with the gap unbounded over the matching family.\n\n## Open directions\n\n1. **Determine the exact threshold `p*(F)`.** We have the general lower bound\n   (constructions exist for) `p < (n - c)/m` and, for matchings, a matching upper\n   bound `p* = 1`. Is `p*(F) = (n - c)/m` for all `F`? A natural first test is the\n   triangle `K\u2083` (`n = 3, m = 3, c = 1`): block constructions give `p < 2/3`; does\n   a counterexample exist for `2/3 \u2264 p < 1`, and is there any counterexample for\n   `p \u2265 1`? Formalizing the triangle homomorphism functional and either a smarter\n   construction or a Sidorenko-type lower bound would settle this.\n\n2. **Rank-one (positive semidefinite) perturbations.** Kernels of the form\n   `W = \u03c1 + c\u00b7\u03c6(x)\u03c6(y)` with `c \u2265 0` are automatically \u03c1-locally dense\n   (`\u222b_{S\u00d7S} W = \u03c1|S|\u00b2 + c(\u222b_S \u03c6)\u00b2 \u2265 \u03c1|S|\u00b2`). These are far more flexible than\n   block kernels and are the natural candidate for beating `(n - c)/m`. Formalizing\n   this family and computing its `L\u1d56` functional is a concrete next step.\n\n3. **General block-kernel theorem.** Prove the closed form\n   `(1/N^n) \u03a3_\u03c6 \u220f_{edges} W(\u03c6)^p = k^{c - n + mp} \u03c1^{mp}` for the `k`-block kernel\n   and a general graph `F`, giving `p < (n - c)/m \u21d2 counterexample` in full\n   generality. The combinatorial heart is counting monochromatic vertex-colourings\n   (`= k^c`), i.e. relating to the number of connected components.\n\n4. **Continuum bridge.** Lift the finite-model results to genuine graphons on\n   `[0,1]\u00b2` (Bochner/`lintegral` over `Measure.pi`), and prove that for\n   block-constant kernels the worst-case local-density set is a union of blocks, so\n   that the finite check is equivalent to the continuum condition.\n\n5. **Relation to Sidorenko / KNRS.** The `p = 1` case of `\u2016W_F\u2016_{L\u00b9} \u2265 \u03c1^{e(F)}`\n   for \u03c1-locally dense hosts is exactly the KNRS lower bound; clarifying for which\n   `F` the `L\u1d56` inequality persists for some `p > 1` (as it does for matchings, up\n   to `p = 1` being the boundary of counterexamples) would connect this threshold\n   question to Sidorenko's conjecture.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1199",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b08004d1",
+    "status": "available",
+    "timestamp": "2026-07-13T08:07:20.584913+00:00",
+    "title": "The mission asked to interrogate the claim:"
   },
   {
     "consumed_by_exp_id": "",
