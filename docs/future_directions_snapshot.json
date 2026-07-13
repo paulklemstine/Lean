@@ -6160,7 +6160,7 @@
       "mancinska2020quantum",
       "lovasz1967operations"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eee58a28",
     "description": "For all finite graphs F and G, there exists an oddomorphism from F to G if and only if G is a split-off minor of F. The forward direction is established in the paper; the converse remains open.",
     "domain_bridges": [
       "homomorphism_indistinguishability",
@@ -6176,7 +6176,7 @@
     "proof_strategy": "The forward direction is given by the paper's Theorem that oddomorphism from F to G implies G is a split-off minor of F. For the converse, attempt to construct an oddomorphism from F to G given that G is a split-off minor of F, by reversing each split-off minor operation step and verifying parity conditions on homomorphism counts are preserved. A counterexample search via CFI-type constructions could also be pursued.",
     "research_mode": "team",
     "source_exp_id": "2607.03405v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T02:03:09.912711+00:00",
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
   },
@@ -7755,7 +7755,7 @@
       "SidorenkoSurvey",
       "ConlonSchulke"
     ],
-    "consumed_by_exp_id": "e3aaa465",
+    "consumed_by_exp_id": "",
     "description": "For any k ≥3 and 1≤ℓ<k, and any two accumulation points α, β in Π^k_ℓ, there exists a transfer function f such that f(α) = β.",
     "domain_bridges": [
       "Algebraic Combinatorics",
@@ -7770,7 +7770,7 @@
     "proof_strategy": "Construct a tree suspension parameterized to target specific densities, demonstrating that tree structures can interpolate between any pair of accumulation points.",
     "research_mode": "team",
     "source_exp_id": "2607.06518v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T19:01:40.311474+00:00",
     "title": "Universality of Transfer Functions Among Accumulation Points"
   },

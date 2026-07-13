@@ -13574,7 +13574,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "roberson2022oddomorphisms",
         "mancinska2020quantum",
@@ -13582,7 +13582,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "eee58a28",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13598,7 +13598,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0512",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T15:22:08.386125+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem oddomorphism_iff_split_off_minor (F G : SimpleGraph) [Fintype V_F] [Fintype V_G] [DecidableRel (Adj F)] [DecidableRel (Adj G)] : Oddomorphism F G ↔ IsSplitOffMinor G F := by sorry",
       "lineage_refs": [],
@@ -13613,7 +13613,7 @@
       "source": "",
       "source_exp_id": "2607.03405v1",
       "source_path": "http://arxiv.org/abs/2607.03405v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-07T02:03:09.912711+00:00",
       "title": "Equivalence of Oddomorphism and Split-Off Minor"
@@ -18023,7 +18023,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "e3aaa465",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -18053,7 +18053,7 @@
       "source": "",
       "source_exp_id": "2607.06518v1",
       "source_path": "http://arxiv.org/abs/2607.06518v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-08T19:01:40.311474+00:00",
       "title": "Universality of Transfer Functions Among Accumulation Points"
@@ -42093,6 +42093,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }

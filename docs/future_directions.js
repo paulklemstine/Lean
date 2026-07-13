@@ -3697,7 +3697,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eee58a28",
     "description": "For all finite graphs F and G, there exists an oddomorphism from F to G if and only if G is a split-off minor of F. The forward direction is established in the paper; the converse remains open.",
     "domains": [
       "Bridges"
@@ -3706,7 +3706,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03405v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T02:03:09.912711+00:00",
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
   },
@@ -4512,7 +4512,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dirac Boundary Cyclic Subset Bound for Minimum Degree Graphs"
   },
   {
-    "consumed_by_exp_id": "e3aaa465",
+    "consumed_by_exp_id": "",
     "description": "For any k \u22653 and 1\u2264\u2113<k, and any two accumulation points \u03b1, \u03b2 in \u03a0^k_\u2113, there exists a transfer function f such that f(\u03b1) = \u03b2.",
     "domains": [
       "Bridges"
@@ -4521,7 +4521,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.06518v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-08T19:01:40.311474+00:00",
     "title": "Universality of Transfer Functions Among Accumulation Points"
   },
