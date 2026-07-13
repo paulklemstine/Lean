@@ -339,7 +339,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -348,7 +348,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -407,20 +407,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:19:31.875554+00:00",
     "title": "Deepening: Lower bounds on clique densities using generalized inverses"
-  },
-  {
-    "consumed_by_exp_id": "f347bf96",
-    "description": "Building on cycle e8b8d594 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k \u2265 1, the maximum determinant of any 4\u00d74 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shift",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_e8b8d594_31f7f907",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "e8b8d594",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T12:53:44.504671+00:00",
-    "title": "Deepening: Maximum Determinant Bound for 4\u00d74 Unimodular Matrices with Bounded Entries"
   },
   {
     "consumed_by_exp_id": "",
@@ -734,7 +720,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "777d3024",
     "description": "Building on cycle 996ff4be (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors ",
     "domains": [
       "Applications"
@@ -743,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "996ff4be",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:17:30.409549+00:00",
     "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
   },
@@ -7998,6 +7984,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T15:23:56.684450+00:00",
     "title": "The file `Applications/TransferUniversality.lean` formalizes a universality/tran"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Extremal Determinants with Bounded Entries\n\nThis cycle established, for `4 \u00d7 4` integer matrices with entries in the symmetric\nrange `{-B, \u2026, B}`, that the maximum determinant is bracketed by\n`16\u00b7B\u2074 \u2264 M(B) \u2264 24\u00b7B\u2074`, with `16\u00b7B\u2074` attained by a scaled order-`4` Hadamard\nmatrix (mutually orthogonal rows), and that the previously circulated candidate\n`(2k-1)\u2074 - 2(2k-1)\u00b2 + 1` is false (it is not even an upper bound). The findings\nbelow build directly on those results.\n\n## 1. Close the bracket to the exact value `16\u00b7B\u2074`.\n\n**Conjecture.** Every `4 \u00d7 4` real matrix with `|A\u1d62\u2c7c| \u2264 B` satisfies\n`|det A| \u2264 16\u00b7B\u2074`, with equality exactly for the scaled Hadamard matrices.\n\nThe key insight is that `(det A)\u00b2 = det(A A\u1d40)`, where `G = A A\u1d40` is\npositive\u2011semidefinite with diagonal entries `G\u1d62\u1d62 = \u2016row i\u2016\u00b2 \u2264 4B\u00b2`; the\nHadamard\u2013Fischer inequality `det G \u2264 \u220f\u1d62 G\u1d62\u1d62` then yields `(det A)\u00b2 \u2264 (4B\u00b2)\u2074`,\ni.e. `|det A| \u2264 16\u00b7B\u2074`, and equality forces the rows to be orthogonal of equal\nlength \u2014 a Hadamard matrix. Why now? The lower bound and its orthogonality\ncertificate are already in hand; only the positive\u2011semidefinite determinant\ninequality is missing, and it is a self-contained, order-`4` analytic fact that\ncompletes the characterisation.\n\n## 2. General even order and the Hadamard connection.\n\n**Conjecture.** For every order `n` divisible by `4`, the maximum determinant of\nan `n \u00d7 n` matrix with `|A\u1d62\u2c7c| \u2264 B` equals `n\u207f/\u00b2 \u00b7 B\u207f`, and this value is\nattained **iff** a Hadamard matrix of order `n` exists.\n\nThe key insight is that the Hadamard bound `n\u207f/\u00b2\u00b7B\u207f` is attained precisely when\nthe rows can be made mutually orthogonal with all entries `\u00b1B`, which is the\ndefinition of a Hadamard matrix scaled by `B`. Why now? The order-`4` case is a\nfully worked model here; extending the achievability argument turns the maximal\ndeterminant problem into a direct probe of the **Hadamard conjecture** (existence\nof Hadamard matrices of every order `4m`), a long-standing open problem.\n\n## 3. The gap when no Hadamard matrix exists.\n\n**Conjecture.** For orders `n \u2261 1, 2, 3 (mod 4)` the maximum determinant is\nstrictly below the Hadamard bound `n\u207f/\u00b2\u00b7B\u207f`, and the deficit is governed by the\nBarba (`n` odd) and Ehlich\u2013Wojtas (`n \u2261 2 mod 4`) bounds, scaled by `B\u207f`.\n\nThe key insight is that orthogonality of `\u00b1B` rows is impossible unless `n`\npermits a Hadamard structure, so the extremal Gram matrix is forced away from a\nscalar multiple of the identity, and the sharpest deficit is captured by the\nbest near-orthogonal block designs. Why now? The `4 \u00d7 4` orthogonality\ncertificate isolates exactly which algebraic feature fails in non-Hadamard\norders, making the deficit conjecture concrete and testable order by order.\n\n## 4. Rigidity of the extremiser.\n\n**Conjecture.** Among `4 \u00d7 4` matrices with entries in `{-B, \u2026, B}`, the only\ndeterminant-maximising matrices are the `2\u2074 \u00b7 4!`-many signed permutations of the\nscaled Hadamard matrix (equivalently, all `\u00b1B` matrices with orthogonal rows).\n\nThe key insight is that equality in the Hadamard\u2013Fischer inequality holds only\nwhen the Gram matrix is diagonal and each diagonal entry is maximal, forcing all\nentries to have modulus `B` and the rows to be orthogonal. Why now? The\northogonality certificate already characterises the achievers up to sign and\npermutation symmetry; proving no other configuration ties the maximum would give\na complete classification of the extremisers.\n\n## 5. Growth law and scaling.\n\n**Conjecture.** The maximum determinant `M(B)` is exactly a monomial `c_n \u00b7 B\u207f`\nin the entry bound `B`, with `c_n` independent of `B`; for `n = 4`, `c\u2084 = 16`.\n\nThe key insight is multilinearity: the determinant is linear in each entry, so\nits extremum over the box `[-B, B]^(n\u00b2)` is attained at a vertex where every\nentry is `\u00b1B`, and rescaling all entries by `B` multiplies the determinant by\n`B\u207f`. Why now? The scaling law `det(B \u00b7 A) = B\u207f \u00b7 det A` is already isolated in\nthis cycle, reducing the entire family to the single combinatorial constant `c_n`\nof the `\u00b11` problem.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1230",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f347bf96",
+    "status": "available",
+    "timestamp": "2026-07-13T16:16:00.912350+00:00",
+    "title": "This cycle established, for `4 \u00d7 4` integer matrices with entries in the symmetr"
   },
   {
     "consumed_by_exp_id": "",

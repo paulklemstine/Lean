@@ -458,7 +458,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domain_bridges": [],
     "domains": [
@@ -470,7 +470,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
   },
@@ -549,25 +549,6 @@
     "status": "available",
     "timestamp": "2026-07-12T07:19:31.875554+00:00",
     "title": "Deepening: Lower bounds on clique densities using generalized inverses"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "f347bf96",
-    "description": "Building on cycle e8b8d594 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k ≥ 1, the maximum determinant of any 4×4 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a specific construction involving circulant-like matrices with entries from {-1, 0, 1} scaled and shift",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_e8b8d594_31f7f907",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e8b8d594",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T12:53:44.504671+00:00",
-    "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
   },
   {
     "ambition_level": "extension",
@@ -993,7 +974,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "777d3024",
     "description": "Building on cycle 996ff4be (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors ",
     "domain_bridges": [],
     "domains": [
@@ -1005,7 +986,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "996ff4be",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:17:30.409549+00:00",
     "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
   },
@@ -12876,6 +12857,26 @@
     "status": "available",
     "timestamp": "2026-07-13T15:23:56.684450+00:00",
     "title": "The file `Applications/TransferUniversality.lean` formalizes a universality/tran"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Extremal Determinants with Bounded Entries\n\nThis cycle established, for `4 × 4` integer matrices with entries in the symmetric\nrange `{-B, …, B}`, that the maximum determinant is bracketed by\n`16·B⁴ ≤ M(B) ≤ 24·B⁴`, with `16·B⁴` attained by a scaled order-`4` Hadamard\nmatrix (mutually orthogonal rows), and that the previously circulated candidate\n`(2k-1)⁴ - 2(2k-1)² + 1` is false (it is not even an upper bound). The findings\nbelow build directly on those results.\n\n## 1. Close the bracket to the exact value `16·B⁴`.\n\n**Conjecture.** Every `4 × 4` real matrix with `|Aᵢⱼ| ≤ B` satisfies\n`|det A| ≤ 16·B⁴`, with equality exactly for the scaled Hadamard matrices.\n\nThe key insight is that `(det A)² = det(A Aᵀ)`, where `G = A Aᵀ` is\npositive‑semidefinite with diagonal entries `Gᵢᵢ = ‖row i‖² ≤ 4B²`; the\nHadamard–Fischer inequality `det G ≤ ∏ᵢ Gᵢᵢ` then yields `(det A)² ≤ (4B²)⁴`,\ni.e. `|det A| ≤ 16·B⁴`, and equality forces the rows to be orthogonal of equal\nlength — a Hadamard matrix. Why now? The lower bound and its orthogonality\ncertificate are already in hand; only the positive‑semidefinite determinant\ninequality is missing, and it is a self-contained, order-`4` analytic fact that\ncompletes the characterisation.\n\n## 2. General even order and the Hadamard connection.\n\n**Conjecture.** For every order `n` divisible by `4`, the maximum determinant of\nan `n × n` matrix with `|Aᵢⱼ| ≤ B` equals `nⁿ/² · Bⁿ`, and this value is\nattained **iff** a Hadamard matrix of order `n` exists.\n\nThe key insight is that the Hadamard bound `nⁿ/²·Bⁿ` is attained precisely when\nthe rows can be made mutually orthogonal with all entries `±B`, which is the\ndefinition of a Hadamard matrix scaled by `B`. Why now? The order-`4` case is a\nfully worked model here; extending the achievability argument turns the maximal\ndeterminant problem into a direct probe of the **Hadamard conjecture** (existence\nof Hadamard matrices of every order `4m`), a long-standing open problem.\n\n## 3. The gap when no Hadamard matrix exists.\n\n**Conjecture.** For orders `n ≡ 1, 2, 3 (mod 4)` the maximum determinant is\nstrictly below the Hadamard bound `nⁿ/²·Bⁿ`, and the deficit is governed by the\nBarba (`n` odd) and Ehlich–Wojtas (`n ≡ 2 mod 4`) bounds, scaled by `Bⁿ`.\n\nThe key insight is that orthogonality of `±B` rows is impossible unless `n`\npermits a Hadamard structure, so the extremal Gram matrix is forced away from a\nscalar multiple of the identity, and the sharpest deficit is captured by the\nbest near-orthogonal block designs. Why now? The `4 × 4` orthogonality\ncertificate isolates exactly which algebraic feature fails in non-Hadamard\norders, making the deficit conjecture concrete and testable order by order.\n\n## 4. Rigidity of the extremiser.\n\n**Conjecture.** Among `4 × 4` matrices with entries in `{-B, …, B}`, the only\ndeterminant-maximising matrices are the `2⁴ · 4!`-many signed permutations of the\nscaled Hadamard matrix (equivalently, all `±B` matrices with orthogonal rows).\n\nThe key insight is that equality in the Hadamard–Fischer inequality holds only\nwhen the Gram matrix is diagonal and each diagonal entry is maximal, forcing all\nentries to have modulus `B` and the rows to be orthogonal. Why now? The\northogonality certificate already characterises the achievers up to sign and\npermutation symmetry; proving no other configuration ties the maximum would give\na complete classification of the extremisers.\n\n## 5. Growth law and scaling.\n\n**Conjecture.** The maximum determinant `M(B)` is exactly a monomial `c_n · Bⁿ`\nin the entry bound `B`, with `c_n` independent of `B`; for `n = 4`, `c₄ = 16`.\n\nThe key insight is multilinearity: the determinant is linear in each entry, so\nits extremum over the box `[-B, B]^(n²)` is attained at a vertex where every\nentry is `±B`, and rescaling all entries by `B` multiplies the determinant by\n`Bⁿ`. Why now? The scaling law `det(B · A) = Bⁿ · det A` is already isolated in\nthis cycle, reducing the entire family to the single combinatorial constant `c_n`\nof the `±1` problem.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1230",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f347bf96",
+    "status": "available",
+    "timestamp": "2026-07-13T16:16:00.912350+00:00",
+    "title": "This cycle established, for `4 × 4` integer matrices with entries in the symmetr"
   },
   {
     "ambition_level": "extension",

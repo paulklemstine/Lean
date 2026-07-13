@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "97b9c756",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Siegel–Weil / E₈ theta series\n\nThe file `SiegelWeilE8ThetaDeepening.lean` deepens the earlier weight-`4`\ndevelopment in two ways: (i) it generalizes the entire Hecke-eigenform st",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 16,
-      "timestamp": "2026-07-13T01:24:26",
-      "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
-    },
-    {
       "cycle_id": "cbbd1369",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Generalized Giampietro–Darmon Factorization\n\n## Summary of what was proved / disproved\n\nThis project formalizes a self-contained arithmetic model of the structural core\nof the Gi",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-13T15:24:16",
       "title": "Universality of Transfer Functions Among Accumulation Points"
+    },
+    {
+      "cycle_id": "f347bf96",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Extremal Determinants with Bounded Entries\n\nThis cycle established, for `4 × 4` integer matrices with entries in the symmetric\nrange `{-B, …, B}`, that the maximum determinant is",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-13T16:16:08",
+      "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0981cb8f",
-      "domain": "Probability",
-      "key_insight": "# Future Directions: Self-Reference, Fixed Points, and Strange Loops\n\nEach conjecture below is bold, falsifiable, and derived from the findings of this\ncycle — the observation that existence (Lawvere)",
-      "quality_score": 0.83,
-      "sorry_count": 6,
-      "theorem_count": 20,
-      "timestamp": "2026-07-11T00:40:03",
-      "title": "Consciousness as Emergent Fixed Point"
-    },
     {
       "cycle_id": "0ba9c9ed",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-13T15:24:16",
       "title": "Universality of Transfer Functions Among Accumulation Points"
+    },
+    {
+      "cycle_id": "f347bf96",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Extremal Determinants with Bounded Entries\n\nThis cycle established, for `4 × 4` integer matrices with entries in the symmetric\nrange `{-B, …, B}`, that the maximum determinant is",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-13T16:16:08",
+      "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3e1dd178",
-      "domain": "Applications",
-      "name": "tesseract_vertices",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "86e0e034",
-      "domain": "Applications",
-      "name": "linking",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "86e0e034",
-      "domain": "Applications",
-      "name": "const_on_walk",
-      "quality": 0.74
-    },
     {
       "cycle_id": "86e0e034",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "add_mem_Pi",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "f347bf96",
+      "domain": "Applications",
+      "name": "det_fin_four",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f347bf96",
+      "domain": "Applications",
+      "name": "hadamardMat_det",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f347bf96",
+      "domain": "Applications",
+      "name": "hadamardMat_entry_abs",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-13T15:24:16",
+  "last_updated": "2026-07-13T16:16:08",
   "open_questions": [
     {
       "context": "+--   · sorry   -- infinite tail: composite n > 10000 (Carmichael's analytic core); -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "4cfd5e43",
-        "quality": 0.83,
-        "theorems": 9,
-        "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
-      },
-      {
         "cycle_id": "59a15132",
         "quality": 0.79,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 14,
         "title": "Universality of Transfer Functions Among Accumulation Points"
+      },
+      {
+        "cycle_id": "f347bf96",
+        "quality": 0.78,
+        "theorems": 16,
+        "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded En"
       }
     ],
     "Bridges": [
