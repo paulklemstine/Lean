@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7e49f0c7",
-      "domain": "Novelty",
-      "key_insight": "# Stochastic Galois Theory over Finite Fields — Results and Future Directions\n\n## What was proved (all `sorry`-free, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n**`Catalog/Novelty/StochasticGal",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-10T08:38:04",
-      "title": "Stochastic Galois Theory: Random Permutations Have Generic Galois Groups"
-    },
-    {
       "cycle_id": "3fa70466",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Morphogenesis as Algebraic Geometry\n\nThe linear analysis established here recasts the onset of Turing patterns as\nconic-section geometry: the number of excited spatial modes is a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-13T01:25:17",
       "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "cycle_id": "2a098803",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle closed the three transport lemmas that identify the classical\nfactorial (factoradic) number system as a single point in the general\nmixed-radix family, and re-derived f",
+      "quality_score": 0.6,
+      "sorry_count": 6,
+      "theorem_count": 0,
+      "timestamp": "2026-07-13T02:01:11",
+      "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss "
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T01:25:17",
+  "last_updated": "2026-07-13T02:01:11",
   "open_questions": [
-    {
-      "context": "+The structural reduction is complete and `sorry`-free: the computational; +  tail is therefore left as a single, clearly documented `sorry` (a; sorry",
-      "cycle_id": "a6691c84",
-      "domain": "Novelty",
-      "sorry_count": 6,
-      "timestamp": "2026-07-12T10:44:26"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "f3dfcf44",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-13T01:25:17"
+    },
+    {
+      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "2a098803",
+      "domain": "Novelty",
+      "sorry_count": 6,
+      "timestamp": "2026-07-13T02:01:11"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0c4e7ae8",
-        "quality": 0.82,
-        "theorems": 20,
-        "title": "This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
-      },
-      {
         "cycle_id": "208b1ca5",
         "quality": 0.82,
         "theorems": 17,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 9,
         "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+      },
+      {
+        "cycle_id": "2a098803",
+        "quality": 0.6,
+        "theorems": 0,
+        "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–We"
       }
     ],
     "NumberTheory": [
