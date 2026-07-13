@@ -2251,32 +2251,6 @@
     "title": "Cone Colorful Carathéodory Theorem"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO",
-      "math.SP"
-    ],
-    "consumed_by_exp_id": "d954b0de",
-    "description": "For every Turán graph T(n, r) with r ≥ 4 and n ≥ 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) − e) > E_S(T(n, r)). This is Theorem 1.2 of the paper, resolving a problem of Tian et al., but its formalization requires building the entire theory of Seidel matrices, Seidel energy, Turán graphs, and the reduced-order spectral machinery for blow-up graphs—a substantial formalization undertaking.",
-    "domain_bridges": [
-      "spectral_graph_theory",
-      "linear_algebra",
-      "combinatorics"
-    ],
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0613",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "First formalize Seidel matrices and Seidel energy in Lean, then define Turán graphs and independent-set blow-up graphs. Establish the reduced-order spectral criterion that reduces the Seidel energy comparison to eigenvalue analysis of a smaller matrix whose order depends only on the number of partite sets. Apply this criterion to the Turán graph case with r ≥ 4 and n ≥ 4r, verifying the inequality via explicit eigenvalue computation on the reduced matrix.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06095v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T09:55:51.506040+00:00",
-    "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "Spr12",
@@ -2612,6 +2586,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Cycle d954b0de (Q=0.740) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every Turán graph T(n, r) with r ≥ 4 and n ≥ 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) − e) > E_S(T(n, r)). This is Theorem 1.2 of the pa",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_d954b0de_d371b41a",
+    "lineage_refs": [],
+    "priority_score": 0.79,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d954b0de",
+    "status": "available",
+    "timestamp": "2026-07-13T19:07:10.963972+00:00",
+    "title": "Close Proofs: Seidel energy strictly increases under edge deletion in Turán graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
     "domain_bridges": [],
     "domains": [
@@ -2863,6 +2856,26 @@
     "status": "available",
     "timestamp": "2026-07-13T18:49:54.528672+00:00",
     "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S² = n(n-1)`, from which a\nuniversal energy floor `E_S ≥ √(n(n-1))` follows by Cauchy–Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Turán edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Turán graphs)\nFor every Turán graph `T(n, r)` with `r ≥ 4` and `n ≥ 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) − e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) − e`, deleting an edge flips two symmetric Seidel entries\nfrom `−1` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero — a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Turán (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `±√(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy — the ℓ¹ norm of the eigenvalues —\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `∑λ² = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n−2)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S ↦ S + 2(e_a e_bᵀ + e_b e_aᵀ)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S ≥ √(n(n-1))` is attained asymptotically (ratio → 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy–Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `±1` off-diagonal\nmatrix on the sphere `∑λ² = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n\n\n# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S² = n(n-1)`, from which a\nuniversal energy floor `E_S ≥ √(n(n-1))` follows by Cauchy–Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Turán edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Turán graphs)\nFor every Turán graph `T(n, r)` with `r ≥ 4` and `n ≥ 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) − e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) − e`, deleting an edge flips two symmetric Seidel entries\nfrom `−1` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero — a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Turán (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `±√(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy — the ℓ¹ norm of the eigenvalues —\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `∑λ² = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n−2)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S ↦ S + 2(e_a e_bᵀ + e_b e_aᵀ)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S ≥ √(n(n-1))` is attained asymptotically (ratio → 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy–Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `±1` off-diagonal\nmatrix on the sphere `∑λ² = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n\n\n# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S² = n(n-1)`, from which a\nuniversal energy floor `E_S ≥ √(n(n-1))` follows by Cauchy–Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Turán edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Turán graphs)\nFor every Turán graph `T(n, r)` with `r ≥ 4` and `n ≥ 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) − e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) − e`, deleting an edge flips two symmetric Seidel entries\nfrom `−1` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero — a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Turán (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `±√(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy — the ℓ¹ norm of the eigenvalues —\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `∑λ² = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n−2)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S ↦ S + 2(e_a e_bᵀ + e_b e_aᵀ)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S ≥ √(n(n-1))` is attained asymptotically (ratio → 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy–Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `±1` off-diagonal\nmatrix on the sphere `∑λ² = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Pythagorean"
+    ],
+    "id": "fd_1239",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d954b0de",
+    "status": "available",
+    "timestamp": "2026-07-13T19:07:02.581945+00:00",
+    "title": "Elementary spectral-moment foundations of Seidel"
   },
   {
     "ambition_level": "extension",

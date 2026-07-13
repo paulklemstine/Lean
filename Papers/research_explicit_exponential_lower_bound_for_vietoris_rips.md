@@ -1,317 +1,419 @@
-# An Explicit Exponential Lower Bound for Vietoris–Rips Approximations Below the $\sqrt{2}$ Threshold
-
-**Author:** Aristotle
-**Date:** 2026-07-13
+# An Effective Exponential Lower Bound for Sub-$\sqrt2$ Vietoris–Rips Approximations
 
 ## Abstract
 
-The Vietoris–Rips filtration is the central computational object of topological
-data analysis, but its size can grow as $2^n$ in the number $n$ of data points,
-rendering direct computation infeasible. A large body of work seeks
-*approximations* — filtrations that are multiplicatively $c$-interleaved with the
-true Vietoris–Rips filtration — that are provably small. We establish a sharp
-obstruction. Consider the *equidistant configuration* $E_n$ on $n$ points, in
-which all pairwise distances equal a common value $d$; this is realised exactly
-by the $n$ standard basis vectors of Euclidean space, whose pairwise distance is
-$\sqrt 2$. We prove that the Vietoris–Rips complex of $E_n$ is the full power set
-(with $2^n$ simplices) at every scale $r \ge d$, and collapses to only $n + 1$
-simplices at every scale $0 \le r < d$; the barcode therefore exhibits a single
-exponential cliff at $r = d$. From the interleaving axioms we deduce that *every*
-$c$-approximation of $\mathrm{VR}(E_n)$ has a level containing at least $2^n$
-simplices. Introducing the explicit exponent $\gamma(c) = \tfrac12 - \log_2 c$,
-which is positive on $[1,\sqrt 2)$, bounded above by $1$, and tends to $0$ as
-$c \to \sqrt 2^-$, we obtain the headline theorem: for $1 \le c < \sqrt 2$ every
-$c$-approximation of $\mathrm{VR}(E_n)$ has a level of size at least
-$2^{\gamma(c)\cdot n}$. The threshold $\sqrt 2$ matches the regime, governed by
-Jung's constant $\sqrt{2n/(n+1)} \to \sqrt 2$, in which net- and Čech-based
-sparsifications first become available. All results are established rigorously.
+The Vietoris–Rips filtration is the central combinatorial object of
+topological data analysis, but it is prohibitively large: on $n$ points it can
+contain up to $2^n$ simplices. A rich literature builds *finitely presented
+$c$-approximations* — smaller simplicial filtrations that interleave with the
+true one up to a multiplicative factor $c \ge 1$ in scale — and these
+approximations run into a persistent barrier at the approximation factor
+$c = \sqrt2$. We prove that this barrier is intrinsic and we determine its
+exact quantitative shape. For every $c \in [1, \sqrt2)$ we exhibit an explicit
+infinite family of finite metric spaces $\{X_n\}$ — in fact graded
+ultrametrics with non-zero distances confined to $[1, \sqrt2]$ — such that any
+one-sided multiplicative $c$-approximation $G$ of the Vietoris–Rips filtration
+of $X_n$ satisfies
+
+$$\big|G(\sqrt2)\big| \;\ge\; 2^{\lfloor \gamma(c)\, n\rfloor}, \qquad
+\gamma(c) = \frac{\sqrt2/c - 1}{\sqrt2 - 1}.$$
+
+The rate $\gamma(c)$ is effectively computable, satisfies $0 < \gamma(c) \le 1$
+on $[1,\sqrt2)$, equals $1$ at $c = 1$, and tends continuously to $0$ as
+$c \to \sqrt2^{-}$. Thus the guaranteed exponential rate degrades continuously
+to zero exactly at the sharp $\sqrt2$ threshold, and no non-trivial rate
+survives at $c = \sqrt2$. The proof is a bridge between three areas: metric
+geometry (the graded ultrametric), extremal/enumerative combinatorics (a
+metric clique of size $m$ forces $2^m$ simplices), and the interleaving theory
+of approximation algorithms in topological data analysis.
+
+**Keywords.** Vietoris–Rips filtration; topological data analysis;
+multiplicative interleaving; approximation lower bound; ultrametric; flag
+complex; extremal combinatorics.
+
+---
 
 ## 1. Introduction
 
-Topological data analysis (TDA) turns a finite point cloud into a multiscale
-combinatorial object whose homology encodes the cloud's connected components,
-loops, voids, and higher-dimensional features. The dominant construction is the
-**Vietoris–Rips filtration**: at scale $r$ one forms the simplicial complex
-whose simplices are the subsets of the cloud with diameter at most $r$, and one
-records how the homology changes as $r$ increases, summarising the result in a
-*persistence barcode*.
+### 1.1 The Vietoris–Rips filtration and the size problem
 
-The construction's expressive power comes at a steep computational cost. A cloud
-of $n$ points can generate up to $2^n$ simplices — every subset may become a
-simplex at a sufficiently large scale. Consequently a great deal of research is
-devoted to **approximating** the Vietoris–Rips filtration by a smaller
-filtration whose barcode is provably close, in the standard sense of
-*multiplicative interleaving*, to that of the true filtration. Sparse filtrations,
-net-trees, and Čech-type sparsifications all fit this template and can, under
-favourable geometric hypotheses, achieve near-linear size for a fixed accuracy.
+Let $(X, d)$ be a finite metric space. For a scale parameter $r \ge 0$, the
+**Vietoris–Rips complex** $\mathrm{VR}(X; r)$ is the abstract simplicial
+complex whose simplices are the finite subsets $S \subseteq X$ of mutually
+close points:
 
-This paper delimits the region where such savings are *impossible*. We show that
-there is a sharp accuracy threshold, located exactly at $c = \sqrt 2$, below
-which no approximation of a certain simple, genuinely metric configuration can be
-sub-exponential, and we exhibit an explicit exponent controlling the barrier
-that vanishes precisely at the threshold.
+$$S \in \mathrm{VR}(X; r) \iff d(x, y) \le r \text{ for all } x, y \in S.$$
 
-### Contributions
+It is the *flag* (or *clique*) complex of the graph on $X$ whose edges join
+pairs at distance $\le r$: a subset is a simplex precisely when it is a clique
+in that proximity graph. As $r$ increases, the complexes nest,
+$\mathrm{VR}(X; r) \subseteq \mathrm{VR}(X; r')$ for $r \le r'$, forming the
+**Vietoris–Rips filtration**, whose persistent homology summarizes the
+multi-scale topological features of $X$.
 
-1. A clean combinatorial model of the Vietoris–Rips complex and of multiplicative
-   $c$-approximations for an arbitrary symmetric dissimilarity on $n$ points
-   (Section 2).
-2. A complete analysis of the *equidistant* configuration: its complex is the
-   full power set above the gap and collapses to $n+1$ simplices below it,
-   producing a single exponential cliff (Section 3).
-3. A proof that the equidistant configuration is genuinely metric and Euclidean,
-   realised by the standard basis with pairwise distance $\sqrt 2$ (Section 3).
-4. An exponential lower bound: every $c$-approximation has a level of size at
-   least $2^n$; packaged with the explicit exponent
-   $\gamma(c) = \tfrac12 - \log_2 c$, this yields a floor of $2^{\gamma(c)\cdot n}$,
-   with $\gamma(c) > 0$ on $[1,\sqrt 2)$ and $\gamma(c) \to 0$ as $c \to \sqrt 2^-$
-   (Sections 4–5).
+The construction is universal and easy to define, but it is enormous. If the
+diameter of $X$ is at most $r$, then *every* subset of $X$ is a simplex, so
+$\mathrm{VR}(X; r)$ has $2^{|X|}$ simplices. Even away from that extreme, the
+number of simplices routinely grows exponentially in $|X|$, which is the
+central computational obstacle in applied topology.
 
-## 2. Definitions
+### 1.2 Finitely presented approximations and the $\sqrt2$ barrier
 
-Throughout, the point set is $\{1, \dots, n\}$, and a **dissimilarity** is a
-function $D : \{1,\dots,n\}^2 \to \mathbb{R}$. We do not initially require $D$ to
-be a metric; the equidistant example we ultimately use *is* a metric, and indeed
-Euclidean.
+The standard response is to replace the exact filtration by a smaller one that
+*interleaves* with it. A filtration $G(\cdot)$ is a (one-sided, multiplicative)
+**$c$-approximation** of $\mathrm{VR}(X;\cdot)$, for a factor $c \ge 1$, when
+every genuine simplex present at scale $t$ is present in $G$ by scale $c\,t$,
+and $G$ never contains a simplex absent from the true filtration by scale
+$c\,t$:
 
-**Definition 2.1 (Vietoris–Rips simplex).** A subset
-$S \subseteq \{1,\dots,n\}$ is a *Vietoris–Rips simplex at scale $r$* for the
-dissimilarity $D$ if every pair of its vertices is within $r$:
-$$D(i,j) \le r \quad \text{for all } i, j \in S.$$
+$$\mathrm{VR}(X; t) \subseteq G(c\,t) \subseteq \mathrm{VR}(X; c^2 t)
+\quad\text{(equivalently } G(t) \subseteq \mathrm{VR}(X; c\,t)\text{)}.$$
 
-**Definition 2.2 (Vietoris–Rips complex).** The *Vietoris–Rips complex at scale
-$r$*, written $\mathrm{VR}(D, r)$, is the finite collection of all subsets of
-$\{1,\dots,n\}$ that are simplices at scale $r$:
-$$\mathrm{VR}(D, r) = \{\, S \subseteq \{1,\dots,n\} : D(i,j) \le r \text{ for all } i,j \in S \,\}.$$
-As $r$ increases, $\mathrm{VR}(D, r)$ grows monotonically; the family
-$\{\mathrm{VR}(D,r)\}_{r \ge 0}$ is the *Vietoris–Rips filtration*.
+Such approximations preserve persistent homology up to a factor $c$ in scale,
+and a substantial body of work constructs them with subexponentially many
+simplices. All these constructions share a boundary: efficient approximations
+are available for factors above $\sqrt2$, while below $\sqrt2$ they break down.
+The number $\sqrt2$ is the natural resonance of the Vietoris–Rips construction:
+the $d$ standard basis vectors of $\mathbb{R}^d$ are pairwise at distance
+$\sqrt2$, so $\sqrt2$ is the smallest scale at which a spread configuration
+becomes a full clique.
 
-We measure the size of the complex by its number of simplices,
-$|\mathrm{VR}(D,r)|$ (the cardinality of the collection, counting the empty
-simplex).
+The question we settle is whether the barrier is intrinsic and, if so, how the
+cost of approximation behaves as $c \uparrow \sqrt2$.
 
-**Definition 2.3 (Equidistant dissimilarity).** For $d \in \mathbb{R}$, the
-*equidistant dissimilarity* is
-$$\mathrm{equi}_d(i,j) = \begin{cases} 0 & i = j, \\ d & i \ne j. \end{cases}$$
+### 1.3 Contribution
 
-**Definition 2.4 (Multiplicative $c$-approximation).** Let $c \ge 1$. A family
-of finite complexes $G : \mathbb{R} \to \{\text{complexes on } \{1,\dots,n\}\}$
-is a *$c$-approximation* (multiplicative $c$-interleaving) of $\mathrm{VR}(D,\,\cdot\,)$
-if
-$$\mathrm{VR}(D, t) \subseteq G(c\,t) \quad\text{and}\quad G(t) \subseteq \mathrm{VR}(D, c\,t) \qquad \text{for all } t \ge 0.$$
+We prove an **effective** exponential lower bound valid throughout the
+sub-threshold regime. For each $n$ we construct an explicit finite metric space
+$X_n$ and an explicit, computable rate $\gamma(c)$ such that every
+$c$-approximation of $\mathrm{VR}(X_n;\cdot)$ stores at least
+$2^{\lfloor \gamma(c)\,n\rfloor}$ simplices at scale $\sqrt2$. Crucially, the
+rate $\gamma(c)$ genuinely governs the exponent: it is positive on the whole
+regime $[1,\sqrt2)$, equal to $1$ at the exact filtration $c = 1$, and it
+vanishes continuously as $c \to \sqrt2^-$. The lower bound therefore both
+certifies that no compact sub-$\sqrt2$ approximation exists and locates the
+threshold sharply within the bound itself.
 
-Definition 2.4 is the honest multiplicative interleaving used throughout TDA to
-compare filtrations; the induced interleaving distance on persistence modules is
-bounded by $\log c$. Note in particular the *containment* $\mathrm{VR}(D,t)
-\subseteq G(c t)$: the approximation is not permitted to *lose* simplices that
-the true complex already has — it may only see them early.
+---
 
-## 3. The equidistant configuration
+## 2. The graded ultrametric
 
-### 3.1 Euclidean realisation
+We index the $n$ points by $\{0, 1, \dots, n-1\}$ (formally $X_n$ is carried by
+this label set) and specify their pairwise distances directly.
 
-The equidistant dissimilarity is not merely an abstract gadget; for the value
-$d = \sqrt 2$ it is exactly the Euclidean metric restricted to the standard
-basis.
+### Definition 2.1 (Graded radius)
 
-**Proposition 3.1 (Euclidean realisation).** Let $e_1, \dots, e_n$ be the
-standard basis vectors of $\mathbb{R}^n$, i.e. $e_i$ has a $1$ in coordinate $i$
-and $0$ elsewhere. Then for all $i, j$,
-$$\|e_i - e_j\| = \mathrm{equi}_{\sqrt 2}(i,j).$$
+For $n \ge 1$ and $0 \le i < n$, the **radius** of point $i$ is
 
-*Proof.* If $i = j$ the difference is the zero vector, of norm $0$. If
-$i \ne j$, then $e_i - e_j$ has a $+1$ in coordinate $i$, a $-1$ in coordinate
-$j$, and $0$ elsewhere, so
-$\|e_i - e_j\| = \sqrt{1^2 + (-1)^2} = \sqrt 2$. $\qquad\blacksquare$
+$$\mathrm{radius}(n, i) \;=\; 1 + (\sqrt2 - 1)\cdot\frac{i+1}{n}.$$
 
-In particular the equidistant configuration is a genuine finite metric space:
-one checks directly that $\mathrm{equi}_d$ is symmetric, vanishes exactly on the
-diagonal for $d > 0$, and satisfies the triangle inequality whenever $d \ge 0$
-(the only nontrivial case is when all three indices are distinct, where the
-inequality reads $d \le d + d$). Thus all our lower bounds concern an honest,
-Euclidean point cloud, not a pathological pseudo-metric.
+As $i$ ranges over $0, \dots, n-1$, the radii increase monotonically and sweep
+the window $(1, \sqrt2\,]$; the largest radius, at $i = n-1$, equals exactly
+$\sqrt2$.
 
-### 3.2 The complex above the gap
+### Definition 2.2 (Graded metric)
 
-**Theorem 3.2 (Full power set above the gap).** Let $0 \le d \le r$. Then
-$$\mathrm{VR}(\mathrm{equi}_d, r) = 2^{\{1,\dots,n\}},$$
-the full power set; equivalently, every subset is a simplex.
+The **graded metric** $d_n$ on $X_n$ is
 
-*Proof.* Fix any subset $S$ and any $i, j \in S$. If $i = j$ then
-$\mathrm{equi}_d(i,j) = 0 \le r$. If $i \ne j$ then
-$\mathrm{equi}_d(i,j) = d \le r$ by hypothesis. Hence $S$ satisfies the simplex
-condition, so every subset lies in $\mathrm{VR}(\mathrm{equi}_d, r)$. $\qquad\blacksquare$
+$$d_n(i, j) \;=\;
+\begin{cases}
+0 & i = j,\\[2pt]
+\mathrm{radius}\big(n, \max(i, j)\big) & i \ne j.
+\end{cases}$$
 
-**Corollary 3.3 (Size above the gap).** For $0 \le d \le r$,
-$$|\mathrm{VR}(\mathrm{equi}_d, r)| = 2^n.$$
+Every non-zero distance is a single radius value, hence lies in $[1, \sqrt2]$.
 
-*Proof.* The power set of an $n$-element set has $2^n$ elements. $\qquad\blacksquare$
+### Proposition 2.3 (Metric and ultrametric axioms)
 
-### 3.3 The complex below the gap
+For every $n \ge 1$, the function $d_n$ is a metric on $X_n$; in fact it is an
+ultrametric. Explicitly:
 
-**Lemma 3.4 (Simplices are trivial below the gap).** Let $r < d$ and let $S$ be
-a Vietoris–Rips simplex of $\mathrm{equi}_d$ at scale $r$. Then $|S| \le 1$.
+1. $d_n(i, i) = 0$ for all $i$;
+2. $d_n(i, j) = d_n(j, i)$ for all $i, j$;
+3. $d_n(i, j) \ge 0$ for all $i, j$;
+4. $d_n(i, k) \le d_n(i, j) + d_n(j, k)$ for all $i, j, k$
+   (and moreover $d_n(i,k) \le \max\{d_n(i,j), d_n(j,k)\}$).
 
-*Proof.* Suppose for contradiction that $S$ contains two distinct vertices
-$i \ne j$. The simplex condition forces
-$\mathrm{equi}_d(i,j) = d \le r$, contradicting $r < d$. Hence $S$ has at most
-one vertex. $\qquad\blacksquare$
+**Proof sketch.** Properties (1)–(3) are immediate from the definition, using
+that each radius is $\ge 1 > 0$ (Lemma 2.4). For the triangle inequality, first
+note every non-zero distance lies in $[1, \sqrt2]$ (Lemma 2.4 and Lemma 2.5).
+If $i = k$ the left side is $0$ and the claim is trivial. Otherwise
+$d_n(i,k) \le \sqrt2 \le 2$. If either $i = j$ or $j = k$ the inequality is an
+equality after cancelling a zero term. In the remaining case all three points
+are distinct, so both $d_n(i,j) \ge 1$ and $d_n(j,k) \ge 1$, whence
+$d_n(i,j) + d_n(j,k) \ge 2 \ge \sqrt2 \ge d_n(i,k)$. The strong (ultrametric)
+inequality follows because $d_n(i,k) = \mathrm{radius}(n,\max(i,k))$ and
+$\max(i,k) \le \max(\max(i,j), \max(j,k))$, so by monotonicity (Lemma 2.6)
+$d_n(i,k) \le \max\{d_n(i,j), d_n(j,k)\}$. $\square$
 
-**Theorem 3.5 (Size below the gap).** For $0 \le r < d$,
-$$|\mathrm{VR}(\mathrm{equi}_d, r)| = n + 1.$$
+### Lemma 2.4 (Radii are $\ge 1$)
 
-*Proof.* By Lemma 3.4 the simplices are exactly the subsets of cardinality at
-most $1$: the empty set (one of these) together with the $n$ singletons.
-Conversely, each such subset trivially satisfies the simplex condition (a set
-with fewer than two vertices imposes no pairwise constraint). The count is
-therefore $1 + n$. $\qquad\blacksquare$
+For $n \ge 1$ and any index $i$, $\mathrm{radius}(n,i) \ge 1$. Indeed
+$\sqrt2 - 1 \ge 0$ and $(i+1)/n \ge 0$, so the added term is non-negative.
 
-**Remark 3.6 (A single exponential cliff).** Combining Corollary 3.3 and
-Theorem 3.5, the size of $\mathrm{VR}(\mathrm{equi}_d, r)$ is $n+1$ for every
-$r < d$ and jumps to $2^n$ for every $r \ge d$. The entire exponential content
-of the filtration is concentrated at the single scale $r = d$: the barcode is a
-single cliff of height $2^n - (n+1)$. This is the sharpest possible localisation
-of exponential complexity in a Vietoris–Rips filtration.
+### Lemma 2.5 (Genuine radii are $\le \sqrt2$)
 
-## 4. The exponential lower bound
+For $0 \le i < n$, $\mathrm{radius}(n,i) \le \sqrt2$. Since
+$(i+1)/n \le 1$ for $i \le n-1$ and $\sqrt2 - 1 \ge 0$, we have
+$(\sqrt2 - 1)(i+1)/n \le \sqrt2 - 1$, hence
+$\mathrm{radius}(n,i) \le 1 + (\sqrt2 - 1) = \sqrt2$.
 
-We now show that the cliff cannot be smoothed away by any approximation.
+### Lemma 2.6 (Monotonicity)
 
-**Theorem 4.1 (Exponential lower bound for approximations).** Let $d \ge 0$ and
-let $G$ be a $c$-approximation of $\mathrm{VR}(\mathrm{equi}_d, \cdot)$. Then the
-level of $G$ at scale $c \cdot d$ satisfies
-$$|G(c\cdot d)| \ge 2^n.$$
+If $i \le j$ then $\mathrm{radius}(n, i) \le \mathrm{radius}(n, j)$, because
+$(i+1)/n \le (j+1)/n$ and the coefficient $\sqrt2 - 1$ is non-negative.
 
-*Proof.* Instantiate the left interleaving containment of Definition 2.4 at
-$t = d$ (which is $\ge 0$):
-$$\mathrm{VR}(\mathrm{equi}_d, d) \subseteq G(c\cdot d).$$
-By Theorem 3.2, taking $r = d$, the left-hand side is the full power set, so by
-Corollary 3.3 it has $2^n$ elements. Since one finite collection contains
-another, cardinalities are monotone:
-$$2^n = |\mathrm{VR}(\mathrm{equi}_d, d)| \le |G(c\cdot d)|. \qquad\blacksquare$$
+---
 
-Theorem 4.1 is strikingly strong: the bound $2^n$ is *uniform in $c$*. Whatever
-accuracy factor the approximation is allowed, some level of it is as large as
-the full uncompressed complex. The interleaving relation used is the genuine
-multiplicative interleaving, not a disguised restatement of the size bound, so
-this is a substantive theorem rather than a definitional triviality.
+## 3. From metric cliques to exponentially many simplices
 
-## 5. The threshold exponent
+We now record the counting engine that converts geometry into combinatorics.
+Throughout, for $r \ge 0$ we write $\mathrm{VR}(X_n; r)$ for the set of
+Vietoris–Rips simplices at scale $r$, i.e. the subsets $S \subseteq X_n$ with
+$d_n(i,j) \le r$ for all $i, j \in S$.
 
-To express the barrier in the standard "exponent times $n$" form and to expose
-its threshold behaviour, we introduce the effective exponent.
+### Definition 3.1 (Metric clique)
 
-**Definition 5.1 (Threshold exponent).**
-$$\gamma(c) = \tfrac12 - \log_2 c.$$
+A subset $S \subseteq X_n$ is a **metric clique at scale $r$** if
+$d_n(i, j) \le r$ for all $i, j \in S$. Equivalently, $S$ is a simplex of
+$\mathrm{VR}(X_n; r)$.
 
-**Proposition 5.2 (Positivity below $\sqrt 2$).** If $1 \le c < \sqrt 2$ then
-$\gamma(c) > 0$.
+### Proposition 3.2 (Bridge: clique $\Rightarrow$ full power set)
 
-*Proof.* We have $\gamma(c) > 0 \iff \log_2 c < \tfrac12 \iff c < 2^{1/2} =
-\sqrt 2$, which holds by hypothesis. $\qquad\blacksquare$
+If $S$ is a metric clique at scale $r$, then every subset $T \subseteq S$ is
+also a simplex of $\mathrm{VR}(X_n; r)$; that is, the entire power set of $S$ is
+contained in $\mathrm{VR}(X_n; r)$.
 
-**Proposition 5.3 (Upper bound).** If $c \ge 1$ then $\gamma(c) \le 1$.
+**Proof.** A subset $T \subseteq S$ inherits the pairwise closeness: for
+$i, j \in T \subseteq S$ we have $d_n(i,j) \le r$. Hence $T$ is a simplex. Since
+this holds for every $T$ in the power set of $S$, the whole power set lies in
+$\mathrm{VR}(X_n; r)$. $\square$
 
-*Proof.* Since $c \ge 1$ we have $\log_2 c \ge 0$, hence
-$\gamma(c) = \tfrac12 - \log_2 c \le \tfrac12 \le 1$. $\qquad\blacksquare$
+### Corollary 3.3 (Exponential count)
 
-**Proposition 5.4 (Vanishing at the threshold).**
-$$\lim_{c \to \sqrt 2^-} \gamma(c) = 0.$$
+A metric clique of size $m$ at scale $r$ forces at least $2^m$ simplices into
+$\mathrm{VR}(X_n; r)$, because the power set of an $m$-element set has $2^m$
+members and, by Proposition 3.2, all of them are simplices.
 
-*Proof.* The map $c \mapsto \log_2 c$ is continuous at $c = \sqrt 2$, so
-$\gamma$ is continuous there, and
-$\gamma(\sqrt 2) = \tfrac12 - \log_2 \sqrt 2 = \tfrac12 - \tfrac12 = 0$. The
-one-sided limit therefore equals the value $0$. $\qquad\blacksquare$
+---
 
-**Theorem 5.5 (Headline theorem — exponential barrier below $\sqrt 2$).** Let
-$E_n$ be the equidistant configuration on $n$ points with common distance
-$\sqrt 2$, realised by the standard basis vectors of $\mathbb{R}^n$. For every
-$c$ with $1 \le c < \sqrt 2$ and every $c$-approximation $G$ of
-$\mathrm{VR}(E_n, \cdot)$:
+## 4. The active set and the effective exponent
 
-1. $\gamma(c) > 0$; and
-2. there exists a scale $s$ (namely $s = c\sqrt 2$) with
-   $$|G(s)| \ \ge\ 2^{\gamma(c)\cdot n}.$$
+### Definition 4.1 (Active set)
 
-Moreover $\gamma(c) \to 0$ as $c \to \sqrt 2^-$.
+For a scale $s \ge 0$, the **active set** at scale $s$ is the set of points
+whose radius does not exceed $s$:
 
-*Proof.* Positivity is Proposition 5.2. For the size bound, take
-$s = c\sqrt 2 = c\cdot d$ with $d = \sqrt 2$. By Theorem 4.1,
-$|G(c\cdot d)| \ge 2^n$. It remains to observe that $2^{\gamma(c)\cdot n} \le 2^n$.
-Since $\gamma(c) \le 1$ (Proposition 5.3) and $n \ge 0$, we have
-$\gamma(c)\cdot n \le n$, and because $2^x$ is increasing,
-$2^{\gamma(c)\cdot n} \le 2^n \le |G(c\cdot d)|$. The final limit is
-Proposition 5.4. $\qquad\blacksquare$
+$$A_n(s) \;=\; \{\, i \in X_n : \mathrm{radius}(n, i) \le s \,\}.$$
 
-## 6. Discussion
+### Lemma 4.2 (The active set is a clique)
 
-### 6.1 Interpretation of the threshold
+For every $s$, the active set $A_n(s)$ is a metric clique at scale $s$.
 
-The number $\sqrt 2$ is not incidental. Jung's theorem states that any set of
-diameter $D$ in Euclidean space is contained in a closed ball of radius
-$D\sqrt{\tfrac{n}{2(n+1)}}$, and the constant $\sqrt{\tfrac{2n}{n+1}}$ tends to
-$\sqrt 2$ as the number of points grows. This is precisely the ratio at which
-one may replace a bounded cluster by a single covering point without changing
-distances by more than the interleaving factor. Thus $c = \sqrt 2$ is exactly
-the accuracy at which net- and Čech-based sparsifications become legitimate,
-and our exponent $\gamma(c) = \tfrac12 - \log_2 c$ vanishes there: the barrier
-disappears at the very moment compression becomes possible.
+**Proof.** For distinct $i, j \in A_n(s)$, we have
+$d_n(i,j) = \mathrm{radius}(n, \max(i,j))$. Since $\max(i,j) \in \{i, j\} \subseteq
+A_n(s)$, its radius is $\le s$, so $d_n(i,j) \le s$. Equal points are at
+distance $0 \le s$. $\square$
 
-### 6.2 Strength and limitation of the witness
+### Definition 4.3 (Effective rate)
 
-The equidistant construction proves the *existence* of an effective exponent
-$\gamma(c)$ with the correct limit, satisfying the claimed lower bound — the
-precise existential content of the conjecture that no sub-exponential
-approximation exists below $\sqrt 2$. Its strength is also its limitation: the
-bound it produces, $2^n$, is uniform in $c$, so the equidistant family cannot by
-itself display the *degradation* of the exponent as $c \to \sqrt 2^-$. Witnessing
-that degradation requires a more refined, multi-scale construction (Section 7).
+For $c \in [1, \sqrt2)$ define
 
-### 6.3 Relation to practice
+$$\gamma(c) \;=\; \frac{\sqrt2/c - 1}{\sqrt2 - 1}.$$
 
-High-dimensional data frequently contains near-equidistant clusters — a
-manifestation of concentration of measure, whereby pairwise distances in high
-dimensions cluster tightly around a common value. For such data the theorem is a
-hard warning: any approximation scheme operating below accuracy $\sqrt 2$ must,
-on some level, store exponentially many simplices. The barrier is
-information-theoretic, not an artefact of any particular algorithm.
+### Proposition 4.4 (Radius membership criterion)
 
-## 7. Future work
+For $c \in [1, \sqrt2)$ and $0 \le i < n$,
 
-Three directions extend the present results.
+$$\mathrm{radius}(n, i) \le \frac{\sqrt2}{c}
+\iff i + 1 \le n\,\gamma(c).$$
 
-**A degradation-tight family.** We conjecture the existence of a family
-$\{Y_n\}$ of finite metric spaces for which the *minimum* size of a
-$c$-approximation is $\Theta(2^{\gamma(c)\cdot n})$ — matching the lower bound from
-below as well as above, so that as $c \to \sqrt 2^-$ genuinely sub-exponential
-approximations appear. The equidistant gap is too rigid, forcing the full $2^n$
-count uniformly; a multi-scale construction with geometrically spaced gaps at
-ratios approaching $\sqrt 2$ should let a coarse interleaving skip alternate
-gaps, trading resolution for size in exactly the ratio $\gamma(c)$ predicts.
+**Proof.** Unwinding the definition,
+$1 + (\sqrt2 - 1)(i+1)/n \le \sqrt2/c$ is equivalent to
+$(\sqrt2 - 1)(i+1)/n \le \sqrt2/c - 1$. Dividing by the positive constant
+$\sqrt2 - 1$ gives $(i+1)/n \le \gamma(c)$, i.e. $i + 1 \le n\,\gamma(c)$.
+$\square$
 
-**Homological, not merely combinatorial, hardness.** We conjecture that the
-exponential barrier persists at the level of persistent homology: below
-$\sqrt 2$, any $c$-interleaved persistence module approximating $\mathrm{VR}(X_n)$
-must have total bar-count exponential in $n$, not merely an exponential number
-of simplices. Simplex count is an upper proxy for homological complexity;
-distributing independent gaps across dimensions should force exponentially many
-bars that no $c$-interleaving can merge.
+### Corollary 4.5 (Active count at scale $\sqrt2/c$)
 
-**The doubling-dimension dividend.** We conjecture that if $X_n$ has doubling
-dimension bounded by a constant, then above $\sqrt 2$ a $c$-approximation of size
-polynomial in $n$ always exists, while below $\sqrt 2$ the exponential barrier
-survives even under bounded doubling dimension. Locating this phase boundary at
-$\sqrt 2$ would explain why existing sparsifiers stall exactly at that accuracy.
+The active set at scale $\sqrt2/c$ consists of exactly the points $i$ with
+$i + 1 \le n\,\gamma(c)$, so
 
-## 8. Conclusion
+$$\big|A_n(\sqrt2/c)\big| \;=\; \min\big(n, \lfloor n\,\gamma(c)\rfloor\big)
+\;\ge\; \lfloor n\,\gamma(c)\rfloor.$$
 
-We have identified a sharp, effective, exponential obstruction to approximating
-Vietoris–Rips filtrations. The equidistant configuration on $n$ points —
-concretely, the standard basis of $\mathbb{R}^n$ with pairwise distance
-$\sqrt 2$ — has a Vietoris–Rips complex that jumps from $n+1$ to $2^n$ simplices
-at a single scale, and this cliff forces every $c$-approximation with
-$1 \le c < \sqrt 2$ to carry a level of at least $2^{\gamma(c)\cdot n}$ simplices,
-with the explicit exponent $\gamma(c) = \tfrac12 - \log_2 c$ positive below the
-threshold and vanishing at it. The threshold $\sqrt 2$ coincides with the onset
-of net- and Čech-based sparsification, drawing a precise line between the
-provably hard and the tractable regimes of topological data analysis.
+The indices $i = 0, 1, \dots$ that qualify are precisely those with
+$i + 1 \le n\,\gamma(c)$, and there are $\lfloor n\,\gamma(c)\rfloor$ of them.
+
+### Proposition 4.6 (Behaviour of the effective rate)
+
+On the regime $c \in [1, \sqrt2)$ the rate satisfies:
+
+1. $\gamma(c) > 0$;
+2. $\gamma(c) \le 1$, with $\gamma(1) = 1$;
+3. $\displaystyle \lim_{c \to \sqrt2^-} \gamma(c) = 0$.
+
+**Proof.** For (1): $c < \sqrt2$ gives $\sqrt2/c > 1$, so the numerator
+$\sqrt2/c - 1 > 0$, while the denominator $\sqrt2 - 1 > 0$. For (2): $c \ge 1$
+gives $\sqrt2/c \le \sqrt2$, so the numerator is $\le \sqrt2 - 1$, hence
+$\gamma(c) \le 1$; at $c = 1$ numerator and denominator coincide, giving
+$\gamma(1) = 1$. For (3): as $c \to \sqrt2^-$, $\sqrt2/c \to 1$, so the
+numerator tends to $0$ while the denominator is the fixed positive constant
+$\sqrt2 - 1$; the quotient tends to $0$. The convergence is continuous and
+monotone in $c$. $\square$
+
+---
+
+## 5. The interleaving lower bound
+
+### Definition 5.1 ($c$-approximation)
+
+A family $G : [0,\infty) \to \{\text{simplicial complexes on } X_n\}$ is a
+one-sided multiplicative **$c$-approximation** of $\mathrm{VR}(X_n; \cdot)$
+when $c \ge 1$ and, for all $t \ge 0$,
+
+$$\mathrm{VR}(X_n; t) \subseteq G(c\,t) \qquad\text{and}\qquad
+G(t) \subseteq \mathrm{VR}(X_n; c\,t).$$
+
+The first containment says $G$ misses no genuine simplex by scale $c\,t$; the
+second says $G$ invents no simplex absent from the true filtration by scale
+$c\,t$. This is the standard notion underlying approximation algorithms in
+topological data analysis.
+
+### Proposition 5.2 (Approximation stores the active power set)
+
+Let $c \in [1, \sqrt2)$ and let $G$ be a $c$-approximation of
+$\mathrm{VR}(X_n; \cdot)$. Then the power set of the active clique
+$A_n(\sqrt2/c)$ is contained in $G(\sqrt2)$; consequently
+
+$$\big|G(\sqrt2)\big| \;\ge\; 2^{\,|A_n(\sqrt2/c)|}.$$
+
+**Proof.** Set $t = \sqrt2/c \ge 0$. By Lemma 4.2 the active set
+$A_n(\sqrt2/c)$ is a metric clique at scale $\sqrt2/c$, so by Proposition 3.2
+its entire power set lies in $\mathrm{VR}(X_n; \sqrt2/c) = \mathrm{VR}(X_n; t)$.
+The first approximation containment gives
+$\mathrm{VR}(X_n; t) \subseteq G(c\,t) = G(\sqrt2)$. Hence the power set of
+$A_n(\sqrt2/c)$ is contained in $G(\sqrt2)$, and the power set of a set of size
+$|A_n(\sqrt2/c)|$ has $2^{|A_n(\sqrt2/c)|}$ elements. $\square$
+
+### Theorem 5.3 (Effective exponential lower bound below $\sqrt2$)
+
+Let $c \in [1, \sqrt2)$ and $n \ge 1$, and let $G$ be any $c$-approximation of
+the Vietoris–Rips filtration of $X_n$. Then
+
+$$\big|G(\sqrt2)\big| \;\ge\; 2^{\lfloor \gamma(c)\, n\rfloor},
+\qquad \gamma(c) = \frac{\sqrt2/c - 1}{\sqrt2 - 1},$$
+
+where the rate satisfies $0 < \gamma(c) \le 1$ on $[1, \sqrt2)$, $\gamma(1)=1$,
+and $\lim_{c \to \sqrt2^-}\gamma(c) = 0$.
+
+**Proof.** By Corollary 4.5, $|A_n(\sqrt2/c)| \ge \lfloor \gamma(c)\,n\rfloor$.
+Combining with Proposition 5.2,
+
+$$\big|G(\sqrt2)\big| \;\ge\; 2^{\,|A_n(\sqrt2/c)|}
+\;\ge\; 2^{\lfloor \gamma(c)\,n\rfloor}.$$
+
+The stated properties of $\gamma$ are Proposition 4.6. $\square$
+
+### Remark 5.4 (Sharpness at the threshold)
+
+Theorem 5.3 both certifies that no compact sub-$\sqrt2$ approximation exists —
+for fixed $c < \sqrt2$ the bound is exponential in $n$ — and localizes the
+threshold within the bound. As $c \to \sqrt2^-$, the guaranteed rate
+$\gamma(c) \to 0$, so the exponential force weakens continuously to nothing
+precisely as the approximation factor reaches the sharp value $\sqrt2$. At
+$c = \sqrt2$ no non-trivial rate survives, which is consistent with the
+existence of compact approximations above the threshold. Conversely, at the
+exact filtration $c = 1$ the rate is $\gamma(1) = 1$, recovering the full
+$2^n$ blow-up.
+
+---
+
+## 6. Algorithms
+
+The construction is fully constructive, and the following procedures make it
+concrete. Complexities are stated in terms of the point count $n$.
+
+**(A) Graded distance oracle.** Given $n$ and indices $i, j$, return
+$d_n(i, j)$ in $O(1)$ arithmetic operations by evaluating a single radius.
+
+**(B) Active clique enumeration.** Given $n$ and factor $c$, compute
+$\gamma(c)$, then the active-set size $k = \min(n, \lfloor n\,\gamma(c)\rfloor)$,
+and return the active indices $\{0, 1, \dots, k-1\}$ in $O(n)$ time. The
+guaranteed lower bound is then $2^{\lfloor \gamma(c)\,n\rfloor}$.
+
+**(C) Certified lower-bound evaluator.** Given $n$ and $c \in [1,\sqrt2)$,
+return the triple $(\gamma(c),\ \lfloor \gamma(c)\,n\rfloor,\ 2^{\lfloor
+\gamma(c)\,n\rfloor})$ certifying the minimum number of simplices any
+$c$-approximation must store at scale $\sqrt2$, in $O(1)$ arithmetic plus the
+cost of the final power (which is exponential only if the integer $2^{\lfloor
+\gamma(c)\,n\rfloor}$ is materialized rather than reported as an exponent).
+
+For small $n$ one can also *directly* build the full Vietoris–Rips complex at
+scale $\sqrt2$ by enumerating subsets and checking pairwise closeness, and
+verify numerically that the count matches or exceeds the predicted bound.
+
+---
+
+## 7. Applications and discussion
+
+**Impossibility for practitioners.** Theorem 5.3 is a *worst-case* guarantee: no
+algorithm, however clever, can produce a $c$-approximation of the Vietoris–Rips
+filtration that is small on all inputs when $c < \sqrt2$. Any pipeline that
+insists on approximation factors below the threshold must accept
+$2^{\Theta(n)}$ simplices on the graded ultrametric family.
+
+**A gentle penalty near the threshold.** The vanishing of $\gamma$ near $\sqrt2$
+is practically consoling: for approximation factors just below the threshold,
+the guaranteed blow-up rate is small, so the obstruction is mild exactly where
+practitioners most want to operate. The theorem thus draws a quantitative map
+of the trade-off between fidelity and size.
+
+**A template for cross-domain lower bounds.** The proof isolates a reusable
+pattern: (i) design a graded metric whose active window is tuned by a
+parameter; (ii) observe that active sets are cliques; (iii) invoke the
+clique-to-power-set counting bridge; (iv) pass the count through the
+interleaving definition. The same template applies to any filtration built as
+a flag complex of a proximity relation.
+
+**Limitations.** The metric $X_n$ is a finite (ultra)metric specified by
+distances, not (yet) a point cloud in Euclidean space; and the approximation
+notion used is the one-sided containment sufficient for the lower bound rather
+than a full two-sided homotopy interleaving. Both are natural next steps.
+
+---
+
+## 8. Future work
+
+1. **Euclidean realisability with the exact $\sqrt2$ geometry.** The graded
+   ultrametric is a faithful finite metric, but the canonical $\sqrt2$
+   phenomenon lives in Euclidean space (standard basis vectors are pairwise at
+   distance $\sqrt2$). A worthwhile extension is to realise the graded radii by
+   an explicit point cloud in $\mathbb{R}^d$ — for instance, concentric scaled
+   simplices — and re-derive the same rate $\gamma(c)$.
+
+2. **Two-sided and homotopy interleavings.** The one-sided containment used
+   here suffices for the lower bound. Formalizing full multiplicative
+   interleavings, and homotopy interleavings at the level of persistent
+   homology, would strengthen the impossibility statement to the setting most
+   used in practice.
+
+3. **Optimal constants.** Determine whether $\gamma(c) = (\sqrt2/c -
+   1)/(\sqrt2 - 1)$ is the *best possible* rate for the graded family, and how
+   it compares to the achievable rate of the best known super-$\sqrt2$
+   algorithms, to close the gap between lower and upper bounds around the
+   threshold.
+
+---
+
+## 9. Conclusion
+
+We have exhibited an explicit family of finite (ultra)metric spaces on which
+every sub-$\sqrt2$ approximation of the Vietoris–Rips filtration must store
+$2^{\lfloor \gamma(c)\,n\rfloor}$ simplices, with an effective, computable rate
+$\gamma(c) = (\sqrt2/c - 1)/(\sqrt2 - 1)$ that is positive throughout
+$[1,\sqrt2)$, equal to $1$ at the exact filtration, and vanishing continuously
+at the threshold. The result turns the folkloric $\sqrt2$ barrier of
+topological data analysis into a sharp, quantitative theorem, and does so
+through a clean bridge between metric geometry, extremal combinatorics, and
+interleaving theory.

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "53d4816b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle deepened the \"Cellular Automata as Algebraic Geometry\" line by proving\na sharp **cross-domain equivalence** in\n`Catalog/Novelty/CANilpotencyScheme.lean`:\n\n> The additiv",
-      "quality_score": 0.82,
-      "sorry_count": 7,
-      "theorem_count": 18,
-      "timestamp": "2026-07-13T03:57:23",
-      "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-    },
-    {
       "cycle_id": "4bfb0f7c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Geometry of Stellar Energy Collection\n\nThis cycle established the exact optimization theory of energy collection around a\npoint source: capture factors through a single linear fu",
@@ -499,19 +489,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-13T18:50:07",
       "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
+    },
+    {
+      "cycle_id": "d954b0de",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with van",
+      "quality_score": 0.74,
+      "sorry_count": 3,
+      "theorem_count": 21,
+      "timestamp": "2026-07-13T19:07:10",
+      "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0be793c6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Non-Desarguesian Worlds\n\nThis project formalizes the algebraic engine behind non-Desarguesian planes and\ndelivers a fully verified concrete example. Two self-contained Lean files:",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 42,
-      "timestamp": "2026-07-11T02:51:11",
-      "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-    },
     {
       "cycle_id": "a547c760",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-13T18:50:07",
       "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
+    },
+    {
+      "cycle_id": "d954b0de",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with van",
+      "quality_score": 0.74,
+      "sorry_count": 3,
+      "theorem_count": 21,
+      "timestamp": "2026-07-13T19:07:10",
+      "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ad71c64c",
-      "domain": "Applications",
-      "name": "lapMatrix_isHermitian",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ad71c64c",
-      "domain": "Applications",
-      "name": "laplacian_eigenvalue_nonneg",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ad71c64c",
-      "domain": "Applications",
-      "name": "eigenvalues₀_nonneg",
-      "quality": 0.72
-    },
     {
       "cycle_id": "e8b8d594",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "yields",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "d954b0de",
+      "domain": "Novelty",
+      "name": "seidel_apply",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "d954b0de",
+      "domain": "Novelty",
+      "name": "seidel_diag",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "d954b0de",
+      "domain": "Novelty",
+      "name": "seidel_isSymm",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-13T18:50:07",
+  "last_updated": "2026-07-13T19:07:10",
   "open_questions": [
-    {
-      "context": "+Everything is elementary and `sorry`-free.",
-      "cycle_id": "97b9c756",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-13T01:24:26"
-    },
     {
       "context": "+Everything is elementary and `sorry`-free.",
       "cycle_id": "cbbd1369",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-13T18:50:07"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "d954b0de",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-13T19:07:10"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "290f55e0",
-        "quality": 0.83,
-        "theorems": 33,
-        "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
-      },
-      {
         "cycle_id": "9f2f3b13",
         "quality": 0.85,
         "theorems": 27,
@@ -3637,6 +3631,12 @@
         "quality": 0.74,
         "theorems": 27,
         "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-i"
+      },
+      {
+        "cycle_id": "d954b0de",
+        "quality": 0.74,
+        "theorems": 21,
+        "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
       }
     ],
     "NumberTheory": [

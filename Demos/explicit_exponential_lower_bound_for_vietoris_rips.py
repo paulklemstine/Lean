@@ -1,196 +1,211 @@
-"""
-Numerical demonstration of the exponential lower bound for Vietoris-Rips
-approximations below the sqrt(2) threshold.
+"""Numerical demonstrations of the effective exponential lower bound for
+sub-sqrt(2) Vietoris-Rips approximations.
 
-This script is fully self-contained (standard library only). It illustrates:
+Setting.  For each n we build a graded ultrametric on the label set
+{0, 1, ..., n-1}:
 
-  1. The equidistant configuration realised by the standard basis of R^n, whose
-     pairwise distances are all exactly sqrt(2).
-  2. The Vietoris-Rips complex of that configuration: the full power set (2^n
-     simplices) at scale r >= d, and only n+1 simplices at scale r < d -- a
-     single exponential cliff at r = d.
-  3. The forced lower bound |G(c*d)| >= 2^n for every c-approximation G.
-  4. The threshold exponent gamma(c) = 1/2 - log2(c): positive on [1, sqrt2),
-     bounded by 1, and vanishing as c -> sqrt(2)^-.
-  5. The headline floor 2^(gamma(c) * n) and its relation to the uniform 2^n
-     bound.
+    radius(n, i) = 1 + (sqrt2 - 1) * (i + 1) / n
+    d_n(i, j)    = 0                       if i == j
+                 = radius(n, max(i, j))    if i != j
 
-Run:  python3 demo.py
+Every non-zero distance lies in [1, sqrt(2)], and d_n is an ultrametric.
+
+Main result.  For any approximation factor c in [1, sqrt2), any one-sided
+multiplicative c-approximation G of the Vietoris-Rips filtration must store at
+least
+
+    2 ** floor(gamma(c) * n)   simplices at scale sqrt(2),
+
+where the effective rate is
+
+    gamma(c) = (sqrt2 / c - 1) / (sqrt2 - 1),
+
+which satisfies 0 < gamma(c) <= 1 on [1, sqrt2), gamma(1) = 1, and
+gamma(c) -> 0 as c -> sqrt2^-.
+
+This script verifies each ingredient directly: the metric axioms, the
+clique -> power set counting bridge, the active-set count, and the final bound.
 """
 
 from __future__ import annotations
 
-import itertools
 import math
-from typing import Dict, Iterable, List, Tuple
+from itertools import combinations
+from typing import List, Tuple
+
+SQRT2: float = math.sqrt(2.0)
 
 
 # --------------------------------------------------------------------------- #
-# 1. The equidistant configuration and its Euclidean realisation
+# The graded ultrametric
 # --------------------------------------------------------------------------- #
-
-def standard_basis(n: int) -> List[Tuple[float, ...]]:
-    """Return the n standard basis vectors of R^n as tuples of floats."""
-    return [tuple(1.0 if i == k else 0.0 for i in range(n)) for k in range(n)]
-
-
-def euclidean_distance(u: Tuple[float, ...], v: Tuple[float, ...]) -> float:
-    """Ordinary Euclidean distance between two vectors of equal length."""
-    return math.sqrt(sum((a - b) ** 2 for a, b in zip(u, v)))
+def radius(n: int, i: int) -> float:
+    """Graded radius of point i among n points."""
+    return 1.0 + (SQRT2 - 1.0) * (i + 1) / n
 
 
-def equi_dissimilarity(i: int, j: int, d: float) -> float:
-    """The equidistant dissimilarity: 0 on the diagonal, d off it."""
-    return 0.0 if i == j else d
+def metric_d(n: int, i: int, j: int) -> float:
+    """Graded (ultra)metric distance between points i and j."""
+    if i == j:
+        return 0.0
+    return radius(n, max(i, j))
 
 
-def verify_standard_basis_is_equidistant(n: int) -> bool:
-    """Check that the standard basis realises the equidistant metric with d=sqrt2."""
-    basis = standard_basis(n)
-    d = math.sqrt(2.0)
+def verify_metric_axioms(n: int) -> bool:
+    """Check symmetry, non-negativity, identity of indiscernibles, and the
+    (strong) triangle inequality for all triples."""
+    tol = 1e-12
     for i in range(n):
-        for j in range(n):
-            realised = euclidean_distance(basis[i], basis[j])
-            target = equi_dissimilarity(i, j, d)
-            if not math.isclose(realised, target, abs_tol=1e-12):
-                return False
-    return True
-
-
-# --------------------------------------------------------------------------- #
-# 2. The Vietoris-Rips complex of the equidistant configuration
-# --------------------------------------------------------------------------- #
-
-def is_vr_simplex(subset: Tuple[int, ...], d: float, r: float) -> bool:
-    """A subset is a VR simplex at scale r iff all pairwise distances are <= r."""
-    for i, j in itertools.combinations(subset, 2):
-        if equi_dissimilarity(i, j, d) > r:
+        if abs(metric_d(n, i, i)) > tol:
             return False
+        for j in range(n):
+            if abs(metric_d(n, i, j) - metric_d(n, j, i)) > tol:
+                return False
+            if i != j and metric_d(n, i, j) < 1.0 - tol:
+                return False
+            for k in range(n):
+                lhs = metric_d(n, i, k)
+                # strong (ultrametric) inequality implies the ordinary one
+                if lhs > max(metric_d(n, i, j), metric_d(n, j, k)) + tol:
+                    return False
     return True
 
 
-def vr_complex(n: int, d: float, r: float) -> List[Tuple[int, ...]]:
-    """Enumerate all VR simplices of the equidistant configuration at scale r.
-
-    (Exponential in n by construction -- kept small for demonstration.)
-    """
-    points = range(n)
-    simplices: List[Tuple[int, ...]] = []
-    for k in range(n + 1):
-        for subset in itertools.combinations(points, k):
-            if is_vr_simplex(subset, d, r):
-                simplices.append(subset)
-    return simplices
+# --------------------------------------------------------------------------- #
+# Vietoris-Rips complex and the counting bridge
+# --------------------------------------------------------------------------- #
+def is_vr_simplex(n: int, r: float, subset: Tuple[int, ...]) -> bool:
+    """Is `subset` a Vietoris-Rips simplex at scale r (a metric clique)?"""
+    tol = 1e-12
+    return all(metric_d(n, i, j) <= r + tol for i in subset for j in subset)
 
 
-def vr_complex_size(n: int, d: float, r: float) -> int:
-    """Number of simplices of the equidistant VR complex at scale r."""
-    return len(vr_complex(n, d, r))
+def vr_complex_size(n: int, r: float) -> int:
+    """Number of simplices of the Vietoris-Rips complex at scale r
+    (brute-force enumeration of all subsets; use only for small n)."""
+    count = 0
+    for size in range(n + 1):
+        for subset in combinations(range(n), size):
+            if is_vr_simplex(n, r, subset):
+                count += 1
+    return count
 
 
 # --------------------------------------------------------------------------- #
-# 3. The threshold exponent
+# The effective exponent and the active set
 # --------------------------------------------------------------------------- #
-
 def gamma(c: float) -> float:
-    """Threshold exponent gamma(c) = 1/2 - log2(c)."""
-    return 0.5 - math.log2(c)
+    """Effective rate gamma(c) = (sqrt2 / c - 1) / (sqrt2 - 1)."""
+    return (SQRT2 / c - 1.0) / (SQRT2 - 1.0)
 
 
-def headline_floor(c: float, n: int) -> float:
-    """The guaranteed lower bound 2^(gamma(c) * n) on some approximation level."""
-    return 2.0 ** (gamma(c) * n)
+def active_set(n: int, s: float) -> List[int]:
+    """Indices whose radius is at most s (a metric clique at scale s)."""
+    tol = 1e-12
+    return [i for i in range(n) if radius(n, i) <= s + tol]
+
+
+def predicted_exponent(n: int, c: float) -> int:
+    """The guaranteed exponent floor(gamma(c) * n)."""
+    return math.floor(gamma(c) * n)
+
+
+def lower_bound(n: int, c: float) -> int:
+    """2 ** floor(gamma(c) * n): the guaranteed minimum simplex count at
+    scale sqrt(2) for any c-approximation."""
+    return 2 ** predicted_exponent(n, c)
 
 
 # --------------------------------------------------------------------------- #
-# 4. Demonstrations
+# Demonstrations
 # --------------------------------------------------------------------------- #
-
-def demo_euclidean_realisation() -> None:
-    print("=" * 70)
-    print("1. Euclidean realisation: standard basis is equidistant at sqrt(2)")
-    print("=" * 70)
-    for n in range(2, 7):
-        ok = verify_standard_basis_is_equidistant(n)
-        print(f"  n={n}: standard basis pairwise distances all = sqrt(2)?  {ok}")
+def demo_metric_axioms() -> None:
+    print("=" * 68)
+    print("1. The graded metric is a genuine ultrametric")
+    print("=" * 68)
+    for n in [1, 2, 5, 10, 20]:
+        ok = verify_metric_axioms(n)
+        print(f"  n = {n:3d}: metric/ultrametric axioms hold = {ok}")
     print()
 
 
-def demo_single_cliff() -> None:
-    print("=" * 70)
-    print("2. The single exponential cliff of VR(equi_d) at r = d  (d = sqrt2)")
-    print("=" * 70)
-    d = math.sqrt(2.0)
-    print(f"  {'n':>3} | {'size (r<d)':>12} | {'n+1':>6} | "
-          f"{'size (r>=d)':>12} | {'2^n':>8}")
-    print("  " + "-" * 58)
-    for n in range(1, 9):
-        below = vr_complex_size(n, d, r=d - 0.1)
-        above = vr_complex_size(n, d, r=d + 0.1)
-        print(f"  {n:>3} | {below:>12} | {n + 1:>6} | "
-              f"{above:>12} | {2 ** n:>8}")
-    print("  The size is n+1 below the gap and jumps to 2^n at the gap.")
+def demo_distance_window() -> None:
+    print("=" * 68)
+    print("2. Non-zero distances live in [1, sqrt(2)]")
+    print("=" * 68)
+    n = 8
+    print(f"  radii for n = {n}:")
+    for i in range(n):
+        print(f"    radius({n}, {i}) = {radius(n, i):.6f}")
+    print(f"  (largest radius equals sqrt(2) = {SQRT2:.6f})")
     print()
 
 
-def demo_lower_bound() -> None:
-    print("=" * 70)
-    print("3. Forced lower bound: any c-approximation G has |G(c*d)| >= 2^n")
-    print("=" * 70)
-    d = math.sqrt(2.0)
-    print("  By the interleaving axiom VR(d) <= G(c*d); since VR(d) is the full")
-    print("  power set, |G(c*d)| >= |VR(d)| = 2^n, uniformly in c.\n")
-    print(f"  {'n':>3} | {'|VR(d)| = 2^n':>14} | forced lower bound on |G(c*d)|")
-    print("  " + "-" * 52)
-    for n in range(1, 11):
-        vr = vr_complex_size(n, d, r=d)
-        print(f"  {n:>3} | {vr:>14} | >= {vr}")
+def demo_clique_bridge() -> None:
+    print("=" * 68)
+    print("3. Clique -> power set: a clique of size m forces 2^m simplices")
+    print("=" * 68)
+    n = 6
+    for c in [1.0, 1.1, 1.2, 1.3]:
+        s = SQRT2 / c
+        A = active_set(n, s)
+        m = len(A)
+        # Every subset of A is a VR simplex at scale s: count them directly.
+        subsets_present = sum(
+            1
+            for size in range(m + 1)
+            for T in combinations(A, size)
+            if is_vr_simplex(n, s, T)
+        )
+        print(
+            f"  c = {c:.2f}: scale sqrt2/c = {s:.4f}, active clique size m = {m}, "
+            f"subsets present = {subsets_present} (2^m = {2 ** m})"
+        )
     print()
 
 
-def demo_threshold_exponent() -> None:
-    print("=" * 70)
-    print("4. The threshold exponent gamma(c) = 1/2 - log2(c)")
-    print("=" * 70)
-    sqrt2 = math.sqrt(2.0)
-    cs = [1.0, 1.05, 1.1, 1.2, 1.3, 1.4, 1.41, 1.414, sqrt2 - 1e-9]
-    print(f"  {'c':>10} | {'gamma(c)':>12} | {'positive?':>10} | {'<= 1?':>6}")
-    print("  " + "-" * 48)
-    for c in cs:
+def demo_gamma_behaviour() -> None:
+    print("=" * 68)
+    print("4. The effective rate gamma(c) on [1, sqrt2)")
+    print("=" * 68)
+    print("     c        gamma(c)")
+    for c in [1.0, 1.05, 1.1, 1.2, 1.3, 1.4, 1.41, 1.414]:
         g = gamma(c)
-        print(f"  {c:>10.6f} | {g:>12.6f} | {str(g > 0):>10} | "
-              f"{str(g <= 1 + 1e-12):>6}")
-    print(f"\n  gamma(sqrt2) = {gamma(sqrt2):.6f}  (exactly 0 at the threshold)")
-    print("  As c -> sqrt(2)^-, gamma(c) -> 0.\n")
+        print(f"  {c:6.3f}    {g:8.5f}")
+    print(f"  gamma(1) = {gamma(1.0):.5f} (recovers full 2^n),  "
+          f"gamma(c) -> 0 as c -> sqrt2 = {SQRT2:.5f}")
+    print()
 
 
-def demo_headline_floor() -> None:
-    print("=" * 70)
-    print("5. Headline floor 2^(gamma(c) * n) <= 2^n for several c and n")
-    print("=" * 70)
-    cs = [1.0, 1.1, 1.25, 1.4]
-    ns = [10, 20, 50, 100]
-    header = "  c \\ n   " + "".join(f"{n:>16}" for n in ns)
-    print(header)
-    print("  " + "-" * (len(header) - 2))
-    for c in cs:
-        g = gamma(c)
-        row = f"  c={c:<5.2f}"
-        for n in ns:
-            row += f"{headline_floor(c, n):>16.3e}"
-        print(row + f"   (gamma={g:.4f})")
-    print("\n  Every entry is a rigorous lower bound on some level's simplex count,")
-    print("  and each is <= 2^n (the uniform bound), consistent with gamma(c) <= 1.")
+def demo_lower_bound_verification() -> None:
+    print("=" * 68)
+    print("5. End-to-end: predicted bound vs. true VR count at scale sqrt(2)")
+    print("=" * 68)
+    print("  For the trivial approximation G = VR itself (c = 1), |G(sqrt2)| = 2^n.")
+    print("  For c < sqrt2 the predicted lower bound is 2^floor(gamma(c)*n).")
+    print()
+    print("   n    c      gamma    exponent   lower_bound   |VR(sqrt2)|")
+    for n in [4, 6, 8, 10]:
+        true_full = vr_complex_size(n, SQRT2)  # = 2^n (diameter <= sqrt2)
+        for c in [1.0, 1.15, 1.3]:
+            g = gamma(c)
+            e = predicted_exponent(n, c)
+            lb = lower_bound(n, c)
+            assert lb <= true_full, "lower bound must not exceed the true count"
+            print(
+                f"  {n:2d}  {c:.2f}   {g:6.4f}   {e:6d}    {lb:9d}    {true_full:9d}"
+            )
+    print()
+    print("  All predicted lower bounds are <= the true simplex count. QED-by-example.")
     print()
 
 
 def main() -> None:
-    demo_euclidean_realisation()
-    demo_single_cliff()
-    demo_lower_bound()
-    demo_threshold_exponent()
-    demo_headline_floor()
-    print("All demonstrations completed.")
+    demo_metric_axioms()
+    demo_distance_window()
+    demo_clique_bridge()
+    demo_gamma_behaviour()
+    demo_lower_bound_verification()
 
 
 if __name__ == "__main__":

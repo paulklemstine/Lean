@@ -1,56 +1,65 @@
-# Computational Evidence — Siegel–Weil for the E₈ theta series
+# Computational Evidence: the `E₄² = E₈` congruence shadow
 
-All claims below are additionally verified symbolically in
-`SiegelWeilE8ThetaMoebius.lean`.
+We study the weight-`8` / weight-`4` divisor sums
+`σ₇(n) = ∑_{d ∣ n} d⁷` and `σ₃(n) = ∑_{d ∣ n} d³`, the Fourier coefficient
+systems of the Eisenstein series `E₈` and `E₄`. The Siegel–Weil identity for
+rank `8` gives `θ_{E₈} = E₄`; squaring yields `E₄² = E₈`, whose coefficient form
+is the convolution law
 
-## 1. Small-case representation numbers `r(n) = 240·σ₃(n)`
+```
+σ₇(n) = σ₃(n) + 120 · ∑_{i=1}^{n-1} σ₃(i)·σ₃(n-i).
+```
 
-| n | σ₃(n) = Σ_{d|n} d³ | r(n) = 240·σ₃(n) |
-|---|--------------------|------------------|
-| 1 | 1                  | 240              |
-| 2 | 1 + 8 = 9          | 2160             |
-| 3 | 1 + 27 = 28        | 6720             |
-| 4 | 1 + 8 + 64 = 73    | 17520            |
-| 5 | 1 + 125 = 126      | 30240            |
+## 1. Small-case verification of the convolution law
 
-These reproduce the known E₈ vector counts (240 roots, then 2160, 6720, 17520,
-30240 vectors of squared length 4, 6, 8, 10).
+Writing `C(n) = ∑_{i=1}^{n-1} σ₃(i)·σ₃(n-i)`:
 
-## 2. Eigenform defect at prime squares: `σ₃(p²) = σ₃(p)² − p³`
+| n  | σ₇(n)    | σ₃(n) + 120·C(n) | equal? |
+|----|----------|------------------|--------|
+| 1  | 1        | 1                | ✓      |
+| 2  | 129      | 129              | ✓      |
+| 3  | 2188     | 2188             | ✓      |
+| 4  | 16513    | 16513            | ✓      |
+| 5  | 78126    | 78126            | ✓      |
+| 6  | 282252   | 282252           | ✓      |
+| 7  | 823544   | 823544           | ✓      |
+| 8  | 2113665  | 2113665          | ✓      |
+| 9  | 4785157  | 4785157          | ✓      |
+| 10 | 10078254 | 10078254         | ✓      |
+| 11 | 19487172 | 19487172         | ✓      |
 
-| p | σ₃(p) | σ₃(p)² | σ₃(p²)        | defect = p³ |
-|---|-------|--------|---------------|-------------|
-| 2 | 9     | 81     | 1+8+64 = 73   | 8           |
-| 3 | 28    | 784    | 1+27+729 = 757| 27          |
-| 5 | 126   | 15876  | 1+125+15625 = 15751 | 125   |
+The convolution law holds on the entire tested range, so `σ₇(n) − σ₃(n)` is a
+positive multiple of `120` for every `n ≥ 1`.
 
-The defect is always positive, confirming `σ₃(p²) < σ₃(p)²`: the coefficient
-system is multiplicative but never completely multiplicative.
+## 2. The congruence residue
 
-## 3. Möbius inversion recovers cubes: `Σ_{d·e=n} μ(d)·σ₃(e) = n³`
+Reducing the coefficient systems modulo `120`:
 
-| n | divisor pairs (d,e) with μ(d)≠0 | signed sum | n³ |
-|---|---------------------------------|-----------|----|
-| 2 | (1,2):+9, (2,1):−1              | 8         | 8  |
-| 3 | (1,3):+28, (3,1):−1            | 27        | 27 |
-| 4 | (1,4):+73, (2,2):−9, (4,1):0  | 64        | 64 |
-| 6 | (1,6):+σ₃(6)=252, (2,3):−28, (3,2):−9, (6,1):+1 | 216 | 216 |
+| n | σ₇(n) mod 120 | σ₃(n) mod 120 |
+|---|---------------|---------------|
+| 1 | 1  | 1  |
+| 2 | 9  | 9  |
+| 3 | 28 | 28 |
+| 4 | 73 | 73 |
+| 5 | 6  | 6  |
+| 6 | 12 | 12 |
+| 7 | 104| 104|
+| 8 | 105| 105|
+| 9 | 37 | 37 |
 
-Each row returns exactly `n³`, as predicted by dividing the Eisenstein
-L-function by ζ.
+The two systems coincide modulo `120` — this is the statement proved in full
+generality as `sigma7_modEq_sigma3`.
 
-## 4. Closed Euler-factor form: `σ₃(pʳ)·(p³−1) = p^{3(r+1)}−1`
+## 3. Optimality of the modulus
 
-For p = 2: σ₃(2²)·7 = 73·7 = 511 = 2⁹ − 1 = 512 − 1. ✓
-For p = 3, r = 1: σ₃(3)·26 = 28·26 = 728 = 3⁶ − 1 = 729 − 1. ✓
+At `n = 2` the difference is `σ₇(2) − σ₃(2) = 129 − 9 = 120`, which is divisible
+by `120` but **not** by `240`. Hence `120` is the largest modulus for which the
+congruence `σ₇ ≡ σ₃` holds universally; this sharpness is formalized as
+`sigma7_not_modEq_sigma3_mod240`.
 
-## 5. OEIS
+## 4. Pointwise power congruence
 
-The sequence `240·σ₃(n)` (240, 2160, 6720, 17520, 30240, ...) is the theta series
-of the E₈ lattice, OEIS A004009 (with the constant term 1 for n = 0). The divisor
-cube sum σ₃(n) is OEIS A001158.
-
-## Counterexample hunt
-
-No counterexample to `r(n) = 240·σ₃(n)`, to the eigenform defect inequality, or to
-the Möbius-inversion identity was found in the tested range `1 ≤ n ≤ 200`.
+The engine of the divisor-sum congruence is `d⁷ ≡ d³ (mod 120)` for all `d`,
+verified on residues `0,…,119` and proved by gluing the coprime factors `8, 3,
+5` via the Chinese Remainder Theorem. Sequence of `d⁷ − d³` for `d = 0,…,6`:
+`0, 0, 120, 2160, 16320, 78000, 279720`, each a multiple of `120`.

@@ -2251,32 +2251,6 @@
     "title": "Cone Colorful Carathéodory Theorem"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO",
-      "math.SP"
-    ],
-    "consumed_by_exp_id": "d954b0de",
-    "description": "For every Turán graph T(n, r) with r ≥ 4 and n ≥ 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) − e) > E_S(T(n, r)). This is Theorem 1.2 of the paper, resolving a problem of Tian et al., but its formalization requires building the entire theory of Seidel matrices, Seidel energy, Turán graphs, and the reduced-order spectral machinery for blow-up graphs—a substantial formalization undertaking.",
-    "domain_bridges": [
-      "spectral_graph_theory",
-      "linear_algebra",
-      "combinatorics"
-    ],
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0613",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "First formalize Seidel matrices and Seidel energy in Lean, then define Turán graphs and independent-set blow-up graphs. Establish the reduced-order spectral criterion that reduces the Seidel energy comparison to eigenvalue analysis of a smaller matrix whose order depends only on the number of partite sets. Apply this criterion to the Turán graph case with r ≥ 4 and n ≥ 4r, verifying the inequality via explicit eigenvalue computation on the reduced matrix.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06095v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T09:55:51.506040+00:00",
-    "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "Spr12",
@@ -2387,34 +2361,6 @@
     "status": "available",
     "timestamp": "2026-07-08T09:56:13.663591+00:00",
     "title": "Unbounded Gap Between Co-Index of a Free Z_2-Space and Its Suspension"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "VR filtrations and metric spaces",
-      "Approximation algorithms in TDA",
-      "Homotopy interleavings",
-      "Doubling dimension in metric geometry"
-    ],
-    "consumed_by_exp_id": "ad0affd1",
-    "description": "There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-approximation to the Vietoris-Rips filtration VR(Xₙ) requires at least 2^(γ·n) simplices, and moreover γ can be taken to satisfy γ = γ(c) with lim_{c→√2⁻} γ(c) = 0.",
-    "domain_bridges": [
-      "Formal verification of persistent homology algorithms",
-      "Computability theory in metric geometry",
-      "Quantitative topology in Lean 4"
-    ],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "fd_0673",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "1. Construct an explicit infinite family of finite metric spaces Xₙ (e.g., using ℓ₁-spheres or Hamming cube constructions) with controlled geometric properties. 2. Prove that these spaces have unbounded doubling dimension. 3. Use combinatorial arguments to show that any c-approximation must encode sufficient information to distinguish between exponentially many distinct metric configurations. 4. Establish the quantitative bound on γ(c) by analyzing the homomorphism density needed in the approximation maps. 5. Verify the limit behavior as c approaches √2 from below using asymptotic analysis.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06524v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T17:01:42.923851+00:00",
-    "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
   },
   {
     "ambition_level": "extension",
@@ -2607,6 +2553,25 @@
     "status": "in_progress",
     "timestamp": "2026-07-13T18:50:07.324365+00:00",
     "title": "Close Proofs: Sharp maximal excess of co-index under suspension for all feasible sta"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle d954b0de (Q=0.740) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every Turán graph T(n, r) with r ≥ 4 and n ≥ 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) − e) > E_S(T(n, r)). This is Theorem 1.2 of the pa",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_d954b0de_d371b41a",
+    "lineage_refs": [],
+    "priority_score": 0.79,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d954b0de",
+    "status": "available",
+    "timestamp": "2026-07-13T19:07:10.963972+00:00",
+    "title": "Close Proofs: Seidel energy strictly increases under edge deletion in Turán graphs"
   },
   {
     "ambition_level": "extension",
@@ -2863,6 +2828,46 @@
     "status": "available",
     "timestamp": "2026-07-13T18:49:54.528672+00:00",
     "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S² = n(n-1)`, from which a\nuniversal energy floor `E_S ≥ √(n(n-1))` follows by Cauchy–Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Turán edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Turán graphs)\nFor every Turán graph `T(n, r)` with `r ≥ 4` and `n ≥ 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) − e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) − e`, deleting an edge flips two symmetric Seidel entries\nfrom `−1` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero — a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Turán (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `±√(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy — the ℓ¹ norm of the eigenvalues —\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `∑λ² = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n−2)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S ↦ S + 2(e_a e_bᵀ + e_b e_aᵀ)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S ≥ √(n(n-1))` is attained asymptotically (ratio → 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy–Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `±1` off-diagonal\nmatrix on the sphere `∑λ² = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n\n\n# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S² = n(n-1)`, from which a\nuniversal energy floor `E_S ≥ √(n(n-1))` follows by Cauchy–Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Turán edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Turán graphs)\nFor every Turán graph `T(n, r)` with `r ≥ 4` and `n ≥ 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) − e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) − e`, deleting an edge flips two symmetric Seidel entries\nfrom `−1` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero — a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Turán (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `±√(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy — the ℓ¹ norm of the eigenvalues —\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `∑λ² = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n−2)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S ↦ S + 2(e_a e_bᵀ + e_b e_aᵀ)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S ≥ √(n(n-1))` is attained asymptotically (ratio → 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy–Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `±1` off-diagonal\nmatrix on the sphere `∑λ² = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n\n\n# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S² = n(n-1)`, from which a\nuniversal energy floor `E_S ≥ √(n(n-1))` follows by Cauchy–Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Turán edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Turán graphs)\nFor every Turán graph `T(n, r)` with `r ≥ 4` and `n ≥ 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) − e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) − e`, deleting an edge flips two symmetric Seidel entries\nfrom `−1` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero — a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Turán (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `±√(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy — the ℓ¹ norm of the eigenvalues —\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `∑λ² = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n−2)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S ↦ S + 2(e_a e_bᵀ + e_b e_aᵀ)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S ≥ √(n(n-1))` is attained asymptotically (ratio → 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy–Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `±1` off-diagonal\nmatrix on the sphere `∑λ² = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Pythagorean"
+    ],
+    "id": "fd_1239",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d954b0de",
+    "status": "available",
+    "timestamp": "2026-07-13T19:07:02.581945+00:00",
+    "title": "Elementary spectral-moment foundations of Seidel"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential lower bound for sub-√2 Vietoris–Rips approximations whose rate `γ(c)` vanishes\nat the √2 threshold.\n\n## What is proved (file `Bridges/VietorisRipsSubSqrt2LowerBound.lean`)\n\nFor each `n` we build the graded ultrametric `metricD n` on `Fin n` (non-zero distances in\n`[1, √2]`, `radius(n,i) = 1 + (√2−1)(i+1)/n`), and set\n`γ(c) = (√2/c − 1)/(√2 − 1)`.\n\n* **Metric geometry.** `dist_isMetric`: `metricD n` is a genuine finite (ultra)metric\n  (symmetry, non-negativity, `d(i,i)=0`, triangle inequality).\n* **Geometry → combinatorics (the bridge).** `two_pow_card_le_card_VRcomplex`: a metric\n  clique of size `m` at scale `r` forces `2^m` Vietoris–Rips simplices (its whole power\n  set), and `two_pow_activeCard_le_VRcomplex` applies this to the graded active set.\n* **The effective exponent.** `gamma_pos`, `gamma_le_one` (so `0 < γ(c) ≤ 1` on `[1,√2)`),\n  and `gamma_tendsto_nhdsWithin` (`γ(c) → 0` as `c → √2⁻`).\n* **Rate realisation.** `radius_le_iff` and `floor_gamma_le_exponent`:\n  `⌊n·γ(c)⌋ ≤ #active(√2/c)`.\n* **Interleaving lower bound.** `approx_card_lower_bound`: any one-sided `c`-approximation\n  `G` (`IsCApprox`) has `2^(#active(√2/c)) ≤ |G(√2)|`.\n* **Headline connector.** `subSqrt2_exponential_lower_bound`: for every `c ∈ [1,√2)`, every\n  `n>0`, and every `c`-approximation `G`,\n  `2^⌊n·γ(c)⌋ ≤ |G(√2)|`, with `0 < γ(c) ≤ 1` and `lim_{c→√2⁻} γ(c) = 0`.\n\nThe main theorem uses only `propext`, `Classical.choice`, `Quot.sound`.\n\n## Relation to the catalog reference\n\nThe catalog file `Catalog/Novelty/VietorisRipsCliqueBridge.lean` proves a *flat* `2^n`\nbound for an equidistant configuration and defines a `γ(c)` that does **not** control the\nexponent (the bound is `2^n` independent of `c`). The present work supplies the missing\n`c`-dependence demanded by the mission: an explicit `γ(c)` that genuinely governs the\nexponent `⌊n·γ(c)⌋`, is positive on the whole regime `[1,√2)`, and continuously degrades to\n`0` at the threshold. This is what makes the √2 boundary sharp in the lower bound itself.\n\n## Directions to strengthen / extend\n\n1. **Euclidean realisability with the exact √2 geometry.** The graded ultrametric is a\n   faithful finite metric, but the \"canonical\" √2 phenomenon lives in Euclidean space\n   (standard basis vectors are pairwise at distance √2). A worthwhile extension is to\n   realise the graded radii by an explicit point cloud in `ℝ^d` (e.g. concentric scaled\n   simplices) and re-derive the same `γ(c)`, connecting to `EuclideanSpace` in Mathlib.\n\n2. **Two-sided interleavings and homotopy interleavings.** `IsCApprox` here is the\n   one-sided containment sufficient for the lower bound. Formalizing full multiplicative\n   interleavings and homotopy-interleavings (Blumberg–Lesnick) and proving the same\n   simplex-count lower bound survives would tighten the link to the standard TDA notion of\n   `c`-approximation.\n\n3. **Doubling dimension.** The catalog reference \"Doubling dimension in metric geometry\"\n   suggests quantifying how the doubling dimension of `metricD n` scales with `n`, and\n   whether the exponential lower bound can be phrased purely in terms of a growth/packing\n   invariant — turning the bridge into a doubling-dimension ⇒ complexity statement.\n\n4. **Persistent homology, not just simplex count.** Upgrade from \"many simplices\" to a\n   lower bound on the size of any interleaved *persistence module* / barcode, linking to\n   the `Catalog/.../PrimePersistentHomology.lean` line of development.\n\n5. **Optimality of `γ(c)`.** Investigate whether `(√2/c − 1)/(√2 − 1)` is the best possible\n   rate for this family, and characterise the extremal metric spaces achieving a given\n   `γ(c)`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1240",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ad0affd1",
+    "status": "available",
+    "timestamp": "2026-07-13T19:07:14.716898+00:00",
+    "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
   },
   {
     "ambition_level": "extension",
