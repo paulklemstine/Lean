@@ -213,7 +213,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "290f55e0",
     "description": "Building on cycle 34e9f39c (Q=0.820), which proved 20 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determ",
     "domains": [
       "Applications"
@@ -222,7 +222,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "34e9f39c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T14:32:36.770001+00:00",
     "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
   },
