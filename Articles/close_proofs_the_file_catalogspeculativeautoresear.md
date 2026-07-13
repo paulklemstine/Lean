@@ -1,211 +1,169 @@
-# The Shape of Togetherness: How Counting Bridges Reveals a Hidden Law of Networks
+# One Rule to Count Them All: How the Factorial Number System Is Just an Ordinary Positional System in Disguise
 
-Imagine a swarm of fireflies blinking in a dark field. At first, each one is its
-own little island of light. Then, as your eyes adjust and you start grouping the
-ones that are close together, clusters form. Two fireflies nearby become a pair;
-a pair near a third becomes a trio; and eventually, if you keep relaxing your
-notion of "close," the whole field merges into a single shimmering crowd.
+## A tale of two number systems
 
-This little thought experiment is, surprisingly, one of the deepest ideas in
-modern data science. It sits at the crossroads of three fields that rarely speak
-to one another — the *topology* of data, the *optimization* of networks, and the
-humble *art of counting*. This article tells the story of a clean mathematical
-law that ties all three together, and shows that what looks like sophisticated
-geometry is, at its heart, nothing more than careful bookkeeping.
+Every child learns to count in base ten. The number $2{,}025$ means
+$2\cdot 10^3 + 0\cdot 10^2 + 2\cdot 10^1 + 5\cdot 10^0$. Computers prefer
+base two, cryptographers sometimes reach for base sixteen, and the ancient
+Babylonians famously used base sixty (which is why an hour still has sixty
+minutes). In all of these systems a single number — the *base* — governs the
+whole scheme: each place is worth the base times the place to its right.
 
-## The problem: when do things become one?
+But there is a stranger, more beautiful way to write numbers, one where the
+"base" changes as you move from one digit to the next. It is called the
+**factorial number system**, or *factoradic*, and it looks like this. Instead
+of powers of ten, the place values are the **factorials**
+$$0! = 1,\quad 1! = 1,\quad 2! = 2,\quad 3! = 6,\quad 4! = 24,\quad 5! = 120,\ \dots$$
+A factoradic number is a string of digits $c_{k-1}\,\cdots\,c_2\,c_1\,c_0$ whose
+value is
+$$c_{k-1}\cdot (k-1)! + \cdots + c_2\cdot 2! + c_1\cdot 1! + c_0\cdot 0!.$$
+The twist is in the rules for the digits. In base ten every digit runs from $0$
+to $9$. In the factorial system the *allowed range grows*: the digit in place
+$i$ may be any integer from $0$ up to $i$. So the units digit ($i=0$) must be
+$0$; the next digit ($i=1$) may be $0$ or $1$; the next ($i=2$) may be $0$,
+$1$, or $2$; and so on.
 
-Scientists constantly face point clouds — collections of data points scattered
-in space. A biologist studying how a protein folds sees thousands of atoms; an
-astronomer sees galaxies; a sociologist sees people in a social network. In every
-case, a natural question arises: **how are these points connected, and at what
-scale?**
+Try it. The number $17{,}\text{decimal}$ becomes $2\,2\,1\,0$ in factoradic,
+because
+$$2\cdot 3! + 2\cdot 2! + 1\cdot 1! + 0\cdot 0! = 12 + 4 + 1 + 0 = 17.$$
+It works, and — remarkably — **it works uniquely**: every whole number has
+exactly one factoradic representation, just as it has exactly one representation
+in base ten.
 
-The standard tool is beautifully simple. Pick a "connection radius" `t`. Declare
-two points connected if they're closer than `t`. As you turn the dial on `t` from
-zero upward, more and more points link up, and separate clusters merge. This
-growing family of graphs is called a *filtration*, and tracking how the number of
-clusters changes as `t` grows is the subject of **persistent homology** — the
-flagship technique of topological data analysis.
+This is not a curiosity for its own sake. The factorial number system is the
+natural language of *permutations*. If you want to list all the ways to shuffle
+a deck, or to jump straight to the ten-billionth arrangement of a set without
+generating the ten billion before it, the factoradic digits are precisely the
+instructions you need. It is the engine behind ranking and unranking
+permutations, behind the *Lehmer code*, and behind fast combinatorial
+generation.
 
-The number of connected clusters at scale `t` has a name: the **zeroth Betti
-number**, written `β₀(t)`. At `t = 0`, every point is alone, so `β₀` is large. As
-`t` grows, clusters merge and `β₀` falls. Eventually everything is one big blob
-and `β₀ = 1`. The *story* of how `β₀` declines — when each merger happens and how
-much "cluster structure" survives at each scale — is a fingerprint of the data's
-shape.
+## The question that ties them together
 
-But here is the puzzle that motivates everything below. The full machinery of
-persistent homology is heavy: chain complexes, boundary maps, homology groups.
-Do we really need all of that just to understand clustering? The answer, it turns
-out, is a resounding **no**. For the zeroth Betti number, all of that abstraction
-collapses into something a schoolchild could compute.
+Here is the puzzle at the heart of this article. Base ten, base two, base
+sixty — these all obey one fixed rule. The factorial system changes its rule at
+every step. They look like different animals. **Are they?**
 
-## The key insight: forget the geometry, keep the death times
+The answer is a clean and satisfying *no*. Both are instances of a single,
+more general construction, and once you see that construction, the good
+behaviour of *all* of them — the fact that every number has exactly one
+representation — falls out of **one theorem, proved once**.
 
-Every cluster except one is destined to die. As `t` increases, clusters merge,
-and at each merger, two clusters become one — one of them, in the language of
-persistence, "dies." Only a single cluster lives forever (it's the last one
-standing). Each death happens at a specific scale, the distance at which the
-merger occurs. Collect all these death scales into a bag of numbers — a
-**multiset** we'll call `D`.
+## The unifying idea: mixed-radix systems
 
-That bag `D` is *all the information you need*. The entire connectivity history
-of the point cloud — every value of `β₀(t)`, at every scale — is reconstructable
-from `D` by counting. Specifically, the number of clusters at scale `t` is
+Forget about a single base. Instead, hand yourself an entire *sequence* of
+bases, one for each place:
+$$b_0,\ b_1,\ b_2,\ b_3,\ \dots$$
+The place values are no longer powers of a fixed number. Instead, each place is
+worth the running product of all the bases below it:
+$$P_0 = 1,\qquad P_1 = b_0,\qquad P_2 = b_0 b_1,\qquad P_i = b_0 b_1 \cdots b_{i-1}.$$
+A digit string $c_0, c_1, \dots, c_{k-1}$ now stands for the number
+$$\text{value} = \sum_{i=0}^{k-1} c_i\, P_i
+     = c_0\, P_0 + c_1\, P_1 + \cdots + c_{k-1}\, P_{k-1}.$$
+And a representation is **valid** when each digit stays below its *local* base:
+$$0 \le c_i < b_i \quad\text{for every } i.$$
+This is the **mixed-radix number system**. It is the honest generalization of
+everything above:
 
-> **`β₀(t) = 1 + #{ d ∈ D : t < d }`.**
+* Choose every base to be the same number $N$ — that is, $b_i = N$ for all $i$.
+  Then the running product is $P_i = N^i$, the digit rule is $0 \le c_i < N$,
+  and you have recovered **ordinary base $N$**.
+* Choose the bases to be $b_i = i+1$ — that is, $b_0=1,\ b_1=2,\ b_2=3,\dots$.
+  Then the running product is
+  $$P_i = 1\cdot 2\cdot 3\cdots i = i!,$$
+  and the digit rule "$c_i < b_i = i+1$" is exactly "$c_i \le i$". You have
+  recovered the **factorial number system**.
 
-In words: one immortal cluster, plus one for every death that hasn't happened yet
-(every `d` strictly greater than the current scale `t`). It's almost
-embarrassingly simple. The deaths still waiting in the future are exactly the
-mergers that haven't fired, and each pending merger corresponds to one extra
-cluster floating around.
+The two systems that looked so different are simply two settings of the same
+dial. This is the *bridge*: the factorial system is the mixed-radix system with
+bases $b_i = i+1$, no more and no less. Concretely, the running product of the
+bases $1,2,3,\dots,i$ really is the factorial,
+$$\prod_{j=0}^{i-1}(j+1) = i!,$$
+so the place values match; and the digit constraint $c_i < i+1$ is literally
+the same statement as $c_i \le i$, so the "valid strings" of the two systems are
+the same strings. Every factoradic number is a mixed-radix number, and vice
+versa.
 
-From this formula, two facts are immediate. First, **the curve only ever goes
-down**: as you raise `t`, the set of "future deaths" shrinks, so `β₀(t)` can only
-decrease or stay flat. This is the formal statement that *raising the connection
-radius can only merge clusters, never split them* — a sanity check that any
-honest notion of clustering must satisfy. Second, **once `t` passes the largest
-death scale, `β₀(t) = 1`**: there are no future mergers left, so only the single
-immortal cluster remains. Everything is connected. These are not deep theorems —
-they fall straight out of the counting formula — but they confirm the picture is
-coherent.
+## The theorem that does all the work
 
-## Total persistence: the area under the story
+The prize is a single **uniqueness theorem**, stated once for the general
+system:
 
-A single number `β₀(t)` is a snapshot. To summarize the *whole* clustering story
-with one number, we measure the **total persistence**: the cumulative amount of
-cluster structure across all scales up to some horizon `T`. Think of it as the
-*area under the curve* of `β₀(t) - 1` (we subtract the one immortal cluster, which
-contributes a boring constant). Formally,
+> **Uniqueness of mixed-radix representations.** Fix any sequence of bases
+> $b_0, b_1, b_2, \dots$. If two valid digit strings $c$ and $d$ of length $k$
+> have the same value — that is,
+> $$\sum_{i<k} c_i\, P_i = \sum_{i<k} d_i\, P_i \quad\text{with}\quad c_i < b_i,\ d_i < b_i$$
+> — then they are the *same string*: $c_i = d_i$ for every $i < k$.
 
-> **`P(T) = ∑_{t < T} (β₀(t) - 1) = ∑_{t < T} #{ d ∈ D : t < d }`.**
+Why is it true? The argument is short and elegant, and it rests on one
+estimate: **a valid string of length $k$ can never reach the next place value.**
+Formally, if $c_i < b_i$ for all $i<k$, then
+$$\sum_{i<k} c_i\, P_i \ <\ P_k = b_0 b_1 \cdots b_{k-1}.$$
+This is the mixed-radix version of the everyday fact that a three-digit decimal
+number is at most $999$, which is less than $1000$. Once you have it, uniqueness
+follows by peeling digits off the top. Divide the common value by $P_{k-1}$: the
+"tail" $\sum_{i<k-1} c_i P_i$ is too small to contribute (that is exactly the
+estimate), so the division isolates the top digit and forces
+$c_{k-1} = d_{k-1}$. Subtract it off and repeat on what remains. Each step nails
+one more digit, and after $k$ steps the two strings are shown to be identical.
 
-Each term counts how many clusters are still "alive and pending" at scale `t`, and
-we add those up across all scales below the horizon. A point cloud whose clusters
-linger — that resists merging — racks up a large total persistence. One whose
-clusters snap together immediately scores low. It's a measure of how *stubbornly
-clustered* the data is.
+The beauty is that **this proof never mentions a specific base**. It uses only
+the running product and the digit bound. So the moment you set $b_i = i+1$, the
+very same theorem tells you that *factoradic representations are unique* — the
+classical fact about the factorial number system — as an immediate corollary.
+And setting $b_i = N$ gives you the uniqueness of ordinary base-$N$ numerals in
+the same breath. One proof, many number systems.
 
-Computing `P(T)` directly looks like a chore: for every scale `t`, you'd recount
-how many deaths lie ahead, then sum over all scales. If there are many scales and
-many deaths, that's a lot of recounting. Can we do better?
+There is a companion result going the other way, guaranteeing that the general
+system is not just consistent but *complete*: **every** number $n$ below the top
+place value $P_k$ actually has a representation. You can compute its digits
+directly, by repeated division and remainder:
+$$c_i = \left\lfloor \frac{n}{P_i} \right\rfloor \bmod b_i.$$
+Feed those digits back into the value formula and you recover $n$ exactly.
+Together, uniqueness and existence say that a mixed-radix system with $k$ places
+is a *perfect dictionary* — a one-to-one correspondence between the numbers
+$0, 1, \dots, P_k - 1$ and the valid digit strings of length $k$.
 
-## The layer-cake trick: counting two ways
+## Why this matters
 
-Here is where the magic happens, and it's a trick every mathematician treasures:
-**count the same thing two different ways and set the answers equal.**
+At first glance, showing that the factorial system "is really" a mixed-radix
+system might seem like tidying up. But this kind of unification is exactly how
+mathematics gains power. A theorem proved about a *family* is worth far more than
+the same theorem proved about a single member, because it applies to members you
+haven't even thought about yet.
 
-Picture a grid. Along the bottom, mark each scale `t` from `0` up to the horizon
-`T`. Up the side, list each death `d` in the bag `D`. Now place a chip on the
-square `(t, d)` whenever `t < d` — that is, whenever death `d` is still pending at
-scale `t`.
+The mixed-radix framework is genuinely useful in the wild:
 
-The total persistence `P(T)` counts these chips **column by column**: for each
-scale `t`, how many deaths are pending? Add up the columns.
+* **Combinatorics and algorithms.** The factorial system is the standard tool
+  for *ranking* and *unranking* permutations — turning a shuffle into a number
+  and back. This is how software can pick "the $10^9$-th permutation" instantly.
+  The digit-extraction formula above is that algorithm.
+* **Odometers and calendars.** Any counting device whose wheels have different
+  sizes — days within months, months within years, seconds/minutes/hours — is a
+  mixed-radix odometer. The running-product place values are exactly how you
+  convert such a reading to a single count.
+* **Coding and hashing.** Mixed-radix encodings pack tuples drawn from
+  differently sized alphabets into a single integer with no wasted space,
+  precisely because the representation is *unique* and *complete*.
 
-But you could just as well count **row by row**: for each death `d`, how many
-scales `t` (below the horizon `T`) does it stay pending? A death at scale `d`
-stays pending for every scale `t` with `t < d` and `t < T` — that's exactly
-`min(d, T)` scales. (If the death happens before the horizon, it's pending for `d`
-steps; if it happens after the horizon, it's pending for the whole window of `T`
-steps.)
+And there is a lesson in the *structure* of the argument itself. The
+re-derivation of factoradic uniqueness leans **only** on the general theorem and
+the two bridge facts (place values match, digit rules match). It does not quietly
+reuse the old, special-case proof. That independence is what makes the
+generalization real rather than cosmetic: the abstract theory genuinely *stands
+on its own* and *contains* the classical result as one of its shadows.
 
-Two ways of counting the same chips must agree. That single observation is the
-heart of everything:
+## The bigger picture
 
-> **The Layer-Cake Identity:**
-> **`∑_{t < T} #{ d ∈ D : t < d } = ∑_{d ∈ D} min(d, T)`.**
+Numbers do not care how we write them. Base ten is a historical accident of
+having ten fingers; base two an accident of transistors being easiest to build
+with two states. What the mixed-radix viewpoint reveals is that *all* positional
+notations — the familiar, the exotic, and the ones nobody has named yet — are
+points in one continuous landscape, governed by one law: **the place values are
+the running products of the bases, and a digit must stay below its own base.**
+From that single law, the guarantee we most want from any notation — that it
+names each number once and only once — flows automatically.
 
-The left side is the awkward column-by-column count; the right side is a clean,
-one-pass sum over the deaths. We've replaced a nested double-count with a single
-loop over the bag of death times. In formal mathematics this kind of swap is
-called a *discrete Fubini theorem* or a *layer-cake decomposition* — the same
-principle that lets you compute the area under a curve by slicing it horizontally
-instead of vertically. Here it's proved by a clean induction: peel off one death
-at a time, and check that adding a death `a` contributes exactly `min(a, T)` to
-both sides.
-
-## The punchline: persistence *is* the minimum spanning tree
-
-Now comes the reward. Suppose we set the horizon `T` large enough to be past every
-death — large enough that the whole cloud has fused into one cluster. Then for
-every death `d`, we have `d ≤ T`, so `min(d, T) = d`. The layer-cake identity
-collapses to its purest form:
-
-> **The MST Law for `H₀` Persistence:**
-> **`P(T) = ∑_{d ∈ D} d`** — total persistence equals the *sum of all the death
-> times*.
-
-So the entire area under the cluster-count curve, the grand summary of the data's
-clustering story, is nothing more than the **sum of the merge scales**. No
-geometry, no homology groups — just adding up the distances at which clusters
-fused.
-
-And those merge scales have another famous identity. The process of repeatedly
-fusing the two nearest clusters is precisely **single-linkage clustering**, which
-is mathematically identical to **Kruskal's algorithm** for building a *minimum
-spanning tree* (MST). A spanning tree is the cheapest possible web of connections
-that links every point into one network; Kruskal builds it by greedily adding the
-shortest edge that joins two as-yet-unconnected pieces. Each edge Kruskal adds is
-exactly a cluster merger — exactly a death. So the bag of death times `D` *is* the
-bag of edge weights of the minimum spanning tree.
-
-Putting the two facts side by side:
-
-> **Total `H₀` persistence = sum of death times = total weight of the minimum
-> spanning tree.**
-
-A quantity born in the abstract world of topological data analysis turns out to
-equal a quantity from the concrete world of network optimization, and the bridge
-between them is a one-line counting argument. The "shape" measured by topology and
-the "cost" measured by optimization are, for connected components, literally the
-same number.
-
-## Closing the loop, by hand
-
-To make this tangible, consider a tiny network of four points — say four key
-contacts in a folding protein — with the pairwise distances written on the edges
-between them. Run the greedy merger: sort the edges from shortest to longest, and
-add each one only if it joins two separate clusters, recording its length as a
-death. After three mergers, all four points are united in a single cluster (a tree
-on four vertices always has exactly three edges).
-
-The three recorded lengths are the death times. Add them up. On one hand, that sum
-is the total `H₀` persistence — the area under the cluster-count curve, computed
-the hard way. On the other hand, it's the total weight of the minimum spanning
-tree — and you can verify by brute force that *no other* way of connecting the
-four points into a single network costs less. The two numbers match, exactly, and
-the match is not a coincidence of this example but a theorem that holds for every
-point cloud.
-
-This is the satisfying click of mathematics locking into place: a topological
-invariant, an optimization optimum, and a counting identity, all revealed to be
-three faces of one object.
-
-## Why it matters
-
-Beyond its elegance, this law is *useful*. Total `H₀` persistence is used as a
-feature in machine-learning pipelines — a single number summarizing how clustered
-a dataset is, fed into classifiers that, for instance, distinguish folded from
-misfolded proteins, healthy from diseased tissue, or one material's microstructure
-from another's. Knowing that this feature is *exactly* the minimum spanning tree
-weight means it can be computed by a fast, classical, well-understood algorithm
-instead of the comparatively heavy persistence pipeline. It also means the feature
-inherits the MST's robustness and its rich theory — decades of results about
-spanning trees suddenly apply to a topological statistic.
-
-More broadly, the story is a parable about mathematical economy. The temptation,
-when facing a hard problem, is to reach for the most powerful machinery available.
-But often the decisive move is to find the *right invariant* — here, the bag of
-death times — and then realize that once you have it, the rest is counting. The
-homology, the geometry, the optimization all melt away, leaving behind a single
-identity you can check on a napkin:
-
-> **Count the pending mergers one scale at a time, or count how long each merger
-> stays pending — either way, you get the sum of the merge scales, and that is the
-> cost of the cheapest network that ties your data together.**
-
-The fireflies, in the end, were always telling us something simple. We just had to
-learn how to count.
+The factorial number system, so useful and so odd-looking, turns out not to be
+an exception to the rules of ordinary arithmetic. It is one of those rules,
+written down for a base that refuses to sit still.
