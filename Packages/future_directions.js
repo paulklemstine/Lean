@@ -692,7 +692,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
   {
-    "consumed_by_exp_id": "57f58be0",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 538f30a2 (Q=0.780), which proved 47 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show",
     "domains": [
       "Tropical"
@@ -701,7 +701,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "538f30a2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T03:38:30.661331+00:00",
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
