@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e618ea1a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Symmetric Argumentation\n\nThis cycle established the *correct* Euler/semantics bridge on the symmetric side\nof Dung's theory: in a symmetric framework every confli",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-12T11:18:27",
-      "title": "This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
-    },
-    {
       "cycle_id": "0930ae42",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Cyclotomic Geometry of Knotted-Light OAM Spectra\n\nThis cycle established that, for every odd prime `p`, the `T(2, p)` torus-knot\nAlexander polynomial *is* the `2p`-th cycloto",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-13T01:25:17",
       "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+    },
+    {
+      "cycle_id": "48b25c91",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Thermodynamic Horizon of Discovery\n\nThis cycle turns the informal \"heat death of mathematics\" picture into a small\ncollection of fully proved Lean 4 theorems (see `Thermodyna",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T02:02:00",
+      "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3fa70466",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Morphogenesis as Algebraic Geometry\n\nThe linear analysis established here recasts the onset of Turing patterns as\nconic-section geometry: the number of excited spatial modes is a",
-      "quality_score": 0.79,
-      "sorry_count": 4,
-      "theorem_count": 10,
-      "timestamp": "2026-07-10T08:38:10",
-      "title": "Turing's Flowers: Morphogenesis as Algebraic Geometry"
-    },
     {
       "cycle_id": "9c1224fc",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-13T02:01:11",
       "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss "
+    },
+    {
+      "cycle_id": "48b25c91",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Thermodynamic Horizon of Discovery\n\nThis cycle turns the informal \"heat death of mathematics\" picture into a small\ncollection of fully proved Lean 4 theorems (see `Thermodyna",
+      "quality_score": 0.72,
+      "sorry_count": 1,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T02:02:00",
+      "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "91f941b6",
-      "domain": "Novelty",
-      "name": "nuclearHamiltonian_isHermitian",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "91f941b6",
-      "domain": "Novelty",
-      "name": "hasEigenvalue_atomicNumber",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "91f941b6",
-      "domain": "Novelty",
-      "name": "eigenvalue_imp_atomicNumber",
-      "quality": 0.78
-    },
     {
       "cycle_id": "44b2d089",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "choose_absorb",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "48b25c91",
+      "domain": "Applications",
+      "name": "statements_countable",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "48b25c91",
+      "domain": "Applications",
+      "name": "statements_infinite",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "48b25c91",
+      "domain": "Applications",
+      "name": "discoverable_fraction_upper_bound",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-13T02:01:11",
+  "last_updated": "2026-07-13T02:02:00",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "f3dfcf44",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-12T13:00:55"
-    },
     {
       "context": "Everything is elementary and `sorry`-free.; +currently available in Mathlib.  Rather than leaving a `sorry` (or asserting the; -    sorry",
       "cycle_id": "8cebc683",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 6,
       "timestamp": "2026-07-13T02:01:11"
+    },
+    {
+      "context": "+Everything is elementary and `sorry`-free.",
+      "cycle_id": "48b25c91",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T02:02:00"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6fce3466",
-        "quality": 0.83,
-        "theorems": 39,
-        "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory"
-      },
-      {
         "cycle_id": "1f9ea620",
         "quality": 0.82,
         "theorems": 119,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 19,
         "title": "The optimal portion ratio μ₂ equals 1 + ρ"
+      },
+      {
+        "cycle_id": "48b25c91",
+        "quality": 0.72,
+        "theorems": 9,
+        "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
       }
     ],
     "Bridges": [

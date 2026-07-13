@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18bb2fc7",
     "description": "Building on cycle d019c88a (Q=0.880), which proved 30 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hyper",
     "domain_bridges": [],
     "domains": [
@@ -14,7 +14,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "d019c88a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T14:10:41.329355+00:00",
     "title": "Deepening: Exact dictionary \"logical qubits = middle homology\""
   },
@@ -1568,25 +1568,6 @@
     "status": "failed",
     "timestamp": "2026-07-10T20:20:23.650892+00:00",
     "title": "Close Proofs: The Combinatorics of Compiler Optimization: Register Allocation as Gra"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2a098803",
-    "description": "Cycle f3dfcf44 (Q=0.820) proved 17 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field\norder parameter `m = tanh(β m)` undergoes a sharp, continuous (second-order)\nphase transition at t",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_f3dfcf44_23db64c7",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f3dfcf44",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T13:00:55.354878+00:00",
-    "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss "
   },
   {
     "ambition_level": "extension",
@@ -9791,6 +9772,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 48b25c91 (Q=0.720) proved 9 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet ",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_48b25c91_a9f2c786",
+    "lineage_refs": [],
+    "priority_score": 0.77,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "48b25c91",
+    "status": "available",
+    "timestamp": "2026-07-13T02:02:00.195641+00:00",
+    "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "7362296f",
     "description": "Cycle 82394822 (Q=0.720) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's ",
     "domain_bridges": [],
@@ -11108,26 +11108,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "48b25c91",
-    "description": "# Future Directions — The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet is countably infinite, whereas any physically\nrealizable enumerator has a finite operation budget, so the *fraction* of statements\nit can ever exhibit tends to zero — and even holographic (area-law) storage, which\nscales with the square of a black hole's mass, cannot change that asymptotic verdict.\n\n## 1. Density-graded inexhaustibility\n**Conjecture.** For every productive deductive system there is a length-graded\nenumeration in which the discoverable fraction decays no faster than the reciprocal\nof the enumeration index, and this rate is optimal across all enumerations.\n*The key insight is* that finiteness of the budget, not the growth law of the\nresource, controls the asymptotic density, so the decay rate is an invariant of the\ncounting order rather than of the physics. *Why now?* Length-graded complexity\nmeasures for formal languages are now precise enough to pin the exact reciprocal\nrate, turning a qualitative \"measure zero\" statement into a sharp asymptotic law.\n\n## 2. Area-law optimality of holographic memory\n**Conjecture.** Among all monotone storage laws bounded by the surface area of a\nregion, the quadratic-in-mass Bekenstein–Hawking law is the unique maximizer of\ntotal storable information at fixed enclosed energy.\n*The key insight is* that the horizon area, not the enclosed volume, is the true\ncapacity variable, so any volume-scaling proposal violates the entropy bound and\nthe quadratic law is forced. *Why now?* Entropy bounds for gravitating systems have\nmatured to the point where the extremal characterization can be stated as a clean\noptimization over admissible capacity functions.\n\n## 3. Quadratic-beats-linear crossover is a phase boundary\n**Conjecture.** The crossover mass at which area-law storage overtakes any fixed\nlinear budget marks a genuine threshold: below it, discovery is budget-limited;\nabove it, discovery is enumeration-limited, and the two regimes have distinct\nscaling exponents for the number of statements exhibited per unit energy.\n*The key insight is* that the ratio of quadratic to linear capacity crosses one at a\nmass determined solely by the linear coefficient and the geometric constant, giving a\nsharp, computable boundary. *Why now?* The dominance inequality is already established\nin closed form, so the crossover mass is explicit and its two-sided behavior is testable.\n\n## 4. Robustness of fraction-zero under super-polynomial storage\n**Conjecture.** Replacing the area law by any storage law that is finite for every\nfinite mass — including hypothetical super-polynomial laws — leaves the discoverable\nfraction tending to zero; the fraction is positive only if storage becomes actually\ninfinite at some finite mass.\n*The key insight is* that the dichotomy is finite-versus-infinite, not slow-versus-fast,\nso the entire hierarchy of realizable storage laws collapses to a single asymptotic\nclass. *Why now?* With the finite-budget squeeze argument in hand, the conjecture\nreduces to characterizing exactly which growth laws remain finite pointwise.\n\n## 5. Countability transfer across formal systems\n**Conjecture.** The bijection between the theorems of one productive system and the\nnatural numbers can be made to commute with translation maps between systems, so that\nrelative discovery rates between two theories are governed by a single comparison\nfunction independent of either system's internal syntax.\n*The key insight is* that countability is a structural, syntax-free property, so\ninter-theory discovery comparisons factor through the shared enumeration of the\nnaturals. *Why now?* Uniform translation frameworks between formal systems are now\nstandard, making the commuting-bijection statement precise and checkable.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_1114",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "26d2653d",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T06:11:26.567700+00:00",
-    "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Repulsion, Sparsity, and Exceptional Zeros\n\nThese conjectures are distilled from the present cycle, whose central finding is that\nthe \"at most one exceptional character\" phenomenon of Page's theorem is, at its logical\ncore, a *quantitative repulsion-to-uniqueness* implication: a pairwise lower bound on\nhow far apart two near-`1` real zeros must sit, combined with a bounded conductor\nwindow, forces uniqueness precisely when the repulsion constant dominates\n`2·Q₀^{-ε}·log M`.\n\n## 1. Sharp window–constant trade-off is an equality, not just a threshold\n\n**Conjecture.** For each `ε > 0` there is a critical curve `C = κ(ε)·Q₀^{-ε}·log M`\nsuch that below it two distinct exceptional characters can genuinely coexist, and the\nextremal configurations are attained by pairs of quadratic characters whose conductors\nare as close as the window permits.\n\nThe key insight is that the threshold `2·Q₀^{-ε}·log M` isolated in this cycle is not\nan artefact of the estimation but the true order of magnitude of the barrier, so the\ninequality governing uniqueness should be reversible up to the constant `κ(ε)`.\n\nWhy now? The recent programme of pushing non-real zeros back to `Re ρ ≤ 1 − C/log q`\nsupplies, for the first time, explicit repulsion constants whose dependence on `ε` can\nbe tracked, making the extremal analysis concrete rather than heuristic.\n\n## 2. Repulsion upgrades \"at most one per window\" to \"at most one globally\"\n\n**Conjecture.** If the repulsion constant grows at least like `C(q) ≍ (log q)^{1+δ}`\nfor some `δ > 0` — a strength just beyond what pairwise product-`L`-function positivity\ngives — then across *all* conductors, not merely a bounded window, at most one\nprimitive quadratic character has an exceptional real zero.\n\nThe key insight is that the obstruction to a global statement is entirely the slow\ngrowth of `log(q₁q₂)`; a repulsion constant that itself grows with the conductor\noverwhelms this and collapses the family of exceptional characters to a single point.\n\nWhy now? Conditional inputs excluding non-real zeros from shrinking neighbourhoods of\n`s = 1` are exactly the mechanism believed to boost the effective repulsion strength,\nso the hypothesis `C(q) ≍ (log q)^{1+δ}` is newly within conditional reach.\n\n## 3. The repulsion template transfers to higher-degree L-functions\n\n**Conjecture.** The same repulsion-to-sparsity implication holds verbatim for families\nof automorphic `L`-functions indexed by analytic conductor, yielding \"at most one\nexceptional form\" statements for `GL(2)` newforms of bounded conductor.\n\nThe key insight is that nothing in the uniqueness deduction uses the quadratic nature\nof the characters — only a real parameter attached to each object and a pairwise\ninequality of the shape `min(β, β') ≤ 1 − C/log(q q')` — so the phenomenon is a\nstructural feature of conductor-indexed families, not of Dirichlet characters.\n\nWhy now? Explicit pairwise repulsion estimates for `GL(2)` `L`-functions have recently\nbeen made unconditional in several ranges, so the abstract template can be instantiated\nwithout waiting for a full zero-density theory.\n\n## 4. Exceptional moduli are a genuinely sparse set with a computable exponent\n\n**Conjecture.** Under the conditional non-real-zero exclusion, the number of conductors\n`q ≤ X` carrying an exceptional real zero is `O((log X)^{A})` for an effectively\ncomputable `A = A(ε)`, and in fact bounded by a constant once the window analysis is\niterated dyadically.\n\nThe key insight is that the window result of this cycle can be chained across a dyadic\ndecomposition of `[1, X]`, and the per-window bound of `1` accumulates only through the\nnumber of windows, which is logarithmic.\n\nWhy now? Effective, ε-explicit constants `C(ε)`, `Q₀(ε)` are precisely what the recent\nconditional refinements provide, turning a qualitative \"rare\" into a quantitative count.\n",
     "domain_bridges": [],
@@ -12384,6 +12364,46 @@
     "status": "available",
     "timestamp": "2026-07-13T01:25:08.173104+00:00",
     "title": "The file `BayesianWerewolfHypergeometric.lean` establishes that the elementary"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle closed the three transport lemmas that identify the classical\nfactorial (factoradic) number system as a single point in the general\nmixed-radix family, and re-derived factoradic uniqueness as a corollary of the\ngeneral mixed-radix uniqueness theorem. The one obstruction that resisted\nclosure is the infinite composite tail of Carmichael's primitive-divisor\ntheorem for Fibonacci numbers, whose finite range is settled by direct\ncomputation but whose asymptotic range demands genuinely new structural\nmachinery. The conjectures below grow directly out of these two findings.\n\n## 1. A uniform mixed-radix bijection with the interval `[0, ∏ bᵢ)`\n\n**Conjecture.** For every base sequence `b : ℕ → ℕ` with all `bᵢ > 0`, the\nlength-`k` digit-extraction map and the length-`k` value map are mutually\ninverse bijections between valid digit tuples and the interval\n`{0, 1, …, (∏_{i<k} bᵢ) − 1}`; consequently the count of valid length-`k`\nrepresentations is exactly the running product `∏_{i<k} bᵢ`, uniformly across the\nentire family (base-`N`, factoradic, and every hybrid in between).\n\nThe key insight is that uniqueness and existence were both proved without ever\ninvoking cardinality, surjectivity, or an enumeration theorem — they follow only\nfrom the digit-bound estimate and the two Euclidean splitting identities — so the\ncounting statement should drop out as a *formal consequence* of the transport\nalready established, rather than requiring a separate combinatorial argument.\n\nWhy now? The mixed-radix value and validity predicates have just been shown to\nspecialize *definitionally* to the factoradic ones (modulo the running-product\nidentity `∏_{j<i}(j+1) = i!`). This means a single bijection theorem, proved once\nat the level of arbitrary bases, would immediately subsume the classical\nfactoradic and base-`N` bijections as instances — the abstraction cost has\nalready been paid.\n\n## 2. Carmichael's tail via a size-versus-support dichotomy\n\n**Conjecture.** For every composite `n` beyond the computationally verified\nwindow, the \"primitive part\" of the `n`-th Fibonacci number — what remains after\ndividing out every factor shared with an earlier Fibonacci number — exceeds `1`,\nbecause its magnitude grows like `φ^{ϕ(n)}` (with `φ` the golden ratio and `ϕ`\nEuler's totient) while the only admissible non-primitive factors are bounded by\n`n` itself.\n\nThe key insight is that the primitive part is exactly the value at the golden\nratio of the `n`-th cyclotomic-type factor, so its size is controlled by the\nnumber of primitive `n`-th roots of unity, namely `ϕ(n)`; for composite `n` the\ntotient is large enough that exponential growth in `ϕ(n)` overwhelms the linear\n`n`-sized ceiling on intrinsic factors.\n\nWhy now? The finite range is already dispatched by direct verification, so the\n*only* missing ingredient is this single asymptotic lower bound. Isolating the\nproblem to one clean inequality — golden-ratio growth of the primitive part\nversus a linear bound on intrinsic divisors — turns a famous classical theorem\ninto a self-contained analytic estimate that can be attacked independently of the\nsurrounding number theory.\n\n## 3. Intrinsic divisors appear to the first power only\n\n**Conjecture.** When a prime `p` divides the `n`-th Fibonacci number but is not\nprimitive (it already divides an earlier Fibonacci number), then `p` divides `n`,\nand it divides the primitive part of `F(n)` at most to the first power.\n\nThe key insight is a lifting-the-exponent phenomenon: the `p`-adic valuation of\n`F(m)` increases by exactly one each time the index `m` is multiplied by `p` past\nthe rank of apparition, so the \"extra\" contribution concentrated in the\nprimitive part can never accumulate beyond a single factor of `p`.\n\nWhy now? Conjecture 2 needs precisely this bound to cap the non-primitive part by\n`n`. Proving the first-power statement in isolation converts the qualitative\n\"intrinsic divisors are small\" intuition into the quantitative ceiling that the\nsize-versus-support dichotomy consumes, decoupling the hardest step of the tail\nargument from the growth estimate.\n\n## 4. A base-agnostic carry/normalization algorithm\n\n**Conjecture.** There is a single normalization procedure that, given *any*\n(possibly out-of-range) digit tuple and *any* positive base sequence `b`,\nreturns the unique valid tuple with the same value, and this procedure\nspecializes to ordinary base-`N` carrying and to factoradic carrying without\nmodification.\n\nThe key insight is that the splitting identities `value / (∏ bᵢ) = top digit` and\n`value mod (∏ bᵢ) = lower part` already encode one carry step; iterating them is a\nterminating recursion whose correctness is exactly the uniqueness theorem applied\nto the normalized output.\n\nWhy now? With uniqueness and existence available at full generality, the\ncorrectness proof of such an algorithm reduces to transport plus the two\nsplitting lemmas already in hand — no new arithmetic is required, only the\nrecursion and its termination measure.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1180",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2a098803",
+    "status": "available",
+    "timestamp": "2026-07-13T02:00:57.566742+00:00",
+    "title": "This cycle closed the three transport lemmas that identify the classical"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Thermodynamic Horizon of Discovery\n\nThis cycle turns the informal \"heat death of mathematics\" picture into a small\ncollection of fully proved Lean 4 theorems (see `ThermodynamicHorizon.lean`, all\nproofs complete, `0` sorries). The unifying model is deliberately elementary: the\ndiscoverable statements up to enumeration index `N` are the first `N` naturals, a\nphysically realizable *budget* is a finite object, and the *discoverable fraction*\nis `|discovered| / N`.\n\n## What is proved\n\n| Conjecture (informal) | Formal counterpart |\n|---|---|\n| Countably infinite statements over a finite alphabet | `statements_countable`, `statements_infinite` |\n| Discoverable fraction → 0 (measure zero) | `discoverable_fraction_tendsto_zero` |\n| Decay is exactly of order `1/N` (optimality) | `discoverable_fraction_upper_bound`, `discoverable_fraction_reciprocal_lower` |\n| Robustness: fraction → 0 iff budget finite (finite-vs-infinite dichotomy) | `robustness_finite_iff` |\n| Area-law capacity crossover mass `L/c` | `area_law_crossover` |\n| Area-law dominance above crossover | `linear_over_quadratic_tendsto_zero` |\n| Countability transfer factors through `ℕ` | `discovery_comparison_factors` |\n\n### Highlights\n\n* **`robustness_finite_iff`** is the sharpest statement: modelling the total\n  budget as a value `s : ℝ≥0∞`, the discoverable fraction `s / N` tends to `0`\n  **if and only if** `s ≠ ⊤`. The asymptotic verdict is thus a *finite-versus-\n  infinite* dichotomy — the growth *law* of the resource (linear, quadratic,\n  super-polynomial) is irrelevant; only pointwise finiteness matters. This is\n  exactly the content of Conjecture 4.\n\n* **`area_law_crossover`** makes the quadratic-beats-linear boundary explicit and\n  two-sided: for `c > 0` and nonnegative mass `m`, `L·m ≤ c·m²` holds precisely\n  when `m = 0` or `m ≥ L/c`, pinning the crossover mass at `L/c`\n  (Conjecture 3). `linear_over_quadratic_tendsto_zero` complements it: above the\n  crossover the linear budget is a vanishing fraction of the area-law capacity.\n\n* **`discoverable_fraction_upper_bound` + `discoverable_fraction_reciprocal_lower`**\n  bracket the discoverable fraction between `1/N` and `|S|/N`, so the decay is\n  exactly `Θ(1/N)` — the reciprocal rate of Conjecture 1 is optimal.\n\n## Open directions for later cycles\n\n1. **Length-graded enumerations.** Replace the abstract index `N` with a genuine\n   length grading on `List (Fin (k+1))` and prove the reciprocal rate for that\n   concrete order, sharpening Conjecture 1.\n2. **Extremal capacity characterization (Conjecture 2).** State admissible\n   capacity functions as an ordered family and prove the area law is the unique\n   maximizer under an entropy-bound constraint; this needs a Lean formulation of\n   the Bekenstein bound as an inequality on capacity functionals.\n3. **Two-regime scaling exponents (Conjecture 3).** Formalize the distinct\n   \"budget-limited\" vs \"enumeration-limited\" scaling of statements-per-energy on\n   either side of `L/c`.\n4. **Commuting translation maps (Conjecture 5).** Strengthen\n   `discovery_comparison_factors` to a naturality square over an explicit class of\n   syntactic translation maps between formal systems.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1181",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "48b25c91",
+    "status": "available",
+    "timestamp": "2026-07-13T02:01:31.929532+00:00",
+    "title": "This cycle turns the informal \"heat death of mathematics\" picture into a small"
   },
   {
     "ambition_level": "extension",
