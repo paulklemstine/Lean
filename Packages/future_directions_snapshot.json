@@ -1192,7 +1192,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce15dd8e",
     "description": "Cycle 0643b2b3 (Q=0.820) proved 11 theorems in Combinatorics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon",
     "domain_bridges": [],
     "domains": [
@@ -1204,7 +1204,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0643b2b3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T20:52:48.400479+00:00",
     "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
