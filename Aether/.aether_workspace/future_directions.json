@@ -16739,11 +16739,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cf19c51c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16756,7 +16756,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1238",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T23:51:31.010576+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16771,7 +16771,7 @@
       "source": "",
       "source_exp_id": "d31b8b8b",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d31b8b8b",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_d93434e6",
       "timestamp": "2026-07-13T18:49:54.528672+00:00",
       "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
@@ -43637,7 +43637,6 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -43652,6 +43651,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
+    "abduction_followup",
     "abduction_followup"
   ]
 }
