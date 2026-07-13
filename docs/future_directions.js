@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "18bb2fc7",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d019c88a (Q=0.880), which proved 30 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hyper",
     "domains": [
       "Applications"
@@ -12,7 +12,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "d019c88a",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T14:10:41.329355+00:00",
     "title": "Deepening: Exact dictionary \"logical qubits = middle homology\""
   },
@@ -283,7 +283,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
   },
   {
-    "consumed_by_exp_id": "4bfb0f7c",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4b34e974 (Q=0.820), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
     "domains": [
       "Probability"
@@ -292,7 +292,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "4b34e974",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:53:42.878360+00:00",
     "title": "Deepening: Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
@@ -578,7 +578,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d2eb6f49",
     "description": "Building on cycle a9aa7bbf (Q=0.800), which proved 18 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
     "domains": [
       "Geometry"
@@ -587,7 +587,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "a9aa7bbf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T10:46:04.413215+00:00",
     "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
   },
@@ -846,7 +846,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53e5b011",
     "description": "Building on cycle fb4de3e5 (Q=0.780), which proved 23 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some met",
     "domains": [
       "Tropical"
@@ -855,7 +855,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "fb4de3e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T02:10:54.368732+00:00",
     "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Op"
   },
@@ -1281,7 +1281,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d6f8fba",
     "description": "Cycle 319bd9f6 (Q=0.780) proved 13 theorems in Shared but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the funda",
     "domains": [
       "Shared"
@@ -1290,7 +1290,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "319bd9f6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:29:28.312612+00:00",
     "title": "Close Proofs: Rucker: Spacetime Donuts \u2014 Topology of the Universe"
   },
