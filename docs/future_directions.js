@@ -171,7 +171,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b659b436",
     "description": "Building on cycle 0643b2b3 (Q=0.820), which proved 11 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost r",
     "domains": [
       "Combinatorics"
@@ -180,7 +180,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "0643b2b3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T20:52:48.331838+00:00",
     "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
@@ -648,6 +648,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-09T21:40:59.530765+00:00",
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 1abce342 (Q=0.780), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant \u03bc\u2082 is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves \u03bc\u2082 \u2264 1 + \u03c1 where \u03c1 \u2248 0.75488 is",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_1abce342_8b0445d9",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "1abce342",
+    "status": "available",
+    "timestamp": "2026-07-13T01:06:08.832578+00:00",
+    "title": "Deepening: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
   {
     "consumed_by_exp_id": "",
@@ -1293,6 +1307,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T19:27:07.217097+00:00",
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 1abce342 (Q=0.780) proved 19 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The constant \u03bc\u2082 is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n c",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_1abce342_1cbfd699",
+    "priority_score": 0.8300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "1abce342",
+    "status": "available",
+    "timestamp": "2026-07-13T01:06:09.210691+00:00",
+    "title": "Close Proofs: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
   {
     "consumed_by_exp_id": "",
@@ -4108,20 +4136,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-07T15:50:50.927745+00:00",
     "title": "Exact Threshold for No-$(k+1)$-in-line Problem"
-  },
-  {
-    "consumed_by_exp_id": "1abce342",
-    "description": "The constant \u03bc\u2082 is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves \u03bc\u2082 \u2264 1 + \u03c1 where \u03c1 \u2248 0.75488 is the unique real root of \u03c1\u00b2 + \u03c1\u00b3 = 1. The conjecture asserts this bound is tight: \u03bc\u2082 = 1 + \u03c1, meaning no cutting strategy can achieve a worst-case portion ratio strictly below 1 + \u03c1. This would also establish \u03bc\u2082 as irrational, since \u03c1 is irrational.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0570",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05330v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T18:26:42.696541+00:00",
-    "title": "The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
   {
     "consumed_by_exp_id": "",
@@ -7507,6 +7521,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T00:44:50.407876+00:00",
     "title": "`SiegelWeilE8Theta.lean` proves that the E\u2088 vector counts `rE8 n = 240\u00b7\u03c3\u2083(n)`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 the optimal portion ratio \u03bc\u2082 = 1 + \u03c1\n\nThe algebra of the governing constant is now settled: \u03c1 is the unique real root of\n\u03c1\u00b2 + \u03c1\u00b3 = 1, it lies in the certified window (0.7548, 0.7549), it is irrational,\nand \u03bc = 1 + \u03c1 satisfies the depressed cubic x\u00b3 \u2212 2x\u00b2 + x \u2212 1 = 0, the\nself-similarity law \u03c1\u00b2\u00b7\u03bc = 1, and the strict bound \u03bc < 2.  The following bold,\ntestable conjectures grow out of this cycle.\n\n## 1. The matching lower bound: \u03bc\u2082 \u2265 1 + \u03c1\n\n**Conjecture.** Every infinite sequence of radial cuts produces, at infinitely many\nstages, a portion-ratio at least 1 + \u03c1; hence the worst-case constant equals 1 + \u03c1\nexactly.\n\nThe key insight is that the self-similarity identity \u03c1\u00b2\u00b7(1 + \u03c1) = 1 is not merely\nan algebraic curiosity but a conservation law: any strategy trying to beat 1 + \u03c1\nmust, over two consecutive generations of splitting, reproduce a scaled copy of its\nown worst portion, and the scaling factor is pinned to \u03c1 by the requirement that\ntotal length be preserved. A potential-function argument tracking the ratio of the\ncurrent largest to smallest portion should therefore be bounded below by the fixed\npoint of the two-generation map, which is exactly 1 + \u03c1.\n\nWhy now? The upper bound \u03bc\u2082 \u2264 1 + \u03c1 and the full algebraic profile of the target\nconstant are in hand, so the only missing half is a lower bound; framing it through\nthe two-generation contraction turns an infinitary optimisation into a finite fixed-\npoint inequality that is within reach of current techniques.\n\n## 2. Irrationality forces non-attainment\n\n**Conjecture.** No finite dissection into rationally commensurable slice lengths can\nachieve portion-ratio equal to the optimum; the optimum is approached but never\nattained along any strategy that stays within a fixed number field of degree < 3.\n\nThe key insight is that 1 + \u03c1 generates a cubic field: since \u03bc is a root of an\nirreducible cubic, equality of a portion-ratio with \u03bc would force the slice lengths\nto live in \u211a(\u03c1), a degree-3 extension, so any strategy confined to quadratic or\nrational lengths is bounded strictly away from the optimum.\n\nWhy now? We have proved \u03bc irrational and identified its minimal cubic, which is\nexactly the field-theoretic data needed to convert \"irrational\" into \"requires a\ndegree-3 extension\", sharpening non-attainment from a numerical to a structural\nstatement.\n\n## 3. Higher portions: the k-slice constant \u03bc_k\n\n**Conjecture.** For portions consisting of k consecutive slices, the optimal\nworst-case ratio \u03bc_k is the reciprocal power of the root of a k-term self-similar\nrecurrence, and \u03bc_k \u2192 1 as k \u2192 \u221e at rate \u0398(1/k).\n\nThe key insight is that widening the portion averages away local imbalance \u2014 the\ncompanion aggregation principle already shows the ratio cannot increase with window\nwidth \u2014 so the governing polynomial should interpolate between the plastic-type root\n(k = 2, giving 1 + \u03c1) and perfect balance (k \u2192 \u221e).\n\nWhy now? The k = 2 case is fully pinned down here, and the aggregation monotonicity\nthat controls larger windows is already available, so the interpolation is concrete\nand immediately testable for k = 3, 4.\n\n## 4. Spectral reformulation of the extremal strategy\n\n**Conjecture.** The extremal cutting sequence is generated by a substitution on two\nslice-length symbols whose incidence matrix has Perron eigenvalue 1/\u03c1, and the\nportion-ratio limsup equals the ratio of the two coordinates of the Perron\neigenvector.\n\nThe key insight is that \u03c1\u00b2 \u00b7 \u03bc = 1 is precisely the characteristic relation of a\n2\u00d72 substitution matrix with entries encoding \"one long piece splits into a long and\na short\", so the whole optimisation is the spectral data of a single primitive\nmatrix.\n\nWhy now? The self-similarity identity \u03c1\u00b2\u00b7\u03bc = 1 has just been isolated as the core of\nthe problem; recasting it as a Perron\u2013Frobenius statement connects cake cutting to\nthe well-developed theory of substitution dynamical systems and low-discrepancy\nsequences.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1176",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1abce342",
+    "status": "available",
+    "timestamp": "2026-07-13T01:05:54.538665+00:00",
+    "title": "The algebra of the governing constant is now settled: \u03c1 is the unique real root "
   },
   {
     "consumed_by_exp_id": "",

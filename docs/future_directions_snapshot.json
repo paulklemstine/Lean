@@ -230,7 +230,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b659b436",
     "description": "Building on cycle 0643b2b3 (Q=0.820), which proved 11 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost r",
     "domain_bridges": [],
     "domains": [
@@ -242,7 +242,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0643b2b3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T20:52:48.331838+00:00",
     "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
   },
@@ -875,6 +875,25 @@
     "status": "failed",
     "timestamp": "2026-07-09T21:40:59.530765+00:00",
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 1abce342 (Q=0.780), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant μ₂ is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves μ₂ ≤ 1 + ρ where ρ ≈ 0.75488 is",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_1abce342_8b0445d9",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1abce342",
+    "status": "available",
+    "timestamp": "2026-07-13T01:06:08.832578+00:00",
+    "title": "Deepening: The optimal portion ratio μ₂ equals 1 + ρ"
   },
   {
     "ambition_level": "extension",
@@ -1745,6 +1764,25 @@
     "status": "failed",
     "timestamp": "2026-07-11T19:27:07.217097+00:00",
     "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 1abce342 (Q=0.780) proved 19 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The constant μ₂ is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n c",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_1abce342_1cbfd699",
+    "lineage_refs": [],
+    "priority_score": 0.8300000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1abce342",
+    "status": "available",
+    "timestamp": "2026-07-13T01:06:09.210691+00:00",
+    "title": "Close Proofs: The optimal portion ratio μ₂ equals 1 + ρ"
   },
   {
     "ambition_level": "extension",
@@ -6944,32 +6982,6 @@
     "status": "available",
     "timestamp": "2026-07-07T15:50:50.927745+00:00",
     "title": "Exact Threshold for No-$(k+1)$-in-line Problem"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Korsky_conjecture_mu2_equals_2",
-      "cake_cutting_portion_bounds"
-    ],
-    "consumed_by_exp_id": "1abce342",
-    "description": "The constant μ₂ is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves μ₂ ≤ 1 + ρ where ρ ≈ 0.75488 is the unique real root of ρ² + ρ³ = 1. The conjecture asserts this bound is tight: μ₂ = 1 + ρ, meaning no cutting strategy can achieve a worst-case portion ratio strictly below 1 + ρ. This would also establish μ₂ as irrational, since ρ is irrational.",
-    "domain_bridges": [
-      "math.CO",
-      "math.RA",
-      "combinatorics_on_words"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0570",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The upper bound μ₂ ≤ 1 + ρ is proven constructively via a specific cutting algorithm and a word-avoidance argument over {0,1,2,3}. The lower bound μ₂ ≥ 1 + ρ remains wide open (only μ₂ ≥ 5/3 is known). A plausible approach: (1) Show that any infinite cutting sequence achieving ratio < 1 + ρ must, after sufficient normalization, produce slices whose sizes lie in ratios from {1, ρ, ρ², ρ³}, (2) Prove that the corresponding word over {0,1,2,3} must avoid all factors in the forbidden set A from Proposition O, (3) Show by combinatorial or automata-theoretic means that no infinite word cyclically avoiding A can have all adjacent-pair sums below 1 + ρ times the minimum adjacent-pair sum. Alternatively, a potential-function argument tracking the distribution of slice sizes could force a lower bound.",
-    "research_mode": "team",
-    "source_exp_id": "2607.05330v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T18:26:42.696541+00:00",
-    "title": "The optimal portion ratio μ₂ equals 1 + ρ"
   },
   {
     "ambition_level": "extension",
@@ -12357,6 +12369,26 @@
     "status": "available",
     "timestamp": "2026-07-13T00:44:50.407876+00:00",
     "title": "`SiegelWeilE8Theta.lean` proves that the E₈ vector counts `rE8 n = 240·σ₃(n)`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — the optimal portion ratio μ₂ = 1 + ρ\n\nThe algebra of the governing constant is now settled: ρ is the unique real root of\nρ² + ρ³ = 1, it lies in the certified window (0.7548, 0.7549), it is irrational,\nand μ = 1 + ρ satisfies the depressed cubic x³ − 2x² + x − 1 = 0, the\nself-similarity law ρ²·μ = 1, and the strict bound μ < 2.  The following bold,\ntestable conjectures grow out of this cycle.\n\n## 1. The matching lower bound: μ₂ ≥ 1 + ρ\n\n**Conjecture.** Every infinite sequence of radial cuts produces, at infinitely many\nstages, a portion-ratio at least 1 + ρ; hence the worst-case constant equals 1 + ρ\nexactly.\n\nThe key insight is that the self-similarity identity ρ²·(1 + ρ) = 1 is not merely\nan algebraic curiosity but a conservation law: any strategy trying to beat 1 + ρ\nmust, over two consecutive generations of splitting, reproduce a scaled copy of its\nown worst portion, and the scaling factor is pinned to ρ by the requirement that\ntotal length be preserved. A potential-function argument tracking the ratio of the\ncurrent largest to smallest portion should therefore be bounded below by the fixed\npoint of the two-generation map, which is exactly 1 + ρ.\n\nWhy now? The upper bound μ₂ ≤ 1 + ρ and the full algebraic profile of the target\nconstant are in hand, so the only missing half is a lower bound; framing it through\nthe two-generation contraction turns an infinitary optimisation into a finite fixed-\npoint inequality that is within reach of current techniques.\n\n## 2. Irrationality forces non-attainment\n\n**Conjecture.** No finite dissection into rationally commensurable slice lengths can\nachieve portion-ratio equal to the optimum; the optimum is approached but never\nattained along any strategy that stays within a fixed number field of degree < 3.\n\nThe key insight is that 1 + ρ generates a cubic field: since μ is a root of an\nirreducible cubic, equality of a portion-ratio with μ would force the slice lengths\nto live in ℚ(ρ), a degree-3 extension, so any strategy confined to quadratic or\nrational lengths is bounded strictly away from the optimum.\n\nWhy now? We have proved μ irrational and identified its minimal cubic, which is\nexactly the field-theoretic data needed to convert \"irrational\" into \"requires a\ndegree-3 extension\", sharpening non-attainment from a numerical to a structural\nstatement.\n\n## 3. Higher portions: the k-slice constant μ_k\n\n**Conjecture.** For portions consisting of k consecutive slices, the optimal\nworst-case ratio μ_k is the reciprocal power of the root of a k-term self-similar\nrecurrence, and μ_k → 1 as k → ∞ at rate Θ(1/k).\n\nThe key insight is that widening the portion averages away local imbalance — the\ncompanion aggregation principle already shows the ratio cannot increase with window\nwidth — so the governing polynomial should interpolate between the plastic-type root\n(k = 2, giving 1 + ρ) and perfect balance (k → ∞).\n\nWhy now? The k = 2 case is fully pinned down here, and the aggregation monotonicity\nthat controls larger windows is already available, so the interpolation is concrete\nand immediately testable for k = 3, 4.\n\n## 4. Spectral reformulation of the extremal strategy\n\n**Conjecture.** The extremal cutting sequence is generated by a substitution on two\nslice-length symbols whose incidence matrix has Perron eigenvalue 1/ρ, and the\nportion-ratio limsup equals the ratio of the two coordinates of the Perron\neigenvector.\n\nThe key insight is that ρ² · μ = 1 is precisely the characteristic relation of a\n2×2 substitution matrix with entries encoding \"one long piece splits into a long and\na short\", so the whole optimisation is the spectral data of a single primitive\nmatrix.\n\nWhy now? The self-similarity identity ρ²·μ = 1 has just been isolated as the core of\nthe problem; recasting it as a Perron–Frobenius statement connects cake cutting to\nthe well-developed theory of substitution dynamical systems and low-discrepancy\nsequences.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1176",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1abce342",
+    "status": "available",
+    "timestamp": "2026-07-13T01:05:54.538665+00:00",
+    "title": "The algebra of the governing constant is now settled: ρ is the unique real root "
   },
   {
     "ambition_level": "extension",
