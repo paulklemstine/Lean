@@ -1281,7 +1281,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "951fa653",
     "description": "Cycle 64d4f5fe (Q=0.780) proved 16 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There exists an effectively computable constant \u03b3 > 0 such that for every c \u2208 [1, \u221a2), there exists an infinite family of finite metric spaces {X\u2099} indexed by n \u2208 \u2115 where any finitely presented c-appr",
     "domains": [
       "Novelty"
@@ -1290,7 +1290,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "64d4f5fe",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T12:17:27.828410+00:00",
     "title": "Close Proofs: Explicit exponential lower bound for Vietoris-Rips approximations belo"
   },
@@ -1937,6 +1937,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
+  },
+  {
+    "consumed_by_exp_id": "477f7787",
+    "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique\u2011matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique\u2011Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3\u03052K2). This extends the result of [arXiv:xxxx] from distance\u2011hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0146",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00730v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-03T13:24:03.491700+00:00",
+    "title": "Conjecture: Balanced graphs coincide with hereditary clique\u2011Helly graphs"
   },
   {
     "consumed_by_exp_id": "",

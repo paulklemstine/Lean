@@ -4167,7 +4167,7 @@
       "source": "",
       "source_exp_id": "2607.00730v1",
       "source_path": "http://arxiv.org/abs/2607.00730v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T13:24:03.491700+00:00",
       "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
@@ -40040,7 +40040,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "951fa653",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40067,7 +40067,7 @@
       "source": "",
       "source_exp_id": "64d4f5fe",
       "source_path": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-13T12:17:27.828410+00:00",
       "title": "Close Proofs: Explicit exponential lower bound for Vietoris-Rips approximations belo"

@@ -1730,7 +1730,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "951fa653",
     "description": "Cycle 64d4f5fe (Q=0.780) proved 16 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There exists an effectively computable constant γ > 0 such that for every c ∈ [1, √2), there exists an infinite family of finite metric spaces {Xₙ} indexed by n ∈ ℕ where any finitely presented c-appr",
     "domain_bridges": [],
     "domains": [
@@ -1742,7 +1742,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "64d4f5fe",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T12:17:27.828410+00:00",
     "title": "Close Proofs: Explicit exponential lower bound for Vietoris-Rips approximations belo"
   },
@@ -2828,6 +2828,33 @@
     "status": "available",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "https://arxiv.org/abs/xxxx"
+    ],
+    "consumed_by_exp_id": "477f7787",
+    "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique‑matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique‑Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3̅2K2). This extends the result of [arXiv:xxxx] from distance‑hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
+    "domain_bridges": [
+      "balanced graphs",
+      "hereditary clique-Helly",
+      "distance-hereditary graphs",
+      "forbidden induced subgraph \\u03c3\\u0305K2",
+      "linear-time recognition algorithm"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0146",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "To prove the conjecture we would: (1) develop a decomposition of hereditary clique‑Helly graphs into distance‑hereditary components using a tree decomposition (e.g., a 2‑tree or split‑decomposition). (2) Apply the linear‑time recognition algorithm from the paper to each component to show that none can be unbalanced. (3) Demonstrate that the presence of an induced \\u03c3\\u0305K2 would contradict the hereditary clique‑Helly property, hence no such subgraph can appear. The combination yields balancedness. Formalisation in Lean would define balancedness, hereditary clique‑Helly, and induced subgraph relations, then prove the two implications.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00730v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-03T13:24:03.491700+00:00",
+    "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
   },
   {
     "ambition_level": "extension",
