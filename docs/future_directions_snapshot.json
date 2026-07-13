@@ -79,6 +79,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 32285b55 (Q=0.830), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: f",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_32285b55_cf76f641",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "32285b55",
+    "status": "available",
+    "timestamp": "2026-07-13T03:02:38.459095+00:00",
+    "title": "Deepening: Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
     "domain_bridges": [],
     "domains": [
@@ -6033,35 +6052,6 @@
     "title": "Aharoni-Korman Property for Well-Founded FAC Posets"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "ohsugi-tsuchiya-conj",
-      "higashitani-jochemko-michalek",
-      "gal-gamma-positivity",
-      "bruns-romer-unimodal"
-    ],
-    "consumed_by_exp_id": "32285b55",
-    "description": "For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: for every vector a in Z_{>=1}^4, the h*-polynomial of Q_{G(a)} is gamma-positive. This would yield a complete classification of gamma-positivity for this family.",
-    "domain_bridges": [
-      "Ehrhart_theory",
-      "polyhedral_geometry",
-      "graph_theory",
-      "combinatorial_positivity"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0477",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "For m <= 3, leverage known results: graphs with a vertex connected to all others (cones) are gamma-positive by Ohsugi-Tsuchiya, and complete bipartite graphs by Higashitani-Jochemko-Michalek. For m = 4, compute the gamma-polynomial coefficients using the regular unimodular triangulation structure of symmetric edge polytopes and show all coefficients are non-negative. The linear and quadratic gamma-coefficients are already known positive; the key is controlling the cubic and higher terms via the combinatorics of the series-parallel structure.",
-    "research_mode": "team",
-    "source_exp_id": "2607.02424v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T18:40:26.791668+00:00",
-    "title": "Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at most four paths"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO",
@@ -6305,7 +6295,7 @@
       "Vandermonde_matrix",
       "Cyclotomic_field"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca370926",
     "description": "The cyclotomic matrix $A_k(\\chi) = [G_N(\\chi^{ki+kj})]$ involving Gauss sums over $\\mathbb{Z}/N\\mathbb{Z}$ (where $N=p^m$ and $n=\\varphi(N)/k$) can be decomposed as the matrix product $W D W^T$, where $W$ is the $n \\times n$ discrete Fourier transform matrix with entries $W_{i,a} = \\omega^{ai}$ ($\\omega$ being a primitive $n$-th root of unity) and $D$ is the diagonal matrix of the $n$ Gauss periods $\\eta_a$ corresponding to the $k$-th power residue cyclotomic cosets.",
     "domain_bridges": [
       "Linear_algebra",
@@ -6320,7 +6310,7 @@
     "proof_strategy": "Rewrite the Gauss sum $G_N(\\chi^{k(i+j)})$ by partitioning the summation over $(\\mathbb{Z}/N\\mathbb{Z})^\\times$ into the $n$ cyclotomic cosets $C_a$ modulo $k$. Express $\\chi^{k(i+j)}(x)$ as $\\omega^{a(i+j)}$ for $x \\in C_a$, pulling the root of unity out of the sum to yield $\\sum_{a=0}^{n-1} \\omega^{a(i+j)} \\eta_a$, which directly translates to the matrix factorization $A_k(\\chi) = W D W^T$.",
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T22:55:43.909167+00:00",
     "title": "Factorization of Cyclotomic Gauss Sum Matrix"
   },
@@ -12416,6 +12406,26 @@
     "status": "available",
     "timestamp": "2026-07-13T02:42:14.681965+00:00",
     "title": "This project formalizes, from scratch and with no `sorry`, the cleanest"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — γ-positivity for series–parallel symmetric edge polytopes\n\nThese conjectures are distilled from the present cycle: the algebraic structure of\nthe γ-positive cone (closure under nonnegative scaling, addition, and product across\norders; nonnegativity on the positive axis) together with the sharp flat-palindrome\nboundary that separates palindromicity from γ-positivity in every degree `≥ 2`.\n\n## Conjecture 1 (Complete classification at `m ≤ 4`)\n\nFor every vector of path lengths `a ∈ Z_{>0}^m` with `m ≤ 4`, the `h*`-polynomial\nof the symmetric edge polytope `Q_{G(a)}` is γ-positive; for `m ≥ 5` there exist\nchoices of `a` for which it is not.\n\nThe key insight is that the failure of γ-positivity is detected by a *finite* window\nof low-order coefficients — a single sign condition on the second γ-coefficient — so\nthe classification reduces to bounding that window across the parallel-join operation,\nwhich stabilises exactly at four paths.\n\nWhy now? The palindromic/γ-positive gap has just been pinned to an explicit infinite\nfamily (the flat palindromes), giving a concrete profile to test the `m ≥ 5` failures\nagainst and a finite certificate to verify the `m ≤ 4` successes.\n\n## Conjecture 2 (Real-rootedness dichotomy)\n\nThe `h*`-polynomial of `Q_{G(a)}` is real-rooted if and only if it is γ-positive\nwith γ-vector supported on an interval; in the `m ≤ 4` regime it is always\nnonnegative on `[0,∞)` and has no positive real root.\n\nThe key insight is that γ-positivity already forces nonnegativity on the entire\nnonnegative axis, so any real root must be negative; real-rootedness then becomes a\nstatement about the interlacing of the two building-block families rather than about\nsign changes.\n\nWhy now? Evaluation-positivity on `[0,∞)` is now available as a structural\nconsequence of γ-positivity, turning a global analytic question into a local one\nabout the location of negative roots.\n\n## Conjecture 3 (Multiplicativity is the only source of γ-positivity for large `m`)\n\nFor `m ≥ 5`, the `h*`-polynomial of `Q_{G(a)}` is γ-positive if and only if it\nfactors as a product of γ-positive polynomials of strictly smaller order (equivalently,\nthe graph decomposes along a series cut).\n\nThe key insight is that the parallel-join of five or more paths introduces a genuinely\nnon-multiplicative interaction term, and this term is exactly the flat-palindrome-type\nobstruction; γ-positivity can then survive only when that interaction is absent, i.e.\nwhen the polynomial is a product.\n\nWhy now? The product-closure of the γ-positive cone across orders is established, so\n\"γ-positive because it factors\" is a precise, checkable alternative to intrinsic\nγ-positivity.\n\n## Conjecture 4 (Quantitative depth of the obstruction)\n\nFor the flat-type `h*`-profiles arising at `m ≥ 5`, the most negative forced\nγ-coefficient grows linearly in the total path length, so no bounded perturbation of\nthe edge structure can restore γ-positivity.\n\nThe key insight is that the forced value `γ₁ = 1 − n` is linear in the degree `n`, so\nthe failure is not marginal but deepens with size — a robustness statement about the\ncounterexample family.\n\nWhy now? The exact linear formula for the failing γ-coefficient is available from the\nflat-palindrome analysis, making the \"how badly does it fail\" question quantitative.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1185",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "32285b55",
+    "status": "available",
+    "timestamp": "2026-07-13T03:01:34.157318+00:00",
+    "title": "These conjectures are distilled from the present cycle: the algebraic structure "
   },
   {
     "ambition_level": "extension",

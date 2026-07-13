@@ -60,6 +60,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 32285b55 (Q=0.830), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: f",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_32285b55_cf76f641",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "32285b55",
+    "status": "available",
+    "timestamp": "2026-07-13T03:02:38.459095+00:00",
+    "title": "Deepening: Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
     "domains": [
       "Applications"
@@ -3635,20 +3649,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Aharoni-Korman Property for Well-Founded FAC Posets"
   },
   {
-    "consumed_by_exp_id": "32285b55",
-    "description": "For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: for every vector a in Z_{>=1}^4, the h*-polynomial of Q_{G(a)} is gamma-positive. This would yield a complete classification of gamma-positivity for this family.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0477",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02424v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T18:40:26.791668+00:00",
-    "title": "Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at most four paths"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every simple graph G with maximum degree \u0394(G) > |V(G)|/3, the chromatic index \u03c7'(G) equals \u0394(G) if and only if G contains no \u0394(G)-overfull subgraph (a subgraph H with |E(H)| > \u0394(G)\u00b7\u230a|V(H)|/2\u230b). This would yield a polynomial-time algorithm for determining the chromatic index of dense graphs and implies several longstanding conjectures including the 1-Factorization Conjecture for regular graphs.",
     "domains": [
@@ -3767,7 +3767,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca370926",
     "description": "The cyclotomic matrix $A_k(\\chi) = [G_N(\\chi^{ki+kj})]$ involving Gauss sums over $\\mathbb{Z}/N\\mathbb{Z}$ (where $N=p^m$ and $n=\\varphi(N)/k$) can be decomposed as the matrix product $W D W^T$, where $W$ is the $n \\times n$ discrete Fourier transform matrix with entries $W_{i,a} = \\omega^{ai}$ ($\\omega$ being a primitive $n$-th root of unity) and $D$ is the diagonal matrix of the $n$ Gauss periods $\\eta_a$ corresponding to the $k$-th power residue cyclotomic cosets.",
     "domains": [
       "Bridges"
@@ -3776,7 +3776,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02392v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T22:55:43.909167+00:00",
     "title": "Factorization of Cyclotomic Gauss Sum Matrix"
   },
@@ -7569,6 +7569,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T02:42:14.681965+00:00",
     "title": "This project formalizes, from scratch and with no `sorry`, the cleanest"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 \u03b3-positivity for series\u2013parallel symmetric edge polytopes\n\nThese conjectures are distilled from the present cycle: the algebraic structure of\nthe \u03b3-positive cone (closure under nonnegative scaling, addition, and product across\norders; nonnegativity on the positive axis) together with the sharp flat-palindrome\nboundary that separates palindromicity from \u03b3-positivity in every degree `\u2265 2`.\n\n## Conjecture 1 (Complete classification at `m \u2264 4`)\n\nFor every vector of path lengths `a \u2208 Z_{>0}^m` with `m \u2264 4`, the `h*`-polynomial\nof the symmetric edge polytope `Q_{G(a)}` is \u03b3-positive; for `m \u2265 5` there exist\nchoices of `a` for which it is not.\n\nThe key insight is that the failure of \u03b3-positivity is detected by a *finite* window\nof low-order coefficients \u2014 a single sign condition on the second \u03b3-coefficient \u2014 so\nthe classification reduces to bounding that window across the parallel-join operation,\nwhich stabilises exactly at four paths.\n\nWhy now? The palindromic/\u03b3-positive gap has just been pinned to an explicit infinite\nfamily (the flat palindromes), giving a concrete profile to test the `m \u2265 5` failures\nagainst and a finite certificate to verify the `m \u2264 4` successes.\n\n## Conjecture 2 (Real-rootedness dichotomy)\n\nThe `h*`-polynomial of `Q_{G(a)}` is real-rooted if and only if it is \u03b3-positive\nwith \u03b3-vector supported on an interval; in the `m \u2264 4` regime it is always\nnonnegative on `[0,\u221e)` and has no positive real root.\n\nThe key insight is that \u03b3-positivity already forces nonnegativity on the entire\nnonnegative axis, so any real root must be negative; real-rootedness then becomes a\nstatement about the interlacing of the two building-block families rather than about\nsign changes.\n\nWhy now? Evaluation-positivity on `[0,\u221e)` is now available as a structural\nconsequence of \u03b3-positivity, turning a global analytic question into a local one\nabout the location of negative roots.\n\n## Conjecture 3 (Multiplicativity is the only source of \u03b3-positivity for large `m`)\n\nFor `m \u2265 5`, the `h*`-polynomial of `Q_{G(a)}` is \u03b3-positive if and only if it\nfactors as a product of \u03b3-positive polynomials of strictly smaller order (equivalently,\nthe graph decomposes along a series cut).\n\nThe key insight is that the parallel-join of five or more paths introduces a genuinely\nnon-multiplicative interaction term, and this term is exactly the flat-palindrome-type\nobstruction; \u03b3-positivity can then survive only when that interaction is absent, i.e.\nwhen the polynomial is a product.\n\nWhy now? The product-closure of the \u03b3-positive cone across orders is established, so\n\"\u03b3-positive because it factors\" is a precise, checkable alternative to intrinsic\n\u03b3-positivity.\n\n## Conjecture 4 (Quantitative depth of the obstruction)\n\nFor the flat-type `h*`-profiles arising at `m \u2265 5`, the most negative forced\n\u03b3-coefficient grows linearly in the total path length, so no bounded perturbation of\nthe edge structure can restore \u03b3-positivity.\n\nThe key insight is that the forced value `\u03b3\u2081 = 1 \u2212 n` is linear in the degree `n`, so\nthe failure is not marginal but deepens with size \u2014 a robustness statement about the\ncounterexample family.\n\nWhy now? The exact linear formula for the failing \u03b3-coefficient is available from the\nflat-palindrome analysis, making the \"how badly does it fail\" question quantitative.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1185",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "32285b55",
+    "status": "available",
+    "timestamp": "2026-07-13T03:01:34.157318+00:00",
+    "title": "These conjectures are distilled from the present cycle: the algebraic structure "
   },
   {
     "consumed_by_exp_id": "",

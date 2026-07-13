@@ -13431,7 +13431,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Gauss_sum",
         "Vandermonde_matrix",
@@ -13439,7 +13439,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ca370926",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13454,7 +13454,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0506",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T03:04:58.242310+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cyclotomic_gauss_matrix_factorization\n    {N : ℕ} {p m k : ℕ} {χ : (ZMod N)ˣ →* Circle} (g : (ZMod N)ˣ)\n    (hN : N = p ^ m) (hk : k ∣ Nat.totient N) (hχ : IsGenerator χ) :\n    let n := (Nat.totient N) / k\n    let ω := χ ^ k g\n    let A := Matrix.of fun i j : Fin n => gaussSum N (χ ^ (k * (i : ℕ) + k * (j : ℕ)))\n    let W := Matrix.of fun i a : Fin n => ω ^ ((a : ℕ) * (i : ℕ))\n    let D := Matrix.diagonal (fun a : Fin n => gaussPeriod N k a)\n    A = W * D * W.transpose :=\n  sorry",
       "lineage_refs": [],
@@ -13469,7 +13469,7 @@
       "source": "",
       "source_exp_id": "2607.02392v1",
       "source_path": "http://arxiv.org/abs/2607.02392v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-06T22:55:43.909167+00:00",
       "title": "Factorization of Cyclotomic Gauss Sum Matrix"
@@ -13582,7 +13582,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d4192a75",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13613,7 +13613,7 @@
       "source": "",
       "source_exp_id": "2607.03405v1",
       "source_path": "http://arxiv.org/abs/2607.03405v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-07T02:03:09.912711+00:00",
       "title": "Equivalence of Oddomorphism and Split-Off Minor"
@@ -33855,7 +33855,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1abce342 (Q=0.780), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant μ₂ is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves μ₂ ≤ 1 + ρ where ρ ≈ 0.75488 is",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -34280,6 +34280,46 @@
       "thread_id": "",
       "timestamp": "2026-07-12T00:29:28.233896+00:00",
       "title": "Deepening: Rucker: Spacetime Donuts — Topology of the Universe"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 32285b55 (Q=0.830), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: f",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "push_32285b55_cf76f641",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9299999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "32285b55",
+      "source_path": "Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at ",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-13T03:02:38.459095+00:00",
+      "title": "Deepening: Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at "
     },
     {
       "ambition_level": "extension",
@@ -35615,7 +35655,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 82155f74 (Q=0.820), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For increasing Boolean functions f,g:{0,1}^n→{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small ε, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibl",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],
@@ -35735,7 +35775,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 86966da0 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself —\n`T ≈ Π (x : T), P x`, equivalently `T ≃ (T → Prop)` — cannot exist, for the same\ndiagonal reason underlying the theorems of Cantor, Gödel, and Tarski. ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -37855,7 +37895,7 @@
       "depth_estimate": 3,
       "description": "Cycle 1abce342 (Q=0.780) proved 19 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The constant μ₂ is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n c",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -38175,7 +38215,7 @@
       "depth_estimate": 3,
       "description": "Cycle 48b25c91 (Q=0.720) proved 9 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — The Last Theorem and the Thermodynamic Horizon of Discovery\n\nThese conjectures grow out of the cycle's core finding: the collection of provable\nstatements over a finite alphabet ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -39522,7 +39562,6 @@
     "z_{>=1}^4": 1
   },
   "selection_log": [
-    "cross_domain_bridge",
     "abduction_followup",
     "abduction_followup",
     "abduction_followup",
@@ -39539,6 +39578,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"
