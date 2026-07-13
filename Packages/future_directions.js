@@ -241,7 +241,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "664b3442",
     "description": "Building on cycle 4b281557 (Q=0.820), which proved 19 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed ",
     "domains": [
       "Probability"
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "4b281557",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T02:28:00.464705+00:00",
     "title": "Deepening: Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
   },
@@ -664,7 +664,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp maximal excess of co-index under suspension for all feasible sta"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7547cdb0",
     "description": "Building on cycle 538f30a2 (Q=0.780), which proved 47 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show",
     "domains": [
       "Tropical"
@@ -673,7 +673,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "538f30a2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T03:38:30.661331+00:00",
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
@@ -720,7 +720,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The cycle established that the atomic AllDifferent constraint has a sharp"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "beca1e55",
     "description": "Building on cycle d0bff55a (Q=0.780), which proved 20 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
     "domains": [
       "MachineLearning"
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "d0bff55a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:23:26.434548+00:00",
     "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
   },
@@ -762,7 +762,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "117d6517",
     "description": "Building on cycle fb4de3e5 (Q=0.780), which proved 23 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some met",
     "domains": [
       "Tropical"
@@ -771,7 +771,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "fb4de3e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T02:10:54.368732+00:00",
     "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Op"
   },
@@ -1253,7 +1253,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "17340490",
     "description": "Cycle 7a9dcf2f (Q=0.780) proved 81 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishe",
     "domains": [
       "MachineLearning"
@@ -1262,7 +1262,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "7a9dcf2f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T02:59:14.834105+00:00",
     "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
@@ -1514,7 +1514,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Exponent for Constrained Coset Guesswork"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1bd2f770",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domains": [
       "Physics"
@@ -1523,7 +1523,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -1613,7 +1613,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea3218f3",
     "description": "Every minimally 1\u2011tough graph that contains no induced subgraph isomorphic to K\u2081 \u222a P\u2084 and has at least three vertices admits a Hamiltonian cycle.",
     "domains": [
       "Physics"
@@ -1622,7 +1622,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.07239v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-09T09:17:10.297215+00:00",
     "title": "Minimally 1\u2011tough (K\u2081 \u222a P\u2084)-free graphs are Hamiltonian"
   },
@@ -1800,7 +1800,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The Fundamental Theorem of Cakes: Algebraic Geometry of Baking"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0f7e73c",
     "description": "# Future Directions: Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle established a sharp dichotomy for the *total* d-Hoggatt numbers\n`H_d(n) = \u2211_k H_d(n,k)`: the `d = 1` totals `2^n` are infinitely log-concave\n(indeed log-linear), while the `d = 2` totals (Catalan numbers) are strictly\nlog-convex, and the `d = 3` totals (Baxter numbers) are empirically log-convex.\nThe following conjectures are the natural next targets.\n\n## Conjecture 1 \u2014 Universal log-convexity of the totals for d \u2265 2\n\nFor every `d \u2265 2`, the total d-Hoggatt numbers are strictly log-convex:\n`H_d(n+1)\u00b2 < H_d(n) \u00b7 H_d(n+2)` for all `n \u2265 0`.\n\nThe key insight is that each `H_d(n)` is a positively weighted sum of products\nof binomial coefficients whose dominant growth ratio increases with `n`, so the\ntotals inherit the log-convexity of the Catalan case rather than the\nlog-concavity of the individual rows. Why now? The Catalan (`d = 2`) case is now\nsettled from a two-term recurrence, and the Baxter (`d = 3`) case matches it\nterm-by-term in the computed data, suggesting a single recurrence-driven\nargument covers the whole family.\n\n## Conjecture 2 \u2014 Row-sum log-convexity is a summation phenomenon\n\nIf `T(n,k)` is any triangle whose rows are log-concave and whose row-ratio\n`T(n+1,k)/T(n,k)` is nondecreasing in `n`, then the row sums `S(n) = \u2211_k T(n,k)`\nare log-convex.\n\nThe key insight is that log-convexity of the totals is not special to Hoggatt\ntriangles but follows from monotone amplification of a common growth factor\nacross rows, a Chebyshev-sum / rearrangement effect. Why now? Having seen the\nsame negative discriminant `\u0394_n < 0` for both Catalan and Baxter totals, the\nphenomenon is clearly structural rather than coincidental and deserves a triangle\n-level hypothesis.\n\n## Conjecture 3 \u2014 Infinite log-concavity of the rows\n\nFor every `d \u2265 1`, each fixed row `k \u21a6 H_d(n,k)` of the d-Hoggatt triangle is\ninfinitely log-concave.\n\nThe key insight is that the log-concavity operator, when applied to a finite\npositive log-concave row with the golden-ratio-squared safety factor\n`a_k\u00b2 \u2265 ((3+\u221a5)/2) \u00b7 a_{k-1} a_{k+1}`, reproduces that same safety factor, so a\nsingle closure lemma propagates through all iterates. Why now? The threshold\nconstant `(3+\u221a5)/2` is exactly the fixed point of the operator's worst-case\nratio, and the toolkit built this cycle (the operator `\ud835\udcdb`, its annihilation of\nlog-linear sequences, and closure under products) already contains the moving\nparts needed to attack the closure lemma.\n\n## Conjecture 4 \u2014 A log-concave \"renormalization\" of the totals\n\nFor every `d \u2265 2` there is an explicit positive normalizing sequence `w_d(n)`\n(e.g. a ratio of factorials) such that the renormalized totals\n`H_d(n) / w_d(n)` are infinitely log-concave, even though the raw totals are\nlog-convex.\n\nThe key insight is that log-convexity of the totals is caused by a smooth,\npredictable growth factor which can be divided out, leaving a residual sequence\ngoverned by the same infinite-log-concavity mechanism as the rows. Why now? The\nexact growth ratio `(n+2)(2n+3)/((2n+1)(n+3))` for the Catalan totals is now\nknown in closed form, giving a concrete first candidate for `w_2` and a template\nfor higher `d`.\n\n## Conjecture 5 \u2014 Tropical dequantization of the dichotomy\n\nUnder the tropical (min-plus) limit that sends a positive sequence `a_n` to its\nvaluations `v_n = \u2212log a_n`, log-concavity becomes convexity of `v` and\nlog-linearity becomes affinity of `v`. The `d = 1`/`d \u2265 2` dichotomy then reads:\n`v` is affine for `d = 1` and strictly concave for `d \u2265 2`.\n\nThe key insight is that the log-concavity operator degenerates, in the tropical\nlimit, to a second finite difference, so infinite log-concavity corresponds to a\nsequence of iterated finite differences retaining a fixed sign \u2014 a purely\npiecewise-linear, tropical-geometric condition. Why now? Casting the numeric\ndichotomy in the min-plus semiring links this combinatorial question to tropical\nconvexity, where second-difference sign conditions are the natural objects and\npowerful piecewise-linear tools are available.\n",
     "domains": [
       "Tropical",
@@ -1810,7 +1810,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "236b0246",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T17:01:12.860686+00:00",
     "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
   },
