@@ -706,7 +706,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The cycle established that the atomic AllDifferent constraint has a sharp"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "beca1e55",
     "description": "Building on cycle d0bff55a (Q=0.780), which proved 20 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
     "domains": [
       "MachineLearning"
@@ -715,7 +715,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "d0bff55a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:23:26.434548+00:00",
     "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
   },
@@ -1514,7 +1514,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Exponent for Constrained Coset Guesswork"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1bd2f770",
     "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
     "domains": [
       "Physics"
@@ -1523,7 +1523,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02410v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-07T00:02:19.658603+00:00",
     "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
