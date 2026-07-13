@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "494cab2e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nMission: *\"Causal Loops in Category Theory: when composition loops back\"* — a tensor\nproduct whose associativity fails **on the nose** but is rep",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-12T15:37:53",
-      "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
-    },
-    {
       "cycle_id": "3cdfbb0e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Automatic Sequences and the Kernel Criterion\n\nThis cycle established the finite-kernel criterion for automatic sequences as a\nself-contained, characteristic-free foundation: deci",
@@ -499,19 +489,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-13T06:44:59",
       "title": "Deepening: Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+    },
+    {
+      "cycle_id": "111bebcc",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Congruences for Labeled Partial Orders\n\nThe number `P(n)` of partial orders on `n` labeled points is known to be odd for\nevery `n`, and this parity is explained structurally: orde",
+      "quality_score": 0.72,
+      "sorry_count": 4,
+      "theorem_count": 24,
+      "timestamp": "2026-07-13T07:01:18",
+      "title": "Constant residue of labeled poset counts modulo 4"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c22096e0",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThis project formalises the **deterministic core** of the vertex-Ramsey\nthreshold: for clique targets `s : κ → ℕ` with `sᵢ ≥ 1`,\n\n```\nKₙ  →_v  (K_{s i})_i      ⇔      ∑_i (s_i − 1",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-10T12:23:29",
-      "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
-    },
     {
       "cycle_id": "6528f137",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-13T06:44:59",
       "title": "Deepening: Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+    },
+    {
+      "cycle_id": "111bebcc",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Congruences for Labeled Partial Orders\n\nThe number `P(n)` of partial orders on `n` labeled points is known to be odd for\nevery `n`, and this parity is explained structurally: orde",
+      "quality_score": 0.72,
+      "sorry_count": 4,
+      "theorem_count": 24,
+      "timestamp": "2026-07-13T07:01:18",
+      "title": "Constant residue of labeled poset counts modulo 4"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "86966da0",
-      "domain": "Applications",
-      "name": "shows",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "86966da0",
-      "domain": "Applications",
-      "name": "and",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "1abce342",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.78
-    },
     {
       "cycle_id": "1abce342",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "patternSpace_t2",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "111bebcc",
+      "domain": "Applications",
+      "name": "mem_POSet",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "111bebcc",
+      "domain": "Applications",
+      "name": "isPO_dual",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "111bebcc",
+      "domain": "Applications",
+      "name": "dualPO_involutive",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-13T06:44:59",
+  "last_updated": "2026-07-13T07:01:18",
   "open_questions": [
-    {
-      "context": "+The three lemmas below are fully proved (no `sorry`) and constitute the verified; -    sorry; +    sorry",
-      "cycle_id": "b35b4ce5",
-      "domain": "Applications",
-      "sorry_count": 7,
-      "timestamp": "2026-07-12T15:03:08"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "3cdfbb0e",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-13T06:44:59"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "111bebcc",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-13T07:01:18"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "28bb3270",
-        "quality": 0.83,
-        "theorems": 12,
-        "title": "Close Proofs: Siegel-Weil Identity for the E₈ Lattice Theta Series"
-      },
-      {
         "cycle_id": "1abce342",
         "quality": 0.78,
         "theorems": 19,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 29,
         "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
+      },
+      {
+        "cycle_id": "111bebcc",
+        "quality": 0.72,
+        "theorems": 24,
+        "title": "Constant residue of labeled poset counts modulo 4"
       }
     ],
     "Bridges": [

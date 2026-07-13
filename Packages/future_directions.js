@@ -2442,20 +2442,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "consumed_by_exp_id": "111bebcc",
-    "description": "For all integers n \u2265 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) \u2261 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 \u2261 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Ern\u00e9-Stege moment reduction.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0256",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.31526v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T18:54:52.477458+00:00",
-    "title": "Constant residue of labeled poset counts modulo 4"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture: There exists an absolute constant K>0 such that for every n\u2208\u2115 and every family F\u22862^[n] that is 3\u2011sunflower\u2011free (i.e., contains no three sets with pairwise constant intersection), we have |F| \u2264 K\u00b7n^{1/6}\u00b7(3/2^{2/3})^n.",
     "domains": [
@@ -5481,6 +5467,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 111bebcc (Q=0.720) proved 24 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For all integers n \u2265 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) \u2261 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 6460994419377",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_111bebcc_b1e9090a",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "111bebcc",
+    "status": "available",
+    "timestamp": "2026-07-13T07:01:18.928014+00:00",
+    "title": "Close Proofs: Constant residue of labeled poset counts modulo 4"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 39ced9f7 (Q=0.720) proved 15 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that for every d \u2208 \u2115, every connected graph admits a tree-decomposition where each bag is (d,2d+1)-inseparable and each adhesion set has diameter at most 4d+2 (improving the 5d+2 bound of T",
     "domains": [
       "Applications"
@@ -7649,6 +7649,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T06:44:49.970468+00:00",
     "title": "That a neural network with `k` threshold neurons carries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Congruences for Labeled Partial Orders\n\nThe number `P(n)` of partial orders on `n` labeled points is known to be odd for\nevery `n`, and this parity is explained structurally: order reversal is an\ninvolution on the family of labeled orders whose unique fixed point is the\ndiscrete order. Empirically the residue sharpens to `P(n) \u2261 3 (mod 4)` for all\n`n \u2265 2`. The following conjectures push this structural viewpoint further.\n\n## Conjecture 1 \u2014 The full modulo-4 congruence\n\nFor every `n \u2265 2`, `P(n) \u2261 3 (mod 4)`.\n\n**The key insight is** that the parity `P(n) \u2261 1 (mod 2)` comes from a *single*\ninvolution (duality) with exactly one fixed point, whereas the refinement to\n`mod 4` must come from a group of order four \u2014 duality combined with a label\ntransposition \u2014 acting on labeled orders, where the surviving contribution mod 4\nis governed by the two-element orbits rather than by the global fixed point\nalone.\n\n**Why now?** The uniqueness of the self-dual order pins down the fixed locus of\nduality completely, removing the main unknown in a Burnside-style count; what\nremains is a controlled bookkeeping of the transposition action, which is now the\nonly missing ingredient.\n\n## Conjecture 2 \u2014 Transposition-fixed orders control the second bit\n\nLet `F(n)` be the number of labeled orders invariant under swapping two fixed\nlabels. Then `F(n) \u2261 1 (mod 2)`, and the residue of `P(n)` modulo 4 is\ndetermined by `F(n)` together with the (known) self-dual count.\n\n**The key insight is** that the second binary digit of `P(n)` is not intrinsic to\nposets as abstract objects but is carried entirely by how the labeling interacts\nwith symmetry, so counting symmetric-under-transposition orders isolates exactly\nthat digit.\n\n**Why now?** The same reflexive/antisymmetric/transitive enumeration that fixes\nthe self-dual count extends verbatim to transposition-invariant orders, making\nthe two counts directly comparable at small `n`.\n\n## Conjecture 3 \u2014 Modulo-`2^k` periodicity of the \"moment reduction\"\n\nFor each `k`, the residues `P(n) mod 2^k` are eventually determined by a finite\nautomaton in `n` (equivalently, `P(n) mod 2^k` is ultimately periodic once the\nappropriate reduction of the defining recurrence is taken modulo `2^k`).\n\n**The key insight is** that the alternating inclusion\u2013exclusion (\"moment\nreduction\") expressing labeled orders through surjection-type sums has, modulo a\nprime power, only finitely many relevant strata, forcing eventual periodicity of\nthe residues.\n\n**Why now?** The exact values are available far enough (`n \u2264 19`) to fit and then\nfalsify any conjectured period modulo `4`, `8`, and `16`, so a concrete periodic\nmodel can be proposed and tested immediately.\n\n## Conjecture 4 \u2014 Duality-uniqueness across richer order classes\n\nThe \"unique self-dual object\" phenomenon persists for labeled *preorders* and\nlabeled `T0` topologies: in each class the self-dual objects are exactly the\nsymmetric ones, and hence form a structurally trivial, exactly-countable family.\n\n**The key insight is** that antisymmetry (or its `T0` analogue) is precisely the\naxiom that collapses self-duality to symmetry, so the same involution argument\ntransfers to any class where that axiom is present.\n\n**Why now?** Labeled preorders and finite `T0` topologies are in explicit\nbijection with the poset data already enumerated here, so the transfer can be\nchecked on identical small-case tables without new machinery.\n\n\n# Future Directions: Primitive Prime Divisors of Fibonacci Numbers\n\nThe development in `CarmichaelProof.lean`, `CarmichaelComposite.lean`, and\n`CarmichaelPrimitiveDivisor.lean` establishes, for every `n` with\n`13 \u2264 n \u2264 10000`, that the Fibonacci number `F(n)` has a *primitive* prime\ndivisor \u2014 a prime `p` dividing `F(n)` but dividing no earlier `F(k)` with\n`0 < k < n`. The prime case is handled unconditionally by a `gcd`-collapse\nargument (`fib_primitive_divisor_prime`); the composite case is reduced to the\npositivity of an explicitly computed \"primitive part\" and verified for the whole\nrange up to `10000`.\n\n## Conjecture 1 \u2014 Carmichael's theorem, the unbounded tail\n\nFor every composite `n > 10000`, `F(n)` has a primitive prime divisor; hence\n`F(n)` has a primitive prime divisor for all `n \u2265 13`.\n\n**The key insight is** that the primitive part of `F(n)` is, up to a factor no\nlarger than the largest prime factor of `n`, the value of the homogeneous\ncyclotomic form `\u03a6_n(\u03b1, \u03b2)` at the golden-ratio conjugates, whose size grows like\n`\u03b1^{\u03c6(n)}`; once Euler's totient `\u03c6(n)` is large enough this exponential growth\ndominates the correction, forcing the primitive part above `1`.\n\n**Why now?** The finite range is already discharged by a genuine primitive-part\ncomputation up to `10000`, so the only missing ingredient is the growth estimate\non `\u03a6_n(\u03b1, \u03b2)` \u2014 a self-contained analytic bound that can be attacked\nindependently of the combinatorial reduction, which is complete.\n\n## Conjecture 2 \u2014 A rank-of-apparition growth law\n\nLet `z(p)` be the rank of apparition of a prime `p` (the least `k > 0` with\n`p \u2223 F(k)`). Then a prime `p` is a primitive divisor of `F(n)` exactly when\n`z(p) = n`, and the number of `n \u2264 X` for which every prime divisor of `F(n)` is\nnon-primitive is finite and bounded independently of `X`.\n\n**The key insight is** that non-primitivity of every divisor of `F(n)` forces the\nentire prime content of `F(n)` to be recycled from proper divisors `d \u2223 n`, and\nlifting-the-exponent for Fibonacci makes that recycled content too small to\naccount for the full exponential size of `F(n)` beyond finitely many exceptions.\n\n**Why now?** The entry-point machinery (`fibEntryPt`, `fibEntryPt_dvd_of_fib_dvd`,\n`primitive_of_entryPt_eq`) is already in place, so the law of apparition and a\nlifting-the-exponent lemma are the only remaining structural inputs.\n\n## Conjecture 3 \u2014 Uniform primitive divisors for general Lucas sequences\n\nThe same phenomenon holds for every non-degenerate Lucas sequence `U_n(P, Q)`:\n`U_n` has a primitive prime divisor for all `n` past a small explicit bound\ndepending only on `(P, Q)`.\n\n**The key insight is** that the golden-ratio growth argument is not special to\nFibonacci but reflects the general fact that the characteristic roots of a\nnon-degenerate Lucas sequence have modulus bounded away from `1`, so the\ncyclotomic factor again outgrows its bounded correction.\n\n**Why now?** The Fibonacci case isolates every step of the argument in a form\nthat mentions the golden ratio only through generic inequalities, so the\ntransfer to arbitrary `(P, Q)` requires re-deriving the same bounds with the two\ncharacteristic roots left symbolic.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1196",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "111bebcc",
+    "status": "available",
+    "timestamp": "2026-07-13T07:01:10.939185+00:00",
+    "title": "The number `P(n)` of partial orders on `n` labeled points is known to be odd for"
   },
   {
     "consumed_by_exp_id": "",
