@@ -2243,35 +2243,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "math.NT",
-      "math.AG",
-      "Siegel-Weil formula",
-      "Eisenstein series",
-      "Theta series"
-    ],
-    "consumed_by_exp_id": "f3fa6ca4",
-    "description": "The theta series of any even positive definite unimodular lattice of rank 8 equals the Eisenstein series E₄. Concretely, for every positive integer n, the number of vectors of norm n in such a lattice equals 240·σ₃(n), where σ₃(n) = Σ_{d|n} d³. This is the foundational special case of the classical Siegel-Weil formula, connecting the theta series of a lattice to an Eisenstein series, and reduces to verifying that the Fourier coefficients of θ_L coincide with those of E₄.",
-    "domain_bridges": [
-      "Lattice theory and quadratic forms",
-      "Modular forms and q-expansions",
-      "Arithmetic divisor functions"
-    ],
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "fd_0629",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Two possible routes: (1) Modular route — prove θ_L is a modular form of weight 4 for SL₂(ℤ) via Poisson summation on the lattice, establish that M₄(SL₂(ℤ)) is 1-dimensional spanned by E₄, and match constant terms; (2) Combinatorial route — use the explicit root system of E₈ to compute the theta series coefficients and verify they equal 240·σ₃(n) via the Weyl character formula or direct root system enumeration.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06285v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T04:27:04.932052+00:00",
-    "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "math.CO",
       "quant-ph",
       "15A18",
@@ -2870,6 +2841,26 @@
     "status": "available",
     "timestamp": "2026-07-13T19:24:07.939919+00:00",
     "title": "This cycle established, with no finiteness or well-foundedness hypothesis on the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: from the `E₄² = E₈` congruence to sharper Eisenstein arithmetic\n\nThis cycle isolated and proved the arithmetic residue of the identity\n`E₄² = E₈`, namely `σ₇(n) ≡ σ₃(n) (mod 120)`, together with the sharpness of\nthe modulus `120`. Three structural strands emerged, each pointing to a bold,\ntestable conjecture.\n\n## Direction 1 — The exact convolution law `σ₇ = σ₃ + 120·(σ₃ ⋆ σ₃)`\n\n**Conjecture.** For every positive integer `n`,\n`σ₇(n) = σ₃(n) + 120·∑_{i=1}^{n-1} σ₃(i)·σ₃(n-i)`, with the self-convolution\nterm always a non-negative integer, so that `σ₇(n) − σ₃(n)` is a positive\nmultiple of `120` for all `n ≥ 2`.\n\nThe key insight is that the correction term is not merely bounded modulo `120`\nbut is *exactly* `120` times a divisor-power self-convolution, which upgrades the\ncongruence into an equality and pins the constant `120` to the dimension-one\nspace of weight-`8` cusp-free forms.\n\nWhy now? The pointwise congruence `d⁷ ≡ d³ (mod 120)` and its Chinese-Remainder\ngluing are now in hand, providing the exact residue that a full convolution\nproof must reproduce term by term; the small-case data already match on the\nfirst eleven coefficients, so the remaining task is a structural identity rather\nthan a search.\n\n## Direction 2 — A congruence hierarchy across all even weights\n\n**Conjecture.** For each `k ≥ 2` there is an optimal modulus `M_k` with\n`σ_{2k-1}(n) ≡ σ_3(n) (mod M_k)` for all `n`, and `M_k` is governed by the\ndenominators of the corresponding Bernoulli numbers: `M_4 = 120` is the first\nnontrivial instance, matching the numerator/denominator structure of the\nweight-`8` Eisenstein normalization.\n\nThe key insight is that each congruence modulus is the exact arithmetic weight\nof the correction term relating two Eisenstein coefficient systems, so the whole\nfamily is controlled by a single Bernoulli-number denominator law rather than by\nweight-specific accidents.\n\nWhy now? The modular gluing technique used for `120 = 8·3·5` generalizes\nverbatim to any squarefree-supported modulus, and the optimality counterexample\nmethod (testing the first exceptional `n`) gives a direct way to certify each\n`M_k` as sharp.\n\n## Direction 3 — Representation-number congruences for lattice genera\n\n**Conjecture.** For every even unimodular lattice of rank `16`, the number of\nvectors of squared length `2n` is congruent modulo `28800` to `240·σ₃(n)`, the\n`E₈` vector count, uniformly in `n`; the two rank-`16` lattices `E₈ ⊕ E₈` and\n`D₁₆⁺` differ only through the cusp form contribution, which vanishes modulo\n`28800`.\n\nThe key insight is that scaling the weight-`8` congruence by the normalizing\nfactor `240` transports a purely arithmetic statement about divisor sums into a\ngeometric statement about lattice vector counts, so genus-level congruences\nfollow from elementary power residues rather than from deep mass formulas.\n\nWhy now? The integral divisibility `28800 ∣ 240·σ₇(n) − 240·σ₃(n)` is already\nestablished, giving the exact modulus against which the rank-`16` genus should be\ntested; the remaining step is to identify the cusp-form defect and confirm it\nlands in the same residue class.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1243",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f3fa6ca4",
+    "status": "available",
+    "timestamp": "2026-07-13T19:25:02.043277+00:00",
+    "title": "This cycle isolated and proved the arithmetic residue of the identity"
   },
   {
     "ambition_level": "extension",

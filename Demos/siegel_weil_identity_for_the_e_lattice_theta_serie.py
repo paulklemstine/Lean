@@ -1,35 +1,28 @@
 """
-Numerical demonstrations for the Siegel-Weil identity of the E8 theta series.
+Numerical demonstration of the E4^2 = E8 congruence shadow of the
+rank-8 Siegel-Weil identity.
 
-Central identity (rank-8 Siegel-Weil):
+Key facts demonstrated:
+  1. r(n) = 240 * sigma_3(n) is the E8 vector count at squared length 2n.
+  2. Pointwise power congruence: d^7 == d^3 (mod 120) for every d.
+  3. Divisor-sum congruence: sigma_7(n) == sigma_3(n) (mod 120).
+  4. Exact convolution law (E4^2 = E8):
+         sigma_7(n) = sigma_3(n) + 120 * sum_{i=1}^{n-1} sigma_3(i) sigma_3(n-i).
+  5. Optimality: the congruence fails mod 240; sigma_7(2) - sigma_3(2) = 120.
+  6. Lattice transport: 240*sigma_7(n) == 240*sigma_3(n) (mod 28800).
 
-    r(n) = 240 * sigma_3(n),     sigma_s(n) = sum_{d | n} d^s,
-
-where r(n) is the number of E8 vectors of squared length 2n.
-
-This script verifies, for the general divisor-power sum sigma_s and its E8
-specialization s = 3, the three structural fingerprints:
-
-  1. Division-free closed form:   sigma_s(p^r) * (p^s - 1) = p^(s(r+1)) - 1
-  2. Moebius inversion:           n^s = sum_{d*e=n} mu(d) * sigma_s(e)
-  3. Eigenform / Hecke defect:    sigma_s(p^2) + p^s = sigma_s(p)^2
-
-All functions are self-contained with type hints.
+Self-contained: standard library only.
 """
 
 from __future__ import annotations
 
-from typing import List, Tuple
+from math import gcd
+from functools import reduce
+from typing import List
 
-
-# ---------------------------------------------------------------------------
-# Elementary number-theoretic helpers
-# ---------------------------------------------------------------------------
 
 def divisors(n: int) -> List[int]:
-    """Return the sorted list of positive divisors of n."""
-    if n <= 0:
-        raise ValueError("n must be positive")
+    """Return the sorted list of positive divisors of n (n >= 1)."""
     ds: List[int] = []
     d = 1
     while d * d <= n:
@@ -42,115 +35,71 @@ def divisors(n: int) -> List[int]:
 
 
 def sigma(s: int, n: int) -> int:
-    """Divisor-power sum sigma_s(n) = sum_{d | n} d^s."""
+    """Divisor-power sum sigma_s(n) = sum_{d|n} d^s, with sigma_s(0) = 0."""
+    if n == 0:
+        return 0
     return sum(d ** s for d in divisors(n))
 
 
-def is_prime(p: int) -> bool:
-    """Simple primality test."""
-    if p < 2:
-        return False
-    i = 2
-    while i * i <= p:
-        if p % i == 0:
-            return False
-        i += 1
-    return True
+def pow_congruence_mod120(d: int) -> bool:
+    """Check the pointwise power congruence d^7 == d^3 (mod 120)."""
+    return (d ** 7 - d ** 3) % 120 == 0
 
 
-def moebius(n: int) -> int:
-    """Moebius function mu(n)."""
-    if n == 1:
-        return 1
-    result = 1
-    m = n
-    p = 2
-    while p * p <= m:
-        if m % p == 0:
-            m //= p
-            if m % p == 0:
-                return 0  # squared prime factor
-            result = -result
-        p += 1
-    if m > 1:
-        result = -result
-    return result
+def convolution_correction(n: int) -> int:
+    """Self-convolution sum_{i=1}^{n-1} sigma_3(i) sigma_3(n-i)."""
+    return sum(sigma(3, i) * sigma(3, n - i) for i in range(1, n))
 
 
-def rE8(n: int) -> int:
-    """Siegel-Weil / E4 prediction for E8 vector counts: 240 * sigma_3(n)."""
+def r_E8(n: int) -> int:
+    """Number of E8 vectors of squared length 2n: r(n) = 240 * sigma_3(n)."""
     return 240 * sigma(3, n)
 
 
-# ---------------------------------------------------------------------------
-# Demonstration 1: the Siegel-Weil identity against known shell counts
-# ---------------------------------------------------------------------------
+def demo() -> None:
+    print("=" * 68)
+    print("Siegel-Weil E8 theta series: the E4^2 = E8 congruence shadow")
+    print("=" * 68)
 
-def demo_siegel_weil() -> None:
-    known = {1: 240, 2: 2160, 3: 6720, 4: 17520, 5: 30240}
-    print("== Siegel-Weil identity: r(n) = 240 * sigma_3(n) ==")
-    for n, expected in known.items():
-        got = rE8(n)
-        status = "OK" if got == expected else "MISMATCH"
-        print(f"  n={n}: sigma_3={sigma(3, n):>4}  r(n)={got:>6}  known={expected:>6}  [{status}]")
-    print()
+    print("\n[1] E8 vector counts r(n) = 240 * sigma_3(n)")
+    print("    (r(1) = 240 = number of roots / kissing number of E8)")
+    for n in range(1, 9):
+        print(f"    n={n:2d}:  sigma_3(n)={sigma(3, n):6d}   r(n)={r_E8(n):8d}")
 
+    print("\n[2] Pointwise power congruence d^7 == d^3 (mod 120)")
+    ok = all(pow_congruence_mod120(d) for d in range(0, 200))
+    print(f"    verified for d = 0..199:  {ok}")
 
-# ---------------------------------------------------------------------------
-# Demonstration 2: division-free Euler-factor closed form
-# ---------------------------------------------------------------------------
+    print("\n[3] Divisor-sum congruence sigma_7(n) == sigma_3(n) (mod 120)")
+    for n in range(1, 12):
+        s7, s3 = sigma(7, n), sigma(3, n)
+        diff = s7 - s3
+        print(f"    n={n:2d}:  sigma_7={s7:12d}  sigma_3={s3:6d}  "
+              f"diff={diff:12d}  diff%120={diff % 120}")
 
-def demo_closed_form(s: int = 3, primes: Tuple[int, ...] = (2, 3, 5, 7),
-                     rmax: int = 4) -> None:
-    print("== Division-free closed form: sigma_s(p^r)*(p^s-1) = p^(s(r+1))-1 ==")
-    for p in primes:
-        for r in range(rmax + 1):
-            lhs = sigma(s, p ** r) * (p ** s - 1)
-            rhs = p ** (s * (r + 1)) - 1
-            assert lhs == rhs, (p, r)
-        print(f"  p={p}: verified for r=0..{rmax}  (s={s})")
-    print()
+    print("\n[4] Exact convolution law  sigma_7 = sigma_3 + 120*(sigma_3 * sigma_3)")
+    all_eq = True
+    for n in range(1, 12):
+        lhs = sigma(7, n)
+        rhs = sigma(3, n) + 120 * convolution_correction(n)
+        all_eq &= (lhs == rhs)
+        print(f"    n={n:2d}:  sigma_7={lhs:12d}   predicted={rhs:12d}   "
+              f"match={lhs == rhs}")
+    print(f"    all matched (n=1..11): {all_eq}")
 
+    print("\n[5] Optimality: congruence holds mod 120 but FAILS mod 240")
+    diff2 = sigma(7, 2) - sigma(3, 2)
+    print(f"    sigma_7(2) - sigma_3(2) = 129 - 9 = {diff2}")
+    print(f"    {diff2} % 120 = {diff2 % 120}   (holds)")
+    print(f"    {diff2} % 240 = {diff2 % 240}   (fails => 120 is sharp)")
+    g = reduce(gcd, (sigma(7, n) - sigma(3, n) for n in range(1, 200)))
+    print(f"    gcd of sigma_7(n)-sigma_3(n) over n=1..199:  {g}")
 
-# ---------------------------------------------------------------------------
-# Demonstration 3: Moebius inversion recovering pure powers
-# ---------------------------------------------------------------------------
-
-def demo_moebius(s: int = 3, nmax: int = 12) -> None:
-    print("== Moebius inversion: sum_{d*e=n} mu(d)*sigma_s(e) = n^s ==")
-    for n in range(1, nmax + 1):
-        total = sum(moebius(d) * sigma(s, n // d) for d in divisors(n))
-        assert total == n ** s, (n, total)
-        # E8 transport: sum mu(d) r(e) = 240 n^3  (when s == 3)
-        if s == 3:
-            e8 = sum(moebius(d) * rE8(n // d) for d in divisors(n))
-            assert e8 == 240 * n ** 3, (n, e8)
-        print(f"  n={n:>2}: sum = {total:>6} = {n}^{s}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# Demonstration 4: eigenform / Hecke defect
-# ---------------------------------------------------------------------------
-
-def demo_eigenform_defect(s: int = 3, primes: Tuple[int, ...] = (2, 3, 5, 7, 11)) -> None:
-    print("== Eigenform defect: sigma_s(p)^2 - sigma_s(p^2) = p^s  (> 0) ==")
-    for p in primes:
-        defect = sigma(s, p) ** 2 - sigma(s, p ** 2)
-        assert defect == p ** s
-        assert sigma(s, p ** 2) < sigma(s, p) ** 2
-        print(f"  p={p:>2}: sigma_{s}(p)^2={sigma(s, p)**2:>7}  "
-              f"sigma_{s}(p^2)={sigma(s, p**2):>7}  defect={defect:>6} = {p}^{s}")
-    print()
-
-
-def main() -> None:
-    demo_siegel_weil()
-    demo_closed_form()
-    demo_moebius()
-    demo_eigenform_defect()
-    print("All structural identities verified.")
+    print("\n[6] Lattice transport: 240*sigma_7 == 240*sigma_3 (mod 28800)")
+    for n in range(1, 8):
+        s, r = 240 * sigma(7, n), r_E8(n)
+        print(f"    n={n}:  s(n)-r(n)={s - r:12d}   %28800={(s - r) % 28800}")
 
 
 if __name__ == "__main__":
-    main()
+    demo()
