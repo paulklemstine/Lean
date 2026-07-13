@@ -154,7 +154,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0557da65",
     "description": "Building on cycle 4f5260f0 (Q=0.830), which proved 19 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formali",
     "domain_bridges": [],
     "domains": [
@@ -166,7 +166,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "4f5260f0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T22:48:17.286043+00:00",
     "title": "Deepening: Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
   },
@@ -416,25 +416,6 @@
     "status": "available",
     "timestamp": "2026-07-11T19:10:40.696987+00:00",
     "title": "Deepening: Speculative: Topological Quantum Error Correction from Mathematical Structures"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "6ed40476",
-    "description": "Building on cycle 82155f74 (Q=0.820), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For increasing Boolean functions f,g:{0,1}^n→{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small ε, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibl",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_82155f74_9eb005cf",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "82155f74",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T21:59:16.097786+00:00",
-    "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
   },
   {
     "ambition_level": "extension",
@@ -955,7 +936,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "57f58be0",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 538f30a2 (Q=0.780), which proved 47 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show",
     "domain_bridges": [],
     "domains": [
@@ -967,7 +948,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "538f30a2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T03:38:30.661331+00:00",
     "title": "Deepening: Moonshot: Multiverse Set Theory — Mathematics Across Branches"
   },
@@ -12520,6 +12501,26 @@
     "status": "available",
     "timestamp": "2026-07-13T07:01:22.694820+00:00",
     "title": "This cycle established, in fully verified form, two complementary faces of a sin"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Stability of the Diagonal Correlation Inequality\n\nThis cycle established the base camp for a quantitative stability theory of the\ncorrelation inequality on the discrete cube: the two-sided Harris inequality for\narbitrary real increasing observables, the sharp diagonal bound\n`Cov(f, g) ≤ 1/4` for `[0,1]`-valued observables (attained by common\ndictatorships), and the exact vanishing of correlation on disjoint coordinate\nsupports. The findings below are the natural next conjectures.\n\n## 1. Sharp stability of the diagonal bound\n\n**Conjecture.** There is a constant `c > 0` such that for `{0,1}`-valued\nincreasing observables `f, g` with `E f = E g = 1/2` and\n`Cov(f, g) ≥ 1/4 − ε`, both `f` and `g` agree with a single common dictatorship\non all but a `c·ε` fraction of the cube.\n\n*The key insight is* that the diagonal `Cov = 1/4` is attained only by a common\ndictatorship, so the covariance deficit `1/4 − Cov` should control the distance\nto the dictatorship class, upgrading the extremal computation into a robust\nrigidity statement.\n\n*Why now?* The extremal value and its unique maximiser are now pinned down\nexactly, which is precisely the anchor a stability argument needs: one can expand\nthe covariance deficit in the Fourier–Walsh basis and track the mass that must\nconcentrate on the first level.\n\n## 2. Trichotomy for the equality boundary\n\n**Conjecture.** For increasing `{0,1}`-valued `f, g`, equality `Cov(f, g) = 0`\nholds if and only if, after permuting coordinates, `f` and `g` depend on disjoint\nblocks of coordinates.\n\n*The key insight is* that disjoint support already forces `Cov = 0`, so the whole\ncontent is the converse — positivity of correlation must be strict whenever the\nsupports genuinely overlap in a monotone-relevant way.\n\n*Why now?* The disjoint-support direction is fully settled, isolating the exact\nstatement whose converse remains open and turning a vague \"either/or\" description\ninto a crisp biconditional.\n\n## 3. Weighted (biased) diagonal bound\n\n**Conjecture.** Under the `p`-biased product measure on the cube, the sharp\ndiagonal bound becomes `Cov_p(f, g) ≤ p(1 − p)` for `[0,1]`-valued observables,\nagain attained on the diagonal by a common dictatorship.\n\n*The key insight is* that the variance of a single biased coordinate is\n`p(1 − p)`, so the uniform constant `1/4 = (1/2)(1/2)` should deform continuously\nwith the bias while retaining the dictatorship extremiser.\n\n*Why now?* The uniform case is proved with a translation-plus-Cauchy–Schwarz\nskeleton that is measure-agnostic; only the coordinate-variance input changes, so\nthe biased generalisation is within immediate reach.\n\n## 4. Higher-order correlation and the second eigenvalue gap\n\n**Conjecture.** If an increasing `[0,1]`-valued observable has trivial first-level\ncorrelation with every coordinate dictatorship (`Cov(f, dictᵢ) ≤ ε` for all `i`),\nthen `Var f ≤ Cε` — that is, low diagonal correlation with the coordinate\ndirections forces the observable to be nearly constant.\n\n*The key insight is* that the coordinate dictatorships span the top of the\ncorrelation spectrum, so simultaneous near-orthogonality to all of them drains the\nvariance into higher, monotonicity-forbidden frequencies.\n\n*Why now?* The exact coordinate covariances `Cov(dictᵢ, dictⱼ) = [i = j]/4` give a\nclean orthogonal reference frame, making the variance-versus-first-level tradeoff\nquantitatively tractable for the first time.\n\n## 5. Reverse stability for oppositely monotone pairs\n\n**Conjecture.** For increasing `f` and decreasing `g`, both `[0,1]`-valued, the\nsharp reverse bound `Cov(f, g) ≥ −1/4` holds, attained by a dictatorship and its\ncomplement, with a matching stability statement near the minimiser.\n\n*The key insight is* that negation exchanges increasing and decreasing\nobservables while flipping the sign of covariance, so the diagonal maximiser maps\nto a diagonal minimiser realised by `dictᵢ` against `1 − dictᵢ`.\n\n*Why now?* The reverse correlation inequality `Cov ≤ 0` for oppositely monotone\npairs is already available, providing the correct sign and the candidate extremal\nconfiguration for the sharp reverse constant.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1198",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6ed40476",
+    "status": "available",
+    "timestamp": "2026-07-13T07:18:10.109606+00:00",
+    "title": "Base camp for a quantitative stability theory of the"
   },
   {
     "ambition_level": "extension",

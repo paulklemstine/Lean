@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c81fdc47",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Bruhat order and closure of orbit strata\n\nThis cycle established the order-theoretic backbone of the statement *\"Bruhat order\npreserves closure relations for orbit strata on a pr",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-12T16:46:15",
-      "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
-    },
-    {
       "cycle_id": "b6e3f70d",
       "domain": "Applications",
       "key_insight": "# Future Directions — Tightness of the Isolation Lemma under edge offsets\n\nThis cycle established, for the singleton hypergraph with an arbitrary integer\nedge offset, an exact product–sum formula for",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-13T07:01:34",
       "title": "Functional Equations Enforce Primitivity of Coefficients"
+    },
+    {
+      "cycle_id": "6ed40476",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Stability of the Diagonal Correlation Inequality\n\nThis cycle established the base camp for a quantitative stability theory of the\ncorrelation inequality on the discrete cube: the",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 30,
+      "timestamp": "2026-07-13T07:18:16",
+      "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "92e61cee",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Leading-Term Cancellation and Spectral Balance\n\nThe results of this cycle establish that the leading correction to a spectral\nheat-kernel trace, `L(t) = Σᵢ dᵢ e^{−t Eᵢ}`, cancels",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-10T13:11:38",
-      "title": "Conjecture on Leading Term Cancellation"
-    },
     {
       "cycle_id": "0884751e",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-13T07:01:34",
       "title": "Functional Equations Enforce Primitivity of Coefficients"
+    },
+    {
+      "cycle_id": "6ed40476",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Stability of the Diagonal Correlation Inequality\n\nThis cycle established the base camp for a quantitative stability theory of the\ncorrelation inequality on the discrete cube: the",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 30,
+      "timestamp": "2026-07-13T07:18:16",
+      "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "97b9c756",
-      "domain": "Novelty",
-      "name": "sigma_prime_pow",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "cbbd1369",
-      "domain": "Novelty",
-      "name": "sq_real_inner_le",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "cbbd1369",
-      "domain": "Novelty",
-      "name": "neronTateObstruction_nonneg",
-      "quality": 0.7
-    },
     {
       "cycle_id": "cbbd1369",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "completedLFunction_central",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "6ed40476",
+      "domain": "Novelty",
+      "name": "uses",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "6ed40476",
+      "domain": "Novelty",
+      "name": "two_pow_ne_zero",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "6ed40476",
+      "domain": "Novelty",
+      "name": "E_const",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-13T07:01:34",
+  "last_updated": "2026-07-13T07:18:16",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "3cdfbb0e",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-12T15:55:11"
-    },
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "b6e3f70d",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-13T07:01:18"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "6ed40476",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-13T07:18:16"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3959b92d",
-        "quality": 0.82,
-        "theorems": 9,
-        "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-      },
-      {
         "cycle_id": "2a098803",
         "quality": 0.6,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.8,
         "theorems": 8,
         "title": "Functional Equations Enforce Primitivity of Coefficients"
+      },
+      {
+        "cycle_id": "6ed40476",
+        "quality": 0.83,
+        "theorems": 30,
+        "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for m"
       }
     ],
     "NumberTheory": [
