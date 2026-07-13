@@ -2,25 +2,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5acf2050",
-    "description": "Building on cycle 9f2f3b13 (Q=0.850), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nThis cycle established that the geometry surrounding the Hopf fibration is\norganised by the composition (normed division) algebras, and that a single\nalgebraic device — the Hermitian inner product of two unit vectors — r",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_9f2f3b13_9574c122",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "9f2f3b13",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T13:26:13.578901+00:00",
-    "title": "Deepening: That the geometry surrounding the Hopf fibration is"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle d019c88a (Q=0.880), which proved 30 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hyper",
     "domain_bridges": [],
@@ -477,7 +458,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domain_bridges": [],
     "domains": [
@@ -489,7 +470,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
   },
@@ -2885,33 +2866,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "https://arxiv.org/abs/xxxx"
-    ],
-    "consumed_by_exp_id": "477f7787",
-    "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique‑matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique‑Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3̅2K2). This extends the result of [arXiv:xxxx] from distance‑hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
-    "domain_bridges": [
-      "balanced graphs",
-      "hereditary clique-Helly",
-      "distance-hereditary graphs",
-      "forbidden induced subgraph \\u03c3\\u0305K2",
-      "linear-time recognition algorithm"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0146",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "To prove the conjecture we would: (1) develop a decomposition of hereditary clique‑Helly graphs into distance‑hereditary components using a tree decomposition (e.g., a 2‑tree or split‑decomposition). (2) Apply the linear‑time recognition algorithm from the paper to each component to show that none can be unbalanced. (3) Demonstrate that the presence of an induced \\u03c3\\u0305K2 would contradict the hereditary clique‑Helly property, hence no such subgraph can appear. The combination yields balancedness. Formalisation in Lean would define balancedness, hereditary clique‑Helly, and induced subgraph relations, then prove the two implications.",
-    "research_mode": "team",
-    "source_exp_id": "2607.00730v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T13:24:03.491700+00:00",
-    "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
   },
   {
     "ambition_level": "extension",
@@ -12870,6 +12824,46 @@
     "status": "available",
     "timestamp": "2026-07-13T14:34:51.070111+00:00",
     "title": "The file `Catalog/Novelty/FifthRootsGoldenBridge.lean` establishes, fully formal"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a **cross-domain bridge** between two areas that meet in\nthe study of *balanced* graphs:\n\n* **0/1-matrix combinatorics** — balancedness of the clique matrix (no odd\n  square submatrix with exactly two `1`'s per row and column);\n* **Helly theory of set systems / graph theory** — the clique-Helly property and\n  its hereditary version.\n\nThe file `Catalog/Applications/BalancedHClique.lean` isolates the shared\nobstruction — a `BadTriple` of maximal cliques — and shows it *simultaneously*\nbreaks balancedness (`not_balanced_of_badTriple`) and clique-Helly-ness\n(`not_cliqueHelly_of_badTriple`). The octahedron `Oct = (3K₂)ᶜ` carries such a\ntriple, giving the implication **(ii) ⇒ (iii)** of the conjecture in full\ngenerality (`hereditaryCliqueHelly_no_induced_octahedron`), the isomorphism\ninvariance of the Helly property (`cliqueHelly_of_iso`), and the concrete\ntwo-world obstruction (`octahedron_is_the_bridge`).\n\n## What is proved\n\n* `oct_eq_compl_threeK2` : `(3K₂)ᶜ = Oct`.\n* `not_cliqueHelly_of_badTriple`, `not_balanced_of_badTriple` : the unified bridge.\n* `cliqueHelly_of_iso` : clique-Helly-ness is an isomorphism invariant.\n* `hereditaryCliqueHelly_no_induced_octahedron` : **(ii) ⇒ (iii)**.\n* `hereditaryBalanced_no_induced_octahedron` : **(i) ⇒ (iii)** (the matrix-side\n  twin, derived from the *same* obstruction via `oct_not_balanced`).\n* `oct_not_cliqueHelly`, `oct_not_balanced`, `octahedron_is_the_bridge`.\n\n## Open directions\n\n1. **The hard direction (i) ⇒ (iii): balanced ⇒ no induced octahedron.**\n   The obstacle is that a triangle of an *induced* octahedron need not be a\n   maximal clique of the ambient graph, while balancedness is a property of the\n   *maximal*-clique matrix. A faithful route is to prove that balancedness of a\n   0/1 matrix is closed under taking submatrices *and* to relate the clique\n   matrix of an induced subgraph to that of the whole graph. This requires a\n   genuine theory of balanced matrices (Berge / Conforti–Cornuéjols–Rao), not\n   just the single forbidden pattern.\n\n2. **The reverse (iii) ⇒ (ii).** Prisner's theorem characterizes hereditary\n   clique-Helly graphs by *three* forbidden \"ocular\"/Hájos configurations, not by\n   the octahedron alone; establishing that (iii) as stated (only `(3K₂)ᶜ`\n   forbidden) is *equivalent* would require reconciling the single-obstruction\n   claim with Prisner's list, and may need extra hypotheses (e.g. the\n   distance-hereditary restriction of the cited source).\n\n3. **General balanced-matrix library.** Formalize `Balanced` for arbitrary 0/1\n   matrices with the closure-under-submatrix lemma and the bipartite\n   \"even-cycle\" reformulation, then derive the graph-level `GraphBalanced` as a\n   special case. This is the reusable infrastructure Mathlib currently lacks.\n\n4. **Enumerating all maximal cliques.** Prove that the eight transversal\n   triangles are *exactly* the maximal cliques of `Oct`, giving the full clique\n   matrix and letting `GraphBalanced Oct` be analyzed exhaustively.\n\n5. **Clique-Helly deciding.** A `Decidable` instance for `CliqueHelly` on finite\n   graphs (via the maximal-clique hypergraph) would let small cases be settled by\n   `decide` and support automated search for further bridge examples.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges",
+      "Pythagorean"
+    ],
+    "id": "fd_1227",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "477f7787",
+    "status": "available",
+    "timestamp": "2026-07-13T14:51:18.710456+00:00",
+    "title": "This project formalizes a **cross-domain bridge** between two areas that meet in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Composition-Algebra Playground, Deepened\n\nThis cycle extended the Hermitian-inner-product \"witness\" from the first Hopf\nfibration `S³ → S²` to the quaternionic Hopf fibration `S⁷ → S⁴`. A single\nalgebraic device — the inner product `λ = q̄q' + r̄r'` of two unit vectors —\ndetects, bounds, and *reconstructs* the fibre, with the only structural change\nbeing that noncommutativity forces the connecting phase to act on the right.\nThe following conjectures push the pattern further.\n\n## Conjecture 1 — The octonionic witness reconstructs the last Hopf fibre\n\nOver the octonions, the inner product `λ = q̄q' + r̄r'` of two unit vectors in\n`𝕆²` should reconstruct the fibre of the octonionic Hopf fibration `S¹⁵ → S⁸`,\nwith `‖λ‖ ≤ 1` and equality iff the two points are proportional.\n**The key insight is** that the squared-distance defect identity\n`‖q' − qλ‖² + ‖r' − rλ‖² = 1 − ‖λ‖²` depends only on norm-multiplicativity and\nthe conjugation antihomomorphism, both of which survive in the octonions despite\nthe loss of associativity — the projection must simply be bracketed as `q(λ)`\nwith a fixed association.\n**Why now?** The complex and quaternionic cases are now settled by the same\nproof skeleton; isolating exactly which associativity uses appear pinpoints the\nminimal hypotheses and makes the nonassociative case a finite bookkeeping task.\n\n## Conjecture 2 — A Hopf-invariant one obstruction from the witness\n\nThe witness construction should exist as a norm-nonincreasing reconstruction map\nonly in dimensions `1, 2, 4, 8`. **The key insight is** that the defect identity\n`‖q'−qλ‖²+‖r'−rλ‖² = 1−‖λ‖²` forces the underlying algebra to be a real\ncomposition algebra, and Hurwitz's theorem then bars every other dimension.\n**Why now?** With the witness identity proved uniformly across `ℂ` and `ℍ`, the\nidentity itself — rather than fibration topology — becomes the carrier of the\ndimensional obstruction, offering an algebraic route to a classically\ntopological fact.\n\n## Conjecture 3 — Witness transition cocycles classify the quaternionic bundle\n\nThe fibre through a fixed unit vector `a = (q,r)` is now known to be a principal\nhomogeneous space for the unit quaternions `S³` acting on the right, with\nright-multiplication and the inner-product witness mutually inverse on the\nsphere. Building on this torsor structure, the transition functions of the\nquaternionic Hopf bundle over an open cover of the base `S⁴` should themselves be\nwitnesses evaluated on chart overlaps, and their homotopy class should realise\nthe generator of the third homotopy group of `S³`.\n**The key insight is** that once the fibre is a right `S³`-torsor and the witness\nis its exact reconstructor, the phase comparing two overlapping local\ntrivialisations is a witness-valued cocycle, so the entire bundle is encoded by a\nsingle unit-quaternion-valued gluing datum.\n**Why now?** The pointwise torsor structure is now settled, so the correspondence\ncan be promoted from a fibrewise statement to a global gluing description,\nturning a reconstruction identity into a bundle-classification tool.\n\n## Conjecture 4 — Curvature from the witness on the projective base\n\nThe imaginary part of the witness, evaluated on infinitesimally close fibres,\nshould recover the Fubini–Study connection form on the quaternionic projective\nline `ℍP¹ = S⁴`. **The key insight is** that `λ` measures the phase needed to\nalign two nearby fibres, so its derivative along the base is precisely the\nhorizontal-lift defect, i.e. the connection.\n**Why now?** The witness is proved to be the exact right-phase aligning two\nfibres; differentiating a proven exact alignment is the natural next quantitative\nstep, connecting the discrete reconstruction result to gauge-theoretic geometry.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1228",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5acf2050",
+    "status": "available",
+    "timestamp": "2026-07-13T14:51:33.072594+00:00",
+    "title": "Hermitian-inner-product \"witness\" from the first Hopf"
   },
   {
     "ambition_level": "extension",

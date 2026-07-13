@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "909a0259",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: harmonic-balance and the opposite-semicube Helly property\n\nThis cycle established that the opposite-semicube Helly property of a partial cube\nis governed by a single *harmonic-bal",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 0,
-      "timestamp": "2026-07-13T00:10:01",
-      "title": "Deepening: The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
-    },
-    {
-      "cycle_id": "28bb3270",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — E₈ / Siegel–Weil theta series\n\n## Context\n\n`SiegelWeilE8Theta.lean` proves that the E₈ vector counts `rE8 n = 240·σ₃(n)`\ncarry the full Hecke-eigenform structure of `E₄` (geometr",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 12,
-      "timestamp": "2026-07-13T00:46:20",
-      "title": "Close Proofs: Siegel-Weil Identity for the E₈ Lattice Theta Series"
-    },
-    {
       "cycle_id": "1abce342",
       "domain": "Applications",
       "key_insight": "# Future Directions — the optimal portion ratio μ₂ = 1 + ρ\n\nThe algebra of the governing constant is now settled: ρ is the unique real root of\nρ² + ρ³ = 1, it lies in the certified window (0.7548, 0.7",
@@ -499,29 +479,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-13T14:34:47",
       "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
+    },
+    {
+      "cycle_id": "477f7787",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain bridge** between two areas that meet in\nthe study of *balanced* graphs:\n\n* **0/1-matrix combinatorics** — balancedness of the clique matri",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-13T14:51:29",
+      "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
+    },
+    {
+      "cycle_id": "5acf2050",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Composition-Algebra Playground, Deepened\n\nThis cycle extended the Hermitian-inner-product \"witness\" from the first Hopf\nfibration `S³ → S²` to the quaternionic Hopf fibration",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-13T14:51:35",
+      "title": "Deepening: That the geometry surrounding the Hopf fibration is"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0faef071",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Tangled Hierarchies and Self-Referential Soundness\n\nThis cycle established, over Gödel–Löb frames, that the semantic Löb principle\n`□(□A → A) ⊆ □A` collapses any internal proof o",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 16,
-      "timestamp": "2026-07-10T23:50:39",
-      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-    },
-    {
-      "cycle_id": "478ae68b",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\nThis file (`Catalog/Logic/StrangeLoops/Chain.lean`) builds a single dependency chain\nfrom the Liar paradox up to a non-vacuous Gödel incompleteness theorem and the\nprovability lat",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-11T00:07:03",
-      "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
-    },
     {
       "cycle_id": "d0bff55a",
       "domain": "MachineLearning",
@@ -2501,27 +2481,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-13T14:34:47",
       "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
+    },
+    {
+      "cycle_id": "477f7787",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain bridge** between two areas that meet in\nthe study of *balanced* graphs:\n\n* **0/1-matrix combinatorics** — balancedness of the clique matri",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-13T14:51:29",
+      "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
+    },
+    {
+      "cycle_id": "5acf2050",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Composition-Algebra Playground, Deepened\n\nThis cycle extended the Hermitian-inner-product \"witness\" from the first Hopf\nfibration `S³ → S²` to the quaternionic Hopf fibration",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-13T14:51:35",
+      "title": "Deepening: That the geometry surrounding the Hopf fibration is"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0557da65",
-      "domain": "Applications",
-      "name": "no_surjection_onto_powerset",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "9da8e56c",
-      "domain": "Novelty",
-      "name": "eulerian_zero_zero",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "9da8e56c",
-      "domain": "Novelty",
-      "name": "eulerian_zero_succ",
-      "quality": 0.72
-    },
     {
       "cycle_id": "9da8e56c",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "sigma_prime",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "5acf2050",
+      "domain": "Applications",
+      "name": "norm_sq_eq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5acf2050",
+      "domain": "Applications",
+      "name": "normSq_identity",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5acf2050",
+      "domain": "Applications",
+      "name": "dist_sq_eq",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T14:34:47",
+  "last_updated": "2026-07-13T14:51:35",
   "open_questions": [
     {
       "context": "+--   · sorry   -- infinite tail: composite n > 10000 (Carmichael's analytic core); -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,18 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3e1dd178",
-        "quality": 0.82,
-        "theorems": 15,
-        "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
-      },
-      {
-        "cycle_id": "86e0e034",
-        "quality": 0.74,
-        "theorems": 5,
-        "title": "The mission asked to interrogate the claim:"
-      },
-      {
         "cycle_id": "167aed7f",
         "quality": 0.82,
         "theorems": 64,
@@ -3141,6 +3129,18 @@
         "quality": 0.83,
         "theorems": 15,
         "title": "Deepening: Edge-Spectral Supersaturation for Triangles"
+      },
+      {
+        "cycle_id": "477f7787",
+        "quality": 0.7,
+        "theorems": 24,
+        "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
+      },
+      {
+        "cycle_id": "5acf2050",
+        "quality": 0.82,
+        "theorems": 8,
+        "title": "Deepening: That the geometry surrounding the Hopf fibration is"
       }
     ],
     "Bridges": [

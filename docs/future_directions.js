@@ -353,7 +353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "b222c758",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -362,7 +362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -1979,20 +1979,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-03T09:58:51.961008+00:00",
     "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
-  },
-  {
-    "consumed_by_exp_id": "477f7787",
-    "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique\u2011matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique\u2011Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3\u03052K2). This extends the result of [arXiv:xxxx] from distance\u2011hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0146",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00730v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-03T13:24:03.491700+00:00",
-    "title": "Conjecture: Balanced graphs coincide with hereditary clique\u2011Helly graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -7981,6 +7967,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T14:34:51.070111+00:00",
     "title": "The file `Catalog/Novelty/FifthRootsGoldenBridge.lean` establishes, fully formal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes a **cross-domain bridge** between two areas that meet in\nthe study of *balanced* graphs:\n\n* **0/1-matrix combinatorics** \u2014 balancedness of the clique matrix (no odd\n  square submatrix with exactly two `1`'s per row and column);\n* **Helly theory of set systems / graph theory** \u2014 the clique-Helly property and\n  its hereditary version.\n\nThe file `Catalog/Applications/BalancedHClique.lean` isolates the shared\nobstruction \u2014 a `BadTriple` of maximal cliques \u2014 and shows it *simultaneously*\nbreaks balancedness (`not_balanced_of_badTriple`) and clique-Helly-ness\n(`not_cliqueHelly_of_badTriple`). The octahedron `Oct = (3K\u2082)\u1d9c` carries such a\ntriple, giving the implication **(ii) \u21d2 (iii)** of the conjecture in full\ngenerality (`hereditaryCliqueHelly_no_induced_octahedron`), the isomorphism\ninvariance of the Helly property (`cliqueHelly_of_iso`), and the concrete\ntwo-world obstruction (`octahedron_is_the_bridge`).\n\n## What is proved\n\n* `oct_eq_compl_threeK2` : `(3K\u2082)\u1d9c = Oct`.\n* `not_cliqueHelly_of_badTriple`, `not_balanced_of_badTriple` : the unified bridge.\n* `cliqueHelly_of_iso` : clique-Helly-ness is an isomorphism invariant.\n* `hereditaryCliqueHelly_no_induced_octahedron` : **(ii) \u21d2 (iii)**.\n* `hereditaryBalanced_no_induced_octahedron` : **(i) \u21d2 (iii)** (the matrix-side\n  twin, derived from the *same* obstruction via `oct_not_balanced`).\n* `oct_not_cliqueHelly`, `oct_not_balanced`, `octahedron_is_the_bridge`.\n\n## Open directions\n\n1. **The hard direction (i) \u21d2 (iii): balanced \u21d2 no induced octahedron.**\n   The obstacle is that a triangle of an *induced* octahedron need not be a\n   maximal clique of the ambient graph, while balancedness is a property of the\n   *maximal*-clique matrix. A faithful route is to prove that balancedness of a\n   0/1 matrix is closed under taking submatrices *and* to relate the clique\n   matrix of an induced subgraph to that of the whole graph. This requires a\n   genuine theory of balanced matrices (Berge / Conforti\u2013Cornu\u00e9jols\u2013Rao), not\n   just the single forbidden pattern.\n\n2. **The reverse (iii) \u21d2 (ii).** Prisner's theorem characterizes hereditary\n   clique-Helly graphs by *three* forbidden \"ocular\"/H\u00e1jos configurations, not by\n   the octahedron alone; establishing that (iii) as stated (only `(3K\u2082)\u1d9c`\n   forbidden) is *equivalent* would require reconciling the single-obstruction\n   claim with Prisner's list, and may need extra hypotheses (e.g. the\n   distance-hereditary restriction of the cited source).\n\n3. **General balanced-matrix library.** Formalize `Balanced` for arbitrary 0/1\n   matrices with the closure-under-submatrix lemma and the bipartite\n   \"even-cycle\" reformulation, then derive the graph-level `GraphBalanced` as a\n   special case. This is the reusable infrastructure Mathlib currently lacks.\n\n4. **Enumerating all maximal cliques.** Prove that the eight transversal\n   triangles are *exactly* the maximal cliques of `Oct`, giving the full clique\n   matrix and letting `GraphBalanced Oct` be analyzed exhaustively.\n\n5. **Clique-Helly deciding.** A `Decidable` instance for `CliqueHelly` on finite\n   graphs (via the maximal-clique hypergraph) would let small cases be settled by\n   `decide` and support automated search for further bridge examples.\n",
+    "domains": [
+      "Bridges",
+      "Pythagorean"
+    ],
+    "id": "fd_1227",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "477f7787",
+    "status": "available",
+    "timestamp": "2026-07-13T14:51:18.710456+00:00",
+    "title": "This project formalizes a **cross-domain bridge** between two areas that meet in"
   },
   {
     "consumed_by_exp_id": "",
