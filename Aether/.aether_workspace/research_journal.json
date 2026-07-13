@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "edd57dbd",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Divisor-Stratified OAM Spectra of Torus Knots\n\nThis cycle established the general divisor factorization of the `T(2,n)` Alexander\npolynomial: for every odd `n`,\n\n  A_n(X) = ∏_{d",
-      "quality_score": 0.86,
-      "sorry_count": 1,
-      "theorem_count": 9,
-      "timestamp": "2026-07-12T15:02:50",
-      "title": "Deepening: The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
-    },
-    {
       "cycle_id": "b35b4ce5",
       "domain": "Applications",
       "key_insight": "# Future Directions — Clique Densities\n\nThis cycle established the unconditional *upper* comparison of clique counts,\n`C(t,s)·k_t(G) ≤ C(n-s,t-s)·k_s(G)`, its tightness on the complete graph, and the",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T05:18:44",
       "title": "Factorization of Cyclotomic Gauss Sum Matrix"
+    },
+    {
+      "cycle_id": "96ae8e1e",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThis project formalizes the **character-free skeleton** of the conjectured\ngeneralized variance formula for the digits of `1/p` in base `b`\n(`Catalog/Novelty/DigitVarianceGeneral.",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-13T05:20:20",
+      "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9f734f3e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Morphogenesis as Algebraic Geometry\n\nThis cycle established the coordinate-free conic classification of two-mode Turing\npatterns: the discriminant `Δ = b² − 4ac` of the leading q",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 7,
-      "timestamp": "2026-07-10T11:50:43",
-      "title": "Deepening: Turing's Flowers: Morphogenesis as Algebraic Geometry"
-    },
     {
       "cycle_id": "25448d9e",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-13T05:18:44",
       "title": "Factorization of Cyclotomic Gauss Sum Matrix"
+    },
+    {
+      "cycle_id": "96ae8e1e",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThis project formalizes the **character-free skeleton** of the conjectured\ngeneralized variance formula for the digits of `1/p` in base `b`\n(`Catalog/Novelty/DigitVarianceGeneral.",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-13T05:20:20",
+      "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "26646791",
-      "domain": "Novelty",
-      "name": "below",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "26646791",
-      "domain": "Novelty",
-      "name": "fc_zero",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "4d87b490",
-      "domain": "Applications",
-      "name": "then",
-      "quality": 0.83
-    },
     {
       "cycle_id": "4d87b490",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "A_factor",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "96ae8e1e",
+      "domain": "Novelty",
+      "name": "euclid",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "96ae8e1e",
+      "domain": "Novelty",
+      "name": "euclidZ",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "96ae8e1e",
+      "domain": "Novelty",
+      "name": "shift_sum",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-13T05:18:44",
+  "last_updated": "2026-07-13T05:20:20",
   "open_questions": [
     {
       "context": "-Everything is elementary and `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0242f406",
-        "quality": 0.72,
-        "theorems": 0,
-        "title": "Close Proofs: The opposite-semicube Helly property characterizes harmonic-evenne"
-      },
-      {
         "cycle_id": "909a0259",
         "quality": 0.83,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 14,
         "title": "Deepening: Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+      },
+      {
+        "cycle_id": "96ae8e1e",
+        "quality": 0.72,
+        "theorems": 13,
+        "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
       }
     ],
     "NumberTheory": [

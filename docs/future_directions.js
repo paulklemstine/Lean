@@ -2113,20 +2113,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Failure of L^p Relaxation of KNRS Conjecture Below Threshold p"
   },
   {
-    "consumed_by_exp_id": "96ae8e1e",
-    "description": "We conjecture that for any prime p >= 3, integer base b >= 2 with p not dividing b, let l be the order of b modulo p and d = (p-1)/l. For each prime q dividing d let m_q be the exponent of q in d. Then there exist Dirichlet characters \u03c7_{q,r} modulo p of order q^{m_q} (for 1 <= r <= m_q) such that the sum S of the repetend digits and the sum T of the squares of the digits satisfy S = (b-1)/2 * l + (b-1)/2 * \u03a3_{q|d} \u03a3_{r=1}^{m_q} [B_{\u03c7_{q,r}}]_0, T = (T_0 + T_1)/d + \u03a3_{q|d} \u03a3_{r=2}^{m_q} [T_{q,r}]_0 / q^{m_q - r + 1} + [T_d]_0 / 2, where the definitions of T_0,T_1,T_{q,r} are the same as in Theorem 2 with the appropriate characters. Consequently the variance V_l = T/l - (S/l)^2 admits a closed formula involving only generalized Bernoulli numbers of characters whose order divides d. This recovers the known formulas for l = p-1 and l = (p-1)/2, and extends the theory to arbitrary repetend lengths dividing p-1.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0182",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29930v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T04:45:09.367217+00:00",
-    "title": "Generalized variance formula for digit expansions of $1/p$ beyond powers of two"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The conjecture asserts that for all n \u2265 1, the positive anti-Wick density satisfies the required conditions in the finite-core reduction, directly contradicting the paper's claim of obstruction.",
     "domains": [
@@ -2456,7 +2442,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02c1616a",
     "description": "This conjecture asserts that functional equations for Dirichlet L-functions, under mild assumptions, necessitate the coefficient function to be a primitive Dirichlet character.",
     "domains": [
       "Pythagorean"
@@ -2465,7 +2451,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:51:39.872882+00:00",
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
@@ -7632,6 +7618,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T05:18:37.769691+00:00",
     "title": "This project formalizes the linear-algebraic core of the cyclotomic Gauss-sum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThis project formalizes the **character-free skeleton** of the conjectured\ngeneralized variance formula for the digits of `1/p` in base `b`\n(`Catalog/Novelty/DigitVarianceGeneral.lean`).  What is proved, and what remains,\nare summarized below.\n\n## What is proved (exact, for arbitrary repetend length `l`)\n\nLet `l` be any period of the remainder orbit (`rem p b l = rem p b 0`; in\nparticular `l = ord_p(b)`), and let\n`S, R, Q, C, T` be the orbit sums defined in the file.  Then, with **no primality\nassumption**:\n\n* `sum_digits_formula` / `digit_sum_eq`: `p\u00b7S = (b\u22121)\u00b7R`.\n* `sum_squares_formula`: `p\u00b2\u00b7T + 2b\u00b7C = (b\u00b2+1)\u00b7Q`.\n* `variance_numerator`: `p\u00b2\u00b7(l\u00b7T \u2212 S\u00b2) = l\u00b7((b\u00b2+1)Q \u2212 2bC) \u2212 (b\u22121)\u00b2R\u00b2`,\n  a closed form for the variance `V = (l\u00b7T \u2212 S\u00b2)/l\u00b2` in terms of the three\n  orbit sums `R, Q, C` alone.\n* `midy_pairing`: a Midy-type digit complementarity under orbit reflection.\n* `mean_full_reptend`: the classical mean value `2S = (b\u22121)(p\u22121)` when the orbit\n  sums to `p(p\u22121)/2` (full reptend primes), recovering mean `(b\u22121)/2`.\n* `mean_not_always_half`: a disproof of the naive conjecture that the mean is\n  always `(b\u22121)/2` (witness `1/7` in base `2`).\n\nThese reduce the entire mean/variance theory to understanding the three\nsymmetric orbit sums `R`, `Q`, `C` over the multiplicative subgroup\n`H = \u27e8b\u27e9 \u2286 (\u2124/p\u2124)\u02e3` of order `l`.\n\n## The gap to the full character-theoretic conjecture\n\nThe conjecture in the mission statement expresses `S` and `T` via generalized\nBernoulli numbers `B_\u03c7` of Dirichlet characters `\u03c7 mod p` whose order divides\n`d = (p\u22121)/l`.  The bridge from the proved identities to that form is:\n\n1. **Subgroup indicator as a character sum.**  For `p` prime, the indicator of\n   `H = \u27e8b\u27e9` is `1_H(x) = (l/(p\u22121)) \u03a3_{\u03c7 : \u03c7|_H = 1} \u03c7(x)`, the sum being over the\n   `d` characters trivial on `H`.  Hence\n   `R = \u03a3_{h\u2208H} h`, `Q = \u03a3_{h\u2208H} h\u00b2`, `C = \u03a3_{h\u2208H} h\u00b7(b\u00b7h mod p)` all expand as\n   `(1/(p\u22121))`-weighted sums of `\u03a3_{x} \u03c7(x)\u00b7f(x)` over these `d` characters.\n\n2. **Twisted power sums = generalized Bernoulli numbers.**  For a nonprincipal\n   character `\u03c7 mod p`, `\u03a3_{x=1}^{p-1} \u03c7(x)\u00b7x = p\u00b7[B_{1,\u03c7}]` and\n   `\u03a3_{x=1}^{p-1} \u03c7(x)\u00b7x\u00b2 = p\u00b2\u00b7[B_{2,\u03c7}]/\u2026 ` up to elementary correction terms\n   (Mauduit\u2013Rivat; Erickson\u2013Mauduit).  Substituting into step 1 turns `R, Q, C`\n   into `\u211a`-combinations of `B_{k,\u03c7}` for `\u03c7` of order dividing `d`, which is\n   exactly the shape `[B_\u03c7]_0`, `[T_{q,r}]_0`, `[T_d]_0` in the conjecture.\n\nFormalizing this requires, in Mathlib terms:\n\n* Dirichlet characters `mod p` and the orthogonality relation over subgroups\n  (`Mathlib` has `DirichletCharacter`; subgroup-restricted orthogonality is not\n  yet packaged and would need to be built).\n* Generalized Bernoulli numbers `B_{k,\u03c7}` and their identification with the\n  twisted power sums `\u03a3 \u03c7(x) x\u1d4f` (partial support exists via\n  `Polynomial.bernoulli` and `ZMod` sums; the twisted version is missing).\n* The reduction of `C = \u03a3 h\u00b7(bh mod p)` \u2014 the only sum involving the *base* `b`\n  nontrivially \u2014 to a Gauss/Jacobi-sum expression.  This cross term is the main\n  new analytic ingredient beyond the `l = p\u22121` and `l = (p\u22121)/2` cases.\n\n## Concrete next steps\n\n1. Build subgroup orthogonality for `DirichletCharacter (ZMod p)` and prove\n   `R, Q` as character sums (no base dependence \u2014 the easier half).\n2. Formalize `\u03a3_{x} \u03c7(x) x = p\u00b7B_{1,\u03c7}` for `p` prime, giving the `S` half of the\n   conjecture directly from `digit_sum_eq`.\n3. Attack the cross sum `C` via Gauss sums; this yields the genuinely new\n   `[T_{q,r}]_0 / q^{m_q\u2212r+1}` terms for prime-power order components of `d`.\n4. Assemble `variance_numerator` + steps 2\u20133 into the closed Bernoulli-number\n   variance formula, and specialize to `l = p\u22121`, `l = (p\u22121)/2` to reproduce the\n   two known theorems.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1192",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "96ae8e1e",
+    "status": "available",
+    "timestamp": "2026-07-13T05:19:12.299252+00:00",
+    "title": "This project formalizes the **character-free skeleton** of the conjectured"
   },
   {
     "consumed_by_exp_id": "",

@@ -439,7 +439,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d31b185d",
     "description": "Building on cycle 86966da0 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself —\n`T ≈ Π (x : T), P x`, equivalently `T ≃ (T → Prop)` — cannot exist, for the same\ndiagonal reason underlying the theorems of Cantor, Gödel, and Tarski. ",
     "domain_bridges": [],
     "domains": [
@@ -451,7 +451,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "86966da0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T23:52:10.953199+00:00",
     "title": "Deepening: That a type which fully quantifies over itself —"
   },
@@ -3776,7 +3776,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": "allouche2018mock",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02c1616a",
     "description": "This conjecture asserts that functional equations for Dirichlet L-functions, under mild assumptions, necessitate the coefficient function to be a primitive Dirichlet character.",
     "domain_bridges": "Dirichlet characters",
     "domains": [
@@ -3788,7 +3788,7 @@
     "proof_strategy": "Application of Dirichlet character properties and functional equation constraints",
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T14:51:39.872882+00:00",
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
