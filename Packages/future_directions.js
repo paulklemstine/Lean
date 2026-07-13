@@ -550,20 +550,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Computational Complexity of Alien Civilizations"
   },
   {
-    "consumed_by_exp_id": "05e37ec1",
-    "description": "Building on cycle a6f348ea (Q=0.800), which proved 20 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algeb",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_a6f348ea_bf814570",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "a6f348ea",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T21:09:03.265182+00:00",
-    "title": "Deepening: Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle a9aa7bbf (Q=0.800), which proved 18 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sorting a list of n elements reduces the entropy from log(n!) bits to 0 bits, doing thermodynamic work W = kT * log(n!) in the process. But this is only true if sorting is irreversible \u2014 if the sorted list uniquely determines the input, then sorting is reversible and does no thermodynamic work. The ",
     "domains": [
@@ -2099,7 +2085,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Berge-Tight Cycles in R-Graphs with Positive Minimum r-Degree"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b08004d1",
     "description": "For a graph F with m edges and n non-isolated vertices, if p < (n choose 2)/m, there exists a \u03c1-locally dense graphon W such that ||W_F||_{L^p} < \u03c1^{e(F)}.",
     "domains": [
       "Pythagorean"
@@ -2108,7 +2094,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T04:04:19.585983+00:00",
     "title": "Failure of L^p Relaxation of KNRS Conjecture Below Threshold p"
   },
@@ -7648,6 +7634,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T06:26:46.082939+00:00",
     "title": "This cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving tha"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Stone Duality for Neural Networks\n\nThis cycle established that a neural network with `k` threshold neurons carries a\ncanonical **Stone dual**: the preimage homomorphism from the clopen algebra of\nits finite (hence Stone) pattern space `Fin k \u2192 Bool` into the algebra of input\nregions. The homomorphism is faithful exactly when every activation pattern is\nrealized, its atoms are the activation cells, and for a linear-threshold layer\nthose cells are convex. The following conjectures push the correspondence toward\ninfinite depth, dynamics, and reconstruction.\n\n## 1. Non-principal duals for deep networks\n\n**Conjecture.** For a family of networks of unbounded depth sharing a fixed\nneuron alphabet, the inverse limit of the finite pattern algebras is an infinite\nBoolean algebra whose Stone space contains genuine non-principal ultrafilters,\nand these correspond precisely to *idealized limiting decision boundaries* not\nattained at any finite depth.\n\n*The key insight is* that depth is a directed system on Boolean algebras, so the\n\"limit network\" lives on the profinite Stone space of the colimit algebra, where\nnon-principal ultrafilters encode boundaries that only emerge in the limit.\n\n*Why now?* The finite-depth duality is now fully pinned down (homomorphism laws,\natoms, faithfulness), giving the exact algebraic objects whose inverse limit is\nthe natural next step.\n\n## 2. Functoriality of the dual under network composition\n\n**Conjecture.** Composition of networks `X \u2192 Y \u2192 Z` induces composition of Stone\nduals in the reverse order, making the assignment \"network \u21a6 region homomorphism\"\na contravariant functor from a category of activation maps to the category of\nBoolean-algebra homomorphisms; moreover this functor reflects isomorphisms.\n\n*The key insight is* that the region map is literally a preimage, and preimage is\ncontravariantly functorial, so network semantics assemble into a duality functor\nrather than a mere per-network gadget.\n\n*Why now?* With the single-network homomorphism laws proved, the only missing\ningredient is the composition law, which the preimage formulation makes tractable.\n\n## 3. Convex-geometric refinement of the atom lattice\n\n**Conjecture.** For a linear-threshold layer, the nonempty cells and their\nlower-dimensional shared faces form a graded lattice isomorphic to the face\nlattice of a hyperplane arrangement, and its rank equals the number of neurons in\n\"general position\"; the Stone dual sees only the top rank (the cells themselves),\nlosing the facial structure.\n\n*The key insight is* that convexity of cells (already established) is the shadow\nof a hyperplane arrangement, whose full face lattice is a strictly finer invariant\nthan the Boolean algebra of regions.\n\n*Why now?* Convexity of the cells is proved, isolating exactly the geometric data\nthe Boolean/topological dual discards and thereby pinpointing what a refined\nduality must recover.\n\n## 4. Capacity gap between realizable and abstract region algebras\n\n**Conjecture.** The number of decision regions realizable by an actual\n`n`-input, `k`-neuron linear-threshold layer is strictly smaller than the\nabstract bound `2^(2^k)` whenever `k > n + 1`, with the deficit governed by the\nmaximal number of cells of an arrangement of `k` hyperplanes in `n` dimensions.\n\n*The key insight is* that geometry constrains which of the `2^k` sign patterns are\njointly satisfiable, so surjectivity of the activation map \u2014 the exact condition\nfor a faithful dual \u2014 fails generically in high neuron-to-dimension regimes.\n\n*Why now?* The abstract capacity `2^(2^k)` and the faithfulness criterion are both\nproved; comparing them against the geometric cell count is the natural test of how\ntight the abstract Stone dual is.\n\n## 5. Reconstruction of the network from its dual up to symmetry\n\n**Conjecture.** Two networks with the same input space induce equal region\nhomomorphisms if and only if their activation maps agree up to a relabeling\n(automorphism) of the pattern space; hence the Stone dual determines the network\nexactly modulo neuron permutation and polarity flips.\n\n*The key insight is* that the kernel and atom structure of the region\nhomomorphism recover the fibers of the activation map, and the only remaining\nambiguity is a symmetry of the finite pattern space.\n\n*Why now?* The atom/cell correspondence and the injectivity criterion proved this\ncycle already recover the fibers of a faithful dual; extending to the non-faithful\ncase via the symmetry group is the concrete open step.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1195",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "05e37ec1",
+    "status": "available",
+    "timestamp": "2026-07-13T06:44:49.970468+00:00",
+    "title": "That a neural network with `k` threshold neurons carries"
   },
   {
     "consumed_by_exp_id": "",

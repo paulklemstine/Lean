@@ -4990,7 +4990,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "KNRS2010",
         "ConlonLee2021",
@@ -4998,7 +4998,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b08004d1",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5013,7 +5013,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0181",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T06:45:14.880913+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem failure_Lp_KNRS (F : graph) (p : ℝ) (ρ : ℝ) : p < (n choose 2)/m → ∃ W : graphon, ||W_F||_Lp < ρ^{e(F)}",
       "lineage_refs": [],
@@ -5028,7 +5028,7 @@
       "source": "",
       "source_exp_id": "2606.30010v1",
       "source_path": "http://arxiv.org/abs/2606.30010v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T04:04:19.585983+00:00",
       "title": "Failure of L^p Relaxation of KNRS Conjecture Below Threshold p"
@@ -33543,7 +33543,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Topology of Argumentation (VIII)\n\nThis cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving that\na **well-founded** Dung argumentation framework has a **unique complete\nextension** — the grounded extension — which is also stable and preferred, and\nthat the grounded extension is always the intersection of all complete\nextensions. Key results:\n\n- `stable_complete` — every stable extension is complete (no hypothesis).\n- `groundedExt_eq_sInter_complete` — grounded = ⋂ of all complete extensions.\n- `groundedExt_stable_of_wf` — grounded is stable under well-foundedness.\n- `complete_eq_grounded_of_wf`, `grounded_unique_complete_of_wf` — uniqueness.\n- `stable_unique_of_wf`, `grounded_preferred_of_wf` — coincidence of\n  grounded/stable/preferred semantics on well-founded frameworks.\n\n## Where to go next\n\n- **Kleene reachability for finitary frameworks.** For frameworks in which every\n  argument has finitely many attackers, `charF` is ω-continuous, so\n  `groundedExt = ⋃ₙ charF^[n] ∅`. Formalize the ω-continuity and derive the\n  explicit union description, then re-prove `groundedExt_stable_of_wf` for\n  *finitary well-founded* frameworks by ordinary (ℕ-indexed) induction.\n\n- **Preferred ⇒ complete in general.** Prove the classical result that every\n  preferred (maximal admissible) extension is complete, without well-foundedness.\n  Combined with `grounded_preferred_of_wf` this would upgrade uniqueness to\n  \"grounded = preferred = stable = complete\" purely from the extension calculus.\n\n- **Labelling correspondence.** Introduce complete labellings (in/out/undec) and\n  the bijection with complete extensions; transport `grounded_unique_complete_of_wf`\n  to \"the unique complete labelling has no `undec` label\" on well-founded frameworks.\n\n- **Quantitative well-foundedness.** Relate the ordinal rank of the attack\n  relation to the least stage at which `lfpApprox` stabilizes, giving an ordinal\n  bound on the convergence of the grounded construction.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -40093,7 +40093,6 @@
     "without": 7
   },
   "selection_log": [
-    "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
@@ -40112,6 +40111,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }
