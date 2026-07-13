@@ -1867,6 +1867,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
   },
   {
+    "consumed_by_exp_id": "8e89241b",
+    "description": "The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alternate in the limit, with only sparse violations.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0111",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01210v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-03T00:16:17.133115+00:00",
+    "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for any prime r, any 1 \u2264 x \u2264 r^{0.499}, and any real q \u2208 [0,1], the average over characters modulo r of |\u2211_{n\u2264x} \u03c7(n)|^{2q} is at least (1/2)^q x^q, matching the known upper bounds and implying sharpness.",
     "domains": [
