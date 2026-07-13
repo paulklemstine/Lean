@@ -135,7 +135,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28ee7277",
     "description": "Building on cycle 453f48e6 (Q=0.830), which proved 30 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself — the halting problem ",
     "domain_bridges": [],
     "domains": [
@@ -147,7 +147,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "453f48e6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T00:46:46.156194+00:00",
     "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
   },
@@ -974,25 +974,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "beca1e55",
-    "description": "Building on cycle d0bff55a (Q=0.780), which proved 20 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_d0bff55a_5a61b5b8",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d0bff55a",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:23:26.434548+00:00",
-    "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle e3aaa465 (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any k ≥3 and 1≤ℓ<k, and any two accumulation points α, β in Π^k_ℓ, there exists a transfer function f such that f(α) = β.",
     "domain_bridges": [],
@@ -1027,25 +1008,6 @@
     "status": "available",
     "timestamp": "2026-07-12T09:01:53.417824+00:00",
     "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "117d6517",
-    "description": "Building on cycle fb4de3e5 (Q=0.780), which proved 23 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize analogy-making as a mathematical operation. Define: an analogy between structures A and B is a pair of functors F: A -> B and G: B -> A with F . G approximating identity. Prove: the best analogies maximize the 'structural similarity' (the composition F.G should be close to id_A in some met",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_fb4de3e5_e932d229",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "fb4de3e5",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T02:10:54.368732+00:00",
-    "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
   },
   {
     "ambition_level": "extension",
@@ -2910,6 +2872,46 @@
     "status": "available",
     "timestamp": "2026-07-13T22:36:11.690365+00:00",
     "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Analogy as an Adjoint Operation\n\nThis cycle recast analogy-making between two ordered structures as the taking of an\n*adjoint pair* `(forward, backward)` bound by the adjunction law\n`forward a ≤ b ↔ a ≤ backward b`. The round-trip `backward ∘ forward` was shown to be a\nclosure operator (inflationary, monotone, idempotent), the backward map was shown to be\nuniquely determined by the forward map, and the structural fidelity — the number of source\npoints recovered exactly by a round trip — was shown to be maximized precisely by *perfect*\nanalogies. The canonical best analogy for a min-plus (tropical) map was identified with\nits max-plus residual, recovering the classical shortest-path reconstruction inequalities.\nThe following conjectures push these findings further.\n\n## 1. Fidelity is a rank-type invariant of the analogy\n\n**Conjecture.** For an analogy over a finite source, the fidelity (number of round-trip\nfixed points) equals the size of the image of the closure operator `backward ∘ forward`,\nand this quantity is monotone under composition of analogies: the fidelity of a composite\nanalogy never exceeds the smaller of the two component fidelities.\n\nThe key insight is that the fixed-point set of the fidelity operator is exactly the set of\n\"analogically stable\" concepts — those that survive translation unchanged — so counting\nthem is the same as measuring the rank of the stabilized sublattice, and rank can only\ndrop when analogies are chained.\n\nWhy now? We have already established that the round trip is an idempotent closure operator,\nso its image is well defined and equals its fixed-point set; the remaining step is to show\nthis image size behaves submultiplicatively under composition, which is a finite, checkable\ncombinatorial statement rather than an open-ended search.\n\n## 2. Best analogies are Lipschitz-optimal reconstructions\n\n**Conjecture.** Among all backward maps paired with a fixed forward map, the adjoint\nbackward map minimizes the worst-case reconstruction defect measured in the natural\nsup-metric; moreover, in the tropical setting this optimal defect is controlled by the\nspread of the matrix entries along each column.\n\nThe key insight is that the residual is not merely *a* left inverse but the *tightest*\nover-approximation permitted by monotonicity, so any competing backward map must pay a\nstrictly larger reconstruction error somewhere, and in the min-plus world that error is\nexactly a difference of column extrema.\n\nWhy now? The adjunction inequalities `w ≤ A ⊗ (A♯ w)` and `A♯ (A ⊗ v) ≤ v` proved this\ncycle already sandwich the reconstruction; converting the sandwich into a sharp Lipschitz\nbound only requires the sup-inf inequality already available in the tropical toolkit.\n\n## 3. Perfect two-way analogies are exactly order isomorphisms of the stable cores\n\n**Conjecture.** Every analogy restricts to a perfect two-way analogy — an order\nisomorphism — between the image of its source-side closure operator and the image of its\ntarget-side interior operator, and this restricted isomorphism is the unique maximal\nsub-analogy that loses no structure.\n\nThe key insight is that even a lossy analogy hides a perfectly faithful core: the closure\nand interior operators carve out exactly the sublattices on which forward and backward are\nmutually inverse, so every analogy is an isomorphism \"up to stabilization.\"\n\nWhy now? This cycle proved that a two-sided perfect analogy is an order embedding and that\nthe round trips are idempotent; the images of those idempotents are the candidate cores,\nso the conjecture is the natural completion of results already in hand.\n\n## 4. Analogical composition forms a category with residuation as inverse\n\n**Conjecture.** Analogies between ordered structures compose associatively, identities are\nthe trivial self-analogies, and the perfect analogies are exactly the isomorphisms of the\nresulting category; in the tropical instantiation, composition of analogies corresponds to\nmin-plus matrix multiplication and residuation reverses the arrows.\n\nThe key insight is that the adjunction law is preserved under composition, so \"being an\nanalogy\" is a closed, categorical property, and the tropical residual furnishes a concrete,\ncomputable dagger-style involution on the arrows.\n\nWhy now? The uniqueness of the backward map established this cycle guarantees composition is\nwell defined on the forward maps alone, removing the main obstruction to organizing analogies\ninto a category.\n\n## 5. Fidelity concentration for random tropical analogies\n\n**Conjecture.** For a min-plus matrix with independent random entries, the fidelity of the\ncanonical analogy on the discretized source concentrates sharply around a deterministic\nvalue determined only by the entry distribution and the dimension, with fluctuations\nvanishing as the dimension grows.\n\nThe key insight is that whether a source point is a round-trip fixed point depends only on\nlocal column comparisons, so fidelity is a sum of weakly dependent indicator variables and\nshould obey a law-of-large-numbers-style concentration.\n\nWhy now? The exact characterization of round-trip fixed points proved this cycle turns\nfidelity into an explicit counting statistic, making it amenable to the standard\nconcentration machinery for sums of nearly independent indicators.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_1252",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "117d6517",
+    "status": "available",
+    "timestamp": "2026-07-13T23:13:16.545009+00:00",
+    "title": "This cycle recast analogy-making between two ordered structures as the taking of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Transfinite Game Theory, Deepened\n\nThis cycle deepens the theory of two-player **well-founded (transfinite) games**\nby developing the *disjunctive sum*, the central algebraic operation of\ncombinatorial game theory, and proving structural theorems plus two contrarian\ndisproofs. All results are in `Catalog/MachineLearning/TransfiniteGameSum.lean`\nand compile independently (only axioms `propext`, `Classical.choice`,\n`Quot.sound`; no `sorry`).\n\n## What was proved this cycle\n\n* **`sumWf`** — the disjunctive sum of a well-founded game with itself is\n  well-founded (identified with `Prod.GameAdd` of the reverse move relation).\n  Hence the value function `W` is well-defined on the sum.\n* **`sum_terminal_right` / `sum_terminal_left`** — a terminal (empty) component\n  is a *neutral element*: adjoining it does not change the value.\n* **`sum_comm`** — the value of the sum is commutative: `W (a,b) ↔ W (b,a)`.\n* **`diag_loss`** (flagship) — for *every* well-founded game, `G + G` is a\n  second-player win: `¬ W (a,a)`. This is the transfinite mirroring /\n  strategy-stealing principle, valid at arbitrary ordinal rank.\n* **`determinacy`** — Zermelo's theorem for well-founded games (mover can force a\n  win iff the position is winning), and **`diag_mover_loses`**, its strategic\n  corollary: in `G + G` the *opponent* has the winning (mirroring) strategy.\n* **`twoHeapNim`** — the sharp two-heap Nim identity for the countdown game:\n  `Wsum (m,n) ↔ m ≠ n`. The `m = n` half is the flagship `diag_loss`; the\n  `m ≠ n` half moves the larger heap down to the diagonal. This closes the\n  stepping-stone conjecture (previously only validated computationally) and makes\n  both contrarian disproofs instances of a single equivalence.\n\n## What was disproved this cycle (contrarian mode)\n\n* **`sum_of_wins_can_lose`** — \"the sum of two winning positions is winning\" is\n  FALSE (`1 + 1` in countdown is a loss).\n* **`p_position_not_neutral`** — \"a losing (P) component can be dropped without\n  changing the winner\" is FALSE (`0 + 1` is a win); only the *empty* game is\n  neutral, not an arbitrary P-position.\n\n## Strongest remaining conjectures / next steps\n\n1. **Sprague–Grundy for transfinite games.** Define an ordinal-valued Grundy\n   function `g : P → Ordinal` by `g p = mex { g q | mv p q }` (ordinal `mex` =\n   least ordinal not in the image) and prove `W p ↔ g p ≠ 0`. This subsumes\n   `diag_loss` and would let us characterize `Wsum` of arbitrary components.\n\n2. **Nim-addition theorem.** With `g` in hand, prove\n   `g (sum a b) = g a ⊕ g b` (ordinal nim-sum). The special case for countdown\n   is the two-heap Nim identity `Wsum (m,n) ↔ m ≠ n`, now **proved** as\n   `twoHeapNim`; the general Grundy/nim-sum statement remains open.\n\n3. **General P + P = P.** Prove that the disjunctive sum of two P-positions is a\n   P-position. This is *not* an easy single induction (the naive attempt leaves\n   the induction measure uncontrolled); it appears to require the Grundy\n   machinery of step 1, which is why only the diagonal case (`diag_loss`) is\n   proved here.\n\n4. **Arbitrary sums and a monoid structure.** Extend `sumMv` from `P × P` to\n   heterogeneous sums `P × Q` and to finite/indexed families, and organize the\n   Grundy values into the commutative monoid `(Ordinal, ⊕)`.\n\n5. **Determinacy hierarchy and large cardinals.** The `GaleStewart` core\n   (`Catalog/Logic/GaleStewartCore.lean`) sets up open-length games; connecting\n   the well-founded value theory here to Borel/analytic determinacy and the\n   large-cardinal strength of `AD`-fragments remains the long-range goal of the\n   original mission.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1253",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "beca1e55",
+    "status": "available",
+    "timestamp": "2026-07-13T23:13:37.545062+00:00",
+    "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
   },
   {
     "ambition_level": "extension",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6ed40476",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Stability of the Diagonal Correlation Inequality\n\nThis cycle established the base camp for a quantitative stability theory of the\ncorrelation inequality on the discrete cube: the",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 30,
-      "timestamp": "2026-07-13T07:18:16",
-      "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
-    },
-    {
       "cycle_id": "b08004d1",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-13T23:13:27",
       "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
+    },
+    {
+      "cycle_id": "beca1e55",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Transfinite Game Theory, Deepened\n\nThis cycle deepens the theory of two-player **well-founded (transfinite) games**\nby developing the *disjunctive sum*, the central algebraic ope",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-07-13T23:13:45",
+      "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f3c4c6a5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Dream Logic (Deepening)\n\nThis cycle deepened the *dream logic* development (paraconsistent, non-monotone,\nbelief-revisable reasoning where contradictions coexist) with three new",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-07-11T07:12:51",
-      "title": "Deepening: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-    },
     {
       "cycle_id": "f57636f1",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-13T23:13:27",
       "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
+    },
+    {
+      "cycle_id": "beca1e55",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Transfinite Game Theory, Deepened\n\nThis cycle deepens the theory of two-player **well-founded (transfinite) games**\nby developing the *disjunctive sum*, the central algebraic ope",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-07-13T23:13:45",
+      "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e3aaa465",
-      "domain": "Applications",
-      "name": "sub_mem_Pi",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e3aaa465",
-      "domain": "Applications",
-      "name": "add_mem_Pi",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "f347bf96",
-      "domain": "Applications",
-      "name": "det_fin_four",
-      "quality": 0.78
-    },
     {
       "cycle_id": "f347bf96",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "in",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "beca1e55",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "beca1e55",
+      "domain": "Applications",
+      "name": "W_fix",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "beca1e55",
+      "domain": "Applications",
+      "name": "notW_iff_all_W",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T23:13:27",
+  "last_updated": "2026-07-13T23:13:45",
   "open_questions": [
     {
       "context": "+Everything is elementary and `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ad0affd1",
-        "quality": 0.79,
-        "theorems": 28,
-        "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
-      },
-      {
         "cycle_id": "c0577eb2",
         "quality": 0.82,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 23,
         "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Math"
+      },
+      {
+        "cycle_id": "beca1e55",
+        "quality": 0.82,
+        "theorems": 32,
+        "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
       }
     ],
     "Bridges": [
