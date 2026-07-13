@@ -746,6 +746,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 59a15132 (Q=0.790), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that a generalized Latin rectangle of size n×n (i.e., λ = 1) possessing pairwise reflection symmetry—where each ordered symbol pair (p,q) appears as often as its reversal (q,p) on every pair of columns—exists if and only if n is a power of two.",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_59a15132_94f0523d",
+    "lineage_refs": [],
+    "priority_score": 0.89,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "59a15132",
+    "status": "available",
+    "timestamp": "2026-07-13T11:12:22.899860+00:00",
+    "title": "Deepening: Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectang"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b35b4ce5 (Q=0.790), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any integers 2 ≤ s < t and any n-vertex graph G, the t-clique density of G is bounded below by the composition of the Lovász-Simonovits t-clique density function evaluated at the generalized inverse of the s-clique density function applied to the s-clique density of G. Specifically, k_t(G) / n^t",
     "domain_bridges": [],
     "domains": [
@@ -6220,31 +6239,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "math.CO",
-      "math.SP"
-    ],
-    "consumed_by_exp_id": "ad71c64c",
-    "description": "For any simple graph G with n vertices and m edges, and for any 1 ≤ k ≤ n-1, the sum of the k largest Laplacian eigenvalues s_k(G) equals m + binom(k+1, 2) if and only if G is a threshold graph with clique number k+1.",
-    "domain_bridges": [
-      "Linear Algebra",
-      "Graph Theory"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0531",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Reduce the problem to the Grone-Merris-Bai theorem, which states s_k(G) ≤ ∑_{i=1}^k d_i^*(G) where d* is the conjugate degree sequence. Show that equality in Brouwer's bound implies equality in Grone-Merris-Bai, forcing the degree sequence to match the Laplacian eigenvalue sequence. Use the characterization of threshold graphs via their degree sequences and the specific sum m + binom(k+1, 2) to conclude that G must be a threshold graph with clique number k+1.",
-    "research_mode": "team",
-    "source_exp_id": "2607.03388v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T03:55:00.492813+00:00",
-    "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "math.CO"
     ],
     "consumed_by_exp_id": "",
@@ -11525,7 +11519,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9f2f3b13",
     "description": "# Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nThis cycle established that the geometry surrounding the Hopf fibration is\norganised by the composition (normed division) algebras, and that a single\nalgebraic device — the Hermitian inner product of two unit vectors — recovers the\nfull fibre structure of the Hopf map. The following conjectures push that picture\noutward.\n\n## Conjecture 1 — The octonionic Hopf map has abelian great-sphere fibres\n\nFor the octonionic Hopf map `S¹⁵ → S⁸`, the fibres `S⁷` are recoverable from a\nsingle \"inner-product witness\" analogous to `λ = z̄z' + w̄w'`, but the witness must\nbe evaluated in a fixed associative subalgebra of the octonions.\n\n*The key insight is* that the phase ambiguity of a unit vector is always a\nprincipal homogeneous space for the unit group of the underlying composition\nalgebra, and octonionic non-associativity only obstructs the *global* group\nstructure, not the local reconstruction of the fibre from two points.\n\n*Why now?* The complex fibre reconstruction was reduced this cycle to two bilinear\nidentities and one norm-multiplicativity step; each has a direct quaternionic and\noctonionic analogue via the two- and four-square identities, so the same proof\nskeleton can be transported dimension by dimension.\n\n## Conjecture 2 — Balanced tori are the unique isoperimetric flat tori on every odd sphere\n\nAmong all flat `m`-tori embedded in `S^{2m-1}` with radii `(r₁,…,r_m)`,\n`∑ rᵢ² = 1`, the balanced torus `rᵢ² = 1/m` uniquely maximises the induced volume,\nand its volume grows like `m^{-m/2}` up to an explicit constant.\n\n*The key insight is* that the volume is a monotone function of the elementary\nsymmetric product `∏ rᵢ²`, so the arithmetic–geometric mean inequality — verified\nhere for `m = 2, 3` with a sharp equality case — controls the extremal problem in\nevery dimension simultaneously.\n\n*Why now?* The two- and three-radius balance results already exhibit the exact\nextremiser and the exact bound; the general statement needs only the `m`-variable\narithmetic–geometric mean together with the observed monotonicity of the volume\nfunctional, both of which are within reach of the present techniques.\n\n## Conjecture 3 — Fixed-point-free isometries of even spheres are exactly the almost-complex ones\n\nEvery fixed-point-free linear isometry of `S^{2n-1}` of order dividing 4 is\nconjugate to multiplication by `i` on `ℂⁿ`; equivalently, the \"rotation through the\nfourth dimension\" is, up to change of coordinates, the *only* algebraic complex\nstructure available.\n\n*The key insight is* that fixed-point freeness is equivalent to the absence of the\neigenvalue `1`, which for an order-4 isometry forces the `±i` eigenspaces to pair\nthe coordinates exactly as a complex structure does.\n\n*Why now?* The obstruction was made concrete this cycle: `J = ·i` on `ℂⁿ` squares\nto `−1`, preserves the norm and has no invariant axis, and the fixed-point analysis\nreduced to the single scalar fact `i − 1 ≠ 0`. Turning necessity into a\nclassification is the natural next step.\n\n## Conjecture 4 — The four-square identity is the last bilinear composition identity\n\nThere is no bilinear identity expressing a product of two sums of three squares as\na sum of three squares, nor of five, six, or seven squares; the ladder of\ncomposition identities terminates at four (before jumping to eight).\n\n*The key insight is* that a bilinear norm-multiplicative form on `ℝ^d` endows\n`ℝ^d` with a composition-algebra structure, and the associated quadratic form's\nmultiplicativity is exactly what fails when `d ∉ {1,2,4,8}`.\n\n*Why now?* The two- and four-square identities were both reduced to a single\npolynomial identity this cycle, and the three-square case was shown numerically to\nhave no such reduction — isolating the exact dimension at which the phenomenon\nbreaks and pointing at the algebraic reason.\n\n## Conjecture 5 — Conjugation rigidity characterises the sphere's rotation group\n\nThe isometries of `S³` arising as `x ↦ qxq⁻¹` for unit quaternions `q`, together\nwith left/right translations, generate the full rotation group `SO(4)`, and the\nkernel of the double cover is exactly `{±1}`.\n\n*The key insight is* that quaternion conjugation preserves the norm for *every*\nnonzero quaternion — not merely unit ones — so the rotation action factors through\nthe projective unit group, producing the classical `2:1` covers `S³ → SO(3)` and\n`S³ × S³ → SO(4)`.\n\n*Why now?* The norm-preservation of conjugation was established here in full\ngenerality from multiplicativity and inversion of the quaternion norm; assembling\nthe generation and covering statements is a group-theoretic continuation of the\nsame computation.\n",
     "domain_bridges": [],
     "domains": [
@@ -11538,7 +11532,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "44b2d089",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T19:56:26.915544+00:00",
     "title": "That the geometry surrounding the Hopf fibration is"
   },
@@ -12601,6 +12595,26 @@
     "status": "available",
     "timestamp": "2026-07-13T11:11:55.904509+00:00",
     "title": "Truth/meaning dichotomy in two settings — the group of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalises a **cross-domain bridge** underlying the conjecture that a\n`λ = 1` pairwise-reflection-symmetric (PRS) Latin square of order `n` exists iff `n` is a\npower of two. The bridge connects three areas:\n\n* **Combinatorics / design theory** — Latin squares and the column-pair reflection index;\n* **Group theory** — finite groups of exponent two (elementary abelian 2-groups);\n* **Number theory** — powers of two.\n\n## What is proved (`Bridges/PowerTwoReflectionLatin.lean`)\n\n1. `cayley_isLatin` — the Cayley table of any finite group is a Latin square.\n2. `cayley_isIndexLeOne` — that table has index `λ ≤ 1`.\n3. `cayley_pairCount` — an exact formula for the column-pair symbol counts.\n4. `isPRS_cayley_iff_involutive` — **the heart of the bridge**: the Cayley table is PRS iff\n   the group has exponent two. A combinatorial symmetry is equivalent to an algebraic one.\n5. `card_pow_two_of_involutive` — a finite exponent-two group has order a power of two.\n6. `card_pow_two_of_cayley_isPRS` — hence a PRS Cayley table forces power-of-two order.\n7. `exists_involutive_group_iff_pow_two` — an exponent-two group of order `n` exists iff\n   `n` is a power of two.\n8. `prs_latin_exists_of_pow_two` — the **constructive direction** of the conjecture: for\n   every `k` a PRS `λ ≤ 1` Latin square of order `2^k` exists (the table of `(ℤ/2)^k`).\n\nTogether these give a complete proof of the \"if\" direction of the conjecture and of the\n\"only if\" direction *restricted to group-based squares*.\n\n## Open direction\n\nThe genuinely open part of the conjecture is the **only-if direction for arbitrary PRS\nLatin squares**:\n\n> If a `λ = 1` PRS Latin square of order `n` exists, must `n` be a power of two?\n\nOur results settle this for squares that are group Cayley tables. The general case is open\nbecause not every Latin square is isotopic to a group table (the first non-group Latin\nsquare appears at order 5). Concrete next steps:\n\n* **Autotopism / prolongation invariants.** Attach to a PRS square the multiset of\n  column-pair \"difference\" permutations and study the algebraic constraints reflection\n  symmetry imposes; identify a `𝔽₂`-linear invariant that survives to non-group squares.\n* **Quasigroup formulation.** Restate PRS for a general quasigroup `(Q, ∗)` and determine\n  which identities it forces; the exponent-two condition `x ∗ x = e` should generalise to a\n  Steiner-like identity, giving a route to `|Q| = 2^k`.\n* **Character / Fourier method.** For abelian-group squares the PRS condition is a\n  statement about `±1` characters; a Fourier-analytic obstruction may extend to the general\n  case and directly produce the power-of-two conclusion.\n* **Formalise the converse** once a mathematical proof is known, reusing `pairCount` and\n  `IsPRS` from this file.\n\n## Reusable API\n\n`IsLatin`, `pairCount`, `IsPRS`, `IsIndexLeOne`, `cayley`, and `cayley_pairCount` are stated\ngenerically and can be reused for any future work on symmetric Latin squares.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1213",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "59a15132",
+    "status": "available",
+    "timestamp": "2026-07-13T11:12:08.537674+00:00",
+    "title": "This project formalises a **cross-domain bridge** underlying the conjecture that"
   },
   {
     "ambition_level": "extension",

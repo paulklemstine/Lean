@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "465c6137",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis file records the enumerative layer of the *\"Recursive decomposition\nisomorphism for general `m`-Tamari intervals and planar `(m+1)`-constellations\"*\nprogram. It complements t",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-12T20:32:01",
-      "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
-    },
-    {
       "cycle_id": "61c22649",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nDerived from the study of the opposite-semicube Helly property on Cartesian\nproducts of partial cubes and its equivalence with harmonic-evenness.\n\n## 1. Harmonic-evenness is a mul",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-13T11:12:05",
       "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "59a15132",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalises a **cross-domain bridge** underlying the conjecture that a\n`λ = 1` pairwise-reflection-symmetric (PRS) Latin square of order `n` exists iff `n` is a\npower",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-13T11:12:22",
+      "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "00abb0ac",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Argumentation\n\nThis project formalizes, from first principles in Lean 4 / Mathlib, the core of\nDung's abstract argumentation theory together with the topological",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-07-10T18:12:07",
-      "title": "The Topology of Argumentation: Why Debates Have Holes"
-    },
     {
       "cycle_id": "99c2e84e",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-13T11:12:05",
       "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "59a15132",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalises a **cross-domain bridge** underlying the conjecture that a\n`λ = 1` pairwise-reflection-symmetric (PRS) Latin square of order `n` exists iff `n` is a\npower",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-13T11:12:22",
+      "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "96ae8e1e",
-      "domain": "Novelty",
-      "name": "euclidZ",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "96ae8e1e",
-      "domain": "Novelty",
-      "name": "shift_sum",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "291fcce1",
-      "domain": "Novelty",
-      "name": "uses",
-      "quality": 0.72
-    },
     {
       "cycle_id": "291fcce1",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "sign_permCongr",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "59a15132",
+      "domain": "Applications",
+      "name": "cayley_apply",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "59a15132",
+      "domain": "Applications",
+      "name": "cayley_isLatin",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "59a15132",
+      "domain": "Applications",
+      "name": "cayley_isIndexLeOne",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-07-13T11:12:05",
+  "last_updated": "2026-07-13T11:12:22",
   "open_questions": [
     {
       "context": "Every proof below is complete and `sorry`-free; the file compiles standalone.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5b802ccf",
-        "quality": 0.82,
-        "theorems": 29,
-        "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
-      },
-      {
         "cycle_id": "111bebcc",
         "quality": 0.72,
         "theorems": 24,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 9,
         "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
+      },
+      {
+        "cycle_id": "59a15132",
+        "quality": 0.79,
+        "theorems": 14,
+        "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectang"
       }
     ],
     "Bridges": [
