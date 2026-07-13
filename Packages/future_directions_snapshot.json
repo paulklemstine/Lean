@@ -4571,7 +4571,7 @@
       "math.CO",
       "math.SP"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02ff061d",
     "description": "The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi(F) = 3$, most notably for triangles ($K_3$). The conjecture states that for every $\\epsilon > 0$, there exist $\\delta > 0$ and $M$ such that for all $m \\ge M$ and $0 < q \\le \\delta \\sqrt{m}$, any graph $G$ with $m$ edges and $\\lambda^2(G) \\ge m + q$ contains at least $(1 - \\epsilon) q \\sqrt{m}$ triangles, corresponding to the sharp constant $B_{K_3} = 1$.",
     "domain_bridges": [
       "spectral_graph_theory",
@@ -4587,7 +4587,7 @@
     "proof_strategy": "Adapt the spectral stability methods used for $\\chi(F) \\ge 4$ to the $\\chi(F)=3$ case. This requires establishing spectral stability for near-bipartite graphs, then applying supersaturation counting arguments within the bipartite structure to find the requisite number of triangles. The bipartite case $r=2$ might require different spectral inequalities or combinatorial reductions since the Li-Liu-Zhang bound was only for $r \\ge 3$.",
     "research_mode": "team",
     "source_exp_id": "2607.01073v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T04:22:22.147668+00:00",
     "title": "Edge-Spectral Supersaturation for Triangles"
   },

@@ -9973,14 +9973,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.SP"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "02ff061d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -9996,7 +9996,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0372",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T09:50:02.147592+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem edge_spectral_supersaturation_K3 \n  (ε : ℝ) (hε : ε > 0) :\n  ∃ (δ : ℝ) (M : ℕ) (hδ : δ > 0), ∀ (m : ℕ) (q : ℝ) (G : SimpleGraph ℕ),\n  m ≥ M → 0 < q → q ≤ δ * Real.sqrt m → G.edgeFinset.card = m →\n  (adjSpectralRadius G)^2 ≥ m + q →\n  (countTriangles G : ℝ) ≥ (1 - ε) * q * Real.sqrt m :=\n  sorry",
       "lineage_refs": [],
@@ -10011,7 +10011,7 @@
       "source": "",
       "source_exp_id": "2607.01073v1",
       "source_path": "http://arxiv.org/abs/2607.01073v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-06T04:22:22.147668+00:00",
       "title": "Edge-Spectral Supersaturation for Triangles"
@@ -34797,7 +34797,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1abce342 (Q=0.780), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant μ₂ is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves μ₂ ≤ 1 + ρ where ρ ≈ 0.75488 is",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Applications"
       ],
@@ -35237,7 +35237,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 32285b55 (Q=0.830), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: f",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -35997,7 +35997,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 5b802ccf (Q=0.820), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation semantics: conflict-free\nsets, the characteristic (defense) operator `charF`, admissible / complete /\np",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -36917,7 +36917,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 8e89241b (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The coefficients V₂(n), V₃(n), V₄(n) of the q-series v₂(q), v₃(q), v₄(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alterna",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -38917,7 +38917,7 @@
       "depth_estimate": 3,
       "description": "Cycle 111bebcc (Q=0.720) proved 24 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For all integers n ≥ 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) ≡ 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 6460994419377",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -38957,7 +38957,7 @@
       "depth_estimate": 3,
       "description": "Cycle 1abce342 (Q=0.780) proved 19 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The constant μ₂ is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n c",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Applications"
       ],
@@ -39877,7 +39877,7 @@
       "depth_estimate": 3,
       "description": "Cycle 8e89241b (Q=0.820) proved 18 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The coefficients V₂(n), V₃(n), V₄(n) of the q-series v₂(q), v₃(q), v₄(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for al",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -40666,7 +40666,6 @@
   },
   "selection_log": [
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -40684,6 +40683,7 @@
     "cross_domain_bridge",
     "abduction_followup",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }

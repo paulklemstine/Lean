@@ -227,20 +227,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
   },
   {
-    "consumed_by_exp_id": "3e1dd178",
-    "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_47a54792_2ae5aec0",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "47a54792",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T00:29:46.239053+00:00",
-    "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 4b281557 (Q=0.820), which proved 19 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed ",
     "domains": [
@@ -2843,7 +2829,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Colorful Carath\u00e9odory theorem for spanning k-trees admits a polynomial-size witness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02ff061d",
     "description": "The paper proves an edge-spectral supersaturation bound with a sharp constant $B_F$ for color-critical graphs $F$ with $\\chi(F) \\ge 4$. A natural open problem is whether the same bound holds for $\\chi(F) = 3$, most notably for triangles ($K_3$). The conjecture states that for every $\\epsilon > 0$, there exist $\\delta > 0$ and $M$ such that for all $m \\ge M$ and $0 < q \\le \\delta \\sqrt{m}$, any graph $G$ with $m$ edges and $\\lambda^2(G) \\ge m + q$ contains at least $(1 - \\epsilon) q \\sqrt{m}$ triangles, corresponding to the sharp constant $B_{K_3} = 1$.",
     "domains": [
       "Pythagorean",
@@ -2853,7 +2839,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01073v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T04:22:22.147668+00:00",
     "title": "Edge-Spectral Supersaturation for Triangles"
   },
@@ -7701,6 +7687,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T09:49:22.314782+00:00",
     "title": "This cycle completed the bridge showing that the factorial number system is a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThis cycle established the elementary algebraic core of four-dimensional geometry:\nthe volume law of the 4-ball, the face combinatorics and Euler characteristics of\nthe tesseract and its boundary sphere, the norm-preservation and fibre invariance\nof the Hopf map, the Clifford torus's placement on the 3-sphere, and the isometry\nand one-parameter group structure of rotations through the fourth dimension. The\nfollowing conjectures push each strand toward a deeper structural statement.\n\n## 1. The Hopf map is a Riemannian submersion with totally geodesic fibres\n\n**Conjecture.** The Hopf map from the unit 3-sphere to the 2-sphere of radius\none-half is a Riemannian submersion whose fibres are great circles, and the\nhorizontal distribution it defines is a contact structure whose Reeb flow is\nexactly the fibre circle action.\n\n*The key insight is* that the single quadratic identity `4ab + (a-b)\u00b2 = (a+b)\u00b2`,\nwhich already forces the image to land on a sphere, also controls the first-order\nbehaviour of the map: differentiating the identity along the unit-scalar action\nshows the fibre directions are precisely the kernel of the differential, so the\nmetric splits orthogonally into fibre and base components.\n\n*Why now?* The norm identity and fibre invariance are already in hand as exact\nequalities; upgrading them to a statement about the differential is the natural\nnext step, and it connects the purely algebraic picture to the metric geometry\nthat makes the Hopf fibration a source of examples in geometry and physics.\n\n## 2. The alternating face vector characterises spheres among cube boundaries\n\n**Conjecture.** Among the boundaries of `n`-cubes, the vanishing of the\nalternating face count occurs exactly for even `n`, and this parity dichotomy is\nthe combinatorial shadow of the Euler characteristic of spheres: odd-dimensional\nspheres have characteristic `0`, even-dimensional spheres have characteristic `2`.\n\n*The key insight is* that the boundary Euler characteristic equals `1 - (-1)^n`,\na formula proved here by peeling the top cell off the binomial identity; its\nparity, and nothing else, decides whether the boundary sphere is odd- or\neven-dimensional.\n\n*Why now?* The general formula `1 - (-1)^n` is now available for every `n`, so\nthe dichotomy is no longer a case-by-case observation but a single closed\nexpression whose parity can be analysed uniformly.\n\n## 3. Isoclinic rotations split SO(4) into two commuting circle families\n\n**Conjecture.** The four-dimensional rotations that mix one spatial axis with the\nfourth coordinate, together with their \"dual\" rotations in the complementary\nplane, generate two commuting one-parameter families whose product realises every\nelement of the identity component of the rotation group, so that `SO(4)` is\nlocally the product of two circles' worth of rotations.\n\n*The key insight is* that the angle-addition law proved for a single mixing plane\nmakes each family a one-parameter group, and disjoint coordinate planes commute\nterm by term; the whole rotation group is assembled from these independent blocks.\n\n*Why now?* The composition law `rot(\u03b8) \u2218 rot(\u03c6) = rot(\u03b8+\u03c6)` is established as an\nexact identity, giving the group law for one block; the remaining task is purely\nto combine two commuting blocks, which the coordinate independence makes routine.\n\n## 4. The 4-ball volume law extends to a monotone dimension ladder\n\n**Conjecture.** The ratio of the volume of the unit ball in dimension `n+2` to\nthat in dimension `n` equals `2\u03c0 / (n+2)`, so the sequence of unit-ball volumes\nrises to a single maximum and then decreases to zero, with the four-dimensional\nvalue `\u03c0\u00b2/2` sitting just past the peak.\n\n*The key insight is* that the even-dimensional volumes `\u03c0^k / k!` and the\nodd-dimensional volumes built from double factorials both satisfy the same\ntwo-step recurrence, which turns the qualitative \"volumes eventually shrink\"\nfolklore into an exact multiplicative law.\n\n*Why now?* The `n = 4` volume is pinned down here from the general even-dimension\nformula; the same formula supplies every other dimension, so the recurrence and\nits unimodal consequence are immediately testable.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1207",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3e1dd178",
+    "status": "available",
+    "timestamp": "2026-07-13T09:49:33.253981+00:00",
+    "title": "Elementary algebraic core of four-dimensional geometr"
   },
   {
     "consumed_by_exp_id": "",
