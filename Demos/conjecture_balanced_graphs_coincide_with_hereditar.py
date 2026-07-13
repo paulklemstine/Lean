@@ -1,168 +1,196 @@
-"""
-Numerical demonstrations for:
+"""Numerical demonstrations for the balanced / clique-Helly bridge.
 
-    The Octahedron as the Minimal Obstruction to Hereditary Clique-Helliness
+This self-contained script illustrates the central results:
 
-This self-contained script verifies, by direct combinatorial computation, that
-the octahedron K_{2,2,2} = complement of 3K_2 is NOT clique-Helly. It exhibits
-three maximal cliques that pairwise intersect yet have empty common intersection,
-and it contrasts this with a graph that IS clique-Helly.
+* the octahedron K_{2,2,2} is the complement of the perfect matching 3K_2;
+* three of its transversal triangles form a "bad triple": pairwise
+  intersecting maximal cliques with empty total intersection;
+* that bad triple simultaneously breaks the clique-Helly property (a Helly
+  fact about set systems) and balancedness (a fact about 0/1 matrices);
+* both failures come from the identical 3x3 two-per-row-and-column submatrix.
 
-All functions are inlined and use only the Python standard library.
+Run with:  python demo.py
 """
 
 from __future__ import annotations
 
 from itertools import combinations
-from typing import Dict, FrozenSet, List, Set, Tuple
+from typing import Dict, FrozenSet, List, Sequence, Set, Tuple
 
 Vertex = int
 Graph = Dict[Vertex, Set[Vertex]]
 Clique = FrozenSet[Vertex]
 
 
-# ---------------------------------------------------------------------------
-# Graph construction
-# ---------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# Graph builders
+# --------------------------------------------------------------------------
+def make_graph(n: int, adj: Sequence[Tuple[Vertex, Vertex]]) -> Graph:
+    """Build an undirected simple graph on vertices 0..n-1 from an edge list."""
+    g: Graph = {v: set() for v in range(n)}
+    for u, v in adj:
+        if u != v:
+            g[u].add(v)
+            g[v].add(u)
+    return g
+
+
+def antipodal_pair(i: Vertex) -> int:
+    """Antipodal-pair index: {0,1}->0, {2,3}->1, {4,5}->2."""
+    return i // 2
+
+
 def octahedron() -> Graph:
-    """Return the octahedron K_{2,2,2} on vertices 0..5.
-
-    Vertices are split into parts by i // 2: {0,1}, {2,3}, {4,5}.
-    Two distinct vertices are adjacent iff they lie in different parts.
-    """
-    verts = list(range(6))
-    adj: Graph = {v: set() for v in verts}
-    for u, v in combinations(verts, 2):
-        if u // 2 != v // 2:
-            adj[u].add(v)
-            adj[v].add(u)
-    return adj
+    """K_{2,2,2} on 6 vertices: adjacent iff in different antipodal pairs."""
+    edges = [
+        (i, j)
+        for i in range(6)
+        for j in range(i + 1, 6)
+        if antipodal_pair(i) != antipodal_pair(j)
+    ]
+    return make_graph(6, edges)
 
 
-def complete_graph(n: int) -> Graph:
-    """Return the complete graph K_n (a clique-Helly graph)."""
-    verts = list(range(n))
-    return {v: {w for w in verts if w != v} for v in verts}
+def three_k2() -> Graph:
+    """Perfect matching 3K_2: adjacent iff same antipodal pair."""
+    edges = [(0, 1), (2, 3), (4, 5)]
+    return make_graph(6, edges)
 
 
-# ---------------------------------------------------------------------------
-# Clique machinery
-# ---------------------------------------------------------------------------
-def is_clique(graph: Graph, s: Set[Vertex]) -> bool:
-    """True iff every two distinct vertices of s are adjacent."""
-    return all(v in graph[u] for u, v in combinations(sorted(s), 2))
+def complement(g: Graph) -> Graph:
+    """Complement graph on the same vertex set."""
+    n = len(g)
+    edges = [
+        (i, j)
+        for i in range(n)
+        for j in range(i + 1, n)
+        if j not in g[i]
+    ]
+    return make_graph(n, edges)
 
 
-def maximal_cliques(graph: Graph) -> List[Clique]:
-    """Enumerate all maximal cliques by brute force over subsets.
+# --------------------------------------------------------------------------
+# Cliques
+# --------------------------------------------------------------------------
+def is_clique(g: Graph, s: Sequence[Vertex]) -> bool:
+    """Every pair of distinct vertices in s is adjacent."""
+    return all(v in g[u] for u, v in combinations(s, 2))
 
-    Adequate for the small graphs in this demo; exponential in general.
-    """
-    verts = sorted(graph)
-    cliques: List[Set[Vertex]] = []
+
+def maximal_cliques(g: Graph) -> List[Clique]:
+    """All maximal cliques via brute-force subset search (small graphs)."""
+    verts = list(g)
+    cliques: List[Clique] = []
     for r in range(1, len(verts) + 1):
         for combo in combinations(verts, r):
-            s = set(combo)
-            if is_clique(graph, s):
-                cliques.append(s)
-    # keep only maximal ones
-    maximal: List[Clique] = []
-    for s in cliques:
-        if not any(s < t for t in cliques):
-            maximal.append(frozenset(s))
-    return maximal
+            if not is_clique(g, combo):
+                continue
+            outside = [w for w in verts if w not in combo]
+            if all(not is_clique(g, tuple(combo) + (w,)) for w in outside):
+                cliques.append(frozenset(combo))
+    # dedup while preserving order
+    seen: Set[Clique] = set()
+    out: List[Clique] = []
+    for c in cliques:
+        if c not in seen:
+            seen.add(c)
+            out.append(c)
+    return out
 
 
-def pairwise_intersecting(family: List[Clique]) -> bool:
-    """True iff every two members of the family share a vertex."""
-    return all(len(a & b) > 0 for a, b in combinations(family, 2))
+# --------------------------------------------------------------------------
+# The bad triple and its two consequences
+# --------------------------------------------------------------------------
+def is_bad_triple(k0: Clique, k1: Clique, k2: Clique) -> bool:
+    """Pairwise intersecting maximal cliques with empty total intersection."""
+    pairwise = (k0 & k1) and (k0 & k2) and (k1 & k2)
+    total_empty = not (k0 & k1 & k2)
+    return bool(pairwise) and total_empty
 
 
-def common_intersection(family: List[Clique]) -> FrozenSet[Vertex]:
-    """Intersection of all members of the family."""
-    if not family:
-        return frozenset()
-    result = set(family[0])
-    for c in family[1:]:
-        result &= c
-    return frozenset(result)
+def find_bad_triple(cliques: Sequence[Clique]) -> Tuple[Clique, Clique, Clique] | None:
+    """Return a bad triple among the given maximal cliques, if any."""
+    for k0, k1, k2 in combinations(cliques, 3):
+        if is_bad_triple(k0, k1, k2):
+            return (k0, k1, k2)
+    return None
 
 
-def is_clique_helly(graph: Graph) -> Tuple[bool, List[Clique]]:
-    """Test the clique-Helly property.
-
-    Returns (True, []) if clique-Helly. Otherwise returns
-    (False, witness) where witness is a pairwise-intersecting family of
-    maximal cliques with empty common intersection.
-    """
-    maximal = maximal_cliques(graph)
-    for r in range(2, len(maximal) + 1):
-        for family in combinations(maximal, r):
-            fam = list(family)
-            if pairwise_intersecting(fam) and len(common_intersection(fam)) == 0:
-                return False, fam
-    return True, []
+def clique_helly_violation(cliques: Sequence[Clique]) -> bool:
+    """True iff some subfamily is pairwise intersecting with empty overlap."""
+    return find_bad_triple(cliques) is not None
 
 
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-def demo_octahedron_not_helly() -> None:
-    print("=" * 70)
-    print("Octahedron K_{2,2,2}: NOT clique-Helly")
-    print("=" * 70)
-    g = octahedron()
-
-    A, B, C = frozenset({0, 2, 4}), frozenset({0, 3, 5}), frozenset({1, 2, 5})
-    for name, s in [("A", A), ("B", B), ("C", C)]:
-        print(f"  {name} = {set(s)}   is_clique = {is_clique(g, set(s))}")
-
-    print(f"\n  A ∩ B = {set(A & B)}")
-    print(f"  A ∩ C = {set(A & C)}")
-    print(f"  B ∩ C = {set(B & C)}")
-    print(f"  pairwise intersecting = {pairwise_intersecting([A, B, C])}")
-    print(f"  A ∩ B ∩ C = {set(common_intersection([A, B, C]))}")
-
-    helly, witness = is_clique_helly(g)
-    print(f"\n  clique-Helly = {helly}")
-    if not helly:
-        print(f"  witness family (pairwise meet, empty core):")
-        for c in witness:
-            print(f"      {set(c)}")
-    assert helly is False, "Octahedron must fail the Helly property"
-    print("  [verified] octahedron is NOT clique-Helly\n")
+def incidence_submatrix(
+    rows: Sequence[Clique], cols: Sequence[Vertex]
+) -> List[List[int]]:
+    """0/1 submatrix M[i][j] = 1 iff cols[j] in rows[i]."""
+    return [[1 if c in k else 0 for c in cols] for k in rows]
 
 
-def demo_complete_graph_is_helly() -> None:
-    print("=" * 70)
-    print("Complete graph K_5: clique-Helly (single maximal clique)")
-    print("=" * 70)
-    g = complete_graph(5)
-    mc = maximal_cliques(g)
-    print(f"  maximal cliques: {[set(c) for c in mc]}")
-    helly, _ = is_clique_helly(g)
-    print(f"  clique-Helly = {helly}")
-    assert helly is True
-    print("  [verified] K_5 is clique-Helly\n")
+def is_two_regular_odd(matrix: List[List[int]]) -> bool:
+    """Square, odd order, exactly two 1's in every row and column."""
+    k = len(matrix)
+    if k % 2 == 0 or any(len(row) != k for row in matrix):
+        return False
+    rows_ok = all(sum(row) == 2 for row in matrix)
+    cols_ok = all(sum(matrix[i][j] for i in range(k)) == 2 for j in range(k))
+    return rows_ok and cols_ok
 
 
-def demo_clique_matrix() -> None:
-    print("=" * 70)
-    print("Clique matrix of the octahedron (rows = vertices, cols = cliques)")
-    print("=" * 70)
-    g = octahedron()
-    mc = sorted((tuple(sorted(c)) for c in maximal_cliques(g)))
-    print(f"  number of maximal cliques = {len(mc)} (expected 8 triangles)")
-    header = "      " + " ".join(f"{c}" for c in mc)
-    print(header)
-    for v in range(6):
-        row = " ".join(" 1 " if v in c else " . " for c in mc)
-        print(f"  v{v}: {row}")
-    print()
+# --------------------------------------------------------------------------
+# Demonstration
+# --------------------------------------------------------------------------
+def main() -> None:
+    print("=" * 68)
+    print("The octahedron as the bridge between two worlds")
+    print("=" * 68)
+
+    oct_g = octahedron()
+    comp = complement(three_k2())
+
+    same = all(oct_g[v] == comp[v] for v in oct_g)
+    print(f"\n(3K_2)^c == octahedron K_(2,2,2)? {same}")
+
+    cliques = maximal_cliques(oct_g)
+    print(f"\nMaximal cliques of the octahedron ({len(cliques)} of them):")
+    for c in cliques:
+        print("   ", sorted(c))
+
+    triple = find_bad_triple(cliques)
+    assert triple is not None, "octahedron must carry a bad triple"
+    k0, k1, k2 = triple
+    print("\nA bad triple (pairwise intersecting, empty total overlap):")
+    print("   K0 =", sorted(k0))
+    print("   K1 =", sorted(k1))
+    print("   K2 =", sorted(k2))
+    print("   K0 & K1 =", sorted(k0 & k1))
+    print("   K0 & K2 =", sorted(k0 & k2))
+    print("   K1 & K2 =", sorted(k1 & k2))
+    print("   K0 & K1 & K2 =", sorted(k0 & k1 & k2))
+
+    print("\n=> Clique-Helly property FAILS:", clique_helly_violation(cliques))
+
+    # Choose the three meeting vertices as columns to expose the pattern.
+    a = next(iter(k1 & k2))
+    b = next(iter(k0 & k2))
+    c = next(iter(k0 & k1))
+    cols = [a, b, c]
+    sub = incidence_submatrix([k0, k1, k2], cols)
+    print(f"\n3x3 incidence submatrix on columns {cols} (rows K0,K1,K2):")
+    for row in sub:
+        print("   ", row)
+    print("=> odd two-per-row-and-column forbidden pattern:", is_two_regular_odd(sub))
+    print("=> Balancedness FAILS (same configuration).")
+
+    print("\n" + "-" * 68)
+    print("Sanity check: a triangle-free / bipartite graph is balanced &")
+    print("clique-Helly. Take a 4-cycle C4 (0-1-2-3-0).")
+    c4 = make_graph(4, [(0, 1), (1, 2), (2, 3), (3, 0)])
+    c4_cliques = maximal_cliques(c4)
+    print("   maximal cliques of C4:", [sorted(x) for x in c4_cliques])
+    print("   clique-Helly violation:", clique_helly_violation(c4_cliques))
 
 
 if __name__ == "__main__":
-    demo_octahedron_not_helly()
-    demo_complete_graph_is_helly()
-    demo_clique_matrix()
-    print("All demonstrations completed successfully.")
+    main()
