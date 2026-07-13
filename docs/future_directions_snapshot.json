@@ -1382,25 +1382,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c81e5afa",
-    "description": "Cycle e0843845 (Q=0.800) proved 15 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_e0843845_85271455",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e0843845",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T13:44:01.104282+00:00",
-    "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.l"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle e2c082ff (Q=0.820) proved 9 theorems in MachineLearning but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a f",
     "domain_bridges": [],
@@ -1711,7 +1692,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5fd927d4",
     "description": "Cycle 996ff4be (Q=0.780) proved 14 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups an",
     "domain_bridges": [],
     "domains": [
@@ -1723,7 +1704,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "996ff4be",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T07:17:30.485687+00:00",
     "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
   },
