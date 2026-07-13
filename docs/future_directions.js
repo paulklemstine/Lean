@@ -2470,7 +2470,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equations Enforce Primitivity of Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "111bebcc",
     "description": "For all integers n \u2265 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) \u2261 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 \u2261 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Ern\u00e9-Stege moment reduction.",
     "domains": [
       "Bridges"
@@ -2479,7 +2479,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
   },

@@ -6989,13 +6989,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "OEIS A001035"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "111bebcc",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7009,7 +7009,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0256",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-13T04:14:06.081224+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem labeled_posets_mod_four (n : ℕ) (hn : n ≥ 2) : (number_of_labeled_posets n) % 4 = 3 := by sorry",
       "lineage_refs": [],
@@ -7024,7 +7024,7 @@
       "source": "",
       "source_exp_id": "2606.31526v1",
       "source_path": "http://arxiv.org/abs/2606.31526v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T18:54:52.477458+00:00",
       "title": "Constant residue of labeled poset counts modulo 4"
@@ -39685,7 +39685,6 @@
     "without": 7
   },
   "selection_log": [
-    "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -39699,6 +39698,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

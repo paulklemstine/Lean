@@ -3836,7 +3836,7 @@
     "catalog_references": [
       "OEIS A001035"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "111bebcc",
     "description": "For all integers n ≥ 2, the number of labeled partially ordered sets on n points (OEIS A001035) satisfies P(n) ≡ 3 (mod 4). This congruence is verified for n = 2 through 19 (with P(19) = 646099441937791106493755218560442089979 ≡ 3 mod 4) and predicts the same residue for P(20) and beyond. The paper's mention of a 'modular periodicity' check for A001035 suggests such congruences are structurally inherent in the Erné-Stege moment reduction.",
     "domain_bridges": [
       "math.NT"
@@ -3850,7 +3850,7 @@
     "proof_strategy": "Analyze the Erné-Stege moment reduction modulo 4. Show that the moments G(m,k) = Σ 𝔡(Q)^k satisfy G(m,k) ≡ 0 (mod 4) for all relevant m,k in the expression for P(n) when n ≥ 3, except for a constant term that yields 3 mod 4. Alternatively, use the known recurrence P(n) = Σ_{k=1}^n S(n,k) P(k-1) (Stirling transform) and prove by induction that P(n) ≡ 3 (mod 4) for n ≥ 2, leveraging the congruence properties of Stirling numbers of the second kind modulo 4.",
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T18:54:52.477458+00:00",
     "title": "Constant residue of labeled poset counts modulo 4"
   },
