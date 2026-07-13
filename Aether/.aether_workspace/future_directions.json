@@ -38452,7 +38452,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b222c758",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38479,7 +38479,7 @@
       "source": "",
       "source_exp_id": "acce14cf",
       "source_path": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-12T01:03:33.365633+00:00",
       "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
