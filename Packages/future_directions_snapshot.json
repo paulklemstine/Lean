@@ -2275,7 +2275,7 @@
       "math.CO",
       "math.SP"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d954b0de",
     "description": "For every Turán graph T(n, r) with r ≥ 4 and n ≥ 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) − e) > E_S(T(n, r)). This is Theorem 1.2 of the paper, resolving a problem of Tian et al., but its formalization requires building the entire theory of Seidel matrices, Seidel energy, Turán graphs, and the reduced-order spectral machinery for blow-up graphs—a substantial formalization undertaking.",
     "domain_bridges": [
       "spectral_graph_theory",
@@ -2291,7 +2291,7 @@
     "proof_strategy": "First formalize Seidel matrices and Seidel energy in Lean, then define Turán graphs and independent-set blow-up graphs. Establish the reduced-order spectral criterion that reduces the Seidel energy comparison to eigenvalue analysis of a smaller matrix whose order depends only on the number of partite sets. Apply this criterion to the Turán graph case with r ≥ 4 and n ≥ 4r, verifying the inequality via explicit eigenvalue computation on the reduced matrix.",
     "research_mode": "team",
     "source_exp_id": "2607.06095v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-08T09:55:51.506040+00:00",
     "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
   },
