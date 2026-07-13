@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b659b436",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Uncanny Valley of Prime-Generating Formulas\n\nThis cycle established that no nonconstant integer polynomial takes a prime value\nat every input, and that in fact the inputs wher",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 24,
-      "timestamp": "2026-07-13T04:46:23",
-      "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-    },
-    {
       "cycle_id": "8e89241b",
       "domain": "Applications",
       "key_insight": "# Future Directions — Asymptotic Alternating Signs of Andrews-type q-Series\n\nThis cycle established an amplitude-domination principle: a coefficient sequence\nof the form `V(n) = (-1)^n A(n) + E(n)`, w",
@@ -499,19 +489,19 @@
       "theorem_count": 28,
       "timestamp": "2026-07-13T19:07:27",
       "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
+    },
+    {
+      "cycle_id": "c0577eb2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic–tent conjugacy (`h(t) = sin²(πt/2)` intertwining\n`f(x)=4x(1-x)` with the ten",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-13T19:24:04",
+      "title": "Deepening: Exact topological conjugacy between the smooth logisti"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "08430233",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What is proved here\n\n`TransfiniteComputation.lean` establishes a machine-checked **bridge** between\ncellular-automaton dynamics and ordinal / transfinite computation, via the t",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-11T02:51:29",
-      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-    },
     {
       "cycle_id": "01e9ab7a",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 28,
       "timestamp": "2026-07-13T19:07:27",
       "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
+    },
+    {
+      "cycle_id": "c0577eb2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic–tent conjugacy (`h(t) = sin²(πt/2)` intertwining\n`f(x)=4x(1-x)` with the ten",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-13T19:24:04",
+      "title": "Deepening: Exact topological conjugacy between the smooth logisti"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9f2f3b13",
-      "domain": "Novelty",
-      "name": "eigen_supersat_general",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "e0843845",
-      "domain": "Applications",
-      "name": "fib_carmichael_composite",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "e0843845",
-      "domain": "Applications",
-      "name": "fib_carmichael_composite",
-      "quality": 0.8
-    },
     {
       "cycle_id": "e0843845",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "radius_le_sqrt2",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "c0577eb2",
+      "domain": "Applications",
+      "name": "logistic_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c0577eb2",
+      "domain": "Applications",
+      "name": "logistic_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c0577eb2",
+      "domain": "Applications",
+      "name": "logistic_sin_sq",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-13T19:07:27",
+  "last_updated": "2026-07-13T19:24:04",
   "open_questions": [
     {
       "context": "+Everything is elementary and `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e0843845",
-        "quality": 0.8,
-        "theorems": 15,
-        "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
-      },
-      {
         "cycle_id": "0568e201",
         "quality": 0.83,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.79,
         "theorems": 28,
         "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
+      },
+      {
+        "cycle_id": "c0577eb2",
+        "quality": 0.82,
+        "theorems": 14,
+        "title": "Deepening: Exact topological conjugacy between the smooth logisti"
       }
     ],
     "Bridges": [

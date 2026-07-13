@@ -344,25 +344,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6e7a2b5e",
-    "description": "Building on cycle 5b802ccf (Q=0.820), which proved 29 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation semantics: conflict-free\nsets, the characteristic (defense) operator `charF`, admissible / complete /\np",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_5b802ccf_fd81a556",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "5b802ccf",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T06:26:53.802498+00:00",
-    "title": "Deepening: Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7473e6ed (Q=0.820), which proved 14 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (Gödel-style). Show: the fixed points of the type-forming operations cor",
     "domain_bridges": [],
@@ -435,25 +416,6 @@
     "status": "available",
     "timestamp": "2026-07-13T05:18:32.917732+00:00",
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v₂(q), v₃(q), v₄(q)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "c0577eb2",
-    "description": "Building on cycle ac37e9f5 (Q=0.820), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Geometry of the Logistic–Tent Conjugacy\n\nThis cycle established an exact topological conjugacy between the smooth logistic\nmap `f(x)=4x(1-x)` and the piecewise-linear tent map `T(t)=1-|2t-1|`, implemented\nby the strictly increasing homeomorphism `h(t)=sin²(πt/2)` of the unit int",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_ac37e9f5_bbb8db69",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ac37e9f5",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T16:32:48.088789+00:00",
-    "title": "Deepening: Exact topological conjugacy between the smooth logisti"
   },
   {
     "ambition_level": "extension",
@@ -2868,6 +2830,46 @@
     "status": "available",
     "timestamp": "2026-07-13T19:07:14.716898+00:00",
     "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic–tent conjugacy (`h(t) = sin²(πt/2)` intertwining\n`f(x)=4x(1-x)` with the tent map `T`), this cycle establishes an exact bridge to a\n*different* mathematical area — the theory of **Chebyshev / orthogonal\npolynomials** — culminating in a closed-form polynomial identity for every iterate.\n\nNew file: `Geometry/LogisticChebyshev.lean`.\n\nMain results (all proved, no `sorry`, only standard axioms):\n\n* `logistic_sin_sq`, `logistic_iterate_sin_sq` — the semiconjugacy of the logistic\n  map to angle doubling, `fⁿ(sin²φ) = sin²(2ⁿφ)`.\n* `sin_sq_eq_chebyshev` — `sin²(2ⁿφ) = (1 - T_{2ⁿ}(cos 2φ))/2`, connecting the\n  doubling picture to the Chebyshev polynomial via `T_m(cos θ) = cos(mθ)`.\n* `logisticPolyIter_eq_chebRHS` — **as polynomials**, the `n`-fold composition of\n  the logistic map equals the rescaled Chebyshev polynomial\n  `(1 - T_{2ⁿ}(1 - 2X))/2`.\n* `logistic_iterate_eq_chebyshev` — the pointwise bridge, valid for *every* real\n  `x`: `fⁿ(x) = (1 - T_{2ⁿ}(1 - 2x))/2`.\n* `chebRHS_natDegree`, `logistic_iterate_natDegree` — the `n`-th iterate has degree\n  `2ⁿ`, now read off directly from the Chebyshev degree `deg T_{2ⁿ} = 2ⁿ`.\n* `logistic_fixedPoints`, `logistic_fixedPoints_card` — the base case (`n = 1`) of\n  the periodic-point law below: the fixed points of the logistic map are exactly\n  `{0, 3/4}`, so there are `2 = 2¹` of them.\n* `logistic_iterate2_fixedPoints`, `logistic_iterate2_fixedPoints_card` — the case\n  `n = 2`: the fixed points of `f²` are exactly `{0, 3/4, (5-√5)/8, (5+√5)/8}`\n  (the two fixed points together with the genuine period-`2` orbit), so there are\n  `4 = 2²` of them. This is obtained from the exact factorisation\n  `f²(x) - x = -4·x·(x - 3/4)·(16x² - 20x + 5)`.\n\nThe cross-domain content: a chaotic smooth dynamical system's iterates are, on the\nnose, classical orthogonal polynomials. The `2ⁿ`-fold angle multiplication that\ndrives the chaos is exactly the index `2ⁿ` of the Chebyshev polynomial.\n\n## Strongest remaining conjectures\n\n1. **Exact periodic-point count `2ⁿ`.** The earlier files reduced counting\n   period-`n` points of the logistic map to counting them for the tent map. With\n   the Chebyshev identity, fixed points of `fⁿ` in `[0,1]` become solutions of\n   `T_{2ⁿ}(1-2x) = 1-2x`, i.e. `cos(2ⁿ⁺¹φ) = cos(2φ)` — a trigonometric equation\n   whose solution count in one period is exactly `2ⁿ`. Formalizing this count\n   (either by the sawtooth geometry of `Tⁿ` or via the Chebyshev root structure)\n   would prove the full `2ⁿ` law. The cases `n = 1` and `n = 2` are now **proved**\n   (`logistic_fixedPoints_card`: exactly `{0, 3/4}`, count `2 = 2¹`;\n   `logistic_iterate2_fixedPoints_card`: exactly\n   `{0, 3/4, (5-√5)/8, (5+√5)/8}`, count `4 = 2²`). The remaining task is the\n   inductive step for general `n`.\n\n2. **Invariant measure transfer.** The tent map preserves Lebesgue measure; the\n   logistic map preserves the arcsine law `dμ = dx / (π√(x(1-x)))`. The conjugacy\n   `h` should push one onto the other. This is a bridge to ergodic theory /\n   probability and would let the Chebyshev orthogonality weight (`1/√(1-y²)`)\n   be identified with the logistic invariant density.\n\n3. **Topological entropy `log 2`.** The `2ⁿ` degree / period growth gives entropy\n   `log 2` for both maps; a formal entropy computation would close the dynamical\n   picture.\n\n## Files\n\n* `Geometry/LogisticChebyshev.lean` — the Chebyshev bridge (this cycle).\n* `ComputationalEvidence.md` — exact rational sanity checks of the identity.\n\n\n# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic–tent conjugacy (`h(t) = sin²(πt/2)` intertwining\n`f(x)=4x(1-x)` with the tent map `T`), this cycle establishes an exact bridge to a\n*different* mathematical area — the theory of **Chebyshev / orthogonal\npolynomials** — culminating in a closed-form polynomial identity for every iterate.\n\nNew file: `Geometry/LogisticChebyshev.lean`.\n\nMain results (all proved, no `sorry`, only standard axioms):\n\n* `logistic_sin_sq`, `logistic_iterate_sin_sq` — the semiconjugacy of the logistic\n  map to angle doubling, `fⁿ(sin²φ) = sin²(2ⁿφ)`.\n* `sin_sq_eq_chebyshev` — `sin²(2ⁿφ) = (1 - T_{2ⁿ}(cos 2φ))/2`, connecting the\n  doubling picture to the Chebyshev polynomial via `T_m(cos θ) = cos(mθ)`.\n* `logisticPolyIter_eq_chebRHS` — **as polynomials**, the `n`-fold composition of\n  the logistic map equals the rescaled Chebyshev polynomial\n  `(1 - T_{2ⁿ}(1 - 2X))/2`.\n* `logistic_iterate_eq_chebyshev` — the pointwise bridge, valid for *every* real\n  `x`: `fⁿ(x) = (1 - T_{2ⁿ}(1 - 2x))/2`.\n* `chebRHS_natDegree`, `logistic_iterate_natDegree` — the `n`-th iterate has degree\n  `2ⁿ`, now read off directly from the Chebyshev degree `deg T_{2ⁿ} = 2ⁿ`.\n* `logistic_fixedPoints`, `logistic_fixedPoints_card` — the base case (`n = 1`) of\n  the periodic-point law below: the fixed points of the logistic map are exactly\n  `{0, 3/4}`, so there are `2 = 2¹` of them.\n* `logistic_iterate2_fixedPoints`, `logistic_iterate2_fixedPoints_card` — the case\n  `n = 2`: the fixed points of `f²` are exactly `{0, 3/4, (5-√5)/8, (5+√5)/8}`\n  (the two fixed points together with the genuine period-`2` orbit), so there are\n  `4 = 2²` of them. This is obtained from the exact factorisation\n  `f²(x) - x = -4·x·(x - 3/4)·(16x² - 20x + 5)`.\n\nThe cross-domain content: a chaotic smooth dynamical system's iterates are, on the\nnose, classical orthogonal polynomials. The `2ⁿ`-fold angle multiplication that\ndrives the chaos is exactly the index `2ⁿ` of the Chebyshev polynomial.\n\n## Strongest remaining conjectures\n\n1. **Exact periodic-point count `2ⁿ`.** The earlier files reduced counting\n   period-`n` points of the logistic map to counting them for the tent map. With\n   the Chebyshev identity, fixed points of `fⁿ` in `[0,1]` become solutions of\n   `T_{2ⁿ}(1-2x) = 1-2x`, i.e. `cos(2ⁿ⁺¹φ) = cos(2φ)` — a trigonometric equation\n   whose solution count in one period is exactly `2ⁿ`. Formalizing this count\n   (either by the sawtooth geometry of `Tⁿ` or via the Chebyshev root structure)\n   would prove the full `2ⁿ` law. The cases `n = 1` and `n = 2` are now **proved**\n   (`logistic_fixedPoints_card`: exactly `{0, 3/4}`, count `2 = 2¹`;\n   `logistic_iterate2_fixedPoints_card`: exactly\n   `{0, 3/4, (5-√5)/8, (5+√5)/8}`, count `4 = 2²`). The remaining task is the\n   inductive step for general `n`.\n\n2. **Invariant measure transfer.** The tent map preserves Lebesgue measure; the\n   logistic map preserves the arcsine law `dμ = dx / (π√(x(1-x)))`. The conjugacy\n   `h` should push one onto the other. This is a bridge to ergodic theory /\n   probability and would let the Chebyshev orthogonality weight (`1/√(1-y²)`)\n   be identified with the logistic invariant density.\n\n3. **Topological entropy `log 2`.** The `2ⁿ` degree / period growth gives entropy\n   `log 2` for both maps; a formal entropy computation would close the dynamical\n   picture.\n\n## Files\n\n* `Geometry/LogisticChebyshev.lean` — the Chebyshev bridge (this cycle).\n* `ComputationalEvidence.md` — exact rational sanity checks of the identity.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_1241",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c0577eb2",
+    "status": "available",
+    "timestamp": "2026-07-13T19:23:53.373050+00:00",
+    "title": "Building on the earlier logistic–tent conjugacy (`h(t) = sin²(πt/2)` intertwinin"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Topology of Argumentation (IX)\n\nThis cycle established, with no finiteness or well-foundedness hypothesis on the\nattack relation, the maximal-extension half of Dung's semantics: the Fundamental\nLemma, the identity *preferred = maximal complete*, and the unconditional\nexistence of preferred extensions via a chain-union / Zorn argument. Together\nwith the earlier grounded-extension development (least complete extension,\nwell-founded uniqueness) this yields a full order-theoretic picture: the complete\nextensions of an argumentation framework form a *pointed poset* whose least\nelement is the grounded extension and whose maximal elements are exactly the\npreferred extensions.\n\n## Conjecture 1 — The complete extensions form a complete meet-semilattice\n\nEvery nonempty family of complete extensions has a greatest lower bound that is\nagain complete, and this bound is computed by iterating the defense operator from\nthe intersection.\n\n*The key insight is* that the defense operator is monotone and the grounded\nconstruction is just its least fixed point started from the empty set; starting\nthe same iteration from an arbitrary intersection of complete extensions should\nconverge to the largest complete extension below all of them.\n\n*Why now?* The Fundamental Lemma and the pointed-poset characterization make the\nmissing ingredient purely order-theoretic — a fixed-point-from-below argument —\nrather than a bespoke combinatorial one, so the semilattice structure is now\nwithin reach by a uniform method.\n\n## Conjecture 2 — A dichotomy for stable existence\n\nAn argumentation framework admits a stable extension if and only if some\npreferred extension attacks every argument outside it; equivalently, stable\nextensions are precisely the preferred extensions with empty \"undecided\" region.\n\n*The key insight is* that stability was shown to be strictly stronger than\ncompleteness, yet every stable set is preferred; the gap between preferred and\nstable is exactly the set of arguments neither accepted nor attacked, so\ncontrolling that gap controls stable existence.\n\n*Why now?* With *preferred = maximal complete* proved, the search for stable\nextensions reduces to inspecting the maximal elements of a single poset, turning\nan existence question into a boundary condition on already-characterized objects.\n\n## Conjecture 3 — Topological reflection of the extension poset\n\nThe nerve of the poset of complete extensions, ordered by inclusion, is\ncontractible, reflecting the fact that the grounded extension is a canonical\nleast element to which the whole family retracts.\n\n*The key insight is* that a poset with a least element has a contractible order\ncomplex; identifying the grounded extension as that least element promotes a\nsemantic fact into a topological one.\n\n*Why now?* The pointed-poset structure isolated in this cycle is exactly the\nhypothesis under which the classical \"least element ⇒ contractible nerve\"\nprinciple applies, bridging argumentation semantics with combinatorial topology.\n\n## Conjecture 4 — Fundamental Lemma governs semi-stable and ideal semantics\n\nThe same conflict-avoidance mechanism that powers the Fundamental Lemma extends\nto semi-stable and ideal semantics: the ideal extension is the greatest\nadmissible set contained in every preferred extension, and it too arises as a\nfixed point reachable by monotone iteration.\n\n*The key insight is* that admissibility grows freely along defended arguments\nregardless of which maximality notion is imposed, so every \"optimal admissible\"\nsemantics should inherit an existence proof from the chain-union lemma.\n\n*Why now?* Having reduced preferred existence to Zorn over admissible sets, the\nidentical machine applies to any subfamily closed under directed unions, of which\nthe ideal and semi-stable families are natural candidates.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1242",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6e7a2b5e",
+    "status": "available",
+    "timestamp": "2026-07-13T19:24:07.939919+00:00",
+    "title": "This cycle established, with no finiteness or well-foundedness hypothesis on the"
   },
   {
     "ambition_level": "extension",
