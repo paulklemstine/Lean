@@ -637,6 +637,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 49ddee39 (Q=0.780), which proved 28 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle d31b8b8b (Q=0.740) proved 27 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integers d \u2265 2 and c with 1 \u2264 c \u2264 d, there exists a finite free simplicial Z2-complex K of dimension d such that coi",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_49ddee39_2fa09bc8",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "49ddee39",
+    "status": "available",
+    "timestamp": "2026-07-13T21:24:24.384798+00:00",
+    "title": "Deepening: Sharp maximal excess of co-index under suspension for all feasible sta"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 538f30a2 (Q=0.780), which proved 47 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show",
     "domains": [
       "Tropical"
@@ -1714,20 +1728,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The mission asked to interrogate the claim:"
   },
   {
-    "consumed_by_exp_id": "49ddee39",
-    "description": "Cycle d31b8b8b (Q=0.740) proved 27 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integers d \u2265 2 and c with 1 \u2264 c \u2264 d, there exists a finite free simplicial Z2-complex K of dimension d such that coind(K) = c and coind(suspension K) = d + 1. This generalizes the paper's re",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_d31b8b8b_5f73fb61",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "d31b8b8b",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T18:50:07.324365+00:00",
-    "title": "Close Proofs: Sharp maximal excess of co-index under suspension for all feasible sta"
-  },
-  {
     "consumed_by_exp_id": "fb7fe841",
     "description": "Cycle d954b0de (Q=0.740) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every Tur\u00e1n graph T(n, r) with r \u2265 4 and n \u2265 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) \u2212 e) > E_S(T(n, r)). This is Theorem 1.2 of the pa",
     "domains": [
@@ -2021,6 +2021,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T20:48:13.997205+00:00",
     "title": "The file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct n \u2245 Oct(m+n+1)`, and\nthe classical suspension jump recovered as the special case `L = S\u2070`. The following\nconjectures push toward the sharp equality and the full maximal-excess phenomenon.\n\n## Conjecture 1 (Sharp join law)\nFor free \u2124\u2082-complexes `K, L`, the co-index is *exactly* additive with a shift:\n`coind(K * L) = coind(K) + coind(L) + 1`.\nThe key insight is that the lower bound is realised by an explicit coordinate-split\nequivariant map, so the entire difficulty concentrates in a single matching upper\nbound `coind(K * L) \u2264 coind(K) + coind(L) + 1`, which should follow from a\n\u2124\u2082-index (equivariant cohomology) obstruction that is itself additive under joins.\nWhy now? The join bifunctor and its explicit connecting map are now in hand, so the\nonly missing ingredient is a purely obstruction-theoretic upper bound \u2014 a\nself-contained, isolable target.\n\n## Conjecture 2 (Maximal excess for all feasible starting co-index)\nFor all integers `d \u2265 2` and `c` with `1 \u2264 c \u2264 d`, there is a finite free\n\u2124\u2082-complex `K` of dimension `d` with `coind(K) = c` and `coind(S K) = d + 1`.\nThe key insight is that the \"excess\" `d + 1 - c` can be manufactured by joining a\nlow-co-index but high-dimensional building block (a complex whose co-index is\npinned below its dimension by a Borsuk\u2013Ulam obstruction) with a sphere that supplies\nthe missing co-index only after one further suspension. Why now? The join\nconstruction gives a flexible dial for dimension independent of co-index, exactly\nthe freedom needed to separate `c` from `d`.\n\n## Conjecture 3 (Borsuk\u2013Ulam upper bound in the octahedral tower)\nAny equivariant simplicial map `Oct n \u2192 Oct k` forces `n \u2264 k`; equivalently\n`coind(Oct k) = k` on the nose.\nThe key insight is that the base case (no equivariant map to `Oct 0` from a\nhigher sphere) already isolates the parity/degree obstruction, and the general case\nshould follow by an inductive \"peel one coordinate\" argument compatible with the\njoin splitting `Oct k \u2245 Oct 0 * Oct(k-1)`. Why now? The join splitting turns the\nglobal obstruction into a one-step induction that reuses the verified base case.\n\n## Conjecture 4 (Excess is monotone but not superadditive under iterated suspension)\nWriting `S^j K` for the `j`-fold suspension, the excess sequence\n`e_j := coind(S^j K) - (dim(S^j K))` is non-increasing in `j` and stabilises at\n`0` after finitely many steps.\nThe key insight is that each suspension can raise the co-index by *at most* one while\nraising the dimension by exactly one, so the gap can only shrink; stabilisation at\n`0` is the assertion that suspension eventually saturates the Borsuk\u2013Ulam bound.\nWhy now? The exact `+1` dimension law and the `\u2265 +1` co-index law are both proved,\nso the monotonicity direction is within reach and only the saturation needs the\nupper bound of Conjecture 1.\n",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_1247",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "49ddee39",
+    "status": "available",
+    "timestamp": "2026-07-13T21:24:15.573588+00:00",
+    "title": "Constructive, lower-bound half of the co-index theory"
   },
   {
     "consumed_by_exp_id": "",

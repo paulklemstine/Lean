@@ -861,6 +861,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 49ddee39 (Q=0.780), which proved 28 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle d31b8b8b (Q=0.740) proved 27 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integers d ≥ 2 and c with 1 ≤ c ≤ d, there exists a finite free simplicial Z2-complex K of dimension d such that coi",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_49ddee39_2fa09bc8",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "49ddee39",
+    "status": "available",
+    "timestamp": "2026-07-13T21:24:24.384798+00:00",
+    "title": "Deepening: Sharp maximal excess of co-index under suspension for all feasible sta"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 538f30a2 (Q=0.780), which proved 47 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show",
     "domain_bridges": [],
     "domains": [
@@ -1673,25 +1692,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5fd927d4",
-    "description": "Cycle 996ff4be (Q=0.780) proved 14 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups an",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_996ff4be_9807c88d",
-    "lineage_refs": [],
-    "priority_score": 0.8300000000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "996ff4be",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T07:17:30.485687+00:00",
-    "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set — they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line — they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line — they are a fractal curve.",
     "domain_bridges": [],
@@ -2452,25 +2452,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "49ddee39",
-    "description": "Cycle d31b8b8b (Q=0.740) proved 27 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integers d ≥ 2 and c with 1 ≤ c ≤ d, there exists a finite free simplicial Z2-complex K of dimension d such that coind(K) = c and coind(suspension K) = d + 1. This generalizes the paper's re",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_d31b8b8b_5f73fb61",
-    "lineage_refs": [],
-    "priority_score": 0.79,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d31b8b8b",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T18:50:07.324365+00:00",
-    "title": "Close Proofs: Sharp maximal excess of co-index under suspension for all feasible sta"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "fb7fe841",
     "description": "Cycle d954b0de (Q=0.740) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every Turán graph T(n, r) with r ≥ 4 and n ≥ 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) − e) > E_S(T(n, r)). This is Theorem 1.2 of the pa",
     "domain_bridges": [],
@@ -2862,6 +2843,46 @@
     "status": "available",
     "timestamp": "2026-07-13T20:48:13.997205+00:00",
     "title": "The file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Sharp maximal excess of the ℤ₂ co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free ℤ₂-complexes satisfies\n`coind(K * L) ≥ coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct n ≅ Oct(m+n+1)`, and\nthe classical suspension jump recovered as the special case `L = S⁰`. The following\nconjectures push toward the sharp equality and the full maximal-excess phenomenon.\n\n## Conjecture 1 (Sharp join law)\nFor free ℤ₂-complexes `K, L`, the co-index is *exactly* additive with a shift:\n`coind(K * L) = coind(K) + coind(L) + 1`.\nThe key insight is that the lower bound is realised by an explicit coordinate-split\nequivariant map, so the entire difficulty concentrates in a single matching upper\nbound `coind(K * L) ≤ coind(K) + coind(L) + 1`, which should follow from a\nℤ₂-index (equivariant cohomology) obstruction that is itself additive under joins.\nWhy now? The join bifunctor and its explicit connecting map are now in hand, so the\nonly missing ingredient is a purely obstruction-theoretic upper bound — a\nself-contained, isolable target.\n\n## Conjecture 2 (Maximal excess for all feasible starting co-index)\nFor all integers `d ≥ 2` and `c` with `1 ≤ c ≤ d`, there is a finite free\nℤ₂-complex `K` of dimension `d` with `coind(K) = c` and `coind(S K) = d + 1`.\nThe key insight is that the \"excess\" `d + 1 - c` can be manufactured by joining a\nlow-co-index but high-dimensional building block (a complex whose co-index is\npinned below its dimension by a Borsuk–Ulam obstruction) with a sphere that supplies\nthe missing co-index only after one further suspension. Why now? The join\nconstruction gives a flexible dial for dimension independent of co-index, exactly\nthe freedom needed to separate `c` from `d`.\n\n## Conjecture 3 (Borsuk–Ulam upper bound in the octahedral tower)\nAny equivariant simplicial map `Oct n → Oct k` forces `n ≤ k`; equivalently\n`coind(Oct k) = k` on the nose.\nThe key insight is that the base case (no equivariant map to `Oct 0` from a\nhigher sphere) already isolates the parity/degree obstruction, and the general case\nshould follow by an inductive \"peel one coordinate\" argument compatible with the\njoin splitting `Oct k ≅ Oct 0 * Oct(k-1)`. Why now? The join splitting turns the\nglobal obstruction into a one-step induction that reuses the verified base case.\n\n## Conjecture 4 (Excess is monotone but not superadditive under iterated suspension)\nWriting `S^j K` for the `j`-fold suspension, the excess sequence\n`e_j := coind(S^j K) - (dim(S^j K))` is non-increasing in `j` and stabilises at\n`0` after finitely many steps.\nThe key insight is that each suspension can raise the co-index by *at most* one while\nraising the dimension by exactly one, so the gap can only shrink; stabilisation at\n`0` is the assertion that suspension eventually saturates the Borsuk–Ulam bound.\nWhy now? The exact `+1` dimension law and the `≥ +1` co-index law are both proved,\nso the monotonicity direction is within reach and only the saturation needs the\nupper bound of Conjecture 1.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_1247",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "49ddee39",
+    "status": "available",
+    "timestamp": "2026-07-13T21:24:15.573588+00:00",
+    "title": "Constructive, lower-bound half of the co-index theory"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Category Theory of Jokes\n\nThis work develops surprise (humor) as a genuine algebraic/categorical invariant of\nsetups. Three complementary threads are now formalized:\n\n* **Universal resolutions** (`UniversalJoke.lean`): the optimal resolution of a setup is\n  a terminal object, unique up to unique coherent isomorphism, and rigid.\n* **Metric geometry of surprise** (`JokeHumorMetric.lean`): surprise is the diameter of\n  the resolution configuration, nonnegative, monotone, and Lipschitz-stable.\n* **Algebra of surprise** (`JokeSurpriseAlgebra.lean`, this cycle): surprise is a\n  monotone **functor** `Setup ⥤ ℝ` from the poset of setups (ordered by refinement) to\n  the reals, inflationary under juxtaposition and **subadditive under shared context**.\n\n## Directions\n\n1. **Lax monoidal structure.** `humor_union_le_add_of_inter` is the lax structure map of\n   surprise for the \"juxtaposition with shared context\" monoidal structure on `Setup`.\n   Formalize `Setup` as a (partial) monoidal category and upgrade `surpriseFunctor` to a\n   lax monoidal functor `(Setup, ∪) ⥤ (ℝ, +)`. The failure of unconditional\n   subadditivity (documented in `ComputationalEvidence.md`) shows it is genuinely *lax*,\n   not strong.\n\n2. **Higher-dimensional setups.** Replace `Finset ℝ` by finite configurations in `ℝⁿ`\n   and define surprise as the diameter of the convex hull. The functoriality and\n   subadditivity statements should survive with the metric diameter in place of the\n   one-dimensional range.\n\n3. **Colimits as combination.** Interpret `∪` as a coproduct-flavored colimit in the\n   setup lattice and `∩` as the dual; recast `humor_union_ge_left/right` and\n   `humor_inter_le_left` as (co)continuity-style properties of `surpriseFunctor`.\n\n4. **Tightness and extremal setups.** Characterize exactly the pairs `(S, T)` for which\n   `humor(S∪T) = humor S + humor T` (equality in subadditivity). The evidence table\n   suggests this happens iff the shared pivot is an extreme of both parts.\n\n5. **Enriched / metric functoriality.** Combine the Lipschitz stability of surprise with\n   its functoriality to view `surpriseFunctor` as a functor enriched over the reals as a\n   metric-enriched category.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1248",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5fd927d4",
+    "status": "available",
+    "timestamp": "2026-07-13T21:24:28.676426+00:00",
+    "title": "This work develops surprise (humor) as a genuine algebraic/categorical invariant"
   },
   {
     "ambition_level": "extension",

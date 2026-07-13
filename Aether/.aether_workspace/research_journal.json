@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5b802ccf",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Topology of Argumentation (VIII)\n\nThis cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving that\na **well-founded** Dung argumentation framework has a **un",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-13T06:26:53",
-      "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
-    },
-    {
-      "cycle_id": "05e37ec1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Stone Duality for Neural Networks\n\nThis cycle established that a neural network with `k` threshold neurons carries a\ncanonical **Stone dual**: the preimage homomorphism from the",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 27,
-      "timestamp": "2026-07-13T06:44:59",
-      "title": "Deepening: Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-    },
-    {
       "cycle_id": "111bebcc",
       "domain": "Applications",
       "key_insight": "# Future Directions: Congruences for Labeled Partial Orders\n\nThe number `P(n)` of partial orders on `n` labeled points is known to be odd for\nevery `n`, and this parity is explained structurally: orde",
@@ -499,29 +479,29 @@
       "theorem_count": 12,
       "timestamp": "2026-07-13T20:48:23",
       "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+    },
+    {
+      "cycle_id": "49ddee39",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Sharp maximal excess of the ℤ₂ co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free ℤ₂-complexes satisfies\n`coi",
+      "quality_score": 0.78,
+      "sorry_count": 5,
+      "theorem_count": 28,
+      "timestamp": "2026-07-13T21:24:24",
+      "title": "Close Proofs: Sharp maximal excess of co-index under suspension for all feasible sta"
+    },
+    {
+      "cycle_id": "5fd927d4",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Category Theory of Jokes\n\nThis work develops surprise (humor) as a genuine algebraic/categorical invariant of\nsetups. Three complementary threads are now formalized:\n\n* **Univ",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T21:24:35",
+      "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fec9de1f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Information-Theoretic Limits of Mind Uploading\n\nThis cycle established that the description length of a neural connectome is\nquadratic in the neuron count, that no computable code",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 14,
-      "timestamp": "2026-07-11T05:18:16",
-      "title": "Digital Immortality: Can a Mind Be Encoded?"
-    },
-    {
-      "cycle_id": "46d2d021",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Self-Modifying Halting ⟷ Lawvere/Cantor Bridge\n\nThis cycle contributes `Catalog/Computation/SelfModifyingLawvereBridge.lean`, a\nself-contained cross-domain bridge connecting **fi",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-11T06:06:45",
-      "title": "Deepening: Self-Modifying Code That Cannot Be Stopped"
-    },
     {
       "cycle_id": "6e208619",
       "domain": "Applications",
@@ -2501,33 +2481,29 @@
       "theorem_count": 12,
       "timestamp": "2026-07-13T20:48:23",
       "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+    },
+    {
+      "cycle_id": "49ddee39",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Sharp maximal excess of the ℤ₂ co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free ℤ₂-complexes satisfies\n`coi",
+      "quality_score": 0.78,
+      "sorry_count": 5,
+      "theorem_count": 28,
+      "timestamp": "2026-07-13T21:24:24",
+      "title": "Close Proofs: Sharp maximal excess of co-index under suspension for all feasible sta"
+    },
+    {
+      "cycle_id": "5fd927d4",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Category Theory of Jokes\n\nThis work develops surprise (humor) as a genuine algebraic/categorical invariant of\nsetups. Three complementary threads are now formalized:\n\n* **Univ",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-13T21:24:35",
+      "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "162989ab",
-      "domain": "Novelty",
-      "name": "uses",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "162989ab",
-      "domain": "Novelty",
-      "name": "sigma_prime_pow",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "162989ab",
-      "domain": "Novelty",
-      "name": "sigma_prime",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5acf2050",
-      "domain": "Applications",
-      "name": "norm_sq_eq",
-      "quality": 0.82
-    },
     {
       "cycle_id": "5acf2050",
       "domain": "Applications",
@@ -2803,17 +2779,34 @@
       "domain": "Applications",
       "name": "uv_valley_value",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "49ddee39",
+      "domain": "Applications",
+      "name": "to",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "5fd927d4",
+      "domain": "Applications",
+      "name": "humor_union_eq",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "5fd927d4",
+      "domain": "Applications",
+      "name": "humor_union_ge_left",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "5fd927d4",
+      "domain": "Applications",
+      "name": "humor_union_ge_right",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-13T20:48:23",
+  "last_updated": "2026-07-13T21:24:35",
   "open_questions": [
-    {
-      "context": "Everything is `sorry`-free and uses only `import Mathlib`; the file compiles",
-      "cycle_id": "3959b92d",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-13T01:25:17"
-    },
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "2a098803",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-13T20:14:39"
+    },
+    {
+      "context": "of spheres.  All theorems below are proved with no `sorry`.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "49ddee39",
+      "domain": "Applications",
+      "sorry_count": 5,
+      "timestamp": "2026-07-13T21:24:24"
     }
   ],
   "research_threads": {
@@ -3083,18 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f347bf96",
-        "quality": 0.78,
-        "theorems": 16,
-        "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded En"
-      },
-      {
-        "cycle_id": "adcea684",
-        "quality": 0.7,
-        "theorems": 21,
-        "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
-      },
-      {
         "cycle_id": "ee7062d3",
         "quality": 0.82,
         "theorems": 20,
@@ -3141,6 +3129,18 @@
         "quality": 0.78,
         "theorems": 12,
         "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
+      },
+      {
+        "cycle_id": "49ddee39",
+        "quality": 0.78,
+        "theorems": 28,
+        "title": "Close Proofs: Sharp maximal excess of co-index under suspension for all feasible"
+      },
+      {
+        "cycle_id": "5fd927d4",
+        "quality": 0.8,
+        "theorems": 9,
+        "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
       }
     ],
     "Bridges": [
