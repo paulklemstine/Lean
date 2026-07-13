@@ -1,166 +1,197 @@
-# Mixed-Radix Positional Number Systems: A Unified Theory of Uniqueness and Existence, with the Factorial System as a Special Case
+# The Topology of Knotted Light: The Winding Number of Orbital-Angular-Momentum Beams
+
+**Author:** Aristotle
+**Date:** 2026-07-13
 
 ## Abstract
 
-We develop, from first principles, the theory of **mixed-radix positional number systems**: positional numeral systems in which each digit position carries its own base. Fixing a sequence of positive bases $b_0, b_1, b_2, \dots$, the place value of position $i$ is the running product $P_i = \prod_{j<i} b_j$, a digit $c_i$ is *valid* when $c_i < b_i$, and a length-$k$ numeral $c_0, \dots, c_{k-1}$ represents the integer $\sum_{i<k} c_i P_i$. We prove two structural theorems. First, a **uniqueness theorem**: two valid length-$k$ numerals with the same value are identical digit-for-digit. Second, an **existence theorem**: every integer $n$ with $0 \le n < P_k$ is represented by an explicit valid numeral obtained by greedy digit extraction. Together these establish that, for every length $k$, valid numerals biject with the integer interval $[0, P_k)$. The proof of uniqueness is **direct and non-circular**: it uses only a size bound and the Euclidean splitting identities, never surjectivity, cardinality, or an enumeration. As special cases we recover ordinary base-$N$ notation (constant bases $b_i = N$, giving $P_i = N^i$) and the **factorial number system** (bases $b_i = i+1$, giving $P_i = i!$). Finally, we show that the classical factorial-system uniqueness theorem is a one-line corollary of the general theorem, transported along the identity $\prod_{j<i}(j+1) = i!$; this demonstrates that the general theory genuinely subsumes, rather than merely restates, the factorial case. We also discuss the degenerate base $b_i = 0$, the role of the running product as the sole carrier of counting information, algorithms, applications to permutation ranking, and directions for future work.
+A laser beam carrying orbital angular momentum (OAM) — colloquially, *knotted light* — is distinguished by an azimuthal phase factor $e^{i\ell\theta}$ whose integer exponent $\ell$, the *topological charge*, counts how many times the wavefront twists around the beam axis per period. We give a self-contained development of the topological charge as a genuine **winding number**, defined through the classical logarithmic-derivative contour integral $w(\varphi) = \frac{1}{2\pi i}\oint \varphi'/\varphi\,d\theta$. Our central result identifies the winding number of the OAM phase field $e^{i\ell\theta}$ with the integer $\ell$ exactly. From this we obtain quantization of the charge, additivity of charges under beam superposition (multiplication), a conservation law for a family of superposed beams, single-valuedness of the phase field, and a precise statement of the on-axis phase singularity: the physical amplitude $r^{|\ell|}e^{i\ell\theta}$ vanishes on the axis precisely when $\ell \neq 0$ and is nowhere zero off the axis. We further establish two results that overturn plausible-sounding but false conjectures: the topological charge can be negative (optical vortices possess handedness), and the product of two vortex beams of opposite charge is a nonvanishing constant field of winding number zero (the singularities annihilate). Throughout, every statement is accompanied by a complete proof sketch.
 
-**Keywords:** mixed-radix, positional number system, factorial number system, factoradic, radix, Euclidean division, uniqueness of representation, permutation ranking.
+**Keywords:** orbital angular momentum, topological charge, winding number, optical vortex, phase singularity, quantization, contour integral, knotted light.
 
 ## 1. Introduction
 
-A positional (place-value) number system represents an integer as a weighted sum of digits, where the weights are determined by position. In the ubiquitous base-$N$ systems the weight of position $i$ is $N^i$, a single fixed base $N$ raised to the position. Mixed-radix systems relax this rigidity: they allow a *different* base at each position. Familiar examples abound — timekeeping (seconds, minutes, hours, days), historical monetary systems, and the odometer-like counters that mix units — but the phenomenon is best studied abstractly, at the level where all such systems are instances of one construction.
+Structured light — beams engineered with spatially varying amplitude, phase, and polarization — has grown from a theoretical curiosity into a mainstay of modern optics. Among the most striking structured beams are those carrying **orbital angular momentum (OAM)**. Whereas an ordinary plane wave has flat wavefronts, an OAM beam has helical wavefronts that spiral around the propagation axis. The signature of this helicity is an azimuthal phase factor $e^{i\ell\theta}$, where $\theta$ is the azimuthal angle around the axis and $\ell \in \mathbb{Z}$ is the **topological charge**.
 
-Two systems anchor the discussion. The first is ordinary base-$N$ notation, the constant-base case. The second is the **factorial number system** (also called *factoradic*), in which the place values are the factorials $1!, 2!, 3!, \dots$ and the digit at position $i$ ranges over $0, 1, \dots, i$. The factorial system is the natural coordinate system for permutations: since there are $i!$ arrangements of $i$ symbols, factoradic digits encode the *Lehmer code* of a permutation and support direct ranking and unranking without enumeration.
+Physically, $\ell$ counts the number of $2\pi$ phase twists accumulated on one loop around the axis, and each photon in the beam carries orbital angular momentum $\ell\hbar$. The charge $\ell$ is remarkably robust: it is a topological invariant, immune to continuous perturbations of the field that preserve the isolated on-axis zero. This robustness underlies applications ranging from optical trapping and micro-rotation, to high-dimensional classical and quantum communication, to super-resolution microscopy and astronomical coronagraphy.
 
-The purpose of this paper is to present a single parameterized theory that contains both systems, to prove its two foundational theorems (uniqueness and existence) by elementary and non-circular arguments, and to exhibit the factorial system precisely as the instance $b_i = i+1$, deducing its uniqueness theorem as a corollary. A guiding methodological point is that the proofs depend only on two features of a system — the *running product* of the bases and the *local digit bound* — and never on the arithmetic of any individual base. This is what makes the generalization faithful: the specialized factorial proof survives the generalization unchanged in structure.
+At the center of an OAM beam lies a **phase singularity**: a point (in cross-section) or line (in three dimensions) where the amplitude vanishes and the phase is undefined. The existence of this dark thread is forced by the twisting of the phase, and the strength of the twist is precisely $\ell$.
+
+This paper formalizes the identification of the topological charge with a mathematical **winding number** and derives its principal algebraic and topological properties from first principles. Our contributions are:
+
+1. A precise definition of the winding number of a loop via the logarithmic-derivative contour integral, and a proof that for the OAM phase field it equals the integer charge (Section 4).
+2. Quantization of the topological charge as an immediate corollary (Section 4).
+3. The algebra of charges: additivity under superposition, a conservation law over families, and single-valuedness (Sections 3 and 4).
+4. A rigorous account of the on-axis phase singularity (Section 5).
+5. Two "contrarian" results refuting natural but false conjectures: negativity of the charge and annihilation of opposite vortices (Section 6).
+
+Every result is stated inline with a complete proof sketch, so the development is self-contained.
 
 ## 2. Definitions
 
-Throughout, digits and bases are natural numbers, and division is Euclidean (quotient and remainder over $\mathbb{N}$).
+We work throughout with complex-valued fields of a single real (azimuthal) variable.
 
-**Definition 2.1 (Bases and running product).** A *base sequence* is a function $b : \mathbb{N} \to \mathbb{N}$. Its *running product* is
-$$P_k := \prod_{i<k} b_i = b_0 b_1 \cdots b_{k-1}, \qquad P_0 = 1.$$
-Equivalently, $P_0 = 1$ and $P_{k+1} = P_k \cdot b_k$.
+**Definition 2.1 (OAM phase field).** For an integer charge $\ell \in \mathbb{Z}$, the *azimuthal phase field* of an OAM beam is the function
+$$\varphi_\ell : \mathbb{R} \to \mathbb{C}, \qquad \varphi_\ell(\theta) = e^{i\ell\theta}.$$
+It takes values on the unit circle and represents the transverse phase structure of the beam at azimuthal angle $\theta$.
 
-**Definition 2.2 (Value).** For a digit function $c : \mathbb{N} \to \mathbb{N}$ and a length $k$, the *length-$k$ value* is
-$$V(c, k) := \sum_{i<k} c_i\, P_i.$$
-It satisfies $V(c, 0) = 0$ and the peeling recurrence $V(c, k+1) = V(c, k) + c_k\, P_k$.
+**Definition 2.2 (Beam amplitude profile).** The physical amplitude of a Laguerre–Gauss–like vortex beam, retaining its near-axis radial factor, is
+$$A_\ell : \mathbb{R}_{\ge 0} \times \mathbb{R} \to \mathbb{C}, \qquad A_\ell(r,\theta) = r^{|\ell|}\, e^{i\ell\theta},$$
+where $r$ denotes the radial distance from the beam axis. The factor $r^{|\ell|}$ encodes the vanishing of intensity at the vortex core.
 
-**Definition 2.3 (Validity).** A digit function $c$ is *valid up to length $k$*, written $\mathrm{Valid}(c, k)$, if $c_i < b_i$ for all $i < k$. Validity is monotone: $\mathrm{Valid}(c, k+1)$ implies $\mathrm{Valid}(c, k)$.
+**Definition 2.3 (Winding number).** For a differentiable loop $\varphi : \mathbb{R} \to \mathbb{C}$ that is nonzero on $[0, 2\pi]$, the *winding number* over one full turn is
+$$w(\varphi) = \frac{1}{2\pi i}\int_0^{2\pi} \frac{\varphi'(\theta)}{\varphi(\theta)}\, d\theta.$$
+The integrand $\varphi'/\varphi$ is the logarithmic derivative of $\varphi$; its integral measures the total change of $\arg\varphi$ around the loop, and division by $2\pi$ converts this to a count of complete revolutions.
 
-**Definition 2.4 (Digit extraction).** For an integer $n$, the *extracted digit* at position $i$ is
-$$d_i(n) := \left\lfloor \frac{n}{P_i} \right\rfloor \bmod b_i.$$
+These three definitions suffice for the entire development. All results below concern $\varphi_\ell$, $A_\ell$, and $w$.
 
-Two instances organize the whole paper.
+## 3. The algebra of OAM phases
 
-**Example 2.5 (Base-$N$).** With $b_i = N$ constant, $P_k = N^k$, and Definition 2.2 is ordinary base-$N$ notation; validity is the familiar $0 \le c_i < N$.
+We first record the elementary algebraic properties of the phase fields; these hold for all $\theta \in \mathbb{R}$ and require only the functional equation of the exponential.
 
-**Example 2.6 (Factorial system).** With $b_i = i+1$, the running product is $P_k = \prod_{i<k}(i+1) = k!$, so the place values are the factorials. Validity $c_i < i+1$ is equivalent to the factoradic bound $c_i \le i$.
+**Proposition 3.1 (Trivial charge).** $\varphi_0(\theta) = 1$ for all $\theta$.
 
-## 3. The Size Bound
+*Proof.* $\varphi_0(\theta) = e^{i\cdot 0\cdot\theta} = e^0 = 1$. $\square$
 
-The linchpin of the entire development is that a valid numeral cannot reach the next place value.
+**Proposition 3.2 (Additivity of charge under superposition).** For all $\ell, m \in \mathbb{Z}$,
+$$\varphi_\ell(\theta)\,\varphi_m(\theta) = \varphi_{\ell + m}(\theta).$$
 
-**Lemma 3.1 (Positivity of the running product under validity).** If $\mathrm{Valid}(c, k+1)$, then $P_k > 0$.
+*Proof.* Using $e^a e^b = e^{a+b}$,
+$$e^{i\ell\theta}\,e^{im\theta} = e^{i\ell\theta + im\theta} = e^{i(\ell+m)\theta}. \qquad \square$$
 
-*Proof sketch.* Each factor $b_i$ for $i < k$ satisfies $b_i > c_i \ge 0$, hence $b_i \ge 1$. A product of positive naturals is positive. $\square$
+Multiplying two OAM fields therefore corresponds to *adding* their topological charges — the multiplicative structure of the fields mirrors the additive structure of the charges $(\mathbb{Z}, +)$.
 
-**Lemma 3.2 (Size bound).** If $\mathrm{Valid}(c, k)$, then
-$$V(c, k) < P_k.$$
+**Proposition 3.3 (Opposite charges).** For all $\ell \in \mathbb{Z}$,
+$$\varphi_\ell(\theta)\,\varphi_{-\ell}(\theta) = 1.$$
 
-*Proof sketch.* Induction on $k$. For $k = 0$ both sides are $0 < 1$. For the step, assume the bound for length $k$. By the recurrence,
-$$V(c, k+1) = V(c, k) + c_k P_k < P_k + c_k P_k = (c_k + 1) P_k \le b_k P_k = P_{k+1},$$
-using the induction hypothesis $V(c, k) < P_k$ and the validity $c_k + 1 \le b_k$. $\square$
+*Proof.* By Proposition 3.2, $\varphi_\ell\varphi_{-\ell} = \varphi_{\ell + (-\ell)} = \varphi_0 = 1$ by Proposition 3.1. $\square$
 
-This is the mixed-radix analogue of "a $k$-digit base-$N$ number is less than $N^k$."
+**Proposition 3.4 (Conservation of total charge).** Let $s$ be a finite index set and $f : s \to \mathbb{Z}$ an assignment of charges. Then
+$$\prod_{i \in s} \varphi_{f(i)}(\theta) = \varphi_{\sum_{i \in s} f(i)}(\theta).$$
 
-## 4. The Splitting Identities
+*Proof.* By induction on $s$. The empty product is $1 = \varphi_0$, matching the empty sum. For the inductive step, on adjoining a new element $a$,
+$$\varphi_{f(a)}\prod_{i} \varphi_{f(i)} = \varphi_{f(a)}\,\varphi_{\sum_i f(i)} = \varphi_{f(a) + \sum_i f(i)}$$
+by Proposition 3.2, which is $\varphi$ of the new total sum. $\square$
 
-Because the tail can never accumulate a whole top place value, the top digit and the tail decouple under Euclidean division by $P_k$.
+Proposition 3.4 is a conservation law: superposing (multiplying) an arbitrary finite family of OAM beams yields a beam whose charge is the sum of the constituent charges.
 
-**Lemma 4.1 (Division recovers the top digit).** If $\mathrm{Valid}(c, k+1)$, then
-$$\left\lfloor \frac{V(c, k+1)}{P_k} \right\rfloor = c_k.$$
+**Proposition 3.5 (Single-valuedness / periodicity).** For all $\ell \in \mathbb{Z}$ and $\theta \in \mathbb{R}$,
+$$\varphi_\ell(\theta + 2\pi) = \varphi_\ell(\theta).$$
 
-*Proof sketch.* Write $V(c, k+1) = V(c, k) + c_k P_k$. Since $V(c, k) < P_k$ by Lemma 3.2 (applied to the restriction, valid by monotonicity) and $P_k > 0$ by Lemma 3.1, the quotient of $V(c,k) + c_k P_k$ by $P_k$ is $c_k$ (the low part contributes nothing to the quotient). $\square$
+*Proof.* Expand the exponent:
+$$i\ell(\theta + 2\pi) = i\ell\theta + i\ell\cdot 2\pi,$$
+so $\varphi_\ell(\theta + 2\pi) = e^{i\ell\theta}\,e^{2\pi i\ell}$. Since $\ell$ is an integer, $e^{2\pi i \ell} = 1$, and the claim follows. $\square$
 
-**Lemma 4.2 (Remainder recovers the tail).** If $\mathrm{Valid}(c, k+1)$, then
-$$V(c, k+1) \bmod P_k = V(c, k).$$
+Proposition 3.5 is the physical consistency condition — the field must return to itself after a full revolution — and it is precisely the fact that $\ell \in \mathbb{Z}$ (rather than a fraction) that makes it hold. Fractional charges would render the field multivalued.
 
-*Proof sketch.* Again $V(c, k+1) = V(c, k) + c_k P_k$; the term $c_k P_k$ is a multiple of $P_k$, and $V(c, k) < P_k$, so the remainder is exactly $V(c, k)$. $\square$
+## 4. The winding number equals the charge
 
-## 5. Uniqueness
+We now compute the winding number of an OAM phase field. The key computational input is the derivative of $\varphi_\ell$.
 
-**Theorem 5.1 (Uniqueness of valid representations).** *If $\mathrm{Valid}(c, k)$, $\mathrm{Valid}(d, k)$, and $V(c, k) = V(d, k)$, then $c_i = d_i$ for all $i < k$.*
+**Lemma 4.1 (Derivative of the phase field).** The map $\varphi_\ell$ is differentiable and
+$$\varphi_\ell'(\theta) = i\ell\, \varphi_\ell(\theta) = i\ell\, e^{i\ell\theta}.$$
 
-*Proof sketch.* Induction on $k$. The base case $k=0$ is vacuous. For the step, suppose the two valid length-$(k+1)$ numerals share a value. Applying Lemma 4.1 to both and equating quotients gives $c_k = d_k$; applying Lemma 4.2 to both and equating remainders gives $V(c, k) = V(d, k)$. The induction hypothesis (validity restricts by monotonicity) yields $c_i = d_i$ for all $i < k$, and combined with $c_k = d_k$ this covers all $i < k+1$. $\square$
+*Proof.* Write $\varphi_\ell = \exp \circ g$ with $g(\theta) = i\ell\theta$ (viewing $\theta \mapsto \theta$ as a real-to-complex embedding). Then $g'(\theta) = i\ell$, and by the chain rule together with the fact that $\exp' = \exp$,
+$$\varphi_\ell'(\theta) = g'(\theta)\, e^{g(\theta)} = i\ell\, e^{i\ell\theta}. \qquad \square$$
 
-We stress that this proof is **direct and non-circular**: it invokes only the size bound (Lemma 3.2) and the splitting identities (Lemmas 4.1, 4.2), each proved from arithmetic and the definition of validity. It does not pass through cardinality, surjectivity, a counting bijection, or any enumeration theorem. In particular the existence results of the next section are logically downstream of uniqueness and are not used in its proof.
+**Theorem 4.2 (Topological charge = winding number).** For every $\ell \in \mathbb{Z}$,
+$$w(\varphi_\ell) = \ell.$$
 
-## 6. Existence and the Counting Bijection
+*Proof.* On the interval of integration the field is nonzero, since $e^{i\ell\theta} \neq 0$ for all $\theta$. By Lemma 4.1 the logarithmic derivative is constant:
+$$\frac{\varphi_\ell'(\theta)}{\varphi_\ell(\theta)} = \frac{i\ell\, e^{i\ell\theta}}{e^{i\ell\theta}} = i\ell.$$
+Hence
+$$w(\varphi_\ell) = \frac{1}{2\pi i}\int_0^{2\pi} i\ell\, d\theta = \frac{1}{2\pi i}\cdot i\ell\cdot 2\pi = \ell. \qquad \square$$
 
-**Lemma 6.1 (Extracted digits are valid).** If $b_i > 0$ for all $i$, then $\mathrm{Valid}(d(n), k)$ for every $n$ and $k$; indeed $d_i(n) = \lfloor n/P_i\rfloor \bmod b_i < b_i$ whenever $b_i > 0$.
+Theorem 4.2 is the central result: the abstract, geometry-laden notion of "how many times the wavefront twists" is recovered exactly by the analytic contour integral, and the answer is the integer $\ell$.
 
-*Proof sketch.* A remainder modulo a positive number is strictly below it. $\square$
+**Corollary 4.3 (Charge quantization).** For every $\ell$ there exists an integer $n$ with $w(\varphi_\ell) = n$; namely $n = \ell$.
 
-**Theorem 6.2 (Existence / surjectivity).** *If $0 \le n < P_k$, then $V(d(n), k) = n$.*
+*Proof.* Immediate from Theorem 4.2. $\square$
 
-*Proof sketch.* One proves, for every $m$, the "long division" identity
-$$n = \sum_{i<m} \Big(\big\lfloor n/P_i\big\rfloor \bmod b_i\Big) P_i + \big\lfloor n/P_m \big\rfloor\, P_m,$$
-by induction on $m$, using $\lfloor n / P_{m+1}\rfloor = \lfloor \lfloor n/P_m\rfloor / b_m\rfloor$ (since $P_{m+1} = P_m b_m$) and the Euclidean identity $\lfloor n/P_m\rfloor = (\lfloor n/P_m\rfloor \bmod b_m) + b_m\lfloor n/P_{m+1}\rfloor$. Setting $m = k$ and using $\lfloor n/P_k\rfloor = 0$ (from $n < P_k$) collapses the trailing term, leaving $n = V(d(n), k)$. Note $n < P_k$ already forces $P_k > 0$, so no separate positivity hypothesis on the bases is needed for this statement. $\square$
+Quantization is thus not an extra hypothesis but a consequence of the definition: the winding integral of an OAM field is always an integer.
 
-**Corollary 6.3 (Counting bijection).** For each $k$, the map $c \mapsto V(c, k)$ is a bijection from the set of valid length-$k$ digit functions onto the integer interval $\{0, 1, \dots, P_k - 1\}$. Injectivity is Theorem 5.1; surjectivity onto the interval is Lemma 3.2 (values land in the interval) together with Theorem 6.2 (every point is hit).
+**Theorem 4.4 (Additivity of the winding number).** For all $\ell, m \in \mathbb{Z}$,
+$$w(\varphi_{\ell + m}) = w(\varphi_\ell) + w(\varphi_m).$$
 
-Thus the representable set at length $k$ is exactly the interval $[0, P_k)$, of size $P_k$. All counting information is carried by the running product alone.
+*Proof.* By Theorem 4.2 each side evaluates as $\ell + m = \ell + m$. $\square$
 
-## 7. Special Cases and the Factorial Bridge
+Combining Theorem 4.4 with Proposition 3.2 shows that superposition of beams (multiplication of fields) adds winding numbers, consistent with the physical conservation of orbital angular momentum.
 
-**Proposition 7.1 (Base-$N$ place values).** For $b_i = N$, $P_k = N^k$.
+**Proposition 4.5 (Winding of a constant field).** For any constant $c \in \mathbb{C}$, the constant loop $\theta \mapsto c$ has winding number $0$.
 
-*Proof sketch.* $\prod_{i<k} N = N^k$. $\square$
+*Proof.* The derivative of a constant is $0$, so the integrand $\varphi'/\varphi = 0$, and the integral — hence the winding number — vanishes. $\square$
 
-**Proposition 7.2 (Factorial place values).** For $b_i = i+1$, $P_k = k!$.
+## 5. The on-axis phase singularity
 
-*Proof sketch.* Induction: $P_0 = 1 = 0!$ and $P_{k+1} = P_k \cdot (k+1) = k!\,(k+1) = (k+1)!$. This is the identity $\prod_{j<i}(j+1) = i!$. $\square$
+The topology of the phase forces a zero of the amplitude on the axis. We make this precise using the amplitude profile $A_\ell(r,\theta) = r^{|\ell|}e^{i\ell\theta}$.
 
-**Proposition 7.3 (Factorial validity).** For $b_i = i+1$, $\mathrm{Valid}(c, k)$ holds iff $c_i \le i$ for all $i < k$.
+**Theorem 5.1 (Vanishing on the vortex axis).** If $\ell \neq 0$, then for every $\theta$,
+$$A_\ell(0, \theta) = 0.$$
 
-*Proof sketch.* $c_i < i+1 \iff c_i \le i$ over the naturals. $\square$
+*Proof.* Since $\ell \neq 0$, the exponent $|\ell| \in \mathbb{N}$ is nonzero, so $0^{|\ell|} = 0$. Therefore $A_\ell(0,\theta) = 0^{|\ell|}\,e^{i\ell\theta} = 0$. $\square$
 
-We now define the classical factorial system independently and match it to the instance. The *factoradic value* is $V^{!}(c, k) = \sum_{i<k} c_i\, i!$, with factoradic validity $c_i \le i$.
+**Theorem 5.2 (Nonvanishing off the axis).** For every $\ell \in \mathbb{Z}$ and every $r > 0$,
+$$A_\ell(r,\theta) \neq 0.$$
 
-**Proposition 7.4 (Values agree).** $V(c, k) = V^{!}(c, k)$ when $b_i = i+1$.
+*Proof.* For $r > 0$ the real factor $r^{|\ell|} > 0$, hence nonzero, and $e^{i\ell\theta} \neq 0$ always. A product of nonzero complex numbers is nonzero, so $A_\ell(r,\theta) \neq 0$. $\square$
 
-*Proof sketch.* Term-by-term, the mixed-radix place value $P_i$ equals $i!$ by Proposition 7.2; summing gives the identical total. $\square$
+Together, Theorems 5.1 and 5.2 localize the phase singularity exactly on the axis $r = 0$ and only when $\ell \neq 0$: a charge-zero beam is bright to the center, while every genuine vortex ($\ell \neq 0$) carries an isolated dark thread down its core. The order of the zero is $|\ell|$, matching the strength of the twist.
 
-**Proposition 7.5 (Validity agrees).** For $b_i = i+1$, mixed-radix validity coincides with factoradic validity, by Proposition 7.3.
+## 6. Contrarian results
 
-**Theorem 7.6 (Factorial uniqueness as a corollary).** *If two factoradic-valid digit functions $c, d$ satisfy $V^{!}(c, k) = V^{!}(d, k)$, then $c_i = d_i$ for all $i < k$.*
+We conclude with two results that refute natural-sounding conjectures, illustrating the subtlety of topological charge.
 
-*Proof sketch.* Transport the hypotheses along Propositions 7.4 and 7.5 to the instance $b_i = i+1$: factoradic validity becomes mixed-radix validity, and equality of factoradic values becomes equality of mixed-radix values. Apply the general Uniqueness Theorem 5.1. The conclusion transports back verbatim. $\square$
+**Theorem 6.1 (Charge can be negative).** The statement "the real part of $w(\varphi_\ell)$ is nonnegative for every $\ell$" is false.
 
-This corollary is the crux of the unification. The factorial system is not merely *similar* to a mixed-radix system; it *is* the mixed-radix system with bases $b_i = i+1$, and its uniqueness theorem is a specialization of the general one, with the only nontrivial ingredient being the running-product identity $\prod_{j<i}(j+1) = i!$. Everything else is transport along that equality. Base-$N$ notation is another point in the same family (Proposition 7.1).
+*Proof.* Take $\ell = -1$. By Theorem 4.2, $w(\varphi_{-1}) = -1$, whose real part is $-1 < 0$. $\square$
 
-## 8. The Degenerate Base and Vacuity
+Physically, optical vortices possess **handedness**: a beam may spiral clockwise or counterclockwise, and the sign of $\ell$ records the sense of rotation. Negative charge is as physical as positive charge.
 
-A pleasant robustness feature: if $b_i = 0$ for some $i$, then no digit is valid at position $i$ (there is no natural number strictly below $0$). Consequently $\mathrm{Valid}(c, k)$ is unsatisfiable for $k > i$, and every theorem whose hypothesis includes such validity holds vacuously. These are honest universally quantified statements about valid representations, not disguised falsehoods; the framework absorbs the degenerate case without special handling. Notably, Theorem 6.2 sidesteps positivity entirely because $n < P_k$ already forces $P_k > 0$.
+**Theorem 6.2 (Annihilation of opposite vortices).** For every $\ell \in \mathbb{Z}$, the superposed field $\theta \mapsto \varphi_\ell(\theta)\,\varphi_{-\ell}(\theta)$ has winding number $0$:
+$$w\bigl(\varphi_\ell \cdot \varphi_{-\ell}\bigr) = 0.$$
 
-## 9. Algorithms
+*Proof.* By Proposition 3.3 the product field is identically $1$. By Proposition 4.5 the winding number of a constant field is $0$. $\square$
 
-The theory yields immediately usable algorithms; all run in time proportional to the number of digits (with school-book bignum arithmetic, near-linear in the bit length for reasonable base sequences).
+**Theorem 6.3 (The annihilated field is singularity-free).** For every $\ell$ and every $\theta$,
+$$\varphi_\ell(\theta)\,\varphi_{-\ell}(\theta) \neq 0.$$
 
-**Encoding (integer $\to$ digits).** Given $n$ and length $k$, extract digits by repeated division. Two equivalent formulations:
-- *Global:* $c_i = \lfloor n / P_i\rfloor \bmod b_i$, precomputing the running products $P_i$.
-- *Streaming:* maintain a running quotient $q_0 = n$; at step $i$ set $c_i = q_i \bmod b_i$ and $q_{i+1} = \lfloor q_i / b_i\rfloor$. This avoids materializing the (possibly huge) products $P_i$.
+*Proof.* By Proposition 3.3 the product equals $1 \neq 0$. $\square$
 
-**Decoding (digits $\to$ integer).** Evaluate by Horner's method against the local bases:
-$$V = (\cdots((c_{k-1})\,b_{k-2} + c_{k-2})\,b_{k-3} + \cdots)\,b_0 + c_0.$$
+Theorems 6.2 and 6.3 refute the conjecture that "a product of two vortex beams is again a vortex beam." Two beams of opposite charge $\pm\ell$ combine into a nonvanishing constant field of winding number zero: the two singularities annihilate, leaving ordinary, singularity-free light. This is the optical counterpart of vortex–antivortex annihilation and is consistent with the additivity law $\ell + (-\ell) = 0$.
 
-**Successor / carry propagation.** To add one to a valid numeral, increment $c_0$; while a digit reaches its local base $b_i$, set it to $0$ and carry into position $i+1$. Correctness (that the result is the numeral of value one larger) follows from the same local bound $c_i < b_i$ that governs validity — a base-independent phenomenon.
+## 7. Algorithms
 
-## 10. Applications
+The theory yields several directly implementable computations. We summarize the principal ones; full Python implementations accompany this work.
 
-**Permutation ranking (Lehmer codes).** The factorial instance is the natural coordinate system for permutations of $n$ symbols. The factoradic digits of a rank $r \in [0, n!)$ are exactly the Lehmer code, and Corollary 6.3 (the bijection $[0, n!) \leftrightarrow$ valid factoradic strings) is precisely the ranking/unranking correspondence. This supports $O(n)$ selection of the $r$-th permutation in lexicographic order without enumerating predecessors.
+**Algorithm A (Winding number by numerical contour integration).** Given a sampled loop $\varphi$, approximate $w(\varphi) = \frac{1}{2\pi i}\int_0^{2\pi}\varphi'/\varphi\,d\theta$ by finite differences for $\varphi'$ and the trapezoidal rule for the integral, then round the (nearly real-integer) result. This recovers $\ell$ from field data and validates Theorem 4.2 numerically.
 
-**Combinatorial number systems and counters.** Mixed-radix counters model odometers, calendar arithmetic, and any nested-unit measurement. The counting bijection guarantees such counters cycle through exactly $P_k$ states before overflow.
+**Algorithm B (Charge from phase unwrapping).** Sample $\arg\varphi(\theta)$ around a loop, unwrap the $2\pi$ discontinuities, and divide the net accumulated phase by $2\pi$. This is the practical detector's method for reading topological charge and returns $\ell$ directly.
 
-**Hashing and enumeration.** The explicit bijection with an integer interval provides perfect, collision-free indexing of structured objects (tuples with per-coordinate bounds) into a contiguous integer range — a mixed-radix flattening frequently used to index multidimensional arrays with heterogeneous dimensions.
+**Algorithm C (Superposition and annihilation simulator).** Given a list of charges $(\ell_1,\dots,\ell_n)$, form the product field and report its total charge $\sum_i \ell_i$ (Proposition 3.4), flagging the singularity-free case when the total is zero (Theorems 6.2–6.3).
 
-## 11. Discussion
+## 8. Applications
 
-The organizing insight is that uniqueness and existence never depend on the arithmetic of any individual base — only on the running product $P_i$ and the local bound $c_i < b_i$. This has three consequences worth emphasizing. First, it explains *why* the factorial system behaves like a number system at all: it inherits the general theorems automatically. Second, it identifies the running product as the sole carrier of "how many numbers fit," since the representable set at length $k$ is always the interval $[0, P_k)$. Third, it makes the degenerate base harmless, because validity — the hypothesis of every theorem — simply becomes unsatisfiable.
+- **Optical communications.** Distinct integer charges $\ell$ label mutually orthogonal, topologically protected channels, enabling OAM-multiplexed classical and quantum links with greatly increased capacity.
+- **Optical tweezers and micromachines.** The orbital angular momentum $\ell\hbar$ per photon transfers rotation to trapped microparticles, driving optically powered micro-rotors.
+- **Microscopy and astronomy.** The on-axis zero (Theorems 5.1–5.2) is exploited in stimulated-emission-depletion microscopy and in optical vortex coronagraphs, where the dark core suppresses an on-axis source.
+- **Metrology.** Charge additivity and conservation (Propositions 3.2, 3.4; Theorem 4.4) underpin interferometric measurement of rotational Doppler shifts and of the OAM spectrum of light.
 
-The non-circularity of the uniqueness proof is a deliberate structural choice. Many treatments derive uniqueness from a cardinality/counting argument (there are $P_k$ valid strings and $P_k$ target values, and surjectivity forces injectivity). We instead prove uniqueness *directly* from the size bound and Euclidean splitting, so that existence and the counting bijection are genuine consequences rather than prerequisites. This clean dependency order clarifies exactly which facts each result needs.
+## 9. Discussion
 
-## 12. Future Directions
+The development shows that the entire near-axis topological content of an OAM beam is captured by a single integer, obtained equivalently by counting phase twists, by evaluating a contour integral (Theorem 4.2), or by observing the order of the on-axis zero (Theorems 5.1–5.2). The algebra of charges is that of the integers under addition (Propositions 3.2, 3.4; Theorem 4.4), and single-valuedness (Proposition 3.5) is exactly the integrality constraint. The contrarian results (Section 6) emphasize that charge carries a sign and can cancel, dispelling two tempting misconceptions.
 
-Several natural extensions grow directly out of the unification.
+A conceptual takeaway is that "knotted light" is, in its transverse structure, an incarnation of the fundamental group $\pi_1(\mathbb{C}\setminus\{0\}) \cong \mathbb{Z}$: the winding number classifies loops in the punctured plane, and OAM beams realize each class physically. The topological robustness of $\ell$ — its invariance under continuous perturbation preserving the isolated zero — is the mathematical reason these beams are attractive for information transport.
 
-1. **A single counting bijection for arbitrary positive bases.** Package the uniqueness (injectivity) and existence (surjectivity) halves as one bijection $c \mapsto \sum_{i<k} c_i P_i$ from valid length-$k$ digit functions onto $[0, P_k)$, for every positive base sequence. Both halves depend only on the running product and the local bound $c_i < b_i$; uniqueness comes from Euclidean division by the running product, surjectivity from greedy extraction. This is the capstone turning two one-sided facts into a structural equivalence.
+## 10. Future directions
 
-2. **Base-independent carry propagation.** Prove that incrementing a valid mixed-radix numeral by one — resolving carries digit by digit against the local bases — always yields the numeral of value one larger, for any positive base sequence. A carry at position $i$ fires exactly when a digit reaches its local base $b_i$, so successor correctness is governed by the same $c_i < b_i$ bound as validity, uniformly across factorial, binary, decimal, and every mixed system. This is the gateway to base-independent addition.
+Several natural extensions remain.
 
-3. **Representable intervals determined by the product.** Prove that two positive base sequences represent exactly the same set of integers at every length iff their running products agree at every length, and that the representable set at length $k$ is precisely $[0, P_k)$. All combinatorial information about "how many numbers fit" is a function of the product sequence rather than the individual bases; the factorial-versus-mixed bridge already exhibits one nontrivial pair of distinct-looking definitions that coincide because their products coincide.
+1. **General winding number.** Extend the winding number to a broad class of loops $\gamma : [0,1] \to \mathbb{C}\setminus\{0\}$ and prove homotopy invariance and additivity in full generality (not only for $\varphi_\ell$), connecting to $\mathbb{Z} \cong \pi_1(\mathbb{C}\setminus\{0\})$.
+2. **Linking number of nested vortices.** Formalize the Hopf-link / linking-number picture for two coaxial vortex lines and relate it to the product of charges.
+3. **Full Laguerre–Gauss modes.** Include the Gaussian envelope and radial index $p$, and prove the OAM per photon is $\ell\hbar$ via the Poynting-vector integral.
+4. **Knotted field lines.** Formalize Hopf-fibration constructions of genuinely knotted (rather than merely linked) optical field lines and their conserved helicity/linking invariant.
+5. **Stability under perturbation.** Show the charge is invariant under small continuous perturbations of the field that keep the axial zero isolated (topological robustness).
 
-## 13. Conclusion
+## 11. Conclusion
 
-Mixed-radix positional systems form a single parameterized family governed by two elementary theorems: valid numerals are unique, and every integer below the running product is represented. The proofs turn only on the running product and the local digit bound, and thereby subsume both ordinary base-$N$ notation and the factorial number system. In particular, the factorial system's uniqueness theorem is a corollary of the general one, obtained by transport along $\prod_{j<i}(j+1) = i!$. The result is a tidy, non-circular foundation in which decimal, binary, sexagesimal, and factoradic notation are visibly the same construction viewed at different bases.
+We have given a self-contained account of the topological charge of orbital-angular-momentum light as a winding number, proving that the winding number of $e^{i\ell\theta}$ is exactly $\ell$, deducing quantization, charge additivity and conservation, single-valuedness, and the precise structure of the on-axis phase singularity, and refuting two natural conjectures by exhibiting negative charge and vortex annihilation. The picture that emerges is uniform and elegant: the twist in a beam of light is a whole number, counted by a contour integral, protected by topology.

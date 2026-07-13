@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "57f58be0",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Multiverse Set Theory\n\n`Catalog/Novelty/MultiverseSetTheory.lean` formalizes the combinatorial core of\nHamkins' set-theoretic multiverse: worlds as truth assignments, a multivers",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 42,
-      "timestamp": "2026-07-13T08:08:14",
-      "title": "Deepening: Moonshot: Multiverse Set Theory — Mathematics Across Branches"
-    },
-    {
       "cycle_id": "d31b185d",
       "domain": "Novelty",
       "key_insight": "# Future Directions: The Diagonal as a Single Organising Principle\n\nThis cycle established, from one structural root, that no type can fully quantify\nover itself: a type `T` equivalent to its own pred",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-13T23:31:37",
       "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
+    },
+    {
+      "cycle_id": "664b3442",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consisten",
+      "quality_score": 0.83,
+      "sorry_count": 5,
+      "theorem_count": 20,
+      "timestamp": "2026-07-13T23:31:45",
+      "title": "Deepening: Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5e3f6a63",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Unreasonable Effectiveness of Wrong Theories\n\n`WrongTheories.lean` formalizes theory-space as a real inner-product space `E`\nwith a distinguished `truth`, wrongness `‖T − tru",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-11T07:46:01",
-      "title": "The Unreasonable Effectiveness of Wrong Theories"
-    },
     {
       "cycle_id": "0250199a",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-13T23:31:37",
       "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
+    },
+    {
+      "cycle_id": "664b3442",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consisten",
+      "quality_score": 0.83,
+      "sorry_count": 5,
+      "theorem_count": 20,
+      "timestamp": "2026-07-13T23:31:45",
+      "title": "Deepening: Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "24c0b42e",
-      "domain": "Novelty",
-      "name": "gumbelCDF_pos",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "24c0b42e",
-      "domain": "Novelty",
-      "name": "gumbelCDF_lt_one",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ac37e9f5",
-      "domain": "Novelty",
-      "name": "tent_maps_unitInterval",
-      "quality": 0.82
-    },
     {
       "cycle_id": "adcea684",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "pow_two_logLinear",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "664b3442",
+      "domain": "Applications",
+      "name": "traj_zero",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "664b3442",
+      "domain": "Applications",
+      "name": "traj_succ",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "664b3442",
+      "domain": "Applications",
+      "name": "traj_periodic",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-13T23:31:37",
+  "last_updated": "2026-07-13T23:31:45",
   "open_questions": [
-    {
-      "context": "+Everything is elementary and `sorry`-free.",
-      "cycle_id": "48b25c91",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-13T02:02:00"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "7362296f",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-13T23:13:27"
+    },
+    {
+      "context": "+range rather than leave the tail as `sorry`. -/; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "664b3442",
+      "domain": "Applications",
+      "sorry_count": 5,
+      "timestamp": "2026-07-13T23:31:45"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6e7a2b5e",
-        "quality": 0.82,
-        "theorems": 19,
-        "title": "Deepening: Previous cycles formalized Dung's abstract argumentation semantics: c"
-      },
-      {
         "cycle_id": "f3fa6ca4",
         "quality": 0.82,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 17,
         "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
+      },
+      {
+        "cycle_id": "664b3442",
+        "quality": 0.83,
+        "theorems": 20,
+        "title": "Deepening: Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
       }
     ],
     "Bridges": [
