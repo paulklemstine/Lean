@@ -185,20 +185,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
   },
   {
-    "consumed_by_exp_id": "b659b436",
-    "description": "Building on cycle 0643b2b3 (Q=0.820), which proved 11 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost r",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_0643b2b3_4cda8c03",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "0643b2b3",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T20:52:48.331838+00:00",
-    "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
     "domains": [
@@ -311,7 +297,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Speculative: Topological Quantum Error Correction from Mathematical Structures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ed40476",
     "description": "Building on cycle 82155f74 (Q=0.820), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For increasing Boolean functions f,g:{0,1}^n\u2192{0,1}, if the covariance exceeds the right-hand side of the FKKK inequality by at most a small \u03b5, then either f and g depend on disjoint sets of coordinates, or they are both dictatorships on the same coordinate, or after permuting coordinates and possibl",
     "domains": [
       "Applications"
@@ -320,7 +306,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "82155f74",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T21:59:16.097786+00:00",
     "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
   },
@@ -7601,6 +7587,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T04:13:40.642703+00:00",
     "title": "Exact optimization theory of energy collection around"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Uncanny Valley of Prime-Generating Formulas\n\nThis cycle established that no nonconstant integer polynomial takes a prime value\nat every input, and that in fact the inputs where the \"prime illusion\" breaks form\nan infinite set. The obstruction is a single divisibility identity,\n`f(a) \u2223 f(a + k\u00b7f(a))`, propagating a prime value along an arithmetic progression\nuntil finiteness of a polynomial's value set forces a collapse. The following\nconjectures push this phenomenon further.\n\n## Conjecture 1 \u2014 Quantitative width of the valley\nFor a nonconstant integer polynomial `f` of degree `d`, the number of inputs\n`n \u2208 {0, 1, \u2026, N}` at which `f(n)` is composite grows like `N \u2212 O(N / log N)`;\nequivalently, the density of prime inputs tends to `0`.\n\n**The key insight is** that the divisibility engine forces composite values along\nan entire arithmetic progression of modulus `f(a)`, so each prime output \"spends\"\na whole residue class, and only a logarithmically thin set of inputs can survive.\n\n**Why now?** The exact-failure mechanism has been pinned down structurally rather\nthan case-by-case, so the qualitative \"infinitely many failures\" result is ready\nto be sharpened into a density statement using standard sieve counting.\n\n## Conjecture 2 \u2014 The uncanny valley is universal across value-restricted targets\nReplace \"prime\" by any set `T \u2286 \u2124` that meets each nonzero residue class\n`{m : p \u2223 m}` in only finitely many associates (e.g. prime powers with bounded\nexponent, or squarefree numbers with a fixed number of prime factors). Then no\nnonconstant integer polynomial can take values in `T` at every input.\n\n**The key insight is** that the proof never used primality beyond \"a prime\ndividing a value pins that value to finitely many possibilities\"; abstracting this\nto a *finite-fiber divisibility* condition on `T` should reproduce the collapse.\n\n**Why now?** The current proof already factors cleanly through the lemma\n`prime_dvd_prime_eq`; replacing it by a finite-fiber hypothesis is a direct\ngeneralization whose scaffolding is already in place.\n\n## Conjecture 3 \u2014 Multivariate uncanny valley\nNo nonconstant polynomial `f \u2208 \u2124[x\u2081, \u2026, x_k]` (that genuinely depends on at least\none variable) takes a prime value at every integer lattice point.\n\n**The key insight is** that fixing all but one variable reduces the problem to the\nsingle-variable theorem, so the only obstruction is ruling out the degenerate case\nwhere every such restriction is constant \u2014 which forces `f` itself constant.\n\n**Why now?** The one-variable result is fully established, and the reduction to it\nvia partial evaluation is exactly the kind of induction on variable count that\nfollows once the base case is secure.\n\n## Conjecture 4 \u2014 Escaping the valley requires transcendence\nAny function `g : \u2124 \u2192 \u2124` that IS prime at every input must be non-polynomial in a\nstrong sense: its finite differences of every order are eventually nonzero, so `g`\ncannot satisfy any linear recurrence with constant coefficients.\n\n**The key insight is** that satisfying a constant-coefficient recurrence is\nequivalent to being a \"polynomial-exponential\" sequence, and the divisibility\nengine generalizes to such sequences, so genuine prime formulas must lie strictly\noutside this class.\n\n**Why now?** With the polynomial case closed, the natural next boundary is the\nclass of C-finite sequences, for which the same congruence-propagation argument has\na clean analogue.\n\n## Conjecture 5 \u2014 Sharpness of the run length\nAmong monic quadratics `n\u00b2 + n + c`, the length of the initial prime run is\nmaximized precisely when `4c \u2212 1` is one of the Heegner-type discriminants, and the\nmaximal run length equals `c \u2212 1` (attained by `c = 41`, giving the length-40 run).\n\n**The key insight is** that a long initial prime run corresponds to the associated\nimaginary quadratic order having class number one, tying the \"depth\" of the uncanny\nvalley directly to a deep arithmetic invariant.\n\n**Why now?** The failure point of each quadratic is now understood as a congruence\nforced by the seed value, making it possible to correlate run length with the\nclass-number obstruction rather than treating each polynomial in isolation.\n",
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_1189",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b659b436",
+    "status": "available",
+    "timestamp": "2026-07-13T04:46:15.317936+00:00",
+    "title": "That no nonconstant integer polynomial takes a prime valu"
   },
   {
     "consumed_by_exp_id": "",

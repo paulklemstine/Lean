@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bc831bad",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Neural Coding: from Averages to Concentration\n\nThe present cycle upgraded the neural-coding chain from *first-moment* facts\n(capacity `2^N`, average energy `N/2`, sparse counts `",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 7,
-      "timestamp": "2026-07-12T13:53:38",
-      "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
-    },
-    {
       "cycle_id": "d019c88a",
       "domain": "Applications",
       "key_insight": "# Future Directions: Homological Quantum Codes — Cycle 1 results\n\nThread `th_c942ee26`, root direction `fd_0859`. The previous cycle established\nthe exact dictionary **\"logical qubits = middle homolog",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-13T04:13:49",
       "title": "Deepening: Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+    },
+    {
+      "cycle_id": "b659b436",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Uncanny Valley of Prime-Generating Formulas\n\nThis cycle established that no nonconstant integer polynomial takes a prime value\nat every input, and that in fact the inputs wher",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 24,
+      "timestamp": "2026-07-13T04:46:23",
+      "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "81ffd6ce",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## Build & compilation status\n\nAll deliverable files of this cycle now compile end-to-end and are `sorry`-free.\nThe top-level Lake project builds them by default: `lake build` com",
-      "quality_score": 0.6,
-      "sorry_count": 6,
-      "theorem_count": 0,
-      "timestamp": "2026-07-10T11:18:05",
-      "title": "Close Proofs: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psycholog"
-    },
     {
       "cycle_id": "da4694df",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-13T04:13:49",
       "title": "Deepening: Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
+    },
+    {
+      "cycle_id": "b659b436",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: The Uncanny Valley of Prime-Generating Formulas\n\nThis cycle established that no nonconstant integer polynomial takes a prime value\nat every input, and that in fact the inputs wher",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 24,
+      "timestamp": "2026-07-13T04:46:23",
+      "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-13T04:13:49",
+  "last_updated": "2026-07-13T04:46:23",
   "open_questions": [
-    {
-      "context": "-Everything is elementary and `sorry`-free.",
-      "cycle_id": "d019c88a",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-12T14:10:41"
-    },
     {
       "context": "+infinite tail as an unproved `sorry`, we state and prove the theorem *in full* on; +This is proved completely (no `sorry`) by combining the bridge lemma with the; -    sorry",
       "cycle_id": "f8254dbf",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 7,
       "timestamp": "2026-07-13T03:57:23"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "b659b436",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-13T04:46:23"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "465c6137",
-        "quality": 0.72,
-        "theorems": 19,
-        "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Co"
-      },
-      {
         "cycle_id": "82155f74",
         "quality": 0.82,
         "theorems": 25,
@@ -3141,6 +3135,12 @@
         "quality": 0.7,
         "theorems": 31,
         "title": "Equivalence of Oddomorphism and Split-Off Minor"
+      },
+      {
+        "cycle_id": "b659b436",
+        "quality": 0.83,
+        "theorems": 24,
+        "title": "Deepening: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
       }
     ],
     "Bridges": [
