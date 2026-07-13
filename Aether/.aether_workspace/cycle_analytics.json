@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T02:02:01.920231+00:00",
+  "last_updated": "2026-07-13T02:21:47.815138+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -10615,6 +10615,7 @@
       "outcome_quality": 0.6,
       "phase": "A_only",
       "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19",
@@ -10686,6 +10687,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-13T02:02:01.876700+00:00",
       "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 104,
+      "domain": "Novelty",
+      "duration_seconds": 1142.5761318206787,
+      "end_time": 1783909219.671666,
+      "files_integrated": 4,
+      "job_id": "7362296f",
+      "outcome_quality": 0.8,
+      "phase": "complete",
+      "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.8,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.535,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.8,
+        "novelty": 0.8,
+        "proof_depth": 0.8,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.8,
+      "sorry_count": 6,
+      "sorry_density": 0.5,
+      "start_time": 1783908077.095534,
+      "strategy_count": 0,
+      "theorem_count": 12,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 10,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-13T02:21:47.766540+00:00",
+      "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
     }
   ]
 }

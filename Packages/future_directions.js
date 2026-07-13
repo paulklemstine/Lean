@@ -522,6 +522,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
   },
   {
+    "consumed_by_exp_id": "291fcce1",
+    "description": "Building on cycle 7362296f (Q=0.800), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 82394822 (Q=0.720) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_7362296f_3b9a9df8",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "7362296f",
+    "status": "in_progress",
+    "timestamp": "2026-07-13T02:21:43.025993+00:00",
+    "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 766b6e47 (Q=0.800), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For p an odd prime, k \u2265 2 an even integer, and a_p in the algebraic closure of Q_p with v(a_p) > 0 and v(a_p) not an integer (i.e., the slope is fractional), the mod p semisimplified reduction V\u0304_{k,a_p} of the two-dimensional crystalline representation V_{k,a_p} of G_{Q_p} is irreducible. This folk",
     "domains": [
@@ -3810,7 +3824,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
   {
-    "consumed_by_exp_id": "d4192a75",
+    "consumed_by_exp_id": "",
     "description": "For all finite graphs F and G, there exists an oddomorphism from F to G if and only if G is a split-off minor of F. The forward direction is established in the paper; the converse remains open.",
     "domains": [
       "Bridges"
@@ -3819,7 +3833,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03405v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T02:03:09.912711+00:00",
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
   },
@@ -5591,20 +5605,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T02:02:00.195641+00:00",
     "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
-  },
-  {
-    "consumed_by_exp_id": "7362296f",
-    "description": "Cycle 82394822 (Q=0.720) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is the main classification result of the paper, verified by both Burnside's ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_82394822_9aae26c3",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "82394822",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T23:32:06.223021+00:00",
-    "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
   },
   {
     "consumed_by_exp_id": "",
@@ -7553,6 +7553,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T02:01:31.929532+00:00",
     "title": "This cycle turns the informal \"heat death of mathematics\" picture into a small"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was done in this cycle\n\nThe target theorem file `BooleanCubicFormsBurnside.lean` was already `sorry`-free (the\nBurnside \u21c4 orbit\u2013stabilizer bridge, the division principle, the `GL(2,2) \u2245 S\u2083` worked\nexample, the `GL(n,2)` action on Boolean functions, and the `3 691 560` inference/\nfactorisation). In the **contrarian** spirit of the mission we added a new self-contained\ncompanion file, `BooleanCubicFormsOrbitBounds.lean`, that stress-tests the classification\nfigure against elementary constraints and proves several new results:\n\n* `card_le_card_orbits_mul_card_group` \u2014 for any finite group action, `|X| \u2264 (#orbits)\u00b7|G|`\n  (a Burnside-free orbit lower bound, proved from the orbit decomposition and\n  orbit\u2013stabilizer).\n* `free_action_card_dvd` / `exists_stabilizer_ne_bot_of_not_dvd` \u2014 a freeness obstruction:\n  free \u21d2 `|G| \u2223 |X|`, contrapositively `|G| \u2224 |X|` \u21d2 some point has a nontrivial stabilizer.\n* `card_GL10` \u2014 the exact order `|GL(10,2)| = 366 440 137 299 948 128 422 802 227 200`,\n  obtained rigorously from `Matrix.card_GL_field`.\n* `orbitCount10_satisfies_orbit_bound` \u2014 the published `3 691 560` clears the orbit\n  lower bound `3 691 560\u00b7|GL(10,2)| \u2265 2\u00b9\u00b2\u2070 \u2212 1` (a genuine consistency certificate).\n* `booleanCubic10_orbits_lower_bound` \u2014 the elementary constraints force **at least\n  `3 627 409`** orbits.\n* `booleanCubic10_not_free` \u2014 a **disproof** of the \"regular action\" conjecture: because\n  `|GL(10,2)|` is even and `2\u00b9\u00b2\u2070 \u2212 1` is odd, the action on nonzero cubic forms is not free.\n\n## Natural next steps\n\n1. **Compute the exact orbit count inside Lean.** The largest open gap is that\n   `3 691 560` is still introduced as a definition and only *checked* for consistency, not\n   *derived* from a fixed-point computation. A full formalisation would (a) build the cubic\n   layer `RM(3,10)/RM(2,10)` as a concrete `GL(10,2)`-module, (b) compute the Burnside sum\n   `\u2211_g |Fix g|`, and (c) apply `card_orbits_of_fixedBy_sum`. This is a large but\n   well-scoped `native_decide`/enumeration project; the conjugacy-class structure of\n   `GL(10,2)` (cycle-type data on `\ud835\udd3d\u2082\u00b9\u2070`) is the main ingredient.\n\n2. **Sharper stabilizer accounting.** The surplus `3 691 560 \u2212 3 627 409 = 64 151` counts\n   (weighted) forms with nontrivial stabilizers. Formalising the exact relation\n   `\u2211_x |Stab x| = (#orbits)\u00b7|G|` for the cubic layer would let one recover this surplus\n   from the number of non-regular orbits.\n\n3. **Smaller `n` as ground truth.** Fully compute orbit counts of Boolean cubic forms for\n   `n = 4,5,6,7` (dimensions `4,10,20,35`) by `decide`/`native_decide` on the actual layer,\n   giving verified small-case data to validate the machinery before scaling to `n = 10`.\n\n4. **Generalise the bounds.** `card_le_card_orbits_mul_card_group` and the freeness\n   obstruction are stated for arbitrary finite group actions and are reusable Mathlib-style\n   lemmas; a parity/`p`-group refinement (a `p`-group acting on a set of size prime to `p`\n   has a fixed point) would strengthen the obstruction and connect to Sylow theory.\n\n5. **Quadratic and quartic layers.** The same consistency/obstruction analysis applies to\n   `RM(2,n)/RM(1,n)` (quadratic forms, classically fully classified by rank/type) and\n   `RM(4,n)/RM(3,n)`; comparing forced lower bounds to known counts is a good test bed.\n\n## Completion pass (follow-up)\n\nA follow-up pass reviewed the whole project for truncated/incomplete work and closed the\nremaining tractable gaps:\n\n* **`Catalog/output-final_aristotle/Bridges/BooleanCubicFormsBurnside.lean` and\n  `BooleanCubicFormsOrbitBounds.lean`** \u2014 re-verified: both elaborate cleanly and are\n  `sorry`-free.\n* **`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`** \u2014 the three bridge\n  theorems `value_eq`, `valid_iff`, and `factorial_value_unique_via_mixed` (previously\n  `:= by sorry`) are now fully proved. `value_eq` is a `Finset.sum_congr` transported along\n  `MixedRadix.factorial_radixProd`; `valid_iff` is `MixedRadix.factorial_valid_iff` (the RHS\n  is definitionally `FactorialNumberSystem.Valid`); and `factorial_value_unique_via_mixed`\n  re-derives factorial uniqueness from the general `MixedRadix.value_unique` via the two\n  bridge lemmas. The module now builds under the project (`lake build\n  Catalog.Speculative.AutoResearch.MixedRadixFactorialBridge`).\n* **Build hygiene.** A `Catalog` `lean_lib` was added to `lakefile.toml` and the import in\n  `Catalog/Shared/CarmichaelProof.lean` was normalised to `import\n  Catalog.Shared.CarmichaelHelper`, so the module resolves and builds under Lake.\n\n### One remaining open step (genuinely hard, unrelated to the GL(10,2) mission)\n\n`Catalog/Shared/CarmichaelProof.lean : fib_carmichael_composite` still contains a single\n`sorry` in the **infinite composite tail** (`n > 10000`) of Carmichael's primitive-divisor\ntheorem for Fibonacci numbers. The finite range `13 \u2264 n \u2264 10000` is discharged by the\nkernel-checked `primPart_check` (`native_decide`), but the tail is not reducible to a finite\ncomputation. It requires:\n\n1. a Zsygmondy / Lifting-the-Exponent argument for the `p`-adic valuation of Fibonacci\n   numbers (the *law of repetition*, relating `fibRank (p^k)` to `fibRank p`), and\n2. a growth/counting lower bound on the primitive part `primPart n` (equivalently a lower\n   bound on the homogeneous cyclotomic value `\u03a6_n(\u03c6,\u03c8)`), showing `\u03a6_n > n` for `n > 12`.\n\nMathlib currently provides none of this (only `Nat.fib_gcd` and Fibonacci coprimality), so a\ncomplete proof amounts to formalizing Carmichael's theorem from scratch. Notably, the\ncatalog's other Carmichael files (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`\nand `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean`) both *defer* this same tail back\nto `fib_carmichael_composite`, so this is the single load-bearing open gap of that thread.\nThe rank-of-apparition infrastructure needed for step (1) already exists, `sorry`-free, in\n`Catalog/Applications/Pythagorean/RankOfApparition.lean` (`fibRank`, `fibRank_dvd_iff`,\n`fibRank_fib`, `fib_dvd_fib_iff`) and in `UnifiedRankOfApparition.lean` /\n`RankLatticeMorphism.lean` (`rank_dvd_iff`, `rank_lcm`, `rank_mul_coprime`), which is the\nnatural starting point for a future full formalization.\n\n## Completion pass (latest follow-up)\n\nA further review re-audited the whole catalog for truncated/incomplete work:\n\n* **Single remaining `sorry` confirmed and localized.** A catalog-wide scan found exactly\n  one genuine code-level `sorry`: the infinite composite tail (`n > 10000`) of\n  `Catalog/Shared/CarmichaelProof.lean : fib_carmichael_composite`. Everything else that\n  reads \"sorry\" in the tree is inside docstrings/prose. Two independent high-effort proof\n  searches (a golden-ratio/cyclotomic growth route and an elementary totient-bound route)\n  were run against this tail; both confirm that the argument requires a Lifting-the-Exponent\n  law for Fibonacci `p`-adic valuations plus a cyclotomic-value growth bound. Neither Mathlib\n  nor the catalog's existing rank-of-apparition files provide any valuation/LTE or growth\n  machinery, so the step is genuinely research-grade and is left honestly marked as `sorry`\n  (no axiom was introduced and the statement was not weakened).\n* **GL(10,2) mission deliverable re-verified.** `BooleanCubicFormsBurnside.lean` and\n  `BooleanCubicFormsOrbitBounds.lean` build cleanly; `booleanCubic10_orbitCount_of_burnside`\n  uses only the standard axioms `propext`, `Classical.choice`, `Quot.sound`.\n* **Carmichael thread now compiles end-to-end.** The downstream files\n  `Catalog/Speculative/AutoResearch/CarmichaelComposite.lean` and\n  `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean` had stale non-`Catalog`-prefixed\n  imports (`import Shared.CarmichaelHelper`, `import Shared.CarmichaelComposite`, \u2026); these\n  were corrected to the actual module paths (`Catalog.Shared.CarmichaelHelper`,\n  `Catalog.Speculative.AutoResearch.CarmichaelComposite`, \u2026), so the full Helper \u2192 Proof \u2192\n  Composite \u2192 PrimitiveDivisor chain now builds under Lake (with the single documented tail\n  `sorry` propagating harmlessly).\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1182",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7362296f",
+    "status": "available",
+    "timestamp": "2026-07-13T02:21:16.875129+00:00",
+    "title": "The target theorem file `BooleanCubicFormsBurnside.lean` was already `sorry`-fre"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0930ae42",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Cyclotomic Geometry of Knotted-Light OAM Spectra\n\nThis cycle established that, for every odd prime `p`, the `T(2, p)` torus-knot\nAlexander polynomial *is* the `2p`-th cycloto",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-12T11:18:43",
-      "title": "The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
-    },
-    {
       "cycle_id": "25c7a40e",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## What was proved (this cycle)\n\nThree self-contained Lean 4 files formalise a coherent slice of the number theory hiding inside\nthe quadratic recurrence `z_{n+1} = z_n^2 + c` and",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-13T02:02:00",
       "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
+    },
+    {
+      "cycle_id": "7362296f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was done in this cycle\n\nThe target theorem file `BooleanCubicFormsBurnside.lean` was already `sorry`-free (the\nBurnside ⇄ orbit–stabilizer bridge, the division principle,",
+      "quality_score": 0.8,
+      "sorry_count": 6,
+      "theorem_count": 12,
+      "timestamp": "2026-07-13T02:21:42",
+      "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9c1224fc",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Topological Quantum Compiling via Braid Groups\n\n## What this project establishes (all machine-checked, no `sorry`, no extra axioms)\n\nWorking with the **reduced Burau representatio",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-10T09:10:09",
-      "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-    },
     {
       "cycle_id": "e37aa20a",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-13T02:02:00",
       "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
+    },
+    {
+      "cycle_id": "7362296f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What was done in this cycle\n\nThe target theorem file `BooleanCubicFormsBurnside.lean` was already `sorry`-free (the\nBurnside ⇄ orbit–stabilizer bridge, the division principle,",
+      "quality_score": 0.8,
+      "sorry_count": 6,
+      "theorem_count": 12,
+      "timestamp": "2026-07-13T02:21:42",
+      "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "44b2d089",
-      "domain": "Applications",
-      "name": "carries",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "44b2d089",
-      "domain": "Applications",
-      "name": "verbatim",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "44b2d089",
-      "domain": "Applications",
-      "name": "sum_of_squares_core",
-      "quality": 0.83
-    },
     {
       "cycle_id": "167b800e",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "discoverable_fraction_upper_bound",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "7362296f",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "7362296f",
+      "domain": "Novelty",
+      "name": "from",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "7362296f",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-13T02:02:00",
+  "last_updated": "2026-07-13T02:21:42",
   "open_questions": [
-    {
-      "context": "Everything is elementary and `sorry`-free.; +currently available in Mathlib.  Rather than leaving a `sorry` (or asserting the; -    sorry",
-      "cycle_id": "8cebc683",
-      "domain": "Applications",
-      "sorry_count": 7,
-      "timestamp": "2026-07-12T13:18:12"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "73c84a79",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-07-13T02:02:00"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "7362296f",
+      "domain": "Novelty",
+      "sorry_count": 6,
+      "timestamp": "2026-07-13T02:21:42"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "208b1ca5",
-        "quality": 0.82,
-        "theorems": 17,
-        "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
-      },
-      {
         "cycle_id": "26646791",
         "quality": 0.72,
         "theorems": 26,
@@ -3637,6 +3631,12 @@
         "quality": 0.6,
         "theorems": 0,
         "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–We"
+      },
+      {
+        "cycle_id": "7362296f",
+        "quality": 0.8,
+        "theorems": 12,
+        "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
       }
     ],
     "NumberTheory": [

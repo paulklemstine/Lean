@@ -13582,7 +13582,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d4192a75",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13613,7 +13613,7 @@
       "source": "",
       "source_exp_id": "2607.03405v1",
       "source_path": "http://arxiv.org/abs/2607.03405v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-07T02:03:09.912711+00:00",
       "title": "Equivalence of Oddomorphism and Split-Off Minor"
@@ -32313,7 +32313,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## What was proved\n\nThe file `Catalog/Novelty/GreedyTamariPlaneTreeBridge.lean` builds a constructive\n**cross-domain bridge** between three combinatorial families, one of which\n(plane trees) has no prior presence in Mathlib:\n\n* **Plane trees** — ordered rooted trees of arbitrary arity (tree combinatorics);\n* **Binary trees** — `Mathlib`'s `Tree Unit` (data structures / algebra);\n* **Dyck words** — `Mathlib`'s `DyckWord` lattice paths (path combinatorics).\n\nKey results (all `sorry`-free, depending only on `propext`, `Classical.choice`,\n`Quot.sound`):\n\n* `forestEquivBin : List PlaneTree ≃ Tree Unit` — the left-child/right-sibling\n  (Knuth) transform, proved a genuine bijection with explicit inverse.\n* `planeTreeEquivBin : PlaneTree ≃ Tree Unit` — the global bijection.\n* `numNodes_forestToBin` — the transform preserves node counts.\n* `card_forest_eq_catalan`, `card_planeTree_eq_catalan` — enumeration of plane\n  forests/trees by Catalan numbers.\n* `planeTreeEquivDyck : {t // t.numNodes = n+1} ≃ {p : DyckWord // p.semilength = n}`\n  and `card_planeTree_eq_card_dyck` — the headline **planar trees ↔ Dyck paths**\n  correspondence.\n\nThis is exactly the `m = 1` backbone of the mission's programme: the \"bijective\ncorrespondence established *via Dyck paths*\" relating **planar trees** to objects\ngoverned by the Tamari lattice.\n\n## Toward the full conjecture (arbitrary `m`)\n\nThe mission conjecture concerns maximal *greedy Tamari intervals* in planar\n`(m+1)`-constellations versus maximal planar trees with `m` internally labeled\nvertices. Natural next steps, in increasing difficulty:\n\n1. **Fuss–Catalan / `m`-ary layer.** Introduce full `(m+1)`-ary plane trees and\n   `m`-Dyck paths (steps `+1` / `-m`, staying non-negative). Generalize\n   `forestEquivBin` to an `(m+1)`-fold first-return decomposition and prove the\n   count is the Fuss–Catalan number\n   `\\frac{1}{mn+1}\\binom{(m+1)n}{n}`. This is the direct `m`-analogue of the file\n   and the cleanest extension. The main new ingredient is a Fuss–Catalan\n   convolution recurrence, provable by induction on the number of internal nodes.\n\n2. **Tamari order.** Formalize the Tamari partial order on Dyck words / binary\n   trees via the right-rotation cover relation, and prove antisymmetry through a\n   strictly monotone integer statistic. This is the missing order-theoretic\n   infrastructure (Mathlib currently has none) needed to even *state* \"Tamari\n   interval\".\n\n3. **Greedy / synchronized intervals.** Define greedy (synchronized) Tamari\n   intervals and their maximal elements, then attempt the enumeration bridge to\n   labeled planar trees. This is genuine research-level territory generalizing\n   Bousquet-Mélou–Chapoton; the bijection in this file is the shared\n   Dyck-path substrate on which such a correspondence would be built.\n\n## Reusability\n\nPlane trees, their node count, and the Knuth transform are stated generically and\nare independently useful; they could seed a `Mathlib` contribution on ordered\ntrees, which are currently absent despite binary trees and Dyck words being\npresent.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Bridges",
         "Algebra"
@@ -32559,7 +32559,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis cycle adds a **second pillar of the probabilistic method** to the Novelty catalog,\nalongside the Erdős counting lower bound for diagonal Ramsey numbers\n(`Novelty.RamseyProbabilisticLowerBound`): **Property B**, the two-colourability of sparse\nhypergraphs, with the classical Erdős bound `m(k) ≥ 2^{k-1}`.\n\n## What was proved (`Novelty/PropertyBSparseHypergraph.lean`)\n\nA `k`-uniform hypergraph on a finite vertex type `V` is a family `H : Finset (Finset V)` of\n`k`-element edges. A colouring is a red vertex set `R : Finset V`; an edge is *monochromatic*\niff it is all-red (`e ⊆ R`) or all-blue (`Disjoint e R`); the colouring is *proper* iff no\nedge is monochromatic (`IsProperColoring`); `H` is *two-colourable* (`TwoColorable`) iff a\nproper colouring exists.\n\nThe results form a chain, each building on the previous:\n\n1. `card_filter_superset`, `card_filter_disjoint` — Boolean-lattice interval counts\n   `#{R : S ⊆ R} = #{R : Disjoint S R} = 2^{|Gr|-|S|}` (shared with the Ramsey development).\n2. `card_monochromatic_le` — for one edge, at most `2·2^{N-k}` colourings make it monochromatic.\n3. `twoColorable_of_card_lt` — **Property B**: `|H| < 2^{k-1}` ⇒ `H` is two-colourable\n   (union bound over the edges beats the total colouring count).\n4. `card_ge_of_not_twoColorable` — the contrapositive `m(k) ≥ 2^{k-1}`.\n5. `twoColorable_single_edge`, `twoColorable_of_three_uniform_card_lt_four` — concrete\n   witnesses (a size-`≥2` edge is 2-colourable; every 3-uniform hypergraph with `≤ 3` edges\n   is 2-colourable, i.e. `m(3) ≥ 4`).\n\nAll theorems compile with only the standard axioms `propext, Classical.choice, Quot.sound`,\nand the file is self-contained (`import Mathlib` only).\n\n## Natural next steps\n\n* **Sharpen the bound.** Prove the Radhakrishnan–Srinivasan improvement\n  `m(k) = Ω(2^k √(k/ln k))` via the random recolouring argument, or the easier\n  `m(k) ≥ 2^{k-1}·(something)` via alteration (delete a vertex from each bad edge).\n* **Non-uniform Property B.** Generalise `twoColorable_of_card_lt` to hypergraphs where\n  edges may have different sizes, with the weighted condition `∑_{e∈H} 2^{1-|e|} < 1`.\n* **Lovász Local Lemma route.** Combine with the existing LLL chain rule to get\n  Property B under a *degree* condition (each edge meets few others) rather than a global\n  edge-count condition — the symmetric LLL gives 2-colourability when each edge intersects\n  at most `2^{k-3}` others.\n* **Upper bounds / constructions.** Formalise the Fano plane as the extremal\n  non-two-colourable 3-uniform hypergraph (`m(3) = 7`), matching the lower bound direction.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Computation"
@@ -35037,6 +35037,46 @@
       "thread_id": "",
       "timestamp": "2026-07-11T06:39:37.464758+00:00",
       "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 1,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "291fcce1",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 7362296f (Q=0.800), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 82394822 (Q=0.720) proved 15 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The number of nonzero orbits of Boolean cubic forms in 10 variables under the action of GL(10,2) is exactly 3,691,560. This is",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 0,
+      "id": "push_7362296f_3b9a9df8",
+      "last_attempt_time": "2026-07-13T02:22:57.237806+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "7362296f",
+      "source_path": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables",
+      "status": "in_progress",
+      "thread_id": "",
+      "timestamp": "2026-07-13T02:21:43.025993+00:00",
+      "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
     },
     {
       "ambition_level": "extension",
