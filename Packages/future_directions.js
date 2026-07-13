@@ -790,20 +790,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: Wetware \u2014 Biological Computation and Its Mathematical Limits"
   },
   {
-    "consumed_by_exp_id": "ffec372c",
-    "description": "Building on cycle bb33d4fa (Q=0.780), which proved 13 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A \u2286 E(G) where r\u2081(A) + r\u2082(E\\A) < t, and this failure is strict for no other subset.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_bb33d4fa_673a9012",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "bb33d4fa",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T14:32:43.571596+00:00",
-    "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle c2b68f4a (Q=0.780), which proved 20 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
     "domains": [
@@ -3824,7 +3810,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive Curvature Threshold for Lin-Lu-Yau Curvature"
   },
   {
-    "consumed_by_exp_id": "d4192a75",
+    "consumed_by_exp_id": "",
     "description": "For all finite graphs F and G, there exists an oddomorphism from F to G if and only if G is a split-off minor of F. The forward direction is established in the paper; the converse remains open.",
     "domains": [
       "Bridges"
@@ -3833,7 +3819,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.03405v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T02:03:09.912711+00:00",
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
   },
@@ -7568,6 +7554,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T02:21:16.875129+00:00",
     "title": "The target theorem file `BooleanCubicFormsBurnside.lean` was already `sorry`-fre"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was established\n\nWorking purely from the four matroid rank axioms (`IsMatroidRank`), on the objective\n`g(A) = r\u2081(A) + r\u2082(E \\ A)`:\n\n1. **Rainbow Forest Inequality (weak duality)** `rainbow_forest_inequality`:\n   every common independent set (total rainbow forest) `I \u2286 E` satisfies\n   `|I| \u2264 r\u2081(A) + r\u2082(E\\A)` for all `A`.  Consequently a single failing subset blocks\n   all rainbow forests of that size (`obstruction_blocks`).\n2. **Submodularity of the objective** `g_submodular`.\n3. **Lattice of witnesses** `minimizer_inf`, `minimizer_sup`: the minimizers of `g`\n   are closed under intersection and union.\n4. **Unique least / greatest witness** `exists_least_minimizer`,\n   `exists_greatest_minimizer`.\n5. **Refutation of the uniqueness conjecture** `uniqueness_fails`,\n   `minimizer_not_unique`: with both matroids equal to `U\u2081,\u2082` on `{0,1}`, the minimum\n   is attained by two distinct subsets.\n\n## The contrarian verdict\n\nThe original conjecture \u2014 *a minimal obstruction has a unique failing subset `A`, and\nthe failure is strict for no other subset* \u2014 is **false** as stated.  The correct,\nrobust statements are the lattice structure and the unique **least**/**greatest**\nwitnesses.\n\nTwo subtleties feed the refutation:\n\n* Uniqueness fails already for ordinary obstructions (item 5).\n* Under the natural \"delete an edge\" notion of minimality, the intersection number\n  `min_A g(A)` is monotone under deletion, so obstructions are downward closed and the\n  only edge-minimal obstruction is the empty ground set.  Thus edge-minimality cannot\n  restore uniqueness.\n\n## Open problems\n\n* **Alternative minimality.** Is there a *colour*-deletion or *contraction* based\n  notion of minimal obstruction under which the least and greatest witnesses coincide?\n  Characterize the matroid pairs for which `A_least = A_greatest`.\n* **Strong duality.** Formalize matroid intersection strong duality\n  (`max |I| = min_A g(A)`) to turn `obstruction_blocks` into an equivalence.\n* **Counting witnesses.** The witness family is a distributive lattice; relate the\n  number of minimizers to the structure of the \"tight\" sets (a Dilworth-type count).\n* **Weighted version.** Extend `g` and the lattice result to weighted matroid\n  intersection.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1183",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ffec372c",
+    "status": "available",
+    "timestamp": "2026-07-13T02:41:41.790649+00:00",
+    "title": "Working purely from the four matroid rank axioms (`IsMatroidRank`), on the objec"
   },
   {
     "consumed_by_exp_id": "",

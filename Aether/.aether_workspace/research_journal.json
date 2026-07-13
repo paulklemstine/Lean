@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "25c7a40e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What was proved (this cycle)\n\nThree self-contained Lean 4 files formalise a coherent slice of the number theory hiding inside\nthe quadratic recurrence `z_{n+1} = z_n^2 + c` and",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 33,
-      "timestamp": "2026-07-12T11:36:00",
-      "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-    },
-    {
       "cycle_id": "812631ed",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Robust Neural Coding\n\nThis cycle added the **Singleton bound** and its **robust-capacity** corollary to\nthe neural-coding theory, complementing the earlier sphere-packing (Hammin",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-13T02:21:42",
       "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+    },
+    {
+      "cycle_id": "ffec372c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## What was established\n\nWorking purely from the four matroid rank axioms (`IsMatroidRank`), on the objective\n`g(A) = r₁(A) + r₂(E \\ A)`:\n\n1. **Rainbow Forest Inequality (weak dua",
+      "quality_score": 0.8,
+      "sorry_count": 1,
+      "theorem_count": 18,
+      "timestamp": "2026-07-13T02:42:03",
+      "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e37aa20a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Chaos and Cryptography via the Logistic Map\n\nThis cycle established the exact semiconjugacy `f(sin² t) = sin²(2 t)` of the\nfull-strength logistic map `f(x) = 4x(1-x)` to angle dou",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-10T09:26:12",
-      "title": "Cryptography from Chaos: Encrypting with the Logistic Map"
-    },
     {
       "cycle_id": "207fb5b4",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-13T02:21:42",
       "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
+    },
+    {
+      "cycle_id": "ffec372c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## What was established\n\nWorking purely from the four matroid rank axioms (`IsMatroidRank`), on the objective\n`g(A) = r₁(A) + r₂(E \\ A)`:\n\n1. **Rainbow Forest Inequality (weak dua",
+      "quality_score": 0.8,
+      "sorry_count": 1,
+      "theorem_count": 18,
+      "timestamp": "2026-07-13T02:42:03",
+      "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "167b800e",
-      "domain": "Applications",
-      "name": "euler_poincare_defect",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "465c6137",
-      "domain": "Applications",
-      "name": "fussCatalan_zero",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "465c6137",
-      "domain": "Applications",
-      "name": "fussCatalan_key",
-      "quality": 0.72
-    },
     {
       "cycle_id": "465c6137",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "for",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "ffec372c",
+      "domain": "Applications",
+      "name": "IsMatroidRank",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "ffec372c",
+      "domain": "Applications",
+      "name": "IsMatroidRank",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "ffec372c",
+      "domain": "Applications",
+      "name": "rainbow_forest_inequality",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-13T02:21:42",
+  "last_updated": "2026-07-13T02:42:03",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "73c84a79",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-12T13:35:34"
-    },
     {
       "context": "-Everything is elementary and `sorry`-free.",
       "cycle_id": "bc831bad",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 6,
       "timestamp": "2026-07-13T02:21:42"
+    },
+    {
+      "context": "+Everything is elementary and `sorry`-free.",
+      "cycle_id": "ffec372c",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T02:42:03"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1f9ea620",
-        "quality": 0.82,
-        "theorems": 119,
-        "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematic"
-      },
-      {
         "cycle_id": "44b2d089",
         "quality": 0.83,
         "theorems": 21,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 9,
         "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
+      },
+      {
+        "cycle_id": "ffec372c",
+        "quality": 0.8,
+        "theorems": 18,
+        "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest "
       }
     ],
     "Bridges": [

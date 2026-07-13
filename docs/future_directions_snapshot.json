@@ -1069,25 +1069,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ffec372c",
-    "description": "Building on cycle bb33d4fa (Q=0.780), which proved 13 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an edge-colored graph that is a minimal obstruction to total rainbow forests, there exists a unique subset A ⊆ E(G) where r₁(A) + r₂(E\\A) < t, and this failure is strict for no other subset.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_bb33d4fa_673a9012",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "bb33d4fa",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T14:32:43.571596+00:00",
-    "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle c2b68f4a (Q=0.780), which proved 20 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distrib",
     "domain_bridges": [],
@@ -3416,35 +3397,6 @@
     "status": "available",
     "timestamp": "2026-07-04T15:52:09.764829+00:00",
     "title": "Every $τ_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges for $n ≥ 2k+2$"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "matching_polynomials",
-      "spectral_graph_theory",
-      "limit_points_of_graph_roots",
-      "golden_ratio_in_graph_theory"
-    ],
-    "consumed_by_exp_id": "5b1ced03",
-    "description": "Let τ = (√5 + 1)/2 be the golden ratio. For the threshold value T = τ^(1/2) + τ^(-1/2), there exists a countable set S ⊆ [−T, T] such that S is exactly the set of limit points of largest matching roots μ(G) for graphs G. Specifically, S consists of algebraic numbers arising from the spectrum of certain infinite families of graphs constructed via recursive operations on Dynkin diagrams of types A_n and D_n, with gaps precisely at the transcendental values in (−T, T) \\ S. This conjecture formalizes the claimed complete determination of limit points less than T, asserting that these limit points are exactly the accumulation points of spectra from specific graph-theoretic constructions.",
-    "domain_bridges": [
-      "algebraic_number_theory",
-      "spectral_theory",
-      "combinatorial_matrix_theory"
-    ],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0208",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Prove by constructing explicit graph sequences whose matching roots converge to claimed limit points, while showing any convergent sequence of largest matching roots must arise from these constructions. Use interlacing properties of matching polynomials under graph operations, analyze the asymptotic spectrum of recursively defined graph families, and establish algebraic characterization of the resulting limit values.",
-    "research_mode": "team",
-    "source_exp_id": "2606.28162v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T16:55:54.714925+00:00",
-    "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Matching Roots"
   },
   {
     "ambition_level": "grand_challenge",
@@ -6405,7 +6357,7 @@
       "mancinska2020quantum",
       "lovasz1967operations"
     ],
-    "consumed_by_exp_id": "d4192a75",
+    "consumed_by_exp_id": "",
     "description": "For all finite graphs F and G, there exists an oddomorphism from F to G if and only if G is a split-off minor of F. The forward direction is established in the paper; the converse remains open.",
     "domain_bridges": [
       "homomorphism_indistinguishability",
@@ -6421,7 +6373,7 @@
     "proof_strategy": "The forward direction is given by the paper's Theorem that oddomorphism from F to G implies G is a split-off minor of F. For the converse, attempt to construct an oddomorphism from F to G given that G is a split-off minor of F, by reversing each split-off minor operation step and verifying parity conditions on homomorphism counts are preserved. A counterexample search via CFI-type constructions could also be pursued.",
     "research_mode": "team",
     "source_exp_id": "2607.03405v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-07T02:03:09.912711+00:00",
     "title": "Equivalence of Oddomorphism and Split-Off Minor"
   },
@@ -12424,6 +12376,46 @@
     "status": "available",
     "timestamp": "2026-07-13T02:21:16.875129+00:00",
     "title": "The target theorem file `BooleanCubicFormsBurnside.lean` was already `sorry`-fre"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was established\n\nWorking purely from the four matroid rank axioms (`IsMatroidRank`), on the objective\n`g(A) = r₁(A) + r₂(E \\ A)`:\n\n1. **Rainbow Forest Inequality (weak duality)** `rainbow_forest_inequality`:\n   every common independent set (total rainbow forest) `I ⊆ E` satisfies\n   `|I| ≤ r₁(A) + r₂(E\\A)` for all `A`.  Consequently a single failing subset blocks\n   all rainbow forests of that size (`obstruction_blocks`).\n2. **Submodularity of the objective** `g_submodular`.\n3. **Lattice of witnesses** `minimizer_inf`, `minimizer_sup`: the minimizers of `g`\n   are closed under intersection and union.\n4. **Unique least / greatest witness** `exists_least_minimizer`,\n   `exists_greatest_minimizer`.\n5. **Refutation of the uniqueness conjecture** `uniqueness_fails`,\n   `minimizer_not_unique`: with both matroids equal to `U₁,₂` on `{0,1}`, the minimum\n   is attained by two distinct subsets.\n\n## The contrarian verdict\n\nThe original conjecture — *a minimal obstruction has a unique failing subset `A`, and\nthe failure is strict for no other subset* — is **false** as stated.  The correct,\nrobust statements are the lattice structure and the unique **least**/**greatest**\nwitnesses.\n\nTwo subtleties feed the refutation:\n\n* Uniqueness fails already for ordinary obstructions (item 5).\n* Under the natural \"delete an edge\" notion of minimality, the intersection number\n  `min_A g(A)` is monotone under deletion, so obstructions are downward closed and the\n  only edge-minimal obstruction is the empty ground set.  Thus edge-minimality cannot\n  restore uniqueness.\n\n## Open problems\n\n* **Alternative minimality.** Is there a *colour*-deletion or *contraction* based\n  notion of minimal obstruction under which the least and greatest witnesses coincide?\n  Characterize the matroid pairs for which `A_least = A_greatest`.\n* **Strong duality.** Formalize matroid intersection strong duality\n  (`max |I| = min_A g(A)`) to turn `obstruction_blocks` into an equivalence.\n* **Counting witnesses.** The witness family is a distributive lattice; relate the\n  number of minimizers to the structure of the \"tight\" sets (a Dilworth-type count).\n* **Weighted version.** Extend `g` and the lattice result to weighted matroid\n  intersection.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1183",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ffec372c",
+    "status": "available",
+    "timestamp": "2026-07-13T02:41:41.790649+00:00",
+    "title": "Working purely from the four matroid rank axioms (`IsMatroidRank`), on the objec"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes, from scratch and with no `sorry`, the cleanest\nconcrete instance of the \"limit points of largest matching roots below the\ngolden-ratio threshold\" picture: the **path family**. The file\n`Catalog/Novelty/MatchingRootGoldenThreshold.lean` proves that the largest\nmatching roots of paths `Pₙ` form a strictly increasing sequence\n`2cos(π/(n+2)) ↗ 2`, that `2` is a genuine accumulation point (`AccPt`) of\nthese values, and that `2` lies strictly below the threshold\n`T = √τ + 1/√τ = √(2+√5)`.\n\n## What is proved\n\n* `pathMatch` — matching polynomial of `Pₙ` via edge–deletion recurrence;\n  `pathMatch_monic`, `pathMatch_natDegree`, `pathMatch_eval_two`.\n* `pathMatch_eval_cos` — the exact trigonometric evaluation\n  `μ(Pₙ)(2cosθ)·sinθ = sin((n+1)θ)`.\n* `pathMatch_isGreatest_root` — the greatest root of `μ(Pₙ)` is `2cos(π/(n+1))`,\n  by proving the `n` explicit numbers `2cos(kπ/(n+1))` are *all* the roots.\n* `mu_strictMono`, `mu_lt_two`, `mu_tendsto_two` — the largest-root sequence.\n* `goldenThreshold_eq_sqrt_tau`, `two_lt_goldenThreshold` — threshold arithmetic.\n* `largest_matching_root_accumulates_at_two`, `two_isAccPt_matching_roots` — the\n  capstone accumulation results.\n* `mu_three_eq_tau` — the largest matching root of `P₅` is exactly the golden\n  ratio.\n\n## Natural next steps\n\n1. **Cycles `Cₙ`.** The matching polynomial of the cycle satisfies\n   `μ(Cₙ) = μ(Pₙ) − μ(Pₙ₋₂)` and evaluates to `2cos(nθ)` in disguise; its\n   largest root is `2cos(π/n) → 2` as well. Formalizing this gives a second\n   family accumulating at `2` and a good warm-up for products/unions of graphs.\n\n2. **The `Dₙ` family and values in `(2, T)`.** The genuinely new content of the\n   research concept lives *between* `2` and `T`: limit points there come from\n   the `Dₙ`/`E`-type recursive constructions (Shearer/Hoffman-style \"internal\n   path subdivision\"). A tractable milestone is to build a single explicit\n   family whose largest matching roots converge to a value in `(2, T)`, e.g. via\n   trees obtained by attaching a fixed gadget to a growing path.\n\n3. **General matching polynomial API.** Presently `pathMatch` is defined by the\n   path recurrence. A reusable development would define the matching polynomial\n   of an arbitrary finite (simple) graph as\n   `∑ₖ (−1)ᵏ m(G,k) x^{n−2k}` where `m(G,k)` counts `k`-matchings, prove the\n   edge-deletion recurrence `μ(G) = μ(G−e) − μ(G−u−v)`, and specialize to paths\n   (recovering `pathMatch`) and to forests (matching polynomial = characteristic\n   polynomial, hence matching roots = adjacency eigenvalues). This connects\n   `μ(G)` to spectral graph theory and to Smith's theorem.\n\n4. **Reality and interlacing.** Heilmann–Lieb: all matching roots are real and\n   lie in `[−2√(Δ−1), 2√(Δ−1)]` for maximum degree `Δ`. Formalizing the real-\n   rootedness of `μ(G)` (via the recurrence and Sturm/interlacing) would make\n   \"largest matching root\" well-defined for all graphs and put the accumulation\n   statements on a fully general footing.\n\n5. **Countability / gap structure.** The concept asserts the set `S` of limit\n   points below `T` is countable with gaps at transcendental values. A formal\n   target: show the closure of `{2cos(π/n) : n}` together with the `Dₙ`-limits\n   is countable, and exhibit an explicit transcendental value in `(−T,T)\\S`\n   (e.g. via a Baker-type argument on `2cosθ` with `θ/π` transcendental).\n\n6. **Threshold sharpness.** Prove that no largest matching root of any graph in\n   the studied families exceeds `T`, i.e. `T` really is the barrier — the\n   converse direction of the characterization.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1184",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5b1ced03",
+    "status": "available",
+    "timestamp": "2026-07-13T02:42:14.681965+00:00",
+    "title": "This project formalizes, from scratch and with no `sorry`, the cleanest"
   },
   {
     "ambition_level": "extension",
