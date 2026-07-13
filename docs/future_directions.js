@@ -720,20 +720,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
   {
-    "consumed_by_exp_id": "909a0259",
-    "description": "Building on cycle 61c22649 (Q=0.780), which proved 29 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A partial cube that is a Cartesian product of two partial cubes satisfies the opposite-semicube Helly property if and only if both factors are harmonic-even.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_61c22649_7d11f433",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "61c22649",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T20:49:46.145056+00:00",
-    "title": "Deepening: The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 73d4b43b (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a s",
     "domains": [
@@ -1093,7 +1079,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3959b92d",
     "description": "Cycle 48961a11 (Q=0.830) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a were",
     "domains": [
       "Applications"
@@ -1102,7 +1088,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "48961a11",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T05:35:47.121314+00:00",
     "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
@@ -7505,6 +7491,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T23:52:02.546523+00:00",
     "title": "This cycle sharpened the reflective tower `L(0) = Bool`, `L(n+1) = L(n) \u2192 Bool`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: harmonic-balance and the opposite-semicube Helly property\n\nThis cycle established that the opposite-semicube Helly property of a partial cube\nis governed by a single *harmonic-balance* invariant that is simultaneously\ncoordinate-local, multiplicative across Cartesian products of arbitrary finite\nfamilies, a parity obstruction on the vertex count, and canonically realised by\nthe antipodal involution whenever the vertex set is closed under it. The following\nconjectures push each of these four facets further.\n\n## 1. A multiplicative count of cut-matchings\n\n**Conjecture.** For a finite family of nonempty balanced partial cubes, the number\nof coordinatewise systems of cut-representatives (choices of a matching for every\n\u0398-class simultaneously) of the family product factors as a product over the\nfactors, each factor's contribution raised to the power given by the product of the\nsizes of the remaining factors.\n\n*The key insight is* that a matching of a cut in the product is a merge of a\nmatching in one factor with the identity on all others, so the space of product\nmatchings is a fibered product whose cardinality multiplies coordinate by\ncoordinate. *Why now?* The present cycle already proves that the *existence* of cut\nmatchings is multiplicative; upgrading existence to an exact enumeration is the\nnatural quantitative refinement, and the merge-map cardinality calculus developed\nhere supplies precisely the bookkeeping needed to carry the counts through the\ndisjoint-union coordinate set.\n\n## 2. Antipodal closure characterises involutive canonical matchings\n\n**Conjecture.** A balanced partial cube admits a single involution of its vertex\nset that restricts, on every \u0398-class, to a fixed-point-free matching of the two\nopposite semicubes if and only if the vertex set is closed under the coordinatewise\ncomplement.\n\n*The key insight is* that a global involutive matching is exactly a free action of\nthe two-element group compatible with every cut, and the only such action available\nuniformly across all coordinates is the antipodal map. *Why now?* We have shown\nantipodal closure is *sufficient* for a canonical matching; isolating it as the\n*exact* obstruction to an involutive (as opposed to merely bijective) matching\nturns a one-directional construction into a structural equivalence and separates\n\"balanced\" from \"symmetrically balanced\".\n\n## 3. Alphabet independence of the balance law\n\n**Conjecture.** Over a $q$-symbol alphabet, define a coordinate to be balanced when\nall $q$ of its fibers are equinumerous. Then the family-product balance law and its\nHelly reformulation hold verbatim, with the two-sided matching replaced by a\ntransitive family of bijections among the $q$ fibers, and the parity obstruction\nstrengthened to divisibility of the vertex count by $q$.\n\n*The key insight is* that the merge-map cardinality argument never uses that the\nalphabet has two symbols \u2014 it only uses that a one-coordinate slice of a product is\nagain a product with a single factor restricted. *Why now?* The Boolean case is now\nfully understood; because the proof mechanism is alphabet-agnostic, the $q$-ary\ngeneralisation is the shortest route to a genuinely broader theorem covering Hamming\ngraphs and mixed-radix product structures.\n\n## 4. Harmonic balance as a spectral/mean-value symmetry\n\n**Conjecture.** A partial cube is balanced at every coordinate if and only if the\nuniform distribution on its vertices places the coordinate mean at the center of\nthe cube; equivalently, the $\\pm 1$ coordinate functions all have zero average.\nConsequently every harmonic-even partial cube has an even vertex count and its\n\"center of mass\" is the geometric center of the hypercube.\n\n*The key insight is* that balance of a cut is the vanishing of the average of the\nassociated $\\pm 1$ coordinate character, so harmonic-evenness is precisely a\ndiscrete mean-value (harmonic) condition \u2014 the exact analogue of a function whose\nvalue at a point equals its average over neighbors. *Why now?* This cycle proved the\nparity corollary directly from a single balanced cut; recasting balance as the\nvanishing of coordinate averages explains *why* parity appears and connects the\ncombinatorial invariant to the harmonic-analysis viewpoint on the cube, opening the\ndoor to Fourier-analytic tools.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1174",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "909a0259",
+    "status": "available",
+    "timestamp": "2026-07-13T00:09:50.389973+00:00",
+    "title": "That the opposite-semicube Helly property of a partial cu"
   },
   {
     "consumed_by_exp_id": "",

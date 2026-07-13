@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e978b5fe",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: White's Quadratic Exchange Conjecture\n\nThis cycle isolated the *element-census invariant* as the exact obstruction that\nquadratic exchange moves preserve, verified that every symm",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 1210,
-      "timestamp": "2026-07-12T09:01:53",
-      "title": "White's Quadratic Exchange Conjecture (Part 3)"
-    },
-    {
       "cycle_id": "c3fe1d06",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — The Topology of Arithmetic (continued)\n\nThis cycle deepens `Shared/PrimeBarcodeInvariants.lean` and\n`Novelty/PrimePersistentHomology.lean`, which established that the zero-dimens",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-12T23:52:10",
       "title": "That a type which fully quantifies over itself —"
+    },
+    {
+      "cycle_id": "909a0259",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: harmonic-balance and the opposite-semicube Helly property\n\nThis cycle established that the opposite-semicube Helly property of a partial cube\nis governed by a single *harmonic-bal",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 0,
+      "timestamp": "2026-07-13T00:10:01",
+      "title": "Deepening: The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "996ff4be",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Geometry and Universal Structure of Surprise\n\nThis cycle established two complementary pillars. First, *surprise* — the gap between\nthe most conservative and most divergent re",
-      "quality_score": 0.78,
-      "sorry_count": 3,
-      "theorem_count": 14,
-      "timestamp": "2026-07-10T07:17:30",
-      "title": "The Category Theory of Jokes: Universal Properties of Humor"
-    },
     {
       "cycle_id": "34a8cfea",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-12T23:52:10",
       "title": "That a type which fully quantifies over itself —"
+    },
+    {
+      "cycle_id": "909a0259",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: harmonic-balance and the opposite-semicube Helly property\n\nThis cycle established that the opposite-semicube Helly property of a partial cube\nis governed by a single *harmonic-bal",
+      "quality_score": 0.83,
+      "sorry_count": 1,
+      "theorem_count": 0,
+      "timestamp": "2026-07-13T00:10:01",
+      "title": "Deepening: The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-12T23:52:10",
+  "last_updated": "2026-07-13T00:10:01",
   "open_questions": [
-    {
-      "context": "+recorded as a future direction rather than left as an unproven `sorry`.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "e2c082ff",
-      "domain": "MachineLearning",
-      "sorry_count": 5,
-      "timestamp": "2026-07-12T07:19:31"
-    },
     {
       "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.",
       "cycle_id": "71e324bf",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 5,
       "timestamp": "2026-07-12T23:52:10"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "909a0259",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-13T00:10:01"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d95af58e",
-        "quality": 0.82,
-        "theorems": 28,
-        "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
-      },
-      {
         "cycle_id": "61c22649",
         "quality": 0.78,
         "theorems": 29,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 0,
         "title": "Close Proofs: The opposite-semicube Helly property characterizes harmonic-evenne"
+      },
+      {
+        "cycle_id": "909a0259",
+        "quality": 0.83,
+        "theorems": 0,
+        "title": "Deepening: The opposite-semicube Helly property characterizes harmonic-evenness "
       }
     ],
     "NumberTheory": [
