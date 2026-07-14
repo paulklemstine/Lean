@@ -974,6 +974,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "b78ccbe1",
+    "description": "Building on cycle 769cd692 (Q=0.780), which proved 51 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved three things about it unconditionally: iterating the\nsingle-step suspension raises the co-index by at l",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_769cd692_d6ba925b",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "769cd692",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T07:30:03.453805+00:00",
+    "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7a9dcf2f (Q=0.780), which proved 81 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' — beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
     "domain_bridges": [],
@@ -1688,6 +1707,25 @@
     "status": "available",
     "timestamp": "2026-07-10T05:00:51.823169+00:00",
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "6e60d0a1",
+    "description": "Cycle 769cd692 (Q=0.780) proved 51 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved thr",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_769cd692_db044927",
+    "lineage_refs": [],
+    "priority_score": 0.8300000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "769cd692",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T07:30:03.599030+00:00",
+    "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
   },
   {
     "ambition_level": "extension",

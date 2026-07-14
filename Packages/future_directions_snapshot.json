@@ -974,7 +974,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b78ccbe1",
     "description": "Building on cycle 769cd692 (Q=0.780), which proved 51 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved three things about it unconditionally: iterating the\nsingle-step suspension raises the co-index by at l",
     "domain_bridges": [],
     "domains": [
@@ -986,7 +986,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "769cd692",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T07:30:03.453805+00:00",
     "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
   },
@@ -1711,7 +1711,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e60d0a1",
     "description": "Cycle 769cd692 (Q=0.780) proved 51 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved thr",
     "domain_bridges": [],
     "domains": [
@@ -1723,7 +1723,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "769cd692",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T07:30:03.599030+00:00",
     "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
   },
