@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "44ee6caf",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domains": [
       "Probability"
@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "0981cb8f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:40:03.135454+00:00",
     "title": "Deepening: Consciousness as Emergent Fixed Point"
   },
@@ -325,7 +325,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "7a80f842",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -334,7 +334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -718,20 +718,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T21:24:24.384798+00:00",
     "title": "Deepening: Sharp maximal excess of co-index under suspension for all feasible sta"
-  },
-  {
-    "consumed_by_exp_id": "3361b315",
-    "description": "Building on cycle 7a9dcf2f (Q=0.780), which proved 81 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_7a9dcf2f_786c70cb",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "7a9dcf2f",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T02:59:14.748710+00:00",
-    "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
   },
   {
     "consumed_by_exp_id": "",
@@ -2557,6 +2543,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T16:15:59.332057+00:00",
     "title": "The file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Knotted Light\n\nThis cycle established the topological charge of an orbital-angular-momentum beam\nas an additive invariant governed by a contour-integral **product rule**\n`w(\u03c6\u00b7\u03c8) = w(\u03c6) + w(\u03c8)`, showed the charge is carried by the full physical\namplitude (not merely its phase), and bridged the charge of a torus-knot beam to\nthe arithmetic `lcm` of its knot parameters. The following conjectures extend\nthese findings.\n\n## 1. The winding number is a group homomorphism onto the integers\n**Conjecture.** The map sending a non-vanishing, piecewise-smooth beam loop to its\nwinding number is a surjective group homomorphism from the multiplicative group of\nsuch loops onto `(\u2124, +)`, and its kernel is exactly the loops that lift to a\nsingle-valued logarithm over one turn.\n**The key insight is** that additivity of charge is not a property of the\nexponential ansatz but of the logarithmic derivative, so *every* admissible beam \u2014\nhowever it is engineered \u2014 obeys the same conservation law.\n**Why now?** With the product rule proved for general loops, the remaining step is\nonly to identify the kernel with the exact (globally-integrable-logarithm) loops,\na self-contained analytic characterization.\n\n## 2. Torus-knot beams realize every meridional charge, and coprime pairs are extremal\n**Conjecture.** Among all `(p, q)` torus-knot beams with fixed charge `N = p\u00b7q`,\nthe coprime factorizations are exactly those whose singularity is a single\nconnected knot rather than a split link; equivalently, `gcd(p,q)` counts the\nconnected components of the phase singularity.\n**The key insight is** that the arithmetic identity `lcm p q = p\u00b7q \u21d4 gcd(p,q)=1`\nis the shadow of a topological dichotomy (knot vs. link) at the level of the beam's\nzero set.\n**Why now?** The charge/`lcm` bridge is in hand; the next move is to promote the\nscalar identity to a statement about the number of components, which is a finite,\ncheckable combinatorial invariant.\n\n## 3. Annihilation is the only way to lower total charge\n**Conjecture.** For any finite family of beams, the total winding number of their\nsuperposition equals the sum of charges, and it can be strictly reduced only by\nincluding beams of opposite handedness whose singularities pairwise cancel; no\ncontinuous, singularity-free deformation changes the total.\n**The key insight is** that the winding number is a homotopy invariant of the loop\nin `\u2102 \\ {0}`, so charge is conserved unless a zero is created or destroyed.\n**Why now?** Conservation over families is already proved as a contour-integral\ncorollary; upgrading it to a homotopy-invariance statement connects it to the\nstandard degree theory of the punctured plane.\n\n## 4. Charge quantization survives radial and polarization dressing\n**Conjecture.** Multiplying a beam by any nowhere-zero, single-valued envelope\n(radial profile, Gaussian waist, or scalar polarization factor) leaves the winding\nnumber unchanged; hence the integer charge is a robust label independent of the\nexperimentally uncontrolled amplitude.\n**The key insight is** that only the phase's failure to be single-valued\ncontributes to the contour integral, so any genuinely single-valued dressing is\ninvisible to the invariant.\n**Why now?** The special case of a constant envelope (and the `r^{|\u2113|}` Laguerre\u2013\nGauss factor) is already proved; the general envelope case needs only the same\nlogarithmic-derivative cancellation applied to an arbitrary non-vanishing factor.\n\n\n# Future Directions \u2014 The Topology of Knotted Light\n\nThis cycle established the topological charge of an orbital-angular-momentum beam\nas an additive invariant governed by a contour-integral **product rule**\n`w(\u03c6\u00b7\u03c8) = w(\u03c6) + w(\u03c8)`, showed the charge is carried by the full physical\namplitude (not merely its phase), and bridged the charge of a torus-knot beam to\nthe arithmetic `lcm` of its knot parameters. The following conjectures extend\nthese findings.\n\n## 1. The winding number is a group homomorphism onto the integers\n**Conjecture.** The map sending a non-vanishing, piecewise-smooth beam loop to its\nwinding number is a surjective group homomorphism from the multiplicative group of\nsuch loops onto `(\u2124, +)`, and its kernel is exactly the loops that lift to a\nsingle-valued logarithm over one turn.\n**The key insight is** that additivity of charge is not a property of the\nexponential ansatz but of the logarithmic derivative, so *every* admissible beam \u2014\nhowever it is engineered \u2014 obeys the same conservation law.\n**Why now?** With the product rule proved for general loops, the remaining step is\nonly to identify the kernel with the exact (globally-integrable-logarithm) loops,\na self-contained analytic characterization.\n\n## 2. Torus-knot beams realize every meridional charge, and coprime pairs are extremal\n**Conjecture.** Among all `(p, q)` torus-knot beams with fixed charge `N = p\u00b7q`,\nthe coprime factorizations are exactly those whose singularity is a single\nconnected knot rather than a split link; equivalently, `gcd(p,q)` counts the\nconnected components of the phase singularity.\n**The key insight is** that the arithmetic identity `lcm p q = p\u00b7q \u21d4 gcd(p,q)=1`\nis the shadow of a topological dichotomy (knot vs. link) at the level of the beam's\nzero set.\n**Why now?** The charge/`lcm` bridge is in hand; the next move is to promote the\nscalar identity to a statement about the number of components, which is a finite,\ncheckable combinatorial invariant.\n\n## 3. Annihilation is the only way to lower total charge\n**Conjecture.** For any finite family of beams, the total winding number of their\nsuperposition equals the sum of charges, and it can be strictly reduced only by\nincluding beams of opposite handedness whose singularities pairwise cancel; no\ncontinuous, singularity-free deformation changes the total.\n**The key insight is** that the winding number is a homotopy invariant of the loop\nin `\u2102 \\ {0}`, so charge is conserved unless a zero is created or destroyed.\n**Why now?** Conservation over families is already proved as a contour-integral\ncorollary; upgrading it to a homotopy-invariance statement connects it to the\nstandard degree theory of the punctured plane.\n\n## 4. Charge quantization survives radial and polarization dressing\n**Conjecture.** Multiplying a beam by any nowhere-zero, single-valued envelope\n(radial profile, Gaussian waist, or scalar polarization factor) leaves the winding\nnumber unchanged; hence the integer charge is a robust label independent of the\nexperimentally uncontrolled amplitude.\n**The key insight is** that only the phase's failure to be single-valued\ncontributes to the contour integral, so any genuinely single-valued dressing is\ninvisible to the invariant.\n**Why now?** The special case of a constant envelope (and the `r^{|\u2113|}` Laguerre\u2013\nGauss factor) is already proved; the general envelope case needs only the same\nlogarithmic-derivative cancellation applied to an arbitrary non-vanishing factor.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1305",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3361b315",
+    "status": "available",
+    "timestamp": "2026-07-14T16:16:24.711910+00:00",
+    "title": "Topological charge of an orbital-angular-momentum bea"
   },
   {
     "consumed_by_exp_id": "",

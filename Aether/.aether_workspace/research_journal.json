@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "117d6517",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Analogy as an Adjoint Operation\n\nThis cycle recast analogy-making between two ordered structures as the taking of an\n*adjoint pair* `(forward, backward)` bound by the adjunction l",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 23,
-      "timestamp": "2026-07-13T23:13:27",
-      "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
-    },
-    {
       "cycle_id": "beca1e55",
       "domain": "Applications",
       "key_insight": "# Future Directions — Transfinite Game Theory, Deepened\n\nThis cycle deepens the theory of two-player **well-founded (transfinite) games**\nby developing the *disjunctive sum*, the central algebraic ope",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-14T16:16:10",
       "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+    },
+    {
+      "cycle_id": "3361b315",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Knotted Light\n\nThis cycle established the topological charge of an orbital-angular-momentum beam\nas an additive invariant governed by a contour-integral **product",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 16,
+      "timestamp": "2026-07-14T16:16:35",
+      "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "453f48e6",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — I Am a Strange Loop, Formalized\n\nThis project formalizes the structural core of Hofstadter's *I Am a Strange\nLoop* via three self-contained Lean files:\n\n- `Combinatorics/StrangeL",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-07-12T00:46:46",
-      "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
-    },
     {
       "cycle_id": "acce14cf",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-14T16:16:10",
       "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+    },
+    {
+      "cycle_id": "3361b315",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Knotted Light\n\nThis cycle established the topological charge of an orbital-angular-momentum beam\nas an additive invariant governed by a contour-integral **product",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 16,
+      "timestamp": "2026-07-14T16:16:35",
+      "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b97ab468",
-      "domain": "Novelty",
-      "name": "dist_pt_eq_sqrt2",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0a1d0253",
-      "domain": "Applications",
-      "name": "primPart_check",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0a1d0253",
-      "domain": "Applications",
-      "name": "over",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0a1d0253",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "weightSum_prime",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "3361b315",
+      "domain": "Novelty",
+      "name": "winding_mul",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "3361b315",
+      "domain": "Novelty",
+      "name": "winding_smul_left",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "3361b315",
+      "domain": "Novelty",
+      "name": "oamPhase_hasDerivAt",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T16:16:10",
+  "last_updated": "2026-07-14T16:16:35",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "d954b0de",
-      "domain": "Novelty",
-      "sorry_count": 3,
-      "timestamp": "2026-07-13T19:07:10"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "c81e5afa",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-14T16:16:10"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "3361b315",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T16:16:35"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "769cd692",
-        "quality": 0.78,
-        "theorems": 51,
-        "title": "**suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
-      },
-      {
         "cycle_id": "b78ccbe1",
         "quality": 0.82,
         "theorems": 24,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 26,
         "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+      },
+      {
+        "cycle_id": "3361b315",
+        "quality": 0.83,
+        "theorems": 16,
+        "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
       }
     ],
     "NumberTheory": [
