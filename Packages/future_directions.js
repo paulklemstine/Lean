@@ -115,20 +115,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "6af180ae",
-    "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients \u220f_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_6490730e_4c7375d5",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "6490730e",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T03:16:46.250984+00:00",
-    "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domains": [
@@ -911,7 +897,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bec8fe46",
     "description": "Cycle 1bd2f770 (Q=0.820) proved 21 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's pol",
     "domains": [
       "Novelty"
@@ -920,7 +906,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "1bd2f770",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T01:16:54.245504+00:00",
     "title": "Close Proofs: Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -2135,6 +2121,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T01:53:18.479283+00:00",
     "title": "Bold, falsifiable conjectures arising from the Fibonacci Pythagorean triple fami"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from the generalized multinomial convolution identity\n$$\\sum_{i_1+\\cdots+i_m=d}\\ \\prod_{j=1}^{m}\\binom{a+i_j}{a}=\\binom{ma+d+m-1}{d},$$\nand its multichoose reformulation\n$$\\sum_{f:\\,\\sum_{i\\in s} f(i)=d}\\ \\prod_{i\\in s}\\operatorname{multichoose}(r,f(i))=\\operatorname{multichoose}(|s|\\cdot r,\\,d),$$\nnow also established in the *heterogeneous* form where each factor carries its own\nmultiplicity $r(i)$ and the right-hand side becomes $\\operatorname{multichoose}\\big(\\sum_{i\\in s} r(i),\\,d\\big)$, so that\n$$\\sum_{i_1+\\cdots+i_m=d}\\ \\prod_{j=1}^{m}\\binom{a_j+i_j}{a_j}=\\binom{\\big(\\textstyle\\sum_j a_j\\big)+d+m-1}{d}.$$\n\n## 1. Heterogeneous multiplicities (now established) \u2192 two-parameter refinement\n\n**Status.** The heterogeneous convolution is now proved: for any multiplicities\n$(r_1,\\dots,r_m)$,\n$$\\sum_{i_1+\\cdots+i_m=d}\\ \\prod_{j=1}^{m}\\binom{r_j-1+i_j}{i_j}=\\binom{\\big(\\sum_j r_j\\big)-1+d}{d},$$\nsince the right-hand side depends on the multiplicities only through their sum,\nexactly as the generating function $\\prod_j (1-x)^{-r_j}=(1-x)^{-\\sum_j r_j}$\npredicts.\n\n**Conjecture (successor).** There is a *doubly graded* refinement recording, for\neach part, both its size and the index of the factor it came from: a bivariate\nsum $\\sum_{\\mathbf i}\\ x^{\\sum_j j\\,i_j}\\prod_j\\binom{r_j-1+i_j}{i_j}$ factors as a\nproduct of shifted $q$-multichoose numbers whose principal specialization\nrecovers the identity above.\n\nThe key insight is that once the multiplicities are allowed to vary with the\nindex, the convolution is no longer symmetric in the parts, so an order-sensitive\nstatistic (the position-weighted degree) becomes a genuine second grading rather\nthan a cosmetic marker.\nWhy now? The finite-index-set induction isolates a single insertion step adding\none factor of arbitrary multiplicity, and that step is exactly where a\nposition weight can be attached and tracked through the recursion.\n\n## 2. Alternating (signed) convolution\n\n**Conjecture.** With signs attached to the parts,\n$$\\sum_{i_1+\\cdots+i_m=d}(-1)^{d}\\prod_{j=1}^{m}\\binom{a+i_j}{a}\n\\ \\text{stabilises to a single signed binomial when } a \\text{ is replaced by a negative integer parameter.}$$\n\nThe key insight is that the positive identity is the $a\\ge 0$ branch of a\nVandermonde law valid for all integer upper parameters, where negative values\nproduce the inclusion\u2013exclusion signs seen in M\u00f6bius-type inversions.\nWhy now? The multichoose Vandermonde convolution proved here has a known integer\nextension ($\\operatorname{multichoose}(-n,k)$), giving a concrete target for the\nsigned version.\n\n## 3. $q$-analogue via Gaussian binomials\n\n**Conjecture.**\n$$\\sum_{i_1+\\cdots+i_m=d}\\ q^{\\,e(\\mathbf i)}\\prod_{j=1}^{m}\\binom{a+i_j}{a}_q=\\binom{ma+d+m-1}{d}_q$$\nfor an explicit exponent statistic $e(\\mathbf i)$ (a sum of partial-sum products).\n\nThe key insight is that stars-and-bars convolutions almost always admit a\n$q$-refinement recording the \"area\" of the underlying lattice paths, and the\ntelescoping cons step should carry a clean power of $q$.\nWhy now? Gaussian-binomial Vandermonde identities are available, so the base\nconvolution can be upgraded and the same induction re-run.\n\n## 4. Direct Latin rectangle corollary\n\n**Conjecture.** The count of $k\\times n$ Latin rectangles admits a closed\nconvolution reduction whose innermost sum is an instance of the identity above\nfor every fixed number of rows, removing the $m=3$ restriction in the classical\nBogart\u2013Longyear simplification.\n\nThe key insight is that each additional row contributes one more convolution\nfactor of the same binomial shape, so the all-orders identity is precisely the\nalgebraic engine needed to collapse the multi-row recurrence.\nWhy now? With the arbitrary-$m$ identity in hand, the only remaining step is to\nmatch the row-insertion recurrence to the tuple sum.\n\n## 5. Species / bijective proof\n\n**Conjecture.** There is a natural weight-preserving bijection between\n$m$-tuples of \"$a$-decorated\" multisets with total size $d$ and single\n$(m(a+1))$-decorated multisets of size $d$, refining the numerical identity to an\nequivalence of combinatorial species.\n\nThe key insight is that $\\binom{a+i}{a}=\\operatorname{multichoose}(a+1,i)$ counts\nmultisets, so the product side counts tuples of multisets and the right side\ncounts a single larger multiset \u2014 a merge/split bijection should realise the\nequality directly.\nWhy now? The multichoose reformulation established here makes the two sides\nmanifestly enumerative, which is the standard precondition for extracting a\nbijection.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1264",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6af180ae",
+    "status": "available",
+    "timestamp": "2026-07-14T01:53:31.189853+00:00",
+    "title": "Derived from the generalized multinomial convolution identity"
   },
   {
     "consumed_by_exp_id": "",
