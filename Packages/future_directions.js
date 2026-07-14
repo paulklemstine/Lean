@@ -171,20 +171,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
   },
   {
-    "consumed_by_exp_id": "1e9bf31c",
-    "description": "Building on cycle 07d73c91 (Q=0.820), which proved 51 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Multiverse Set Theory \u2014 Mathematics Across Branches (Cycle 1)\n\nThis cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the\nmodal logic of forcing in the set-theoretic multiverse. All results compile with\n**0 sorries** and use only the standard axioms (`propext`, `Classical.choic",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_07d73c91_c87d527a",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "07d73c91",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T18:39:56.640608+00:00",
-    "title": "Deepening: This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
     "domains": [
@@ -2125,7 +2111,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Additive / geometric / analytic scaffolding around th"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "daf8e94d",
     "description": "# Future directions: AVD\u2011total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self\u2011contained model of total colourings (proper vertex colourings\nof the total graph `T(H)` on `V \u2295 E`) and adjacent\u2011vertex\u2011distinguishing (AVD)\ntotal colourings, and with the central graph `C(G)` (subdivide every edge, join\nevery non\u2011adjacent pair), we prove for a **`d`\u2011regular graph `G` that is not\ncomplete**:\n\n* `card_ge_of_regular_not_complete` : `|V(G)| \u2265 d + 2`.\n* `central_no_avd_regular_card` : `C(G)` has no AVD total colouring with `d + 2`\n  colours.\n* `avd_coloring_castLE` : palette sizes admitting an AVD total colouring are\n  upward closed (pad unused colours along `Fin n \u21aa Fin m`).\n* `avd_total_ge_regular` : **every** AVD total colouring of `C(G)` uses at least\n  `d + 3` colours.\n* `avdTotalChromatic_ge_regular` : as an inequality of invariants,\n  `d + 3 \u2264 \u03c7''\u2090(C(G))`.\n* `cycle5_avd_ge_five` : the `C\u2085` instance (`d = 2`), giving the bound `5`.\n\nThis is exactly the **lower half** of the guiding conjecture\n`\u03c7''\u2090(C(G)) = d + 3`.\n\n## Sharpness and a caveat\n\nThe companion `Basic.lean` proves the sharper, `|V|`\u2011governed bound\n`\u03c7''\u2090(C(G)) \u2265 |V(G)| + 1` (every original vertex of `C(G)` has degree `|V| \u2212 1`).\nSince a non\u2011complete `d`\u2011regular graph can have `|V| > d + 2` (e.g. `C\u2085`, where\n`|V| = 5 > 4 = d + 2`), the true value is often **strictly larger** than `d + 3`.\nThe conjectured equality can therefore only hold in the extremal regime\n`|V| = d + 2`, i.e. when the complement of `G` is a perfect matching (the\ncocktail\u2011party graphs `K_{d+2} minus a perfect matching`).\n\n## Open problems to formalise next\n\n1. **Matching upper bound in the extremal case.** For `|V| = d + 2` construct an\n   explicit AVD total colouring of `C(G)` with `d + 3` colours, proving\n   `\u03c7''\u2090(C(G)) = d + 3` there.\n2. **Exact value for cycles.** Determine and formalise `\u03c7''\u2090(C(C\u2099))` as a function\n   of `n`; our results give `\u2265 n + 1` (via `Basic`) and `\u2265 5` (via the `d`\u2011bound).\n3. **Characterisation of the extremal graphs.** Formalise that `|V| = d + 2` for a\n   `d`\u2011regular graph is equivalent to the complement being `1`\u2011regular.\n4. **General upper bound.** Show `\u03c7''\u2090(C(G)) \u2264 |V(G)| + 2` (or the exact value) for\n   arbitrary regular `G`, closing the gap with the lower bounds.\n",
     "domains": [
       "Algebra",
@@ -2135,7 +2121,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "0abd0edb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T06:53:46.809090+00:00",
     "title": "Working with a self\u2011contained model of total colourings (proper vertex colouring"
   },
@@ -2633,6 +2619,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T20:09:35.455338+00:00",
     "title": "This cycle turned two of the standing conjectures about fixed-genus chord-swap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n`MultiverseModalForcing.lean` builds the modal-logic layer on top of the\nmultiverse core of `MultiverseSetTheory.lean`: an abstract Kripke semantics with\nthe modal axioms `K, T, 4, .2, 5` proved from frame conditions, and a concrete\n(symmetric, flip-based) forcing frame that validates all of them.\n\n`MultiverseAsymmetricForcing.lean` **completes former direction 1 below**: it\nrealises genuine, asymmetric forcing via the pointwise *domination* order\n`dom w v := \u2200 a, w a = true \u2192 v a = true` (extensions may switch atoms on, never\noff). This frame is reflexive, transitive and confluent \u2014 so it validates\n`T`, `4` and the characteristic axiom `.2` (`asym_T`, `asym_four`, `asym_dot2`)\n\u2014 but it is not Euclidean (`dom_not_euclidean`) and, crucially, it **refutes\naxiom `5`** (`asym_refutes_five`). This gives a clean semantic separation of\n`S4.2` from `S5`, the phenomenon that makes the modal logic of forcing genuinely\n`S4.2`. That file also proves the converse half of the `.2` correspondence\n(`confluent_of_dot2`: validating the `.2` schema forces the frame to be\nconfluent). All results compile with `0` sorries over Mathlib using only the\nstandard axioms.\n\nRemaining next steps, from closest to most ambitious:\n\n1. **Completeness for S4.2.** Prove that a modal formula is valid in *every*\n   reflexive-transitive-confluent frame iff it is a theorem of `S4.2`. This is\n   the Hamkins\u2013L\u00f6we theorem; it needs a syntactic proof system and a canonical\n   model / filtration argument. (The `.2`\u2194confluence correspondence\n   `confluent_of_dot2` / `asym_dot2` is a first ingredient.)\n\n2. **Sentence-level necessity operator.** Extend the `Sentence` datatype of\n   `MultiverseSetTheory.lean` with `\u25a1` and `\u25c7` constructors and define `eval`\n   over the forcing frame, connecting the semantic `Box`/`Dia` here to a genuine\n   modal object language.\n\n3. **Buttons and switches.** Formalise Hamkins' *switches* (statements `s` with\n   `\u25a1\u25c7s \u2227 \u25a1\u25c7\u00acs`) and *buttons* (statements `b` with `\u25c7\u25a1b`), and prove the\n   independent-buttons-and-switches control theorem characterising which Boolean\n   combinations are realisable. The asymmetric frame is the right setting, since\n   buttons (once pushed, forever true) are exactly the monotone predicates for\n   `dom`.\n\n4. **Boolean-valued models.** Replace the two-valued `World = \u03b1 \u2192 Bool` by\n   assignments into a complete Boolean algebra, recovering the classical\n   forcing construction and connecting to Mathlib's order-theoretic library.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1314",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1e9bf31c",
+    "status": "available",
+    "timestamp": "2026-07-14T20:10:05.213850+00:00",
+    "title": "`MultiverseModalForcing.lean` builds the modal-logic layer on top of the"
   },
   {
     "consumed_by_exp_id": "",

@@ -2900,7 +2900,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "daf8e94d",
     "description": "# Future directions: AVD‑total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self‑contained model of total colourings (proper vertex colourings\nof the total graph `T(H)` on `V ⊕ E`) and adjacent‑vertex‑distinguishing (AVD)\ntotal colourings, and with the central graph `C(G)` (subdivide every edge, join\nevery non‑adjacent pair), we prove for a **`d`‑regular graph `G` that is not\ncomplete**:\n\n* `card_ge_of_regular_not_complete` : `|V(G)| ≥ d + 2`.\n* `central_no_avd_regular_card` : `C(G)` has no AVD total colouring with `d + 2`\n  colours.\n* `avd_coloring_castLE` : palette sizes admitting an AVD total colouring are\n  upward closed (pad unused colours along `Fin n ↪ Fin m`).\n* `avd_total_ge_regular` : **every** AVD total colouring of `C(G)` uses at least\n  `d + 3` colours.\n* `avdTotalChromatic_ge_regular` : as an inequality of invariants,\n  `d + 3 ≤ χ''ₐ(C(G))`.\n* `cycle5_avd_ge_five` : the `C₅` instance (`d = 2`), giving the bound `5`.\n\nThis is exactly the **lower half** of the guiding conjecture\n`χ''ₐ(C(G)) = d + 3`.\n\n## Sharpness and a caveat\n\nThe companion `Basic.lean` proves the sharper, `|V|`‑governed bound\n`χ''ₐ(C(G)) ≥ |V(G)| + 1` (every original vertex of `C(G)` has degree `|V| − 1`).\nSince a non‑complete `d`‑regular graph can have `|V| > d + 2` (e.g. `C₅`, where\n`|V| = 5 > 4 = d + 2`), the true value is often **strictly larger** than `d + 3`.\nThe conjectured equality can therefore only hold in the extremal regime\n`|V| = d + 2`, i.e. when the complement of `G` is a perfect matching (the\ncocktail‑party graphs `K_{d+2} minus a perfect matching`).\n\n## Open problems to formalise next\n\n1. **Matching upper bound in the extremal case.** For `|V| = d + 2` construct an\n   explicit AVD total colouring of `C(G)` with `d + 3` colours, proving\n   `χ''ₐ(C(G)) = d + 3` there.\n2. **Exact value for cycles.** Determine and formalise `χ''ₐ(C(Cₙ))` as a function\n   of `n`; our results give `≥ n + 1` (via `Basic`) and `≥ 5` (via the `d`‑bound).\n3. **Characterisation of the extremal graphs.** Formalise that `|V| = d + 2` for a\n   `d`‑regular graph is equivalent to the complement being `1`‑regular.\n4. **General upper bound.** Show `χ''ₐ(C(G)) ≤ |V(G)| + 2` (or the exact value) for\n   arbitrary regular `G`, closing the gap with the lower bounds.\n",
     "domain_bridges": [],
     "domains": [
@@ -2913,7 +2913,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0abd0edb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T06:53:46.809090+00:00",
     "title": "Working with a self‑contained model of total colourings (proper vertex colouring"
   },
