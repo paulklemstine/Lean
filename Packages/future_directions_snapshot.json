@@ -268,6 +268,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 1207283c (Q=0.820), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Good manifolds in an `n`-nice polytope\n\nThe verified cycle established that the maximal number of good manifolds in an\n`n`-nice polytope is, from dimension seven onward, exactly `2^n`: the count\ndoubles with each new dimension, its partial sums are geometric, the whole\nsequence",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_1207283c_d9cf72f6",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1207283c",
+    "status": "available",
+    "timestamp": "2026-07-14T23:11:48.084973+00:00",
+    "title": "Deepening: The verified cycle established that the maximal number of good manifolds in an"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "c23e4bea",
     "description": "Building on cycle 12ea9340 (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp maximal excess of the ℤ₂ co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free ℤ₂-complexes satisfies\n`coind(K * L) ≥ coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct",
     "domain_bridges": [],
@@ -454,6 +473,25 @@
     "status": "available",
     "timestamp": "2026-07-13T05:18:32.917732+00:00",
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v₂(q), v₃(q), v₄(q)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a25c6e48 (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and proves it equals\nthe integer charge `ℓ`, together with quantization, charge conservation under\nsuper",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_a25c6e48_5464a68d",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a25c6e48",
+    "status": "available",
+    "timestamp": "2026-07-14T23:11:53.926490+00:00",
+    "title": "Deepening: `KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
   },
   {
     "ambition_level": "extension",
@@ -2635,26 +2673,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a25c6e48",
-    "description": "# Future Directions — Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and proves it equals\nthe integer charge `ℓ`, together with quantization, charge conservation under\nsuperposition, the on-axis phase singularity, and two contrarian disproofs\n(negative charges exist; opposite vortices annihilate).\n\n## What was proved\n- `winding_oamPhase` — winding number of `exp(iℓθ)` equals `ℓ` (contour integral).\n- `winding_quantized` — the charge is always an integer.\n- `oamPhase_mul`, `oamPhase_prod`, `winding_additive` — charge additivity/conservation.\n- `oamPhase_periodic` — single-valuedness of the phase field.\n- `beamAmp_vanishes`, `beamAmp_nonzero` — amplitude vanishes exactly on the axis iff `ℓ ≠ 0`.\n\n## What was disproved (contrarian)\n- `winding_can_be_negative` — refutes \"charge is always nonnegative\".\n- `oam_annihilation` (+ `oam_annihilation_nonvanishing`) — refutes \"a product of\n  two vortex beams is always a vortex beam\".\n\n## Natural next steps\n1. **General winding number.** Extend `winding` to a broad class of loops\n   `γ : [0,1] → ℂ \\ {0}` and prove homotopy invariance and additivity in full\n   generality (not just for `oamPhase`), connecting to `ℤ = π₁(ℂ*)`.\n2. **Linking number of nested vortices.** Formalize the Hopf-link / linking-number\n   picture for two coaxial vortex lines and relate it to the product of charges.\n3. **Full Laguerre–Gauss modes.** Include the Gaussian envelope and radial index\n   `p`, and prove the OAM per photon is `ℓ ℏ` via the Poynting-vector integral.\n4. **Knotted field lines.** Formalize Hopf fibration constructions of genuinely\n   knotted (rather than merely linked) optical field lines and their conserved\n   helicity/linking invariant.\n5. **Stability under perturbation.** Show the charge is invariant under small\n   continuous perturbations of the field that keep the axis zero isolated\n   (topological robustness).\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_1256",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "17340490",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T23:31:49.480718+00:00",
-    "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "0e4c0a6c",
     "description": "# Future Directions\n\nThese conjectures are distilled from the current cycle, which closed the bridge\nidentifying the factorial (factoradic) number system as a single point in the\none-parameter family of mixed-radix positional systems, and re-derived the\nuniqueness of factoradic representations as a corollary of the general\nmixed-radix uniqueness theorem.\n\n## 1. A universal uniqueness law for arbitrary running products\n\n**Conjecture.** Fix any base sequence `b : ℕ → ℕ`. A digit string `c` with\n`c i < b i` for all `i < k` is the *unique* representation of its value\n`∑_{i<k} c i · (∏_{j<i} b j)` among all valid length-`k` strings, and every\nnatural number below `∏_{i<k} b i` occurs exactly once.\n\nThe key insight is that neither uniqueness nor surjectivity depends on any\nregularity of the bases: the entire argument is carried by the Euclidean\nsplitting `value / P_k = c_k`, `value mod P_k = value_{<k}`, where `P_k` is the\nrunning product. Positivity of the relevant partial products is *forced* by\nvalidity rather than assumed, so degenerate bases (including `b i = 0`) never\nbreak the statement — they merely empty the space of valid strings.\n\nWhy now? The factoradic and base-`N` systems, historically studied with\nbespoke arguments, are now seen to be the same theorem at two parameter values;\nthe natural next step is to characterize exactly which base sequences yield\nnumber systems with prescribed carry behavior.\n\n## 2. Carry-free additivity across mixed-radix systems\n\n**Conjecture.** Addition in a mixed-radix system `b` is carry-free on a digit\nposition `i` precisely when the local base `b i` exceeds the sum of the two\ndigits there; consequently, two mixed-radix systems `b` and `b'` induce the same\ncarry pattern on a fixed integer interval if and only if their running products\nagree up to the length of that interval.\n\nThe key insight is that carry structure is a function of the running product\nalone, not of the individual bases, mirroring the way place values — and not raw\nbases — governed the uniqueness proof.\n\nWhy now? With uniqueness and existence unified across all bases, carry behavior\nis the first genuinely *arithmetic* (as opposed to combinatorial) invariant that\ndistinguishes members of the family, and it is the natural gateway to\nmixed-radix analogues of classical digit-sum congruences.\n\n## 3. Primitive divisors and the composite Fibonacci tail\n\n**Conjecture.** For every composite `n` outside the small exceptional set, the\nFibonacci number `F(n)` has a *primitive* prime divisor — a prime dividing\n`F(n)` but no earlier `F(k)` — and moreover the primitive part of `F(n)`\n(the cofactor obtained by stripping all factors shared with proper-divisor\nFibonacci numbers) grows without bound as `n → ∞`.\n\nThe key insight is that the primitive part is exactly the quantity isolated by\nthe greatest-common-divisor collapse `F(gcd m n) = gcd(F m, F n)`: a shared\nprime between `F(n)` and an earlier `F(k)` must already live in `F(gcd n k)`,\nso primitivity is a statement about how proper divisors of `n` interlock, not\nabout `F(n)` in isolation.\n\nWhy now? The finite range is already settled by direct computation, and the\ngcd-collapse mechanism cleanly reduces the general claim to a growth estimate on\nthe primitive part; the remaining obstacle is a quantitative lower bound on that\ncofactor for large composite indices, which is a self-contained analytic target.\n\n## 4. Digit-extraction as a length-independent normal form\n\n**Conjecture.** The explicit digit-extraction map `n ↦ (⌊n / P_i⌋ mod b_i)_i`\nis a section of evaluation that is *stable under lengthening*: extending the\nlength `k` never alters the digits already computed, so the infinite digit\nstream of `n` is a well-defined canonical object independent of any truncation.\n\nThe key insight is that each extracted digit depends only on `n` and the running\nproduct up to that position, so truncation and extraction commute — the same\nlocality that made the splitting identities length-agnostic.\n\nWhy now? Establishing a canonical infinite normal form is the prerequisite for\nextending mixed-radix systems from finite integers to profinite or `b`-adic\ncompletions, opening a bridge between elementary positional notation and\n`p`-adic-style analysis.\n",
     "domain_bridges": [],
@@ -3275,26 +3293,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1207283c",
-    "description": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThe verified cycle established that the maximal number of good manifolds in an\n`n`-nice polytope is, from dimension seven onward, exactly `2^n`: the count\ndoubles with each new dimension, its partial sums are geometric, the whole\nsequence is strictly increasing, and its `2`-adic valuation equals the\ndimension. These facts suggest several bold, testable conjectures.\n\n## Conjecture 1 — The head is a \"defect\" sequence with bounded correction\n\nDefine the correction `d(n) = a(n) − 2^n`, so `d(n) = 0` for `n ≥ 7` and\n`d(1..6) = (4, 4, 4, 8, 8, 16)`. Conjecture: the correction is itself a\ntruncated doubling sequence — `d` takes values in `{4, 8, 16}` and each value\npersists over a contiguous block whose lengths `(3, 2, 1)` decrease by one.\n\n*The key insight is* that the head is not noise but a second, faster-decaying\ngeometric layer that vanishes precisely when the dominant layer `2^n` overtakes\nit. *Why now?* The exact closed form of the tail is settled, so the residual\nhead becomes a clean, finite object whose internal structure can be pinned down\nrather than treated as an anomaly.\n\n## Conjecture 2 — Prime-power valuation encodes dimension universally\n\nFor any counting family whose tail is `c · b^n` with `b` prime, the `b`-adic\nvaluation of the count should recover the dimension up to the additive constant\n`v_b(c)`. Conjecture: `v_2(a(n)) = n` for all `n ≥ 7`, and more generally\n`v_b(a(n)) = n + v_b(c)` for the analogous `b`-nice families.\n\n*The key insight is* that a geometric growth law leaves an arithmetic\nfingerprint: the exponent of the base is legible directly in the prime\nfactorization of the count. *Why now?* The `2`-adic identity is already\nverified for this sequence, giving a template to test the base-`b`\ngeneralization against other polytope families.\n\n## Conjecture 3 — Doubling is the extremal growth rate for `n`-nice polytopes\n\nAmong all \"nice\" polytope families, the maximal good-manifold count grows no\nfaster than `2^n` asymptotically, with equality achieved by the family studied\nhere. Conjecture: `limsup a(n)^{1/n} = 2`, and any family exceeding this rate\nfails the niceness axioms.\n\n*The key insight is* that doubling reflects a binary choice made independently\nin each dimension, so a strictly faster rate would require correlated choices\nthat niceness forbids. *Why now?* With the exact rate established for the\ncanonical family, the extremality question becomes a sharp, falsifiable upper\nbound rather than a vague asymptotic guess.\n\n## Conjecture 4 — Geometric partial sums characterize the tail threshold\n\nThe threshold `n = 7` at which the closed form begins is exactly the first `n`\nfor which the partial sum `∑_{k≤n} a(k)` becomes divisible by `2^7`. Conjecture:\nthe onset of pure geometric behaviour is detectable from divisibility of the\ncumulative counts alone, without knowing the individual terms.\n\n*The key insight is* that the transition to a clean geometric tail is a global\n(cumulative) phenomenon, not merely a local one, so it should be visible in the\nrunning totals. *Why now?* The subtraction-free geometric sum formula for the\ntail is proved, making the cumulative divisibility test precise and checkable.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_1296",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d09018a9",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T13:37:45.666073+00:00",
-    "title": "The verified cycle established that the maximal number of good manifolds in an"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant governed by the\ndimensional sign `d ↦ (-1)^d`, with an explicit stabilization map identifying the\nnegative-dimensional world with the zero-dimensional one up to sign. The\nfollowing conjectures are the natural next targets.\n\n## 1. A negative-dimensional Euler–Poincaré duality\n\n**Conjecture.** For a formal space of dimension `-n` there is a canonical pairing\nbetween its `π₀` data and that of its `n`-fold stabilization, under which the\nEuler characteristic is self-dual: reflecting the dimension `d ↦ -d` leaves `χ`\nunchanged up to the parity sign already recorded by `sgn`.\n\nThe key insight is that the invariance `sgn(-d) = sgn(d)` is not an accident of\nthe sign function but the shadow of a duality that swaps a space with its formal\ndesuspension while preserving the count of path components.\n\nWhy now? The stabilization map and the parity-invariance of the sign are both in\nhand, so the duality can be stated as an isomorphism of the underlying component\nmonoids and tested against the product structure that is already proved\nmultiplicative.\n\n## 2. Multiplicativity forces the sign law\n\n**Conjecture.** Any dimension-graded, component-multiplicative integer invariant\nthat is additive under disjoint union and multiplicative under products must\ncoincide with `sgn(dim)·|π₀|`; equivalently, the only monoid homomorphism from\n`(ℤ,+) × (ℕ,·)` to `ℤ` that is `±1` on each sphere is the Euler characteristic.\n\nThe key insight is that additivity and multiplicativity together pin down the\ninvariant on generators (spheres and points), and every formal space is built\nfrom these by the two operations, so the invariant is rigid.\n\nWhy now? The monoid structure on formal spaces and the homomorphism property of\n`χ` are established, reducing the uniqueness question to a statement about\nhomomorphisms out of a finitely generated commutative monoid.\n\n## 3. The pro-spectrum limit of the stabilization tower\n\n**Conjecture.** The tower `… → Σ⁻¹X → X → ΣX → …` of suspensions has a well-defined\nstable Euler characteristic obtained as a limit, and this limit is independent of\nthe starting dimension, depending only on `|π₀|` weighted by the coherent sign.\n\nThe key insight is that although each suspension flips the sign of `χ`, the pair\n`(χ, dim mod 2)` is a genuine invariant of the whole tower, so the limit exists\nonce one records the parity alongside the value.\n\nWhy now? The exact one-step behavior `χ(ΣX) = -χ(X)` and the `n`-step law\n`χ(ΣⁿX) = (-1)^n χ(X)` are proved, giving the precise transition maps whose limit\nthe conjecture concerns.\n\n## 4. Negative-dimensional surfaces and a signed Gauss–Bonnet\n\n**Conjecture.** The identity `χ = 2 - 2g` for the genus-`g` surface admits a\nnegative-dimensional companion in which the roles of the top and bottom Betti\nnumbers are exchanged by desuspension, producing a signed genus formula\n`χ = (-1)^d (2 - 2g)` for the `d`-fold desuspended surface.\n\nThe key insight is that the graded Euler characteristic already treats every\ndegree — positive or negative — on the same footing through the alternating sign,\nso shifting all Betti numbers into negative degrees merely multiplies the\nclassical value by a global sign.\n\nWhy now? The bridge reproducing `2 - 2g` from sign-weighted Betti numbers is\nestablished, and the degree-shift operation is exactly the suspension whose effect\non `χ` is already computed.\n\n## 5. A character theory for the sign group\n\n**Conjecture.** The dimensional sign is the unique nontrivial character of the\nadditive group of dimensions valued in the units of `ℤ`, and the collection of\nnegative-dimensional Euler characteristics assembles into the character table of\na naturally occurring `ℤ/2` grading on the stable homotopy category of formal\nspheres.\n\nThe key insight is that `sgn: (ℤ,+) → {±1}` is precisely the reduction mod 2\ncomposed with the unique isomorphism `ℤ/2 ≅ {±1}`, so its topological meaning is a\n`ℤ/2`-grading that separates even- from odd-dimensional formal spheres.\n\nWhy now? The homomorphism property `sgn(a+b) = sgn(a)·sgn(b)` is proved, which is\nthe defining property of a character; what remains is to interpret it as a grading\nand read off the resulting decomposition.\n",
     "domain_bridges": [],
@@ -3771,6 +3769,46 @@
     "status": "available",
     "timestamp": "2026-07-14T22:54:02.748147+00:00",
     "title": "The join of two combinatorial spheres is again a sphere, and the equivariant map"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThis cycle established the exact two-layer structure of the maximal\ngood-manifold count `a(n)`: a dominant geometric layer `2^n` and a subdominant\ndefect `d(n)` supported on `1 ≤ n ≤ 6`, taking the values `4, 8, 16` on blocks\nof lengths `3, 2, 1`. Past `n = 7` the count is a pure power of two, its\n`2`-adic valuation equals the dimension, and its `n`-th root converges to `2`.\nThe natural cumulative-divisibility heuristic (Conjecture 4 of the seed) was\nfound to be false: the running totals carry a fixed residue `43` modulo `128`.\nThese findings suggest the following bold, testable conjectures.\n\n## Conjecture A — The defect is the unique maximal subdominant doubling head\n\nAmong all sequences `a(n) = 2^n + h(n)` with `h` eventually zero, `h` taking\nvalues in a geometric progression `4, 8, 16, …`, and `a` strictly increasing,\nthe observed head `(4,4,4,8,8,16)` is the *longest* head whose blocks have\nstrictly decreasing lengths. Conjecture: no admissible head can have block\nlengths that are non-decreasing, so the pattern `3, 2, 1` is forced by\nmonotonicity together with the requirement that each block value be overtaken by\n`2^n` exactly at its right endpoint.\n\n*The key insight is* that the block-length triangle `3, 2, 1` is not a free\nparameter but the unique descent pattern compatible with the dominant layer\ncatching up to each subdominant value in turn. *Why now?* With the head pinned\ndown exactly and its monotonicity established, the extremal characterisation\nbecomes a finite optimisation over admissible descent patterns.\n\n## Conjecture B — Valuation-dimension dictionary for `b`-nice families\n\nFor a family whose tail is `c · b^n` with `b` prime, the `b`-adic valuation of\nthe count should read off the dimension: `v_b(a(n)) = n + v_b(c)` for all large\n`n`. The present family is the case `b = 2, c = 1`, where `v_2(a(n)) = n`.\nConjecture: the additive constant `v_b(c)` is the *only* obstruction, and it is\ndetectable as the eventual constant gap `v_b(a(n)) − n`.\n\n*The key insight is* that a geometric growth law leaves an arithmetic\nfingerprint — the exponent of the base is legible directly in the prime\nfactorisation, shifted only by the valuation of the leading coefficient.\n*Why now?* The `2`-adic identity is proved for the canonical family, giving a\nclean template to test against `b = 3, 5` polytope families.\n\n## Conjecture C — Doubling is the extremal growth rate\n\nAmong all \"nice\" polytope families the maximal good-manifold count grows no\nfaster than `2^n`: `limsup a(n)^{1/n} = 2`, with equality for the family here.\nConjecture: any family exceeding this rate violates the niceness axioms, because\na strictly faster rate would require a per-dimension choice set of size greater\nthan two, which niceness forbids.\n\n*The key insight is* that doubling reflects a single binary choice made\nindependently in each dimension; a faster rate demands correlated choices that\nthe local niceness conditions rule out. *Why now?* The exact rate `2` is\nestablished for the canonical family (its `n`-th roots are eventually constant),\nturning extremality into a sharp, falsifiable upper bound.\n\n## Conjecture D — Cumulative residues obstruct divisibility tests universally\n\nThe running totals satisfy `S(n) = 2^{n+1} + 43` for `n ≥ 6`, hence\n`S(n) ≡ 43 (mod 128)` forever, so `2^7 ∤ S(n)` for every `n`. Conjecture: for\nany two-layer count `a(n) = c·b^n + h(n)` the partial sums are eventually\n`(b/(b−1))·c·b^n + R`, where `R` is a fixed residue determined entirely by the\nhead `h`; consequently a cumulative divisibility test for `b^k` succeeds only\nwhen `b^k | R`, which generically fails. The tail threshold is therefore *not*\nrecoverable from cumulative divisibility.\n\n*The key insight is* that the head contributes a permanent additive residue to\nevery partial sum, so the \"global\" cumulative signal is masked rather than\namplified. *Why now?* The subtraction-free geometric sum for the tail is\nproved, making the residue `R` explicit and the failure of the divisibility\nheuristic precise and checkable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_1323",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1207283c",
+    "status": "available",
+    "timestamp": "2026-07-14T23:11:38.005557+00:00",
+    "title": "Exact two-layer structure of the maximal"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Topology of Knotted Light (Cycle 1)\n\n## Summary of this cycle\n\n`KnottedLight.lean` computed the winding number only for the special phase field\n`exp(iℓθ)`. This cycle introduces **`KnottedLightGeneralWinding.lean`**, which\ndevelops the winding number as a genuine invariant of an *arbitrary* smooth\nnon-vanishing loop `γ : ℝ → ℂ \\ {0}` and proves the structural theorems that make it\nthe fundamental invariant of `ℂ*` (advancing \"next step 1: general winding number\").\n\n### New definitions\n- `winding φ` — the log-derivative contour integral `(1/2πi) ∮₀^{2π} φ'/φ`.\n- `IsSmoothLoop γ γ'` — a predicate bundling: `γ` differentiable everywhere with\n  derivative `γ'`, `γ` nowhere zero, `γ'` continuous.\n- `oamPhase ℓ` — the running OAM example `exp(iℓθ)`, shown to be an `IsSmoothLoop`.\n\n### Proved theorems\n- `winding_mul` — **additivity**: `w(γ·δ) = w(γ) + w(δ)` for arbitrary loops\n  (charge conservation under superposition, in full generality).\n- `winding_inv` — **inversion**: `w(1/γ) = -w(γ)`.\n- `winding_one` / `winding_const` — the constant loop has charge `0`.\n- `winding_integer` — **integrality (`ℤ = π₁(ℂ*)`)**: the winding number of *any*\n  closed (`γ(2π)=γ(0)`) smooth non-vanishing loop is an integer. Proved honestly\n  via `F(θ)=γ(θ)exp(-∫₀^θ γ'/γ)` being constant, forcing `exp(-G(2π))=1`.\n- `winding_oamPhase` — the general winding number reproduces the charge `ℓ`.\n- `winding_surjective` — every integer is realised by a closed loop, so together\n  with additivity and integrality the winding number is a surjective group\n  homomorphism `π₁(ℂ*) ↠ ℤ`.\n\n### Disproved (contrarian, v26)\n- `winding_not_additive_under_sum` — refutes \"winding is additive under pointwise\n  *addition* of fields\"; it is additive under multiplication, not addition.\n- `winding_scale_invariant` — refutes \"rescaling the amplitude changes the charge\";\n  the charge is amplitude-independent.\n\nAll results compile against Mathlib (Lean v4.28.0) with no `sorry` and depend only\non the standard axioms `propext, Classical.choice, Quot.sound`.\n\n## Natural next steps (remaining / newly opened)\n\n1. **Homotopy invariance.** Prove `winding` is invariant under a continuous\n   homotopy of closed loops through `ℂ*` (the last missing piece to identify\n   `winding` with the class in `π₁(ℂ*)`). Integrality + additivity are done; the\n   homotopy step needs a uniform continuity / covering-space argument.\n2. **Injectivity on `π₁`.** Show two closed loops with equal winding are homotopic,\n   completing `π₁(ℂ*) ≅ ℤ` as a group isomorphism.\n3. **Linking number of nested vortices.** Build the Hopf-link / linking-number\n   picture for two coaxial vortex lines from the additive winding homomorphism.\n4. **Full Laguerre–Gauss modes.** Add the Gaussian envelope and radial index `p`;\n   the amplitude-invariance lemma already shows the envelope does not affect the\n   charge.\n5. **Stability under perturbation.** Use additivity + `winding_scale_invariant` to\n   show robustness of the charge under small field perturbations keeping the axis\n   zero isolated.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1324",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a25c6e48",
+    "status": "available",
+    "timestamp": "2026-07-14T23:11:51.360639+00:00",
+    "title": "`KnottedLight.lean` computed the winding number only for the special phase field"
   },
   {
     "ambition_level": "extension",

@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bec8fe46",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain i",
-      "quality_score": 0.85,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-14T04:50:27",
-      "title": "Close Proofs: Tight spectral gap exponent for the fixed-genus chord swap chain"
-    },
-    {
-      "cycle_id": "2758a31c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What this cycle establishes\n\n`Catalog/Bridges/MatsunoIwasawaMonoidHom.lean` deepens the algebraic model of the\ntwo classical **Iwasawa invariants** `μ` and `λ` (built in `Matsu",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-14T05:23:54",
-      "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
-    },
-    {
       "cycle_id": "33954867",
       "domain": "Applications",
       "key_insight": "# Future Directions: from `E₄² = E₈` to sharper Eisenstein arithmetic\n\nThis cycle formalized the **arithmetic residue** of the identity `E₄² = E₈` as a\n*connector* between modular forms and elementary",
@@ -499,29 +479,29 @@
       "theorem_count": 26,
       "timestamp": "2026-07-14T22:54:15",
       "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
+    },
+    {
+      "cycle_id": "1207283c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThis cycle established the exact two-layer structure of the maximal\ngood-manifold count `a(n)`: a dominant geometric layer `2^n` and a sub",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-14T23:11:48",
+      "title": "The verified cycle established that the maximal number of good manifolds in an"
+    },
+    {
+      "cycle_id": "a25c6e48",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Topology of Knotted Light (Cycle 1)\n\n## Summary of this cycle\n\n`KnottedLight.lean` computed the winding number only for the special phase field\n`exp(iℓθ)`. This cycle introduces",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-14T23:11:53",
+      "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "27e75405",
-      "domain": "Applications",
-      "key_insight": "# Future directions — Product Hilton–Milner theorem\n\nThe file `Catalog/Novelty/ProductHiltonMilnerLarge.lean` develops, fully and with\n0 `sorry`s, the structure surrounding the product Hilton–Milner t",
-      "quality_score": 0.62,
-      "sorry_count": 0,
-      "theorem_count": 865,
-      "timestamp": "2026-07-12T07:53:28",
-      "title": "Product Hilton-Milner theorem for large n"
-    },
-    {
-      "cycle_id": "b88b4225",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — quantum binomial characters and plethystic filtrations\n\nThis cycle established the character-level backbone of the conjectured\nfield-independent filtration of `Δ^{(n,m)} Sym^d E`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 848,
-      "timestamp": "2026-07-12T07:53:41",
-      "title": "Categorifying the quantum binomial product rule via filtrations of plethystic modules"
-    },
     {
       "cycle_id": "c1de826b",
       "domain": "Applications",
@@ -2501,45 +2481,29 @@
       "theorem_count": 26,
       "timestamp": "2026-07-14T22:54:15",
       "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
+    },
+    {
+      "cycle_id": "1207283c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThis cycle established the exact two-layer structure of the maximal\ngood-manifold count `a(n)`: a dominant geometric layer `2^n` and a sub",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-14T23:11:48",
+      "title": "The verified cycle established that the maximal number of good manifolds in an"
+    },
+    {
+      "cycle_id": "a25c6e48",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Topology of Knotted Light (Cycle 1)\n\n## Summary of this cycle\n\n`KnottedLight.lean` computed the winding number only for the special phase field\n`exp(iℓθ)`. This cycle introduces",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-14T23:11:53",
+      "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "16f220a2",
-      "domain": "Novelty",
-      "name": "stable_iff_kernel",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "16f220a2",
-      "domain": "Novelty",
-      "name": "stable_iff_gameSolution",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "e6dfc1d4",
-      "domain": "Novelty",
-      "name": "muWeight_pos",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e6dfc1d4",
-      "domain": "Novelty",
-      "name": "weightSum_pos_iff",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e6dfc1d4",
-      "domain": "Novelty",
-      "name": "weightSum_prime",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "3361b315",
-      "domain": "Novelty",
-      "name": "winding_mul",
-      "quality": 0.83
-    },
     {
       "cycle_id": "3361b315",
       "domain": "Novelty",
@@ -2803,9 +2767,45 @@
       "domain": "Novelty",
       "name": "energy_eq_roots",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "1207283c",
+      "domain": "Applications",
+      "name": "defect_eq_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "1207283c",
+      "domain": "Applications",
+      "name": "a_eq_pow",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "1207283c",
+      "domain": "Applications",
+      "name": "defect_values",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a25c6e48",
+      "domain": "Applications",
+      "name": "continuous",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a25c6e48",
+      "domain": "Applications",
+      "name": "deriv_eq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a25c6e48",
+      "domain": "Applications",
+      "name": "logDeriv_continuous",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T22:54:15",
+  "last_updated": "2026-07-14T23:11:53",
   "open_questions": [
     {
       "context": "-    sorry; +      sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,18 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bce13597",
-        "quality": 0.83,
-        "theorems": 15,
-        "title": "The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
-      },
-      {
-        "cycle_id": "0c7f8736",
-        "quality": 0.78,
-        "theorems": 0,
-        "title": "Close Proofs: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded"
-      },
-      {
         "cycle_id": "d09018a9",
         "quality": 0.82,
         "theorems": 15,
@@ -3141,6 +3129,18 @@
         "quality": 0.82,
         "theorems": 26,
         "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
+      },
+      {
+        "cycle_id": "1207283c",
+        "quality": 0.82,
+        "theorems": 22,
+        "title": "The verified cycle established that the maximal number of good manifolds in an"
+      },
+      {
+        "cycle_id": "a25c6e48",
+        "quality": 0.82,
+        "theorems": 17,
+        "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
       }
     ],
     "Bridges": [
