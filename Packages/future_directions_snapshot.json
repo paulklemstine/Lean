@@ -287,7 +287,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` — abstract multiverse.**\nA `Multivers",
     "domain_bridges": [],
     "domains": [
@@ -299,7 +299,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -1268,25 +1268,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2c734846",
-    "description": "Cycle 0faef071 (Q=0.820) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own co",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_0faef071_9d4987ae",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0faef071",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T23:50:39.190132+00:00",
-    "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domain_bridges": [],
@@ -1985,34 +1966,6 @@
     "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO",
-      "Engel's interval packing problem",
-      "Boolean lattice",
-      "Set systems"
-    ],
-    "consumed_by_exp_id": "85360393",
-    "description": "For any natural numbers n, l, r such that n >= (l+1)*r + l, there exists an interval packing of maximum possible size (n choose l) in the Boolean lattice restricted to levels l through l+r. This can be formulated as the existence of a function f mapping each l-sized subset T of [n] to an r-sized subset C_T disjoint from T, such that for any distinct l-sized subsets T1, T2, T1 is not contained in T2 union C_T2 and T2 is not contained in T1 union C_T1.",
-    "domain_bridges": [
-      "Set theory",
-      "Combinatorics",
-      "Order theory"
-    ],
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "fd_0527",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Define the explicit construction of the function f mapping each l-set T to an r-set C_T using the cyclic sequence method described in the paper. Subsequently, prove that the resulting intervals [T, T ∪ C_T] are pairwise disjoint by showing that for any two distinct l-sets T1, T2, neither T1 ⊆ T2 ∪ C_{T2} nor T2 ⊆ T1 ∪ C_{T1} holds.",
-    "research_mode": "team",
-    "source_exp_id": "2607.04794v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T11:01:58.641433+00:00",
-    "title": "Engel's Interval Packing Theorem"
   },
   {
     "ambition_level": "extension",
@@ -2975,7 +2928,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07d73c91",
     "description": "# Multiverse Set Theory — Mathematics Across Branches (Cycle 1)\n\nThis cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the\nmodal logic of forcing in the set-theoretic multiverse. All results compile with\n**0 sorries** and use only the standard axioms (`propext`, `Classical.choice`,\n`Quot.sound`).\n\n## Files\n\n- `ModalFrame.lean` — the abstract Kripke-frame core: box/diamond operators and\n  the Sahlqvist **frame correspondences**, culminating in the `S4.2` ≠ `S5`\n  separation for the directed forcing order.\n- `ButtonsSwitches.lean` — the button/switch dichotomy of Direction 2.\n- `IndependenceCount.lean` — the quantitative \"independence is generic\" count of\n  Direction 5.\n\n## Results proved\n\n### Direction 1 — the forcing order is genuinely `S4.2`, not `S5`\n\nFor an arbitrary accessibility relation `R : W → W → Prop` we define\n\n```\nbox R P w := ∀ v, R w v → P v      -- necessity: true in every extension\ndia R P w := ∃ v, R w v ∧ P v      -- possibility: true in some extension\n```\n\nand prove the modal-axiom / frame-condition correspondences:\n\n| Axiom | Schema | Frame condition | Theorem |\n|-------|--------|-----------------|---------|\n| **T** | `□p → p`     | reflexive   | `box_toPoint_iff_reflexive` |\n| **4** | `□p → □□p`   | transitive  | `box_box_iff_transitive` |\n| **B** | `p → □◇p`    | symmetric   | `brouwer_iff_symmetric` |\n| **5** | `◇p → □◇p`   | euclidean   | `euclid_iff_euclidean` |\n| **.2**| `◇□p → □◇p`  | confluent (directed) | `directed_iff_confluent` |\n\nEach is an `↔` (both correspondence directions). Instantiating with the directed\nantisymmetric extension order `(ℕ, ≤)`, `nat_le_frame_is_S42_not_S5` shows that\n**T**, **4**, **.2** hold while **B** and **5** both fail. Symmetry is exactly the\nframe condition whose loss drops `S5` to the Hamkins–Löwe logic `S4.2`.\n\n### Direction 2 — buttons and switches\n\n- `button_iff_box_fixed`: over a reflexive frame the **buttons** (monotone\n  assertions) are *exactly* the fixed points of the necessity operator `□`.\n- `button_and`, `button_or`, `button_distrib`: buttons form a distributive\n  lattice.\n- `switch_iff_nonconstant_of_complete`: in the fully connected multiverse the\n  **switches** are exactly the non-constant assertions.\n- `switch_not_button`: a genuine switch is never a non-trivial button.\n\n### Direction 5 — independence is generic\n\nBranches over `n` atoms are `Fin n → Bool` (`card_branches`: `2^n`); sentences are\nBoolean functions of branches (`card_sentences`: `2^(2^n)`). The *settled*\nsentences are exactly the two constants (`settled_eq_pair`, `card_settled = 2`), so\nexactly `2^(2^n) - 2` sentences are **independent** (`card_independent`). Hence\n`independent_ratio_tendsto_one`: the proportion of independent sentences tends to\n`1` as `n → ∞` — undecidability is the typical case.\n\n## Next steps\n\n- **Direction 3** (law-adoption as unit propagation): model finitely many\n  implications among atoms as a sub-Finset of branches and prove the number of\n  newly-settled atoms equals the unit-propagation closure of the implication\n  graph.\n- **Direction 4** (Lindenbaum/Alexandrov topology): promote `box` on\n  sentences-modulo-equivalence to an interior operator and identify settled\n  sentences with the clopen elements.\n- Extend the `.2` separation to an explicit finite countermodel and connect the\n  abstract `box`/`dia` to a Hilbert-style derivability predicate.\n",
     "domain_bridges": [],
     "domains": [
@@ -2988,7 +2941,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "86411247",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T06:17:02.935697+00:00",
     "title": "This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
   },
@@ -3451,6 +3404,46 @@
     "status": "available",
     "timestamp": "2026-07-14T14:32:42.391251+00:00",
     "title": "This cycle proves the **cone colorful Carathéodory theorem in arbitrary finite"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Engel's Interval Packing Theorem\n\n## What is proved (`Speculative/EngelIntervalPacking.lean`)\n\nThe file fixes the correct (disjointness) formalization of interval packings in the\nBoolean lattice and proves:\n\n- `engel_r_zero` — for all `n, l`, the empty assignment (`r = 0`) is a maximum\n  interval packing (singleton intervals).\n- `engel_l_one` — for `l = 1` and `n ≥ 2r + 1` (the Engel threshold `(l+1)r+l` at\n  `l = 1`), the explicit **cyclic** construction `C_{t} = {t+1,…,t+r} (mod n)` is a\n  maximum interval packing. Core mechanism: `cycC_no_digon`.\n- `no_maxpacking_two_one_one` — a **disproof** below threshold: for `n = 2, l = 1,\n  r = 1` no maximum packing exists.\n- `naive_packing_impossible` — the *literal* reading of the informal statement (both\n  non-containments for all distinct pairs) is unsatisfiable for `l, r ≥ 1`; this\n  justifies the disjointness formulation.\n\nAll four have axiom profile `[propext, Classical.choice, Quot.sound]`.\n\n## Open / next steps\n\n1. **General `l ≥ 2` construction.** The main theorem — a maximum packing for all\n   `n ≥ (l+1)r + l` — remains open in this development. Computational search\n   (`ComputationalEvidence.md`) shows the obvious global/greedy formulas fail for\n   `l ≥ 2`, and a single-potential (extremal `l`-subset) argument is provably\n   impossible. Engel's actual construction should be located and formalized; a clean\n   `cycC`-style gap/rotation construction generalizing `engel_l_one` is the natural\n   target.\n\n2. **`r = 1`, general `l`.** A lighter milestone: `|B_T| = l + 1`, so the disjointness\n   condition simplifies (each competing `T'` is `B_T` minus one element). A tailored\n   construction here would be a good stepping stone.\n\n3. **Tightness / converse.** Prove that for `n < (l+1)r + l` no maximum packing\n   exists (the `l = 1` sub-case is witnessed by `no_maxpacking_two_one_one`), i.e.\n   that the Engel bound is sharp.\n\n4. **Counting refinement.** Formalize that a valid assignment on *every* `l`-set\n   yields exactly `C(n, l)` pairwise-disjoint intervals, making the word \"maximum\"\n   explicit as a cardinality statement.\n\n5. **Interval covering (dual).** Engel's paper also treats interval *covering*; an\n   analogous development would be a natural companion.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1300",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "85360393",
+    "status": "available",
+    "timestamp": "2026-07-14T15:40:46.715569+00:00",
+    "title": "The file fixes the correct (disjointness) formalization of interval packings in "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Tangled Hierarchies: Proof Systems That Reference Their Own Soundness\n\nThe file `TangledSoundness.lean` develops the semantic core of self-referential\nproof systems: a chain from the pure-logic seed `¬(P ↔ ¬P)` up to\n`soundness_predicate_not_internal`, the statement that a soundness predicate cannot\nconsistently live inside the self-referential system it validates.\n\nNatural next steps:\n\n1. **Full syntactic Löb's theorem.** Replace the semantic Gödel fixed point in\n   `ProofSystem` with the Hilbert–Bernays–Löb derivability conditions\n   (`D1: Prov s → Prov (box s)`, `D2` distribution, `D3: Prov (box s) → Prov (box (box s))`)\n   and a syntactic diagonal, then derive `Prov (imp (box s) s) → Prov s`. This is the\n   sharpest form of \"a system cannot safely reference its own soundness\".\n\n2. **Second incompleteness.** From Löb with `s = ⊥`, obtain that a consistent system\n   cannot prove its own consistency sentence `Con := neg (box ⊥)`.\n\n3. **Ordinal-indexed reflection towers.** Iterate the addition of a soundness\n   reflection principle `RFN(P)` and study the transfinite hierarchy\n   `P₀ ⊂ P₁ ⊂ ⋯`, showing each level proves the consistency of the previous — the\n   stratified escape from the tangle.\n\n4. **Kripke/paracomplete semantics.** Weaken `neg_truth` to a three-valued or\n   fixed-point (Kripke) semantics, where the Liar receives a truth-value gap, and\n   measure exactly which theorems survive. This isolates classicality as the\n   ingredient forcing the tangle's inconsistency.\n\n5. **Category-theoretic bridge.** Recast `no_semantic_fixed_points` and Tarski via\n   Lawvere's fixed-point theorem, unifying them with Cantor and the\n   `Type : Type` collapse.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Bridges"
+    ],
+    "id": "fd_1301",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2c734846",
+    "status": "available",
+    "timestamp": "2026-07-14T15:41:07.242873+00:00",
+    "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
   },
   {
     "ambition_level": "extension",

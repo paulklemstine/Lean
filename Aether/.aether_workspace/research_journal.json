@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ce15dd8e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x³ − 3x` of Mori's uncanny-valley acceptance curv",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-13T20:48:23",
-      "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-    },
-    {
       "cycle_id": "49ddee39",
       "domain": "Applications",
       "key_insight": "# Future Directions: Sharp maximal excess of the ℤ₂ co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free ℤ₂-complexes satisfies\n`coi",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-14T14:32:53",
       "title": "Deepening: Cone Colorful Carathéodory Theorem"
+    },
+    {
+      "cycle_id": "2c734846",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Tangled Hierarchies: Proof Systems That Reference Their Own Soundness\n\nThe file `TangledSoundness.lean` develops the semantic core of self-referential\nproof systems: a chain from",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-14T15:41:13",
+      "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "de167401",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Lifebox: Information-Theoretic Identity\n\nThe file `LifeboxInformationIdentity.lean` formalizes and proves five claims around\nRudy Rucker's *Lifebox* thesis (identity = informatio",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-11T23:55:51",
-      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
-    },
     {
       "cycle_id": "319bd9f6",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-14T15:40:56",
       "title": "Engel's Interval Packing Theorem"
+    },
+    {
+      "cycle_id": "2c734846",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Tangled Hierarchies: Proof Systems That Reference Their Own Soundness\n\nThe file `TangledSoundness.lean` develops the semantic core of self-referential\nproof systems: a chain from",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-14T15:41:13",
+      "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "33954867",
-      "domain": "Applications",
-      "name": "pow7_sub_pow3_dvd",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "797ab793",
-      "domain": "Applications",
-      "name": "ext",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "797ab793",
-      "domain": "Applications",
-      "name": "susp_id",
-      "quality": 0.82
-    },
     {
       "cycle_id": "797ab793",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "for",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "2c734846",
+      "domain": "Applications",
+      "name": "exhibits",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2c734846",
+      "domain": "Applications",
+      "name": "not_iff_not_self",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "2c734846",
+      "domain": "Applications",
+      "name": "no_self_negation",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-14T15:40:56",
+  "last_updated": "2026-07-14T15:41:13",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bcaaf8f2",
-        "quality": 0.72,
-        "theorems": 20,
-        "title": "Elementary spectral-moment foundations of Seidel"
-      },
-      {
         "cycle_id": "b6231f58",
         "quality": 0.82,
         "theorems": 48,
@@ -3141,6 +3135,12 @@
         "quality": 0.6,
         "theorems": 14,
         "title": "Engel's Interval Packing Theorem"
+      },
+      {
+        "cycle_id": "2c734846",
+        "quality": 0.78,
+        "theorems": 12,
+        "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundn"
       }
     ],
     "Bridges": [
