@@ -241,7 +241,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "479516dd",
     "description": "Building on cycle 3903c2d7 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bypassed",
     "domains": [
       "Applications"
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "3903c2d7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T01:53:27.565033+00:00",
     "title": "Deepening: Bypassed"
   },

@@ -20474,7 +20474,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "479516dd",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -20501,7 +20501,7 @@
       "source": "",
       "source_exp_id": "3903c2d7",
       "source_path": "Bypassed",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-14T01:53:27.565033+00:00",
       "title": "Deepening: Bypassed"
