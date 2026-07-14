@@ -2104,32 +2104,6 @@
     "title": "Unbounded Gap Between Co-Index of a Free Z_2-Space and Its Suspension"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "arXiv:2407.XXXXX (this paper)",
-      "Corneil et al. 'Cographs: recognition and applications' (1981)"
-    ],
-    "consumed_by_exp_id": "ae9bfe48",
-    "description": "The class of cographs (Forb(P₄)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spectrum), then H must also be a cograph. This extends the paper's result for threshold graphs (Forb(2K₂, P₄, C₄)) to the larger class of cographs.",
-    "domain_bridges": [
-      "spectral graph theory",
-      "hereditary graph classes",
-      "algebraic combinatorics"
-    ],
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0676",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Apply the paper's β-closed walk framework and linear programming approach to search for a walk-realizable {P₄}-supporter. If such a supporter exists, the LP feasibility problem will certify generalized spectral closedness. If no supporter exists, attempt to construct a counterexample by finding a cograph G and a non-cograph H with identical generalized spectra, possibly using the paper's induced-subgraph expansion formulas for β-closed walk counts.",
-    "research_mode": "team",
-    "source_exp_id": "2607.06455v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T18:43:29.811729+00:00",
-    "title": "Cographs are generalized spectrally closed"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.NT",
@@ -2947,6 +2921,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Generalized Spectral Characterization of Cographs\n\nThis cycle established the structural backbone: the class of cographs\n(graphs with no induced `P₄`) is closed under complementation, `P₄` is\nself-complementary, the class is hereditary, and the complement adjacency\nmatrix obeys `A(Gᶜ) = J - I - A(G)`. These results motivate the following\nbold, testable conjectures.\n\n## 1. Cographs are generalized spectrally closed\n\n**Conjecture.** If `G` is a cograph and `H` is generalized cospectral with\n`G` (equal adjacency spectrum and equal complement spectrum), then `H` is a\ncograph.\n\n*The key insight is* that being a cograph is a *self-complementary*\nhereditary property, so the invariant that must be preserved is exactly the\npair (adjacency spectrum, complement spectrum) — neither alone suffices,\nbecause the number of induced `P₄`'s is a symmetric function of the two\nspectra through the identity `A(Gᶜ) = J - I - A(G)`.\n\n*Why now?* The self-complementarity and the linear complement identity are\nnow available in fully verified form, giving a rigorous foundation on which\nthe counting argument for induced `P₄`'s can be built.\n\n## 2. The induced-`P₄` count is a two-spectrum invariant\n\n**Conjecture.** The number of induced copies of `P₄` in a graph is a\npolynomial in the moments (power sums of eigenvalues) of the adjacency\nmatrix and of the complement adjacency matrix jointly, and is therefore\ndetermined by generalized cospectrality.\n\n*The key insight is* that induced `P₄` counts can be expressed through\nwalk counts (traces of matrix powers) in `A(G)` and `A(Gᶜ)`, and the\ncomplement identity turns every such trace into a symmetric function of the\ntwo spectra.\n\n*Why now?* With `A(Gᶜ) = J - I - A(G)` established, the traces of powers of\nthe complement matrix expand explicitly in terms of `A(G)`, `J`, and `I`,\nmaking the moment computation concrete and checkable on small cases.\n\n## 3. Spectral detectability governs generalized spectral closure\n\n**Conjecture.** For a finite family `F` closed under complementation, the\nclass `Forb(F)` is generalized spectrally closed precisely when membership\nof each `H ∈ F` as an induced subgraph is determined by the joint spectra.\n\n*The key insight is* that closure under complementation of the forbidden\nfamily is necessary for the two-spectrum invariant to even be well posed,\nand cographs (`F = {P₄}`) are the minimal nontrivial instance.\n\n*Why now?* The complement functor on induced embeddings, verified this\ncycle, shows that `Forb(F)` is complement-closed exactly when `F` is,\nisolating the precise hypothesis under which the conjecture can be tested.\n\n## 4. Threshold graphs sit strictly inside the cograph closure\n\n**Conjecture.** The known generalized spectral characterization of threshold\ngraphs (`Forb(2K₂, P₄, C₄)`) factors through the cograph result: a threshold\ngraph's generalized-cospectral mates are exactly its cograph mates that also\navoid `2K₂` and `C₄`, both of which are themselves two-spectrum detectable.\n\n*The key insight is* that `2K₂` and `C₄` are complement-paired (`C₄` is\nself-complementary, `2K₂` complements to `K₂ ∪ K₂`'s join structure), so the\nthreshold forbidden family is complement-closed and the same self-complementary\nmechanism applies one level up.\n\n*Why now?* The cograph closure established here is the strictly larger class\ncontaining threshold graphs, so the threshold result becomes a corollary once\nthe two extra forbidden subgraphs are shown spectrally detectable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_1262",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ae9bfe48",
+    "status": "available",
+    "timestamp": "2026-07-14T01:17:18.369618+00:00",
+    "title": "Structural backbone: the class of cographs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$‑regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD‑total chromatic number, namel",
     "domain_bridges": [],
     "domains": [
@@ -2999,6 +2993,25 @@
     "status": "failed",
     "timestamp": "2026-07-13T01:24:57.427672+00:00",
     "title": "Close Proofs: Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle ea3218f3 (Q=0.700) proved 18 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Every minimally 1‑tough graph that contains no induced subgraph isomorphic to K₁ ∪ P₄ and has at least three vertices admits a Hamiltonian cycle.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_ea3218f3_dcf3eb77",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ea3218f3",
+    "status": "available",
+    "timestamp": "2026-07-14T01:17:13.673052+00:00",
+    "title": "Close Proofs: Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
   },
   {
     "ambition_level": "extension",

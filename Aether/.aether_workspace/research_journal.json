@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "75061bf5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis cycle completed the bridge showing that the factorial number system is a\nsingle point in the one-parameter family of mixed-radix positional systems:\nplace values, digit value",
-      "quality_score": 0.72,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-13T09:49:29",
-      "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
-    {
       "cycle_id": "3e1dd178",
       "domain": "Applications",
       "key_insight": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThis cycle established the elementary algebraic core of four-dimensional geometry:\nthe volume law of the 4-ball, the face combin",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-14T01:16:54",
       "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
+    },
+    {
+      "cycle_id": "ea3218f3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle established a reusable toughness toolkit centered on the *component\ncount* `numComp G S` (the number of",
+      "quality_score": 0.7,
+      "sorry_count": 5,
+      "theorem_count": 18,
+      "timestamp": "2026-07-14T01:17:13",
+      "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1c874912",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Information Cost of Encoding a Mind\n\nThis cycle established that the wiring diagram of `n` neurons carries an intrinsic,\nquadratic, and unbeatable information cost of `C(n,2)`",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 13,
-      "timestamp": "2026-07-11T09:25:07",
-      "title": "Deepening: Digital Immortality: Can a Mind Be Encoded?"
-    },
     {
       "cycle_id": "ea473918",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-14T01:16:54",
       "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
+    },
+    {
+      "cycle_id": "ea3218f3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle established a reusable toughness toolkit centered on the *component\ncount* `numComp G S` (the number of",
+      "quality_score": 0.7,
+      "sorry_count": 5,
+      "theorem_count": 18,
+      "timestamp": "2026-07-14T01:17:13",
+      "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ee7062d3",
-      "domain": "Applications",
-      "name": "inf_decomp",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ee7062d3",
-      "domain": "Applications",
-      "name": "InfSub_le_Inf",
-      "quality": 0.82
-    },
     {
       "cycle_id": "37818bd9",
       "domain": "Novelty",
@@ -2803,17 +2791,22 @@
       "domain": "Novelty",
       "name": "references",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "ea3218f3",
+      "domain": "Novelty",
+      "name": "isolates",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "ea3218f3",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-14T01:16:54",
+  "last_updated": "2026-07-14T01:17:13",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "b659b436",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-13T04:46:23"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "8e89241b",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T01:16:54"
+    },
+    {
+      "context": "-    sorry; +      sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "ea3218f3",
+      "domain": "Novelty",
+      "sorry_count": 5,
+      "timestamp": "2026-07-14T01:17:13"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ac37e9f5",
-        "quality": 0.82,
-        "theorems": 20,
-        "title": "Exact topological conjugacy between the smooth logisti"
-      },
-      {
         "cycle_id": "b222c758",
         "quality": 0.82,
         "theorems": 29,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 21,
         "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
+      },
+      {
+        "cycle_id": "ea3218f3",
+        "quality": 0.7,
+        "theorems": 18,
+        "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
       }
     ],
     "NumberTheory": [

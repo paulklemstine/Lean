@@ -1529,20 +1529,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Formal Group Integrating p-adic Maass--Shimura Operators for Hodge Type Shimura Varieties"
   },
   {
-    "consumed_by_exp_id": "ea3218f3",
-    "description": "Every minimally 1\u2011tough graph that contains no induced subgraph isomorphic to K\u2081 \u222a P\u2084 and has at least three vertices admits a Hamiltonian cycle.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0748",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.07239v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-09T09:17:10.297215+00:00",
-    "title": "Minimally 1\u2011tough (K\u2081 \u222a P\u2084)-free graphs are Hamiltonian"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every palindromic Poincar\u00e9 polynomial arising from a strongly smooth element in type A_n occurs as a Poincar\u00e9 polynomial P_w(q) for some element w in the principal poset Pr(L_B) under the canonical Lehmer code L_B for type B_n, where the correspondence is given by w = bot^{-1}(v) for v \u2208 Sm_n.",
     "domains": [
@@ -2107,6 +2093,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle established a reusable toughness toolkit centered on the *component\ncount* `numComp G S` (the number of connected components left after deleting a\nvertex set `S`): its monotonicity under edge additions, the toughness of complete\ngraphs, a minimum-degree-two theorem for `1`-tough graphs, and the fact that\ncomplete graphs forbid every induced subgraph containing a non-edge (in particular\n`K\u2081 \u222a P\u2084`). The following conjectures extend these findings.\n\n## 1. Minimally `1`-tough `(K\u2081 \u222a P\u2084)`-free graphs are Hamiltonian\nEvery minimally `1`-tough graph on at least three vertices that contains no induced\ncopy of `K\u2081 \u222a P\u2084` admits a Hamiltonian cycle.\n**The key insight is** that in a `(K\u2081 \u222a P\u2084)`-free graph the neighbourhoods are so\ntightly interlocked that the minimum-degree-two witness produced by edge-minimal\ntoughness upgrades to a global cyclic structure: every degree-two vertex forces a\nlong induced path, which the forbidden subgraph then closes into a cycle.\n**Why now?** The component-count monotonicity proved here is exactly the reduction\nstep that transports a spanning cycle's toughness to the ambient graph; combined\nwith the newly isolated minimum-degree lemma, the remaining gap is purely local\nneighbourhood analysis inside a single forbidden pattern.\n\n## 2. A degree-sum refinement of Kriesell's conjecture\nIn a minimally `1`-tough graph, the number of vertices of degree exactly two is at\nleast the number of components created by any tight cutset.\n**The key insight is** that edge-minimality makes every edge *critical*: removing it\nmust create a cutset that only barely fails the toughness inequality, and such\ntight cutsets can only arise adjacent to degree-two vertices.\n**Why now?** The singleton-deletion argument behind the minimum-degree theorem\nalready exhibits one tight cutset per low-degree vertex; counting these witnesses\nglobally is the natural next quantitative step.\n\n## 3. Toughness is monotone but Hamiltonicity is not: a quantified gap\nFor every `t`, there is a `t`-tough graph that is not Hamiltonian, yet its\ncomponent count exceeds the deleted-set size by an amount growing with the number of\nindependent \"bad\" cutsets.\n**The key insight is** that the failure of the toughness-implies-Hamiltonicity\nconverse is not a single anomaly but a *robust* phenomenon measured by how many\ndisjoint scattering sets a graph admits.\n**Why now?** With component-count monotonicity formalized, the classical\ncounterexamples to sufficiency can be recast as extremal configurations of the same\ninvariant, opening a quantitative comparison rather than a binary one.\n\n## 4. Forbidden-pair toughness dichotomy\nFor a pair of small graphs `(H\u2081, H\u2082)`, every `1`-tough `{H\u2081, H\u2082}`-free graph on at\nleast three vertices is Hamiltonian if and only if `{H\u2081, H\u2082}` is one of an\nexplicitly describable finite list including `(K\u2081 \u222a P\u2084, \u00b7)`.\n**The key insight is** that the complete-graph freeness lemma proved here \u2014 a\ncomplete graph forbids exactly the graphs with a non-edge \u2014 pins down the \"trivial\"\nend of the dichotomy, so the classification reduces to the connected forbidden\npatterns.\n**Why now?** The induced-freeness predicate and its complete-graph instance give a\nuniform, checkable notion of forbidden pairs on which such a dichotomy can be\nsystematically tested.\n\n## 5. Component count as a spectral-style invariant\nThe component count `S \u21a6 numComp G S` is a submodular-like set function whose\nLov\u00e1sz-type extension controls toughness; its extremal sets coincide with the tight\ncutsets of the toughness minimisation.\n**The key insight is** that monotonicity under edge additions is one half of a\nsubmodularity statement, suggesting the full invariant behaves like a rank function\namenable to optimisation techniques.\n**Why now?** Having the monotonicity direction as a proven lemma makes the\nsubmodular companion inequality the precise, isolated target needed to bring\ncombinatorial-optimisation machinery to bear on toughness.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1261",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ea3218f3",
+    "status": "available",
+    "timestamp": "2026-07-14T01:16:58.791375+00:00",
+    "title": "Reusable toughness toolkit centered on the *component"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
     "domains": [
       "Applications"
@@ -2146,6 +2147,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-13T01:24:57.427672+00:00",
     "title": "Close Proofs: Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle ea3218f3 (Q=0.700) proved 18 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Every minimally 1\u2011tough graph that contains no induced subgraph isomorphic to K\u2081 \u222a P\u2084 and has at least three vertices admits a Hamiltonian cycle.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_ea3218f3_dcf3eb77",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ea3218f3",
+    "status": "available",
+    "timestamp": "2026-07-14T01:17:13.673052+00:00",
+    "title": "Close Proofs: Minimally 1\u2011tough (K\u2081 \u222a P\u2084)-free graphs are Hamiltonian"
   },
   {
     "consumed_by_exp_id": "",
