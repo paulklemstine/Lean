@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0557da65",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n`Catalog/Bridges/CantorHierarchy.lean` formalizes the classical skeleton of\nCantor's transfinite hierarchy: Cantor's theorem and the absence of a largest\ncardinal, the Hartogs num",
-      "quality_score": 0.82,
-      "sorry_count": 1,
-      "theorem_count": 29,
-      "timestamp": "2026-07-13T08:43:50",
-      "title": "Deepening: Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
-    },
-    {
       "cycle_id": "9da8e56c",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## What was proved\n\nThe file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-free\nformalization of the `P^K = Hilb` identity of the mission specialised to t",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-13T23:51:09",
       "title": "Deepening: Moonshot: Multiverse Set Theory — Mathematics Across Branches"
+    },
+    {
+      "cycle_id": "28ee7277",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Consciousness as Self-Reference (Strange Loop, Parts IV–VI)\n\nThis cycle deepened the \"I Am a Strange Loop\" programme along three axes:\na *quantitative* blind spot (the un-represe",
+      "quality_score": 0.85,
+      "sorry_count": 4,
+      "theorem_count": 39,
+      "timestamp": "2026-07-14T01:00:14",
+      "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "21228762",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Counterfactual Number Theory\n\nThis cycle isolated a clean dividing line inside a deformed arithmetic. Modelling\n\"counterfactual primes\" by the irreducibles of the Hilbert monoid",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-11T08:51:43",
-      "title": "Counterfactual Number Theory: What If Primes Were Random?"
-    },
     {
       "cycle_id": "9ca5466b",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-14T00:41:38",
       "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
+    },
+    {
+      "cycle_id": "28ee7277",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Consciousness as Self-Reference (Strange Loop, Parts IV–VI)\n\nThis cycle deepened the \"I Am a Strange Loop\" programme along three axes:\na *quantitative* blind spot (the un-represe",
+      "quality_score": 0.85,
+      "sorry_count": 4,
+      "theorem_count": 39,
+      "timestamp": "2026-07-14T01:00:14",
+      "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b222c758",
-      "domain": "Novelty",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b222c758",
-      "domain": "Novelty",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b222c758",
-      "domain": "Novelty",
-      "name": "C_idem_eq",
-      "quality": 0.82
-    },
     {
       "cycle_id": "ee7062d3",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "oamPhase_opposite",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "28ee7277",
+      "domain": "Novelty",
+      "name": "behaviours_outnumber_states",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "28ee7277",
+      "domain": "Novelty",
+      "name": "no_finite_conscious",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "28ee7277",
+      "domain": "Novelty",
+      "name": "blindspot_positive",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-07-14T00:41:38",
+  "last_updated": "2026-07-14T01:00:14",
   "open_questions": [
-    {
-      "context": "+Everything is elementary and `sorry`-free.",
-      "cycle_id": "ffec372c",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-13T02:42:03"
-    },
     {
       "context": "+finite-range result rather than leave an unproved `sorry`.; -    sorry; +preserved here (commented out) rather than shipped with a `sorry`; the honest,",
       "cycle_id": "53d4816b",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-14T00:41:38"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "28ee7277",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T01:00:14"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "162989ab",
-        "quality": 0.82,
-        "theorems": 15,
-        "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
-      },
-      {
         "cycle_id": "24c0b42e",
         "quality": 0.72,
         "theorems": 19,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 0,
         "title": "Deepening: Moonshot: Multiverse Set Theory — Mathematics Across Branches"
+      },
+      {
+        "cycle_id": "28ee7277",
+        "quality": 0.85,
+        "theorems": 39,
+        "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
       }
     ],
     "NumberTheory": [

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-14T00:41:57.540925+00:00",
+  "last_updated": "2026-07-14T01:00:16.573756+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -13754,6 +13754,7 @@
       "outcome_quality": 0.6,
       "phase": "A_only",
       "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19",
@@ -13782,6 +13783,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-14T00:41:57.413595+00:00",
       "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 198,
+      "domain": "Novelty",
+      "duration_seconds": 1077.4768517017365,
+      "end_time": 1783990781.794873,
+      "files_integrated": 4,
+      "job_id": "28ee7277",
+      "outcome_quality": 0.85,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.85,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5575,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.85,
+        "novelty": 0.85,
+        "proof_depth": 0.85,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.85,
+      "sorry_count": 4,
+      "sorry_density": 0.10256410256410256,
+      "start_time": 1783989704.3180213,
+      "strategy_count": 0,
+      "theorem_count": 39,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 25,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-14T01:00:16.511588+00:00",
+      "title": "Deepening: Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
     }
   ]
 }

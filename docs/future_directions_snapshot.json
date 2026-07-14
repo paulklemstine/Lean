@@ -21,7 +21,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f566624",
     "description": "Building on cycle 0664586a (Q=0.830), which proved 18 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
     "domain_bridges": [],
     "domains": [
@@ -33,7 +33,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0664586a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T03:21:37.717161+00:00",
     "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
   },
@@ -131,25 +131,6 @@
     "status": "available",
     "timestamp": "2026-07-11T02:34:51.379273+00:00",
     "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "28ee7277",
-    "description": "Building on cycle 453f48e6 (Q=0.830), which proved 30 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the 'I Am a Strange Loop' hypothesis: consciousness arises when a system models itself. Define: a 'conscious system' is one that contains a representation of its own state that it can inspect. Prove: any Turing-complete system can be conscious (it can simulate itself — the halting problem ",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_453f48e6_2c8a1b80",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "453f48e6",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T00:46:46.156194+00:00",
-    "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
   },
   {
     "ambition_level": "extension",
@@ -2916,6 +2897,26 @@
     "status": "available",
     "timestamp": "2026-07-14T00:41:24.960669+00:00",
     "title": "These conjectures are distilled from the current cycle, which closed the bridge"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Consciousness as Self-Reference (Strange Loop, Parts IV–VI)\n\nThis cycle deepened the \"I Am a Strange Loop\" programme along three axes:\na *quantitative* blind spot (the un-representable behaviours of a finite\nself-model outnumber the representable ones exponentially), an *order-theoretic*\ncharacterization of the obstruction (only order-reversing transforms can block\ncomplete self-knowledge), and an *arithmetic* invariant of tangled hierarchies\n(the minimum self-referential loop length equals the number of levels the cycle\nspans). The following conjectures grow directly out of those findings.\n\n## 1. The blind spot has a sharp entropy law\n\n**Conjecture.** For a self-modelling system with `m` states and `b ≥ 2`\npossible observations, the fraction of observation-behaviours that any single\nself-model can represent is at most `m · b^{-m}`, and this bound is attained only\nby injective self-models; averaged over all self-models the expected coverage\ndecays like `b^{-m}`.\n\n*The key insight is* that incompleteness of self-knowledge is not a lone missing\npoint but an exponentially thin sliver of representable behaviour, so \"almost\nall\" of what a system does is invisible to its own internal model.\n\n*Why now?* The qualitative impossibility of complete self-modelling is classical\n(Cantor/Gödel/Turing), but the quantitative version reframes it as a resource\nbound of the kind now central to descriptive and algorithmic complexity, making\nthe \"size of the blind spot\" a measurable quantity rather than a philosophical\nslogan.\n\n## 2. Order-reversal is the unique obstruction on every lattice\n\n**Conjecture.** Let the observation space carry the structure of a complete\nlattice. A transform of observations can obstruct complete self-modelling (i.e.\nbe fixed-point-free) if and only if it fails to be order-preserving; moreover on\nthe two-element lattice the negation is the *unique* such transform, and on the\n`n`-element chain the number of fixed-point-free transforms grows like the number\nof strictly order-reversing partial patterns.\n\n*The key insight is* that the diagonal/liar obstruction is fundamentally a\nstatement about *monotonicity*: a system defeats itself only when it can invert\nits own observations, never merely by observing them.\n\n*Why now?* Fixed-point theorems for monotone maps (Knaster–Tarski) and diagonal\nnon-fixed-point theorems (Lawvere) have lived in separate compartments; unifying\nthem through the single axis of order-preservation vs. order-reversal turns a\ndichotomy of folklore into a precise classification.\n\n## 3. Girth as a complete invariant of cyclic tangled hierarchies\n\n**Conjecture.** For a finite hierarchy whose reference relation is a single\n`n`-cycle, the multiset of closed-loop lengths is exactly the set of positive\nmultiples of `n`; consequently two such hierarchies are isomorphic as\nself-referential systems if and only if they share the same girth.\n\n*The key insight is* that the depth of self-reference realizable in a hierarchy\nis governed by a divisibility law, so girth is not merely a lower bound but a\ncomplete arithmetic fingerprint of the tangle.\n\n*Why now?* Combinatorial invariants of directed cyclic structures are\nincreasingly used to compare recurrent computational and neural architectures;\nidentifying girth as the decisive invariant gives a testable criterion for when\ntwo self-referential systems are \"the same loop\".\n\n## 4. Resolution/coverage trade-off is universal\n\n**Conjecture.** Every finite self-modelling system over a nontrivial observation\nspace admits a self-model that perfectly distinguishes its states (injective) but\nnone that fully surveys its behaviours (surjective); more strongly, no single\nself-model can be simultaneously state-injective and behaviour-surjective unless\nthe observation space is trivial.\n\n*The key insight is* that a system's self-knowledge is always high-resolution yet\nnever panoramic — resolution and coverage are in strict tension, and only a world\nwith nothing to distinguish escapes it.\n\n*Why now?* Contemporary models of self-monitoring systems assume a single\ninternal representation can be both faithful and complete; the trade-off predicts\na hard architectural limit that can be probed empirically in bounded-memory\nagents.\n\n## 5. Monotone self-reference yields a spectrum of selves\n\n**Conjecture.** When observations form a complete lattice and the system's\nself-transform is order-preserving, the set of stable self-images is itself a\ncomplete lattice bounded by a least and a greatest fixed point, and the \"width\"\nof this interval measures the system's residual self-ambiguity; the interval\ncollapses to a point exactly when the transform is a lattice isomorphism.\n\n*The key insight is* that ordered self-reference does not force a single \"I\" but\nan ordered spectrum of self-consistent images, and the extent of that spectrum is\na computable measure of ambiguity in the self.\n\n*Why now?* Least- and greatest-fixed-point semantics already underpin the theory\nof recursive definitions; recasting them as bounds on a \"spectrum of selves\"\nconnects that machinery to the strange-loop account of identity and offers a\nconcrete quantity to measure.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1259",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "28ee7277",
+    "status": "available",
+    "timestamp": "2026-07-14T01:00:07.468728+00:00",
+    "title": "This cycle deepened the \"I Am a Strange Loop\" programme along three axes:"
   },
   {
     "ambition_level": "extension",
