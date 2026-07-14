@@ -40,7 +40,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "226557b2",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domain_bridges": [],
     "domains": [
@@ -52,7 +52,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0981cb8f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-11T00:40:03.135454+00:00",
     "title": "Deepening: Consciousness as Emergent Fixed Point"
   },
@@ -473,6 +473,25 @@
     "status": "available",
     "timestamp": "2026-07-12T16:46:15.392866+00:00",
     "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c923638c (Q=0.820), which proved 25 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `μ` and `λ` of a characteristic element, realised on the\npolynomial ring `ℤ[X]`, and proves:\n\n1. **A cross-domain bridge (`muInv_mul`, `lambdaInv_mul`",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_c923638c_93391866",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c923638c",
+    "status": "available",
+    "timestamp": "2026-07-14T03:40:48.915387+00:00",
+    "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
   },
   {
     "ambition_level": "extension",
@@ -1340,6 +1359,25 @@
     "status": "available",
     "timestamp": "2026-07-12T05:03:54.350424+00:00",
     "title": "Close Proofs: Infinite-Dimensional Chess: Winning on the Hilbert Board"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle c923638c (Q=0.820) proved 25 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `μ` and `λ` of a characteristic element, realised ",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_c923638c_b707ef9c",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c923638c",
+    "status": "available",
+    "timestamp": "2026-07-14T03:40:54.759277+00:00",
+    "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of"
   },
   {
     "ambition_level": "extension",
@@ -2432,26 +2470,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c923638c",
-    "description": "# Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `μ` and `λ` of a characteristic element, realised on the\npolynomial ring `ℤ[X]`, and proves:\n\n1. **A cross-domain bridge (`muInv_mul`, `lambdaInv_mul`).**\n   The μ-invariant lives in `p`-adic / commutative-algebra land (it is the\n   `p`-adic valuation of the *content*, the gcd of the coefficients), while the\n   λ-invariant lives in finite-field polynomial combinatorics (it is the\n   *trailing degree* of the mod-`p` reduction of the primitive part). Both are\n   proved **additive under multiplication**:\n   * μ-additivity = Gauss's lemma (multiplicativity of content) + additivity of\n     the `p`-adic valuation;\n   * λ-additivity = additivity of trailing degree in the domain `𝔽_p[X]` +\n     multiplicativity of the primitive part.\n   This is precisely the mechanism that makes factorisations of characteristic\n   elements translate into additive relations between Iwasawa invariants.\n\n2. **A Matsuno-type twist formula (`matsuno_twist_formula`,\n   `lambdaInv_twistFactor_eq_const_mul_muInv`, `matsuno_nonvanishing_mu`).**\n   For the modelled quadratic-twist factor `twistFactor c k = C(pᵏ)·X^{c·k}`,\n   the λ-invariant satisfies `λ = c·μ`, so twisting shifts\n\n   `λ_p(f · twist) = λ_p(f) + c · μ_p(twist)`,\n\n   a correction term **literally proportional to the μ-invariant**, non-zero\n   exactly when `μ ≠ 0`. This models the mission's concept that the sharp/flat\n   λ-difference under quadratic twist should contain a μ-proportional term when\n   `μ ≠ 0`.\n\n## Relation to the cited literature\n\nThe catalog references (`Spr12` Sprung, `Pol03` Pollack, `Mat08` Matsuno,\n`Hatley–Ray`) concern the *analytic* and *arithmetic* Iwasawa theory of elliptic\ncurves with supersingular reduction: Pollack's `±` `p`-adic `L`-functions,\nSprung's sharp/flat (`♯`/`♭`) decomposition, Matsuno's comparison of\nλ-invariants under quadratic twist, and non-vanishing `μ` phenomena. The present\nfile does **not** formalise those objects; it isolates and proves the purely\nalgebraic *core* that underlies their invariant bookkeeping — the additivity of\n`μ` and `λ` and the resulting μ-proportional shift under a multiplicative twist.\n\n## Concrete next steps\n\n1. **Move from `ℤ[X]` to the Iwasawa algebra `Λ = ℤ_p[[T]]`.** Replace content\n   by the `p`-adic valuation of a power series and trailing degree by the\n   distinguished-polynomial degree from Weierstrass preparation, then reprove\n   `muInv_mul` / `lambdaInv_mul` in that setting. Mathlib already has\n   `PowerSeries`, `Polynomial.Monic`, and the tools for Weierstrass preparation\n   over complete local rings, so this is the natural first extension.\n\n2. **Model the sharp/flat pair honestly.** Introduce a two-component\n   characteristic element `(f♯, f♭)` and formalise the specific relation between\n   them coming from the logarithmic matrix of Pollack–Sprung, then derive the\n   λ-difference formula `λ♯ − λ♭` with its μ-correction as a theorem rather than\n   as an assumed twist factor.\n\n3. **Formalise the twist action on genuine characteristic ideals.** Define the\n   quadratic twist by `D ≡ 1 mod 4` at the level of Selmer groups / Λ-modules\n   and prove that it multiplies the characteristic element by an explicit factor\n   whose invariants are `(μ_D, λ_D)`, recovering `matsuno_twist_formula` with\n   number-theoretic content.\n\n4. **Generalise the proportionality constant.** The model fixes `λ = c·μ` via\n   `X^{c·k}`; a next step is to allow twist factors whose λ/μ ratio varies with\n   the twisting prime, matching the actual dependence in Matsuno's formula.\n\n5. **Explicit `E/ℚ` examples.** Once the Λ-module layer exists, instantiate the\n   framework on a curve of supersingular reduction at `2` with a non-vanishing\n   `μ`-invariant and check the twist formula against tabulated Iwasawa\n   invariants.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1236",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "37818bd9",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T17:26:11.384250+00:00",
-    "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Proofs as DAGs\n\nThis cycle deepened the \"Proofs as DAGs\" line by developing the *topological\nstructure* of an abstract proof-dependency relation. Starting from the existing\n`Handshaking.lean` (undirected acyclic edge bound, tree hubs), `TopologicalOrder.lean`\nbuilds a self-contained chain of results for **directed** acyclic relations, each\ntheorem using the previous one:\n\n1. `IsAcyclic.irrefl` — no self-loop.\n2. `IsAcyclic.asymm` — no 2-cycle.\n3. `IsAcyclic.transGen_asymm` — no cycle of any length.\n4. `mem_predSet_of_transGen`, `predSet_subset_of_transGen`,\n   `not_mem_predSet_self`, `predSet_ssubset_of_transGen` — the ancestor (predecessor)\n   set is strictly monotone along reachability.\n5. `IsAcyclic.exists_topological_numbering` / `exists_rank_edge` — every finite\n   proof DAG has a rank function increasing along dependencies.\n6. `IsAcyclic.exists_source` / `exists_sink` — existence of foundational (source)\n   and capstone (sink) statements.\n7. `IsAcyclic.two_mul_edgeCount_le` — sparsity: `2|E| ≤ n(n-1)`.\n\n## Natural next steps\n\n- **Antichains and Dilworth / Mirsky.** The rank function partitions the DAG into\n  layers (an antichain decomposition). Prove that the longest dependency chain\n  equals the minimum number of layers (Mirsky's theorem), quantifying \"proof depth\".\n- **Unique topological order iff Hamiltonian path.** A proof DAG has a unique\n  topological numbering exactly when its transitive closure is a total order.\n- **Transitive reduction.** Every finite DAG has a unique minimal set of edges with\n  the same reachability — the \"essential dependencies\" of a proof.\n- **Weighted / cost DAGs.** Attach proof-length weights to edges and study the\n  critical path (longest weighted chain) as a model of total verification cost.\n- **Spine / backbone conjecture.** Formalize and test the original conjecture that\n  the global DAG of mathematics concentrates on a small \"spine\" of foundational\n  hubs, connecting `exists_source` here with the hub-fragility results in\n  `Handshaking.lean`.\n",
     "domain_bridges": [],
@@ -3013,6 +3031,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — the sharp/flat λ-difference and its μ-correction\n\nThis cycle isolated the purely algebraic core of the extension of Matsuno's\ntwist formula to non-vanishing μ-invariants. Modelling a characteristic element\non the polynomial ring `ℤ[X]`, with the μ-invariant read off the p-adic\nvaluation of the content and the λ-invariant read off the trailing degree of the\nmod-p reduced primitive part, we proved that a two-component (sharp/flat) pair\nbehaves as follows under a quadratic twist:\n\n* the twist acts **identically** on the two μ-invariants (μ-symmetry);\n* the resulting sharp/flat **λ-difference is exactly a μ-proportional term**,\n  `(cs − cf)·μ`, non-zero precisely when `μ ≠ 0` and the sharp/flat\n  proportionality constants differ;\n* the generalised twist factor realises **any** `(λ, μ)` pair, so the λ/μ ratio\n  is a free parameter rather than a fixed constant.\n\nThe following bold, testable conjectures are the natural continuations.\n\n## 1. The μ-correction survives passage to the Iwasawa algebra `Λ = ℤ_p[[T]]`\n\n**Conjecture.** Replacing content by the p-adic valuation of a power series and\nthe trailing degree by the distinguished-polynomial degree supplied by\nWeierstrass preparation, the μ-symmetry of the twist and the identity\n`λ♯ − λ♭ = (cs − cf)·μ` hold verbatim for genuine elements of `Λ`.\n\nThe key insight is that both invariants are additive under multiplication for a\nstructural reason — a valuation on the coefficient ring and a degree in the\nresidual polynomial ring — and Weierstrass preparation transports exactly these\ntwo pieces of data from `ℤ[X]` to `Λ`, so the additive bookkeeping cannot change.\n\nWhy now? Weierstrass preparation over complete local rings, power series, and the\nmonic/distinguished-polynomial machinery are all available and stable, so the\nmigration is a matter of re-expressing the same two additive quantities rather\nthan developing new theory.\n\n## 2. The sharp/flat difference is governed by a single depth-weighted linear form\n\n**Conjecture.** For a twist by a modulus `D`, the sharp/flat λ-difference of the\ntwisted element equals a linear form `∑_{ℓ ∣ D} w(ℓ)·μ`, where the local weights\n`w(ℓ)` are the 2-adic depth weights `2^{n_ℓ}` with `n_ℓ = v₂((ℓ²−1)/8)`, and the\nform is additive over coprime moduli.\n\nThe key insight is that the μ-proportional constant `cs − cf` observed for a\nsingle twist factor is not a single number but a sum of local contributions, one\nper ramified prime, each carrying the same depth weight that already controls the\nclassical (μ = 0) Matsuno term.\n\nWhy now? The local depth weights and their multiplicative behaviour over coprime\nmoduli are already understood in closed form, so the only new ingredient is\nattaching the μ-proportional factor to each local term and proving the combined\nform is still additive.\n\n## 3. A variable proportionality constant tied to the twisting prime\n\n**Conjecture.** Allowing the sharp and flat proportionality constants to depend\non the twisting prime `ℓ`, the λ-difference becomes `∑_{ℓ ∣ D} (cs(ℓ) − cf(ℓ))·μ`,\nand this refined form still vanishes identically when `μ = 0` while remaining\nstrictly positive whenever `μ ≠ 0` and at least one local difference is non-zero.\n\nThe key insight is that the free λ/μ ratio established for a single generalised\ntwist factor upgrades to a prime-indexed family, matching the genuine dependence\nof Matsuno's correction on the arithmetic of each twisting prime.\n\nWhy now? The generalised twist factor already decouples λ from μ, so replacing a\nglobal constant by a prime-indexed one changes only the indexing of an\nalready-additive sum, not the underlying mechanism.\n\n## 4. μ-symmetry characterises the sharp/flat pair\n\n**Conjecture.** Among two-component characteristic elements, the pairs whose two\ncomponents share a common μ-invariant after every quadratic twist are exactly the\nsharp/flat pairs arising from a supersingular decomposition; equivalently,\nμ-symmetry of the twist is a defining property rather than an accident of the\nmodel.\n\nThe key insight is that in the present model the two components differ only in a\npower of `X`, which the μ-invariant cannot see, so μ-symmetry is forced — and the\nconverse should pin down precisely the elements for which the sharp/flat splitting\nis meaningful.\n\nWhy now? The clean separation of variance proved this cycle (μ blind to the\nsplitting, λ carrying all of it) gives a concrete, checkable criterion to test\nagainst the honest supersingular construction.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1268",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c923638c",
+    "status": "available",
+    "timestamp": "2026-07-14T03:40:27.699502+00:00",
+    "title": "This cycle isolated the purely algebraic core of the extension of Matsuno's"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle assembled a reusable toughness toolkit around a single load-bearing\ninvariant, the *component count* `numComp G S` (the number of connected components\nleft after deleting a vertex set `S`). We proved that this count is monotone under\nedge additions, that toughness itself is therefore monotone under edge additions,\nthat every `1`-tough graph on at least three vertices has minimum degree two and\nhence at least as many edges as vertices, and we exhibited the triangle `K₃` as a\nfully verified instance of the guiding theorem (minimally `1`-tough,\n`(K₁ ∪ P₄)`-free, and Hamiltonian). The following conjectures are the natural next\ntargets suggested by that structure.\n\n## 1. Chvátal's necessary condition, in full\n\n**Conjecture.** Every graph that admits a Hamiltonian cycle is `1`-tough.\n\nThe key insight is that toughness is monotone under edge additions, so the entire\nstatement reduces to a single special case: the pure cycle `Cₙ` is `1`-tough.\nDeleting `k` vertices from a cycle severs it into at most `k` arcs, so the component\ncount never exceeds the number of deleted vertices — exactly the `1`-tough\ninequality. Once the cycle case is in hand, the monotonicity step transports the\nbound to any graph containing a spanning Hamiltonian cycle.\n\nWhy now? The reduction step — that a graph inheriting a `1`-tough spanning subgraph\nis itself `1`-tough — is already established. What remains is a purely combinatorial\nstatement about a single, highly symmetric family of graphs, decoupled from the\ngeneral Hamiltonicity problem.\n\n## 2. Kriesell's minimum-degree conjecture within the `(K₁ ∪ P₄)`-free class\n\n**Conjecture.** Every minimally `1`-tough `(K₁ ∪ P₄)`-free graph is regular of\ndegree two, i.e. is a disjoint union of cycles; combined with connectivity it is a\nsingle Hamiltonian cycle.\n\nThe key insight is that minimal toughness forces a rigidity from both sides: the\nminimum-degree theorem pins degrees from below at two, while the forbidden induced\nsubgraph `K₁ ∪ P₄` caps the local spread of high-degree vertices from above. The\ntwo pressures should meet exactly at two-regularity.\n\nWhy now? The lower bound (minimum degree two) is proved unconditionally in this\ncycle. The task is reduced to supplying the matching upper bound using only the\nforbidden-subgraph hypothesis, a self-contained local argument.\n\n## 3. The edge-count threshold is sharp\n\n**Conjecture.** For every `n ≥ 3` there is a `1`-tough graph on `n` vertices with\nexactly `n` edges, and any `1`-tough graph attaining this minimum is a single\nspanning cycle.\n\nThe key insight is that the density bound `|E| ≥ |V|` proved here comes entirely\nfrom summing the degree bound `deg v ≥ 2`; equality in the sum forces equality\nvertex-by-vertex, so every vertex has degree exactly two, which for a connected\ngraph means a Hamiltonian cycle.\n\nWhy now? The inequality and its proof mechanism (the handshake identity applied to\na uniform degree bound) are already formalized, so the equality-case analysis is a\ndirect refinement rather than a new development.\n\n## 4. Toughness monotonicity characterizes the tough closure\n\n**Conjecture.** For a fixed vertex set, the family of `1`-tough graphs is an upward-\nclosed set in the edge-inclusion order whose minimal elements are exactly the\nminimally `1`-tough graphs.\n\nThe key insight is that toughness monotonicity makes \"`1`-tough\" a monotone graph\nproperty, so the minimally `1`-tough graphs are precisely the order-theoretic\nminimal witnesses of that property — turning a metric definition into a lattice-\ntheoretic one.\n\nWhy now? Monotonicity of toughness under edge additions was just established,\nwhich is the single ingredient needed to phrase and attack the minimality question\npurely in terms of the edge-inclusion lattice.\n\n## 5. Forbidden-subgraph dichotomy for tough Hamiltonicity\n\n**Conjecture.** Among all disjoint unions `K₁ ∪ Pₖ`, the value `k = 4` is the\nlargest for which every minimally `1`-tough `(K₁ ∪ Pₖ)`-free graph on at least\nthree vertices is Hamiltonian; for `k ≥ 5` there is a non-Hamiltonian minimally\n`1`-tough graph avoiding `K₁ ∪ Pₖ`.\n\nThe key insight is that the isolated vertex together with a short path is exactly\nthe local configuration that a tough graph cannot afford, and lengthening the path\nweakens the restriction until it no longer excludes the known tough non-Hamiltonian\nconstructions.\n\nWhy now? With the `1`-tough machinery and a concrete verified Hamiltonian instance\nin place, the boundary between the Hamiltonian and non-Hamiltonian regimes can be\nprobed by varying a single integer parameter, making the dichotomy a sharply posed,\ntestable question.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1269",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "11762aec",
+    "status": "available",
+    "timestamp": "2026-07-14T03:41:15.394977+00:00",
+    "title": "This cycle assembled a reusable toughness toolkit around a single load-bearing"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$‑regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD‑total chromatic number, namel",
     "domain_bridges": [],
     "domains": [
@@ -3084,25 +3142,6 @@
     "status": "failed",
     "timestamp": "2026-07-13T01:24:57.427672+00:00",
     "title": "Close Proofs: Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "11762aec",
-    "description": "Cycle ea3218f3 (Q=0.700) proved 18 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Every minimally 1‑tough graph that contains no induced subgraph isomorphic to K₁ ∪ P₄ and has at least three vertices admits a Hamiltonian cycle.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_ea3218f3_dcf3eb77",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ea3218f3",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T01:17:13.673052+00:00",
-    "title": "Close Proofs: Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
   },
   {
     "ambition_level": "extension",

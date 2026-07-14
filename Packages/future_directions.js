@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "226557b2",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domains": [
       "Probability"
@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "0981cb8f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-11T00:40:03.135454+00:00",
     "title": "Deepening: Consciousness as Emergent Fixed Point"
   },
@@ -351,6 +351,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T16:46:15.392866+00:00",
     "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c923638c (Q=0.820), which proved 25 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `\u03bc` and `\u03bb` of a characteristic element, realised on the\npolynomial ring `\u2124[X]`, and proves:\n\n1. **A cross-domain bridge (`muInv_mul`, `lambdaInv_mul`",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_c923638c_93391866",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "c923638c",
+    "status": "available",
+    "timestamp": "2026-07-14T03:40:48.915387+00:00",
+    "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
   },
   {
     "consumed_by_exp_id": "",
@@ -993,6 +1007,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T05:03:54.350424+00:00",
     "title": "Close Proofs: Infinite-Dimensional Chess: Winning on the Hilbert Board"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle c923638c (Q=0.820) proved 25 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `\u03bc` and `\u03bb` of a characteristic element, realised ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_c923638c_b707ef9c",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "c923638c",
+    "status": "available",
+    "timestamp": "2026-07-14T03:40:54.759277+00:00",
+    "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of"
   },
   {
     "consumed_by_exp_id": "",
@@ -1733,21 +1761,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "This file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as "
   },
   {
-    "consumed_by_exp_id": "c923638c",
-    "description": "# Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `\u03bc` and `\u03bb` of a characteristic element, realised on the\npolynomial ring `\u2124[X]`, and proves:\n\n1. **A cross-domain bridge (`muInv_mul`, `lambdaInv_mul`).**\n   The \u03bc-invariant lives in `p`-adic / commutative-algebra land (it is the\n   `p`-adic valuation of the *content*, the gcd of the coefficients), while the\n   \u03bb-invariant lives in finite-field polynomial combinatorics (it is the\n   *trailing degree* of the mod-`p` reduction of the primitive part). Both are\n   proved **additive under multiplication**:\n   * \u03bc-additivity = Gauss's lemma (multiplicativity of content) + additivity of\n     the `p`-adic valuation;\n   * \u03bb-additivity = additivity of trailing degree in the domain `\ud835\udd3d_p[X]` +\n     multiplicativity of the primitive part.\n   This is precisely the mechanism that makes factorisations of characteristic\n   elements translate into additive relations between Iwasawa invariants.\n\n2. **A Matsuno-type twist formula (`matsuno_twist_formula`,\n   `lambdaInv_twistFactor_eq_const_mul_muInv`, `matsuno_nonvanishing_mu`).**\n   For the modelled quadratic-twist factor `twistFactor c k = C(p\u1d4f)\u00b7X^{c\u00b7k}`,\n   the \u03bb-invariant satisfies `\u03bb = c\u00b7\u03bc`, so twisting shifts\n\n   `\u03bb_p(f \u00b7 twist) = \u03bb_p(f) + c \u00b7 \u03bc_p(twist)`,\n\n   a correction term **literally proportional to the \u03bc-invariant**, non-zero\n   exactly when `\u03bc \u2260 0`. This models the mission's concept that the sharp/flat\n   \u03bb-difference under quadratic twist should contain a \u03bc-proportional term when\n   `\u03bc \u2260 0`.\n\n## Relation to the cited literature\n\nThe catalog references (`Spr12` Sprung, `Pol03` Pollack, `Mat08` Matsuno,\n`Hatley\u2013Ray`) concern the *analytic* and *arithmetic* Iwasawa theory of elliptic\ncurves with supersingular reduction: Pollack's `\u00b1` `p`-adic `L`-functions,\nSprung's sharp/flat (`\u266f`/`\u266d`) decomposition, Matsuno's comparison of\n\u03bb-invariants under quadratic twist, and non-vanishing `\u03bc` phenomena. The present\nfile does **not** formalise those objects; it isolates and proves the purely\nalgebraic *core* that underlies their invariant bookkeeping \u2014 the additivity of\n`\u03bc` and `\u03bb` and the resulting \u03bc-proportional shift under a multiplicative twist.\n\n## Concrete next steps\n\n1. **Move from `\u2124[X]` to the Iwasawa algebra `\u039b = \u2124_p[[T]]`.** Replace content\n   by the `p`-adic valuation of a power series and trailing degree by the\n   distinguished-polynomial degree from Weierstrass preparation, then reprove\n   `muInv_mul` / `lambdaInv_mul` in that setting. Mathlib already has\n   `PowerSeries`, `Polynomial.Monic`, and the tools for Weierstrass preparation\n   over complete local rings, so this is the natural first extension.\n\n2. **Model the sharp/flat pair honestly.** Introduce a two-component\n   characteristic element `(f\u266f, f\u266d)` and formalise the specific relation between\n   them coming from the logarithmic matrix of Pollack\u2013Sprung, then derive the\n   \u03bb-difference formula `\u03bb\u266f \u2212 \u03bb\u266d` with its \u03bc-correction as a theorem rather than\n   as an assumed twist factor.\n\n3. **Formalise the twist action on genuine characteristic ideals.** Define the\n   quadratic twist by `D \u2261 1 mod 4` at the level of Selmer groups / \u039b-modules\n   and prove that it multiplies the characteristic element by an explicit factor\n   whose invariants are `(\u03bc_D, \u03bb_D)`, recovering `matsuno_twist_formula` with\n   number-theoretic content.\n\n4. **Generalise the proportionality constant.** The model fixes `\u03bb = c\u00b7\u03bc` via\n   `X^{c\u00b7k}`; a next step is to allow twist factors whose \u03bb/\u03bc ratio varies with\n   the twisting prime, matching the actual dependence in Matsuno's formula.\n\n5. **Explicit `E/\u211a` examples.** Once the \u039b-module layer exists, instantiate the\n   framework on a curve of supersingular reduction at `2` with a non-vanishing\n   `\u03bc`-invariant and check the twist formula against tabulated Iwasawa\n   invariants.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1236",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "37818bd9",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T17:26:11.384250+00:00",
-    "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Proofs as DAGs\n\nThis cycle deepened the \"Proofs as DAGs\" line by developing the *topological\nstructure* of an abstract proof-dependency relation. Starting from the existing\n`Handshaking.lean` (undirected acyclic edge bound, tree hubs), `TopologicalOrder.lean`\nbuilds a self-contained chain of results for **directed** acyclic relations, each\ntheorem using the previous one:\n\n1. `IsAcyclic.irrefl` \u2014 no self-loop.\n2. `IsAcyclic.asymm` \u2014 no 2-cycle.\n3. `IsAcyclic.transGen_asymm` \u2014 no cycle of any length.\n4. `mem_predSet_of_transGen`, `predSet_subset_of_transGen`,\n   `not_mem_predSet_self`, `predSet_ssubset_of_transGen` \u2014 the ancestor (predecessor)\n   set is strictly monotone along reachability.\n5. `IsAcyclic.exists_topological_numbering` / `exists_rank_edge` \u2014 every finite\n   proof DAG has a rank function increasing along dependencies.\n6. `IsAcyclic.exists_source` / `exists_sink` \u2014 existence of foundational (source)\n   and capstone (sink) statements.\n7. `IsAcyclic.two_mul_edgeCount_le` \u2014 sparsity: `2|E| \u2264 n(n-1)`.\n\n## Natural next steps\n\n- **Antichains and Dilworth / Mirsky.** The rank function partitions the DAG into\n  layers (an antichain decomposition). Prove that the longest dependency chain\n  equals the minimum number of layers (Mirsky's theorem), quantifying \"proof depth\".\n- **Unique topological order iff Hamiltonian path.** A proof DAG has a unique\n  topological numbering exactly when its transitive closure is a total order.\n- **Transitive reduction.** Every finite DAG has a unique minimal set of edges with\n  the same reachability \u2014 the \"essential dependencies\" of a proof.\n- **Weighted / cost DAGs.** Attach proof-length weights to edges and study the\n  critical path (longest weighted chain) as a model of total verification cost.\n- **Spine / backbone conjecture.** Formalize and test the original conjecture that\n  the global DAG of mathematics concentrates on a small \"spine\" of foundational\n  hubs, connecting `exists_source` here with the hub-fragility results in\n  `Handshaking.lean`.\n",
     "domains": [
@@ -2166,6 +2179,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T03:04:22.612819+00:00",
     "title": "`ComplexBaseIMinus1.lean` formalizes arithmetic in the **complex base `\u03b2 = i \u2212 1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 the sharp/flat \u03bb-difference and its \u03bc-correction\n\nThis cycle isolated the purely algebraic core of the extension of Matsuno's\ntwist formula to non-vanishing \u03bc-invariants. Modelling a characteristic element\non the polynomial ring `\u2124[X]`, with the \u03bc-invariant read off the p-adic\nvaluation of the content and the \u03bb-invariant read off the trailing degree of the\nmod-p reduced primitive part, we proved that a two-component (sharp/flat) pair\nbehaves as follows under a quadratic twist:\n\n* the twist acts **identically** on the two \u03bc-invariants (\u03bc-symmetry);\n* the resulting sharp/flat **\u03bb-difference is exactly a \u03bc-proportional term**,\n  `(cs \u2212 cf)\u00b7\u03bc`, non-zero precisely when `\u03bc \u2260 0` and the sharp/flat\n  proportionality constants differ;\n* the generalised twist factor realises **any** `(\u03bb, \u03bc)` pair, so the \u03bb/\u03bc ratio\n  is a free parameter rather than a fixed constant.\n\nThe following bold, testable conjectures are the natural continuations.\n\n## 1. The \u03bc-correction survives passage to the Iwasawa algebra `\u039b = \u2124_p[[T]]`\n\n**Conjecture.** Replacing content by the p-adic valuation of a power series and\nthe trailing degree by the distinguished-polynomial degree supplied by\nWeierstrass preparation, the \u03bc-symmetry of the twist and the identity\n`\u03bb\u266f \u2212 \u03bb\u266d = (cs \u2212 cf)\u00b7\u03bc` hold verbatim for genuine elements of `\u039b`.\n\nThe key insight is that both invariants are additive under multiplication for a\nstructural reason \u2014 a valuation on the coefficient ring and a degree in the\nresidual polynomial ring \u2014 and Weierstrass preparation transports exactly these\ntwo pieces of data from `\u2124[X]` to `\u039b`, so the additive bookkeeping cannot change.\n\nWhy now? Weierstrass preparation over complete local rings, power series, and the\nmonic/distinguished-polynomial machinery are all available and stable, so the\nmigration is a matter of re-expressing the same two additive quantities rather\nthan developing new theory.\n\n## 2. The sharp/flat difference is governed by a single depth-weighted linear form\n\n**Conjecture.** For a twist by a modulus `D`, the sharp/flat \u03bb-difference of the\ntwisted element equals a linear form `\u2211_{\u2113 \u2223 D} w(\u2113)\u00b7\u03bc`, where the local weights\n`w(\u2113)` are the 2-adic depth weights `2^{n_\u2113}` with `n_\u2113 = v\u2082((\u2113\u00b2\u22121)/8)`, and the\nform is additive over coprime moduli.\n\nThe key insight is that the \u03bc-proportional constant `cs \u2212 cf` observed for a\nsingle twist factor is not a single number but a sum of local contributions, one\nper ramified prime, each carrying the same depth weight that already controls the\nclassical (\u03bc = 0) Matsuno term.\n\nWhy now? The local depth weights and their multiplicative behaviour over coprime\nmoduli are already understood in closed form, so the only new ingredient is\nattaching the \u03bc-proportional factor to each local term and proving the combined\nform is still additive.\n\n## 3. A variable proportionality constant tied to the twisting prime\n\n**Conjecture.** Allowing the sharp and flat proportionality constants to depend\non the twisting prime `\u2113`, the \u03bb-difference becomes `\u2211_{\u2113 \u2223 D} (cs(\u2113) \u2212 cf(\u2113))\u00b7\u03bc`,\nand this refined form still vanishes identically when `\u03bc = 0` while remaining\nstrictly positive whenever `\u03bc \u2260 0` and at least one local difference is non-zero.\n\nThe key insight is that the free \u03bb/\u03bc ratio established for a single generalised\ntwist factor upgrades to a prime-indexed family, matching the genuine dependence\nof Matsuno's correction on the arithmetic of each twisting prime.\n\nWhy now? The generalised twist factor already decouples \u03bb from \u03bc, so replacing a\nglobal constant by a prime-indexed one changes only the indexing of an\nalready-additive sum, not the underlying mechanism.\n\n## 4. \u03bc-symmetry characterises the sharp/flat pair\n\n**Conjecture.** Among two-component characteristic elements, the pairs whose two\ncomponents share a common \u03bc-invariant after every quadratic twist are exactly the\nsharp/flat pairs arising from a supersingular decomposition; equivalently,\n\u03bc-symmetry of the twist is a defining property rather than an accident of the\nmodel.\n\nThe key insight is that in the present model the two components differ only in a\npower of `X`, which the \u03bc-invariant cannot see, so \u03bc-symmetry is forced \u2014 and the\nconverse should pin down precisely the elements for which the sharp/flat splitting\nis meaningful.\n\nWhy now? The clean separation of variance proved this cycle (\u03bc blind to the\nsplitting, \u03bb carrying all of it) gives a concrete, checkable criterion to test\nagainst the honest supersingular construction.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1268",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c923638c",
+    "status": "available",
+    "timestamp": "2026-07-14T03:40:27.699502+00:00",
+    "title": "This cycle isolated the purely algebraic core of the extension of Matsuno's"
   },
   {
     "consumed_by_exp_id": "",

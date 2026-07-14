@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "59a15132",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalises a **cross-domain bridge** underlying the conjecture that a\n`λ = 1` pairwise-reflection-symmetric (PRS) Latin square of order `n` exists iff `n` is a\npower",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-13T11:12:22",
-      "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
-    },
-    {
-      "cycle_id": "191c7579",
-      "domain": "Applications",
-      "key_insight": "# Future directions — Isolation-Lemma density bridge (combinatorics ⇄ analysis)\n\n## What was settled this cycle\n\nNew Lean file: `IsolationLemmaAsymptoticDensity.lean`.\n\nBuilding on the exact enumerati",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-13T12:01:03",
-      "title": "This cycle deepened the singleton-hypergraph tightness result of"
-    },
-    {
       "cycle_id": "64d4f5fe",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Exponential barriers for Vietoris–Rips approximation\n\nThe results here isolate a sharp threshold: the equidistant configuration on `n` points,\nrealised by the standard basis of E",
@@ -499,29 +479,29 @@
       "theorem_count": 25,
       "timestamp": "2026-07-14T03:04:59",
       "title": "Close Proofs: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
+    },
+    {
+      "cycle_id": "c923638c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — the sharp/flat λ-difference and its μ-correction\n\nThis cycle isolated the purely algebraic core of the extension of Matsuno's\ntwist formula to non-vanishing μ-invariants. Modelli",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 25,
+      "timestamp": "2026-07-14T03:40:48",
+      "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
+    },
+    {
+      "cycle_id": "11762aec",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle assembled a reusable toughness toolkit around a single load-bearing\ninvariant, the *component count* `nu",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-14T03:41:29",
+      "title": "Close Proofs: Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fb4f44b5",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThis project formalises the exact Seidel spectrum and Seidel energy of complete\nbipartite graphs and their single-edge deletions, and settles the sharp threshold\nfor the energy in",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 38,
-      "timestamp": "2026-07-11T11:08:40",
-      "title": "Sharp threshold characterization for Seidel energy increase in complete bipartite graphs under edge "
-    },
-    {
-      "cycle_id": "d4a0469f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Counterfactual (random) number theory\n\nThis cycle added a **cross-domain connector**\n(`CounterfactualRandomPrimesBorelCantelli.lean`) linking\n\n* **probability / measure theory**",
-      "quality_score": 0.82,
-      "sorry_count": 9,
-      "theorem_count": 8,
-      "timestamp": "2026-07-11T11:42:29",
-      "title": "Deepening: Counterfactual Number Theory: What If Primes Were Random?"
-    },
     {
       "cycle_id": "a0852bd7",
       "domain": "Applications",
@@ -2501,27 +2481,29 @@
       "theorem_count": 25,
       "timestamp": "2026-07-14T03:04:59",
       "title": "Close Proofs: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
+    },
+    {
+      "cycle_id": "c923638c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — the sharp/flat λ-difference and its μ-correction\n\nThis cycle isolated the purely algebraic core of the extension of Matsuno's\ntwist formula to non-vanishing μ-invariants. Modelli",
+      "quality_score": 0.82,
+      "sorry_count": 5,
+      "theorem_count": 25,
+      "timestamp": "2026-07-14T03:40:48",
+      "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
+    },
+    {
+      "cycle_id": "11762aec",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle assembled a reusable toughness toolkit around a single load-bearing\ninvariant, the *component count* `nu",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-14T03:41:29",
+      "title": "Close Proofs: Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ad0affd1",
-      "domain": "Applications",
-      "name": "one_le_radius",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "ad0affd1",
-      "domain": "Applications",
-      "name": "radius_le_sqrt2",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "c0577eb2",
-      "domain": "Applications",
-      "name": "logistic_zero",
-      "quality": 0.82
-    },
     {
       "cycle_id": "c0577eb2",
       "domain": "Applications",
@@ -2803,24 +2785,28 @@
       "domain": "Applications",
       "name": "cvalue_nil",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "c923638c",
+      "domain": "Novelty",
+      "name": "plus",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c923638c",
+      "domain": "Novelty",
+      "name": "reduce_mul",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c923638c",
+      "domain": "Novelty",
+      "name": "reduce_primPart_ne_zero",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T03:04:59",
+  "last_updated": "2026-07-14T03:41:29",
   "open_questions": [
-    {
-      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "d31b185d",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-13T08:26:17"
-    },
-    {
-      "context": "All results are proved without `sorry`.  Mathlib's cardinal theory is built on",
-      "cycle_id": "0557da65",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-13T08:43:50"
-    },
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "75061bf5",
@@ -3016,6 +3002,20 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T02:10:35"
+    },
+    {
+      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "c923638c",
+      "domain": "Novelty",
+      "sorry_count": 5,
+      "timestamp": "2026-07-14T03:40:48"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "11762aec",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T03:41:29"
     }
   ],
   "research_threads": {
@@ -3579,18 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d31b8b8b",
-        "quality": 0.74,
-        "theorems": 27,
-        "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-i"
-      },
-      {
-        "cycle_id": "d954b0de",
-        "quality": 0.74,
-        "theorems": 21,
-        "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
-      },
-      {
         "cycle_id": "6d984d02",
         "quality": 0.62,
         "theorems": 21,
@@ -3637,6 +3625,18 @@
         "quality": 0.79,
         "theorems": 36,
         "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
+      },
+      {
+        "cycle_id": "c923638c",
+        "quality": 0.82,
+        "theorems": 25,
+        "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
+      },
+      {
+        "cycle_id": "11762aec",
+        "quality": 0.82,
+        "theorems": 0,
+        "title": "Close Proofs: Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
       }
     ],
     "NumberTheory": [
