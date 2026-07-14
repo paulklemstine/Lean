@@ -287,7 +287,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` — abstract multiverse.**\nA `Multivers",
     "domain_bridges": [],
     "domains": [
@@ -299,7 +299,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -1051,6 +1051,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e6dfc1d4 (Q=0.780), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D ≡1 mod 4, the difference in sharp/flat λ-invariants under quadratic twist by D should include a term proportional to the μ-invariant when μ ≠ 0.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_e6dfc1d4_afd9811c",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e6dfc1d4",
+    "status": "available",
+    "timestamp": "2026-07-14T16:16:10.297995+00:00",
+    "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domain_bridges": [],
     "domains": [
@@ -1674,6 +1693,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Cycle e6dfc1d4 (Q=0.780) proved 26 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D ≡1 mod 4, the difference in sharp/flat λ-invariants under quadratic twist by D should include a term proportiona",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_e6dfc1d4_e896cd0a",
+    "lineage_refs": [],
+    "priority_score": 0.8300000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e6dfc1d4",
+    "status": "available",
+    "timestamp": "2026-07-14T16:16:10.424105+00:00",
+    "title": "Close Proofs: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set — they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line — they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line — they are a fractal curve.",
     "domain_bridges": [],
     "domains": [
@@ -1966,34 +2004,6 @@
     "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Spr12",
-      "Pol03",
-      "Mat08",
-      "Hatley-Ray"
-    ],
-    "consumed_by_exp_id": "e6dfc1d4",
-    "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D ≡1 mod 4, the difference in sharp/flat λ-invariants under quadratic twist by D should include a term proportional to the μ-invariant when μ ≠ 0.",
-    "domain_bridges": [
-      "2-adic L-functions",
-      "Quadratic Twists",
-      "Iwasawa Invariants"
-    ],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0625",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Extend the existing formula by analyzing the μ-invariant's contribution through local-global principles and modular forms.",
-    "research_mode": "team",
-    "source_exp_id": "2607.05305v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T01:05:41.844138+00:00",
-    "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
   },
   {
     "ambition_level": "extension",
@@ -3464,6 +3474,46 @@
     "status": "available",
     "timestamp": "2026-07-14T15:58:20.123905+00:00",
     "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — μ-extension of Matsuno's formula\n\n## Summary of what was established\n\nThe file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode**, the\narithmetic model\n`lambdaDiffMu D NE μ ord = lambdaDiff D NE ord + μ · Σ_{ℓ ∣ D} 2^{n_ℓ}`\nof the sharp/flat Iwasawa `λ`-difference of a quadratic twist `E^D` of an elliptic curve\n`E/ℚ` with good supersingular reduction at `2`, extended to allow a non-vanishing\n`2`-adic μ-invariant.  Here `n_ℓ = v₂((ℓ²−1)/8)`.\n\n### Bold conjectures proved TRUE\n\n1. **Complete additivity** over coprime moduli (`lambdaDiffMu_mul_coprime`): the μ-term\n   preserves the additive structure of Matsuno's formula.\n2. **Exact recovery / inversion of μ** (`mu_recovery`): whenever `D` has a prime divisor,\n   `μ = (lambdaDiffMu − lambdaDiff) / Σ 2^{n_ℓ}`.  A non-vanishing μ is *measurable* from\n   the twist data, not merely present.\n3. **Strict monotonicity and injectivity in μ** (`lambdaDiffMu_strictMono_mu`,\n   `lambdaDiffMu_injective_mu`): distinct μ give distinct invariants when `D` is ramified.\n4. **Strict growth under adding a ramified prime** (`lambdaDiffMu_strict_add_prime`).\n5. **The `2`-adic depth law** (`muWeight_depth`): `8·2^{n_ℓ} = 2^{v₂(ℓ−1)+v₂(ℓ+1)}`.\n\n### Bold conjectures proved FALSE (disproofs)\n\n6. **Multiplicativity fails** (`lambdaDiffMu_not_multiplicative`): the invariant is\n   additive but not multiplicative — witnesses `a = 3`, `b = 5`.\n7. **Recovery requires a prime divisor** (`mu_not_injective_of_no_prime`): for `D = 1` the\n   invariant is constant in μ, so μ is not recoverable — the hypothesis in (2)/(3) is sharp.\n8. **The μ-correction is not lower-order** (`muTerm_not_dominated_by_lambdaDiff`): it can\n   strictly exceed the entire classical Matsuno term.\n\n## Open directions\n\n* **Genuine sharp/flat invariants.**  The current work is an arithmetic *model* isolating\n  the combinatorial content of the conjectured μ-term.  Building Kobayashi–Sprung\n  sharp/flat Selmer groups and their `Λ`-module invariants inside Mathlib (Iwasawa algebra,\n  Weierstrass preparation over `ℤ_p[[T]]`, control theorems) would let `lambdaDiff`,\n  `muWeight`, and `lambdaDiffMu` be *derived* rather than posited.  The additivity and\n  inversion theorems here predict exactly what those derived quantities must satisfy.\n* **Proportionality constant.**  The model uses local weight `2^{n_ℓ}` for the μ-term,\n  matching the classical local depth.  Determining whether the true μ-correction uses this\n  weight, or a `μ`-independent multiple of it, is the central analytic question; the\n  inversion formula (2) turns this into a single measurable ratio.\n* **The `D ≡ 1 (mod 4)`, supersingular-at-`2` hypotheses.**  These constrain which primes\n  `ℓ` and residues occur; a refined model tracking `ℓ mod 8` (see the `muWeight = 1 ⟺\n  ℓ ≡ ±3 mod 8` pattern in `ComputationalEvidence.md`) could sharpen the weight law into an\n  exact congruence-indexed formula.\n* **Higher μ and layered towers.**  Extending injectivity to the full\n  `(μ, λ^#, λ^♭)` triple, and studying how the inversion behaves along the cyclotomic\n  tower, are natural next steps.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1304",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e6dfc1d4",
+    "status": "available",
+    "timestamp": "2026-07-14T16:15:59.332057+00:00",
+    "title": "The file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Topology of Knotted Light\n\nThis cycle established the topological charge of an orbital-angular-momentum beam\nas an additive invariant governed by a contour-integral **product rule**\n`w(φ·ψ) = w(φ) + w(ψ)`, showed the charge is carried by the full physical\namplitude (not merely its phase), and bridged the charge of a torus-knot beam to\nthe arithmetic `lcm` of its knot parameters. The following conjectures extend\nthese findings.\n\n## 1. The winding number is a group homomorphism onto the integers\n**Conjecture.** The map sending a non-vanishing, piecewise-smooth beam loop to its\nwinding number is a surjective group homomorphism from the multiplicative group of\nsuch loops onto `(ℤ, +)`, and its kernel is exactly the loops that lift to a\nsingle-valued logarithm over one turn.\n**The key insight is** that additivity of charge is not a property of the\nexponential ansatz but of the logarithmic derivative, so *every* admissible beam —\nhowever it is engineered — obeys the same conservation law.\n**Why now?** With the product rule proved for general loops, the remaining step is\nonly to identify the kernel with the exact (globally-integrable-logarithm) loops,\na self-contained analytic characterization.\n\n## 2. Torus-knot beams realize every meridional charge, and coprime pairs are extremal\n**Conjecture.** Among all `(p, q)` torus-knot beams with fixed charge `N = p·q`,\nthe coprime factorizations are exactly those whose singularity is a single\nconnected knot rather than a split link; equivalently, `gcd(p,q)` counts the\nconnected components of the phase singularity.\n**The key insight is** that the arithmetic identity `lcm p q = p·q ⇔ gcd(p,q)=1`\nis the shadow of a topological dichotomy (knot vs. link) at the level of the beam's\nzero set.\n**Why now?** The charge/`lcm` bridge is in hand; the next move is to promote the\nscalar identity to a statement about the number of components, which is a finite,\ncheckable combinatorial invariant.\n\n## 3. Annihilation is the only way to lower total charge\n**Conjecture.** For any finite family of beams, the total winding number of their\nsuperposition equals the sum of charges, and it can be strictly reduced only by\nincluding beams of opposite handedness whose singularities pairwise cancel; no\ncontinuous, singularity-free deformation changes the total.\n**The key insight is** that the winding number is a homotopy invariant of the loop\nin `ℂ \\ {0}`, so charge is conserved unless a zero is created or destroyed.\n**Why now?** Conservation over families is already proved as a contour-integral\ncorollary; upgrading it to a homotopy-invariance statement connects it to the\nstandard degree theory of the punctured plane.\n\n## 4. Charge quantization survives radial and polarization dressing\n**Conjecture.** Multiplying a beam by any nowhere-zero, single-valued envelope\n(radial profile, Gaussian waist, or scalar polarization factor) leaves the winding\nnumber unchanged; hence the integer charge is a robust label independent of the\nexperimentally uncontrolled amplitude.\n**The key insight is** that only the phase's failure to be single-valued\ncontributes to the contour integral, so any genuinely single-valued dressing is\ninvisible to the invariant.\n**Why now?** The special case of a constant envelope (and the `r^{|ℓ|}` Laguerre–\nGauss factor) is already proved; the general envelope case needs only the same\nlogarithmic-derivative cancellation applied to an arbitrary non-vanishing factor.\n\n\n# Future Directions — The Topology of Knotted Light\n\nThis cycle established the topological charge of an orbital-angular-momentum beam\nas an additive invariant governed by a contour-integral **product rule**\n`w(φ·ψ) = w(φ) + w(ψ)`, showed the charge is carried by the full physical\namplitude (not merely its phase), and bridged the charge of a torus-knot beam to\nthe arithmetic `lcm` of its knot parameters. The following conjectures extend\nthese findings.\n\n## 1. The winding number is a group homomorphism onto the integers\n**Conjecture.** The map sending a non-vanishing, piecewise-smooth beam loop to its\nwinding number is a surjective group homomorphism from the multiplicative group of\nsuch loops onto `(ℤ, +)`, and its kernel is exactly the loops that lift to a\nsingle-valued logarithm over one turn.\n**The key insight is** that additivity of charge is not a property of the\nexponential ansatz but of the logarithmic derivative, so *every* admissible beam —\nhowever it is engineered — obeys the same conservation law.\n**Why now?** With the product rule proved for general loops, the remaining step is\nonly to identify the kernel with the exact (globally-integrable-logarithm) loops,\na self-contained analytic characterization.\n\n## 2. Torus-knot beams realize every meridional charge, and coprime pairs are extremal\n**Conjecture.** Among all `(p, q)` torus-knot beams with fixed charge `N = p·q`,\nthe coprime factorizations are exactly those whose singularity is a single\nconnected knot rather than a split link; equivalently, `gcd(p,q)` counts the\nconnected components of the phase singularity.\n**The key insight is** that the arithmetic identity `lcm p q = p·q ⇔ gcd(p,q)=1`\nis the shadow of a topological dichotomy (knot vs. link) at the level of the beam's\nzero set.\n**Why now?** The charge/`lcm` bridge is in hand; the next move is to promote the\nscalar identity to a statement about the number of components, which is a finite,\ncheckable combinatorial invariant.\n\n## 3. Annihilation is the only way to lower total charge\n**Conjecture.** For any finite family of beams, the total winding number of their\nsuperposition equals the sum of charges, and it can be strictly reduced only by\nincluding beams of opposite handedness whose singularities pairwise cancel; no\ncontinuous, singularity-free deformation changes the total.\n**The key insight is** that the winding number is a homotopy invariant of the loop\nin `ℂ \\ {0}`, so charge is conserved unless a zero is created or destroyed.\n**Why now?** Conservation over families is already proved as a contour-integral\ncorollary; upgrading it to a homotopy-invariance statement connects it to the\nstandard degree theory of the punctured plane.\n\n## 4. Charge quantization survives radial and polarization dressing\n**Conjecture.** Multiplying a beam by any nowhere-zero, single-valued envelope\n(radial profile, Gaussian waist, or scalar polarization factor) leaves the winding\nnumber unchanged; hence the integer charge is a robust label independent of the\nexperimentally uncontrolled amplitude.\n**The key insight is** that only the phase's failure to be single-valued\ncontributes to the contour integral, so any genuinely single-valued dressing is\ninvisible to the invariant.\n**Why now?** The special case of a constant envelope (and the `r^{|ℓ|}` Laguerre–\nGauss factor) is already proved; the general envelope case needs only the same\nlogarithmic-derivative cancellation applied to an arbitrary non-vanishing factor.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1305",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3361b315",
+    "status": "available",
+    "timestamp": "2026-07-14T16:16:24.711910+00:00",
+    "title": "Topological charge of an orbital-angular-momentum bea"
   },
   {
     "ambition_level": "extension",

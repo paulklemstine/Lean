@@ -213,7 +213,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -222,7 +222,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -777,6 +777,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e6dfc1d4 (Q=0.780), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_e6dfc1d4_afd9811c",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "e6dfc1d4",
+    "status": "available",
+    "timestamp": "2026-07-14T16:16:10.297995+00:00",
+    "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domains": [
       "Novelty",
@@ -1240,6 +1254,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle e6dfc1d4 (Q=0.780) proved 26 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportiona",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_e6dfc1d4_e896cd0a",
+    "priority_score": 0.8300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "e6dfc1d4",
+    "status": "available",
+    "timestamp": "2026-07-14T16:16:10.424105+00:00",
+    "title": "Close Proofs: Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
       "Novelty",
@@ -1442,20 +1470,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
-  },
-  {
-    "consumed_by_exp_id": "e6dfc1d4",
-    "description": "For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0625",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.05305v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T01:05:41.844138+00:00",
-    "title": "Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
   },
   {
     "consumed_by_exp_id": "",
@@ -2528,6 +2542,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T15:58:20.123905+00:00",
     "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 \u03bc-extension of Matsuno's formula\n\n## Summary of what was established\n\nThe file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode**, the\narithmetic model\n`lambdaDiffMu D NE \u03bc ord = lambdaDiff D NE ord + \u03bc \u00b7 \u03a3_{\u2113 \u2223 D} 2^{n_\u2113}`\nof the sharp/flat Iwasawa `\u03bb`-difference of a quadratic twist `E^D` of an elliptic curve\n`E/\u211a` with good supersingular reduction at `2`, extended to allow a non-vanishing\n`2`-adic \u03bc-invariant.  Here `n_\u2113 = v\u2082((\u2113\u00b2\u22121)/8)`.\n\n### Bold conjectures proved TRUE\n\n1. **Complete additivity** over coprime moduli (`lambdaDiffMu_mul_coprime`): the \u03bc-term\n   preserves the additive structure of Matsuno's formula.\n2. **Exact recovery / inversion of \u03bc** (`mu_recovery`): whenever `D` has a prime divisor,\n   `\u03bc = (lambdaDiffMu \u2212 lambdaDiff) / \u03a3 2^{n_\u2113}`.  A non-vanishing \u03bc is *measurable* from\n   the twist data, not merely present.\n3. **Strict monotonicity and injectivity in \u03bc** (`lambdaDiffMu_strictMono_mu`,\n   `lambdaDiffMu_injective_mu`): distinct \u03bc give distinct invariants when `D` is ramified.\n4. **Strict growth under adding a ramified prime** (`lambdaDiffMu_strict_add_prime`).\n5. **The `2`-adic depth law** (`muWeight_depth`): `8\u00b72^{n_\u2113} = 2^{v\u2082(\u2113\u22121)+v\u2082(\u2113+1)}`.\n\n### Bold conjectures proved FALSE (disproofs)\n\n6. **Multiplicativity fails** (`lambdaDiffMu_not_multiplicative`): the invariant is\n   additive but not multiplicative \u2014 witnesses `a = 3`, `b = 5`.\n7. **Recovery requires a prime divisor** (`mu_not_injective_of_no_prime`): for `D = 1` the\n   invariant is constant in \u03bc, so \u03bc is not recoverable \u2014 the hypothesis in (2)/(3) is sharp.\n8. **The \u03bc-correction is not lower-order** (`muTerm_not_dominated_by_lambdaDiff`): it can\n   strictly exceed the entire classical Matsuno term.\n\n## Open directions\n\n* **Genuine sharp/flat invariants.**  The current work is an arithmetic *model* isolating\n  the combinatorial content of the conjectured \u03bc-term.  Building Kobayashi\u2013Sprung\n  sharp/flat Selmer groups and their `\u039b`-module invariants inside Mathlib (Iwasawa algebra,\n  Weierstrass preparation over `\u2124_p[[T]]`, control theorems) would let `lambdaDiff`,\n  `muWeight`, and `lambdaDiffMu` be *derived* rather than posited.  The additivity and\n  inversion theorems here predict exactly what those derived quantities must satisfy.\n* **Proportionality constant.**  The model uses local weight `2^{n_\u2113}` for the \u03bc-term,\n  matching the classical local depth.  Determining whether the true \u03bc-correction uses this\n  weight, or a `\u03bc`-independent multiple of it, is the central analytic question; the\n  inversion formula (2) turns this into a single measurable ratio.\n* **The `D \u2261 1 (mod 4)`, supersingular-at-`2` hypotheses.**  These constrain which primes\n  `\u2113` and residues occur; a refined model tracking `\u2113 mod 8` (see the `muWeight = 1 \u27fa\n  \u2113 \u2261 \u00b13 mod 8` pattern in `ComputationalEvidence.md`) could sharpen the weight law into an\n  exact congruence-indexed formula.\n* **Higher \u03bc and layered towers.**  Extending injectivity to the full\n  `(\u03bc, \u03bb^#, \u03bb^\u266d)` triple, and studying how the inversion behaves along the cyclotomic\n  tower, are natural next steps.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1304",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e6dfc1d4",
+    "status": "available",
+    "timestamp": "2026-07-14T16:15:59.332057+00:00",
+    "title": "The file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode"
   },
   {
     "consumed_by_exp_id": "",
