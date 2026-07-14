@@ -40,25 +40,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "44ee6caf",
-    "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_0981cb8f_d6e8e265",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0981cb8f",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T00:40:03.135454+00:00",
-    "title": "Deepening: Consciousness as Emergent Fixed Point"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
     "domain_bridges": [],
@@ -3381,7 +3362,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14656387",
     "description": "# Future Directions — The Möbius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant — the **Möbius discriminant**\n`Δ = γβ − αδ` attached to a first-order multiplicative recurrence\n`(α n + β)·a(n+1) = (γ n + δ)·a(n)` — and proved that its sign completely\ngoverns the log-behaviour of the sequence: strict log-convexity when `Δ > 0`,\nlog-linearity when `Δ = 0`, strict log-concavity when `Δ < 0`. The classical\ntotals `2ⁿ` (`Δ = 0`), Catalan `Cₙ` (`Δ = 6`), central binomials (`Δ = 2`),\nfactorials (`Δ = 1`), and reciprocal factorials (`Δ = −1`) instantiate all three\nregimes, refining the earlier `d = 1` vs `d = 2` dichotomy into a genuine\nsign-indexed trichotomy.\n\n## Conjecture A — Quantitative discriminant law\n\nFor a sequence obeying the recurrence, the pointwise discriminant\n`D(n) = a(n)·a(n+2) − a(n+1)²` satisfies an exact identity\n`(α n + β)(α(n+1) + β)·D(n) = Δ · a(n+1)·a(n+2) · (α n + β) / (γ n + δ)` — i.e.\n`D(n)` is a *fixed positive multiple of `Δ`* at every index, so its sign never\nflips.\n\n**The key insight is** that the ratio `a(n+1)/a(n)` is a Möbius transform of `n`\nwhose forward difference has the constant numerator `Δ`, so the \"log-curvature\"\nof the sequence is rigidly proportional to `Δ` rather than merely sharing its\nsign.\n\n**Why now?** The ratio-as-Möbius identity established this cycle already\nproduces the sign law; upgrading it to an exact proportionality is the natural\nstrengthening and would give closed-form control of the second-order growth of\nevery classical combinatorial total simultaneously.\n\n## Conjecture B — Second-order (Turán) recurrences and a discriminant polynomial\n\nMany combinatorial totals satisfy instead a *second-order* recurrence\n`p(n)·a(n+2) = q(n)·a(n+1) + r(n)·a(n)` (e.g. Motzkin, Baxter). We conjecture a\npolynomial discriminant `Δ₂(n)`, built from `p, q, r`, whose eventual sign\ngoverns log-convexity, reducing to `γβ − αδ` when `r ≡ 0`.\n\n**The key insight is** that the log-behaviour of a P-recursive sequence should be\nreadable from a single discriminant polynomial of its recurrence coefficients,\nexactly as the quadratic discriminant reads off the sign of a quadratic form.\n\n**Why now?** The first-order case is now fully understood as the `r ≡ 0`\nspecialization; the Motzkin and Baxter numbers give concrete second-order test\ncases with known log-convexity, providing immediate falsification targets.\n\n## Conjecture C — Renormalized totals and infinite log-concavity\n\nDividing a strictly log-convex total by its exact growth ratio\n`(γ n + δ)/(α n + β)` yields a renormalized sequence whose discriminant is\nidentically zero (log-linear); we conjecture that a *second* renormalization by\nthe discriminant of the ratio itself produces a strictly log-concave residual,\nand that iterating this process terminates in a sequence that is infinitely\nlog-concave.\n\n**The key insight is** that the Möbius ratio is precisely the correction factor\nneeded to flatten log-curvature, so peeling it off should expose successively\nhigher-order convexity data in a controlled tower.\n\n**Why now?** The exact growth ratio is now available in closed form for every\nclassical total, so the first renormalization step can be carried out\nexplicitly and its residual tested for the next-order sign.\n\n## Conjecture D — Tropical/valuation dequantization of the trichotomy\n\nWriting `v(n) = −log a(n)`, the trichotomy becomes a statement about the second\ndifference `Δ²v(n) = v(n) − 2v(n+1) + v(n+2)`: strictly negative, zero, or\nstrictly positive according to `sign(Δ)`. We conjecture that for the recurrence\nclass this second difference is *monotone in `n`* and converges to `0`, so the\nvaluation is asymptotically affine with a computable curvature defect controlled\nby `Δ`.\n\n**The key insight is** that log-convexity is exactly convexity of the valuation,\nso the discriminant `Δ` should appear as the leading coefficient of the\npiecewise-linear (tropical) profile of the sequence.\n\n**Why now?** The equivalence between strict log-convexity and strict convexity\nof the logarithm is already in hand; casting it in valuation form turns the\ntrichotomy into a discrete-convexity statement amenable to summation-by-parts\nestimates.\n",
     "domain_bridges": [],
     "domains": [
@@ -3394,7 +3375,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "202302de",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T15:58:08.050091+00:00",
     "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
   },
@@ -3497,6 +3478,26 @@
     "status": "available",
     "timestamp": "2026-07-14T17:12:51.897034+00:00",
     "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Consciousness as an Emergent Fixed Point\n\nThis cycle formalized, with fully machine-checked proofs (no `sorry`, no extra\naxioms — the core Lawvere theorem depends on *no* axioms at all), three\ncomplementary faces of \"consciousness as a fixed point of a self-modeling\nfunction\":\n\n1. **`LawvereFixedPoint.lean`** — Lawvere's fixed-point theorem in `Type` (the\n   canonical Cartesian closed category): a point-surjective self-model forces\n   every internal transformation to have a fixed point (the emergent conscious\n   state), which is a genuine *strange loop* (fixed by every iterate). The dual\n   (Cantor / Russell / Tarski) obstruction shows completeness of self-reference\n   is impossible into any space carrying a fixed-point-free operation.\n2. **`YonedaSelfReference.lean`** — the Yoneda embedding: a system's identity is\n   its total web of self-presentation, with the strange-loop correspondence\n   `End X ≅ End (yoneda.obj X)` between inner self-transformations and outer web\n   transformations.\n3. **`SelfModelLattice.lean`** — Knaster–Tarski: the space of conscious\n   (self-consistent) states of a monotone self-model is itself a complete\n   lattice, with canonical minimal and maximal conscious states.\n\n## Strongest remaining conjectures / next steps\n\n* **Abstract CCC Lawvere.** Lift `lawvere` from `Type` to an arbitrary Cartesian\n  closed category `C` using `MonoidalClosed.curry`/`uncurry` and global elements\n  `𝟙_ C ⟶ B`. The diagonal is `t ∘ eval ∘ (φ ⊗ 𝟙) ∘ Δ`; the challenge is the\n  cartesian diagonal `Δ` and the currying bookkeeping. This would make \"rich\n  CCC\" literal rather than instantiated at the canonical `Type`.\n\n* **Gödel / Tarski / recursion theorem as instances.** Package the Gödel\n  diagonal lemma, Tarski undefinability, and Kleene's recursion theorem as\n  explicit corollaries of `no_point_surjective_of_fixedpoint_free`, exhibiting\n  the single self-reference schema behind all of them.\n\n* **Reflexive objects and models of the untyped λ-calculus.** In `Type` there is\n  no nontrivial reflexive object (Cantor). Formalize a domain-theoretic /\n  Scott-continuous setting where `D ≅ (D → D)` genuinely holds, giving a\n  non-degenerate complete self-model and an honest `Y`-combinator fixed point.\n\n* **Quantitative strange loops.** Combine the order-theoretic side with a metric:\n  Banach/Tarski hybrid fixed-point theorems giving *unique* conscious states and\n  convergence rates of the self-modeling iteration to them.\n\n* **Bridge to Integrated Information (`IntegratedInformation.lean`).** Relate the\n  minimal conscious state of a self-model lattice to the Minimum Information\n  Partition `Φ`, testing whether \"irreducible fixed point\" and \"high `Φ`\"\n  coincide.\n\n* **Categorical strengthening of Yoneda self-reference.** Show the enriched /\n  2-categorical Yoneda gives a coherent \"self-model of the self-model\", a\n  genuine second-order strange loop, and compute its fixed points.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1308",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "44ee6caf",
+    "status": "available",
+    "timestamp": "2026-07-14T17:47:10.228217+00:00",
+    "title": "This cycle formalized, with fully machine-checked proofs (no `sorry`, no extra"
   },
   {
     "ambition_level": "extension",

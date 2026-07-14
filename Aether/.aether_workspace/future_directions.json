@@ -19361,11 +19361,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "14656387",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -19378,7 +19378,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1302",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-14T17:47:46.961212+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -19393,7 +19393,7 @@
       "source": "",
       "source_exp_id": "202302de",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/202302de",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_c09a34af",
       "timestamp": "2026-07-14T15:58:08.050091+00:00",
       "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
@@ -19978,7 +19978,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0a1d0253 (Q=0.820), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmetic\nskeleton of the extension of Matsuno's formula to non-vanishing μ-invariants, together\nwith the concrete `p = 2` sharp/flat degree sequences. Natural next steps:\n\n1. **Genuine Iwasawa invariants.**",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Applications"
       ],
@@ -20292,7 +20292,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b45b1485",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -20319,7 +20319,7 @@
       "source": "",
       "source_exp_id": "167aed7f",
       "source_path": "This project formalizes an abstract, model-agnostic version of Hamkins'",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-13T10:55:13.373867+00:00",
       "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
@@ -23578,7 +23578,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b2384a8a (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],
@@ -23778,7 +23778,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle bce13597 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: from the constructive lower bound to the exact ℤ₂-coindex\n\n## What this cycle added\n\nThe previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-complex in the\ncross-polytope model and proved, *unconditionally*, the **constructive lower-bound half**:\nsingle-st",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -24138,7 +24138,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle d09018a9 (Q=0.820), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -25498,7 +25498,7 @@
       "depth_estimate": 3,
       "description": "Cycle 0a1d0253 (Q=0.820) proved 19 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\nThe file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmetic\nskeleton of the extension of Matsuno's formula to non-vanishing μ-invariants, together\nwith the c",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Applications"
       ],
@@ -46845,7 +46845,6 @@
     "π^k_ℓ": 2
   },
   "selection_log": [
-    "cross_domain_bridge",
     "abduction_followup",
     "abduction_followup",
     "cross_domain_bridge",
@@ -46864,6 +46863,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
+    "abduction_followup",
     "abduction_followup"
   ]
 }
