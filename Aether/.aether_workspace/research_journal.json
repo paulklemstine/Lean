@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6e7a2b5e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Topology of Argumentation (IX)\n\nThis cycle established, with no finiteness or well-foundedness hypothesis on the\nattack relation, the maximal-extension half of Dung's semanti",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-13T19:24:40",
-      "title": "Deepening: Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
-    },
-    {
       "cycle_id": "f3fa6ca4",
       "domain": "Applications",
       "key_insight": "# Future Directions: from the `E₄² = E₈` congruence to sharper Eisenstein arithmetic\n\nThis cycle isolated and proved the arithmetic residue of the identity\n`E₄² = E₈`, namely `σ₇(n) ≡ σ₃(n) (mod 120)`",
@@ -499,19 +489,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-14T13:20:07",
       "title": "This cycle established, with no finiteness or well-foundedness hypothesis on the"
+    },
+    {
+      "cycle_id": "d09018a9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThe verified cycle established that the maximal number of good manifolds in an\n`n`-nice polytope is, from dimension seven onward, exactly",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 15,
+      "timestamp": "2026-07-14T13:37:53",
+      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b6492bf5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Anti-Gravity Mathematics\n\nThis mission formalizes a finite model of theorem dependency graphs and proves the\nrobust combinatorial core of the \"anti-gravity theorems\" theme, while",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-11T22:48:11",
-      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-    },
     {
       "cycle_id": "4f5260f0",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 30,
       "timestamp": "2026-07-14T13:20:07",
       "title": "This cycle established, with no finiteness or well-foundedness hypothesis on the"
+    },
+    {
+      "cycle_id": "d09018a9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThe verified cycle established that the maximal number of good manifolds in an\n`n`-nice polytope is, from dimension seven onward, exactly",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 15,
+      "timestamp": "2026-07-14T13:37:53",
+      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7acc7a45",
-      "domain": "Novelty",
-      "name": "anti_ne",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "2758a31c",
-      "domain": "Applications",
-      "name": "reduce_mul",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "2758a31c",
-      "domain": "Applications",
-      "name": "reduce_primPart_ne_zero",
-      "quality": 0.83
-    },
     {
       "cycle_id": "2758a31c",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "charF_mono",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "d09018a9",
+      "domain": "Applications",
+      "name": "about",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d09018a9",
+      "domain": "Applications",
+      "name": "goodManifolds_eq_two_pow",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d09018a9",
+      "domain": "Applications",
+      "name": "goodManifolds_doubling",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T13:20:07",
+  "last_updated": "2026-07-14T13:37:53",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "b222c758",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-13T17:09:34"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "ee7062d3",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-14T13:00:03"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "d09018a9",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T13:37:53"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "efa2b99e",
-        "quality": 0.83,
-        "theorems": 0,
-        "title": "Reusable toughness toolkit centered on the *component"
-      },
-      {
         "cycle_id": "0a1d0253",
         "quality": 0.82,
         "theorems": 19,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 0,
         "title": "Close Proofs: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded"
+      },
+      {
+        "cycle_id": "d09018a9",
+        "quality": 0.82,
+        "theorems": 15,
+        "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
       }
     ],
     "Bridges": [

@@ -227,7 +227,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -236,7 +236,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -255,7 +255,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2360ad91",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domains": [
       "Applications"
@@ -264,7 +264,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "2ca6565f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T01:28:51.638164+00:00",
     "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
   },
@@ -435,6 +435,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T16:46:15.392866+00:00",
     "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d09018a9 (Q=0.820), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_d09018a9_e2622cff",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "d09018a9",
+    "status": "available",
+    "timestamp": "2026-07-14T13:37:53.951753+00:00",
+    "title": "Deepening: OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
@@ -1077,6 +1091,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T14:10:41.417442+00:00",
     "title": "Close Proofs: Exact dictionary \"logical qubits = middle homology\""
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle d09018a9 (Q=0.820) proved 15 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_d09018a9_45a66f79",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "d09018a9",
+    "status": "available",
+    "timestamp": "2026-07-14T13:37:54.054317+00:00",
+    "title": "Close Proofs: OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytop"
   },
   {
     "consumed_by_exp_id": "",
@@ -2468,6 +2496,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Good manifolds in an `n`-nice polytope\n\nThe verified cycle established that the maximal number of good manifolds in an\n`n`-nice polytope is, from dimension seven onward, exactly `2^n`: the count\ndoubles with each new dimension, its partial sums are geometric, the whole\nsequence is strictly increasing, and its `2`-adic valuation equals the\ndimension. These facts suggest several bold, testable conjectures.\n\n## Conjecture 1 \u2014 The head is a \"defect\" sequence with bounded correction\n\nDefine the correction `d(n) = a(n) \u2212 2^n`, so `d(n) = 0` for `n \u2265 7` and\n`d(1..6) = (4, 4, 4, 8, 8, 16)`. Conjecture: the correction is itself a\ntruncated doubling sequence \u2014 `d` takes values in `{4, 8, 16}` and each value\npersists over a contiguous block whose lengths `(3, 2, 1)` decrease by one.\n\n*The key insight is* that the head is not noise but a second, faster-decaying\ngeometric layer that vanishes precisely when the dominant layer `2^n` overtakes\nit. *Why now?* The exact closed form of the tail is settled, so the residual\nhead becomes a clean, finite object whose internal structure can be pinned down\nrather than treated as an anomaly.\n\n## Conjecture 2 \u2014 Prime-power valuation encodes dimension universally\n\nFor any counting family whose tail is `c \u00b7 b^n` with `b` prime, the `b`-adic\nvaluation of the count should recover the dimension up to the additive constant\n`v_b(c)`. Conjecture: `v_2(a(n)) = n` for all `n \u2265 7`, and more generally\n`v_b(a(n)) = n + v_b(c)` for the analogous `b`-nice families.\n\n*The key insight is* that a geometric growth law leaves an arithmetic\nfingerprint: the exponent of the base is legible directly in the prime\nfactorization of the count. *Why now?* The `2`-adic identity is already\nverified for this sequence, giving a template to test the base-`b`\ngeneralization against other polytope families.\n\n## Conjecture 3 \u2014 Doubling is the extremal growth rate for `n`-nice polytopes\n\nAmong all \"nice\" polytope families, the maximal good-manifold count grows no\nfaster than `2^n` asymptotically, with equality achieved by the family studied\nhere. Conjecture: `limsup a(n)^{1/n} = 2`, and any family exceeding this rate\nfails the niceness axioms.\n\n*The key insight is* that doubling reflects a binary choice made independently\nin each dimension, so a strictly faster rate would require correlated choices\nthat niceness forbids. *Why now?* With the exact rate established for the\ncanonical family, the extremality question becomes a sharp, falsifiable upper\nbound rather than a vague asymptotic guess.\n\n## Conjecture 4 \u2014 Geometric partial sums characterize the tail threshold\n\nThe threshold `n = 7` at which the closed form begins is exactly the first `n`\nfor which the partial sum `\u2211_{k\u2264n} a(k)` becomes divisible by `2^7`. Conjecture:\nthe onset of pure geometric behaviour is detectable from divisibility of the\ncumulative counts alone, without knowing the individual terms.\n\n*The key insight is* that the transition to a clean geometric tail is a global\n(cumulative) phenomenon, not merely a local one, so it should be visible in the\nrunning totals. *Why now?* The subtraction-free geometric sum formula for the\ntail is proved, making the cumulative divisibility test precise and checkable.\n",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_1296",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d09018a9",
+    "status": "available",
+    "timestamp": "2026-07-14T13:37:45.666073+00:00",
+    "title": "The verified cycle established that the maximal number of good manifolds in an"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle ae9bfe48 (Q=0.700) proved 13 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The class of cographs (Forb(P\u2084)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spec",
     "domains": [
       "Applications"
@@ -2582,20 +2625,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T18:11:39.634722+00:00",
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
-  },
-  {
-    "consumed_by_exp_id": "d09018a9",
-    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_1245",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "oeis:212351",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T19:58:20.850025+00:00",
-    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
