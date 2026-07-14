@@ -353,7 +353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7a80f842",
     "description": "Building on cycle acce14cf (Q=0.820), which proved 43 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension",
     "domains": [
       "Combinatorics"
@@ -362,7 +362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "acce14cf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
@@ -734,20 +734,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp maximal excess of co-index under suspension for all feasible sta"
   },
   {
-    "consumed_by_exp_id": "482ba253",
-    "description": "Building on cycle 769cd692 (Q=0.780), which proved 51 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: the suspension tower and the excess spectrum of free \u2124\u2082-complexes\n\nThis cycle established the **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as a\nrigorous object and proved three things about it unconditionally: iterating the\nsingle-step suspension raises the co-index by at l",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_769cd692_d6ba925b",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "769cd692",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T07:30:03.453805+00:00",
-    "title": "Deepening: **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7a9dcf2f (Q=0.780), which proved 81 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' \u2014 beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity t",
     "domains": [
@@ -981,7 +967,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "2a9d00c1",
+    "consumed_by_exp_id": "",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domains": [
       "Applications"
@@ -990,7 +976,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "26d2653d",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T06:11:35.997237+00:00",
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
@@ -1077,20 +1063,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T14:10:41.417442+00:00",
     "title": "Close Proofs: Exact dictionary \"logical qubits = middle homology\""
-  },
-  {
-    "consumed_by_exp_id": "0c7f8736",
-    "description": "Cycle e8b8d594 (Q=0.820) proved 10 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integer k \u2265 1, the maximum determinant of any 4\u00d74 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a s",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_e8b8d594_d578f187",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "e8b8d594",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T12:53:44.644238+00:00",
-    "title": "Close Proofs: Maximum Determinant Bound for 4\u00d74 Unimodular Matrices with Bounded Ent"
   },
   {
     "consumed_by_exp_id": "",
@@ -2449,6 +2421,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T11:16:55.310136+00:00",
     "title": "This cycle turned the *existence* dichotomy for antipodal maps of cross-polytope"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: enumerative rigidity of equivariant maps of free \u2124\u2082-complexes\n\nThis cycle sharpened the existence theory of the \u2124\u2082-coindex of combinatorial spheres\ninto an **exact enumeration**: the antipodally-equivariant simplicial maps `S\u1d50 \u2192 S\u207f`\nnumber exactly `2^(m+1) \u00b7 (n+1)^{falling(m+1)}`, the self-maps of `S\u207f` recover the\norder of the hyperoctahedral group `B_{n+1}`, and the coindex criterion `coind(S\u207f) = n`\nfalls out as the positivity of that count.  The following conjectures push the\n\"count, don't just decide\" philosophy into genuinely new territory.\n\n## 1. Enumerative rigidity for general free \u2124\u2082-complexes\n\n**Conjecture.** For a finite free \u2124\u2082-complex `K` of dimension `d` whose facets carry\na transitive sign action, the number of equivariant simplicial maps `S\u1d50 \u2192 K` is a\npolynomial in the facet count with leading term controlled by `2^(m+1)` and the number\nof `(m+1)`-cliques in the \"sign-quotient graph\" of `K`.\n\n**The key insight is** that equivariance collapses a map to a choice of positive-vertex\nimages subject to a single local incompatibility relation, so counting equivariant maps\nis counting independent transversals in a coloured intersection structure, not counting\narbitrary functions.\n\n**Why now?** The sphere case proved here shows the count is a clean product of a\nsign power and an injection count; the same bijection (positive data + local\nsimpliciality) applies verbatim to any free \u2124\u2082-complex, so the general polynomiality\nstatement is now a concrete, testable target rather than a vague hope.\n\n## 2. The excess spectrum is realised by explicit gluings\n\n**Conjecture.** For every pair `0 \u2264 c \u2264 d` there is a finite free \u2124\u2082-complex with\ndimension exactly `d` and coindex exactly `c`; moreover the number of coindex-realising\nmaps `S\u1d9c \u2192 K` is bounded below by `2^(c+1)`, with equality iff `K` is \"coindex-rigid\".\n\n**The key insight is** that joins add coindices with a `+1` shift while suspensions add\ndimension with a `+1` shift, so mixing the two operations lets dimension and coindex be\ntuned independently \u2014 the excess `d \u2212 c` becomes a free parameter.\n\n**Why now?** The suspension tower (dimension `+1` per step) and the join superadditivity\n(coindex `+1` per `S\u2070` factor) are both established; combining them to hit every point\nof the excess spectrum is the natural next assembly, and the enumeration gives a\nquantitative handle on rigidity.\n\n## 3. The falling-factorial count characterises spheres among free \u2124\u2082-complexes\n\n**Conjecture.** A finite free \u2124\u2082-complex `K` of dimension `n` satisfies\n`|Z2Map S\u1d50 K| = 2^(m+1)\u00b7(n+1)^{falling(m+1)}` for all `m \u2264 n` **iff** `K` is\nequivariantly isomorphic to the octahedral sphere `S\u207f`.\n\n**The key insight is** that the octahedral count is the maximum possible \u2014 every source\naxis may map to any unused target axis with any sign \u2014 so achieving it for all `m`\nforces the target to have no additional simpliciality constraints, i.e. to be the\ncross-polytope boundary itself.\n\n**Why now?** With the exact octahedral count in hand, \"maximal count \u21d2 maximal freedom\n\u21d2 sphere\" becomes a precise extremal characterisation, connecting equivariant topology\nto extremal set systems.\n\n## 4. Hyperoctahedral functoriality of the self-map monoid\n\n**Conjecture.** The self-map monoid `End(S\u207f) = Z2Map n n` is a group isomorphic to the\nhyperoctahedral group `B_{n+1}`, and suspension induces the standard inclusion\n`B_{n+1} \u21aa B_{n+2}` fixing the new axis; consequently the coindex is a fixed point of\nthis tower of group inclusions.\n\n**The key insight is** that the self-map count equals `|B_{n+1}|` because every\nequivariant self-map injects `n+1` axes into `n+1` axes and is therefore a bijection \u2014\na signed permutation \u2014 so `End(S\u207f)` is not merely a monoid but the full symmetry group.\n\n**Why now?** The self-map count `2^(n+1)(n+1)!` proved this cycle is exactly `|B_{n+1}|`;\nupgrading the numerical coincidence to a natural group isomorphism, compatible with\nsuspension, would give a group-theoretic backbone to the whole suspension tower.\n\n## 5. Every Fibonacci number past the twelfth carries a primitive prime\n\n**Conjecture.** For every integer `n > 12` the Fibonacci number `F(n)` has a\n*primitive* prime divisor \u2014 a prime dividing `F(n)` but none of `F(1), \u2026, F(n\u22121)`.\nEquivalently, the only positive indices whose Fibonacci number lacks a primitive\nprime divisor are `1, 2, 6, 12`.\n\n**The key insight is** that the primitive part of `F(n)` is the value of the\n`n`-th Fibonacci cyclotomic factor `\u03a6_n = \u220f_{d \u2223 n} F(d)^{\u03bc(n/d)}`, whose size\ngrows like `\u03b1^{\u03c6(n)}` (with `\u03b1` the golden ratio and `\u03c6` Euler's totient), while\nthe only obstruction to primitivity \u2014 an \"intrinsic\" prime \u2014 is the largest prime\nfactor of `n` occurring to the first power; once `\u03b1^{\u03c6(n)}` outgrows `n`, a\nprimitive prime must survive.\n\n**Why now?** The statement is verified here unconditionally on the entire range\n`13 \u2264 n \u2264 10000`, and the prime-index case is settled for all `n` by an elementary\napparition argument; what remains is precisely the analytic growth estimate for\n`\u03a6_n`, isolating a single, sharply-stated hurdle between the finite verification\nand the full classical theorem.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1293",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "482ba253",
+    "status": "available",
+    "timestamp": "2026-07-14T12:59:43.696803+00:00",
+    "title": "This cycle sharpened the existence theory of the \u2124\u2082-coindex of combinatorial sph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBold, falsifiable conjectures growing out of the mixed-radix / factorial bridge\nand the primitive-divisor investigation completed in this cycle.\n\n## 1. Uniqueness holds for every eventually-positive base sequence\n\n**Conjecture.** Fix a base sequence `b : \u2115 \u2192 \u2115`. If `b i \u2265 1` for all `i` below a\nlength `k`, then every natural number `< \u220f_{i<k} b i` has a *unique* valid\nmixed-radix representation of length `k`, and conversely each valid digit string\nnames a distinct value. Dropping positivity at a single index `i` collapses the\nwhole family from that index on, but leaves the truncation below `i` unaffected.\n\nThe key insight is that uniqueness never uses the *specific* running product \u2014\nonly that the running product is positive, which a single valid digit already\nforces. Why now? The bridge just showed the factorial and base-`N` systems are\ntwo points of one parameterized family; the natural next step is to characterize\n*exactly* which base sequences inherit the uniqueness/existence dictionary.\n\n## 2. A carry-free arithmetic on mixed-radix strings\n\n**Conjecture.** There is an addition algorithm on length-`k` mixed-radix strings\nwhose per-position work depends only on the local bases `b i, b (i+1)`, computing\nthe representation of the sum without materializing the integer value, and it is\ncorrect precisely when the running products are positive.\n\nThe key insight is that place values factor multiplicatively through the running\nproduct, so a carry at position `i` is governed solely by `b i`. Why now? With\nvalue-agreement and uniqueness formalized, positional *algorithms* (not just\nrepresentations) become provable, opening a path to verified variable-radix\narithmetic.\n\n## 3. Factoradic digit sums track permutation statistics\n\n**Conjecture.** Under the standard bijection between `{0, \u2026, k!-1}` and\npermutations of `k` letters, the factoradic digit sum of `n` equals the number of\ninversions of the corresponding permutation, and the largest nonzero factoradic\ndigit position equals the largest descent.\n\nThe key insight is that the factoradic digit at position `i` counts exactly the\nelements to the right of position `i` that are smaller \u2014 i.e. a local inversion\ncount. Why now? The bridge pins the factorial system inside the mixed-radix\ntheory, so combinatorial statistics of permutations can be transported to\nstatements about the general positional value function.\n\n## 4. Fibonacci primitive divisors beyond the verified range\n\n**Conjecture.** For every composite `n > 12`, the Fibonacci number `F(n)` has a\nprimitive prime divisor \u2014 a prime dividing `F(n)` but no earlier `F(k)` \u2014 and the\n\"primitive part\" of `F(n)` exceeds `n` for all sufficiently large `n`.\n\nThe key insight is that the primitive part equals a cyclotomic-type evaluation\n`\u03a6_n` at the golden ratio, whose magnitude grows like `\u03c6^{\u03d5(n)}` and therefore\neventually dwarfs the single \"intrinsic\" prime factor that could otherwise absorb\nit. Why now? The finite range up to `10000` is already certified by direct\ncomputation; closing the infinite tail requires exactly this growth estimate, and\nisolating it as a standalone inequality is the crucial missing lemma.\n\n## 5. A radix-independent entropy bound on digit strings\n\n**Conjecture.** Among all base sequences with a fixed running product `P = \u220f b i`,\nthe number of valid length-`k` digit strings is exactly `P`, independent of how\nthe product is factored across positions; consequently the counting is invariant\nunder \"regrouping\" bases (merging two positions `b i, b (i+1)` into one base\n`b i \u00b7 b (i+1)`).\n\nThe key insight is that validity is a product of independent local constraints,\nso the count telescopes to the running product regardless of the factorization.\nWhy now? The bridge already exhibits regrouping informally (factorial vs base-`N`);\nmaking regrouping-invariance a theorem would give a clean structural explanation\nfor why so many distinct positional systems share the same enumeration.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1294",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0c7f8736",
+    "status": "available",
+    "timestamp": "2026-07-14T13:00:00.119965+00:00",
+    "title": "Bold, falsifiable conjectures growing out of the mixed-radix / factorial bridge"
   },
   {
     "consumed_by_exp_id": "",

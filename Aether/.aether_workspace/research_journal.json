@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d954b0de",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with van",
-      "quality_score": 0.74,
-      "sorry_count": 3,
-      "theorem_count": 21,
-      "timestamp": "2026-07-13T19:07:10",
-      "title": "Seidel energy strictly increases under edge deletion in Turán graphs"
-    },
-    {
-      "cycle_id": "ad0affd1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ni",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-13T19:07:27",
-      "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
-    },
-    {
       "cycle_id": "c0577eb2",
       "domain": "Applications",
       "key_insight": "# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic–tent conjugacy (`h(t) = sin²(πt/2)` intertwining\n`f(x)=4x(1-x)` with the ten",
@@ -499,29 +479,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-14T11:17:06",
       "title": "The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
+    },
+    {
+      "cycle_id": "482ba253",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: enumerative rigidity of equivariant maps of free ℤ₂-complexes\n\nThis cycle sharpened the existence theory of the ℤ₂-coindex of combinatorial spheres\ninto an **exact enumeration**:",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 28,
+      "timestamp": "2026-07-14T12:59:51",
+      "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
+    },
+    {
+      "cycle_id": "0c7f8736",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of the mixed-radix / factorial bridge\nand the primitive-divisor investigation completed in this cycle.\n\n## 1. Uniqueness holds for every",
+      "quality_score": 0.78,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-14T13:00:03",
+      "title": "Close Proofs: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Ent"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7473e6ed",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Consciousness as Fixed Points of Recursive Type Theory\n\nThis cycle established that a type which fully quantifies over itself —\n`T ≈ Π (x : T), P x`, equivalently `T ≃ (T → Prop)`",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 14,
-      "timestamp": "2026-07-11T22:13:56",
-      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-    },
-    {
-      "cycle_id": "29aa9d96",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nThe file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field\norder parameter `m = tanh(β m)` undergoes a sharp, continuous (second-order)\nphase transition at t",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 11,
-      "timestamp": "2026-07-11T22:30:55",
-      "title": "Deepening: Speculative: Mathematics as a Phase Transition"
-    },
     {
       "cycle_id": "a06d4115",
       "domain": "Algebra",
@@ -2501,6 +2481,26 @@
       "theorem_count": 15,
       "timestamp": "2026-07-14T11:17:06",
       "title": "The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
+    },
+    {
+      "cycle_id": "482ba253",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: enumerative rigidity of equivariant maps of free ℤ₂-complexes\n\nThis cycle sharpened the existence theory of the ℤ₂-coindex of combinatorial spheres\ninto an **exact enumeration**:",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 28,
+      "timestamp": "2026-07-14T12:59:51",
+      "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
+    },
+    {
+      "cycle_id": "0c7f8736",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of the mixed-radix / factorial bridge\nand the primitive-divisor investigation completed in this cycle.\n\n## 1. Uniqueness holds for every",
+      "quality_score": 0.78,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-14T13:00:03",
+      "title": "Close Proofs: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Ent"
     }
   ],
   "key_theorems": [
@@ -2805,22 +2805,8 @@
       "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T11:17:06",
+  "last_updated": "2026-07-14T13:00:03",
   "open_questions": [
-    {
-      "context": "+`sorry`-free.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "162989ab",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-13T14:34:47"
-    },
-    {
-      "context": "None of the statements use `sorry`.",
-      "cycle_id": "adcea684",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-13T16:51:44"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "b222c758",
@@ -3016,6 +3002,20 @@
       "domain": "Novelty",
       "sorry_count": 7,
       "timestamp": "2026-07-14T10:25:32"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "482ba253",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T12:59:51"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "0c7f8736",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-07-14T13:00:03"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "189556db",
-        "quality": 0.72,
-        "theorems": 574,
-        "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic mode"
-      },
-      {
         "cycle_id": "efa2b99e",
         "quality": 0.83,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 15,
         "title": "The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
+      },
+      {
+        "cycle_id": "0c7f8736",
+        "quality": 0.78,
+        "theorems": 0,
+        "title": "Close Proofs: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded"
       }
     ],
     "Bridges": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7acc7a45",
-        "quality": 0.83,
-        "theorems": 24,
-        "title": "Close Proofs: This cycle established, unconditionally, the constructive lower-bo"
-      },
-      {
         "cycle_id": "bec8fe46",
         "quality": 0.85,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 44,
         "title": "Deepening: Exact AVD‑total chromatic number of central graphs of regular graphs"
+      },
+      {
+        "cycle_id": "482ba253",
+        "quality": 0.82,
+        "theorems": 28,
+        "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
       }
     ],
     "NumberTheory": [
