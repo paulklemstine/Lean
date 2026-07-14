@@ -154,25 +154,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "797ab793",
-    "description": "Building on cycle 7acc7a45 (Q=0.830), which proved 24 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle cf19c51c (Q=0.790) proved 36 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of ℤ₂-co-index under suspension\n\nThis cycle established, unconditionally, the constructive l",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_7acc7a45_4c5b1d29",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7acc7a45",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T03:41:54.706806+00:00",
-    "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domain_bridges": [],
@@ -2532,26 +2513,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "33954867",
-    "description": "# Future Directions: from the `E₄² = E₈` congruence to sharper Eisenstein arithmetic\n\nThis cycle isolated and proved the arithmetic residue of the identity\n`E₄² = E₈`, namely `σ₇(n) ≡ σ₃(n) (mod 120)`, together with the sharpness of\nthe modulus `120`. Three structural strands emerged, each pointing to a bold,\ntestable conjecture.\n\n## Direction 1 — The exact convolution law `σ₇ = σ₃ + 120·(σ₃ ⋆ σ₃)`\n\n**Conjecture.** For every positive integer `n`,\n`σ₇(n) = σ₃(n) + 120·∑_{i=1}^{n-1} σ₃(i)·σ₃(n-i)`, with the self-convolution\nterm always a non-negative integer, so that `σ₇(n) − σ₃(n)` is a positive\nmultiple of `120` for all `n ≥ 2`.\n\nThe key insight is that the correction term is not merely bounded modulo `120`\nbut is *exactly* `120` times a divisor-power self-convolution, which upgrades the\ncongruence into an equality and pins the constant `120` to the dimension-one\nspace of weight-`8` cusp-free forms.\n\nWhy now? The pointwise congruence `d⁷ ≡ d³ (mod 120)` and its Chinese-Remainder\ngluing are now in hand, providing the exact residue that a full convolution\nproof must reproduce term by term; the small-case data already match on the\nfirst eleven coefficients, so the remaining task is a structural identity rather\nthan a search.\n\n## Direction 2 — A congruence hierarchy across all even weights\n\n**Conjecture.** For each `k ≥ 2` there is an optimal modulus `M_k` with\n`σ_{2k-1}(n) ≡ σ_3(n) (mod M_k)` for all `n`, and `M_k` is governed by the\ndenominators of the corresponding Bernoulli numbers: `M_4 = 120` is the first\nnontrivial instance, matching the numerator/denominator structure of the\nweight-`8` Eisenstein normalization.\n\nThe key insight is that each congruence modulus is the exact arithmetic weight\nof the correction term relating two Eisenstein coefficient systems, so the whole\nfamily is controlled by a single Bernoulli-number denominator law rather than by\nweight-specific accidents.\n\nWhy now? The modular gluing technique used for `120 = 8·3·5` generalizes\nverbatim to any squarefree-supported modulus, and the optimality counterexample\nmethod (testing the first exceptional `n`) gives a direct way to certify each\n`M_k` as sharp.\n\n## Direction 3 — Representation-number congruences for lattice genera\n\n**Conjecture.** For every even unimodular lattice of rank `16`, the number of\nvectors of squared length `2n` is congruent modulo `28800` to `240·σ₃(n)`, the\n`E₈` vector count, uniformly in `n`; the two rank-`16` lattices `E₈ ⊕ E₈` and\n`D₁₆⁺` differ only through the cusp form contribution, which vanishes modulo\n`28800`.\n\nThe key insight is that scaling the weight-`8` congruence by the normalizing\nfactor `240` transports a purely arithmetic statement about divisor sums into a\ngeometric statement about lattice vector counts, so genus-level congruences\nfollow from elementary power residues rather than from deep mass formulas.\n\nWhy now? The integral divisibility `28800 ∣ 240·σ₇(n) − 240·σ₃(n)` is already\nestablished, giving the exact modulus against which the rank-`16` genus should be\ntested; the remaining step is to identify the cusp-form defect and confirm it\nlands in the same residue class.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_1243",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f3fa6ca4",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T19:25:02.043277+00:00",
-    "title": "This cycle isolated and proved the arithmetic residue of the identity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x³ − 3x` of Mori's uncanny-valley acceptance curve and proves,\nas a chain of results, that it exhibits the full ascent → peak → drop → valley →\nrecovery shape, culminating in `uncanny_valley_shape`.\n\nNatural next steps:\n\n1. **Parametric family.** Study `UV_c(x) = x³ − 3c²x` (c > 0), whose peak/valley\n   sit at ∓c with values ±2c³. Prove the valley depth `UV_c(c) < UV_c(−c)` and a\n   recovery threshold scaling linearly in c. This generalizes the whole chain.\n\n2. **General cubics.** Characterize exactly which monic cubics `x³ + px + q`\n   possess an uncanny valley: the discriminant condition `p < 0` (two real\n   critical points). Formalize \"has an uncanny valley ⟺ p < 0\".\n\n3. **Derivative-based formulation.** Re-derive the monotonicity regimes from\n   `deriv UV = 3x² − 3` using Mathlib's `StrictMonoOn`/`StrictAntiOn` and\n   `StrictMonoOn.lt_of_lt`, connecting the elementary algebra to real analysis.\n\n4. **Quantifying the depth.** Define the \"uncanny gap\" `UV(peak) − UV(valley)`\n   and study how it grows with the model's steepness; relate to a normalized\n   acceptance scale.\n\n5. **Beyond one valley.** Model higher-degree acceptance curves (e.g. degree-5)\n   admitting *multiple* valleys, and prove an alternation theorem for the signs\n   of successive turning points.\n\n6. **Smoothness / non-polynomial models.** Replace the cubic with a bounded\n   sigmoid-minus-Gaussian model and prove the same qualitative shape, moving\n   from algebraic to analytic techniques.\n",
     "domain_bridges": [],
@@ -3088,6 +3049,46 @@
     "status": "available",
     "timestamp": "2026-07-14T05:23:44.249070+00:00",
     "title": "`Catalog/Bridges/MatsunoIwasawaMonoidHom.lean` deepens the algebraic model of th"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: from `E₄² = E₈` to sharper Eisenstein arithmetic\n\nThis cycle formalized the **arithmetic residue** of the identity `E₄² = E₈` as a\n*connector* between modular forms and elementary number theory. The rigidity of\nthe weight-8 space of level-one modular forms forces `E₄² = E₈`; comparing\n`q`-expansions yields the divisor-sum congruence `σ₇(n) ≡ σ₃(n) (mod 120)`. We\nproved this congruence, its sharpness, a weight-6 analogue, and the reusable\ntransfer mechanism behind them, all by elementary means.\n\n## What is proved (`EisensteinPowerCongruence.lean`)\n\n- **Connector lemma** `sigma_sub_dvd_of_pow`: any pointwise power congruence\n  `m ∣ aʲ − aᵏ` (all integers `a`) transfers to divisor sums, `m ∣ σⱼ(n) − σₖ(n)`.\n  This is the bridge turning a finite residue computation into an\n  Eisenstein-coefficient congruence.\n- **Pointwise laws** `pow7_sub_pow3_dvd` (`120 ∣ d⁷ − d³`) and\n  `pow5_sub_pow3_dvd` (`24 ∣ d⁵ − d³`), via `decide` in `ZMod`.\n- **Divisor-sum congruences** `sigma7_sub_sigma3_dvd`, `sigma5_sub_sigma3_dvd`.\n- **Sharpness** `pow7_modulus_isGreatest`, `sigma7_modulus_isGreatest`: `120` is\n  the greatest modulus that works (witnessed at `a = 2`, resp. `n = 2`), and the\n  weight-`6` analogues `pow5_modulus_isGreatest`, `sigma5_modulus_isGreatest`:\n  `24` is the greatest modulus for `d⁵ ≡ d³` / `σ₅ ≡ σ₃`.\n- **E₈-normalized corollary** `E8_normalized_congruence`:\n  `28800 ∣ 240·σ₇(n) − 240·σ₃(n)`.\n- **Convolution-law instances** `convolution_law_two … five`: concrete cases of\n  the exact law `σ₇(n) = σ₃(n) + 120·(σ₃ ⋆ σ₃)(n)`.\n\n## Direction 1 — the exact convolution law\n\n**Conjecture.** For all `n ≥ 1`,\n`σ₇(n) = σ₃(n) + 120·∑_{i=1}^{n-1} σ₃(i)·σ₃(n−i)`.\n\nThis upgrades the congruence to an equality; it is equivalent to `E₄² = E₈`.\nVerified here for `n ≤ 11` (four cases proved as theorems). The remaining task is\na structural identity: either formalize the `q`-expansion comparison of\nEisenstein series, or find/formalize a purely elementary (Liouville-style)\ndivisor-sum proof. The connector lemma already reproduces the `mod 120` residue\nof every term.\n\n## Direction 2 — a congruence hierarchy across even weights\n\n**Conjecture.** For each odd exponent `2k−1` there is an optimal modulus `M_k`\nwith `σ_{2k−1}(n) ≡ σ₃(n) (mod M_k)`, governed by Bernoulli-number denominators.\nWe established the first two nontrivial instances: `M = 24` for exponent `5`\n(`pow5_modulus_isGreatest`, `sigma5_modulus_isGreatest`) and `M = 120` for\nexponent `7` (`pow7_modulus_isGreatest`, `sigma7_modulus_isGreatest`), both\nproved sharp as `IsGreatest` statements. The `pow_pow_dvd_of_zmod`\nmechanism generalizes verbatim: for any target exponents `j, k`, the optimal\nmodulus is `gcd_a (aʲ − aᵏ)`, computable and transferable to divisor sums by the\nsame connector lemma. Next: prove the general `M_k = gcd_a (a^{2k-1} − a^3)`\nformula and relate it to `denominator(B_{2k})`.\n\n## Direction 3 — representation-number congruences for lattice genera\n\n**Conjecture.** For every even unimodular rank-16 lattice, the number of vectors\nof squared length `2n` is `≡ 240·σ₃(n) (mod 28800)`. The two classes\n`E₈ ⊕ E₈` and `D₁₆⁺` share the same Eisenstein part `240·σ₇(n)` and differ only\nby a weight-8 cusp form, which must vanish mod `28800`. Our\n`E8_normalized_congruence` supplies the exact modulus `28800 = 240·120`. Next:\nformalize the theta-series decomposition and identify the cusp-form defect's\nresidue class.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1273",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "33954867",
+    "status": "available",
+    "timestamp": "2026-07-14T05:59:26.103593+00:00",
+    "title": "This cycle formalized the **arithmetic residue** of the identity `E₄² = E₈` as a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: the functorial excess of the ℤ₂-coindex under suspension\n\nThis cycle deepened the constructive lower-bound theory of the ℤ₂-coindex of combinatorial\nspheres from an *existence* statement into a *functorial* one: suspension of equivariant\nsimplicial maps is an endofunctor of the category of free ℤ₂-spheres (it preserves identities\nand composition), the constructive tower `coind(Sⁿ) ≥ n` is the orbit of a single base map\nunder that functor, and finite Borsuk–Ulam obstructions certify that the coindex increment is\nexactly one, now verified up through dimension two (`coind(S²) = 2`).\n\nThe following conjectures are the natural next targets.\n\n## 1. The excess is exactly one in every dimension\n\n**Conjecture.** For every `n`, there is no equivariant simplicial map `Sⁿ⁺¹ → Sⁿ`, so the\ncoindex increment under suspension is exactly one at every level, not merely on the verified\nbase of the tower.\n\n*The key insight is* that each individual non-existence statement is a *finite* decidable\nquestion about positive-vertex data, so the whole family is a uniform sequence of finite\nobstructions rather than a single infinitary theorem; a structural induction that transports\nan obstruction at level `n` to one at level `n+1` — dual to the suspension functor that\ntransports witnesses upward — would close the gap without invoking the analytic Borsuk–Ulam\ntheorem.\n\n*Why now?* The suspension functor and its identity/composition laws are now available as a\nmechanism for transporting maps between adjacent levels; the same machinery, run\ncontravariantly, is exactly what an inductive obstruction argument needs.\n\n## 2. A join functor with additive excess\n\n**Conjecture.** The combinatorial join `Sᵐ * Sⁿ ≅ Sᵐ⁺ⁿ⁺¹` upgrades to a *bifunctor* on free\nℤ₂-spheres whose effect on the coindex is additive: a witness for `Sᵐ` and one for `Sⁿ`\ncombine into a witness for `Sᵐ⁺ⁿ⁺¹`, and suspension is the special case of joining with `S⁰`.\n\n*The key insight is* that suspension is join-with-a-point, so proving the functor laws for the\njoin subsumes and explains the suspension functor laws established this cycle, exposing the\n`+1` excess of suspension as the `coind(S⁰) + 1 = 1` contribution of a single join factor.\n\n*Why now?* With suspension identified as an endofunctor, the algebraic pattern (a monoidal-style\noperation grading the coindex) is visible; formalizing the join is the direct generalization.\n\n## 3. Uniqueness of the constructive tower up to equivariant homotopy\n\n**Conjecture.** Any two coindex witnesses `Sⁿ → Sⁿ` of full dimension are connected by a finite\nsequence of elementary equivariant moves; in particular the identity tower produced by\niterating suspension of the base point is canonical up to such moves.\n\n*The key insight is* that extensionality reduces equality of maps to equality of vertex data,\nso an equivariant-homotopy relation can be presented purely combinatorially as a rewriting\nsystem on positive-vertex data, making \"uniqueness up to homotopy\" a decidable question in each\nfixed dimension.\n\n*Why now?* Extensionality and the explicit description of the tower as `Σⁿ(id_{S⁰})` give a\nconcrete canonical representative against which all other witnesses can be compared.\n\n## 4. Sharpness certificates as a certified decision procedure\n\n**Conjecture.** The finite reformulation of map-existence yields a uniformly certified decision\nprocedure that, given `m` and `n`, decides whether a coindex witness `Sᵐ → Sⁿ` exists and\nreturns either an explicit suspended/iterated map or a finite obstruction.\n\n*The key insight is* that the positive-vertex reformulation is decidable, and the constructive\nside is generated functorially, so the \"yes\" answers and the \"no\" answers are produced by two\ncomplementary, fully explicit mechanisms that together cover the diagonal boundary `m = n+1`.\n\n*Why now?* Both halves now exist in explicit form — constructive witnesses from the suspension\nfunctor and finite obstructions from the decidable reformulation — so packaging them into a\nsingle procedure is an engineering step on top of proven mathematics.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1274",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "797ab793",
+    "status": "available",
+    "timestamp": "2026-07-14T05:59:51.594934+00:00",
+    "title": "This cycle deepened the constructive lower-bound theory of the ℤ₂-coindex of com"
   },
   {
     "ambition_level": "extension",
