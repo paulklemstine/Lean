@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9da8e56c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What was proved\n\nThe file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-free\nformalization of the `P^K = Hilb` identity of the mission specialised to t",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T09:00:00",
-      "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of Matroids"
-    },
-    {
       "cycle_id": "75061bf5",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThis cycle completed the bridge showing that the factorial number system is a\nsingle point in the one-parameter family of mixed-radix positional systems:\nplace values, digit value",
@@ -499,19 +489,19 @@
       "theorem_count": 39,
       "timestamp": "2026-07-14T01:00:14",
       "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
+    },
+    {
+      "cycle_id": "1bd2f770",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Spectral gaps of fixed-genus chord-swap chains\n\nThis cycle established, unconditionally, that the variational (Rayleigh-quotient)\nupper bound for a one-dimensional swap chain sca",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 21,
+      "timestamp": "2026-07-14T01:16:54",
+      "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9ca5466b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## Computational Complexity of Alien Civilizations\n\nThis project isolates the *substrate-independent* core of computational\nobstructions: **Lawvere's fixed-point theorem**. Every",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 40,
-      "timestamp": "2026-07-11T08:51:48",
-      "title": "Computational Complexity of Alien Civilizations"
-    },
     {
       "cycle_id": "1c874912",
       "domain": "Applications",
@@ -2501,15 +2491,19 @@
       "theorem_count": 39,
       "timestamp": "2026-07-14T01:00:14",
       "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
+    },
+    {
+      "cycle_id": "1bd2f770",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Spectral gaps of fixed-genus chord-swap chains\n\nThis cycle established, unconditionally, that the variational (Rayleigh-quotient)\nupper bound for a one-dimensional swap chain sca",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 21,
+      "timestamp": "2026-07-14T01:16:54",
+      "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ee7062d3",
-      "domain": "Applications",
-      "name": "and",
-      "quality": 0.82
-    },
     {
       "cycle_id": "ee7062d3",
       "domain": "Applications",
@@ -2803,17 +2797,16 @@
       "domain": "Novelty",
       "name": "blindspot_positive",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "1bd2f770",
+      "domain": "Novelty",
+      "name": "references",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T01:00:14",
+  "last_updated": "2026-07-14T01:16:54",
   "open_questions": [
-    {
-      "context": "+finite-range result rather than leave an unproved `sorry`.; -    sorry; +preserved here (commented out) rather than shipped with a `sorry`; the honest,",
-      "cycle_id": "53d4816b",
-      "domain": "Novelty",
-      "sorry_count": 7,
-      "timestamp": "2026-07-13T03:57:23"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "b659b436",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T01:00:14"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "1bd2f770",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T01:16:54"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "24c0b42e",
-        "quality": 0.72,
-        "theorems": 19,
-        "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
-      },
-      {
         "cycle_id": "ac37e9f5",
         "quality": 0.82,
         "theorems": 20,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 39,
         "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
+      },
+      {
+        "cycle_id": "1bd2f770",
+        "quality": 0.82,
+        "theorems": 21,
+        "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
       }
     ],
     "NumberTheory": [

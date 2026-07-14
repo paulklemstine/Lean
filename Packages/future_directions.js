@@ -200,6 +200,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 1bd2f770 (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap ch",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_1bd2f770_8ce6f0b7",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "1bd2f770",
+    "status": "available",
+    "timestamp": "2026-07-14T01:16:54.126795+00:00",
+    "title": "Deepening: Tight spectral gap exponent for the fixed-genus chord swap chain"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
     "domains": [
       "Applications"
@@ -884,6 +898,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 1bd2f770 (Q=0.820) proved 21 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's pol",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_1bd2f770_505fb95f",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "1bd2f770",
+    "status": "available",
+    "timestamp": "2026-07-14T01:16:54.245504+00:00",
+    "title": "Close Proofs: Tight spectral gap exponent for the fixed-genus chord swap chain"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domains": [
       "Applications"
@@ -1414,20 +1442,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-06T11:06:30.434239+00:00",
     "title": "Exact Exponent for Constrained Coset Guesswork"
-  },
-  {
-    "consumed_by_exp_id": "1bd2f770",
-    "description": "For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap chains on perfect matchings.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0501",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02410v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-07T00:02:19.658603+00:00",
-    "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
   {
     "consumed_by_exp_id": "",
@@ -2075,6 +2089,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T01:00:07.468728+00:00",
     "title": "This cycle deepened the \"I Am a Strange Loop\" programme along three axes:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Spectral gaps of fixed-genus chord-swap chains\n\nThis cycle established, unconditionally, that the variational (Rayleigh-quotient)\nupper bound for a one-dimensional swap chain scales as `\u0398(n^{-3})`: a monotone\nstatistic that changes by one unit per move has Dirichlet energy of order `n`\nand variance of order `n\u2074`, and the ratio pins the gap upper bound to the cubic\nwindow `[6 n^{-3}, 12 n^{-3}]`.  The conjectures below extend this mechanism from\nthe model path chain to the genuine fixed-genus chord-swap chain and beyond.\n\n## Conjecture 1 \u2014 Cubic upper bound for the fixed-genus chord-swap gap\n\nFor every fixed genus `g`, the spectral gap of the chord-swap chain on chord\ndiagrams with `n` chords satisfies `\u03b3_{n,g} = O(n^{-3})`.\n\nThe key insight is that thickening a chord diagram produces a monotone\ngenus-aware \"spread\" statistic \u2014 for instance the total nesting-plus-crossing\nindex \u2014 that a single swap changes by a bounded amount, so its Dirichlet energy\ngrows linearly in `n` while its variance grows quartically; the quotient is\nexactly the cubic order isolated for the path model.\n\nWhy now? The energy/variance bookkeeping that forces the exponent has now been\ncarried out in full for the one-dimensional prototype, reducing the chord-swap\nupper bound to the concrete combinatorial task of exhibiting one monotone,\nunit-step, quartic-variance statistic on the diagram space.\n\n## Conjecture 2 \u2014 Matching cubic lower bound (tightness of the exponent)\n\nFor every fixed genus `g`, the spectral gap obeys `\u03b3_{n,g} = \u03a9(n^{-3})`, so that\ncombined with Conjecture 1 the exponent is exactly three: `\u03b3_{n,g} = \u0398(n^{-3})`.\n\nThe key insight is that a canonical-path (multicommodity-flow) routing of unit\nmass between diagrams, in which each swap edge carries flow proportional to the\nlength of the paths through it, incurs congestion of order `n\u00b3`; the standard\nduality between congestion and the Poincar\u00e9 constant then converts the `O(n\u00b3)`\nrelaxation time into the matching `\u03a9(n^{-3})` gap.\n\nWhy now? The upper bound identifies `n\u00b3` as the intrinsic time scale, which tells\nthe lower-bound designer exactly the congestion budget a good routing must meet,\nturning an open exponent question into a calibrated flow-construction problem.\n\n## Conjecture 3 \u2014 Genus enters only through the constant, not the exponent\n\nWrite `\u03b3_{n,g} = c(g) \u00b7 n^{-3} (1 + o(1))` as `n \u2192 \u221e`.  Then the leading constant\n`c(g)` is a strictly decreasing, strictly positive function of the genus `g`, and\nthe exponent `-3` is independent of `g`.\n\nThe key insight is that fixing the genus caps the number of topologically\ndistinct local obstructions a swap must resolve, so genus rescales the effective\nconductance (hence the constant) without altering the one-dimensional diffusive\ngeometry that produces the cubic exponent.\n\nWhy now? With the exponent understood, the residual `g`-dependence is isolated in\na single measurable amplitude `c(g)`, which can be estimated from moderate-size\ndiagrams and compared across genera to test monotonicity directly.\n\n## Conjecture 4 \u2014 Universality across unit-step swap statistics\n\nAny reversible swap chain on a combinatorial family that carries a monotone\ninteger statistic changing by `\u00b11` per move, and whose stationary law spreads\nthat statistic across a range of order `n` with variance of order `n\u2074`, has\nspectral gap of order `n^{-3}`.\n\nThe key insight is that the cubic exponent is a property of the statistic's\nenergy-to-variance ratio, not of the specific objects being shuffled, so perfect\nmatchings, chord diagrams, and lattice paths should all share the same exponent\nwhenever their driving statistic has the linear-energy / quartic-variance\nprofile.\n\nWhy now? The prototype computation shows the exponent depends only on these two\ngrowth rates, making the universality statement a precise, falsifiable prediction\nthat can be checked family by family.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1260",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1bd2f770",
+    "status": "available",
+    "timestamp": "2026-07-14T01:16:41.929862+00:00",
+    "title": "This cycle established, unconditionally, that the variational (Rayleigh-quotient"
   },
   {
     "consumed_by_exp_id": "",
