@@ -974,6 +974,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "c4f680cf",
+    "description": "Building on cycle 9a38651d (Q=0.780), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consistentHistoryEquivFixedPoint` — consistent histories ≃ round-trip fixed points;\n* `novikov_iff_fixedPoint",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_9a38651d_e03ed9d1",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9a38651d",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T21:58:04.632669+00:00",
+    "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle a71dcffe (Q=0.780), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and tha",
     "domain_bridges": [],
@@ -2521,26 +2540,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9a38651d",
-    "description": "# Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consistentHistoryEquivFixedPoint` — consistent histories ≃ round-trip fixed points;\n* `novikov_iff_fixedPoint` — a consistent history exists iff the round trip has a fixed point;\n* `card_consistentHistory_eq_card_fixedPoint` — counts agree;\n* `grandfather_paradox` — the `state ↦ ¬state` loop has no consistent history;\n* `roundTrip_iterate`, `pow_roundTrip` — `k` traversals = `k`-th iterate of the round trip;\n* `finite_pow_consistent` — on a finite non-empty state space, some repetition of the loop is always consistent.\n\n## Natural extensions\n\n1. **Continuous / topological Novikov.** Replace finiteness by a compact convex `X`\n   and continuous causal steps, and derive existence of a consistent history from the\n   Brouwer / Schauder fixed-point theorem instead of pigeonhole.\n\n2. **Probabilistic self-consistency.** Let each `step i` be a Markov kernel; a consistent\n   history becomes a stationary distribution of the round-trip kernel. The Novikov\n   principle then always holds (stationary distributions exist on finite state spaces),\n   quantifying \"how paradoxical\" a loop is by the entropy of that distribution.\n\n3. **Counting and generic loops.** Compute the expected number of consistent histories of\n   a random loop via fixed-point statistics of random self-maps, and characterize which\n   loop lengths force consistency.\n\n4. **Uniqueness / determinism.** Give conditions (e.g. each `step i` a contraction, or the\n   round trip having a unique fixed point) under which the consistent history is unique —\n   the \"deterministic time travel\" regime.\n\n5. **Interacting loops.** Model several causal loops sharing state and study joint\n   consistency as a simultaneous fixed-point problem, connecting to Nash-style existence.\n\n## Appendix: Carmichael's Fibonacci primitive-divisor theorem (open tail)\n\nThe catalog also contains a formalization of **Carmichael's primitive-divisor\ntheorem for Fibonacci numbers** — for `n ≥ 13`, `F(n)` has a *primitive* prime\ndivisor (a prime dividing `F(n)` but no earlier `F(k)`, `0 < k < n`):\n\n* `Catalog/Shared/CarmichaelHelper.lean` — the prime case (`fib_primitive_divisor_prime`),\n  fully proved by the `gcd`-collapse argument via `Nat.fib_gcd`.\n* `Catalog/Shared/CarmichaelProof.lean` — the primitive-part infrastructure\n  (`primPart`, `primPart_dvd`, `primPart_implies_primitive`) and the composite case\n  over the computationally verified range `13 ≤ n ≤ 10000` (`fib_carmichael_composite`).\n* `Catalog/Speculative/AutoResearch/CarmichaelComposite.lean` — entry-point\n  (rank-of-apparition) theory and the headline `fib_carmichael` over `13 ≤ n ≤ 10000`.\n* `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean` — the packaged statement\n  `fib_primitive_divisor` over the same verified range.\n\nAll of the above are complete and `sorry`-free.  What remains open is the\n**infinite composite tail** `n > 10000`.  A rigorous Lean proof of that tail is\nthe classical Carmichael/Zsygmondy argument: writing `F(n) = ∏_{d∣n} C_d` with the\nhomogeneous cyclotomic values `C_d`, the primitive part is `C_n` up to at most one\nintrinsic prime factor dividing `n`; the primitive divisor then exists because\n`|C_n|` grows like `φ^{φ(n)}` and eventually exceeds `n`.  Formalizing this\nrequires:\n\n1. cyclotomic-value growth bounds `|Φ_n(α,β)| ≥ (|α|-|β|)^{φ(n)}` and their\n   sharpenings (control of how close primitive roots of unity approach `-1`);\n2. the law of apparition / lifting-the-exponent for Lucas sequences, pinning the\n   only imprimitive prime factor of `C_n` to a divisor of `n`;\n3. the bridge from the real/algebraic value `C_n` to the integer primitive part\n   `primPart n`.\n\nNone of this machinery (Zsygmondy's theorem, primitive divisors of Lucas\nsequences) is currently in Mathlib, so the tail is stated as an explicit\nboundedness hypothesis (`n ≤ 10000`) rather than left as `sorry`.  Supplying the\nthree ingredients above would let one drop that hypothesis and recover the\nunconditional theorem for all `n ≥ 13`.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1255",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "664b3442",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T23:31:41.555656+00:00",
-    "title": "The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "a25c6e48",
     "description": "# Future Directions — Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and proves it equals\nthe integer charge `ℓ`, together with quantization, charge conservation under\nsuperposition, the on-axis phase singularity, and two contrarian disproofs\n(negative charges exist; opposite vortices annihilate).\n\n## What was proved\n- `winding_oamPhase` — winding number of `exp(iℓθ)` equals `ℓ` (contour integral).\n- `winding_quantized` — the charge is always an integer.\n- `oamPhase_mul`, `oamPhase_prod`, `winding_additive` — charge additivity/conservation.\n- `oamPhase_periodic` — single-valuedness of the phase field.\n- `beamAmp_vanishes`, `beamAmp_nonzero` — amplitude vanishes exactly on the axis iff `ℓ ≠ 0`.\n\n## What was disproved (contrarian)\n- `winding_can_be_negative` — refutes \"charge is always nonnegative\".\n- `oam_annihilation` (+ `oam_annihilation_nonvanishing`) — refutes \"a product of\n  two vortex beams is always a vortex beam\".\n\n## Natural next steps\n1. **General winding number.** Extend `winding` to a broad class of loops\n   `γ : [0,1] → ℂ \\ {0}` and prove homotopy invariance and additivity in full\n   generality (not just for `oamPhase`), connecting to `ℤ = π₁(ℂ*)`.\n2. **Linking number of nested vortices.** Formalize the Hopf-link / linking-number\n   picture for two coaxial vortex lines and relate it to the product of charges.\n3. **Full Laguerre–Gauss modes.** Include the Gaussian envelope and radial index\n   `p`, and prove the OAM per photon is `ℓ ℏ` via the Poynting-vector integral.\n4. **Knotted field lines.** Formalize Hopf fibration constructions of genuinely\n   knotted (rather than merely linked) optical field lines and their conserved\n   helicity/linking invariant.\n5. **Stability under perturbation.** Show the charge is invariant under small\n   continuous perturbations of the field that keep the axis zero isolated\n   (topological robustness).\n",
     "domain_bridges": [],
@@ -3617,6 +3616,26 @@
     "status": "available",
     "timestamp": "2026-07-14T21:57:35.296107+00:00",
     "title": "This cycle characterised the *extremal regime* `|V(G)| = d + 2` for a `d`-regula"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Contrarian Time-Travel Consistency\n\nThis cycle (thread `th_1434a219`, cycle 1) takes a *contrarian* stance on the Novikov\nself-consistency principle: rather than only proving that consistent histories exist, we\nask **which structural hypotheses on a causal loop actually force self-consistency**, and\nwhich merely look like they should. The file\n`Catalog/Novelty/TimeTravelContrarian.lean` states each as a bold conjecture and settles\nit with a Lean proof or an explicit counterexample.\n\nA causal loop is modelled by its one-traversal map `evolve : X → X`; self-consistency is\nexistence of a fixed point, and `consistentCount` is the number of fixed points (= number\nof consistent histories) on a finite state space.\n\n## Verdicts obtained\n\n**Disproofs (structural hypotheses that do NOT force consistency):**\n\n1. `not_bijective_forces_selfConsistent` — reversibility of the causal step (the loop map\n   being a bijection) does not suffice: the grandfather flip `¬·` is a bijection with no\n   fixed point.\n2. `exists_sq_consistent_not_consistent` — consistency does not *descend*: a loop whose\n   double traversal is consistent can itself be paradoxical.\n3. `exists_selfConsistent_comp_not_selfConsistent` — consistency is not *compositional*:\n   two self-consistent loops sharing a state space can compose to a fixed-point-free loop\n   (explicit `Fin 3` 3-cycle witness).\n\n**Proofs (structural hypotheses that DO force consistency):**\n\n4. `selfConsistent_iterate` — consistency *ascends*: a self-consistent loop stays\n   consistent under any number of repetitions.\n5. `contracting_unique_selfConsistent` — \"deterministic time travel\": a contracting loop\n   on a complete state space has a *unique* consistent history (Banach).\n6. `involutive_consistentCount_parity` — quantitative Novikov: for an involutive loop on a\n   finite state space, `consistentCount ≡ |X| (mod 2)`.\n7. `involutive_odd_selfConsistent` — corollary: an involutive loop on an odd-sized state\n   space is always self-consistent (with an odd number of histories).\n8. `exists_iterate_selfConsistent` — eventual consistency: on any finite non-empty state\n   space, some positive number of repetitions of any loop is self-consistent.\n\nPlus concrete counts `grandfather_consistentCount = 0` and `identity_consistentCount = 2`.\n\n## Where this points next\n\n* **Sharpen the parity invariant.** `consistentCount ≡ |X| (mod 2)` for involutions is the\n  order-2 case of a general orbit-counting law. A natural next step: for a loop of prime\n  order `p` (i.e. `evolve^[p] = id`), `consistentCount ≡ |X| (mod p)`, recovering the\n  Cauchy/Frobenius style congruence and giving mod-`p` Novikov obstructions.\n* **Compositional repair.** Disproof (3) shows consistency is not preserved by composition.\n  What extra hypothesis repairs it? Conjecture: if two self-consistent loops *commute*,\n  their composite is self-consistent (their common fixed-point sets interact). This is the\n  \"interacting loops\" direction of the parent file, phrased as a simultaneous fixed point.\n* **Quantitative determinism.** Extend (5) with the Banach convergence-rate bound to\n  measure *how fast* history is pinned down, and compare with the non-unique (multiple\n  fixed points) regime — the boundary between deterministic and branching time travel.\n* **Probabilistic tail.** Replace `evolve` by a Markov kernel; the parity/counting results\n  become statements about the support of stationary distributions, connecting the discrete\n  counts here to the \"probabilistic self-consistency\" extension.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1318",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9a38651d",
+    "status": "available",
+    "timestamp": "2026-07-14T21:57:50.784705+00:00",
+    "title": "This cycle (thread `th_1434a219`, cycle 1) takes a *contrarian* stance on the No"
   },
   {
     "ambition_level": "extension",
