@@ -199,7 +199,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
   {
-    "consumed_by_exp_id": "f53587f0",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 1bd2f770 (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap ch",
     "domains": [
       "Novelty"
@@ -208,7 +208,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "1bd2f770",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-14T01:16:54.126795+00:00",
     "title": "Deepening: Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -2240,7 +2240,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "30ef4e5b",
     "description": "Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets A\u2c7c of the L\u2081 ball {x \u2208 \u2124\u1d48 : |x\u2081| + ... + |x_d| \u2264 m} in \u2124\u1d48, establish a sharp lower bound |A\u2081+\u2026+A\u2099| \u2265 (|A\u2081|\u22ef|A\u2099|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on ",
     "domains": [
       "Applications"
@@ -2249,7 +2249,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "adcea684",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T16:51:44.275408+00:00",
     "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },

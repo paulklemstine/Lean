@@ -268,7 +268,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f53587f0",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 1bd2f770 (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap γ_{n,g} satisfies γ_{n,g} = Θ(n^{-3}) when g is fixed and n → ∞. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap ch",
     "domain_bridges": [],
     "domains": [
@@ -280,7 +280,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "1bd2f770",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-14T01:16:54.126795+00:00",
     "title": "Deepening: Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -3109,7 +3109,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "30ef4e5b",
     "description": "Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|Aₙ|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on ",
     "domain_bridges": [],
     "domains": [
@@ -3121,7 +3121,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "adcea684",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T16:51:44.275408+00:00",
     "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
   },
