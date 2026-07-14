@@ -136,6 +136,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 385fff12 (Q=0.830), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The main result establishing the exact exponential growth rate of the ρ-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly ρ(1-R) relative to the unconstrained Arıkan--Merhav e",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_385fff12_757c3e3d",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "385fff12",
+    "status": "available",
+    "timestamp": "2026-07-14T10:08:42.159007+00:00",
+    "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 48961a11 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnu",
     "domain_bridges": [],
     "domains": [
@@ -1306,7 +1325,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a9d00c1",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domain_bridges": [],
     "domains": [
@@ -1318,7 +1337,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "26d2653d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T06:11:35.997237+00:00",
     "title": "Close Proofs: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
   },
