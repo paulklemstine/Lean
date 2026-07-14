@@ -410,6 +410,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle daf8e94d (Q=0.820), which proved 38 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: AVD\u2011total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self\u2011contained model of total colourings (proper vertex colourings\nof the total graph `T(H)` on `V \u2295 E`) and adjacent\u2011vertex\u2011distinguishing (AVD)\ntotal c",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_daf8e94d_3610f9d9",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "daf8e94d",
+    "status": "available",
+    "timestamp": "2026-07-14T21:57:46.553617+00:00",
+    "title": "Deepening: Working with a self\u2011contained model of total colourings (proper vertex colouring"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e2c082ff (Q=0.820), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
     "domains": [
       "MachineLearning"
@@ -1723,7 +1737,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic"
   },
   {
-    "consumed_by_exp_id": "12ea9340",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct n \u2245 Oct(m+n+1)`, and\nthe classical suspension jump recovered as the special case `L = S\u2070`. The following\nconjectures push toward the sharp equality and the full maximal-excess phenomenon.\n\n## Conjecture 1 (Sharp join law)\nFor free \u2124\u2082-complexes `K, L`, the co-index is *exactly* additive with a shift:\n`coind(K * L) = coind(K) + coind(L) + 1`.\nThe key insight is that the lower bound is realised by an explicit coordinate-split\nequivariant map, so the entire difficulty concentrates in a single matching upper\nbound `coind(K * L) \u2264 coind(K) + coind(L) + 1`, which should follow from a\n\u2124\u2082-index (equivariant cohomology) obstruction that is itself additive under joins.\nWhy now? The join bifunctor and its explicit connecting map are now in hand, so the\nonly missing ingredient is a purely obstruction-theoretic upper bound \u2014 a\nself-contained, isolable target.\n\n## Conjecture 2 (Maximal excess for all feasible starting co-index)\nFor all integers `d \u2265 2` and `c` with `1 \u2264 c \u2264 d`, there is a finite free\n\u2124\u2082-complex `K` of dimension `d` with `coind(K) = c` and `coind(S K) = d + 1`.\nThe key insight is that the \"excess\" `d + 1 - c` can be manufactured by joining a\nlow-co-index but high-dimensional building block (a complex whose co-index is\npinned below its dimension by a Borsuk\u2013Ulam obstruction) with a sphere that supplies\nthe missing co-index only after one further suspension. Why now? The join\nconstruction gives a flexible dial for dimension independent of co-index, exactly\nthe freedom needed to separate `c` from `d`.\n\n## Conjecture 3 (Borsuk\u2013Ulam upper bound in the octahedral tower)\nAny equivariant simplicial map `Oct n \u2192 Oct k` forces `n \u2264 k`; equivalently\n`coind(Oct k) = k` on the nose.\nThe key insight is that the base case (no equivariant map to `Oct 0` from a\nhigher sphere) already isolates the parity/degree obstruction, and the general case\nshould follow by an inductive \"peel one coordinate\" argument compatible with the\njoin splitting `Oct k \u2245 Oct 0 * Oct(k-1)`. Why now? The join splitting turns the\nglobal obstruction into a one-step induction that reuses the verified base case.\n\n## Conjecture 4 (Excess is monotone but not superadditive under iterated suspension)\nWriting `S^j K` for the `j`-fold suspension, the excess sequence\n`e_j := coind(S^j K) - (dim(S^j K))` is non-increasing in `j` and stabilises at\n`0` after finitely many steps.\nThe key insight is that each suspension can raise the co-index by *at most* one while\nraising the dimension by exactly one, so the gap can only shrink; stabilisation at\n`0` is the assertion that suspension eventually saturates the Borsuk\u2013Ulam bound.\nWhy now? The exact `+1` dimension law and the `\u2265 +1` co-index law are both proved,\nso the monotonicity direction is within reach and only the saturation needs the\nupper bound of Conjecture 1.\n",
     "domains": [
       "Geometry",
@@ -1733,7 +1747,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "49ddee39",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T21:24:15.573588+00:00",
     "title": "Constructive, lower-bound half of the co-index theory"
   },
@@ -2081,21 +2095,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T06:35:14.632728+00:00",
     "title": "Additive / geometric / analytic scaffolding around th"
-  },
-  {
-    "consumed_by_exp_id": "daf8e94d",
-    "description": "# Future directions: AVD\u2011total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self\u2011contained model of total colourings (proper vertex colourings\nof the total graph `T(H)` on `V \u2295 E`) and adjacent\u2011vertex\u2011distinguishing (AVD)\ntotal colourings, and with the central graph `C(G)` (subdivide every edge, join\nevery non\u2011adjacent pair), we prove for a **`d`\u2011regular graph `G` that is not\ncomplete**:\n\n* `card_ge_of_regular_not_complete` : `|V(G)| \u2265 d + 2`.\n* `central_no_avd_regular_card` : `C(G)` has no AVD total colouring with `d + 2`\n  colours.\n* `avd_coloring_castLE` : palette sizes admitting an AVD total colouring are\n  upward closed (pad unused colours along `Fin n \u21aa Fin m`).\n* `avd_total_ge_regular` : **every** AVD total colouring of `C(G)` uses at least\n  `d + 3` colours.\n* `avdTotalChromatic_ge_regular` : as an inequality of invariants,\n  `d + 3 \u2264 \u03c7''\u2090(C(G))`.\n* `cycle5_avd_ge_five` : the `C\u2085` instance (`d = 2`), giving the bound `5`.\n\nThis is exactly the **lower half** of the guiding conjecture\n`\u03c7''\u2090(C(G)) = d + 3`.\n\n## Sharpness and a caveat\n\nThe companion `Basic.lean` proves the sharper, `|V|`\u2011governed bound\n`\u03c7''\u2090(C(G)) \u2265 |V(G)| + 1` (every original vertex of `C(G)` has degree `|V| \u2212 1`).\nSince a non\u2011complete `d`\u2011regular graph can have `|V| > d + 2` (e.g. `C\u2085`, where\n`|V| = 5 > 4 = d + 2`), the true value is often **strictly larger** than `d + 3`.\nThe conjectured equality can therefore only hold in the extremal regime\n`|V| = d + 2`, i.e. when the complement of `G` is a perfect matching (the\ncocktail\u2011party graphs `K_{d+2} minus a perfect matching`).\n\n## Open problems to formalise next\n\n1. **Matching upper bound in the extremal case.** For `|V| = d + 2` construct an\n   explicit AVD total colouring of `C(G)` with `d + 3` colours, proving\n   `\u03c7''\u2090(C(G)) = d + 3` there.\n2. **Exact value for cycles.** Determine and formalise `\u03c7''\u2090(C(C\u2099))` as a function\n   of `n`; our results give `\u2265 n + 1` (via `Basic`) and `\u2265 5` (via the `d`\u2011bound).\n3. **Characterisation of the extremal graphs.** Formalise that `|V| = d + 2` for a\n   `d`\u2011regular graph is equivalent to the complement being `1`\u2011regular.\n4. **General upper bound.** Show `\u03c7''\u2090(C(G)) \u2264 |V(G)| + 2` (or the exact value) for\n   arbitrary regular `G`, closing the gap with the lower bounds.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1278",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0abd0edb",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T06:53:46.809090+00:00",
-    "title": "Working with a self\u2011contained model of total colourings (proper vertex colouring"
   },
   {
     "consumed_by_exp_id": "",
@@ -2636,6 +2635,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T21:05:06.686877+00:00",
     "title": "This cycle isolated the scalar **M\u00f6bius discriminant** `\u0394 = \u03b3\u03b2 \u2212 \u03b1\u03b4` of a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: the extremal regime of AVD-total colourings of central graphs\n\nThis cycle characterised the *extremal regime* `|V(G)| = d + 2` for a `d`-regular\nnon-complete graph `G`, showing it is exactly where the two competing lower bounds\non the adjacent-vertex-distinguishing (AVD) total chromatic number of the central\ngraph `C(G)` \u2014 the `d`-governed bound `d + 3` and the `|V|`-governed bound\n`|V(G)| + 1` \u2014 coincide. We proved these extremal graphs are precisely the\ncocktail-party graphs (`K_{d+2}` minus a perfect matching), i.e. those whose\ncomplement is `1`-regular, and confirmed the smallest instance is the `4`-cycle,\nwhile the `5`-cycle already lies strictly outside the extremal family.\n\n## Conjecture 1 \u2014 Matching upper bound on the cocktail-party family\n\nFor every `d`-regular non-complete graph with `|V| = d + 2` (equivalently, whose\ncomplement is a perfect matching), the central graph admits an AVD total colouring\nwith exactly `d + 3` colours, so `\u03c7''\u2090(C(G)) = d + 3` on this family.\n\n*The key insight is* that once the complement is a perfect matching, the\nnon-adjacency edges of `C(G)` form a single near-perfect structure, so a colouring\ncan be assembled by pairing each vertex with its unique complement-partner and\nrotating a fixed palette of `d + 3` colours along the perfect matching.\n\n*Why now?* The lower bound `d + 3` is now known to be sharp *only* here, so the\nfamily on which equality could possibly hold has been pinned down exactly; the\nconstruction no longer has to contend with the generic `|V|`-governed obstruction.\n\n## Conjecture 2 \u2014 Exact AVD-total chromatic number of central graphs of cycles\n\nFor the `n`-cycle, `\u03c7''\u2090(C(C_n)) = n + 1` for all `n \u2265 4`.\n\n*The key insight is* that every original vertex of `C(C_n)` has degree `n \u2212 1`, and\ntwo non-adjacent original vertices force the `|V|`-governed obstruction, so the\nlower bound is `n + 1`; the matching upper bound should follow from a rotational\ncolouring exploiting the cyclic symmetry.\n\n*Why now?* This cycle established `\u03c7''\u2090(C(C_n)) \u2265 n + 1` unconditionally and showed\nthe `d`-bound (`5`) is strictly weaker for `n \u2265 5`, isolating `n + 1` as the only\ncandidate exact value.\n\n## Conjecture 3 \u2014 General upper bound governed by `|V|`\n\nFor every regular graph `G`, `\u03c7''\u2090(C(G)) \u2264 |V(G)| + 2`, and the exact value is\n`|V(G)| + 1` unless a local parity obstruction at a maximum-degree vertex forces one\nextra colour.\n\n*The key insight is* that the original vertices of `C(G)` are the only\nmaximum-degree vertices (all of degree `|V| \u2212 1`) and they induce the complement of\n`G`; colouring that complement together with the low-degree subdivision vertices\ndecouples into two nearly independent problems, each solvable within `|V| + 2`\ncolours.\n\n*Why now?* The `|V|`-governed lower bound is established and shown to dominate; the\nremaining gap is entirely on the upper side, and the degree structure isolating the\nmaximum-degree vertices makes a two-phase colouring argument tractable.\n\n## Conjecture 4 \u2014 Complement-degree dichotomy for extremality\n\nAmong all `d`-regular non-complete graphs, extremality (`|V| = d + 2`) is *rigid*:\nthe extremal graphs are exactly those whose complement is `1`-regular, and any\n`d`-regular graph whose complement has a vertex of degree `\u2265 2` satisfies the strict\ninequality `\u03c7''\u2090(C(G)) \u2265 d + 4`.\n\n*The key insight is* that a complement vertex of degree `\u2265 2` yields `|V| \u2265 d + 3`,\nwhich pushes the `|V|`-governed bound strictly past `d + 3`.\n\n*Why now?* The characterisation `|V| = d + 2 \u21d4` complement `1`-regular is now\nproved, turning a statement about chromatic numbers into a purely structural\nstatement about complement degrees.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1317",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "daf8e94d",
+    "status": "available",
+    "timestamp": "2026-07-14T21:57:35.296107+00:00",
+    "title": "This cycle characterised the *extremal regime* `|V(G)| = d + 2` for a `d`-regula"
   },
   {
     "consumed_by_exp_id": "",

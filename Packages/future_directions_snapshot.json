@@ -554,6 +554,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle daf8e94d (Q=0.820), which proved 38 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: AVD‑total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self‑contained model of total colourings (proper vertex colourings\nof the total graph `T(H)` on `V ⊕ E`) and adjacent‑vertex‑distinguishing (AVD)\ntotal c",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_daf8e94d_3610f9d9",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "daf8e94d",
+    "status": "available",
+    "timestamp": "2026-07-14T21:57:46.553617+00:00",
+    "title": "Deepening: Working with a self‑contained model of total colourings (proper vertex colouring"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e2c082ff (Q=0.820), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
     "domain_bridges": [],
     "domains": [
@@ -2382,7 +2401,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "12ea9340",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Sharp maximal excess of the ℤ₂ co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free ℤ₂-complexes satisfies\n`coind(K * L) ≥ coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct n ≅ Oct(m+n+1)`, and\nthe classical suspension jump recovered as the special case `L = S⁰`. The following\nconjectures push toward the sharp equality and the full maximal-excess phenomenon.\n\n## Conjecture 1 (Sharp join law)\nFor free ℤ₂-complexes `K, L`, the co-index is *exactly* additive with a shift:\n`coind(K * L) = coind(K) + coind(L) + 1`.\nThe key insight is that the lower bound is realised by an explicit coordinate-split\nequivariant map, so the entire difficulty concentrates in a single matching upper\nbound `coind(K * L) ≤ coind(K) + coind(L) + 1`, which should follow from a\nℤ₂-index (equivariant cohomology) obstruction that is itself additive under joins.\nWhy now? The join bifunctor and its explicit connecting map are now in hand, so the\nonly missing ingredient is a purely obstruction-theoretic upper bound — a\nself-contained, isolable target.\n\n## Conjecture 2 (Maximal excess for all feasible starting co-index)\nFor all integers `d ≥ 2` and `c` with `1 ≤ c ≤ d`, there is a finite free\nℤ₂-complex `K` of dimension `d` with `coind(K) = c` and `coind(S K) = d + 1`.\nThe key insight is that the \"excess\" `d + 1 - c` can be manufactured by joining a\nlow-co-index but high-dimensional building block (a complex whose co-index is\npinned below its dimension by a Borsuk–Ulam obstruction) with a sphere that supplies\nthe missing co-index only after one further suspension. Why now? The join\nconstruction gives a flexible dial for dimension independent of co-index, exactly\nthe freedom needed to separate `c` from `d`.\n\n## Conjecture 3 (Borsuk–Ulam upper bound in the octahedral tower)\nAny equivariant simplicial map `Oct n → Oct k` forces `n ≤ k`; equivalently\n`coind(Oct k) = k` on the nose.\nThe key insight is that the base case (no equivariant map to `Oct 0` from a\nhigher sphere) already isolates the parity/degree obstruction, and the general case\nshould follow by an inductive \"peel one coordinate\" argument compatible with the\njoin splitting `Oct k ≅ Oct 0 * Oct(k-1)`. Why now? The join splitting turns the\nglobal obstruction into a one-step induction that reuses the verified base case.\n\n## Conjecture 4 (Excess is monotone but not superadditive under iterated suspension)\nWriting `S^j K` for the `j`-fold suspension, the excess sequence\n`e_j := coind(S^j K) - (dim(S^j K))` is non-increasing in `j` and stabilises at\n`0` after finitely many steps.\nThe key insight is that each suspension can raise the co-index by *at most* one while\nraising the dimension by exactly one, so the gap can only shrink; stabilisation at\n`0` is the assertion that suspension eventually saturates the Borsuk–Ulam bound.\nWhy now? The exact `+1` dimension law and the `≥ +1` co-index law are both proved,\nso the monotonicity direction is within reach and only the saturation needs the\nupper bound of Conjecture 1.\n",
     "domain_bridges": [],
     "domains": [
@@ -2395,7 +2414,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "49ddee39",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T21:24:15.573588+00:00",
     "title": "Constructive, lower-bound half of the co-index theory"
   },
@@ -2498,26 +2517,6 @@
     "status": "available",
     "timestamp": "2026-07-13T23:13:37.545062+00:00",
     "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "9a38651d",
-    "description": "# Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consistentHistoryEquivFixedPoint` — consistent histories ≃ round-trip fixed points;\n* `novikov_iff_fixedPoint` — a consistent history exists iff the round trip has a fixed point;\n* `card_consistentHistory_eq_card_fixedPoint` — counts agree;\n* `grandfather_paradox` — the `state ↦ ¬state` loop has no consistent history;\n* `roundTrip_iterate`, `pow_roundTrip` — `k` traversals = `k`-th iterate of the round trip;\n* `finite_pow_consistent` — on a finite non-empty state space, some repetition of the loop is always consistent.\n\n## Natural extensions\n\n1. **Continuous / topological Novikov.** Replace finiteness by a compact convex `X`\n   and continuous causal steps, and derive existence of a consistent history from the\n   Brouwer / Schauder fixed-point theorem instead of pigeonhole.\n\n2. **Probabilistic self-consistency.** Let each `step i` be a Markov kernel; a consistent\n   history becomes a stationary distribution of the round-trip kernel. The Novikov\n   principle then always holds (stationary distributions exist on finite state spaces),\n   quantifying \"how paradoxical\" a loop is by the entropy of that distribution.\n\n3. **Counting and generic loops.** Compute the expected number of consistent histories of\n   a random loop via fixed-point statistics of random self-maps, and characterize which\n   loop lengths force consistency.\n\n4. **Uniqueness / determinism.** Give conditions (e.g. each `step i` a contraction, or the\n   round trip having a unique fixed point) under which the consistent history is unique —\n   the \"deterministic time travel\" regime.\n\n5. **Interacting loops.** Model several causal loops sharing state and study joint\n   consistency as a simultaneous fixed-point problem, connecting to Nash-style existence.\n\n## Appendix: Carmichael's Fibonacci primitive-divisor theorem (open tail)\n\nThe catalog also contains a formalization of **Carmichael's primitive-divisor\ntheorem for Fibonacci numbers** — for `n ≥ 13`, `F(n)` has a *primitive* prime\ndivisor (a prime dividing `F(n)` but no earlier `F(k)`, `0 < k < n`):\n\n* `Catalog/Shared/CarmichaelHelper.lean` — the prime case (`fib_primitive_divisor_prime`),\n  fully proved by the `gcd`-collapse argument via `Nat.fib_gcd`.\n* `Catalog/Shared/CarmichaelProof.lean` — the primitive-part infrastructure\n  (`primPart`, `primPart_dvd`, `primPart_implies_primitive`) and the composite case\n  over the computationally verified range `13 ≤ n ≤ 10000` (`fib_carmichael_composite`).\n* `Catalog/Speculative/AutoResearch/CarmichaelComposite.lean` — entry-point\n  (rank-of-apparition) theory and the headline `fib_carmichael` over `13 ≤ n ≤ 10000`.\n* `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean` — the packaged statement\n  `fib_primitive_divisor` over the same verified range.\n\nAll of the above are complete and `sorry`-free.  What remains open is the\n**infinite composite tail** `n > 10000`.  A rigorous Lean proof of that tail is\nthe classical Carmichael/Zsygmondy argument: writing `F(n) = ∏_{d∣n} C_d` with the\nhomogeneous cyclotomic values `C_d`, the primitive part is `C_n` up to at most one\nintrinsic prime factor dividing `n`; the primitive divisor then exists because\n`|C_n|` grows like `φ^{φ(n)}` and eventually exceeds `n`.  Formalizing this\nrequires:\n\n1. cyclotomic-value growth bounds `|Φ_n(α,β)| ≥ (|α|-|β|)^{φ(n)}` and their\n   sharpenings (control of how close primitive roots of unity approach `-1`);\n2. the law of apparition / lifting-the-exponent for Lucas sequences, pinning the\n   only imprimitive prime factor of `C_n` to a divisor of `n`;\n3. the bridge from the real/algebraic value `C_n` to the integer primitive part\n   `primPart n`.\n\nNone of this machinery (Zsygmondy's theorem, primitive divisors of Lucas\nsequences) is currently in Mathlib, so the tail is stated as an explicit\nboundedness hypothesis (`n ≤ 10000`) rather than left as `sorry`.  Supplying the\nthree ingredients above would let one drop that hypothesis and recover the\nunconditional theorem for all `n ≥ 13`.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1255",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "664b3442",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T23:31:41.555656+00:00",
-    "title": "The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
   },
   {
     "ambition_level": "extension",
@@ -2858,26 +2857,6 @@
     "status": "available",
     "timestamp": "2026-07-14T06:35:14.632728+00:00",
     "title": "Additive / geometric / analytic scaffolding around th"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "daf8e94d",
-    "description": "# Future directions: AVD‑total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self‑contained model of total colourings (proper vertex colourings\nof the total graph `T(H)` on `V ⊕ E`) and adjacent‑vertex‑distinguishing (AVD)\ntotal colourings, and with the central graph `C(G)` (subdivide every edge, join\nevery non‑adjacent pair), we prove for a **`d`‑regular graph `G` that is not\ncomplete**:\n\n* `card_ge_of_regular_not_complete` : `|V(G)| ≥ d + 2`.\n* `central_no_avd_regular_card` : `C(G)` has no AVD total colouring with `d + 2`\n  colours.\n* `avd_coloring_castLE` : palette sizes admitting an AVD total colouring are\n  upward closed (pad unused colours along `Fin n ↪ Fin m`).\n* `avd_total_ge_regular` : **every** AVD total colouring of `C(G)` uses at least\n  `d + 3` colours.\n* `avdTotalChromatic_ge_regular` : as an inequality of invariants,\n  `d + 3 ≤ χ''ₐ(C(G))`.\n* `cycle5_avd_ge_five` : the `C₅` instance (`d = 2`), giving the bound `5`.\n\nThis is exactly the **lower half** of the guiding conjecture\n`χ''ₐ(C(G)) = d + 3`.\n\n## Sharpness and a caveat\n\nThe companion `Basic.lean` proves the sharper, `|V|`‑governed bound\n`χ''ₐ(C(G)) ≥ |V(G)| + 1` (every original vertex of `C(G)` has degree `|V| − 1`).\nSince a non‑complete `d`‑regular graph can have `|V| > d + 2` (e.g. `C₅`, where\n`|V| = 5 > 4 = d + 2`), the true value is often **strictly larger** than `d + 3`.\nThe conjectured equality can therefore only hold in the extremal regime\n`|V| = d + 2`, i.e. when the complement of `G` is a perfect matching (the\ncocktail‑party graphs `K_{d+2} minus a perfect matching`).\n\n## Open problems to formalise next\n\n1. **Matching upper bound in the extremal case.** For `|V| = d + 2` construct an\n   explicit AVD total colouring of `C(G)` with `d + 3` colours, proving\n   `χ''ₐ(C(G)) = d + 3` there.\n2. **Exact value for cycles.** Determine and formalise `χ''ₐ(C(Cₙ))` as a function\n   of `n`; our results give `≥ n + 1` (via `Basic`) and `≥ 5` (via the `d`‑bound).\n3. **Characterisation of the extremal graphs.** Formalise that `|V| = d + 2` for a\n   `d`‑regular graph is equivalent to the complement being `1`‑regular.\n4. **General upper bound.** Show `χ''ₐ(C(G)) ≤ |V(G)| + 2` (or the exact value) for\n   arbitrary regular `G`, closing the gap with the lower bounds.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1278",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0abd0edb",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T06:53:46.809090+00:00",
-    "title": "Working with a self‑contained model of total colourings (proper vertex colouring"
   },
   {
     "ambition_level": "extension",
@@ -3598,6 +3577,46 @@
     "status": "available",
     "timestamp": "2026-07-14T21:05:06.686877+00:00",
     "title": "This cycle isolated the scalar **Möbius discriminant** `Δ = γβ − αδ` of a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: the extremal regime of AVD-total colourings of central graphs\n\nThis cycle characterised the *extremal regime* `|V(G)| = d + 2` for a `d`-regular\nnon-complete graph `G`, showing it is exactly where the two competing lower bounds\non the adjacent-vertex-distinguishing (AVD) total chromatic number of the central\ngraph `C(G)` — the `d`-governed bound `d + 3` and the `|V|`-governed bound\n`|V(G)| + 1` — coincide. We proved these extremal graphs are precisely the\ncocktail-party graphs (`K_{d+2}` minus a perfect matching), i.e. those whose\ncomplement is `1`-regular, and confirmed the smallest instance is the `4`-cycle,\nwhile the `5`-cycle already lies strictly outside the extremal family.\n\n## Conjecture 1 — Matching upper bound on the cocktail-party family\n\nFor every `d`-regular non-complete graph with `|V| = d + 2` (equivalently, whose\ncomplement is a perfect matching), the central graph admits an AVD total colouring\nwith exactly `d + 3` colours, so `χ''ₐ(C(G)) = d + 3` on this family.\n\n*The key insight is* that once the complement is a perfect matching, the\nnon-adjacency edges of `C(G)` form a single near-perfect structure, so a colouring\ncan be assembled by pairing each vertex with its unique complement-partner and\nrotating a fixed palette of `d + 3` colours along the perfect matching.\n\n*Why now?* The lower bound `d + 3` is now known to be sharp *only* here, so the\nfamily on which equality could possibly hold has been pinned down exactly; the\nconstruction no longer has to contend with the generic `|V|`-governed obstruction.\n\n## Conjecture 2 — Exact AVD-total chromatic number of central graphs of cycles\n\nFor the `n`-cycle, `χ''ₐ(C(C_n)) = n + 1` for all `n ≥ 4`.\n\n*The key insight is* that every original vertex of `C(C_n)` has degree `n − 1`, and\ntwo non-adjacent original vertices force the `|V|`-governed obstruction, so the\nlower bound is `n + 1`; the matching upper bound should follow from a rotational\ncolouring exploiting the cyclic symmetry.\n\n*Why now?* This cycle established `χ''ₐ(C(C_n)) ≥ n + 1` unconditionally and showed\nthe `d`-bound (`5`) is strictly weaker for `n ≥ 5`, isolating `n + 1` as the only\ncandidate exact value.\n\n## Conjecture 3 — General upper bound governed by `|V|`\n\nFor every regular graph `G`, `χ''ₐ(C(G)) ≤ |V(G)| + 2`, and the exact value is\n`|V(G)| + 1` unless a local parity obstruction at a maximum-degree vertex forces one\nextra colour.\n\n*The key insight is* that the original vertices of `C(G)` are the only\nmaximum-degree vertices (all of degree `|V| − 1`) and they induce the complement of\n`G`; colouring that complement together with the low-degree subdivision vertices\ndecouples into two nearly independent problems, each solvable within `|V| + 2`\ncolours.\n\n*Why now?* The `|V|`-governed lower bound is established and shown to dominate; the\nremaining gap is entirely on the upper side, and the degree structure isolating the\nmaximum-degree vertices makes a two-phase colouring argument tractable.\n\n## Conjecture 4 — Complement-degree dichotomy for extremality\n\nAmong all `d`-regular non-complete graphs, extremality (`|V| = d + 2`) is *rigid*:\nthe extremal graphs are exactly those whose complement is `1`-regular, and any\n`d`-regular graph whose complement has a vertex of degree `≥ 2` satisfies the strict\ninequality `χ''ₐ(C(G)) ≥ d + 4`.\n\n*The key insight is* that a complement vertex of degree `≥ 2` yields `|V| ≥ d + 3`,\nwhich pushes the `|V|`-governed bound strictly past `d + 3`.\n\n*Why now?* The characterisation `|V| = d + 2 ⇔` complement `1`-regular is now\nproved, turning a statement about chromatic numbers into a purely structural\nstatement about complement degrees.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1317",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "daf8e94d",
+    "status": "available",
+    "timestamp": "2026-07-14T21:57:35.296107+00:00",
+    "title": "This cycle characterised the *extremal regime* `|V(G)| = d + 2` for a `d`-regula"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Contrarian Time-Travel Consistency\n\nThis cycle (thread `th_1434a219`, cycle 1) takes a *contrarian* stance on the Novikov\nself-consistency principle: rather than only proving that consistent histories exist, we\nask **which structural hypotheses on a causal loop actually force self-consistency**, and\nwhich merely look like they should. The file\n`Catalog/Novelty/TimeTravelContrarian.lean` states each as a bold conjecture and settles\nit with a Lean proof or an explicit counterexample.\n\nA causal loop is modelled by its one-traversal map `evolve : X → X`; self-consistency is\nexistence of a fixed point, and `consistentCount` is the number of fixed points (= number\nof consistent histories) on a finite state space.\n\n## Verdicts obtained\n\n**Disproofs (structural hypotheses that do NOT force consistency):**\n\n1. `not_bijective_forces_selfConsistent` — reversibility of the causal step (the loop map\n   being a bijection) does not suffice: the grandfather flip `¬·` is a bijection with no\n   fixed point.\n2. `exists_sq_consistent_not_consistent` — consistency does not *descend*: a loop whose\n   double traversal is consistent can itself be paradoxical.\n3. `exists_selfConsistent_comp_not_selfConsistent` — consistency is not *compositional*:\n   two self-consistent loops sharing a state space can compose to a fixed-point-free loop\n   (explicit `Fin 3` 3-cycle witness).\n\n**Proofs (structural hypotheses that DO force consistency):**\n\n4. `selfConsistent_iterate` — consistency *ascends*: a self-consistent loop stays\n   consistent under any number of repetitions.\n5. `contracting_unique_selfConsistent` — \"deterministic time travel\": a contracting loop\n   on a complete state space has a *unique* consistent history (Banach).\n6. `involutive_consistentCount_parity` — quantitative Novikov: for an involutive loop on a\n   finite state space, `consistentCount ≡ |X| (mod 2)`.\n7. `involutive_odd_selfConsistent` — corollary: an involutive loop on an odd-sized state\n   space is always self-consistent (with an odd number of histories).\n8. `exists_iterate_selfConsistent` — eventual consistency: on any finite non-empty state\n   space, some positive number of repetitions of any loop is self-consistent.\n\nPlus concrete counts `grandfather_consistentCount = 0` and `identity_consistentCount = 2`.\n\n## Where this points next\n\n* **Sharpen the parity invariant.** `consistentCount ≡ |X| (mod 2)` for involutions is the\n  order-2 case of a general orbit-counting law. A natural next step: for a loop of prime\n  order `p` (i.e. `evolve^[p] = id`), `consistentCount ≡ |X| (mod p)`, recovering the\n  Cauchy/Frobenius style congruence and giving mod-`p` Novikov obstructions.\n* **Compositional repair.** Disproof (3) shows consistency is not preserved by composition.\n  What extra hypothesis repairs it? Conjecture: if two self-consistent loops *commute*,\n  their composite is self-consistent (their common fixed-point sets interact). This is the\n  \"interacting loops\" direction of the parent file, phrased as a simultaneous fixed point.\n* **Quantitative determinism.** Extend (5) with the Banach convergence-rate bound to\n  measure *how fast* history is pinned down, and compare with the non-unique (multiple\n  fixed points) regime — the boundary between deterministic and branching time travel.\n* **Probabilistic tail.** Replace `evolve` by a Markov kernel; the parity/counting results\n  become statements about the support of stationary distributions, connecting the discrete\n  counts here to the \"probabilistic self-consistency\" extension.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1318",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9a38651d",
+    "status": "available",
+    "timestamp": "2026-07-14T21:57:50.784705+00:00",
+    "title": "This cycle (thread `th_1434a219`, cycle 1) takes a *contrarian* stance on the No"
   },
   {
     "ambition_level": "extension",
