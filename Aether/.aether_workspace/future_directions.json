@@ -17639,11 +17639,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "19e0135d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17656,7 +17656,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1260",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-14T18:22:36.336562+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -17671,7 +17671,7 @@
       "source": "",
       "source_exp_id": "1bd2f770",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1bd2f770",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_6985de7d",
       "timestamp": "2026-07-14T01:16:41.929862+00:00",
       "title": "This cycle established, unconditionally, that the variational (Rayleigh-quotient"
@@ -19453,7 +19453,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — μ-extension of Matsuno's formula\n\n## Summary of what was established\n\nThe file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode**, the\narithmetic model\n`lambdaDiffMu D NE μ ord = lambdaDiff D NE ord + μ · Σ_{ℓ ∣ D} 2^{n_ℓ}`\nof the sharp/flat Iwasawa `λ`-difference of a quadratic twist `E^D` of an elliptic curve\n`E/ℚ` with good supersingular reduction at `2`, extended to allow a non-vanishing\n`2`-adic μ-invariant.  Here `n_ℓ = v₂((ℓ²−1)/8)`.\n\n### Bold conjectures proved TRUE\n\n1. **Complete additivity** over coprime moduli (`lambdaDiffMu_mul_coprime`): the μ-term\n   preserves the additive structure of Matsuno's formula.\n2. **Exact recovery / inversion of μ** (`mu_recovery`): whenever `D` has a prime divisor,\n   `μ = (lambdaDiffMu − lambdaDiff) / Σ 2^{n_ℓ}`.  A non-vanishing μ is *measurable* from\n   the twist data, not merely present.\n3. **Strict monotonicity and injectivity in μ** (`lambdaDiffMu_strictMono_mu`,\n   `lambdaDiffMu_injective_mu`): distinct μ give distinct invariants when `D` is ramified.\n4. **Strict growth under adding a ramified prime** (`lambdaDiffMu_strict_add_prime`).\n5. **The `2`-adic depth law** (`muWeight_depth`): `8·2^{n_ℓ} = 2^{v₂(ℓ−1)+v₂(ℓ+1)}`.\n\n### Bold conjectures proved FALSE (disproofs)\n\n6. **Multiplicativity fails** (`lambdaDiffMu_not_multiplicative`): the invariant is\n   additive but not multiplicative — witnesses `a = 3`, `b = 5`.\n7. **Recovery requires a prime divisor** (`mu_not_injective_of_no_prime`): for `D = 1` the\n   invariant is constant in μ, so μ is not recoverable — the hypothesis in (2)/(3) is sharp.\n8. **The μ-correction is not lower-order** (`muTerm_not_dominated_by_lambdaDiff`): it can\n   strictly exceed the entire classical Matsuno term.\n\n## Open directions\n\n* **Genuine sharp/flat invariants.**  The current work is an arithmetic *model* isolating\n  the combinatorial content of the conjectured μ-term.  Building Kobayashi–Sprung\n  sharp/flat Selmer groups and their `Λ`-module invariants inside Mathlib (Iwasawa algebra,\n  Weierstrass preparation over `ℤ_p[[T]]`, control theorems) would let `lambdaDiff`,\n  `muWeight`, and `lambdaDiffMu` be *derived* rather than posited.  The additivity and\n  inversion theorems here predict exactly what those derived quantities must satisfy.\n* **Proportionality constant.**  The model uses local weight `2^{n_ℓ}` for the μ-term,\n  matching the classical local depth.  Determining whether the true μ-correction uses this\n  weight, or a `μ`-independent multiple of it, is the central analytic question; the\n  inversion formula (2) turns this into a single measurable ratio.\n* **The `D ≡ 1 (mod 4)`, supersingular-at-`2` hypotheses.**  These constrain which primes\n  `ℓ` and residues occur; a refined model tracking `ℓ mod 8` (see the `muWeight = 1 ⟺\n  ℓ ≡ ±3 mod 8` pattern in `ComputationalEvidence.md`) could sharpen the weight law into an\n  exact congruence-indexed formula.\n* **Higher μ and layered towers.**  Extending injectivity to the full\n  `(μ, λ^#, λ^♭)` triple, and studying how the inversion behaves along the cyclotomic\n  tower, are natural next steps.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -23739,7 +23739,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b97ab468 (Q=0.820), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty"
       ],
@@ -46887,7 +46887,6 @@
   },
   "selection_log": [
     "abduction_followup",
-    "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
     "abduction_followup",
@@ -46904,6 +46903,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
+    "abduction_followup",
     "abduction_followup",
     "abduction_followup"
   ]

@@ -185,7 +185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -194,7 +194,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -634,20 +634,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-10T04:25:48.919565+00:00",
     "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
-  },
-  {
-    "consumed_by_exp_id": "5b1c1bd3",
-    "description": "Building on cycle 2c002c80 (Q=0.780), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_2c002c80_c6a62f96",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "2c002c80",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T12:23:22.264886+00:00",
-    "title": "Deepening: Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
   },
   {
     "consumed_by_exp_id": "",
@@ -1873,7 +1859,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle deepened the \"I Am a Strange Loop\" programme along three axes:"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19e0135d",
     "description": "# Future Directions \u2014 Spectral gaps of fixed-genus chord-swap chains\n\nThis cycle established, unconditionally, that the variational (Rayleigh-quotient)\nupper bound for a one-dimensional swap chain scales as `\u0398(n^{-3})`: a monotone\nstatistic that changes by one unit per move has Dirichlet energy of order `n`\nand variance of order `n\u2074`, and the ratio pins the gap upper bound to the cubic\nwindow `[6 n^{-3}, 12 n^{-3}]`.  The conjectures below extend this mechanism from\nthe model path chain to the genuine fixed-genus chord-swap chain and beyond.\n\n## Conjecture 1 \u2014 Cubic upper bound for the fixed-genus chord-swap gap\n\nFor every fixed genus `g`, the spectral gap of the chord-swap chain on chord\ndiagrams with `n` chords satisfies `\u03b3_{n,g} = O(n^{-3})`.\n\nThe key insight is that thickening a chord diagram produces a monotone\ngenus-aware \"spread\" statistic \u2014 for instance the total nesting-plus-crossing\nindex \u2014 that a single swap changes by a bounded amount, so its Dirichlet energy\ngrows linearly in `n` while its variance grows quartically; the quotient is\nexactly the cubic order isolated for the path model.\n\nWhy now? The energy/variance bookkeeping that forces the exponent has now been\ncarried out in full for the one-dimensional prototype, reducing the chord-swap\nupper bound to the concrete combinatorial task of exhibiting one monotone,\nunit-step, quartic-variance statistic on the diagram space.\n\n## Conjecture 2 \u2014 Matching cubic lower bound (tightness of the exponent)\n\nFor every fixed genus `g`, the spectral gap obeys `\u03b3_{n,g} = \u03a9(n^{-3})`, so that\ncombined with Conjecture 1 the exponent is exactly three: `\u03b3_{n,g} = \u0398(n^{-3})`.\n\nThe key insight is that a canonical-path (multicommodity-flow) routing of unit\nmass between diagrams, in which each swap edge carries flow proportional to the\nlength of the paths through it, incurs congestion of order `n\u00b3`; the standard\nduality between congestion and the Poincar\u00e9 constant then converts the `O(n\u00b3)`\nrelaxation time into the matching `\u03a9(n^{-3})` gap.\n\nWhy now? The upper bound identifies `n\u00b3` as the intrinsic time scale, which tells\nthe lower-bound designer exactly the congestion budget a good routing must meet,\nturning an open exponent question into a calibrated flow-construction problem.\n\n## Conjecture 3 \u2014 Genus enters only through the constant, not the exponent\n\nWrite `\u03b3_{n,g} = c(g) \u00b7 n^{-3} (1 + o(1))` as `n \u2192 \u221e`.  Then the leading constant\n`c(g)` is a strictly decreasing, strictly positive function of the genus `g`, and\nthe exponent `-3` is independent of `g`.\n\nThe key insight is that fixing the genus caps the number of topologically\ndistinct local obstructions a swap must resolve, so genus rescales the effective\nconductance (hence the constant) without altering the one-dimensional diffusive\ngeometry that produces the cubic exponent.\n\nWhy now? With the exponent understood, the residual `g`-dependence is isolated in\na single measurable amplitude `c(g)`, which can be estimated from moderate-size\ndiagrams and compared across genera to test monotonicity directly.\n\n## Conjecture 4 \u2014 Universality across unit-step swap statistics\n\nAny reversible swap chain on a combinatorial family that carries a monotone\ninteger statistic changing by `\u00b11` per move, and whose stationary law spreads\nthat statistic across a range of order `n` with variance of order `n\u2074`, has\nspectral gap of order `n^{-3}`.\n\nThe key insight is that the cubic exponent is a property of the statistic's\nenergy-to-variance ratio, not of the specific objects being shuffled, so perfect\nmatchings, chord diagrams, and lattice paths should all share the same exponent\nwhenever their driving statistic has the linear-energy / quartic-variance\nprofile.\n\nWhy now? The prototype computation shows the exponent depends only on these two\ngrowth rates, making the universality statement a precise, falsifiable prediction\nthat can be checked family by family.\n",
     "domains": [
       "Algebra",
@@ -1883,7 +1869,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "1bd2f770",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T01:16:41.929862+00:00",
     "title": "This cycle established, unconditionally, that the variational (Rayleigh-quotient"
   },
@@ -2561,6 +2547,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T17:47:10.228217+00:00",
     "title": "This cycle formalized, with fully machine-checked proofs (no `sorry`, no extra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle deepened the \"Sperner \u21d2 Nash\" theme along two fully-formalised chains.\n\n## What was proved\n\n### `SignedSperner.lean` \u2014 the 1-D Sperner lemma as an exact signed count\nUpgrades the earlier *parity* statement to an exact integer identity (a discrete\ndegree):\n`upCount c n \u2212 downCount c n = \u27e6c n\u27e7 \u2212 \u27e6c 0\u27e7` (`signed_count`).\nEverything else is a corollary of this one telescoping identity:\n- `card_eq` \u2014 fully coloured edges split into up/down edges;\n- `parity` \u2014 recovers the earlier parity form;\n- `upCount_eq_downCount_of_eq` \u2014 equal endpoints \u21d2 equal numbers of crossings;\n- `exists_oriented`, `exists_fullyColoured_of_ne` \u2014 Sperner existence;\n- `discrete_ivt`, `discrete_ivt'` \u2014 discrete intermediate value theorems;\n- `discrete_brouwer` \u2014 a discrete Brouwer fixed point (the Sperner\u2192Brouwer bridge).\n\n### `UniformEquilibrium.lean` \u2014 from example games to a general equilibrium theorem\nGeneralises the earlier concrete verifications (Matching Pennies, Prisoner's\nDilemma) to a general criterion:\n`uniform_isNash_of_row_sum_const` \u2014 if every row of player 1's payoff and every\ncolumn of player 2's payoff has a constant sum, the uniform profile is a Nash\nequilibrium, with values `S1/|J|` and `S2/|I|` (`E1_value_uniform`,\n`E2_value_uniform`). Instantiated to a parametric cyclic family on `ZMod n`\n(`cyclicGame`, `cyclicGame_uniform_isNash`, `cyclicGame_value`), recovering Matching\nPennies (`n = 2`) and Rock\u2013Paper\u2013Scissors (`n = 3`) as special cases.\n\n## Natural next steps\n\n1. **2-D Sperner lemma.** Extend `signed_count` to an oriented count of fully\n   labelled triangles in a triangulated 2-simplex, via the \"door\"/edge-counting\n   argument. The signed telescoping here is the 1-D degree; the 2-D case is a\n   boundary-degree argument over edges of the triangulation.\n\n2. **Brouwer in higher dimension.** Package `discrete_brouwer` as a limit statement:\n   a continuous self-map of `[0,1]` has a fixed point (via `discrete_ivt` on a fine\n   grid and compactness). Mathlib lacks a simplicial Sperner/Brouwer, so this fills a\n   genuine gap.\n\n3. **General 2\u00d72 Nash existence.** Beyond the constant-sum criterion, prove that\n   *every* 2\u00d72 game has a mixed equilibrium: either a pure equilibrium exists, or the\n   indifference probabilities lie in `[0,1]`; `discrete_ivt'` can locate the\n   best-response crossing.\n\n4. **Best-response correspondence.** Formalise the best-response map and derive Nash\n   existence for finite games from a (to-be-formalised) Kakutani fixed-point theorem,\n   whose combinatorial core is the higher-dimensional Sperner lemma of step 1.\n\n5. **Symmetric games.** Show every finite symmetric two-player game has a symmetric\n   equilibrium; the cyclic family gives a rich supply of test cases.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1309",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5b1c1bd3",
+    "status": "available",
+    "timestamp": "2026-07-14T18:22:12.473843+00:00",
+    "title": "This cycle deepened the \"Sperner \u21d2 Nash\" theme along two fully-formalised chains"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "17340490",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T23:31:53",
-      "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
-    {
       "cycle_id": "7547cdb0",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Multiverse Set Theory: Mathematics Across Branches\n\nThis cycle deepened the combinatorial core of the set-theoretic multiverse by\nequipping it with a **modal structure of forcing",
@@ -499,19 +489,19 @@
       "theorem_count": 36,
       "timestamp": "2026-07-14T17:47:35",
       "title": "Deepening: Consciousness as Emergent Fixed Point"
+    },
+    {
+      "cycle_id": "5b1c1bd3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle deepened the \"Sperner ⇒ Nash\" theme along two fully-formalised chains.\n\n## What was proved\n\n### `SignedSperner.lean` — the 1-D Sperner lemma as an exact signed count\nUp",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-07-14T18:22:21",
+      "title": "Deepening: Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4b281557",
-      "domain": "Probability",
-      "key_insight": "# Future Directions: Time-Travel Logic and Causal Consistency\n\nThe file `Catalog/Probability/TimeTravelCausalConsistency.lean` develops a single\nchain of results modelling closed timelike curves (CTCs",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-12T02:28:00",
-      "title": "Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
-    },
     {
       "cycle_id": "f6622907",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 36,
       "timestamp": "2026-07-14T17:47:35",
       "title": "Deepening: Consciousness as Emergent Fixed Point"
+    },
+    {
+      "cycle_id": "5b1c1bd3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle deepened the \"Sperner ⇒ Nash\" theme along two fully-formalised chains.\n\n## What was proved\n\n### `SignedSperner.lean` — the 1-D Sperner lemma as an exact signed count\nUp",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-07-14T18:22:21",
+      "title": "Deepening: Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b78ccbe1",
-      "domain": "Novelty",
-      "name": "suspV_anti",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b6231f58",
-      "domain": "Applications",
-      "name": "at",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b6231f58",
-      "domain": "Applications",
-      "name": "meval_atom",
-      "quality": 0.82
-    },
     {
       "cycle_id": "b6231f58",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "strange_loop",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "5b1c1bd3",
+      "domain": "Novelty",
+      "name": "as",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5b1c1bd3",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5b1c1bd3",
+      "domain": "Novelty",
+      "name": "signed_count",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T17:47:35",
+  "last_updated": "2026-07-14T18:22:21",
   "open_questions": [
     {
       "context": "of spheres.  All theorems below are proved with no `sorry`.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c4aa235b",
-        "quality": 0.82,
-        "theorems": 44,
-        "title": "Deepening: Exact AVD‑total chromatic number of central graphs of regular graphs"
-      },
-      {
         "cycle_id": "482ba253",
         "quality": 0.82,
         "theorems": 28,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 12,
         "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
+      },
+      {
+        "cycle_id": "5b1c1bd3",
+        "quality": 0.82,
+        "theorems": 40,
+        "title": "Deepening: Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points i"
       }
     ],
     "NumberTheory": [
