@@ -87,7 +87,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5cfd9ce",
     "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
     "domains": [
       "Applications"
@@ -96,7 +96,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "3399a930",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T02:34:51.379273+00:00",
     "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
@@ -351,6 +351,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b2384a8a (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_b2384a8a_4f23655d",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "b2384a8a",
+    "status": "available",
+    "timestamp": "2026-07-14T10:25:51.327870+00:00",
+    "title": "Deepening: Limit Distribution of Descendants in Random d-DAGs"
   },
   {
     "consumed_by_exp_id": "",
@@ -1416,20 +1430,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
-    "consumed_by_exp_id": "b2384a8a",
-    "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0043",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T18:56:55.867431+00:00",
-    "title": "Limit Distribution of Descendants in Random d-DAGs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "A 7-dimensional 0/1-polytope with vertices violating central symmetry while satisfying Ziegler's conditions.",
     "domains": [
@@ -2419,6 +2419,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T10:25:21.940975+00:00",
     "title": "That the adjacent-vertex-distinguishing total chromatic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Descendant limit laws in random recursive DAGs\n\nDerived from the current cycle, whose contributions are: (i) the complete moment\ndescription of the Gamma`(d,1)` limit target, (ii) the `n^{1/d}` mean-growth scaling of\ndescendant counts, and (iii) the finite closed form of the integer-shape limit CDF as a\nPoisson tail (Gamma\u2013Poisson duality).\n\n## Conjecture 1 \u2014 Poisson-tail representation of the full descendant CDF\n\nFor integer out-degree `d \u2265 2`, the limiting distribution function of `|D_n|/n^{1/d}`\nis exactly the Poisson survival function `t \u21a6 P(Poisson(t) \u2265 d)`, and the convergence of\ndistribution functions is uniform on the half-line.\n\nThe key insight is that the continuous limit target, being Erlang for integer shape,\ncarries a hidden discrete structure: its cumulative distribution is a finite sum of\nPoisson point masses, so a continuous scaling limit is governed by a discrete counting law.\n\nWhy now? The moment description and the closed-form CDF are both in hand, so the remaining\nstep \u2014 upgrading pointwise convergence of moments to uniform convergence of distribution\nfunctions \u2014 is the natural and immediately testable next target.\n\n## Conjecture 2 \u2014 Moment determinacy of the limit law\n\nThe Gamma`(d,1)` moment sequence `m_k = \u220f_{i<k}(d+i)` satisfies Carleman's condition\n`\u2211_k m_{2k}^{-1/(2k)} = \u221e`, so it uniquely determines the limit distribution; consequently\nthe method of moments is *valid* for the descendant limit theorem, not merely suggestive.\n\nThe key insight is that the rising-factorial growth of the moments is slow enough\n(sub-`(2k)!`) that no other distribution can share them, which turns the moment recurrence\n`m_{p+1} = (d+p) m_p` into a genuine uniqueness statement.\n\nWhy now? The exact rising-factorial formula for the moments is already established, so the\ndeterminacy estimate reduces to a concrete asymptotic bound on `\u220f_{i<k}(d+i)`.\n\n## Conjecture 3 \u2014 Variance-to-mean rigidity across the DAG family\n\nAcross all out-degrees `d \u2265 1`, the limit law has variance exactly equal to its mean\n(both `= d`), and this equidispersion is inherited from the Poisson layer exposed by the\nGamma\u2013Poisson duality rather than from the DAG geometry.\n\nThe key insight is that equidispersion `Var = Mean` is a Poisson fingerprint, and its\nsurvival through the continuous scaling limit signals that the descendant process is, in a\nprecise sense, a randomized Poisson mixture.\n\nWhy now? The mean and variance have both been computed in closed form and coincide for\nevery `d`; identifying the mechanism (Poisson mixture) is the clear conceptual next step.\n\n## Conjecture 4 \u2014 Interpolating the tree and DAG regimes\n\nThe scaling exponent `1/d` and multiplicative constant `1/\u0393(1 + 1/d)` of the mean-growth\nproduct vary analytically in `d \u2265 1`, interpolating continuously between the linear growth\nof the random recursive tree (`d = 1`) and the `n^{1/d}` regime (`d \u2265 2`), with no phase\ntransition at `d = 1`.\n\nThe key insight is that the closed form `P_n(a) = \u0393(n+1+a)/(\u0393(1+a)\u00b7n!)` is an analytic\nfunction of the continuous parameter `a = 1/d`, so the tree case is not special but simply\nthe endpoint `a = 1` of a smooth family.\n\nWhy now? Both the `d = 1` linear law and the general `n^{1/d}` law are already proved in\nclosed form; showing they are two values of one analytic curve is a direct consequence.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1290",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b2384a8a",
+    "status": "available",
+    "timestamp": "2026-07-14T10:25:36.630889+00:00",
+    "title": "Derived from the current cycle, whose contributions are: (i) the complete moment"
   },
   {
     "consumed_by_exp_id": "",

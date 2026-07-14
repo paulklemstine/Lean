@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "37818bd9",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `μ` and `λ` of a characteristic element, realised",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-13T17:26:19",
-      "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
-    },
-    {
       "cycle_id": "ddc0d02e",
       "domain": "Applications",
       "key_insight": "# Future Directions: Proofs as DAGs\n\nThis cycle deepened the \"Proofs as DAGs\" line by developing the *topological\nstructure* of an abstract proof-dependency relation. Starting from the existing\n`Hands",
@@ -499,19 +489,19 @@
       "theorem_count": 44,
       "timestamp": "2026-07-14T10:25:32",
       "title": "Deepening: Exact AVD‑total chromatic number of central graphs of regular graphs"
+    },
+    {
+      "cycle_id": "b2384a8a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Descendant limit laws in random recursive DAGs\n\nDerived from the current cycle, whose contributions are: (i) the complete moment\ndescription of the Gamma`(d,1)` limit target, (ii",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-14T10:25:51",
+      "title": "Limit Distribution of Descendants in Random d-DAGs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c695f186",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — TDA of Theorem Networks\n\nThe file `FlagComplex.lean` proves a self-contained chain of results about the flag\n(clique) complex of a theorem-citation network `G` and its `f`-vector",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-11T20:17:49",
-      "title": "Speculative: Topological Data Analysis of Theorem Networks"
-    },
     {
       "cycle_id": "0a5d3cfa",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 44,
       "timestamp": "2026-07-14T10:25:32",
       "title": "Deepening: Exact AVD‑total chromatic number of central graphs of regular graphs"
+    },
+    {
+      "cycle_id": "b2384a8a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Descendant limit laws in random recursive DAGs\n\nDerived from the current cycle, whose contributions are: (i) the complete moment\ndescription of the Gamma`(d,1)` limit target, (ii",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-14T10:25:51",
+      "title": "Limit Distribution of Descendants in Random d-DAGs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6af180ae",
-      "domain": "Novelty",
-      "name": "prod_multichoose_piAntidiag",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "6af180ae",
-      "domain": "Novelty",
-      "name": "prod_multichoose_piAntidiag_hetero",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "0782e3ca",
-      "domain": "Applications",
-      "name": "sum_isLittleO_of_isLittleO",
-      "quality": 0.72
-    },
     {
       "cycle_id": "30210199",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "card_starIdx",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "b2384a8a",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b2384a8a",
+      "domain": "Applications",
+      "name": "poissonTerm_eq_gammaDensity",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b2384a8a",
+      "domain": "Applications",
+      "name": "poissonTerm_hasDerivAt_succ",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T10:25:32",
+  "last_updated": "2026-07-14T10:25:51",
   "open_questions": [
     {
       "context": "+`sorry`-free.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "2758a31c",
-        "quality": 0.83,
-        "theorems": 25,
-        "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model o"
-      },
-      {
         "cycle_id": "33954867",
         "quality": 0.72,
         "theorems": 17,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 12,
         "title": "Exact Exponent for Constrained Coset Guesswork"
+      },
+      {
+        "cycle_id": "b2384a8a",
+        "quality": 0.82,
+        "theorems": 10,
+        "title": "Limit Distribution of Descendants in Random d-DAGs"
       }
     ],
     "Bridges": [

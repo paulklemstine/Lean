@@ -116,7 +116,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5cfd9ce",
     "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
     "domain_bridges": [],
     "domains": [
@@ -128,7 +128,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3399a930",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T02:34:51.379273+00:00",
     "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
   },
@@ -473,6 +473,25 @@
     "status": "available",
     "timestamp": "2026-07-12T01:03:33.365633+00:00",
     "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b2384a8a (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_b2384a8a_4f23655d",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b2384a8a",
+    "status": "available",
+    "timestamp": "2026-07-14T10:25:51.327870+00:00",
+    "title": "Deepening: Limit Distribution of Descendants in Random d-DAGs"
   },
   {
     "ambition_level": "extension",
