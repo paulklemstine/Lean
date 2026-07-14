@@ -143,6 +143,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
   },
   {
+    "consumed_by_exp_id": "1e9bf31c",
+    "description": "Building on cycle 07d73c91 (Q=0.820), which proved 51 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Multiverse Set Theory \u2014 Mathematics Across Branches (Cycle 1)\n\nThis cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the\nmodal logic of forcing in the set-theoretic multiverse. All results compile with\n**0 sorries** and use only the standard axioms (`propext`, `Classical.choic",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_07d73c91_c87d527a",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "07d73c91",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T18:39:56.640608+00:00",
+    "title": "Deepening: This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
     "domains": [
@@ -1374,7 +1388,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
   },
   {
-    "consumed_by_exp_id": "45e15555",
+    "consumed_by_exp_id": "",
     "description": "For any d-dimensional spanning k-tree K contained in the join V\u2081*\u22ef*V_{d+1} and any affine map A:|\u0394_V|\u2192\u211d^d with 0\u2208A(V_i) for all i, there exists a face \u03c3\u2208K with 0\u2208A(\u03c3) such that the number of faces in K is bounded by a polynomial in |V| of degree at most k+1. Moreover, when k=1 (spanning trees), the bound is linear in |V|.",
     "domains": [
       "Geometry"
@@ -1383,7 +1397,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-06T04:02:38.934140+00:00",
     "title": "Colorful Carath\u00e9odory theorem for spanning k-trees admits a polynomial-size witness"
   },
@@ -2054,21 +2068,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle deepened the constructive lower-bound theory of the \u2124\u2082-coindex of com"
   },
   {
-    "consumed_by_exp_id": "07d73c91",
-    "description": "# Multiverse Set Theory \u2014 Mathematics Across Branches (Cycle 1)\n\nThis cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the\nmodal logic of forcing in the set-theoretic multiverse. All results compile with\n**0 sorries** and use only the standard axioms (`propext`, `Classical.choice`,\n`Quot.sound`).\n\n## Files\n\n- `ModalFrame.lean` \u2014 the abstract Kripke-frame core: box/diamond operators and\n  the Sahlqvist **frame correspondences**, culminating in the `S4.2` \u2260 `S5`\n  separation for the directed forcing order.\n- `ButtonsSwitches.lean` \u2014 the button/switch dichotomy of Direction 2.\n- `IndependenceCount.lean` \u2014 the quantitative \"independence is generic\" count of\n  Direction 5.\n\n## Results proved\n\n### Direction 1 \u2014 the forcing order is genuinely `S4.2`, not `S5`\n\nFor an arbitrary accessibility relation `R : W \u2192 W \u2192 Prop` we define\n\n```\nbox R P w := \u2200 v, R w v \u2192 P v      -- necessity: true in every extension\ndia R P w := \u2203 v, R w v \u2227 P v      -- possibility: true in some extension\n```\n\nand prove the modal-axiom / frame-condition correspondences:\n\n| Axiom | Schema | Frame condition | Theorem |\n|-------|--------|-----------------|---------|\n| **T** | `\u25a1p \u2192 p`     | reflexive   | `box_toPoint_iff_reflexive` |\n| **4** | `\u25a1p \u2192 \u25a1\u25a1p`   | transitive  | `box_box_iff_transitive` |\n| **B** | `p \u2192 \u25a1\u25c7p`    | symmetric   | `brouwer_iff_symmetric` |\n| **5** | `\u25c7p \u2192 \u25a1\u25c7p`   | euclidean   | `euclid_iff_euclidean` |\n| **.2**| `\u25c7\u25a1p \u2192 \u25a1\u25c7p`  | confluent (directed) | `directed_iff_confluent` |\n\nEach is an `\u2194` (both correspondence directions). Instantiating with the directed\nantisymmetric extension order `(\u2115, \u2264)`, `nat_le_frame_is_S42_not_S5` shows that\n**T**, **4**, **.2** hold while **B** and **5** both fail. Symmetry is exactly the\nframe condition whose loss drops `S5` to the Hamkins\u2013L\u00f6we logic `S4.2`.\n\n### Direction 2 \u2014 buttons and switches\n\n- `button_iff_box_fixed`: over a reflexive frame the **buttons** (monotone\n  assertions) are *exactly* the fixed points of the necessity operator `\u25a1`.\n- `button_and`, `button_or`, `button_distrib`: buttons form a distributive\n  lattice.\n- `switch_iff_nonconstant_of_complete`: in the fully connected multiverse the\n  **switches** are exactly the non-constant assertions.\n- `switch_not_button`: a genuine switch is never a non-trivial button.\n\n### Direction 5 \u2014 independence is generic\n\nBranches over `n` atoms are `Fin n \u2192 Bool` (`card_branches`: `2^n`); sentences are\nBoolean functions of branches (`card_sentences`: `2^(2^n)`). The *settled*\nsentences are exactly the two constants (`settled_eq_pair`, `card_settled = 2`), so\nexactly `2^(2^n) - 2` sentences are **independent** (`card_independent`). Hence\n`independent_ratio_tendsto_one`: the proportion of independent sentences tends to\n`1` as `n \u2192 \u221e` \u2014 undecidability is the typical case.\n\n## Next steps\n\n- **Direction 3** (law-adoption as unit propagation): model finitely many\n  implications among atoms as a sub-Finset of branches and prove the number of\n  newly-settled atoms equals the unit-propagation closure of the implication\n  graph.\n- **Direction 4** (Lindenbaum/Alexandrov topology): promote `box` on\n  sentences-modulo-equivalence to an interior operator and identify settled\n  sentences with the clopen elements.\n- Extend the `.2` separation to an explicit finite countermodel and connect the\n  abstract `box`/`dia` to a Hilbert-style derivability predicate.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_1275",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "86411247",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T06:17:02.935697+00:00",
-    "title": "This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThese conjectures grow out of two threads consolidated in this cycle: the\nidentification of the factorial numeral system as one point in a single\nparameterized family of mixed-radix positional systems, and the primitive-divisor\nstructure of the Fibonacci sequence.\n\n## 1. Uniqueness is a running-product phenomenon, not a base phenomenon\n\n**Conjecture.** For *every* sequence of bases `b : \u2115 \u2192 \u2115`, the map sending a valid\ndigit string `(c_0, c_1, \u2026, c_{k-1})` (with `c_i < b_i`) to the integer\n`\u2211_{i<k} c_i \u00b7 \u220f_{j<i} b_j` is a bijection onto `{0, 1, \u2026, (\u220f_{i<k} b_i) \u2212 1}`,\nand this remains true when the bases are allowed to depend on the digits already\nread (a \"context-sensitive radix\").\n\nThe key insight is that both uniqueness and existence of representations depend\nonly on the *running product of the bases* and on the local bound `c_i < b_i`,\nnever on any arithmetic special to a fixed base or to the factorials; the\nfactorial and ordinary base-`N` systems are simply two evaluations of the same\nidentity `value = quotient\u00b7(running product) + remainder`.\n\nWhy now? The mixed-radix and factorial developments have just been shown to be the\nsame theorem instantiated twice, so the natural next step is to test how far the\n\"running-product\" abstraction stretches \u2014 in particular to adaptive radices used\nin combinatorial ranking and to Cantor-style variable-base expansions.\n\n## 2. Optimal-length mixed radices and a factorial-vs-binary threshold\n\n**Conjecture.** Among all base sequences with `b_i \u2265 2`, the factorial radix\n`b_i = i+1` minimizes the total number of admissible digit strings needed to\nrepresent every integer below a fixed bound `M`, up to a bounded multiplicative\nfactor, and it strictly beats every constant base `N` past an explicit threshold\n`M_0(N)`.\n\nThe key insight is that the factorial radix increases its place values as fast as\npossible while keeping each digit alphabet as small as possible, so it sits\nexactly at the trade-off frontier between \"few positions\" and \"small digit sets\".\n\nWhy now? With the factorial system realized as a mixed-radix instance, place-value\ngrowth rates can be compared directly across the whole family, turning a folklore\nefficiency claim into a precise extremal statement.\n\n## 3. Primitive divisors of Fibonacci numbers are dense and effective\n\n**Conjecture.** There is an explicit, slowly growing function `B(n)` such that for\nevery `n \u2265 13` the Fibonacci number `F(n)` has a primitive prime divisor below\n`B(n)`; moreover the primitive part of `F(n)` (the cofactor obtained after\nremoving all prime factors that already appear in some earlier `F(d)`, `d < n`)\nexceeds the largest prime factor of `n` for all `n > 12`.\n\nThe key insight is that the primitive part of `F(n)` behaves like the value of the\n`n`-th Fibonacci cyclotomic factor, which grows geometrically in the golden ratio\nraised to Euler's totient of `n`, while the only obstruction \u2014 an \"intrinsic\"\nprime dividing `n` itself \u2014 can contribute at most a single factor.\n\nWhy now? The composite range `13 \u2264 n \u2264 10000` has been certified exhaustively by a\ndirect primitive-part computation, isolating the sole remaining obstacle to a full\nproof to the tail `n > 10000`, exactly where the geometric growth estimate is\nstrongest; this makes an effective, quantitative form of the classical theorem the\nnatural target.\n\n## 4. A ranking bridge between numeral systems and primitive divisors\n\n**Conjecture.** The rank-of-apparition function of the Fibonacci sequence (the\nleast `n` with `p \u2223 F(n)`) is equidistributed, in a precise mixed-radix sense,\nagainst the factorial-digit statistics of `n`; concretely, the density of primes\nwhose rank has a prescribed leading factoradic digit matches the density predicted\nby treating successive ranks as mixed-radix numerals.\n\nThe key insight is that both objects are governed by the same multiplicative\n\"peeling\" operation \u2014 dividing by a running product in the numeral setting, and\nstripping already-seen prime factors in the Fibonacci setting \u2014 so their\nstatistics should be transportable across the bridge.\n\nWhy now? Having placed the factorial numeral system inside the mixed-radix family\nand having a computational handle on Fibonacci primitive parts, the two threads can\nbe compared on the same range of `n` for the first time.\n",
     "domains": [
@@ -2562,6 +2561,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T18:22:12.473843+00:00",
     "title": "This cycle deepened the \"Sperner \u21d2 Nash\" theme along two fully-formalised chains"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of the Forcing Multiverse\n\nThis cycle established that the necessity and possibility operators of the forcing\nmultiverse are the interior and closure operators of the Alexandrov topology of\nthe extension preorder, with buttons the open sets and settled assertions the\nclopen sets. The following conjectures push that bridge further.\n\n## 1. Specialization preorder recovers the frame\n\n**Conjecture.** The extension accessibility relation is reconstructible from the\nAlexandrov topology alone: `w` accesses `v` if and only if `v` lies in the\ntopological closure of `{w}`. Thus the modal frame and its topology carry\nidentical information, and every frame-condition correspondence (T, 4, .2) is a\npurely topological separation property.\n\n*The key insight is* that on an Alexandrov-discrete space the specialization\npreorder is a perfect inverse to the upper-set construction, so the modal logic of\nforcing and the topology of forcing are two presentations of one object.\n\n*Why now?* With interior = box and closure = dia proven, the specialization\npreorder is the only missing arrow needed to make the correspondence a genuine\nequivalence of categories between forcing frames and Alexandrov spaces.\n\n## 2. The .2 axiom is topological irreducibility\n\n**Conjecture.** Directedness (axiom **.2**, the amalgamation property of iterated\nforcing) is equivalent to the Alexandrov space being *irreducible*: no two\nnonempty open sets are disjoint. Consequently the Hamkins\u2013L\u00f6we logic S4.2 is\nexactly the logic of irreducible Alexandrov spaces, and S5 is the logic of the\nindiscrete ones.\n\n*The key insight is* that confluence forces any two nonempty forcing-stable\nassertions to be jointly forceable, which is precisely topological irreducibility.\n\n*Why now?* The clopen classification of this cycle already shows S5 collapses the\ntopology to the indiscrete one; irreducibility is the natural weaker property that\nshould pin down S4.2 between S4 and S5.\n\n## 3. Settled assertions form a Boolean subalgebra; contingent ones a dense ideal\n\n**Conjecture.** The clopen (settled) assertions form a Boolean subalgebra of the\npowerset, while the assertions that are neither valid nor refutable form a\ntopologically dense complement. In the fully connected multiverse this subalgebra\nhas exactly two elements, and its density-complement \u2014 the independent assertions \u2014\nhas relative measure tending to one as the number of atoms grows.\n\n*The key insight is* that independence is not merely generic in counting terms\n(Direction 5) but *topologically* generic: the settled sentences are nowhere\ndense among all assertions.\n\n*Why now?* This cycle proved the two-element clopen algebra topologically; joining\nit to the `2^(2^n) - 2` independence count converts a cardinality statement into a\nstatement about Baire-style genericity.\n\n## 4. Interior operators classify intermediate forcing logics\n\n**Conjecture.** Every modal logic between S4 and S5 arises as the interior-operator\nlogic of a class of Alexandrov spaces cut out by a single separation axiom, and the\nlattice of such logics is anti-isomorphic to a lattice of topological properties\n(reflexive, transitive, irreducible, symmetric).\n\n*The key insight is* that each modal axiom is a Sahlqvist formula whose first-order\nframe condition is a topological property of the associated Alexandrov space, so the\nmap \"modal logic to topology\" is a lattice anti-homomorphism.\n\n*Why now?* Having realized T, 4, and the clopen structure topologically, the\nremaining axioms B and 5 are the last data needed to chart the whole interval.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1310",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "07d73c91",
+    "status": "available",
+    "timestamp": "2026-07-14T18:39:46.221094+00:00",
+    "title": "That the necessity and possibility operators of the forci"
   },
   {
     "consumed_by_exp_id": "",
