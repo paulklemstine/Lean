@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "226557b2",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domains": [
       "Probability"
@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "0981cb8f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-11T00:40:03.135454+00:00",
     "title": "Deepening: Consciousness as Emergent Fixed Point"
   },
@@ -367,7 +367,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2758a31c",
     "description": "Building on cycle c923638c (Q=0.820), which proved 25 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `\u03bc` and `\u03bb` of a characteristic element, realised on the\npolynomial ring `\u2124[X]`, and proves:\n\n1. **A cross-domain bridge (`muInv_mul`, `lambdaInv_mul`",
     "domains": [
       "Novelty"
@@ -376,7 +376,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "c923638c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T03:40:48.915387+00:00",
     "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
   },
