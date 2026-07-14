@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3e1dd178",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThis cycle established the elementary algebraic core of four-dimensional geometry:\nthe volume law of the 4-ball, the face combin",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T09:49:47",
-      "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
-    },
-    {
       "cycle_id": "3f303e8a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-14T01:17:13",
       "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
+    },
+    {
+      "cycle_id": "ae9bfe48",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Generalized Spectral Characterization of Cographs\n\nThis cycle established the structural backbone: the class of cographs\n(graphs with no induced `P₄`) is closed under complementat",
+      "quality_score": 0.7,
+      "sorry_count": 5,
+      "theorem_count": 13,
+      "timestamp": "2026-07-14T01:18:02",
+      "title": "Cographs are generalized spectrally closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ea473918",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Unreasonable Effectiveness of Wrong Theories\n\nThis deepening (`WrongTheoriesDeepening.lean`) adds, on top of the earlier\nmetric/perturbative and single-phenomenon results:\n\n-",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-11T09:25:12",
-      "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
-    },
     {
       "cycle_id": "f85e4d43",
       "domain": "Applications",
@@ -2501,15 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-14T01:17:13",
       "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
+    },
+    {
+      "cycle_id": "ae9bfe48",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Generalized Spectral Characterization of Cographs\n\nThis cycle established the structural backbone: the class of cographs\n(graphs with no induced `P₄`) is closed under complementat",
+      "quality_score": 0.7,
+      "sorry_count": 5,
+      "theorem_count": 13,
+      "timestamp": "2026-07-14T01:18:02",
+      "title": "Cographs are generalized spectrally closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "37818bd9",
-      "domain": "Novelty",
-      "name": "writes",
-      "quality": 0.7
-    },
     {
       "cycle_id": "37818bd9",
       "domain": "Novelty",
@@ -2803,17 +2797,16 @@
       "domain": "Novelty",
       "name": "for",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "ae9bfe48",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-14T01:17:13",
+  "last_updated": "2026-07-14T01:18:02",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "8e89241b",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-13T05:18:32"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "05e37ec1",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-14T01:17:13"
+    },
+    {
+      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "ae9bfe48",
+      "domain": "Applications",
+      "sorry_count": 5,
+      "timestamp": "2026-07-14T01:18:02"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c81e5afa",
-        "quality": 0.72,
-        "theorems": 0,
-        "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBrid"
-      },
-      {
         "cycle_id": "ce15dd8e",
         "quality": 0.78,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.6,
         "theorems": 0,
         "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
+      },
+      {
+        "cycle_id": "ae9bfe48",
+        "quality": 0.7,
+        "theorems": 13,
+        "title": "Cographs are generalized spectrally closed"
       }
     ],
     "Bridges": [

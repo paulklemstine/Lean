@@ -855,7 +855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "30210199",
     "description": "Cycle 0664586a (Q=0.830) proved 18 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in ",
     "domains": [
       "Computation"
@@ -864,7 +864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "0664586a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T03:21:37.797608+00:00",
     "title": "Close Proofs: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
@@ -1500,20 +1500,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unbounded Gap Between Co-Index of a Free Z_2-Space and Its Suspension"
   },
   {
-    "consumed_by_exp_id": "ae9bfe48",
-    "description": "The class of cographs (Forb(P\u2084)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spectrum), then H must also be a cograph. This extends the paper's result for threshold graphs (Forb(2K\u2082, P\u2084, C\u2084)) to the larger class of cographs.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0676",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.06455v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-08T18:43:29.811729+00:00",
-    "title": "Cographs are generalized spectrally closed"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let Sh_G be a Shimura variety of Hodge type with \u03bc-ordinary Mantovan Igusa variety Ig_\u03bc. Let D = \u2295_{i=1}^n D_i be the graded algebra of rank one Maass--Shimura differential operators on Ig_\u03bc. Conjecture: There exists an explicit n-dimensional commutative formal group F_D such that the action of D integrates to an action of F_D on Ig_\u03bc, and the coordinate ring of F_D is canonically isomorphic to the symmetric algebra Sym(D) equipped with a specific coproduct structure determined by the Hodge embedding data. Moreover, this isomorphism is equivariant for the natural action of the derived Hecke algebra H^*(K_p, G) where K_p is a hyperspecial maximal subgroup.",
     "domains": [
@@ -2108,6 +2094,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Generalized Spectral Characterization of Cographs\n\nThis cycle established the structural backbone: the class of cographs\n(graphs with no induced `P\u2084`) is closed under complementation, `P\u2084` is\nself-complementary, the class is hereditary, and the complement adjacency\nmatrix obeys `A(G\u1d9c) = J - I - A(G)`. These results motivate the following\nbold, testable conjectures.\n\n## 1. Cographs are generalized spectrally closed\n\n**Conjecture.** If `G` is a cograph and `H` is generalized cospectral with\n`G` (equal adjacency spectrum and equal complement spectrum), then `H` is a\ncograph.\n\n*The key insight is* that being a cograph is a *self-complementary*\nhereditary property, so the invariant that must be preserved is exactly the\npair (adjacency spectrum, complement spectrum) \u2014 neither alone suffices,\nbecause the number of induced `P\u2084`'s is a symmetric function of the two\nspectra through the identity `A(G\u1d9c) = J - I - A(G)`.\n\n*Why now?* The self-complementarity and the linear complement identity are\nnow available in fully verified form, giving a rigorous foundation on which\nthe counting argument for induced `P\u2084`'s can be built.\n\n## 2. The induced-`P\u2084` count is a two-spectrum invariant\n\n**Conjecture.** The number of induced copies of `P\u2084` in a graph is a\npolynomial in the moments (power sums of eigenvalues) of the adjacency\nmatrix and of the complement adjacency matrix jointly, and is therefore\ndetermined by generalized cospectrality.\n\n*The key insight is* that induced `P\u2084` counts can be expressed through\nwalk counts (traces of matrix powers) in `A(G)` and `A(G\u1d9c)`, and the\ncomplement identity turns every such trace into a symmetric function of the\ntwo spectra.\n\n*Why now?* With `A(G\u1d9c) = J - I - A(G)` established, the traces of powers of\nthe complement matrix expand explicitly in terms of `A(G)`, `J`, and `I`,\nmaking the moment computation concrete and checkable on small cases.\n\n## 3. Spectral detectability governs generalized spectral closure\n\n**Conjecture.** For a finite family `F` closed under complementation, the\nclass `Forb(F)` is generalized spectrally closed precisely when membership\nof each `H \u2208 F` as an induced subgraph is determined by the joint spectra.\n\n*The key insight is* that closure under complementation of the forbidden\nfamily is necessary for the two-spectrum invariant to even be well posed,\nand cographs (`F = {P\u2084}`) are the minimal nontrivial instance.\n\n*Why now?* The complement functor on induced embeddings, verified this\ncycle, shows that `Forb(F)` is complement-closed exactly when `F` is,\nisolating the precise hypothesis under which the conjecture can be tested.\n\n## 4. Threshold graphs sit strictly inside the cograph closure\n\n**Conjecture.** The known generalized spectral characterization of threshold\ngraphs (`Forb(2K\u2082, P\u2084, C\u2084)`) factors through the cograph result: a threshold\ngraph's generalized-cospectral mates are exactly its cograph mates that also\navoid `2K\u2082` and `C\u2084`, both of which are themselves two-spectrum detectable.\n\n*The key insight is* that `2K\u2082` and `C\u2084` are complement-paired (`C\u2084` is\nself-complementary, `2K\u2082` complements to `K\u2082 \u222a K\u2082`'s join structure), so the\nthreshold forbidden family is complement-closed and the same self-complementary\nmechanism applies one level up.\n\n*Why now?* The cograph closure established here is the strictly larger class\ncontaining threshold graphs, so the threshold result becomes a corollary once\nthe two extra forbidden subgraphs are shown spectrally detectable.\n",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_1262",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ae9bfe48",
+    "status": "available",
+    "timestamp": "2026-07-14T01:17:18.369618+00:00",
+    "title": "Structural backbone: the class of cographs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
     "domains": [
       "Applications"
@@ -2133,6 +2134,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T16:51:44.275408+00:00",
     "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle ae9bfe48 (Q=0.700) proved 13 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The class of cographs (Forb(P\u2084)) is generalized spectrally closed: if G is a cograph and H is generalized cospectral with G (i.e., G and H have the same adjacency spectrum and the same complement spec",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_ae9bfe48_43665e25",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ae9bfe48",
+    "status": "available",
+    "timestamp": "2026-07-14T01:18:02.170391+00:00",
+    "title": "Close Proofs: Cographs are generalized spectrally closed"
   },
   {
     "consumed_by_exp_id": "",
