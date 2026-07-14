@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0568e201",
-      "domain": "Applications",
-      "key_insight": "# Future directions — edge-spectral supersaturation for triangles\n\n## What this cycle added\n\nThe file `Novelty/EdgeSpectralSupersaturationGraphBridge.lean` closes the gap left by\n`EdgeSpectralSupersat",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T14:02:05",
-      "title": "Deepening: Edge-Spectral Supersaturation for Triangles"
-    },
-    {
       "cycle_id": "2aaaa5f9",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle contributes `Catalog/Novelty/VietorisRipsCliqueBridge.lean`, a self-contained\n**cross-domain bridge** (\"Connector\" mission) linking:\n\n* **metric geometry / topological",
@@ -499,19 +489,19 @@
       "theorem_count": 32,
       "timestamp": "2026-07-14T06:35:35",
       "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
+    },
+    {
+      "cycle_id": "0abd0edb",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: AVD‑total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self‑contained model of total colourings (proper vert",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 26,
+      "timestamp": "2026-07-14T06:54:01",
+      "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dfaaa130",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Mega-Sphere\n\nThis project formalizes the rigorous algebraic skeleton behind the \"mega-sphere\"\nfantasy — a single object recovering every finite stage of a tower at once — in",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-07-11T14:28:08",
-      "title": "The Mega-Sphere: All Dimensions at Once"
-    },
     {
       "cycle_id": "e480cbbd",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 32,
       "timestamp": "2026-07-14T06:35:35",
       "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
+    },
+    {
+      "cycle_id": "0abd0edb",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: AVD‑total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self‑contained model of total colourings (proper vert",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 26,
+      "timestamp": "2026-07-14T06:54:01",
+      "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular graphs"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T06:35:35",
+  "last_updated": "2026-07-14T06:54:01",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "4cfd5e43",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-13T11:12:05"
-    },
     {
       "context": "+    -- sequences), so this branch is left as a single documented `sorry`.; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "64d4f5fe",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T06:35:35"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "0abd0edb",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T06:54:01"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "1bd2f770",
-        "quality": 0.82,
-        "theorems": 21,
-        "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
-      },
-      {
         "cycle_id": "ea3218f3",
         "quality": 0.7,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 32,
         "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
+      },
+      {
+        "cycle_id": "0abd0edb",
+        "quality": 0.78,
+        "theorems": 26,
+        "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular grap"
       }
     ],
     "NumberTheory": [

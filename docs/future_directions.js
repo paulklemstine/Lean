@@ -622,6 +622,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
+    "consumed_by_exp_id": "c4aa235b",
+    "description": "Building on cycle 0abd0edb (Q=0.780), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the cent",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_0abd0edb_bcdad5b7",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "0abd0edb",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T06:54:01.837362+00:00",
+    "title": "Deepening: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 1abce342 (Q=0.780), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant \u03bc\u2082 is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves \u03bc\u2082 \u2264 1 + \u03c1 where \u03c1 \u2248 0.75488 is",
     "domains": [
@@ -2273,18 +2287,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "Additive / geometric / analytic scaffolding around th"
   },
   {
-    "consumed_by_exp_id": "0abd0edb",
-    "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: AVD\u2011total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self\u2011contained model of total colourings (proper vertex colourings\nof the total graph `T(H)` on `V \u2295 E`) and adjacent\u2011vertex\u2011distinguishing (AVD)\ntotal colourings, and with the central graph `C(G)` (subdivide every edge, join\nevery non\u2011adjacent pair), we prove for a **`d`\u2011regular graph `G` that is not\ncomplete**:\n\n* `card_ge_of_regular_not_complete` : `|V(G)| \u2265 d + 2`.\n* `central_no_avd_regular_card` : `C(G)` has no AVD total colouring with `d + 2`\n  colours.\n* `avd_coloring_castLE` : palette sizes admitting an AVD total colouring are\n  upward closed (pad unused colours along `Fin n \u21aa Fin m`).\n* `avd_total_ge_regular` : **every** AVD total colouring of `C(G)` uses at least\n  `d + 3` colours.\n* `avdTotalChromatic_ge_regular` : as an inequality of invariants,\n  `d + 3 \u2264 \u03c7''\u2090(C(G))`.\n* `cycle5_avd_ge_five` : the `C\u2085` instance (`d = 2`), giving the bound `5`.\n\nThis is exactly the **lower half** of the guiding conjecture\n`\u03c7''\u2090(C(G)) = d + 3`.\n\n## Sharpness and a caveat\n\nThe companion `Basic.lean` proves the sharper, `|V|`\u2011governed bound\n`\u03c7''\u2090(C(G)) \u2265 |V(G)| + 1` (every original vertex of `C(G)` has degree `|V| \u2212 1`).\nSince a non\u2011complete `d`\u2011regular graph can have `|V| > d + 2` (e.g. `C\u2085`, where\n`|V| = 5 > 4 = d + 2`), the true value is often **strictly larger** than `d + 3`.\nThe conjectured equality can therefore only hold in the extremal regime\n`|V| = d + 2`, i.e. when the complement of `G` is a perfect matching (the\ncocktail\u2011party graphs `K_{d+2} minus a perfect matching`).\n\n## Open problems to formalise next\n\n1. **Matching upper bound in the extremal case.** For `|V| = d + 2` construct an\n   explicit AVD total colouring of `C(G)` with `d + 3` colours, proving\n   `\u03c7''\u2090(C(G)) = d + 3` there.\n2. **Exact value for cycles.** Determine and formalise `\u03c7''\u2090(C(C\u2099))` as a function\n   of `n`; our results give `\u2265 n + 1` (via `Basic`) and `\u2265 5` (via the `d`\u2011bound).\n3. **Characterisation of the extremal graphs.** Formalise that `|V| = d + 2` for a\n   `d`\u2011regular graph is equivalent to the complement being `1`\u2011regular.\n4. **General upper bound.** Show `\u03c7''\u2090(C(G)) \u2264 |V(G)| + 2` (or the exact value) for\n   arbitrary regular `G`, closing the gap with the lower bounds.\n",
     "domains": [
-      "Applications"
+      "Algebra",
+      "Pythagorean"
     ],
-    "id": "sorry_fill_71e324bf_13fece62",
+    "id": "fd_1278",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "71e324bf",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T07:36:38.107204+00:00",
-    "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
+    "source_exp_id": "0abd0edb",
+    "status": "available",
+    "timestamp": "2026-07-14T06:53:46.809090+00:00",
+    "title": "Working with a self\u2011contained model of total colourings (proper vertex colouring"
   },
   {
     "consumed_by_exp_id": "",

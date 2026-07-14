@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-14T06:35:41.063842+00:00",
+  "last_updated": "2026-07-14T06:54:14.198705+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -14600,6 +14600,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-14T06:35:40.997762+00:00",
       "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 221,
+      "domain": "Novelty",
+      "duration_seconds": 1116.045604467392,
+      "end_time": 1784011993.4939945,
+      "files_integrated": 4,
+      "job_id": "0abd0edb",
+      "outcome_quality": 0.78,
+      "phase": "complete",
+      "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "sorry_density": 0.15384615384615385,
+      "start_time": 1784010877.44839,
+      "strategy_count": 0,
+      "theorem_count": 26,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-14T06:54:14.130280+00:00",
+      "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
     }
   ]
 }
