@@ -494,7 +494,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "13f58c80",
     "description": "Building on cycle 766b6e47 (Q=0.800), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For p an odd prime, k \u2265 2 an even integer, and a_p in the algebraic closure of Q_p with v(a_p) > 0 and v(a_p) not an integer (i.e., the slope is fractional), the mod p semisimplified reduction V\u0304_{k,a_p} of the two-dimensional crystalline representation V_{k,a_p} of G_{Q_p} is irreducible. This folk",
     "domains": [
       "Applications"
@@ -503,23 +503,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "766b6e47",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T17:21:20.503455+00:00",
     "title": "Deepening: Irreducibility of mod p reductions of crystalline representations at fractional "
-  },
-  {
-    "consumed_by_exp_id": "b6231f58",
-    "description": "Building on cycle 86411247 (Q=0.800), which proved 40 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Multiverse Set Theory: Mathematics Across Branches\n\nThis cycle deepened the combinatorial core of the set-theoretic multiverse by\nequipping it with a **modal structure of forcing**: possibility as truth in some\ngeneric extension, necessity as truth in every generic extension. M",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_86411247_04893461",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "86411247",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T06:17:11.005418+00:00",
-    "title": "Deepening: This cycle deepened the combinatorial core of the set-theoretic multiverse by"
   },
   {
     "consumed_by_exp_id": "",
@@ -2401,6 +2387,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-14T08:57:48.045739+00:00",
     "title": "The previous cycle established the **suspension tower** `S\u1d4f(K)` of a free `\u2124\u2082`-c"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Modal Logic of Forcing\n\nThis cycle deepened the combinatorial core of the set-theoretic multiverse\n(`MultiverseSetTheory.lean`) by equipping it with a **modal structure of\nforcing**, in the spirit of the Hamkins\u2013L\u00f6we programme:\n\n* **possibility** `\u25c7p` \u2014 `p` holds in *some* generic (forcing) extension;\n* **necessity**  `\u25a1p` \u2014 `p` holds in *every* generic extension.\n\n## What was proved (`MultiverseModalForcing.lean`, 0 sorries)\n\nA full Kripke semantics `meval R M w p` for a modal language `MSentence` over\nworlds `\u03b1 \u2192 Bool`, with `R` the forcing-extension relation and `M` the multiverse,\nand the **soundness of S4.2 for forcing frames**:\n\n* `sound_K`, `sound_Nec` \u2014 axiom `K` and the necessitation rule (any frame);\n* `sound_T` \u2014 `\u25a1p \u2192 p` from reflexivity;\n* `sound_Four` \u2014 `\u25a1p \u2192 \u25a1\u25a1p` from transitivity (iterated forcing);\n* `sound_Two` \u2014 `\u25c7\u25a1p \u2192 \u25a1\u25c7p` from directedness (product/amalgamation forcing);\n* `forcing_sound_S42` \u2014 the four axioms bundled for any `ForcingFrame`;\n* `meval_dia`, `dia_iff_not_box_not` \u2014 the `\u25c7p \u2194 \u00ac\u25a1\u00acp` duality;\n* `box_conj`, `dia_disj`, `box_mono`, `dia_mono`, `sound_T_dual` \u2014 the standard\n  normal-modal interaction/monotonicity laws;\n* `flipFrame` / `flip_sound_S42` \u2014 a concrete *flip-reachability* forcing frame\n  realising the abstract axioms;\n* `B_fails` \u2014 the `S5` axiom `p \u2192 \u25a1\u25c7p` **fails** in a reflexive-transitive-directed\n  sink frame, so the logic is *properly* S4.2, not S5 (no forcing back);\n* `CH_contingent`, `CH_not_necessary` \u2014 the classical independence of `CH` recast\n  as modal contingency `\u25c7CH \u2227 \u25c7\u00acCH` in the forcing frame;\n* `fullFrame`, `meval_dia_fullFrame`, `MIndependent`,\n  `contingent_iff_independent`, `contingent_global` \u2014 the **bridge** between the\n  base file's *independence* and the modal *contingency* `\u25c7p \u2227 \u25c7\u00acp`: in the\n  full-accessibility forcing frame the two notions coincide for every sentence\n  `p`, and contingency there is a global (world-independent) property.  This\n  closes former open thread 5 below.\n\n## Open threads for the next cycle\n\n1. **Completeness (the hard half).** We proved *soundness*: forcing validates\n   S4.2. The Hamkins\u2013L\u00f6we theorem states the valid principles are *exactly* S4.2.\n   Formalising the lower bound requires building control statements (buttons and\n   switches) and the S4.2 frame-embedding lemma \u2014 a substantial project.\n2. **L\u00f6wenheim-style frame constructions.** Formalise finite pre-Boolean-algebra\n   frames and prove every finite S4.2 frame embeds into the forcing frame.\n3. **Second-order / parametrised modalities.** Add `\u25c7_\u0393` for restricted forcing\n   classes (ccc, proper, `<\u03ba`-closed) and study the resulting sublogics.\n4. **Modal validities of large-cardinal axioms.** Which `Meas`-type statements are\n   necessary vs. merely possible under `<\u03ba`-directed-closed forcing?\n5. **Connection to the base file.** *(Closed this cycle.)* The bridge\n   `contingent_iff_independent` proves that modal contingency `\u25c7p \u2227 \u25c7\u00acp` in the\n   full-accessibility forcing frame (`fullFrame`) is equivalent to modal\n   independence `MIndependent` (true in some admissible world, false in another) \u2014\n   the modal reading of the base file's `Independent`.  A remaining refinement is\n   to transport this equivalence across the two files' distinct `Sentence` /\n   `MSentence` languages via an explicit modality-erasing translation.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1286",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b6231f58",
+    "status": "available",
+    "timestamp": "2026-07-14T09:16:54.063937+00:00",
+    "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse"
   },
   {
     "consumed_by_exp_id": "",
