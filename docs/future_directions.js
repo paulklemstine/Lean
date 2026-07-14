@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "226557b2",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domains": [
       "Probability"
@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "0981cb8f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-11T00:40:03.135454+00:00",
     "title": "Deepening: Consciousness as Emergent Fixed Point"
   },
@@ -1416,20 +1416,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Central Symmetric 7-D Polytope"
   },
   {
-    "consumed_by_exp_id": "0782e3ca",
-    "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form \u2211_{n\u2264X} H(n) \u00d7 weight(n) \u223c C X^\u03b1 log^k X as X\u2192\u221e, where C, \u03b1, and k depend on the Maass form's spectral parameters.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0204",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28657v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-04T14:41:26.130876+00:00",
-    "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For d \u2265 3, every discrete d-pseudomanifold with exactly 2d+7 vertices that is not a simplicial d-sphere is flag normal and isomorphic to the (d-2)-fold suspension of the 6-vertex triangulation of \u211dP\u00b2. This extends the optimality result in the paper by characterizing all non-sphere examples at the threshold number of vertices.",
     "domains": [
@@ -2164,6 +2150,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T02:10:25.506652+00:00",
     "title": "**suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis project formalizes the analytic engine behind asymptotic expansions of\nweighted Riesz means, in the model regimes that already exhibit both the\npower-law factor `X^\u03b1` and the logarithmic factor `(log X)^k` appearing in the\nmission's target shape `C \u00b7 X^\u03b1 \u00b7 (log X)^k`.\n\n## What was proved (`Catalog/Applications/WeightedRieszMean.lean`)\n\n- `sum_isLittleO_of_isLittleO` \u2014 Stolz\u2013Ces\u00e0ro principle for little-o: partial\n  summation sends `o(g)` to `o(\u2211 g)` when `\u2211 g \u2192 \u221e` and `g` is eventually\n  positive.\n- `isEquivalent_sum` \u2014 the abstract **Riesz-mean transfer**: partial summation\n  preserves asymptotic equivalence `~[atTop]`.\n- `power_sum_isEquivalent` \u2014 `\u2211_{n<N} n^p ~ N^(p+1)/(p+1)` for real `p > 0`\n  (`\u03b1 = p+1`, `k = 0`), proved by an Euler\u2013Maclaurin-style integral sandwich.\n- `power_sum_tendsto_atTop` \u2014 divergence of the power sums.\n- `log_sum_isEquivalent` \u2014 `\u2211_{n<N} log n ~ N log N` (`\u03b1 = 1`, `k = 1`), the\n  Stirling leading term and the cleanest instance of the `(log X)^k` phenomenon.\n- `power_log_sum_isEquivalent` \u2014 the **mixed regime**\n  `\u2211_{n<N} n^p \u00b7 log n ~ N^(p+1) \u00b7 log N / (p+1)` for real `p > 0`\n  (`\u03b1 = p+1 > 1` and `k = 1` both nontrivial), proved by an Euler\u2013Maclaurin\n  integral sandwich with antiderivative\n  `x^(p+1) log x/(p+1) \u2212 x^(p+1)/(p+1)^2`. This is the instance that most\n  directly realizes the mission's target shape `C \u00b7 X^\u03b1 \u00b7 (log X)^k`.\n- `iterated_power_sum_isEquivalent` \u2014 a genuine second-order Riesz mean\n  `\u2211_{n<N} \u2211_{m<n} m^p ~ N^(p+2)/((p+1)(p+2))`, obtained by composing the power\n  law with the transfer engine.\n\nAll results depend only on the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`.\n\n## Immediate extensions\n\n1. **General log-powers `(log X)^k`.** Prove\n   `\u2211_{n<N} (log n)^k / n ~ (log N)^{k+1}/(k+1)` by the same integral sandwich\n   with antiderivative `(log x)^{k+1}/(k+1)`, giving the pure `\u03b1 = 0`, arbitrary\n   `k` regime. The `k = 1` mixed case `\u2211_{n<N} n^p (log n)^1 ~ N^{p+1} log N/(p+1)`\n   is now proved (`power_log_sum_isEquivalent`); the natural next step is the\n   general `\u2211_{n<N} n^p (log n)^k ~ N^{p+1}(log N)^k/(p+1)` via `k`-fold\n   integration by parts on the same antiderivative recursion.\n\n2. **Weighted Riesz means of order `r`.** Iterate `isEquivalent_sum` `r` times to\n   obtain `\u2211 ... \u2211 n^p ~ N^{p+r} \u00b7 p! / (p+r)!`-type constants, and reformulate\n   as the Riesz mean `(1/X^r)\u2211_{n\u2264X}(X-n)^r a(n)` with the Beta-function constant\n   `B(\u03b1, r+1)`.\n\n3. **Abel/partial-summation bridge.** Package `isEquivalent_sum` together with an\n   Abel-summation lemma so that an asymptotic for `\u2211 a(n)` transfers to any\n   smoothly weighted mean `\u2211 a(n) w(n)` with `w` slowly varying.\n\n## Toward the Hurwitz / sesquiharmonic Maass-form target\n\nThe mission concerns `\u2211_{n\u2264X} H(n) \u00b7 weight(n)` for Hurwitz class numbers `H(n)`\nand weights coming from weight-1/2 sesquiharmonic Maass forms. The natural path,\nbuilding on this file, is:\n\n1. **Average of Hurwitz class numbers.** Formalize the classical\n   `\u2211_{n\u2264X} H(n) ~ (2\u03c0/(21\u03b6(3))) X^{3/2}` (Mertens/Eichler). The `X^{3/2}` main\n   term is exactly the `power_sum_isEquivalent` shape with `p = 1/2`; the missing\n   ingredient is the arithmetic input `H(n) = (average) + (fluctuation)` where the\n   fluctuation is `o` of the main term \u2014 precisely the hypothesis format consumed\n   by `isEquivalent_sum`.\n\n2. **Computable `H(n)`.** Define `H(n)` via reduced positive-definite integral\n   binary quadratic forms of discriminant `-n` (with the `1/2`, `1/3` weights for\n   the two elliptic points). This is a finite, decidable enumeration and would let\n   one verify Hurwitz\u2013Kronecker class-number relations\n   `\u2211_{r} H(4n - r\u00b2) = \u2211_{d|n} max(d, n/d)` for concrete `n`.\n\n3. **Spectral parameters.** The exponent `\u03b1` and log-power `k` in the mission\n   statement are governed by the pole location/order of the associated Dirichlet\n   series / the Maass form's spectral parameter. The transfer engine here shows,\n   abstractly, how a pole of order `k+1` at `s = \u03b1` produces the `X^\u03b1 (log X)^k`\n   mean \u2014 the analytic skeleton on which the number-theoretic input hangs.\n\n## Lean/infrastructure notes\n\n- The integral-sandwich pattern (`MonotoneOn.integral_le_sum` /\n  `MonotoneOn.sum_le_integral` + `integral_rpow` / `integral_log` + squeeze via\n  `isEquivalent_iff_tendsto_one`) is reusable for any monotone weight with a known\n  antiderivative; abstracting it into a single reusable lemma\n  `monotone_sum_isEquivalent_integral` would shorten all future instances.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1266",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0782e3ca",
+    "status": "available",
+    "timestamp": "2026-07-14T03:03:34.714395+00:00",
+    "title": "This project formalizes the analytic engine behind asymptotic expansions of"
   },
   {
     "consumed_by_exp_id": "",

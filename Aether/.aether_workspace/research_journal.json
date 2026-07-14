@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "02ff061d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Edge-Spectral Supersaturation for Triangles\n\nThe power-trace method yields an unconditional triangle count `t ≥ (λq)/3` in terms\nof the spectral excess `q = λ² − m`, with the endp",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 6,
-      "timestamp": "2026-07-13T10:55:35",
-      "title": "Edge-Spectral Supersaturation for Triangles"
-    },
-    {
       "cycle_id": "4cfd5e43",
       "domain": "Applications",
       "key_insight": "# Future Directions — Isomorphisms of Meaning: When Structures Collide\n\nThis cycle established a truth/meaning dichotomy in two settings — the group of\nself-symmetries of a set and the monoid of divis",
@@ -499,19 +489,19 @@
       "theorem_count": 36,
       "timestamp": "2026-07-14T02:10:35",
       "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
+    },
+    {
+      "cycle_id": "0782e3ca",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes the analytic engine behind asymptotic expansions of\nweighted Riesz means, in the model regimes that already exhibit both the\npower-law factor `X^α` and the",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-14T03:03:56",
+      "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1978e429",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nTwo self-contained Lean files (each importing only Mathlib) realize the mission\n\"Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent\":\n\n- `Catalog/Logic/ParadoxesConsi",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-11T10:49:45",
-      "title": "Close Proofs: Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-    },
     {
       "cycle_id": "3dc9cabc",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 36,
       "timestamp": "2026-07-14T02:10:35",
       "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
+    },
+    {
+      "cycle_id": "0782e3ca",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis project formalizes the analytic engine behind asymptotic expansions of\nweighted Riesz means, in the model regimes that already exhibit both the\npower-law factor `X^α` and the",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-14T03:03:56",
+      "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d954b0de",
-      "domain": "Novelty",
-      "name": "seidel_apply",
-      "quality": 0.74
-    },
     {
       "cycle_id": "d954b0de",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "prod_multichoose_piAntidiag_hetero",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "0782e3ca",
+      "domain": "Applications",
+      "name": "sum_isLittleO_of_isLittleO",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-14T02:10:35",
+  "last_updated": "2026-07-14T03:03:56",
   "open_questions": [
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "49ddee39",
-        "quality": 0.78,
-        "theorems": 28,
-        "title": "Close Proofs: Sharp maximal excess of co-index under suspension for all feasible"
-      },
-      {
         "cycle_id": "5fd927d4",
         "quality": 0.8,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 10,
         "title": "Bypassed"
+      },
+      {
+        "cycle_id": "0782e3ca",
+        "quality": 0.72,
+        "theorems": 7,
+        "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
       }
     ],
     "Bridges": [
