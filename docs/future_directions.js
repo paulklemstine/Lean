@@ -31,6 +31,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
+    "consumed_by_exp_id": "0725f80e",
+    "description": "Building on cycle 14656387 (Q=0.830), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The M\u00f6bius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant \u2014 the **M\u00f6bius discriminant**\n`\u0394 = \u03b3\u03b2 \u2212 \u03b1\u03b4` attached to a first-order multiplicative recurrence\n`(\u03b1 n + \u03b2)\u00b7a(n+1) = (\u03b3 n + \u03b4)\u00b7a(n)` \u2014 and proved that its sign comple",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_14656387_a6c7f6db",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "14656387",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T19:16:11.234630+00:00",
+    "title": "Deepening: This cycle isolated a single scalar invariant \u2014 the **M\u00f6bius discriminant**"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions \u2014 Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
     "domains": [
@@ -2517,7 +2531,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "`BoundedError.lean` establishes, for surveillance on a finite dynamic network:"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ceb2563",
     "description": "# Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Ar\u0131kan\u2013Merhav growth rate and derived the shift from a multiplicative density model.\n\nThis cycle **removes that hypothesis at the maximal-entropy source `p = 1/2`**. In\n`ExactUniformExponent.lean` we:\n\n1. **Construct** the guesswork moment from first principles as the exact average\n   `M(N) = 2^{-k} \u03a3_{j=1}^{2^k} j^\u03c1` over `2^k` equiprobable candidates.\n2. **Prove** the elementary two-sided power-sum estimate\n   `2^{(j-1)(\u03c1+1)} \u2264 \u03a3_{j=1}^{2^j} j^\u03c1 \u2264 2^{j(\u03c1+1)}` (`powSum_lower`, `powSum_upper`)\n   and its logarithmic form (`powSum_logb_bounds`).\n3. **Derive** by a squeeze argument the exact growth rate of the constrained coset moment,\n   `(1/m) log\u2082 M(2^{k_m}) \u2192 \u03c1\u00b7R` whenever `k_m/m \u2192 R` (`cosetMoment_rate`).\n4. **Identify** `amExponent \u03c1 (1/2) = \u03c1` (`amExponent_half`) and hence obtain the exact\n   shift `\u03c1\u00b7R = amExponent \u03c1 (1/2) - \u03c1(1-R)` (`cosetMoment_rate_am`,\n   `exact_exponent_shift`), with the unconstrained case `R = 1` as `unifMoment_rate`.\n\nThe whole chain is `sorry`-free and uses only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`.\n\n## Natural next steps\n\n1. **General `p \u2260 1/2`.** Replace the uniform (max-entropy) source by a genuine\n   Bernoulli(`p`) noise distribution. This requires the *tilted / type-class* enumeration\n   underlying Ar\u0131kan's bound: order noise vectors by decreasing probability, group by\n   Hamming weight, and prove `(1/n) log\u2082 \u03a3_e P(e)\u00b7rank(e)^\u03c1 \u2192 amExponent \u03c1 p`. The R\u00e9nyi\n   closed form `amExponent_eq_renyi` from the companion file already supplies the target.\n\n2. **Averaging over random linear codes.** Make `k_m` and the coset genuinely arise from a\n   random `[n, Rn]` generator matrix, and prove the density factor `2^{-(1-R)n}` in\n   expectation (first-moment method), tying `cosetMoment` to `HammingBallDiscrepancy`'s\n   `inter_ball_coset_invariant` (coset-invariance of counts).\n\n3. **Concentration / converse.** Upgrade the expectation statement to an almost-sure or\n   high-probability exponent, and prove a matching converse (lower bound on the moment),\n   establishing the exponent as a genuine limit rather than a bound.\n\n4. **`q`-ary alphabets.** The power-sum machinery is alphabet-agnostic; replacing base `2`\n   by base `q` gives the `q`-ary coset exponent `\u03c1 \u00b7 H_{1/(1+\u03c1)}^{(q)}(p) - \u03c1(1-R)`.\n\n5. **Sharper asymptotics.** The proof gives `O((\u03c1+1)/m)` convergence; a second-order\n   (Euler\u2013Maclaurin) analysis of `\u03a3 j^\u03c1` would yield the constant and the finite-`n`\n   correction to the exponent.\n",
     "domains": [
       "Computation",
@@ -2527,7 +2541,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "a3c4f06b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T17:12:51.897034+00:00",
     "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
   },

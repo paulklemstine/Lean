@@ -31,6 +31,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
+    "consumed_by_exp_id": "0725f80e",
+    "description": "Building on cycle 14656387 (Q=0.830), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The M\u00f6bius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant \u2014 the **M\u00f6bius discriminant**\n`\u0394 = \u03b3\u03b2 \u2212 \u03b1\u03b4` attached to a first-order multiplicative recurrence\n`(\u03b1 n + \u03b2)\u00b7a(n+1) = (\u03b3 n + \u03b4)\u00b7a(n)` \u2014 and proved that its sign comple",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_14656387_a6c7f6db",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "14656387",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T19:16:11.234630+00:00",
+    "title": "Deepening: This cycle isolated a single scalar invariant \u2014 the **M\u00f6bius discriminant**"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions \u2014 Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
     "domains": [
@@ -325,7 +339,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
   {
-    "consumed_by_exp_id": "4990a5b4",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b2384a8a (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Applications"
@@ -334,7 +348,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "b2384a8a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T10:25:51.327870+00:00",
     "title": "Deepening: Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -353,7 +367,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorifying the quantum binomial product rule via filtrations of plethystic mo"
   },
   {
-    "consumed_by_exp_id": "59e795e5",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b97ab468 (Q=0.820), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential",
     "domains": [
       "Novelty"
@@ -362,7 +376,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "b97ab468",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T07:29:42.613481+00:00",
     "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
   },
@@ -1827,7 +1841,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
   },
   {
-    "consumed_by_exp_id": "5e4d3a69",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consistentHistoryEquivFixedPoint` \u2014 consistent histories \u2243 round-trip fixed points;\n* `novikov_iff_fixedPoint` \u2014 a consistent history exists iff the round trip has a fixed point;\n* `card_consistentHistory_eq_card_fixedPoint` \u2014 counts agree;\n* `grandfather_paradox` \u2014 the `state \u21a6 \u00acstate` loop has no consistent history;\n* `roundTrip_iterate`, `pow_roundTrip` \u2014 `k` traversals = `k`-th iterate of the round trip;\n* `finite_pow_consistent` \u2014 on a finite non-empty state space, some repetition of the loop is always consistent.\n\n## Natural extensions\n\n1. **Continuous / topological Novikov.** Replace finiteness by a compact convex `X`\n   and continuous causal steps, and derive existence of a consistent history from the\n   Brouwer / Schauder fixed-point theorem instead of pigeonhole.\n\n2. **Probabilistic self-consistency.** Let each `step i` be a Markov kernel; a consistent\n   history becomes a stationary distribution of the round-trip kernel. The Novikov\n   principle then always holds (stationary distributions exist on finite state spaces),\n   quantifying \"how paradoxical\" a loop is by the entropy of that distribution.\n\n3. **Counting and generic loops.** Compute the expected number of consistent histories of\n   a random loop via fixed-point statistics of random self-maps, and characterize which\n   loop lengths force consistency.\n\n4. **Uniqueness / determinism.** Give conditions (e.g. each `step i` a contraction, or the\n   round trip having a unique fixed point) under which the consistent history is unique \u2014\n   the \"deterministic time travel\" regime.\n\n5. **Interacting loops.** Model several causal loops sharing state and study joint\n   consistency as a simultaneous fixed-point problem, connecting to Nash-style existence.\n\n## Appendix: Carmichael's Fibonacci primitive-divisor theorem (open tail)\n\nThe catalog also contains a formalization of **Carmichael's primitive-divisor\ntheorem for Fibonacci numbers** \u2014 for `n \u2265 13`, `F(n)` has a *primitive* prime\ndivisor (a prime dividing `F(n)` but no earlier `F(k)`, `0 < k < n`):\n\n* `Catalog/Shared/CarmichaelHelper.lean` \u2014 the prime case (`fib_primitive_divisor_prime`),\n  fully proved by the `gcd`-collapse argument via `Nat.fib_gcd`.\n* `Catalog/Shared/CarmichaelProof.lean` \u2014 the primitive-part infrastructure\n  (`primPart`, `primPart_dvd`, `primPart_implies_primitive`) and the composite case\n  over the computationally verified range `13 \u2264 n \u2264 10000` (`fib_carmichael_composite`).\n* `Catalog/Speculative/AutoResearch/CarmichaelComposite.lean` \u2014 entry-point\n  (rank-of-apparition) theory and the headline `fib_carmichael` over `13 \u2264 n \u2264 10000`.\n* `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean` \u2014 the packaged statement\n  `fib_primitive_divisor` over the same verified range.\n\nAll of the above are complete and `sorry`-free.  What remains open is the\n**infinite composite tail** `n > 10000`.  A rigorous Lean proof of that tail is\nthe classical Carmichael/Zsygmondy argument: writing `F(n) = \u220f_{d\u2223n} C_d` with the\nhomogeneous cyclotomic values `C_d`, the primitive part is `C_n` up to at most one\nintrinsic prime factor dividing `n`; the primitive divisor then exists because\n`|C_n|` grows like `\u03c6^{\u03c6(n)}` and eventually exceeds `n`.  Formalizing this\nrequires:\n\n1. cyclotomic-value growth bounds `|\u03a6_n(\u03b1,\u03b2)| \u2265 (|\u03b1|-|\u03b2|)^{\u03c6(n)}` and their\n   sharpenings (control of how close primitive roots of unity approach `-1`);\n2. the law of apparition / lifting-the-exponent for Lucas sequences, pinning the\n   only imprimitive prime factor of `C_n` to a divisor of `n`;\n3. the bridge from the real/algebraic value `C_n` to the integer primitive part\n   `primPart n`.\n\nNone of this machinery (Zsygmondy's theorem, primitive divisors of Lucas\nsequences) is currently in Mathlib, so the tail is stated as an explicit\nboundedness hypothesis (`n \u2264 10000`) rather than left as `sorry`.  Supplying the\nthree ingredients above would let one drop that hypothesis and recover the\nunconditional theorem for all `n \u2265 13`.\n",
     "domains": [
       "Algebra",
@@ -1837,7 +1851,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "664b3442",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T23:31:41.555656+00:00",
     "title": "The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
   },
@@ -1887,7 +1901,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle deepened the \"I Am a Strange Loop\" programme along three axes:"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19e0135d",
     "description": "# Future Directions \u2014 Spectral gaps of fixed-genus chord-swap chains\n\nThis cycle established, unconditionally, that the variational (Rayleigh-quotient)\nupper bound for a one-dimensional swap chain scales as `\u0398(n^{-3})`: a monotone\nstatistic that changes by one unit per move has Dirichlet energy of order `n`\nand variance of order `n\u2074`, and the ratio pins the gap upper bound to the cubic\nwindow `[6 n^{-3}, 12 n^{-3}]`.  The conjectures below extend this mechanism from\nthe model path chain to the genuine fixed-genus chord-swap chain and beyond.\n\n## Conjecture 1 \u2014 Cubic upper bound for the fixed-genus chord-swap gap\n\nFor every fixed genus `g`, the spectral gap of the chord-swap chain on chord\ndiagrams with `n` chords satisfies `\u03b3_{n,g} = O(n^{-3})`.\n\nThe key insight is that thickening a chord diagram produces a monotone\ngenus-aware \"spread\" statistic \u2014 for instance the total nesting-plus-crossing\nindex \u2014 that a single swap changes by a bounded amount, so its Dirichlet energy\ngrows linearly in `n` while its variance grows quartically; the quotient is\nexactly the cubic order isolated for the path model.\n\nWhy now? The energy/variance bookkeeping that forces the exponent has now been\ncarried out in full for the one-dimensional prototype, reducing the chord-swap\nupper bound to the concrete combinatorial task of exhibiting one monotone,\nunit-step, quartic-variance statistic on the diagram space.\n\n## Conjecture 2 \u2014 Matching cubic lower bound (tightness of the exponent)\n\nFor every fixed genus `g`, the spectral gap obeys `\u03b3_{n,g} = \u03a9(n^{-3})`, so that\ncombined with Conjecture 1 the exponent is exactly three: `\u03b3_{n,g} = \u0398(n^{-3})`.\n\nThe key insight is that a canonical-path (multicommodity-flow) routing of unit\nmass between diagrams, in which each swap edge carries flow proportional to the\nlength of the paths through it, incurs congestion of order `n\u00b3`; the standard\nduality between congestion and the Poincar\u00e9 constant then converts the `O(n\u00b3)`\nrelaxation time into the matching `\u03a9(n^{-3})` gap.\n\nWhy now? The upper bound identifies `n\u00b3` as the intrinsic time scale, which tells\nthe lower-bound designer exactly the congestion budget a good routing must meet,\nturning an open exponent question into a calibrated flow-construction problem.\n\n## Conjecture 3 \u2014 Genus enters only through the constant, not the exponent\n\nWrite `\u03b3_{n,g} = c(g) \u00b7 n^{-3} (1 + o(1))` as `n \u2192 \u221e`.  Then the leading constant\n`c(g)` is a strictly decreasing, strictly positive function of the genus `g`, and\nthe exponent `-3` is independent of `g`.\n\nThe key insight is that fixing the genus caps the number of topologically\ndistinct local obstructions a swap must resolve, so genus rescales the effective\nconductance (hence the constant) without altering the one-dimensional diffusive\ngeometry that produces the cubic exponent.\n\nWhy now? With the exponent understood, the residual `g`-dependence is isolated in\na single measurable amplitude `c(g)`, which can be estimated from moderate-size\ndiagrams and compared across genera to test monotonicity directly.\n\n## Conjecture 4 \u2014 Universality across unit-step swap statistics\n\nAny reversible swap chain on a combinatorial family that carries a monotone\ninteger statistic changing by `\u00b11` per move, and whose stationary law spreads\nthat statistic across a range of order `n` with variance of order `n\u2074`, has\nspectral gap of order `n^{-3}`.\n\nThe key insight is that the cubic exponent is a property of the statistic's\nenergy-to-variance ratio, not of the specific objects being shuffled, so perfect\nmatchings, chord diagrams, and lattice paths should all share the same exponent\nwhenever their driving statistic has the linear-energy / quartic-variance\nprofile.\n\nWhy now? The prototype computation shows the exponent depends only on these two\ngrowth rates, making the universality statement a precise, falsifiable prediction\nthat can be checked family by family.\n",
     "domains": [
       "Algebra",
@@ -1897,7 +1911,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "1bd2f770",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T01:16:41.929862+00:00",
     "title": "This cycle established, unconditionally, that the variational (Rayleigh-quotient"
   },
@@ -2517,7 +2531,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "`BoundedError.lean` establishes, for surveillance on a finite dynamic network:"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ceb2563",
     "description": "# Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Ar\u0131kan\u2013Merhav growth rate and derived the shift from a multiplicative density model.\n\nThis cycle **removes that hypothesis at the maximal-entropy source `p = 1/2`**. In\n`ExactUniformExponent.lean` we:\n\n1. **Construct** the guesswork moment from first principles as the exact average\n   `M(N) = 2^{-k} \u03a3_{j=1}^{2^k} j^\u03c1` over `2^k` equiprobable candidates.\n2. **Prove** the elementary two-sided power-sum estimate\n   `2^{(j-1)(\u03c1+1)} \u2264 \u03a3_{j=1}^{2^j} j^\u03c1 \u2264 2^{j(\u03c1+1)}` (`powSum_lower`, `powSum_upper`)\n   and its logarithmic form (`powSum_logb_bounds`).\n3. **Derive** by a squeeze argument the exact growth rate of the constrained coset moment,\n   `(1/m) log\u2082 M(2^{k_m}) \u2192 \u03c1\u00b7R` whenever `k_m/m \u2192 R` (`cosetMoment_rate`).\n4. **Identify** `amExponent \u03c1 (1/2) = \u03c1` (`amExponent_half`) and hence obtain the exact\n   shift `\u03c1\u00b7R = amExponent \u03c1 (1/2) - \u03c1(1-R)` (`cosetMoment_rate_am`,\n   `exact_exponent_shift`), with the unconstrained case `R = 1` as `unifMoment_rate`.\n\nThe whole chain is `sorry`-free and uses only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`.\n\n## Natural next steps\n\n1. **General `p \u2260 1/2`.** Replace the uniform (max-entropy) source by a genuine\n   Bernoulli(`p`) noise distribution. This requires the *tilted / type-class* enumeration\n   underlying Ar\u0131kan's bound: order noise vectors by decreasing probability, group by\n   Hamming weight, and prove `(1/n) log\u2082 \u03a3_e P(e)\u00b7rank(e)^\u03c1 \u2192 amExponent \u03c1 p`. The R\u00e9nyi\n   closed form `amExponent_eq_renyi` from the companion file already supplies the target.\n\n2. **Averaging over random linear codes.** Make `k_m` and the coset genuinely arise from a\n   random `[n, Rn]` generator matrix, and prove the density factor `2^{-(1-R)n}` in\n   expectation (first-moment method), tying `cosetMoment` to `HammingBallDiscrepancy`'s\n   `inter_ball_coset_invariant` (coset-invariance of counts).\n\n3. **Concentration / converse.** Upgrade the expectation statement to an almost-sure or\n   high-probability exponent, and prove a matching converse (lower bound on the moment),\n   establishing the exponent as a genuine limit rather than a bound.\n\n4. **`q`-ary alphabets.** The power-sum machinery is alphabet-agnostic; replacing base `2`\n   by base `q` gives the `q`-ary coset exponent `\u03c1 \u00b7 H_{1/(1+\u03c1)}^{(q)}(p) - \u03c1(1-R)`.\n\n5. **Sharper asymptotics.** The proof gives `O((\u03c1+1)/m)` convergence; a second-order\n   (Euler\u2013Maclaurin) analysis of `\u03a3 j^\u03c1` would yield the constant and the finite-`n`\n   correction to the exponent.\n",
     "domains": [
       "Computation",
@@ -2527,7 +2541,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "a3c4f06b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T17:12:51.897034+00:00",
     "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
   },

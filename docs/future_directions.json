@@ -19566,11 +19566,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8ceb2563",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -19583,7 +19583,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1307",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-14T19:52:01.141024+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -19598,7 +19598,7 @@
       "source": "",
       "source_exp_id": "a3c4f06b",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/a3c4f06b",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_48fd384b",
       "timestamp": "2026-07-14T17:12:51.897034+00:00",
       "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
@@ -20523,7 +20523,7 @@
       "source": "",
       "source_exp_id": "14656387",
       "source_path": "This cycle isolated a single scalar invariant — the **Möbius discriminant**",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-14T19:16:11.234630+00:00",
       "title": "Deepening: This cycle isolated a single scalar invariant — the **Möbius discriminant**"
@@ -47129,7 +47129,6 @@
     "π^k_ℓ": 2
   },
   "selection_log": [
-    "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
     "abduction_followup",
@@ -47146,6 +47145,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
+    "abduction_followup",
     "abduction_followup",
     "abduction_followup",
     "abduction_followup"

@@ -40,6 +40,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "0725f80e",
+    "description": "Building on cycle 14656387 (Q=0.830), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Möbius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant — the **Möbius discriminant**\n`Δ = γβ − αδ` attached to a first-order multiplicative recurrence\n`(α n + β)·a(n+1) = (γ n + δ)·a(n)` — and proved that its sign comple",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_14656387_a6c7f6db",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "14656387",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T19:16:11.234630+00:00",
+    "title": "Deepening: This cycle isolated a single scalar invariant — the **Möbius discriminant**"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
     "domain_bridges": [],
