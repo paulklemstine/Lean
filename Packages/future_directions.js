@@ -748,6 +748,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
   },
   {
+    "consumed_by_exp_id": "c4f680cf",
+    "description": "Building on cycle 9a38651d (Q=0.780), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consistentHistoryEquivFixedPoint` \u2014 consistent histories \u2243 round-trip fixed points;\n* `novikov_iff_fixedPoint",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_9a38651d_e03ed9d1",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "9a38651d",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T21:58:04.632669+00:00",
+    "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle a71dcffe (Q=0.780), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and tha",
     "domains": [
@@ -1009,7 +1023,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50098ece",
     "description": "Cycle 8ceb2563 (Q=0.820) proved 13 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**:",
     "domains": [
       "Novelty"
@@ -1018,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "8ceb2563",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T22:36:24.306202+00:00",
     "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponen"
   },

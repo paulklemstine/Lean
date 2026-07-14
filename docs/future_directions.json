@@ -23971,7 +23971,7 @@
       "source": "",
       "source_exp_id": "9a38651d",
       "source_path": "The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-14T21:58:04.632669+00:00",
       "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
@@ -27544,7 +27544,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "50098ece",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -27571,7 +27571,7 @@
       "source": "",
       "source_exp_id": "8ceb2563",
       "source_path": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-14T22:36:24.306202+00:00",
       "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponen"
