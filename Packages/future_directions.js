@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "226557b2",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domains": [
       "Probability"
@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "0981cb8f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:40:03.135454+00:00",
     "title": "Deepening: Consciousness as Emergent Fixed Point"
   },
