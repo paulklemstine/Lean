@@ -17110,7 +17110,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "12ea9340",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17138,7 +17138,7 @@
       "source": "",
       "source_exp_id": "49ddee39",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/49ddee39",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_0a5fcbcc",
       "timestamp": "2026-07-13T21:24:15.573588+00:00",
       "title": "Constructive, lower-bound half of the co-index theory"
