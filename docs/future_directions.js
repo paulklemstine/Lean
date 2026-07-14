@@ -213,7 +213,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b45b1485",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -222,7 +222,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
