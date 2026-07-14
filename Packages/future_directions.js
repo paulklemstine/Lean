@@ -720,7 +720,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp maximal excess of co-index under suspension for all feasible sta"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "482ba253",
     "description": "Building on cycle 769cd692 (Q=0.780), which proved 51 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: the suspension tower and the excess spectrum of free \u2124\u2082-complexes\n\nThis cycle established the **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as a\nrigorous object and proved three things about it unconditionally: iterating the\nsingle-step suspension raises the co-index by at l",
     "domains": [
       "Novelty"
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "769cd692",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T07:30:03.453805+00:00",
     "title": "Deepening: **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as"
   },
@@ -790,7 +790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Universality of Transfer Functions Among Accumulation Points"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef403dbc",
     "description": "Building on cycle e978b5fe (Q=0.780), which proved 1210 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: While White's conjecture on symmetric exchanges (Part 2) is false, the weaker Part 3 remains open: for any matroid M and any two multisets of bases B and B' with the same multiset union of elements, it is possible to obtain B' from B by repeatedly replacing two bases with any two other bases having ",
     "domains": [
       "MachineLearning"
@@ -799,7 +799,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "e978b5fe",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T09:01:53.417824+00:00",
     "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
   },
@@ -1444,7 +1444,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b2384a8a",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -1453,7 +1453,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -1512,6 +1512,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
+  },
+  {
+    "consumed_by_exp_id": "385fff12",
+    "description": "The main result establishing the exact exponential growth rate of the \u03c1-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly \u03c1(1-R) relative to the unconstrained Ar\u0131kan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary R\u00e9nyi entropy.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_0446",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00205v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-06T11:06:30.434239+00:00",
+    "title": "Exact Exponent for Constrained Coset Guesswork"
   },
   {
     "consumed_by_exp_id": "",
@@ -2374,7 +2388,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The foundational cycle showed the *second* Seidel moment `tr(S\u00b2) = n(n-1)` is"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bce13597",
     "description": "# Future Directions: from the constructive lower bound to the exact \u2124\u2082-coindex\n\n## What this cycle added\n\nThe previous cycle established the **suspension tower** `S\u1d4f(K)` of a free `\u2124\u2082`-complex in the\ncross-polytope model and proved, *unconditionally*, the **constructive lower-bound half**:\nsingle-step suspension raises the coindex, the increase is realised by an explicit suspended map,\nand the bound is sharp only in two base cases (`S\u00b9 \u219b S\u2070`, `S\u00b2 \u219b S\u00b9`, by `decide`). The matching\nupper bound `coind(S\u207f) \u2264 n` in every dimension was left open \u2014 flagged as \"the full strength of the\nBorsuk\u2013Ulam / Tucker theorem\".\n\nThis cycle **closes that gap** in the combinatorial model. The file\n`Catalog/Novelty/Z2CoindexSuspensionTower.lean` (self-contained, no `sorry`, only standard axioms)\nproves:\n\n1. **The combinatorial heart** (`induced_simplicial_iff_injective`): a `\u2124\u2082`-map, being equivariant,\n   is determined by positive-vertex data `g`, and its simpliciality is **equivalent** to injectivity\n   of the coordinate map `\u03c3 i = (g i).1`. A simplicial antipodal self-map of cross-polytopes is\n   precisely an injection of coordinate axes carrying arbitrary independent signs.\n\n2. **The exact existence criterion** (`nonempty_iff_le`): `Nonempty (Z2Map m n) \u2194 m \u2264 n`.\n   This single statement contains both the constructive lower bound `coind(S\u207f) \u2265 n` and the full\n   Borsuk\u2013Ulam upper bound `coind(S\u207f) \u2264 n`.\n\n3. **Borsuk\u2013Ulam in all dimensions** (`borsuk_ulam_general`): `IsEmpty (Z2Map (n+1) n)` for every\n   `n`, upgrading the two `decide` base cases to the whole tower.\n\n4. **The exact coindex** (`coind`, `coind_eq`): `coind(S\u207f) := sSup {m | Nonempty (Z2Map m n)} = n`.\n\n5. **The suspension tower, sharp** (`Z2Map.suspIter`, `suspension_tower_raises_coindex`,\n   `suspension_tower_exact`, `borsuk_ulam_tower_sharp`): the `k`-fold suspension functor exists,\n   raises the coindex bound by exactly `k`, preserves the \"excess\" `n \u2212 m`\n   (`Nonempty (Z2Map (m+k) (n+k)) \u2194 Nonempty (Z2Map m n)`), and every level of the tower is\n   Borsuk\u2013Ulam sharp.\n\n## Interpretation\n\nIn this rigid simplicial model the entire \"excess spectrum\" collapses to a single invariant, the\nexcess `n \u2212 m`, which suspension preserves exactly. The coindex is therefore a complete invariant:\nit equals the dimension, and the suspension tower increments it by one at each step with no slack.\n\n## Genuinely open next steps\n\n* **Beyond cross-polytopes.** The equivalence \"simplicial antipodal map \u21d4 coordinate injection\" is\n  special to the octahedral model. For general free simplicial `\u2124\u2082`-complexes `K`, the coindex is\n  *not* determined by dimension alone, and the upper bound genuinely needs Tucker's lemma. Formalise\n  Tucker's lemma and recover `coind \u2264 dim` for arbitrary `K`.\n* **The index / coindex gap.** Introduce the `\u2124\u2082`-*index* (maps *out of* `K` into spheres) and study\n  complexes with `ind(K) < coind(K)`; the cross-polytope spheres have `ind = coind = n`.\n* **Chromatic applications.** Connect `coind` of neighbourhood/box complexes to lower bounds on\n  chromatic numbers (Lov\u00e1sz\u2013Kneser), now that `coind` is pinned down exactly for spheres.\n* **Equivariant homotopy refinement.** Replace \"`Nonempty (Z2Map m n)`\" by a homotopy category and\n  ask whether the suspension functor is fully faithful / an equivalence on the relevant subcategory.\n",
     "domains": [
       "Geometry",
@@ -2384,7 +2398,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "b78ccbe1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T08:57:48.045739+00:00",
     "title": "The previous cycle established the **suspension tower** `S\u1d4f(K)` of a free `\u2124\u2082`-c"
   },
