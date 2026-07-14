@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ddc0d02e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Proofs as DAGs\n\nThis cycle deepened the \"Proofs as DAGs\" line by developing the *topological\nstructure* of an abstract proof-dependency relation. Starting from the existing\n`Hands",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-13T17:59:25",
-      "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-    },
-    {
       "cycle_id": "d31b8b8b",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Sharp excess of ℤ₂-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free ℤ₂-complexes: sus",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-14T10:25:51",
       "title": "Limit Distribution of Descendants in Random d-DAGs"
+    },
+    {
+      "cycle_id": "ef403dbc",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — White's Quadratic Exchange Conjecture (Part 3)\n\nThis cycle deepened the quadratic-exchange engine (`Basic.lean`) and its uniform\ninstances (`Uniform.lean`) with genuine structura",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-14T10:59:51",
+      "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0a5d3cfa",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Mathematics as a Phase Transition\n\nThis cycle closed the outstanding placeholder results connecting the factorial\nnumber system to the general mixed-radix theory, and distilled th",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 13,
-      "timestamp": "2026-07-11T20:17:57",
-      "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
-    },
     {
       "cycle_id": "8e111703",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-14T10:25:51",
       "title": "Limit Distribution of Descendants in Random d-DAGs"
+    },
+    {
+      "cycle_id": "ef403dbc",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — White's Quadratic Exchange Conjecture (Part 3)\n\nThis cycle deepened the quadratic-exchange engine (`Basic.lean`) and its uniform\ninstances (`Uniform.lean`) with genuine structura",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-14T10:59:51",
+      "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "30210199",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "30210199",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.82
-    },
     {
       "cycle_id": "30210199",
       "domain": "Applications",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "poissonTerm_hasDerivAt_succ",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "ef403dbc",
+      "domain": "Applications",
+      "name": "RQMove",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "ef403dbc",
+      "domain": "Applications",
+      "name": "RReachable",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-14T10:25:51",
+  "last_updated": "2026-07-14T10:59:51",
   "open_questions": [
     {
       "context": "+`sorry`-free.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "33954867",
-        "quality": 0.72,
-        "theorems": 17,
-        "title": "This cycle isolated and proved the arithmetic residue of the identity"
-      },
-      {
         "cycle_id": "797ab793",
         "quality": 0.82,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 10,
         "title": "Limit Distribution of Descendants in Random d-DAGs"
+      },
+      {
+        "cycle_id": "ef403dbc",
+        "quality": 0.8,
+        "theorems": 16,
+        "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
       }
     ],
     "Bridges": [
