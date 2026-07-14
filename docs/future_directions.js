@@ -200,6 +200,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 12ea9340 (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_12ea9340_039025ac",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "12ea9340",
+    "status": "available",
+    "timestamp": "2026-07-14T22:36:30.357183+00:00",
+    "title": "Deepening: Constructive, lower-bound half of the co-index theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -734,20 +748,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
   },
   {
-    "consumed_by_exp_id": "c4f680cf",
-    "description": "Building on cycle 9a38651d (Q=0.780), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consistentHistoryEquivFixedPoint` \u2014 consistent histories \u2243 round-trip fixed points;\n* `novikov_iff_fixedPoint",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_9a38651d_e03ed9d1",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "9a38651d",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T21:58:04.632669+00:00",
-    "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle a71dcffe (Q=0.780), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and tha",
     "domains": [
@@ -937,6 +937,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T08:39:55.260573+00:00",
     "title": "Close Proofs: The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the"
+  },
+  {
+    "consumed_by_exp_id": "71637775",
+    "description": "Cycle 12ea9340 (Q=0.820) proved 27 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coi",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_12ea9340_398c84dc",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "12ea9340",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T22:36:30.475747+00:00",
+    "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -2692,6 +2706,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T22:36:14.720481+00:00",
     "title": "The present cycle removed the binary restriction from the exact coset-guesswork "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: the join bifunctor and the sharp join law for the \u2124\u2082-coindex\n\nThis cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-bound half of the\nco-index theory by building the **join** of free \u2124\u2082-complexes on top of the previously established\nsuspension tower (`coind(S\u207f) = n`). The new file is\n`Catalog/Novelty/Z2CoindexJoin.lean`.\n\n## What was proved this cycle\n\nWorking with **free \u2124\u2082-sets** `FreeZ2` (a type with a fixed-point-free antipodal involution) and\ntheir equivariant simplicial maps `GMap` (the octahedral / cross-polytope face structure), with the\ncoindex `coind K = sSup {m | Nonempty (GMap (Oct m) K)}`:\n\n- **Join bifunctor** `GMap.joinMap : GMap A K \u2192 GMap B L \u2192 GMap (A \u22c6 B) (K \u22c6 L)`.\n- **Join-monoid isomorphism** `Oct m \u22c6 Oct n \u2245 Oct (m+n+1)` via an explicit coordinate-splitting\n  equivariant bijection `octJoinEquiv` (with both directions `octJoinIso`, `octJoinIsoInv`).\n- **Constructive lower bound (headline)** `coindex_join_lower_bound`: for *arbitrary* free \u2124\u2082-sets,\n  `Nonempty (GMap (Oct a) K) \u2192 Nonempty (GMap (Oct b) L) \u2192 Nonempty (GMap (Oct (a+b+1)) (K \u22c6 L))`,\n  i.e. `coind(K \u22c6 L) \u2265 coind(K) + coind(L) + 1`, realised by an explicit map.\n- **Sharp join law on the octahedral tower** `coind_octJoin`/`coind_join_eq_add`:\n  `coind(Oct m \u22c6 Oct n) = m + n + 1 = coind(Oct m) + coind(Oct n) + 1` \u2014 the equality half of\n  Conjecture 1, proved exactly where `coind = dim`.\n- **Suspension jump** `coind_join_S0`: `coind(Oct m \u22c6 Oct 0) = m + 1`, the classical suspension case\n  `L = S\u2070`.\n- **Commutative associative join-monoid** `coind_join_comm`, `coind_join_left`, `coind_join_right`,\n  `coind_join_assoc` on the level of the coindex.\n\nAll results compile against Mathlib `v4.28.0` and use only the standard axioms\n`propext, Classical.choice, Quot.sound`.\n\n## Relation to the stated conjectures\n\n- **Conjecture 1 (Sharp join law).** The *lower bound* is proved constructively for all free\n  \u2124\u2082-sets; the full *equality* is proved on the octahedral tower (`coind_octJoin`). The general\n  equality still needs an equivariant-cohomology upper bound beyond this combinatorial model.\n- **Conjecture 3 (Borsuk\u2013Ulam in the octahedral tower).** Already `coind(Oct k) = k` on the nose via\n  the base file's `nonempty_iff_le`, re-exposed here as `nonempty_gmapOct_iff` and `coind_Oct`; the\n  join splitting `Oct k \u2245 Oct 0 \u22c6 Oct (k-1)` is the special case `octJoinEquiv 0 (k-1)`.\n\n## Open problems / next steps\n\n1. **General upper bound.** Introduce a \u2124\u2082-index that is additive under joins (equivariant\n   cohomology / Stiefel\u2013Whitney height) to upgrade the octahedral equality to arbitrary `K, L`.\n2. **Conjecture 2 (maximal excess).** Build finite free \u2124\u2082-complexes of dimension `d` with\n   `coind = c < d` by joining a Borsuk\u2013Ulam-pinned block with a sphere; the join dial (dimension\n   independent of coindex) is now formalised.\n3. **Conjecture 4 (excess monotone under iterated suspension).** Combine the `+1` dimension law with\n   the `\u2265 +1` coindex law to prove the excess `e_j = coind(S\u02b2 K) \u2212 dim(S\u02b2 K)` is non-increasing,\n   with saturation contingent on the general upper bound.\n",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_1320",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "12ea9340",
+    "status": "available",
+    "timestamp": "2026-07-14T22:36:27.724196+00:00",
+    "title": "This cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-boun"
   },
   {
     "consumed_by_exp_id": "",

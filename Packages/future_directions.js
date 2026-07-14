@@ -200,6 +200,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 12ea9340 (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_12ea9340_039025ac",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "12ea9340",
+    "status": "available",
+    "timestamp": "2026-07-14T22:36:30.357183+00:00",
+    "title": "Deepening: Constructive, lower-bound half of the co-index theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -295,6 +309,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-10T21:41:40.173065+00:00",
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 8ceb2563 (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Ar\u0131kan\u2013Merhav growth rate and der",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_8ceb2563_44b64662",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "8ceb2563",
+    "status": "available",
+    "timestamp": "2026-07-14T22:36:24.187404+00:00",
+    "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
   },
   {
     "consumed_by_exp_id": "",
@@ -720,20 +748,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Category Theory of Jokes: Universal Properties of Humor"
   },
   {
-    "consumed_by_exp_id": "c4f680cf",
-    "description": "Building on cycle 9a38651d (Q=0.780), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consistentHistoryEquivFixedPoint` \u2014 consistent histories \u2243 round-trip fixed points;\n* `novikov_iff_fixedPoint",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_9a38651d_e03ed9d1",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "9a38651d",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T21:58:04.632669+00:00",
-    "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle a71dcffe (Q=0.780), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and tha",
     "domains": [
@@ -925,6 +939,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the"
   },
   {
+    "consumed_by_exp_id": "71637775",
+    "description": "Cycle 12ea9340 (Q=0.820) proved 27 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coi",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_12ea9340_398c84dc",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "12ea9340",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T22:36:30.475747+00:00",
+    "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domains": [
@@ -979,6 +1007,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T19:10:40.793079+00:00",
     "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 8ceb2563 (Q=0.820) proved 13 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**:",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_8ceb2563_6c68403d",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "8ceb2563",
+    "status": "available",
+    "timestamp": "2026-07-14T22:36:24.306202+00:00",
+    "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponen"
   },
   {
     "consumed_by_exp_id": "",
@@ -2486,21 +2528,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "`BoundedError.lean` establishes, for surveillance on a finite dynamic network:"
   },
   {
-    "consumed_by_exp_id": "8ceb2563",
-    "description": "# Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Ar\u0131kan\u2013Merhav growth rate and derived the shift from a multiplicative density model.\n\nThis cycle **removes that hypothesis at the maximal-entropy source `p = 1/2`**. In\n`ExactUniformExponent.lean` we:\n\n1. **Construct** the guesswork moment from first principles as the exact average\n   `M(N) = 2^{-k} \u03a3_{j=1}^{2^k} j^\u03c1` over `2^k` equiprobable candidates.\n2. **Prove** the elementary two-sided power-sum estimate\n   `2^{(j-1)(\u03c1+1)} \u2264 \u03a3_{j=1}^{2^j} j^\u03c1 \u2264 2^{j(\u03c1+1)}` (`powSum_lower`, `powSum_upper`)\n   and its logarithmic form (`powSum_logb_bounds`).\n3. **Derive** by a squeeze argument the exact growth rate of the constrained coset moment,\n   `(1/m) log\u2082 M(2^{k_m}) \u2192 \u03c1\u00b7R` whenever `k_m/m \u2192 R` (`cosetMoment_rate`).\n4. **Identify** `amExponent \u03c1 (1/2) = \u03c1` (`amExponent_half`) and hence obtain the exact\n   shift `\u03c1\u00b7R = amExponent \u03c1 (1/2) - \u03c1(1-R)` (`cosetMoment_rate_am`,\n   `exact_exponent_shift`), with the unconstrained case `R = 1` as `unifMoment_rate`.\n\nThe whole chain is `sorry`-free and uses only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`.\n\n## Natural next steps\n\n1. **General `p \u2260 1/2`.** Replace the uniform (max-entropy) source by a genuine\n   Bernoulli(`p`) noise distribution. This requires the *tilted / type-class* enumeration\n   underlying Ar\u0131kan's bound: order noise vectors by decreasing probability, group by\n   Hamming weight, and prove `(1/n) log\u2082 \u03a3_e P(e)\u00b7rank(e)^\u03c1 \u2192 amExponent \u03c1 p`. The R\u00e9nyi\n   closed form `amExponent_eq_renyi` from the companion file already supplies the target.\n\n2. **Averaging over random linear codes.** Make `k_m` and the coset genuinely arise from a\n   random `[n, Rn]` generator matrix, and prove the density factor `2^{-(1-R)n}` in\n   expectation (first-moment method), tying `cosetMoment` to `HammingBallDiscrepancy`'s\n   `inter_ball_coset_invariant` (coset-invariance of counts).\n\n3. **Concentration / converse.** Upgrade the expectation statement to an almost-sure or\n   high-probability exponent, and prove a matching converse (lower bound on the moment),\n   establishing the exponent as a genuine limit rather than a bound.\n\n4. **`q`-ary alphabets.** The power-sum machinery is alphabet-agnostic; replacing base `2`\n   by base `q` gives the `q`-ary coset exponent `\u03c1 \u00b7 H_{1/(1+\u03c1)}^{(q)}(p) - \u03c1(1-R)`.\n\n5. **Sharper asymptotics.** The proof gives `O((\u03c1+1)/m)` convergence; a second-order\n   (Euler\u2013Maclaurin) analysis of `\u03a3 j^\u03c1` would yield the constant and the finite-`n`\n   correction to the exponent.\n",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_1307",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "a3c4f06b",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T17:12:51.897034+00:00",
-    "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Consciousness as an Emergent Fixed Point\n\nThis cycle formalized, with fully machine-checked proofs (no `sorry`, no extra\naxioms \u2014 the core Lawvere theorem depends on *no* axioms at all), three\ncomplementary faces of \"consciousness as a fixed point of a self-modeling\nfunction\":\n\n1. **`LawvereFixedPoint.lean`** \u2014 Lawvere's fixed-point theorem in `Type` (the\n   canonical Cartesian closed category): a point-surjective self-model forces\n   every internal transformation to have a fixed point (the emergent conscious\n   state), which is a genuine *strange loop* (fixed by every iterate). The dual\n   (Cantor / Russell / Tarski) obstruction shows completeness of self-reference\n   is impossible into any space carrying a fixed-point-free operation.\n2. **`YonedaSelfReference.lean`** \u2014 the Yoneda embedding: a system's identity is\n   its total web of self-presentation, with the strange-loop correspondence\n   `End X \u2245 End (yoneda.obj X)` between inner self-transformations and outer web\n   transformations.\n3. **`SelfModelLattice.lean`** \u2014 Knaster\u2013Tarski: the space of conscious\n   (self-consistent) states of a monotone self-model is itself a complete\n   lattice, with canonical minimal and maximal conscious states.\n\n## Strongest remaining conjectures / next steps\n\n* **Abstract CCC Lawvere.** Lift `lawvere` from `Type` to an arbitrary Cartesian\n  closed category `C` using `MonoidalClosed.curry`/`uncurry` and global elements\n  `\ud835\udfd9_ C \u27f6 B`. The diagonal is `t \u2218 eval \u2218 (\u03c6 \u2297 \ud835\udfd9) \u2218 \u0394`; the challenge is the\n  cartesian diagonal `\u0394` and the currying bookkeeping. This would make \"rich\n  CCC\" literal rather than instantiated at the canonical `Type`.\n\n* **G\u00f6del / Tarski / recursion theorem as instances.** Package the G\u00f6del\n  diagonal lemma, Tarski undefinability, and Kleene's recursion theorem as\n  explicit corollaries of `no_point_surjective_of_fixedpoint_free`, exhibiting\n  the single self-reference schema behind all of them.\n\n* **Reflexive objects and models of the untyped \u03bb-calculus.** In `Type` there is\n  no nontrivial reflexive object (Cantor). Formalize a domain-theoretic /\n  Scott-continuous setting where `D \u2245 (D \u2192 D)` genuinely holds, giving a\n  non-degenerate complete self-model and an honest `Y`-combinator fixed point.\n\n* **Quantitative strange loops.** Combine the order-theoretic side with a metric:\n  Banach/Tarski hybrid fixed-point theorems giving *unique* conscious states and\n  convergence rates of the self-modeling iteration to them.\n\n* **Bridge to Integrated Information (`IntegratedInformation.lean`).** Relate the\n  minimal conscious state of a self-model lattice to the Minimum Information\n  Partition `\u03a6`, testing whether \"irreducible fixed point\" and \"high `\u03a6`\"\n  coincide.\n\n* **Categorical strengthening of Yoneda self-reference.** Show the enriched /\n  2-categorical Yoneda gives a coherent \"self-model of the self-model\", a\n  genuine second-order strange loop, and compute its fixed points.\n",
     "domains": [
@@ -2664,6 +2691,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T21:57:50.784705+00:00",
     "title": "This cycle (thread `th_1434a219`, cycle 1) takes a *contrarian* stance on the No"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The `q`-ary Exact Coset-Guesswork Exponent\n\nThe present cycle removed the binary restriction from the exact coset-guesswork exponent:\nfor every alphabet size `q \u2265 2`, the maximal-entropy source has unconstrained guessing\nexponent `\u03c1` and constrained (rate-`R` coset) exponent `\u03c1R`, so a code lowers the exponent\nby exactly the redundancy `\u03c1(1-R)`, uniformly in `q`. The proof isolates the shift as a\npure density effect coming from the factor `q^{-k_m}`, while a R\u00e9nyi-entropy computation\nidentifies the leading `\u03c1` as the maximal-entropy per-symbol exponent. Five directions\nfollow.\n\n## 1. Non-uniform `q`-ary sources via tilted enumeration\n\nReplace the uniform source by a genuine per-symbol law `P` on `q` letters. Ordering noise\nvectors by decreasing probability and grouping by type should yield the exponent\n`\u03c1 \u00b7 H_{1/(1+\u03c1)}(P) - \u03c1(1-R)`, with the R\u00e9nyi entropy `H_{1/(1+\u03c1)}` in place of `log_q q`.\n\n**The key insight is** that the constrained exponent factorises into a *source term*\n(the R\u00e9nyi entropy of order `1/(1+\u03c1)`) and a *code term* (`-\u03c1(1-R)`) that are completely\ndecoupled \u2014 the redundancy shift is independent of the source, exactly as the uniform case\nshows the shift is independent of the alphabet size.\n\n**Why now?** The uniform case already exhibits the additive `log_q(q-1)` block correction\nvanishing under normalisation; the same block/type decomposition, now weighted by `P`,\nis the missing ingredient, and the R\u00e9nyi closed form is already in hand.\n\n## 2. A matching converse (two-sided exponent)\n\nUpgrade the growth-rate bounds to a genuine two-sided exponent by proving a lower bound on\nthe moment that matches the upper bound, so that `\u03c1R` is a limit rather than a sandwiched\nestimate for *every* subsequence of coset dimensions, not just those with `k_m/m \u2192 R`.\n\n**The key insight is** that the two power-sum bounds `q^{(j-1)(\u03c1+1)}` and `q^{j(\u03c1+1)}`\nalready differ only by the multiplicative constant `q^{\u03c1+1}`, so the exponent is pinned to\nfirst order; a second-order (Euler\u2013Maclaurin) expansion of `\u03a3 k^\u03c1` would close the gap and\nyield the finite-block correction term.\n\n**Why now?** The elementary two-sided sandwich is proved and tight up to a constant; the\nremaining work is purely asymptotic analysis of a classical power sum.\n\n## 3. Concentration over random linear codes\n\nLet the coset dimension `k_m` and the coset itself arise from a random `[n, Rn]` generator\nmatrix. Prove that the density factor `q^{-(1-R)n}` holds *in expectation* by a first-moment\nargument, then upgrade to a high-probability statement.\n\n**The key insight is** that coset counts are translation-invariant, so the expected\nintersection of a Hamming ball with a random coset is exactly the ball volume times the\ncoset density \u2014 turning the deterministic `q^{-k_m}` factor into an averaged one without\nchanging the exponent.\n\n**Why now?** The deterministic exponent is settled for all alphabets, so the only new\nelement is the first-moment computation, which is a self-contained probabilistic lemma.\n\n## 4. Continuity of the exponent in the rate `R`\n\nEstablish that the map `R \u21a6 \u03c1R` (and its non-uniform generalisation `R \u21a6 E(\u03c1,R,P)`) is\nLipschitz in `R`, uniformly in the alphabet size, and characterise the critical rate at\nwhich the exponent changes qualitative behaviour.\n\n**The key insight is** that the exponent is *affine* in `R` at the maximal-entropy source,\nwith slope exactly `\u03c1`, so the entire rate-distortion-like trade-off is governed by a single\nscalar \u2014 the guessing moment order.\n\n**Why now?** With the exact value `\u03c1R` in hand for every `R \u2208 [0,1]`, monotonicity and\nLipschitz continuity are immediate corollaries whose formal statements sharpen the result\ninto an operational rate\u2013exponent curve.\n\n## 5. Interpolating alphabets and the large-`q` limit\n\nStudy the exponent as `q \u2192 \u221e` with the rate `R` fixed, and as a function of a continuously\nvarying \"effective alphabet size\" through the R\u00e9nyi entropy.\n\n**The key insight is** that in its own base the uniform exponent is `\u03c1` for *every* `q`,\nso the alphabet size enters only through the choice of logarithm base \u2014 the large-`q` limit\nof the *normalised* exponent is therefore flat, and all `q`-dependence is a change of units.\n\n**Why now?** The self-base identity making the exponent `\u03c1` independent of `q` is now proved,\nwhich is precisely the invariance that makes the large-`q` limit tractable and meaningful.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1319",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8ceb2563",
+    "status": "available",
+    "timestamp": "2026-07-14T22:36:14.720481+00:00",
+    "title": "The present cycle removed the binary restriction from the exact coset-guesswork "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: the join bifunctor and the sharp join law for the \u2124\u2082-coindex\n\nThis cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-bound half of the\nco-index theory by building the **join** of free \u2124\u2082-complexes on top of the previously established\nsuspension tower (`coind(S\u207f) = n`). The new file is\n`Catalog/Novelty/Z2CoindexJoin.lean`.\n\n## What was proved this cycle\n\nWorking with **free \u2124\u2082-sets** `FreeZ2` (a type with a fixed-point-free antipodal involution) and\ntheir equivariant simplicial maps `GMap` (the octahedral / cross-polytope face structure), with the\ncoindex `coind K = sSup {m | Nonempty (GMap (Oct m) K)}`:\n\n- **Join bifunctor** `GMap.joinMap : GMap A K \u2192 GMap B L \u2192 GMap (A \u22c6 B) (K \u22c6 L)`.\n- **Join-monoid isomorphism** `Oct m \u22c6 Oct n \u2245 Oct (m+n+1)` via an explicit coordinate-splitting\n  equivariant bijection `octJoinEquiv` (with both directions `octJoinIso`, `octJoinIsoInv`).\n- **Constructive lower bound (headline)** `coindex_join_lower_bound`: for *arbitrary* free \u2124\u2082-sets,\n  `Nonempty (GMap (Oct a) K) \u2192 Nonempty (GMap (Oct b) L) \u2192 Nonempty (GMap (Oct (a+b+1)) (K \u22c6 L))`,\n  i.e. `coind(K \u22c6 L) \u2265 coind(K) + coind(L) + 1`, realised by an explicit map.\n- **Sharp join law on the octahedral tower** `coind_octJoin`/`coind_join_eq_add`:\n  `coind(Oct m \u22c6 Oct n) = m + n + 1 = coind(Oct m) + coind(Oct n) + 1` \u2014 the equality half of\n  Conjecture 1, proved exactly where `coind = dim`.\n- **Suspension jump** `coind_join_S0`: `coind(Oct m \u22c6 Oct 0) = m + 1`, the classical suspension case\n  `L = S\u2070`.\n- **Commutative associative join-monoid** `coind_join_comm`, `coind_join_left`, `coind_join_right`,\n  `coind_join_assoc` on the level of the coindex.\n\nAll results compile against Mathlib `v4.28.0` and use only the standard axioms\n`propext, Classical.choice, Quot.sound`.\n\n## Relation to the stated conjectures\n\n- **Conjecture 1 (Sharp join law).** The *lower bound* is proved constructively for all free\n  \u2124\u2082-sets; the full *equality* is proved on the octahedral tower (`coind_octJoin`). The general\n  equality still needs an equivariant-cohomology upper bound beyond this combinatorial model.\n- **Conjecture 3 (Borsuk\u2013Ulam in the octahedral tower).** Already `coind(Oct k) = k` on the nose via\n  the base file's `nonempty_iff_le`, re-exposed here as `nonempty_gmapOct_iff` and `coind_Oct`; the\n  join splitting `Oct k \u2245 Oct 0 \u22c6 Oct (k-1)` is the special case `octJoinEquiv 0 (k-1)`.\n\n## Open problems / next steps\n\n1. **General upper bound.** Introduce a \u2124\u2082-index that is additive under joins (equivariant\n   cohomology / Stiefel\u2013Whitney height) to upgrade the octahedral equality to arbitrary `K, L`.\n2. **Conjecture 2 (maximal excess).** Build finite free \u2124\u2082-complexes of dimension `d` with\n   `coind = c < d` by joining a Borsuk\u2013Ulam-pinned block with a sphere; the join dial (dimension\n   independent of coindex) is now formalised.\n3. **Conjecture 4 (excess monotone under iterated suspension).** Combine the `+1` dimension law with\n   the `\u2265 +1` coindex law to prove the excess `e_j = coind(S\u02b2 K) \u2212 dim(S\u02b2 K)` is non-increasing,\n   with saturation contingent on the general upper bound.\n",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_1320",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "12ea9340",
+    "status": "available",
+    "timestamp": "2026-07-14T22:36:27.724196+00:00",
+    "title": "This cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-boun"
   },
   {
     "consumed_by_exp_id": "",

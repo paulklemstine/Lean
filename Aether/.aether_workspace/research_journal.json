@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c923638c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — the sharp/flat λ-difference and its μ-correction\n\nThis cycle isolated the purely algebraic core of the extension of Matsuno's\ntwist formula to non-vanishing μ-invariants. Modelli",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 25,
-      "timestamp": "2026-07-14T03:40:48",
-      "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
-    },
-    {
       "cycle_id": "11762aec",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle assembled a reusable toughness toolkit around a single load-bearing\ninvariant, the *component count* `nu",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-14T22:36:24",
       "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
+    },
+    {
+      "cycle_id": "12ea9340",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: the join bifunctor and the sharp join law for the ℤ₂-coindex\n\nThis cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-bound half of the\nco-index theory by buil",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 27,
+      "timestamp": "2026-07-14T22:36:30",
+      "title": "Constructive, lower-bound half of the co-index theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "49f67430",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Explicit threshold for no-(k+1)-in-line\n\n## What is proved (`Geometry/NoKPlus1InLine.lean`)\n\nPoints live in the `n × n` integer grid `grid n = {0,…,n-1}²`. Collinearity is\nthe int",
-      "quality_score": 0.62,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-12T07:02:25",
-      "title": "Explicit Threshold for No-(k+1)-in-line: f_k(n) = kn for all k ≥ 3 and n ≥ k"
-    },
     {
       "cycle_id": "e2c082ff",
       "domain": "MachineLearning",
@@ -2501,21 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-14T22:36:24",
       "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
+    },
+    {
+      "cycle_id": "12ea9340",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: the join bifunctor and the sharp join law for the ℤ₂-coindex\n\nThis cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-bound half of the\nco-index theory by buil",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 27,
+      "timestamp": "2026-07-14T22:36:30",
+      "title": "Constructive, lower-bound half of the co-index theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2c734846",
-      "domain": "Applications",
-      "name": "no_self_negation",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "202302de",
-      "domain": "Novelty",
-      "name": "StrictLogConvex",
-      "quality": 0.83
-    },
     {
       "cycle_id": "202302de",
       "domain": "Novelty",
@@ -2803,17 +2791,22 @@
       "domain": "Novelty",
       "name": "renyiEntropy_uniform",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "12ea9340",
+      "domain": "Novelty",
+      "name": "symm_equiv",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "12ea9340",
+      "domain": "Novelty",
+      "name": "trans_equiv",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T22:36:24",
+  "last_updated": "2026-07-14T22:36:30",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "dbbebdc4",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T00:41:38"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "28ee7277",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T22:36:24"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "12ea9340",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-14T22:36:30"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a3c4f06b",
-        "quality": 0.83,
-        "theorems": 12,
-        "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
-      },
-      {
         "cycle_id": "5b1c1bd3",
         "quality": 0.82,
         "theorems": 40,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 13,
         "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
+      },
+      {
+        "cycle_id": "12ea9340",
+        "quality": 0.82,
+        "theorems": 27,
+        "title": "Constructive, lower-bound half of the co-index theory"
       }
     ],
     "NumberTheory": [
