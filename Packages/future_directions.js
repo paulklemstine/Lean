@@ -995,20 +995,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "consumed_by_exp_id": "189556db",
-    "description": "Cycle c923638c (Q=0.820) proved 25 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `\u03bc` and `\u03bb` of a characteristic element, realised ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_c923638c_b707ef9c",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "c923638c",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T03:40:54.759277+00:00",
-    "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle d019c88a (Q=0.880) proved 30 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logi",
     "domains": [
@@ -2241,6 +2227,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T06:17:02.935697+00:00",
     "title": "This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese conjectures grow out of two threads consolidated in this cycle: the\nidentification of the factorial numeral system as one point in a single\nparameterized family of mixed-radix positional systems, and the primitive-divisor\nstructure of the Fibonacci sequence.\n\n## 1. Uniqueness is a running-product phenomenon, not a base phenomenon\n\n**Conjecture.** For *every* sequence of bases `b : \u2115 \u2192 \u2115`, the map sending a valid\ndigit string `(c_0, c_1, \u2026, c_{k-1})` (with `c_i < b_i`) to the integer\n`\u2211_{i<k} c_i \u00b7 \u220f_{j<i} b_j` is a bijection onto `{0, 1, \u2026, (\u220f_{i<k} b_i) \u2212 1}`,\nand this remains true when the bases are allowed to depend on the digits already\nread (a \"context-sensitive radix\").\n\nThe key insight is that both uniqueness and existence of representations depend\nonly on the *running product of the bases* and on the local bound `c_i < b_i`,\nnever on any arithmetic special to a fixed base or to the factorials; the\nfactorial and ordinary base-`N` systems are simply two evaluations of the same\nidentity `value = quotient\u00b7(running product) + remainder`.\n\nWhy now? The mixed-radix and factorial developments have just been shown to be the\nsame theorem instantiated twice, so the natural next step is to test how far the\n\"running-product\" abstraction stretches \u2014 in particular to adaptive radices used\nin combinatorial ranking and to Cantor-style variable-base expansions.\n\n## 2. Optimal-length mixed radices and a factorial-vs-binary threshold\n\n**Conjecture.** Among all base sequences with `b_i \u2265 2`, the factorial radix\n`b_i = i+1` minimizes the total number of admissible digit strings needed to\nrepresent every integer below a fixed bound `M`, up to a bounded multiplicative\nfactor, and it strictly beats every constant base `N` past an explicit threshold\n`M_0(N)`.\n\nThe key insight is that the factorial radix increases its place values as fast as\npossible while keeping each digit alphabet as small as possible, so it sits\nexactly at the trade-off frontier between \"few positions\" and \"small digit sets\".\n\nWhy now? With the factorial system realized as a mixed-radix instance, place-value\ngrowth rates can be compared directly across the whole family, turning a folklore\nefficiency claim into a precise extremal statement.\n\n## 3. Primitive divisors of Fibonacci numbers are dense and effective\n\n**Conjecture.** There is an explicit, slowly growing function `B(n)` such that for\nevery `n \u2265 13` the Fibonacci number `F(n)` has a primitive prime divisor below\n`B(n)`; moreover the primitive part of `F(n)` (the cofactor obtained after\nremoving all prime factors that already appear in some earlier `F(d)`, `d < n`)\nexceeds the largest prime factor of `n` for all `n > 12`.\n\nThe key insight is that the primitive part of `F(n)` behaves like the value of the\n`n`-th Fibonacci cyclotomic factor, which grows geometrically in the golden ratio\nraised to Euler's totient of `n`, while the only obstruction \u2014 an \"intrinsic\"\nprime dividing `n` itself \u2014 can contribute at most a single factor.\n\nWhy now? The composite range `13 \u2264 n \u2264 10000` has been certified exhaustively by a\ndirect primitive-part computation, isolating the sole remaining obstacle to a full\nproof to the tail `n > 10000`, exactly where the geometric growth estimate is\nstrongest; this makes an effective, quantitative form of the classical theorem the\nnatural target.\n\n## 4. A ranking bridge between numeral systems and primitive divisors\n\n**Conjecture.** The rank-of-apparition function of the Fibonacci sequence (the\nleast `n` with `p \u2223 F(n)`) is equidistributed, in a precise mixed-radix sense,\nagainst the factorial-digit statistics of `n`; concretely, the density of primes\nwhose rank has a prescribed leading factoradic digit matches the density predicted\nby treating successive ranks as mixed-radix numerals.\n\nThe key insight is that both objects are governed by the same multiplicative\n\"peeling\" operation \u2014 dividing by a running product in the numeral setting, and\nstripping already-seen prime factors in the Fibonacci setting \u2014 so their\nstatistics should be transportable across the bridge.\n\nWhy now? Having placed the factorial numeral system inside the mixed-radix family\nand having a computational handle on Fibonacci primitive parts, the two threads can\nbe compared on the same range of `n` for the first time.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1276",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "189556db",
+    "status": "available",
+    "timestamp": "2026-07-14T06:34:47.120936+00:00",
+    "title": "These conjectures grow out of two threads consolidated in this cycle: the"
   },
   {
     "consumed_by_exp_id": "0abd0edb",

@@ -288,6 +288,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 30ef4e5b (Q=0.820), which proved 32 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|A",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_30ef4e5b_c8d545af",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "30ef4e5b",
+    "status": "available",
+    "timestamp": "2026-07-14T06:35:35.689308+00:00",
+    "title": "Deepening: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3903c2d7 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bypassed",
     "domain_bridges": [],
     "domains": [
@@ -783,7 +802,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "20aae333",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle cf19c51c (Q=0.790), which proved 36 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp excess of ℤ₂-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free ℤ₂-complexes: suspension raises the co-index by at\nleast one (`coind_suspension`), the octahedral tower realises the ",
     "domain_bridges": [],
     "domains": [
@@ -795,7 +814,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "cf19c51c",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-14T02:10:35.347197+00:00",
     "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound half of th"
   },
@@ -1340,25 +1359,6 @@
     "status": "available",
     "timestamp": "2026-07-12T05:03:54.350424+00:00",
     "title": "Close Proofs: Infinite-Dimensional Chess: Winning on the Hilbert Board"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "189556db",
-    "description": "Cycle c923638c (Q=0.820) proved 25 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `μ` and `λ` of a characteristic element, realised ",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_c923638c_b707ef9c",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c923638c",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T03:40:54.759277+00:00",
-    "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of"
   },
   {
     "ambition_level": "extension",
@@ -3112,6 +3112,46 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese conjectures grow out of two threads consolidated in this cycle: the\nidentification of the factorial numeral system as one point in a single\nparameterized family of mixed-radix positional systems, and the primitive-divisor\nstructure of the Fibonacci sequence.\n\n## 1. Uniqueness is a running-product phenomenon, not a base phenomenon\n\n**Conjecture.** For *every* sequence of bases `b : ℕ → ℕ`, the map sending a valid\ndigit string `(c_0, c_1, …, c_{k-1})` (with `c_i < b_i`) to the integer\n`∑_{i<k} c_i · ∏_{j<i} b_j` is a bijection onto `{0, 1, …, (∏_{i<k} b_i) − 1}`,\nand this remains true when the bases are allowed to depend on the digits already\nread (a \"context-sensitive radix\").\n\nThe key insight is that both uniqueness and existence of representations depend\nonly on the *running product of the bases* and on the local bound `c_i < b_i`,\nnever on any arithmetic special to a fixed base or to the factorials; the\nfactorial and ordinary base-`N` systems are simply two evaluations of the same\nidentity `value = quotient·(running product) + remainder`.\n\nWhy now? The mixed-radix and factorial developments have just been shown to be the\nsame theorem instantiated twice, so the natural next step is to test how far the\n\"running-product\" abstraction stretches — in particular to adaptive radices used\nin combinatorial ranking and to Cantor-style variable-base expansions.\n\n## 2. Optimal-length mixed radices and a factorial-vs-binary threshold\n\n**Conjecture.** Among all base sequences with `b_i ≥ 2`, the factorial radix\n`b_i = i+1` minimizes the total number of admissible digit strings needed to\nrepresent every integer below a fixed bound `M`, up to a bounded multiplicative\nfactor, and it strictly beats every constant base `N` past an explicit threshold\n`M_0(N)`.\n\nThe key insight is that the factorial radix increases its place values as fast as\npossible while keeping each digit alphabet as small as possible, so it sits\nexactly at the trade-off frontier between \"few positions\" and \"small digit sets\".\n\nWhy now? With the factorial system realized as a mixed-radix instance, place-value\ngrowth rates can be compared directly across the whole family, turning a folklore\nefficiency claim into a precise extremal statement.\n\n## 3. Primitive divisors of Fibonacci numbers are dense and effective\n\n**Conjecture.** There is an explicit, slowly growing function `B(n)` such that for\nevery `n ≥ 13` the Fibonacci number `F(n)` has a primitive prime divisor below\n`B(n)`; moreover the primitive part of `F(n)` (the cofactor obtained after\nremoving all prime factors that already appear in some earlier `F(d)`, `d < n`)\nexceeds the largest prime factor of `n` for all `n > 12`.\n\nThe key insight is that the primitive part of `F(n)` behaves like the value of the\n`n`-th Fibonacci cyclotomic factor, which grows geometrically in the golden ratio\nraised to Euler's totient of `n`, while the only obstruction — an \"intrinsic\"\nprime dividing `n` itself — can contribute at most a single factor.\n\nWhy now? The composite range `13 ≤ n ≤ 10000` has been certified exhaustively by a\ndirect primitive-part computation, isolating the sole remaining obstacle to a full\nproof to the tail `n > 10000`, exactly where the geometric growth estimate is\nstrongest; this makes an effective, quantitative form of the classical theorem the\nnatural target.\n\n## 4. A ranking bridge between numeral systems and primitive divisors\n\n**Conjecture.** The rank-of-apparition function of the Fibonacci sequence (the\nleast `n` with `p ∣ F(n)`) is equidistributed, in a precise mixed-radix sense,\nagainst the factorial-digit statistics of `n`; concretely, the density of primes\nwhose rank has a prescribed leading factoradic digit matches the density predicted\nby treating successive ranks as mixed-radix numerals.\n\nThe key insight is that both objects are governed by the same multiplicative\n\"peeling\" operation — dividing by a running product in the numeral setting, and\nstripping already-seen prime factors in the Fibonacci setting — so their\nstatistics should be transportable across the bridge.\n\nWhy now? Having placed the factorial numeral system inside the mixed-radix family\nand having a computational handle on Fibonacci primitive parts, the two threads can\nbe compared on the same range of `n` for the first time.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1276",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "189556db",
+    "status": "available",
+    "timestamp": "2026-07-14T06:34:47.120936+00:00",
+    "title": "These conjectures grow out of two threads consolidated in this cycle: the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Sharp Sumset Bounds in L₁ Balls\n\nThis cycle established the additive / geometric / analytic scaffolding around the\nsharp exponent `p = n·log(m+1) / log(nm+1)` for sumsets inside the cross-polytope\n`{x ∈ ℤᵈ : |x₁| + ⋯ + |x_d| ≤ m}`. It proved the unconditional geometric-mean\nbound (exponent `n`), showed the whole family of exponents `q ≥ n` remains valid,\nlocated the sharp exponent strictly inside `(1, n)`, and verified equality for the\none-dimensional interval extremiser. The following conjectures push toward the\nfull sharp inequality.\n\n## 1. The dimension-free sharp exponent bound\n\n**Conjecture.** For all finite nonempty `A₁,…,Aₙ ⊆ {x ∈ ℤᵈ : ∑|xᵢ| ≤ m}`,\n`|A₁ + ⋯ + Aₙ| ≥ (|A₁| ⋯ |Aₙ|)^{1/p}` with `p = n·log(m+1)/log(nm+1)`, for every\ndimension `d`.\n\nThe key insight is that the exponent depends only on `n` and `m`, never on `d`:\nthe cross-polytope's radial dilation structure is self-similar across dimensions,\nso a one-dimensional extremiser should already be globally extremal. Why now? The\npresent cycle isolates the exact obstruction — the gap between the general\nexponent-`n` bound and the extremal exponent-`p` equality — reducing the open\nproblem to a single monotone comparison rather than a dimension-by-dimension\nanalysis.\n\n## 2. Tensor-power stability of the extremal configuration\n\n**Conjecture.** Among all sub-sumset configurations of fixed cardinalities inside\nthe radius-`m` ball, the product-of-intervals family\n`Aⱼ = {0,…,m}^{d}` uniquely minimises `|A₁ + ⋯ + Aₙ|`, and the minimum is exactly\n`(nm+1)^d`.\n\nThe key insight is that the counting identity for the dilated ball tensorises: if\nthe interval is extremal in one dimension, its `d`-fold Cartesian power should be\nextremal in `d` dimensions, turning sharpness into a rigidity/uniqueness\nstatement. Why now? Having the radius-1 point count `2d+1` and the additive\nequality case in hand gives the base and inductive seed for a tensor-power\nargument.\n\n## 3. A stability (near-extremal) version\n\n**Conjecture.** If `|A₁ + ⋯ + Aₙ|` is within a `(1+ε)` factor of the sharp lower\nbound, then each `Aⱼ` is, up to affine transformation, within `O(ε)` (in symmetric\ndifference density) of an arithmetic progression of common difference dividing the\nball's radial step.\n\nThe key insight is that equality forces the additive Cauchy–Davenport step to be\ntight at every stage, and tightness there is known to force arithmetic-progression\nstructure; a quantitative propagation of this tightness yields stability. Why now?\nThe extremal equality case is now pinned down exactly, providing the rigid model\nthat a stability theorem perturbs around.\n\n## 4. Replacing the L₁ ball by general symmetric convex lattice bodies\n\n**Conjecture.** For any origin-symmetric convex lattice polytope `K ⊆ ℤᵈ`, the\nsharp sumset exponent equals `n·log|K| / log|nK|`, where `nK` is the `n`-fold\ndilate, and equality is attained by intersecting `K` with a rational line through\nthe origin.\n\nThe key insight is that the exponent is a purely volumetric quantity — the ratio\nof log-cardinalities of a body and its dilate — so the L₁ specialisation is one\ninstance of a body-independent phenomenon. Why now? The cross-polytope proof\nfactors cleanly through only two properties (radial dilation additivity and a\nlattice-point count), both of which generalise verbatim to arbitrary symmetric\nconvex lattice bodies.\n\n## 5. The transcendence and monotonicity of the exponent surface\n\n**Conjecture.** The two-variable function `p(n,m) = n·log(m+1)/log(nm+1)` is\nstrictly increasing in `n`, strictly decreasing in `m`, and takes an algebraic\nvalue only on the trivial locus `n = 1`; elsewhere it is transcendental.\n\nThe key insight is that `p` measures a genuine \"loss of independence\" as sets are\nsummed, and its monotonicity encodes how that loss scales with the number of\nsummands versus the radius. Why now? This cycle already establishes the bracket\n`1 < p < n` and the boundary equalities; the monotonicity and transcendence\nrefine that bracket into a complete qualitative description of the exponent\nsurface.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1277",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "30ef4e5b",
+    "status": "available",
+    "timestamp": "2026-07-14T06:35:14.632728+00:00",
+    "title": "Additive / geometric / analytic scaffolding around th"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "0abd0edb",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$‑regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD‑total chromatic number, namel",
     "domain_bridges": [],
@@ -3127,25 +3167,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-12T07:36:38.107204+00:00",
     "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "30ef4e5b",
-    "description": "Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets Aⱼ of the L₁ ball {x ∈ ℤᵈ : |x₁| + ... + |x_d| ≤ m} in ℤᵈ, establish a sharp lower bound |A₁+…+Aₙ| ≥ (|A₁|⋯|Aₙ|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on ",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_adcea684_9f1d4a1c",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "adcea684",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T16:51:44.275408+00:00",
-    "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
   },
   {
     "ambition_level": "extension",
