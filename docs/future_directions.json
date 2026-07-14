@@ -17848,7 +17848,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "769cd692",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17876,7 +17876,7 @@
       "source": "",
       "source_exp_id": "cf19c51c",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/cf19c51c",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_d93434e6",
       "timestamp": "2026-07-14T02:10:25.506652+00:00",
       "title": "**suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
