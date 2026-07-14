@@ -1287,7 +1287,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2c734846",
     "description": "Cycle 0faef071 (Q=0.820) proved 16 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own co",
     "domain_bridges": [],
     "domains": [
@@ -1299,7 +1299,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0faef071",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T23:50:39.190132+00:00",
     "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
