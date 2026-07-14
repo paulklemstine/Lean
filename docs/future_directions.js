@@ -255,20 +255,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
-    "consumed_by_exp_id": "479516dd",
-    "description": "Building on cycle 3903c2d7 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bypassed",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_3903c2d7_faa6d17b",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "3903c2d7",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T01:53:27.565033+00:00",
-    "title": "Deepening: Bypassed"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domains": [
@@ -2509,6 +2495,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T14:12:56.708950+00:00",
     "title": "The results of this cycle establish that the Euler characteristic extends to"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBold, testable conjectures arising from the strong-divisibility characterization and the\nFibonacci\u2013Pythagorean bridge.\n\n## 1. A uniform primitive-divisor threshold for injective strong divisibility sequences\n\n**Conjecture.** For every strictly increasing strong divisibility sequence `a` with\n`a 1 = 1`, there is a finite threshold `N` beyond which every term `a n` (with `n > N`)\npossesses a primitive prime divisor \u2014 one dividing no earlier term.\n\nThe key insight is that the index-level equivalence `a m \u2223 a n \u2194 m \u2223 n` reduces\nprimitivity entirely to the arithmetic of the index lattice `(\u2115, \u2223)`, so the existence of\na primitive divisor becomes a statement about how fast the term-size outgrows the product\nof the \"old\" prime contributions coming from proper divisors.\n\nWhy now? The characterization proved in this cycle turns primitivity into a finite divisor\ncheck, and the two canonical instances (Fibonacci and `a^n \u2212 1`) already satisfy such a\nthreshold (`N = 12` and `N = 6` respectively, by the classical Carmichael and Bang\nresults). A single unified proof for all injective strong divisibility sequences now looks\nwithin reach.\n\n## 2. Density of prime indices among Fibonacci primes\n\n**Conjecture.** Apart from the single exception `n = 4`, the set of indices `n` for which\n`F n` is prime has natural density zero inside the primes, yet is infinite.\n\nThe key insight is that the index test `F n prime \u21d2 n = 4 \u2228 n prime` restricts Fibonacci\nprimes to prime indices, so the question of their abundance is exactly a question about a\nthin, multiplicatively structured subset of the primes.\n\nWhy now? The necessary condition (prime index) is now established unconditionally; the\nremaining content is the still-open infinitude, and framing it against the prime indices\nsharpens what a probabilistic heuristic must predict.\n\n## 3. Fibonacci\u2013Pythagorean triples realize every Fibonacci hypotenuse of odd index\n\n**Conjecture.** A Fibonacci number `F k` is the hypotenuse of a Fibonacci\u2013Pythagorean\ntriple of the form `(F n \u00b7 F (n+3), 2 F (n+1) F (n+2), F k)` if and only if `k` is odd and\n`k \u2265 3`; moreover the triple is primitive exactly when `F n` and `F (n+1)` have opposite\nparity in a prescribed pattern.\n\nThe key insight is that the hypotenuse identity `C = F (2n+3)` shows the construction lands\nprecisely on the odd-index Fibonacci numbers, so the \"which Fibonacci numbers are\nhypotenuses\" question is answered by a parity condition on the index.\n\nWhy now? The exact hypotenuse formula proved here pins the image of the construction to\n`{F 3, F 5, F 7, \u2026}`, converting a search problem into a clean parity classification whose\nprimitivity refinement is the natural next target.\n\n## 4. Transfer of the Zsygmondy exception set across strong divisibility sequences\n\n**Conjecture.** The finite set of \"exceptional\" indices where a strong divisibility\nsequence fails to have a primitive divisor is an invariant of the sequence's *growth\nexponent* alone: two injective strong divisibility sequences with the same exponential\ngrowth rate share the same exceptional index set for all but finitely many members.\n\nThe key insight is that, once divisibility is governed purely by the index lattice, the\nonly remaining obstruction to primitivity is a size comparison, and size is controlled by\nthe growth exponent.\n\nWhy now? With the index-level equivalence separated cleanly from the size estimate, the\nexceptional set is exposed as the solution set of an explicit growth inequality, making a\ncross-sequence transfer principle formulatable and testable on Lucas sequences.\n",
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_1298",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "479516dd",
+    "status": "available",
+    "timestamp": "2026-07-14T14:13:27.099351+00:00",
+    "title": "Bold, testable conjectures arising from the strong-divisibility characterization"
   },
   {
     "consumed_by_exp_id": "",
