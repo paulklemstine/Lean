@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "167aed7f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — a min-plus shortest-path calculus for the multiverse\n\nThis cycle promoted the qualitative multiverse/tropical bridge (existence ↦\ntropical sum, universality ↦ tropical product) t",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-07-13T10:55:13",
-      "title": "This project formalizes an abstract, model-agnostic version of Hamkins'"
-    },
-    {
       "cycle_id": "02ff061d",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Edge-Spectral Supersaturation for Triangles\n\nThe power-trace method yields an unconditional triangle count `t ≥ (λq)/3` in terms\nof the spectral excess `q = λ² − m`, with the endp",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-14T01:53:43",
       "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
+    },
+    {
+      "cycle_id": "cf19c51c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved thr",
+      "quality_score": 0.79,
+      "sorry_count": 4,
+      "theorem_count": 36,
+      "timestamp": "2026-07-14T02:10:35",
+      "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8e65b62c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Thermodynamics of Mathematical Proof\n\n## What was established (all machine-checked, `sorry`-free)\n\n`ThermodynamicsOfProof.lean` — the positive theory:\n\n* **`erasedBits`** — infor",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-07-11T10:14:43",
-      "title": "Thermodynamics of Mathematical Proof"
-    },
     {
       "cycle_id": "1978e429",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-14T01:53:43",
       "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
+    },
+    {
+      "cycle_id": "cf19c51c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved thr",
+      "quality_score": 0.79,
+      "sorry_count": 4,
+      "theorem_count": 36,
+      "timestamp": "2026-07-14T02:10:35",
+      "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.86
     }
   ],
-  "last_updated": "2026-07-14T01:53:43",
+  "last_updated": "2026-07-14T02:10:35",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "6ed40476",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-13T07:18:16"
-    },
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "d31b185d",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T01:53:43"
+    },
+    {
+      "context": "empty statement about an unreachable complex.  No `sorry` remains.; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k",
+      "cycle_id": "cf19c51c",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T02:10:35"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "37818bd9",
-        "quality": 0.7,
-        "theorems": 19,
-        "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
-      },
-      {
         "cycle_id": "d31b8b8b",
         "quality": 0.74,
         "theorems": 27,
@@ -3637,6 +3631,12 @@
         "quality": 0.86,
         "theorems": 12,
         "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enum"
+      },
+      {
+        "cycle_id": "cf19c51c",
+        "quality": 0.79,
+        "theorems": 36,
+        "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
       }
     ],
     "NumberTheory": [
