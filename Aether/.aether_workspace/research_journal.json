@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "162989ab",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Siegel–Weil for the E₈ theta series\n\nThis cycle established that the E₈ vector-count sequence `240·σ₃(n)` behaves in\nevery measurable arithmetic respect like the Fourier coeffici",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T14:34:47",
-      "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
-    },
-    {
       "cycle_id": "477f7787",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain bridge** between two areas that meet in\nthe study of *balanced* graphs:\n\n* **0/1-matrix combinatorics** — balancedness of the clique matri",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-14T07:29:42",
       "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
+    },
+    {
+      "cycle_id": "769cd692",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: from the general dimension law to the excess spectrum\n\nThis cycle detached the \"+1 dimension per suspension\" phenomenon from the\noctahedral base: the suspension tower `Sᵏ(K)` of *",
+      "quality_score": 0.78,
+      "sorry_count": 1,
+      "theorem_count": 51,
+      "timestamp": "2026-07-14T07:30:03",
+      "title": "**suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c67f6099",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalizes the **order-parameter / phase-transition** picture behind\nthe speculative theme *\"mathematics as a phase transition\"*. Rather than model a\nsociological pro",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 21,
-      "timestamp": "2026-07-11T15:33:24",
-      "title": "Speculative: Mathematics as a Phase Transition"
-    },
     {
       "cycle_id": "f8dd2b6a",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-14T07:29:42",
       "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
+    },
+    {
+      "cycle_id": "769cd692",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: from the general dimension law to the excess spectrum\n\nThis cycle detached the \"+1 dimension per suspension\" phenomenon from the\noctahedral base: the suspension tower `Sᵏ(K)` of *",
+      "quality_score": 0.78,
+      "sorry_count": 1,
+      "theorem_count": 51,
+      "timestamp": "2026-07-14T07:30:03",
+      "title": "**suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T07:29:42",
+  "last_updated": "2026-07-14T07:30:03",
   "open_questions": [
-    {
-      "context": "+    -- sequences), so this branch is left as a single documented `sorry`.; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "64d4f5fe",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-13T12:17:27"
-    },
     {
       "context": "-- Synthesis (PI): constant-`1/3` supersaturation + Nosal endpoint, all sorry-free.",
       "cycle_id": "a1dac228",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T06:54:01"
+    },
+    {
+      "context": "injectivity/pigeonhole count.  No `sorry` remains in any result below.",
+      "cycle_id": "769cd692",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-14T07:30:03"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6af180ae",
-        "quality": 0.86,
-        "theorems": 12,
-        "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enum"
-      },
-      {
         "cycle_id": "cf19c51c",
         "quality": 0.79,
         "theorems": 36,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 18,
         "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
+      },
+      {
+        "cycle_id": "769cd692",
+        "quality": 0.78,
+        "theorems": 51,
+        "title": "**suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
       }
     ],
     "NumberTheory": [
