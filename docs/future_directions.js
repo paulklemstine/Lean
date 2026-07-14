@@ -367,20 +367,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "2758a31c",
-    "description": "Building on cycle c923638c (Q=0.820), which proved 25 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `\u03bc` and `\u03bb` of a characteristic element, realised on the\npolynomial ring `\u2124[X]`, and proves:\n\n1. **A cross-domain bridge (`muInv_mul`, `lambdaInv_mul`",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_c923638c_93391866",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "c923638c",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T03:40:48.915387+00:00",
-    "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle da4694df (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/",
     "domains": [
@@ -1897,7 +1883,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project formalizes the **one-dimensional case** of the Infinite Pachner"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca326542",
     "description": "# Future Directions \u2014 Colorful Carath\u00e9odory for Convex Cones\n\nThe results established here treat the origin as the distinguished point, exploit\nthe homogeneity that collapses conical and convex representability there, and\nsettle both the sharp color threshold in dimension one and the conical\nCarath\u00e9odory bound in every dimension. Several bold, testable directions follow.\n\n## 1. The full colorful cone theorem in every dimension\n\n**Conjecture.** Given `d + 1` finite color classes of vectors in `d`-dimensional\nspace, each capturing the origin as a nontrivial nonnegative combination, there is\na colorful transversal \u2014 one vector chosen per color \u2014 whose own cone captures the\norigin.\n\nThe key insight is that, at the origin, the colorful cone theorem coincides with\nthe classical colorful Carath\u00e9odory theorem, so the correct color count is `d + 1`\nrather than `d`, and the nearest-point exchange argument that proves the affine\nstatement should transfer verbatim once membership is phrased through the\nhomogeneity bridge. Why now? The homogeneity bridge and the sharp one-dimensional\nbase case are already in hand, isolating exactly the geometric exchange step that\nremains, so the general theorem is reduced to a single, well-understood mechanism.\n\n## 2. Quantitative colorful cones: counting transversals\n\n**Conjecture.** Under the hypotheses of the colorful cone theorem, the number of\ncolorful transversals whose cone captures the origin is at least exponential in the\nnumber of colors when each class straddles the origin in general position.\n\nThe key insight is that each straddling color contributes an independent binary\nchoice of sign that can be completed to a valid transversal, so valid transversals\nshould multiply rather than merely exist. Why now? The two-case construction in the\none-dimensional proof already exhibits multiple valid transversals explicitly,\ngiving a concrete combinatorial seed for a counting lower bound.\n\n## 3. Sharpness of the conical Carath\u00e9odory number via positive circuits\n\n**Conjecture.** In `d`-dimensional space the conical Carath\u00e9odory bound `d + 1` is\nattained precisely by minimal positively dependent families (\"positive circuits\"),\nand every family capturing the origin contains such a circuit of size at most\n`d + 1`.\n\nThe key insight is that pruning a nonnegative representation always terminates at a\nsupport on which the vectors are affinely independent yet positively dependent, and\nsuch supports are exactly positive circuits. Why now? The pruning step proved here\nalready reduces any capturing family below the `d + 1` threshold, so extracting the\ncircuit structure is the natural next refinement of that same argument.\n\n## 4. A colorful cone theorem for interior capture\n\n**Conjecture.** If each of `d` color classes positively spans the whole space\n(the origin lies in the interior of each cone), then some colorful transversal of\n`d + 1` chosen vectors captures the origin in the interior of its cone, and `d`\ncolors never suffice.\n\nThe key insight is that interior capture is an open condition stable under small\nperturbations, so a transversal achieving boundary capture can be nudged into\ninterior capture whenever one extra color is available. Why now? The dimension-one\nanalysis already separates \"boundary\" capture (a single ray) from genuine interior\ncapture, pinpointing the extra color as the resource that upgrades one to the\nother.\n\n## 5. Stability of capture under perturbation\n\n**Conjecture.** The property \"this colorful transversal captures the origin\nconically\" is stable: there is a positive margin such that perturbing every chosen\nvector within that margin preserves capture, with the margin controlled by the\nsmallest positive coefficient in the witnessing combination.\n\nThe key insight is that a strictly positive witnessing coefficient furnishes slack\nthat a sufficiently small perturbation cannot exhaust. Why now? The nontriviality\nclause enforced throughout this work supplies exactly such a strictly positive\ncoefficient, turning a qualitative existence statement into a quantitative\nrobustness estimate.\n",
     "domains": [
       "Algebra",
@@ -1907,7 +1893,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5d81b714",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T22:35:39.370659+00:00",
     "title": "The results established here treat the origin as the distinguished point, exploi"
   },
@@ -2225,6 +2211,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T04:50:15.932619+00:00",
     "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What this cycle establishes\n\n`Catalog/Bridges/MatsunoIwasawaMonoidHom.lean` deepens the algebraic model of the\ntwo classical **Iwasawa invariants** `\u03bc` and `\u03bb` (built in `MatsunoIwasawaBridge.lean`)\nby lifting the isolated *additivity* facts to a single **structural cross-domain\nbridge**.\n\nFor `f = \u03a3 a\u1d62 X\u2071 \u2208 \u2124[X]`:\n\n* `\u03bc_p(f) = padicValInt p (content f)` \u2014 the least `p`-adic valuation among the\n  coefficients (a `\u2124`-arithmetic / commutative-algebra datum);\n* `\u03bb_p(f) = natTrailingDegree (reduce_p (primPart f))` \u2014 the first index at which\n  that minimum is attained (a `\ud835\udd3d_p[X]` combinatorial datum).\n\n### New results (all `sorry`-free, axioms `propext / Classical.choice / Quot.sound`)\n\n1. **`iwasawaHom` \u2014 the central connector.** The pair `f \u21a6 (\u03bc_p f, \u03bb_p f)` is a\n   `MonoidHom` from the multiplicative monoid `\u2124[X]\u2070` (nonzero integer polynomials)\n   to the additive monoid `\u2115 \u00d7 \u2115`, viewed multiplicatively as\n   `Multiplicative (\u2115 \u00d7 \u2115)`. This is the precise statement that the Iwasawa\n   invariants form a **valuation-type object**: an additive invariant of a\n   multiplicative structure. It bridges **number theory** (Iwasawa `\u03bc`, `\u03bb`) with\n   the **algebra of ordered monoids / valuations**.\n\n2. **`lambdaInv_eq_rootMultiplicity`.** The `\u03bb`-invariant *equals* `rootMultiplicity 0`\n   of the reduced primitive part \u2014 the **order of vanishing at the origin** of the\n   mod-`p` reduction. This connects Iwasawa `\u03bb` to the local algebro-geometric\n   notion of the multiplicity of a root.\n\n3. **`muInv_le_of_dvd`, `lambdaInv_le_of_dvd`.** Both invariants are **monotone\n   under divisibility**, the hallmark of a valuation \u2014 bridging the ring-theoretic\n   divisibility order with the numerical order on invariants.\n\n4. **`muInv_prod`, `lambdaInv_prod`.** Both invariants send a finite product of\n   characteristic elements to the finite sum of their invariants.\n\n5. **`matsuno_iterated_twist`.** Twisting a characteristic element by a finite\n   family of Matsuno twist factors shifts `\u03bb` by the sum of the individual\n   `\u03bc`-proportional contributions.\n\n### Supporting building blocks\n\n`muInv_one`, `lambdaInv_one`, `muInv_C_pow`, `lambdaInv_C_pow`, `muInv_X_pow`,\n`lambdaInv_X_pow`, `muInv_twistFactor`, `lambdaInv_twistFactor`, and the base\nadditivity lemmas `muInv_mul`, `lambdaInv_mul` (restated self-contained).\n\n## Where to go next\n\n* **Group homomorphism on the fraction field.** Extend `iwasawaHom` from `\u2124[X]\u2070` to\n  a group homomorphism `Frac(\u2124[X])\u02e3 \u2192* Multiplicative (\u2124 \u00d7 \u2124)`, realising `(\u03bc, \u03bb)`\n  as an honest `\u2124`-valued valuation pair on rational functions.\n* **Lexicographic valuation.** Equip `\u2115 \u00d7\u2097 \u2115` with its lex order and prove the\n  ultrametric/valuation inequalities, packaging `(\u03bc, \u03bb)` as an `AddValuation`.\n* **True `\u2124_p[[T]]` model.** Replace the `\u2124[X]` stand-in by the genuine Iwasawa\n  algebra via Weierstrass preparation, recovering `\u03bc`, `\u03bb` from `f = p^\u03bc \u00b7 U \u00b7 P`.\n* **Sharp/flat refinement.** Combine with `MatsunoSharpFlatDifference.lean` to make\n  `iwasawaHom` sharp/flat aware, tracking the `\u00b1`-invariants of Pollack\u2013Sprung.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1272",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2758a31c",
+    "status": "available",
+    "timestamp": "2026-07-14T05:23:44.249070+00:00",
+    "title": "`Catalog/Bridges/MatsunoIwasawaMonoidHom.lean` deepens the algebraic model of th"
   },
   {
     "consumed_by_exp_id": "0abd0edb",
