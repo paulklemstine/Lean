@@ -5490,7 +5490,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "45e15555",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5521,7 +5521,7 @@
       "source": "",
       "source_exp_id": "2607.01143v1",
       "source_path": "http://arxiv.org/abs/2607.01143v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-06T04:02:38.934140+00:00",
       "title": "Colorful Carathéodory theorem for spanning k-trees admits a polynomial-size witness"
