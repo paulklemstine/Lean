@@ -536,7 +536,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: This project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that "
   },
   {
-    "consumed_by_exp_id": "13f58c80",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 766b6e47 (Q=0.800), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For p an odd prime, k \u2265 2 an even integer, and a_p in the algebraic closure of Q_p with v(a_p) > 0 and v(a_p) not an integer (i.e., the slope is fractional), the mod p semisimplified reduction V\u0304_{k,a_p} of the two-dimensional crystalline representation V_{k,a_p} of G_{Q_p} is irreducible. This folk",
     "domains": [
       "Applications"
@@ -545,7 +545,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "766b6e47",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T17:21:20.503455+00:00",
     "title": "Deepening: Irreducibility of mod p reductions of crystalline representations at fractional "
   },
@@ -1806,7 +1806,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Building on the earlier logistic\u2013tent conjugacy (`h(t) = sin\u00b2(\u03c0t/2)` intertwinin"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd6ccec1",
     "description": "# Future Directions \u2014 The Topology of Argumentation (IX)\n\nThis cycle established, with no finiteness or well-foundedness hypothesis on the\nattack relation, the maximal-extension half of Dung's semantics: the Fundamental\nLemma, the identity *preferred = maximal complete*, and the unconditional\nexistence of preferred extensions via a chain-union / Zorn argument. Together\nwith the earlier grounded-extension development (least complete extension,\nwell-founded uniqueness) this yields a full order-theoretic picture: the complete\nextensions of an argumentation framework form a *pointed poset* whose least\nelement is the grounded extension and whose maximal elements are exactly the\npreferred extensions.\n\n## Conjecture 1 \u2014 The complete extensions form a complete meet-semilattice\n\nEvery nonempty family of complete extensions has a greatest lower bound that is\nagain complete, and this bound is computed by iterating the defense operator from\nthe intersection.\n\n*The key insight is* that the defense operator is monotone and the grounded\nconstruction is just its least fixed point started from the empty set; starting\nthe same iteration from an arbitrary intersection of complete extensions should\nconverge to the largest complete extension below all of them.\n\n*Why now?* The Fundamental Lemma and the pointed-poset characterization make the\nmissing ingredient purely order-theoretic \u2014 a fixed-point-from-below argument \u2014\nrather than a bespoke combinatorial one, so the semilattice structure is now\nwithin reach by a uniform method.\n\n## Conjecture 2 \u2014 A dichotomy for stable existence\n\nAn argumentation framework admits a stable extension if and only if some\npreferred extension attacks every argument outside it; equivalently, stable\nextensions are precisely the preferred extensions with empty \"undecided\" region.\n\n*The key insight is* that stability was shown to be strictly stronger than\ncompleteness, yet every stable set is preferred; the gap between preferred and\nstable is exactly the set of arguments neither accepted nor attacked, so\ncontrolling that gap controls stable existence.\n\n*Why now?* With *preferred = maximal complete* proved, the search for stable\nextensions reduces to inspecting the maximal elements of a single poset, turning\nan existence question into a boundary condition on already-characterized objects.\n\n## Conjecture 3 \u2014 Topological reflection of the extension poset\n\nThe nerve of the poset of complete extensions, ordered by inclusion, is\ncontractible, reflecting the fact that the grounded extension is a canonical\nleast element to which the whole family retracts.\n\n*The key insight is* that a poset with a least element has a contractible order\ncomplex; identifying the grounded extension as that least element promotes a\nsemantic fact into a topological one.\n\n*Why now?* The pointed-poset structure isolated in this cycle is exactly the\nhypothesis under which the classical \"least element \u21d2 contractible nerve\"\nprinciple applies, bridging argumentation semantics with combinatorial topology.\n\n## Conjecture 4 \u2014 Fundamental Lemma governs semi-stable and ideal semantics\n\nThe same conflict-avoidance mechanism that powers the Fundamental Lemma extends\nto semi-stable and ideal semantics: the ideal extension is the greatest\nadmissible set contained in every preferred extension, and it too arises as a\nfixed point reachable by monotone iteration.\n\n*The key insight is* that admissibility grows freely along defended arguments\nregardless of which maximality notion is imposed, so every \"optimal admissible\"\nsemantics should inherit an existence proof from the chain-union lemma.\n\n*Why now?* Having reduced preferred existence to Zorn over admissible sets, the\nidentical machine applies to any subfamily closed under directed unions, of which\nthe ideal and semi-stable families are natural candidates.\n",
     "domains": [
       "Algebra",
@@ -1816,7 +1816,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "6e7a2b5e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T19:24:07.939919+00:00",
     "title": "This cycle established, with no finiteness or well-foundedness hypothesis on the"
   },
