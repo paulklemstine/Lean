@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5d81b714",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Colorful Carathéodory for Convex Cones\n\nThe results established here treat the origin as the distinguished point, exploit\nthe homogeneity that collapses conical and convex repres",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-13T22:35:58",
-      "title": "Cone Colorful Carathéodory Theorem"
-    },
-    {
       "cycle_id": "117d6517",
       "domain": "Applications",
       "key_insight": "# Future Directions: Analogy as an Adjoint Operation\n\nThis cycle recast analogy-making between two ordered structures as the taking of an\n*adjoint pair* `(forward, backward)` bound by the adjunction l",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-14T15:58:22",
       "title": "Deepening: This cycle established, with no finiteness or well-foundedness hypothesis on the"
+    },
+    {
+      "cycle_id": "e6dfc1d4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — μ-extension of Matsuno's formula\n\n## Summary of what was established\n\nThe file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode**, the\narithmetic model\n`la",
+      "quality_score": 0.78,
+      "sorry_count": 1,
+      "theorem_count": 26,
+      "timestamp": "2026-07-14T16:16:10",
+      "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b4ccc3c5",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nThis project formalizes the elementary algebraic backbone of the Atkin–Lehner theory\nunderlying the Giampietro–Darmon factorization program:\n\n* `Pythagorean/AtkinLehnerGroup.lean`",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 47,
-      "timestamp": "2026-07-12T00:29:52",
-      "title": "Atkin-Lehner Genus Zero Criterion for Giampietro-Darmon Factorization"
-    },
     {
       "cycle_id": "453f48e6",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-14T15:58:22",
       "title": "Deepening: This cycle established, with no finiteness or well-foundedness hypothesis on the"
+    },
+    {
+      "cycle_id": "e6dfc1d4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — μ-extension of Matsuno's formula\n\n## Summary of what was established\n\nThe file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode**, the\narithmetic model\n`la",
+      "quality_score": 0.78,
+      "sorry_count": 1,
+      "theorem_count": 26,
+      "timestamp": "2026-07-14T16:16:10",
+      "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "30ef4e5b",
-      "domain": "Novelty",
-      "name": "iterated_cauchy_davenport",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "30ef4e5b",
-      "domain": "Novelty",
-      "name": "card_A_le_sumset",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b97ab468",
-      "domain": "Novelty",
-      "name": "sqrt2_nonneg",
-      "quality": 0.82
-    },
     {
       "cycle_id": "b97ab468",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "stable_iff_gameSolution",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "e6dfc1d4",
+      "domain": "Novelty",
+      "name": "muWeight_pos",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e6dfc1d4",
+      "domain": "Novelty",
+      "name": "weightSum_pos_iff",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e6dfc1d4",
+      "domain": "Novelty",
+      "name": "weightSum_prime",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-14T15:58:22",
+  "last_updated": "2026-07-14T16:16:10",
   "open_questions": [
-    {
-      "context": "proved with no `sorry`.; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "d31b8b8b",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-13T18:50:07"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "d954b0de",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T15:58:22"
+    },
+    {
+      "context": "All statements are proved with no `sorry` and no extra axioms.",
+      "cycle_id": "e6dfc1d4",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-14T16:16:10"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b97ab468",
-        "quality": 0.82,
-        "theorems": 18,
-        "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
-      },
-      {
         "cycle_id": "769cd692",
         "quality": 0.78,
         "theorems": 51,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 18,
         "title": "Deepening: This cycle established, with no finiteness or well-foundedness hypoth"
+      },
+      {
+        "cycle_id": "e6dfc1d4",
+        "quality": 0.78,
+        "theorems": 26,
+        "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
       }
     ],
     "NumberTheory": [
