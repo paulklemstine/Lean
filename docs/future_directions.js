@@ -981,20 +981,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Exact dictionary \"logical qubits = middle homology\""
   },
   {
-    "consumed_by_exp_id": "dbbebdc4",
-    "description": "Cycle e2c082ff (Q=0.820) proved 9 theorems in MachineLearning but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a f",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "sorry_fill_e2c082ff_dd78638a",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "e2c082ff",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T07:19:31.986954+00:00",
-    "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle e8b8d594 (Q=0.820) proved 10 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integer k \u2265 1, the maximum determinant of any 4\u00d74 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a s",
     "domains": [
@@ -1374,7 +1360,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Central Symmetric 7-D Polytope"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0782e3ca",
     "description": "For weight 1/2 sesquiharmonic Maass forms of moderate growth, the weighted Riesz mean of Hurwitz class numbers has an asymptotic expansion of the form \u2211_{n\u2264X} H(n) \u00d7 weight(n) \u223c C X^\u03b1 log^k X as X\u2192\u221e, where C, \u03b1, and k depend on the Maass form's spectral parameters.",
     "domains": [
       "Physics"
@@ -1383,7 +1369,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28657v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-04T14:41:26.130876+00:00",
     "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
   },
@@ -2073,6 +2059,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T23:50:41.777632+00:00",
     "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse by"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese conjectures are distilled from the current cycle, which closed the bridge\nidentifying the factorial (factoradic) number system as a single point in the\none-parameter family of mixed-radix positional systems, and re-derived the\nuniqueness of factoradic representations as a corollary of the general\nmixed-radix uniqueness theorem.\n\n## 1. A universal uniqueness law for arbitrary running products\n\n**Conjecture.** Fix any base sequence `b : \u2115 \u2192 \u2115`. A digit string `c` with\n`c i < b i` for all `i < k` is the *unique* representation of its value\n`\u2211_{i<k} c i \u00b7 (\u220f_{j<i} b j)` among all valid length-`k` strings, and every\nnatural number below `\u220f_{i<k} b i` occurs exactly once.\n\nThe key insight is that neither uniqueness nor surjectivity depends on any\nregularity of the bases: the entire argument is carried by the Euclidean\nsplitting `value / P_k = c_k`, `value mod P_k = value_{<k}`, where `P_k` is the\nrunning product. Positivity of the relevant partial products is *forced* by\nvalidity rather than assumed, so degenerate bases (including `b i = 0`) never\nbreak the statement \u2014 they merely empty the space of valid strings.\n\nWhy now? The factoradic and base-`N` systems, historically studied with\nbespoke arguments, are now seen to be the same theorem at two parameter values;\nthe natural next step is to characterize exactly which base sequences yield\nnumber systems with prescribed carry behavior.\n\n## 2. Carry-free additivity across mixed-radix systems\n\n**Conjecture.** Addition in a mixed-radix system `b` is carry-free on a digit\nposition `i` precisely when the local base `b i` exceeds the sum of the two\ndigits there; consequently, two mixed-radix systems `b` and `b'` induce the same\ncarry pattern on a fixed integer interval if and only if their running products\nagree up to the length of that interval.\n\nThe key insight is that carry structure is a function of the running product\nalone, not of the individual bases, mirroring the way place values \u2014 and not raw\nbases \u2014 governed the uniqueness proof.\n\nWhy now? With uniqueness and existence unified across all bases, carry behavior\nis the first genuinely *arithmetic* (as opposed to combinatorial) invariant that\ndistinguishes members of the family, and it is the natural gateway to\nmixed-radix analogues of classical digit-sum congruences.\n\n## 3. Primitive divisors and the composite Fibonacci tail\n\n**Conjecture.** For every composite `n` outside the small exceptional set, the\nFibonacci number `F(n)` has a *primitive* prime divisor \u2014 a prime dividing\n`F(n)` but no earlier `F(k)` \u2014 and moreover the primitive part of `F(n)`\n(the cofactor obtained by stripping all factors shared with proper-divisor\nFibonacci numbers) grows without bound as `n \u2192 \u221e`.\n\nThe key insight is that the primitive part is exactly the quantity isolated by\nthe greatest-common-divisor collapse `F(gcd m n) = gcd(F m, F n)`: a shared\nprime between `F(n)` and an earlier `F(k)` must already live in `F(gcd n k)`,\nso primitivity is a statement about how proper divisors of `n` interlock, not\nabout `F(n)` in isolation.\n\nWhy now? The finite range is already settled by direct computation, and the\ngcd-collapse mechanism cleanly reduces the general claim to a growth estimate on\nthe primitive part; the remaining obstacle is a quantitative lower bound on that\ncofactor for large composite indices, which is a self-contained analytic target.\n\n## 4. Digit-extraction as a length-independent normal form\n\n**Conjecture.** The explicit digit-extraction map `n \u21a6 (\u230an / P_i\u230b mod b_i)_i`\nis a section of evaluation that is *stable under lengthening*: extending the\nlength `k` never alters the digits already computed, so the infinite digit\nstream of `n` is a well-defined canonical object independent of any truncation.\n\nThe key insight is that each extracted digit depends only on `n` and the running\nproduct up to that position, so truncation and extraction commute \u2014 the same\nlocality that made the splitting identities length-agnostic.\n\nWhy now? Establishing a canonical infinite normal form is the prerequisite for\nextending mixed-radix systems from finite integers to profinite or `b`-adic\ncompletions, opening a bridge between elementary positional notation and\n`p`-adic-style analysis.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1258",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dbbebdc4",
+    "status": "available",
+    "timestamp": "2026-07-14T00:41:24.960669+00:00",
+    "title": "These conjectures are distilled from the current cycle, which closed the bridge"
   },
   {
     "consumed_by_exp_id": "",

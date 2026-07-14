@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c99af430",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Paradoxes as Theorems\n\nThis cycle reduced the Liar, Russell, and Berry paradoxes to a single algebraic\nphenomenon — a *designated fixed point of negation* — and built a finite,\ns",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-11T08:51:37",
-      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-    },
-    {
       "cycle_id": "21228762",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Counterfactual Number Theory\n\nThis cycle isolated a clean dividing line inside a deformed arithmetic. Modelling\n\"counterfactual primes\" by the irreducibles of the Hilbert monoid",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-13T23:51:09",
       "title": "Deepening: Moonshot: Multiverse Set Theory — Mathematics Across Branches"
+    },
+    {
+      "cycle_id": "dbbebdc4",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese conjectures are distilled from the current cycle, which closed the bridge\nidentifying the factorial (factoradic) number system as a single point in the\none-parameter family",
+      "quality_score": 0.6,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-14T00:41:38",
+      "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-13T23:51:09",
+  "last_updated": "2026-07-14T00:41:38",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "7362296f",
-      "domain": "Novelty",
-      "sorry_count": 6,
-      "timestamp": "2026-07-13T02:21:42"
-    },
     {
       "context": "+Everything is elementary and `sorry`-free.",
       "cycle_id": "ffec372c",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 5,
       "timestamp": "2026-07-13T23:31:45"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "dbbebdc4",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T00:41:38"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f3fa6ca4",
-        "quality": 0.82,
-        "theorems": 11,
-        "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
-      },
-      {
         "cycle_id": "c81e5afa",
         "quality": 0.72,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 20,
         "title": "Deepening: Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
+      },
+      {
+        "cycle_id": "dbbebdc4",
+        "quality": 0.6,
+        "theorems": 0,
+        "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
       }
     ],
     "Bridges": [

@@ -3611,7 +3611,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Zagier75",
         "DukeImamogluToth19",
@@ -3619,7 +3619,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0782e3ca",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3635,7 +3635,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0204",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-14T00:42:11.687795+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (form : SesquiharmonicMaassForm 1/2), (X : ℕ), (ε : ℝ>0), ∃ (C : ℝ>0), (α : ℝ), (k : ℕ), ∀ (X' : ℕ ≥ X) [RieszMean form X' ε ≤ C (X')^α (log X')^k + ε]",
       "lineage_refs": [],
@@ -3650,7 +3650,7 @@
       "source": "",
       "source_exp_id": "2606.28657v1",
       "source_path": "http://arxiv.org/abs/2606.28657v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-04T14:41:26.130876+00:00",
       "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
@@ -43677,7 +43677,6 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -43693,6 +43692,7 @@
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
