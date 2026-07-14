@@ -143,6 +143,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The previous cycle established the **suspension tower** `S\u1d4f(K)` of a free `\u2124\u2082`-c"
   },
   {
+    "consumed_by_exp_id": "16f220a2",
+    "description": "Building on cycle bd6ccec1 (Q=0.830), which proved 30 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The Topology of Argumentation (IX)\n\nThis cycle established, with no finiteness or well-foundedness hypothesis on the\nattack relation, the maximal-extension half of Dung's semantics: the Fundamental\nLemma, the identity *preferred = maximal complete*, and the unconditional\nexiste",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_bd6ccec1_3dd317b1",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "bd6ccec1",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T13:20:07.518709+00:00",
+    "title": "Deepening: This cycle established, with no finiteness or well-foundedness hypothesis on the"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domains": [
@@ -1778,21 +1792,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Building on the earlier logistic\u2013tent conjugacy (`h(t) = sin\u00b2(\u03c0t/2)` intertwinin"
   },
   {
-    "consumed_by_exp_id": "bd6ccec1",
-    "description": "# Future Directions \u2014 The Topology of Argumentation (IX)\n\nThis cycle established, with no finiteness or well-foundedness hypothesis on the\nattack relation, the maximal-extension half of Dung's semantics: the Fundamental\nLemma, the identity *preferred = maximal complete*, and the unconditional\nexistence of preferred extensions via a chain-union / Zorn argument. Together\nwith the earlier grounded-extension development (least complete extension,\nwell-founded uniqueness) this yields a full order-theoretic picture: the complete\nextensions of an argumentation framework form a *pointed poset* whose least\nelement is the grounded extension and whose maximal elements are exactly the\npreferred extensions.\n\n## Conjecture 1 \u2014 The complete extensions form a complete meet-semilattice\n\nEvery nonempty family of complete extensions has a greatest lower bound that is\nagain complete, and this bound is computed by iterating the defense operator from\nthe intersection.\n\n*The key insight is* that the defense operator is monotone and the grounded\nconstruction is just its least fixed point started from the empty set; starting\nthe same iteration from an arbitrary intersection of complete extensions should\nconverge to the largest complete extension below all of them.\n\n*Why now?* The Fundamental Lemma and the pointed-poset characterization make the\nmissing ingredient purely order-theoretic \u2014 a fixed-point-from-below argument \u2014\nrather than a bespoke combinatorial one, so the semilattice structure is now\nwithin reach by a uniform method.\n\n## Conjecture 2 \u2014 A dichotomy for stable existence\n\nAn argumentation framework admits a stable extension if and only if some\npreferred extension attacks every argument outside it; equivalently, stable\nextensions are precisely the preferred extensions with empty \"undecided\" region.\n\n*The key insight is* that stability was shown to be strictly stronger than\ncompleteness, yet every stable set is preferred; the gap between preferred and\nstable is exactly the set of arguments neither accepted nor attacked, so\ncontrolling that gap controls stable existence.\n\n*Why now?* With *preferred = maximal complete* proved, the search for stable\nextensions reduces to inspecting the maximal elements of a single poset, turning\nan existence question into a boundary condition on already-characterized objects.\n\n## Conjecture 3 \u2014 Topological reflection of the extension poset\n\nThe nerve of the poset of complete extensions, ordered by inclusion, is\ncontractible, reflecting the fact that the grounded extension is a canonical\nleast element to which the whole family retracts.\n\n*The key insight is* that a poset with a least element has a contractible order\ncomplex; identifying the grounded extension as that least element promotes a\nsemantic fact into a topological one.\n\n*Why now?* The pointed-poset structure isolated in this cycle is exactly the\nhypothesis under which the classical \"least element \u21d2 contractible nerve\"\nprinciple applies, bridging argumentation semantics with combinatorial topology.\n\n## Conjecture 4 \u2014 Fundamental Lemma governs semi-stable and ideal semantics\n\nThe same conflict-avoidance mechanism that powers the Fundamental Lemma extends\nto semi-stable and ideal semantics: the ideal extension is the greatest\nadmissible set contained in every preferred extension, and it too arises as a\nfixed point reachable by monotone iteration.\n\n*The key insight is* that admissibility grows freely along defended arguments\nregardless of which maximality notion is imposed, so every \"optimal admissible\"\nsemantics should inherit an existence proof from the chain-union lemma.\n\n*Why now?* Having reduced preferred existence to Zorn over admissible sets, the\nidentical machine applies to any subfamily closed under directed unions, of which\nthe ideal and semi-stable families are natural candidates.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_1242",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6e7a2b5e",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T19:24:07.939919+00:00",
-    "title": "This cycle established, with no finiteness or well-foundedness hypothesis on the"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x\u00b3 \u2212 3x` of Mori's uncanny-valley acceptance curve and proves,\nas a chain of results, that it exhibits the full ascent \u2192 peak \u2192 drop \u2192 valley \u2192\nrecovery shape, culminating in `uncanny_valley_shape`.\n\nNatural next steps:\n\n1. **Parametric family.** Study `UV_c(x) = x\u00b3 \u2212 3c\u00b2x` (c > 0), whose peak/valley\n   sit at \u2213c with values \u00b12c\u00b3. Prove the valley depth `UV_c(c) < UV_c(\u2212c)` and a\n   recovery threshold scaling linearly in c. This generalizes the whole chain.\n\n2. **General cubics.** Characterize exactly which monic cubics `x\u00b3 + px + q`\n   possess an uncanny valley: the discriminant condition `p < 0` (two real\n   critical points). Formalize \"has an uncanny valley \u27fa p < 0\".\n\n3. **Derivative-based formulation.** Re-derive the monotonicity regimes from\n   `deriv UV = 3x\u00b2 \u2212 3` using Mathlib's `StrictMonoOn`/`StrictAntiOn` and\n   `StrictMonoOn.lt_of_lt`, connecting the elementary algebra to real analysis.\n\n4. **Quantifying the depth.** Define the \"uncanny gap\" `UV(peak) \u2212 UV(valley)`\n   and study how it grows with the model's steepness; relate to a normalized\n   acceptance scale.\n\n5. **Beyond one valley.** Model higher-degree acceptance curves (e.g. degree-5)\n   admitting *multiple* valleys, and prove an alternation theorem for the signs\n   of successive turning points.\n\n6. **Smoothness / non-polynomial models.** Replace the cubic with a bounded\n   sigmoid-minus-Gaussian model and prove the same qualitative shape, moving\n   from algebraic to analytic techniques.\n",
     "domains": [
@@ -2451,6 +2450,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T13:00:00.119965+00:00",
     "title": "Bold, falsifiable conjectures growing out of the mixed-radix / factorial bridge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Argumentation (IX): the meet-semilattice of complete extensions\n\nThis cycle settles **Conjecture 1** of the previous *Future Directions* note and,\nin doing so, re-derives the existence of the grounded extension purely\norder-theoretically. All results are formalized and machine-checked in\n\n* `Catalog/Novelty/ArgumentationMeetSemilattice.lean`\n\nwhich is self-contained (it re-declares the basic Dung semantics from\n`ArgumentationCore` / `ArgumentationExtensions`) and compiles against Mathlib\n`v4.28.0` using only the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`.\n\n## What was proved\n\nFor an argumentation framework modeled by a relation `R : A \u2192 A \u2192 Prop`, with the\ndefense operator `charF S = {a | S defends a}`, a set is a **complete extension**\niff it is a conflict-free fixed point of `charF`. The theorem chain is:\n\n1. `complete_charF_eq` \u2014 a complete extension is a fixed point of `charF`.\n2. `charF_sInter_subset` \u2014 **the decisive lemma**: for a family `\ud835\udcae` of complete\n   extensions, `charF (\u22c2\u2080 \ud835\udcae) \u2286 \u22c2\u2080 \ud835\udcae`. Hence `charF` restricts to a monotone\n   self-map of the interval `[\u22a5, \u22c2\u2080 \ud835\udcae]`.\n3. `familyMeet \ud835\udcae := \u22c3\u2080 {S | S \u2286 \u22c2\u2080 \ud835\udcae \u2227 S \u2286 charF S}` \u2014 the meet, built as the\n   greatest post-fixed point of `charF` below the intersection (a hand-rolled\n   Knaster\u2013Tarski union).\n4. `familyMeet_postfixed`, `familyMeet_charF_subset`, `familyMeet_fixed` \u2014 the\n   meet is a fixed point of `charF`.\n5. `familyMeet_conflictFree`, `familyMeet_complete` \u2014 the meet is a **complete\n   extension** (for a nonempty family).\n6. `familyMeet_subset_of_mem`, `le_familyMeet`, `familyMeet_isGLB` \u2014\n   **Conjecture 1**: the meet is the greatest lower bound, so the complete\n   extensions form a meet-semilattice with no finiteness or well-foundedness\n   hypothesis on the attack relation.\n7. `completeInf`, `completeInf_isGLB` \u2014 the specialization to the binary meet of\n   two complete extensions.\n8. `exists_complete` (Zorn + Fundamental Lemma), `exists_least_complete`,\n   `least_complete_unique` \u2014 feeding the family of **all** complete extensions\n   into the meet reconstructs the **least complete extension** (the grounded\n   extension) as the bottom of the semilattice, without the transfinite\n   fixed-point induction used in `ArgumentationGrounded`.\n\nThe mathematical heart is the observation that the intersection of complete\nextensions is `charF`-closed, which turns the search for a common lower bound into\na greatest-fixed-point problem solvable uniformly over the interval below the\nintersection.\n\n## Next directions\n\n* **Directed joins / complete lattice.** With arbitrary nonempty meets and a\n  bottom element in hand, the complementary question is whether directed families\n  of complete extensions have joins, upgrading the meet-semilattice to a complete\n  semilattice (in Dung's sense). The chain-union machinery already used for\n  preferred existence is the natural tool.\n* **Conjecture 2 (stable dichotomy).** With `preferred = maximal complete` and the\n  meet-semilattice structure available, characterize stable existence as a\n  boundary condition (empty \"undecided\" region) on the maximal elements of this\n  poset.\n* **Conjecture 4 (ideal semantics).** The ideal extension is the greatest\n  admissible set contained in every preferred extension; the greatest-fixed-point\n  construction here is a candidate template for reaching it by monotone iteration.\n* **Conjecture 3 (contractible nerve).** The pointed-poset structure \u2014 now with a\n  formally established least element via `exists_least_complete` \u2014 is exactly the\n  hypothesis for the \"least element \u21d2 contractible order complex\" principle.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1295",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bd6ccec1",
+    "status": "available",
+    "timestamp": "2026-07-14T13:19:36.775460+00:00",
+    "title": "This cycle settles **Conjecture 1** of the previous *Future Directions* note and"
   },
   {
     "consumed_by_exp_id": "",
