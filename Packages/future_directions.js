@@ -228,6 +228,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 3903c2d7 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bypassed",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_3903c2d7_faa6d17b",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "3903c2d7",
+    "status": "available",
+    "timestamp": "2026-07-14T01:53:27.565033+00:00",
+    "title": "Deepening: Bypassed"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domains": [
       "NumberTheory"
@@ -926,6 +940,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 3903c2d7 (Q=0.820) proved 10 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Bypassed",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_3903c2d7_361fff5c",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "3903c2d7",
+    "status": "available",
+    "timestamp": "2026-07-14T01:53:27.669006+00:00",
+    "title": "Close Proofs: Bypassed"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 7473e6ed (Q=0.820) proved 14 theorems in Physics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any su",
     "domains": [
       "Physics"
@@ -1545,20 +1573,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
   },
   {
-    "consumed_by_exp_id": "3903c2d7",
-    "description": "Bypassed",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_1244",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.09439v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T19:58:15.016075+00:00",
-    "title": "Bypassed"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
     "domains": [
@@ -2106,6 +2120,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T01:17:18.369618+00:00",
     "title": "Structural backbone: the class of cographs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBold, falsifiable conjectures arising from the Fibonacci Pythagorean triple family\n`a = F n\u00b7F(n+3)`, `b = 2\u00b7F(n+1)\u00b7F(n+2)`, `c = F(n+1)\u00b2+F(n+2)\u00b2 = F(2n+3)`.\n\n## 1. Primitivity dichotomy governed by index parity\n\n**Conjecture.** The triple `(a, b, c)` is primitive (its three entries share no common\nfactor) precisely when `n \u2262 1 (mod 3)`; when `n \u2261 1 (mod 3)` the greatest common divisor\nof the three entries is exactly `2`.\n\n*The key insight is* that primitivity of a Euclid triple `(p\u00b2\u2212q\u00b2, 2pq, p\u00b2+q\u00b2)` is\ncontrolled by the parity of the generators `p = F(n+2)`, `q = F(n+1)`, and consecutive\nFibonacci numbers are both odd exactly when neither index is a multiple of `3` \u2014 the\npositions where `F` is even recur with period `3`.\n\n*Why now?* The strong-divisibility structure of the Fibonacci sequence (`gcd(F m, F n) =\nF gcd(m,n)`) and the exact even-index pattern are already available, so the parity of the\ngenerators \u2014 the only obstruction to primitivity \u2014 can be pinned down completely.\n\n## 2. The Fibonacci triples are inradius-integral\n\n**Conjecture.** Every triangle in the family has integer inradius `r = (a + b \u2212 c)/2`, and\n`r = F n \u00b7 F(n+1)` \u2014 the product of the two smaller consecutive Fibonacci numbers.\n\n*The key insight is* that for a right triangle the inradius equals `(a + b \u2212 c)/2`, and the\nEuclid form makes this `q(p \u2212 q) = F(n+1)\u00b7F n`, collapsing a geometric quantity to a bare\nFibonacci product.\n\n*Why now?* The leg and hypotenuse identities are established in closed Fibonacci form, so the\ninradius reduces to elementary algebra on `F n` and `F(n+1)` with no new machinery.\n\n## 3. Hypotenuses are exactly the odd-index Fibonacci numbers, and they interleave\n\n**Conjecture.** The map `n \u21a6 F(2n+3)` is a strictly increasing bijection from the naturals\nonto the odd-indexed Fibonacci numbers `\u2265 F\u2083`, and consecutive hypotenuses satisfy the\nlinear recurrence `c_{n+1} = 3\u00b7c_n \u2212 c_{n\u22121}`.\n\n*The key insight is* that the bisected Fibonacci sequence `F(2n+1)` obeys the second-order\nrecurrence with characteristic root `\u03c6\u00b2`, so the hypotenuses form an exactly solvable\ninteger sequence rather than a sporadic set.\n\n*Why now?* With the hypotenuse pinned to `F(2n+3)`, the recurrence follows from the doubling\nidentities already in hand, turning an infinite geometric family into a single linear system.\n\n## 4. A perimeter\u2013area law linking two Fibonacci products\n\n**Conjecture.** Perimeter `P = a + b + c` and area `A = \u00bdab` satisfy\n`A = F n \u00b7 F(n+1) \u00b7 F(n+2) \u00b7 F(n+3)` while `P = 2\u00b7F(n+2)\u00b7F(n+3)`, so\n`A / P = \u00bd \u00b7 F n \u00b7 F(n+1) / F(n+2)` \u2014 a ratio converging to `\u00bd\u00b7\u03c6^{-3}`.\n\n*The key insight is* that both the perimeter and the area factor through consecutive\nFibonacci products, so their quotient is a pure ratio of Fibonacci numbers whose limit is a\nfixed power of the golden ratio.\n\n*Why now?* The area identity (product of four consecutive Fibonacci numbers) is proved, and\nthe perimeter identity is one further application of the recurrence, so the asymptotic law is\nimmediately testable.\n\n## 5. Lucas-indexed analogue\n\n**Conjecture.** Replacing `F` by the Lucas sequence `L` in the same template yields\n`(L n\u00b7L(n+3), 2\u00b7L(n+1)\u00b7L(n+2), L(n+1)\u00b2+L(n+2)\u00b2)`, again a Pythagorean triple, but its\nhypotenuse equals `L(2n+3)` only up to an additive correction of `\u00b12\u00b7(\u22121)^n`, so the family\nis Pythagorean yet its hypotenuse is *not* a pure Lucas number.\n\n*The key insight is* that the Euclid parametrisation depends only on the additive recurrence\nshared by `F` and `L`, so the Pythagorean property transfers verbatim, whereas the\nsum-of-squares hypotenuse identity uses a Fibonacci-specific convolution that the Lucas\nsequence perturbs by the `L\u00b2 \u2212 5F\u00b2 = 4(\u22121)^n` defect.\n\n*Why now?* The catalog already carries a self-contained Lucas layer with the doubling and\n`L\u00b2\u22125F\u00b2` identities, providing exactly the correction term needed to state and test the\nLucas analogue.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1263",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3903c2d7",
+    "status": "available",
+    "timestamp": "2026-07-14T01:53:18.479283+00:00",
+    "title": "Bold, falsifiable conjectures arising from the Fibonacci Pythagorean triple fami"
   },
   {
     "consumed_by_exp_id": "",

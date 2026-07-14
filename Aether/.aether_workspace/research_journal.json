@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3f303e8a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
-      "quality_score": 0.72,
-      "sorry_count": 9,
-      "theorem_count": 0,
-      "timestamp": "2026-07-13T10:22:39",
-      "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
-    },
-    {
       "cycle_id": "86e0e034",
       "domain": "Applications",
       "key_insight": "# Future Directions — Cycle 1 (Connector)\n\n## What this cycle contributes\n\nThread `th_25156375` studies the `Lᵖ` relaxation of the KNRS/Sidorenko lower bound\nfor ρ-locally dense hosts, in the finite s",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-14T01:18:02",
       "title": "Cographs are generalized spectrally closed"
+    },
+    {
+      "cycle_id": "3903c2d7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the Fibonacci Pythagorean triple family\n`a = F n·F(n+3)`, `b = 2·F(n+1)·F(n+2)`, `c = F(n+1)²+F(n+2)² = F(2n+3)`.\n\n## 1. Primitivity dic",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 10,
+      "timestamp": "2026-07-14T01:53:27",
+      "title": "Bypassed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f85e4d43",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Graded Connectomes and the Combinatorics of Merged Minds\n\nThe results just established fix the exact description-length law for graded\nsynapses (`log₂(w^slots) = slots · log₂ w`)",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-11T09:58:05",
-      "title": "The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
-    },
     {
       "cycle_id": "f9466ee5",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-14T01:18:02",
       "title": "Cographs are generalized spectrally closed"
+    },
+    {
+      "cycle_id": "3903c2d7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the Fibonacci Pythagorean triple family\n`a = F n·F(n+3)`, `b = 2·F(n+1)·F(n+2)`, `c = F(n+1)²+F(n+2)² = F(2n+3)`.\n\n## 1. Primitivity dic",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 10,
+      "timestamp": "2026-07-14T01:53:27",
+      "title": "Bypassed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "37818bd9",
-      "domain": "Novelty",
-      "name": "reduce_mul",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "37818bd9",
-      "domain": "Novelty",
-      "name": "reduce_primPart_ne_zero",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "ddc0d02e",
-      "domain": "Applications",
-      "name": "IsAcyclic",
-      "quality": 0.8
-    },
     {
       "cycle_id": "ddc0d02e",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "is",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "3903c2d7",
+      "domain": "Applications",
+      "name": "fib_sq_add_sq_eq_fib",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3903c2d7",
+      "domain": "Applications",
+      "name": "fib_pythagorean",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3903c2d7",
+      "domain": "Applications",
+      "name": "hyp_eq_fib",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T01:18:02",
+  "last_updated": "2026-07-14T01:53:27",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "05e37ec1",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-13T06:44:59"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "111bebcc",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 5,
       "timestamp": "2026-07-14T01:18:02"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "3903c2d7",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T01:53:27"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ce15dd8e",
-        "quality": 0.78,
-        "theorems": 12,
-        "title": "Close Proofs: The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-      },
-      {
         "cycle_id": "49ddee39",
         "quality": 0.78,
         "theorems": 28,
@@ -3141,6 +3135,12 @@
         "quality": 0.7,
         "theorems": 13,
         "title": "Cographs are generalized spectrally closed"
+      },
+      {
+        "cycle_id": "3903c2d7",
+        "quality": 0.82,
+        "theorems": 10,
+        "title": "Bypassed"
       }
     ],
     "Bridges": [

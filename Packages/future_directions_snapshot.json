@@ -154,25 +154,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6af180ae",
-    "description": "Building on cycle 6490730e (Q=0.830), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For all natural numbers m, a, and d, the sum over all m-tuples (i_1, ..., i_m) of non-negative integers summing to d of the product of binomial coefficients ∏_{j=1}^{m} C(a + i_j, a) equals C(ma + d + m - 1, d). This generalizes the identity stated in the paper for m=3 (used to simplify the Bogart-L",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_6490730e_4c7375d5",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6490730e",
-    "status": "in_progress",
-    "timestamp": "2026-07-10T03:16:46.250984+00:00",
-    "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domain_bridges": [],
@@ -302,6 +283,25 @@
     "status": "available",
     "timestamp": "2026-07-11T01:28:51.638164+00:00",
     "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 3903c2d7 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bypassed",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_3903c2d7_faa6d17b",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3903c2d7",
+    "status": "available",
+    "timestamp": "2026-07-14T01:53:27.565033+00:00",
+    "title": "Deepening: Bypassed"
   },
   {
     "ambition_level": "extension",
@@ -1250,6 +1250,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Cycle 3903c2d7 (Q=0.820) proved 10 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Bypassed",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_3903c2d7_361fff5c",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3903c2d7",
+    "status": "available",
+    "timestamp": "2026-07-14T01:53:27.669006+00:00",
+    "title": "Close Proofs: Bypassed"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 7473e6ed (Q=0.820) proved 14 theorems in Physics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any su",
     "domain_bridges": [],
     "domains": [
@@ -2187,25 +2206,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3903c2d7",
-    "description": "Bypassed",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_1244",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Bypassed",
-    "research_mode": "team",
-    "source_exp_id": "2607.09439v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T19:58:15.016075+00:00",
-    "title": "Bypassed"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
     "domain_bridges": [],
@@ -2936,6 +2936,46 @@
     "status": "available",
     "timestamp": "2026-07-14T01:17:18.369618+00:00",
     "title": "Structural backbone: the class of cographs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBold, falsifiable conjectures arising from the Fibonacci Pythagorean triple family\n`a = F n·F(n+3)`, `b = 2·F(n+1)·F(n+2)`, `c = F(n+1)²+F(n+2)² = F(2n+3)`.\n\n## 1. Primitivity dichotomy governed by index parity\n\n**Conjecture.** The triple `(a, b, c)` is primitive (its three entries share no common\nfactor) precisely when `n ≢ 1 (mod 3)`; when `n ≡ 1 (mod 3)` the greatest common divisor\nof the three entries is exactly `2`.\n\n*The key insight is* that primitivity of a Euclid triple `(p²−q², 2pq, p²+q²)` is\ncontrolled by the parity of the generators `p = F(n+2)`, `q = F(n+1)`, and consecutive\nFibonacci numbers are both odd exactly when neither index is a multiple of `3` — the\npositions where `F` is even recur with period `3`.\n\n*Why now?* The strong-divisibility structure of the Fibonacci sequence (`gcd(F m, F n) =\nF gcd(m,n)`) and the exact even-index pattern are already available, so the parity of the\ngenerators — the only obstruction to primitivity — can be pinned down completely.\n\n## 2. The Fibonacci triples are inradius-integral\n\n**Conjecture.** Every triangle in the family has integer inradius `r = (a + b − c)/2`, and\n`r = F n · F(n+1)` — the product of the two smaller consecutive Fibonacci numbers.\n\n*The key insight is* that for a right triangle the inradius equals `(a + b − c)/2`, and the\nEuclid form makes this `q(p − q) = F(n+1)·F n`, collapsing a geometric quantity to a bare\nFibonacci product.\n\n*Why now?* The leg and hypotenuse identities are established in closed Fibonacci form, so the\ninradius reduces to elementary algebra on `F n` and `F(n+1)` with no new machinery.\n\n## 3. Hypotenuses are exactly the odd-index Fibonacci numbers, and they interleave\n\n**Conjecture.** The map `n ↦ F(2n+3)` is a strictly increasing bijection from the naturals\nonto the odd-indexed Fibonacci numbers `≥ F₃`, and consecutive hypotenuses satisfy the\nlinear recurrence `c_{n+1} = 3·c_n − c_{n−1}`.\n\n*The key insight is* that the bisected Fibonacci sequence `F(2n+1)` obeys the second-order\nrecurrence with characteristic root `φ²`, so the hypotenuses form an exactly solvable\ninteger sequence rather than a sporadic set.\n\n*Why now?* With the hypotenuse pinned to `F(2n+3)`, the recurrence follows from the doubling\nidentities already in hand, turning an infinite geometric family into a single linear system.\n\n## 4. A perimeter–area law linking two Fibonacci products\n\n**Conjecture.** Perimeter `P = a + b + c` and area `A = ½ab` satisfy\n`A = F n · F(n+1) · F(n+2) · F(n+3)` while `P = 2·F(n+2)·F(n+3)`, so\n`A / P = ½ · F n · F(n+1) / F(n+2)` — a ratio converging to `½·φ^{-3}`.\n\n*The key insight is* that both the perimeter and the area factor through consecutive\nFibonacci products, so their quotient is a pure ratio of Fibonacci numbers whose limit is a\nfixed power of the golden ratio.\n\n*Why now?* The area identity (product of four consecutive Fibonacci numbers) is proved, and\nthe perimeter identity is one further application of the recurrence, so the asymptotic law is\nimmediately testable.\n\n## 5. Lucas-indexed analogue\n\n**Conjecture.** Replacing `F` by the Lucas sequence `L` in the same template yields\n`(L n·L(n+3), 2·L(n+1)·L(n+2), L(n+1)²+L(n+2)²)`, again a Pythagorean triple, but its\nhypotenuse equals `L(2n+3)` only up to an additive correction of `±2·(−1)^n`, so the family\nis Pythagorean yet its hypotenuse is *not* a pure Lucas number.\n\n*The key insight is* that the Euclid parametrisation depends only on the additive recurrence\nshared by `F` and `L`, so the Pythagorean property transfers verbatim, whereas the\nsum-of-squares hypotenuse identity uses a Fibonacci-specific convolution that the Lucas\nsequence perturbs by the `L² − 5F² = 4(−1)^n` defect.\n\n*Why now?* The catalog already carries a self-contained Lucas layer with the doubling and\n`L²−5F²` identities, providing exactly the correction term needed to state and test the\nLucas analogue.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1263",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3903c2d7",
+    "status": "available",
+    "timestamp": "2026-07-14T01:53:18.479283+00:00",
+    "title": "Bold, falsifiable conjectures arising from the Fibonacci Pythagorean triple fami"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from the generalized multinomial convolution identity\n$$\\sum_{i_1+\\cdots+i_m=d}\\ \\prod_{j=1}^{m}\\binom{a+i_j}{a}=\\binom{ma+d+m-1}{d},$$\nand its multichoose reformulation\n$$\\sum_{f:\\,\\sum_{i\\in s} f(i)=d}\\ \\prod_{i\\in s}\\operatorname{multichoose}(r,f(i))=\\operatorname{multichoose}(|s|\\cdot r,\\,d),$$\nnow also established in the *heterogeneous* form where each factor carries its own\nmultiplicity $r(i)$ and the right-hand side becomes $\\operatorname{multichoose}\\big(\\sum_{i\\in s} r(i),\\,d\\big)$, so that\n$$\\sum_{i_1+\\cdots+i_m=d}\\ \\prod_{j=1}^{m}\\binom{a_j+i_j}{a_j}=\\binom{\\big(\\textstyle\\sum_j a_j\\big)+d+m-1}{d}.$$\n\n## 1. Heterogeneous multiplicities (now established) → two-parameter refinement\n\n**Status.** The heterogeneous convolution is now proved: for any multiplicities\n$(r_1,\\dots,r_m)$,\n$$\\sum_{i_1+\\cdots+i_m=d}\\ \\prod_{j=1}^{m}\\binom{r_j-1+i_j}{i_j}=\\binom{\\big(\\sum_j r_j\\big)-1+d}{d},$$\nsince the right-hand side depends on the multiplicities only through their sum,\nexactly as the generating function $\\prod_j (1-x)^{-r_j}=(1-x)^{-\\sum_j r_j}$\npredicts.\n\n**Conjecture (successor).** There is a *doubly graded* refinement recording, for\neach part, both its size and the index of the factor it came from: a bivariate\nsum $\\sum_{\\mathbf i}\\ x^{\\sum_j j\\,i_j}\\prod_j\\binom{r_j-1+i_j}{i_j}$ factors as a\nproduct of shifted $q$-multichoose numbers whose principal specialization\nrecovers the identity above.\n\nThe key insight is that once the multiplicities are allowed to vary with the\nindex, the convolution is no longer symmetric in the parts, so an order-sensitive\nstatistic (the position-weighted degree) becomes a genuine second grading rather\nthan a cosmetic marker.\nWhy now? The finite-index-set induction isolates a single insertion step adding\none factor of arbitrary multiplicity, and that step is exactly where a\nposition weight can be attached and tracked through the recursion.\n\n## 2. Alternating (signed) convolution\n\n**Conjecture.** With signs attached to the parts,\n$$\\sum_{i_1+\\cdots+i_m=d}(-1)^{d}\\prod_{j=1}^{m}\\binom{a+i_j}{a}\n\\ \\text{stabilises to a single signed binomial when } a \\text{ is replaced by a negative integer parameter.}$$\n\nThe key insight is that the positive identity is the $a\\ge 0$ branch of a\nVandermonde law valid for all integer upper parameters, where negative values\nproduce the inclusion–exclusion signs seen in Möbius-type inversions.\nWhy now? The multichoose Vandermonde convolution proved here has a known integer\nextension ($\\operatorname{multichoose}(-n,k)$), giving a concrete target for the\nsigned version.\n\n## 3. $q$-analogue via Gaussian binomials\n\n**Conjecture.**\n$$\\sum_{i_1+\\cdots+i_m=d}\\ q^{\\,e(\\mathbf i)}\\prod_{j=1}^{m}\\binom{a+i_j}{a}_q=\\binom{ma+d+m-1}{d}_q$$\nfor an explicit exponent statistic $e(\\mathbf i)$ (a sum of partial-sum products).\n\nThe key insight is that stars-and-bars convolutions almost always admit a\n$q$-refinement recording the \"area\" of the underlying lattice paths, and the\ntelescoping cons step should carry a clean power of $q$.\nWhy now? Gaussian-binomial Vandermonde identities are available, so the base\nconvolution can be upgraded and the same induction re-run.\n\n## 4. Direct Latin rectangle corollary\n\n**Conjecture.** The count of $k\\times n$ Latin rectangles admits a closed\nconvolution reduction whose innermost sum is an instance of the identity above\nfor every fixed number of rows, removing the $m=3$ restriction in the classical\nBogart–Longyear simplification.\n\nThe key insight is that each additional row contributes one more convolution\nfactor of the same binomial shape, so the all-orders identity is precisely the\nalgebraic engine needed to collapse the multi-row recurrence.\nWhy now? With the arbitrary-$m$ identity in hand, the only remaining step is to\nmatch the row-insertion recurrence to the tuple sum.\n\n## 5. Species / bijective proof\n\n**Conjecture.** There is a natural weight-preserving bijection between\n$m$-tuples of \"$a$-decorated\" multisets with total size $d$ and single\n$(m(a+1))$-decorated multisets of size $d$, refining the numerical identity to an\nequivalence of combinatorial species.\n\nThe key insight is that $\\binom{a+i}{a}=\\operatorname{multichoose}(a+1,i)$ counts\nmultisets, so the product side counts tuples of multisets and the right side\ncounts a single larger multiset — a merge/split bijection should realise the\nequality directly.\nWhy now? The multichoose reformulation established here makes the two sides\nmanifestly enumerative, which is the standard precondition for extracting a\nbijection.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1264",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6af180ae",
+    "status": "available",
+    "timestamp": "2026-07-14T01:53:31.189853+00:00",
+    "title": "Derived from the generalized multinomial convolution identity"
   },
   {
     "ambition_level": "extension",
