@@ -306,7 +306,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "823f5582",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-07-10T21:41:40.173065+00:00",
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
@@ -353,7 +353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorifying the quantum binomial product rule via filtrations of plethystic mo"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c60eca36",
     "description": "Building on cycle b97ab468 (Q=0.820), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential",
     "domains": [
       "Novelty"
@@ -362,7 +362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "b97ab468",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T07:29:42.613481+00:00",
     "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
   },
@@ -508,7 +508,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Irreducibility of mod p reductions of crystalline representations at fractional "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b6231f58",
     "description": "Building on cycle 86411247 (Q=0.800), which proved 40 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Multiverse Set Theory: Mathematics Across Branches\n\nThis cycle deepened the combinatorial core of the set-theoretic multiverse by\nequipping it with a **modal structure of forcing**: possibility as truth in some\ngeneric extension, necessity as truth in every generic extension. M",
     "domains": [
       "Novelty"
@@ -517,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "86411247",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T06:17:11.005418+00:00",
     "title": "Deepening: This cycle deepened the combinatorial core of the set-theoretic multiverse by"
   },
@@ -636,7 +636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4aa235b",
     "description": "Building on cycle 0abd0edb (Q=0.780), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the cent",
     "domains": [
       "Novelty"
@@ -645,7 +645,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "0abd0edb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T06:54:01.837362+00:00",
     "title": "Deepening: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
@@ -1281,7 +1281,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e60d0a1",
     "description": "Cycle 769cd692 (Q=0.780) proved 51 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: the suspension tower and the excess spectrum of free \u2124\u2082-complexes\n\nThis cycle established the **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as a\nrigorous object and proved thr",
     "domains": [
       "Novelty"
@@ -1290,7 +1290,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "769cd692",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T07:30:03.599030+00:00",
     "title": "Close Proofs: **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as"
   },
@@ -1923,7 +1923,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project formalizes the **one-dimensional case** of the Infinite Pachner"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca326542",
     "description": "# Future Directions \u2014 Colorful Carath\u00e9odory for Convex Cones\n\nThe results established here treat the origin as the distinguished point, exploit\nthe homogeneity that collapses conical and convex representability there, and\nsettle both the sharp color threshold in dimension one and the conical\nCarath\u00e9odory bound in every dimension. Several bold, testable directions follow.\n\n## 1. The full colorful cone theorem in every dimension\n\n**Conjecture.** Given `d + 1` finite color classes of vectors in `d`-dimensional\nspace, each capturing the origin as a nontrivial nonnegative combination, there is\na colorful transversal \u2014 one vector chosen per color \u2014 whose own cone captures the\norigin.\n\nThe key insight is that, at the origin, the colorful cone theorem coincides with\nthe classical colorful Carath\u00e9odory theorem, so the correct color count is `d + 1`\nrather than `d`, and the nearest-point exchange argument that proves the affine\nstatement should transfer verbatim once membership is phrased through the\nhomogeneity bridge. Why now? The homogeneity bridge and the sharp one-dimensional\nbase case are already in hand, isolating exactly the geometric exchange step that\nremains, so the general theorem is reduced to a single, well-understood mechanism.\n\n## 2. Quantitative colorful cones: counting transversals\n\n**Conjecture.** Under the hypotheses of the colorful cone theorem, the number of\ncolorful transversals whose cone captures the origin is at least exponential in the\nnumber of colors when each class straddles the origin in general position.\n\nThe key insight is that each straddling color contributes an independent binary\nchoice of sign that can be completed to a valid transversal, so valid transversals\nshould multiply rather than merely exist. Why now? The two-case construction in the\none-dimensional proof already exhibits multiple valid transversals explicitly,\ngiving a concrete combinatorial seed for a counting lower bound.\n\n## 3. Sharpness of the conical Carath\u00e9odory number via positive circuits\n\n**Conjecture.** In `d`-dimensional space the conical Carath\u00e9odory bound `d + 1` is\nattained precisely by minimal positively dependent families (\"positive circuits\"),\nand every family capturing the origin contains such a circuit of size at most\n`d + 1`.\n\nThe key insight is that pruning a nonnegative representation always terminates at a\nsupport on which the vectors are affinely independent yet positively dependent, and\nsuch supports are exactly positive circuits. Why now? The pruning step proved here\nalready reduces any capturing family below the `d + 1` threshold, so extracting the\ncircuit structure is the natural next refinement of that same argument.\n\n## 4. A colorful cone theorem for interior capture\n\n**Conjecture.** If each of `d` color classes positively spans the whole space\n(the origin lies in the interior of each cone), then some colorful transversal of\n`d + 1` chosen vectors captures the origin in the interior of its cone, and `d`\ncolors never suffice.\n\nThe key insight is that interior capture is an open condition stable under small\nperturbations, so a transversal achieving boundary capture can be nudged into\ninterior capture whenever one extra color is available. Why now? The dimension-one\nanalysis already separates \"boundary\" capture (a single ray) from genuine interior\ncapture, pinpointing the extra color as the resource that upgrades one to the\nother.\n\n## 5. Stability of capture under perturbation\n\n**Conjecture.** The property \"this colorful transversal captures the origin\nconically\" is stable: there is a positive margin such that perturbing every chosen\nvector within that margin preserves capture, with the margin controlled by the\nsmallest positive coefficient in the witnessing combination.\n\nThe key insight is that a strictly positive witnessing coefficient furnishes slack\nthat a sufficiently small perturbation cannot exhaust. Why now? The nontriviality\nclause enforced throughout this work supplies exactly such a strictly positive\ncoefficient, turning a qualitative existence statement into a quantitative\nrobustness estimate.\n",
     "domains": [
       "Algebra",
@@ -1933,7 +1933,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5d81b714",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T22:35:39.370659+00:00",
     "title": "The results established here treat the origin as the distinguished point, exploi"
   },

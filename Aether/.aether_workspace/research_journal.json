@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f347bf96",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Extremal Determinants with Bounded Entries\n\nThis cycle established, for `4 × 4` integer matrices with entries in the symmetric\nrange `{-B, …, B}`, that the maximum determinant is",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-13T16:16:08",
-      "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
-    },
-    {
       "cycle_id": "24c0b42e",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the\nFyodorov–Hiary–Keating (FHK) conjecture: the standard Gumbel law\n`G(x) = exp(-exp(-x))` as a genuine probabilit",
@@ -499,19 +489,19 @@
       "theorem_count": 25,
       "timestamp": "2026-07-14T08:40:07",
       "title": "Deepening: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
+    },
+    {
+      "cycle_id": "bcaaf8f2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Seidel higher spectral moments under edge flips\n\n## What this cycle established (all machine-checked in `SeidelHigherMoments.lean`)\n\nThe foundational cycle showed the *second* Se",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-14T08:40:17",
+      "title": "Elementary spectral-moment foundations of Seidel"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4eef1c33",
-      "domain": "Novelty",
-      "key_insight": "# The Mega-Sphere (Deepening) — Results and Future Directions\n\nThis cycle deepens the \"Mega-Sphere: all dimensions at once\" program (prior\ncycle dfaaa130) with three new self-contained Lean files unde",
-      "quality_score": 0.83,
-      "sorry_count": 6,
-      "theorem_count": 27,
-      "timestamp": "2026-07-11T17:47:24",
-      "title": "Deepening: The Mega-Sphere: All Dimensions at Once"
-    },
     {
       "cycle_id": "f6949247",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 25,
       "timestamp": "2026-07-14T08:40:07",
       "title": "Deepening: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
+    },
+    {
+      "cycle_id": "bcaaf8f2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Seidel higher spectral moments under edge flips\n\n## What this cycle established (all machine-checked in `SeidelHigherMoments.lean`)\n\nThe foundational cycle showed the *second* Se",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-14T08:40:17",
+      "title": "Elementary spectral-moment foundations of Seidel"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "17340490",
-      "domain": "Novelty",
-      "name": "oamPhase_zero",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "17340490",
-      "domain": "Novelty",
-      "name": "oamPhase_mul",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "17340490",
-      "domain": "Novelty",
-      "name": "oamPhase_opposite",
-      "quality": 0.83
-    },
     {
       "cycle_id": "28ee7277",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "qExp_dim_one_eq_pExp",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "bcaaf8f2",
+      "domain": "Applications",
+      "name": "trace_mul_single",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "bcaaf8f2",
+      "domain": "Applications",
+      "name": "trace_cube_add",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "bcaaf8f2",
+      "domain": "Applications",
+      "name": "trace_cube_flip",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-14T08:40:07",
+  "last_updated": "2026-07-14T08:40:17",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3903c2d7",
-        "quality": 0.82,
-        "theorems": 10,
-        "title": "Bypassed"
-      },
-      {
         "cycle_id": "0782e3ca",
         "quality": 0.72,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 25,
         "title": "Deepening: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
+      },
+      {
+        "cycle_id": "bcaaf8f2",
+        "quality": 0.72,
+        "theorems": 20,
+        "title": "Elementary spectral-moment foundations of Seidel"
       }
     ],
     "Bridges": [
