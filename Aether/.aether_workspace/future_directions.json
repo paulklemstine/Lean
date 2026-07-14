@@ -8274,7 +8274,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 3,
       "catalog_references": [
         "Spr12",
         "Pol03",
@@ -8283,7 +8283,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e6dfc1d4",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -8299,7 +8299,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0625",
-      "last_attempt_time": "2026-07-13T21:24:56.755214+00:00",
+      "last_attempt_time": "2026-07-14T14:33:07.698243+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem: If μ²(E, ω^i) ≠ 0, then λ²*(E^D, ω^i) = λ²*(E, ω^i) + Σ_{ℓ|D} [terms] + c ⋅ μ²(E, ω^i) for some constant c ∈ Z_2.",
       "lineage_refs": [],
@@ -8314,7 +8314,7 @@
       "source": "",
       "source_exp_id": "2607.05305v1",
       "source_path": "http://arxiv.org/abs/2607.05305v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-08T01:05:41.844138+00:00",
       "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
@@ -23289,7 +23289,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b97ab468 (Q=0.820), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Novelty"
       ],
@@ -46358,7 +46358,6 @@
   "selection_log": [
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "abduction_followup",
     "abduction_followup",
     "cross_domain_bridge",
@@ -46375,6 +46374,7 @@
     "abduction_followup",
     "abduction_followup",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }

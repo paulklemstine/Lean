@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c81e5afa",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
-      "quality_score": 0.72,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-13T20:14:39",
-      "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.l"
-    },
-    {
       "cycle_id": "ce15dd8e",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x³ − 3x` of Mori's uncanny-valley acceptance curv",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-14T14:13:21",
       "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
+    },
+    {
+      "cycle_id": "656eecef",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Cone Colorful Carathéodory (general dimension)\n\nThis cycle proves the **cone colorful Carathéodory theorem in arbitrary finite\ndimension** (`Catalog/Novelty/ConeColorfulCaratheod",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-14T14:32:53",
+      "title": "Deepening: Cone Colorful Carathéodory Theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9af0a04a",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Wetware Computation\n\nThis file (`Bridges/WetwareComputation.lean`) models a *wetware* computation as a\ndiscrete dynamical system (a step map iterated on a neural state space) and",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-11T23:05:15",
-      "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
-    },
     {
       "cycle_id": "7b741692",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-14T14:13:21",
       "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
+    },
+    {
+      "cycle_id": "656eecef",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Cone Colorful Carathéodory (general dimension)\n\nThis cycle proves the **cone colorful Carathéodory theorem in arbitrary finite\ndimension** (`Catalog/Novelty/ConeColorfulCaratheod",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-14T14:32:53",
+      "title": "Deepening: Cone Colorful Carathéodory Theorem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2758a31c",
-      "domain": "Applications",
-      "name": "muInv_mul",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "33954867",
-      "domain": "Applications",
-      "name": "sigmaZ_def",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "33954867",
-      "domain": "Applications",
-      "name": "pow_pow_dvd_of_zmod",
-      "quality": 0.72
-    },
     {
       "cycle_id": "33954867",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "goodManifolds_doubling",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "656eecef",
+      "domain": "Novelty",
+      "name": "and",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "656eecef",
+      "domain": "Novelty",
+      "name": "in",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "656eecef",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-07-14T14:13:21",
+  "last_updated": "2026-07-14T14:32:53",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "86411247",
-        "quality": 0.8,
-        "theorems": 40,
-        "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse by"
-      },
-      {
         "cycle_id": "30ef4e5b",
         "quality": 0.82,
         "theorems": 32,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 30,
         "title": "This cycle established, with no finiteness or well-foundedness hypothesis on the"
+      },
+      {
+        "cycle_id": "656eecef",
+        "quality": 0.84,
+        "theorems": 15,
+        "title": "Deepening: Cone Colorful Carathéodory Theorem"
       }
     ],
     "NumberTheory": [
