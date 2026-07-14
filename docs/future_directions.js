@@ -199,7 +199,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f53587f0",
     "description": "Building on cycle 1bd2f770 (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the fixed genus chord swap Markov chain on chord diagrams with n chords and genus g, the spectral gap \u03b3_{n,g} satisfies \u03b3_{n,g} = \u0398(n^{-3}) when g is fixed and n \u2192 \u221e. This sharpens the paper's polynomial lower bound to a precise exponent and matches the n^{-3} scaling observed in related swap ch",
     "domains": [
       "Novelty"
@@ -208,7 +208,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "1bd2f770",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T01:16:54.126795+00:00",
     "title": "Deepening: Tight spectral gap exponent for the fixed-genus chord swap chain"
   },
@@ -2164,7 +2164,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "11762aec",
     "description": "Cycle ea3218f3 (Q=0.700) proved 18 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Every minimally 1\u2011tough graph that contains no induced subgraph isomorphic to K\u2081 \u222a P\u2084 and has at least three vertices admits a Hamiltonian cycle.",
     "domains": [
       "Novelty"
@@ -2173,7 +2173,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ea3218f3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T01:17:13.673052+00:00",
     "title": "Close Proofs: Minimally 1\u2011tough (K\u2081 \u222a P\u2084)-free graphs are Hamiltonian"
   },
