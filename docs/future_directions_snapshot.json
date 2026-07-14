@@ -136,6 +136,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 385fff12 (Q=0.830), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The main result establishing the exact exponential growth rate of the ρ-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly ρ(1-R) relative to the unconstrained Arıkan--Merhav e",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_385fff12_757c3e3d",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "385fff12",
+    "status": "available",
+    "timestamp": "2026-07-14T10:08:42.159007+00:00",
+    "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 48961a11 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnu",
     "domain_bridges": [],
     "domains": [
@@ -1306,7 +1325,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a9d00c1",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domain_bridges": [],
     "domains": [
@@ -1318,7 +1337,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "26d2653d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T06:11:35.997237+00:00",
     "title": "Close Proofs: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
   },
@@ -2031,34 +2050,6 @@
     "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "cs.IT",
-      "cs.GT",
-      "math.CO",
-      "math.PR"
-    ],
-    "consumed_by_exp_id": "385fff12",
-    "description": "The main result establishing the exact exponential growth rate of the ρ-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly ρ(1-R) relative to the unconstrained Arıkan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary Rényi entropy.",
-    "domain_bridges": [
-      "math.PR",
-      "math.CO",
-      "cs.IT"
-    ],
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0446",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Define the probability space for random binary linear codes and the constrained guesswork rank. Prove the universality theorem, expressing the guesswork exponent as a functional of the weight-enumerator growth rate: (1+ρ)ψ_{1/(1+ρ)}(g) - ρψ_1(g). Then, evaluate this Legendre-type transform for the specific weight-enumerator growth rate of random linear codes to derive the closed-form exponent ρ h_{1/(1+ρ)}(p) + ρ(R-1).",
-    "research_mode": "team",
-    "source_exp_id": "2607.00205v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T11:06:30.434239+00:00",
-    "title": "Exact Exponent for Constrained Coset Guesswork"
   },
   {
     "ambition_level": "extension",
@@ -3325,6 +3316,26 @@
     "status": "available",
     "timestamp": "2026-07-14T10:08:28.260389+00:00",
     "title": "This cycle takes the combinatorial model of free `ℤ₂`-complexes from"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Constrained Coset Guesswork\n\nDerived from the exact coset-exponent cycle. Each conjecture is falsifiable.\n\n## 1. Universality of the additive redundancy term\n\n**Conjecture.** For *any* discrete memoryless source over a `q`-ary alphabet and\nany linear code of rate `R`, the constrained coset guessing exponent equals the\nunconstrained Arıkan–Merhav exponent minus `ρ(1-R)·log₂ q`, with no dependence on\nthe source distribution in the redundancy term.\n\nThe key insight is that the shift arises purely from the *density* of a coset\ninside the ambient space, `q^{-(1-R)n}`, which is a property of the code and not of\nthe noise; the source distribution only enters through the unconstrained exponent.\n\nWhy now? The binary case establishes the additive separation cleanly; the `q`-ary\ngeneralization is the natural next test of whether \"coding cost\" and \"source\ndifficulty\" truly decouple.\n\n## 2. Second-order (dispersion) refinement of the shift\n\n**Conjecture.** Beyond the first-order exponent, the constrained coset moment admits\na Gaussian-type refinement whose `√n` dispersion term is *unchanged* by the coset\nconstraint; only the exponent's linear term shifts.\n\nThe key insight is that coset compression is a deterministic multiplicative factor\n`2^{-ρ(1-R)n}`, which contributes nothing to fluctuations, so all randomness — and\nhence all dispersion — comes from the source alone.\n\nWhy now? Finite-blocklength guesswork is increasingly relevant to side-channel and\npassword-strength analysis, where the `√n` term dominates at practical lengths.\n\n## 3. Rate–moment phase boundary\n\n**Conjecture.** There is a critical rate `R*(ρ, p) = 1 - H_{1/(1+ρ)}(p)` at which the\nconstrained coset exponent changes sign, separating a regime where guessing is\nsub-exponentially easy from one where it is exponentially hard.\n\nThe key insight is that the exact closed form `ρ·H_{1/(1+ρ)}(p) - ρ(1-R)` is linear\nin `R`, so its unique zero is an exact, computable phase boundary rather than an\nestimate.\n\nWhy now? The exact exponent makes the boundary explicit for the first time,\nturning a qualitative \"harder/easier\" intuition into a sharp threshold.\n\n## 4. Rényi–Shannon continuity at the boundary order\n\n**Conjecture.** As `ρ → ∞` (order `α = 1/(1+ρ) → 0`) the per-symbol exponent\n`H_{1/(1+ρ)}(p)` increases monotonically to `log₂ 2 = 1`, while as `ρ → 0` it\ndecreases continuously to the Shannon entropy `H(p)`, with no discontinuity at the\nexcluded order `α = 1`.\n\nThe key insight is that the guarded case `α ≠ 1` in the Rényi formula is a\nremovable singularity: the limit exists and equals the Shannon entropy, so the\nwhole family of exponents is continuous in `ρ`.\n\nWhy now? Bridging the Rényi guessing exponents to the Shannon entropy at `ρ → 0`\nwould unify moment-based and rate-based code design under one continuous curve.\n\n## 5. Adversarial coset selection\n\n**Conjecture.** If the adversary may choose *which* coset to attack (rather than\nfacing the syndrome-determined one), the best-case exponent is lowered by an\nadditional term equal to the exponent of the minimum coset weight, and this extra\nsaving is at most `ρ(1-R)`, saturating exactly for perfect codes.\n\nThe key insight is that coset weight distributions of random linear codes\nconcentrate, so the \"easiest\" coset is only polynomially lighter than average\nexcept for the atypical perfect-code case.\n\nWhy now? Adversarial (worst-case over cosets) guesswork models realistic attackers\nwho can steer toward weak syndromes, a gap not captured by the average-case theory.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_1288",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "385fff12",
+    "status": "available",
+    "timestamp": "2026-07-14T10:08:39.673066+00:00",
+    "title": "Derived from the exact coset-exponent cycle. Each conjecture is falsifiable."
   },
   {
     "ambition_level": "extension",

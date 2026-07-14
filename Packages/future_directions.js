@@ -102,6 +102,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 385fff12 (Q=0.830), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The main result establishing the exact exponential growth rate of the \u03c1-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly \u03c1(1-R) relative to the unconstrained Ar\u0131kan--Merhav e",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_385fff12_757c3e3d",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "385fff12",
+    "status": "available",
+    "timestamp": "2026-07-14T10:08:42.159007+00:00",
+    "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 48961a11 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnu",
     "domains": [
       "Applications"
@@ -967,7 +981,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a9d00c1",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domains": [
       "Applications"
@@ -976,7 +990,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "26d2653d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T06:11:35.997237+00:00",
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
@@ -1484,20 +1498,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
-  },
-  {
-    "consumed_by_exp_id": "385fff12",
-    "description": "The main result establishing the exact exponential growth rate of the \u03c1-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly \u03c1(1-R) relative to the unconstrained Ar\u0131kan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary R\u00e9nyi entropy.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0446",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00205v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T11:06:30.434239+00:00",
-    "title": "Exact Exponent for Constrained Coset Guesswork"
   },
   {
     "consumed_by_exp_id": "",
@@ -2403,6 +2403,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T10:08:28.260389+00:00",
     "title": "This cycle takes the combinatorial model of free `\u2124\u2082`-complexes from"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Constrained Coset Guesswork\n\nDerived from the exact coset-exponent cycle. Each conjecture is falsifiable.\n\n## 1. Universality of the additive redundancy term\n\n**Conjecture.** For *any* discrete memoryless source over a `q`-ary alphabet and\nany linear code of rate `R`, the constrained coset guessing exponent equals the\nunconstrained Ar\u0131kan\u2013Merhav exponent minus `\u03c1(1-R)\u00b7log\u2082 q`, with no dependence on\nthe source distribution in the redundancy term.\n\nThe key insight is that the shift arises purely from the *density* of a coset\ninside the ambient space, `q^{-(1-R)n}`, which is a property of the code and not of\nthe noise; the source distribution only enters through the unconstrained exponent.\n\nWhy now? The binary case establishes the additive separation cleanly; the `q`-ary\ngeneralization is the natural next test of whether \"coding cost\" and \"source\ndifficulty\" truly decouple.\n\n## 2. Second-order (dispersion) refinement of the shift\n\n**Conjecture.** Beyond the first-order exponent, the constrained coset moment admits\na Gaussian-type refinement whose `\u221an` dispersion term is *unchanged* by the coset\nconstraint; only the exponent's linear term shifts.\n\nThe key insight is that coset compression is a deterministic multiplicative factor\n`2^{-\u03c1(1-R)n}`, which contributes nothing to fluctuations, so all randomness \u2014 and\nhence all dispersion \u2014 comes from the source alone.\n\nWhy now? Finite-blocklength guesswork is increasingly relevant to side-channel and\npassword-strength analysis, where the `\u221an` term dominates at practical lengths.\n\n## 3. Rate\u2013moment phase boundary\n\n**Conjecture.** There is a critical rate `R*(\u03c1, p) = 1 - H_{1/(1+\u03c1)}(p)` at which the\nconstrained coset exponent changes sign, separating a regime where guessing is\nsub-exponentially easy from one where it is exponentially hard.\n\nThe key insight is that the exact closed form `\u03c1\u00b7H_{1/(1+\u03c1)}(p) - \u03c1(1-R)` is linear\nin `R`, so its unique zero is an exact, computable phase boundary rather than an\nestimate.\n\nWhy now? The exact exponent makes the boundary explicit for the first time,\nturning a qualitative \"harder/easier\" intuition into a sharp threshold.\n\n## 4. R\u00e9nyi\u2013Shannon continuity at the boundary order\n\n**Conjecture.** As `\u03c1 \u2192 \u221e` (order `\u03b1 = 1/(1+\u03c1) \u2192 0`) the per-symbol exponent\n`H_{1/(1+\u03c1)}(p)` increases monotonically to `log\u2082 2 = 1`, while as `\u03c1 \u2192 0` it\ndecreases continuously to the Shannon entropy `H(p)`, with no discontinuity at the\nexcluded order `\u03b1 = 1`.\n\nThe key insight is that the guarded case `\u03b1 \u2260 1` in the R\u00e9nyi formula is a\nremovable singularity: the limit exists and equals the Shannon entropy, so the\nwhole family of exponents is continuous in `\u03c1`.\n\nWhy now? Bridging the R\u00e9nyi guessing exponents to the Shannon entropy at `\u03c1 \u2192 0`\nwould unify moment-based and rate-based code design under one continuous curve.\n\n## 5. Adversarial coset selection\n\n**Conjecture.** If the adversary may choose *which* coset to attack (rather than\nfacing the syndrome-determined one), the best-case exponent is lowered by an\nadditional term equal to the exponent of the minimum coset weight, and this extra\nsaving is at most `\u03c1(1-R)`, saturating exactly for perfect codes.\n\nThe key insight is that coset weight distributions of random linear codes\nconcentrate, so the \"easiest\" coset is only polynomially lighter than average\nexcept for the atypical perfect-code case.\n\nWhy now? Adversarial (worst-case over cosets) guesswork models realistic attackers\nwho can steer toward weak syndromes, a gap not captured by the average-case theory.\n",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_1288",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "385fff12",
+    "status": "available",
+    "timestamp": "2026-07-14T10:08:39.673066+00:00",
+    "title": "Derived from the exact coset-exponent cycle. Each conjecture is falsifiable."
   },
   {
     "consumed_by_exp_id": "",
