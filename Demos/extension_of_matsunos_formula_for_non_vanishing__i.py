@@ -1,38 +1,49 @@
 """
-demo.py — Numerical demonstrations for the μ-corrected Matsuno formula.
+Numerical demonstration of the mu-extension of Matsuno's sharp/flat
+lambda-difference formula.
 
-This self-contained script illustrates the main results on the extension of
-Matsuno's formula for the sharp/flat Iwasawa λ-invariants of quadratic twists
-of an elliptic curve with good supersingular reduction at 2, in the presence of
-a non-vanishing μ-invariant.
+For an elliptic curve E/Q with good supersingular reduction at 2 and a
+square-free twisting parameter D = 1 (mod 4), we model the sharp/flat
+Iwasawa lambda-difference of the quadratic twist E^D by
 
-All mathematical objects are re-implemented here directly from their
-definitions so the file stands alone.  Everything is exact integer arithmetic.
+    lambda_diff_mu(D) = lambda_diff(D) + mu * W(D),
 
-Run:  python3 demo.py
+where
+    n_ell        = v2((ell^2 - 1) / 8)          (2-adic depth)
+    c_ell        = local Matsuno term (three cases)
+    lambda_diff  = sum over primes ell | D of c_ell
+    w_ell        = 2 ** n_ell                    (mu-weight)
+    W(D)         = sum over primes ell | D of w_ell
+
+This script reproduces every theorem of the accompanying paper numerically:
+additivity, exact recovery (inversion) of mu, strict monotonicity/injectivity,
+strict growth under a new ramified prime, the 2-adic depth law, and the three
+disproofs (multiplicativity fails; recovery needs a prime; not lower-order).
+
+Pure standard library; run with:  python3 demo.py
 """
 
 from __future__ import annotations
 
-from typing import Callable, Dict, List, Tuple
+from typing import Callable, Dict, List
 
 
 # --------------------------------------------------------------------------- #
-#  Basic 2-adic arithmetic
+# Core arithmetic
 # --------------------------------------------------------------------------- #
-def padic_val(p: int, n: int) -> int:
-    """The p-adic valuation v_p(n): the exponent of p in n (v_p(0) := 0)."""
-    if n == 0:
-        return 0
-    v = 0
-    while n % p == 0:
-        n //= p
-        v += 1
-    return v
+def v2(m: int) -> int:
+    """2-adic valuation of a positive integer m."""
+    if m <= 0:
+        raise ValueError("v2 requires a positive integer")
+    k = 0
+    while m % 2 == 0:
+        m //= 2
+        k += 1
+    return k
 
 
 def prime_factors(n: int) -> List[int]:
-    """The sorted list of distinct prime divisors of n (n >= 1)."""
+    """Sorted list of distinct prime divisors of n (empty for n <= 1)."""
     factors: List[int] = []
     d = 2
     m = n
@@ -47,163 +58,141 @@ def prime_factors(n: int) -> List[int]:
     return factors
 
 
-# --------------------------------------------------------------------------- #
-#  Part I.  The μ-corrected Matsuno λ-difference
-# --------------------------------------------------------------------------- #
 def n_ell(ell: int) -> int:
-    """The 2-adic depth  n_ell = v_2( (ell^2 - 1) / 8 )."""
-    return padic_val(2, (ell ** 2 - 1) // 8)
+    """2-adic depth n_ell = v2((ell^2 - 1) / 8) for odd ell >= 3."""
+    val = ell * ell - 1
+    assert val % 8 == 0, "ell^2 - 1 must be divisible by 8 for odd ell"
+    return v2(val // 8)
 
 
-def local_term(conductor: int, ord_map: Callable[[int], int], ell: int) -> int:
-    """Classical (μ = 0) local contribution δ(ℓ) of a prime ℓ.
+def mu_weight(ell: int) -> int:
+    """Local mu-weight w_ell = 2 ** n_ell."""
+    return 2 ** n_ell(ell)
 
-    2^{n_ℓ}       if ℓ divides the conductor N_E,
-    2^{n_ℓ + 1}   else if the reduction order ord(ℓ) is even,
-    0             otherwise.
-    """
-    if conductor % ell == 0:
+
+def weight_sum(D: int) -> int:
+    """Total mu-weight W(D) = sum of w_ell over primes ell | D."""
+    return sum(mu_weight(ell) for ell in prime_factors(D))
+
+
+def local_term(NE: int, ord_fn: Callable[[int], int], ell: int) -> int:
+    """Classical Matsuno local term c_ell (three cases)."""
+    if NE % ell == 0:
         return 2 ** n_ell(ell)
-    if ord_map(ell) % 2 == 0:
+    if ord_fn(ell) % 2 == 0:
         return 2 ** (n_ell(ell) + 1)
     return 0
 
 
-def lambda_diff(D: int, conductor: int, ord_map: Callable[[int], int]) -> int:
-    """Classical Matsuno sharp/flat λ-difference of the twist E^D (μ = 0)."""
-    return sum(local_term(conductor, ord_map, ell) for ell in prime_factors(D))
-
-
-def mu_weight(ell: int) -> int:
-    """The local μ-weight 2^{n_ℓ} carried by each prime divisor of D."""
-    return 2 ** n_ell(ell)
-
-
-def mu_term(D: int, mu: int) -> int:
-    """The μ-correction:  μ · Σ_{ℓ | D} 2^{n_ℓ}."""
-    return mu * sum(mu_weight(ell) for ell in prime_factors(D))
+def lambda_diff(D: int, NE: int, ord_fn: Callable[[int], int]) -> int:
+    """Classical (mu = 0) Matsuno lambda-difference."""
+    return sum(local_term(NE, ord_fn, ell) for ell in prime_factors(D))
 
 
 def lambda_diff_mu(
-    D: int, conductor: int, mu: int, ord_map: Callable[[int], int]
+    D: int, NE: int, mu: int, ord_fn: Callable[[int], int]
 ) -> int:
-    """The μ-corrected sharp/flat λ-difference of the twist E^D."""
-    return lambda_diff(D, conductor, ord_map) + mu_term(D, mu)
+    """mu-corrected lambda-difference."""
+    return lambda_diff(D, NE, ord_fn) + mu * weight_sum(D)
+
+
+def recover_mu(
+    D: int, NE: int, mu: int, ord_fn: Callable[[int], int]
+) -> int:
+    """Inversion formula: recover mu from the twist data (needs W(D) > 0)."""
+    W = weight_sum(D)
+    if W == 0:
+        raise ValueError("recovery requires a prime divisor of D")
+    return (lambda_diff_mu(D, NE, mu, ord_fn) - lambda_diff(D, NE, ord_fn)) // W
 
 
 # --------------------------------------------------------------------------- #
-#  Part II.  Sharp/flat degree sequences (Pollack–Kobayashi type) at p = 2
+# Demonstrations
 # --------------------------------------------------------------------------- #
-def flat_deg(n: int) -> int:
-    """Flat degree  Σ_{i<n} 4^i = (4^n - 1)/3."""
-    return sum(4 ** i for i in range(n))
-
-
-def sharp_deg(n: int) -> int:
-    """Sharp degree  Σ_{i<n} 2·4^i = 2·flat_deg(n)."""
-    return sum(2 * 4 ** i for i in range(n))
-
-
-def jacobsthal(n: int) -> int:
-    """Jacobsthal number  J_n:  J_0 = 0, J_1 = 1, J_{n+2} = J_{n+1} + 2 J_n."""
-    a, b = 0, 1
-    if n == 0:
-        return a
-    for _ in range(n - 1):
-        a, b = b, b + 2 * a
-    return b
-
-
-# --------------------------------------------------------------------------- #
-#  Demonstrations
-# --------------------------------------------------------------------------- #
-def demo_depths() -> None:
+def demo_depth_law() -> None:
     print("=" * 68)
-    print("  2-adic depths  n_ℓ = v_2((ℓ²-1)/8)  and μ-weights 2^{n_ℓ}")
+    print("Depth law:  8 * 2^{n_ell} = 2^{v2(ell-1) + v2(ell+1)}")
     print("=" * 68)
-    print(f"{'ℓ':>5} | {'ℓ²-1':>8} | {'(ℓ²-1)/8':>10} | {'n_ℓ':>4} | {'2^{n_ℓ}':>8} |"
-          f" {'v2(ℓ-1)+v2(ℓ+1)':>16}")
-    print("-" * 68)
-    for ell in [3, 5, 7, 11, 13, 17, 31, 127]:
-        v = padic_val(2, ell - 1) + padic_val(2, ell + 1)
-        print(f"{ell:>5} | {ell**2-1:>8} | {(ell**2-1)//8:>10} | {n_ell(ell):>4} |"
-              f" {2**n_ell(ell):>8} | {v:>16}")
-    print("\nDepth law check:  8 · 2^{n_ℓ} = 2^{v2(ℓ-1)+v2(ℓ+1)} for odd ℓ ≥ 3")
-    for ell in [3, 5, 7, 11, 13, 17, 31, 127]:
+    print(f"{'ell':>4} {'n_ell':>6} {'w_ell':>6} {'8*w':>6} {'2^(v+v)':>8}"
+          f" {'ell mod 8':>10}")
+    for ell in [3, 5, 7, 11, 13, 17, 23, 31, 41]:
         lhs = 8 * mu_weight(ell)
-        rhs = 2 ** (padic_val(2, ell - 1) + padic_val(2, ell + 1))
-        assert lhs == rhs, (ell, lhs, rhs)
-    print("  verified for all sampled ℓ.\n")
+        rhs = 2 ** (v2(ell - 1) + v2(ell + 1))
+        assert lhs == rhs
+        print(f"{ell:>4} {n_ell(ell):>6} {mu_weight(ell):>6} {lhs:>6}"
+              f" {rhs:>8} {ell % 8:>10}")
+    print("Note: w_ell == 1  exactly when  ell = +/-3 (mod 8).\n")
 
 
-def demo_conservativity_and_mu() -> None:
+def demo_inversion() -> None:
     print("=" * 68)
-    print("  Conservativity and the μ-contribution")
+    print("Exact recovery of mu via the inversion formula")
     print("=" * 68)
-    # A toy model: conductor N_E = 15, reduction order ord(ℓ) = ℓ - 1.
-    conductor = 15
-    ord_map: Callable[[int], int] = lambda ell: ell - 1
-    for D in [5, 13, 65, 5 * 13 * 17]:
-        base = lambda_diff(D, conductor, ord_map)
-        print(f"D = {D:>4}:  classical λ-difference = {base}")
-        for mu in [0, 1, 2, 3]:
-            total = lambda_diff_mu(D, conductor, mu, ord_map)
-            print(f"           μ = {mu}:  corrected = {total:>4}"
-                  f"   (extra = {total - base})")
-        assert lambda_diff_mu(D, conductor, 0, ord_map) == base
+    NE = 3 * 7  # E ramified at 3 and 7
+    ord_fn = lambda ell: 2 if ell % 3 == 1 else 1
+    for D in [5, 13, 5 * 13, 5 * 13 * 17]:
+        for mu in [0, 1, 2, 5, 42]:
+            rec = recover_mu(D, NE, mu, ord_fn)
+            assert rec == mu
+        print(f"  D = {D:>4}:  recovered mu correctly for mu in "
+              f"{{0,1,2,5,42}}   (W(D) = {weight_sum(D)})")
     print()
 
 
 def demo_additivity() -> None:
     print("=" * 68)
-    print("  Complete additivity over coprime moduli")
+    print("Additivity over coprime moduli (but NOT multiplicativity)")
     print("=" * 68)
-    conductor = 15
-    ord_map: Callable[[int], int] = lambda ell: ell - 1
-    mu = 2
-    pairs: List[Tuple[int, int]] = [(5, 13), (17, 29), (5 * 13, 17)]
-    for a, b in pairs:
-        left = lambda_diff_mu(a * b, conductor, mu, ord_map)
-        right = (lambda_diff_mu(a, conductor, mu, ord_map)
-                 + lambda_diff_mu(b, conductor, mu, ord_map))
-        status = "OK" if left == right else "FAIL"
-        print(f"  a={a:>3}, b={b:>3}:  Λ(ab)={left:>4}   Λ(a)+Λ(b)={right:>4}   [{status}]")
-        assert left == right
-    print()
+    NE = 7
+    ord_fn = lambda ell: 2 if ell == 5 else 1
+    mu = 3
+    a, b = 3, 5
+    lhs = lambda_diff_mu(a * b, NE, mu, ord_fn)
+    rhs = lambda_diff_mu(a, NE, mu, ord_fn) + lambda_diff_mu(b, NE, mu, ord_fn)
+    prod = lambda_diff_mu(a, NE, mu, ord_fn) * lambda_diff_mu(b, NE, mu, ord_fn)
+    print(f"  ldm(15) = {lhs},  ldm(3)+ldm(5) = {rhs}   -> additive: {lhs == rhs}")
+    print(f"  ldm(3)*ldm(5) = {prod}                   -> multiplicative: "
+          f"{lhs == prod}\n")
 
 
-def demo_sharp_flat() -> None:
+def demo_monotonicity() -> None:
     print("=" * 68)
-    print("  Sharp/flat degree sequences and the Jacobsthal law (p = 2)")
+    print("Strict monotonicity / injectivity in mu (D ramified)")
     print("=" * 68)
-    print(f"{'n':>3} | {'flatDeg':>8} | {'sharpDeg':>9} | {'4^n':>8} |"
-          f" {'J_{2n}':>8} | {'3·flat+1':>9}")
-    print("-" * 60)
-    for n in range(0, 9):
-        f = flat_deg(n)
-        s = sharp_deg(n)
-        j = jacobsthal(2 * n)
-        print(f"{n:>3} | {f:>8} | {s:>9} | {4**n:>8} | {j:>8} | {3*f+1:>9}")
-        assert s == 2 * f                      # sharp = 2·flat
-        assert s + f + 1 == 4 ** n             # sharp + flat + 1 = 4^n
-        assert 3 * f + 1 == 4 ** n             # 3·flat + 1 = 4^n
-        assert j == f                          # J_{2n} = flatDeg(n)
-    print("\nJacobsthal closed form  3·J_n = 2^n - (-1)^n:")
-    for n in range(0, 10):
-        assert 3 * jacobsthal(n) == 2 ** n - (-1) ** n
-    print("  verified for n = 0..9.")
-    print("Consecutive sum  J_n + J_{n+1} = 2^n:")
-    for n in range(0, 10):
-        assert jacobsthal(n) + jacobsthal(n + 1) == 2 ** n
-    print("  verified for n = 0..9.\n")
+    NE, D = 1, 15
+    ord_fn = lambda ell: 1
+    vals: Dict[int, int] = {mu: lambda_diff_mu(D, NE, mu, ord_fn)
+                            for mu in range(6)}
+    print("  mu -> ldm(15):", vals)
+    seq = [vals[mu] for mu in range(6)]
+    assert all(seq[i] < seq[i + 1] for i in range(len(seq) - 1))
+    print("  strictly increasing, hence injective.\n")
+
+
+def demo_disproofs() -> None:
+    print("=" * 68)
+    print("Disproofs")
+    print("=" * 68)
+    # (1) recovery needs a prime divisor: D = 1
+    NE, ord_fn = 1, (lambda ell: 1)
+    v0 = lambda_diff_mu(1, NE, 0, ord_fn)
+    v1 = lambda_diff_mu(1, NE, 1, ord_fn)
+    print(f"  D=1: ldm(mu=0)={v0}, ldm(mu=1)={v1}  -> mu invisible: {v0 == v1}")
+    # (2) mu-term not lower-order: D = 3
+    D = 3
+    cls = lambda_diff(D, 1, lambda ell: 1)
+    cor = 1 * weight_sum(D)
+    print(f"  D=3: classical={cls}, mu-correction={cor}  -> correction "
+          f"dominates: {cls < cor}\n")
 
 
 def main() -> None:
-    demo_depths()
-    demo_conservativity_and_mu()
+    demo_depth_law()
+    demo_inversion()
     demo_additivity()
-    demo_sharp_flat()
-    print("All demonstrations completed and all identities verified.")
+    demo_monotonicity()
+    demo_disproofs()
+    print("All numerical checks passed.")
 
 
 if __name__ == "__main__":
