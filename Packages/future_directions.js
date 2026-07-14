@@ -101,20 +101,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at "
   },
   {
-    "consumed_by_exp_id": "a3c4f06b",
-    "description": "Building on cycle 385fff12 (Q=0.830), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The main result establishing the exact exponential growth rate of the \u03c1-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly \u03c1(1-R) relative to the unconstrained Ar\u0131kan--Merhav e",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_385fff12_757c3e3d",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "385fff12",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T10:08:42.159007+00:00",
-    "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 48961a11 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnu",
     "domains": [
@@ -213,7 +199,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -222,7 +208,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -395,7 +381,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dfe6f1f9",
     "description": "Building on cycle da4694df (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/",
     "domains": [
       "Applications"
@@ -404,7 +390,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "da4694df",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T11:50:21.285776+00:00",
     "title": "Deepening: The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
@@ -2559,6 +2545,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T16:54:28.173949+00:00",
     "title": "`BoundedError.lean` establishes, for surveillance on a finite dynamic network:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Ar\u0131kan\u2013Merhav growth rate and derived the shift from a multiplicative density model.\n\nThis cycle **removes that hypothesis at the maximal-entropy source `p = 1/2`**. In\n`ExactUniformExponent.lean` we:\n\n1. **Construct** the guesswork moment from first principles as the exact average\n   `M(N) = 2^{-k} \u03a3_{j=1}^{2^k} j^\u03c1` over `2^k` equiprobable candidates.\n2. **Prove** the elementary two-sided power-sum estimate\n   `2^{(j-1)(\u03c1+1)} \u2264 \u03a3_{j=1}^{2^j} j^\u03c1 \u2264 2^{j(\u03c1+1)}` (`powSum_lower`, `powSum_upper`)\n   and its logarithmic form (`powSum_logb_bounds`).\n3. **Derive** by a squeeze argument the exact growth rate of the constrained coset moment,\n   `(1/m) log\u2082 M(2^{k_m}) \u2192 \u03c1\u00b7R` whenever `k_m/m \u2192 R` (`cosetMoment_rate`).\n4. **Identify** `amExponent \u03c1 (1/2) = \u03c1` (`amExponent_half`) and hence obtain the exact\n   shift `\u03c1\u00b7R = amExponent \u03c1 (1/2) - \u03c1(1-R)` (`cosetMoment_rate_am`,\n   `exact_exponent_shift`), with the unconstrained case `R = 1` as `unifMoment_rate`.\n\nThe whole chain is `sorry`-free and uses only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`.\n\n## Natural next steps\n\n1. **General `p \u2260 1/2`.** Replace the uniform (max-entropy) source by a genuine\n   Bernoulli(`p`) noise distribution. This requires the *tilted / type-class* enumeration\n   underlying Ar\u0131kan's bound: order noise vectors by decreasing probability, group by\n   Hamming weight, and prove `(1/n) log\u2082 \u03a3_e P(e)\u00b7rank(e)^\u03c1 \u2192 amExponent \u03c1 p`. The R\u00e9nyi\n   closed form `amExponent_eq_renyi` from the companion file already supplies the target.\n\n2. **Averaging over random linear codes.** Make `k_m` and the coset genuinely arise from a\n   random `[n, Rn]` generator matrix, and prove the density factor `2^{-(1-R)n}` in\n   expectation (first-moment method), tying `cosetMoment` to `HammingBallDiscrepancy`'s\n   `inter_ball_coset_invariant` (coset-invariance of counts).\n\n3. **Concentration / converse.** Upgrade the expectation statement to an almost-sure or\n   high-probability exponent, and prove a matching converse (lower bound on the moment),\n   establishing the exponent as a genuine limit rather than a bound.\n\n4. **`q`-ary alphabets.** The power-sum machinery is alphabet-agnostic; replacing base `2`\n   by base `q` gives the `q`-ary coset exponent `\u03c1 \u00b7 H_{1/(1+\u03c1)}^{(q)}(p) - \u03c1(1-R)`.\n\n5. **Sharper asymptotics.** The proof gives `O((\u03c1+1)/m)` convergence; a second-order\n   (Euler\u2013Maclaurin) analysis of `\u03a3 j^\u03c1` would yield the constant and the finite-`n`\n   correction to the exponent.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_1307",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a3c4f06b",
+    "status": "available",
+    "timestamp": "2026-07-14T17:12:51.897034+00:00",
+    "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
   },
   {
     "consumed_by_exp_id": "",

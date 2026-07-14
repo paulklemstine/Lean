@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a0f7e73c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`\ndichotomy** for the *total* d-Hoggatt numbers `H_d(n) = ∑",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-13T23:31:37",
-      "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
-    },
-    {
       "cycle_id": "664b3442",
       "domain": "Applications",
       "key_insight": "# Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consisten",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-14T16:54:56",
       "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
+    },
+    {
+      "cycle_id": "a3c4f06b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`ρ(1-R)` **abstractly**:",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-14T17:13:01",
+      "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4b34e974",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Megastructure Mathematics\n\nBold, testable conjectures distilled from this cycle's study of Dyson-scale\ngeometry, thermodynamics, and computation.\n\n## 1. The optimal collector geo",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-12T01:53:42",
-      "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
-    },
     {
       "cycle_id": "fb4de3e5",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-14T16:54:56",
       "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
+    },
+    {
+      "cycle_id": "a3c4f06b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`ρ(1-R)` **abstractly**:",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-14T17:13:01",
+      "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "13e584ca",
-      "domain": "Applications",
-      "name": "qExp_dim_one_eq_pExp",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "bcaaf8f2",
-      "domain": "Applications",
-      "name": "trace_mul_single",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "bcaaf8f2",
-      "domain": "Applications",
-      "name": "trace_cube_add",
-      "quality": 0.72
-    },
     {
       "cycle_id": "bcaaf8f2",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "fano_error_bound",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a3c4f06b",
+      "domain": "Novelty",
+      "name": "amExponent_half",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "a3c4f06b",
+      "domain": "Novelty",
+      "name": "powSum_pos",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "a3c4f06b",
+      "domain": "Novelty",
+      "name": "powSum_upper",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T16:54:56",
+  "last_updated": "2026-07-14T17:13:01",
   "open_questions": [
     {
       "context": "of spheres.  All theorems below are proved with no `sorry`.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6e60d0a1",
-        "quality": 0.8,
-        "theorems": 18,
-        "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
-      },
-      {
         "cycle_id": "c4aa235b",
         "quality": 0.82,
         "theorems": 44,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 20,
         "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
+      },
+      {
+        "cycle_id": "a3c4f06b",
+        "quality": 0.83,
+        "theorems": 12,
+        "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
       }
     ],
     "NumberTheory": [
