@@ -143,20 +143,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
   },
   {
-    "consumed_by_exp_id": "a46f1a93",
-    "description": "Building on cycle fb4f44b5 (Q=0.830), which proved 38 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the complete bipartite graph K_{m,n} with parts of sizes m and n, the Seidel energy strictly increases under any edge deletion if and only if both m,n \u2265 3. This conjecture claims that the threshold conditions (m,n) \u2265 (3,6), (6,3), (2,15), (15,2) and (4,4) established in the paper are not sharp f",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_fb4f44b5_3d98523f",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "fb4f44b5",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T11:08:41.152651+00:00",
-    "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 094010ae (Q=0.820), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
     "domains": [
@@ -2735,6 +2721,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T22:36:27.724196+00:00",
     "title": "This cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-boun"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 Seidel energy of `K_{m,n}` under edge deletion\n\n`SeidelEnergyTwoDeletions.lean` computes, in closed form, the Seidel energy of\n`K_{m,n}` after deleting **two independent (vertex-disjoint) cross edges**:\n\n```\nE\u2082 = (m+n) + \u221a((m+n+2)\u00b2 - 32),\n```\n\nand proves that this **strictly exceeds** the base energy `2(m+n-1)` for every\nadmissible `(m,n)` (`m,n \u2265 2`, `m+n \u2265 5`) \u2014 no threshold obstruction, unlike the\nsingle-edge case whose sharp threshold is `m+n \u2265 4`.\n\nThe spectral engine is the reduction of a rank-five perturbation of `-I` to a\n`5\u00d75` core via the matrix-determinant lemma (`charpoly_mul_comm_of_le`), whose\ncharacteristic polynomial is computed through an explicit `det_fin_five`\nexpansion. The resulting Seidel spectrum of `K_{m,n} \u2212 {e\u2081,e\u2082}` is\n\n```\n{ -1 }^(m+n-5) \u222a { 1 }\u00b2 \u222a { -3 } \u222a { ((m+n-4) \u00b1 \u221a((m+n+2)\u00b2-32))/2 }.\n```\n\n## Natural next steps\n\n1. **General matching deletion (size `k`).** The same s/d change of basis shows\n   that deleting `k` independent edges yields Seidel spectrum\n   `{-1}^(N-2k-1) \u222a {1}^k \u222a {-3}^(k-1) \u222a {((N-4)\u00b1\u221a((N+2)\u00b2-16k))/2}`\n   (`N = m+n`), hence energy `E_k = (N + 2k - 4) + \u221a((N+2)\u00b2 - 16k)` in the\n   non-degenerate regime `N \u2265 2k+1`. The predicted **sharp threshold** for a\n   strict increase is `N \u2265 k + 3`; combined with `N \u2265 2k+1` this means the energy\n   *always* increases once `k \u2265 2`. Formalizing the general `k` requires\n   variable-size cores and a `Fin`-indexed matching; the `k = 2` file here is the\n   fully worked base case.\n\n2. **Non-independent deletions.** Deleting two edges sharing a vertex (a path\n   `P\u2083` worth of deletions), or a star `K_{1,t}` of deletions at one vertex, is a\n   rank-three perturbation but produces a cubic core whose roots are not rational\n   in `N`; the energy is still algebraic but lacks the clean `\u221a` closed form.\n   A careful sign analysis of that cubic would settle the star case.\n\n3. **Perfect-matching (degenerate) case.** When `N = 2k` (e.g. `K_{k,k}` minus a\n   perfect matching) the weight vector `w` becomes dependent on the unit vectors\n   and the core drops rank; the spectrum and energy change shape and deserve a\n   separate treatment.\n\n4. **Beyond bipartite.** The rank-one structure `S = w w\u1d40 - I` is special to\n   complete bipartite graphs. Extending the \"energy increases under deletion\"\n   analysis to complete multipartite graphs `K_{n\u2081,\u2026,n_r}` (Seidel matrix of\n   rank `r`) is the natural higher-rank generalization.\n\n---\n\n# Open frontier \u2014 Carmichael's primitive-divisor theorem for Fibonacci numbers\n\nThe files `Shared/CarmichaelHelper.lean`, `Shared/CarmichaelProof.lean`,\n`Speculative/AutoResearch/CarmichaelComposite.lean` and\n`Speculative/CarmichaelPrimitiveDivisor.lean` establish, with **no `sorry`** and\nonly the standard axioms, that for every `n` with `13 \u2264 n \u2264 10000` the Fibonacci\nnumber `F(n)` has a *primitive prime divisor* \u2014 a prime `p` dividing `F(n)` but\ndividing no earlier `F(k)` with `0 < k < n`.  Each file is self-contained\n(`import Mathlib` only) and compiles independently.\n\nThe argument splits into:\n\n* **Prime case** (`fib_primitive_divisor_prime`): elementary, unbounded \u2014 for a\n  prime index there are no nontrivial proper divisors to host an earlier\n  occurrence, so *every* prime factor of `F(n)` is primitive.\n* **Composite case** (`fib_carmichael_composite`, `fib_carmichael`,\n  `fib_primitive_divisor`): reduces primitivity to the assertion that the\n  \"primitive part\" `primPart n` (resp. `fibCoprimePart n`) exceeds `1`, and\n  discharges that assertion by a verified `native_decide` computation over the\n  range `13 \u2264 n \u2264 10000`.\n\n## The unbounded tail (`n > 10000`)\n\nThe remaining case \u2014 composite `n > 10000` \u2014 is the **quantitative core** of\nCarmichael's 1913 theorem and is left open here.  It cannot be closed by the\nelementary divisor-product estimate used for the finite range: that bound is\n`F(n) \u2264 n \u00b7 \u220f_{d\u2223n, d<n} F(d)` up to bounded factors, and for *abundant* indices\n`n` (where `\u03c3(n)` is large) the right-hand side already exceeds `F(n)`, so no\ncontradiction is obtained.  The correct tool is the homogeneous cyclotomic\n**primitive part**\n\n```\n\u03a6_n  :=  \u220f_{d \u2223 n} F(d)^{\u03bc(n/d)}      (a positive integer, with F(n) = \u220f_{d\u2223n} \u03a6_d),\n```\n\nfor which `|\u03a6_n| \u2248 \u03c6^{\u03d5_euler(n)}` grows fast enough that `\u03a6_n > n` for all\n`n > 12`; since `\u03a6_n` shares at most one prime (to first order) with `n`, this\nforces a primitive prime factor.  Formalizing this needs a body of theory not\ncurrently in Mathlib:\n\n1. the integrality and M\u00f6bius-product structure of `\u03a6_n` for the Fibonacci\n   (Lucas) sequence;\n2. the multiplicative factorization `F(n) = \u220f_{d\u2223n} \u03a6_d`;\n3. the golden-ratio growth lower bound `\u03a6_n > n` for `n > 12`;\n4. the lifting-the-exponent / rank-of-apparition control showing every\n   non-primitive prime factor of `F(n)` has entry point a proper divisor of `n`.\n\nPartial infrastructure toward this (entry-point theory, a Fibonacci LTE step,\nand negative small-index examples showing the large-index hypothesis is\nnecessary) is collected in the `output-final_aristotle/Shared/FibonacciLTE`,\n`output-final_aristotle/Shared/FibonacciLiftingExponent` and\n`output-final_aristotle/Shared/FibCarmichaelTail` modules; closing steps (2) and\n(3) is the natural next milestone.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1321",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a46f1a93",
+    "status": "available",
+    "timestamp": "2026-07-14T22:53:48.419623+00:00",
+    "title": "`SeidelEnergyTwoDeletions.lean` computes, in closed form, the Seidel energy of"
   },
   {
     "consumed_by_exp_id": "",
