@@ -1037,7 +1037,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dbf870e8",
     "description": "Cycle 7669ab26 (Q=0.820) proved 24 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-comple",
     "domains": [
       "Applications"
@@ -1046,7 +1046,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "7669ab26",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T19:10:40.793079+00:00",
     "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
   },
@@ -1121,7 +1121,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytop"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "90554d1b",
     "description": "Cycle ee7062d3 (Q=0.820) proved 20 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfi",
     "domains": [
       "Applications"
@@ -1130,7 +1130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "ee7062d3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T17:09:44.847521+00:00",
     "title": "Close Proofs: Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Li"
   },
