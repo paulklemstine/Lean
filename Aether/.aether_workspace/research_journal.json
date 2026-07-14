@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f3fa6ca4",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: from the `E₄² = E₈` congruence to sharper Eisenstein arithmetic\n\nThis cycle isolated and proved the arithmetic residue of the identity\n`E₄² = E₈`, namely `σ₇(n) ≡ σ₃(n) (mod 120)`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-13T19:25:09",
-      "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
-    },
-    {
       "cycle_id": "c81e5afa",
       "domain": "Applications",
       "key_insight": "# Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-14T13:37:53",
       "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+    },
+    {
+      "cycle_id": "c5cfd9ce",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant govern",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-14T14:13:21",
+      "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4f5260f0",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Rucker: Infinity and the Mind\n\nThis project (`Catalog/Bridges/RuckerInfinityHierarchy.lean`) formalizes, entirely\ninside ZFC as available in Mathlib, a coherent slice of Cantor's",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-11T22:48:17",
-      "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
-    },
     {
       "cycle_id": "9af0a04a",
       "domain": "Geometry",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-14T13:37:53",
       "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+    },
+    {
+      "cycle_id": "c5cfd9ce",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant govern",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-14T14:13:21",
+      "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T13:37:53",
+  "last_updated": "2026-07-14T14:13:21",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0a1d0253",
-        "quality": 0.82,
-        "theorems": 19,
-        "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
-      },
-      {
         "cycle_id": "13e584ca",
         "quality": 0.83,
         "theorems": 25,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 15,
         "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+      },
+      {
+        "cycle_id": "c5cfd9ce",
+        "quality": 0.83,
+        "theorems": 0,
+        "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
       }
     ],
     "Bridges": [

@@ -87,20 +87,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at "
   },
   {
-    "consumed_by_exp_id": "c5cfd9ce",
-    "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n \u00b7 |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_3399a930_5af2d1bb",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "3399a930",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T02:34:51.379273+00:00",
-    "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 385fff12 (Q=0.830), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The main result establishing the exact exponential growth rate of the \u03c1-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly \u03c1(1-R) relative to the unconstrained Ar\u0131kan--Merhav e",
     "domains": [
@@ -227,7 +213,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -236,7 +222,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -2508,6 +2494,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T13:37:45.666073+00:00",
     "title": "The verified cycle established that the maximal number of good manifolds in an"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant governed by the\ndimensional sign `d \u21a6 (-1)^d`, with an explicit stabilization map identifying the\nnegative-dimensional world with the zero-dimensional one up to sign. The\nfollowing conjectures are the natural next targets.\n\n## 1. A negative-dimensional Euler\u2013Poincar\u00e9 duality\n\n**Conjecture.** For a formal space of dimension `-n` there is a canonical pairing\nbetween its `\u03c0\u2080` data and that of its `n`-fold stabilization, under which the\nEuler characteristic is self-dual: reflecting the dimension `d \u21a6 -d` leaves `\u03c7`\nunchanged up to the parity sign already recorded by `sgn`.\n\nThe key insight is that the invariance `sgn(-d) = sgn(d)` is not an accident of\nthe sign function but the shadow of a duality that swaps a space with its formal\ndesuspension while preserving the count of path components.\n\nWhy now? The stabilization map and the parity-invariance of the sign are both in\nhand, so the duality can be stated as an isomorphism of the underlying component\nmonoids and tested against the product structure that is already proved\nmultiplicative.\n\n## 2. Multiplicativity forces the sign law\n\n**Conjecture.** Any dimension-graded, component-multiplicative integer invariant\nthat is additive under disjoint union and multiplicative under products must\ncoincide with `sgn(dim)\u00b7|\u03c0\u2080|`; equivalently, the only monoid homomorphism from\n`(\u2124,+) \u00d7 (\u2115,\u00b7)` to `\u2124` that is `\u00b11` on each sphere is the Euler characteristic.\n\nThe key insight is that additivity and multiplicativity together pin down the\ninvariant on generators (spheres and points), and every formal space is built\nfrom these by the two operations, so the invariant is rigid.\n\nWhy now? The monoid structure on formal spaces and the homomorphism property of\n`\u03c7` are established, reducing the uniqueness question to a statement about\nhomomorphisms out of a finitely generated commutative monoid.\n\n## 3. The pro-spectrum limit of the stabilization tower\n\n**Conjecture.** The tower `\u2026 \u2192 \u03a3\u207b\u00b9X \u2192 X \u2192 \u03a3X \u2192 \u2026` of suspensions has a well-defined\nstable Euler characteristic obtained as a limit, and this limit is independent of\nthe starting dimension, depending only on `|\u03c0\u2080|` weighted by the coherent sign.\n\nThe key insight is that although each suspension flips the sign of `\u03c7`, the pair\n`(\u03c7, dim mod 2)` is a genuine invariant of the whole tower, so the limit exists\nonce one records the parity alongside the value.\n\nWhy now? The exact one-step behavior `\u03c7(\u03a3X) = -\u03c7(X)` and the `n`-step law\n`\u03c7(\u03a3\u207fX) = (-1)^n \u03c7(X)` are proved, giving the precise transition maps whose limit\nthe conjecture concerns.\n\n## 4. Negative-dimensional surfaces and a signed Gauss\u2013Bonnet\n\n**Conjecture.** The identity `\u03c7 = 2 - 2g` for the genus-`g` surface admits a\nnegative-dimensional companion in which the roles of the top and bottom Betti\nnumbers are exchanged by desuspension, producing a signed genus formula\n`\u03c7 = (-1)^d (2 - 2g)` for the `d`-fold desuspended surface.\n\nThe key insight is that the graded Euler characteristic already treats every\ndegree \u2014 positive or negative \u2014 on the same footing through the alternating sign,\nso shifting all Betti numbers into negative degrees merely multiplies the\nclassical value by a global sign.\n\nWhy now? The bridge reproducing `2 - 2g` from sign-weighted Betti numbers is\nestablished, and the degree-shift operation is exactly the suspension whose effect\non `\u03c7` is already computed.\n\n## 5. A character theory for the sign group\n\n**Conjecture.** The dimensional sign is the unique nontrivial character of the\nadditive group of dimensions valued in the units of `\u2124`, and the collection of\nnegative-dimensional Euler characteristics assembles into the character table of\na naturally occurring `\u2124/2` grading on the stable homotopy category of formal\nspheres.\n\nThe key insight is that `sgn: (\u2124,+) \u2192 {\u00b11}` is precisely the reduction mod 2\ncomposed with the unique isomorphism `\u2124/2 \u2245 {\u00b11}`, so its topological meaning is a\n`\u2124/2`-grading that separates even- from odd-dimensional formal spheres.\n\nWhy now? The homomorphism property `sgn(a+b) = sgn(a)\u00b7sgn(b)` is proved, which is\nthe defining property of a character; what remains is to interpret it as a grading\nand read off the resulting decomposition.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1297",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c5cfd9ce",
+    "status": "available",
+    "timestamp": "2026-07-14T14:12:56.708950+00:00",
+    "title": "The results of this cycle establish that the Euler characteristic extends to"
   },
   {
     "consumed_by_exp_id": "",

@@ -116,25 +116,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c5cfd9ce",
-    "description": "Building on cycle 3399a930 (Q=0.830), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensio",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_3399a930_5af2d1bb",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3399a930",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T02:34:51.379273+00:00",
-    "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 385fff12 (Q=0.830), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The main result establishing the exact exponential growth rate of the ρ-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly ρ(1-R) relative to the unconstrained Arıkan--Merhav e",
     "domain_bridges": [],
@@ -306,7 +287,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` — abstract multiverse.**\nA `Multivers",
     "domain_bridges": [],
     "domains": [
@@ -318,7 +299,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -3448,6 +3429,46 @@
     "status": "available",
     "timestamp": "2026-07-14T13:37:45.666073+00:00",
     "title": "The verified cycle established that the maximal number of good manifolds in an"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant governed by the\ndimensional sign `d ↦ (-1)^d`, with an explicit stabilization map identifying the\nnegative-dimensional world with the zero-dimensional one up to sign. The\nfollowing conjectures are the natural next targets.\n\n## 1. A negative-dimensional Euler–Poincaré duality\n\n**Conjecture.** For a formal space of dimension `-n` there is a canonical pairing\nbetween its `π₀` data and that of its `n`-fold stabilization, under which the\nEuler characteristic is self-dual: reflecting the dimension `d ↦ -d` leaves `χ`\nunchanged up to the parity sign already recorded by `sgn`.\n\nThe key insight is that the invariance `sgn(-d) = sgn(d)` is not an accident of\nthe sign function but the shadow of a duality that swaps a space with its formal\ndesuspension while preserving the count of path components.\n\nWhy now? The stabilization map and the parity-invariance of the sign are both in\nhand, so the duality can be stated as an isomorphism of the underlying component\nmonoids and tested against the product structure that is already proved\nmultiplicative.\n\n## 2. Multiplicativity forces the sign law\n\n**Conjecture.** Any dimension-graded, component-multiplicative integer invariant\nthat is additive under disjoint union and multiplicative under products must\ncoincide with `sgn(dim)·|π₀|`; equivalently, the only monoid homomorphism from\n`(ℤ,+) × (ℕ,·)` to `ℤ` that is `±1` on each sphere is the Euler characteristic.\n\nThe key insight is that additivity and multiplicativity together pin down the\ninvariant on generators (spheres and points), and every formal space is built\nfrom these by the two operations, so the invariant is rigid.\n\nWhy now? The monoid structure on formal spaces and the homomorphism property of\n`χ` are established, reducing the uniqueness question to a statement about\nhomomorphisms out of a finitely generated commutative monoid.\n\n## 3. The pro-spectrum limit of the stabilization tower\n\n**Conjecture.** The tower `… → Σ⁻¹X → X → ΣX → …` of suspensions has a well-defined\nstable Euler characteristic obtained as a limit, and this limit is independent of\nthe starting dimension, depending only on `|π₀|` weighted by the coherent sign.\n\nThe key insight is that although each suspension flips the sign of `χ`, the pair\n`(χ, dim mod 2)` is a genuine invariant of the whole tower, so the limit exists\nonce one records the parity alongside the value.\n\nWhy now? The exact one-step behavior `χ(ΣX) = -χ(X)` and the `n`-step law\n`χ(ΣⁿX) = (-1)^n χ(X)` are proved, giving the precise transition maps whose limit\nthe conjecture concerns.\n\n## 4. Negative-dimensional surfaces and a signed Gauss–Bonnet\n\n**Conjecture.** The identity `χ = 2 - 2g` for the genus-`g` surface admits a\nnegative-dimensional companion in which the roles of the top and bottom Betti\nnumbers are exchanged by desuspension, producing a signed genus formula\n`χ = (-1)^d (2 - 2g)` for the `d`-fold desuspended surface.\n\nThe key insight is that the graded Euler characteristic already treats every\ndegree — positive or negative — on the same footing through the alternating sign,\nso shifting all Betti numbers into negative degrees merely multiplies the\nclassical value by a global sign.\n\nWhy now? The bridge reproducing `2 - 2g` from sign-weighted Betti numbers is\nestablished, and the degree-shift operation is exactly the suspension whose effect\non `χ` is already computed.\n\n## 5. A character theory for the sign group\n\n**Conjecture.** The dimensional sign is the unique nontrivial character of the\nadditive group of dimensions valued in the units of `ℤ`, and the collection of\nnegative-dimensional Euler characteristics assembles into the character table of\na naturally occurring `ℤ/2` grading on the stable homotopy category of formal\nspheres.\n\nThe key insight is that `sgn: (ℤ,+) → {±1}` is precisely the reduction mod 2\ncomposed with the unique isomorphism `ℤ/2 ≅ {±1}`, so its topological meaning is a\n`ℤ/2`-grading that separates even- from odd-dimensional formal spheres.\n\nWhy now? The homomorphism property `sgn(a+b) = sgn(a)·sgn(b)` is proved, which is\nthe defining property of a character; what remains is to interpret it as a grading\nand read off the resulting decomposition.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1297",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c5cfd9ce",
+    "status": "available",
+    "timestamp": "2026-07-14T14:12:56.708950+00:00",
+    "title": "The results of this cycle establish that the Euler characteristic extends to"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBold, testable conjectures arising from the strong-divisibility characterization and the\nFibonacci–Pythagorean bridge.\n\n## 1. A uniform primitive-divisor threshold for injective strong divisibility sequences\n\n**Conjecture.** For every strictly increasing strong divisibility sequence `a` with\n`a 1 = 1`, there is a finite threshold `N` beyond which every term `a n` (with `n > N`)\npossesses a primitive prime divisor — one dividing no earlier term.\n\nThe key insight is that the index-level equivalence `a m ∣ a n ↔ m ∣ n` reduces\nprimitivity entirely to the arithmetic of the index lattice `(ℕ, ∣)`, so the existence of\na primitive divisor becomes a statement about how fast the term-size outgrows the product\nof the \"old\" prime contributions coming from proper divisors.\n\nWhy now? The characterization proved in this cycle turns primitivity into a finite divisor\ncheck, and the two canonical instances (Fibonacci and `a^n − 1`) already satisfy such a\nthreshold (`N = 12` and `N = 6` respectively, by the classical Carmichael and Bang\nresults). A single unified proof for all injective strong divisibility sequences now looks\nwithin reach.\n\n## 2. Density of prime indices among Fibonacci primes\n\n**Conjecture.** Apart from the single exception `n = 4`, the set of indices `n` for which\n`F n` is prime has natural density zero inside the primes, yet is infinite.\n\nThe key insight is that the index test `F n prime ⇒ n = 4 ∨ n prime` restricts Fibonacci\nprimes to prime indices, so the question of their abundance is exactly a question about a\nthin, multiplicatively structured subset of the primes.\n\nWhy now? The necessary condition (prime index) is now established unconditionally; the\nremaining content is the still-open infinitude, and framing it against the prime indices\nsharpens what a probabilistic heuristic must predict.\n\n## 3. Fibonacci–Pythagorean triples realize every Fibonacci hypotenuse of odd index\n\n**Conjecture.** A Fibonacci number `F k` is the hypotenuse of a Fibonacci–Pythagorean\ntriple of the form `(F n · F (n+3), 2 F (n+1) F (n+2), F k)` if and only if `k` is odd and\n`k ≥ 3`; moreover the triple is primitive exactly when `F n` and `F (n+1)` have opposite\nparity in a prescribed pattern.\n\nThe key insight is that the hypotenuse identity `C = F (2n+3)` shows the construction lands\nprecisely on the odd-index Fibonacci numbers, so the \"which Fibonacci numbers are\nhypotenuses\" question is answered by a parity condition on the index.\n\nWhy now? The exact hypotenuse formula proved here pins the image of the construction to\n`{F 3, F 5, F 7, …}`, converting a search problem into a clean parity classification whose\nprimitivity refinement is the natural next target.\n\n## 4. Transfer of the Zsygmondy exception set across strong divisibility sequences\n\n**Conjecture.** The finite set of \"exceptional\" indices where a strong divisibility\nsequence fails to have a primitive divisor is an invariant of the sequence's *growth\nexponent* alone: two injective strong divisibility sequences with the same exponential\ngrowth rate share the same exceptional index set for all but finitely many members.\n\nThe key insight is that, once divisibility is governed purely by the index lattice, the\nonly remaining obstruction to primitivity is a size comparison, and size is controlled by\nthe growth exponent.\n\nWhy now? With the index-level equivalence separated cleanly from the size estimate, the\nexceptional set is exposed as the solution set of an explicit growth inequality, making a\ncross-sequence transfer principle formulatable and testable on Lucas sequences.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_1298",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "479516dd",
+    "status": "available",
+    "timestamp": "2026-07-14T14:13:27.099351+00:00",
+    "title": "Bold, testable conjectures arising from the strong-divisibility characterization"
   },
   {
     "ambition_level": "extension",
