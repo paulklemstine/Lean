@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "24c0b42e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the\nFyodorov–Hiary–Keating (FHK) conjecture: the standard Gumbel law\n`G(x) = exp(-exp(-x))` as a genuine probabilit",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-13T16:32:30",
-      "title": "Fyodorov-Hiary-Keating Conjecture for the Riemann Zeta Function"
-    },
-    {
       "cycle_id": "ac37e9f5",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Periodic Orbits through the Logistic–Tent Conjugacy\n\nThis cycle transported the periodic-orbit skeleton of the tent map\n`T(t) = 1 - |2t - 1|` onto the smooth logistic map `f(x) =",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-14T08:40:17",
       "title": "Elementary spectral-moment foundations of Seidel"
+    },
+    {
+      "cycle_id": "b78ccbe1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: from the constructive lower bound to the exact ℤ₂-coindex\n\n## What this cycle added\n\nThe previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-complex in the",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-14T08:58:29",
+      "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f6949247",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Chromatic Sum Complexity Dichotomy\n\n## Mission and what was formalised\n\nThe mission conjectures a **complexity dichotomy** for the Chromatic Sum\nproblem on `H`-free graphs: polyn",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-11T18:04:15",
-      "title": "Chromatic Sum Complexity Dichotomy for Forest-Forbidden Graphs"
-    },
     {
       "cycle_id": "dac5bc28",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-14T08:40:17",
       "title": "Elementary spectral-moment foundations of Seidel"
+    },
+    {
+      "cycle_id": "b78ccbe1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: from the constructive lower bound to the exact ℤ₂-coindex\n\n## What this cycle added\n\nThe previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-complex in the",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-14T08:58:29",
+      "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "28ee7277",
-      "domain": "Novelty",
-      "name": "behaviours_outnumber_states",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "28ee7277",
-      "domain": "Novelty",
-      "name": "no_finite_conscious",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "28ee7277",
-      "domain": "Novelty",
-      "name": "blindspot_positive",
-      "quality": 0.85
-    },
     {
       "cycle_id": "1bd2f770",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "trace_cube_flip",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "b78ccbe1",
+      "domain": "Novelty",
+      "name": "anti_anti",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b78ccbe1",
+      "domain": "Novelty",
+      "name": "anti_ne",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b78ccbe1",
+      "domain": "Novelty",
+      "name": "suspV_anti",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T08:40:17",
+  "last_updated": "2026-07-14T08:58:29",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cf19c51c",
-        "quality": 0.79,
-        "theorems": 36,
-        "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
-      },
-      {
         "cycle_id": "c923638c",
         "quality": 0.82,
         "theorems": 25,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 51,
         "title": "**suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
+      },
+      {
+        "cycle_id": "b78ccbe1",
+        "quality": 0.82,
+        "theorems": 24,
+        "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
       }
     ],
     "NumberTheory": [

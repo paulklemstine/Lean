@@ -1514,20 +1514,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
   {
-    "consumed_by_exp_id": "385fff12",
-    "description": "The main result establishing the exact exponential growth rate of the \u03c1-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly \u03c1(1-R) relative to the unconstrained Ar\u0131kan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary R\u00e9nyi entropy.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0446",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.00205v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T11:06:30.434239+00:00",
-    "title": "Exact Exponent for Constrained Coset Guesswork"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any natural numbers n, l, r such that n >= (l+1)*r + l, there exists an interval packing of maximum possible size (n choose l) in the Boolean lattice restricted to levels l through l+r. This can be formulated as the existence of a function f mapping each l-sized subset T of [n] to an r-sized subset C_T disjoint from T, such that for any distinct l-sized subsets T1, T2, T1 is not contained in T2 union C_T2 and T2 is not contained in T1 union C_T1.",
     "domains": [
@@ -1923,7 +1909,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project formalizes the **one-dimensional case** of the Infinite Pachner"
   },
   {
-    "consumed_by_exp_id": "ca326542",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Colorful Carath\u00e9odory for Convex Cones\n\nThe results established here treat the origin as the distinguished point, exploit\nthe homogeneity that collapses conical and convex representability there, and\nsettle both the sharp color threshold in dimension one and the conical\nCarath\u00e9odory bound in every dimension. Several bold, testable directions follow.\n\n## 1. The full colorful cone theorem in every dimension\n\n**Conjecture.** Given `d + 1` finite color classes of vectors in `d`-dimensional\nspace, each capturing the origin as a nontrivial nonnegative combination, there is\na colorful transversal \u2014 one vector chosen per color \u2014 whose own cone captures the\norigin.\n\nThe key insight is that, at the origin, the colorful cone theorem coincides with\nthe classical colorful Carath\u00e9odory theorem, so the correct color count is `d + 1`\nrather than `d`, and the nearest-point exchange argument that proves the affine\nstatement should transfer verbatim once membership is phrased through the\nhomogeneity bridge. Why now? The homogeneity bridge and the sharp one-dimensional\nbase case are already in hand, isolating exactly the geometric exchange step that\nremains, so the general theorem is reduced to a single, well-understood mechanism.\n\n## 2. Quantitative colorful cones: counting transversals\n\n**Conjecture.** Under the hypotheses of the colorful cone theorem, the number of\ncolorful transversals whose cone captures the origin is at least exponential in the\nnumber of colors when each class straddles the origin in general position.\n\nThe key insight is that each straddling color contributes an independent binary\nchoice of sign that can be completed to a valid transversal, so valid transversals\nshould multiply rather than merely exist. Why now? The two-case construction in the\none-dimensional proof already exhibits multiple valid transversals explicitly,\ngiving a concrete combinatorial seed for a counting lower bound.\n\n## 3. Sharpness of the conical Carath\u00e9odory number via positive circuits\n\n**Conjecture.** In `d`-dimensional space the conical Carath\u00e9odory bound `d + 1` is\nattained precisely by minimal positively dependent families (\"positive circuits\"),\nand every family capturing the origin contains such a circuit of size at most\n`d + 1`.\n\nThe key insight is that pruning a nonnegative representation always terminates at a\nsupport on which the vectors are affinely independent yet positively dependent, and\nsuch supports are exactly positive circuits. Why now? The pruning step proved here\nalready reduces any capturing family below the `d + 1` threshold, so extracting the\ncircuit structure is the natural next refinement of that same argument.\n\n## 4. A colorful cone theorem for interior capture\n\n**Conjecture.** If each of `d` color classes positively spans the whole space\n(the origin lies in the interior of each cone), then some colorful transversal of\n`d + 1` chosen vectors captures the origin in the interior of its cone, and `d`\ncolors never suffice.\n\nThe key insight is that interior capture is an open condition stable under small\nperturbations, so a transversal achieving boundary capture can be nudged into\ninterior capture whenever one extra color is available. Why now? The dimension-one\nanalysis already separates \"boundary\" capture (a single ray) from genuine interior\ncapture, pinpointing the extra color as the resource that upgrades one to the\nother.\n\n## 5. Stability of capture under perturbation\n\n**Conjecture.** The property \"this colorful transversal captures the origin\nconically\" is stable: there is a positive margin such that perturbing every chosen\nvector within that margin preserves capture, with the margin controlled by the\nsmallest positive coefficient in the witnessing combination.\n\nThe key insight is that a strictly positive witnessing coefficient furnishes slack\nthat a sufficiently small perturbation cannot exhaust. Why now? The nontriviality\nclause enforced throughout this work supplies exactly such a strictly positive\ncoefficient, turning a qualitative existence statement into a quantitative\nrobustness estimate.\n",
     "domains": [
       "Algebra",
@@ -1933,7 +1919,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5d81b714",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-13T22:35:39.370659+00:00",
     "title": "The results established here treat the origin as the distinguished point, exploi"
   },
@@ -2386,6 +2372,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T08:40:12.799683+00:00",
     "title": "The foundational cycle showed the *second* Seidel moment `tr(S\u00b2) = n(n-1)` is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: from the constructive lower bound to the exact \u2124\u2082-coindex\n\n## What this cycle added\n\nThe previous cycle established the **suspension tower** `S\u1d4f(K)` of a free `\u2124\u2082`-complex in the\ncross-polytope model and proved, *unconditionally*, the **constructive lower-bound half**:\nsingle-step suspension raises the coindex, the increase is realised by an explicit suspended map,\nand the bound is sharp only in two base cases (`S\u00b9 \u219b S\u2070`, `S\u00b2 \u219b S\u00b9`, by `decide`). The matching\nupper bound `coind(S\u207f) \u2264 n` in every dimension was left open \u2014 flagged as \"the full strength of the\nBorsuk\u2013Ulam / Tucker theorem\".\n\nThis cycle **closes that gap** in the combinatorial model. The file\n`Catalog/Novelty/Z2CoindexSuspensionTower.lean` (self-contained, no `sorry`, only standard axioms)\nproves:\n\n1. **The combinatorial heart** (`induced_simplicial_iff_injective`): a `\u2124\u2082`-map, being equivariant,\n   is determined by positive-vertex data `g`, and its simpliciality is **equivalent** to injectivity\n   of the coordinate map `\u03c3 i = (g i).1`. A simplicial antipodal self-map of cross-polytopes is\n   precisely an injection of coordinate axes carrying arbitrary independent signs.\n\n2. **The exact existence criterion** (`nonempty_iff_le`): `Nonempty (Z2Map m n) \u2194 m \u2264 n`.\n   This single statement contains both the constructive lower bound `coind(S\u207f) \u2265 n` and the full\n   Borsuk\u2013Ulam upper bound `coind(S\u207f) \u2264 n`.\n\n3. **Borsuk\u2013Ulam in all dimensions** (`borsuk_ulam_general`): `IsEmpty (Z2Map (n+1) n)` for every\n   `n`, upgrading the two `decide` base cases to the whole tower.\n\n4. **The exact coindex** (`coind`, `coind_eq`): `coind(S\u207f) := sSup {m | Nonempty (Z2Map m n)} = n`.\n\n5. **The suspension tower, sharp** (`Z2Map.suspIter`, `suspension_tower_raises_coindex`,\n   `suspension_tower_exact`, `borsuk_ulam_tower_sharp`): the `k`-fold suspension functor exists,\n   raises the coindex bound by exactly `k`, preserves the \"excess\" `n \u2212 m`\n   (`Nonempty (Z2Map (m+k) (n+k)) \u2194 Nonempty (Z2Map m n)`), and every level of the tower is\n   Borsuk\u2013Ulam sharp.\n\n## Interpretation\n\nIn this rigid simplicial model the entire \"excess spectrum\" collapses to a single invariant, the\nexcess `n \u2212 m`, which suspension preserves exactly. The coindex is therefore a complete invariant:\nit equals the dimension, and the suspension tower increments it by one at each step with no slack.\n\n## Genuinely open next steps\n\n* **Beyond cross-polytopes.** The equivalence \"simplicial antipodal map \u21d4 coordinate injection\" is\n  special to the octahedral model. For general free simplicial `\u2124\u2082`-complexes `K`, the coindex is\n  *not* determined by dimension alone, and the upper bound genuinely needs Tucker's lemma. Formalise\n  Tucker's lemma and recover `coind \u2264 dim` for arbitrary `K`.\n* **The index / coindex gap.** Introduce the `\u2124\u2082`-*index* (maps *out of* `K` into spheres) and study\n  complexes with `ind(K) < coind(K)`; the cross-polytope spheres have `ind = coind = n`.\n* **Chromatic applications.** Connect `coind` of neighbourhood/box complexes to lower bounds on\n  chromatic numbers (Lov\u00e1sz\u2013Kneser), now that `coind` is pinned down exactly for spheres.\n* **Equivariant homotopy refinement.** Replace \"`Nonempty (Z2Map m n)`\" by a homotopy category and\n  ask whether the suspension functor is fully faithful / an equivalence on the relevant subcategory.\n",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_1285",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b78ccbe1",
+    "status": "available",
+    "timestamp": "2026-07-14T08:57:48.045739+00:00",
+    "title": "The previous cycle established the **suspension tower** `S\u1d4f(K)` of a free `\u2124\u2082`-c"
   },
   {
     "consumed_by_exp_id": "",
