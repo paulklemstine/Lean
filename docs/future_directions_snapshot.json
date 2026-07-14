@@ -1882,7 +1882,7 @@
       "join_of_simplicial_complexes",
       "convex_hull_intersection"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45e15555",
     "description": "For any d-dimensional spanning k-tree K contained in the join V₁*⋯*V_{d+1} and any affine map A:|Δ_V|→ℝ^d with 0∈A(V_i) for all i, there exists a face σ∈K with 0∈A(σ) such that the number of faces in K is bounded by a polynomial in |V| of degree at most k+1. Moreover, when k=1 (spanning trees), the bound is linear in |V|.",
     "domain_bridges": [
       "topological_combinatorics",
@@ -1898,7 +1898,7 @@
     "proof_strategy": "Construct explicit minimal subcomplexes using induction on k, leveraging the recursive structure of spanning k-trees where each k-tree can be built from a (k-1)-tree by adding a spanning tree structure. Apply the known result for k=0 (bipartite case) recursively while maintaining the polynomial bound through careful counting of faces in the iterated join construction.",
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T04:02:38.934140+00:00",
     "title": "Colorful Carathéodory theorem for spanning k-trees admits a polynomial-size witness"
   },
