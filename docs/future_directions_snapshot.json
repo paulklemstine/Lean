@@ -78,7 +78,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "445da682",
     "description": "Building on cycle 202302de (Q=0.830), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`\ndichotomy** for the *total* d-Hoggatt numbers `H_d(n) = ∑_k H_d(n,k)`, together\nwith the general mechanism and its tropical reformulation:\n\n* **`d = 1`** (`H",
     "domain_bridges": [],
     "domains": [
@@ -90,7 +90,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "202302de",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T15:58:15.382803+00:00",
     "title": "Deepening: This cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`"
   },
@@ -188,25 +188,6 @@
     "status": "available",
     "timestamp": "2026-07-14T11:17:07.026084+00:00",
     "title": "Deepening: The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "16f220a2",
-    "description": "Building on cycle bd6ccec1 (Q=0.830), which proved 30 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation (IX)\n\nThis cycle established, with no finiteness or well-foundedness hypothesis on the\nattack relation, the maximal-extension half of Dung's semantics: the Fundamental\nLemma, the identity *preferred = maximal complete*, and the unconditional\nexiste",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_bd6ccec1_3dd317b1",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "bd6ccec1",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T13:20:07.518709+00:00",
-    "title": "Deepening: This cycle established, with no finiteness or well-foundedness hypothesis on the"
   },
   {
     "ambition_level": "extension",
@@ -3463,6 +3444,26 @@
     "status": "available",
     "timestamp": "2026-07-14T15:58:08.050091+00:00",
     "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Topology of Argumentation (X): the kernel/game bridge\n\nThis cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file that\nconnects three areas usually developed in isolation:\n\n* **Dung argumentation semantics** (stable extensions),\n* **directed graph theory** (kernels: independent + absorbing sets, in the sense\n  of von Neumann–Morgenstern), and\n* **combinatorial game theory** (P-position solutions of a move relation).\n\n## What was proved (all `sorry`-free, standard axioms only)\n\nThe dictionary:\n\n* `stable_iff_kernel` — a stable extension of the attack relation `R` is exactly a\n  kernel of the transposed digraph `flip R` (this one needs **no axioms at all**).\n* `stable_iff_gameSolution` — equivalently, a P-position solution of the\n  reversed-attack game.\n* `terminal_mem_of_kernel` — terminal positions are forced into every kernel: the\n  normal-play \"no move ⇒ you lose\" convention is a *consequence* of the kernel\n  axioms.\n\nThe odd-cycle obstruction (why *some* hypothesis is unavoidable):\n\n* `no_kernel_cyc3`, `no_stable_cyc3` — the directed 3-cycle has no kernel, hence\n  the 3-cycle framework has no stable extension. This is the classical reason\n  stable extensions can fail to exist, in sharp contrast to the *maximal\n  (preferred)* extensions of the earlier cycles, which exist unconditionally.\n\nWell-founded existence and uniqueness (Zermelo determinacy):\n\n* `isLoss` / `isLoss_iff` — the P-position predicate defined by the standard game\n  recursion over the well-founded reverse-move relation.\n* `kernel_isLoss` — the P-positions form a kernel.\n* `kernel_unique`, `exists_unique_kernel` — a well-founded digraph has a **unique**\n  kernel.\n* `wf_game_determined` — every well-founded game has a unique solution.\n* `exists_unique_stable_of_wf` — a well-founded argumentation framework has a\n  **unique** stable extension: well-foundedness *restores* the existence that\n  failed on the odd cycle, and forces uniqueness.\n\n## Why this is a \"connector\"\n\nThe single identity `Stable R = Kernel (flip R) = GameSolution (flip R)` lets a\nresult proved in one language be read in all three. The odd-cycle non-existence\nis simultaneously (i) a Dung framework with no stable extension, (ii) a digraph\nwith no kernel, and (iii) a game with no consistent win/loss labelling. The\nwell-founded determinacy theorem is simultaneously Zermelo's theorem for\nterminating games, the Richardson-style kernel existence theorem for\nwell-founded digraphs, and the well-founded-AF uniqueness theorem for Dung\nsemantics.\n\n## Open directions\n\n* **Even cycles / kernel-perfect digraphs.** Formalise the positive side: even\n  directed cycles have kernels; more generally, digraphs with no odd directed\n  cycle are kernel-perfect (Richardson's theorem). Only the odd obstruction is\n  formalised here.\n* **Grounded = unique stable, in the well-founded case.** Identify the unique\n  stable extension `exists_unique_stable_of_wf` with the grounded extension\n  (`OrderHom.lfp charF`) from the earlier cycles, closing the loop between the\n  order-theoretic and game-theoretic constructions.\n* **Sprague–Grundy.** Refine `isLoss` to a Grundy-value function and connect\n  disjunctive sums of frameworks to nim-addition.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1303",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "16f220a2",
+    "status": "available",
+    "timestamp": "2026-07-14T15:58:20.123905+00:00",
+    "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
   },
   {
     "ambition_level": "extension",
