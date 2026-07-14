@@ -381,7 +381,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorifying the quantum binomial product rule via filtrations of plethystic mo"
   },
   {
-    "consumed_by_exp_id": "c60eca36",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b97ab468 (Q=0.820), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential",
     "domains": [
       "Novelty"
@@ -390,7 +390,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "b97ab468",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T07:29:42.613481+00:00",
     "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
   },
@@ -1079,7 +1079,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Exact dictionary \"logical qubits = middle homology\""
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c7f8736",
     "description": "Cycle e8b8d594 (Q=0.820) proved 10 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every integer k \u2265 1, the maximum determinant of any 4\u00d74 unimodular matrix with entries in {-(2k-1), -(2k-2), ..., 0, ..., 2k-2, 2k-1} equals (2k-1)^4 - 2(2k-1)^2 + 1. This bound is achieved by a s",
     "domains": [
       "Applications"
@@ -1088,7 +1088,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "e8b8d594",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T12:53:44.644238+00:00",
     "title": "Close Proofs: Maximum Determinant Bound for 4\u00d74 Unimodular Matrices with Bounded Ent"
   },
