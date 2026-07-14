@@ -40,6 +40,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "0725f80e",
+    "description": "Building on cycle 14656387 (Q=0.830), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Möbius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant — the **Möbius discriminant**\n`Δ = γβ − αδ` attached to a first-order multiplicative recurrence\n`(α n + β)·a(n+1) = (γ n + δ)·a(n)` — and proved that its sign comple",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_14656387_a6c7f6db",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "14656387",
+    "status": "in_progress",
+    "timestamp": "2026-07-14T19:16:11.234630+00:00",
+    "title": "Deepening: This cycle isolated a single scalar invariant — the **Möbius discriminant**"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
     "domain_bridges": [],
@@ -3342,26 +3361,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "14656387",
-    "description": "# Future Directions — The Möbius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant — the **Möbius discriminant**\n`Δ = γβ − αδ` attached to a first-order multiplicative recurrence\n`(α n + β)·a(n+1) = (γ n + δ)·a(n)` — and proved that its sign completely\ngoverns the log-behaviour of the sequence: strict log-convexity when `Δ > 0`,\nlog-linearity when `Δ = 0`, strict log-concavity when `Δ < 0`. The classical\ntotals `2ⁿ` (`Δ = 0`), Catalan `Cₙ` (`Δ = 6`), central binomials (`Δ = 2`),\nfactorials (`Δ = 1`), and reciprocal factorials (`Δ = −1`) instantiate all three\nregimes, refining the earlier `d = 1` vs `d = 2` dichotomy into a genuine\nsign-indexed trichotomy.\n\n## Conjecture A — Quantitative discriminant law\n\nFor a sequence obeying the recurrence, the pointwise discriminant\n`D(n) = a(n)·a(n+2) − a(n+1)²` satisfies an exact identity\n`(α n + β)(α(n+1) + β)·D(n) = Δ · a(n+1)·a(n+2) · (α n + β) / (γ n + δ)` — i.e.\n`D(n)` is a *fixed positive multiple of `Δ`* at every index, so its sign never\nflips.\n\n**The key insight is** that the ratio `a(n+1)/a(n)` is a Möbius transform of `n`\nwhose forward difference has the constant numerator `Δ`, so the \"log-curvature\"\nof the sequence is rigidly proportional to `Δ` rather than merely sharing its\nsign.\n\n**Why now?** The ratio-as-Möbius identity established this cycle already\nproduces the sign law; upgrading it to an exact proportionality is the natural\nstrengthening and would give closed-form control of the second-order growth of\nevery classical combinatorial total simultaneously.\n\n## Conjecture B — Second-order (Turán) recurrences and a discriminant polynomial\n\nMany combinatorial totals satisfy instead a *second-order* recurrence\n`p(n)·a(n+2) = q(n)·a(n+1) + r(n)·a(n)` (e.g. Motzkin, Baxter). We conjecture a\npolynomial discriminant `Δ₂(n)`, built from `p, q, r`, whose eventual sign\ngoverns log-convexity, reducing to `γβ − αδ` when `r ≡ 0`.\n\n**The key insight is** that the log-behaviour of a P-recursive sequence should be\nreadable from a single discriminant polynomial of its recurrence coefficients,\nexactly as the quadratic discriminant reads off the sign of a quadratic form.\n\n**Why now?** The first-order case is now fully understood as the `r ≡ 0`\nspecialization; the Motzkin and Baxter numbers give concrete second-order test\ncases with known log-convexity, providing immediate falsification targets.\n\n## Conjecture C — Renormalized totals and infinite log-concavity\n\nDividing a strictly log-convex total by its exact growth ratio\n`(γ n + δ)/(α n + β)` yields a renormalized sequence whose discriminant is\nidentically zero (log-linear); we conjecture that a *second* renormalization by\nthe discriminant of the ratio itself produces a strictly log-concave residual,\nand that iterating this process terminates in a sequence that is infinitely\nlog-concave.\n\n**The key insight is** that the Möbius ratio is precisely the correction factor\nneeded to flatten log-curvature, so peeling it off should expose successively\nhigher-order convexity data in a controlled tower.\n\n**Why now?** The exact growth ratio is now available in closed form for every\nclassical total, so the first renormalization step can be carried out\nexplicitly and its residual tested for the next-order sign.\n\n## Conjecture D — Tropical/valuation dequantization of the trichotomy\n\nWriting `v(n) = −log a(n)`, the trichotomy becomes a statement about the second\ndifference `Δ²v(n) = v(n) − 2v(n+1) + v(n+2)`: strictly negative, zero, or\nstrictly positive according to `sign(Δ)`. We conjecture that for the recurrence\nclass this second difference is *monotone in `n`* and converges to `0`, so the\nvaluation is asymptotically affine with a computable curvature defect controlled\nby `Δ`.\n\n**The key insight is** that log-convexity is exactly convexity of the valuation,\nso the discriminant `Δ` should appear as the leading coefficient of the\npiecewise-linear (tropical) profile of the sequence.\n\n**Why now?** The equivalence between strict log-convexity and strict convexity\nof the logarithm is already in hand; casting it in valuation form turns the\ntrichotomy into a discrete-convexity statement amenable to summation-by-parts\nestimates.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_1302",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "202302de",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T15:58:08.050091+00:00",
-    "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — The Topology of Argumentation (X): the kernel/game bridge\n\nThis cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file that\nconnects three areas usually developed in isolation:\n\n* **Dung argumentation semantics** (stable extensions),\n* **directed graph theory** (kernels: independent + absorbing sets, in the sense\n  of von Neumann–Morgenstern), and\n* **combinatorial game theory** (P-position solutions of a move relation).\n\n## What was proved (all `sorry`-free, standard axioms only)\n\nThe dictionary:\n\n* `stable_iff_kernel` — a stable extension of the attack relation `R` is exactly a\n  kernel of the transposed digraph `flip R` (this one needs **no axioms at all**).\n* `stable_iff_gameSolution` — equivalently, a P-position solution of the\n  reversed-attack game.\n* `terminal_mem_of_kernel` — terminal positions are forced into every kernel: the\n  normal-play \"no move ⇒ you lose\" convention is a *consequence* of the kernel\n  axioms.\n\nThe odd-cycle obstruction (why *some* hypothesis is unavoidable):\n\n* `no_kernel_cyc3`, `no_stable_cyc3` — the directed 3-cycle has no kernel, hence\n  the 3-cycle framework has no stable extension. This is the classical reason\n  stable extensions can fail to exist, in sharp contrast to the *maximal\n  (preferred)* extensions of the earlier cycles, which exist unconditionally.\n\nWell-founded existence and uniqueness (Zermelo determinacy):\n\n* `isLoss` / `isLoss_iff` — the P-position predicate defined by the standard game\n  recursion over the well-founded reverse-move relation.\n* `kernel_isLoss` — the P-positions form a kernel.\n* `kernel_unique`, `exists_unique_kernel` — a well-founded digraph has a **unique**\n  kernel.\n* `wf_game_determined` — every well-founded game has a unique solution.\n* `exists_unique_stable_of_wf` — a well-founded argumentation framework has a\n  **unique** stable extension: well-foundedness *restores* the existence that\n  failed on the odd cycle, and forces uniqueness.\n\n## Why this is a \"connector\"\n\nThe single identity `Stable R = Kernel (flip R) = GameSolution (flip R)` lets a\nresult proved in one language be read in all three. The odd-cycle non-existence\nis simultaneously (i) a Dung framework with no stable extension, (ii) a digraph\nwith no kernel, and (iii) a game with no consistent win/loss labelling. The\nwell-founded determinacy theorem is simultaneously Zermelo's theorem for\nterminating games, the Richardson-style kernel existence theorem for\nwell-founded digraphs, and the well-founded-AF uniqueness theorem for Dung\nsemantics.\n\n## Open directions\n\n* **Even cycles / kernel-perfect digraphs.** Formalise the positive side: even\n  directed cycles have kernels; more generally, digraphs with no odd directed\n  cycle are kernel-perfect (Richardson's theorem). Only the odd obstruction is\n  formalised here.\n* **Grounded = unique stable, in the well-founded case.** Identify the unique\n  stable extension `exists_unique_stable_of_wf` with the grounded extension\n  (`OrderHom.lfp charF`) from the earlier cycles, closing the loop between the\n  order-theoretic and game-theoretic constructions.\n* **Sprague–Grundy.** Refine `isLoss` to a Grundy-value function and connect\n  disjunctive sums of frameworks to nim-addition.\n",
     "domain_bridges": [],
@@ -3518,6 +3517,26 @@
     "status": "available",
     "timestamp": "2026-07-14T18:39:46.221094+00:00",
     "title": "That the necessity and possibility operators of the forci"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Möbius discriminant, quantitatively\n\nThis cycle (thread `th_c09a34af`, cycle 3) builds on the *sign* trichotomy of the\nprevious cycle (`HoggattTrichotomy.lean`) by upgrading it to **exact\nquantitative identities**, and — in the contrarian spirit of the mission — by\n**disproving** the naive second-order generalization.\n\nAll results are formalized and machine-checked in\n`MobiusDiscriminantQuantitative.lean` (imports only Mathlib, compiles\nindependently, no `sorry`, axioms `propext / Classical.choice / Quot.sound`\nonly).\n\nThroughout, `a : ℕ → ℝ` obeys the first-order multiplicative recurrence\n`(α n + β)·a(n+1) = (γ n + δ)·a(n)` and `Δ = γβ − αδ` is the Möbius\ndiscriminant.\n\n## Conjecture A — Quantitative discriminant law — **PROVED**\n\n- `discriminant_exact` : the *exact* pointwise identity\n  `(α n + β)·(α (n+1) + β)·(a(n)·a(n+2) − a(n+1)²) = Δ·a(n)·a(n+1)`,\n  needing **no positivity** — pure algebra from the recurrence at `n` and `n+1`.\n  (The research brief's stated RHS `Δ·a(n+1)·a(n+2)·(αn+β)/(γn+δ)` carried a\n  typo; the clean exact form above is proved.)\n- `discriminant_sign_pos / _zero / _neg` : the pointwise discriminant is\n  `> 0 / = 0 / < 0` at *every* index according to `sign(Δ)`. This is the\n  pointwise, quantitative refinement of the previous cycle's sign trichotomy.\n- `catalan_discriminant_exact` : the concrete instance for Catalan numbers\n  (`α,β,γ,δ = 1,2,4,2`, `Δ = 6`):\n  `(n+2)(n+3)·(Cₙ·Cₙ₊₂ − Cₙ₊₁²) = 6·Cₙ·Cₙ₊₁`.\n\n## Ratio-as-Möbius, constant numerator `Δ` — **PROVED**\n\n- `ratio_eq_mobius` : `a(n+1)/a(n) = (γ n + δ)/(α n + β)`.\n- `ratio_forward_difference` : the forward difference of the ratio has the\n  `n`-independent numerator `Δ`:\n  `a(n+2)/a(n+1) − a(n+1)/a(n) = Δ / ((α n + β)·(α (n+1) + β))`.\n\n## Conjecture D — Tropical / valuation dequantization — **PROVED**\n\n- `curvature_ratio` : the exact log-curvature ratio\n  `a(n)·a(n+2)/a(n+1)² = 1 + Δ / ((γ n + δ)·(α (n+1) + β))`.\n- `log_curvature` : the valuation form\n  `log a(n) − 2 log a(n+1) + log a(n+2) = log(1 + Δ / ((γ n + δ)·(α (n+1) + β)))`.\n- `log_curvature_tendsto_zero` : for `α, γ > 0` the log-curvature tends to `0`,\n  so the valuation `v = −log a` is asymptotically affine with curvature defect\n  controlled by `Δ`.\n\n## Conjecture B — coefficient-only second-order discriminant — **DISPROVED**\n\nThe conjecture asked for a discriminant polynomial `Δ₂(n)` built from the\ncoefficients `p, q, r` of a second-order recurrence\n`p·a(n+2) = q·a(n+1) + r·a(n)` whose *eventual sign* governs log-convexity.\n\nWe give an explicit obstruction. The Fibonacci numbers satisfy this recurrence\nwith **constant** coefficients `p = q = r = 1`, so any coefficient-built `Δ₂` is\na constant with a single fixed sign. But (Cassini's identity):\n\n- `fib_discriminant` : `fib(n)·fib(n+2) − fib(n+1)² = (−1)^{n+1}`, and\n- `fib_discriminant_not_eventually_signed` : this discriminant is `> 0`\n  infinitely often (odd `n`) **and** `< 0` infinitely often (even `n`).\n\nHence no function of `p, q, r` alone can predict the sign — a\ncoefficient-only second-order discriminant law is impossible in general. The\nfirst-order case (where the discriminant *is* sign-definite because\n`a(n)a(n+2) − a(n+1)²` is a fixed multiple of the constant `Δ`) is genuinely\nspecial: the obstruction is precisely the initial-condition dependence /\nsign-alternation that first-order recurrences cannot exhibit.\n\n## What remains open\n\n- **Conjecture B, corrected form.** A correct second-order statement must be a\n  *quadratic form* `Q_n(a(n), a(n+1)) = p·a(n+1)² − q·a(n)a(n+1) − r·a(n)²`\n  whose sign (under a monotone-ratio hypothesis on the specific sequence)\n  governs log-convexity. Formalizing this state-dependent version, and pinning\n  down exactly which extra hypotheses (positivity of a Turán-type initial\n  discriminant) restore sign-definiteness, is the natural next step.\n- **Conjecture C (renormalization tower).** Dividing a strictly log-convex total\n  by its exact growth ratio `(γn+δ)/(αn+β)` yields a log-linear sequence\n  (`Δ = 0`), by `discriminant_sign_zero`; iterating the peeling to expose\n  higher-order convexity and proving termination in an infinitely log-concave\n  residual remains open.\n- **Conjecture D, monotonicity.** We proved the log-curvature tends to `0`;\n  proving it is *monotone* in `n` (not merely convergent) via\n  summation-by-parts is a clean follow-up.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1311",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "14656387",
+    "status": "available",
+    "timestamp": "2026-07-14T19:15:57.459980+00:00",
+    "title": "This cycle (thread `th_c09a34af`, cycle 3) builds on the *sign* trichotomy of th"
   },
   {
     "ambition_level": "extension",

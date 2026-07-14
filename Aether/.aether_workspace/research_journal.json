@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "28ee7277",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Consciousness as Self-Reference (Strange Loop, Parts IV–VI)\n\nThis cycle deepened the \"I Am a Strange Loop\" programme along three axes:\na *quantitative* blind spot (the un-represe",
-      "quality_score": 0.85,
-      "sorry_count": 4,
-      "theorem_count": 39,
-      "timestamp": "2026-07-14T01:00:14",
-      "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
-    },
-    {
       "cycle_id": "1bd2f770",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Spectral gaps of fixed-genus chord-swap chains\n\nThis cycle established, unconditionally, that the variational (Rayleigh-quotient)\nupper bound for a one-dimensional swap chain sca",
@@ -499,19 +489,19 @@
       "theorem_count": 51,
       "timestamp": "2026-07-14T18:39:56",
       "title": "This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
+    },
+    {
+      "cycle_id": "14656387",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Möbius discriminant, quantitatively\n\nThis cycle (thread `th_c09a34af`, cycle 3) builds on the *sign* trichotomy of the\nprevious cycle (`HoggattTrichotomy.lean`) by upgrading",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-14T19:16:11",
+      "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0664586a",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Alien Number Systems\n\nBold, falsifiable conjectures distilled from this cycle's study of negative,\ncomplex, and irrational bases.\n\n## 1. A uniform bijection theorem for every bas",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 18,
-      "timestamp": "2026-07-12T03:21:37",
-      "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-    },
     {
       "cycle_id": "538f30a2",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 51,
       "timestamp": "2026-07-14T18:39:56",
       "title": "This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
+    },
+    {
+      "cycle_id": "14656387",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Möbius discriminant, quantitatively\n\nThis cycle (thread `th_c09a34af`, cycle 3) builds on the *sign* trichotomy of the\nprevious cycle (`HoggattTrichotomy.lean`) by upgrading",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-14T19:16:11",
+      "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6e60d0a1",
-      "domain": "Novelty",
-      "name": "susp_comp",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "c4aa235b",
-      "domain": "Novelty",
-      "name": "star_pairwise",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c4aa235b",
-      "domain": "Novelty",
-      "name": "card_starIdx",
-      "quality": 0.82
-    },
     {
       "cycle_id": "b2384a8a",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "closure_eq_dia",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "14656387",
+      "domain": "Novelty",
+      "name": "discriminant_exact",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "14656387",
+      "domain": "Novelty",
+      "name": "discriminant_sign_pos",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "14656387",
+      "domain": "Novelty",
+      "name": "discriminant_sign_zero",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T18:39:56",
+  "last_updated": "2026-07-14T19:16:11",
   "open_questions": [
     {
       "context": "of spheres.  All theorems below are proved with no `sorry`.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "bd6ccec1",
-        "quality": 0.83,
-        "theorems": 30,
-        "title": "This cycle established, with no finiteness or well-foundedness hypothesis on the"
-      },
-      {
         "cycle_id": "656eecef",
         "quality": 0.84,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 51,
         "title": "This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
+      },
+      {
+        "cycle_id": "14656387",
+        "quality": 0.83,
+        "theorems": 14,
+        "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
       }
     ],
     "NumberTheory": [
