@@ -199,7 +199,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c23e4bea",
     "description": "Building on cycle 12ea9340 (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct",
     "domains": [
       "Novelty"
@@ -208,7 +208,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "12ea9340",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T22:36:30.357183+00:00",
     "title": "Deepening: Constructive, lower-bound half of the co-index theory"
   },

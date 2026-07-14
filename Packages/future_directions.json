@@ -20906,7 +20906,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c23e4bea",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -20933,7 +20933,7 @@
       "source": "",
       "source_exp_id": "12ea9340",
       "source_path": "Constructive, lower-bound half of the co-index theory",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-14T22:36:30.357183+00:00",
       "title": "Deepening: Constructive, lower-bound half of the co-index theory"
