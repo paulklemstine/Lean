@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "226557b2",
     "description": "Building on cycle 0981cb8f (Q=0.830), which proved 20 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
     "domains": [
       "Probability"
@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "0981cb8f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T00:40:03.135454+00:00",
     "title": "Deepening: Consciousness as Emergent Fixed Point"
   },
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "797ab793",
     "description": "Building on cycle 7acc7a45 (Q=0.830), which proved 24 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle cf19c51c (Q=0.790) proved 36 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of \u2124\u2082-co-index under suspension\n\nThis cycle established, unconditionally, the constructive l",
     "domains": [
       "Novelty"
@@ -124,7 +124,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "7acc7a45",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T03:41:54.706806+00:00",
     "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound"
   },
@@ -1023,7 +1023,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "189556db",
     "description": "Cycle c923638c (Q=0.820) proved 25 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `\u03bc` and `\u03bb` of a characteristic element, realised ",
     "domains": [
       "Novelty"
@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "c923638c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T03:40:54.759277+00:00",
     "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of"
   },
