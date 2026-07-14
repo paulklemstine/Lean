@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "797ab793",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: the functorial excess of the ℤ₂-coindex under suspension\n\nThis cycle deepened the constructive lower-bound theory of the ℤ₂-coindex of combinatorial\nspheres from an *existence* st",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 10,
-      "timestamp": "2026-07-14T06:00:01",
-      "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound"
-    },
-    {
       "cycle_id": "86411247",
       "domain": "Novelty",
       "key_insight": "# Multiverse Set Theory — Mathematics Across Branches (Cycle 1)\n\nThis cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the\nmodal logic of forcing in the set-theoretic multiverse.",
@@ -499,19 +489,19 @@
       "theorem_count": 52,
       "timestamp": "2026-07-14T23:12:12",
       "title": "Deepening: Working with a self‑contained model of total colourings (proper vertex colouring"
+    },
+    {
+      "cycle_id": "0e4c0a6c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Mixed-Radix Number Systems (Cycle 1, thread th_d1eba7ba)\n\nThis cycle advances the mixed-radix program by settling two of the four standing\nconjectures in fully general form (arbi",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-14T23:30:35",
+      "title": "These conjectures are distilled from the current cycle, which closed the bridge"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "62dd551b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Aleph-One Surface\n\nThis cycle established the Hilbert cube `Q = ℕ → [0,1]` as the canonical \"surface\nbetween the dimensions\": a compact, metrizable continuum with continuum-m",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 22,
-      "timestamp": "2026-07-12T08:27:47",
-      "title": "Deepening: Aleph-1 Surface: Geometry Between Dimensions"
-    },
     {
       "cycle_id": "e978b5fe",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 52,
       "timestamp": "2026-07-14T23:12:12",
       "title": "Deepening: Working with a self‑contained model of total colourings (proper vertex colouring"
+    },
+    {
+      "cycle_id": "0e4c0a6c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Mixed-Radix Number Systems (Cycle 1, thread th_d1eba7ba)\n\nThis cycle advances the mixed-radix program by settling two of the four standing\nconjectures in fully general form (arbi",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-14T23:30:35",
+      "title": "These conjectures are distilled from the current cycle, which closed the bridge"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2360ad91",
-      "domain": "Novelty",
-      "name": "reconSet_card_le_rate",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "2360ad91",
-      "domain": "Novelty",
-      "name": "fano_error_bound",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a3c4f06b",
-      "domain": "Novelty",
-      "name": "amExponent_half",
-      "quality": 0.83
-    },
     {
       "cycle_id": "a3c4f06b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "star_comp_injective",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "0e4c0a6c",
+      "domain": "Applications",
+      "name": "radixProd_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "0e4c0a6c",
+      "domain": "Applications",
+      "name": "radixProd_succ",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "0e4c0a6c",
+      "domain": "Applications",
+      "name": "value_zero",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-14T23:12:12",
+  "last_updated": "2026-07-14T23:30:35",
   "open_questions": [
     {
       "context": "-    sorry; +      sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c5cfd9ce",
-        "quality": 0.83,
-        "theorems": 0,
-        "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
-      },
-      {
         "cycle_id": "85360393",
         "quality": 0.6,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 52,
         "title": "Deepening: Working with a self‑contained model of total colourings (proper verte"
+      },
+      {
+        "cycle_id": "0e4c0a6c",
+        "quality": 0.78,
+        "theorems": 26,
+        "title": "These conjectures are distilled from the current cycle, which closed the bridge"
       }
     ],
     "Bridges": [

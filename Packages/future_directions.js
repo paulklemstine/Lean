@@ -693,6 +693,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0e4c0a6c (Q=0.780), which proved 26 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThese conjectures are distilled from the current cycle, which closed the bridge\nidentifying the factorial (factoradic) number system as a single point in the\none-parameter family of mixed-radix positional systems, and re-derived the\nuniqueness of factoradic representations as a ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_0e4c0a6c_6a18bebb",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "0e4c0a6c",
+    "status": "available",
+    "timestamp": "2026-07-14T23:30:35.132822+00:00",
+    "title": "Deepening: These conjectures are distilled from the current cycle, which closed the bridge"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 1abce342 (Q=0.780), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant \u03bc\u2082 is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves \u03bc\u2082 \u2264 1 + \u03c1 where \u03c1 \u2248 0.75488 is",
     "domains": [
       "Applications"
@@ -1037,7 +1051,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
-    "consumed_by_exp_id": "dbf870e8",
+    "consumed_by_exp_id": "",
     "description": "Cycle 7669ab26 (Q=0.820) proved 24 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-comple",
     "domains": [
       "Applications"
@@ -1046,7 +1060,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "7669ab26",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-11T19:10:40.793079+00:00",
     "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
   },
@@ -1514,7 +1528,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Colorful Carath\u00e9odory theorem for spanning k-trees admits a polynomial-size witness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "99a1b43f",
     "description": "The spectral inequality equivalence for Sidorenko-type inequalities in admissible classes fails for certain bipartite graphs outside the range v(H) \u2264 e(H). Specifically, for the 5-vertex path graph H (a tree with 5 vertices and 4 edges), there exists an admissible class C (e.g., the class of doubly nonnegative graphons) such that the spectral inequality holds for all W \u2208 C, but H is not C-Sidorenko.",
     "domains": [
       "Physics"
@@ -1523,7 +1537,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
@@ -1923,21 +1937,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T23:13:37.545062+00:00",
     "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
-  },
-  {
-    "consumed_by_exp_id": "0e4c0a6c",
-    "description": "# Future Directions\n\nThese conjectures are distilled from the current cycle, which closed the bridge\nidentifying the factorial (factoradic) number system as a single point in the\none-parameter family of mixed-radix positional systems, and re-derived the\nuniqueness of factoradic representations as a corollary of the general\nmixed-radix uniqueness theorem.\n\n## 1. A universal uniqueness law for arbitrary running products\n\n**Conjecture.** Fix any base sequence `b : \u2115 \u2192 \u2115`. A digit string `c` with\n`c i < b i` for all `i < k` is the *unique* representation of its value\n`\u2211_{i<k} c i \u00b7 (\u220f_{j<i} b j)` among all valid length-`k` strings, and every\nnatural number below `\u220f_{i<k} b i` occurs exactly once.\n\nThe key insight is that neither uniqueness nor surjectivity depends on any\nregularity of the bases: the entire argument is carried by the Euclidean\nsplitting `value / P_k = c_k`, `value mod P_k = value_{<k}`, where `P_k` is the\nrunning product. Positivity of the relevant partial products is *forced* by\nvalidity rather than assumed, so degenerate bases (including `b i = 0`) never\nbreak the statement \u2014 they merely empty the space of valid strings.\n\nWhy now? The factoradic and base-`N` systems, historically studied with\nbespoke arguments, are now seen to be the same theorem at two parameter values;\nthe natural next step is to characterize exactly which base sequences yield\nnumber systems with prescribed carry behavior.\n\n## 2. Carry-free additivity across mixed-radix systems\n\n**Conjecture.** Addition in a mixed-radix system `b` is carry-free on a digit\nposition `i` precisely when the local base `b i` exceeds the sum of the two\ndigits there; consequently, two mixed-radix systems `b` and `b'` induce the same\ncarry pattern on a fixed integer interval if and only if their running products\nagree up to the length of that interval.\n\nThe key insight is that carry structure is a function of the running product\nalone, not of the individual bases, mirroring the way place values \u2014 and not raw\nbases \u2014 governed the uniqueness proof.\n\nWhy now? With uniqueness and existence unified across all bases, carry behavior\nis the first genuinely *arithmetic* (as opposed to combinatorial) invariant that\ndistinguishes members of the family, and it is the natural gateway to\nmixed-radix analogues of classical digit-sum congruences.\n\n## 3. Primitive divisors and the composite Fibonacci tail\n\n**Conjecture.** For every composite `n` outside the small exceptional set, the\nFibonacci number `F(n)` has a *primitive* prime divisor \u2014 a prime dividing\n`F(n)` but no earlier `F(k)` \u2014 and moreover the primitive part of `F(n)`\n(the cofactor obtained by stripping all factors shared with proper-divisor\nFibonacci numbers) grows without bound as `n \u2192 \u221e`.\n\nThe key insight is that the primitive part is exactly the quantity isolated by\nthe greatest-common-divisor collapse `F(gcd m n) = gcd(F m, F n)`: a shared\nprime between `F(n)` and an earlier `F(k)` must already live in `F(gcd n k)`,\nso primitivity is a statement about how proper divisors of `n` interlock, not\nabout `F(n)` in isolation.\n\nWhy now? The finite range is already settled by direct computation, and the\ngcd-collapse mechanism cleanly reduces the general claim to a growth estimate on\nthe primitive part; the remaining obstacle is a quantitative lower bound on that\ncofactor for large composite indices, which is a self-contained analytic target.\n\n## 4. Digit-extraction as a length-independent normal form\n\n**Conjecture.** The explicit digit-extraction map `n \u21a6 (\u230an / P_i\u230b mod b_i)_i`\nis a section of evaluation that is *stable under lengthening*: extending the\nlength `k` never alters the digits already computed, so the infinite digit\nstream of `n` is a well-defined canonical object independent of any truncation.\n\nThe key insight is that each extracted digit depends only on `n` and the running\nproduct up to that position, so truncation and extraction commute \u2014 the same\nlocality that made the splitting identities length-agnostic.\n\nWhy now? Establishing a canonical infinite normal form is the prerequisite for\nextending mixed-radix systems from finite integers to profinite or `b`-adic\ncompletions, opening a bridge between elementary positional notation and\n`p`-adic-style analysis.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_1258",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "dbbebdc4",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T00:41:24.960669+00:00",
-    "title": "These conjectures are distilled from the current cycle, which closed the bridge"
   },
   {
     "consumed_by_exp_id": "",
@@ -2793,6 +2792,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T23:11:57.317389+00:00",
     "title": "This cycle isolated the mechanism behind the lower bound for adjacent\u2011vertex\u2011"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Mixed-Radix Number Systems (Cycle 1, thread th_d1eba7ba)\n\nThis cycle advances the mixed-radix program by settling two of the four standing\nconjectures in fully general form (arbitrary base sequence `b : \u2115 \u2192 \u2115`, no\nregularity or positivity assumptions), formalized and machine-checked in\n`MixedRadixCarryNormalForm.lean`.  The file is self-contained: it re-establishes\nthe running-product / value / digit machinery and proves the new results on top.\n\n## Results proved this cycle\n\n### Conjecture 1 \u2014 universal uniqueness, and the factorial system as one instance \u2714\n\nThe general uniqueness/existence machinery for an arbitrary base sequence\n`b : \u2115 \u2192 \u2115` lives in `MixedRadixNumberSystem.lean` (`value_unique`,\n`value_digit`, with positivity of running products *forced* by validity rather\nthan assumed).  The bridge file\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` now exhibits\nthe classical factorial (factoradic) system as the single instance `b i = i + 1`\nand re-derives its uniqueness as a corollary of the general theorem:\n\n- `value_eq` : `MixedRadix.value (\u00b7+1) c k = FactorialNumberSystem.value c k`\n  (place values are the factorials, via `radixProd (\u00b7+1) i = i!`).\n- `valid_iff` : mixed-radix validity at `b i = i+1` coincides with factoradic\n  validity `c i \u2264 i`.\n- `factorial_value_unique_via_mixed` : the catalog's factorial uniqueness\n  theorem, proved *only* from `MixedRadix.value_unique` and the two bridge\n  lemmas \u2014 confirming the generalization genuinely subsumes the special case\n  (checked to depend only on `propext`, `Classical.choice`, `Quot.sound`).\n\n### Conjecture 4 \u2014 digit extraction is a length-independent normal form \u2714\n\nThe digit map `digit b n i = (\u230an / P_i\u230b) mod b_i` (with `P_i = \u220f_{j<i} b_j`)\ncarries no length parameter, and its locality makes it a canonical normal form:\n\n- `digit_mod_radixProd_succ` : `digit b (n % P_{i+1}) i = digit b n i` \u2014 the\n  `i`-th digit depends only on `n mod P_{i+1}`.\n- `digit_truncation` : for `i < k`, `digit b (n % P_k) i = digit b n i` \u2014\n  **truncation and extraction commute**, so lengthening `k` never disturbs an\n  already-computed digit and the infinite digit stream is well-defined.\n- `value_digit_mod` : `value b (digit b n) k = n % P_k` \u2014 the master\n  reconstruction law, valid *unconditionally* (including degenerate bases with\n  `b i = 0`, where `P_k = 0` and `n % 0 = n`).\n\n### Conjecture 2 \u2014 carry-free additivity \u2714 (fully-carry-free case)\n\n- `value_add` : evaluation is additive digitwise, `value b (c+d) k =\n  value b c k + value b d k`, with **no** carry hypothesis (pure linearity of the\n  place-value sum).\n- `digit_value` : a valid digit function is recovered by extraction (uniqueness\n  of digits), derived from the general uniqueness/existence theorems.\n- `digit_add_carryFree` : if the local base exceeds the digit sum at every\n  position (`c i + d i < b i` for `i < k`), then addition is carry-free \u2014 the\n  `i`-th digit of `value b c k + value b d k` equals the pointwise sum\n  `c i + d i`.\n- `not_valid_of_carry` : a position with `b i \u2264 c i + d i` is exactly one where\n  the pointwise sum fails validity \u2014 the location of a forced carry.\n\nTogether these confirm the conjecture's key insight: carry structure is governed\nby the local base vs. digit sum, while *evaluation* is always additive; the\ncarry-free regime is precisely where the naive digitwise sum stays valid.\n\n## Open sub-problems for the next cycle\n\n1. **Carry-pattern equality across bases.** The remaining half of Conjecture 2:\n   two systems `b`, `b'` induce the same carry pattern on an interval iff their\n   running products agree up to its length.  This needs a formal `carryPattern`\n   invariant defined from running products (not raw bases) and a proof that it is\n   a running-product invariant.\n\n2. **Profinite / b-adic completion (Conjecture 4 extension).** With the canonical\n   infinite digit stream now available, define the inverse limit\n   `lim_k (\u2115 / P_k)` and show the digit stream gives a topological isomorphism\n   onto the mixed-radix completion \u2014 the bridge to p-adic-style analysis.\n\n3. **Mixed-radix digit-sum congruences.** With carry-free additivity in hand, the\n   natural analogue of \"casting out nines\" is a digit-sum-mod congruence for\n   position-uniform bases; a good self-contained arithmetic target.\n\n4. **Fibonacci primitive divisors (Conjecture 3).** Untouched this cycle; it is a\n   genuinely deep analytic target (Carmichael's primitive-divisor theorem) and\n   deserves its own thread rather than a corollary of the positional-notation\n   machinery.\n",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_1326",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0e4c0a6c",
+    "status": "available",
+    "timestamp": "2026-07-14T23:30:26.707629+00:00",
+    "title": "This cycle advances the mixed-radix program by settling two of the four standing"
   },
   {
     "consumed_by_exp_id": "",

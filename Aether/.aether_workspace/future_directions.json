@@ -5769,7 +5769,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Sidorenko's conjecture (Sidorenko 1991)",
         "Lovász-Szegedy graphon theory (Lovász 2012)",
@@ -5777,7 +5777,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "99a1b43f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5793,7 +5793,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0408",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-14T23:30:51.864246+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_transfer_sharpness (C : AdmissibleClass) : (∃ H : SimpleGraph, is_bipartite H ∧ vertex_count H = 5 ∧ edge_count H = 4) ∧ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (spectral_radius W)^(2*4 - 5) * (density W)^(5 - 4)) ∧ ¬ (∀ W : Graphon, W ∈ C → t(H, W) ≥ (density W)^4)",
       "lineage_refs": [],
@@ -5808,7 +5808,7 @@
       "source": "",
       "source_exp_id": "2607.02260v1",
       "source_path": "http://arxiv.org/abs/2607.02260v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-05T22:13:32.517589+00:00",
       "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
@@ -20954,6 +20954,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle 0e4c0a6c (Q=0.780), which proved 26 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThese conjectures are distilled from the current cycle, which closed the bridge\nidentifying the factorial (factoradic) number system as a single point in the\none-parameter family of mixed-radix positional systems, and re-derived the\nuniqueness of factoradic representations as a ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "push_0e4c0a6c_6a18bebb",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.88,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "0e4c0a6c",
+      "source_path": "These conjectures are distilled from the current cycle, which closed the bridge",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-14T23:30:35.132822+00:00",
+      "title": "Deepening: These conjectures are distilled from the current cycle, which closed the bridge"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 0faef071 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
       "domain_bridges": [],
       "domain_quality_penalty": 1.0,
@@ -21036,7 +21076,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 10dfa4e0 (Q=0.820), which proved 26 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combinatorial\nmodel of free `ℤ₂`-complexes — the boundary complexes of cross-polytopes, i.e. the octahedra",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -21076,7 +21116,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1207283c (Q=0.820), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Good manifolds in an `n`-nice polytope\n\nThe verified cycle established that the maximal number of good manifolds in an\n`n`-nice polytope is, from dimension seven onward, exactly `2^n`: the count\ndoubles with each new dimension, its partial sums are geometric, the whole\nsequence",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -21436,7 +21476,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 19e0135d (Q=0.830), which proved 33 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Spectral gaps of fixed-genus chord-swap chains\n\nThis cycle established, unconditionally, that the variational (Rayleigh-quotient)\nupper bound for a one-dimensional swap chain scales as `Θ(n^{-3})`: a monotone\nstatistic that changes by one unit per move has Dirichlet energy of o",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -22476,7 +22516,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 45e15555 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any d-dimensional spanning k-tree K contained in the join V₁*⋯*V_{d+1} and any affine map A:|Δ_V|→ℝ^d with 0∈A(V_i) for all i, there exists a face σ∈K with 0∈A(σ) such that the number of faces in K is bounded by a polynomial in |V| of degree at most k+1. Moreover, when k=1 (spanning trees), the ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -24476,7 +24516,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a25c6e48 (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and proves it equals\nthe integer charge `ℓ`, together with quantization, charge conservation under\nsuper",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -25276,7 +25316,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle d09018a9 (Q=0.820), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Applications"
       ],
@@ -48143,7 +48183,6 @@
     "π^k_ℓ": 2
   },
   "selection_log": [
-    "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
@@ -48162,6 +48201,7 @@
     "abduction_followup",
     "abduction_followup",
     "abduction_followup",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
