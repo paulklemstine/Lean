@@ -115,20 +115,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "797ab793",
-    "description": "Building on cycle 7acc7a45 (Q=0.830), which proved 24 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle cf19c51c (Q=0.790) proved 36 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of \u2124\u2082-co-index under suspension\n\nThis cycle established, unconditionally, the constructive l",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_7acc7a45_4c5b1d29",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "7acc7a45",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T03:41:54.706806+00:00",
-    "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domains": [
@@ -1763,7 +1749,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary spectral-moment foundations of Seidel"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b97ab468",
     "description": "# Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential lower bound for sub-\u221a2 Vietoris\u2013Rips approximations whose rate `\u03b3(c)` vanishes\nat the \u221a2 threshold.\n\n## What is proved (file `Bridges/VietorisRipsSubSqrt2LowerBound.lean`)\n\nFor each `n` we build the graded ultrametric `metricD n` on `Fin n` (non-zero distances in\n`[1, \u221a2]`, `radius(n,i) = 1 + (\u221a2\u22121)(i+1)/n`), and set\n`\u03b3(c) = (\u221a2/c \u2212 1)/(\u221a2 \u2212 1)`.\n\n* **Metric geometry.** `dist_isMetric`: `metricD n` is a genuine finite (ultra)metric\n  (symmetry, non-negativity, `d(i,i)=0`, triangle inequality).\n* **Geometry \u2192 combinatorics (the bridge).** `two_pow_card_le_card_VRcomplex`: a metric\n  clique of size `m` at scale `r` forces `2^m` Vietoris\u2013Rips simplices (its whole power\n  set), and `two_pow_activeCard_le_VRcomplex` applies this to the graded active set.\n* **The effective exponent.** `gamma_pos`, `gamma_le_one` (so `0 < \u03b3(c) \u2264 1` on `[1,\u221a2)`),\n  and `gamma_tendsto_nhdsWithin` (`\u03b3(c) \u2192 0` as `c \u2192 \u221a2\u207b`).\n* **Rate realisation.** `radius_le_iff` and `floor_gamma_le_exponent`:\n  `\u230an\u00b7\u03b3(c)\u230b \u2264 #active(\u221a2/c)`.\n* **Interleaving lower bound.** `approx_card_lower_bound`: any one-sided `c`-approximation\n  `G` (`IsCApprox`) has `2^(#active(\u221a2/c)) \u2264 |G(\u221a2)|`.\n* **Headline connector.** `subSqrt2_exponential_lower_bound`: for every `c \u2208 [1,\u221a2)`, every\n  `n>0`, and every `c`-approximation `G`,\n  `2^\u230an\u00b7\u03b3(c)\u230b \u2264 |G(\u221a2)|`, with `0 < \u03b3(c) \u2264 1` and `lim_{c\u2192\u221a2\u207b} \u03b3(c) = 0`.\n\nThe main theorem uses only `propext`, `Classical.choice`, `Quot.sound`.\n\n## Relation to the catalog reference\n\nThe catalog file `Catalog/Novelty/VietorisRipsCliqueBridge.lean` proves a *flat* `2^n`\nbound for an equidistant configuration and defines a `\u03b3(c)` that does **not** control the\nexponent (the bound is `2^n` independent of `c`). The present work supplies the missing\n`c`-dependence demanded by the mission: an explicit `\u03b3(c)` that genuinely governs the\nexponent `\u230an\u00b7\u03b3(c)\u230b`, is positive on the whole regime `[1,\u221a2)`, and continuously degrades to\n`0` at the threshold. This is what makes the \u221a2 boundary sharp in the lower bound itself.\n\n## Directions to strengthen / extend\n\n1. **Euclidean realisability with the exact \u221a2 geometry.** The graded ultrametric is a\n   faithful finite metric, but the \"canonical\" \u221a2 phenomenon lives in Euclidean space\n   (standard basis vectors are pairwise at distance \u221a2). A worthwhile extension is to\n   realise the graded radii by an explicit point cloud in `\u211d^d` (e.g. concentric scaled\n   simplices) and re-derive the same `\u03b3(c)`, connecting to `EuclideanSpace` in Mathlib.\n\n2. **Two-sided interleavings and homotopy interleavings.** `IsCApprox` here is the\n   one-sided containment sufficient for the lower bound. Formalizing full multiplicative\n   interleavings and homotopy-interleavings (Blumberg\u2013Lesnick) and proving the same\n   simplex-count lower bound survives would tighten the link to the standard TDA notion of\n   `c`-approximation.\n\n3. **Doubling dimension.** The catalog reference \"Doubling dimension in metric geometry\"\n   suggests quantifying how the doubling dimension of `metricD n` scales with `n`, and\n   whether the exponential lower bound can be phrased purely in terms of a growth/packing\n   invariant \u2014 turning the bridge into a doubling-dimension \u21d2 complexity statement.\n\n4. **Persistent homology, not just simplex count.** Upgrade from \"many simplices\" to a\n   lower bound on the size of any interleaved *persistence module* / barcode, linking to\n   the `Catalog/.../PrimePersistentHomology.lean` line of development.\n\n5. **Optimality of `\u03b3(c)`.** Investigate whether `(\u221a2/c \u2212 1)/(\u221a2 \u2212 1)` is the best possible\n   rate for this family, and characterise the extremal metric spaces achieving a given\n   `\u03b3(c)`.\n",
     "domains": [
       "Geometry",
@@ -1773,7 +1759,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ad0affd1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T19:07:14.716898+00:00",
     "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
   },
@@ -2226,6 +2212,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T05:59:26.103593+00:00",
     "title": "This cycle formalized the **arithmetic residue** of the identity `E\u2084\u00b2 = E\u2088` as a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: the functorial excess of the \u2124\u2082-coindex under suspension\n\nThis cycle deepened the constructive lower-bound theory of the \u2124\u2082-coindex of combinatorial\nspheres from an *existence* statement into a *functorial* one: suspension of equivariant\nsimplicial maps is an endofunctor of the category of free \u2124\u2082-spheres (it preserves identities\nand composition), the constructive tower `coind(S\u207f) \u2265 n` is the orbit of a single base map\nunder that functor, and finite Borsuk\u2013Ulam obstructions certify that the coindex increment is\nexactly one, now verified up through dimension two (`coind(S\u00b2) = 2`).\n\nThe following conjectures are the natural next targets.\n\n## 1. The excess is exactly one in every dimension\n\n**Conjecture.** For every `n`, there is no equivariant simplicial map `S\u207f\u207a\u00b9 \u2192 S\u207f`, so the\ncoindex increment under suspension is exactly one at every level, not merely on the verified\nbase of the tower.\n\n*The key insight is* that each individual non-existence statement is a *finite* decidable\nquestion about positive-vertex data, so the whole family is a uniform sequence of finite\nobstructions rather than a single infinitary theorem; a structural induction that transports\nan obstruction at level `n` to one at level `n+1` \u2014 dual to the suspension functor that\ntransports witnesses upward \u2014 would close the gap without invoking the analytic Borsuk\u2013Ulam\ntheorem.\n\n*Why now?* The suspension functor and its identity/composition laws are now available as a\nmechanism for transporting maps between adjacent levels; the same machinery, run\ncontravariantly, is exactly what an inductive obstruction argument needs.\n\n## 2. A join functor with additive excess\n\n**Conjecture.** The combinatorial join `S\u1d50 * S\u207f \u2245 S\u1d50\u207a\u207f\u207a\u00b9` upgrades to a *bifunctor* on free\n\u2124\u2082-spheres whose effect on the coindex is additive: a witness for `S\u1d50` and one for `S\u207f`\ncombine into a witness for `S\u1d50\u207a\u207f\u207a\u00b9`, and suspension is the special case of joining with `S\u2070`.\n\n*The key insight is* that suspension is join-with-a-point, so proving the functor laws for the\njoin subsumes and explains the suspension functor laws established this cycle, exposing the\n`+1` excess of suspension as the `coind(S\u2070) + 1 = 1` contribution of a single join factor.\n\n*Why now?* With suspension identified as an endofunctor, the algebraic pattern (a monoidal-style\noperation grading the coindex) is visible; formalizing the join is the direct generalization.\n\n## 3. Uniqueness of the constructive tower up to equivariant homotopy\n\n**Conjecture.** Any two coindex witnesses `S\u207f \u2192 S\u207f` of full dimension are connected by a finite\nsequence of elementary equivariant moves; in particular the identity tower produced by\niterating suspension of the base point is canonical up to such moves.\n\n*The key insight is* that extensionality reduces equality of maps to equality of vertex data,\nso an equivariant-homotopy relation can be presented purely combinatorially as a rewriting\nsystem on positive-vertex data, making \"uniqueness up to homotopy\" a decidable question in each\nfixed dimension.\n\n*Why now?* Extensionality and the explicit description of the tower as `\u03a3\u207f(id_{S\u2070})` give a\nconcrete canonical representative against which all other witnesses can be compared.\n\n## 4. Sharpness certificates as a certified decision procedure\n\n**Conjecture.** The finite reformulation of map-existence yields a uniformly certified decision\nprocedure that, given `m` and `n`, decides whether a coindex witness `S\u1d50 \u2192 S\u207f` exists and\nreturns either an explicit suspended/iterated map or a finite obstruction.\n\n*The key insight is* that the positive-vertex reformulation is decidable, and the constructive\nside is generated functorially, so the \"yes\" answers and the \"no\" answers are produced by two\ncomplementary, fully explicit mechanisms that together cover the diagonal boundary `m = n+1`.\n\n*Why now?* Both halves now exist in explicit form \u2014 constructive witnesses from the suspension\nfunctor and finite obstructions from the decidable reformulation \u2014 so packaging them into a\nsingle procedure is an engineering step on top of proven mathematics.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1274",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "797ab793",
+    "status": "available",
+    "timestamp": "2026-07-14T05:59:51.594934+00:00",
+    "title": "This cycle deepened the constructive lower-bound theory of the \u2124\u2082-coindex of com"
   },
   {
     "consumed_by_exp_id": "0abd0edb",
