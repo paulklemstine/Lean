@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ad71c64c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Brouwer Laplacian Equality Characterization\n\nThe results established here pin down the exact, unconditional spine of Brouwer's\nequality problem: the total spectral sum is the edg",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-13T12:36:08",
-      "title": "Full Brouwer's Laplacian Conjecture Equality Characterization"
-    },
-    {
       "cycle_id": "e8b8d594",
       "domain": "Applications",
       "key_insight": "# Future Directions — Maximal Determinants of Small Bounded-Entry Matrices\n\nEach conjecture below is bold, falsifiable, and grows directly out of the two\nfindings of this cycle: (i) the exact achievab",
@@ -499,19 +489,19 @@
       "theorem_count": 25,
       "timestamp": "2026-07-14T05:23:54",
       "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
+    },
+    {
+      "cycle_id": "33954867",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: from `E₄² = E₈` to sharper Eisenstein arithmetic\n\nThis cycle formalized the **arithmetic residue** of the identity `E₄² = E₈` as a\n*connector* between modular forms and elementary",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-14T05:59:46",
+      "title": "This cycle isolated and proved the arithmetic residue of the identity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f6b0dfd4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalises the mission *\"Causal Loops in Category Theory: when composition\nloops back\"*: a tensor product whose associativity fails **on the nose** but is repaired\nby",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-11T13:21:45",
-      "title": "Causal Loops in Category Theory: When Composition Loops Back"
-    },
     {
       "cycle_id": "997ab258",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 25,
       "timestamp": "2026-07-14T05:23:54",
       "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
+    },
+    {
+      "cycle_id": "33954867",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: from `E₄² = E₈` to sharper Eisenstein arithmetic\n\nThis cycle formalized the **arithmetic residue** of the identity `E₄² = E₈` as a\n*connector* between modular forms and elementary",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-14T05:59:46",
+      "title": "This cycle isolated and proved the arithmetic residue of the identity"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f3fa6ca4",
-      "domain": "Applications",
-      "name": "gives",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f3fa6ca4",
-      "domain": "Applications",
-      "name": "pow7_pow3_mod3",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ce15dd8e",
-      "domain": "Applications",
-      "name": "uv_diff",
-      "quality": 0.78
-    },
     {
       "cycle_id": "ce15dd8e",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "muInv_mul",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "33954867",
+      "domain": "Applications",
+      "name": "sigmaZ_def",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "33954867",
+      "domain": "Applications",
+      "name": "pow_pow_dvd_of_zmod",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "33954867",
+      "domain": "Applications",
+      "name": "pow7_sub_pow3_dvd",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-14T05:23:54",
+  "last_updated": "2026-07-14T05:59:46",
   "open_questions": [
     {
       "context": "+unconditionally and `sorry`-free, the composite case on the computationally; +`n ≥ 13`, with the tail `n > 10000` left as an (unproved) `sorry`.  It is; -    sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "117d6517",
-        "quality": 0.83,
-        "theorems": 23,
-        "title": "Deepening: Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Math"
-      },
-      {
         "cycle_id": "beca1e55",
         "quality": 0.82,
         "theorems": 32,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 25,
         "title": "Deepening: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model o"
+      },
+      {
+        "cycle_id": "33954867",
+        "quality": 0.72,
+        "theorems": 17,
+        "title": "This cycle isolated and proved the arithmetic residue of the identity"
       }
     ],
     "Bridges": [
