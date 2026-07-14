@@ -73,7 +73,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
-    "consumed_by_exp_id": "40b55b0f",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 32285b55 (Q=0.830), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: f",
     "domains": [
       "Applications"
@@ -82,7 +82,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "32285b55",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-13T03:02:38.459095+00:00",
     "title": "Deepening: Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at "
   },
@@ -2227,7 +2227,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0abd0edb",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
     "domains": [
       "Applications"
@@ -2236,7 +2236,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "71e324bf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T07:36:38.107204+00:00",
     "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
