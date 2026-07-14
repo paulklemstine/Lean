@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-14T10:59:53.364213+00:00",
+  "last_updated": "2026-07-14T11:17:09.982216+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -15116,6 +15116,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-14T10:59:53.306577+00:00",
       "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 235,
+      "domain": "Applications",
+      "duration_seconds": 1030.2394165992737,
+      "end_time": 1784027805.942748,
+      "files_integrated": 4,
+      "job_id": "bce13597",
+      "outcome_quality": 0.83,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19a",
+      "phase_a_quality_score": 0.83,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19a",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5485,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.83,
+        "novelty": 0.83,
+        "proof_depth": 0.83,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784026775.7033315,
+      "strategy_count": 0,
+      "theorem_count": 15,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-14T11:17:09.913579+00:00",
+      "title": "The previous cycle established the **suspension tower** `S\u1d4f(K)` of a free `\u2124\u2082`-c"
     }
   ]
 }

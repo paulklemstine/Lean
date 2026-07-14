@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d31b8b8b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Sharp excess of ℤ₂-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free ℤ₂-complexes: sus",
-      "quality_score": 0.74,
-      "sorry_count": 5,
-      "theorem_count": 27,
-      "timestamp": "2026-07-13T18:50:07",
-      "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
-    },
-    {
       "cycle_id": "d954b0de",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with van",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-14T10:59:51",
       "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
+    },
+    {
+      "cycle_id": "bce13597",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: from the octahedral count to the general index–coindex gap\n\nThis cycle turned the *existence* dichotomy for antipodal maps of cross-polytope spheres\n(`there is a ℤ₂-map Sᵐ → Sⁿ ⟺",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-14T11:17:06",
+      "title": "The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8e111703",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: reliable intuition as a non-computable resource\n\nThis cycle modelled Ramanujan-style intuition as a verdict map on encoded\nstatements and proved two complementary obstructions to",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-11T20:51:04",
-      "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-    },
     {
       "cycle_id": "7473e6ed",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-14T10:59:51",
       "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
+    },
+    {
+      "cycle_id": "bce13597",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: from the octahedral count to the general index–coindex gap\n\nThis cycle turned the *existence* dichotomy for antipodal maps of cross-polytope spheres\n(`there is a ℤ₂-map Sᵐ → Sⁿ ⟺",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-14T11:17:06",
+      "title": "The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "30210199",
-      "domain": "Applications",
-      "name": "cvalue_nil",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c923638c",
-      "domain": "Novelty",
-      "name": "plus",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c923638c",
-      "domain": "Novelty",
-      "name": "reduce_mul",
-      "quality": 0.82
-    },
     {
       "cycle_id": "c923638c",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "RReachable",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "bce13597",
+      "domain": "Applications",
+      "name": "Z2Map",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "bce13597",
+      "domain": "Applications",
+      "name": "Z2Map",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "bce13597",
+      "domain": "Applications",
+      "name": "nonempty_comp",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T10:59:51",
+  "last_updated": "2026-07-14T11:17:06",
   "open_questions": [
     {
       "context": "+`sorry`-free.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "797ab793",
-        "quality": 0.82,
-        "theorems": 10,
-        "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound"
-      },
-      {
         "cycle_id": "189556db",
         "quality": 0.72,
         "theorems": 574,
@@ -3141,6 +3135,12 @@
         "quality": 0.8,
         "theorems": 16,
         "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
+      },
+      {
+        "cycle_id": "bce13597",
+        "quality": 0.83,
+        "theorems": 15,
+        "title": "The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
       }
     ],
     "Bridges": [

@@ -174,6 +174,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle bce13597 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: from the constructive lower bound to the exact ℤ₂-coindex\n\n## What this cycle added\n\nThe previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-complex in the\ncross-polytope model and proved, *unconditionally*, the **constructive lower-bound half**:\nsingle-st",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_bce13597_048ee436",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bce13597",
+    "status": "available",
+    "timestamp": "2026-07-14T11:17:07.026084+00:00",
+    "title": "Deepening: The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domain_bridges": [],
     "domains": [
@@ -3054,7 +3073,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d2eb77e2",
     "description": "# Future Directions — Sharp Sumset Bounds in L₁ Balls\n\nThis cycle established the additive / geometric / analytic scaffolding around the\nsharp exponent `p = n·log(m+1) / log(nm+1)` for sumsets inside the cross-polytope\n`{x ∈ ℤᵈ : |x₁| + ⋯ + |x_d| ≤ m}`. It proved the unconditional geometric-mean\nbound (exponent `n`), showed the whole family of exponents `q ≥ n` remains valid,\nlocated the sharp exponent strictly inside `(1, n)`, and verified equality for the\none-dimensional interval extremiser. The following conjectures push toward the\nfull sharp inequality.\n\n## 1. The dimension-free sharp exponent bound\n\n**Conjecture.** For all finite nonempty `A₁,…,Aₙ ⊆ {x ∈ ℤᵈ : ∑|xᵢ| ≤ m}`,\n`|A₁ + ⋯ + Aₙ| ≥ (|A₁| ⋯ |Aₙ|)^{1/p}` with `p = n·log(m+1)/log(nm+1)`, for every\ndimension `d`.\n\nThe key insight is that the exponent depends only on `n` and `m`, never on `d`:\nthe cross-polytope's radial dilation structure is self-similar across dimensions,\nso a one-dimensional extremiser should already be globally extremal. Why now? The\npresent cycle isolates the exact obstruction — the gap between the general\nexponent-`n` bound and the extremal exponent-`p` equality — reducing the open\nproblem to a single monotone comparison rather than a dimension-by-dimension\nanalysis.\n\n## 2. Tensor-power stability of the extremal configuration\n\n**Conjecture.** Among all sub-sumset configurations of fixed cardinalities inside\nthe radius-`m` ball, the product-of-intervals family\n`Aⱼ = {0,…,m}^{d}` uniquely minimises `|A₁ + ⋯ + Aₙ|`, and the minimum is exactly\n`(nm+1)^d`.\n\nThe key insight is that the counting identity for the dilated ball tensorises: if\nthe interval is extremal in one dimension, its `d`-fold Cartesian power should be\nextremal in `d` dimensions, turning sharpness into a rigidity/uniqueness\nstatement. Why now? Having the radius-1 point count `2d+1` and the additive\nequality case in hand gives the base and inductive seed for a tensor-power\nargument.\n\n## 3. A stability (near-extremal) version\n\n**Conjecture.** If `|A₁ + ⋯ + Aₙ|` is within a `(1+ε)` factor of the sharp lower\nbound, then each `Aⱼ` is, up to affine transformation, within `O(ε)` (in symmetric\ndifference density) of an arithmetic progression of common difference dividing the\nball's radial step.\n\nThe key insight is that equality forces the additive Cauchy–Davenport step to be\ntight at every stage, and tightness there is known to force arithmetic-progression\nstructure; a quantitative propagation of this tightness yields stability. Why now?\nThe extremal equality case is now pinned down exactly, providing the rigid model\nthat a stability theorem perturbs around.\n\n## 4. Replacing the L₁ ball by general symmetric convex lattice bodies\n\n**Conjecture.** For any origin-symmetric convex lattice polytope `K ⊆ ℤᵈ`, the\nsharp sumset exponent equals `n·log|K| / log|nK|`, where `nK` is the `n`-fold\ndilate, and equality is attained by intersecting `K` with a rational line through\nthe origin.\n\nThe key insight is that the exponent is a purely volumetric quantity — the ratio\nof log-cardinalities of a body and its dilate — so the L₁ specialisation is one\ninstance of a body-independent phenomenon. Why now? The cross-polytope proof\nfactors cleanly through only two properties (radial dilation additivity and a\nlattice-point count), both of which generalise verbatim to arbitrary symmetric\nconvex lattice bodies.\n\n## 5. The transcendence and monotonicity of the exponent surface\n\n**Conjecture.** The two-variable function `p(n,m) = n·log(m+1)/log(nm+1)` is\nstrictly increasing in `n`, strictly decreasing in `m`, and takes an algebraic\nvalue only on the trivial locus `n = 1`; elsewhere it is transcendental.\n\nThe key insight is that `p` measures a genuine \"loss of independence\" as sets are\nsummed, and its monotonicity encodes how that loss scales with the number of\nsummands versus the radius. Why now? This cycle already establishes the bracket\n`1 < p < n` and the boundary equalities; the monotonicity and transcendence\nrefine that bracket into a complete qualitative description of the exponent\nsurface.\n",
     "domain_bridges": [],
     "domains": [
@@ -3067,7 +3086,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "30ef4e5b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T06:35:14.632728+00:00",
     "title": "Additive / geometric / analytic scaffolding around th"
   },
@@ -3214,26 +3233,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "bce13597",
-    "description": "# Future Directions: from the constructive lower bound to the exact ℤ₂-coindex\n\n## What this cycle added\n\nThe previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-complex in the\ncross-polytope model and proved, *unconditionally*, the **constructive lower-bound half**:\nsingle-step suspension raises the coindex, the increase is realised by an explicit suspended map,\nand the bound is sharp only in two base cases (`S¹ ↛ S⁰`, `S² ↛ S¹`, by `decide`). The matching\nupper bound `coind(Sⁿ) ≤ n` in every dimension was left open — flagged as \"the full strength of the\nBorsuk–Ulam / Tucker theorem\".\n\nThis cycle **closes that gap** in the combinatorial model. The file\n`Catalog/Novelty/Z2CoindexSuspensionTower.lean` (self-contained, no `sorry`, only standard axioms)\nproves:\n\n1. **The combinatorial heart** (`induced_simplicial_iff_injective`): a `ℤ₂`-map, being equivariant,\n   is determined by positive-vertex data `g`, and its simpliciality is **equivalent** to injectivity\n   of the coordinate map `σ i = (g i).1`. A simplicial antipodal self-map of cross-polytopes is\n   precisely an injection of coordinate axes carrying arbitrary independent signs.\n\n2. **The exact existence criterion** (`nonempty_iff_le`): `Nonempty (Z2Map m n) ↔ m ≤ n`.\n   This single statement contains both the constructive lower bound `coind(Sⁿ) ≥ n` and the full\n   Borsuk–Ulam upper bound `coind(Sⁿ) ≤ n`.\n\n3. **Borsuk–Ulam in all dimensions** (`borsuk_ulam_general`): `IsEmpty (Z2Map (n+1) n)` for every\n   `n`, upgrading the two `decide` base cases to the whole tower.\n\n4. **The exact coindex** (`coind`, `coind_eq`): `coind(Sⁿ) := sSup {m | Nonempty (Z2Map m n)} = n`.\n\n5. **The suspension tower, sharp** (`Z2Map.suspIter`, `suspension_tower_raises_coindex`,\n   `suspension_tower_exact`, `borsuk_ulam_tower_sharp`): the `k`-fold suspension functor exists,\n   raises the coindex bound by exactly `k`, preserves the \"excess\" `n − m`\n   (`Nonempty (Z2Map (m+k) (n+k)) ↔ Nonempty (Z2Map m n)`), and every level of the tower is\n   Borsuk–Ulam sharp.\n\n## Interpretation\n\nIn this rigid simplicial model the entire \"excess spectrum\" collapses to a single invariant, the\nexcess `n − m`, which suspension preserves exactly. The coindex is therefore a complete invariant:\nit equals the dimension, and the suspension tower increments it by one at each step with no slack.\n\n## Genuinely open next steps\n\n* **Beyond cross-polytopes.** The equivalence \"simplicial antipodal map ⇔ coordinate injection\" is\n  special to the octahedral model. For general free simplicial `ℤ₂`-complexes `K`, the coindex is\n  *not* determined by dimension alone, and the upper bound genuinely needs Tucker's lemma. Formalise\n  Tucker's lemma and recover `coind ≤ dim` for arbitrary `K`.\n* **The index / coindex gap.** Introduce the `ℤ₂`-*index* (maps *out of* `K` into spheres) and study\n  complexes with `ind(K) < coind(K)`; the cross-polytope spheres have `ind = coind = n`.\n* **Chromatic applications.** Connect `coind` of neighbourhood/box complexes to lower bounds on\n  chromatic numbers (Lovász–Kneser), now that `coind` is pinned down exactly for spheres.\n* **Equivariant homotopy refinement.** Replace \"`Nonempty (Z2Map m n)`\" by a homotopy category and\n  ask whether the suspension functor is fully faithful / an equivalence on the relevant subcategory.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Logic"
-    ],
-    "id": "fd_1285",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "b78ccbe1",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T08:57:48.045739+00:00",
-    "title": "The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — The Modal Logic of Forcing\n\nThis cycle deepened the combinatorial core of the set-theoretic multiverse\n(`MultiverseSetTheory.lean`) by equipping it with a **modal structure of\nforcing**, in the spirit of the Hamkins–Löwe programme:\n\n* **possibility** `◇p` — `p` holds in *some* generic (forcing) extension;\n* **necessity**  `□p` — `p` holds in *every* generic extension.\n\n## What was proved (`MultiverseModalForcing.lean`, 0 sorries)\n\nA full Kripke semantics `meval R M w p` for a modal language `MSentence` over\nworlds `α → Bool`, with `R` the forcing-extension relation and `M` the multiverse,\nand the **soundness of S4.2 for forcing frames**:\n\n* `sound_K`, `sound_Nec` — axiom `K` and the necessitation rule (any frame);\n* `sound_T` — `□p → p` from reflexivity;\n* `sound_Four` — `□p → □□p` from transitivity (iterated forcing);\n* `sound_Two` — `◇□p → □◇p` from directedness (product/amalgamation forcing);\n* `forcing_sound_S42` — the four axioms bundled for any `ForcingFrame`;\n* `meval_dia`, `dia_iff_not_box_not` — the `◇p ↔ ¬□¬p` duality;\n* `box_conj`, `dia_disj`, `box_mono`, `dia_mono`, `sound_T_dual` — the standard\n  normal-modal interaction/monotonicity laws;\n* `flipFrame` / `flip_sound_S42` — a concrete *flip-reachability* forcing frame\n  realising the abstract axioms;\n* `B_fails` — the `S5` axiom `p → □◇p` **fails** in a reflexive-transitive-directed\n  sink frame, so the logic is *properly* S4.2, not S5 (no forcing back);\n* `CH_contingent`, `CH_not_necessary` — the classical independence of `CH` recast\n  as modal contingency `◇CH ∧ ◇¬CH` in the forcing frame;\n* `fullFrame`, `meval_dia_fullFrame`, `MIndependent`,\n  `contingent_iff_independent`, `contingent_global` — the **bridge** between the\n  base file's *independence* and the modal *contingency* `◇p ∧ ◇¬p`: in the\n  full-accessibility forcing frame the two notions coincide for every sentence\n  `p`, and contingency there is a global (world-independent) property.  This\n  closes former open thread 5 below.\n\n## Open threads for the next cycle\n\n1. **Completeness (the hard half).** We proved *soundness*: forcing validates\n   S4.2. The Hamkins–Löwe theorem states the valid principles are *exactly* S4.2.\n   Formalising the lower bound requires building control statements (buttons and\n   switches) and the S4.2 frame-embedding lemma — a substantial project.\n2. **Löwenheim-style frame constructions.** Formalise finite pre-Boolean-algebra\n   frames and prove every finite S4.2 frame embeds into the forcing frame.\n3. **Second-order / parametrised modalities.** Add `◇_Γ` for restricted forcing\n   classes (ccc, proper, `<κ`-closed) and study the resulting sublogics.\n4. **Modal validities of large-cardinal axioms.** Which `Meas`-type statements are\n   necessary vs. merely possible under `<κ`-directed-closed forcing?\n5. **Connection to the base file.** *(Closed this cycle.)* The bridge\n   `contingent_iff_independent` proves that modal contingency `◇p ∧ ◇¬p` in the\n   full-accessibility forcing frame (`fullFrame`) is equivalent to modal\n   independence `MIndependent` (true in some admissible world, false in another) —\n   the modal reading of the base file's `Independent`.  A remaining refinement is\n   to transport this equivalence across the two files' distinct `Sentence` /\n   `MSentence` languages via an explicit modality-erasing translation.\n",
     "domain_bridges": [],
@@ -3350,6 +3349,26 @@
     "status": "available",
     "timestamp": "2026-07-14T10:59:42.196124+00:00",
     "title": "This cycle deepened the quadratic-exchange engine (`Basic.lean`) and its uniform"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: from the octahedral count to the general index–coindex gap\n\nThis cycle turned the *existence* dichotomy for antipodal maps of cross-polytope spheres\n(`there is a ℤ₂-map Sᵐ → Sⁿ ⟺ m ≤ n`) into a *structural and enumerative* theory. Three facets of\nthe single invariant `m ≤ n` were pinned down simultaneously:\n\n* **Functoriality.** Antipodal simplicial maps compose, so the spheres form a thin category whose\n  reachability relation is exactly `≤`.\n* **Index = coindex.** The dual invariant — the smallest sphere `Sⁿ` maps *out of* — equals the\n  coindex: `ind(Sⁿ) = coind(Sⁿ) = n`. For octahedral spheres the index–coindex gap vanishes.\n* **Exact enumeration.** A ℤ₂-map is an injection of coordinate axes plus an independent sign vector,\n  giving `#(Z2Map m n) = (n+1)^{↓(m+1)} · 2^{m+1}`, whose diagonal recovers the order of the\n  hyperoctahedral group `B_{n+1}`.\n\nBelow are bold, testable conjectures the findings suggest.\n\n## Conjecture 1 — A strictly positive index–coindex gap beyond the octahedron\n\nFor every `g ≥ 1` there is a free simplicial ℤ₂-complex `K` with `coind(K) = d` but\n`ind(K) = d + g`; moreover the minimal number of vertices realising a gap of size `g` grows at least\nlinearly in `g`.\n\n*The key insight is* that the octahedral collapse \"`ind = coind`\" is forced only because a\nsimplicial antipodal self-map of a cross-polytope must permute coordinate axes, and no such rigidity\nholds for a general free complex — the sign freedom that made our count factorise is exactly what\ndisappears when faces are larger than single axes.\n\n*Why now?* With the index and coindex pinned down *exactly* for the octahedral family, that family\nbecomes a controlled zero-gap baseline against which any engineered gap can be measured and certified,\nturning a qualitative folklore statement into a quantitative program.\n\n## Conjecture 2 — Falling-factorial enumeration is characteristic of octahedral rigidity\n\nAmong all free simplicial ℤ₂-complexes on a fixed vertex set, the number of antipodal simplicial\nmaps into `Sⁿ` is a product of a falling factorial and a power of two **iff** the source is a\njoin of copies of `S⁰` (a cross-polytope). Every non-octahedral source produces a map-count that is\n*not* of this shape.\n\n*The key insight is* that the factorisation `#maps = (injections of axes) × (free signs)` is the\nenumerative signature of the two independent degrees of freedom — axis choice and sign choice — that\nonly decouple when every simplex is spanned by antipodal axis pairs.\n\n*Why now?* We now possess the exact count in the rigid case as a normal form; deviations from the\nfalling-factorial-times-power-of-two shape give a computable obstruction detecting non-octahedral\nstructure directly from the size of the map-space.\n\n## Conjecture 3 — Suspension is an equivalence of enumeration, not merely of existence\n\nThe suspension functor induces a bijection between antipodal maps `Sᵐ → Sⁿ` and those\n`Sᵐ⁺¹ → Sⁿ⁺¹` that fix the two suspension poles; consequently the full map-count satisfies the\nexact recursion `#(Z2Map (m+1) (n+1)) = (something explicit) · #(Z2Map m n)`, and the \"excess\"\n`n − m` is a complete invariant of the map-space up to this pole-fixing bijection.\n\n*The key insight is* that suspension reuses source coordinates verbatim and only appends a single new\npole axis, so it should act on the *set* of maps as cleanly as it acts on their mere existence.\n\n*Why now?* Existence-level sharpness of the suspension tower is already established; upgrading it to a\ncounting bijection is the natural next rung and would make the tower a genuine enumerative recursion.\n\n## Conjecture 4 — Chromatic lower bounds from the octahedral count\n\nFor the Kneser graph `KG(n, k)`, the neighbourhood/box complex admits an antipodal map from\n`S^{n-2k}` but from no higher sphere, and this coindex value — now that it is computable exactly for\noctahedral pieces — yields the tight chromatic bound `χ(KG(n,k)) = n − 2k + 2` via the composition\nfunctoriality established here.\n\n*The key insight is* that composition of antipodal maps transports coindex lower bounds along\ngraph homomorphisms, so a single exactly-known octahedral coindex propagates to a whole family of\ncombinatorial lower bounds.\n\n*Why now?* With coindex, index, and functoriality all in hand for the spheres that appear as the\ntargets in the topological method, the remaining gap to chromatic applications is the box-complex\ncomparison alone, isolating a single concrete lemma to attack.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1292",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bce13597",
+    "status": "available",
+    "timestamp": "2026-07-14T11:16:55.310136+00:00",
+    "title": "This cycle turned the *existence* dichotomy for antipodal maps of cross-polytope"
   },
   {
     "ambition_level": "extension",
