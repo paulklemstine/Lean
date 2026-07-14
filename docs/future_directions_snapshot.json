@@ -325,25 +325,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2360ad91",
-    "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_2ca6565f_fb8f73b6",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "2ca6565f",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T01:28:51.638164+00:00",
-    "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 47a54792 (Q=0.820), which proved 21 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domain_bridges": [],
@@ -917,7 +898,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b1c1bd3",
     "description": "Building on cycle 2c002c80 (Q=0.780), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani",
     "domain_bridges": [],
     "domains": [
@@ -929,7 +910,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "2c002c80",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T12:23:22.264886+00:00",
     "title": "Deepening: Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
   },
@@ -3495,6 +3476,26 @@
     "status": "available",
     "timestamp": "2026-07-14T16:16:24.711910+00:00",
     "title": "Topological charge of an orbital-angular-momentum bea"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n`BoundedError.lean` establishes, for surveillance on a finite dynamic network:\n\n1. a combinatorial Fano lower bound on the surveillance rate needed to\n   reconstruct all but `k` configurations, and its bit form;\n2. a **sharp** rate–distortion law identifying the minimum surveillance rate with\n   the distortion-covering number of the state space.\n\nNatural extensions:\n\n- **Probabilistic Fano.** Replace the uniform error count by an arbitrary prior\n  `p : S → ℝ≥0` and prove `H(p) ≤ log₂ rate + h(P_err) + P_err · log₂(|S|-1)`,\n  the classical Fano inequality, using Mathlib's `Real` entropy once developed.\n\n- **Average distortion.** Here distortion is worst-case (`∀ s, d (dec (obs s)) s ≤ D`).\n  Formalize the average-distortion variant `∑ₛ p s · d (dec (obs s)) s ≤ D` and\n  the corresponding rate–distortion function, recovering the covering law as the\n  `D → 0` limit.\n\n- **Dynamic / temporal networks.** Model a trajectory `Fin T → S` and prove a\n  per-timestep rate bound, quantifying how surveillance cost scales with the\n  observation horizon `T` and the network's temporal correlation.\n\n- **Optimal covers.** Combine `rate_distortion_sharp` with explicit covering\n  numbers for structured dissimilarities (Hamming distance on adjacency matrices,\n  graph edit distance) to get closed-form rate–distortion curves for concrete\n  social-network models.\n\n- **Continuity of the tradeoff.** Prove `minCover d` is antitone in `D` and\n  compute its jumps, giving the shape of the privacy–utility frontier.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1306",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2360ad91",
+    "status": "available",
+    "timestamp": "2026-07-14T16:54:28.173949+00:00",
+    "title": "`BoundedError.lean` establishes, for surveillance on a finite dynamic network:"
   },
   {
     "ambition_level": "extension",

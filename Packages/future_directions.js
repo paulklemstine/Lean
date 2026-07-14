@@ -213,7 +213,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -222,7 +222,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -239,20 +239,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-14T01:16:54.126795+00:00",
     "title": "Deepening: Tight spectral gap exponent for the fixed-genus chord swap chain"
-  },
-  {
-    "consumed_by_exp_id": "2360ad91",
-    "description": "Building on cycle 2ca6565f (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_2ca6565f_fb8f73b6",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "2ca6565f",
-    "status": "in_progress",
-    "timestamp": "2026-07-11T01:28:51.638164+00:00",
-    "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
     "consumed_by_exp_id": "",
@@ -678,7 +664,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b1c1bd3",
     "description": "Building on cycle 2c002c80 (Q=0.780), which proved 25 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani",
     "domains": [
       "Applications"
@@ -687,7 +673,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "2c002c80",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-10T12:23:22.264886+00:00",
     "title": "Deepening: Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
   },
@@ -2558,6 +2544,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T16:16:24.711910+00:00",
     "title": "Topological charge of an orbital-angular-momentum bea"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n`BoundedError.lean` establishes, for surveillance on a finite dynamic network:\n\n1. a combinatorial Fano lower bound on the surveillance rate needed to\n   reconstruct all but `k` configurations, and its bit form;\n2. a **sharp** rate\u2013distortion law identifying the minimum surveillance rate with\n   the distortion-covering number of the state space.\n\nNatural extensions:\n\n- **Probabilistic Fano.** Replace the uniform error count by an arbitrary prior\n  `p : S \u2192 \u211d\u22650` and prove `H(p) \u2264 log\u2082 rate + h(P_err) + P_err \u00b7 log\u2082(|S|-1)`,\n  the classical Fano inequality, using Mathlib's `Real` entropy once developed.\n\n- **Average distortion.** Here distortion is worst-case (`\u2200 s, d (dec (obs s)) s \u2264 D`).\n  Formalize the average-distortion variant `\u2211\u209b p s \u00b7 d (dec (obs s)) s \u2264 D` and\n  the corresponding rate\u2013distortion function, recovering the covering law as the\n  `D \u2192 0` limit.\n\n- **Dynamic / temporal networks.** Model a trajectory `Fin T \u2192 S` and prove a\n  per-timestep rate bound, quantifying how surveillance cost scales with the\n  observation horizon `T` and the network's temporal correlation.\n\n- **Optimal covers.** Combine `rate_distortion_sharp` with explicit covering\n  numbers for structured dissimilarities (Hamming distance on adjacency matrices,\n  graph edit distance) to get closed-form rate\u2013distortion curves for concrete\n  social-network models.\n\n- **Continuity of the tradeoff.** Prove `minCover d` is antitone in `D` and\n  compute its jumps, giving the shape of the privacy\u2013utility frontier.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1306",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2360ad91",
+    "status": "available",
+    "timestamp": "2026-07-14T16:54:28.173949+00:00",
+    "title": "`BoundedError.lean` establishes, for surveillance on a finite dynamic network:"
   },
   {
     "consumed_by_exp_id": "",
