@@ -1635,7 +1635,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "861a1f59",
+    "consumed_by_exp_id": "",
     "description": "Cycle e6dfc1d4 (Q=0.780) proved 26 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D ≡1 mod 4, the difference in sharp/flat λ-invariants under quadratic twist by D should include a term proportiona",
     "domain_bridges": [],
     "domains": [
@@ -1647,7 +1647,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "e6dfc1d4",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-14T16:16:10.424105+00:00",
     "title": "Close Proofs: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
   },
@@ -2561,7 +2561,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e4c0a6c",
     "description": "# Future Directions\n\nThese conjectures are distilled from the current cycle, which closed the bridge\nidentifying the factorial (factoradic) number system as a single point in the\none-parameter family of mixed-radix positional systems, and re-derived the\nuniqueness of factoradic representations as a corollary of the general\nmixed-radix uniqueness theorem.\n\n## 1. A universal uniqueness law for arbitrary running products\n\n**Conjecture.** Fix any base sequence `b : ℕ → ℕ`. A digit string `c` with\n`c i < b i` for all `i < k` is the *unique* representation of its value\n`∑_{i<k} c i · (∏_{j<i} b j)` among all valid length-`k` strings, and every\nnatural number below `∏_{i<k} b i` occurs exactly once.\n\nThe key insight is that neither uniqueness nor surjectivity depends on any\nregularity of the bases: the entire argument is carried by the Euclidean\nsplitting `value / P_k = c_k`, `value mod P_k = value_{<k}`, where `P_k` is the\nrunning product. Positivity of the relevant partial products is *forced* by\nvalidity rather than assumed, so degenerate bases (including `b i = 0`) never\nbreak the statement — they merely empty the space of valid strings.\n\nWhy now? The factoradic and base-`N` systems, historically studied with\nbespoke arguments, are now seen to be the same theorem at two parameter values;\nthe natural next step is to characterize exactly which base sequences yield\nnumber systems with prescribed carry behavior.\n\n## 2. Carry-free additivity across mixed-radix systems\n\n**Conjecture.** Addition in a mixed-radix system `b` is carry-free on a digit\nposition `i` precisely when the local base `b i` exceeds the sum of the two\ndigits there; consequently, two mixed-radix systems `b` and `b'` induce the same\ncarry pattern on a fixed integer interval if and only if their running products\nagree up to the length of that interval.\n\nThe key insight is that carry structure is a function of the running product\nalone, not of the individual bases, mirroring the way place values — and not raw\nbases — governed the uniqueness proof.\n\nWhy now? With uniqueness and existence unified across all bases, carry behavior\nis the first genuinely *arithmetic* (as opposed to combinatorial) invariant that\ndistinguishes members of the family, and it is the natural gateway to\nmixed-radix analogues of classical digit-sum congruences.\n\n## 3. Primitive divisors and the composite Fibonacci tail\n\n**Conjecture.** For every composite `n` outside the small exceptional set, the\nFibonacci number `F(n)` has a *primitive* prime divisor — a prime dividing\n`F(n)` but no earlier `F(k)` — and moreover the primitive part of `F(n)`\n(the cofactor obtained by stripping all factors shared with proper-divisor\nFibonacci numbers) grows without bound as `n → ∞`.\n\nThe key insight is that the primitive part is exactly the quantity isolated by\nthe greatest-common-divisor collapse `F(gcd m n) = gcd(F m, F n)`: a shared\nprime between `F(n)` and an earlier `F(k)` must already live in `F(gcd n k)`,\nso primitivity is a statement about how proper divisors of `n` interlock, not\nabout `F(n)` in isolation.\n\nWhy now? The finite range is already settled by direct computation, and the\ngcd-collapse mechanism cleanly reduces the general claim to a growth estimate on\nthe primitive part; the remaining obstacle is a quantitative lower bound on that\ncofactor for large composite indices, which is a self-contained analytic target.\n\n## 4. Digit-extraction as a length-independent normal form\n\n**Conjecture.** The explicit digit-extraction map `n ↦ (⌊n / P_i⌋ mod b_i)_i`\nis a section of evaluation that is *stable under lengthening*: extending the\nlength `k` never alters the digits already computed, so the infinite digit\nstream of `n` is a well-defined canonical object independent of any truncation.\n\nThe key insight is that each extracted digit depends only on `n` and the running\nproduct up to that position, so truncation and extraction commute — the same\nlocality that made the splitting identities length-agnostic.\n\nWhy now? Establishing a canonical infinite normal form is the prerequisite for\nextending mixed-radix systems from finite integers to profinite or `b`-adic\ncompletions, opening a bridge between elementary positional notation and\n`p`-adic-style analysis.\n",
     "domain_bridges": [],
     "domains": [
@@ -2574,7 +2574,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "dbbebdc4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T00:41:24.960669+00:00",
     "title": "These conjectures are distilled from the current cycle, which closed the bridge"
   },
