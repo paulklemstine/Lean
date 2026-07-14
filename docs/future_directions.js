@@ -720,7 +720,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp maximal excess of co-index under suspension for all feasible sta"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b78ccbe1",
     "description": "Building on cycle 769cd692 (Q=0.780), which proved 51 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: the suspension tower and the excess spectrum of free \u2124\u2082-complexes\n\nThis cycle established the **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as a\nrigorous object and proved three things about it unconditionally: iterating the\nsingle-step suspension raises the co-index by at l",
     "domains": [
       "Novelty"
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "769cd692",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T07:30:03.453805+00:00",
     "title": "Deepening: **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as"
   },
