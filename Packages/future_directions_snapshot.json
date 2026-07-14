@@ -2078,7 +2078,7 @@
       "math.CO",
       "math.PR"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "385fff12",
     "description": "The main result establishing the exact exponential growth rate of the ρ-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly ρ(1-R) relative to the unconstrained Arıkan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary Rényi entropy.",
     "domain_bridges": [
       "math.PR",
@@ -2094,7 +2094,7 @@
     "proof_strategy": "Define the probability space for random binary linear codes and the constrained guesswork rank. Prove the universality theorem, expressing the guesswork exponent as a functional of the weight-enumerator growth rate: (1+ρ)ψ_{1/(1+ρ)}(g) - ρψ_1(g). Then, evaluate this Legendre-type transform for the specific weight-enumerator growth rate of random linear codes to derive the closed-form exponent ρ h_{1/(1+ρ)}(p) + ρ(R-1).",
     "research_mode": "team",
     "source_exp_id": "2607.00205v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T11:06:30.434239+00:00",
     "title": "Exact Exponent for Constrained Coset Guesswork"
   },

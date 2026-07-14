@@ -1514,7 +1514,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "385fff12",
     "description": "The main result establishing the exact exponential growth rate of the \u03c1-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly \u03c1(1-R) relative to the unconstrained Ar\u0131kan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary R\u00e9nyi entropy.",
     "domains": [
       "Computation"
@@ -1523,7 +1523,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00205v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T11:06:30.434239+00:00",
     "title": "Exact Exponent for Constrained Coset Guesswork"
   },
@@ -2371,6 +2371,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T08:39:59.624732+00:00",
     "title": "This program studies **sharp lower bounds for sumsets in L\u2081-balls / boxes in \u2124\u1d48*"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Seidel higher spectral moments under edge flips\n\n## What this cycle established (all machine-checked in `SeidelHigherMoments.lean`)\n\nThe foundational cycle showed the *second* Seidel moment `tr(S\u00b2) = n(n-1)` is\ngraph-independent and therefore **blind** to edge deletion. This cycle pins down\nthe first moment that is **not** blind, and gives it a closed form.\n\n- **`trace_cube_flip`** (main). For any real symmetric zero-diagonal matrix `M`,\n  distinct `a \u2260 b`, and weight `c`, the symmetric rank-two flip\n  `P = c\u00b7(E\u1d43\u1d47 + E\u1d47\u1d43)` changes the third moment by exactly\n  `tr((M+P)\u00b3) \u2212 tr(M\u00b3) = 6\u00b7c\u00b7(M\u00b2)_{a b}`.\n  The `tr(P\u00b3)` and `tr(M\u00b7P\u00b2)` contributions vanish precisely because `M` has zero\n  diagonal \u2014 a Seidel-specific structural fact.\n\n- **`seidel_delete_eq`**. Deleting one edge `{a,b}` is exactly the flip with\n  `c = 2`: `S(G\u2212e) = S(G) + 2\u00b7(E\u1d43\u1d47 + E\u1d47\u1d43)`.\n\n- **`seidel_trace_cube_delete`**. Consequently the third Seidel moment changes by\n  `12\u00b7(S\u00b2)_{a b}` under an edge deletion, whereas\n  **`seidel_trace_sq_delete_invariant`** confirms the second moment does not\n  change at all.\n\n- **Concrete witness** (`K3_vs_P3_third_moment`, `K3_vs_P3_second_moment`,\n  `K3_flip_quantity`): for `K\u2083` vs `K\u2083 \u2212 e` (= `P\u2083`), `tr(S\u00b3)` jumps `\u22126 \u2192 +6`\n  (change `+12 = 12\u00b7(S\u00b2)\u2081\u2082 = 12\u00b71`) while `tr(S\u00b2)` is fixed at `6`.\n\n- **Complementation** (`seidel_compl_eq`, `energy_neg`, `seidel_energy_compl`):\n  complementing a graph negates the Seidel matrix, so the Seidel *energy* is a\n  complementation invariant. Hence Seidel energy cannot be a monotone function of\n  the number of edges \u2014 a contrarian counterpoint to naive \"more edges \u21d2 more\n  energy\" heuristics.\n\nAll results are proved for an arbitrary finite vertex type and depend only on the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n## Interpretation\n\nThis is an elementary, fully rigorous *moment-level* version of the rank-two\nedge-flip perturbation program (Conjecture 3). The sign and magnitude of the\nthird-moment response to an edge flip are governed by the single graph-theoretic\nquantity `(S\u00b2)_{a b} = \u2211\u2096 S_{ak} S_{kb}`, which is generically nonzero \u2014 exactly\nwhy the third moment sees a flip that the sphere constraint `\u2211\u03bb\u00b2 = n(n-1)` cannot.\n\n## Next steps\n\n1. **Sign of `(S\u00b2)_{a b}`.** Turn `(S\u00b2)_{a b} = \u2211\u2096 S_{ak}S_{kb}` into a\n   combinatorial count (common neighbours vs. mixed pairs) and determine its sign\n   on Tur\u00e1n graphs, tightening the connection to the strict edge-deletion\n   inequality (Conjecture 1).\n\n2. **From moments to energy.** Combine the exact third-moment change with the\n   fixed second moment to constrain how eigenvalue mass crosses `0`, converting\n   the analytic energy inequality into an eigenvalue-counting statement\n   (Conjecture 3, spectral form).\n\n3. **Fourth moment.** Compute `tr((M+P)\u2074) \u2212 tr(M\u2074)` for the same flip; the\n   leading correction should be `4\u00b7tr(M\u00b2P) + \u2026`, giving a second higher-moment\n   invariant sensitive to edge changes.\n\n4. **Complement + switching.** The energy is invariant under both complementation\n   (this cycle) and switching (foundational cycle); characterise the joint orbit\n   and its minimal-energy representatives (Conjecture 2).\n",
+    "domains": [
+      "Physics",
+      "Pythagorean"
+    ],
+    "id": "fd_1284",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bcaaf8f2",
+    "status": "available",
+    "timestamp": "2026-07-14T08:40:12.799683+00:00",
+    "title": "The foundational cycle showed the *second* Seidel moment `tr(S\u00b2) = n(n-1)` is"
   },
   {
     "consumed_by_exp_id": "",
