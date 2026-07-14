@@ -1402,7 +1402,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Classification of Discrete d-Pseudomanifolds with 2d+7 Vertices"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45e15555",
     "description": "For any d-dimensional spanning k-tree K contained in the join V\u2081*\u22ef*V_{d+1} and any affine map A:|\u0394_V|\u2192\u211d^d with 0\u2208A(V_i) for all i, there exists a face \u03c3\u2208K with 0\u2208A(\u03c3) such that the number of faces in K is bounded by a polynomial in |V| of degree at most k+1. Moreover, when k=1 (spanning trees), the bound is linear in |V|.",
     "domains": [
       "Geometry"
@@ -1411,7 +1411,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-06T04:02:38.934140+00:00",
     "title": "Colorful Carath\u00e9odory theorem for spanning k-trees admits a polynomial-size witness"
   },
