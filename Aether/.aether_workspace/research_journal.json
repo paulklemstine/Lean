@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a1dac228",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Edge-Spectral Supersaturation for Triangles\n\nFile: `Catalog/Novelty/EdgeSpectralSupersaturationTriangles.lean`\n\n## What is proved\n\nThe file establishes a **cross-domain bridge**",
-      "quality_score": 0.82,
-      "sorry_count": 1,
-      "theorem_count": 10,
-      "timestamp": "2026-07-13T12:17:35",
-      "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
-    },
-    {
       "cycle_id": "290f55e0",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Alexander polynomials as signed lattice-path sums\n\nThis cycle settled the combinatorial status of the \"Alexander polynomial as a\nlattice-path count\" conjecture: the *unsigned* gen",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-14T03:41:54",
       "title": "Close Proofs: This cycle established, unconditionally, the constructive lower-bound "
+    },
+    {
+      "cycle_id": "bec8fe46",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain i",
+      "quality_score": 0.85,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-14T04:50:27",
+      "title": "Close Proofs: Tight spectral gap exponent for the fixed-genus chord swap chain"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2c395553",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Dreamtime Algebra\n\nThe file `Catalog/Bridges/DreamtimeKinshipAlgebra.lean` formalizes the bridge\nbetween Australian Aboriginal kinship systems and finite group theory: the\nfour-s",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 40,
-      "timestamp": "2026-07-11T11:59:17",
-      "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
-    },
     {
       "cycle_id": "c06d8e8c",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 24,
       "timestamp": "2026-07-14T03:41:54",
       "title": "Close Proofs: This cycle established, unconditionally, the constructive lower-bound "
+    },
+    {
+      "cycle_id": "bec8fe46",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain i",
+      "quality_score": 0.85,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-14T04:50:27",
+      "title": "Close Proofs: Tight spectral gap exponent for the fixed-genus chord swap chain"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T03:41:54",
+  "last_updated": "2026-07-14T04:50:27",
   "open_questions": [
-    {
-      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "75061bf5",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-13T09:49:29"
-    },
     {
       "context": "+unconditionally and `sorry`-free, the composite case on the computationally; +`n ≥ 13`, with the tail `n > 10000` left as an (unproved) `sorry`.  It is; -    sorry",
       "cycle_id": "3f303e8a",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T03:41:29"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "bec8fe46",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T04:50:27"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "17340490",
-        "quality": 0.83,
-        "theorems": 15,
-        "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
-      },
-      {
         "cycle_id": "7547cdb0",
         "quality": 0.82,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 24,
         "title": "Close Proofs: This cycle established, unconditionally, the constructive lower-bo"
+      },
+      {
+        "cycle_id": "bec8fe46",
+        "quality": 0.85,
+        "theorems": 0,
+        "title": "Close Proofs: Tight spectral gap exponent for the fixed-genus chord swap chain"
       }
     ],
     "NumberTheory": [
