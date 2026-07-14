@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3903c2d7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the Fibonacci Pythagorean triple family\n`a = F n·F(n+3)`, `b = 2·F(n+1)·F(n+2)`, `c = F(n+1)²+F(n+2)² = F(2n+3)`.\n\n## 1. Primitivity dic",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 10,
-      "timestamp": "2026-07-14T01:53:27",
-      "title": "Bypassed"
-    },
-    {
       "cycle_id": "6af180ae",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nDerived from the generalized multinomial convolution identity\n$$\\sum_{i_1+\\cdots+i_m=d}\\ \\prod_{j=1}^{m}\\binom{a+i_j}{a}=\\binom{ma+d+m-1}{d},$$\nand its multichoose reformulation\n$",
@@ -499,19 +489,19 @@
       "theorem_count": 70,
       "timestamp": "2026-07-14T20:10:18",
       "title": "Deepening: This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
+    },
+    {
+      "cycle_id": "ef88d58c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle deepened the μ-extension of Matsuno's formula by building a\n**cross-domain connector**: the file\n`Catalog/Bridges/MatsunoArithmeticPolynomialBridge.lean` shows that the",
+      "quality_score": 0.83,
+      "sorry_count": 6,
+      "theorem_count": 41,
+      "timestamp": "2026-07-14T20:28:08",
+      "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "245dd564",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Mind Tools: Mathematics as Cognitive Extension\n\nThis project formalizes Rudy Rucker's notion of a **mind tool** (a formal system\nthat extends what a cognitive agent can directly",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 44,
-      "timestamp": "2026-07-12T04:46:27",
-      "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
-    },
     {
       "cycle_id": "c016fced",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 70,
       "timestamp": "2026-07-14T20:10:18",
       "title": "Deepening: This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
+    },
+    {
+      "cycle_id": "ef88d58c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle deepened the μ-extension of Matsuno's formula by building a\n**cross-domain connector**: the file\n`Catalog/Bridges/MatsunoArithmeticPolynomialBridge.lean` shows that the",
+      "quality_score": 0.83,
+      "sorry_count": 6,
+      "theorem_count": 41,
+      "timestamp": "2026-07-14T20:28:08",
+      "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bce13597",
-      "domain": "Applications",
-      "name": "Z2Map",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "bce13597",
-      "domain": "Applications",
-      "name": "nonempty_comp",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "bd6ccec1",
-      "domain": "Novelty",
-      "name": "mem_charF",
-      "quality": 0.83
-    },
     {
       "cycle_id": "bd6ccec1",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "box_T",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "ef88d58c",
+      "domain": "Novelty",
+      "name": "reduce_mul",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "ef88d58c",
+      "domain": "Novelty",
+      "name": "reduce_primPart_ne_zero",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "ef88d58c",
+      "domain": "Novelty",
+      "name": "muInv_mul",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T20:10:18",
+  "last_updated": "2026-07-14T20:28:08",
   "open_questions": [
-    {
-      "context": "of spheres.  All theorems below are proved with no `sorry`.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "49ddee39",
-      "domain": "Applications",
-      "sorry_count": 5,
-      "timestamp": "2026-07-13T21:24:24"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "117d6517",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 5,
       "timestamp": "2026-07-14T16:54:56"
+    },
+    {
+      "context": "`sorry`s and no extra axioms.; +  sorry; -    sorry",
+      "cycle_id": "ef88d58c",
+      "domain": "Novelty",
+      "sorry_count": 6,
+      "timestamp": "2026-07-14T20:28:08"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "202302de",
-        "quality": 0.83,
-        "theorems": 20,
-        "title": "This cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`"
-      },
-      {
         "cycle_id": "16f220a2",
         "quality": 0.83,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 70,
         "title": "Deepening: This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial cor"
+      },
+      {
+        "cycle_id": "ef88d58c",
+        "quality": 0.83,
+        "theorems": 41,
+        "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
       }
     ],
     "NumberTheory": [

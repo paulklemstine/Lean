@@ -73,7 +73,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: This cycle established, unconditionally, that the variational (Rayleigh-quotient"
   },
   {
-    "consumed_by_exp_id": "445da682",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 202302de (Q=0.830), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`\ndichotomy** for the *total* d-Hoggatt numbers `H_d(n) = \u2211_k H_d(n,k)`, together\nwith the general mechanism and its tropical reformulation:\n\n* **`d = 1`** (`H",
     "domains": [
       "Novelty"
@@ -82,7 +82,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "202302de",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-14T15:58:15.382803+00:00",
     "title": "Deepening: This cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`"
   },
@@ -409,7 +409,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
-    "consumed_by_exp_id": "dfe6f1f9",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle da4694df (Q=0.820), which proved 17 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/",
     "domains": [
       "Applications"
@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "da4694df",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-10T11:50:21.285776+00:00",
     "title": "Deepening: The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
@@ -746,20 +746,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T15:24:17.196126+00:00",
     "title": "Deepening: Universality of Transfer Functions Among Accumulation Points"
-  },
-  {
-    "consumed_by_exp_id": "ef88d58c",
-    "description": "Building on cycle e6dfc1d4 (Q=0.780), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_e6dfc1d4_afd9811c",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "e6dfc1d4",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T16:16:10.297995+00:00",
-    "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
   },
   {
     "consumed_by_exp_id": "",
@@ -2006,7 +1992,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle assembled a reusable toughness toolkit around a single load-bearing"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "10dfa4e0",
     "description": "# Future Directions: Sharp excess of \u2124\u2082-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combinatorial\nmodel of free `\u2124\u2082`-complexes \u2014 the boundary complexes of cross-polytopes, i.e. the octahedral\ncombinatorial spheres `S\u207f` \u2014 and proves, with no `sorry` and only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`), the **constructive lower-bound half** of the\nbehaviour of the `\u2124\u2082`-coindex under suspension:\n\n* **Category structure.** `Z2Map.id`, `Z2Map.comp`, and the equatorial inclusion\n  `Z2Map.incl : Z2Map n (n+1)` organise `\u2124\u2082`-maps of spheres into a category.\n* **Suspension functor on maps.** `Z2Map.susp : Z2Map m n \u2192 Z2Map (m+1) (n+1)` suspends a\n  `\u2124\u2082`-map, preserving the two poles and transporting all other coordinates.  This is the\n  geometric heart of the lower bound.\n* **Constructive lower bound.** `coindex_lower_bound : m \u2264 n \u2192 Nonempty (Z2Map m n)`\n  (`coind(S\u207f) \u2265 n`), and `suspension_raises_coindex : Nonempty (Z2Map m n) \u2192\n  Nonempty (Z2Map (m+1) (n+1))`.\n* **Decidable reformulation.** `nonempty_iff_exists_pos` reduces existence of a `\u2124\u2082`-map to a\n  finite check over the images of the positive vertices.\n* **Sharpness at the base.** The finite Borsuk\u2013Ulam instances `borsuk_ulam_S1_S0`\n  (`S\u00b9 \u219b S\u2070`) and `borsuk_ulam_S2_S1` (`S\u00b2 \u219b S\u00b9`), verified by `decide`, pin down\n  `coind(S\u2070) = 0` and `coind(S\u00b9) = 1`, so the suspension increment is exactly one\n  (`sharp_suspension_increment`).\n\n## The gap that remains: the upper-bound (maximal-excess) half\n\nThe matching upper bound `coind(S\u207f) \u2264 n` in **every** dimension is the full strength of the\nBorsuk\u2013Ulam / Tucker theorem: there is no `\u2124\u2082`-map `S\u207f\u207a\u00b9 \u2192 S\u207f`.  Here it is proved only in\nthe two finite base cases.  Directions:\n\n1. **General Tucker's lemma.** Prove `IsEmpty (Z2Map (n+1) n)` for all `n` via a combinatorial\n   Tucker labelling argument on the cross-polytope, giving `coind(S\u207f) = n` unconditionally.\n2. **Abstract free \u2124\u2082-complexes.** Generalise `Z2Map` from spheres to arbitrary simplicial\n   complexes carrying a free simplicial `\u2124\u2082`-action, define `coind`/`ind` as\n   `sup`/`inf` over `\u2115\u221e`, and prove `coind \u2264 ind` (Borsuk\u2013Ulam) and the join/suspension laws\n   `coind(X * Y) \u2265 coind X + coind Y + 1`.\n3. **The excess `ind \u2212 coind`.** With both indices in hand, formalise complexes where the\n   excess is positive and study its growth under suspension \u2014 the \"maximal-excess programme\".\n4. **Deleted joins and the Lov\u00e1sz bound.** Connect `coind` of the neighbourhood/box complex\n   to graph chromatic numbers (`\u03c7(G) \u2265 coind(\u00b7) + 2`).\n\n## Model choices and honesty of scope\n\nThe purely local (vertex-pair) form of simpliciality is exactly equivalent to \"faces map to\nfaces\" for cross-polytope complexes, which keeps every statement decidable and every proof\nelementary while remaining faithful to the topology: the lower bound is genuinely constructed\n(not assumed), and the base-case obstructions are genuine Borsuk\u2013Ulam phenomena, not vacuous.\n",
     "domains": [
       "Logic",
@@ -2016,7 +2002,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "7acc7a45",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T03:41:44.512573+00:00",
     "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
   },
@@ -2634,6 +2620,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T20:10:05.213850+00:00",
     "title": "`MultiverseModalForcing.lean` builds the modal-logic layer on top of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis cycle deepened the \u03bc-extension of Matsuno's formula by building a\n**cross-domain connector**: the file\n`Catalog/Bridges/MatsunoArithmeticPolynomialBridge.lean` shows that the abstract\narithmetic \u03bc-corrected sharp/flat \u03bb-difference\n`lambdaDiffMu D NE \u03bc ord = \u03a3_{\u2113\u2223D} localTerm \u2113 + \u03bc\u00b7\u03a3_{\u2113\u2223D} 2^{n_\u2113}`\nis *realized on the nose* as the genuine polynomial Iwasawa invariants of an\nexplicit characteristic element `charElt D NE \u03bc ord \u2208 \u2124[X]`:\n\n- `muInv_charElt` : `\u03bc_p(charElt) = \u03bc`;\n- `lambdaInv_charElt` : `\u03bb_p(charElt) = lambdaDiffMu D NE \u03bc ord`;\n- `mu_recovery_polynomial`, `mu_recovery_eq_muInv`, `lambdaInv_charElt_gt`,\n  `lambdaInv_charElt_strictMono`, `lambdaInv_charElt_coprime`.\n\nThis connects two a-priori unrelated developments used in the study of\nsupersingular Iwasawa theory: the `2`-adic combinatorics of the twist (a finite\nsum over the primes dividing `D`) and the commutative algebra of `\u2124[X]`\n(Gauss's-lemma content valuation for `\u03bc`, trailing degree of the mod-`p`\nreduction for `\u03bb`).\n\n## Concrete next steps\n\n1. **Beyond powers of `X`.** Replace the local factors `X^{localTerm \u2113}` by\n   distinguished polynomials with prescribed trailing behaviour, so the model\n   captures the position (not only the count) of the sharp/flat sign changes in\n   the Pollack\u2013Sprung `\u00b1`-theory. The additivity engine (`muInv_mul`,\n   `lambdaInv_mul`, and the finite-product versions) already supports this.\n\n2. **A power-series model.** Port `muInv`/`lambdaInv` from `\u2124[X]` to\n   `\u2124_p[[T]]` via Weierstrass preparation, upgrading the polynomial stand-in to\n   the true Iwasawa algebra `\u039b`. The content/primitive-part decomposition should\n   be replaced by `p^\u03bc \u00b7 (unit) \u00b7 (distinguished)`.\n\n3. **Sharp/flat pair as a single object.** Combine `charElt` for the sharp and\n   flat characteristic elements into one `(f\u266f, f\u266d)` and prove the difference\n   `\u03bb\u266f \u2212 \u03bb\u266d` is `\u03bc`-proportional directly on the realized polynomials (the\n   companion file `MatsunoSharpFlatDifference` does this arithmetically; the\n   bridge would make it a statement about genuine polynomial invariants).\n\n4. **Functoriality.** Package `charElt` as a monoid/semiring map from the\n   arithmetic twist data into `(\u2124[X]\u2070, \u00b7)` and prove the invariants factor\n   through it, tightening the connector into an equivalence of structures.\n\n5. **Effective depth law.** Extend `muWeight_depth` (the identity\n   `8\u00b72^{n_\u2113} = 2^{v\u2082(\u2113\u22121)+v\u2082(\u2113+1)}`) to a closed form for `weightSum D` in\n   terms of `\u220f_{\u2113\u2223D}`, enabling exact asymptotics of the \u03bc-correction.\n\n## Completion pass: truncated files finished\n\nThis pass finished the remaining truncated/incomplete Lean developments in the\ncatalog.\n\n### `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` \u2014 complete\n\nThe three previously-`sorry`ed bridge theorems are now fully proved (and the file\nnow imports the number-system modules under their correct module names,\n`Computation.MixedRadixNumberSystem` / `Computation.FactorialNumberSystem`):\n\n- `MixedRadixBridge.value_eq` \u2014 the mixed-radix place values for base `b i = i+1`\n  are the factorials, so `MixedRadix.value (\u00b7+1) c k = FactorialNumberSystem.value c k`;\n- `MixedRadixBridge.valid_iff` \u2014 mixed-radix validity for `b i = i+1` coincides\n  with factorial validity (`c i < i+1 \u2194 c i \u2264 i`);\n- `MixedRadixBridge.factorial_value_unique_via_mixed` \u2014 the factorial-uniqueness\n  theorem re-derived from the general `MixedRadix.value_unique`, confirming the\n  factorial number system is genuinely the `b = (\u00b7+1)` instance of the\n  mixed-radix theory.\n\nThe file is `sorry`-free.\n\n### `Catalog/Shared/CarmichaelProof.lean` \u2014 reduction finished, deep tail isolated\n\nThe composite-case Carmichael file previously ended in a single `sorry` for the\ninfinite tail (`n > 10000`).  That branch has been decomposed and its\n*reduction* half is now fully proved:\n\n- `dvd_stripAllAux_of_coprime` \u2014 a prime coprime to `m` survives every\n  gcd-stripping step, so it still divides `stripAllAux r m fuel`;\n- `primPart_gt_one_of_primitive` (**Part A**) \u2014 if `Nat.fib n` has a primitive\n  prime divisor (one dividing no `Nat.fib d` for a proper divisor `d \u2223 n`), then\n  the computed primitive part satisfies `1 < primPart n`.  This connects the\n  concrete gcd-stripping object `primPart` to the number-theoretic notion of a\n  primitive divisor.\n\nThe main theorem `fib_carmichael_composite` now reduces, for the tail, to a\nsingle clearly-stated deep lemma:\n\n- `fib_primitive_divisor_exists_large` (**Part B**) \u2014 for composite `n > 10000`,\n  `Nat.fib n` has a primitive prime divisor.\n\n**Part B is Carmichael's primitive-divisor theorem for Fibonacci numbers\n(Carmichael, 1913) and remains open here.**  A pure size argument is provably\ninsufficient (`primPart n = 1` means `Nat.fib n` and the proper-divisor product\nshare a radical, which does not bound sizes), so a genuine *new* prime must be\nexhibited.  The standard route needs infrastructure not currently in Mathlib:\n\n1. **Rank of apparition.** `rank p = ` least `k > 0` with `p \u2223 Nat.fib k`, and\n   the entry-point law `p \u2223 Nat.fib k \u2194 rank p \u2223 k` (provable from\n   `Nat.fib_gcd`); primitivity of `p \u2223 Nat.fib n` is then `rank p = n`.\n2. **Lifting the exponent for the Lucas sequence.** Mathlib provides LTE for\n   `x^n - y^n` (`Int.emultiplicity_pow_sub_pow`, `Nat.emultiplicity_pow_sub_pow`),\n   but the Fibonacci case needs it transported to the ring of integers of\n   `\u211a(\u221a5)` (with `\u03b1, \u03b2` the golden-ratio conjugates and `\u03b1 - \u03b2 = \u221a5`) and the\n   valuations pushed down to rational primes.\n3. **Primitive-part growth.** The M\u00f6bius primitive part\n   `D(n) = \u220f_{d \u2223 n} (Nat.fib d) ^ \u03bc(n/d)` is a positive integer whose only\n   possible non-primitive prime factor divides `n` and appears once; via\n   `Real.coe_fib_eq` its size is `\u2248 \u03c6^{totient n}`, which for `n > 10000` far\n   exceeds `n`, forcing a primitive prime.\n\nFormalizing (1)\u2013(3) \u2014 especially LTE for Lucas sequences in `\ud835\udcde_{\u211a(\u221a5)}` and the\nreal-analytic growth bound \u2014 is a substantial standalone project and is the\nnatural next step to make `Catalog/Shared/CarmichaelProof.lean` `sorry`-free.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1315",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ef88d58c",
+    "status": "available",
+    "timestamp": "2026-07-14T20:27:47.635013+00:00",
+    "title": "This cycle deepened the \u03bc-extension of Matsuno's formula by building a"
   },
   {
     "consumed_by_exp_id": "",

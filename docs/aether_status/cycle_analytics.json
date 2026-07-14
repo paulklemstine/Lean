@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-14T20:10:20.983550+00:00",
+  "last_updated": "2026-07-14T20:28:23.587717+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -16020,6 +16020,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-14T20:10:20.922799+00:00",
       "title": "Deepening: This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 263,
+      "domain": "Novelty",
+      "duration_seconds": 1097.3459906578064,
+      "end_time": 1784060851.5123315,
+      "files_integrated": 4,
+      "job_id": "ef88d58c",
+      "outcome_quality": 0.83,
+      "phase": "complete",
+      "phase_a_prompt_version": "v27",
+      "phase_a_quality_score": 0.83,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5485,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.83,
+        "novelty": 0.83,
+        "proof_depth": 0.83,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.83,
+      "sorry_count": 6,
+      "sorry_density": 0.14634146341463414,
+      "start_time": 1784059754.1663408,
+      "strategy_count": 0,
+      "theorem_count": 41,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 31,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-14T20:28:23.512748+00:00",
+      "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
     }
   ]
 }
