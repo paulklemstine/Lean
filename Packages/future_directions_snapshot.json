@@ -79,6 +79,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 202302de (Q=0.830), which proved 20 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`\ndichotomy** for the *total* d-Hoggatt numbers `H_d(n) = ∑_k H_d(n,k)`, together\nwith the general mechanism and its tropical reformulation:\n\n* **`d = 1`** (`H",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_202302de_dccd6407",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "202302de",
+    "status": "available",
+    "timestamp": "2026-07-14T15:58:15.382803+00:00",
+    "title": "Deepening: This cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 207fb5b4 (Q=0.830), which proved 24 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every C",
     "domain_bridges": [],
     "domains": [
@@ -169,25 +188,6 @@
     "status": "available",
     "timestamp": "2026-07-14T11:17:07.026084+00:00",
     "title": "Deepening: The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "16f220a2",
-    "description": "Building on cycle bd6ccec1 (Q=0.830), which proved 30 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation (IX)\n\nThis cycle established, with no finiteness or well-foundedness hypothesis on the\nattack relation, the maximal-extension half of Dung's semantics: the Fundamental\nLemma, the identity *preferred = maximal complete*, and the unconditional\nexiste",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_bd6ccec1_3dd317b1",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "bd6ccec1",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T13:20:07.518709+00:00",
-    "title": "Deepening: This cycle established, with no finiteness or well-foundedness hypothesis on the"
   },
   {
     "ambition_level": "extension",
@@ -287,7 +287,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b45b1485",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` — abstract multiverse.**\nA `Multivers",
     "domain_bridges": [],
     "domains": [
@@ -299,7 +299,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -2568,26 +2568,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "202302de",
-    "description": "# Future Directions — Log-Concavity in the d-Hoggatt Hierarchy\n\nThis cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`\ndichotomy** for the *total* d-Hoggatt numbers `H_d(n) = ∑_k H_d(n,k)`, together\nwith the general mechanism and its tropical reformulation:\n\n* **`d = 1`** (`H_1(n) = 2^n`): **log-linear**, `H(n+1)² = H(n)·H(n+2)`, hence\n  log-concave and log-convex with equality and *not* strictly log-convex\n  (`pow_two_logLinear`, `pow_two_not_strictLogConvex`).\n* **`d = 2`** (`H_2(n) = Cₙ`, Catalan): **strictly log-convex**,\n  `H(n+1)² < H(n)·H(n+2)`, and *not* log-concave\n  (`catalan_strictLogConvex`, `catalan_not_logConcave`).\n* Combined statement: `sharp_dichotomy`.\n* Engine: the exact **discriminant identity**\n  `(2n+1)(n+3)·Cₙ·Cₙ₊₂ = (n+2)(2n+3)·Cₙ₊₁²` (`catalan_discriminant`), whose\n  coefficients differ by the positive constant `3`.\n* General criterion (Conjecture 2 mechanism): a positive real sequence with\n  strictly increasing consecutive ratios is strictly log-convex\n  (`strictLogConvex_real_of_ratio_strictMono`), with the Catalan totals exhibited\n  as a concrete instance via strictly increasing ratios `Cₙ₊₁/Cₙ < Cₙ₊₂/Cₙ₊₁`\n  (`catalan_ratio_strictMono`).\n* Tropical dequantization (Conjecture 5): strict log-convexity is exactly strict\n  convexity of `log H` / strict concavity of the valuation `v = −log H`\n  (`strictLogConvex_iff_log`).\n\nAll results compile against Mathlib `v4.28.0` with only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`) and contain no `sorry`.\n\n## Next targets\n\n### Conjecture 1 — Universal log-convexity of the totals for `d ≥ 2`\nEmpirically verified here for Baxter (`d = 3`) on the first several terms. A\nuniform proof would ideally come from a `d`-independent two-term recurrence\nproducing a discriminant identity with a positive coefficient gap, generalizing\n`catalan_discriminant`. The Baxter recurrence\n`(n+3)(n+2)B(n+1) = (n+1)(8n²+ ... )` is a natural next case to formalize.\n\n### Conjecture 2 — Row-sum log-convexity as a summation phenomenon\nThe `ℝ`-level criterion `strictLogConvex_real_of_ratio_strictMono` isolates the\nratio-amplification mechanism. The remaining step is a triangle-level statement:\nlog-concave rows with a nondecreasing row-ratio `T(n+1,k)/T(n,k)` give log-convex\nrow sums (a Chebyshev-sum / rearrangement inequality). This is a clean,\nMathlib-tractable target via `Finset.inner_mul_le_norm_mul_norm`-style\nrearrangement lemmas.\n\n### Conjecture 3 — Infinite log-concavity of the rows\nRequires formalizing the log-concavity operator `𝓛` and the golden-ratio-squared\nclosure constant `(3+√5)/2`. The dichotomy tools here (log-linearity of `2^n`,\nthe ℝ-criterion) are prerequisites for the closure lemma.\n\n### Conjecture 4 — Log-concave renormalization of the totals\nFor `d = 2`, the exact Catalan growth ratio `(n+2)(2n+3)/((2n+1)(n+3))` (readable\nstraight off `catalan_discriminant`) is the concrete `w_2` candidate to divide\nout; the residual sequence is the object to test for infinite log-concavity.\n\n### Conjecture 5 — Tropical dequantization\n`strictLogConvex_iff_log` supplies the base equivalence. The iterated version —\ninfinite log-concavity ⇔ iterated finite differences of `v` keep a fixed sign —\nis the piecewise-linear/tropical statement to build next.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_1254",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a0f7e73c",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T23:31:29.259186+00:00",
-    "title": "This cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consistentHistoryEquivFixedPoint` — consistent histories ≃ round-trip fixed points;\n* `novikov_iff_fixedPoint` — a consistent history exists iff the round trip has a fixed point;\n* `card_consistentHistory_eq_card_fixedPoint` — counts agree;\n* `grandfather_paradox` — the `state ↦ ¬state` loop has no consistent history;\n* `roundTrip_iterate`, `pow_roundTrip` — `k` traversals = `k`-th iterate of the round trip;\n* `finite_pow_consistent` — on a finite non-empty state space, some repetition of the loop is always consistent.\n\n## Natural extensions\n\n1. **Continuous / topological Novikov.** Replace finiteness by a compact convex `X`\n   and continuous causal steps, and derive existence of a consistent history from the\n   Brouwer / Schauder fixed-point theorem instead of pigeonhole.\n\n2. **Probabilistic self-consistency.** Let each `step i` be a Markov kernel; a consistent\n   history becomes a stationary distribution of the round-trip kernel. The Novikov\n   principle then always holds (stationary distributions exist on finite state spaces),\n   quantifying \"how paradoxical\" a loop is by the entropy of that distribution.\n\n3. **Counting and generic loops.** Compute the expected number of consistent histories of\n   a random loop via fixed-point statistics of random self-maps, and characterize which\n   loop lengths force consistency.\n\n4. **Uniqueness / determinism.** Give conditions (e.g. each `step i` a contraction, or the\n   round trip having a unique fixed point) under which the consistent history is unique —\n   the \"deterministic time travel\" regime.\n\n5. **Interacting loops.** Model several causal loops sharing state and study joint\n   consistency as a simultaneous fixed-point problem, connecting to Nash-style existence.\n\n## Appendix: Carmichael's Fibonacci primitive-divisor theorem (open tail)\n\nThe catalog also contains a formalization of **Carmichael's primitive-divisor\ntheorem for Fibonacci numbers** — for `n ≥ 13`, `F(n)` has a *primitive* prime\ndivisor (a prime dividing `F(n)` but no earlier `F(k)`, `0 < k < n`):\n\n* `Catalog/Shared/CarmichaelHelper.lean` — the prime case (`fib_primitive_divisor_prime`),\n  fully proved by the `gcd`-collapse argument via `Nat.fib_gcd`.\n* `Catalog/Shared/CarmichaelProof.lean` — the primitive-part infrastructure\n  (`primPart`, `primPart_dvd`, `primPart_implies_primitive`) and the composite case\n  over the computationally verified range `13 ≤ n ≤ 10000` (`fib_carmichael_composite`).\n* `Catalog/Speculative/AutoResearch/CarmichaelComposite.lean` — entry-point\n  (rank-of-apparition) theory and the headline `fib_carmichael` over `13 ≤ n ≤ 10000`.\n* `Catalog/Speculative/CarmichaelPrimitiveDivisor.lean` — the packaged statement\n  `fib_primitive_divisor` over the same verified range.\n\nAll of the above are complete and `sorry`-free.  What remains open is the\n**infinite composite tail** `n > 10000`.  A rigorous Lean proof of that tail is\nthe classical Carmichael/Zsygmondy argument: writing `F(n) = ∏_{d∣n} C_d` with the\nhomogeneous cyclotomic values `C_d`, the primitive part is `C_n` up to at most one\nintrinsic prime factor dividing `n`; the primitive divisor then exists because\n`|C_n|` grows like `φ^{φ(n)}` and eventually exceeds `n`.  Formalizing this\nrequires:\n\n1. cyclotomic-value growth bounds `|Φ_n(α,β)| ≥ (|α|-|β|)^{φ(n)}` and their\n   sharpenings (control of how close primitive roots of unity approach `-1`);\n2. the law of apparition / lifting-the-exponent for Lucas sequences, pinning the\n   only imprimitive prime factor of `C_n` to a divisor of `n`;\n3. the bridge from the real/algebraic value `C_n` to the integer primitive part\n   `primPart n`.\n\nNone of this machinery (Zsygmondy's theorem, primitive divisors of Lucas\nsequences) is currently in Mathlib, so the tail is stated as an explicit\nboundedness hypothesis (`n ≤ 10000`) rather than left as `sorry`.  Supplying the\nthree ingredients above would let one drop that hypothesis and recover the\nunconditional theorem for all `n ≥ 13`.\n",
     "domain_bridges": [],
@@ -3444,6 +3424,46 @@
     "status": "available",
     "timestamp": "2026-07-14T15:41:07.242873+00:00",
     "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Möbius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant — the **Möbius discriminant**\n`Δ = γβ − αδ` attached to a first-order multiplicative recurrence\n`(α n + β)·a(n+1) = (γ n + δ)·a(n)` — and proved that its sign completely\ngoverns the log-behaviour of the sequence: strict log-convexity when `Δ > 0`,\nlog-linearity when `Δ = 0`, strict log-concavity when `Δ < 0`. The classical\ntotals `2ⁿ` (`Δ = 0`), Catalan `Cₙ` (`Δ = 6`), central binomials (`Δ = 2`),\nfactorials (`Δ = 1`), and reciprocal factorials (`Δ = −1`) instantiate all three\nregimes, refining the earlier `d = 1` vs `d = 2` dichotomy into a genuine\nsign-indexed trichotomy.\n\n## Conjecture A — Quantitative discriminant law\n\nFor a sequence obeying the recurrence, the pointwise discriminant\n`D(n) = a(n)·a(n+2) − a(n+1)²` satisfies an exact identity\n`(α n + β)(α(n+1) + β)·D(n) = Δ · a(n+1)·a(n+2) · (α n + β) / (γ n + δ)` — i.e.\n`D(n)` is a *fixed positive multiple of `Δ`* at every index, so its sign never\nflips.\n\n**The key insight is** that the ratio `a(n+1)/a(n)` is a Möbius transform of `n`\nwhose forward difference has the constant numerator `Δ`, so the \"log-curvature\"\nof the sequence is rigidly proportional to `Δ` rather than merely sharing its\nsign.\n\n**Why now?** The ratio-as-Möbius identity established this cycle already\nproduces the sign law; upgrading it to an exact proportionality is the natural\nstrengthening and would give closed-form control of the second-order growth of\nevery classical combinatorial total simultaneously.\n\n## Conjecture B — Second-order (Turán) recurrences and a discriminant polynomial\n\nMany combinatorial totals satisfy instead a *second-order* recurrence\n`p(n)·a(n+2) = q(n)·a(n+1) + r(n)·a(n)` (e.g. Motzkin, Baxter). We conjecture a\npolynomial discriminant `Δ₂(n)`, built from `p, q, r`, whose eventual sign\ngoverns log-convexity, reducing to `γβ − αδ` when `r ≡ 0`.\n\n**The key insight is** that the log-behaviour of a P-recursive sequence should be\nreadable from a single discriminant polynomial of its recurrence coefficients,\nexactly as the quadratic discriminant reads off the sign of a quadratic form.\n\n**Why now?** The first-order case is now fully understood as the `r ≡ 0`\nspecialization; the Motzkin and Baxter numbers give concrete second-order test\ncases with known log-convexity, providing immediate falsification targets.\n\n## Conjecture C — Renormalized totals and infinite log-concavity\n\nDividing a strictly log-convex total by its exact growth ratio\n`(γ n + δ)/(α n + β)` yields a renormalized sequence whose discriminant is\nidentically zero (log-linear); we conjecture that a *second* renormalization by\nthe discriminant of the ratio itself produces a strictly log-concave residual,\nand that iterating this process terminates in a sequence that is infinitely\nlog-concave.\n\n**The key insight is** that the Möbius ratio is precisely the correction factor\nneeded to flatten log-curvature, so peeling it off should expose successively\nhigher-order convexity data in a controlled tower.\n\n**Why now?** The exact growth ratio is now available in closed form for every\nclassical total, so the first renormalization step can be carried out\nexplicitly and its residual tested for the next-order sign.\n\n## Conjecture D — Tropical/valuation dequantization of the trichotomy\n\nWriting `v(n) = −log a(n)`, the trichotomy becomes a statement about the second\ndifference `Δ²v(n) = v(n) − 2v(n+1) + v(n+2)`: strictly negative, zero, or\nstrictly positive according to `sign(Δ)`. We conjecture that for the recurrence\nclass this second difference is *monotone in `n`* and converges to `0`, so the\nvaluation is asymptotically affine with a computable curvature defect controlled\nby `Δ`.\n\n**The key insight is** that log-convexity is exactly convexity of the valuation,\nso the discriminant `Δ` should appear as the leading coefficient of the\npiecewise-linear (tropical) profile of the sequence.\n\n**Why now?** The equivalence between strict log-convexity and strict convexity\nof the logarithm is already in hand; casting it in valuation form turns the\ntrichotomy into a discrete-convexity statement amenable to summation-by-parts\nestimates.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1302",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "202302de",
+    "status": "available",
+    "timestamp": "2026-07-14T15:58:08.050091+00:00",
+    "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Topology of Argumentation (X): the kernel/game bridge\n\nThis cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file that\nconnects three areas usually developed in isolation:\n\n* **Dung argumentation semantics** (stable extensions),\n* **directed graph theory** (kernels: independent + absorbing sets, in the sense\n  of von Neumann–Morgenstern), and\n* **combinatorial game theory** (P-position solutions of a move relation).\n\n## What was proved (all `sorry`-free, standard axioms only)\n\nThe dictionary:\n\n* `stable_iff_kernel` — a stable extension of the attack relation `R` is exactly a\n  kernel of the transposed digraph `flip R` (this one needs **no axioms at all**).\n* `stable_iff_gameSolution` — equivalently, a P-position solution of the\n  reversed-attack game.\n* `terminal_mem_of_kernel` — terminal positions are forced into every kernel: the\n  normal-play \"no move ⇒ you lose\" convention is a *consequence* of the kernel\n  axioms.\n\nThe odd-cycle obstruction (why *some* hypothesis is unavoidable):\n\n* `no_kernel_cyc3`, `no_stable_cyc3` — the directed 3-cycle has no kernel, hence\n  the 3-cycle framework has no stable extension. This is the classical reason\n  stable extensions can fail to exist, in sharp contrast to the *maximal\n  (preferred)* extensions of the earlier cycles, which exist unconditionally.\n\nWell-founded existence and uniqueness (Zermelo determinacy):\n\n* `isLoss` / `isLoss_iff` — the P-position predicate defined by the standard game\n  recursion over the well-founded reverse-move relation.\n* `kernel_isLoss` — the P-positions form a kernel.\n* `kernel_unique`, `exists_unique_kernel` — a well-founded digraph has a **unique**\n  kernel.\n* `wf_game_determined` — every well-founded game has a unique solution.\n* `exists_unique_stable_of_wf` — a well-founded argumentation framework has a\n  **unique** stable extension: well-foundedness *restores* the existence that\n  failed on the odd cycle, and forces uniqueness.\n\n## Why this is a \"connector\"\n\nThe single identity `Stable R = Kernel (flip R) = GameSolution (flip R)` lets a\nresult proved in one language be read in all three. The odd-cycle non-existence\nis simultaneously (i) a Dung framework with no stable extension, (ii) a digraph\nwith no kernel, and (iii) a game with no consistent win/loss labelling. The\nwell-founded determinacy theorem is simultaneously Zermelo's theorem for\nterminating games, the Richardson-style kernel existence theorem for\nwell-founded digraphs, and the well-founded-AF uniqueness theorem for Dung\nsemantics.\n\n## Open directions\n\n* **Even cycles / kernel-perfect digraphs.** Formalise the positive side: even\n  directed cycles have kernels; more generally, digraphs with no odd directed\n  cycle are kernel-perfect (Richardson's theorem). Only the odd obstruction is\n  formalised here.\n* **Grounded = unique stable, in the well-founded case.** Identify the unique\n  stable extension `exists_unique_stable_of_wf` with the grounded extension\n  (`OrderHom.lfp charF`) from the earlier cycles, closing the loop between the\n  order-theoretic and game-theoretic constructions.\n* **Sprague–Grundy.** Refine `isLoss` to a Grundy-value function and connect\n  disjunctive sums of frameworks to nim-addition.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1303",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "16f220a2",
+    "status": "available",
+    "timestamp": "2026-07-14T15:58:20.123905+00:00",
+    "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
   },
   {
     "ambition_level": "extension",

@@ -15,9 +15,9 @@ The split on whether `n` is prime is exhaustive, so the assembled theorem follow
 immediately by case analysis.
 
 The unbounded tail `n > 10000` is the quantitative core of Carmichael's theorem;
-it requires the growth of the Möbius primitive part `∏_{d∣n} F(d)^{μ(n/d)}` (the
-elementary divisor-product estimate fails for abundant indices) and is left as the
-open frontier of this development.
+it requires the growth of the homogeneous cyclotomic primitive part
+`∏_{d∣n} F(d)^{μ(n/d)}` (the elementary divisor-product estimate fails for
+abundant indices) and is left as the open frontier of this development.
 -/
 
 /-- **Carmichael's theorem (Fibonacci form, verified range).**  For every `n` with
