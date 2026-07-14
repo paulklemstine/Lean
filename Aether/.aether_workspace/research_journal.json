@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7b741692",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThis project formalizes, in `Cryptography/RamanujanOracle.lean`, the claim that a\n\"Ramanujan oracle\" — a device deciding number-theoretic statements — cannot be\ncomputable, via a",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 22,
-      "timestamp": "2026-07-11T23:38:59",
-      "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-    },
-    {
       "cycle_id": "de167401",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Lifebox: Information-Theoretic Identity\n\nThe file `LifeboxInformationIdentity.lean` formalizes and proves five claims around\nRudy Rucker's *Lifebox* thesis (identity = informatio",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-14T14:32:53",
       "title": "Deepening: Cone Colorful Carathéodory Theorem"
+    },
+    {
+      "cycle_id": "85360393",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Engel's Interval Packing Theorem\n\n## What is proved (`Speculative/EngelIntervalPacking.lean`)\n\nThe file fixes the correct (disjointness) formalization of interval packings in the",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-14T15:40:56",
+      "title": "Engel's Interval Packing Theorem"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84
     }
   ],
-  "last_updated": "2026-07-14T14:32:53",
+  "last_updated": "2026-07-14T15:40:56",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "13e584ca",
-        "quality": 0.83,
-        "theorems": 25,
-        "title": "Deepening: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
-      },
-      {
         "cycle_id": "bcaaf8f2",
         "quality": 0.72,
         "theorems": 20,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 0,
         "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
+      },
+      {
+        "cycle_id": "85360393",
+        "quality": 0.6,
+        "theorems": 14,
+        "title": "Engel's Interval Packing Theorem"
       }
     ],
     "Bridges": [
