@@ -31,20 +31,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "0725f80e",
-    "description": "Building on cycle 14656387 (Q=0.830), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The M\u00f6bius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant \u2014 the **M\u00f6bius discriminant**\n`\u0394 = \u03b3\u03b2 \u2212 \u03b1\u03b4` attached to a first-order multiplicative recurrence\n`(\u03b1 n + \u03b2)\u00b7a(n+1) = (\u03b3 n + \u03b4)\u00b7a(n)` \u2014 and proved that its sign comple",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_14656387_a6c7f6db",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "14656387",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T19:16:11.234630+00:00",
-    "title": "Deepening: This cycle isolated a single scalar invariant \u2014 the **M\u00f6bius discriminant**"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions \u2014 Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
     "domains": [
@@ -143,7 +129,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoret"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a46f1a93",
     "description": "Building on cycle fb4f44b5 (Q=0.830), which proved 38 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the complete bipartite graph K_{m,n} with parts of sizes m and n, the Seidel energy strictly increases under any edge deletion if and only if both m,n \u2265 3. This conjecture claims that the threshold conditions (m,n) \u2265 (3,6), (6,3), (2,15), (15,2) and (4,4) established in the paper are not sharp f",
     "domains": [
       "Applications"
@@ -152,7 +138,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "fb4f44b5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-11T11:08:41.152651+00:00",
     "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
   },
@@ -239,6 +225,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-14T01:16:54.126795+00:00",
     "title": "Deepening: Tight spectral gap exponent for the fixed-genus chord swap chain"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 45e15555 (Q=0.820), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any d-dimensional spanning k-tree K contained in the join V\u2081*\u22ef*V_{d+1} and any affine map A:|\u0394_V|\u2192\u211d^d with 0\u2208A(V_i) for all i, there exists a face \u03c3\u2208K with 0\u2208A(\u03c3) such that the number of faces in K is bounded by a polynomial in |V| of degree at most k+1. Moreover, when k=1 (spanning trees), the ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_45e15555_359cf6dd",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "45e15555",
+    "status": "available",
+    "timestamp": "2026-07-14T19:51:30.322942+00:00",
+    "title": "Deepening: Colorful Carath\u00e9odory theorem for spanning k-trees admits a polynomial-size witn"
   },
   {
     "consumed_by_exp_id": "",
@@ -1009,7 +1009,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Exact dictionary \"logical qubits = middle homology\""
   },
   {
-    "consumed_by_exp_id": "bbbc4928",
+    "consumed_by_exp_id": "",
     "description": "Cycle d09018a9 (Q=0.820) proved 15 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find",
     "domains": [
       "Applications"
@@ -1018,7 +1018,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "d09018a9",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-14T13:37:54.054317+00:00",
     "title": "Close Proofs: OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytop"
   },
@@ -2590,6 +2590,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T19:15:57.459980+00:00",
     "title": "This cycle (thread `th_c09a34af`, cycle 3) builds on the *sign* trichotomy of th"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Colorful Carath\u00e9odory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carath\u00e9odory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial of degree `k+1` in\nthe number of vertices, and this collapses to linear when the certifying complex is\na spanning tree (`k = 1`). The captured face itself was produced on the line from\nthe honest convex-hull hypotheses. Below are conjectures that extend these\nfindings.\n\n## 1. Sharp linear witnesses for every fixed width\n**Conjecture.** For every fixed `k`, a spanning `k`-tree on `n` vertices has a\nface count that is *linear* in `n`, namely at most `2^{k} \u00b7 (n - k) + (2^{k+1} - 1)`,\nstrictly below the degree-`k+1` bound that holds for arbitrary width-`(k+1)`\ncomplexes.\n\nThe key insight is that the generic degree-`k+1` bound is driven by *width alone*,\nwhereas a `k`-tree also carries global acyclicity: each newly attached vertex\ncontributes a bounded number of new cliques, so the total grows additively rather\nthan combinatorially. Why now? The `k = 1` case is already settled here (the exact\n`2n` count for trees), and it isolates acyclicity as the mechanism responsible for\nthe collapse; the general `k` statement is the natural inductive lift of that one\nmechanism.\n\n## 2. Rainbow capture inside a spanning tree of the join\n**Conjecture.** For colour classes on the line whose hulls all contain the origin,\none can pre-select a spanning tree of the join `V\u2081 * V\u2082` \u2014 of only linearly many\nedges \u2014 that is guaranteed to contain a rainbow edge through the origin, so the\nexponential join never needs to be examined.\n\nThe key insight is that the origin-capturing edges are not scattered arbitrarily:\nthey form a \"crossing\" pattern determined by the sign pattern of the two colour\nclasses, and a single monotone matching of nonpositive to nonnegative points meets\nthis pattern. Why now? The existence half is proved here via the sign-extraction\nlemma, which already exhibits *one* crossing edge; upgrading \"one edge exists\" to\n\"a linear pre-committed tree always contains one\" is the decisive next step toward\nalgorithmic witnesses.\n\n## 3. Higher-dimensional sign extraction\n**Conjecture.** In `\u211d^d`, if the origin lies in the convex hull of a finite colour\nclass `V`, then `V` contains an affinely independent sub-family of at most `d+1`\npoints whose hull already captures the origin, and this Carath\u00e9odory sub-family can\nbe located by examining only polynomially many `(d+1)`-subsets when the search is\nrestricted to a spanning `d`-tree of `V`.\n\nThe key insight is that the one-dimensional argument \u2014 extract a nonpositive and a\nnonnegative element via the extreme points `min'`, `max'` \u2014 is the shadow of a\ngeneral extreme-point selection: the origin's barycentric coordinates are supported\non a bounded face, and spanning-tree structure controls how many candidate faces\nmust be probed. Why now? The planar base case is complete and pinpoints extreme\npoints as the extraction device; the machinery for finite-dimensional convex hulls\nneeded to iterate it is exactly the classical Carath\u00e9odory support argument.\n\n## 4. Tightness of the degree-`k+1` witness bound\n**Conjecture.** The degree-`k+1` polynomial witness bound is asymptotically tight:\nthere exist width-`(k+1)` complexes (the full `\u2264(k+1)`-skeleta) whose face count\nmatches `\u2211_{i\u2264k+1} C(n,i)` up to a constant factor, so no sub-polynomial witness\nexists in the absence of extra structure such as acyclicity.\n\nThe key insight is that width and acyclicity are genuinely independent resources:\nremoving acyclicity restores the full skeleton, whose exact count `\u2211_{i\u2264k+1} C(n,i)`\nis realized. Why now? The exact skeleton count is established in this cycle, so the\nlower bound is already in hand; formalizing \"no structural assumption \u21d2 no\nimprovement\" turns the upper bound into a matching characterization.\n\n\n# Future Directions \u2014 Colorful Carath\u00e9odory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carath\u00e9odory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial of degree `k+1` in\nthe number of vertices, and this collapses to linear when the certifying complex is\na spanning tree (`k = 1`). The captured face itself was produced on the line from\nthe honest convex-hull hypotheses. Below are conjectures that extend these\nfindings.\n\n## 1. Sharp linear witnesses for every fixed width\n**Conjecture.** For every fixed `k`, a spanning `k`-tree on `n` vertices has a\nface count that is *linear* in `n`, namely at most `2^{k} \u00b7 (n - k) + (2^{k+1} - 1)`,\nstrictly below the degree-`k+1` bound that holds for arbitrary width-`(k+1)`\ncomplexes.\n\nThe key insight is that the generic degree-`k+1` bound is driven by *width alone*,\nwhereas a `k`-tree also carries global acyclicity: each newly attached vertex\ncontributes a bounded number of new cliques, so the total grows additively rather\nthan combinatorially. Why now? The `k = 1` case is already settled here (the exact\n`2n` count for trees), and it isolates acyclicity as the mechanism responsible for\nthe collapse; the general `k` statement is the natural inductive lift of that one\nmechanism.\n\n## 2. Rainbow capture inside a spanning tree of the join\n**Conjecture.** For colour classes on the line whose hulls all contain the origin,\none can pre-select a spanning tree of the join `V\u2081 * V\u2082` \u2014 of only linearly many\nedges \u2014 that is guaranteed to contain a rainbow edge through the origin, so the\nexponential join never needs to be examined.\n\nThe key insight is that the origin-capturing edges are not scattered arbitrarily:\nthey form a \"crossing\" pattern determined by the sign pattern of the two colour\nclasses, and a single monotone matching of nonpositive to nonnegative points meets\nthis pattern. Why now? The existence half is proved here via the sign-extraction\nlemma, which already exhibits *one* crossing edge; upgrading \"one edge exists\" to\n\"a linear pre-committed tree always contains one\" is the decisive next step toward\nalgorithmic witnesses.\n\n## 3. Higher-dimensional sign extraction\n**Conjecture.** In `\u211d^d`, if the origin lies in the convex hull of a finite colour\nclass `V`, then `V` contains an affinely independent sub-family of at most `d+1`\npoints whose hull already captures the origin, and this Carath\u00e9odory sub-family can\nbe located by examining only polynomially many `(d+1)`-subsets when the search is\nrestricted to a spanning `d`-tree of `V`.\n\nThe key insight is that the one-dimensional argument \u2014 extract a nonpositive and a\nnonnegative element via the extreme points `min'`, `max'` \u2014 is the shadow of a\ngeneral extreme-point selection: the origin's barycentric coordinates are supported\non a bounded face, and spanning-tree structure controls how many candidate faces\nmust be probed. Why now? The planar base case is complete and pinpoints extreme\npoints as the extraction device; the machinery for finite-dimensional convex hulls\nneeded to iterate it is exactly the classical Carath\u00e9odory support argument.\n\n## 4. Tightness of the degree-`k+1` witness bound\n**Conjecture.** The degree-`k+1` polynomial witness bound is asymptotically tight:\nthere exist width-`(k+1)` complexes (the full `\u2264(k+1)`-skeleta) whose face count\nmatches `\u2211_{i\u2264k+1} C(n,i)` up to a constant factor, so no sub-polynomial witness\nexists in the absence of extra structure such as acyclicity.\n\nThe key insight is that width and acyclicity are genuinely independent resources:\nremoving acyclicity restores the full skeleton, whose exact count `\u2211_{i\u2264k+1} C(n,i)`\nis realized. Why now? The exact skeleton count is established in this cycle, so the\nlower bound is already in hand; formalizing \"no structural assumption \u21d2 no\nimprovement\" turns the upper bound into a matching characterization.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_1312",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "45e15555",
+    "status": "available",
+    "timestamp": "2026-07-14T19:51:00.052609+00:00",
+    "title": "Two-parameter picture of *witness complexity* for the"
   },
   {
     "consumed_by_exp_id": "",

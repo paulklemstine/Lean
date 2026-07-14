@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1bd2f770",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Spectral gaps of fixed-genus chord-swap chains\n\nThis cycle established, unconditionally, that the variational (Rayleigh-quotient)\nupper bound for a one-dimensional swap chain sca",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 21,
-      "timestamp": "2026-07-14T01:16:54",
-      "title": "Tight spectral gap exponent for the fixed-genus chord swap chain"
-    },
-    {
       "cycle_id": "ea3218f3",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle established a reusable toughness toolkit centered on the *component\ncount* `numComp G S` (the number of",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-14T19:16:11",
       "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
+    },
+    {
+      "cycle_id": "45e15555",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capt",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-14T19:51:30",
+      "title": "Colorful Carathéodory theorem for spanning k-trees admits a polynomial-size witness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "538f30a2",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to t",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 47,
-      "timestamp": "2026-07-12T03:38:30",
-      "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
-    },
     {
       "cycle_id": "08eba531",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-14T19:16:11",
       "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
+    },
+    {
+      "cycle_id": "45e15555",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capt",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-14T19:51:30",
+      "title": "Colorful Carathéodory theorem for spanning k-trees admits a polynomial-size witness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b2384a8a",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b2384a8a",
-      "domain": "Applications",
-      "name": "poissonTerm_eq_gammaDensity",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b2384a8a",
-      "domain": "Applications",
-      "name": "poissonTerm_hasDerivAt_succ",
-      "quality": 0.82
-    },
     {
       "cycle_id": "ef403dbc",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "discriminant_sign_zero",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "45e15555",
+      "domain": "Applications",
+      "name": "asserts",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "45e15555",
+      "domain": "Applications",
+      "name": "hides",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "45e15555",
+      "domain": "Applications",
+      "name": "powerset_filter_card_eq_biUnion",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T19:16:11",
+  "last_updated": "2026-07-14T19:51:30",
   "open_questions": [
     {
       "context": "of spheres.  All theorems below are proved with no `sorry`.; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "385fff12",
-        "quality": 0.83,
-        "theorems": 12,
-        "title": "Exact Exponent for Constrained Coset Guesswork"
-      },
-      {
         "cycle_id": "b2384a8a",
         "quality": 0.82,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 36,
         "title": "Deepening: Consciousness as Emergent Fixed Point"
+      },
+      {
+        "cycle_id": "45e15555",
+        "quality": 0.82,
+        "theorems": 11,
+        "title": "Colorful Carathéodory theorem for spanning k-trees admits a polynomial-size witn"
       }
     ],
     "Bridges": [

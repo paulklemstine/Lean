@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-14T19:16:14.620232+00:00",
+  "last_updated": "2026-07-14T19:51:33.517137+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -15891,6 +15891,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-14T19:16:14.550585+00:00",
       "title": "This cycle isolated a single scalar invariant \u2014 the **M\u00f6bius discriminant**"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 268,
+      "domain": "Applications",
+      "duration_seconds": 1012.3286209106445,
+      "end_time": 1784058638.7320888,
+      "files_integrated": 4,
+      "job_id": "45e15555",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784057626.403468,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-14T19:51:33.450826+00:00",
+      "title": "Colorful Carath\u00e9odory theorem for spanning k-trees admits a polynomial-size witness"
     }
   ]
 }
