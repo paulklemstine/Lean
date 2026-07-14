@@ -155,6 +155,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7acc7a45 (Q=0.830), which proved 24 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle cf19c51c (Q=0.790) proved 36 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of ℤ₂-co-index under suspension\n\nThis cycle established, unconditionally, the constructive l",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_7acc7a45_4c5b1d29",
+    "lineage_refs": [],
+    "priority_score": 0.9299999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7acc7a45",
+    "status": "available",
+    "timestamp": "2026-07-14T03:41:54.706806+00:00",
+    "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domain_bridges": [],
     "domains": [
@@ -1473,25 +1492,6 @@
     "status": "available",
     "timestamp": "2026-07-12T15:03:08.532920+00:00",
     "title": "Close Proofs: Asymptotic Clique-to-Clique Density Bound"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "7acc7a45",
-    "description": "Cycle cf19c51c (Q=0.790) proved 36 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of ℤ₂-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free ℤ₂-complexes: sus",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_cf19c51c_658017c2",
-    "lineage_refs": [],
-    "priority_score": 0.8400000000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "cf19c51c",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T02:10:35.467002+00:00",
-    "title": "Close Proofs: This cycle established, unconditionally, the constructive lower-bound "
   },
   {
     "ambition_level": "extension",
@@ -3066,6 +3066,26 @@
     "status": "available",
     "timestamp": "2026-07-14T03:41:15.394977+00:00",
     "title": "This cycle assembled a reusable toughness toolkit around a single load-bearing"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combinatorial\nmodel of free `ℤ₂`-complexes — the boundary complexes of cross-polytopes, i.e. the octahedral\ncombinatorial spheres `Sⁿ` — and proves, with no `sorry` and only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`), the **constructive lower-bound half** of the\nbehaviour of the `ℤ₂`-coindex under suspension:\n\n* **Category structure.** `Z2Map.id`, `Z2Map.comp`, and the equatorial inclusion\n  `Z2Map.incl : Z2Map n (n+1)` organise `ℤ₂`-maps of spheres into a category.\n* **Suspension functor on maps.** `Z2Map.susp : Z2Map m n → Z2Map (m+1) (n+1)` suspends a\n  `ℤ₂`-map, preserving the two poles and transporting all other coordinates.  This is the\n  geometric heart of the lower bound.\n* **Constructive lower bound.** `coindex_lower_bound : m ≤ n → Nonempty (Z2Map m n)`\n  (`coind(Sⁿ) ≥ n`), and `suspension_raises_coindex : Nonempty (Z2Map m n) →\n  Nonempty (Z2Map (m+1) (n+1))`.\n* **Decidable reformulation.** `nonempty_iff_exists_pos` reduces existence of a `ℤ₂`-map to a\n  finite check over the images of the positive vertices.\n* **Sharpness at the base.** The finite Borsuk–Ulam instances `borsuk_ulam_S1_S0`\n  (`S¹ ↛ S⁰`) and `borsuk_ulam_S2_S1` (`S² ↛ S¹`), verified by `decide`, pin down\n  `coind(S⁰) = 0` and `coind(S¹) = 1`, so the suspension increment is exactly one\n  (`sharp_suspension_increment`).\n\n## The gap that remains: the upper-bound (maximal-excess) half\n\nThe matching upper bound `coind(Sⁿ) ≤ n` in **every** dimension is the full strength of the\nBorsuk–Ulam / Tucker theorem: there is no `ℤ₂`-map `Sⁿ⁺¹ → Sⁿ`.  Here it is proved only in\nthe two finite base cases.  Directions:\n\n1. **General Tucker's lemma.** Prove `IsEmpty (Z2Map (n+1) n)` for all `n` via a combinatorial\n   Tucker labelling argument on the cross-polytope, giving `coind(Sⁿ) = n` unconditionally.\n2. **Abstract free ℤ₂-complexes.** Generalise `Z2Map` from spheres to arbitrary simplicial\n   complexes carrying a free simplicial `ℤ₂`-action, define `coind`/`ind` as\n   `sup`/`inf` over `ℕ∞`, and prove `coind ≤ ind` (Borsuk–Ulam) and the join/suspension laws\n   `coind(X * Y) ≥ coind X + coind Y + 1`.\n3. **The excess `ind − coind`.** With both indices in hand, formalise complexes where the\n   excess is positive and study its growth under suspension — the \"maximal-excess programme\".\n4. **Deleted joins and the Lovász bound.** Connect `coind` of the neighbourhood/box complex\n   to graph chromatic numbers (`χ(G) ≥ coind(·) + 2`).\n\n## Model choices and honesty of scope\n\nThe purely local (vertex-pair) form of simpliciality is exactly equivalent to \"faces map to\nfaces\" for cross-polytope complexes, which keeps every statement decidable and every proof\nelementary while remaining faithful to the topology: the lower bound is genuinely constructed\n(not assumed), and the base-case obstructions are genuine Borsuk–Ulam phenomena, not vacuous.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Geometry"
+    ],
+    "id": "fd_1270",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7acc7a45",
+    "status": "available",
+    "timestamp": "2026-07-14T03:41:44.512573+00:00",
+    "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
   },
   {
     "ambition_level": "extension",
