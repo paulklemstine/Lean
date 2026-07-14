@@ -213,7 +213,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b45b1485",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
       "Applications"
@@ -222,7 +222,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "167aed7f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T10:55:13.373867+00:00",
     "title": "Deepening: This project formalizes an abstract, model-agnostic version of Hamkins'"
   },
@@ -762,7 +762,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Universality of Transfer Functions Among Accumulation Points"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef88d58c",
     "description": "Building on cycle e6dfc1d4 (Q=0.780), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportional to the \u03bc-invariant when \u03bc \u2260 0.",
     "domains": [
       "Novelty"
@@ -771,7 +771,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "e6dfc1d4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T16:16:10.297995+00:00",
     "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
   },
@@ -1239,7 +1239,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "861a1f59",
     "description": "Cycle e6dfc1d4 (Q=0.780) proved 26 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For an elliptic curve E over Q with good supersingular reduction at 2 and square-free D \u22611 mod 4, the difference in sharp/flat \u03bb-invariants under quadratic twist by D should include a term proportiona",
     "domains": [
       "Novelty"
@@ -1248,7 +1248,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "e6dfc1d4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T16:16:10.424105+00:00",
     "title": "Close Proofs: Extension of Matsuno's Formula for Non-Vanishing \u03bc-Invariants"
   },
