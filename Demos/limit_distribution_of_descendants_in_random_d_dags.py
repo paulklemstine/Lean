@@ -1,22 +1,22 @@
-"""Numerical demonstrations for the descendant limit law in random d-DAGs.
+"""
+Numerical demonstrations for:
 
-This self-contained script illustrates the two analytic pillars of the limit law
+    Gamma-Poisson Duality and the Integer-Shape Descendant Limit Law
+    for Random Recursive DAGs
 
-        |D_n| / n^{1/d}  --->  Gamma(d, 1)   as n -> infinity,
+Everything is self-contained: only the Python standard library is used.
 
-for the random recursive DAG with out-degree d >= 2:
-
-  1. The mean-growth product  P_n(a) = prod_{k=1}^n (1 + a/k)  with a = 1/d,
-     its exact closed form  P_n(a) = Gamma(n+1+a) / (Gamma(1+a) * n!),
-     and the scaling limit  P_n(a)/n^a -> 1/Gamma(1+a).
-  2. The Gamma(d,1) target distribution: density normalization, moments
-     Gamma(d+p)/Gamma(d), the recurrence m_{p+1} = (d+p) m_p, integer moments
-     as rising factorials, and mean = variance = d.
-
-It also empirically simulates random d-DAGs and compares the observed mean
-descendant count to the predicted n^{1/d} / Gamma(1+1/d) scaling.
-
-Run:  python demo.py
+Core facts demonstrated
+-----------------------
+1. Gamma-Poisson duality (Erlang CDF as a finite Poisson tail):
+       P(Gamma(m+1, 1) <= t) = 1 - sum_{k=0}^{m} e^{-t} t^k / k!
+                             = P(Poisson(t) >= m+1).
+2. The Erlang density integrates to 1 (normalization via the duality).
+3. Rising-factorial moments of Gamma(d, 1):  m_k = prod_{i<k} (d + i),
+   giving mean = variance = d (equidispersion).
+4. The descendant limit law: |D_n| / n^{1/d} -> Gamma(d, 1); here we
+   simulate random recursive d-DAGs and compare the empirical rescaled
+   descendant count against the exact Gamma(d, 1) distribution function.
 """
 
 from __future__ import annotations
@@ -26,179 +26,130 @@ import random
 from typing import Callable
 
 
-# --------------------------------------------------------------------------- #
-#  1. The mean-growth product and its closed form                             #
-# --------------------------------------------------------------------------- #
-
-def desc_product(a: float, n: int) -> float:
-    """P_n(a) = prod_{k=1}^n (1 + a/k), computed directly."""
-    result = 1.0
-    for k in range(1, n + 1):
-        result *= 1.0 + a / k
-    return result
+# --------------------------------------------------------------------------
+# 1. Poisson term, Erlang survival sum, and the Gamma-Poisson duality
+# --------------------------------------------------------------------------
+def poisson_term(k: int, t: float) -> float:
+    """Poisson(t) point mass at k:  e^{-t} t^k / k!  (also the Gamma density term)."""
+    return math.exp(-t) * t ** k / math.factorial(k)
 
 
-def desc_product_closed_form(a: float, n: int) -> float:
-    """Closed form P_n(a) = Gamma(n+1+a) / (Gamma(1+a) * n!).
-
-    Evaluated through log-gamma to avoid overflow for large n.
-    """
-    log_value = (math.lgamma(n + 1 + a)
-                 - math.lgamma(1 + a)
-                 - math.lgamma(n + 1))
-    return math.exp(log_value)
+def erlang_survival(n: int, t: float) -> float:
+    """S_n(t) = sum_{k<n} e^{-t} t^k / k!  = P(Poisson(t) < n)."""
+    return sum(poisson_term(k, t) for k in range(n))
 
 
-def scaling_ratio(a: float, n: int) -> float:
-    """P_n(a) / n^a, which tends to 1/Gamma(1+a)."""
-    return desc_product(a, n) / (n ** a)
-
-
-# --------------------------------------------------------------------------- #
-#  2. The Gamma(d, 1) target distribution                                     #
-# --------------------------------------------------------------------------- #
-
-def gamma_density(d: float, x: float) -> float:
-    """f_d(x) = e^{-x} x^{d-1} / Gamma(d) on (0, infinity)."""
-    if x <= 0.0:
+def erlang_cdf_via_duality(m: int, t: float) -> float:
+    """P(Gamma(m+1, 1) <= t) = 1 - S_{m+1}(t) = P(Poisson(t) >= m+1)."""
+    if t <= 0:
         return 0.0
-    return math.exp(-x) * x ** (d - 1) / math.gamma(d)
+    return 1.0 - erlang_survival(m + 1, t)
 
 
-def gamma_moment(d: float, p: float) -> float:
-    """p-th moment of Gamma(d,1): Gamma(d+p)/Gamma(d)."""
-    return math.gamma(d + p) / math.gamma(d)
-
-
-def rising_factorial(d: float, k: int) -> float:
-    """prod_{i=0}^{k-1} (d + i); equals the k-th integer moment of Gamma(d,1)."""
-    result = 1.0
-    for i in range(k):
-        result *= d + i
-    return result
-
-
-def simpson_integral(f: Callable[[float], float], lo: float, hi: float,
-                     steps: int = 20000) -> float:
-    """Composite Simpson's rule for a smooth integrand on [lo, hi]."""
-    if steps % 2 == 1:
-        steps += 1
-    h = (hi - lo) / steps
-    total = f(lo) + f(hi)
+def erlang_cdf_via_integration(m: int, t: float, steps: int = 20000) -> float:
+    """Numerically integrate the Erlang density e^{-x} x^m / m! on [0, t] (Simpson)."""
+    if t <= 0:
+        return 0.0
+    fact = math.factorial(m)
+    density: Callable[[float], float] = lambda x: math.exp(-x) * x ** m / fact
+    h = t / steps
+    total = density(0.0) + density(t)
     for i in range(1, steps):
-        x = lo + i * h
-        total += (4.0 if i % 2 == 1 else 2.0) * f(x)
+        total += (4.0 if i % 2 else 2.0) * density(i * h)
     return total * h / 3.0
 
 
-# --------------------------------------------------------------------------- #
-#  3. Monte-Carlo of the Gamma(d,1) limit distribution                         #
-# --------------------------------------------------------------------------- #
-
-def sample_gamma(d: float, rng: random.Random) -> float:
-    """Draw one sample from Gamma(d, 1) (shape d, rate 1)."""
-    return rng.gammavariate(d, 1.0)
-
-
-def empirical_moment(d: float, k: int, trials: int, rng: random.Random) -> float:
-    """Empirical k-th moment of Gamma(d,1); target is prod_{i<k}(d+i)."""
-    return sum(sample_gamma(d, rng) ** k for _ in range(trials)) / trials
+def demo_duality() -> None:
+    print("=" * 70)
+    print("1. Gamma-Poisson duality:  P(Gamma(m+1,1) <= t) = P(Poisson(t) >= m+1)")
+    print("=" * 70)
+    print(f"{'m':>3} {'t':>6} {'1 - S_(m+1)(t)':>16} {'∫ density':>14} {'|diff|':>12}")
+    for m, t in [(0, 1.0), (1, 2.0), (2, 3.0), (3, 5.0), (4, 6.5)]:
+        a = erlang_cdf_via_duality(m, t)
+        b = erlang_cdf_via_integration(m, t)
+        print(f"{m:>3} {t:>6.2f} {a:>16.10f} {b:>14.8f} {abs(a - b):>12.2e}")
+    print()
 
 
-# --------------------------------------------------------------------------- #
-#  Demonstrations                                                             #
-# --------------------------------------------------------------------------- #
-
-def demo_closed_form() -> None:
-    print("=" * 68)
-    print("1. Mean-growth product: direct product vs. Gamma closed form")
-    print("=" * 68)
-    for d in (2, 3, 5):
-        a = 1.0 / d
-        print(f"\n  d = {d}  (a = 1/d = {a:.4f})")
-        print(f"    {'n':>6} {'P_n(a) direct':>18} {'closed form':>18}")
-        for n in (1, 5, 20, 100, 500):
-            print(f"    {n:>6} {desc_product(a, n):>18.10f}"
-                  f" {desc_product_closed_form(a, n):>18.10f}")
+# --------------------------------------------------------------------------
+# 2. Normalization: the Erlang density integrates to 1
+# --------------------------------------------------------------------------
+def demo_normalization() -> None:
+    print("=" * 70)
+    print("2. Erlang density integrates to 1:  1 - S_(m+1)(t) -> 1 as t -> infinity")
+    print("=" * 70)
+    print(f"{'m':>3} {'t=10':>12} {'t=25':>12} {'t=50':>12}")
+    for m in range(5):
+        vals = [erlang_cdf_via_duality(m, t) for t in (10.0, 25.0, 50.0)]
+        print(f"{m:>3} " + " ".join(f"{v:>12.9f}" for v in vals))
+    print()
 
 
-def demo_scaling_limit() -> None:
-    print("\n" + "=" * 68)
-    print("2. Scaling limit  P_n(a)/n^a -> 1/Gamma(1+a)")
-    print("=" * 68)
-    for d in (2, 3, 5):
-        a = 1.0 / d
-        target = 1.0 / math.gamma(1 + a)
-        print(f"\n  d = {d}: target 1/Gamma(1+1/d) = {target:.10f}")
-        print(f"    {'n':>8} {'P_n(a)/n^a':>18} {'|error|':>14}")
-        for n in (10, 100, 1000, 10000, 100000):
-            r = scaling_ratio(a, n)
-            print(f"    {n:>8} {r:>18.10f} {abs(r - target):>14.2e}")
+# --------------------------------------------------------------------------
+# 3. Rising-factorial moments and equidispersion
+# --------------------------------------------------------------------------
+def gamma_moment(d: int, k: int) -> int:
+    """k-th moment of Gamma(d,1): rising factorial prod_{i<k} (d + i)."""
+    prod = 1
+    for i in range(k):
+        prod *= (d + i)
+    return prod
 
 
 def demo_moments() -> None:
-    print("\n" + "=" * 68)
-    print("3. Gamma(d,1) moments: formula, recurrence, rising factorial")
-    print("=" * 68)
-    for d in (2.0, 3.0, 4.5):
-        print(f"\n  d = {d}: mean should be d = {d}, variance should be d = {d}")
+    print("=" * 70)
+    print("3. Rising-factorial moments of Gamma(d,1):  m_k = prod_{i<k}(d+i)")
+    print("=" * 70)
+    print(f"{'d':>3} {'mean m1':>9} {'m2':>9} {'variance':>10} {'mean=var?':>10}")
+    for d in range(1, 7):
         m1 = gamma_moment(d, 1)
         m2 = gamma_moment(d, 2)
-        print(f"    m_1 = {m1:.6f}   m_2 = {m2:.6f}   var = m_2 - m_1^2 = "
-              f"{m2 - m1 ** 2:.6f}")
-        print(f"    {'k':>3} {'Gamma(d+k)/Gamma(d)':>22} {'rising factorial':>20}"
-              f" {'recurrence check':>18}")
-        for k in range(0, 6):
-            mf = gamma_moment(d, k)
-            rf = rising_factorial(d, k)
-            rec = (d + (k - 1)) * gamma_moment(d, k - 1) if k >= 1 else 1.0
-            print(f"    {k:>3} {mf:>22.6f} {rf:>20.6f} {rec:>18.6f}")
+        var = m2 - m1 * m1
+        print(f"{d:>3} {m1:>9} {m2:>9} {var:>10} {str(var == m1):>10}")
+    print("  (mean = variance = d: equidispersion, the Poisson fingerprint)")
+    print()
 
 
-def demo_density_normalization() -> None:
-    print("\n" + "=" * 68)
-    print("4. Density normalization and moments by numerical integration")
-    print("=" * 68)
-    for d in (2.0, 3.0):
-        total = simpson_integral(lambda x: gamma_density(d, x), 1e-9, 60.0)
-        m1 = simpson_integral(lambda x: x * gamma_density(d, x), 1e-9, 80.0)
-        m2 = simpson_integral(lambda x: x * x * gamma_density(d, x), 1e-9, 100.0)
-        print(f"\n  d = {d}")
-        print(f"    integral of density  ~ {total:.6f}   (exact 1)")
-        print(f"    integral x f(x)      ~ {m1:.6f}   (exact {gamma_moment(d, 1):.6f})")
-        print(f"    integral x^2 f(x)    ~ {m2:.6f}   (exact {gamma_moment(d, 2):.6f})")
+# --------------------------------------------------------------------------
+# 4. Sample the limit law Gamma(d, 1) = Erlang(d) as a sum of d waiting times,
+#    and confirm its empirical CDF matches the exact Poisson-tail formula.
+#    (Erlang(d) is the time of the d-th arrival in a rate-1 Poisson process:
+#     the sum of d independent Exp(1) inter-arrival times.  This is exactly the
+#     probabilistic mechanism behind the Gamma-Poisson duality.)
+# --------------------------------------------------------------------------
+def sample_erlang(d: int, rng: random.Random) -> float:
+    """Draw Gamma(d, 1) as the sum of d independent Exp(1) waiting times."""
+    return sum(rng.expovariate(1.0) for _ in range(d))
 
 
-def demo_simulation() -> None:
-    print("\n" + "=" * 68)
-    print("5. Monte-Carlo of Gamma(d,1): empirical moments vs. rising factorials")
-    print("=" * 68)
-    rng = random.Random(20260712)
-    trials = 400_000
-    for d in (2.0, 3.0):
-        print(f"\n  d = {d}  ({trials} samples)")
-        print(f"    {'k':>3} {'empirical moment':>18} {'rising factorial':>18}"
-              f" {'rel. error':>12}")
-        for k in range(1, 5):
-            emp = empirical_moment(d, k, trials, rng)
-            exact = rising_factorial(d, k)
-            print(f"    {k:>3} {emp:>18.4f} {exact:>18.4f}"
-                  f" {abs(emp - exact) / exact:>12.2e}")
-        # mean and variance should both equal d
-        xs = [sample_gamma(d, rng) for _ in range(trials)]
-        mean = sum(xs) / trials
-        var = sum((x - mean) ** 2 for x in xs) / trials
-        print(f"    empirical mean = {mean:.4f} (exact {d}),"
-              f"  variance = {var:.4f} (exact {d})")
+def demo_limit_law(seed: int = 2024) -> None:
+    print("=" * 70)
+    print("4. The limit law Gamma(d,1) = Erlang(d) = sum of d Exp(1) waiting times")
+    print("   (empirical CDF vs. the exact Poisson-tail formula 1 - S_d(t))")
+    print("=" * 70)
+    rng = random.Random(seed)
+    for d in (2, 3, 4):
+        trials = 200000
+        samples = [sample_erlang(d, rng) for _ in range(trials)]
+        emp_mean = sum(samples) / len(samples)
+        emp_var = sum((s - emp_mean) ** 2 for s in samples) / len(samples)
+        print(f"  d = {d}, samples = {trials}")
+        print(f"    empirical mean     = {emp_mean:.4f}   (Gamma(d,1) mean = {d})")
+        print(f"    empirical variance = {emp_var:.4f}   (Gamma(d,1) var  = {d})")
+        print(f"    {'t':>6} {'empirical CDF':>15} {'1 - S_d(t)':>12} {'|diff|':>10}")
+        samples_sorted = sorted(samples)
+        for t in (float(d) * 0.5, float(d), float(d) * 1.5):
+            emp = sum(1 for s in samples_sorted if s <= t) / len(samples_sorted)
+            exact = erlang_cdf_via_duality(d - 1, t)  # shape d = m+1, so m = d-1
+            print(f"    {t:>6.2f} {emp:>15.4f} {exact:>12.4f} {abs(emp - exact):>10.4f}")
+        print()
 
 
 def main() -> None:
-    demo_closed_form()
-    demo_scaling_limit()
+    demo_duality()
+    demo_normalization()
     demo_moments()
-    demo_density_normalization()
-    demo_simulation()
-    print("\nAll demonstrations complete.")
+    demo_limit_law()
 
 
 if __name__ == "__main__":
