@@ -186,6 +186,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 10dfa4e0 (Q=0.820), which proved 26 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp excess of \u2124\u2082-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combinatorial\nmodel of free `\u2124\u2082`-complexes \u2014 the boundary complexes of cross-polytopes, i.e. the octahedra",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_10dfa4e0_826530c1",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "10dfa4e0",
+    "status": "available",
+    "timestamp": "2026-07-14T22:54:15.553828+00:00",
+    "title": "Deepening: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 12ea9340 (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct",
     "domains": [
       "Novelty"
@@ -297,7 +311,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b14e425",
     "description": "Building on cycle 8ceb2563 (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Ar\u0131kan\u2013Merhav growth rate and der",
     "domains": [
       "Novelty"
@@ -306,7 +320,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "8ceb2563",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T22:36:24.187404+00:00",
     "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
   },
@@ -937,6 +951,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T08:39:55.260573+00:00",
     "title": "Close Proofs: The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 10dfa4e0 (Q=0.820) proved 26 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of \u2124\u2082-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combin",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_10dfa4e0_f19f75f5",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "10dfa4e0",
+    "status": "available",
+    "timestamp": "2026-07-14T22:54:15.669711+00:00",
+    "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
   },
   {
     "consumed_by_exp_id": "71637775",
@@ -2033,21 +2061,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle assembled a reusable toughness toolkit around a single load-bearing"
   },
   {
-    "consumed_by_exp_id": "10dfa4e0",
-    "description": "# Future Directions: Sharp excess of \u2124\u2082-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combinatorial\nmodel of free `\u2124\u2082`-complexes \u2014 the boundary complexes of cross-polytopes, i.e. the octahedral\ncombinatorial spheres `S\u207f` \u2014 and proves, with no `sorry` and only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`), the **constructive lower-bound half** of the\nbehaviour of the `\u2124\u2082`-coindex under suspension:\n\n* **Category structure.** `Z2Map.id`, `Z2Map.comp`, and the equatorial inclusion\n  `Z2Map.incl : Z2Map n (n+1)` organise `\u2124\u2082`-maps of spheres into a category.\n* **Suspension functor on maps.** `Z2Map.susp : Z2Map m n \u2192 Z2Map (m+1) (n+1)` suspends a\n  `\u2124\u2082`-map, preserving the two poles and transporting all other coordinates.  This is the\n  geometric heart of the lower bound.\n* **Constructive lower bound.** `coindex_lower_bound : m \u2264 n \u2192 Nonempty (Z2Map m n)`\n  (`coind(S\u207f) \u2265 n`), and `suspension_raises_coindex : Nonempty (Z2Map m n) \u2192\n  Nonempty (Z2Map (m+1) (n+1))`.\n* **Decidable reformulation.** `nonempty_iff_exists_pos` reduces existence of a `\u2124\u2082`-map to a\n  finite check over the images of the positive vertices.\n* **Sharpness at the base.** The finite Borsuk\u2013Ulam instances `borsuk_ulam_S1_S0`\n  (`S\u00b9 \u219b S\u2070`) and `borsuk_ulam_S2_S1` (`S\u00b2 \u219b S\u00b9`), verified by `decide`, pin down\n  `coind(S\u2070) = 0` and `coind(S\u00b9) = 1`, so the suspension increment is exactly one\n  (`sharp_suspension_increment`).\n\n## The gap that remains: the upper-bound (maximal-excess) half\n\nThe matching upper bound `coind(S\u207f) \u2264 n` in **every** dimension is the full strength of the\nBorsuk\u2013Ulam / Tucker theorem: there is no `\u2124\u2082`-map `S\u207f\u207a\u00b9 \u2192 S\u207f`.  Here it is proved only in\nthe two finite base cases.  Directions:\n\n1. **General Tucker's lemma.** Prove `IsEmpty (Z2Map (n+1) n)` for all `n` via a combinatorial\n   Tucker labelling argument on the cross-polytope, giving `coind(S\u207f) = n` unconditionally.\n2. **Abstract free \u2124\u2082-complexes.** Generalise `Z2Map` from spheres to arbitrary simplicial\n   complexes carrying a free simplicial `\u2124\u2082`-action, define `coind`/`ind` as\n   `sup`/`inf` over `\u2115\u221e`, and prove `coind \u2264 ind` (Borsuk\u2013Ulam) and the join/suspension laws\n   `coind(X * Y) \u2265 coind X + coind Y + 1`.\n3. **The excess `ind \u2212 coind`.** With both indices in hand, formalise complexes where the\n   excess is positive and study its growth under suspension \u2014 the \"maximal-excess programme\".\n4. **Deleted joins and the Lov\u00e1sz bound.** Connect `coind` of the neighbourhood/box complex\n   to graph chromatic numbers (`\u03c7(G) \u2265 coind(\u00b7) + 2`).\n\n## Model choices and honesty of scope\n\nThe purely local (vertex-pair) form of simpliciality is exactly equivalent to \"faces map to\nfaces\" for cross-polytope complexes, which keeps every statement decidable and every proof\nelementary while remaining faithful to the topology: the lower bound is genuinely constructed\n(not assumed), and the base-case obstructions are genuine Borsuk\u2013Ulam phenomena, not vacuous.\n",
-    "domains": [
-      "Logic",
-      "Geometry"
-    ],
-    "id": "fd_1270",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7acc7a45",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T03:41:44.512573+00:00",
-    "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain is squeezed between `2 n^{-3}` and\n`12 n^{-3}`, so it is exactly of order `n^{-3}`. The upper bound comes from a\nsingle slowly-varying position witness; the lower bound is a telescoping\nCauchy\u2013Schwarz Poincar\u00e9 inequality showing that *every* non-constant test\nfunction already has Rayleigh quotient at least `2 n^{-3}`. The following\nconjectures push this mechanism toward the genuine fixed-genus chord-swap chain.\n\n## Conjecture 1 \u2014 Genus-graded cubic gap for chord-swap chains\nFor chord diagrams of `n` chords and any fixed genus `g`, the chord-swap chain\nhas spectral gap `\u0398(n^{-3})`, with the implied constants depending only on `g`.\n\nThe key insight is that a chord diagram carries a monotone integer statistic \u2014\na genus-aware \"displacement\" that changes by exactly one unit under a single\nchord swap \u2014 whose Dirichlet energy grows linearly while its variance grows\nquartically, reproducing the path model's energy-to-variance ratio of `n^{-3}`.\n\nWhy now? The abstract energy/variance bookkeeping is fully established and the\none-dimensional prototype is pinned to the cubic window, so the only missing\ningredient is the construction and quartic-variance estimate for the genus\nstatistic \u2014 a concrete, self-contained combinatorial target rather than an\nanalytic obstacle.\n\n## Conjecture 2 \u2014 Universal cubic law for `\u00b11`-monotone swap chains\nAny reversible swap chain on a finite state space that admits a monotone integer\nstatistic taking `\u0398(n)` distinct values and changing by `\u00b11` per accepted move,\nwith `\u0398(n)` boundary-adjacent transitions, has spectral gap `\u0398(n^{-3})`.\n\nThe key insight is that the exponent `3 = 4 \u2212 1` is forced purely by growth\nrates: the variance of such a statistic is quartic in its range while its\nDirichlet energy is only linear, so the ratio is cubic regardless of the\nunderlying combinatorial model.\n\nWhy now? The lower-bound half proved here is model-agnostic \u2014 it uses only the\ntelescoping structure of a `\u00b11` statistic \u2014 so the universal statement is within\nreach by abstracting the path argument away from its specific adjacency weights.\n\n## Conjecture 3 \u2014 Sharp leading constant\nFor the path swap chain the spectral gap satisfies `\u03b3_n = (c + o(1)) n^{-3}` for\nan explicit constant `c` strictly inside `[2, 12]`, realised by the discrete\nfirst eigenfunction (a shifted cosine profile) rather than the linear position\nwitness.\n\nThe key insight is that the linear witness is energy-optimal only to within a\nconstant factor; replacing it by the discrete cosine mode simultaneously lowers\nthe energy and matches the true bottom of the spectrum, so both bounds should\ncollapse to a single constant.\n\nWhy now? The two-sided window is already established, isolating the remaining\nquestion to a one-parameter optimisation over test-function profiles \u2014 a finite\nvariational problem amenable to the same Rayleigh calculus used here.\n\n## Conjecture 4 \u2014 Higher-dimensional swap complexes\nOn a `d`-dimensional product of swap chains the spectral gap is `\u0398(n^{-3})` as\nwell, independent of `d`, because the slowest mode remains one-dimensional.\n\nThe key insight is that tensorising commuting swap chains adds their Dirichlet\nforms while the extremal test function still varies along a single coordinate,\nso the worst-case Rayleigh quotient is inherited unchanged from the line.\n\nWhy now? With the exact one-dimensional constant window in hand, the product\ncomparison reduces to a clean sub-additivity statement for Dirichlet forms,\nwhich the present energy/variance identities express directly.\n\n\n# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain is squeezed between `2 n^{-3}` and\n`12 n^{-3}`, so it is exactly of order `n^{-3}`. The upper bound comes from a\nsingle slowly-varying position witness; the lower bound is a telescoping\nCauchy\u2013Schwarz Poincar\u00e9 inequality showing that *every* non-constant test\nfunction already has Rayleigh quotient at least `2 n^{-3}`. The following\nconjectures push this mechanism toward the genuine fixed-genus chord-swap chain.\n\n## Conjecture 1 \u2014 Genus-graded cubic gap for chord-swap chains\nFor chord diagrams of `n` chords and any fixed genus `g`, the chord-swap chain\nhas spectral gap `\u0398(n^{-3})`, with the implied constants depending only on `g`.\n\nThe key insight is that a chord diagram carries a monotone integer statistic \u2014\na genus-aware \"displacement\" that changes by exactly one unit under a single\nchord swap \u2014 whose Dirichlet energy grows linearly while its variance grows\nquartically, reproducing the path model's energy-to-variance ratio of `n^{-3}`.\n\nWhy now? The abstract energy/variance bookkeeping is fully established and the\none-dimensional prototype is pinned to the cubic window, so the only missing\ningredient is the construction and quartic-variance estimate for the genus\nstatistic \u2014 a concrete, self-contained combinatorial target rather than an\nanalytic obstacle.\n\n## Conjecture 2 \u2014 Universal cubic law for `\u00b11`-monotone swap chains\nAny reversible swap chain on a finite state space that admits a monotone integer\nstatistic taking `\u0398(n)` distinct values and changing by `\u00b11` per accepted move,\nwith `\u0398(n)` boundary-adjacent transitions, has spectral gap `\u0398(n^{-3})`.\n\nThe key insight is that the exponent `3 = 4 \u2212 1` is forced purely by growth\nrates: the variance of such a statistic is quartic in its range while its\nDirichlet energy is only linear, so the ratio is cubic regardless of the\nunderlying combinatorial model.\n\nWhy now? The lower-bound half proved here is model-agnostic \u2014 it uses only the\ntelescoping structure of a `\u00b11` statistic \u2014 so the universal statement is within\nreach by abstracting the path argument away from its specific adjacency weights.\n\n## Conjecture 3 \u2014 Sharp leading constant\nFor the path swap chain the spectral gap satisfies `\u03b3_n = (c + o(1)) n^{-3}` for\nan explicit constant `c` strictly inside `[2, 12]`, realised by the discrete\nfirst eigenfunction (a shifted cosine profile) rather than the linear position\nwitness.\n\nThe key insight is that the linear witness is energy-optimal only to within a\nconstant factor; replacing it by the discrete cosine mode simultaneously lowers\nthe energy and matches the true bottom of the spectrum, so both bounds should\ncollapse to a single constant.\n\nWhy now? The two-sided window is already established, isolating the remaining\nquestion to a one-parameter optimisation over test-function profiles \u2014 a finite\nvariational problem amenable to the same Rayleigh calculus used here.\n\n## Conjecture 4 \u2014 Higher-dimensional swap complexes\nOn a `d`-dimensional product of swap chains the spectral gap is `\u0398(n^{-3})` as\nwell, independent of `d`, because the slowest mode remains one-dimensional.\n\nThe key insight is that tensorising commuting swap chains adds their Dirichlet\nforms while the extremal test function still varies along a single coordinate,\nso the worst-case Rayleigh quotient is inherited unchanged from the line.\n\nWhy now? With the exact one-dimensional constant window in hand, the product\ncomparison reduces to a clean sub-additivity statement for Dirichlet forms,\nwhich the present energy/variance identities express directly.\n",
     "domains": [
@@ -2736,6 +2749,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T22:53:48.419623+00:00",
     "title": "`SeidelEnergyTwoDeletions.lean` computes, in closed form, the Seidel energy of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: the excess of the \u2124\u2082-coindex beyond the sphere\n\nThe join of two combinatorial spheres is again a sphere, and the equivariant maps of spheres\nare governed entirely by injections of coordinate axes: identity, composition, equatorial\ninclusion, suspension, and now join all fit the single picture \"a simplicial antipodal map is an\ninjection of coordinate axes with independent signs.\" For spheres this makes the coindex equal to\nthe dimension and the join law an exact additivity. The interesting phenomena begin once we leave\nthe sphere. The following conjectures push the coordinate-injection analysis into the world of\narbitrary free \u2124\u2082-complexes, where the two natural indices \u2014 the coindex (largest sphere mapping\nin) and the index (smallest sphere mapping out) \u2014 separate.\n\n## 1. The join inequality becomes strict off the sphere\n\n**Conjecture.** For free \u2124\u2082-complexes `X` and `Y`, `coind(X * Y) \u2265 coind X + coind Y + 1`, with\nequality for spheres but strict inequality for a broad family of complexes whose coindex lies\nstrictly below their dimension.\n\n*The key insight is* that a coindex witness for a join can interleave the two factors' axes in\nways no pair of factor-witnesses can, so the join can gain more than the sum of the parts once the\nfactors are no longer \"rigid\" like spheres. *Why now?* The join has just been realised as an\nexplicit, coordinate-level functor on sphere maps; the same construction extends verbatim to\nabstract complexes, and the only new ingredient needed is a complex whose coindex is provably\nbelow its dimension \u2014 the first genuinely non-spherical test case.\n\n## 2. Positive excess: coindex strictly below index\n\n**Conjecture.** There is an explicit family of free \u2124\u2082-complexes `X\u2096` with\n`ind(X\u2096) \u2212 coind(X\u2096) = k` for every `k`, and the excess is non-decreasing under join and\nsuspension.\n\n*The key insight is* that the coindex measures how large a sphere maps *in* while the index\nmeasures how small a sphere maps *out*, and these two coordinate-injection problems become\nindependent once the complex is not a sphere; deleted joins of small complexes should let the gap\nbe dialled to any prescribed value. *Why now?* With both the sphere coindex pinned exactly and the\njoin functor in hand, the excess is the first invariant that cannot be read off from dimension\nalone, making it the natural next target.\n\n## 3. Suspension preserves excess, join adds it\n\n**Conjecture.** For all free \u2124\u2082-complexes, `ind` and `coind` both rise by exactly one under\nsuspension (so the excess is suspension-invariant), while under join the excesses add:\n`excess(X * Y) = excess(X) + excess(Y)`.\n\n*The key insight is* that suspension adds a single shared axis symmetric between the \"in\" and\n\"out\" problems, shifting both indices equally, whereas join contributes a full independent block to\neach. *Why now?* The suspension tower and the join functor have both been established for spheres\nwith exact increments of one; verifying that these increments are excess-neutral (suspension) and\nexcess-additive (join) in general would turn the excess into a well-behaved, computable invariant.\n\n## 4. A chromatic lower bound from the coindex\n\n**Conjecture.** For every finite graph `G`, the chromatic number satisfies\n`\u03c7(G) \u2265 coind(N(G)) + 2`, where `N(G)` is the neighbourhood complex carrying its natural free\n\u2124\u2082-action, and this bound is attained by an explicit family generalising the Kneser graphs.\n\n*The key insight is* that a proper colouring with too few colours yields an equivariant map from a\nhigh-dimensional sphere into a low-dimensional one, contradicting the exact coindex of spheres\nalready established. *Why now?* The obstruction on the topological side \u2014 no equivariant map\n`S\u207f\u207a\u00b9 \u2192 S\u207f` \u2014 is now available in every dimension, so the only remaining step is to package a\ncolouring as such a map, turning a purely combinatorial quantity into a consequence of the sphere\ncoindex.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1322",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "10dfa4e0",
+    "status": "available",
+    "timestamp": "2026-07-14T22:54:02.748147+00:00",
+    "title": "The join of two combinatorial spheres is again a sphere, and the equivariant map"
   },
   {
     "consumed_by_exp_id": "",

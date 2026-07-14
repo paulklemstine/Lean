@@ -250,6 +250,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 10dfa4e0 (Q=0.820), which proved 26 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combinatorial\nmodel of free `ℤ₂`-complexes — the boundary complexes of cross-polytopes, i.e. the octahedra",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_10dfa4e0_826530c1",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "10dfa4e0",
+    "status": "available",
+    "timestamp": "2026-07-14T22:54:15.553828+00:00",
+    "title": "Deepening: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 12ea9340 (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp maximal excess of the ℤ₂ co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free ℤ₂-complexes satisfies\n`coind(K * L) ≥ coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct",
     "domain_bridges": [],
     "domains": [
@@ -401,7 +420,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b14e425",
     "description": "Building on cycle 8ceb2563 (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`ρ(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Arıkan–Merhav growth rate and der",
     "domain_bridges": [],
     "domains": [
@@ -413,7 +432,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "8ceb2563",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T22:36:24.187404+00:00",
     "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
   },
@@ -1264,6 +1283,25 @@
     "status": "available",
     "timestamp": "2026-07-14T08:39:55.260573+00:00",
     "title": "Close Proofs: The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 10dfa4e0 (Q=0.820) proved 26 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combin",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_10dfa4e0_f19f75f5",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "10dfa4e0",
+    "status": "available",
+    "timestamp": "2026-07-14T22:54:15.669711+00:00",
+    "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
   },
   {
     "ambition_level": "extension",

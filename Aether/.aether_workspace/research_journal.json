@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7acc7a45",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combin",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-14T03:41:54",
-      "title": "Close Proofs: This cycle established, unconditionally, the constructive lower-bound "
-    },
-    {
       "cycle_id": "bec8fe46",
       "domain": "Novelty",
       "key_insight": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain i",
@@ -499,19 +489,19 @@
       "theorem_count": 28,
       "timestamp": "2026-07-14T22:53:58",
       "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
+    },
+    {
+      "cycle_id": "10dfa4e0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: the excess of the ℤ₂-coindex beyond the sphere\n\nThe join of two combinatorial spheres is again a sphere, and the equivariant maps of spheres\nare governed entirely by injections of",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 26,
+      "timestamp": "2026-07-14T22:54:15",
+      "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "71e324bf",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThis project formalises, self-contained on top of Mathlib, a small theory of total\ncolourings and adjacent-vertex-distinguishing (AVD) total colourings, and applies\nit to central",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 855,
-      "timestamp": "2026-07-12T07:36:38",
-      "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
-    },
     {
       "cycle_id": "27e75405",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 28,
       "timestamp": "2026-07-14T22:53:58",
       "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
+    },
+    {
+      "cycle_id": "10dfa4e0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: the excess of the ℤ₂-coindex beyond the sphere\n\nThe join of two combinatorial spheres is again a sphere, and the equivariant maps of spheres\nare governed entirely by injections of",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 26,
+      "timestamp": "2026-07-14T22:54:15",
+      "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T22:53:58",
+  "last_updated": "2026-07-14T22:54:15",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "1bd2f770",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T01:16:54"
-    },
     {
       "context": "-    sorry; +      sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "ea3218f3",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-14T22:53:58"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "10dfa4e0",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-07-14T22:54:15"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ef403dbc",
-        "quality": 0.8,
-        "theorems": 16,
-        "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
-      },
-      {
         "cycle_id": "bce13597",
         "quality": 0.83,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 33,
         "title": "This cycle established, unconditionally, that the variational (Rayleigh-quotient"
+      },
+      {
+        "cycle_id": "10dfa4e0",
+        "quality": 0.82,
+        "theorems": 26,
+        "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
       }
     ],
     "Bridges": [
