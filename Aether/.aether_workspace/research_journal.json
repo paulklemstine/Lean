@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2aaaa5f9",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle contributes `Catalog/Novelty/VietorisRipsCliqueBridge.lean`, a self-contained\n**cross-domain bridge** (\"Connector\" mission) linking:\n\n* **metric geometry / topological",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-13T14:34:30",
-      "title": "Deepening: Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
-    },
-    {
       "cycle_id": "162989ab",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Siegel–Weil for the E₈ theta series\n\nThis cycle established that the E₈ vector-count sequence `240·σ₃(n)` behaves in\nevery measurable arithmetic respect like the Fourier coeffici",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-14T06:54:01",
       "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular graphs"
+    },
+    {
+      "cycle_id": "b97ab468",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle establishes that the canonical Euclidean √2 configuration — the standard basis\nof `ℝ^n`, all pairs at distance exactly `√2` — exhibits a *sharp* Vietoris–Rips threshold",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-14T07:29:42",
+      "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e480cbbd",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThe results established here place the box-counting dimension of a natural \"truth\nset\" strictly inside the unit interval and expose i",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 64,
-      "timestamp": "2026-07-11T15:33:11",
-      "title": "The Fractal Dimension of Mathematical Truth"
-    },
     {
       "cycle_id": "c67f6099",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-14T06:54:01",
       "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular graphs"
+    },
+    {
+      "cycle_id": "b97ab468",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThis cycle establishes that the canonical Euclidean √2 configuration — the standard basis\nof `ℝ^n`, all pairs at distance exactly `√2` — exhibits a *sharp* Vietoris–Rips threshold",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-14T07:29:42",
+      "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "beca1e55",
-      "domain": "Applications",
-      "name": "W_fix",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "beca1e55",
-      "domain": "Applications",
-      "name": "notW_iff_all_W",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a0f7e73c",
       "domain": "Applications",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "card_A_le_sumset",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "b97ab468",
+      "domain": "Novelty",
+      "name": "sqrt2_nonneg",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "b97ab468",
+      "domain": "Novelty",
+      "name": "dist_pt_eq_sqrt2",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T06:54:01",
+  "last_updated": "2026-07-14T07:29:42",
   "open_questions": [
     {
       "context": "+    -- sequences), so this branch is left as a single documented `sorry`.; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ea3218f3",
-        "quality": 0.7,
-        "theorems": 18,
-        "title": "Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
-      },
-      {
         "cycle_id": "6af180ae",
         "quality": 0.86,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 26,
         "title": "Close Proofs: Exact AVD‑total chromatic number of central graphs of regular grap"
+      },
+      {
+        "cycle_id": "b97ab468",
+        "quality": 0.82,
+        "theorems": 18,
+        "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
       }
     ],
     "NumberTheory": [
