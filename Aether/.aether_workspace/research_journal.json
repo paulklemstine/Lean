@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "33954867",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: from `E₄² = E₈` to sharper Eisenstein arithmetic\n\nThis cycle formalized the **arithmetic residue** of the identity `E₄² = E₈` as a\n*connector* between modular forms and elementary",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-14T05:59:46",
-      "title": "This cycle isolated and proved the arithmetic residue of the identity"
-    },
-    {
       "cycle_id": "797ab793",
       "domain": "Applications",
       "key_insight": "# Future Directions: the functorial excess of the ℤ₂-coindex under suspension\n\nThis cycle deepened the constructive lower-bound theory of the ℤ₂-coindex of combinatorial\nspheres from an *existence* st",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-14T23:11:53",
       "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
+    },
+    {
+      "cycle_id": "ccd67871",
+      "domain": "Applications",
+      "key_insight": "# Future directions: AVD‑total colourings of central graphs\n\nThis cycle isolated the mechanism behind the lower bound for adjacent‑vertex‑\ndistinguishing (AVD) total colourings of the central graph `C",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 52,
+      "timestamp": "2026-07-14T23:12:12",
+      "title": "Deepening: Working with a self‑contained model of total colourings (proper vertex colouring"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c1de826b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Neural Coding Theorems\n\nThis cycle deepened the neural-coding development by adding a self-contained\ntheory of **error-correcting neural codes** in\n`Catalog/Novelty/NeuralErrorCo",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 33,
-      "timestamp": "2026-07-12T08:27:31",
-      "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-    },
     {
       "cycle_id": "62dd551b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-14T23:11:53",
       "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
+    },
+    {
+      "cycle_id": "ccd67871",
+      "domain": "Applications",
+      "key_insight": "# Future directions: AVD‑total colourings of central graphs\n\nThis cycle isolated the mechanism behind the lower bound for adjacent‑vertex‑\ndistinguishing (AVD) total colourings of the central graph `C",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 52,
+      "timestamp": "2026-07-14T23:12:12",
+      "title": "Deepening: Working with a self‑contained model of total colourings (proper vertex colouring"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3361b315",
-      "domain": "Novelty",
-      "name": "winding_smul_left",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "3361b315",
-      "domain": "Novelty",
-      "name": "oamPhase_hasDerivAt",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "2360ad91",
-      "domain": "Novelty",
-      "name": "rate_le_card_M",
-      "quality": 0.82
-    },
     {
       "cycle_id": "2360ad91",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "logDeriv_continuous",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "ccd67871",
+      "domain": "Applications",
+      "name": "star_pairwise",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "ccd67871",
+      "domain": "Applications",
+      "name": "card_starIdx",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "ccd67871",
+      "domain": "Applications",
+      "name": "star_comp_injective",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T23:11:53",
+  "last_updated": "2026-07-14T23:12:12",
   "open_questions": [
     {
       "context": "-    sorry; +      sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "d09018a9",
-        "quality": 0.82,
-        "theorems": 15,
-        "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-      },
-      {
         "cycle_id": "c5cfd9ce",
         "quality": 0.83,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 17,
         "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
+      },
+      {
+        "cycle_id": "ccd67871",
+        "quality": 0.83,
+        "theorems": 52,
+        "title": "Deepening: Working with a self‑contained model of total colourings (proper verte"
       }
     ],
     "Bridges": [

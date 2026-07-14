@@ -1306,7 +1306,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc9e6854",
     "description": "Cycle 10dfa4e0 (Q=0.820) proved 26 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combin",
     "domain_bridges": [],
     "domains": [
@@ -1318,7 +1318,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "10dfa4e0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T22:54:15.669711+00:00",
     "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
   },
@@ -1515,7 +1515,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "90554d1b",
     "description": "Cycle ee7062d3 (Q=0.820) proved 20 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Any simplicial complex whose links satisfy the KKL theorem also satisfies a global KKL-type theorem for influence functions. Formally, if every (d-1)-dimensional link in a simplicial complex K satisfi",
     "domain_bridges": [],
     "domains": [
@@ -1527,7 +1527,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ee7062d3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T17:09:44.847521+00:00",
     "title": "Close Proofs: Local-to-Global KKL Theorem for Simplicial Complexes with Local KKL Li"
   },

@@ -629,25 +629,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ccd67871",
-    "description": "Building on cycle daf8e94d (Q=0.820), which proved 38 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: AVD‑total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self‑contained model of total colourings (proper vertex colourings\nof the total graph `T(H)` on `V ⊕ E`) and adjacent‑vertex‑distinguishing (AVD)\ntotal c",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_daf8e94d_3610f9d9",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "daf8e94d",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T21:57:46.553617+00:00",
-    "title": "Deepening: Working with a self‑contained model of total colourings (proper vertex colouring"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle e2c082ff (Q=0.820), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
     "domain_bridges": [],
@@ -1325,7 +1306,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc9e6854",
     "description": "Cycle 10dfa4e0 (Q=0.820) proved 26 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combin",
     "domain_bridges": [],
     "domains": [
@@ -1337,7 +1318,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "10dfa4e0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T22:54:15.669711+00:00",
     "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
   },
@@ -3809,6 +3790,26 @@
     "status": "available",
     "timestamp": "2026-07-14T23:11:51.360639+00:00",
     "title": "`KnottedLight.lean` computed the winding number only for the special phase field"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: AVD‑total colourings of central graphs\n\nThis cycle isolated the mechanism behind the lower bound for adjacent‑vertex‑\ndistinguishing (AVD) total colourings of the central graph `C(G)`. The decisive\nstructural fact is that **every original vertex of `C(G)` has degree `|V| − 1`**,\nso any two vertices that are non‑adjacent in `G` become an *adjacent equal‑degree*\npair in `C(G)`. This forces every AVD total colouring of `C(G)` to use at least\n`|V| + 1` colours, with **no regularity assumption**. For a `d`‑regular\nnon‑complete graph this subsumes the earlier `d + 3` bound (because `|V| ≥ d + 2`),\nand for the `5`‑cycle it sharpens the recorded `≥ 5` to `≥ 6`.\n\nThe following conjectures are the natural next targets.\n\n## Conjecture 1 — Exactness of the `|V| + 1` bound for regular graphs of minimum order\n\nFor every `d`‑regular graph `G` (`d ≥ 2`) that is not complete and attains the\nminimum order `|V| = d + 2`, the central graph satisfies `χ''ₐ(C(G)) = |V| + 1 =\nd + 3`.\n\n**The key insight is** that the `|V| + 1` lower bound is met by a colouring in\nwhich the `|V|` colours forced on each original vertex's star are permuted, vertex\nby vertex, so that adjacent original vertices differ in exactly one colour of their\ncolour set — the single extra colour breaks all remaining ties while the\nsubdivision vertices, of degree `2`, absorb the leftover palette freely.\n\n**Why now?** The lower bound is settled and identifies `|V| + 1`, not `d + 3`, as\nthe true quantity; the only missing half is an explicit colouring, and the\nminimum‑order case has the tightest palette, making it the cleanest place to\nconstruct one.\n\n## Conjecture 2 — The order term dominates: `χ''ₐ(C(G)) = |V| + 1` for all non‑complete `G`\n\nFor every finite simple graph `G` that is not complete, `χ''ₐ(C(G)) = |V| + 1`,\nindependently of the degree sequence of `G`.\n\n**The key insight is** that in `C(G)` the original vertices form a clique‑like\ncore (each of degree `|V| − 1`) whose colouring cost is governed entirely by the\nnumber of vertices, while the subdivision vertices are low‑degree and never raise\nthe requirement; hence the chromatic parameter should collapse to a function of\n`|V|` alone.\n\n**Why now?** This cycle proved the `≥ |V| + 1` direction in full generality and\nshowed the regular hypothesis was never load‑bearing; the remaining task is a\nsingle uniform construction rather than a family of ad‑hoc regular ones.\n\n## Conjecture 3 — Complete graphs form the exceptional regime\n\nFor the complete graph `K_m`, the central graph `C(K_m)` has no non‑adjacent\noriginal pair, and `χ''ₐ(C(K_m))` is strictly smaller than `|V| + 1`; in fact it is\ngoverned by the subdivision structure and equals `Θ(m)` with a different leading\nconstant.\n\n**The key insight is** that completeness removes exactly the adjacent\nequal‑degree pairs that drive the `|V| + 1` obstruction, so the extremal behaviour\nmust switch from the vertex‑core to the edge‑subdivision skeleton.\n\n**Why now?** The guard hypothesis \"`G` has a non‑adjacent pair\" used throughout\nthis cycle pinpoints completeness as the sole boundary case, making it the precise\nfrontier to test next.\n\n## Conjecture 4 — Stability: near‑complete graphs interpolate\n\nIf `G` is obtained from `K_m` by deleting a single edge, then `χ''ₐ(C(G)) =\n|V| + 1 = m + 1`, and more generally deleting `k` independent edges keeps the value\nat `m + 1` as long as `k ≥ 1`.\n\n**The key insight is** that a single non‑adjacent pair already suffices to trigger\nthe full `|V| + 1` obstruction, so the parameter should be a step function that\njumps to `m + 1` the moment `G` stops being complete and then stays flat.\n\n**Why now?** The lower bound proved here activates from *one* non‑adjacent pair,\nso the \"one edge deleted\" case is the minimal perturbation that separates the\ncomplete regime (Conjecture 3) from the generic regime (Conjecture 2).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1325",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ccd67871",
+    "status": "available",
+    "timestamp": "2026-07-14T23:11:57.317389+00:00",
+    "title": "This cycle isolated the mechanism behind the lower bound for adjacent‑vertex‑"
   },
   {
     "ambition_level": "extension",
