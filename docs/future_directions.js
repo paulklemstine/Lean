@@ -31,20 +31,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
-    "consumed_by_exp_id": "0725f80e",
-    "description": "Building on cycle 14656387 (Q=0.830), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 The M\u00f6bius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant \u2014 the **M\u00f6bius discriminant**\n`\u0394 = \u03b3\u03b2 \u2212 \u03b1\u03b4` attached to a first-order multiplicative recurrence\n`(\u03b1 n + \u03b2)\u00b7a(n+1) = (\u03b3 n + \u03b4)\u00b7a(n)` \u2014 and proved that its sign comple",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_14656387_a6c7f6db",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "14656387",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T19:16:11.234630+00:00",
-    "title": "Deepening: This cycle isolated a single scalar invariant \u2014 the **M\u00f6bius discriminant**"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 191c7579 (Q=0.830), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions \u2014 Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLemmaTightnessArbitraryOffsets.lean`.\n\n## What was settled this cycle\n\n1. **The general tightness conj",
     "domains": [
@@ -1842,7 +1828,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a25c6e48",
     "description": "# Future Directions \u2014 Topology of Knotted Light\n\n`KnottedLight.lean` formalizes the topological charge of an orbital-angular-momentum\n(OAM) laser beam as an honest contour-integral winding number and proves it equals\nthe integer charge `\u2113`, together with quantization, charge conservation under\nsuperposition, the on-axis phase singularity, and two contrarian disproofs\n(negative charges exist; opposite vortices annihilate).\n\n## What was proved\n- `winding_oamPhase` \u2014 winding number of `exp(i\u2113\u03b8)` equals `\u2113` (contour integral).\n- `winding_quantized` \u2014 the charge is always an integer.\n- `oamPhase_mul`, `oamPhase_prod`, `winding_additive` \u2014 charge additivity/conservation.\n- `oamPhase_periodic` \u2014 single-valuedness of the phase field.\n- `beamAmp_vanishes`, `beamAmp_nonzero` \u2014 amplitude vanishes exactly on the axis iff `\u2113 \u2260 0`.\n\n## What was disproved (contrarian)\n- `winding_can_be_negative` \u2014 refutes \"charge is always nonnegative\".\n- `oam_annihilation` (+ `oam_annihilation_nonvanishing`) \u2014 refutes \"a product of\n  two vortex beams is always a vortex beam\".\n\n## Natural next steps\n1. **General winding number.** Extend `winding` to a broad class of loops\n   `\u03b3 : [0,1] \u2192 \u2102 \\ {0}` and prove homotopy invariance and additivity in full\n   generality (not just for `oamPhase`), connecting to `\u2124 = \u03c0\u2081(\u2102*)`.\n2. **Linking number of nested vortices.** Formalize the Hopf-link / linking-number\n   picture for two coaxial vortex lines and relate it to the product of charges.\n3. **Full Laguerre\u2013Gauss modes.** Include the Gaussian envelope and radial index\n   `p`, and prove the OAM per photon is `\u2113 \u210f` via the Poynting-vector integral.\n4. **Knotted field lines.** Formalize Hopf fibration constructions of genuinely\n   knotted (rather than merely linked) optical field lines and their conserved\n   helicity/linking invariant.\n5. **Stability under perturbation.** Show the charge is invariant under small\n   continuous perturbations of the field that keep the axis zero isolated\n   (topological robustness).\n",
     "domains": [
       "Algebra",
@@ -1852,7 +1838,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "17340490",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T23:31:49.480718+00:00",
     "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
   },
@@ -2635,6 +2621,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T20:27:47.635013+00:00",
     "title": "This cycle deepened the \u03bc-extension of Matsuno's formula by building a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The M\u00f6bius discriminant, deepened\n\nThis cycle isolated the scalar **M\u00f6bius discriminant** `\u0394 = \u03b3\u03b2 \u2212 \u03b1\u03b4` of a\nfirst-order multiplicative recurrence `(\u03b1 n + \u03b2)\u00b7a(n+1) = (\u03b3 n + \u03b4)\u00b7a(n)` and\nproved three new layers of structure: an exact **second-order Hankel law**\n`p\u00b7D(n+1) = \u2212r\u00b7D(n)` with geometric closed form `p\u207f\u00b7D(n) = (\u2212r)\u207f\u00b7D(0)`; global\n**monotonicity of the ratio sequence** and **all-order Tur\u00e1n inequalities**; and\nthe exact **telescoping product** solution. Below are bold, testable directions\nthese findings open.\n\n## 1. A curvature dichotomy across recurrence order\n\n**Conjecture.** For an order-`k` linear recurrence with constant coefficients and\nleading/trailing coefficients `p` and `r`, the order-`k` Hankel (Casoratian)\ndeterminant is a *geometric* sequence with ratio `(\u22121)^{k\u22121}\u00b7r/p`, so its sign is\neventually constant precisely when `(\u22121)^{k\u22121}\u00b7r/p > 0` and perpetually\nalternating otherwise.\n\nThe key insight is that the \"obstruction\" observed for second-order Fibonacci is\nnot disorder but a *negative multiplier*: the determinant still obeys a clean\nfirst-order law, only with a ratio whose sign depends on the parity of the order.\n\nWhy now? The second-order case is now settled exactly (`p\u00b7D(n+1) = \u2212r\u00b7D(n)`), so\nthe multiplier's sign is understood; the only remaining step is to identify how\nthe Casoratian multiplier scales with order, which the second-order computation\nalready predicts through the parity factor `(\u22121)^{k\u22121}`.\n\n## 2. \u0394 as a complete invariant for log-convexity\n\n**Conjecture.** For a positive sequence satisfying the first-order multiplicative\nrecurrence with positive denominators, the following are equivalent: `\u0394 > 0`; the\nconsecutive ratio is strictly increasing; and the all-order Tur\u00e1n inequalities\n`a(i+1)\u00b7a(j) < a(i)\u00b7a(j+1)` hold for every `i < j`. In particular no strictly\nweaker hypothesis than the sign of the single scalar `\u0394` can distinguish\nlog-convex from log-concave totals.\n\nThe key insight is that a single scalar controls an entire two-parameter family\nof cross-index inequalities, collapsing global log-behaviour to one sign.\n\nWhy now? This cycle proved the forward implications (`\u0394 > 0 \u21d2` monotone ratios\n`\u21d2` Tur\u00e1n). The converse \u2014 recovering the sign of `\u0394` from any one Tur\u00e1n\ninequality via the exact forward-difference identity \u2014 is a short algebraic\nstep now that the forward-difference numerator is known to be exactly `\u0394`.\n\n## 3. Telescoping products and asymptotic growth laws\n\n**Conjecture.** When `\u03b1, \u03b3 > 0`, the telescoping product\n`a(n) = a(0)\u00b7\u220f_{k<n} (\u03b3 k + \u03b4)/(\u03b1 k + \u03b2)` grows like\n`C \u00b7 (\u03b3/\u03b1)^n \u00b7 n^{(\u03b4/\u03b3 \u2212 \u03b2/\u03b1)}` up to a bounded factor, so the exponential rate\nis `\u03b3/\u03b1` and the polynomial correction is governed by the *second* M\u00f6bius datum\n`\u03b4/\u03b3 \u2212 \u03b2/\u03b1`.\n\nThe key insight is that the exact product turns qualitative log-convexity into a\nprecise two-term asymptotic, with `\u03b3/\u03b1` setting the exponential scale and a\nsecondary discriminant setting the subexponential drift.\n\nWhy now? The exact product solution is now available in closed form, and the\nlog-curvature was already shown to vanish asymptotically; combining the two\nreduces the growth law to a controlled Stirling-type estimate of the product.\n\n## 4. Signed determinants and orthogonal-polynomial moment sequences\n\n**Conjecture.** A positive sequence is the moment sequence of a positive measure\nif and only if it arises from a first-order multiplicative recurrence with\n`\u0394 \u2265 0` together with the analogous higher Hankel positivity; the sign of `\u0394`\ndetects the first obstruction to the Hamburger moment problem.\n\nThe key insight is that the pointwise discriminant `D(n)` is the `2\u00d72` Hankel\nminor, so the M\u00f6bius discriminant is exactly the first entry in the classical\npositive-definiteness hierarchy for moments.\n\nWhy now? With `D(n)` pinned to a fixed multiple of `\u0394` at every index, the\n`2\u00d72` minors are completely understood; extending to `3\u00d73` Hankel minors is the\nnatural next rung and connects the M\u00f6bius invariant to classical moment theory.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1316",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0725f80e",
+    "status": "available",
+    "timestamp": "2026-07-14T21:05:06.686877+00:00",
+    "title": "This cycle isolated the scalar **M\u00f6bius discriminant** `\u0394 = \u03b3\u03b2 \u2212 \u03b1\u03b4` of a"
   },
   {
     "consumed_by_exp_id": "",

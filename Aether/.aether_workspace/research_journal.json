@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6af180ae",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the generalized multinomial convolution identity\n$$\\sum_{i_1+\\cdots+i_m=d}\\ \\prod_{j=1}^{m}\\binom{a+i_j}{a}=\\binom{ma+d+m-1}{d},$$\nand its multichoose reformulation\n$",
-      "quality_score": 0.86,
-      "sorry_count": 4,
-      "theorem_count": 12,
-      "timestamp": "2026-07-14T01:53:43",
-      "title": "Deepening: Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
-    },
-    {
       "cycle_id": "cf19c51c",
       "domain": "Novelty",
       "key_insight": "# Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved thr",
@@ -499,19 +489,19 @@
       "theorem_count": 41,
       "timestamp": "2026-07-14T20:28:08",
       "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+    },
+    {
+      "cycle_id": "0725f80e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Möbius discriminant, deepened\n\nThis cycle isolated the scalar **Möbius discriminant** `Δ = γβ − αδ` of a\nfirst-order multiplicative recurrence `(α n + β)·a(n+1) = (γ n + δ)·a",
+      "quality_score": 0.86,
+      "sorry_count": 3,
+      "theorem_count": 14,
+      "timestamp": "2026-07-14T21:05:18",
+      "title": "Deepening: This cycle isolated a single scalar invariant — the **Möbius discriminant**"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c016fced",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Winning on the Hilbert Board\n\nThis cycle established that the lone-rook fortress on the infinite plane is not a\nplanar accident: the king's one-step escape, its infinite escape ru",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 1745,
-      "timestamp": "2026-07-12T05:03:54",
-      "title": "Deepening: Infinite-Dimensional Chess: Winning on the Hilbert Board"
-    },
     {
       "cycle_id": "ef2405bd",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 41,
       "timestamp": "2026-07-14T20:28:08",
       "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+    },
+    {
+      "cycle_id": "0725f80e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Möbius discriminant, deepened\n\nThis cycle isolated the scalar **Möbius discriminant** `Δ = γβ − αδ` of a\nfirst-order multiplicative recurrence `(α n + β)·a(n+1) = (γ n + δ)·a",
+      "quality_score": 0.86,
+      "sorry_count": 3,
+      "theorem_count": 14,
+      "timestamp": "2026-07-14T21:05:18",
+      "title": "Deepening: This cycle isolated a single scalar invariant — the **Möbius discriminant**"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bd6ccec1",
-      "domain": "Novelty",
-      "name": "defends_mono",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "bd6ccec1",
-      "domain": "Novelty",
-      "name": "charF_mono",
-      "quality": 0.83
-    },
     {
       "cycle_id": "d09018a9",
       "domain": "Applications",
@@ -2803,17 +2791,22 @@
       "domain": "Novelty",
       "name": "muInv_mul",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "0725f80e",
+      "domain": "Novelty",
+      "name": "mobius_ratio_strictMono",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "0725f80e",
+      "domain": "Novelty",
+      "name": "mobius_ratio_strictAnti",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-07-14T20:28:08",
+  "last_updated": "2026-07-14T21:05:18",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "117d6517",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-13T23:13:27"
-    },
     {
       "context": "+range rather than leave the tail as `sorry`. -/; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "664b3442",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 6,
       "timestamp": "2026-07-14T20:28:08"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "0725f80e",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-14T21:05:18"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "16f220a2",
-        "quality": 0.83,
-        "theorems": 18,
-        "title": "Deepening: This cycle established, with no finiteness or well-foundedness hypoth"
-      },
-      {
         "cycle_id": "e6dfc1d4",
         "quality": 0.78,
         "theorems": 26,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 41,
         "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
+      },
+      {
+        "cycle_id": "0725f80e",
+        "quality": 0.86,
+        "theorems": 14,
+        "title": "Deepening: This cycle isolated a single scalar invariant — the **Möbius discrimi"
       }
     ],
     "NumberTheory": [
