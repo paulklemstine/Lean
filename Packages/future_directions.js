@@ -158,6 +158,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0a1d0253 (Q=0.820), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmetic\nskeleton of the extension of Matsuno's formula to non-vanishing \u03bc-invariants, together\nwith the concrete `p = 2` sharp/flat degree sequences. Natural next steps:\n\n1. **Genuine Iwasawa invariants.**",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_0a1d0253_5bf389c4",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "0a1d0253",
+    "status": "available",
+    "timestamp": "2026-07-14T08:39:55.122822+00:00",
+    "title": "Deepening: The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0faef071 (Q=0.820), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
       "Applications"
@@ -951,6 +965,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T00:40:03.218809+00:00",
     "title": "Close Proofs: Consciousness as Emergent Fixed Point"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 0a1d0253 (Q=0.820) proved 19 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\nThe file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmetic\nskeleton of the extension of Matsuno's formula to non-vanishing \u03bc-invariants, together\nwith the c",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_0a1d0253_207133a9",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "0a1d0253",
+    "status": "available",
+    "timestamp": "2026-07-14T08:39:55.260573+00:00",
+    "title": "Close Proofs: The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the"
   },
   {
     "consumed_by_exp_id": "",
@@ -1924,21 +1952,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The results established here treat the origin as the distinguished point, exploi"
   },
   {
-    "consumed_by_exp_id": "0a1d0253",
-    "description": "# Future Directions\n\nThe file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmetic\nskeleton of the extension of Matsuno's formula to non-vanishing \u03bc-invariants, together\nwith the concrete `p = 2` sharp/flat degree sequences. Natural next steps:\n\n1. **Genuine Iwasawa invariants.** Replace the modelled `lambdaDiff`/`muTerm` by the\n   actual \u03bb- and \u03bc-invariants extracted from a characteristic power series in `\u2124\u2082[[T]]`\n   via Weierstrass preparation, and prove additivity `\u03bb(fg)=\u03bb(f)+\u03bb(g)`,\n   `\u03bc(fg)=\u03bc(f)+\u03bc(g)` from `Polynomial.content_mul` and multiplicativity of the\n   trailing degree modulo `p`.\n\n2. **Sharp/flat Coleman maps.** Formalise Pollack's `\u03c9_n^\u00b1` and Sprung's sharp/flat\n   decomposition of the `2`-adic `L`-function, and identify their degrees with the\n   `flatDeg`/`sharpDeg` sequences proved here.\n\n3. **The full twist formula.** Derive the local terms `2^{n_\u2113}`, `2^{n_\u2113+1}` from the\n   local Tamagawa/reduction data at `\u2113`, upgrading `localTerm` from a definition to a\n   theorem.\n\n4. **General supersingular primes `p`.** Generalise the Jacobsthal identities to\n   `q_n = (p^n \u2212 (\u22121)^n)/(p+1)` and the degree sums to base `p\u00b2`, giving the\n   sharp/flat degrees at arbitrary supersingular `p`.\n\n5. **Hatley\u2013Ray comparison.** Connect the additive \u03bc-correction to residual/comparison\n   results relating congruent modular forms, quantifying how \u03bc transfers under twist.\n",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_1251",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2800cd94",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T22:36:11.690365+00:00",
-    "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Analogy as an Adjoint Operation\n\nThis cycle recast analogy-making between two ordered structures as the taking of an\n*adjoint pair* `(forward, backward)` bound by the adjunction law\n`forward a \u2264 b \u2194 a \u2264 backward b`. The round-trip `backward \u2218 forward` was shown to be a\nclosure operator (inflationary, monotone, idempotent), the backward map was shown to be\nuniquely determined by the forward map, and the structural fidelity \u2014 the number of source\npoints recovered exactly by a round trip \u2014 was shown to be maximized precisely by *perfect*\nanalogies. The canonical best analogy for a min-plus (tropical) map was identified with\nits max-plus residual, recovering the classical shortest-path reconstruction inequalities.\nThe following conjectures push these findings further.\n\n## 1. Fidelity is a rank-type invariant of the analogy\n\n**Conjecture.** For an analogy over a finite source, the fidelity (number of round-trip\nfixed points) equals the size of the image of the closure operator `backward \u2218 forward`,\nand this quantity is monotone under composition of analogies: the fidelity of a composite\nanalogy never exceeds the smaller of the two component fidelities.\n\nThe key insight is that the fixed-point set of the fidelity operator is exactly the set of\n\"analogically stable\" concepts \u2014 those that survive translation unchanged \u2014 so counting\nthem is the same as measuring the rank of the stabilized sublattice, and rank can only\ndrop when analogies are chained.\n\nWhy now? We have already established that the round trip is an idempotent closure operator,\nso its image is well defined and equals its fixed-point set; the remaining step is to show\nthis image size behaves submultiplicatively under composition, which is a finite, checkable\ncombinatorial statement rather than an open-ended search.\n\n## 2. Best analogies are Lipschitz-optimal reconstructions\n\n**Conjecture.** Among all backward maps paired with a fixed forward map, the adjoint\nbackward map minimizes the worst-case reconstruction defect measured in the natural\nsup-metric; moreover, in the tropical setting this optimal defect is controlled by the\nspread of the matrix entries along each column.\n\nThe key insight is that the residual is not merely *a* left inverse but the *tightest*\nover-approximation permitted by monotonicity, so any competing backward map must pay a\nstrictly larger reconstruction error somewhere, and in the min-plus world that error is\nexactly a difference of column extrema.\n\nWhy now? The adjunction inequalities `w \u2264 A \u2297 (A\u266f w)` and `A\u266f (A \u2297 v) \u2264 v` proved this\ncycle already sandwich the reconstruction; converting the sandwich into a sharp Lipschitz\nbound only requires the sup-inf inequality already available in the tropical toolkit.\n\n## 3. Perfect two-way analogies are exactly order isomorphisms of the stable cores\n\n**Conjecture.** Every analogy restricts to a perfect two-way analogy \u2014 an order\nisomorphism \u2014 between the image of its source-side closure operator and the image of its\ntarget-side interior operator, and this restricted isomorphism is the unique maximal\nsub-analogy that loses no structure.\n\nThe key insight is that even a lossy analogy hides a perfectly faithful core: the closure\nand interior operators carve out exactly the sublattices on which forward and backward are\nmutually inverse, so every analogy is an isomorphism \"up to stabilization.\"\n\nWhy now? This cycle proved that a two-sided perfect analogy is an order embedding and that\nthe round trips are idempotent; the images of those idempotents are the candidate cores,\nso the conjecture is the natural completion of results already in hand.\n\n## 4. Analogical composition forms a category with residuation as inverse\n\n**Conjecture.** Analogies between ordered structures compose associatively, identities are\nthe trivial self-analogies, and the perfect analogies are exactly the isomorphisms of the\nresulting category; in the tropical instantiation, composition of analogies corresponds to\nmin-plus matrix multiplication and residuation reverses the arrows.\n\nThe key insight is that the adjunction law is preserved under composition, so \"being an\nanalogy\" is a closed, categorical property, and the tropical residual furnishes a concrete,\ncomputable dagger-style involution on the arrows.\n\nWhy now? The uniqueness of the backward map established this cycle guarantees composition is\nwell defined on the forward maps alone, removing the main obstruction to organizing analogies\ninto a category.\n\n## 5. Fidelity concentration for random tropical analogies\n\n**Conjecture.** For a min-plus matrix with independent random entries, the fidelity of the\ncanonical analogy on the discretized source concentrates sharply around a deterministic\nvalue determined only by the entry distribution and the dimension, with fluctuations\nvanishing as the dimension grows.\n\nThe key insight is that whether a source point is a round-trip fixed point depends only on\nlocal column comparisons, so fidelity is a sum of weakly dependent indicator variables and\nshould obey a law-of-large-numbers-style concentration.\n\nWhy now? The exact characterization of round-trip fixed points proved this cycle turns\nfidelity into an explicit counting statistic, making it amenable to the standard\nconcentration machinery for sums of nearly independent indicators.\n",
     "domains": [
@@ -2342,6 +2355,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T08:39:40.293597+00:00",
     "title": "This cycle promoted the component-count toughness toolkit from a collection of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Supersingular sharp/flat degrees at a general prime\n\nThis cycle established that the sharp/flat characteristic-degree arithmetic of a\nsupersingular elliptic curve, previously understood only at the prime `2` through the\nJacobsthal recurrence, extends verbatim to every supersingular prime `p` once the base\nis taken to be `p\u00b2` and the governing recurrence is the two-parameter\n`q\u2099\u208a\u2082 = (p \u2212 1)q\u2099\u208a\u2081 + p q\u2099`. The closed form `(p + 1)q\u2099 = p\u207f \u2212 (\u22121)\u207f`, the\nconsecutive-sum law `q\u2099 + q\u2099\u208a\u2081 = p\u207f`, the base-`p\u00b2` flat-degree formula\n`(p\u00b2 \u2212 1)\u00b7flatDeg + 1 = p^{2n}`, the sharp/flat ratio `sharp = p\u00b7flat`, and the bridge\n`q_{2n} = (p \u2212 1)\u00b7flatDeg` were all proved and shown to specialise to the classical\n`p = 2` identities. The following conjectures push this scaffold toward genuine Iwasawa\ntheory.\n\n## 1. A uniform Matsuno depth-weight law across supersingular primes\n\n**Conjecture.** For a supersingular prime `p` and an odd prime `\u2113 \u2260 p`, the local twist\nweight in the `\u03bb`-difference equals `p^{m_\u2113}` where `m_\u2113 = v_p((\u2113^{p\u00b2\u22121} \u2212 1)/(p\u00b2\u22121))`,\nand the total weight over the divisors of a twisting modulus `D` equals\n`(p \u2212 1)\u00b7flatDeg_p(\u03c9(D))` where `\u03c9(D)` counts prime divisors, tying the local weights to\neven-indexed generalised Jacobsthal numbers.\n\n*The key insight is* that the base-`2` depth `v\u2082((\u2113\u00b2 \u2212 1)/8)` is the `p = 2` shadow of a\n`p`-adic depth measured against the multiplicative order modulo `p\u00b2`, and the same\nfactorisation `p\u00b2 \u2212 1 = (p + 1)(p \u2212 1)` that produced the bridge `q_{2n} = (p\u22121)\u00b7flatDeg`\ngoverns the aggregate weight.\n\n*Why now?* The bridge identity, proved uniformly in `p` this cycle, removes the last\nplace where the classical formula appeared to rely on the accident `p \u2212 1 = 1`, making a\nprime-independent statement testable for the first time.\n\n## 2. Multiplicativity of the generalised Jacobsthal degree under twisting\n\n**Conjecture.** The map sending a twisting modulus `D` to the pair\n`(sharpDeg, flatDeg)` in base `p\u00b2` is multiplicative on coprime moduli in the strong\nsense that both the sharp and flat degrees of a product decompose as the base-`p\u00b2`\nconvolution `flatDeg(mn) = flatDeg(m) + p^{2\u00b7\u03c9(m)}\u00b7flatDeg(n)` for coprime `m, n`.\n\n*The key insight is* that base-`p\u00b2` positional expansion turns concatenation of prime\nsupports into digit shifts, so additivity of `\u03c9` under coprime multiplication lifts to a\nshift-and-add law on the degree sequences.\n\n*Why now?* With the closed form `(p\u00b2\u22121)\u00b7flatDeg + 1 = p^{2n}` in hand, the convolution\nlaw reduces to an elementary `p^{2n}` identity rather than an assertion about\ncharacteristic ideals, so it can be settled before the full Coleman-map machinery is\navailable.\n\n## 3. Parity of the `\u03bb`-difference is controlled by `p` modulo the Jacobsthal sign\n\n**Conjecture.** The sharp/flat `\u03bb`-difference of a quadratic twist is even for every\nsupersingular prime `p \u2265 3` and every squarefree twisting modulus, the sole obstruction to\noddness occurring at `p = 2` through the `(\u22121)\u207f` term of the Jacobsthal closed form.\n\n*The key insight is* that `(p + 1)q\u2099 = p\u207f \u2212 (\u22121)\u207f` forces `q\u2099` to inherit the parity of\n`(p\u207f \u2212 (\u22121)\u207f)/(p + 1)`, which stabilises for odd `p` but oscillates at `p = 2`.\n\n*Why now?* Parity of `\u03bb`-invariants is exactly the input needed for `p`-parity conjectures\nin the supersingular range, and the explicit sign term isolated this cycle pinpoints where\nparity can fail.\n\n## 4. The bridge as a rank-one degeneration of a two-variable Coleman degree\n\n**Conjecture.** There is a two-variable degree polynomial `Deg_p(x, y)` specialising to\n`sharpDeg` and `flatDeg` along `y = p\u00b7x` and `y = x`, whose value at roots of the\ncharacteristic polynomial `(t \u2212 p)(t + 1)` reproduces the generalised Jacobsthal numbers,\nso that the sharp/flat decomposition is the eigen-decomposition of a single degree\noperator.\n\n*The key insight is* that the two characteristic roots `p` and `\u22121` are precisely the\nsharp and flat eigenvalues, and the bridge `q_{2n} = (p \u2212 1)\u00b7flatDeg` is the statement that\nthe flat component is the `+1`-eigenprojection scaled by the root gap `p \u2212 (\u22121) = p + 1`\ndivided out.\n\n*Why now?* Sprung's sharp/flat Coleman maps are known to diagonalise a `2\u00d72` logarithmic\nmatrix; the eigenvalue interpretation makes the conjecture a concrete linear-algebra\nprediction rather than a structural analogy.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1282",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0a1d0253",
+    "status": "available",
+    "timestamp": "2026-07-14T08:39:52.365766+00:00",
+    "title": "That the sharp/flat characteristic-degree arithmetic of a"
   },
   {
     "consumed_by_exp_id": "",

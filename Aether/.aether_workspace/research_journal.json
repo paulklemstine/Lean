@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5acf2050",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Composition-Algebra Playground, Deepened\n\nThis cycle extended the Hermitian-inner-product \"witness\" from the first Hopf\nfibration `S³ → S²` to the quaternionic Hopf fibration",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-13T14:51:35",
-      "title": "Deepening: That the geometry surrounding the Hopf fibration is"
-    },
-    {
       "cycle_id": "e3aaa465",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe file `Applications/TransferUniversality.lean` formalizes a universality/transitivity\ntheorem for transfer functions among accumulation points, modeling `Π^k_ℓ` as the dense\nad",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-14T08:39:48",
       "title": "Reusable toughness toolkit centered on the *component"
+    },
+    {
+      "cycle_id": "0a1d0253",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Supersingular sharp/flat degrees at a general prime\n\nThis cycle established that the sharp/flat characteristic-degree arithmetic of a\nsupersingular elliptic curve, previously und",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 19,
+      "timestamp": "2026-07-14T08:39:55",
+      "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2bd85c25",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Theorems as Phase Transitions in Proof Space\n\nThis project formalizes, in Lean 4 (Mathlib), a rigorous mathematical skeleton\nfor the speculative picture of *proof space* as a sta",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-11T16:23:18",
-      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-    },
     {
       "cycle_id": "8fb1d399",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-14T08:39:48",
       "title": "Reusable toughness toolkit centered on the *component"
+    },
+    {
+      "cycle_id": "0a1d0253",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Supersingular sharp/flat degrees at a general prime\n\nThis cycle established that the sharp/flat characteristic-degree arithmetic of a\nsupersingular elliptic curve, previously und",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 19,
+      "timestamp": "2026-07-14T08:39:55",
+      "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a0f7e73c",
-      "domain": "Applications",
-      "name": "LogLinear",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "a0f7e73c",
-      "domain": "Applications",
-      "name": "StrictLogConvex",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "a0f7e73c",
-      "domain": "Applications",
-      "name": "pow_two_logLinear",
-      "quality": 0.72
-    },
     {
       "cycle_id": "664b3442",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "dist_pt_eq_sqrt2",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "0a1d0253",
+      "domain": "Applications",
+      "name": "primPart_check",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0a1d0253",
+      "domain": "Applications",
+      "name": "over",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0a1d0253",
+      "domain": "Applications",
+      "name": "fib_carmichael_composite",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T08:39:48",
+  "last_updated": "2026-07-14T08:39:55",
   "open_questions": [
-    {
-      "context": "-- Synthesis (PI): constant-`1/3` supersaturation + Nosal endpoint, all sorry-free.",
-      "cycle_id": "a1dac228",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-13T12:17:35"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "290f55e0",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-14T07:30:03"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "0a1d0253",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-07-14T08:39:55"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "dbbebdc4",
-        "quality": 0.6,
-        "theorems": 0,
-        "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
-      },
-      {
         "cycle_id": "ae9bfe48",
         "quality": 0.7,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.83,
         "theorems": 0,
         "title": "Reusable toughness toolkit centered on the *component"
+      },
+      {
+        "cycle_id": "0a1d0253",
+        "quality": 0.82,
+        "theorems": 19,
+        "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
       }
     ],
     "Bridges": [
