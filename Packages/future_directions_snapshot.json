@@ -687,7 +687,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b6231f58",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 86411247 (Q=0.800), which proved 40 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Multiverse Set Theory: Mathematics Across Branches\n\nThis cycle deepened the combinatorial core of the set-theoretic multiverse by\nequipping it with a **modal structure of forcing**: possibility as truth in some\ngeneric extension, necessity as truth in every generic extension. M",
     "domain_bridges": [],
     "domains": [
@@ -699,7 +699,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "86411247",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T06:17:11.005418+00:00",
     "title": "Deepening: This cycle deepened the combinatorial core of the set-theoretic multiverse by"
   },
@@ -860,7 +860,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c4aa235b",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0abd0edb (Q=0.780), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$‑regular), we conjecture that the cent",
     "domain_bridges": [],
     "domains": [
@@ -872,7 +872,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0abd0edb",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T06:54:01.837362+00:00",
     "title": "Deepening: Exact AVD‑total chromatic number of central graphs of regular graphs"
   },
@@ -974,7 +974,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b78ccbe1",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 769cd692 (Q=0.780), which proved 51 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved three things about it unconditionally: iterating the\nsingle-step suspension raises the co-index by at l",
     "domain_bridges": [],
     "domains": [
@@ -986,7 +986,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "769cd692",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T07:30:03.453805+00:00",
     "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
   },
@@ -1730,7 +1730,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6e60d0a1",
+    "consumed_by_exp_id": "",
     "description": "Cycle 769cd692 (Q=0.780) proved 51 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved thr",
     "domain_bridges": [],
     "domains": [
@@ -1742,7 +1742,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "769cd692",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T07:30:03.599030+00:00",
     "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
   },
@@ -2547,7 +2547,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "bcaaf8f2",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S² = n(n-1)`, from which a\nuniversal energy floor `E_S ≥ √(n(n-1))` follows by Cauchy–Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Turán edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Turán graphs)\nFor every Turán graph `T(n, r)` with `r ≥ 4` and `n ≥ 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) − e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) − e`, deleting an edge flips two symmetric Seidel entries\nfrom `−1` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero — a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Turán (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `±√(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy — the ℓ¹ norm of the eigenvalues —\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `∑λ² = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n−2)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S ↦ S + 2(e_a e_bᵀ + e_b e_aᵀ)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S ≥ √(n(n-1))` is attained asymptotically (ratio → 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy–Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `±1` off-diagonal\nmatrix on the sphere `∑λ² = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n\n\n# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S² = n(n-1)`, from which a\nuniversal energy floor `E_S ≥ √(n(n-1))` follows by Cauchy–Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Turán edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Turán graphs)\nFor every Turán graph `T(n, r)` with `r ≥ 4` and `n ≥ 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) − e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) − e`, deleting an edge flips two symmetric Seidel entries\nfrom `−1` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero — a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Turán (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `±√(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy — the ℓ¹ norm of the eigenvalues —\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `∑λ² = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n−2)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S ↦ S + 2(e_a e_bᵀ + e_b e_aᵀ)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S ≥ √(n(n-1))` is attained asymptotically (ratio → 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy–Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `±1` off-diagonal\nmatrix on the sphere `∑λ² = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n\n\n# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S² = n(n-1)`, from which a\nuniversal energy floor `E_S ≥ √(n(n-1))` follows by Cauchy–Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Turán edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Turán graphs)\nFor every Turán graph `T(n, r)` with `r ≥ 4` and `n ≥ 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) − e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) − e`, deleting an edge flips two symmetric Seidel entries\nfrom `−1` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero — a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Turán (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `±√(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy — the ℓ¹ norm of the eigenvalues —\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `∑λ² = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n−2)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S ↦ S + 2(e_a e_bᵀ + e_b e_aᵀ)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S ≥ √(n(n-1))` is attained asymptotically (ratio → 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy–Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `±1` off-diagonal\nmatrix on the sphere `∑λ² = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n",
     "domain_bridges": [],
     "domains": [
@@ -2560,7 +2560,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "d954b0de",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T19:07:02.581945+00:00",
     "title": "Elementary spectral-moment foundations of Seidel"
   },
@@ -2687,7 +2687,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ca326542",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions — Colorful Carathéodory for Convex Cones\n\nThe results established here treat the origin as the distinguished point, exploit\nthe homogeneity that collapses conical and convex representability there, and\nsettle both the sharp color threshold in dimension one and the conical\nCarathéodory bound in every dimension. Several bold, testable directions follow.\n\n## 1. The full colorful cone theorem in every dimension\n\n**Conjecture.** Given `d + 1` finite color classes of vectors in `d`-dimensional\nspace, each capturing the origin as a nontrivial nonnegative combination, there is\na colorful transversal — one vector chosen per color — whose own cone captures the\norigin.\n\nThe key insight is that, at the origin, the colorful cone theorem coincides with\nthe classical colorful Carathéodory theorem, so the correct color count is `d + 1`\nrather than `d`, and the nearest-point exchange argument that proves the affine\nstatement should transfer verbatim once membership is phrased through the\nhomogeneity bridge. Why now? The homogeneity bridge and the sharp one-dimensional\nbase case are already in hand, isolating exactly the geometric exchange step that\nremains, so the general theorem is reduced to a single, well-understood mechanism.\n\n## 2. Quantitative colorful cones: counting transversals\n\n**Conjecture.** Under the hypotheses of the colorful cone theorem, the number of\ncolorful transversals whose cone captures the origin is at least exponential in the\nnumber of colors when each class straddles the origin in general position.\n\nThe key insight is that each straddling color contributes an independent binary\nchoice of sign that can be completed to a valid transversal, so valid transversals\nshould multiply rather than merely exist. Why now? The two-case construction in the\none-dimensional proof already exhibits multiple valid transversals explicitly,\ngiving a concrete combinatorial seed for a counting lower bound.\n\n## 3. Sharpness of the conical Carathéodory number via positive circuits\n\n**Conjecture.** In `d`-dimensional space the conical Carathéodory bound `d + 1` is\nattained precisely by minimal positively dependent families (\"positive circuits\"),\nand every family capturing the origin contains such a circuit of size at most\n`d + 1`.\n\nThe key insight is that pruning a nonnegative representation always terminates at a\nsupport on which the vectors are affinely independent yet positively dependent, and\nsuch supports are exactly positive circuits. Why now? The pruning step proved here\nalready reduces any capturing family below the `d + 1` threshold, so extracting the\ncircuit structure is the natural next refinement of that same argument.\n\n## 4. A colorful cone theorem for interior capture\n\n**Conjecture.** If each of `d` color classes positively spans the whole space\n(the origin lies in the interior of each cone), then some colorful transversal of\n`d + 1` chosen vectors captures the origin in the interior of its cone, and `d`\ncolors never suffice.\n\nThe key insight is that interior capture is an open condition stable under small\nperturbations, so a transversal achieving boundary capture can be nudged into\ninterior capture whenever one extra color is available. Why now? The dimension-one\nanalysis already separates \"boundary\" capture (a single ray) from genuine interior\ncapture, pinpointing the extra color as the resource that upgrades one to the\nother.\n\n## 5. Stability of capture under perturbation\n\n**Conjecture.** The property \"this colorful transversal captures the origin\nconically\" is stable: there is a positive margin such that perturbing every chosen\nvector within that margin preserves capture, with the margin controlled by the\nsmallest positive coefficient in the witnessing combination.\n\nThe key insight is that a strictly positive witnessing coefficient furnishes slack\nthat a sufficiently small perturbation cannot exhaust. Why now? The nontriviality\nclause enforced throughout this work supplies exactly such a strictly positive\ncoefficient, turning a qualitative existence statement into a quantitative\nrobustness estimate.\n",
     "domain_bridges": [],
     "domains": [
@@ -2700,7 +2700,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "5d81b714",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T22:35:39.370659+00:00",
     "title": "The results established here treat the origin as the distinguished point, exploi"
   },
@@ -3283,6 +3283,26 @@
     "status": "available",
     "timestamp": "2026-07-14T08:39:59.624732+00:00",
     "title": "This program studies **sharp lower bounds for sumsets in L₁-balls / boxes in ℤᵈ*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Seidel higher spectral moments under edge flips\n\n## What this cycle established (all machine-checked in `SeidelHigherMoments.lean`)\n\nThe foundational cycle showed the *second* Seidel moment `tr(S²) = n(n-1)` is\ngraph-independent and therefore **blind** to edge deletion. This cycle pins down\nthe first moment that is **not** blind, and gives it a closed form.\n\n- **`trace_cube_flip`** (main). For any real symmetric zero-diagonal matrix `M`,\n  distinct `a ≠ b`, and weight `c`, the symmetric rank-two flip\n  `P = c·(Eᵃᵇ + Eᵇᵃ)` changes the third moment by exactly\n  `tr((M+P)³) − tr(M³) = 6·c·(M²)_{a b}`.\n  The `tr(P³)` and `tr(M·P²)` contributions vanish precisely because `M` has zero\n  diagonal — a Seidel-specific structural fact.\n\n- **`seidel_delete_eq`**. Deleting one edge `{a,b}` is exactly the flip with\n  `c = 2`: `S(G−e) = S(G) + 2·(Eᵃᵇ + Eᵇᵃ)`.\n\n- **`seidel_trace_cube_delete`**. Consequently the third Seidel moment changes by\n  `12·(S²)_{a b}` under an edge deletion, whereas\n  **`seidel_trace_sq_delete_invariant`** confirms the second moment does not\n  change at all.\n\n- **Concrete witness** (`K3_vs_P3_third_moment`, `K3_vs_P3_second_moment`,\n  `K3_flip_quantity`): for `K₃` vs `K₃ − e` (= `P₃`), `tr(S³)` jumps `−6 → +6`\n  (change `+12 = 12·(S²)₁₂ = 12·1`) while `tr(S²)` is fixed at `6`.\n\n- **Complementation** (`seidel_compl_eq`, `energy_neg`, `seidel_energy_compl`):\n  complementing a graph negates the Seidel matrix, so the Seidel *energy* is a\n  complementation invariant. Hence Seidel energy cannot be a monotone function of\n  the number of edges — a contrarian counterpoint to naive \"more edges ⇒ more\n  energy\" heuristics.\n\nAll results are proved for an arbitrary finite vertex type and depend only on the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n## Interpretation\n\nThis is an elementary, fully rigorous *moment-level* version of the rank-two\nedge-flip perturbation program (Conjecture 3). The sign and magnitude of the\nthird-moment response to an edge flip are governed by the single graph-theoretic\nquantity `(S²)_{a b} = ∑ₖ S_{ak} S_{kb}`, which is generically nonzero — exactly\nwhy the third moment sees a flip that the sphere constraint `∑λ² = n(n-1)` cannot.\n\n## Next steps\n\n1. **Sign of `(S²)_{a b}`.** Turn `(S²)_{a b} = ∑ₖ S_{ak}S_{kb}` into a\n   combinatorial count (common neighbours vs. mixed pairs) and determine its sign\n   on Turán graphs, tightening the connection to the strict edge-deletion\n   inequality (Conjecture 1).\n\n2. **From moments to energy.** Combine the exact third-moment change with the\n   fixed second moment to constrain how eigenvalue mass crosses `0`, converting\n   the analytic energy inequality into an eigenvalue-counting statement\n   (Conjecture 3, spectral form).\n\n3. **Fourth moment.** Compute `tr((M+P)⁴) − tr(M⁴)` for the same flip; the\n   leading correction should be `4·tr(M²P) + …`, giving a second higher-moment\n   invariant sensitive to edge changes.\n\n4. **Complement + switching.** The energy is invariant under both complementation\n   (this cycle) and switching (foundational cycle); characterise the joint orbit\n   and its minimal-energy representatives (Conjecture 2).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Pythagorean"
+    ],
+    "id": "fd_1284",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bcaaf8f2",
+    "status": "available",
+    "timestamp": "2026-07-14T08:40:12.799683+00:00",
+    "title": "The foundational cycle showed the *second* Seidel moment `tr(S²) = n(n-1)` is"
   },
   {
     "ambition_level": "extension",

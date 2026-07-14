@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e3aaa465",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe file `Applications/TransferUniversality.lean` formalizes a universality/transitivity\ntheorem for transfer functions among accumulation points, modeling `Π^k_ℓ` as the dense\nad",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-13T15:24:16",
-      "title": "Universality of Transfer Functions Among Accumulation Points"
-    },
-    {
       "cycle_id": "f347bf96",
       "domain": "Applications",
       "key_insight": "# Future Directions: Extremal Determinants with Bounded Entries\n\nThis cycle established, for `4 × 4` integer matrices with entries in the symmetric\nrange `{-B, …, B}`, that the maximum determinant is",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-14T08:39:55",
       "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
+    },
+    {
+      "cycle_id": "13e584ca",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis program studies **sharp lower bounds for sumsets in L₁-balls / boxes in ℤᵈ**.\n\n## What is proved\n\n### Dimension one — the sharp exponent (`Catalog/Bridges/SumsetL1BallSharpDi",
+      "quality_score": 0.83,
+      "sorry_count": 2,
+      "theorem_count": 25,
+      "timestamp": "2026-07-14T08:40:07",
+      "title": "Deepening: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8fb1d399",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Oracle's Burden\n\n## What was proved (this project)\n\nTwo self-contained Lean 4 files, built on Mathlib's `Computability.TuringDegree` / `RecursiveIn`.\n\n### `Catalog/Computation",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-11T16:57:29",
-      "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
-    },
     {
       "cycle_id": "4eef1c33",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-14T08:39:55",
       "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
+    },
+    {
+      "cycle_id": "13e584ca",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThis program studies **sharp lower bounds for sumsets in L₁-balls / boxes in ℤᵈ**.\n\n## What is proved\n\n### Dimension one — the sharp exponent (`Catalog/Bridges/SumsetL1BallSharpDi",
+      "quality_score": 0.83,
+      "sorry_count": 2,
+      "theorem_count": 25,
+      "timestamp": "2026-07-14T08:40:07",
+      "title": "Deepening: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "664b3442",
-      "domain": "Applications",
-      "name": "traj_zero",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "664b3442",
-      "domain": "Applications",
-      "name": "traj_succ",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "664b3442",
-      "domain": "Applications",
-      "name": "traj_periodic",
-      "quality": 0.83
-    },
     {
       "cycle_id": "17340490",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "fib_carmichael_composite",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "13e584ca",
+      "domain": "Applications",
+      "name": "qExp_pos",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "13e584ca",
+      "domain": "Applications",
+      "name": "qExp_le_n",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "13e584ca",
+      "domain": "Applications",
+      "name": "qExp_dim_one_eq_pExp",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T08:39:55",
+  "last_updated": "2026-07-14T08:40:07",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "290f55e0",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-13T12:34:55"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "e8b8d594",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-14T08:39:55"
+    },
+    {
+      "context": "All statements are `sorry`-free.; All statements are `sorry`-free.",
+      "cycle_id": "13e584ca",
+      "domain": "Applications",
+      "sorry_count": 2,
+      "timestamp": "2026-07-14T08:40:07"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ae9bfe48",
-        "quality": 0.7,
-        "theorems": 13,
-        "title": "Cographs are generalized spectrally closed"
-      },
-      {
         "cycle_id": "3903c2d7",
         "quality": 0.82,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 19,
         "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
+      },
+      {
+        "cycle_id": "13e584ca",
+        "quality": 0.83,
+        "theorems": 25,
+        "title": "Deepening: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
       }
     ],
     "Bridges": [

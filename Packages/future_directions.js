@@ -227,20 +227,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
-    "consumed_by_exp_id": "13e584ca",
-    "description": "Building on cycle 30ef4e5b (Q=0.820), which proved 32 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets A\u2c7c of the L\u2081 ball {x \u2208 \u2124\u1d48 : |x\u2081| + ... + |x_d| \u2264 m} in \u2124\u1d48, establish a sharp lower bound |A\u2081+\u2026+A\u2099| \u2265 (|A\u2081|\u22ef|A",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_30ef4e5b_c8d545af",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "30ef4e5b",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T06:35:35.689308+00:00",
-    "title": "Deepening: Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 3903c2d7 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bypassed",
     "domains": [
@@ -522,7 +508,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Irreducibility of mod p reductions of crystalline representations at fractional "
   },
   {
-    "consumed_by_exp_id": "b6231f58",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 86411247 (Q=0.800), which proved 40 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Multiverse Set Theory: Mathematics Across Branches\n\nThis cycle deepened the combinatorial core of the set-theoretic multiverse by\nequipping it with a **modal structure of forcing**: possibility as truth in some\ngeneric extension, necessity as truth in every generic extension. M",
     "domains": [
       "Novelty"
@@ -531,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "86411247",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T06:17:11.005418+00:00",
     "title": "Deepening: This cycle deepened the combinatorial core of the set-theoretic multiverse by"
   },
@@ -650,7 +636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
   {
-    "consumed_by_exp_id": "c4aa235b",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0abd0edb (Q=0.780), which proved 26 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the cent",
     "domains": [
       "Novelty"
@@ -659,7 +645,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "0abd0edb",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T06:54:01.837362+00:00",
     "title": "Deepening: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
   },
@@ -734,7 +720,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Sharp maximal excess of co-index under suspension for all feasible sta"
   },
   {
-    "consumed_by_exp_id": "b78ccbe1",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 769cd692 (Q=0.780), which proved 51 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: the suspension tower and the excess spectrum of free \u2124\u2082-complexes\n\nThis cycle established the **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as a\nrigorous object and proved three things about it unconditionally: iterating the\nsingle-step suspension raises the co-index by at l",
     "domains": [
       "Novelty"
@@ -743,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "769cd692",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T07:30:03.453805+00:00",
     "title": "Deepening: **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as"
   },
@@ -1295,7 +1281,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "6e60d0a1",
+    "consumed_by_exp_id": "",
     "description": "Cycle 769cd692 (Q=0.780) proved 51 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: the suspension tower and the excess spectrum of free \u2124\u2082-complexes\n\nThis cycle established the **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as a\nrigorous object and proved thr",
     "domains": [
       "Novelty"
@@ -1304,7 +1290,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8300000000000001,
     "research_mode": "team",
     "source_exp_id": "769cd692",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T07:30:03.599030+00:00",
     "title": "Close Proofs: **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as"
   },
@@ -1832,7 +1818,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle deepened the \"Proofs as DAGs\" line by developing the *topological"
   },
   {
-    "consumed_by_exp_id": "bcaaf8f2",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Seidel energy of Tur\u00e1n graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S\u00b2 = n(n-1)`, from which a\nuniversal energy floor `E_S \u2265 \u221a(n(n-1))` follows by Cauchy\u2013Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Tur\u00e1n edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Tur\u00e1n graphs)\nFor every Tur\u00e1n graph `T(n, r)` with `r \u2265 4` and `n \u2265 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) \u2212 e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) \u2212 e`, deleting an edge flips two symmetric Seidel entries\nfrom `\u22121` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero \u2014 a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Tur\u00e1n (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `\u00b1\u221a(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy \u2014 the \u2113\u00b9 norm of the eigenvalues \u2014\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `\u2211\u03bb\u00b2 = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n\u22122)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S \u21a6 S + 2(e_a e_b\u1d40 + e_b e_a\u1d40)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S \u2265 \u221a(n(n-1))` is attained asymptotically (ratio \u2192 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy\u2013Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `\u00b11` off-diagonal\nmatrix on the sphere `\u2211\u03bb\u00b2 = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n\n\n# Future Directions: Seidel energy of Tur\u00e1n graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S\u00b2 = n(n-1)`, from which a\nuniversal energy floor `E_S \u2265 \u221a(n(n-1))` follows by Cauchy\u2013Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Tur\u00e1n edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Tur\u00e1n graphs)\nFor every Tur\u00e1n graph `T(n, r)` with `r \u2265 4` and `n \u2265 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) \u2212 e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) \u2212 e`, deleting an edge flips two symmetric Seidel entries\nfrom `\u22121` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero \u2014 a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Tur\u00e1n (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `\u00b1\u221a(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy \u2014 the \u2113\u00b9 norm of the eigenvalues \u2014\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `\u2211\u03bb\u00b2 = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n\u22122)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S \u21a6 S + 2(e_a e_b\u1d40 + e_b e_a\u1d40)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S \u2265 \u221a(n(n-1))` is attained asymptotically (ratio \u2192 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy\u2013Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `\u00b11` off-diagonal\nmatrix on the sphere `\u2211\u03bb\u00b2 = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n\n\n# Future Directions: Seidel energy of Tur\u00e1n graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with vanishing first moment\n`tr S = 0` and a *graph-independent* second moment `tr S\u00b2 = n(n-1)`, from which a\nuniversal energy floor `E_S \u2265 \u221a(n(n-1))` follows by Cauchy\u2013Schwarz, and the\nSeidel spectrum is invariant under switching. The most instructive finding is a\nnegative one: the second moment is completely blind to edge deletion, which\nexplains why the Tur\u00e1n edge-deletion inequality is genuinely delicate. The\nfollowing conjectures build on that structural insight.\n\n## Conjecture 1 (Strict edge-deletion inequality on Tur\u00e1n graphs)\nFor every Tur\u00e1n graph `T(n, r)` with `r \u2265 4` and `n \u2265 4r`, and every edge `e`,\nthe Seidel energy strictly increases upon deletion: `E_S(T(n,r) \u2212 e) > E_S(T(n,r))`.\n\n*The key insight is* that although the first two spectral moments are identical\nfor `T(n,r)` and `T(n,r) \u2212 e`, deleting an edge flips two symmetric Seidel entries\nfrom `\u22121` to `+1`, a rank-two, trace-zero perturbation whose effect on the energy\nis governed entirely by how it redistributes eigenvalue mass across zero \u2014 a\nhigher-moment quantity the sphere constraint cannot see.\n\n*Why now?* The reduced-order description of Tur\u00e1n (blow-up) Seidel spectra has\nmatured to the point where the perturbation can be tracked on a low-dimensional\nquotient, making a fully rigorous account of the two flipped entries feasible.\n\n## Conjecture 2 (Energy is a strict switching-refinement monotone)\nWithin a fixed switching class, Seidel energy is minimised exactly at the\nconference-type representatives, and strictly increases as the spectrum spreads\naway from the two-point mass on `\u00b1\u221a(n-1)`.\n\n*The key insight is* that the fixed second moment confines every spectrum in a\nswitching class to a common sphere, so energy \u2014 the \u2113\u00b9 norm of the eigenvalues \u2014\nis maximised by spreading and minimised by concentration, turning energy\ncomparison into a majorization statement on the sphere `\u2211\u03bb\u00b2 = n(n-1)`.\n\n*Why now?* Switching invariance of the whole spectrum (established here at the\neigenpair level) lets one compare energies across an entire class by a single\nmajorization argument rather than case-by-case eigenvalue computation.\n\n## Conjecture 3 (Rank-two perturbation formula for edge flips)\nFlipping a single Seidel entry pair changes the characteristic polynomial by an\nexplicit degree-`(n\u22122)` correction, and the resulting energy change has a fixed\nsign determined by the number of eigenvalues the flip pushes across `0`.\n\n*The key insight is* that an edge flip is a symmetric rank-two update\n`S \u21a6 S + 2(e_a e_b\u1d40 + e_b e_a\u1d40)`, so the matrix determinant lemma yields the new\ncharacteristic polynomial in closed form, reducing the energy change to a\ncounting problem about sign changes of eigenvalues.\n\n*Why now?* Closed-form rank-two spectral updates are standard, but they have not\nbeen combined with the fixed-second-moment constraint of Seidel matrices; doing\nso converts an analytic energy inequality into an eigenvalue-counting identity.\n\n## Conjecture 4 (Universal floor is asymptotically sharp only for conference graphs)\nThe universal bound `E_S \u2265 \u221a(n(n-1))` is attained asymptotically (ratio \u2192 1) if\nand only if the graph is a conference two-graph, and every other family is bounded\naway from the floor by a constant factor.\n\n*The key insight is* that equality in the Cauchy\u2013Schwarz step forces all\neigenvalues to have equal magnitude, which for a trace-zero `\u00b11` off-diagonal\nmatrix on the sphere `\u2211\u03bb\u00b2 = n(n-1)` is exactly the conference (regular two-graph)\ncondition.\n\n*Why now?* Regular two-graphs and conference matrices are now catalogued far\nenough (via their equivalence with certain strongly regular graphs) to test the\n\"only if\" direction against all known sporadic families.\n",
     "domains": [
       "Physics",
@@ -1842,7 +1828,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "d954b0de",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T19:07:02.581945+00:00",
     "title": "Elementary spectral-moment foundations of Seidel"
   },
@@ -1937,7 +1923,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This project formalizes the **one-dimensional case** of the Infinite Pachner"
   },
   {
-    "consumed_by_exp_id": "ca326542",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Colorful Carath\u00e9odory for Convex Cones\n\nThe results established here treat the origin as the distinguished point, exploit\nthe homogeneity that collapses conical and convex representability there, and\nsettle both the sharp color threshold in dimension one and the conical\nCarath\u00e9odory bound in every dimension. Several bold, testable directions follow.\n\n## 1. The full colorful cone theorem in every dimension\n\n**Conjecture.** Given `d + 1` finite color classes of vectors in `d`-dimensional\nspace, each capturing the origin as a nontrivial nonnegative combination, there is\na colorful transversal \u2014 one vector chosen per color \u2014 whose own cone captures the\norigin.\n\nThe key insight is that, at the origin, the colorful cone theorem coincides with\nthe classical colorful Carath\u00e9odory theorem, so the correct color count is `d + 1`\nrather than `d`, and the nearest-point exchange argument that proves the affine\nstatement should transfer verbatim once membership is phrased through the\nhomogeneity bridge. Why now? The homogeneity bridge and the sharp one-dimensional\nbase case are already in hand, isolating exactly the geometric exchange step that\nremains, so the general theorem is reduced to a single, well-understood mechanism.\n\n## 2. Quantitative colorful cones: counting transversals\n\n**Conjecture.** Under the hypotheses of the colorful cone theorem, the number of\ncolorful transversals whose cone captures the origin is at least exponential in the\nnumber of colors when each class straddles the origin in general position.\n\nThe key insight is that each straddling color contributes an independent binary\nchoice of sign that can be completed to a valid transversal, so valid transversals\nshould multiply rather than merely exist. Why now? The two-case construction in the\none-dimensional proof already exhibits multiple valid transversals explicitly,\ngiving a concrete combinatorial seed for a counting lower bound.\n\n## 3. Sharpness of the conical Carath\u00e9odory number via positive circuits\n\n**Conjecture.** In `d`-dimensional space the conical Carath\u00e9odory bound `d + 1` is\nattained precisely by minimal positively dependent families (\"positive circuits\"),\nand every family capturing the origin contains such a circuit of size at most\n`d + 1`.\n\nThe key insight is that pruning a nonnegative representation always terminates at a\nsupport on which the vectors are affinely independent yet positively dependent, and\nsuch supports are exactly positive circuits. Why now? The pruning step proved here\nalready reduces any capturing family below the `d + 1` threshold, so extracting the\ncircuit structure is the natural next refinement of that same argument.\n\n## 4. A colorful cone theorem for interior capture\n\n**Conjecture.** If each of `d` color classes positively spans the whole space\n(the origin lies in the interior of each cone), then some colorful transversal of\n`d + 1` chosen vectors captures the origin in the interior of its cone, and `d`\ncolors never suffice.\n\nThe key insight is that interior capture is an open condition stable under small\nperturbations, so a transversal achieving boundary capture can be nudged into\ninterior capture whenever one extra color is available. Why now? The dimension-one\nanalysis already separates \"boundary\" capture (a single ray) from genuine interior\ncapture, pinpointing the extra color as the resource that upgrades one to the\nother.\n\n## 5. Stability of capture under perturbation\n\n**Conjecture.** The property \"this colorful transversal captures the origin\nconically\" is stable: there is a positive margin such that perturbing every chosen\nvector within that margin preserves capture, with the margin controlled by the\nsmallest positive coefficient in the witnessing combination.\n\nThe key insight is that a strictly positive witnessing coefficient furnishes slack\nthat a sufficiently small perturbation cannot exhaust. Why now? The nontriviality\nclause enforced throughout this work supplies exactly such a strictly positive\ncoefficient, turning a qualitative existence statement into a quantitative\nrobustness estimate.\n",
     "domains": [
       "Algebra",
@@ -1947,7 +1933,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5d81b714",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T22:35:39.370659+00:00",
     "title": "The results established here treat the origin as the distinguished point, exploi"
   },
@@ -2370,6 +2356,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T08:39:52.365766+00:00",
     "title": "That the sharp/flat characteristic-degree arithmetic of a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThis program studies **sharp lower bounds for sumsets in L\u2081-balls / boxes in \u2124\u1d48**.\n\n## What is proved\n\n### Dimension one \u2014 the sharp exponent (`Catalog/Bridges/SumsetL1BallSharpDim1.lean`)\n\nThe headline result is the *sharp exponent lower bound itself* \u2014 previously only\nthe geometric-mean bound (exponent `n`) and the extremal equality were formalized:\n\n    SumsetSharpDim1.sumset_sharp_dim_one :\n      (|A\u2080|\u00b7\u2026\u00b7|A_{n-1}|)^{1/p} \u2264 |A\u2080 + \u2026 + A_{n-1}|,   p = n\u00b7log(m+1)/log(nm+1),\n\nfor finite nonempty `A\u2c7c \u2286 {0,\u2026,m} \u2286 \u2124`, packaged with the matching extremiser in\n`sharp_exponent_dim_one`. The engine is iterated Cauchy\u2013Davenport plus a pure real\ninequality `prod_le_rpow` proved from AM\u2013GM and a concavity/chord estimate\n(`chord_lemma`). The exponent is optimal by `extremal_interval_sharp_dim_one`.\n\n### Higher dimensions \u2014 a valid box bound (`Catalog/Bridges/SumsetL1BallHigherDim.lean`)\n\nThe additive engine (`iterated_cauchy_davenport`) already holds in *any*\ntorsion-free abelian group, so it lifts to `\u2124\u1d48`. This gives:\n\n    SumsetL1BallHigherDim.prod_card_le_sumset_rpow :\n      \u220f\u2c7c |A\u2c7c| \u2264 |A\u2080 + \u2026 + A_{n-1}|^{q},   q = qExp n M = n\u00b7log M / log(1+n(M\u22121)),\n\nfor finite nonempty `A\u2c7c` in a torsion-free abelian group with `|A\u2c7c| \u2264 M`, and its\nspecialisation to the box `{0,\u2026,m}^d \u2286 \u2124\u1d48` (cardinality `(m+1)^d`):\n\n    SumsetL1BallHigherDim.sumset_box_higherDim :\n      \u220f\u2c7c |A\u2c7c| \u2264 |\u2211\u2c7c A\u2c7c|^{qExp n ((m+1)^d)}.\n\nBoth come with root forms (`sumset_lower_bound_root`, `sumset_box_higherDim_root`),\nthe exponent bound `qExp_le_n` / `qExp_box_le_n` (so the bound always dominates the\ngeometric-mean bound), and the compatibility identity\n`qExp_dim_one_eq_pExp : qExp n (m+1) = pExp n m` showing `d = 1` recovers the\none-dimensional exponent exactly.\n\n**Caveat.** In dimension `d \u2265 2` the exponent `qExp n ((m+1)^d)` is a *valid* lower\nbound but is **not** sharp: the Cauchy\u2013Davenport step `|\u2211A\u2c7c| \u2265 1 + \u2211(|A\u2c7c|\u22121)` is\nfar from tight for boxes in `\u2124\u1d48`. The genuinely sharp higher-dimensional exponent\nis the main remaining open target below.\n\n## Natural next steps\n\n1. **The sharp higher-dimensional exponent.** The genuinely open target is the\n   *sharp* `p`-exponent lower bound for `A\u2c7c \u2286 {0,\u2026,m}^d` (the box) or the\n   cross-polytope in general `d`. The one-dimensional Cauchy\u2013Davenport step is not\n   tight in `d \u2265 2`; a tensor-power / compression argument or a Pl\u00fcnnecke\u2013Ruzsa\n   route is likely needed to replace it and close the gap between the box bound\n   proved here and the true extremiser.\n\n2. **Sharp exponent for translated/dilated intervals.** Generalize the\n   extremiser optimality from `{0,\u2026,m}` to arbitrary arithmetic progressions and\n   check whether any non-interval configuration can approach equality.\n\n3. **Distinct-set version.** The current bounds are symmetric in the `A\u2c7c`. Explore\n   whether a genuinely asymmetric refinement holds when the `|A\u2c7c|` differ widely.\n\n4. **Stability.** Quantify how close to the extremal interval a near-extremal\n   configuration must be (an inverse/stability theorem for the sharp bound).\n\n5. **Exponent asymptotics.** Formalize `pExp n m \u2192 n` as `m \u2192 \u221e` and the small-`m`\n   behaviour, connecting the sharp regime to the geometric-mean regime; likewise\n   study `qExp n ((m+1)^d)` as `m \u2192 \u221e` or `d \u2192 \u221e`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1283",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "13e584ca",
+    "status": "available",
+    "timestamp": "2026-07-14T08:39:59.624732+00:00",
+    "title": "This program studies **sharp lower bounds for sumsets in L\u2081-balls / boxes in \u2124\u1d48*"
   },
   {
     "consumed_by_exp_id": "",
