@@ -17516,11 +17516,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "86411247",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17533,7 +17533,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1257",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-14T03:42:04.509890+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -17548,7 +17548,7 @@
       "source": "",
       "source_exp_id": "7547cdb0",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7547cdb0",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_ba37d45d",
       "timestamp": "2026-07-13T23:50:41.777632+00:00",
       "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse by"
@@ -44608,7 +44608,6 @@
   "selection_log": [
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -44625,6 +44624,7 @@
     "cross_domain_bridge",
     "abduction_followup",
     "abduction_followup",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "abduction_followup"
   ]
 }

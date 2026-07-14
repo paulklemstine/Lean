@@ -116,6 +116,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7acc7a45 (Q=0.830), which proved 24 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle cf19c51c (Q=0.790) proved 36 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of \u2124\u2082-co-index under suspension\n\nThis cycle established, unconditionally, the constructive l",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_7acc7a45_4c5b1d29",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "7acc7a45",
+    "status": "available",
+    "timestamp": "2026-07-14T03:41:54.706806+00:00",
+    "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f85e4d43 (Q=0.830), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe file `Catalog/Novelty/MindEncodingRefined.lean` develops information-theoretic\nbounds on encoding a neural connectome. Natural extensions:\n\n1. **Weighted / graded synapses.** `card_weighted_connectome` counts `w`-valued\n   synapse configurations. A description-length theorem",
     "domains": [
       "Applications"
@@ -1093,20 +1107,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Asymptotic Clique-to-Clique Density Bound"
   },
   {
-    "consumed_by_exp_id": "7acc7a45",
-    "description": "Cycle cf19c51c (Q=0.790) proved 36 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of \u2124\u2082-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free \u2124\u2082-complexes: sus",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_cf19c51c_658017c2",
-    "priority_score": 0.8400000000000001,
-    "research_mode": "team",
-    "source_exp_id": "cf19c51c",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T02:10:35.467002+00:00",
-    "title": "Close Proofs: This cycle established, unconditionally, the constructive lower-bound "
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Riemann zeta function zeta(s) has zeros at the non-trivial points s = 1/2 + i*gamma_n where gamma_n are the imaginary parts of the zeros. The Fourier transform of the zero counting function N(t) = #{gamma_n <= t} is related to the distribution of primes by the explicit formula. But what if we take the Fourier transform of zeta itself? Define Z(t) = zeta(1/2 + it) as a function of the real variable t. The Fourier transform Z_hat(w) = integral_{-inf}^{inf} Z(t) * e^{-2*pi*i*w*t} dt. Conjecture: Z_hat(w) has sharp peaks at w = log(p)/2*pi for each prime p. This is because the explicit formula expresses zeta(1/2+it) as a sum over primes: zeta(1/2+it) ~ sum_{p} p^{-1/2-it} = sum_{p} e^{-it*log(p)} / sqrt(p), which is a sum of complex exponentials with frequencies log(p). The Fourier transform of a sum of exponentials is a sum of delta functions at the frequencies log(p)/2*pi. So Z_hat(w) = sum_{p} delta(w - log(p)/2*pi) / sqrt(p) + (error from zeros and smooth terms). The peaks at w = log(p)/2*pi give a 'spectrogram' of the primes. Test: compute Z_hat(w) numerically for the first 10^6 zeros and verify the peaks at log(2)/2*pi, log(3)/2*pi, log(5)/2*pi, etc. Impact: you can HEAR the primes by playing the Fourier transform of the Riemann zeta function \u2014 each prime is a distinct note.",
     "domains": [
@@ -2016,7 +2016,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86411247",
     "description": "# Future Directions \u2014 Multiverse Set Theory: Mathematics Across Branches\n\nThis cycle deepened the combinatorial core of the set-theoretic multiverse by\nequipping it with a **modal structure of forcing**: possibility as truth in some\ngeneric extension, necessity as truth in every generic extension. Modelling a\ngeneric extension as a change of only *finitely much* information yields a Kripke\nframe whose accessibility relation is an equivalence, and over that frame the\nwhole `S5` suite (T, 4, B, 5) together with the Maximality Principle is derivable,\nwhile every atomic set-theoretic assertion \u2014 the Continuum Hypothesis included \u2014\nturns out to be a *switch* that forcing can toggle at will.\n\nThe following conjectures extend that picture.\n\n## 1. The forcing order is genuinely `S4.2`, not `S5`\n\n**Conjecture.** If accessibility is taken to be the *directed but antisymmetric*\nextension order (a world accesses exactly its own forcing extensions, never its\ngrounds), then the resulting modal logic is exactly `S4.2`: it validates T, 4, and\nthe directedness axiom `\u25c7\u25a1p \u2192 \u25a1\u25c7p`, but refutes both the Brouwer axiom `B` and the\nEuclidean axiom `5`.\n\n**The key insight is** that symmetry of accessibility is the single frame\ncondition responsible for the collapse to `S5`; dropping it while retaining\ndirectedness \u2014 the true combinatorics of iterated forcing \u2014 should land precisely\non the Hamkins\u2013L\u00f6we value `S4.2`.\n\n**Why now?** The finite-information equivalence relation is already in place; the\ndirected order is obtained from it by intersecting with a monotone information\norder, so the two logics can be compared inside a single frame and the exact\naxioms that survive can be pinned down.\n\n## 2. A dichotomy of buttons and switches\n\n**Conjecture.** In any directed forcing frame every atomic assertion is either a\n*switch* (both it and its negation are possible from every world) or a *button*\n(once true, necessarily true); moreover the buttons are exactly the assertions\nthat are monotone along the extension order, and they generate a distributive\nlattice under conjunction and disjunction.\n\n**The key insight is** that the switch/button distinction is not ad hoc but a\nlattice-theoretic invariant of the accessibility order: buttons are the fixed\npoints of the necessity operator, switches its strictly non-trivial orbits.\n\n**Why now?** The switch phenomenon has already been isolated abstractly and\nconcretely for the Continuum Hypothesis; classifying the complementary buttons is\nthe natural next structural question and requires only the monotone order from\nDirection 1.\n\n## 3. Independence is closed under Boolean law-adoption up to a rank bound\n\n**Conjecture.** Adopting finitely many implications among atoms as \"laws\" of the\nmultiverse (restricting to the worlds that obey them) leaves an atom independent\nunless the laws *entail* a definite truth value for it; and the number of atoms\nthat become settled is exactly the number of atoms forced by unit propagation on\nthe adopted implications.\n\n**The key insight is** that law-adoption is propositional constraint propagation\nin disguise, so the boundary between \"still independent\" and \"now settled\" is\ngoverned by the implication graph of the adopted laws rather than by set-theoretic\ncontent.\n\n**Why now?** The cycle already showed the Continuum Hypothesis survives adoption\nof `V = L \u2192 CH`; recasting survival as a graph-reachability criterion turns a\none-off observation into a decision procedure.\n\n## 4. Necessity distributes over a Lindenbaum\u2013Boolean algebra of branches\n\n**Conjecture.** The sentences modulo multiverse-equivalence form a Boolean\nalgebra on which the necessity operator is an interior operator, and the settled\nsentences are precisely its open elements; consequently the independent sentences\nare exactly the algebra's non-clopen elements.\n\n**The key insight is** that \"settled versus independent\" is the topological\nopen/closed distinction of the interior operator `\u25a1`, making the multiverse a\ntopological (Alexandrov) space whose clopen sets are the decidable statements.\n\n**Why now?** With `\u25a1` already verified to satisfy K, T, and 4 in this cycle, it is\nby definition an interior operator, so the topology it induces is available for\nimmediate exploitation.\n\n## 5. Quantitative independence grows like the Boolean cube\n\n**Conjecture.** Over `n` mutually independent atomic assertions the full\nmultiverse has `2^n` branches, and the proportion of Boolean combinations that are\nindependent (neither valid nor refutable) tends to `1` as `n \u2192 \u221e`, so\n\"independence is generic\" in a precise counting sense.\n\n**The key insight is** that validity and refutability are each exponentially rare\namong `2^{2^n}` possible sentences, so almost every set-theoretic assertion built\nfrom independent atoms is itself independent \u2014 undecidability is the typical case,\nnot the exception.\n\n**Why now?** The exact branch count `2^n` is already established, reducing the\nconjecture to an asymptotic count of constant Boolean functions, which is a clean,\nself-contained combinatorial target.\n",
     "domains": [
       "Logic",
@@ -2026,7 +2026,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "7547cdb0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T23:50:41.777632+00:00",
     "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse by"
   },
@@ -2197,6 +2197,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle assembled a reusable toughness toolkit around a single load-bearing\ninvariant, the *component count* `numComp G S` (the number of connected components\nleft after deleting a vertex set `S`). We proved that this count is monotone under\nedge additions, that toughness itself is therefore monotone under edge additions,\nthat every `1`-tough graph on at least three vertices has minimum degree two and\nhence at least as many edges as vertices, and we exhibited the triangle `K\u2083` as a\nfully verified instance of the guiding theorem (minimally `1`-tough,\n`(K\u2081 \u222a P\u2084)`-free, and Hamiltonian). The following conjectures are the natural next\ntargets suggested by that structure.\n\n## 1. Chv\u00e1tal's necessary condition, in full\n\n**Conjecture.** Every graph that admits a Hamiltonian cycle is `1`-tough.\n\nThe key insight is that toughness is monotone under edge additions, so the entire\nstatement reduces to a single special case: the pure cycle `C\u2099` is `1`-tough.\nDeleting `k` vertices from a cycle severs it into at most `k` arcs, so the component\ncount never exceeds the number of deleted vertices \u2014 exactly the `1`-tough\ninequality. Once the cycle case is in hand, the monotonicity step transports the\nbound to any graph containing a spanning Hamiltonian cycle.\n\nWhy now? The reduction step \u2014 that a graph inheriting a `1`-tough spanning subgraph\nis itself `1`-tough \u2014 is already established. What remains is a purely combinatorial\nstatement about a single, highly symmetric family of graphs, decoupled from the\ngeneral Hamiltonicity problem.\n\n## 2. Kriesell's minimum-degree conjecture within the `(K\u2081 \u222a P\u2084)`-free class\n\n**Conjecture.** Every minimally `1`-tough `(K\u2081 \u222a P\u2084)`-free graph is regular of\ndegree two, i.e. is a disjoint union of cycles; combined with connectivity it is a\nsingle Hamiltonian cycle.\n\nThe key insight is that minimal toughness forces a rigidity from both sides: the\nminimum-degree theorem pins degrees from below at two, while the forbidden induced\nsubgraph `K\u2081 \u222a P\u2084` caps the local spread of high-degree vertices from above. The\ntwo pressures should meet exactly at two-regularity.\n\nWhy now? The lower bound (minimum degree two) is proved unconditionally in this\ncycle. The task is reduced to supplying the matching upper bound using only the\nforbidden-subgraph hypothesis, a self-contained local argument.\n\n## 3. The edge-count threshold is sharp\n\n**Conjecture.** For every `n \u2265 3` there is a `1`-tough graph on `n` vertices with\nexactly `n` edges, and any `1`-tough graph attaining this minimum is a single\nspanning cycle.\n\nThe key insight is that the density bound `|E| \u2265 |V|` proved here comes entirely\nfrom summing the degree bound `deg v \u2265 2`; equality in the sum forces equality\nvertex-by-vertex, so every vertex has degree exactly two, which for a connected\ngraph means a Hamiltonian cycle.\n\nWhy now? The inequality and its proof mechanism (the handshake identity applied to\na uniform degree bound) are already formalized, so the equality-case analysis is a\ndirect refinement rather than a new development.\n\n## 4. Toughness monotonicity characterizes the tough closure\n\n**Conjecture.** For a fixed vertex set, the family of `1`-tough graphs is an upward-\nclosed set in the edge-inclusion order whose minimal elements are exactly the\nminimally `1`-tough graphs.\n\nThe key insight is that toughness monotonicity makes \"`1`-tough\" a monotone graph\nproperty, so the minimally `1`-tough graphs are precisely the order-theoretic\nminimal witnesses of that property \u2014 turning a metric definition into a lattice-\ntheoretic one.\n\nWhy now? Monotonicity of toughness under edge additions was just established,\nwhich is the single ingredient needed to phrase and attack the minimality question\npurely in terms of the edge-inclusion lattice.\n\n## 5. Forbidden-subgraph dichotomy for tough Hamiltonicity\n\n**Conjecture.** Among all disjoint unions `K\u2081 \u222a P\u2096`, the value `k = 4` is the\nlargest for which every minimally `1`-tough `(K\u2081 \u222a P\u2096)`-free graph on at least\nthree vertices is Hamiltonian; for `k \u2265 5` there is a non-Hamiltonian minimally\n`1`-tough graph avoiding `K\u2081 \u222a P\u2096`.\n\nThe key insight is that the isolated vertex together with a short path is exactly\nthe local configuration that a tough graph cannot afford, and lengthening the path\nweakens the restriction until it no longer excludes the known tough non-Hamiltonian\nconstructions.\n\nWhy now? With the `1`-tough machinery and a concrete verified Hamiltonian instance\nin place, the boundary between the Hamiltonian and non-Hamiltonian regimes can be\nprobed by varying a single integer parameter, making the dichotomy a sharply posed,\ntestable question.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1269",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "11762aec",
+    "status": "available",
+    "timestamp": "2026-07-14T03:41:15.394977+00:00",
+    "title": "This cycle assembled a reusable toughness toolkit around a single load-bearing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Sharp excess of \u2124\u2082-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combinatorial\nmodel of free `\u2124\u2082`-complexes \u2014 the boundary complexes of cross-polytopes, i.e. the octahedral\ncombinatorial spheres `S\u207f` \u2014 and proves, with no `sorry` and only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`), the **constructive lower-bound half** of the\nbehaviour of the `\u2124\u2082`-coindex under suspension:\n\n* **Category structure.** `Z2Map.id`, `Z2Map.comp`, and the equatorial inclusion\n  `Z2Map.incl : Z2Map n (n+1)` organise `\u2124\u2082`-maps of spheres into a category.\n* **Suspension functor on maps.** `Z2Map.susp : Z2Map m n \u2192 Z2Map (m+1) (n+1)` suspends a\n  `\u2124\u2082`-map, preserving the two poles and transporting all other coordinates.  This is the\n  geometric heart of the lower bound.\n* **Constructive lower bound.** `coindex_lower_bound : m \u2264 n \u2192 Nonempty (Z2Map m n)`\n  (`coind(S\u207f) \u2265 n`), and `suspension_raises_coindex : Nonempty (Z2Map m n) \u2192\n  Nonempty (Z2Map (m+1) (n+1))`.\n* **Decidable reformulation.** `nonempty_iff_exists_pos` reduces existence of a `\u2124\u2082`-map to a\n  finite check over the images of the positive vertices.\n* **Sharpness at the base.** The finite Borsuk\u2013Ulam instances `borsuk_ulam_S1_S0`\n  (`S\u00b9 \u219b S\u2070`) and `borsuk_ulam_S2_S1` (`S\u00b2 \u219b S\u00b9`), verified by `decide`, pin down\n  `coind(S\u2070) = 0` and `coind(S\u00b9) = 1`, so the suspension increment is exactly one\n  (`sharp_suspension_increment`).\n\n## The gap that remains: the upper-bound (maximal-excess) half\n\nThe matching upper bound `coind(S\u207f) \u2264 n` in **every** dimension is the full strength of the\nBorsuk\u2013Ulam / Tucker theorem: there is no `\u2124\u2082`-map `S\u207f\u207a\u00b9 \u2192 S\u207f`.  Here it is proved only in\nthe two finite base cases.  Directions:\n\n1. **General Tucker's lemma.** Prove `IsEmpty (Z2Map (n+1) n)` for all `n` via a combinatorial\n   Tucker labelling argument on the cross-polytope, giving `coind(S\u207f) = n` unconditionally.\n2. **Abstract free \u2124\u2082-complexes.** Generalise `Z2Map` from spheres to arbitrary simplicial\n   complexes carrying a free simplicial `\u2124\u2082`-action, define `coind`/`ind` as\n   `sup`/`inf` over `\u2115\u221e`, and prove `coind \u2264 ind` (Borsuk\u2013Ulam) and the join/suspension laws\n   `coind(X * Y) \u2265 coind X + coind Y + 1`.\n3. **The excess `ind \u2212 coind`.** With both indices in hand, formalise complexes where the\n   excess is positive and study its growth under suspension \u2014 the \"maximal-excess programme\".\n4. **Deleted joins and the Lov\u00e1sz bound.** Connect `coind` of the neighbourhood/box complex\n   to graph chromatic numbers (`\u03c7(G) \u2265 coind(\u00b7) + 2`).\n\n## Model choices and honesty of scope\n\nThe purely local (vertex-pair) form of simpliciality is exactly equivalent to \"faces map to\nfaces\" for cross-polytope complexes, which keeps every statement decidable and every proof\nelementary while remaining faithful to the topology: the lower bound is genuinely constructed\n(not assumed), and the base-case obstructions are genuine Borsuk\u2013Ulam phenomena, not vacuous.\n",
+    "domains": [
+      "Logic",
+      "Geometry"
+    ],
+    "id": "fd_1270",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7acc7a45",
+    "status": "available",
+    "timestamp": "2026-07-14T03:41:44.512573+00:00",
+    "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
     "domains": [
       "Applications"
@@ -2250,20 +2280,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-13T01:24:57.427672+00:00",
     "title": "Close Proofs: Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
-  },
-  {
-    "consumed_by_exp_id": "11762aec",
-    "description": "Cycle ea3218f3 (Q=0.700) proved 18 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Every minimally 1\u2011tough graph that contains no induced subgraph isomorphic to K\u2081 \u222a P\u2084 and has at least three vertices admits a Hamiltonian cycle.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_ea3218f3_dcf3eb77",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ea3218f3",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T01:17:13.673052+00:00",
-    "title": "Close Proofs: Minimally 1\u2011tough (K\u2081 \u222a P\u2084)-free graphs are Hamiltonian"
   },
   {
     "consumed_by_exp_id": "",
