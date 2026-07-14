@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Exact dictionary \"logical qubits = middle homology\""
   },
   {
-    "consumed_by_exp_id": "4f566624",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0664586a (Q=0.830), which proved 18 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
     "domains": [
       "Computation"
@@ -26,7 +26,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "0664586a",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-12T03:21:37.717161+00:00",
     "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
@@ -73,7 +73,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40b55b0f",
     "description": "Building on cycle 32285b55 (Q=0.830), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the family of series-parallel graphs G(a) obtained by joining two distinguished vertices s and t with m disjoint paths of lengths a_1, ..., a_m, the paper shows that gamma-positivity of the h*-polynomial of Q_G fails for m >= 5. The conjecture is that for m <= 4, gamma-positivity always holds: f",
     "domains": [
       "Applications"
@@ -82,7 +82,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9299999999999999,
     "research_mode": "team",
     "source_exp_id": "32285b55",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T03:02:38.459095+00:00",
     "title": "Deepening: Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at "
   },
@@ -867,20 +867,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-11T23:55:18.527910+00:00",
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
-  },
-  {
-    "consumed_by_exp_id": "30210199",
-    "description": "Cycle 0664586a (Q=0.830) proved 18 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in ",
-    "domains": [
-      "Computation"
-    ],
-    "id": "sorry_fill_0664586a_f93bf9ae",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "0664586a",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T03:21:37.797608+00:00",
-    "title": "Close Proofs: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
   },
   {
     "consumed_by_exp_id": "",
@@ -2165,6 +2151,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T03:03:34.714395+00:00",
     "title": "This project formalizes the analytic engine behind asymptotic expansions of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Alien Number Systems\n\n## What this cycle added\n\n`ComplexBaseIMinus1.lean` formalizes arithmetic in the **complex base `\u03b2 = i \u2212 1`**\nand proves, from first principles, **Penney's theorem**:\n\n> Every Gaussian integer has a *unique* representation in base `i \u2212 1` using only\n> the digits `0` and `1` (no sign, no imaginary digit).\n\nConcretely, `complexBase_unique_rep : \u2200 z : GaussianInt, \u2203! l : List Bool,\nCanonical l \u2227 cvalue l = z`. The proof is split into:\n\n- `cvalue_injective` \u2014 uniqueness, via the parity recovery lemma `par_cvalue_cons`\n  (the least\u2013significant digit equals `(re + im) mod 2`) and cancellation in the\n  Gaussian integers;\n- `exists_canonical` \u2014 existence, by strong induction on the Gaussian norm using\n  the reconstruction identity `reconstruct` and the dispatch lemma\n  `decrease_or_special`;\n- `decrease_or_special` \u2014 the analytic heart: the norm strictly decreases at every\n  digit step *except* on a finite exceptional set of five points, each handled by\n  an explicit witness.\n\nThis complements the two existing exotic-base files in the catalog (negabinary,\nbase `\u22122`, and the golden-ratio base `\u03c6`): together they cover the three headline\n\"alien\" radices \u2014 **negative, complex, and irrational**.\n\n## Contrarian result (disproof)\n\n`complexBase_naive_measure_fails` shows the *naive* termination measure \u2014 \"the\nGaussian norm strictly decreases at every base-`(i\u22121)` digit step\" \u2014 is **false**:\n`i` maps to `1` with equal norm. This is why a complex base is genuinely subtler\nthan an ordinary base and why the existence proof needs the five exceptional\npoints isolated by hand.\n\n## Open directions\n\n1. **Canonical no-adjacent / digit-restriction normal forms.** For base `i \u2212 1`\n   there is a redundancy-elimination story analogous to Zeckendorf for base `\u03c6`.\n   Characterize the canonical bit strings directly (a regular language) and give a\n   bijection with `\u2124[i]` at the level of *string shapes* rather than values.\n\n2. **Effective encoder/decoder with complexity bounds.** Turn `nextGI` into a\n   computable `encode : GaussianInt \u2192 List Bool` (well-founded on the norm after\n   quotienting out the finite exceptional set) and prove a `\u0398(log N(z))` length\n   bound.\n\n3. **Arithmetic algorithms in base `i \u2212 1`.** Formalize addition and\n   multiplication of bit lists directly (carry rules `1 + 1 = ?` collapsing via\n   `\u03b2\u2074 = \u22124`), and prove they commute with `cvalue`.\n\n4. **General complex bases `\u2212n \u00b1 i`.** K\u00e1tai\u2013Szab\u00f3 classifies the Gaussian\n   integers as exactly the `{\u2212n + i : n \u2265 1}` bases admitting a `{0,\u2026,n\u00b2}`\n   canonical digit system. Generalize `decrease_or_special` and identify the\n   finite exceptional set for each.\n\n5. **Eisenstein integers.** Repeat the development for `\u2124[\u03c9]` with a base of norm\n   suited to the digit set `{0,1,2}`, giving a hexagonal analogue.\n\n6. **Uniqueness over `\u211d`/measure-theoretic tiling.** Relate the digit strings to\n   the twin-dragon fractal tile and prove the tiling/exact-cover statement that\n   underlies the discrete uniqueness result.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1267",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "30210199",
+    "status": "available",
+    "timestamp": "2026-07-14T03:04:22.612819+00:00",
+    "title": "`ComplexBaseIMinus1.lean` formalizes arithmetic in the **complex base `\u03b2 = i \u2212 1"
   },
   {
     "consumed_by_exp_id": "",

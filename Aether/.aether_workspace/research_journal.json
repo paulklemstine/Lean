@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4cfd5e43",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Isomorphisms of Meaning: When Structures Collide\n\nThis cycle established a truth/meaning dichotomy in two settings — the group of\nself-symmetries of a set and the monoid of divis",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 9,
-      "timestamp": "2026-07-13T11:12:05",
-      "title": "Deepening: Isomorphisms of Meaning: When Structures Collide"
-    },
-    {
       "cycle_id": "59a15132",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThis project formalises a **cross-domain bridge** underlying the conjecture that a\n`λ = 1` pairwise-reflection-symmetric (PRS) Latin square of order `n` exists iff `n` is a\npower",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-14T03:03:56",
       "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
+    },
+    {
+      "cycle_id": "30210199",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Alien Number Systems\n\n## What this cycle added\n\n`ComplexBaseIMinus1.lean` formalizes arithmetic in the **complex base `β = i − 1`**\nand proves, from first principles, **Penney's",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-07-14T03:04:59",
+      "title": "Close Proofs: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3dc9cabc",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Transreal Arithmetic (Deepening)\n\nThis cycle deepened the transreal formalization (`TReal = ℝ ⊎ {+∞, -∞, Φ}`) in\n`Catalog/Novelty/TransrealArithmeticDeepening.lean`, a fully self",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 44,
-      "timestamp": "2026-07-11T10:50:18",
-      "title": "Deepening: Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-    },
     {
       "cycle_id": "fb4f44b5",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-14T03:03:56",
       "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
+    },
+    {
+      "cycle_id": "30210199",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Alien Number Systems\n\n## What this cycle added\n\n`ComplexBaseIMinus1.lean` formalizes arithmetic in the **complex base `β = i − 1`**\nand proves, from first principles, **Penney's",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-07-14T03:04:59",
+      "title": "Close Proofs: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d954b0de",
-      "domain": "Novelty",
-      "name": "seidel_diag",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "d954b0de",
-      "domain": "Novelty",
-      "name": "seidel_isSymm",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "ad0affd1",
-      "domain": "Applications",
-      "name": "radius_nonneg_gap",
-      "quality": 0.79
-    },
     {
       "cycle_id": "ad0affd1",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "sum_isLittleO_of_isLittleO",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "30210199",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "30210199",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "30210199",
+      "domain": "Applications",
+      "name": "cvalue_nil",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-07-14T03:03:56",
+  "last_updated": "2026-07-14T03:04:59",
   "open_questions": [
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5fd927d4",
-        "quality": 0.8,
-        "theorems": 9,
-        "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
-      },
-      {
         "cycle_id": "5d81b714",
         "quality": 0.82,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 7,
         "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
+      },
+      {
+        "cycle_id": "30210199",
+        "quality": 0.82,
+        "theorems": 25,
+        "title": "Close Proofs: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
       }
     ],
     "Bridges": [
