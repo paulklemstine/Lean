@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "adcea684",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ\n\n## What is proved (`Bridges/SumsetL1BallExponent.lean`)\n\nA cross-domain **connector** linking three areas around sumsets in L₁ b",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 21,
-      "timestamp": "2026-07-13T16:51:44",
-      "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
-    },
-    {
-      "cycle_id": "b222c758",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Universal Mathematics and the Invariant Core of Theories\n\nThis cycle formalized the notion of the *universal core* of a theory — the body\nof theorems shared by every consistent ex",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 29,
-      "timestamp": "2026-07-13T17:09:34",
-      "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
-    },
-    {
       "cycle_id": "ee7062d3",
       "domain": "Applications",
       "key_insight": "# Future Directions: Local-to-Global Influence on Partite Complexes\n\nThis cycle established that on the complete `n`-partite complex over an alphabet of\nsize `m`, every coordinate influence is the *ex",
@@ -499,29 +479,29 @@
       "theorem_count": 48,
       "timestamp": "2026-07-14T09:17:03",
       "title": "Deepening: This cycle deepened the combinatorial core of the set-theoretic multiverse by"
+    },
+    {
+      "cycle_id": "6e60d0a1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: the suspension tower `Sᵏ(K)` and the excess spectrum of free ℤ₂-complexes\n\nThis cycle takes the combinatorial model of free `ℤ₂`-complexes from\n`Catalog/Novelty/Z2CoindexSuspensio",
+      "quality_score": 0.8,
+      "sorry_count": 1,
+      "theorem_count": 18,
+      "timestamp": "2026-07-14T10:08:36",
+      "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
+    },
+    {
+      "cycle_id": "385fff12",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Constrained Coset Guesswork\n\nDerived from the exact coset-exponent cycle. Each conjecture is falsifiable.\n\n## 1. Universality of the additive redundancy term\n\n**Conjecture.** For",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-14T10:08:42",
+      "title": "Exact Exponent for Constrained Coset Guesswork"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c37c01fa",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — The Fractal Dimension of Mathematical Truth\n\nThis cycle proved that the box-counting dimension of a periodic density theory\nequals the asymptotic density of its information-beari",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 30,
-      "timestamp": "2026-07-11T18:54:06",
-      "title": "Deepening: The Fractal Dimension of Mathematical Truth"
-    },
-    {
-      "cycle_id": "7669ab26",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Topological Quantum Codes from Homology\n\nThis cycle established, as exact theorems, that the number of logical qubits of a\nCSS code equals the first Betti number of its underlying",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 24,
-      "timestamp": "2026-07-11T19:10:40",
-      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-    },
     {
       "cycle_id": "c67deafc",
       "domain": "Tropical",
@@ -2501,27 +2481,29 @@
       "theorem_count": 48,
       "timestamp": "2026-07-14T09:17:03",
       "title": "Deepening: This cycle deepened the combinatorial core of the set-theoretic multiverse by"
+    },
+    {
+      "cycle_id": "6e60d0a1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: the suspension tower `Sᵏ(K)` and the excess spectrum of free ℤ₂-complexes\n\nThis cycle takes the combinatorial model of free `ℤ₂`-complexes from\n`Catalog/Novelty/Z2CoindexSuspensio",
+      "quality_score": 0.8,
+      "sorry_count": 1,
+      "theorem_count": 18,
+      "timestamp": "2026-07-14T10:08:36",
+      "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
+    },
+    {
+      "cycle_id": "385fff12",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Constrained Coset Guesswork\n\nDerived from the exact coset-exponent cycle. Each conjecture is falsifiable.\n\n## 1. Universality of the additive redundancy term\n\n**Conjecture.** For",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-14T10:08:42",
+      "title": "Exact Exponent for Constrained Coset Guesswork"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ae9bfe48",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "3903c2d7",
-      "domain": "Applications",
-      "name": "fib_sq_add_sq_eq_fib",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3903c2d7",
-      "domain": "Applications",
-      "name": "fib_pythagorean",
-      "quality": 0.82
-    },
     {
       "cycle_id": "3903c2d7",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "meval_neg",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "6e60d0a1",
+      "domain": "Novelty",
+      "name": "map_ext",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "6e60d0a1",
+      "domain": "Novelty",
+      "name": "susp_id",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "6e60d0a1",
+      "domain": "Novelty",
+      "name": "susp_comp",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-07-14T09:17:03",
+  "last_updated": "2026-07-14T10:08:42",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "e8b8d594",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-13T12:53:44"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "e0843845",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 2,
       "timestamp": "2026-07-14T08:40:07"
+    },
+    {
+      "context": "Everything is unconditional and `sorry`-free.",
+      "cycle_id": "6e60d0a1",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-14T10:08:36"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "30210199",
-        "quality": 0.82,
-        "theorems": 25,
-        "title": "Close Proofs: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-      },
-      {
         "cycle_id": "2758a31c",
         "quality": 0.83,
         "theorems": 25,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 48,
         "title": "Deepening: This cycle deepened the combinatorial core of the set-theoretic multi"
+      },
+      {
+        "cycle_id": "385fff12",
+        "quality": 0.83,
+        "theorems": 12,
+        "title": "Exact Exponent for Constrained Coset Guesswork"
       }
     ],
     "Bridges": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c923638c",
-        "quality": 0.82,
-        "theorems": 25,
-        "title": "`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two"
-      },
-      {
         "cycle_id": "11762aec",
         "quality": 0.82,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 24,
         "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
+      },
+      {
+        "cycle_id": "6e60d0a1",
+        "quality": 0.8,
+        "theorems": 18,
+        "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
       }
     ],
     "NumberTheory": [

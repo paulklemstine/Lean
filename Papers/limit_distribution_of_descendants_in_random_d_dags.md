@@ -1,56 +1,52 @@
-# Computational Evidence
+# Computational Evidence — Gamma–Poisson duality for integer-shape descendant limits
 
-Target: the descendant limit law `|D_n| / n^{1/d} ⟶ Gamma(d, 1)` for random recursive
-`d`-DAGs (Janson 2023). The formalization proves the exact facts that underlie this law:
-the moments of the Gamma`(d,1)` target and the `n^{1/d}` growth of the mean-growth product
-`P_n(a) = ∏_{k=1}^n (1 + a/k)` with `a = 1/d`.
+This note collects small-case evidence for the identity proved in
+`GammaPoissonDuality.lean`:
 
-## 1. Moments of Gamma(d, 1)
+> For every integer shape `m + 1 ≥ 1`,
+> `∫₀ᵗ e^{-x} x^m / m! dx = 1 − ∑_{k=0}^{m} e^{-t} t^k / k!`,
+> i.e. `P(Gamma(m+1,1) ≤ t) = P(Poisson(t) ≥ m+1)`.
 
-The `k`-th moment of the limit law is `m_k = Γ(d+k)/Γ(d) = ∏_{i=0}^{k-1}(d+i)` (rising
-factorial). Small cases:
+## 1. Small-case survival functions (exact symbolic form)
 
-| k | m_k = Γ(d+k)/Γ(d) | value at d=2 | value at d=3 |
-|---|-------------------|--------------|--------------|
-| 0 | 1                 | 1            | 1            |
-| 1 | d                 | 2            | 3            |
-| 2 | d(d+1)            | 6            | 12           |
-| 3 | d(d+1)(d+2)       | 24           | 60           |
-| 4 | d(d+1)(d+2)(d+3)  | 120          | 360          |
+Writing `S_{m+1}(t) = ∑_{k=0}^{m} e^{-t} t^k / k!`:
 
-Mean `= m_1 = d`; variance `= m_2 - m_1^2 = d(d+1) - d^2 = d`. Both are formalized
-(`gammaMoment_one`, `gamma_variance`). For integer `d` the moments are the ratios of
-factorials `(d+k-1)!/(d-1)!`, e.g. at `d=2` the sequence `1, 2, 6, 24, 120, …` is
-`(k+1)!` (OEIS A000142 shifted); at `d=3` it is `1, 3, 12, 60, 360, …` = `(k+2)!/2`.
+| shape `m+1` | survival `S_{m+1}(t)` (Poisson tail form) |
+|-------------|--------------------------------------------|
+| 1           | `e^{-t}` |
+| 2           | `e^{-t}(1 + t)` |
+| 3           | `e^{-t}(1 + t + t²/2)` |
+| 4           | `e^{-t}(1 + t + t²/2 + t³/6)` |
 
-The moment recurrence `m_{k+1} = (d+k) m_k` (formalized as `gammaMoment_succ`) is the
-identity a method-of-moments proof of the limit law relies on.
+Each satisfies `S_{m+1}(0) = 1` and `S_{m+1}'(t) = −e^{-t} t^m/m!`, the negative
+of the Gamma`(m+1,1)` density; this is the telescoping derivative that drives the proof.
 
-## 2. The mean-growth product and n^{1/d} scaling
+## 2. Boundary checks
 
-`P_n(a) = ∏_{k=1}^n (1 + a/k)`. Since `log P_n(a) = Σ_{k=1}^n log(1 + a/k) ≈ a·Σ 1/k ≈
-a·log n`, we expect `P_n(a) ≈ C · n^a`. Numerically, with `a = 1/2` (i.e. `d = 2`):
+* At `t = 0`: the integral is `0` and `1 − S_{m+1}(0) = 1 − 1 = 0`. ✓
+* As `t → ∞`: `S_{m+1}(t) → 0` (polynomial × `e^{-t}`), so the CDF → `1`; the density
+  is a genuine probability density. ✓
 
-| n     | P_n(1/2)  | n^{1/2}  | P_n(1/2)/n^{1/2} |
-|-------|-----------|----------|------------------|
-| 1     | 1.5000    | 1.0000   | 1.50000          |
-| 10    | 3.7001    | 3.1623   | 1.17009          |
-| 100   | 11.326    | 10.000   | 1.13260          |
-| 1000  | 35.696    | 31.623   | 1.12880          |
-| 10^4  | 112.84    | 100.00   | 1.12842          |
+## 3. Moment cross-check (target Gamma`(d,1)` law)
 
-The ratio converges to `1/Γ(1 + 1/2) = 1/Γ(3/2) = 2/√π ≈ 1.12838`. (The slow approach is
-the expected `O(1/n)` correction.) This limit is proved exactly as
-`descProduct_div_rpow_tendsto` / `ddag_descProduct_scaling`, and the exact closed form
-`P_n(a) = Γ(n+1+a)/(Γ(1+a)·n!)` is `descProduct_gamma_closed_form`.
+From `GammaLimitLaw.lean`, the integer moments are rising factorials
+`m_k = ∏_{i<k}(d+i)`:
 
-## 3. Counterexample hunt
+| `d` | `m₁` (mean) | `m₂` | `m₃` | variance `m₂ − m₁²` |
+|-----|-------------|------|------|----------------------|
+| 2   | 2           | 6    | 24   | 2 |
+| 3   | 3           | 12   | 60   | 3 |
+| 4   | 4           | 20   | 120  | 4 |
 
-- The moment recurrence `m_{k+1} = (d+k) m_k` was checked against the direct product
-  formula for `d ∈ {2,3}`, `k ≤ 5`: consistent.
-- The closed form `P_n(a) = Γ(n+1+a)/(Γ(1+a)·n!)` was checked at `a = 1/2`, `n ≤ 10`
-  against the direct product: agreement to floating-point precision.
-- The scaling constant `1/Γ(1+a)` was checked at `a ∈ {1/2, 1/3}`: the ratios above
-  approach `2/√π` and `1/Γ(4/3) ≈ 1.1198` respectively.
+The mean and variance both equal `d`, matching the Gamma`(d,1)` limit target and the
+`n^{1/d}` normalisation of `DescendantScaling.lean`.
 
-No counterexamples found; all formalized statements are consistent with the numerics.
+## 4. Sequence note
+
+For `d = 2` the moment sequence `2, 6, 24, 120, …` is `(k+1)!` (OEIS A000142 shifted),
+consistent with Gamma`(2,1)` moments `m_k = (k+1)!`.
+
+## 5. Counterexample hunt
+
+No counterexample to the CDF identity was found: the derivative/FTC argument is exact and
+holds for all real `t` and all integer shapes, so there is no parameter regime to falsify.

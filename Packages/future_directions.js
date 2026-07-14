@@ -1267,20 +1267,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
-    "consumed_by_exp_id": "6e60d0a1",
-    "description": "Cycle 769cd692 (Q=0.780) proved 51 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: the suspension tower and the excess spectrum of free \u2124\u2082-complexes\n\nThis cycle established the **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as a\nrigorous object and proved thr",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_769cd692_db044927",
-    "priority_score": 0.8300000000000001,
-    "research_mode": "team",
-    "source_exp_id": "769cd692",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T07:30:03.599030+00:00",
-    "title": "Close Proofs: **suspension tower** `S\u1d4f(K)` of a free \u2124\u2082-complex as"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
@@ -2402,6 +2388,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T09:16:54.063937+00:00",
     "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: the suspension tower `S\u1d4f(K)` and the excess spectrum of free \u2124\u2082-complexes\n\nThis cycle takes the combinatorial model of free `\u2124\u2082`-complexes from\n`Catalog/Novelty/Z2CoindexSuspension.lean` (cross-polytope boundary spheres `S\u207f`, the\nfree antipodal action, and equivariant simplicial maps `Z2Map m n`) and assembles the\n**suspension tower** into a rigorous *functorial* object, then proves a single connected\nchain of results describing how the `\u2124\u2082`-coindex propagates up and down the tower.\n\nAll new material lives in `Catalog/Novelty/Z2SuspensionTower.lean`. It compiles with\nLean 4 / Mathlib (`lake build Novelty.Z2SuspensionTower`), contains **no `sorry`**, and every\ntheorem depends only on the standard axioms `propext`, `Classical.choice`, `Quot.sound`\n(in particular the finite Borsuk\u2013Ulam instances use `decide`, not `native_decide`).\n\n## The chain of results (each uses the previous)\n\n1. **Extensionality** \u2014 `Z2Map.map_ext`. A `\u2124\u2082`-map is determined by its underlying vertex\n   map, since the equivariance and simpliciality fields are propositions.\n\n2. **Suspension is an endofunctor** \u2014 `Z2Map.susp_id`, `Z2Map.susp_comp`. The suspension\n   operation `susp : Z2Map m n \u2192 Z2Map (m+1) (n+1)` preserves identities and composition.\n\n3. **The iterated tower** \u2014 `Z2Map.suspIter F k : Z2Map (m+k) (n+k)`, the `k`-fold\n   suspension, with the functor laws lifted to it: `Z2Map.suspIter_id`,\n   `Z2Map.suspIter_comp` (proved by induction on the tower height using 2).\n\n4. **Constructive tower lower bounds** \u2014\n   * `tower_raises_coindex` : a `\u2124\u2082`-map `S\u1d50 \u2192 S\u207f` yields one `S\u1d50\u207a\u1d4f \u2192 S\u207f\u207a\u1d4f` for every `k`;\n   * `coindex_tower_lower_bound` : if `m \u2264 n` there is such a map at every height;\n   * `base_point_tower` : suspending the equatorial map `S\u2070 \u2192 S\u207f` gives `S\u1d4f \u2192 S\u207f\u207a\u1d4f`.\n\n5. **Borsuk\u2013Ulam descent** \u2014 `isEmpty_of_isEmpty_codomain_succ` (lowering the codomain) and\n   `isEmpty_of_isEmpty_domain` (raising the domain), both obtained by composing with the\n   equatorial inclusion. These turn a single non-existence fact into a whole cone of them.\n\n6. **General non-existence to low spheres** \u2014 combining the finite Borsuk\u2013Ulam base\n   instances with descent (5):\n   * `no_map_to_S0 (m)` : `IsEmpty (Z2Map (m+1) 0)` \u2014 *no* `\u2124\u2082`-map from any\n     positive-dimensional sphere to `S\u2070`;\n   * `no_map_to_S1 (m)` : `IsEmpty (Z2Map (m+2) 1)`;\n   * `no_map_to_S2 (m)` : `IsEmpty (Z2Map (m+3) 2)`.\n   Here `borsuk_ulam_S3_S2 : IsEmpty (Z2Map 3 2)` is a new finite Borsuk\u2013Ulam instance,\n   verified by `decide` over the finite positive-vertex reformulation.\n\n7. **The sharp diagonal / excess spectrum at the base** \u2014 `borsuk_ulam_diagonal_le_two`\n   (`IsEmpty (Z2Map (n+1) n)` for `n \u2264 2`) and `tower_coindex_sharp`\n   (`Nonempty (Z2Map n n) \u2227 IsEmpty (Z2Map (n+1) n)` for `n \u2264 2`). Together with the\n   constructive lower bound this pins `coind(S\u207f) = n` exactly for `n \u2208 {0,1,2}`, so each of\n   the bottom three rungs of the suspension tower gains **precisely one** unit of coindex.\n\n## What remains open\n\n* **The full diagonal** `IsEmpty (Z2Map (n+1) n)` for *all* `n` is the full strength of the\n  Borsuk\u2013Ulam / Tucker theorem. Here it is established for `n \u2264 2` by finite computation; the\n  `decide` cost grows quickly, so a general proof needs the genuine topological/combinatorial\n  argument (e.g. a Tucker-lemma parity argument) rather than enumeration.\n* **The excess spectrum.** The \"excess\" of a free `\u2124\u2082`-complex `K` (coindex minus a chosen\n  lower invariant, or the gap between the constructive and Borsuk\u2013Ulam bounds along the\n  tower) is exactly `0` for the spheres by the sharpness results above. Extending the model\n  to non-spherical free `\u2124\u2082`-complexes and measuring where excess becomes positive is the\n  natural next target.\n* **Functoriality upgrade.** `susp_id`/`susp_comp` make `susp` an endofunctor on the concrete\n  category of `Z2Map`s; packaging this as a Mathlib `CategoryTheory.Functor` would let the\n  tower be studied with the general machinery of towers/inverse limits.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1287",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6e60d0a1",
+    "status": "available",
+    "timestamp": "2026-07-14T10:08:28.260389+00:00",
+    "title": "This cycle takes the combinatorial model of free `\u2124\u2082`-complexes from"
   },
   {
     "consumed_by_exp_id": "",

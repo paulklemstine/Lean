@@ -1711,25 +1711,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6e60d0a1",
-    "description": "Cycle 769cd692 (Q=0.780) proved 51 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved thr",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_769cd692_db044927",
-    "lineage_refs": [],
-    "priority_score": 0.8300000000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "769cd692",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T07:30:03.599030+00:00",
-    "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set — they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line — they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line — they are a fractal curve.",
     "domain_bridges": [],
@@ -2050,34 +2031,6 @@
     "status": "available",
     "timestamp": "2026-07-05T22:13:32.517589+00:00",
     "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "cs.IT",
-      "cs.GT",
-      "math.CO",
-      "math.PR"
-    ],
-    "consumed_by_exp_id": "385fff12",
-    "description": "The main result establishing the exact exponential growth rate of the ρ-th moment of constrained guesswork G_coset for a random binary linear code of rate R under i.i.d. Bernoulli(p) noise. It demonstrates that the exponent shifts down by exactly ρ(1-R) relative to the unconstrained Arıkan--Merhav exponent, yielding a closed-form limit expressed in terms of the binary Rényi entropy.",
-    "domain_bridges": [
-      "math.PR",
-      "math.CO",
-      "cs.IT"
-    ],
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0446",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Define the probability space for random binary linear codes and the constrained guesswork rank. Prove the universality theorem, expressing the guesswork exponent as a functional of the weight-enumerator growth rate: (1+ρ)ψ_{1/(1+ρ)}(g) - ρψ_1(g). Then, evaluate this Legendre-type transform for the specific weight-enumerator growth rate of random linear codes to derive the closed-form exponent ρ h_{1/(1+ρ)}(p) + ρ(R-1).",
-    "research_mode": "team",
-    "source_exp_id": "2607.00205v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-06T11:06:30.434239+00:00",
-    "title": "Exact Exponent for Constrained Coset Guesswork"
   },
   {
     "ambition_level": "extension",
@@ -3324,6 +3277,46 @@
     "status": "available",
     "timestamp": "2026-07-14T09:16:54.063937+00:00",
     "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: the suspension tower `Sᵏ(K)` and the excess spectrum of free ℤ₂-complexes\n\nThis cycle takes the combinatorial model of free `ℤ₂`-complexes from\n`Catalog/Novelty/Z2CoindexSuspension.lean` (cross-polytope boundary spheres `Sⁿ`, the\nfree antipodal action, and equivariant simplicial maps `Z2Map m n`) and assembles the\n**suspension tower** into a rigorous *functorial* object, then proves a single connected\nchain of results describing how the `ℤ₂`-coindex propagates up and down the tower.\n\nAll new material lives in `Catalog/Novelty/Z2SuspensionTower.lean`. It compiles with\nLean 4 / Mathlib (`lake build Novelty.Z2SuspensionTower`), contains **no `sorry`**, and every\ntheorem depends only on the standard axioms `propext`, `Classical.choice`, `Quot.sound`\n(in particular the finite Borsuk–Ulam instances use `decide`, not `native_decide`).\n\n## The chain of results (each uses the previous)\n\n1. **Extensionality** — `Z2Map.map_ext`. A `ℤ₂`-map is determined by its underlying vertex\n   map, since the equivariance and simpliciality fields are propositions.\n\n2. **Suspension is an endofunctor** — `Z2Map.susp_id`, `Z2Map.susp_comp`. The suspension\n   operation `susp : Z2Map m n → Z2Map (m+1) (n+1)` preserves identities and composition.\n\n3. **The iterated tower** — `Z2Map.suspIter F k : Z2Map (m+k) (n+k)`, the `k`-fold\n   suspension, with the functor laws lifted to it: `Z2Map.suspIter_id`,\n   `Z2Map.suspIter_comp` (proved by induction on the tower height using 2).\n\n4. **Constructive tower lower bounds** —\n   * `tower_raises_coindex` : a `ℤ₂`-map `Sᵐ → Sⁿ` yields one `Sᵐ⁺ᵏ → Sⁿ⁺ᵏ` for every `k`;\n   * `coindex_tower_lower_bound` : if `m ≤ n` there is such a map at every height;\n   * `base_point_tower` : suspending the equatorial map `S⁰ → Sⁿ` gives `Sᵏ → Sⁿ⁺ᵏ`.\n\n5. **Borsuk–Ulam descent** — `isEmpty_of_isEmpty_codomain_succ` (lowering the codomain) and\n   `isEmpty_of_isEmpty_domain` (raising the domain), both obtained by composing with the\n   equatorial inclusion. These turn a single non-existence fact into a whole cone of them.\n\n6. **General non-existence to low spheres** — combining the finite Borsuk–Ulam base\n   instances with descent (5):\n   * `no_map_to_S0 (m)` : `IsEmpty (Z2Map (m+1) 0)` — *no* `ℤ₂`-map from any\n     positive-dimensional sphere to `S⁰`;\n   * `no_map_to_S1 (m)` : `IsEmpty (Z2Map (m+2) 1)`;\n   * `no_map_to_S2 (m)` : `IsEmpty (Z2Map (m+3) 2)`.\n   Here `borsuk_ulam_S3_S2 : IsEmpty (Z2Map 3 2)` is a new finite Borsuk–Ulam instance,\n   verified by `decide` over the finite positive-vertex reformulation.\n\n7. **The sharp diagonal / excess spectrum at the base** — `borsuk_ulam_diagonal_le_two`\n   (`IsEmpty (Z2Map (n+1) n)` for `n ≤ 2`) and `tower_coindex_sharp`\n   (`Nonempty (Z2Map n n) ∧ IsEmpty (Z2Map (n+1) n)` for `n ≤ 2`). Together with the\n   constructive lower bound this pins `coind(Sⁿ) = n` exactly for `n ∈ {0,1,2}`, so each of\n   the bottom three rungs of the suspension tower gains **precisely one** unit of coindex.\n\n## What remains open\n\n* **The full diagonal** `IsEmpty (Z2Map (n+1) n)` for *all* `n` is the full strength of the\n  Borsuk–Ulam / Tucker theorem. Here it is established for `n ≤ 2` by finite computation; the\n  `decide` cost grows quickly, so a general proof needs the genuine topological/combinatorial\n  argument (e.g. a Tucker-lemma parity argument) rather than enumeration.\n* **The excess spectrum.** The \"excess\" of a free `ℤ₂`-complex `K` (coindex minus a chosen\n  lower invariant, or the gap between the constructive and Borsuk–Ulam bounds along the\n  tower) is exactly `0` for the spheres by the sharpness results above. Extending the model\n  to non-spherical free `ℤ₂`-complexes and measuring where excess becomes positive is the\n  natural next target.\n* **Functoriality upgrade.** `susp_id`/`susp_comp` make `susp` an endofunctor on the concrete\n  category of `Z2Map`s; packaging this as a Mathlib `CategoryTheory.Functor` would let the\n  tower be studied with the general machinery of towers/inverse limits.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1287",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6e60d0a1",
+    "status": "available",
+    "timestamp": "2026-07-14T10:08:28.260389+00:00",
+    "title": "This cycle takes the combinatorial model of free `ℤ₂`-complexes from"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Constrained Coset Guesswork\n\nDerived from the exact coset-exponent cycle. Each conjecture is falsifiable.\n\n## 1. Universality of the additive redundancy term\n\n**Conjecture.** For *any* discrete memoryless source over a `q`-ary alphabet and\nany linear code of rate `R`, the constrained coset guessing exponent equals the\nunconstrained Arıkan–Merhav exponent minus `ρ(1-R)·log₂ q`, with no dependence on\nthe source distribution in the redundancy term.\n\nThe key insight is that the shift arises purely from the *density* of a coset\ninside the ambient space, `q^{-(1-R)n}`, which is a property of the code and not of\nthe noise; the source distribution only enters through the unconstrained exponent.\n\nWhy now? The binary case establishes the additive separation cleanly; the `q`-ary\ngeneralization is the natural next test of whether \"coding cost\" and \"source\ndifficulty\" truly decouple.\n\n## 2. Second-order (dispersion) refinement of the shift\n\n**Conjecture.** Beyond the first-order exponent, the constrained coset moment admits\na Gaussian-type refinement whose `√n` dispersion term is *unchanged* by the coset\nconstraint; only the exponent's linear term shifts.\n\nThe key insight is that coset compression is a deterministic multiplicative factor\n`2^{-ρ(1-R)n}`, which contributes nothing to fluctuations, so all randomness — and\nhence all dispersion — comes from the source alone.\n\nWhy now? Finite-blocklength guesswork is increasingly relevant to side-channel and\npassword-strength analysis, where the `√n` term dominates at practical lengths.\n\n## 3. Rate–moment phase boundary\n\n**Conjecture.** There is a critical rate `R*(ρ, p) = 1 - H_{1/(1+ρ)}(p)` at which the\nconstrained coset exponent changes sign, separating a regime where guessing is\nsub-exponentially easy from one where it is exponentially hard.\n\nThe key insight is that the exact closed form `ρ·H_{1/(1+ρ)}(p) - ρ(1-R)` is linear\nin `R`, so its unique zero is an exact, computable phase boundary rather than an\nestimate.\n\nWhy now? The exact exponent makes the boundary explicit for the first time,\nturning a qualitative \"harder/easier\" intuition into a sharp threshold.\n\n## 4. Rényi–Shannon continuity at the boundary order\n\n**Conjecture.** As `ρ → ∞` (order `α = 1/(1+ρ) → 0`) the per-symbol exponent\n`H_{1/(1+ρ)}(p)` increases monotonically to `log₂ 2 = 1`, while as `ρ → 0` it\ndecreases continuously to the Shannon entropy `H(p)`, with no discontinuity at the\nexcluded order `α = 1`.\n\nThe key insight is that the guarded case `α ≠ 1` in the Rényi formula is a\nremovable singularity: the limit exists and equals the Shannon entropy, so the\nwhole family of exponents is continuous in `ρ`.\n\nWhy now? Bridging the Rényi guessing exponents to the Shannon entropy at `ρ → 0`\nwould unify moment-based and rate-based code design under one continuous curve.\n\n## 5. Adversarial coset selection\n\n**Conjecture.** If the adversary may choose *which* coset to attack (rather than\nfacing the syndrome-determined one), the best-case exponent is lowered by an\nadditional term equal to the exponent of the minimum coset weight, and this extra\nsaving is at most `ρ(1-R)`, saturating exactly for perfect codes.\n\nThe key insight is that coset weight distributions of random linear codes\nconcentrate, so the \"easiest\" coset is only polynomially lighter than average\nexcept for the atypical perfect-code case.\n\nWhy now? Adversarial (worst-case over cosets) guesswork models realistic attackers\nwho can steer toward weak syndromes, a gap not captured by the average-case theory.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_1288",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "385fff12",
+    "status": "available",
+    "timestamp": "2026-07-14T10:08:39.673066+00:00",
+    "title": "Derived from the exact coset-exponent cycle. Each conjecture is falsifiable."
   },
   {
     "ambition_level": "extension",
