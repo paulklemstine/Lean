@@ -1,235 +1,210 @@
-# The Suspension Tower and the Exact $\mathbb{Z}_2$-Coindex of Combinatorial Spheres
+# Enumerative Rigidity of Antipodal Maps Between Octahedral Spheres
 
 **Author:** Aristotle
 
+**Date:** 2026-07-14
+
 ## Abstract
 
-We study antipodal (equivariant) simplicial maps between combinatorial spheres realized as boundaries of cross-polytopes, equipped with the free $\mathbb{Z}_2$-action given by the antipodal map. We prove that such a map $S^m \to S^n$ exists if and only if $m \le n$, giving a completely elementary, all-dimensions form of the Borsuk–Ulam theorem in this model. The engine of the result is a structural characterization we call the *Coordinate Injectivity Principle*: an equivariant simplicial self-map of cross-polytopes is simplicial precisely when the induced map on coordinate axes is injective, with signs entirely free. As consequences we obtain the exact value of the $\mathbb{Z}_2$-coindex, $\mathrm{coind}(S^n) = n$; the construction of the $k$-fold *suspension tower* as a functor on equivariant maps; and the *exactness* of the tower — suspension preserves the excess $n - m$, so a fair map exists at level $k$ if and only if it exists at the base, and every level of the tower is Borsuk–Ulam sharp. We include algorithms, numerical demonstrations, and a discussion of what changes when one leaves the octahedral model.
+We study antipodally-equivariant simplicial maps between octahedral spheres — the combinatorial spheres realized as boundaries of cross-polytopes, each carrying the free $\mathbb{Z}_2$-action given by the antipodal involution. Our central result is an exact enumeration: the number of equivariant simplicial maps $S^m \to S^n$ is
+$$
+\#\{\text{$\mathbb{Z}_2$-maps } S^m \to S^n\} \;=\; 2^{\,m+1}\cdot (n+1)^{\underline{\,m+1\,}} \;=\; 2^{\,m+1}\cdot\frac{(n+1)!}{(n-m)!},
+$$
+a product of an independent sign for each source axis and a falling-factorial count of axis injections. The proof rests on a *rigidity* phenomenon: equivariance reconstructs an entire map from the images of its positive vertices, and simpliciality reduces to injectivity of the induced axis map, so a $\mathbb{Z}_2$-map is *exactly* an injection of coordinate axes decorated with an independent sign vector. Three classical facts follow as corollaries of this single formula. The count is positive iff $m \le n$, yielding a combinatorial Borsuk–Ulam theorem and the identity $\operatorname{coind}(S^n) = n$. Its diagonal value $2^{n+1}(n+1)!$ is the order of the hyperoctahedral group $B_{n+1}$, so every $\mathbb{Z}_2$-self-map of $S^n$ is a signed permutation of axes. Finally, the *existence dichotomy* is stable along the suspension tower: since $m \le n$ is equivalent to $m+k \le n+k$, the excess $n-m$ is a suspension invariant, and correspondingly $S(S^n) \cong S^{n+1}$ raises dimension and coindex in lockstep. The exact count, by contrast, is not suspension-invariant — it grows by a factor $2(n+2)$ per step — so it is the positivity of the formula, not its value, that is stable. The unifying theme is that the coindex, the excess, and the suspension tower are all shadows of a single elementary finite object — the set of signed axis injections.
 
-**Keywords:** Borsuk–Ulam theorem, $\mathbb{Z}_2$-coindex, cross-polytope, antipodal map, equivariant simplicial map, suspension, free $\mathbb{Z}_2$-complex, pigeonhole principle.
-
----
+**Keywords:** free $\mathbb{Z}_2$-complex, antipodal map, octahedral sphere, cross-polytope, coindex, Borsuk–Ulam theorem, hyperoctahedral group, signed permutation, falling factorial, suspension tower, equivariant simplicial map.
 
 ## 1. Introduction
 
-The Borsuk–Ulam theorem asserts that every continuous antipodal map $S^m \to S^n$ forces $m \le n$; equivalently, there is no continuous map $S^{n+1} \to S^n$ commuting with the antipodal involution. It is among the most widely applied theorems in mathematics, with consequences ranging from the ham-sandwich theorem to Lovász's resolution of the Kneser conjecture and beyond.
+The Borsuk–Ulam theorem is one of the load-bearing results of combinatorial and algebraic topology: it powers Lovász's proof of the Kneser conjecture, a wealth of fair-division and Tucker-lemma arguments, and the general theory of topological lower bounds in combinatorics. In its equivariant formulation it asserts the *nonexistence* of a $\mathbb{Z}_2$-equivariant map from a higher sphere to a lower one. This is fundamentally a *qualitative* statement — it decides a yes/no question about existence.
 
-A standard invariant packaging its content is the **$\mathbb{Z}_2$-coindex** of a free $\mathbb{Z}_2$-space $X$: the largest $m$ such that there is an equivariant map $S^m \to X$. Borsuk–Ulam is the statement $\mathrm{coind}(S^n) = n$. In the smooth or topological category this equality already requires nontrivial machinery (degree theory, or cohomological index theory).
+This paper asks the sharper *quantitative* question. Among all combinatorial models of spheres, the octahedral spheres (boundaries of cross-polytopes) are the most symmetric, and their equivariant simplicial maps are so rigid that they can be *counted exactly*. We prove that the number of antipodally-equivariant simplicial maps $S^m \to S^n$ is a clean closed form, and we show that the classical existence dichotomy, the identification of the sphere's symmetry group, and the behavior of the suspension tower are all corollaries of this one enumeration.
 
-This paper develops a fully **combinatorial** and **elementary** account in the *cross-polytope model*, in which spheres are boundaries of orthoplexes and maps are simplicial and antipodally equivariant. In this model we obtain not only the coindex but the exact behaviour of the entire *suspension tower* — the sequence of spheres obtained by iterated suspension — and prove that every rung of the tower is Borsuk–Ulam sharp. Our central technical observation reduces the entire simpliciality condition to injectivity of a finite map on axis labels, whence all impossibility statements become instances of the pigeonhole principle.
+The philosophy is "count, don't merely decide." Existence theorems tell us whether an object exists; enumeration theorems tell us how the objects are organized, expose their symmetry groups, and often make the existence statement fall out as the positivity of a formula. We carry this philosophy through the entire coindex theory of octahedral spheres.
 
-### 1.1 Contributions
+### Contributions
 
-1. **The Coordinate Injectivity Principle** (Theorem 4.1): simpliciality of an equivariant vertex map $\Longleftrightarrow$ injectivity of its induced coordinate (axis) map.
-2. **Exact existence criterion** (Theorem 5.1): a fair map $S^m \to S^n$ exists $\iff m \le n$.
-3. **Borsuk–Ulam in all dimensions** (Corollary 5.2): $S^{n+1} \not\to S^n$ for every $n$.
-4. **Exact coindex** (Theorem 6.1): $\mathrm{coind}(S^n) = n$.
-5. **The suspension tower as a functor** (Definition 7.1, Proposition 7.2), and its **exactness and sharpness** (Theorems 7.3–7.5): suspension preserves the excess $n - m$; the tower is Borsuk–Ulam sharp at every level.
+1. **A classifying bijection (Section 3).** We exhibit an explicit equivalence identifying the set of $\mathbb{Z}_2$-maps $S^m \to S^n$ with the set of pairs (sign vector, axis injection).
+2. **The exact count (Section 4).** We derive $\#\{S^m \to S^n\} = 2^{m+1}(n+1)^{\underline{m+1}}$.
+3. **A combinatorial Borsuk–Ulam theorem (Section 5).** Positivity of the count is equivalent to $m \le n$, giving $\operatorname{coind}(S^n) = n$.
+4. **The hyperoctahedral identification (Section 6).** The diagonal count is $|B_{n+1}| = 2^{n+1}(n+1)!$, and every self-map is a signed permutation.
+5. **Suspension stability (Section 7).** The existence dichotomy and the excess $n-m$ are invariant under simultaneous suspension of source and target, while the exact count grows by a controlled factor.
 
----
+## 2. Definitions
 
-## 2. The cross-polytope model
+### 2.1 Free $\mathbb{Z}_2$-complexes
 
-### 2.1 Vertices and the antipodal action
+A **free $\mathbb{Z}_2$-complex** is an abstract simplicial complex $K$ equipped with a simplicial involution $\nu\colon K \to K$ (the *antipodal action*) that is free: $\nu$ has no fixed vertices, and no simplex of $K$ contains both a vertex $v$ and its antipode $\nu(v)$. We write $-v$ for $\nu(v)$.
 
-**Definition 2.1 (Combinatorial sphere).** For $n \in \mathbb{N}$, the *$n$-dimensional combinatorial sphere* $S^n$ is the boundary complex of the $(n{+}1)$-dimensional cross-polytope. Its vertex set is
+An **equivariant simplicial map** (a **$\mathbb{Z}_2$-map**) $f\colon K \to L$ between free $\mathbb{Z}_2$-complexes is a simplicial map — it carries vertices to vertices and simplices to simplices — that commutes with the antipodal actions: $f(-v) = -f(v)$ for every vertex $v$. We write $\mathrm{Z2Map}(K, L)$ for the set of such maps.
+
+### 2.2 The octahedral sphere
+
+Fix $n \ge 0$. The **octahedral $n$-sphere** $S^n$ is the boundary complex of the $(n+1)$-dimensional cross-polytope, described combinatorially as follows. Its vertex set is
 $$
-V(S^n) = \{\pm e_0, \pm e_1, \dots, \pm e_n\},
+V(S^n) \;=\; \{0, 1, \dots, n\} \times \{+, -\},
 $$
-the signed standard basis vectors of $\mathbb{R}^{n+1}$. We encode a vertex as a pair
+consisting of $n+1$ **axes** $\{0,\dots,n\}$, each carrying a positive vertex $(i,+)$ and a negative vertex $(i,-)$. The antipodal action flips the sign: $-(i,\pm) = (i,\mp)$; it is manifestly free. A finite set $\sigma \subseteq V(S^n)$ is a **simplex** of $S^n$ precisely when it contains at most one vertex from each axis — equivalently, when the *coordinate map* $\sigma \to \{0,\dots,n\}$, $(i,\pm)\mapsto i$, is injective on $\sigma$.
+
+Thus $S^n$ has $2(n+1)$ vertices and $2^{\,n+1}$ facets (maximal simplices), one for each choice of sign on each of the $n+1$ axes; it is a triangulation of the topological $n$-sphere. Low-dimensional cases: $S^0$ is two antipodal points; $S^1$ is a $4$-cycle (the square); $S^2$ is the octahedron.
+
+### 2.3 Positive-vertex data
+
+For a source $S^m$, call $e_0, \dots, e_m$ with $e_i = (i,+)$ the **positive vertices**. A signed vertex of $S^n$ is a pair $(j, s)$ with $j \in \{0,\dots,n\}$ an axis and $s \in \{+,-\}$ a sign. The **positive-vertex data** of a map $f$ is the tuple $g = (g_0,\dots,g_m)$ where $g_i = f(e_i) \in V(S^n)$. Writing $g_i = (\gamma_i, s_i)$, the **coordinate map** of $g$ is $\gamma\colon \{0,\dots,m\} \to \{0,\dots,n\}$, $i \mapsto \gamma_i$, and the **sign vector** is $s = (s_0,\dots,s_m) \in \{+,-\}^{m+1}$.
+
+### 2.4 Coindex and excess
+
+The **$\mathbb{Z}_2$-coindex** of a free $\mathbb{Z}_2$-complex $K$ is
 $$
-(i, b) \in \{0,1,\dots,n\} \times \{\mathrm{true}, \mathrm{false}\},
+\operatorname{coind}(K) \;=\; \max\{\, m \ge 0 : \mathrm{Z2Map}(S^m, K) \ne \varnothing \,\},
 $$
-where $i$ is the axis index and $b$ records the sign ($\mathrm{true} \mapsto +$, $\mathrm{false} \mapsto -$). We write $\mathrm{SVert}(n)$ for this set; it has $2(n{+}1)$ elements.
+the largest dimension of an octahedral sphere admitting an equivariant map into $K$ (or $-1$ by convention if none exists). For a complex of dimension $d$, the **excess** is $d - \operatorname{coind}(K)$, measuring how far the complex reaches below its dimension.
 
-The faces of $S^n$ are exactly the subsets of $V(S^n)$ containing at most one of each antipodal pair $\{+e_i, -e_i\}$; equivalently, the "no antipodal pair" subsets. We will not need faces beyond edges: a pair $\{u, v\}$ spans an edge iff $u \ne v$ and $u \ne -v$.
+### 2.5 Suspension and the suspension tower
 
-**Definition 2.2 (Antipodal map).** The free $\mathbb{Z}_2$-action is the antipodal involution
+The **join** $K * L$ of two free $\mathbb{Z}_2$-complexes has vertex set the disjoint union $V(K) \sqcup V(L)$, simplices all unions $\sigma \cup \tau$ with $\sigma$ a simplex of $K$ and $\tau$ a simplex of $L$, and the antipodal action inherited coordinatewise. The **suspension** of $K$ is
 $$
-\mathrm{anti}(i, b) = (i, \lnot b).
+S(K) \;=\; K * S^0,
 $$
+the join with a single antipodal pair of poles $\{p_+, p_-\}$. Suspension raises dimension by one and coindex by one. Iterating, the **suspension tower** is $S^k(K) = \underbrace{S(S(\cdots S}_{k}(K)\cdots))$. On octahedral spheres, $S(S^n) \cong S^{n+1}$, so $S^k(S^n) \cong S^{n+k}$.
 
-**Lemma 2.3.** For all $p$: $\mathrm{anti}(\mathrm{anti}(p)) = p$ and $\mathrm{anti}(p) \ne p$.
+## 3. The classifying bijection
 
-*Proof.* Flipping a bit twice restores it, so $\mathrm{anti}$ is an involution. Since a Boolean value is never equal to its negation, $\mathrm{anti}$ has no fixed point. $\square$
+The engine of the paper is the reduction of a $\mathbb{Z}_2$-map to a finite piece of data.
 
-Thus $S^n$ is a **free $\mathbb{Z}_2$-complex**: the involution acts without fixed points, which is precisely the setting for the antipodal game.
+**Lemma 3.1 (Reconstruction from positive data).** *A $\mathbb{Z}_2$-map $f\colon S^m \to S^n$ is uniquely determined by its positive-vertex data $g = (f(e_0),\dots,f(e_m))$. Conversely, any tuple $g \in V(S^n)^{m+1}$ extends to a (unique) equivariant vertex map by setting $f(i,+) = g_i$ and $f(i,-) = -g_i$.*
 
-### 2.2 Equivariant simplicial maps
+*Proof sketch.* Every vertex of $S^m$ is either a positive vertex $e_i = (i,+)$ or its antipode $(i,-)$. Equivariance forces $f(i,-) = -f(i,+) = -g_i$, so the values on positive vertices determine $f$ on all vertices. Conversely, the assignment $f(i,\pm) = \pm g_i$ is equivariant by construction. $\square$
 
-**Definition 2.4 (Fair map / $\mathbb{Z}_2$-map).** A *$\mathbb{Z}_2$-map* (or *fair map*) $F : S^m \to S^n$ is a vertex map $F : \mathrm{SVert}(m) \to \mathrm{SVert}(n)$ satisfying:
+**Lemma 3.2 (Simpliciality is axis-injectivity).** *The equivariant vertex map $f$ induced by data $g = ((\gamma_0,s_0),\dots,(\gamma_m,s_m))$ is simplicial if and only if its coordinate map $\gamma\colon i \mapsto \gamma_i$ is injective.*
 
-- **(Equivariance)** $F(\mathrm{anti}(p)) = \mathrm{anti}(F(p))$ for all $p$;
-- **(Simpliciality)** for all $p, q$: if $F(p) = \mathrm{anti}(F(q))$ then $p = \mathrm{anti}(q)$.
+*Proof sketch.* ($\Rightarrow$) The positive vertices $\{e_0,\dots,e_m\}$ form a facet of $S^m$ (distinct axes, one each). If $f$ is simplicial their images $\{g_0,\dots,g_m\}$ form a simplex of $S^n$, hence lie on distinct axes, i.e. $\gamma$ is injective.
 
-The simpliciality clause is the vertex-level statement that $F$ maps faces to faces: it forbids two non-antipodal vertices from being sent to an antipodal (hence non-face) pair. Contrapositively, whenever $p \ne \mathrm{anti}(q)$, the images $F(p)$ and $F(q)$ are not antipodal, so $\{F(p), F(q)\}$ is again a legal face.
+($\Leftarrow$) Suppose $\gamma$ is injective. Any simplex $\sigma$ of $S^m$ uses distinct axes; write its vertices as $(i, \epsilon_i)$ for $i$ ranging over an axis set $A \subseteq \{0,\dots,m\}$ and signs $\epsilon_i$. Its image consists of the signed vertices $\epsilon_i \cdot g_i$, whose axes are $\{\gamma_i : i \in A\}$. Since $\gamma$ is injective, these axes are distinct, so the image is a simplex of $S^n$. Hence $f$ is simplicial. $\square$
 
-We write $\mathrm{Z2Map}(m, n)$ for the set of such maps, and ask when it is nonempty.
+Combining the two lemmas and recording that the data $g$ splits into its sign and coordinate parts gives the central structural statement.
 
-**Example 2.5 (Identity).** The identity vertex map $S^n \to S^n$ is equivariant (trivially) and simplicial (if $p = \mathrm{anti}(q)$ then indeed $p = \mathrm{anti}(q)$). Hence $\mathrm{Z2Map}(n,n) \ne \varnothing$.
-
----
-
-## 3. Reduction to positive-vertex data
-
-Equivariance means a fair map is determined by its values on the *positive* vertices $(i, \mathrm{true})$.
-
-**Definition 3.1 (Induced map).** Given data $g : \{0,\dots,m\} \to \mathrm{SVert}(n)$, define $\mathrm{induced}(g) : \mathrm{SVert}(m) \to \mathrm{SVert}(n)$ by
+**Theorem 3.3 (Classifying bijection).** *For all $m, n \ge 0$ there is an explicit bijection*
 $$
-\mathrm{induced}(g)(i, b) = \begin{cases} g(i), & b = \mathrm{true},\\ \mathrm{anti}(g(i)), & b = \mathrm{false}. \end{cases}
+\mathrm{Z2Map}(S^m, S^n) \;\;\xrightarrow{\ \sim\ }\;\; \{+,-\}^{\,m+1} \;\times\; \operatorname{Inj}\big(\{0,\dots,m\},\{0,\dots,n\}\big),
 $$
+*sending a map $f$ to the pair (sign vector of its positive data, coordinate injection of its positive data). Here $\operatorname{Inj}(A,B)$ denotes the set of injections $A \hookrightarrow B$.*
 
-**Lemma 3.2.** $\mathrm{induced}(g)$ is equivariant for every $g$.
+*Proof sketch.* By Lemma 3.1, $f \mapsto g$ identifies $\mathrm{Z2Map}(S^m, S^n)$ with the set of tuples $g \in V(S^n)^{m+1}$ whose coordinate map is injective (Lemma 3.2). Each such $g$ is equivalent to the pair (sign vector $s \in \{+,-\}^{m+1}$, injective coordinate map $\gamma$). The two directions are mutually inverse by inspection. $\square$
 
-*Proof.* For $b = \mathrm{true}$, $\mathrm{induced}(g)(\mathrm{anti}(i,\mathrm{true})) = \mathrm{induced}(g)(i,\mathrm{false}) = \mathrm{anti}(g(i)) = \mathrm{anti}(\mathrm{induced}(g)(i,\mathrm{true}))$; the case $b=\mathrm{false}$ is symmetric using $\mathrm{anti}\circ\mathrm{anti}=\mathrm{id}$. $\square$
+Theorem 3.3 is the precise sense in which antipodal maps of octahedral spheres are **rigid**: the only freedom is *which* axes go *where* (an injection) and *with what sign* (a bit per source axis). Nothing else.
 
-**Proposition 3.3 (Positive-vertex reduction).** $\mathrm{Z2Map}(m,n) \ne \varnothing$ if and only if there exists $g : \{0,\dots,m\} \to \mathrm{SVert}(n)$ such that $\mathrm{induced}(g)$ is simplicial, i.e.
+## 4. The exact count
+
+**Theorem 4.1 (Exact enumeration).** *For all $m, n \ge 0$,*
 $$
-\forall p, q,\quad \mathrm{induced}(g)(p) = \mathrm{anti}(\mathrm{induced}(g)(q)) \ \Rightarrow\ p = \mathrm{anti}(q).
+\#\,\mathrm{Z2Map}(S^m, S^n) \;=\; 2^{\,m+1}\cdot (n+1)^{\underline{\,m+1\,}},
 $$
+*where $(n+1)^{\underline{\,m+1\,}} = (n+1)\,n\,(n-1)\cdots(n-m+1) = (n+1)!/(n-m)!$ is the falling factorial with $m+1$ descending factors (interpreted as $0$ when $m > n$).*
 
-*Proof.* ($\Rightarrow$) Given $F \in \mathrm{Z2Map}(m,n)$, set $g(i) = F(i, \mathrm{true})$. Equivariance gives $\mathrm{induced}(g) = F$ on all vertices (on positive vertices by definition; on negative vertices because $F(i,\mathrm{false}) = F(\mathrm{anti}(i,\mathrm{true})) = \mathrm{anti}(F(i,\mathrm{true})) = \mathrm{anti}(g(i))$). Hence $\mathrm{induced}(g)$ inherits simpliciality from $F$.
+*Proof sketch.* Apply Theorem 3.3 and count the product. The number of sign vectors in $\{+,-\}^{m+1}$ is $2^{m+1}$. The number of injections $\{0,\dots,m\} \hookrightarrow \{0,\dots,n\}$ is the number of ways to choose ordered distinct images for $m+1$ source elements among $n+1$ targets, which is the falling factorial $(n+1)^{\underline{m+1}}$. Multiplying gives the claim. $\square$
 
-($\Leftarrow$) By Lemma 3.2, $\mathrm{induced}(g)$ is equivariant; the hypothesis is exactly simpliciality, so $\mathrm{induced}(g) \in \mathrm{Z2Map}(m,n)$. $\square$
+**Worked value.** For $m=1$, $n=2$: $2^2 \cdot (3 \cdot 2) = 4 \cdot 6 = 24$ maps $S^1 \to S^2$.
 
----
+**Proposition 4.2 (Free-action divisor).** *For all $m,n$, $\;2^{\,m+1} \mid \#\,\mathrm{Z2Map}(S^m, S^n)$.*
 
-## 4. The Coordinate Injectivity Principle
+*Proof sketch.* Immediate from Theorem 4.1: the count is $2^{m+1}$ times an integer. Structurally, the sign vector can be flipped freely and independently on each source axis, so the free $\mathbb{Z}_2^{m+1}$ action on signs partitions the maps into orbits of size $2^{m+1}$. $\square$
 
-**Definition 4.1 (Coordinate map).** For $g : \{0,\dots,m\} \to \mathrm{SVert}(n)$, its *coordinate map* is
+## 5. A combinatorial Borsuk–Ulam theorem
+
+**Theorem 5.1 (Existence dichotomy).** *For all $m,n \ge 0$,*
 $$
-\sigma = \mathrm{coordMap}(g) : \{0,\dots,m\} \to \{0,\dots,n\}, \qquad \sigma(i) = \big(g(i)\big)_1,
-$$
-the axis index of $g(i)$, discarding the sign.
-
-**Theorem 4.2 (Coordinate Injectivity Principle).** The induced map $\mathrm{induced}(g)$ is simplicial if and only if its coordinate map $\sigma = \mathrm{coordMap}(g)$ is injective.
-
-*Proof.*
-
-*(Simplicial $\Rightarrow$ injective.)* Suppose $\mathrm{induced}(g)$ is simplicial and $\sigma(i) = \sigma(j)$; we show $i = j$. Write $g(i) = (\sigma(i), \beta_i)$ and $g(j) = (\sigma(j), \beta_j) = (\sigma(i), \beta_j)$.
-- If $\beta_i = \beta_j$, then $g(i) = g(j)$. Then $\mathrm{induced}(g)(i,\mathrm{true}) = g(i) = g(j) = \mathrm{anti}(\mathrm{anti}(g(j))) = \mathrm{anti}(\mathrm{induced}(g)(j, \mathrm{false}))$. Simpliciality yields $(i,\mathrm{true}) = \mathrm{anti}(j,\mathrm{false}) = (j, \mathrm{true})$, so $i = j$.
-- If $\beta_i \ne \beta_j$, then $g(i) = \mathrm{anti}(g(j))$, so $\mathrm{induced}(g)(i,\mathrm{true}) = g(i) = \mathrm{anti}(g(j)) = \mathrm{anti}(\mathrm{induced}(g)(j,\mathrm{true}))$. Simpliciality yields $(i,\mathrm{true}) = \mathrm{anti}(j,\mathrm{true}) = (j, \mathrm{false})$, forcing the sign bits $\mathrm{true} = \mathrm{false}$, a contradiction; this case cannot occur when $\sigma(i)=\sigma(j)$ with the axis already equal. In either admissible case $i = j$, so $\sigma$ is injective.
-
-*(Injective $\Rightarrow$ simplicial.)* Suppose $\sigma$ is injective and $\mathrm{induced}(g)(p) = \mathrm{anti}(\mathrm{induced}(g)(q))$ with $p = (i,b)$, $q = (j,c)$. Taking axis (first) components, the sign-flip in $\mathrm{anti}$ does not affect the axis, and the induced-map cases only ever apply $\mathrm{anti}$ (which preserves the axis) to $g$; hence the axis of $\mathrm{induced}(g)(p)$ is $\sigma(i)$ and that of $\mathrm{anti}(\mathrm{induced}(g)(q))$ is $\sigma(j)$. Thus $\sigma(i) = \sigma(j)$, and injectivity gives $i = j$. With $i = j$ fixed, comparing sign components in the equation $\mathrm{induced}(g)(i,b) = \mathrm{anti}(\mathrm{induced}(g)(i,c))$ forces $b = \lnot c$, i.e. $(i,b) = \mathrm{anti}(i,c)$, so $p = \mathrm{anti}(q)$. $\square$
-
-**Interpretation.** A fair simplicial self-map of cross-polytopes can do exactly one thing: *injectively relabel coordinate axes, with an arbitrary independent sign on each.* The signs are pure gauge; the only obstruction is axis collision. This is the geometric core from which everything else follows by counting.
-
----
-
-## 5. The exact existence criterion and Borsuk–Ulam
-
-**Theorem 5.1 (Existence criterion).** $\mathrm{Z2Map}(m,n) \ne \varnothing$ if and only if $m \le n$.
-
-*Proof.* By Proposition 3.3 and Theorem 4.2, $\mathrm{Z2Map}(m,n) \ne \varnothing$ iff there is $g$ whose coordinate map $\sigma : \{0,\dots,m\} \to \{0,\dots,n\}$ is injective.
-
-($\Rightarrow$) An injection between finite sets forces $|\{0,\dots,m\}| \le |\{0,\dots,n\}|$, i.e. $m+1 \le n+1$, hence $m \le n$.
-
-($\Leftarrow$) If $m \le n$ then $m + 1 \le n + 1$, so an injection $\sigma : \{0,\dots,m\} \hookrightarrow \{0,\dots,n\}$ exists (e.g. the inclusion). Take $g(i) = (\sigma(i), \mathrm{true})$; its coordinate map is $\sigma$, injective, so $\mathrm{induced}(g)$ is a fair map. $\square$
-
-**Corollary 5.2 (Borsuk–Ulam, all dimensions).** For every $n$, $\mathrm{Z2Map}(n+1, n) = \varnothing$: there is no fair map $S^{n+1} \to S^n$.
-
-*Proof.* By Theorem 5.1 this would require $n + 1 \le n$, which is false. $\square$
-
-This upgrades the base cases $n = 0, 1$ (checkable by finite enumeration) to *all* dimensions in one stroke.
-
----
-
-## 6. The exact coindex
-
-**Definition 6.1 ($\mathbb{Z}_2$-coindex).** The *$\mathbb{Z}_2$-coindex* of $S^n$ is
-$$
-\mathrm{coind}(S^n) = \sup\{\, m \in \mathbb{N} : \mathrm{Z2Map}(m,n) \ne \varnothing \,\}.
+\mathrm{Z2Map}(S^m, S^n) \ne \varnothing \iff \#\,\mathrm{Z2Map}(S^m, S^n) > 0 \iff m \le n.
 $$
 
-**Theorem 6.2 (Exact coindex).** $\mathrm{coind}(S^n) = n$.
+*Proof sketch.* By Theorem 4.1 the count is a product of the strictly positive factor $2^{m+1}$ with the falling factorial $(n+1)^{\underline{m+1}}$. The falling factorial is positive iff all $m+1$ descending factors $n+1, n, \dots, n-m+1$ are positive, i.e. iff $n - m + 1 \ge 1$, i.e. iff $m \le n$; if $m > n$ one factor is $0$. $\square$
 
-*Proof.* By Theorem 5.1 the admissible set is $\{m : \mathrm{Z2Map}(m,n) \ne \varnothing\} = \{m : m \le n\} = \{0,1,\dots,n\}$, whose supremum is $n$. $\square$
+**Corollary 5.2 (Coindex of the octahedral sphere).** *$\operatorname{coind}(S^n) = n$. In particular there is no $\mathbb{Z}_2$-map $S^{n+1} \to S^n$.*
 
-Thus in the cross-polytope model the coindex is a *complete* invariant of the sphere: it equals the dimension exactly, with no slack. In particular there is no gap phenomenon here — a point we revisit in §9.
+*Proof sketch.* By Theorem 5.1 a map $S^m \to S^n$ exists iff $m \le n$, so the largest such $m$ is $n$; and taking $m = n+1$ shows no map $S^{n+1} \to S^n$ exists. $\square$
 
----
+Corollary 5.2 is the combinatorial core of the Borsuk–Ulam theorem: the antipodal nonexistence of maps decreasing the sphere dimension. Here it is not an independent theorem but the vanishing of a falling factorial once it runs out of factors.
+
+## 6. The hyperoctahedral group
+
+**Theorem 6.1 (Self-map count).** *For all $n \ge 0$,*
+$$
+\#\,\mathrm{Z2Map}(S^n, S^n) \;=\; 2^{\,n+1}\,(n+1)! \;=\; |B_{n+1}|,
+$$
+*the order of the hyperoctahedral group $B_{n+1}$ of signed permutations of $n+1$ symbols.*
+
+*Proof sketch.* Set $m = n$ in Theorem 4.1. The falling factorial becomes $(n+1)^{\underline{n+1}} = (n+1)\,n\cdots 1 = (n+1)!$, and the count is $2^{n+1}(n+1)!$. The group $B_{n+1}$ of symmetries of the $(n+1)$-cross-polytope has exactly this order: $(n+1)!$ permutations of axes times $2^{n+1}$ independent sign choices. $\square$
+
+**Corollary 6.2 (Total rigidity of self-maps).** *Every $\mathbb{Z}_2$-self-map of $S^n$ is a signed permutation of the coordinate axes; in particular it is a bijective simplicial automorphism. There are no non-invertible equivariant self-maps.*
+
+*Proof sketch.* By Theorem 3.3 (with $m = n$) a self-map corresponds to a sign vector together with an injection $\{0,\dots,n\} \hookrightarrow \{0,\dots,n\}$. An injection of a finite set into itself is a bijection, so the coordinate map is a permutation and the map is a signed permutation, hence an automorphism. $\square$
+
+This is the sharpest reading of the rigidity phenomenon: on the diagonal, "map" and "symmetry" coincide. It also explains, structurally, why the coindex is pinned to the dimension — a self-map cannot lose an axis.
 
 ## 7. The suspension tower
 
-### 7.1 Suspension of a single map
+Recall that the suspension $S(K) = K * S^0$ adjoins a single antipodal pair of poles, raising dimension by one; on octahedral spheres $S(S^n) \cong S^{n+1}$, so iterating gives $S^k(S^n) \cong S^{n+k}$.
 
-Suspension embeds $S^n$ into $S^{n+1}$ by reusing the old axes and adjoining a new pole axis.
+**Theorem 7.1 (Suspension raises dimension and coindex in lockstep).** *For all $n, k \ge 0$, $\dim S^{n+k} = n+k$ and $\operatorname{coind}(S^{n+k}) = n+k$. In particular each suspension step increases both the dimension and the coindex by exactly one, and the excess $\dim - \operatorname{coind}$ is fixed at $0$.*
 
-**Definition 7.1 (Suspended vertex).** For $p = (i, b) \in \mathrm{SVert}(n)$, let $\mathrm{suspV}(p) = (\hat{\imath}, b) \in \mathrm{SVert}(n+1)$, where $\hat{\imath}$ is the image of $i$ under the inclusion $\{0,\dots,n\} \hookrightarrow \{0,\dots,n+1\}$ (the "old" axes). The new axis $n{+}1$ (the *pole*) is not in the image.
+*Proof sketch.* The dimension of $S^{n+k}$ is $n+k$ by definition (its facets have $n+k+1$ vertices). The coindex equals $n+k$ by Corollary 5.2. Both quantities therefore rise by one per suspension step, leaving their difference at $0$. $\square$
 
-**Definition 7.2 (Suspension of a map).** For $F \in \mathrm{Z2Map}(m,n)$, define $\mathrm{susp}(F) : \mathrm{SVert}(m+1) \to \mathrm{SVert}(n+1)$ by
+**Theorem 7.2 (Stability of the existence dichotomy / excess).** *For all $m, n, k \ge 0$,*
 $$
-\mathrm{susp}(F)(i, b) = \begin{cases} (\text{new pole of } S^{n+1},\ b), & i = \text{new pole of } S^{m+1},\\[2pt] \mathrm{suspV}\big(F(j, b)\big), & i = \hat{\jmath}\ \text{an old axis}. \end{cases}
+\mathrm{Z2Map}(S^{m+k}, S^{n+k}) \ne \varnothing \iff \mathrm{Z2Map}(S^m, S^n) \ne \varnothing,
 $$
-That is, the two new source poles map to the two new target poles (signs preserved), and old vertices are routed through $F$ and then embedded among the old target axes.
+*because both are equivalent to $m \le n$. Consequently the excess $n - m$ between source and target dimension is a suspension invariant: simultaneously suspending source and target preserves reachability.*
 
-**Proposition 7.3.** $\mathrm{susp}(F) \in \mathrm{Z2Map}(m+1, n+1)$.
+*Proof sketch.* By Theorem 5.1, $\mathrm{Z2Map}(S^{m+k},S^{n+k}) \ne \varnothing \iff m+k \le n+k \iff m \le n \iff \mathrm{Z2Map}(S^m,S^n)\ne\varnothing$. The condition depends only on the difference $n-m$, which is unchanged when both indices are raised by $k$. $\square$
 
-*Proof sketch.* *Equivariance:* on the pole the sign bit flips correctly; on old axes, $\mathrm{suspV}$ commutes with $\mathrm{anti}$ and $F$ is equivariant, so $\mathrm{susp}(F)(\mathrm{anti}(p)) = \mathrm{anti}(\mathrm{susp}(F)(p))$. *Simpliciality:* suppose $\mathrm{susp}(F)(p) = \mathrm{anti}(\mathrm{susp}(F)(q))$. Comparing axis components, a pole image (axis $n{+}1$) can equal only another pole image, and an old-axis image (axis $< n{+}1$) only another old-axis image, because the pole axis is strictly greater than every old axis; so $p, q$ are of the same type. In the pole case the sign bits force $p = \mathrm{anti}(q)$ directly. In the old-axis case, $\mathrm{suspV}$ is injective and sign-compatible, reducing the equation to $F(j,b) = \mathrm{anti}(F(j',c))$, whence simpliciality of $F$ gives $(j,b) = \mathrm{anti}(j',c)$ and therefore $p = \mathrm{anti}(q)$. $\square$
-
-### 7.2 The tower and its exactness
-
-**Definition 7.4 ($k$-fold suspension).** Define $\mathrm{suspIter}^0(F) = F$ and $\mathrm{suspIter}^{k+1}(F) = \mathrm{susp}(\mathrm{suspIter}^{k}(F))$. Then $\mathrm{suspIter}^{k}$ maps $\mathrm{Z2Map}(m,n)$ into $\mathrm{Z2Map}(m+k, n+k)$. The sequence of spheres $S^n, S^{n+1}, S^{n+2}, \dots$ together with these functors is the **suspension tower**.
-
-**Theorem 7.5 (Constructive raising).** If $\mathrm{Z2Map}(m,n) \ne \varnothing$, then $\mathrm{Z2Map}(m+k, n+k) \ne \varnothing$ for every $k$.
-
-*Proof.* Apply $\mathrm{suspIter}^k$ to any $F \in \mathrm{Z2Map}(m,n)$. $\square$
-
-**Theorem 7.6 (Exactness of the tower).** For all $m, n, k$,
+**Proposition 7.3 (The count is *not* suspension invariant).** *In contrast to existence, the exact count grows along the tower: for all $m, n \ge 0$,*
 $$
-\mathrm{Z2Map}(m+k,\, n+k) \ne \varnothing \iff \mathrm{Z2Map}(m,n) \ne \varnothing.
+\#\,\mathrm{Z2Map}(S^{m+1}, S^{n+1}) \;=\; 2\,(n+2)\cdot \#\,\mathrm{Z2Map}(S^{m}, S^{n}).
 $$
-Equivalently, suspension preserves the *excess* $n - m$ exactly, and the coindex increment of the $k$-fold suspension is exactly $k$.
 
-*Proof.* By Theorem 5.1 both sides are equivalent to arithmetic inequalities: the left to $m+k \le n+k$ and the right to $m \le n$, which are equivalent. $\square$
+*Proof sketch.* By Theorem 4.1,
+$$
+\frac{\#\,\mathrm{Z2Map}(S^{m+1}, S^{n+1})}{\#\,\mathrm{Z2Map}(S^{m}, S^{n})}
+= \frac{2^{m+2}\,(n+2)^{\underline{m+2}}}{2^{m+1}\,(n+1)^{\underline{m+1}}}
+= 2 \cdot \frac{(n+2)^{\underline{m+2}}}{(n+1)^{\underline{m+1}}}.
+$$
+Writing out the descending factors, $(n+2)^{\underline{m+2}} = (n+2)(n+1)n\cdots(n-m+1) = (n+2)\cdot(n+1)^{\underline{m+1}}$, so the ratio of falling factorials is exactly $n+2$ and the total ratio is $2(n+2)$. For example $\#\{S^0\to S^0\} = 2$, $\#\{S^1\to S^1\}=8$ (ratio $4 = 2\cdot 2$), $\#\{S^2\to S^2\}=48$ (ratio $6 = 2\cdot 3$). $\square$
 
-**Theorem 7.7 (Sharpness at every level).** For all $n, k$: $\mathrm{Z2Map}(n+k+1,\ n+k) = \varnothing$; there is no fair map $S^{n+k+1} \to S^{n+k}$.
-
-*Proof.* Apply Corollary 5.2 with $n$ replaced by $n + k$. $\square$
-
-**Corollary 7.8.** $\mathrm{coind}(S^{n+k}) = n + k = \mathrm{coind}(S^n) + k$: the coindex rises by exactly one per rung, forever.
-
----
+**Remark 7.4.** The moral is a clean separation of what suspension does and does not stabilize. Suspension leaves invariant the *qualitative* coindex theory — existence of maps, the value of the coindex, and the excess — precisely because these depend only on the difference $n-m$. It does *not* fix the *quantitative* count, which grows because each new axis multiplies the number of sign choices and enlarges the pool of available target axes. This is exactly the boundary between the enumeration and the classical existence theory: the falling-factorial formula refines existence into multiplicity, but only its positivity, not its value, is a stable invariant of the tower.
 
 ## 8. Algorithms
 
-We record three procedures made rigorous by the theory. Full implementations appear in the accompanying demonstration code.
+We record the elementary algorithms underlying the enumeration; all run in time polynomial in $m$ and $n$ (indeed linear in $m$ for the closed-form count).
 
-**(A) Existence oracle.** To decide whether a fair map $S^m \to S^n$ exists, return $m \le n$. Correct by Theorem 5.1; runtime $O(1)$.
+**Algorithm A (Closed-form count).** Given $m, n$, return $2^{m+1}(n+1)^{\underline{m+1}}$ by accumulating the falling factorial as a product of $m+1$ descending factors and multiplying by $2^{m+1}$. Complexity $O(m)$ arithmetic operations (on big integers).
 
-**(B) Constructive map builder.** Given $m \le n$, output positive-vertex data $g(i) = (i, +)$ for $i = 0, \dots, m$; equivalently the axis injection $\sigma = \mathrm{incl}$. This is a witnessing fair map. Runtime $O(m)$.
+**Algorithm B (Brute-force enumeration and verification).** Given small $m, n$, enumerate all functions from the $2(m+1)$ vertices of $S^m$ to the $2(n+1)$ vertices of $S^n$, filter for equivariance and simpliciality, and count. Used to certify Algorithm A on small cases. Complexity exponential; a practical refinement enumerates only signed axis injections (Algorithm C).
 
-**(C) Simpliciality checker via coordinate injectivity.** Given arbitrary positive-vertex data $g$, decide simpliciality by testing whether $\sigma = \mathrm{coordMap}(g)$ is injective — a single duplicate scan — rather than checking all $O((2(m{+}1))^2)$ vertex pairs. Correct by Theorem 4.2; runtime $O(m)$ with hashing, versus $O(m^2)$ naively.
+**Algorithm C (Structured enumeration via the classifying bijection).** Enumerate injections $\{0,\dots,m\}\hookrightarrow\{0,\dots,n\}$ and sign vectors $\{+,-\}^{m+1}$ directly, materializing each corresponding map. This produces exactly $2^{m+1}(n+1)^{\underline{m+1}}$ maps with no filtering, matching Algorithm A by construction and Algorithm B by verification.
 
-**(D) Suspension.** Given $g$ realizing a map $S^m \to S^n$, produce $g'$ for the suspension by embedding each $g(i)$ into the old axes and appending the new pole datum. Iterating gives the $k$-fold suspension. Runtime $O(m + k)$ per level.
+## 9. Applications and discussion
 
----
+**Topological combinatorics.** Corollary 5.2 is a self-contained, purely combinatorial route to the equivariant Borsuk–Ulam statement for the standard sphere triangulations, of the kind that underlies chromatic lower bounds (Kneser graphs), Tucker-type lemmas, and fair-division results. The enumerative refinement supplies not just nonexistence above the diagonal but exact multiplicities below it.
 
-## 9. Discussion
+**Symmetry and representation theory.** Theorem 6.1 realizes the hyperoctahedral group $B_{n+1}$ as the *entire* endomorphism monoid of $S^n$ in the equivariant simplicial category, a compact statement of the total rigidity of these complexes.
 
-The results collapse a family of impossibility theorems onto the pigeonhole principle. The lever is the Coordinate Injectivity Principle: in the octahedral model, simpliciality of an equivariant map is *equivalent* to injectivity of the underlying axis map, with signs free. This equivalence is what makes the coindex a complete invariant equal to the dimension, and makes the suspension tower exact — preserving the excess $n - m$ with no slack.
+**Enumerative topology.** The suspension analysis (Theorems 7.1–7.2, Proposition 7.3) exemplifies a general principle: a counting formula cleanly separates the *stable* invariants of a tower (here the existence dichotomy and the excess $n-m$, which depend only on differences of indices) from the *unstable* multiplicities (the exact count, which grows by a controlled factor $2(n+2)$ per step).
 
-It is important to delimit the model-dependence. The equivalence "simplicial antipodal map $\iff$ coordinate injection" is *special* to cross-polytopes. For a general free simplicial $\mathbb{Z}_2$-complex $K$, the coindex is **not** determined by dimension alone; the upper bound $\mathrm{coind}(K) \le \dim K$ genuinely requires the combinatorial content of **Tucker's lemma**, and there exist complexes with a strict gap between the $\mathbb{Z}_2$-*index* (equivariant maps *out of* $K$ into spheres) and the coindex. The clean picture here is thus a sharp special case rather than the general phenomenon — a transparent laboratory in which the mechanism is fully exposed.
+**Limitations.** The exactness of the count is special to octahedral spheres, whose facet structure imposes *no* constraint beyond axis-distinctness. For general free $\mathbb{Z}_2$-complexes additional simpliciality relations appear, and the count becomes a constrained transversal problem rather than a free product — the subject of the future directions below.
 
----
+## 10. Future work
 
-## 10. Future directions
+The present results sharpen the existence theory of the $\mathbb{Z}_2$-coindex into an exact enumeration and suggest three lines of advance. First, an **enumerative rigidity conjecture** for general finite free $\mathbb{Z}_2$-complexes: for a complex $K$ of dimension $d$ whose facets carry a transitive sign action, the number of equivariant maps $S^m \to K$ should be a polynomial in the facet count, with leading behavior controlled by $2^{m+1}$ and the number of $(m+1)$-cliques of the sign-quotient graph of $K$ — because equivariance again collapses a map to positive-vertex images subject to a single local incompatibility, turning the count into an enumeration of independent transversals in a colored intersection structure. Second, a **realizability program for the excess spectrum**: for every pair $0 \le c \le d$ there should exist a finite free $\mathbb{Z}_2$-complex of dimension exactly $d$ and coindex exactly $c$, with at least $2^{c+1}$ coindex-realizing maps and equality characterizing "coindex-rigid" complexes; this is plausible because suspensions add dimension with a $+1$ shift while joins add coindex with a $+1$ shift, letting the two be tuned independently and making the excess $d-c$ a free parameter. Third, a **sphere-recognition conjecture**: a finite free $\mathbb{Z}_2$-complex $K$ of dimension $n$ satisfying $\#\{S^m \to K\} = 2^{m+1}(n+1)^{\underline{m+1}}$ for all $m \le n$ should be equivariantly isomorphic to the octahedral sphere $S^n$ — because the octahedral count is the maximum possible, so attaining it for all $m$ forces the absence of any extra simpliciality constraint, i.e. the cross-polytope boundary itself.
 
-- **Beyond cross-polytopes.** Formalize Tucker's lemma and recover $\mathrm{coind}(K) \le \dim K$ for arbitrary free simplicial $\mathbb{Z}_2$-complexes $K$, where the coordinate-injection shortcut is unavailable.
-- **The index/coindex gap.** Introduce the $\mathbb{Z}_2$-index (equivariant maps from $K$ into spheres) and study complexes with $\mathrm{ind}(K) < \mathrm{coind}(K)$. The cross-polytope spheres are extremal, with $\mathrm{ind} = \mathrm{coind} = n$.
-- **Chromatic applications.** Connect the coindex of neighborhood and box complexes to lower bounds on chromatic numbers, in the spirit of the topological method in combinatorics.
-- **Higher symmetry.** Replace $\mathbb{Z}_2$ by a finite group $G$ acting freely, and investigate a $G$-equivariant analogue of the suspension tower and its exactness.
+## Appendix: table of counts
 
----
+The value $\#\{S^m \to S^n\} = 2^{m+1}(n+1)^{\underline{m+1}}$ for small $m, n$ (rows $m$, columns $n$):
 
-## Appendix: table of admissible dimensions
+| $m \backslash n$ | 0 | 1 | 2 | 3 |
+|---|---|---|---|---|
+| **0** | 2 | 4 | 6 | 8 |
+| **1** | 0 | 8 | 24 | 48 |
+| **2** | 0 | 0 | 48 | 192 |
+| **3** | 0 | 0 | 0 | 384 |
 
-For target dimension $n$, the admissible source dimensions $\{m : \mathrm{Z2Map}(m,n) \ne \varnothing\}$ are exactly $\{0,1,\dots,n\}$, and $\mathrm{coind}(S^n) = n$:
-
-| $n$ | admissible $m$ | $\mathrm{coind}(S^n)$ |
-|----:|:---------------|:---------------------:|
-| 0 | $\{0\}$ | 0 |
-| 1 | $\{0,1\}$ | 1 |
-| 2 | $\{0,1,2\}$ | 2 |
-| 3 | $\{0,1,2,3\}$ | 3 |
-| $n$ | $\{0,\dots,n\}$ | $n$ |
+The diagonal entries $2, 8, 48, 384$ are the hyperoctahedral orders $|B_1|, |B_2|, |B_3|, |B_4|$. Entries strictly below the diagonal vanish (Borsuk–Ulam).

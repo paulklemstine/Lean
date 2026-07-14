@@ -1,206 +1,205 @@
 """
-Numerical demonstrations for:
+Enumerative rigidity of antipodal maps between octahedral spheres.
 
-    The Suspension Tower and the Exact Z2-Coindex of Combinatorial Spheres
+This self-contained script demonstrates, numerically, the main results on
+antipodally-equivariant simplicial maps between octahedral spheres S^m -> S^n.
 
-Model (self-contained):
-  * The n-dimensional combinatorial sphere S^n is the boundary of the (n+1)-cross-polytope.
-    Its vertices are the signed axes +-e_i, encoded as (i, b) with i in {0,..,n} and b in {True,False}.
-  * The antipodal map flips the sign bit:  anti(i, b) = (i, not b).
-  * A fair map (Z2-map) S^m -> S^n is a vertex map that is equivariant and simplicial.
-  * A fair map is determined by positive-vertex data g : {0,..,m} -> SVert(n).
-    Simpliciality  <=>  the coordinate map sigma(i) = axis of g(i) is injective.
-  * Consequences: a fair map exists iff m <= n; coind(S^n) = n; suspension preserves the excess n - m.
+Combinatorial model
+-------------------
+The octahedral n-sphere S^n is the boundary of the (n+1)-dimensional
+cross-polytope.  Its vertices are pairs (axis, sign) with axis in {0,...,n}
+and sign in {+1, -1}: n+1 antipodal pairs, 2(n+1) vertices.  A set of vertices
+is a simplex iff it uses at most one vertex per axis.  The antipodal action
+flips the sign.  A Z2-map f: S^m -> S^n is a simplicial map with
+f(-v) = -f(v).
 
-Everything below verifies these statements by brute force on the finite vertex sets,
-and cross-checks against the closed-form criteria proved in the paper.
+Main theorem
+------------
+    #{ Z2-maps S^m -> S^n } = 2^(m+1) * fallingfactorial(n+1, m+1)
+                            = 2^(m+1) * (n+1)! / (n-m)!    (0 if m > n).
+
+Corollaries verified below:
+  * positivity  <=>  m <= n           (combinatorial Borsuk-Ulam; coind(S^n)=n)
+  * diagonal m=n  =>  2^(n+1)*(n+1)!  (order of the hyperoctahedral group B_{n+1})
+  * suspension:  #{S^{m+1}->S^{n+1}} = 2(n+2) * #{S^m->S^n}   (NOT invariant)
+
+The closed form is cross-checked against an independent brute-force enumeration.
 """
 
 from __future__ import annotations
 
-from itertools import product
-from typing import Dict, List, Tuple
+from itertools import product, permutations
+from math import factorial
+from typing import Dict, Iterator, List, Tuple
 
-Vertex = Tuple[int, bool]  # (axis index, sign bit)
-
-
-# ---------------------------------------------------------------------------
-# Core model
-# ---------------------------------------------------------------------------
-def anti(p: Vertex) -> Vertex:
-    """The free Z2 antipodal action: flip the sign bit."""
-    i, b = p
-    return (i, not b)
-
-
-def svert(n: int) -> List[Vertex]:
-    """All 2(n+1) vertices of the combinatorial sphere S^n."""
-    return [(i, b) for i in range(n + 1) for b in (True, False)]
-
-
-def induced(g: List[Vertex]) -> Dict[Vertex, Vertex]:
-    """Reconstruct the full equivariant vertex map from positive-vertex data g."""
-    m = len(g) - 1
-    f: Dict[Vertex, Vertex] = {}
-    for i in range(m + 1):
-        f[(i, True)] = g[i]
-        f[(i, False)] = anti(g[i])
-    return f
-
-
-def is_equivariant(f: Dict[Vertex, Vertex]) -> bool:
-    return all(f[anti(p)] == anti(f[p]) for p in f)
-
-
-def is_simplicial(f: Dict[Vertex, Vertex]) -> bool:
-    """No two non-antipodal source vertices land on an antipodal target pair."""
-    for p in f:
-        for q in f:
-            if f[p] == anti(f[q]) and p != anti(q):
-                return False
-    return True
-
-
-def coord_map(g: List[Vertex]) -> List[int]:
-    """sigma(i) = axis index of g(i)."""
-    return [v[0] for v in g]
-
-
-def is_injective(xs: List[int]) -> bool:
-    return len(set(xs)) == len(xs)
+# A signed vertex of S^n: (axis, sign) with sign in {+1, -1}.
+Vertex = Tuple[int, int]
+# A Z2-map is stored by its values on the positive vertices e_0,...,e_m.
+PositiveData = Tuple[Vertex, ...]
 
 
 # ---------------------------------------------------------------------------
-# Suspension
+# Closed-form count
 # ---------------------------------------------------------------------------
-def susp_data(g: List[Vertex]) -> List[Vertex]:
+def falling_factorial(base: int, length: int) -> int:
+    """Falling factorial base^{\\underline{length}} = base*(base-1)*...  (length factors)."""
+    result = 1
+    for i in range(length):
+        result *= (base - i)
+    return result
+
+
+def count_closed_form(m: int, n: int) -> int:
+    """Exact number of Z2-maps S^m -> S^n via the closed form 2^(m+1)*(n+1)^{falling(m+1)}."""
+    ff = falling_factorial(n + 1, m + 1)
+    if ff <= 0:  # m > n forces a zero factor; count is 0
+        return max(ff, 0)
+    return 2 ** (m + 1) * ff
+
+
+# ---------------------------------------------------------------------------
+# Structured enumeration (via the classifying bijection)
+# ---------------------------------------------------------------------------
+def enumerate_maps(m: int, n: int) -> Iterator[PositiveData]:
+    """Yield every Z2-map S^m -> S^n as its positive-vertex data.
+
+    By the classifying bijection, a map is an injection of the m+1 source axes
+    into the n+1 target axes together with an independent sign per source axis.
     """
-    Positive-vertex data of the suspension of the map with data g : {0..m} -> SVert(n).
-    Old axes are reused (indices unchanged, since inclusion into {0..n+1} is identity on labels);
-    a new pole axis (index n+1) is appended, mapping to the target pole with a + sign.
+    axes = range(n + 1)
+    for injection in permutations(axes, m + 1):          # injective axis assignment
+        for signs in product((1, -1), repeat=m + 1):     # one sign per source axis
+            yield tuple((injection[i], signs[i]) for i in range(m + 1))
+
+
+def count_structured(m: int, n: int) -> int:
+    """Count Z2-maps by materializing them through the classifying bijection."""
+    return sum(1 for _ in enumerate_maps(m, n))
+
+
+# ---------------------------------------------------------------------------
+# Independent brute-force enumeration (ground truth for small cases)
+# ---------------------------------------------------------------------------
+def sphere_vertices(d: int) -> List[Vertex]:
+    """All 2(d+1) vertices of S^d."""
+    return [(axis, sign) for axis in range(d + 1) for sign in (1, -1)]
+
+
+def sphere_facets(d: int) -> List[Tuple[Vertex, ...]]:
+    """The maximal simplices (facets) of S^d: one signed vertex per axis."""
+    facets: List[Tuple[Vertex, ...]] = []
+    for signs in product((1, -1), repeat=d + 1):
+        facets.append(tuple((axis, signs[axis]) for axis in range(d + 1)))
+    return facets
+
+
+def is_simplex(vertices: Tuple[Vertex, ...]) -> bool:
+    """A set of vertices is a simplex iff its axes are pairwise distinct."""
+    axes = [v[0] for v in vertices]
+    return len(set(axes)) == len(axes)
+
+
+def count_bruteforce(m: int, n: int) -> int:
+    """Directly count equivariant simplicial maps S^m -> S^n on positive data.
+
+    An equivariant map is fixed by images of positive vertices e_0,...,e_m.
+    We range over ALL 2(n+1) target vertices for each e_i (no shortcuts), then
+    keep exactly those assignments whose induced map is simplicial: it suffices
+    to check that the image of the all-positive facet is a simplex.
     """
-    n = max(v[0] for v in g)  # target dimension
-    new_g = list(g)  # old vertices keep their axis labels inside {0..n+1}
-    new_g.append((n + 1, True))  # new source pole -> new target pole
-    return new_g
+    targets = sphere_vertices(n)
+    total = 0
+    for data in product(targets, repeat=m + 1):
+        # induced map is simplicial iff the images of e_0,...,e_m form a simplex
+        if is_simplex(tuple(data)):
+            total += 1
+    return total
 
 
 # ---------------------------------------------------------------------------
-# Existence oracle (closed form) and brute-force search
+# Derived quantities
 # ---------------------------------------------------------------------------
-def fair_map_exists_closed_form(m: int, n: int) -> bool:
-    """Theorem: Z2Map(m, n) is nonempty  iff  m <= n."""
-    return m <= n
-
-
-def fair_map_exists_bruteforce(m: int, n: int) -> bool:
-    """Search all positive-vertex data g : {0..m} -> SVert(n) for a simplicial one."""
-    for g in product(svert(n), repeat=m + 1):
-        f = induced(list(g))
-        # induced maps are always equivariant; only simpliciality can fail
-        if is_simplicial(f):
-            return True
-    return False
-
-
-def coindex_bruteforce(n: int, m_max: int) -> int:
-    """coind(S^n) = largest m (searched up to m_max) with a fair map S^m -> S^n."""
-    best = 0
-    for m in range(m_max + 1):
-        if fair_map_exists_bruteforce(m, n):
+def coindex(n: int, search_up_to: int = 12) -> int:
+    """coind(S^n): the largest m with a Z2-map S^m -> S^n; equals n."""
+    best = -1
+    for m in range(search_up_to + 1):
+        if count_closed_form(m, n) > 0:
             best = m
     return best
+
+
+def hyperoctahedral_order(k: int) -> int:
+    """Order of the hyperoctahedral (signed permutation) group B_k = 2^k * k!."""
+    return 2 ** k * factorial(k)
 
 
 # ---------------------------------------------------------------------------
 # Demonstrations
 # ---------------------------------------------------------------------------
-def demo_coordinate_injectivity_principle() -> None:
-    print("=" * 70)
-    print("Coordinate Injectivity Principle: simplicial  <=>  sigma injective")
-    print("=" * 70)
-    # try every g : {0,1} -> SVert(2)  (source S^1, target S^2)
+def demo_count_table(max_m: int = 3, max_n: int = 4) -> None:
+    print("Exact counts  #{ Z2-maps S^m -> S^n } = 2^(m+1) * (n+1)^{falling(m+1)}")
+    header = "m\\n | " + "".join(f"{n:>8}" for n in range(max_n + 1))
+    print(header)
+    print("-" * len(header))
+    for m in range(max_m + 1):
+        row = f"{m:>3} | " + "".join(f"{count_closed_form(m, n):>8}" for n in range(max_n + 1))
+        print(row)
+    print()
+
+
+def demo_cross_check(max_m: int = 3, max_n: int = 4) -> None:
+    print("Cross-check: closed form vs structured vs brute-force enumeration")
+    ok = True
+    for m in range(max_m + 1):
+        for n in range(max_n + 1):
+            c = count_closed_form(m, n)
+            s = count_structured(m, n)
+            b = count_bruteforce(m, n)
+            match = (c == s == b)
+            ok = ok and match
+            flag = "OK " if match else "!!!"
+            print(f"  m={m} n={n}: closed={c:>6}  structured={s:>6}  brute={b:>6}  {flag}")
+    print(f"All agree: {ok}\n")
+
+
+def demo_borsuk_ulam(max_n: int = 5) -> None:
+    print("Combinatorial Borsuk-Ulam:  a Z2-map S^m -> S^n exists iff m <= n")
+    for n in range(max_n + 1):
+        c = coindex(n)
+        print(f"  coind(S^{n}) = {c}   (no map S^{n+1} -> S^{n}: count = {count_closed_form(n + 1, n)})")
+    print()
+
+
+def demo_hyperoctahedral(max_n: int = 4) -> None:
+    print("Self-maps of S^n number 2^(n+1)*(n+1)! = |B_{n+1}| (hyperoctahedral group)")
+    for n in range(max_n + 1):
+        c = count_closed_form(n, n)
+        b = hyperoctahedral_order(n + 1)
+        print(f"  #self-maps(S^{n}) = {c:>6}   |B_{n+1}| = {b:>6}   equal: {c == b}")
+    print()
+
+
+def demo_suspension(max_step: int = 4) -> None:
+    print("Suspension growth of the count:  #{S^(m+1)->S^(n+1)} = 2(n+2) * #{S^m->S^n}")
     m, n = 1, 2
-    checked = agree = 0
-    for g in product(svert(n), repeat=m + 1):
-        g = list(g)
-        simplicial = is_simplicial(induced(g))
-        injective = is_injective(coord_map(g))
-        checked += 1
-        if simplicial == injective:
-            agree += 1
-    print(f"S^{m} -> S^{n}: tested {checked} candidate maps; "
-          f"simpliciality matched coordinate-injectivity in {agree}/{checked} cases.")
-    assert agree == checked
-    print("PASS: the two conditions coincide exactly.\n")
-
-
-def demo_existence_criterion() -> None:
-    print("=" * 70)
-    print("Existence criterion:  fair map S^m -> S^n exists  <=>  m <= n")
-    print("=" * 70)
-    print(f"{'m':>3} {'n':>3} {'bruteforce':>12} {'closed form':>12}")
-    for n in range(4):
-        for m in range(4):
-            bf = fair_map_exists_bruteforce(m, n)
-            cf = fair_map_exists_closed_form(m, n)
-            assert bf == cf, (m, n, bf, cf)
-            print(f"{m:>3} {n:>3} {str(bf):>12} {str(cf):>12}")
-    print("PASS: brute force agrees with m <= n everywhere.\n")
-
-
-def demo_borsuk_ulam() -> None:
-    print("=" * 70)
-    print("Borsuk-Ulam, all dimensions: no fair map S^(n+1) -> S^n")
-    print("=" * 70)
-    for n in range(4):
-        exists = fair_map_exists_bruteforce(n + 1, n)
-        assert not exists
-        print(f"S^{n+1} -> S^{n}: fair map exists? {exists}")
-    print("PASS: every S^(n+1) -> S^n is impossible.\n")
-
-
-def demo_coindex() -> None:
-    print("=" * 70)
-    print("Exact coindex:  coind(S^n) = n")
-    print("=" * 70)
-    for n in range(4):
-        c = coindex_bruteforce(n, m_max=n + 1)
-        assert c == n
-        print(f"coind(S^{n}) = {c}")
-    print("PASS: coindex equals dimension.\n")
-
-
-def demo_suspension_tower() -> None:
-    print("=" * 70)
-    print("Suspension tower: exactness (preserves excess n - m) and sharpness")
-    print("=" * 70)
-    # Start with a fair map S^1 -> S^2 (excess 1) and suspend twice.
-    g = [(0, True), (1, True)]  # sigma = inclusion {0,1} -> {0,1,2}
-    assert is_simplicial(induced(g))
-    m, n = 1, 2
-    print(f"level 0: S^{m} -> S^{n}, excess n-m = {n-m}, simplicial = {is_simplicial(induced(g))}")
-    for k in range(1, 3):
-        g = susp_data(g)
+    for _ in range(max_step):
+        c0 = count_closed_form(m, n)
+        c1 = count_closed_form(m + 1, n + 1)
+        ratio = c1 // c0 if c0 else None
+        print(f"  #(S^{m}->S^{n})={c0:>7}   #(S^{m+1}->S^{n+1})={c1:>9}   ratio={ratio}  2(n+2)={2*(n+2)}")
         m, n = m + 1, n + 1
-        ok = is_simplicial(induced(g))
-        print(f"level {k}: S^{m} -> S^{n}, excess n-m = {n-m}, simplicial = {ok}")
-        assert ok and (n - m == 1)
-    # Exactness as a biconditional against the closed form:
-    for base_m, base_n, k in [(1, 2, 3), (2, 2, 5), (3, 2, 4)]:
-        lhs = fair_map_exists_closed_form(base_m + k, base_n + k)
-        rhs = fair_map_exists_closed_form(base_m, base_n)
-        assert lhs == rhs
-    print("PASS: suspension preserves the excess and existence at every level.\n")
+    print("  (The excess n-m stays fixed while the count grows: existence is stable, the value is not.)\n")
 
 
 def main() -> None:
-    demo_coordinate_injectivity_principle()
-    demo_existence_criterion()
+    print("=" * 72)
+    print("Enumerative rigidity of antipodal maps between octahedral spheres")
+    print("=" * 72, "\n")
+    demo_count_table()
+    demo_cross_check()
     demo_borsuk_ulam()
-    demo_coindex()
-    demo_suspension_tower()
-    print("All demonstrations passed.")
+    demo_hyperoctahedral()
+    demo_suspension()
 
 
 if __name__ == "__main__":
