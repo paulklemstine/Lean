@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e0843845",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Mixed-Radix Bijection\n\n## What was done in this cycle\n\nBuilding on the existing mixed-radix theory\n(`Catalog/Computation/MixedRadixNumberSystem.lean`) and the factorial numbe",
-      "quality_score": 0.8,
-      "sorry_count": 4,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T13:44:00",
-      "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
-    },
-    {
       "cycle_id": "a71dcffe",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThis cycle contributes a fully formalized, self-contained **chain** of results\n(`Catalog/Novelty/AllDifferentThreshold.lean`) pinning",
@@ -499,19 +489,19 @@
       "theorem_count": 40,
       "timestamp": "2026-07-14T06:17:10",
       "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse by"
+    },
+    {
+      "cycle_id": "189556db",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese conjectures grow out of two threads consolidated in this cycle: the\nidentification of the factorial numeral system as one point in a single\nparameterized family of mixed-rad",
+      "quality_score": 0.72,
+      "sorry_count": 6,
+      "theorem_count": 574,
+      "timestamp": "2026-07-14T06:35:05",
+      "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "094010ae",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Reflective Type Theory\n\nThe reflective calculus interprets propositions as sets of proof stages and\nattaches a provability modality `□` to a step relation `R`. Three structural\nfi",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 21,
-      "timestamp": "2026-07-11T14:11:15",
-      "title": "Reflective Type Theory: Proving Things About Proving Things"
-    },
     {
       "cycle_id": "c3787823",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 40,
       "timestamp": "2026-07-14T06:17:10",
       "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse by"
+    },
+    {
+      "cycle_id": "189556db",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese conjectures grow out of two threads consolidated in this cycle: the\nidentification of the factorial numeral system as one point in a single\nparameterized family of mixed-rad",
+      "quality_score": 0.72,
+      "sorry_count": 6,
+      "theorem_count": 574,
+      "timestamp": "2026-07-14T06:35:05",
+      "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5d81b714",
-      "domain": "Applications",
-      "name": "for",
-      "quality": 0.82
-    },
     {
       "cycle_id": "5d81b714",
       "domain": "Applications",
@@ -2803,17 +2797,16 @@
       "domain": "Novelty",
       "name": "button_or",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "189556db",
+      "domain": "Applications",
+      "name": "Phi_apply",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-14T06:17:10",
+  "last_updated": "2026-07-14T06:35:06",
   "open_questions": [
-    {
-      "context": "All statements are fully finite and rigorous; no `sorry`, no extra axioms.",
-      "cycle_id": "86e0e034",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-13T10:39:02"
-    },
     {
       "context": "-- Synthesis (PI): constant-`1/3` supersaturation + Nosal endpoint, all sorry-free.",
       "cycle_id": "02ff061d",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-07-14T06:00:01"
+    },
+    {
+      "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.; necessary.  All main theorems are `sorry`-free and use genuine arguments; sorry",
+      "cycle_id": "189556db",
+      "domain": "Applications",
+      "sorry_count": 6,
+      "timestamp": "2026-07-14T06:35:06"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a0f7e73c",
-        "quality": 0.72,
-        "theorems": 17,
-        "title": "Sharp dichotomy for the *total* d-Hoggatt numbers"
-      },
-      {
         "cycle_id": "664b3442",
         "quality": 0.83,
         "theorems": 20,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 10,
         "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound"
+      },
+      {
+        "cycle_id": "189556db",
+        "quality": 0.72,
+        "theorems": 574,
+        "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic mode"
       }
     ],
     "Bridges": [
