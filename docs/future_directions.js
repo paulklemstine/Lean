@@ -214,6 +214,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 30ef4e5b (Q=0.820), which proved 32 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets A\u2c7c of the L\u2081 ball {x \u2208 \u2124\u1d48 : |x\u2081| + ... + |x_d| \u2264 m} in \u2124\u1d48, establish a sharp lower bound |A\u2081+\u2026+A\u2099| \u2265 (|A\u2081|\u22ef|A",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_30ef4e5b_c8d545af",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "30ef4e5b",
+    "status": "available",
+    "timestamp": "2026-07-14T06:35:35.689308+00:00",
+    "title": "Deepening: Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3903c2d7 (Q=0.820), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Bypassed",
     "domains": [
       "Applications"
@@ -579,7 +593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
   },
   {
-    "consumed_by_exp_id": "20aae333",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle cf19c51c (Q=0.790), which proved 36 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp excess of \u2124\u2082-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free \u2124\u2082-complexes: suspension raises the co-index by at\nleast one (`coind_suspension`), the octahedral tower realises the ",
     "domains": [
       "Novelty"
@@ -588,7 +602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "cf19c51c",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-07-14T02:10:35.347197+00:00",
     "title": "Deepening: This cycle established, unconditionally, the constructive lower-bound half of th"
   },
@@ -1869,7 +1883,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The results established here treat the origin as the distinguished point, exploi"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a1d0253",
     "description": "# Future Directions\n\nThe file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmetic\nskeleton of the extension of Matsuno's formula to non-vanishing \u03bc-invariants, together\nwith the concrete `p = 2` sharp/flat degree sequences. Natural next steps:\n\n1. **Genuine Iwasawa invariants.** Replace the modelled `lambdaDiff`/`muTerm` by the\n   actual \u03bb- and \u03bc-invariants extracted from a characteristic power series in `\u2124\u2082[[T]]`\n   via Weierstrass preparation, and prove additivity `\u03bb(fg)=\u03bb(f)+\u03bb(g)`,\n   `\u03bc(fg)=\u03bc(f)+\u03bc(g)` from `Polynomial.content_mul` and multiplicativity of the\n   trailing degree modulo `p`.\n\n2. **Sharp/flat Coleman maps.** Formalise Pollack's `\u03c9_n^\u00b1` and Sprung's sharp/flat\n   decomposition of the `2`-adic `L`-function, and identify their degrees with the\n   `flatDeg`/`sharpDeg` sequences proved here.\n\n3. **The full twist formula.** Derive the local terms `2^{n_\u2113}`, `2^{n_\u2113+1}` from the\n   local Tamagawa/reduction data at `\u2113`, upgrading `localTerm` from a definition to a\n   theorem.\n\n4. **General supersingular primes `p`.** Generalise the Jacobsthal identities to\n   `q_n = (p^n \u2212 (\u22121)^n)/(p+1)` and the degree sums to base `p\u00b2`, giving the\n   sharp/flat degrees at arbitrary supersingular `p`.\n\n5. **Hatley\u2013Ray comparison.** Connect the additive \u03bc-correction to residual/comparison\n   results relating congruent modular forms, quantifying how \u03bc transfers under twist.\n",
     "domains": [
       "Pythagorean",
@@ -1879,7 +1893,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2800cd94",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T22:36:11.690365+00:00",
     "title": "The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the arithmeti"
   },
@@ -2244,6 +2258,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "These conjectures grow out of two threads consolidated in this cycle: the"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Sharp Sumset Bounds in L\u2081 Balls\n\nThis cycle established the additive / geometric / analytic scaffolding around the\nsharp exponent `p = n\u00b7log(m+1) / log(nm+1)` for sumsets inside the cross-polytope\n`{x \u2208 \u2124\u1d48 : |x\u2081| + \u22ef + |x_d| \u2264 m}`. It proved the unconditional geometric-mean\nbound (exponent `n`), showed the whole family of exponents `q \u2265 n` remains valid,\nlocated the sharp exponent strictly inside `(1, n)`, and verified equality for the\none-dimensional interval extremiser. The following conjectures push toward the\nfull sharp inequality.\n\n## 1. The dimension-free sharp exponent bound\n\n**Conjecture.** For all finite nonempty `A\u2081,\u2026,A\u2099 \u2286 {x \u2208 \u2124\u1d48 : \u2211|x\u1d62| \u2264 m}`,\n`|A\u2081 + \u22ef + A\u2099| \u2265 (|A\u2081| \u22ef |A\u2099|)^{1/p}` with `p = n\u00b7log(m+1)/log(nm+1)`, for every\ndimension `d`.\n\nThe key insight is that the exponent depends only on `n` and `m`, never on `d`:\nthe cross-polytope's radial dilation structure is self-similar across dimensions,\nso a one-dimensional extremiser should already be globally extremal. Why now? The\npresent cycle isolates the exact obstruction \u2014 the gap between the general\nexponent-`n` bound and the extremal exponent-`p` equality \u2014 reducing the open\nproblem to a single monotone comparison rather than a dimension-by-dimension\nanalysis.\n\n## 2. Tensor-power stability of the extremal configuration\n\n**Conjecture.** Among all sub-sumset configurations of fixed cardinalities inside\nthe radius-`m` ball, the product-of-intervals family\n`A\u2c7c = {0,\u2026,m}^{d}` uniquely minimises `|A\u2081 + \u22ef + A\u2099|`, and the minimum is exactly\n`(nm+1)^d`.\n\nThe key insight is that the counting identity for the dilated ball tensorises: if\nthe interval is extremal in one dimension, its `d`-fold Cartesian power should be\nextremal in `d` dimensions, turning sharpness into a rigidity/uniqueness\nstatement. Why now? Having the radius-1 point count `2d+1` and the additive\nequality case in hand gives the base and inductive seed for a tensor-power\nargument.\n\n## 3. A stability (near-extremal) version\n\n**Conjecture.** If `|A\u2081 + \u22ef + A\u2099|` is within a `(1+\u03b5)` factor of the sharp lower\nbound, then each `A\u2c7c` is, up to affine transformation, within `O(\u03b5)` (in symmetric\ndifference density) of an arithmetic progression of common difference dividing the\nball's radial step.\n\nThe key insight is that equality forces the additive Cauchy\u2013Davenport step to be\ntight at every stage, and tightness there is known to force arithmetic-progression\nstructure; a quantitative propagation of this tightness yields stability. Why now?\nThe extremal equality case is now pinned down exactly, providing the rigid model\nthat a stability theorem perturbs around.\n\n## 4. Replacing the L\u2081 ball by general symmetric convex lattice bodies\n\n**Conjecture.** For any origin-symmetric convex lattice polytope `K \u2286 \u2124\u1d48`, the\nsharp sumset exponent equals `n\u00b7log|K| / log|nK|`, where `nK` is the `n`-fold\ndilate, and equality is attained by intersecting `K` with a rational line through\nthe origin.\n\nThe key insight is that the exponent is a purely volumetric quantity \u2014 the ratio\nof log-cardinalities of a body and its dilate \u2014 so the L\u2081 specialisation is one\ninstance of a body-independent phenomenon. Why now? The cross-polytope proof\nfactors cleanly through only two properties (radial dilation additivity and a\nlattice-point count), both of which generalise verbatim to arbitrary symmetric\nconvex lattice bodies.\n\n## 5. The transcendence and monotonicity of the exponent surface\n\n**Conjecture.** The two-variable function `p(n,m) = n\u00b7log(m+1)/log(nm+1)` is\nstrictly increasing in `n`, strictly decreasing in `m`, and takes an algebraic\nvalue only on the trivial locus `n = 1`; elsewhere it is transcendental.\n\nThe key insight is that `p` measures a genuine \"loss of independence\" as sets are\nsummed, and its monotonicity encodes how that loss scales with the number of\nsummands versus the radius. Why now? This cycle already establishes the bracket\n`1 < p < n` and the boundary equalities; the monotonicity and transcendence\nrefine that bracket into a complete qualitative description of the exponent\nsurface.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1277",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "30ef4e5b",
+    "status": "available",
+    "timestamp": "2026-07-14T06:35:14.632728+00:00",
+    "title": "Additive / geometric / analytic scaffolding around th"
+  },
+  {
     "consumed_by_exp_id": "0abd0edb",
     "description": "Cycle 71e324bf (Q=0.700) proved 855 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namel",
     "domains": [
@@ -2256,20 +2285,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-12T07:36:38.107204+00:00",
     "title": "Close Proofs: Exact AVD\u2011total chromatic number of central graphs of regular graphs"
-  },
-  {
-    "consumed_by_exp_id": "30ef4e5b",
-    "description": "Cycle adcea684 (Q=0.700) proved 21 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For subsets A\u2c7c of the L\u2081 ball {x \u2208 \u2124\u1d48 : |x\u2081| + ... + |x_d| \u2264 m} in \u2124\u1d48, establish a sharp lower bound |A\u2081+\u2026+A\u2099| \u2265 (|A\u2081|\u22ef|A\u2099|)^{1/p}, where p = (n log(m+1))/log(nm+1) or a refined exponent dependent on ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_adcea684_9f1d4a1c",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "adcea684",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T16:51:44.275408+00:00",
-    "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48"
   },
   {
     "consumed_by_exp_id": "",
