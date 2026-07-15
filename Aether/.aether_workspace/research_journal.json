@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0c4e7ae8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle continues the probabilistic-method thread on **Property B** (Erdős 1963,\ntwo-colourability of sparse hypergraphs). The previous cycle proved the general lower bound\n`2^",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-12T21:59:33",
-      "title": "This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
-    },
-    {
       "cycle_id": "208b1ca5",
       "domain": "Novelty",
       "key_insight": "# Future Directions — from the E₈ / Eisenstein Hecke structure\n\nThis cycle established that the vector-count function of the `E₈` lattice,\n`n ↦ 240·σ₃(n)`, carries the full Hecke-eigenform structure o",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-15T13:42:53",
       "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+    },
+    {
+      "cycle_id": "e93835e7",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\n- Formalize an explicit iterative peeling operator on finite simple graphs and prove that its fixed point is independent of deletion order.\n- Refine seeds into the paper's exact `",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-15T13:43:01",
+      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T13:42:53",
+  "last_updated": "2026-07-15T13:43:01",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "ea22db3c",
-        "quality": 0.40624133333333334,
-        "theorems": 4,
-        "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesia"
-      },
-      {
         "cycle_id": "4aec9d8b",
         "quality": 0.542,
         "theorems": 20,
@@ -3203,6 +3197,12 @@
         "quality": 0.93,
         "theorems": 20,
         "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
+      },
+      {
+        "cycle_id": "e93835e7",
+        "quality": 0.68,
+        "theorems": 8,
+        "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
       }
     ],
     "Combinatorics": [
