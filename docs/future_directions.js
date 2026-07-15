@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd321901",
     "description": "Building on cycle 37f1d216 (Q=0.910), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Colorful Carath\u00e9odory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carath\u00e9odory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial o",
     "domains": [
       "Computation"
@@ -12,7 +12,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "37f1d216",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T02:11:45.910783+00:00",
     "title": "Deepening: Two-parameter picture of *witness complexity* for the"
   },
@@ -43,6 +43,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-12T14:10:41.329355+00:00",
     "title": "Deepening: Exact dictionary \"logical qubits = middle homology\""
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle dc502c2d (Q=0.910), which proved 42 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Transfinite Game Theory, Deepened\n\nThis cycle deepens the theory of two-player **well-founded (transfinite) games**\nby developing the *disjunctive sum*, the central algebraic operation of\ncombinatorial game theory, and proving structural theorems plus two contrarian\ndisproofs. ",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_dc502c2d_946280e7",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "dc502c2d",
+    "status": "available",
+    "timestamp": "2026-07-15T03:46:59.955024+00:00",
+    "title": "Deepening: This cycle deepens the theory of two-player **well-founded (transfinite) games**"
   },
   {
     "consumed_by_exp_id": "",
@@ -664,7 +678,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: These conjectures are distilled from the current cycle, which closed the bridge"
   },
   {
-    "consumed_by_exp_id": "0ee2f71b",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 1abce342 (Q=0.780), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant \u03bc\u2082 is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves \u03bc\u2082 \u2264 1 + \u03c1 where \u03c1 \u2248 0.75488 is",
     "domains": [
       "Applications"
@@ -673,7 +687,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "1abce342",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T01:06:08.832578+00:00",
     "title": "Deepening: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
@@ -939,7 +953,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
-    "consumed_by_exp_id": "42e1a665",
+    "consumed_by_exp_id": "",
     "description": "Cycle 3903c2d7 (Q=0.820) proved 10 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Bypassed",
     "domains": [
       "Applications"
@@ -948,7 +962,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "3903c2d7",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T01:53:27.669006+00:00",
     "title": "Close Proofs: Bypassed"
   },
@@ -1049,6 +1063,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-14T13:37:54.054317+00:00",
     "title": "Close Proofs: OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytop"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle dc502c2d (Q=0.910) proved 42 theorems in MachineLearning but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Transfinite Game Theory, Deepened\n\nThis cycle deepens the theory of two-player **well-founded (transfinite) games**\nby developing the *disjunctive sum*, the central algebraic ope",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "sorry_fill_dc502c2d_a6690a10",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "dc502c2d",
+    "status": "available",
+    "timestamp": "2026-07-15T03:47:00.188324+00:00",
+    "title": "Close Proofs: This cycle deepens the theory of two-player **well-founded (transfinit"
   },
   {
     "consumed_by_exp_id": "",
@@ -1780,7 +1808,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary spectral-moment foundations of Seidel"
   },
   {
-    "consumed_by_exp_id": "884e09c7",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic\u2013tent conjugacy (`h(t) = sin\u00b2(\u03c0t/2)` intertwining\n`f(x)=4x(1-x)` with the tent map `T`), this cycle establishes an exact bridge to a\n*different* mathematical area \u2014 the theory of **Chebyshev / orthogonal\npolynomials** \u2014 culminating in a closed-form polynomial identity for every iterate.\n\nNew file: `Geometry/LogisticChebyshev.lean`.\n\nMain results (all proved, no `sorry`, only standard axioms):\n\n* `logistic_sin_sq`, `logistic_iterate_sin_sq` \u2014 the semiconjugacy of the logistic\n  map to angle doubling, `f\u207f(sin\u00b2\u03c6) = sin\u00b2(2\u207f\u03c6)`.\n* `sin_sq_eq_chebyshev` \u2014 `sin\u00b2(2\u207f\u03c6) = (1 - T_{2\u207f}(cos 2\u03c6))/2`, connecting the\n  doubling picture to the Chebyshev polynomial via `T_m(cos \u03b8) = cos(m\u03b8)`.\n* `logisticPolyIter_eq_chebRHS` \u2014 **as polynomials**, the `n`-fold composition of\n  the logistic map equals the rescaled Chebyshev polynomial\n  `(1 - T_{2\u207f}(1 - 2X))/2`.\n* `logistic_iterate_eq_chebyshev` \u2014 the pointwise bridge, valid for *every* real\n  `x`: `f\u207f(x) = (1 - T_{2\u207f}(1 - 2x))/2`.\n* `chebRHS_natDegree`, `logistic_iterate_natDegree` \u2014 the `n`-th iterate has degree\n  `2\u207f`, now read off directly from the Chebyshev degree `deg T_{2\u207f} = 2\u207f`.\n* `logistic_fixedPoints`, `logistic_fixedPoints_card` \u2014 the base case (`n = 1`) of\n  the periodic-point law below: the fixed points of the logistic map are exactly\n  `{0, 3/4}`, so there are `2 = 2\u00b9` of them.\n* `logistic_iterate2_fixedPoints`, `logistic_iterate2_fixedPoints_card` \u2014 the case\n  `n = 2`: the fixed points of `f\u00b2` are exactly `{0, 3/4, (5-\u221a5)/8, (5+\u221a5)/8}`\n  (the two fixed points together with the genuine period-`2` orbit), so there are\n  `4 = 2\u00b2` of them. This is obtained from the exact factorisation\n  `f\u00b2(x) - x = -4\u00b7x\u00b7(x - 3/4)\u00b7(16x\u00b2 - 20x + 5)`.\n\nThe cross-domain content: a chaotic smooth dynamical system's iterates are, on the\nnose, classical orthogonal polynomials. The `2\u207f`-fold angle multiplication that\ndrives the chaos is exactly the index `2\u207f` of the Chebyshev polynomial.\n\n## Strongest remaining conjectures\n\n1. **Exact periodic-point count `2\u207f`.** The earlier files reduced counting\n   period-`n` points of the logistic map to counting them for the tent map. With\n   the Chebyshev identity, fixed points of `f\u207f` in `[0,1]` become solutions of\n   `T_{2\u207f}(1-2x) = 1-2x`, i.e. `cos(2\u207f\u207a\u00b9\u03c6) = cos(2\u03c6)` \u2014 a trigonometric equation\n   whose solution count in one period is exactly `2\u207f`. Formalizing this count\n   (either by the sawtooth geometry of `T\u207f` or via the Chebyshev root structure)\n   would prove the full `2\u207f` law. The cases `n = 1` and `n = 2` are now **proved**\n   (`logistic_fixedPoints_card`: exactly `{0, 3/4}`, count `2 = 2\u00b9`;\n   `logistic_iterate2_fixedPoints_card`: exactly\n   `{0, 3/4, (5-\u221a5)/8, (5+\u221a5)/8}`, count `4 = 2\u00b2`). The remaining task is the\n   inductive step for general `n`.\n\n2. **Invariant measure transfer.** The tent map preserves Lebesgue measure; the\n   logistic map preserves the arcsine law `d\u03bc = dx / (\u03c0\u221a(x(1-x)))`. The conjugacy\n   `h` should push one onto the other. This is a bridge to ergodic theory /\n   probability and would let the Chebyshev orthogonality weight (`1/\u221a(1-y\u00b2)`)\n   be identified with the logistic invariant density.\n\n3. **Topological entropy `log 2`.** The `2\u207f` degree / period growth gives entropy\n   `log 2` for both maps; a formal entropy computation would close the dynamical\n   picture.\n\n## Files\n\n* `Geometry/LogisticChebyshev.lean` \u2014 the Chebyshev bridge (this cycle).\n* `ComputationalEvidence.md` \u2014 exact rational sanity checks of the identity.\n\n\n# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic\u2013tent conjugacy (`h(t) = sin\u00b2(\u03c0t/2)` intertwining\n`f(x)=4x(1-x)` with the tent map `T`), this cycle establishes an exact bridge to a\n*different* mathematical area \u2014 the theory of **Chebyshev / orthogonal\npolynomials** \u2014 culminating in a closed-form polynomial identity for every iterate.\n\nNew file: `Geometry/LogisticChebyshev.lean`.\n\nMain results (all proved, no `sorry`, only standard axioms):\n\n* `logistic_sin_sq`, `logistic_iterate_sin_sq` \u2014 the semiconjugacy of the logistic\n  map to angle doubling, `f\u207f(sin\u00b2\u03c6) = sin\u00b2(2\u207f\u03c6)`.\n* `sin_sq_eq_chebyshev` \u2014 `sin\u00b2(2\u207f\u03c6) = (1 - T_{2\u207f}(cos 2\u03c6))/2`, connecting the\n  doubling picture to the Chebyshev polynomial via `T_m(cos \u03b8) = cos(m\u03b8)`.\n* `logisticPolyIter_eq_chebRHS` \u2014 **as polynomials**, the `n`-fold composition of\n  the logistic map equals the rescaled Chebyshev polynomial\n  `(1 - T_{2\u207f}(1 - 2X))/2`.\n* `logistic_iterate_eq_chebyshev` \u2014 the pointwise bridge, valid for *every* real\n  `x`: `f\u207f(x) = (1 - T_{2\u207f}(1 - 2x))/2`.\n* `chebRHS_natDegree`, `logistic_iterate_natDegree` \u2014 the `n`-th iterate has degree\n  `2\u207f`, now read off directly from the Chebyshev degree `deg T_{2\u207f} = 2\u207f`.\n* `logistic_fixedPoints`, `logistic_fixedPoints_card` \u2014 the base case (`n = 1`) of\n  the periodic-point law below: the fixed points of the logistic map are exactly\n  `{0, 3/4}`, so there are `2 = 2\u00b9` of them.\n* `logistic_iterate2_fixedPoints`, `logistic_iterate2_fixedPoints_card` \u2014 the case\n  `n = 2`: the fixed points of `f\u00b2` are exactly `{0, 3/4, (5-\u221a5)/8, (5+\u221a5)/8}`\n  (the two fixed points together with the genuine period-`2` orbit), so there are\n  `4 = 2\u00b2` of them. This is obtained from the exact factorisation\n  `f\u00b2(x) - x = -4\u00b7x\u00b7(x - 3/4)\u00b7(16x\u00b2 - 20x + 5)`.\n\nThe cross-domain content: a chaotic smooth dynamical system's iterates are, on the\nnose, classical orthogonal polynomials. The `2\u207f`-fold angle multiplication that\ndrives the chaos is exactly the index `2\u207f` of the Chebyshev polynomial.\n\n## Strongest remaining conjectures\n\n1. **Exact periodic-point count `2\u207f`.** The earlier files reduced counting\n   period-`n` points of the logistic map to counting them for the tent map. With\n   the Chebyshev identity, fixed points of `f\u207f` in `[0,1]` become solutions of\n   `T_{2\u207f}(1-2x) = 1-2x`, i.e. `cos(2\u207f\u207a\u00b9\u03c6) = cos(2\u03c6)` \u2014 a trigonometric equation\n   whose solution count in one period is exactly `2\u207f`. Formalizing this count\n   (either by the sawtooth geometry of `T\u207f` or via the Chebyshev root structure)\n   would prove the full `2\u207f` law. The cases `n = 1` and `n = 2` are now **proved**\n   (`logistic_fixedPoints_card`: exactly `{0, 3/4}`, count `2 = 2\u00b9`;\n   `logistic_iterate2_fixedPoints_card`: exactly\n   `{0, 3/4, (5-\u221a5)/8, (5+\u221a5)/8}`, count `4 = 2\u00b2`). The remaining task is the\n   inductive step for general `n`.\n\n2. **Invariant measure transfer.** The tent map preserves Lebesgue measure; the\n   logistic map preserves the arcsine law `d\u03bc = dx / (\u03c0\u221a(x(1-x)))`. The conjugacy\n   `h` should push one onto the other. This is a bridge to ergodic theory /\n   probability and would let the Chebyshev orthogonality weight (`1/\u221a(1-y\u00b2)`)\n   be identified with the logistic invariant density.\n\n3. **Topological entropy `log 2`.** The `2\u207f` degree / period growth gives entropy\n   `log 2` for both maps; a formal entropy computation would close the dynamical\n   picture.\n\n## Files\n\n* `Geometry/LogisticChebyshev.lean` \u2014 the Chebyshev bridge (this cycle).\n* `ComputationalEvidence.md` \u2014 exact rational sanity checks of the identity.\n",
     "domains": [
       "Geometry",
@@ -1790,7 +1818,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "c0577eb2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-13T19:23:53.373050+00:00",
     "title": "Building on the earlier logistic\u2013tent conjugacy (`h(t) = sin\u00b2(\u03c0t/2)` intertwinin"
   },
@@ -1868,21 +1896,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-07-13T22:35:39.370659+00:00",
     "title": "The results established here treat the origin as the distinguished point, exploi"
-  },
-  {
-    "consumed_by_exp_id": "dc502c2d",
-    "description": "# Future Directions \u2014 Transfinite Game Theory, Deepened\n\nThis cycle deepens the theory of two-player **well-founded (transfinite) games**\nby developing the *disjunctive sum*, the central algebraic operation of\ncombinatorial game theory, and proving structural theorems plus two contrarian\ndisproofs. All results are in `Catalog/MachineLearning/TransfiniteGameSum.lean`\nand compile independently (only axioms `propext`, `Classical.choice`,\n`Quot.sound`; no `sorry`).\n\n## What was proved this cycle\n\n* **`sumWf`** \u2014 the disjunctive sum of a well-founded game with itself is\n  well-founded (identified with `Prod.GameAdd` of the reverse move relation).\n  Hence the value function `W` is well-defined on the sum.\n* **`sum_terminal_right` / `sum_terminal_left`** \u2014 a terminal (empty) component\n  is a *neutral element*: adjoining it does not change the value.\n* **`sum_comm`** \u2014 the value of the sum is commutative: `W (a,b) \u2194 W (b,a)`.\n* **`diag_loss`** (flagship) \u2014 for *every* well-founded game, `G + G` is a\n  second-player win: `\u00ac W (a,a)`. This is the transfinite mirroring /\n  strategy-stealing principle, valid at arbitrary ordinal rank.\n* **`determinacy`** \u2014 Zermelo's theorem for well-founded games (mover can force a\n  win iff the position is winning), and **`diag_mover_loses`**, its strategic\n  corollary: in `G + G` the *opponent* has the winning (mirroring) strategy.\n* **`twoHeapNim`** \u2014 the sharp two-heap Nim identity for the countdown game:\n  `Wsum (m,n) \u2194 m \u2260 n`. The `m = n` half is the flagship `diag_loss`; the\n  `m \u2260 n` half moves the larger heap down to the diagonal. This closes the\n  stepping-stone conjecture (previously only validated computationally) and makes\n  both contrarian disproofs instances of a single equivalence.\n\n## What was disproved this cycle (contrarian mode)\n\n* **`sum_of_wins_can_lose`** \u2014 \"the sum of two winning positions is winning\" is\n  FALSE (`1 + 1` in countdown is a loss).\n* **`p_position_not_neutral`** \u2014 \"a losing (P) component can be dropped without\n  changing the winner\" is FALSE (`0 + 1` is a win); only the *empty* game is\n  neutral, not an arbitrary P-position.\n\n## Strongest remaining conjectures / next steps\n\n1. **Sprague\u2013Grundy for transfinite games.** Define an ordinal-valued Grundy\n   function `g : P \u2192 Ordinal` by `g p = mex { g q | mv p q }` (ordinal `mex` =\n   least ordinal not in the image) and prove `W p \u2194 g p \u2260 0`. This subsumes\n   `diag_loss` and would let us characterize `Wsum` of arbitrary components.\n\n2. **Nim-addition theorem.** With `g` in hand, prove\n   `g (sum a b) = g a \u2295 g b` (ordinal nim-sum). The special case for countdown\n   is the two-heap Nim identity `Wsum (m,n) \u2194 m \u2260 n`, now **proved** as\n   `twoHeapNim`; the general Grundy/nim-sum statement remains open.\n\n3. **General P + P = P.** Prove that the disjunctive sum of two P-positions is a\n   P-position. This is *not* an easy single induction (the naive attempt leaves\n   the induction measure uncontrolled); it appears to require the Grundy\n   machinery of step 1, which is why only the diagonal case (`diag_loss`) is\n   proved here.\n\n4. **Arbitrary sums and a monoid structure.** Extend `sumMv` from `P \u00d7 P` to\n   heterogeneous sums `P \u00d7 Q` and to finite/indexed families, and organize the\n   Grundy values into the commutative monoid `(Ordinal, \u2295)`.\n\n5. **Determinacy hierarchy and large cardinals.** The `GaleStewart` core\n   (`Catalog/Logic/GaleStewartCore.lean`) sets up open-length games; connecting\n   the well-founded value theory here to Borel/analytic determinacy and the\n   large-cardinal strength of `AD`-fragments remains the long-range goal of the\n   original mission.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_1253",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "beca1e55",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T23:13:37.545062+00:00",
-    "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
   },
   {
     "consumed_by_exp_id": "",
@@ -2005,7 +2018,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle assembled a reusable toughness toolkit around a single load-bearing"
   },
   {
-    "consumed_by_exp_id": "22a6ce83",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain is squeezed between `2 n^{-3}` and\n`12 n^{-3}`, so it is exactly of order `n^{-3}`. The upper bound comes from a\nsingle slowly-varying position witness; the lower bound is a telescoping\nCauchy\u2013Schwarz Poincar\u00e9 inequality showing that *every* non-constant test\nfunction already has Rayleigh quotient at least `2 n^{-3}`. The following\nconjectures push this mechanism toward the genuine fixed-genus chord-swap chain.\n\n## Conjecture 1 \u2014 Genus-graded cubic gap for chord-swap chains\nFor chord diagrams of `n` chords and any fixed genus `g`, the chord-swap chain\nhas spectral gap `\u0398(n^{-3})`, with the implied constants depending only on `g`.\n\nThe key insight is that a chord diagram carries a monotone integer statistic \u2014\na genus-aware \"displacement\" that changes by exactly one unit under a single\nchord swap \u2014 whose Dirichlet energy grows linearly while its variance grows\nquartically, reproducing the path model's energy-to-variance ratio of `n^{-3}`.\n\nWhy now? The abstract energy/variance bookkeeping is fully established and the\none-dimensional prototype is pinned to the cubic window, so the only missing\ningredient is the construction and quartic-variance estimate for the genus\nstatistic \u2014 a concrete, self-contained combinatorial target rather than an\nanalytic obstacle.\n\n## Conjecture 2 \u2014 Universal cubic law for `\u00b11`-monotone swap chains\nAny reversible swap chain on a finite state space that admits a monotone integer\nstatistic taking `\u0398(n)` distinct values and changing by `\u00b11` per accepted move,\nwith `\u0398(n)` boundary-adjacent transitions, has spectral gap `\u0398(n^{-3})`.\n\nThe key insight is that the exponent `3 = 4 \u2212 1` is forced purely by growth\nrates: the variance of such a statistic is quartic in its range while its\nDirichlet energy is only linear, so the ratio is cubic regardless of the\nunderlying combinatorial model.\n\nWhy now? The lower-bound half proved here is model-agnostic \u2014 it uses only the\ntelescoping structure of a `\u00b11` statistic \u2014 so the universal statement is within\nreach by abstracting the path argument away from its specific adjacency weights.\n\n## Conjecture 3 \u2014 Sharp leading constant\nFor the path swap chain the spectral gap satisfies `\u03b3_n = (c + o(1)) n^{-3}` for\nan explicit constant `c` strictly inside `[2, 12]`, realised by the discrete\nfirst eigenfunction (a shifted cosine profile) rather than the linear position\nwitness.\n\nThe key insight is that the linear witness is energy-optimal only to within a\nconstant factor; replacing it by the discrete cosine mode simultaneously lowers\nthe energy and matches the true bottom of the spectrum, so both bounds should\ncollapse to a single constant.\n\nWhy now? The two-sided window is already established, isolating the remaining\nquestion to a one-parameter optimisation over test-function profiles \u2014 a finite\nvariational problem amenable to the same Rayleigh calculus used here.\n\n## Conjecture 4 \u2014 Higher-dimensional swap complexes\nOn a `d`-dimensional product of swap chains the spectral gap is `\u0398(n^{-3})` as\nwell, independent of `d`, because the slowest mode remains one-dimensional.\n\nThe key insight is that tensorising commuting swap chains adds their Dirichlet\nforms while the extremal test function still varies along a single coordinate,\nso the worst-case Rayleigh quotient is inherited unchanged from the line.\n\nWhy now? With the exact one-dimensional constant window in hand, the product\ncomparison reduces to a clean sub-additivity statement for Dirichlet forms,\nwhich the present energy/variance identities express directly.\n\n\n# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain is squeezed between `2 n^{-3}` and\n`12 n^{-3}`, so it is exactly of order `n^{-3}`. The upper bound comes from a\nsingle slowly-varying position witness; the lower bound is a telescoping\nCauchy\u2013Schwarz Poincar\u00e9 inequality showing that *every* non-constant test\nfunction already has Rayleigh quotient at least `2 n^{-3}`. The following\nconjectures push this mechanism toward the genuine fixed-genus chord-swap chain.\n\n## Conjecture 1 \u2014 Genus-graded cubic gap for chord-swap chains\nFor chord diagrams of `n` chords and any fixed genus `g`, the chord-swap chain\nhas spectral gap `\u0398(n^{-3})`, with the implied constants depending only on `g`.\n\nThe key insight is that a chord diagram carries a monotone integer statistic \u2014\na genus-aware \"displacement\" that changes by exactly one unit under a single\nchord swap \u2014 whose Dirichlet energy grows linearly while its variance grows\nquartically, reproducing the path model's energy-to-variance ratio of `n^{-3}`.\n\nWhy now? The abstract energy/variance bookkeeping is fully established and the\none-dimensional prototype is pinned to the cubic window, so the only missing\ningredient is the construction and quartic-variance estimate for the genus\nstatistic \u2014 a concrete, self-contained combinatorial target rather than an\nanalytic obstacle.\n\n## Conjecture 2 \u2014 Universal cubic law for `\u00b11`-monotone swap chains\nAny reversible swap chain on a finite state space that admits a monotone integer\nstatistic taking `\u0398(n)` distinct values and changing by `\u00b11` per accepted move,\nwith `\u0398(n)` boundary-adjacent transitions, has spectral gap `\u0398(n^{-3})`.\n\nThe key insight is that the exponent `3 = 4 \u2212 1` is forced purely by growth\nrates: the variance of such a statistic is quartic in its range while its\nDirichlet energy is only linear, so the ratio is cubic regardless of the\nunderlying combinatorial model.\n\nWhy now? The lower-bound half proved here is model-agnostic \u2014 it uses only the\ntelescoping structure of a `\u00b11` statistic \u2014 so the universal statement is within\nreach by abstracting the path argument away from its specific adjacency weights.\n\n## Conjecture 3 \u2014 Sharp leading constant\nFor the path swap chain the spectral gap satisfies `\u03b3_n = (c + o(1)) n^{-3}` for\nan explicit constant `c` strictly inside `[2, 12]`, realised by the discrete\nfirst eigenfunction (a shifted cosine profile) rather than the linear position\nwitness.\n\nThe key insight is that the linear witness is energy-optimal only to within a\nconstant factor; replacing it by the discrete cosine mode simultaneously lowers\nthe energy and matches the true bottom of the spectrum, so both bounds should\ncollapse to a single constant.\n\nWhy now? The two-sided window is already established, isolating the remaining\nquestion to a one-parameter optimisation over test-function profiles \u2014 a finite\nvariational problem amenable to the same Rayleigh calculus used here.\n\n## Conjecture 4 \u2014 Higher-dimensional swap complexes\nOn a `d`-dimensional product of swap chains the spectral gap is `\u0398(n^{-3})` as\nwell, independent of `d`, because the slowest mode remains one-dimensional.\n\nThe key insight is that tensorising commuting swap chains adds their Dirichlet\nforms while the extremal test function still varies along a single coordinate,\nso the worst-case Rayleigh quotient is inherited unchanged from the line.\n\nWhy now? With the exact one-dimensional constant window in hand, the product\ncomparison reduces to a clean sub-additivity statement for Dirichlet forms,\nwhich the present energy/variance identities express directly.\n",
     "domains": [
       "Algebra",
@@ -2015,7 +2028,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "bec8fe46",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T04:50:15.932619+00:00",
     "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
   },
@@ -2320,7 +2333,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle settles **Conjecture 1** of the previous *Future Directions* note and"
   },
   {
-    "consumed_by_exp_id": "582560af",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant governed by the\ndimensional sign `d \u21a6 (-1)^d`, with an explicit stabilization map identifying the\nnegative-dimensional world with the zero-dimensional one up to sign. The\nfollowing conjectures are the natural next targets.\n\n## 1. A negative-dimensional Euler\u2013Poincar\u00e9 duality\n\n**Conjecture.** For a formal space of dimension `-n` there is a canonical pairing\nbetween its `\u03c0\u2080` data and that of its `n`-fold stabilization, under which the\nEuler characteristic is self-dual: reflecting the dimension `d \u21a6 -d` leaves `\u03c7`\nunchanged up to the parity sign already recorded by `sgn`.\n\nThe key insight is that the invariance `sgn(-d) = sgn(d)` is not an accident of\nthe sign function but the shadow of a duality that swaps a space with its formal\ndesuspension while preserving the count of path components.\n\nWhy now? The stabilization map and the parity-invariance of the sign are both in\nhand, so the duality can be stated as an isomorphism of the underlying component\nmonoids and tested against the product structure that is already proved\nmultiplicative.\n\n## 2. Multiplicativity forces the sign law\n\n**Conjecture.** Any dimension-graded, component-multiplicative integer invariant\nthat is additive under disjoint union and multiplicative under products must\ncoincide with `sgn(dim)\u00b7|\u03c0\u2080|`; equivalently, the only monoid homomorphism from\n`(\u2124,+) \u00d7 (\u2115,\u00b7)` to `\u2124` that is `\u00b11` on each sphere is the Euler characteristic.\n\nThe key insight is that additivity and multiplicativity together pin down the\ninvariant on generators (spheres and points), and every formal space is built\nfrom these by the two operations, so the invariant is rigid.\n\nWhy now? The monoid structure on formal spaces and the homomorphism property of\n`\u03c7` are established, reducing the uniqueness question to a statement about\nhomomorphisms out of a finitely generated commutative monoid.\n\n## 3. The pro-spectrum limit of the stabilization tower\n\n**Conjecture.** The tower `\u2026 \u2192 \u03a3\u207b\u00b9X \u2192 X \u2192 \u03a3X \u2192 \u2026` of suspensions has a well-defined\nstable Euler characteristic obtained as a limit, and this limit is independent of\nthe starting dimension, depending only on `|\u03c0\u2080|` weighted by the coherent sign.\n\nThe key insight is that although each suspension flips the sign of `\u03c7`, the pair\n`(\u03c7, dim mod 2)` is a genuine invariant of the whole tower, so the limit exists\nonce one records the parity alongside the value.\n\nWhy now? The exact one-step behavior `\u03c7(\u03a3X) = -\u03c7(X)` and the `n`-step law\n`\u03c7(\u03a3\u207fX) = (-1)^n \u03c7(X)` are proved, giving the precise transition maps whose limit\nthe conjecture concerns.\n\n## 4. Negative-dimensional surfaces and a signed Gauss\u2013Bonnet\n\n**Conjecture.** The identity `\u03c7 = 2 - 2g` for the genus-`g` surface admits a\nnegative-dimensional companion in which the roles of the top and bottom Betti\nnumbers are exchanged by desuspension, producing a signed genus formula\n`\u03c7 = (-1)^d (2 - 2g)` for the `d`-fold desuspended surface.\n\nThe key insight is that the graded Euler characteristic already treats every\ndegree \u2014 positive or negative \u2014 on the same footing through the alternating sign,\nso shifting all Betti numbers into negative degrees merely multiplies the\nclassical value by a global sign.\n\nWhy now? The bridge reproducing `2 - 2g` from sign-weighted Betti numbers is\nestablished, and the degree-shift operation is exactly the suspension whose effect\non `\u03c7` is already computed.\n\n## 5. A character theory for the sign group\n\n**Conjecture.** The dimensional sign is the unique nontrivial character of the\nadditive group of dimensions valued in the units of `\u2124`, and the collection of\nnegative-dimensional Euler characteristics assembles into the character table of\na naturally occurring `\u2124/2` grading on the stable homotopy category of formal\nspheres.\n\nThe key insight is that `sgn: (\u2124,+) \u2192 {\u00b11}` is precisely the reduction mod 2\ncomposed with the unique isomorphism `\u2124/2 \u2245 {\u00b11}`, so its topological meaning is a\n`\u2124/2`-grading that separates even- from odd-dimensional formal spheres.\n\nWhy now? The homomorphism property `sgn(a+b) = sgn(a)\u00b7sgn(b)` is proved, which is\nthe defining property of a character; what remains is to interpret it as a grading\nand read off the resulting decomposition.\n",
     "domains": [
       "Geometry",
@@ -2330,7 +2343,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "c5cfd9ce",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T14:12:56.708950+00:00",
     "title": "The results of this cycle establish that the Euler characteristic extends to"
   },
@@ -2380,7 +2393,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file fixes the correct (disjointness) formalization of interval packings in "
   },
   {
-    "consumed_by_exp_id": "98ba1a43",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Tangled Hierarchies: Proof Systems That Reference Their Own Soundness\n\nThe file `TangledSoundness.lean` develops the semantic core of self-referential\nproof systems: a chain from the pure-logic seed `\u00ac(P \u2194 \u00acP)` up to\n`soundness_predicate_not_internal`, the statement that a soundness predicate cannot\nconsistently live inside the self-referential system it validates.\n\nNatural next steps:\n\n1. **Full syntactic L\u00f6b's theorem.** Replace the semantic G\u00f6del fixed point in\n   `ProofSystem` with the Hilbert\u2013Bernays\u2013L\u00f6b derivability conditions\n   (`D1: Prov s \u2192 Prov (box s)`, `D2` distribution, `D3: Prov (box s) \u2192 Prov (box (box s))`)\n   and a syntactic diagonal, then derive `Prov (imp (box s) s) \u2192 Prov s`. This is the\n   sharpest form of \"a system cannot safely reference its own soundness\".\n\n2. **Second incompleteness.** From L\u00f6b with `s = \u22a5`, obtain that a consistent system\n   cannot prove its own consistency sentence `Con := neg (box \u22a5)`.\n\n3. **Ordinal-indexed reflection towers.** Iterate the addition of a soundness\n   reflection principle `RFN(P)` and study the transfinite hierarchy\n   `P\u2080 \u2282 P\u2081 \u2282 \u22ef`, showing each level proves the consistency of the previous \u2014 the\n   stratified escape from the tangle.\n\n4. **Kripke/paracomplete semantics.** Weaken `neg_truth` to a three-valued or\n   fixed-point (Kripke) semantics, where the Liar receives a truth-value gap, and\n   measure exactly which theorems survive. This isolates classicality as the\n   ingredient forcing the tangle's inconsistency.\n\n5. **Category-theoretic bridge.** Recast `no_semantic_fixed_points` and Tarski via\n   Lawvere's fixed-point theorem, unifying them with Cantor and the\n   `Type : Type` collapse.\n",
     "domains": [
       "Logic",
@@ -2390,7 +2403,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2c734846",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T15:41:07.242873+00:00",
     "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
   },
@@ -2875,7 +2888,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** For smooth non-vanishing closed beam loops, the endpoint defect "
   },
   {
-    "consumed_by_exp_id": "ca1c3afc",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length `k` should admit a canonical bijection with permutations of `k` elements such that factoradic evaluation agrees with lexicographic rank and digit extraction agrees with Lehmer inversion counts. The bijection should intertwine adjacent transpositions with an explicit carry-and-borrow operation on factorial codes.\n\nThe key insight is that the local alphabet of the `i`-th factoradic digit has exactly `i+1` elements, matching the successive insertion choices in a permutation.\n\nWhy now? The finite classification isolates precisely the dependent product needed for insertion coding, while exact agreement of extraction algorithms supplies the arithmetic half of the desired compatibility.\n\n## 2. Carry normalization as a terminating confluent rewrite system\n\nAllow unrestricted natural digits at every factorial position and orient the relation `(i+1)\u00b7i! = (i+1)!` as a local carry rule. On finitely supported digit sequences, these rules should form a terminating and confluent rewriting system whose unique normal forms are exactly the valid factorial codes. Moreover, normalization should preserve value and compute the extracted factoradic digits.\n\nThe key insight is that factorial place values turn every local excess digit into a carry of exactly one unit at the next position, while the represented value supplies a global termination measure.\n\nWhy now? Existence and uniqueness of bounded representations are established; confluence would strengthen this extensional classification into an algorithm-independent normalization theorem.\n\n## 3. Chinese-remainder coordinates for factorial intervals\n\nDetermine exactly for which `k` the interval `Fin (k!)` can be identified with a product of residue rings in a way compatible with factorial-code truncation. More generally, classify the obstruction to making the factorial-code equivalence multiplicative, and express it through the non-coprime overlap among the radices `1,2,\u2026,k`.\n\nThe key insight is that mixed-radix coordinates resemble residue coordinates but encode nested divisibility rather than pairwise coprimality, so the discrepancy should be measured by a precise extension or filtration invariant.\n\nWhy now? The additive finite classification provides a canonical coordinate set against which any proposed ring-compatible coordinate system can be compared and falsified.\n\n## 4. Infinite factorial expansions and profinite completion\n\nThe inverse system obtained by truncating factorial codes should be canonically homeomorphic to the inverse limit of the finite rings `\u2124/(k!)\u2124`. Under this homeomorphism, finite evaluation should be the residue projection, and the carry-normalized addition of infinite codes should recover the topological ring structure of the profinite integers.\n\nThe key insight is that the divisibility chain `k! \u2223 (k+1)!` makes factorial truncation compatible with inverse-limit projections, unlike arbitrary variable-radix systems.\n\nWhy now? The sharp finite equivalence supplies every finite stage and its unique coordinates; the remaining challenge is to prove coherence of these equivalences under truncation and then transport the inverse-limit topology and algebra.\n",
     "domains": [
       "Algebra",
@@ -2885,7 +2898,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "da85fe77",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T02:32:29.643432+00:00",
     "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
   },
@@ -2948,6 +2961,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T03:46:45.514679+00:00",
     "title": "For each finite pattern graph \\(H\\), determine the least edge deficit \\(d(H)\\) s"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Algebra and Rank in Well-Founded Games\n\n## 1. Transfinite Sprague\u2013Grundy classification\n\n**Conjecture.** Every set-sized well-founded impartial game admits an\nordinal-valued Grundy assignment obtained as the least excluded ordinal of its\noptions, and a position is losing exactly when its Grundy value is zero.\n\nThe key insight is that well-founded recursion already supplies the outcome\nclass, while ordinal least-exclusion should refine that binary class without\nrequiring finite game trees. **Why now?** The transfinite mirror theorem shows\nthat rank-independent strategy arguments survive disjunctive addition, giving\nthe first nontrivial consistency test for such an ordinal refinement.\n\n## 2. Ordinal nim-addition theorem\n\n**Conjecture.** The Grundy value of the disjunctive sum of two set-sized\nwell-founded impartial games equals the nim-sum of their Grundy values.\n\nThe key insight is that a move changes exactly one coordinate, so the option\nvalues should satisfy the universal least-exclusion characterization of nim\naddition. **Why now?** The complete two-heap countdown classification provides\na sharp base case, and commutativity plus preservation of well-foundedness\nsupply the structural prerequisites for a general addition law.\n\n## 3. General closure of losing positions under addition\n\n**Conjecture.** If two positions in possibly different well-founded impartial\ngames are losing, then their heterogeneous disjunctive sum is losing.\n\nThe key insight is that binary outcome data alone does not select a response to\nan arbitrary move; equality of zero Grundy values should supply precisely the\nmissing invariant. **Why now?** The diagonal mirror theorem proves the result\nwhen the games and positions coincide, while the failure of arbitrary losing\npositions to act as neutral elements clarifies the distinction that a correct\ngeneral proof must preserve.\n\n## 4. Indexed sums with finite support\n\n**Conjecture.** Finite-support families of well-founded impartial games admit a\nwell-founded disjunctive sum whose Grundy value is the finite nim-sum of the\ncomponent values, independent of enumeration and bracketing.\n\nThe key insight is that one-coordinate moves naturally define a commutative\nmonoid action on finitely supported position families. **Why now?** The binary\nsum is well-founded and outcome-commutative, so associativity and permutation\ninvariance are the next falsifiable coherence conditions.\n\n## 5. Rank-sensitive bridge to open infinite play\n\n**Conjecture.** For every well-founded game tree, its ordinal rank induces an\nopen payoff game of length omega with the same winning player, and the induced\nstrategy can be chosen by recursion uniformly in the rank.\n\nThe key insight is that termination witnesses an open event in an infinite-play\nencoding, while ordinal rank bounds the recursion needed to extract a strategy.\n**Why now?** Strategic determinacy has been isolated directly from the recursive\noutcome equation, making it possible to compare positional well-founded\nstrategies with strategies on encoded histories.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1347",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dc502c2d",
+    "status": "available",
+    "timestamp": "2026-07-15T03:46:56.839502+00:00",
+    "title": "**Conjecture.** Every set-sized well-founded impartial game admits an"
   },
   {
     "consumed_by_exp_id": "",

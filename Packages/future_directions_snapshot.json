@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd321901",
     "description": "Building on cycle 37f1d216 (Q=0.910), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial o",
     "domain_bridges": [],
     "domains": [
@@ -14,7 +14,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "37f1d216",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T02:11:45.910783+00:00",
     "title": "Deepening: Two-parameter picture of *witness complexity* for the"
   },
