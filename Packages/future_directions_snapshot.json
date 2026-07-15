@@ -101,7 +101,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d2137d3",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
     "domains": [
@@ -114,7 +114,7 @@
     "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T22:33:29.187612+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -160,7 +160,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "94e3fc40",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes' and formalize its key results. Abstract: Character-polynomial codes are constructed by evaluating finite field polynomials and mapping the results to complex roots of unity through additive characters. This paper shows that, over extension fields, the original polynomial family may contain redundancies: distinct polynomials can generate the same codeword. We identify the source of this non-injectivity through the trace map and cyclotomic cosets, determine the exact code cardinality, and construct a refined polynomial family that parametrizes the code without redundancy. These results give corrected parameters for CP codes and clarify their algebraic structure.",
     "domain_bridges": [],
     "domains": [
@@ -172,7 +172,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11595v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T08:58:24.618652+00:00",
     "title": "ArXiv paper: Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes"
   },
@@ -237,7 +237,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57481379",
     "description": "Investigate the ArXiv paper 'Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three' and formalize its key results. Abstract: We give three explicit quantum Latin squares of order $6$ with cardinalities $19$, $21$, and $23$, where vectors differing only by a global phase are counted as identical. The first two examples arise from normalized Schur products of columns of complex Hadamard matrices. For cardinality $19$, a Butson-type matrix over eighth roots of unity has the unique nontrivial coincidence $v_{01}=v_{25}=v_{34}$. For cardinality $21$, an explicit member of Karlsson's three-parameter family has $21$ pairwise inequivalent unordered Schur products. To exceed the symmetric Schur-product bound, we give a third, direct-sum construction based on the decomposition $\\C^6=\\C^4\\oplusC^2$. It uses nineteen distinct rays in the four-dimensional summand and four rays in the two-dimensional summand, arranged so that every row and column is an orthonormal basis, yielding cardinality $23$. Together with our earlier constructions of cardinalities $13$, $15$, and $17$ and previously known order-six examples, these r",
     "domain_bridges": [],
     "domains": [
@@ -250,7 +250,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11800v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:46:57.950799+00:00",
     "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three"
   },
@@ -807,7 +807,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a47254c6",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Record compositions of alternating permutations and noncommutative symmetric functions' and formalize its key results. Abstract: Amdeberhan, Shareshian, and Stanley recently proved that a function $\\varphi$ arising in the theory of partition Eisenstein series counts the alternating permutations of $\\{1,\\dots,2n\\}$ with a given `record' partition, and they asked whether there is a similar theory for record compositions, suggesting a role for noncommutative symmetric functions. Here we solve their open problem by showing that the number of alternating permutations of $\\{1,\\dots,2n\\}$ with record composition $(α_1,\\dots,α_\\ell)$ is \\[ \\prod_{j=1}^{\\ell}\\binom{2s_j-1}{2α_j-1}E_{2α_j-1}, \\] where $s_j=α_1+\\dots+α_j$, $E_k$ is an Euler number, and the record composition of $w=a_1a_2\\dots a_{2n}$ (so $a_1>a_2<a_3>\\dotsb$) lists the factor lengths obtained by cutting $a_1a_3\\dots a_{2n-1}$ before each left-to-right maximum other than the first. These numbers are the coefficients of a natural lift of the degree-$n$ sprout symmetric function with seed $\\sec(\\sqrt{t}\\,)$ to noncommutative symmetric functions, expanded in p",
     "domain_bridges": [],
     "domains": [
@@ -819,7 +819,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T13:25:40.671949+00:00",
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
   },
@@ -845,7 +845,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4980b02",
     "description": "Investigate the ArXiv paper 'Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation' and formalize its key results. Abstract: We prove the Gonality Conjecture in arithmetic dynamics: for any non-isotrivial one-parameter algebraic family of rational maps on $\\mathbb{P}^1$, the gonality of distinct dynatomic curves tends to infinity. More generally, outside the flexible Lattès family, every small sequence of horizontal curves has gonality tending to infinity, and its genus grows superlinearly with its degree over the parameter curve. We also obtain higher-dimensional analogues under natural bifurcation and multiplier-genericity hypotheses. As applications, we prove uniform boundedness results for iterated preimages over number fields and geometric uniform boundedness results for preperiodic points over function fields. The proof combines arithmetic equidistribution, woven currents, and bifurcation theory; the bifurcation mechanism is what forces the growth of genus and gonality.",
     "domain_bridges": [],
     "domains": [
@@ -858,7 +858,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12561v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T14:01:10.734967+00:00",
     "title": "ArXiv paper: Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation"
   },
@@ -963,7 +963,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "67328d87",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Hypergraph Turan with bounded matching number' and formalize its key results. Abstract: For a fixed graph $G$, an $r$-uniform hypergraph is said to contain a Berge-$G$ if there exists a bijection $f\\colon E(G)\\to E(\\mathcal{H})$ for some subhypergraph $\\mathcal{H}$ such that $e\\subseteq f(e)$ for every $e\\in E(G)$. Motivated by Alon and Frankl's study of Turán problems under bounded matching constraints, we investigate the maximum number of edges in $r$-uniform Berge-$K_3$-free hypergraphs with matching number at most~$s$. We determine the exact Turán numbers for the cases $r=3$ and $r=4$. For $r=3$ and $n \\geq 3 s$, we prove that every $n$-vertex Berge- $K_3$-free 3-graph with matching number $s$ has at most $s(n-2 s)$ edges, and we characterize the unique extremal hypergraph attaining equality. For $r=4$ and $n \\geq 4 s$, the maximum number of edges is $s\\lfloor(n-2 s) / 2\\rfloor$, except for the exceptional case $s=1$ and $n \\equiv 1(\\bmod 4)$, in which the bound is $(n-1) / 2$. As a corollary, our results recover the classical theorem of Győri on Berge-$K_3$-free hype",
     "domain_bridges": [],
     "domains": [
@@ -975,7 +975,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12300v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T19:54:37.533091+00:00",
     "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
   },
@@ -1021,7 +1021,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "76e6eee9",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Apéry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Apéry-like numbers. As applications, many new supercongruences are deduced.",
     "domain_bridges": [],
     "domains": [
@@ -1033,14 +1033,14 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T20:45:36.266548+00:00",
     "title": "ArXiv paper: Curious identities involving Legendre polynomials and Apéry-like numbers"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e6582bf4",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Some Remarks on Hessians and Wronskians' and formalize its key results. Abstract: The purpose of this note is to elaborate on the apparent connection between Wronskians and Hessians. More generally, to a given subspace of homogeneous bivariate forms over the complex numbers, we associate two determinantal polynomials called the $W$-polynomial and the $\\hat{W}$-polynomial. We give expansion and factorization formulas for these polynomials, and study their behavior under change of coordinates and duality. As an application, we give another proof of Iarrobino's theorem on the strong Lefschetz property for standard graded Artinian Gorenstein algebras in codimension two.",
     "domain_bridges": [],
     "domains": [
@@ -1053,7 +1053,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T21:02:39.460834+00:00",
     "title": "ArXiv paper: Some Remarks on Hessians and Wronskians"
   },
@@ -1136,7 +1136,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e2c77d51",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
@@ -1149,7 +1149,7 @@
     "proof_strategy": "Define vampire numbers formally: v is a vampire number iff v has 2n digits and there exist x, y each with n digits such that v = x*y and the multiset of digits of v equals the union of digits of x and y. Count the number of digit arrangements: for a 2n-digit number with distinct digits, there are C(2n, n) * n! * n! possible fang pairs, so the expected number of fang pairs is C(2n, n) * (n!)^2 / 10^{2n} = C(2n,n) / 10^n ~ 1/sqrt(n). Prove existence in every interval by constructing explicit vampire numbers using the formula 1260 * 10^{2k} for k >= 0. Test: enumerate up to 10^8.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T23:24:14.669394+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
