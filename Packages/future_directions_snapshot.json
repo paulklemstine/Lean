@@ -534,25 +534,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "86efe295",
-    "description": "Building on cycle b97ab468 (Q=0.820), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_b97ab468_8a0da3e4",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "b97ab468",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T07:29:42.613481+00:00",
-    "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "4b27af05",
     "description": "Building on cycle c81fdc47 (Q=0.820), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the natural bijection φ from the set of B-orbits on B_n × P^(n-1) to its image in W_(n+1) × W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O₁ ⊆ O̅₂ iff φ(O₁) ≤ φ(O₂) in (W_(n+1), ≤_Bruhat) × (W_(n+1), ≤_Bruhat).",
     "domain_bridges": [],
@@ -855,25 +836,6 @@
     "status": "available",
     "timestamp": "2026-07-13T11:12:22.899860+00:00",
     "title": "Deepening: Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectang"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "41e1526b",
-    "description": "Building on cycle b35b4ce5 (Q=0.790), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any integers 2 ≤ s < t and any n-vertex graph G, the t-clique density of G is bounded below by the composition of the Lovász-Simonovits t-clique density function evaluated at the generalized inverse of the s-clique density function applied to the s-clique density of G. Specifically, k_t(G) / n^t",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_b35b4ce5_c4a76537",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "b35b4ce5",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T15:03:08.446949+00:00",
-    "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
   },
   {
     "ambition_level": "extension",
@@ -3906,6 +3868,46 @@
     "status": "available",
     "timestamp": "2026-07-15T00:44:19.603412+00:00",
     "title": "This cycle deepened the theory of closed timelike curves beyond the bare"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Exact defect bounds.** Strengthen extremal rigidity quantitatively: if a graph is missing `m` edges, bound the deficit `2 ^ |α| - |cliqueFamily H|` in terms of the missing-edge graph, and characterize equality.\n2. **Critical-scale decomposition.** For a finite metric space, identify every strict jump of the Vietoris–Rips simplex count with an attained pairwise distance, then express the jump size through cliques newly completed at that edge birth.\n3. **Dimension-refined counts.** Replace total simplex count by the vector counting `k`-simplices and prove strict monotonicity and extremal rigidity in each dimension where an added edge can participate.\n4. **Approximation transfer.** Combine the equality characterization with multiplicative interleavings to obtain rigidity or stability results for approximations whose simplex count is close to the `2 ^ |α|` maximum.\n5. **Infinite locally finite filtrations.** Extend the connector from finite vertex types to locally finite proximity graphs by restricting to finite windows and proving compatibility under exhaustion.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_1337",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "86efe295",
+    "status": "available",
+    "timestamp": "2026-07-15T01:49:24.272592+00:00",
+    "title": "1. **Exact defect bounds.** Strengthen extremal rigidity quantitatively: if a gr"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Clique-to-Clique Density\n\n## 1. Sharp generalized-inverse lower envelope\n\nFor every pair of integers `2 ≤ s < t`, determine the exact lower envelope of the normalized `t`-clique count among finite graphs with a prescribed normalized `s`-clique count, and prove that it is the Lovász–Simonovits function of order `t` evaluated at the generalized inverse of its order-`s` counterpart.\n\n**The key insight is...** the binomial threshold theorem proved here identifies the discrete shadow mechanism that any sharp continuous envelope must refine, while complete multipartite graphs supply the expected equality cases.\n\n**Why now?** Arbitrary clique orders are now connected by a single exact finite shadow theorem, isolating the remaining difficulty as analytic interpolation between consecutive binomial thresholds.\n\n## 2. Quantitative stability at every multipartite branch\n\nFor fixed `2 ≤ s < t` and every compact subinterval contained in one branch of the conjectured density envelope, prove that a graph whose `t`-clique density is within `ε` of the optimum must be within `O(ε^c)` edit distance of the corresponding complete multipartite extremizer, for some explicit `c=c(s,t)>0`.\n\n**The key insight is...** near equality should force not only a small iterated shadow but also near equality at each individual deletion step, turning global density information into rigid nested neighborhood structure.\n\n**Why now?** The iterated-shadow factorization makes the intermediate losses visible and provides natural defect quantities for a stability argument.\n\n## 3. Weighted graphon shadow principle\n\nExtend the arbitrary-order clique implication to weighted graphons by finding a measurable analogue of iterated shadows whose mass lower bound converges to the finite Kruskal–Katona estimate under sampling.\n\n**The key insight is...** random sampling should transport measurable clique densities to finite clique families while preserving the shadow inequalities asymptotically, after which concentration can remove the sampling error.\n\n**Why now?** The finite theorem is uniform in the vertex count and clique orders, exactly the form needed for a limit argument.\n\n## 4. Flag-complex face-vector characterization\n\nCharacterize all asymptotic vectors of clique densities `(d_1,d_2,...)` of graphs by combining the iterated-shadow inequalities with the additional constraints imposed by flag complexes, and decide whether these constraints are sufficient after closure.\n\n**The key insight is...** clique families are not arbitrary simplicial complexes: their minimal nonfaces have size two, so Kruskal–Katona inequalities should interact with quadratic forbidden-face conditions.\n\n**Why now?** The present theorem establishes the universal face-shadow constraints across every pair of dimensions; the next test is to identify precisely what flagness adds.\n\n## 5. Local-to-global codegree recursion\n\nFor each `t ≥ 3`, find a sharp convex functional of `(t-1)`-fold common-neighborhood sizes whose average lower-bounds the number of `t`-cliques and whose equality cases recover all branches of the clique-density envelope.\n\n**The key insight is...** every `t`-clique can be counted through its lower-dimensional faces, but the correct generalized inverse should emerge only after optimizing the distribution of local extension counts rather than their mean alone.\n\n**Why now?** The shadow theorem supplies exact global incidence constraints against which candidate local convex functionals can be tested.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_1338",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "41e1526b",
+    "status": "available",
+    "timestamp": "2026-07-15T01:49:36.877125+00:00",
+    "title": "For every pair of integers `2 ≤ s < t`, determine the exact lower envelope of th"
   },
   {
     "ambition_level": "extension",

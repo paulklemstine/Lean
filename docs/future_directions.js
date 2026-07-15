@@ -395,20 +395,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Categorifying the quantum binomial product rule via filtrations of plethystic mo"
   },
   {
-    "consumed_by_exp_id": "86efe295",
-    "description": "Building on cycle b97ab468 (Q=0.820), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_b97ab468_8a0da3e4",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "b97ab468",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T07:29:42.613481+00:00",
-    "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
-  },
-  {
     "consumed_by_exp_id": "4b27af05",
     "description": "Building on cycle c81fdc47 (Q=0.820), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the natural bijection \u03c6 from the set of B-orbits on B_n \u00d7 P^(n-1) to its image in W_(n+1) \u00d7 W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O\u2081 \u2286 O\u0305\u2082 iff \u03c6(O\u2081) \u2264 \u03c6(O\u2082) in (W_(n+1), \u2264_Bruhat) \u00d7 (W_(n+1), \u2264_Bruhat).",
     "domains": [
@@ -2872,6 +2858,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T00:44:19.603412+00:00",
     "title": "This cycle deepened the theory of closed timelike curves beyond the bare"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Exact defect bounds.** Strengthen extremal rigidity quantitatively: if a graph is missing `m` edges, bound the deficit `2 ^ |\u03b1| - |cliqueFamily H|` in terms of the missing-edge graph, and characterize equality.\n2. **Critical-scale decomposition.** For a finite metric space, identify every strict jump of the Vietoris\u2013Rips simplex count with an attained pairwise distance, then express the jump size through cliques newly completed at that edge birth.\n3. **Dimension-refined counts.** Replace total simplex count by the vector counting `k`-simplices and prove strict monotonicity and extremal rigidity in each dimension where an added edge can participate.\n4. **Approximation transfer.** Combine the equality characterization with multiplicative interleavings to obtain rigidity or stability results for approximations whose simplex count is close to the `2 ^ |\u03b1|` maximum.\n5. **Infinite locally finite filtrations.** Extend the connector from finite vertex types to locally finite proximity graphs by restricting to finite windows and proving compatibility under exhaustion.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_1337",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "86efe295",
+    "status": "available",
+    "timestamp": "2026-07-15T01:49:24.272592+00:00",
+    "title": "1. **Exact defect bounds.** Strengthen extremal rigidity quantitatively: if a gr"
   },
   {
     "consumed_by_exp_id": "",
