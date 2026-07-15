@@ -1,0 +1,3 @@
+# Computational Evidence Justification
+
+Computational evidence is unnecessary for this mission because the connector is an exact finite partition theorem, not an empirical conjecture. Sensitive ordered facet pairs are partitioned by the value at a pinned color, producing the influence decomposition for every finite dimension and alphabet. The remaining conclusions follow from exact finite sums and pigeonhole inequalities. Thus small-case computations would only instantiate identities already proved uniformly in Lean and would not provide additional evidence for an asymptotic or uncertain claim.

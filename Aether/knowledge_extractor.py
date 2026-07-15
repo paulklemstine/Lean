@@ -2933,8 +2933,9 @@ Research mode: {concept.research_mode}
                 path = path[len(prefix):]
                 break
         # Strip Aristotle project directory prefixes like 47bf2ccd_aristotle/Bridges/...
+        # Also strip output-final_aristotle/...
         # These are artifacts of the extraction structure, not real Catalog paths
-        path = re.sub(r'^[0-9a-f]+_aristotle/', '', path)
+        path = re.sub(r'^(?:[0-9a-f]+_aristotle|output-final_aristotle)/', '', path)
         # Fix doubled paths like Bridges/Catalog/Bridges/X.lean -> Bridges/X.lean
         # The LLM sometimes generates paths with interior "Catalog/" segments
         while '/Catalog/' in path:
