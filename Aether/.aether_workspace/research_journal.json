@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "48b25c91",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Thermodynamic Horizon of Discovery\n\nThis cycle turns the informal \"heat death of mathematics\" picture into a small\ncollection of fully proved Lean 4 theorems (see `Thermodyna",
-      "quality_score": 0.72,
-      "sorry_count": 1,
-      "theorem_count": 9,
-      "timestamp": "2026-07-13T02:02:00",
-      "title": "These conjectures grow out of the cycle's core finding: the collection of provab"
-    },
-    {
       "cycle_id": "7362296f",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## What was done in this cycle\n\nThe target theorem file `BooleanCubicFormsBurnside.lean` was already `sorry`-free (the\nBurnside ⇄ orbit–stabilizer bridge, the division principle,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-15T21:19:55",
       "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
+    },
+    {
+      "cycle_id": "4dee9bd5",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\n1. **Lower chromatic bound for 3-stability.** The present development proves the\n   constructive upper bound. The central next target is the paper's lower bound\n   for `s=3`, requ",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-15T21:25:27",
+      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:19:55",
+  "last_updated": "2026-07-15T21:25:27",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "26e5c4d5",
-        "quality": 0.63,
-        "theorems": 13,
-        "title": "Monochromatic Pythagorean Triples in Every Level Set of Completely Multiplicativ"
-      },
-      {
         "cycle_id": "b77ed1ec",
         "quality": 0.72,
         "theorems": 24,
@@ -4009,6 +4003,12 @@
         "quality": 0.69,
         "theorems": 11,
         "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
+      },
+      {
+        "cycle_id": "4dee9bd5",
+        "quality": 0.65,
+        "theorems": 14,
+        "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
       }
     ]
   }
