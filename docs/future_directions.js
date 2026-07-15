@@ -3,6 +3,20 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "bd321901",
+    "description": "Building on cycle 37f1d216 (Q=0.910), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Colorful Carath\u00e9odory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carath\u00e9odory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial o",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_37f1d216_c260b967",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "37f1d216",
+    "status": "in_progress",
+    "timestamp": "2026-07-15T02:11:45.910783+00:00",
+    "title": "Deepening: Two-parameter picture of *witness complexity* for the"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7ea29a05 (Q=0.900), which proved 16 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Toughness as an order-monotone invariant\n\nThis cycle promoted the component-count toughness toolkit from a collection of\nisolated lemmas into a small order-theoretic package: `1`-toughness is now known to be\n*monotone under edge additions*, `1`-tough graphs are *`2`-connected*,",
     "domains": [
@@ -17,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: This cycle promoted the component-count toughness toolkit from a collection of"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7385ba7c",
     "description": "Building on cycle ca1c3afc (Q=0.870), which proved 6 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length `k` should admit a canonical bijection with permutations of `k` elements such that factoradic evalua",
     "domains": [
       "Novelty"
@@ -26,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "ca1c3afc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T04:08:41.416722+00:00",
     "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` should admi"
   },
@@ -1037,7 +1051,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e72af703",
     "description": "Cycle ca1c3afc (Q=0.870) proved 6 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length ",
     "domains": [
       "Novelty"
@@ -1046,7 +1060,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "ca1c3afc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T04:08:41.580785+00:00",
     "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `k` s"
   },
@@ -1822,6 +1836,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary spectral-moment foundations of Seidel"
   },
   {
+    "consumed_by_exp_id": "884e09c7",
+    "description": "# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic\u2013tent conjugacy (`h(t) = sin\u00b2(\u03c0t/2)` intertwining\n`f(x)=4x(1-x)` with the tent map `T`), this cycle establishes an exact bridge to a\n*different* mathematical area \u2014 the theory of **Chebyshev / orthogonal\npolynomials** \u2014 culminating in a closed-form polynomial identity for every iterate.\n\nNew file: `Geometry/LogisticChebyshev.lean`.\n\nMain results (all proved, no `sorry`, only standard axioms):\n\n* `logistic_sin_sq`, `logistic_iterate_sin_sq` \u2014 the semiconjugacy of the logistic\n  map to angle doubling, `f\u207f(sin\u00b2\u03c6) = sin\u00b2(2\u207f\u03c6)`.\n* `sin_sq_eq_chebyshev` \u2014 `sin\u00b2(2\u207f\u03c6) = (1 - T_{2\u207f}(cos 2\u03c6))/2`, connecting the\n  doubling picture to the Chebyshev polynomial via `T_m(cos \u03b8) = cos(m\u03b8)`.\n* `logisticPolyIter_eq_chebRHS` \u2014 **as polynomials**, the `n`-fold composition of\n  the logistic map equals the rescaled Chebyshev polynomial\n  `(1 - T_{2\u207f}(1 - 2X))/2`.\n* `logistic_iterate_eq_chebyshev` \u2014 the pointwise bridge, valid for *every* real\n  `x`: `f\u207f(x) = (1 - T_{2\u207f}(1 - 2x))/2`.\n* `chebRHS_natDegree`, `logistic_iterate_natDegree` \u2014 the `n`-th iterate has degree\n  `2\u207f`, now read off directly from the Chebyshev degree `deg T_{2\u207f} = 2\u207f`.\n* `logistic_fixedPoints`, `logistic_fixedPoints_card` \u2014 the base case (`n = 1`) of\n  the periodic-point law below: the fixed points of the logistic map are exactly\n  `{0, 3/4}`, so there are `2 = 2\u00b9` of them.\n* `logistic_iterate2_fixedPoints`, `logistic_iterate2_fixedPoints_card` \u2014 the case\n  `n = 2`: the fixed points of `f\u00b2` are exactly `{0, 3/4, (5-\u221a5)/8, (5+\u221a5)/8}`\n  (the two fixed points together with the genuine period-`2` orbit), so there are\n  `4 = 2\u00b2` of them. This is obtained from the exact factorisation\n  `f\u00b2(x) - x = -4\u00b7x\u00b7(x - 3/4)\u00b7(16x\u00b2 - 20x + 5)`.\n\nThe cross-domain content: a chaotic smooth dynamical system's iterates are, on the\nnose, classical orthogonal polynomials. The `2\u207f`-fold angle multiplication that\ndrives the chaos is exactly the index `2\u207f` of the Chebyshev polynomial.\n\n## Strongest remaining conjectures\n\n1. **Exact periodic-point count `2\u207f`.** The earlier files reduced counting\n   period-`n` points of the logistic map to counting them for the tent map. With\n   the Chebyshev identity, fixed points of `f\u207f` in `[0,1]` become solutions of\n   `T_{2\u207f}(1-2x) = 1-2x`, i.e. `cos(2\u207f\u207a\u00b9\u03c6) = cos(2\u03c6)` \u2014 a trigonometric equation\n   whose solution count in one period is exactly `2\u207f`. Formalizing this count\n   (either by the sawtooth geometry of `T\u207f` or via the Chebyshev root structure)\n   would prove the full `2\u207f` law. The cases `n = 1` and `n = 2` are now **proved**\n   (`logistic_fixedPoints_card`: exactly `{0, 3/4}`, count `2 = 2\u00b9`;\n   `logistic_iterate2_fixedPoints_card`: exactly\n   `{0, 3/4, (5-\u221a5)/8, (5+\u221a5)/8}`, count `4 = 2\u00b2`). The remaining task is the\n   inductive step for general `n`.\n\n2. **Invariant measure transfer.** The tent map preserves Lebesgue measure; the\n   logistic map preserves the arcsine law `d\u03bc = dx / (\u03c0\u221a(x(1-x)))`. The conjugacy\n   `h` should push one onto the other. This is a bridge to ergodic theory /\n   probability and would let the Chebyshev orthogonality weight (`1/\u221a(1-y\u00b2)`)\n   be identified with the logistic invariant density.\n\n3. **Topological entropy `log 2`.** The `2\u207f` degree / period growth gives entropy\n   `log 2` for both maps; a formal entropy computation would close the dynamical\n   picture.\n\n## Files\n\n* `Geometry/LogisticChebyshev.lean` \u2014 the Chebyshev bridge (this cycle).\n* `ComputationalEvidence.md` \u2014 exact rational sanity checks of the identity.\n\n\n# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic\u2013tent conjugacy (`h(t) = sin\u00b2(\u03c0t/2)` intertwining\n`f(x)=4x(1-x)` with the tent map `T`), this cycle establishes an exact bridge to a\n*different* mathematical area \u2014 the theory of **Chebyshev / orthogonal\npolynomials** \u2014 culminating in a closed-form polynomial identity for every iterate.\n\nNew file: `Geometry/LogisticChebyshev.lean`.\n\nMain results (all proved, no `sorry`, only standard axioms):\n\n* `logistic_sin_sq`, `logistic_iterate_sin_sq` \u2014 the semiconjugacy of the logistic\n  map to angle doubling, `f\u207f(sin\u00b2\u03c6) = sin\u00b2(2\u207f\u03c6)`.\n* `sin_sq_eq_chebyshev` \u2014 `sin\u00b2(2\u207f\u03c6) = (1 - T_{2\u207f}(cos 2\u03c6))/2`, connecting the\n  doubling picture to the Chebyshev polynomial via `T_m(cos \u03b8) = cos(m\u03b8)`.\n* `logisticPolyIter_eq_chebRHS` \u2014 **as polynomials**, the `n`-fold composition of\n  the logistic map equals the rescaled Chebyshev polynomial\n  `(1 - T_{2\u207f}(1 - 2X))/2`.\n* `logistic_iterate_eq_chebyshev` \u2014 the pointwise bridge, valid for *every* real\n  `x`: `f\u207f(x) = (1 - T_{2\u207f}(1 - 2x))/2`.\n* `chebRHS_natDegree`, `logistic_iterate_natDegree` \u2014 the `n`-th iterate has degree\n  `2\u207f`, now read off directly from the Chebyshev degree `deg T_{2\u207f} = 2\u207f`.\n* `logistic_fixedPoints`, `logistic_fixedPoints_card` \u2014 the base case (`n = 1`) of\n  the periodic-point law below: the fixed points of the logistic map are exactly\n  `{0, 3/4}`, so there are `2 = 2\u00b9` of them.\n* `logistic_iterate2_fixedPoints`, `logistic_iterate2_fixedPoints_card` \u2014 the case\n  `n = 2`: the fixed points of `f\u00b2` are exactly `{0, 3/4, (5-\u221a5)/8, (5+\u221a5)/8}`\n  (the two fixed points together with the genuine period-`2` orbit), so there are\n  `4 = 2\u00b2` of them. This is obtained from the exact factorisation\n  `f\u00b2(x) - x = -4\u00b7x\u00b7(x - 3/4)\u00b7(16x\u00b2 - 20x + 5)`.\n\nThe cross-domain content: a chaotic smooth dynamical system's iterates are, on the\nnose, classical orthogonal polynomials. The `2\u207f`-fold angle multiplication that\ndrives the chaos is exactly the index `2\u207f` of the Chebyshev polynomial.\n\n## Strongest remaining conjectures\n\n1. **Exact periodic-point count `2\u207f`.** The earlier files reduced counting\n   period-`n` points of the logistic map to counting them for the tent map. With\n   the Chebyshev identity, fixed points of `f\u207f` in `[0,1]` become solutions of\n   `T_{2\u207f}(1-2x) = 1-2x`, i.e. `cos(2\u207f\u207a\u00b9\u03c6) = cos(2\u03c6)` \u2014 a trigonometric equation\n   whose solution count in one period is exactly `2\u207f`. Formalizing this count\n   (either by the sawtooth geometry of `T\u207f` or via the Chebyshev root structure)\n   would prove the full `2\u207f` law. The cases `n = 1` and `n = 2` are now **proved**\n   (`logistic_fixedPoints_card`: exactly `{0, 3/4}`, count `2 = 2\u00b9`;\n   `logistic_iterate2_fixedPoints_card`: exactly\n   `{0, 3/4, (5-\u221a5)/8, (5+\u221a5)/8}`, count `4 = 2\u00b2`). The remaining task is the\n   inductive step for general `n`.\n\n2. **Invariant measure transfer.** The tent map preserves Lebesgue measure; the\n   logistic map preserves the arcsine law `d\u03bc = dx / (\u03c0\u221a(x(1-x)))`. The conjugacy\n   `h` should push one onto the other. This is a bridge to ergodic theory /\n   probability and would let the Chebyshev orthogonality weight (`1/\u221a(1-y\u00b2)`)\n   be identified with the logistic invariant density.\n\n3. **Topological entropy `log 2`.** The `2\u207f` degree / period growth gives entropy\n   `log 2` for both maps; a formal entropy computation would close the dynamical\n   picture.\n\n## Files\n\n* `Geometry/LogisticChebyshev.lean` \u2014 the Chebyshev bridge (this cycle).\n* `ComputationalEvidence.md` \u2014 exact rational sanity checks of the identity.\n",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_1241",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c0577eb2",
+    "status": "in_progress",
+    "timestamp": "2026-07-13T19:23:53.373050+00:00",
+    "title": "Building on the earlier logistic\u2013tent conjugacy (`h(t) = sin\u00b2(\u03c0t/2)` intertwinin"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 The Uncanny Valley of Mathematics\n\nThe file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic\nmodel `UV(x) = x\u00b3 \u2212 3x` of Mori's uncanny-valley acceptance curve and proves,\nas a chain of results, that it exhibits the full ascent \u2192 peak \u2192 drop \u2192 valley \u2192\nrecovery shape, culminating in `uncanny_valley_shape`.\n\nNatural next steps:\n\n1. **Parametric family.** Study `UV_c(x) = x\u00b3 \u2212 3c\u00b2x` (c > 0), whose peak/valley\n   sit at \u2213c with values \u00b12c\u00b3. Prove the valley depth `UV_c(c) < UV_c(\u2212c)` and a\n   recovery threshold scaling linearly in c. This generalizes the whole chain.\n\n2. **General cubics.** Characterize exactly which monic cubics `x\u00b3 + px + q`\n   possess an uncanny valley: the discriminant condition `p < 0` (two real\n   critical points). Formalize \"has an uncanny valley \u27fa p < 0\".\n\n3. **Derivative-based formulation.** Re-derive the monotonicity regimes from\n   `deriv UV = 3x\u00b2 \u2212 3` using Mathlib's `StrictMonoOn`/`StrictAntiOn` and\n   `StrictMonoOn.lt_of_lt`, connecting the elementary algebra to real analysis.\n\n4. **Quantifying the depth.** Define the \"uncanny gap\" `UV(peak) \u2212 UV(valley)`\n   and study how it grows with the model's steepness; relate to a normalized\n   acceptance scale.\n\n5. **Beyond one valley.** Model higher-degree acceptance curves (e.g. degree-5)\n   admitting *multiple* valleys, and prove an alternation theorem for the signs\n   of successive turning points.\n\n6. **Smoothness / non-polynomial models.** Replace the cubic with a bounded\n   sigmoid-minus-Gaussian model and prove the same qualitative shape, moving\n   from algebraic to analytic techniques.\n",
     "domains": [
@@ -1835,6 +1864,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T20:48:13.997205+00:00",
     "title": "The file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic"
+  },
+  {
+    "consumed_by_exp_id": "3c80004e",
+    "description": "# Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct n \u2245 Oct(m+n+1)`, and\nthe classical suspension jump recovered as the special case `L = S\u2070`. The following\nconjectures push toward the sharp equality and the full maximal-excess phenomenon.\n\n## Conjecture 1 (Sharp join law)\nFor free \u2124\u2082-complexes `K, L`, the co-index is *exactly* additive with a shift:\n`coind(K * L) = coind(K) + coind(L) + 1`.\nThe key insight is that the lower bound is realised by an explicit coordinate-split\nequivariant map, so the entire difficulty concentrates in a single matching upper\nbound `coind(K * L) \u2264 coind(K) + coind(L) + 1`, which should follow from a\n\u2124\u2082-index (equivariant cohomology) obstruction that is itself additive under joins.\nWhy now? The join bifunctor and its explicit connecting map are now in hand, so the\nonly missing ingredient is a purely obstruction-theoretic upper bound \u2014 a\nself-contained, isolable target.\n\n## Conjecture 2 (Maximal excess for all feasible starting co-index)\nFor all integers `d \u2265 2` and `c` with `1 \u2264 c \u2264 d`, there is a finite free\n\u2124\u2082-complex `K` of dimension `d` with `coind(K) = c` and `coind(S K) = d + 1`.\nThe key insight is that the \"excess\" `d + 1 - c` can be manufactured by joining a\nlow-co-index but high-dimensional building block (a complex whose co-index is\npinned below its dimension by a Borsuk\u2013Ulam obstruction) with a sphere that supplies\nthe missing co-index only after one further suspension. Why now? The join\nconstruction gives a flexible dial for dimension independent of co-index, exactly\nthe freedom needed to separate `c` from `d`.\n\n## Conjecture 3 (Borsuk\u2013Ulam upper bound in the octahedral tower)\nAny equivariant simplicial map `Oct n \u2192 Oct k` forces `n \u2264 k`; equivalently\n`coind(Oct k) = k` on the nose.\nThe key insight is that the base case (no equivariant map to `Oct 0` from a\nhigher sphere) already isolates the parity/degree obstruction, and the general case\nshould follow by an inductive \"peel one coordinate\" argument compatible with the\njoin splitting `Oct k \u2245 Oct 0 * Oct(k-1)`. Why now? The join splitting turns the\nglobal obstruction into a one-step induction that reuses the verified base case.\n\n## Conjecture 4 (Excess is monotone but not superadditive under iterated suspension)\nWriting `S^j K` for the `j`-fold suspension, the excess sequence\n`e_j := coind(S^j K) - (dim(S^j K))` is non-increasing in `j` and stabilises at\n`0` after finitely many steps.\nThe key insight is that each suspension can raise the co-index by *at most* one while\nraising the dimension by exactly one, so the gap can only shrink; stabilisation at\n`0` is the assertion that suspension eventually saturates the Borsuk\u2013Ulam bound.\nWhy now? The exact `+1` dimension law and the `\u2265 +1` co-index law are both proved,\nso the monotonicity direction is within reach and only the saturation needs the\nupper bound of Conjecture 1.\n",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_1247",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "49ddee39",
+    "status": "in_progress",
+    "timestamp": "2026-07-13T21:24:15.573588+00:00",
+    "title": "Constructive, lower-bound half of the co-index theory"
   },
   {
     "consumed_by_exp_id": "",
