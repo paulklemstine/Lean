@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6e60d0a1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: the suspension tower `Sᵏ(K)` and the excess spectrum of free ℤ₂-complexes\n\nThis cycle takes the combinatorial model of free `ℤ₂`-complexes from\n`Catalog/Novelty/Z2CoindexSuspensio",
-      "quality_score": 0.8,
-      "sorry_count": 1,
-      "theorem_count": 18,
-      "timestamp": "2026-07-14T10:08:36",
-      "title": "Close Proofs: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
-    },
-    {
       "cycle_id": "385fff12",
       "domain": "Applications",
       "key_insight": "# Future Directions: Constrained Coset Guesswork\n\nDerived from the exact coset-exponent cycle. Each conjecture is falsifiable.\n\n## 1. Universality of the additive redundancy term\n\n**Conjecture.** For",
@@ -499,19 +489,19 @@
       "theorem_count": 3,
       "timestamp": "2026-07-15T02:32:26",
       "title": "Topological charge of an orbital-angular-momentum bea"
+    },
+    {
+      "cycle_id": "da85fe77",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length",
+      "quality_score": 0.9,
+      "sorry_count": 3,
+      "theorem_count": 5,
+      "timestamp": "2026-07-15T02:32:33",
+      "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f3dfcf44",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis cycle unified two threshold phenomena — mean-field magnetic ordering\n(`m = tanh(β m)`) and branching-process survival (`q = 1 - exp(-μ q)`) — under a\nsingle abstract criterio",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 17,
-      "timestamp": "2026-07-12T13:00:55",
-      "title": "The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss mean-field"
-    },
     {
       "cycle_id": "8cebc683",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 3,
       "timestamp": "2026-07-15T02:32:26",
       "title": "Topological charge of an orbital-angular-momentum bea"
+    },
+    {
+      "cycle_id": "da85fe77",
+      "domain": "Computation",
+      "key_insight": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length",
+      "quality_score": 0.9,
+      "sorry_count": 3,
+      "theorem_count": 5,
+      "timestamp": "2026-07-15T02:32:33",
+      "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ef88d58c",
-      "domain": "Novelty",
-      "name": "reduce_mul",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "ef88d58c",
-      "domain": "Novelty",
-      "name": "reduce_primPart_ne_zero",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "ef88d58c",
-      "domain": "Novelty",
-      "name": "muInv_mul",
-      "quality": 0.83
-    },
     {
       "cycle_id": "0725f80e",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Computation",
       "name": "old_faces_disjoint_cone",
       "quality": 0.91
+    },
+    {
+      "cycle_id": "da85fe77",
+      "domain": "Computation",
+      "name": "lives",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "da85fe77",
+      "domain": "Computation",
+      "name": "triangles_sized",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "da85fe77",
+      "domain": "Computation",
+      "name": "shadow_triangles_subset_edges",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-07-15T02:32:26",
+  "last_updated": "2026-07-15T02:32:33",
   "open_questions": [
-    {
-      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "c923638c",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-14T03:40:48"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "11762aec",
@@ -3016,6 +3009,13 @@
       "domain": "Algebra",
       "sorry_count": 4,
       "timestamp": "2026-07-15T01:49:32"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "da85fe77",
+      "domain": "Computation",
+      "sorry_count": 3,
+      "timestamp": "2026-07-15T02:32:33"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "d991c87b",
-        "quality": 0.4437857425742574,
-        "theorems": 8,
-        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
-      },
-      {
         "cycle_id": "bb3ce4ee",
         "quality": 0.7902000000000001,
         "theorems": 15,
@@ -3327,6 +3321,12 @@
         "quality": 0.91,
         "theorems": 9,
         "title": "Two-parameter picture of *witness complexity* for the"
+      },
+      {
+        "cycle_id": "da85fe77",
+        "quality": 0.9,
+        "theorems": 5,
+        "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge."
       }
     ],
     "Cryptography": [
