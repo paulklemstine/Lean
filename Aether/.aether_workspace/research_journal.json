@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "00319e93",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle adds a **second pillar of the probabilistic method** to the Novelty catalog,\nalongside the Erdős counting lower bound for diagonal Ramsey numbers\n(`Novelty.RamseyProbab",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-12T23:31:48",
-      "title": "Deepening: This cycle deepens the probabilistic-method development (Erdős Ramsey lower boun"
-    },
-    {
       "cycle_id": "82394822",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis project formalises the *logical core* of the classification of Boolean cubic forms in\nten variables: the Burnside ⇄ orbit–stabilizer bridge, the division principle that turns",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-15T18:44:42",
       "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
+    },
+    {
+      "cycle_id": "2152d45c",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Compressed Universal Posets\n\n## 1. Regularity-guided half-coordinate labeling\n\n**Conjecture.** For every positive real number η, all sufficiently large finite posets on n points a",
+      "quality_score": 0.61,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-15T20:42:25",
+      "title": "ArXiv paper: Even smaller universal posets"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T18:44:42",
+  "last_updated": "2026-07-15T20:42:25",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "b86be6e3",
-        "quality": 0.6648000000000001,
-        "theorems": 16,
-        "title": "Kähler-Einstein Metrics and K-Stability"
-      },
-      {
         "cycle_id": "c4e68c8d",
         "quality": 0.6812400000000001,
         "theorems": 9,
@@ -3389,6 +3383,12 @@
         "quality": 0.83,
         "theorems": 22,
         "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+      },
+      {
+        "cycle_id": "2152d45c",
+        "quality": 0.61,
+        "theorems": 11,
+        "title": "ArXiv paper: Even smaller universal posets"
       }
     ],
     "Geometry": [
