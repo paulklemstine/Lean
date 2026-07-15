@@ -1,0 +1,3 @@
+# Computational Evidence Justification
+
+Computational sampling is not informative for the principal claims. They quantify over arbitrary proof systems and derive strictness from structural closure laws and consistency, not from numerical data or a finite combinatorial pattern. A finite truth table can test propositional implication but cannot test consistency, provability, or simulation of an arbitrary system. There is therefore no relevant integer sequence, OEIS entry, LMFDB object, or numerical plot. Non-vacuity is instead supplied by the explicit converse-well-founded Kripke model, for which the strict reflection theorem is proved uniformly for every tag.
