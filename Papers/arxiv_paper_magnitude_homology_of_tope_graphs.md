@@ -2,29 +2,43 @@
 
 ## Small-case calculations
 
-For a one-hyperplane central arrangement, proper face flags relative to either chamber are repetitions of the center. A flag of length `m` has bidegree `(m,m)`, so there is one endpoint generator in every diagonal bidegree `(m,m)`.
+For the coordinate arrangements of ranks zero through six, the cardinalities of the metric spheres about any chamber are:
 
-For the Boolean arrangement of two coordinate hyperplanes, model zero sets by subsets of `{1,2}`. Weakly increasing nonempty flags ending in `{1,2}` satisfy the terminal-support rule. Examples are:
+| rank | sphere cardinalities |
+|---:|:---|
+| 0 | 1 |
+| 1 | 1, 1 |
+| 2 | 1, 2, 1 |
+| 3 | 1, 3, 3, 1 |
+| 4 | 1, 4, 6, 4, 1 |
+| 5 | 1, 5, 10, 10, 5, 1 |
+| 6 | 1, 6, 15, 20, 15, 6, 1 |
 
-| Flag | Profile | Rank degree (cardinality weight) | Length degree | Hamming transition length |
-|---|---:|---:|---:|---:|
-| `[{1,2}]` | `(1,1)` | 2 | 2 | 0 |
-| `[{1},{1,2}]` | `(2,1)` | 3 | 3 | 1 |
-| `[{2},{1,2}]` | `(1,2)` | 3 | 3 | 1 |
-| `[{1},{1},{1,2}]` | `(3,1)` | 4 | 4 | 1 |
+These rows arise by enumerating subsets of the separating coordinate hyperplanes.  Their row sums are respectively `1, 2, 4, 8, 16, 32, 64`, matching the chamber counts.
 
-In each row, the profile support is the terminal set. Appending `{1,2}` increases both profile coordinates by one and shifts rank and length by `(2,2)`.
+## Sequence identification
 
-## Sequence search
-
-No one-dimensional sequence is central to the claims proved here, so an OEIS identification is not applicable. The relevant data are multigraded flag counts rather than a canonical scalar sequence.
+The triangular array is Pascal's triangle, OEIS A007318.  For fixed rank `n`, its entries are the coefficients of `(1 + t)^n`.  This identifies the candidate Stanley--Reisner numerator as the face enumerator of the full simplex on the wall set.
 
 ## Counterexample hunt
 
-Dropping nesting immediately breaks terminal support: the sequence `[{1},{2}]` has profile support `{1,2}` but terminal set `{2}`. Dropping nonemptiness leaves no terminal set. These examples show that both hypotheses in the terminal-support theorem are sharp.
+Three universal claims were tested on every pair or triple of Boolean sign vectors through rank six:
 
-The central append/delete operation was checked on all displayed flags: appending the full zero set preserves nesting, increments every profile coordinate, and has deletion of the last entry as its inverse.
+1. the separating-wall count is symmetric;
+2. it satisfies the triangle inequality;
+3. the number of sign vectors at distance `k` is independent of the base sign vector.
 
-## Geometric table
+No counterexample occurs.  The corresponding unrestricted statements are established in `Hypercube.lean`.  The unguarded reciprocity formula at indices `k > n` is not adopted: natural-number subtraction would send `n-k` to zero, whereas the coefficient at `k` vanishes, so the claim would fail.  The formal reciprocity theorem therefore requires `k ≤ n`.
 
-For the nested path `{1} ⊆ {1,2}`, the Hamming transition has length `1`, and `1 + |{1}| = |{1,2}|`. Repetitions contribute zero Hamming length, so `{1} ⊆ {1} ⊆ {1,2}` has total transition length `1` as well. This is the finite pattern generalized by the telescoping theorem.
+## Polynomial table
+
+| rank | wall-simplex face enumerator |
+|---:|:---|
+| 0 | `1` |
+| 1 | `1 + t` |
+| 2 | `1 + 2t + t²` |
+| 3 | `1 + 3t + 3t² + t³` |
+| 4 | `1 + 4t + 6t² + 4t³ + t⁴` |
+| 5 | `1 + 5t + 10t² + 10t³ + 5t⁴ + t⁵` |
+
+The coefficient symmetry suggests complement duality on wall subsets.  `HilbertBridge.lean` proves that these coefficients equal metric-sphere cardinalities in every rank and proves the guarded reciprocal symmetry.
