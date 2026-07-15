@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "97b9c756",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Siegel–Weil / E₈ theta series\n\nThe file `SiegelWeilE8ThetaDeepening.lean` deepens the earlier weight-`4`\ndevelopment in two ways: (i) it generalizes the entire Hecke-eigenform st",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 16,
-      "timestamp": "2026-07-13T01:24:26",
-      "title": "Deepening: Siegel-Weil Identity for the E₈ Lattice Theta Series"
-    },
-    {
       "cycle_id": "cbbd1369",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Generalized Giampietro–Darmon Factorization\n\n## Summary of what was proved / disproved\n\nThis project formalizes a self-contained arithmetic model of the structural core\nof the Gi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-15T21:17:34",
       "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
+    },
+    {
+      "cycle_id": "e0f3150d",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n## 1. Oriented-matroid magnitude ranks are controlled by bounded-complex face data\n\n**Conjecture.** For every finite realizable oriented matroid, each diagonal magnitude-homology",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-15T21:19:26",
+      "title": "ArXiv paper: Magnitude homology of tope graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:17:34",
+  "last_updated": "2026-07-15T21:19:26",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "70c42dc4",
-        "quality": 0.7083999999999999,
-        "theorems": 9,
-        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-      },
-      {
         "cycle_id": "ecf65bf0",
         "quality": 0.6173599999999999,
         "theorems": 12,
@@ -3451,6 +3445,12 @@
         "quality": 0.68,
         "theorems": 18,
         "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
+      },
+      {
+        "cycle_id": "e0f3150d",
+        "quality": 0.67,
+        "theorems": 19,
+        "title": "ArXiv paper: Magnitude homology of tope graphs"
       }
     ],
     "Logic": [
