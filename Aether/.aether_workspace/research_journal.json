@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b97ab468",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle establishes that the canonical Euclidean √2 configuration — the standard basis\nof `ℝ^n`, all pairs at distance exactly `√2` — exhibits a *sharp* Vietoris–Rips threshold",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-14T07:29:42",
-      "title": "This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
-    },
-    {
       "cycle_id": "769cd692",
       "domain": "Novelty",
       "key_insight": "# Future Directions: from the general dimension law to the excess spectrum\n\nThis cycle detached the \"+1 dimension per suspension\" phenomenon from the\noctahedral base: the suspension tower `Sᵏ(K)` of *",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T00:43:31",
       "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
+    },
+    {
+      "cycle_id": "dbf870e8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Completed proof chain\n\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` contains a complete three-step chain:\n\n1. `value_eq` identifies mixed-radix evaluation",
+      "quality_score": 0.88,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T00:44:03",
+      "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b290e3a0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Cake-Balancing Ratio\n\nThis cycle established the exact algebra of the balancing-ratio functional for a\nsingle circular dissection and proved that the repeated-bisection seque",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 22,
-      "timestamp": "2026-07-12T10:27:01",
-      "title": "Deepening: Upper bound conjecture for the cake balancing ratio sequence"
-    },
     {
       "cycle_id": "53945fe2",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T00:43:31",
       "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
+    },
+    {
+      "cycle_id": "dbf870e8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Completed proof chain\n\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` contains a complete three-step chain:\n\n1. `value_eq` identifies mixed-radix evaluation",
+      "quality_score": 0.88,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T00:44:03",
+      "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.84
     }
   ],
-  "last_updated": "2026-07-15T00:43:31",
+  "last_updated": "2026-07-15T00:44:03",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "3903c2d7",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T01:53:27"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "6af180ae",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-15T00:42:59"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "dbf870e8",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T00:44:03"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "1e9bf31c",
-        "quality": 0.83,
-        "theorems": 70,
-        "title": "Deepening: This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial cor"
-      },
-      {
         "cycle_id": "ef88d58c",
         "quality": 0.83,
         "theorems": 41,
@@ -3637,6 +3631,12 @@
         "quality": 0.84,
         "theorems": 26,
         "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exp"
+      },
+      {
+        "cycle_id": "dbf870e8",
+        "quality": 0.88,
+        "theorems": 0,
+        "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematica"
       }
     ],
     "NumberTheory": [
