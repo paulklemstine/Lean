@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "16f220a2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Argumentation (X): the kernel/game bridge\n\nThis cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file that\nconnects three areas usually develope",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 18,
-      "timestamp": "2026-07-14T15:58:22",
-      "title": "Deepening: This cycle established, with no finiteness or well-foundedness hypothesis on the"
-    },
-    {
       "cycle_id": "e6dfc1d4",
       "domain": "Novelty",
       "key_insight": "# Future Directions — μ-extension of Matsuno's formula\n\n## Summary of what was established\n\nThe file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode**, the\narithmetic model\n`la",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-07-15T05:40:44",
       "title": "Constructive, lower-bound half of the co-index theory"
+    },
+    {
+      "cycle_id": "e72af703",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Equivariant insertion statistics\n\n**Conjecture.** Under the recursive factorial-code classification, conjugation by an adjacent",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-15T05:41:05",
+      "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `k` s"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ddbb821f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Argumentation (VI): the existence gap for stable extensions\n\nThis cycle (contrarian mode) attacks the **existence gap** left open by the\nprevious cycle's `Catalog",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-12T16:46:42",
-      "title": "This cycle deepens the formalization of Dung's abstract argumentation theory and"
-    },
     {
       "cycle_id": "00880e6f",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 46,
       "timestamp": "2026-07-15T05:40:44",
       "title": "Constructive, lower-bound half of the co-index theory"
+    },
+    {
+      "cycle_id": "e72af703",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Equivariant insertion statistics\n\n**Conjecture.** Under the recursive factorial-code classification, conjugation by an adjacent",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-15T05:41:05",
+      "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `k` s"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0e4c0a6c",
-      "domain": "Applications",
-      "name": "radixProd_succ",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "0e4c0a6c",
-      "domain": "Applications",
-      "name": "value_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "71637775",
-      "domain": "Novelty",
-      "name": "IsoOct",
-      "quality": 0.83
-    },
     {
       "cycle_id": "71637775",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "coind_composeMany",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "e72af703",
+      "domain": "MachineLearning",
+      "name": "decode_encode",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "e72af703",
+      "domain": "MachineLearning",
+      "name": "encode_decode",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "e72af703",
+      "domain": "MachineLearning",
+      "name": "card_factorialCode",
+      "quality": 0.91
     }
   ],
-  "last_updated": "2026-07-15T05:40:44",
+  "last_updated": "2026-07-15T05:41:05",
   "open_questions": [
     {
       "context": "Everything is unconditional and `sorry`-free.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "7976e906",
-        "quality": 0.62,
-        "theorems": 22,
-        "title": "Exponential Lower Bound for Rips c-Approximation in Bounded Doubling Dimension"
-      },
-      {
         "cycle_id": "7a9dcf2f",
         "quality": 0.78,
         "theorems": 81,
@@ -3575,6 +3569,12 @@
         "quality": 0.91,
         "theorems": 42,
         "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
+      },
+      {
+        "cycle_id": "e72af703",
+        "quality": 0.91,
+        "theorems": 13,
+        "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `"
       }
     ],
     "Novelty": [

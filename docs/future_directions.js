@@ -18,6 +18,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e72af703 (Q=0.910), which proved 13 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle ca1c3afc (Q=0.870) proved 6 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classifi",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_e72af703_19b27e25",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "e72af703",
+    "status": "available",
+    "timestamp": "2026-07-15T05:41:05.418140+00:00",
+    "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` s"
+  },
+  {
+    "consumed_by_exp_id": "d1d26693",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -27,7 +41,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T05:40:08.936906+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -118,6 +132,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T05:40:39.215322+00:00",
     "title": "The commutative monoid of finite nonempty free \u2124\u2082-systems under join should admi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Equivariant insertion statistics\n\n**Conjecture.** Under the recursive factorial-code classification, conjugation by an adjacent transposition admits a uniformly local description that changes only a bounded interval of digits, and the minimal such interval is determined by the two transposed values.\n\nThe key insight is that the recursive decomposition remembers a distinguished image at each stage, so adjacent group generators should induce structured carries rather than arbitrary global rewrites.\n\n**Why now?** The free and transitive action identifies every digit rewrite with a unique permutation, making locality a precise, falsifiable property rather than an analogy with sorting algorithms.\n\n## 2. Bruhat order from mixed-radix carries\n\n**Conjecture.** There is an intrinsic partial order on factorial codes, defined solely through elementary digit carries, that is isomorphic to strong Bruhat order on the symmetric group and whose rank is the inversion number.\n\nThe key insight is that factorial digits already encode inversion data, while Bruhat covers are controlled by transpositions satisfying interval-avoidance conditions.\n\n**Why now?** The recursive equivalence supplies the correct global classification; the remaining problem is to characterize the transported order without decoding back to permutations.\n\n## 3. A sharp CRT threshold for factorial radices\n\n**Conjecture.** For every `k \u2265 4`, the additive group of `Z/(k!)Z` is not isomorphic to the direct product of the nontrivial radix groups `Z/2Z \u00d7 \u00b7\u00b7\u00b7 \u00d7 Z/kZ`; moreover, the exponent of the product is `lcm(2,\u2026,k)`, which is strictly smaller than `k!`.\n\nThe key insight is that cardinality agrees but exponent detects the repeated prime-power overlap among factorial radices.\n\n**Why now?** The length-four obstruction gives the first case and isolates the invariant that should yield a uniform classification of all later failures.\n\n## 4. Harmonic analysis on factorial-code space\n\n**Conjecture.** Transporting the regular representation through factorial codes yields a multiscale Fourier transform whose stagewise conditional expectations coincide with restriction along the subgroup chain `S\u2081 \u2282 S\u2082 \u2282 \u00b7\u00b7\u00b7 \u2282 S\u2096`.\n\nThe key insight is that recursive digits and the symmetric-group branching chain have the same product-of-indices structure.\n\n**Why now?** The torsor theorem makes functions on codes canonically into functions on a regular group orbit, exposing a direct bridge between mixed-radix representations and noncommutative harmonic analysis.\n\n## 5. Learnable equivariant factorial architectures\n\n**Conjecture.** Every function between finite factorial-code spaces that is equivariant for the transported symmetric-group actions is determined by the image of one code, and a depth-`O(k)` architecture using recursive digit splits realizes every such function with parameter sharing across stages.\n\nThe key insight is that transitive actions reduce equivariant maps to stabilizer-compatible basepoint data, while factorial codes provide a natural recursive computational graph.\n\n**Why now?** Freeness eliminates stabilizer constraints entirely for equal-length code torsors, giving an exact baseline from which approximate and partially equivariant architectures can be studied.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0008",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e72af703",
+    "status": "available",
+    "timestamp": "2026-07-15T05:40:52.669066+00:00",
+    "title": "**Conjecture.** Under the recursive factorial-code classification, conjugation b"
   },
   {
     "consumed_by_exp_id": "",
