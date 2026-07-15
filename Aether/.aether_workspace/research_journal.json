@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cbbd1369",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Generalized Giampietro–Darmon Factorization\n\n## Summary of what was proved / disproved\n\nThis project formalizes a self-contained arithmetic model of the structural core\nof the Gi",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T01:24:57",
-      "title": "Generalized Giampietro-Darmon Factorization for Arbitrary Genus"
-    },
-    {
       "cycle_id": "3959b92d",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Bayesian Werewolf ↔ Combinatorics bridge\n\nThe file `BayesianWerewolfHypergeometric.lean` establishes that the elementary\nprobabilistic moments of the hypergeometric \"werewolves-i",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-15T21:19:26",
       "title": "ArXiv paper: Magnitude homology of tope graphs"
+    },
+    {
+      "cycle_id": "7c4372de",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe formalization now provides a finite-set model of zero forcing, proves that the minimum is attained, establishes the general bound `Z(G) ≤ |V| - 1` for graphs without isolated",
+      "quality_score": 0.58,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-15T21:19:37",
+      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:19:26",
+  "last_updated": "2026-07-15T21:19:37",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "19e0135d",
-        "quality": 0.83,
-        "theorems": 33,
-        "title": "This cycle established, unconditionally, that the variational (Rayleigh-quotient"
-      },
-      {
         "cycle_id": "10dfa4e0",
         "quality": 0.82,
         "theorems": 26,
@@ -3141,6 +3135,12 @@
         "quality": 0.7,
         "theorems": 91,
         "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers)"
+      },
+      {
+        "cycle_id": "7c4372de",
+        "quality": 0.58,
+        "theorems": 15,
+        "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
       }
     ],
     "Bridges": [
