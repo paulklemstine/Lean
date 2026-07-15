@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ef88d58c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle deepened the μ-extension of Matsuno's formula by building a\n**cross-domain connector**: the file\n`Catalog/Bridges/MatsunoArithmeticPolynomialBridge.lean` shows that the",
-      "quality_score": 0.83,
-      "sorry_count": 6,
-      "theorem_count": 41,
-      "timestamp": "2026-07-14T20:28:08",
-      "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
-    },
-    {
       "cycle_id": "0725f80e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Möbius discriminant, deepened\n\nThis cycle isolated the scalar **Möbius discriminant** `Δ = γβ − αδ` of a\nfirst-order multiplicative recurrence `(α n + β)·a(n+1) = (γ n + δ)·a",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-15T18:44:42",
       "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
+    },
+    {
+      "cycle_id": "d68f278c",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n- Formalize the paper's exact `(k, ωᵘ)`-core, `(k, ωᵘ)`-truss, and `(k, d, ωᵘ)`-truss definitions as graph operators and identify them with the generic seed rule proved here.\n- Ex",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T21:42:41",
+      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5b1ced03",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalizes, from scratch and with no `sorry`, the cleanest\nconcrete instance of the \"limit points of largest matching roots below the\ngolden-ratio threshold\" picture:",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-13T02:42:37",
-      "title": "Characterization of Limit Points Below the Golden Ratio Threshold for Largest Matching Roots"
-    },
     {
       "cycle_id": "32285b55",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-15T21:42:33",
       "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
+    },
+    {
+      "cycle_id": "d68f278c",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n- Formalize the paper's exact `(k, ωᵘ)`-core, `(k, ωᵘ)`-truss, and `(k, d, ωᵘ)`-truss definitions as graph operators and identify them with the generic seed rule proved here.\n- Ex",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T21:42:41",
+      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:42:33",
+  "last_updated": "2026-07-15T21:42:41",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "10dfa4e0",
-        "quality": 0.82,
-        "theorems": 26,
-        "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
-      },
-      {
         "cycle_id": "1207283c",
         "quality": 0.82,
         "theorems": 22,
@@ -3141,6 +3135,12 @@
         "quality": 0.58,
         "theorems": 15,
         "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+      },
+      {
+        "cycle_id": "d68f278c",
+        "quality": 0.76,
+        "theorems": 0,
+        "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
       }
     ],
     "Bridges": [
