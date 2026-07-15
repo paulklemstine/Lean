@@ -22,6 +22,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b1453a16 (Q=0.930), which proved 20 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — The Topology of Argumentation (X): the kernel/game bridge\n\nThis cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file that\nconnects three areas usually developed in isolation:\n\n* **Dung argumentation semantics** (stable extensions),\n* **directed graph theory**",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_b1453a16_2eb035f6",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b1453a16",
+    "status": "available",
+    "timestamp": "2026-07-15T05:59:13.114397+00:00",
+    "title": "Deepening: This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e72af703 (Q=0.910), which proved 13 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle ca1c3afc (Q=0.870) proved 6 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classifi",
     "domain_bridges": [],
     "domains": [
@@ -36,26 +55,6 @@
     "status": "available",
     "timestamp": "2026-07-15T05:41:05.418140+00:00",
     "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` s"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d1d26693",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0005",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T05:40:08.936906+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
     "ambition_level": "extension",
@@ -119,7 +118,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7704d4fe",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
     "domain_bridges": [],
     "domains": [
@@ -132,7 +131,7 @@
     "proof_strategy": "Define a phantom topology as a function T: O -> Top(X) from a set of observers to topologies on X. Define the intersection topology T_cap = intersection of all T(o). Prove: every second-countable T_0 space (X, tau) admits a phantom representation with |O| = 2. Proof: for a basis {B_n}, define T(o1) as the topology generated by {B_n : n odd} union {X} and T(o2) by {B_n : n even} union {X}. Then T_cap = tau. Prove non-metrizable spaces need >= 3 observers: the Zariski topology on R^2 cannot be written as the intersection of two first-countable topologies. Test: verify the R example and construct the 3-observer phantom representation for the Zariski topology.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T05:58:21.385836+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -254,6 +253,25 @@
     "status": "available",
     "timestamp": "2026-07-15T05:59:00.838880+00:00",
     "title": "1. **Computable ranking and unranking.** Replace the finite-cardinality inverse "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Argumentation kernels and games\n\nThis cycle supplies the bridge among stable extensions, directed kernels, and\nnormal-play P-position solutions in `Bridges/ArgumentationKernelGame.lean`.\nIt also proves the terminating-game recursion theorem, existence and uniqueness\nof kernels under reverse-move well-foundedness, and the corresponding unique\nstable-extension theorem.\n\nThe cycle comparison is now two-sided: the directed 3-cycle has no kernel or\nstable extension, while the directed 4-cycle has two explicit alternating\nstable extensions. Thus even cycles provide existence but not uniqueness once\nwell-foundedness is dropped.\n\nNatural next steps are:\n\n1. Define the directed cycle uniformly on `Fin n` and classify all its kernels:\n   none for odd `n`, and exactly two alternating kernels for positive even `n`.\n2. Prove kernel-perfectness under hereditary hypotheses, starting with finite\n   acyclic digraphs and then investigating the no-odd-directed-cycle condition.\n3. Connect recursively defined `isLoss` to an order-theoretic grounded\n   extension and prove equality in the well-founded case.\n4. Refine `isLoss` to a Sprague–Grundy value and show that value zero is exactly\n   kernel membership.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0012",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b1453a16",
+    "status": "available",
+    "timestamp": "2026-07-15T05:59:12.274929+00:00",
+    "title": "This cycle supplies the bridge among stable extensions, directed kernels, and"
   },
   {
     "ambition_level": "extension",
