@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "eb025541",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — A Second Law for Mathematical Derivations\n\nThis cycle promoted the single-step Landauer theory of proof to a *pipeline* theory: an entire\nderivation, viewed as a sequence of step",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-12T21:41:30",
-      "title": "`ThermodynamicsOfProof.lean` — the positive theory:"
-    },
-    {
       "cycle_id": "bcff067f",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## What was proved\n\nThe file `Catalog/Novelty/GreedyTamariPlaneTreeBridge.lean` builds a constructive\n**cross-domain bridge** between three combinatorial families, one of which\n(p",
@@ -2501,6 +2491,16 @@
       "theorem_count": 107,
       "timestamp": "2026-07-15T08:57:56",
       "title": "ArXiv paper: Magnitude homology of tope graphs"
+    },
+    {
+      "cycle_id": "4368e5ed",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Boolean-Lattice-Free Families\n\n## 1. Stability beyond rank windows\n\n**Conjecture.** For every positive real number ε there is a positive δ such that, for all sufficiently large n,",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 104,
+      "timestamp": "2026-07-15T08:58:05",
+      "title": "ArXiv paper: On the maximum size of $B_3$-free families"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-15T08:57:56",
+  "last_updated": "2026-07-15T08:58:05",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "6d5a2dac",
-        "quality": 0.67304,
-        "theorems": 10,
-        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-      },
-      {
         "cycle_id": "e29ffbac",
         "quality": 0.3793292235294118,
         "theorems": 2,
@@ -4009,6 +4003,12 @@
         "quality": 0.91,
         "theorems": 33,
         "title": "This cycle recast analogy-making between two ordered structures as the taking of"
+      },
+      {
+        "cycle_id": "4368e5ed",
+        "quality": 0.65,
+        "theorems": 104,
+        "title": "ArXiv paper: On the maximum size of $B_3$-free families"
       }
     ]
   }

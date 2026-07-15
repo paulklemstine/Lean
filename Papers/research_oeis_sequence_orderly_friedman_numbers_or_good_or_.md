@@ -1,172 +1,172 @@
-# Composable Certificates and an Infinite Family of Orderly Friedman Numbers
+# Repeated Decimal Certificates and Exponential Growth in Orderly Friedman Numbers
+
+**Aristotle**  
+**July 15, 2026**
 
 ## Abstract
 
-An orderly Friedman number is a positive integer whose decimal digits, used exactly once and in their original left-to-right order, can be equipped with arithmetic operations to form an expression equal to the integer itself. This paper gives a self-contained expression model incorporating decimal concatenation, specifies the conditions that exclude trivial certificates, and develops an explicit infinite family. The identities $-1+2^7=127$ and $7+3^6=736$ certify the orderly character of $127$ and $736$, with the latter showing that orderly Friedman numbers need not be odd. Starting from the three-digit certificate for $127$, repeated decimal concatenation produces the recurrence
+An orderly Friedman number is a positive integer representable by a nontrivial arithmetic expression that uses exactly its decimal digits in their original left-to-right order. We give a precise expression model including addition, multiplication, exponentiation, unary negation, and width-aware decimal concatenation. The identity $127=-1+2^7$ supplies a three-digit orderly certificate. Repeating this certificate and concatenating adjacent copies produces an infinite sequence
 
 $$
-F_0=127,
-\qquad
-F_{n+1}=1000F_n+127.
+127,\ 127127,\ 127127127,\ldots.
 $$
 
-Every $F_n$ is shown to be orderly. The family satisfies the exact division-free closed form
+Writing its terms as $F_0=127$ and $F_{n+1}=1000F_n+127$, we prove that every $F_n$ is an orderly Friedman number, that the sequence is strictly increasing, and that
 
 $$
-999F_n=127\left(1000^{n+1}-1\right),
+999F_n=127igl(1000^{n+1}-1igr).
 $$
 
-and is strictly increasing, proving the existence of infinitely many distinct orderly Friedman numbers. We give certificate-validation and family-generation algorithms, discuss their complexity, derive the asymptotic scale $F_n\sim(127/999)1000^{n+1}$, and explain how composable blocks suggest a broader program for counting and searching for orderly Friedman numbers.
+We derive the congruence $F_n\equiv127\pmod{1000}$, the divisibility $1000^{n+1}-1\mid999F_n$, sharp exponential bounds, and the exact normalized error
+
+$$
+\frac{127}{999}-\frac{F_n}{1000^{n+1}}
+=
+\frac{127}{999\cdot1000^{n+1}}.
+$$
+
+We also record two boundary checks: orderly Friedman numbers need not be odd, since $736=7+3^6$, and a commonly supplied list ending in $14641,155$ is not strictly increasing as displayed. The results establish an explicit infinite subfamily and a reusable certificate-composition method, while making no claim to classify or count all orderly Friedman numbers.
 
 ## 1. Introduction
 
-Friedman numbers turn decimal notation into raw material for arithmetic self-description. In the broad version of the problem, the digits of an integer are used to build an expression equal to that integer, often with considerable freedom in their arrangement. The orderly variant imposes a severe syntactic constraint: digits must occur in precisely the order in which they appear in the original numeral. This restriction changes both the search problem and the structure of proofs. A candidate identity must simultaneously satisfy an arithmetic equation and preserve a word in the decimal alphabet.
+Friedman numbers connect decimal notation with arithmetic expression trees. A positive integer is a Friedman number if its own digits can be combined nontrivially to reproduce the integer. The orderly variant imposes a syntactic constraint: the digits must appear in the expression in the same order in which they appear in the numeral. This restriction creates an interaction between two structures that are usually treated separately. Arithmetic controls the value of an expression, while combinatorics on words controls the order of its leaves.
 
 For example,
 
 $$
--1+2^7=127
+127=-1+2^7
 $$
 
-is an orderly certificate because its visible digits, read left to right, are $1,2,7$. Likewise,
+uses the digits $1$, $2$, and $7$ from left to right and evaluates to $127$. Likewise,
 
 $$
-7+3^6=736
+736=7+3^6
 $$
 
-uses $7,3,6$ in order and evaluates correctly. These identities are more than isolated curiosities. The first is a composable three-digit block: copies of its certificate can be joined by decimal concatenation to produce certificates for $127127$, $127127127$, and so on.
+uses $7$, $3$, and $6$ in order. These identities are not mere numerical coincidences: they are certificates whose syntax records exactly the decimal word being represented.
 
-The purpose of this paper is to formulate this composition cleanly and establish four concrete results:
-
-1. $127$ has the orderly certificate $-1+2^7$.
-2. $736$ has the orderly certificate $7+3^6$, disproving the claim that every orderly Friedman number is odd.
-3. Repeating the certified block $127$ gives an orderly Friedman number for every positive number of repetitions.
-4. The resulting sequence has an exact closed form and is strictly increasing, hence supplies infinitely many distinct examples.
-
-The construction is deliberately explicit. It avoids reliance on a database search or an unproved pattern inferred from initial terms. Each member comes with a canonical certificate assembled from copies of one fixed expression.
-
-## 2. Expression model and definitions
-
-### 2.1 Decimal words
-
-A **decimal word** is a finite list of digits $d_1,d_2,\ldots,d_m$, where each $d_i$ belongs to $\{0,1,\ldots,9\}$. Its decimal value is
+The objective of this paper is constructive. Rather than attempt a classification of all orderly Friedman numbers, we show that one certificate can be composed with copies of itself to produce infinitely many. Concatenating copies of the certified block $127$ yields the family
 
 $$
-\operatorname{Dec}(d_1,\ldots,d_m)
-=
-\sum_{i=1}^{m}d_i10^{m-i}.
+F_n=\underbrace{127127\cdots127}_{n+1\text{ copies}}.
 $$
 
-The empty word is assigned value $0$. Leading zeros may occur in a word, although the principal examples below have none.
+This family admits three equivalent descriptions:
 
-The fundamental concatenation identity is the following.
+1. a repeated decimal word;
+2. a recursively concatenated arithmetic certificate; and
+3. an affine recurrence $F_{n+1}=1000F_n+127$.
 
-### Lemma 2.1: Decimal concatenation
+Their equivalence is the core result. Once it is established, elementary algebra yields an exact closed form, congruences, divisibility, and asymptotic growth.
 
-If $u$ and $v$ are decimal words and $|v|$ denotes the length of $v$, then
+The construction is deliberately explicit. It separates what is proved from what remains open. It proves an infinite subfamily, not an asymptotic for the full set. It also shows why careful data validation matters: parity is not invariant, and the supplied list
 
 $$
-\operatorname{Dec}(uv)
-=
-\operatorname{Dec}(u)10^{|v|}+\operatorname{Dec}(v),
+127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,
+4096,6455,11264,11664,12850,13825,14641,155
 $$
 
-where $uv$ is the word obtained by appending $v$ to $u$.
+cannot be an increasing list in the order displayed.
 
-**Proof sketch.** Expand the defining sum for $\operatorname{Dec}(uv)$. Every digit from $u$ acquires $|v|$ additional positions to its right and therefore contributes its old place value multiplied by $10^{|v|}$. The digits from $v$ retain their original place values. Summing the two portions gives the formula. Equivalently, one may induct on the length of $u$.
+## 2. Expression language and decimal semantics
 
-### 2.2 Arithmetic expressions and leaves
+### 2.1 Expressions
 
-We consider expressions generated from decimal digits by the following operations:
+We use expressions generated from decimal digits $0,1,\ldots,9$ by the following constructors:
 
 - a single digit;
 - unary negation;
-- addition;
-- multiplication;
-- exponentiation by a nonnegative integer whose decimal digits are part of the written expression; and
-- decimal concatenation.
+- binary addition;
+- binary multiplication;
+- exponentiation by a nonnegative integer written in decimal;
+- decimal concatenation with an explicitly declared width.
 
-Every expression has a **leaf word**, obtained by reading all displayed decimal digits from left to right while ignoring parentheses and operation symbols. Thus the leaf word of $-1+2^7$ is $(1,2,7)$, and that of $7+3^6$ is $(7,3,6)$.
+The **leaf word** $L(E)$ of an expression $E$ is the list of decimal digits encountered from left to right. A digit $d$ has leaf word $[d]$. Negation does not change the leaf word. For addition, multiplication, and concatenation, the leaf word is the leaf word of the left operand followed by that of the right operand. For a power $E^k$, the decimal digits of the exponent $k$ follow the leaves of $E$. Thus the leaf word of $-1+2^7$ is $[1,2,7]$.
 
-Every expression also has an integer value, defined by the usual arithmetic rules. If expressions $E$ and $G$ are concatenated and the right expression occupies $k$ decimal positions, then
+The integer evaluation $\operatorname{ev}(E)$ has the expected meaning for the arithmetic constructors. If $E$ is concatenated with $G$ using right width $k$, then
 
 $$
-\operatorname{val}(E\Vert_k G)
+\operatorname{ev}(E\mathbin{\Vert_k}G)
 =
-10^k\operatorname{val}(E)+\operatorname{val}(G).
+10^k\operatorname{ev}(E)+\operatorname{ev}(G).
 $$
 
-The notation records the width $k$ because zero-padding is significant in decimal concatenation. A concatenation is **well formed** when $k$ equals the length of the leaf word of its right operand and both subexpressions are themselves well formed. Digits are well formed; negation and exponentiation preserve well-formedness; addition and multiplication are well formed exactly when both operands are.
+A concatenation is **well formed** when $k$ equals the number of digit leaves in $G$, and all subexpressions are well formed. The explicit width prevents an ambiguity that would otherwise arise from leading zeroes or nested concatenations.
 
-This model treats the decimal notation of an exponent as part of the digit supply. In the applications here all exponents are single digits, so no ambiguity arises. A richer grammar could allow an arbitrary expression as exponent, but that extension is not needed for the results below.
+### 2.2 Decimal value
 
-### 2.3 Genuine arithmetic and orderly certificates
-
-Concatenation alone must not count as arithmetic. Otherwise the displayed numeral, parsed as a concatenation of its own digits, would certify every positive integer. We therefore say that an expression contains **genuine arithmetic** if it uses at least one of negation, addition, multiplication, or exponentiation.
-
-### Definition 2.2: Orderly Friedman certificate
-
-Let $N$ be a positive integer with decimal digit word $w_N$. A well-formed expression $E$ is an **orderly Friedman certificate** for $N$ if:
-
-1. the leaf word of $E$ is exactly $w_N$;
-2. $\operatorname{val}(E)=N$; and
-3. $E$ contains genuine arithmetic.
-
-A positive integer is an **orderly Friedman number** if it has an orderly Friedman certificate.
-
-This definition separates three issues that are easy to conflate: preservation of digit order, correctness of decimal widths, and correctness of arithmetic value. It also excludes the vacuous certificate consisting only of the numeral itself.
-
-## 3. Two elementary certificates
-
-### Theorem 3.1: The number $127$ is orderly
-
-The integer $127$ is an orderly Friedman number.
-
-**Proof.** Consider
+For a finite digit word $w=[d_1,\ldots,d_m]$, define its decimal value by
 
 $$
-E=-1+2^7.
+V(w)=\sum_{j=1}^{m}d_j10^{m-j},
 $$
 
-Its leaf word is $(1,2,7)$, which is the decimal word of $127$. Its value is
+with $V([])=0$. The fundamental rule for words is the following.
+
+### Lemma 2.1 (Decimal append identity)
+
+For all finite decimal words $x$ and $y$,
 
 $$
--1+2^7=-1+128=127.
+V(xy)=V(x)10^{|y|}+V(y),
 $$
 
-The expression uses negation, addition, and exponentiation, so it contains genuine arithmetic. No concatenation occurs, making well-formedness immediate. Hence $E$ is an orderly certificate for $127$.
+where $xy$ denotes concatenation and $|y|$ is the length of $y$.
 
-### Theorem 3.2: The number $736$ is orderly
+**Proof sketch.** Induct on the length of $x$. The empty-word case is immediate. If $x$ begins with digit $d$ and has tail $x'$, expand the definition of $V$, apply the induction hypothesis to $x'y$, and collect powers of $10$. The formula is precisely the positional rule for shifting $V(x)$ left by $|y|$ decimal places before appending $y$. $\square$
 
-The integer $736$ is an orderly Friedman number.
+### 2.3 Orderly certificates
 
-**Proof.** Use the expression
+An expression $E$ is an **orderly Friedman certificate** for a positive integer $N$ if:
+
+1. $E$ is well formed;
+2. $V(L(E))=N$;
+3. $\operatorname{ev}(E)=N$; and
+4. $E$ contains at least one arithmetic operation other than concatenation.
+
+A positive integer is an **orderly Friedman number** if it has such a certificate. Condition $4$ excludes the vacuous “certificate” obtained by simply concatenating the digits of $N$ unchanged.
+
+This definition permits a certificate to be reasoned about through two interfaces. The syntactic interface is its leaf word; the semantic interface is its integer evaluation. A successful composition must preserve both.
+
+### Proposition 2.2 (Two seed certificates)
+
+The integers $127$ and $736$ are orderly Friedman numbers.
+
+**Proof sketch.** For $127$, use
 
 $$
-E=7+3^6.
+-1+2^7=127.
 $$
 
-Its leaf word is $(7,3,6)$ and
+Its leaf word is $[1,2,7]$, whose decimal value is $127$, and it contains negation, addition, and exponentiation. For $736$, use
 
 $$
 7+3^6=7+729=736.
 $$
 
-Addition and exponentiation supply genuine arithmetic, so the certificate satisfies every requirement.
+Its leaf word is $[7,3,6]$, and it likewise contains genuine arithmetic. $\square$
 
-### Corollary 3.3: Parity is unrestricted
+Other familiar examples include
 
-Not every orderly Friedman number is odd.
+$$
+343=(3+4)^3,
+$$
 
-**Proof.** The orderly Friedman number $736$ is even.
+$$
+1285=(1+2^8)\cdot5,
+$$
 
-This elementary counterexample is useful methodologically. Patterns suggested by a few small entries should not be elevated to structural laws without checking the full certificate rules.
+and
 
-## 4. Repetition of a certified block
+$$
+2592=2^5\cdot9^2,
+$$
 
-### 4.1 The recurrent family
+all of which preserve the displayed digit order. These examples provide context, but the infinite construction below uses only the certificate for $127$.
 
-Define a sequence $(F_n)_{n\ge0}$ by
+## 3. Repetition of the certified block
+
+Define a sequence $(F_n)_{n\ge0}$ recursively by
 
 $$
 F_0=127,
@@ -174,135 +174,162 @@ F_0=127,
 F_{n+1}=1000F_n+127.
 $$
 
-The first values are
+Define certificates $(C_n)_{n\ge0}$ in parallel. Let $C_0$ be the expression $-1+2^7$. Given $C_n$, let $C_{n+1}$ be the width-$3$ concatenation of $C_n$ with a fresh copy of $C_0$:
 
 $$
-127,\quad
-127127,\quad
-127127127,\quad
-127127127127.
+C_{n+1}=C_n\mathbin{\Vert_3}C_0.
 $$
 
-Since multiplication by $1000$ shifts a decimal numeral three places left, the recurrence appends one copy of $127$ at each step.
-
-Let $C$ denote the expression $-1+2^7$. Define certificate expressions recursively by
+The initial values are
 
 $$
-R_0=C,
+F_0=127,
 \qquad
-R_{n+1}=R_n\Vert_3 C.
+F_1=127127,
+\qquad
+F_2=127127127.
 $$
 
-Thus $R_n$ consists of $n+1$ copies of $C$, joined by width-three concatenations.
+### Lemma 3.1 (Leaf-block structure)
 
-### Lemma 4.1: Leaf structure
+For every $n\ge0$, the leaf word of $C_n$ is $[1,2,7]$ repeated exactly $n+1$ times.
 
-For every $n\ge0$, the leaf word of $R_n$ is the concatenation of $n+1$ copies of $(1,2,7)$.
+**Proof sketch.** The assertion is immediate for $C_0$. At each recursive step, concatenation appends the leaf word of $C_0$, namely $[1,2,7]$, to the leaf word already present. Induction gives the claimed repetition count. $\square$
 
-**Proof sketch.** The assertion is immediate for $R_0=C$. If it holds for $R_n$, then $R_{n+1}$ appends one copy of $C$, whose leaf word is $(1,2,7)$. Hence the number of blocks rises from $n+1$ to $n+2$. Induction proves the claim.
-
-### Lemma 4.2: Well-formedness
-
-For every $n\ge0$, the expression $R_n$ is well formed.
-
-**Proof sketch.** The base expression $C$ contains no concatenation. At the inductive step, both $R_n$ and $C$ are well formed, and the right operand $C$ has exactly three leaves. Therefore the recorded width $3$ is correct.
-
-### Lemma 4.3: Evaluation
+### Lemma 3.2 (Certificate evaluation)
 
 For every $n\ge0$,
 
 $$
-\operatorname{val}(R_n)=F_n.
+\operatorname{ev}(C_n)=F_n.
 $$
 
-**Proof.** For $n=0$, both values are $127$. Assuming the equality at $n$, the definition of width-three concatenation gives
+**Proof sketch.** The base case is the identity $-1+2^7=127$. For the induction step, width-$3$ concatenation gives
 
 $$
-\operatorname{val}(R_{n+1})
-=1000\operatorname{val}(R_n)+\operatorname{val}(C)
-=1000F_n+127
-=F_{n+1}.
+\operatorname{ev}(C_{n+1})
+=1000\operatorname{ev}(C_n)+\operatorname{ev}(C_0).
 $$
 
-The result follows by induction.
+Substitute the induction hypothesis and $\operatorname{ev}(C_0)=127$ to obtain $1000F_n+127=F_{n+1}$. $\square$
 
-### Lemma 4.4: Decimal value of the leaf word
+### Lemma 3.3 (Decimal evaluation of the leaves)
 
-For every $n\ge0$, the decimal value of the leaf word of $R_n$ is $F_n$.
-
-**Proof sketch.** At $n=0$, the leaf word $(1,2,7)$ has value $127$. At the next step, three leaves are appended. Lemma 2.1 therefore multiplies the previous decimal value by $10^3=1000$ and adds $127$. This is exactly the recurrence defining $F_{n+1}$.
-
-### Theorem 4.5: Infinite block-family theorem
-
-For every integer $n\ge0$, $F_n$ is an orderly Friedman number.
-
-**Proof.** Use $R_n$ as the certificate. Lemma 4.2 gives well-formedness. Lemma 4.1 identifies its leaves as the decimal digits of $n+1$ consecutive copies of $127$, while Lemma 4.4 says that this word represents $F_n$. Lemma 4.3 gives the same value arithmetically. Finally, every $R_n$ contains the genuine arithmetic operations already present in each copy of $C$. Thus all certificate conditions hold.
-
-The theorem is uniform and constructive: given $n$, the proof prescribes both the integer and a certificate for it.
-
-## 5. Exact formula and growth
-
-### Theorem 5.1: Division-free closed form
-
-For every integer $n\ge0$,
+For every $n\ge0$,
 
 $$
-999F_n=127\left(1000^{n+1}-1\right).
+V(L(C_n))=F_n.
 $$
 
-**Proof.** At $n=0$,
+**Proof sketch.** In the base case, $V([1,2,7])=127$. At the next step, Lemma 2.1 and Lemma 3.1 give
 
 $$
-999F_0=999\cdot127=127(1000-1).
+V(L(C_{n+1}))
+=V(L(C_n))10^3+V([1,2,7]).
 $$
 
-Suppose the identity holds for $n$. Then
+Using the induction hypothesis, the right-hand side is $1000F_n+127=F_{n+1}$. $\square$
+
+### Lemma 3.4 (Well-formedness and nontriviality)
+
+Every $C_n$ is well formed and contains a genuine arithmetic operation.
+
+**Proof sketch.** The seed $C_0=-1+2^7$ is well formed and arithmetically nontrivial. Each added right operand has exactly three leaves, so width $3$ is correct. Concatenation preserves the already existing negation, addition, and exponentiation. Induction proves both assertions. $\square$
+
+### Theorem 3.5 (Infinite repeated-certificate family)
+
+For every $n\ge0$, $F_n$ is an orderly Friedman number.
+
+**Proof sketch.** Use $C_n$ as the certificate. Lemma 3.4 supplies well-formedness and nontriviality. Lemma 3.3 says that the leaves spell the decimal numeral $F_n$, and Lemma 3.2 says that the expression evaluates to $F_n$. These are exactly the four certificate conditions. $\square$
+
+## 4. Exact algebraic structure
+
+### Theorem 4.1 (Closed form)
+
+For every $n\ge0$,
 
 $$
-\begin{aligned}
+999F_n=127igl(1000^{n+1}-1igr).
+$$
+
+Consequently,
+
+$$
+F_n=127\sum_{j=0}^{n}1000^j
+=127\frac{1000^{n+1}-1}{999}.
+$$
+
+**Proof sketch.** Induct on $n$. For $n=0$, both sides equal $999\cdot127$. Suppose the identity holds at $n$. From the recurrence,
+
+$$
+999F_{n+1}=999(1000F_n+127).
+$$
+
+Substitute $999F_n=127(1000^{n+1}-1)$ and simplify:
+
+$$
 999F_{n+1}
-&=999(1000F_n+127)\\
-&=1000(999F_n)+999\cdot127\\
-&=1000\cdot127(1000^{n+1}-1)+999\cdot127\\
-&=127(1000^{n+2}-1000+999)\\
-&=127(1000^{n+2}-1).
-\end{aligned}
+=127\left(1000(1000^{n+1}-1)+999\right)
+=127(1000^{n+2}-1).
 $$
 
-This is the desired statement at $n+1$.
+Division by $999$ is legitimate in the displayed rational form, while the first identity is division-free over the integers. The finite-sum form follows from the geometric-series identity. $\square$
 
-### Corollary 5.2: Geometric-sum form
+The formula explains the decimal pattern. In base $1000$, the number $F_n$ consists of $n+1$ identical “digits,” each equal to $127$. Because $127<1000$, no carrying occurs between blocks.
+
+### Corollary 4.2 (Suffix congruence)
 
 For every $n\ge0$,
 
 $$
-F_n
-=127\sum_{j=0}^{n}1000^j
-=\frac{127(1000^{n+1}-1)}{999}.
+F_n\equiv127\pmod{1000}.
 $$
 
-**Proof sketch.** Iterating the recurrence yields the finite geometric sum. Multiplying that sum by $999=1000-1$ causes all intermediate powers to cancel, recovering Theorem 5.1. Since $1000^{n+1}-1$ is divisible by $999$, the quotient is an integer.
+**Proof sketch.** The base term has the desired residue. For every successor term, the recurrence gives $F_{n+1}=1000F_n+127$, whose first summand is divisible by $1000$. $\square$
 
-### Theorem 5.3: Strict growth
+### Corollary 4.3 (Repunit divisibility)
 
-The sequence $(F_n)_{n\ge0}$ is strictly increasing.
-
-**Proof.** Every $F_n$ is positive, and
+For every $n\ge0$,
 
 $$
-F_{n+1}-F_n
-=999F_n+127>0.
+1000^{n+1}-1\mid999F_n.
 $$
 
-Hence $F_{n+1}>F_n$ for every $n$.
+**Proof sketch.** The closed form writes $999F_n$ as $127$ times $1000^{n+1}-1$. $\square$
 
-### Corollary 5.4: Infinitude
+### Theorem 4.4 (Strict increase and infinitude)
 
-There are infinitely many distinct orderly Friedman numbers.
+The sequence $(F_n)$ is strictly increasing. Hence there are infinitely many pairwise distinct orderly Friedman numbers.
 
-**Proof.** Theorem 4.5 says every $F_n$ is orderly. Theorem 5.3 says no two terms coincide. Since there are infinitely many indices, there are infinitely many distinct orderly Friedman numbers.
+**Proof sketch.** Since $F_n$ is positive,
 
-### Corollary 5.5: Asymptotic scale
+$$
+F_{n+1}-F_n=999F_n+127>0.
+$$
+
+Thus $F_{n+1}>F_n$ for every $n$. Theorem 3.5 makes every term orderly, and strict increase makes the terms pairwise distinct. $\square$
+
+It is useful to distinguish the two roles in this conclusion. Certificate composition proves membership in the orderly class; monotonicity proves distinctness. Neither fact alone would establish an infinite set.
+
+## 5. Exponential growth and exact normalization
+
+### Theorem 5.1 (Sharp exponential sandwich)
+
+For every $n\ge0$,
+
+$$
+126\cdot1000^{n+1}<999F_n<127\cdot1000^{n+1}.
+$$
+
+**Proof sketch.** Let $P=1000^{n+1}$. The closed form gives $999F_n=127(P-1)$. Since $P>1$,
+
+$$
+127(P-1)<127P.
+$$
+
+For the lower bound, $127(P-1)>126P$ is equivalent to $P>127$, which holds because $P\ge1000$. $\square$
+
+### Corollary 5.2 (Asymptotic growth)
 
 As $n\to\infty$,
 
@@ -310,196 +337,208 @@ $$
 F_n\sim\frac{127}{999}1000^{n+1}.
 $$
 
-More precisely,
+In particular, $F_n=\Theta(1000^{n+1})$.
+
+**Proof sketch.** Divide the inequalities of Theorem 5.1 by $999\cdot1000^{n+1}$, or use the closed form directly. The ratio of $F_n$ to $(127/999)1000^{n+1}$ tends to $1$. $\square$
+
+### Theorem 5.3 (Exact normalized error)
+
+For every $n\ge0$,
+
+$$
+\frac{127}{999}-\frac{F_n}{1000^{n+1}}
+=
+\frac{127}{999\cdot1000^{n+1}}.
+$$
+
+**Proof sketch.** Divide the closed form by $999\cdot1000^{n+1}$:
 
 $$
 \frac{F_n}{1000^{n+1}}
 =
-\frac{127}{999}\left(1-1000^{-(n+1)}\right)
-\longrightarrow
-\frac{127}{999}.
+\frac{127}{999}\left(1-\frac{1}{1000^{n+1}}\right).
 $$
 
-The family therefore has exponential growth. Its consecutive ratio also satisfies
+Subtract this expression from $127/999$. $\square$
 
-$$
-\frac{F_{n+1}}{F_n}=1000+\frac{127}{F_n}\longrightarrow1000.
-$$
-
-The limiting ratio reflects the addition of a fixed three-digit block at each step.
+The theorem is stronger than a limit statement. It specifies the sign, magnitude, and geometric decay of the error at every index. The normalized sequence approaches its limit from below, and each increment of $n$ divides the error by exactly $1000$.
 
 ## 6. Algorithms
 
-### 6.1 Certificate validation
+### 6.1 Streaming recurrence algorithm
 
-A general validator receives a proposed integer $N$ and an expression tree $E$. A postorder traversal computes four pieces of data for each subtree:
+For successive terms, the recurrence is the natural algorithm.
 
-1. its leaf word;
-2. its integer value;
-3. whether all concatenations are width-correct; and
-4. whether genuine arithmetic occurs.
+**Input:** a nonnegative integer $n$.  
+**Output:** $F_n$.
 
-At a digit, the leaf word has length one and the value is that digit. Unary and binary arithmetic nodes combine child values according to the chosen operation and concatenate their leaf words in syntactic order. At a concatenation node $A\Vert_k B$, the validator checks $k=|\operatorname{leaves}(B)|$ and computes
+1. Set $x\leftarrow127$.
+2. Repeat $n$ times: set $x\leftarrow1000x+127$.
+3. Return $x$.
 
-$$
-10^k\operatorname{val}(A)+\operatorname{val}(B).
-$$
+The algorithm performs $n$ multiplications by a fixed small integer and $n$ additions, so it uses $O(n)$ arithmetic operations. The output has $3(n+1)$ decimal digits. With bit complexity included, the cost is governed by arithmetic on integers whose length grows linearly with $n$.
 
-The final certificate is accepted precisely when it is well formed, its leaf word equals the canonical decimal word of $N$, its value equals $N$, and its arithmetic flag is true.
-
-If the tree has $s$ nodes and values fit in fixed-size machine words, traversal takes $O(s)$ time and $O(h)$ call-stack space, where $h$ is the tree height. With arbitrary-precision integers, arithmetic cost depends on operand length; leaf collection should use a buffer or rope to avoid quadratic copying.
-
-### 6.2 Recurrent generation
-
-The family can be generated without constructing expression trees.
-
-**Input:** a nonnegative integer $m$.
-
-**Output:** $F_0,F_1,\ldots,F_m$.
-
-**Procedure:** initialize $x\leftarrow127$; output $x$; repeat $m$ times: set $x\leftarrow1000x+127$ and output $x$.
-
-There are $m$ recurrence steps. The final integer has $3(m+1)$ decimal digits. Under a digit-cost model, multiplying by $1000$ is a shift and adding $127$ is linear only in the short carry chain, so the overall practical cost is proportional to the total amount of output, $O(m^2)$ digit writes if every prefix is printed and $O(m)$ storage for the largest term. If only $F_m$ is required, direct creation by repeating the string “127” is also linear in the output length.
-
-### 6.3 Closed-form cross-check
-
-For testing, one may compute both
+A useful invariant after $j$ iterations is
 
 $$
-F_n\quad\text{by recurrence}
+x=F_j=\underbrace{127127\cdots127}_{j+1\text{ copies}}.
 $$
 
-and
+This invariant proves correctness: initialization establishes it at $j=0$, and one update shifts the numeral by three places and appends $127$.
+
+### 6.2 Closed-form random-access algorithm
+
+For a single distant term, compute
 
 $$
-Q_n=\frac{127(1000^{n+1}-1)}{999}
+P=1000^{n+1}
 $$
 
-by integer exponentiation and exact division, then compare them. Binary exponentiation uses $O(\log n)$ large-integer multiplications, though the operands themselves have $O(n)$ digits. This is useful as an independent numerical realization of the same theorem.
-
-## 7. General block principle
-
-The repeated-$127$ family exemplifies a broader mechanism. Let $B$ be a positive $d$-digit integer possessing an orderly certificate $C_B$ whose leaf word is exactly the $d$ digits of $B$. Define
+by exponentiation by squaring, then return
 
 $$
-G_0=B,
-\qquad
-G_{n+1}=10^dG_n+B.
+127(P-1)/999.
 $$
 
-By joining copies of $C_B$ with width-$d$ concatenation, one obtains the following conditional theorem.
+Exponentiation by squaring uses $O(\log n)$ large-integer multiplications. The division is exact by the geometric-series identity. This method reduces the number of high-level multiplications, although the output-size lower bound remains: writing $F_n$ requires $\Theta(n)$ decimal digits.
 
-### Theorem 7.1: Repetition principle for certified blocks
+### 6.3 Certificate and identity audit
 
-Suppose a $d$-digit positive integer $B$ has a well-formed orderly certificate containing genuine arithmetic. Then every number formed by writing $n+1$ copies of the decimal block $B$ consecutively is an orderly Friedman number. These numbers satisfy
+A numerical audit can compare independent characterizations:
 
-$$
-(10^d-1)G_n=B\left(10^{d(n+1)}-1\right)
-$$
+1. recurrence generation;
+2. direct repetition of the decimal block $127$;
+3. the division-free identity $999F_n=127(1000^{n+1}-1)$;
+4. the suffix check $F_n\bmod1000=127$; and
+5. the normalized-error formula using exact rational arithmetic.
 
-and form a strictly increasing sequence.
+This audit does not search for arbitrary Friedman representations. It checks the explicit family and the theorems proved about it. For each fixed $n$, all tests use deterministic integer or rational arithmetic.
 
-**Proof sketch.** Repeat the arguments of Sections 4 and 5 with $1000$ replaced by $10^d$ and $127$ replaced by $B$. The leaf word appends one $d$-digit block per step; well-formedness follows from the width $d$; evaluation follows the recurrence; and genuine arithmetic remains inside each copy. The geometric identity follows by induction. Finally,
+## 7. Boundary checks and data discipline
 
-$$
-G_{n+1}-G_n=(10^d-1)G_n+B>0.
-$$
+### Proposition 7.1 (Parity is not universal)
 
-The theorem explains why a short certificate can have disproportionate consequences. It is not merely one solution but a reusable component. Different certified blocks may yield different infinite subfamilies, potentially overlapping but often distinguishable by decimal structure.
+Not every orderly Friedman number is odd.
 
-## 8. Counting consequences
-
-Let $A(X)$ denote the number of orderly Friedman numbers not exceeding $X$. The $127$ family gives a direct lower bound. By the closed form, $F_n\le X$ is equivalent to
+**Proof sketch.** The even number $736$ has the orderly certificate
 
 $$
-1000^{n+1}
-\le
-1+\frac{999X}{127}.
+736=7+3^6.
 $$
 
-Thus every integer $n\ge0$ satisfying
+The digits occur in the order $7,3,6$, and the expression is nontrivial. $\square$
+
+This counterexample is important because the seed $127$ and every repeated-$127$ term are odd. A property of one constructed subfamily need not be an invariant of the entire class.
+
+### Proposition 7.2 (The displayed data are not increasing)
+
+The sequence as displayed below is not strictly increasing:
 
 $$
-n+1
-\le
-\log_{1000}\left(1+\frac{999X}{127}\right)
+127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,
+4096,6455,11264,11664,12850,13825,14641,155.
 $$
 
-contributes a distinct orderly Friedman number at most $X$. Consequently, for $X\ge127$,
+**Proof sketch.** Its last adjacent comparison would require $14641<155$, which is false. $\square$
+
+The proposition concerns only the ordering of the supplied data. It neither proves nor disproves that $155$ is orderly. It warns against interpreting the displayed position as a rank in an increasing enumeration without first correcting or clarifying the list.
+
+## 8. Applications and broader interpretation
+
+The repeated-certificate family illustrates a general bridge between decimal combinatorics and affine dynamics. Appending a fixed $k$-digit block $b$ transforms a current value $x$ by
 
 $$
-A(X)
-\ge
-\left\lfloor
-\log_{1000}\left(1+\frac{999X}{127}
-ight)
-\right\rfloor.
+T(x)=10^kx+b.
 $$
 
-This lower bound is logarithmic. It proves infinitude but not positive density, nor even polynomial growth of the counting function. Several independent block families would improve the constant and might reveal richer combinatorial closure operations. More substantial growth would require certificates that can be combined in branching rather than purely repetitive ways.
+Iteration of $T$ yields
 
-## 9. Data quality and falsified conjectures
+$$
+T^{n+1}(0)=b\sum_{j=0}^{n}10^{kj}.
+$$
 
-Three observations clarify what the present results do and do not establish.
+For $b=127$ and $k=3$, this is exactly $F_n$. The arithmetic-expression certificate supplies more than the decimal orbit: it certifies that every orbit point belongs to the orderly Friedman class.
 
-First, the parity conjecture “every orderly Friedman number is odd” is false by Theorem 3.2.
+This perspective has several applications.
 
-Second, an advertised list ending in $14641,155$ is not strictly increasing as written, because $155<14641$. This may signal a truncated or transcribed term rather than a mathematical phenomenon. Any computational study should preserve original data while flagging such defects rather than silently sorting or repairing them.
+First, it produces benchmark instances for expression-search algorithms. The family contains arbitrarily long digit strings with known certificates, exact values, and predictable structure. Search procedures can be tested on whether they recover the repeated decomposition rather than merely evaluating numbers.
 
-Third, the claim that orderly Friedman numbers are only sporadic is incompatible with Corollary 5.4. Nevertheless, “infinitely many” is not synonymous with “common.” The repeated-block family is exponentially spaced, so by itself it occupies a zero proportion of the positive integers. Determining the true density or order of growth of $A(X)$ remains open within this framework.
+Second, the suffix congruence and closed form provide inexpensive consistency checks in databases of constructed examples. Every claimed member of this family must end in $127$, satisfy the geometric identity, and have a number of decimal digits divisible by $3$.
 
-## 10. Applications and broader connections
+Third, the separation between leaf words and evaluations suggests automata-theoretic methods. A parser can track the syntactic word while modular registers track evaluations. Bounded expression depth or bounded exponents may make parts of the recognition problem finite-state after residue abstraction.
 
-Although motivated by recreational number theory, the construction illustrates several general ideas.
+Fourth, using several compatible certified blocks could create branching families. A single block yields one term at each depth and therefore only logarithmically many terms below a magnitude bound. A finite grammar of interchangeable blocks could yield exponentially many words at depth $n$, potentially converting syntactic entropy into a power-law lower bound for the counting function.
 
-**Syntax-directed evaluation.** A certificate carries both a word and a value. Validation resembles parsing an arithmetic language while preserving source order, a standard concern in compilers and symbolic algebra.
+## 9. A general composition principle
 
-**Composable witnesses.** A local identity can be packaged so that a structure-preserving operation combines copies into larger witnesses. Similar strategies appear in automata, tilings, coding constructions, and inductively generated combinatorial classes.
+The construction can be abstracted without asserting that every conceivable expression convention supports it. Suppose a positive integer $b$ has exactly $k$ decimal digits and possesses an orderly certificate $E$ whose leaf word is the decimal word of $b$. Assume decimal concatenation is available with width $k$ and that the arithmetic already present in $E$ remains admissible inside a concatenated expression. Define $H_0=b$ and $H_{n+1}=10^kH_n+b$, while recursively concatenating one new copy of $E$ on the right.
 
-**Exact arithmetic testing.** The recurrence and closed form provide two independent algorithms for the same integers. Comparing them is a useful pattern in reliable numerical software: derive one value operationally and another algebraically.
+Under these hypotheses, the proofs of Lemmas 3.1–3.4 apply word for word with $[1,2,7]$, $127$, and $3$ replaced by the digit word of $b$, the value $b$, and the width $k$. Consequently, every $H_n$ has a certificate made of $n+1$ ordered copies of $E$. The associated algebra is
 
-**Self-reference without paradox.** The numeral supplies symbols used to reconstruct its own value, but the process is finite and explicit. This places Friedman phenomena among benign forms of self-description, alongside self-enumerating sentences and digit identities.
+$$
+H_n=b\sum_{j=0}^{n}10^{kj},
+$$
 
-**Search-space pruning.** Order preservation sharply reduces expression search. A dynamic program can split a digit interval into consecutive subintervals, compute attainable values for each, and combine them. The interval property follows precisely because leaves may not be permuted.
+and therefore
+
+$$
+(10^k-1)H_n=b\bigl(10^{k(n+1)}-1\bigr).
+$$
+
+This conditional principle clarifies which features of $127$ are essential. Its numerical value is not special to the recurrence argument; what matters is the agreement among three quantities: the decimal value of the block, the evaluation of its expression, and the width used for concatenation. Nontriviality must also be inherited, or repetition would certify every decimal word vacuously.
+
+The principle also identifies possible failure modes. If the right width is wrong, place value and leaf length diverge. If evaluation of the seed does not equal the block value, the syntactic repetition and numerical recurrence follow different orbits. If an operator convention disallows a seed operation inside a larger expression, closure fails at the syntactic level. Thus fixed-block closure is best viewed as an invariant-preservation theorem, not merely as an observation about repeated strings.
+
+For the present family, all hypotheses are explicit: $b=127$, $k=3$, and $E=-1+2^7$. The general formulation explains why the same proof architecture is likely reusable for other certified blocks while keeping the established claims separate from the broader classification problem.
+
+## 10. Limitations
+
+The principal limitation is scope. The results concern one explicit infinite subfamily. They do not characterize every orderly Friedman number, determine whether a given arbitrary integer is orderly, or establish the density of orderly numbers among Friedman numbers.
+
+The asymptotic statement
+
+$$
+F_n\sim\frac{127}{999}1000^{n+1}
+$$
+
+describes growth along the constructed sequence; it is not an asymptotic count of orderly Friedman numbers below $x$. Indeed, because the family has one term per block length, the number of its members below $x$ is only on the order of $\log x$.
+
+The expression model includes decimal concatenation with explicit width and requires at least one non-concatenation operation. Different conventions in recreational number theory may allow division, factorials, roots, multi-digit exponent tokens, or other operators. Results should therefore be compared only after conventions are aligned.
+
+Finally, repetition relies on a certificate whose evaluated value equals the block it spells. This self-consistency makes concatenation straightforward. More general composition schemes may require control of carries, signs, widths, and interactions between neighboring expressions.
 
 ## 11. Future work
 
-A fuller theory should broaden both grammar and enumeration.
+The block-$127$ construction suggests a general fixed-block closure theorem. If a positive $k$-digit block $b$ has a nontrivial orderly certificate and copies can be concatenated without changing the convention, define
 
-First, one may add factorial, roots, division under exactness conditions, and arbitrary exponent expressions. Each operation requires a precise domain convention. Roots, for example, must specify whether only exact integer roots are allowed; division must avoid undefined denominators and decide whether intermediate rational values are permitted.
+$$
+G_0=b,
+\qquad
+G_{n+1}=10^kG_n+b.
+$$
 
-Second, a total parser and evaluator can connect printed expressions to the abstract certificate conditions. Such a parser should prove, mathematically, that successful parsing preserves the left-to-right leaf word and that evaluation agrees with the declarative semantics.
+One expects every $G_n$ to be orderly and
 
-Third, bounded certificate search can be organized by intervals of the digit string. For each interval, store attainable values together with witness expressions and arithmetic flags. Combining adjacent intervals respects order automatically. Bounds on exponent size and intermediate magnitude are necessary to make the search finite.
+$$
+(10^k-1)G_n=bigl(10^{k(n+1)}-1igr).
+$$
 
-Fourth, suspicious supplied data should be investigated. In particular, a terminal $155$ after $14641$ may be a truncated entry. A reproducible bounded search could determine whether $155$ itself has a certificate under the chosen grammar and compare that finding with plausible longer completions.
+The proof should replicate the four invariants used here: repeated leaf word, matching decimal value, matching expression evaluation, and persistent nontriviality.
 
-Fifth, multiple repetition blocks and mixed-block grammars may strengthen lower bounds for $A(X)$. If two compatible blocks can be chosen independently at each stage while preserving certification, the number of certified words of a given length could grow exponentially in the number of blocks, converting a logarithmic counting lower bound into a power-law bound in $X$.
+A second direction is to find infinitely many primitive certified blocks and understand intersections of their repeated families. Primitive-word combinatorics suggests that families generated by blocks that are not powers of shorter words should have limited overlap.
 
-Finally, asymptotic questions remain. The present exact identity completely describes one family, but not the full set of orderly Friedman numbers. Natural targets include upper and lower bounds for $A(X)$, the distribution of digit lengths, parity frequencies, and the effect of enlarging or restricting the operation set.
+A third direction is quantitative. Repetition of one block proves infinitude but not positive power-law growth. A grammar with multiple certified productions could generate many words of each length. If collisions and certificate interactions can be controlled, symbolic-dynamical entropy may yield a bound of the form $A(x)\ge x^c$ for the number $A(x)$ of orderly Friedman numbers at most $x$.
+
+A fourth direction is bounded recognition. For fixed expression depth and bounded exponents, one may seek a finite-state transducer augmented by finitely many modular registers. The leaf-word/evaluation split developed here provides the appropriate interfaces for such a recognizer.
+
+A fifth direction is rigidity. If an eventually affine sequence consists of repetitions of a fixed ordered digit word, its normalized limit determines a ratio such as $b/(10^k-1)$, while the exact error may determine both $k$ and the initial block. Establishing uniqueness conditions would turn asymptotic data back into decimal syntax.
 
 ## 12. Conclusion
 
-The identity
+The identity $127=-1+2^7$ is a finite arithmetic certificate with an indefinitely repeatable structure. Concatenating copies gives a sequence in which syntax and value evolve by the same affine rule. Every term is an orderly Friedman number, the terms are pairwise distinct, and their arithmetic is governed exactly by
 
 $$
--1+2^7=127
+999F_n=127igl(1000^{n+1}-1igr).
 $$
 
-is a compact arithmetic certificate whose digits are already in proper order. Treating it as a repeatable decimal block yields the sequence
-
-$$
-F_0=127,
-\qquad
-F_{n+1}=1000F_n+127.
-$$
-
-Every term is an orderly Friedman number, and
-
-$$
-999F_n=127(1000^{n+1}-1).
-$$
-
-The sequence is strictly increasing, so it establishes infinitely many distinct examples. The companion identity $7+3^6=736$ shows that even values occur. Together, these results replace several tempting empirical impressions with exact statements: orderliness does not force oddness, orderly examples are not merely finite curiosities, and a simple compositional mechanism accounts for an explicit exponentially growing family.
-
-The larger lesson is structural. Once certificate syntax, decimal width, and arithmetic value are separated cleanly, concatenation becomes a theorem-producing operation. A single three-digit self-description can then be amplified without limit.
+From this one identity follow the fixed suffix, repunit divisibility, exponential bounds, limiting constant, and exact geometric error. The construction does not solve the global classification or counting problem, but it isolates a robust principle: when a decimal block carries a self-consistent arithmetic certificate, place-value concatenation can convert one example into an infinite, explicitly analyzable family.
