@@ -1,144 +1,417 @@
-# Local Checkability and Multi-Round Soundness Amplification for Zero-Knowledge Certification
+# Raw Coordinate Openings in Private Verification: Exact Privacy Criteria, Soundness Limits, and Boolean Masking
 
 ## Abstract
 
-We isolate and prove the soundness core of zero-knowledge certification protocols in a form that is entirely independent of the internal structure of the verifier's check. A *locally checkable certificate* over a finite challenge space $\Omega$ is a Boolean predicate assigning to each challenge a pass/fail verdict; the certificate is *globally valid* when every challenge passes. Our first result, **Single-Round Soundness**, shows that if a certificate is invalid — some challenge fails — then the set of passing challenges has at most $|\Omega| - 1$ elements, so a verifier sampling a uniformly random challenge rejects with probability at least $1/|\Omega|$. This holds with no assumption whatsoever on the checker. Our main result, **Multi-Round Soundness Amplification**, lifts this to $k$ independent rounds: a prover forced to commit to an invalid certificate in each round survives all rounds with probability at most $\big((|\Omega|-1)/|\Omega|\big)^k$, which decays geometrically to $0$. We prove a companion **Strict Soundness Gap** showing the per-round accepting fraction of an invalid certificate is strictly below $1$. Finally we instantiate the abstract machinery at the classical Goldreich–Micali–Wigderson zero-knowledge protocol for graph $3$-colourability, obtaining a fully amplified soundness bound $\big((|E|-1)/|E|\big)^k$ for a prover committing to improper colourings, where $|E|$ is the number of edges. This upgrades the classical single-round soundness gap to a statement with vanishing error, and exposes the tight round complexity: reaching error $2^{-k}$ requires $\Theta(|\Omega|\cdot k)$ rounds, not the folklore $O(k)$.
-
-**Keywords:** zero-knowledge proofs, local checkability, soundness amplification, probabilistically checkable proofs, graph 3-colouring, Goldreich–Micali–Wigderson protocol, commitment schemes.
+A natural proposal for privately verifying a mathematical witness is to commit to its coordinates and answer random challenges by opening individual coordinates. This paper gives a self-contained finite analysis of that proposal. Perfect witness privacy for opening a fixed coordinate is shown to be equivalent to agreement of all valid witnesses at that coordinate. Privacy under every possible coordinate challenge is therefore equivalent to uniqueness of the valid witness. A one-bit relation gives the minimal privacy counterexample. On the soundness side, if exactly one among $n$ uniformly sampled checks detects malformed evidence, then $k$ independent repetitions have false-acceptance probability exactly $((n-1)/n)^k$. For $n=4$ this is $(3/4)^k$, strictly larger than $2^{-k}$ for every positive $k$; more generally, no fixed repetition count gives a statement-size-independent one-half error bound against a single bad location. Standard binary soundness amplification is recovered once a genuine one-round bound $p\le1/2$ is assumed. As a positive privacy primitive, uniform Boolean one-time-pad masking is analyzed by exact fiber counting: every ciphertext has one preimage mask for either message, so transcript distributions coincide, and opening recovers the message. These results separate commitments, robust encoding, repetition, and masking, and identify the additional ingredients required for a sound zero-knowledge protocol.
 
 ## 1. Introduction
 
-A zero-knowledge proof convinces a verifier that a statement is true while revealing nothing beyond its truth. Since their introduction in the 1980s, such protocols have become foundational to cryptography and, increasingly, to the certification of mathematical and computational claims: one can certify that a theorem has a valid proof, or that a computation was performed correctly, without disclosing the proof or the computation. The intuition driving many such systems is that of *probabilistically checkable proofs* (PCPs): a claimed proof can be re-encoded so that a small number of random spot-checks suffices to detect any flaw with constant probability, and repetition amplifies confidence to certainty.
+Zero-knowledge verification asks whether one party can demonstrate possession of valid evidence without revealing that evidence. In mathematical applications, the public statement could be a theorem in a specified deductive system and the private witness could be a derivation. In combinatorial applications, the statement might assert that a graph is colorable and the witness might be a coloring. The intended security property is stronger than merely withholding most of the witness: the transcript should disclose no witness-dependent information beyond what follows from the public statement.
 
-This paper distills the *soundness* half of that intuition into its logical minimum and proves it rigorously. We deliberately separate two concerns that are often entangled in concrete protocols:
+A tempting protocol has three steps. The prover first commits separately to every coordinate of a witness. The verifier then selects a random coordinate. Finally, the prover opens the selected commitment and demonstrates that the local data are consistent with the relevant rule. Repeating this experiment is often informally claimed both to hide the proof and to drive soundness error down to $2^{-k}$ after $k$ rounds.
 
-- **Local checkability** — the structural property that an invalid certificate must fail at least one local check. We treat this as a hypothesis about the certificate and prove exactly what soundness it buys, *with no assumption on the checker's internals*.
-- **Amplification** — the probabilistic consequence of running many independent rounds. We prove the exact geometric decay of the survival probability and identify the tight base of the exponential.
+Neither conclusion follows from random opening alone. Commitments may hide unopened coordinates, but an opened coordinate appears in the transcript and can distinguish valid witnesses. Likewise, repetition amplifies the actual one-round detection probability. If only one among many locations exposes a defect, then a random local query is unlikely to find it.
 
-The payoff is twofold. First, the abstract results apply to *any* protocol whose acceptance reduces to a uniform random local check, giving a reusable soundness template. Second, specializing to the Goldreich–Micali–Wigderson (GMW) protocol for graph $3$-colourability produces a genuinely new statement: whereas the classical analysis establishes only a single-round gap of $1/|E|$, we obtain a full $k$-round bound $\big((|E|-1)/|E|\big)^k$ with vanishing error.
+This paper isolates these issues in a finite model. The model intentionally avoids computational assumptions and therefore studies perfect, information-theoretic witness privacy. This permits exact characterizations rather than asymptotic claims. The main results are:
 
-### 1.1 Contributions
+1. opening coordinate $i$ is perfectly witness-private exactly when all valid witnesses agree at $i$;
+2. privacy for every coordinate is equivalent to uniqueness of each valid witness;
+3. a relation accepting both Boolean witnesses violates privacy when the bit is opened;
+4. sparse-error checking has exact false-acceptance probability $((n-1)/n)^k$;
+5. no fixed number of repetitions guarantees a uniform one-half error bound as witness length grows;
+6. the familiar $2^{-k}$ amplification follows conditionally from a one-round error at most $1/2$; and
+7. uniform Boolean masking has message-independent transcript fibers and correct opening.
 
-1. A definition of *locally checkable certificate* over a finite challenge space and a formulation of single- and multi-round verifiers as uniform sampling procedures (§2).
-2. **Single-Round Soundness** (Theorem 3.1): an invalid certificate has at most $|\Omega|-1$ passing challenges. The proof is a one-line counting argument via set erasure (§3).
-3. **Strict Soundness Gap** (Theorem 3.3): the accepting fraction of an invalid certificate over a nonempty challenge space is strictly below $1$ (§3).
-4. **Multi-Round Soundness Amplification** (Theorem 4.1): a product bound $\big((|\Omega|-1)/|\Omega|\big)^k$ on the survival probability across $k$ independent invalid rounds, proved by a monotone product inequality (§4).
-5. **Three-Colouring Amplified Soundness** (Theorem 5.1): the abstract bound instantiated at the GMW $3$-colouring verifier, yielding $\big((|E|-1)/|E|\big)^k$ (§5).
-6. A discussion of **tight round complexity** ($\Theta(|\Omega|\cdot k)$) and its correction of the folklore $O(k)$ (§6), and future directions toward constant-gap PCP-style boosts and binding commitments (§7).
+The conclusions are diagnostic rather than a rejection of zero knowledge. They show why robust encodings, hiding mechanisms, binding mechanisms, and transcript-level privacy definitions must be treated as separate components.
 
-## 2. Definitions
+## 2. Finite model and definitions
 
-Throughout, $\beta$ is a type with decidable equality, and $\Omega : \mathrm{Finset}\,\beta$ is a finite **challenge space**. We write $|\Omega|$ for its cardinality.
+Let $S$ be a set of public statements, $W$ a set of witnesses, and
 
-**Definition 2.1 (Locally checkable certificate).** A *locally checkable certificate* over $\Omega$ is a function
-$$\mathrm{check} : \beta \to \{\texttt{true}, \texttt{false}\}.$$
-A challenge $e \in \Omega$ *passes* if $\mathrm{check}(e) = \texttt{true}$ and *fails* otherwise. The **passing set** is
-$$P(\mathrm{check}) = \{\, e \in \Omega : \mathrm{check}(e) = \texttt{true} \,\} = \Omega \cap \mathrm{check}^{-1}(\texttt{true}).$$
+$$
+R\subseteq S\times W
+$$
 
-**Definition 2.2 (Validity).** The certificate is **globally valid** if every challenge in $\Omega$ passes, i.e. $P(\mathrm{check}) = \Omega$. It is **invalid** if some challenge fails: $\exists\, e \in \Omega,\ \mathrm{check}(e) = \texttt{false}$.
+a validity relation. We write $R(s,w)$ when $w$ is a valid witness for statement $s$. Let $V$ be the set of possible verifier views. A deterministic view function is a map
 
-**Definition 2.3 (Verifier).** The *single-round verifier* samples $e \in \Omega$ uniformly at random and **accepts** iff $e$ passes. Its **accepting probability** is
-$$\Pr[\text{accept}] = \frac{|P(\mathrm{check})|}{|\Omega|}.$$
-The *$k$-round verifier* runs $k$ independent single rounds — with certificates $\mathrm{check}_1, \dots, \mathrm{check}_k$ — and accepts iff all $k$ sampled challenges pass. By independence its accepting probability is the product $\prod_{i=1}^k |P(\mathrm{check}_i)|/|\Omega|$.
+$$
+\mathsf{View}:S\times W\to V.
+$$
 
-The modelling choice deserves comment. We identify the "accepting probability" with the *fraction* of passing challenges, which is exactly the probability under uniform sampling. This makes all statements purely combinatorial: cardinalities of finite sets and their ratios, cast into the rationals $\mathbb{Q}$.
+### Definition 2.1 (Perfect witness privacy)
 
-## 3. Single-round soundness
+The view function has **perfect witness privacy** relative to $R$ if, for every $s\in S$ and every pair $w_1,w_2\in W$,
 
-**Theorem 3.1 (Single-Round Soundness).** Let $\mathrm{check}$ be a certificate over $\Omega$ and suppose some challenge fails, i.e. there exists $e \in \Omega$ with $\mathrm{check}(e) = \texttt{false}$. Then
-$$|P(\mathrm{check})| \le |\Omega| - 1.$$
-Equivalently, the single-round verifier rejects with probability at least $1/|\Omega|$.
+$$
+R(s,w_1)\land R(s,w_2)
+\quad\Longrightarrow\quad
+\mathsf{View}(s,w_1)=\mathsf{View}(s,w_2).
+$$
 
-*Proof.* Fix a failing challenge $e \in \Omega$ with $\mathrm{check}(e) = \texttt{false}$. We claim $P(\mathrm{check}) \subseteq \Omega \setminus \{e\}$. Indeed, take any $x \in P(\mathrm{check})$; then $x \in \Omega$ and $\mathrm{check}(x) = \texttt{true}$. If $x = e$, then $\mathrm{check}(e) = \texttt{true}$, contradicting $\mathrm{check}(e) = \texttt{false}$. Hence $x \ne e$, so $x \in \Omega \setminus \{e\}$. Monotonicity of cardinality gives
-$$|P(\mathrm{check})| \le |\Omega \setminus \{e\}| = |\Omega| - 1,$$
-the last equality because $e \in \Omega$. $\qquad\blacksquare$
+Thus the view is constant on the set of valid witnesses for a fixed statement. For randomized protocols, the corresponding requirement is equality of view distributions; the deterministic definition is the appropriate specialization when the challenge is fixed.
 
-**Remark 3.2.** The proof uses no property of $\mathrm{check}$ beyond the existence of a single failing point. This is the precise sense in which *local checkability alone* yields a soundness gap: one bad location is enough, and the gap is at least $1/|\Omega|$.
+Fix a positive witness length $n$ and an alphabet $A$. A coordinate witness is a function
 
-**Theorem 3.3 (Strict Soundness Gap).** If $|\Omega| > 0$ and the certificate is invalid, then the accepting fraction is strictly below $1$:
-$$\frac{|P(\mathrm{check})|}{|\Omega|} < 1.$$
+$$
+w:\{0,1,\ldots,n-1\}\to A.
+$$
 
-*Proof.* Since $|\Omega| > 0$, its rational image is positive and dividing preserves the inequality direction, so it suffices to show $|P(\mathrm{check})| < |\Omega|$ over $\mathbb{Q}$. By Theorem 3.1, $|P(\mathrm{check})| \le |\Omega| - 1$ as naturals; casting to $\mathbb{Q}$ (valid because $|\Omega| \ge 1$) gives $|P(\mathrm{check})| \le |\Omega| - 1 < |\Omega|$. Dividing by $|\Omega| > 0$ yields the claim. $\qquad\blacksquare$
+For a fixed coordinate $i$, define the opening view by
 
-Theorem 3.3 certifies that the soundness gap is genuine and not an artifact of rounding: there is strict separation between a cheating prover's best acceptance probability and certainty.
+$$
+\mathsf{Open}_i(s,w)=w_i.
+$$
 
-## 4. Multi-round soundness amplification
+The public statement is an input but does not alter the returned coordinate.
 
-We now amplify the single-round gap by independent repetition. The key structural fact is that each round's accepting fraction is bounded by the *same* constant $r := (|\Omega|-1)/|\Omega|$, so their product is bounded by $r^k$.
+### Definition 2.2 (All-opening privacy)
 
-**Theorem 4.1 (Multi-Round Soundness Amplification).** Let $|\Omega| > 0$ and let $\mathrm{check}_1, \dots, \mathrm{check}_k$ be certificates over $\Omega$, each invalid (for every $i$ there exists $e \in \Omega$ with $\mathrm{check}_i(e) = \texttt{false}$). Then the $k$-round survival probability satisfies
-$$\prod_{i=1}^{k} \frac{|P(\mathrm{check}_i)|}{|\Omega|} \;\le\; \left( \frac{|\Omega| - 1}{|\Omega|} \right)^{k}.$$
-In particular, since $0 \le (|\Omega|-1)/|\Omega| < 1$, the right-hand side decays geometrically to $0$ as $k \to \infty$.
+A coordinate-witness relation has **all-opening privacy** if $\mathsf{Open}_i$ has perfect witness privacy for every coordinate $i$.
 
-*Proof.* Work in $\mathbb{Q}$. For each $i$, the factor $|P(\mathrm{check}_i)|/|\Omega|$ is nonnegative. By Theorem 3.1 applied to $\mathrm{check}_i$ we have, as naturals, $|P(\mathrm{check}_i)| \le |\Omega| - 1$; casting to $\mathbb{Q}$ (using $|\Omega| \ge 1$) gives $|P(\mathrm{check}_i)| \le |\Omega| - 1$, hence
-$$\frac{|P(\mathrm{check}_i)|}{|\Omega|} \le \frac{|\Omega| - 1}{|\Omega|}.$$
-Since all factors are nonnegative and each is bounded above by the constant $r = (|\Omega|-1)/|\Omega|$, the monotone product inequality gives
-$$\prod_{i=1}^{k} \frac{|P(\mathrm{check}_i)|}{|\Omega|} \le \prod_{i=1}^{k} r = r^{k},$$
-where the last equality is the value of a constant product over $k$ indices. $\qquad\blacksquare$
+For soundness, consider an object with $n$ equally likely local checks, exactly one of which detects an error. In one round the verifier samples one check uniformly. Independent repetition means that the $k$ sampled indices are independent and uniformly distributed.
 
-**Corollary 4.2 (Error target).** To force the survival probability below a target $2^{-k}$, it suffices to run $R$ rounds with $r^R \le 2^{-k}$, i.e.
-$$R \ge \frac{k \ln 2}{\ln\!\big(|\Omega|/(|\Omega|-1)\big)}.$$
-Since $\ln\!\big(|\Omega|/(|\Omega|-1)\big) \approx 1/|\Omega|$ for large $|\Omega|$, this is $R = \Theta(|\Omega|\cdot k)$.
+### Definition 2.3 (Sparse-error false-acceptance probability)
 
-Corollary 4.2 makes precise the round cost that the informal "repeat $O(k)$ times" slogan hides; we return to its optimality in §6.
+For positive $n$ and nonnegative integer $k$, define
 
-## 5. Instantiation: zero-knowledge proof of graph 3-colourability
+$$
+F(n,k)=\left(\frac{n-1}{n}\right)^k.
+$$
 
-We now bridge the abstract theory to a concrete, classical protocol. Let $V$ be a finite type of vertices with decidable equality and let $E : \mathrm{Finset}(V \times V)$ be a finite edge set. A **$3$-colouring** is a map $c : V \to \{0,1,2\}$.
+This quantity is the probability that all $k$ checks miss the unique bad location.
 
-**Definition 5.1 (Proper colouring).** A colouring $c$ is *proper* for $E$ if the endpoints of every edge receive distinct colours:
-$$\forall\, e \in E,\quad c(e_1) \ne c(e_2).$$
-It is *improper* otherwise.
+Finally, for Boolean masking let $m\in\{0,1\}$ be a message, $r\in\{0,1\}$ a random mask, and define
 
-**The GMW protocol (one round).** The prover holds a proper colouring $c$, samples a uniformly random permutation $\pi$ of the three colours, and commits to $\pi \circ c$. The verifier challenges a uniformly random edge $(u,v) \in E$; the prover opens the committed colours $\big(\pi(c(u)), \pi(c(v))\big)$; the verifier accepts iff they differ.
+$$
+\mathsf{Mask}(m,r)=m\oplus r,
+$$
 
-Two classical properties frame the protocol and motivate our soundness contribution:
+where $\oplus$ is exclusive OR.
 
-- **Completeness.** Applying any colour permutation to a proper colouring yields a proper colouring (since permutations are injective, distinct colours stay distinct). Hence an honest prover always opens two distinct colours and is accepted with probability $1$.
-- **Perfect honest-verifier zero knowledge.** For a fixed challenged edge with distinct endpoint colours $a \ne b$, the map $\pi \mapsto (\pi(a), \pi(b))$ is a bijection from the six permutations of $\{0,1,2\}$ onto the six ordered pairs of distinct colours. Thus the opened view is distributed exactly like a uniform random ordered pair of distinct colours — independent of the underlying colouring — so the verifier learns nothing about $c$. (This perfect equidistribution is special to three colours, where the number of permutations, $6$, equals the number of ordered distinct pairs.)
+## 3. Exact privacy characterization for coordinate opening
 
-Our contribution is the **soundness** side. The single-round soundness of GMW is classical: if the committed colouring is improper, at least one edge has equal endpoint colours, so a random-edge verifier catches the prover with probability at least $1/|E|$. We record this as an instance of Theorem 3.1 and then amplify it.
+### Theorem 3.1 (Single-Opening Privacy Theorem)
 
-To connect to §2–4, set the challenge space $\Omega := E$ and, for a colouring $c$, define the check
-$$\mathrm{check}_c(e) := \big[\, c(e_1) \ne c(e_2)\,\big] \in \{\texttt{true},\texttt{false}\}.$$
-The passing set $P(\mathrm{check}_c)$ is exactly the set of edges with distinct endpoint colours, and $\mathrm{check}_c$ is invalid precisely when $c$ is improper: an improper colouring produces an edge with equal endpoints, i.e. a failing challenge. This is the content of the classical "some edge catches the prover" lemma, which supplies the hypothesis of Theorem 3.1.
+Fix a coordinate $i$. The opening view $\mathsf{Open}_i$ has perfect witness privacy if and only if, for every statement $s$ and all valid witnesses $w_1,w_2$ for $s$,
 
-**Theorem 5.2 (Three-Colouring Amplified Soundness).** Suppose $|E| > 0$. Let $c_1, \dots, c_k$ be colourings, each *improper* for $E$, representing a cheating prover's commitment in each of $k$ independent rounds. Then the probability the prover survives all $k$ random-edge challenges satisfies
-$$\prod_{i=1}^{k} \frac{|\{ e \in E : c_i(e_1) \ne c_i(e_2)\}|}{|E|} \;\le\; \left( \frac{|E| - 1}{|E|} \right)^{k},$$
-which decays geometrically to $0$.
+$$
+(w_1)_i=(w_2)_i.
+$$
 
-*Proof.* For each $i$, since $c_i$ is improper there is an edge $e \in E$ with $c_i(e_1) = c_i(e_2)$, i.e. $\mathrm{check}_{c_i}(e) = \texttt{false}$; thus $\mathrm{check}_{c_i}$ is an invalid certificate over $\Omega = E$. Its passing set is $\{ e \in E : c_i(e_1) \ne c_i(e_2)\}$. Apply Theorem 4.1 with $\Omega = E$ and $\mathrm{check}_i = \mathrm{check}_{c_i}$; the constant base is $(|E|-1)/|E|$. $\qquad\blacksquare$
+#### Proof sketch
 
-Theorem 5.2 upgrades the classical single-round gap ($k=1$) to a full amplification statement with error tending to $0$. The genuine novelty is (a) recognizing the single-round gap as one instance of the assumption-free local-check principle of Theorem 3.1, and (b) multiplying it across independent rounds via Theorem 4.1, from which the classical statement is precisely the $k=1$ shadow.
+By definition, the view obtained from witness $w$ is exactly $w_i$. Perfect witness privacy says that the views produced by any two valid witnesses coincide. Substituting the definition of the view gives precisely $(w_1)_i=(w_2)_i$. Both implications are therefore direct instances of the same equality. $\square$
 
-## 6. Tight round complexity
+The theorem is elementary, but it rules out a common intuition: revealing only one coordinate is not automatically zero knowledge. Information leakage is not measured by the fraction of the witness disclosed. If a single coordinate varies among valid witnesses, its disclosure distinguishes those witnesses perfectly.
 
-The base of the exponential in Theorems 4.1 and 5.2 is $(|\Omega|-1)/|\Omega|$, not a fixed constant. This has a sharp consequence.
+### Corollary 3.2 (Distinguishing witnesses destroy privacy)
 
-**Proposition 6.1 (Tightness).** The bound of Theorem 4.1 is achieved. For any $\Omega$ with $|\Omega| = n \ge 1$, consider a prover who, in each round, corrupts exactly one location — a certificate with $\mathrm{check}$ failing on a single challenge and passing on the other $n-1$. Then the per-round accepting fraction is exactly $(n-1)/n$, and over $k$ independent such rounds the survival probability is exactly $\big((n-1)/n\big)^k$.
+Suppose $w_1$ and $w_2$ are valid witnesses for the same statement and $(w_1)_i\ne(w_2)_i$. Then opening coordinate $i$ is not perfectly witness-private.
 
-*Proof.* A single-failure certificate has passing set of size $n-1$, so its accepting fraction is $(n-1)/n$, meeting the bound of Theorem 3.1 with equality. Independence multiplies these to $\big((n-1)/n\big)^k$. $\qquad\blacksquare$
+#### Proof sketch
 
-Consequently, reaching soundness error $2^{-k}$ by independent uniform single-location challenges requires $\Theta(n \cdot k)$ rounds (Corollary 4.2), and Proposition 6.1 shows no schedule of such queries beats $\big((n-1)/n\big)^{\text{rounds}}$. The folklore "$O(k)$ rounds" holds only when the per-round gap is a constant fraction — which requires each query to inspect a constant fraction of the certificate, not a single location. This distinction is exactly the gap that PCP-style re-encodings are designed to close (see §7).
+The two witnesses produce unequal views, contradicting the equality required by perfect witness privacy. Equivalently, this is the contrapositive of the forward direction of Theorem 3.1. $\square$
 
-## 7. Discussion, applications, and future work
+### Theorem 3.3 (All-Openings Privacy Theorem)
 
-### 7.1 Why an assumption-free soundness core matters
+All coordinate openings are perfectly witness-private if and only if every two valid witnesses for the same statement are equal as coordinate functions. Explicitly,
 
-Concrete zero-knowledge protocols differ wildly in their commitment machinery, arithmetization, and simulator constructions. Yet their soundness almost always reduces to the same combinatorial skeleton: a uniform random local check with a guaranteed failing location. By proving that skeleton once, with no hypothesis on the checker, we obtain a template instantiable across protocols — as demonstrated by the GMW specialization. The robustness is notable: because Theorem 3.1 ignores the checker's internals, adversarial structure in the certificate cannot erode the $1/|\Omega|$ gap.
+$$
+\bigl(\forall i,\ \mathsf{Open}_i\text{ is perfectly witness-private}\bigr)
+$$
 
-### 7.2 The full certify-without-revealing picture
+holds if and only if
 
-Soundness is one of two pillars. The other is a *binding commitment* that ties the prover to an entire proof with a single short digest, openable one step at a time with each opening itself binding (as in hash-tree / Merkle commitments). Composed with the amplified soundness proved here, one obtains the complete architecture: the commitment forces the prover to fix the certificate before challenges are drawn (so the "invalid in each round" hypothesis is enforced), while the local-check amplification drives the probability of an undetected falsehood to $0$. Applications include certifying that a theorem admits a valid proof while withholding the proof itself — a sealed-bid auction for proof strategies — and verifying program correctness or large computations without revealing source or trace, as already deployed in succinct blockchain validity proofs.
+$$
+\forall s,w_1,w_2,
+\quad R(s,w_1)\land R(s,w_2)\Longrightarrow w_1=w_2.
+$$
 
-### 7.3 Future directions
+#### Proof sketch
 
-**Binding is free; only uniqueness costs security.** For any tree-structured commitment built from a two-argument compression function, the map from committed data to root digest should be *binding in the constructive sense* — any two openings that agree on the digest but disagree on content yield two distinct inputs with the same compressed value — with no algebraic hypothesis on the compression function; the security assumption (collision resistance) is needed only to turn this into *uniqueness* of the committed content. Ambiguity must surface as a collision at the *first* node where two committed datasets diverge, so the extractor is a purely structural recursion that never inspects the compression function's internals. This sharply poses the question of exactly which security notion each tree shape supports.
+Assume every opening is private. Given two valid witnesses, Theorem 3.1 shows that they agree at every coordinate. Extensional equality of functions then yields $w_1=w_2$. Conversely, if valid witnesses are unique, any two valid witnesses are equal and hence have equal values at every challenged coordinate. Every opening view is therefore private. $\square$
 
-**Tight round complexity: $\Theta(n\cdot k)$, not $O(k)$.** Certifying an $n$-location proof to soundness error $2^{-k}$ by independent single-location challenges requires $\Theta(n\cdot k)$ rounds, and this is optimal: a cheater corrupting a single location survives each round with probability exactly $(n-1)/n$, so no schedule of independent uniform single queries beats $((n-1)/n)^{\text{rounds}}$. The per-round soundness gap of a local checker is exactly $1/n$ in the worst case, so the naive $2^{-k}$ bound silently assumes a constant-fraction gap that only holds when the query already inspects a constant fraction of the proof.
+This result says that randomizing the challenged coordinate does not remove the obstruction. Since the selected index is part of the transcript, conditional privacy for that challenge requires agreement at that index. Supporting every challenge requires coordinatewise agreement everywhere, which is witness uniqueness.
 
-**Constant soundness gap via correlated queries (a PCP-style boost).** There should be a re-encoding of any $n$-location certificate into a new certificate of size $\mathrm{poly}(n)$ whose local checker enjoys a *constant* per-round soundness gap $\ge 1/2$, so that only $O(k)$ rounds — independent of $n$ — reach error $2^{-k}$; equivalently, the gap can be amplified from $1/n$ to a constant by querying a small constant number of *correlated* locations of a suitably encoded proof. This is the algorithmic heart of the PCP theorem, recast in the local-checkability language of this paper.
+### Example 3.4 (One-bit privacy failure)
 
-## 8. Conclusion
+Let the statement space contain a single public statement and let both Boolean witnesses be valid:
 
-We have reduced the soundness of zero-knowledge certification to two elementary but sharp facts. Single-Round Soundness shows that a single failing location caps the accepting fraction at $(|\Omega|-1)/|\Omega|$, with no assumption on the checker. Multi-Round Soundness Amplification multiplies this across independent rounds to $\big((|\Omega|-1)/|\Omega|\big)^k$, a bound that is tight and that, when specialized to graph $3$-colourability, yields $\big((|E|-1)/|E|\big)^k$ — a full upgrade of the classical single-round guarantee. The tightness sharpens the folklore round count to $\Theta(|\Omega|\cdot k)$ and points precisely to where PCP-style re-encodings must intervene to recover a constant gap. Together with binding commitments, these results form the soundness backbone of protocols that certify truth while revealing nothing about the proof.
+$$
+R(s,0)=R(s,1)=\text{true}.
+$$
+
+The witness has one coordinate. Opening it produces view $0$ from one valid witness and view $1$ from the other.
+
+### Proposition 3.5 (Minimal raw-opening leak)
+
+The one-bit relation of Example 3.4 does not have perfect witness privacy under coordinate opening.
+
+#### Proof sketch
+
+Both witnesses are valid and differ at the only coordinate. Corollary 3.2 applies. $\square$
+
+This example separates commitment hiding from opening privacy. Even if an unopened commitment is ideally hiding, an opening discloses the committed value. A commitment mechanism can prevent premature access to coordinates; it cannot make the disclosed coordinate independent of the witness.
+
+## 4. Exact soundness under sparse corruption
+
+Suppose a malformed object has exactly one bad location among $n$ possible checks. A round catches the defect with probability $1/n$ and misses it with probability $(n-1)/n$. Under independent sampling, false acceptance occurs exactly when every round misses.
+
+### Theorem 4.1 (Exact Sparse-Error Formula)
+
+After $k$ independent uniformly random checks, the false-acceptance probability is
+
+$$
+F(n,k)=\left(\frac{n-1}{n}\right)^k.
+$$
+
+#### Proof sketch
+
+Each round misses the unique bad location with probability $(n-1)/n$. Independence makes the probability of missing in every round the product of the $k$ identical one-round probabilities. $\square$
+
+### Proposition 4.2 (Four-check failure probability)
+
+With four possible checks and one bad location,
+
+$$
+F(4,k)=\left(\frac34\right)^k.
+$$
+
+#### Proof sketch
+
+Substitute $n=4$ into Theorem 4.1. $\square$
+
+### Theorem 4.3 (Failure of automatic binary soundness)
+
+For every positive integer $k$,
+
+$$
+\left(\frac12\right)^k<F(4,k)=\left(\frac34\right)^k.
+$$
+
+#### Proof sketch
+
+The base inequality $1/2<3/4$ is strict and both quantities are nonnegative. Raising both sides to a positive integer power preserves strict order. $\square$
+
+Thus $k$ repetitions do not intrinsically imply error $2^{-k}$. That rate is available only if the actual one-round error is no greater than $1/2$.
+
+The dependence on $n$ is more severe than the four-check example suggests.
+
+### Theorem 4.4 (No Fixed-Repetition Half Bound)
+
+For every nonnegative integer $k$, choosing
+
+$$
+n=2k+2
+$$
+
+gives
+
+$$
+\frac12<F(2k+2,k).
+$$
+
+Consequently, no fixed repetition count ensures false-acceptance probability at most $1/2$ uniformly over all witness lengths when only one location detects the error.
+
+#### Proof sketch
+
+For $k=0$, the false-acceptance probability is $1$. For positive $k$, write
+
+$$
+F(2k+2,k)=\left(1-\frac{1}{2k+2}\right)^k.
+$$
+
+Bernoulli’s inequality states that $(1-x)^k\ge1-kx$ for $0\le x\le1$. With $x=1/(2k+2)$,
+
+$$
+F(2k+2,k)
+\ge 1-\frac{k}{2k+2}
+=\frac{k+2}{2k+2}
+>\frac12.
+$$
+
+The strict final inequality follows because $k+2>k+1$. $\square$
+
+For a target error $\varepsilon\in(0,1)$, Theorem 4.1 also yields the repetition requirement
+
+$$
+k\ge \frac{\log \varepsilon}{\log((n-1)/n)}.
+$$
+
+Since $\log((n-1)/n)\sim-1/n$ for large $n$, sparse-error detection requires on the order of $n\log(1/\varepsilon)$ queries. This asymptotic observation explains why constant-query verification requires a robust encoding: malformed objects must fail a constant fraction of checks, not merely one check.
+
+## 5. Conditional soundness amplification
+
+### Theorem 5.1 (Binary Soundness Amplification)
+
+Let $p$ be the one-round false-acceptance probability, with
+
+$$
+0\le p\le\frac12.
+$$
+
+After $k$ independent repetitions in which acceptance requires every round to accept, the false-acceptance probability satisfies
+
+$$
+p^k\le\left(\frac12\right)^k=2^{-k}.
+$$
+
+#### Proof sketch
+
+Independence gives false acceptance probability $p^k$. Since exponentiation by a nonnegative integer is monotone on nonnegative numbers, $p\le1/2$ implies $p^k\le(1/2)^k$. $\square$
+
+This theorem clarifies the logical order of protocol analysis. One must first prove a one-round soundness estimate. Repetition then amplifies that estimate. In a local-checking protocol, a constant one-round estimate usually comes from a distance property: every false or malformed candidate violates a constant fraction $\delta$ of checks. Uniform sampling then catches the error with probability at least $\delta$, yielding one-round false acceptance at most $1-\delta$. If $\delta\ge1/2$, Theorem 5.1 applies directly. Other positive constants also yield exponential decay, but with base $1-\delta$.
+
+A raw derivation does not generally have such distance. Altering one critical line can produce an invalid object that differs from locally plausible data in only one position. Arithmetically representing a derivation does not by itself spread that error. A probabilistically checkable encoding is valuable precisely because it introduces redundancy and robustness.
+
+## 6. Uniform Boolean masking
+
+Raw opening fails because the view equals a witness-dependent value. A simple random transformation can instead make the view distribution independent of the message.
+
+For $m,r,c\in\{0,1\}$, define $c=m\oplus r$. For fixed $m$ and $c$, consider the fiber
+
+$$
+\mathcal F_{m,c}=\{r\in\{0,1\}:m\oplus r=c\}.
+$$
+
+### Lemma 6.1 (Unique Mask Fiber)
+
+For every message $m$ and ciphertext $c$,
+
+$$
+|\mathcal F_{m,c}|=1.
+$$
+
+#### Proof sketch
+
+The unique solution is $r=m\oplus c$. Equivalently, the four possible pairs $(m,c)$ can be enumerated: equal message and ciphertext require $r=0$, while unequal message and ciphertext require $r=1$. $\square$
+
+### Theorem 6.2 (Uniform-Masking Perfect Privacy)
+
+Let $r$ be uniform on $\{0,1\}$. For any two messages $m_1,m_2$ and every ciphertext $c$,
+
+$$
+\Pr[m_1\oplus r=c]=\Pr[m_2\oplus r=c]=\frac12.
+$$
+
+Hence the ciphertext distribution is independent of the message.
+
+#### Proof sketch
+
+By Lemma 6.1, exactly one of the two equally likely masks maps each fixed message to $c$. Therefore each probability is $1/2$, and the fiber cardinalities—and thus distributions—agree for all messages. $\square$
+
+### Theorem 6.3 (Mask Opening Correctness)
+
+For every $m,r\in\{0,1\}$,
+
+$$
+(m\oplus r)\oplus r=m.
+$$
+
+#### Proof sketch
+
+Exclusive OR is associative, $r\oplus r=0$, and $m\oplus0=m$. $\square$
+
+The privacy theorem and correctness theorem illustrate two distinct obligations. Privacy requires that the public value have a message-independent distribution. Correctness requires that the authorized opening recover the message. Both hold for the Boolean one-time pad.
+
+The mask is not by itself a complete commitment: if the prover reveals only $c$ without fixing or authenticating $r$, the prover may later claim either message by choosing the corresponding mask. Thus hiding and binding remain separate requirements. A complete protocol must define both and state whether each is information-theoretic or computational.
+
+## 7. Algorithms and numerical experiments
+
+### 7.1 Exact sparse-error calculator
+
+Given $n>0$ and $k\ge0$, compute
+
+$$
+F(n,k)=\left(1-\frac1n\right)^k.
+$$
+
+The algorithm performs constant-time arithmetic when exponentiation is treated as a primitive, or $O(\log k)$ multiplications by repeated squaring. It can also compute the detection probability $1-F(n,k)$ and compare it with $2^{-k}$.
+
+### 7.2 Minimal repetitions for a target error
+
+Given $n>1$ and $0<\varepsilon<1$, find the least $k$ with $F(n,k)\le\varepsilon$. A direct loop starts from $k=0$ and repeatedly multiplies by $(n-1)/n$ until the target is reached. Its running time is $O(k)$ and constant space. A logarithmic formula supplies an initial estimate, but exact iteration avoids rounding errors at the threshold.
+
+### 7.3 Exhaustive Boolean masking audit
+
+Enumerate all $m,r\in\{0,1\}$, compute $c=m\oplus r$, count each fiber, and verify opening by checking $(m\oplus r)\oplus r=m$. The state space has four input pairs, so the computation is constant size. The same counting method generalizes to finite one-time pads over a finite group: translation by a message permutes the randomness space.
+
+Numerically, for $n=4$ and $k=10$,
+
+$$
+F(4,10)=\left(\frac34\right)^{10}\approx0.0563135,
+$$
+
+whereas
+
+$$
+2^{-10}\approx0.000976563.
+$$
+
+For $k=10$ and $n=22=2k+2$,
+
+$$
+F(22,10)=\left(\frac{21}{22}\right)^{10}\approx0.627,
+$$
+
+which exceeds $1/2$ as Theorem 4.4 predicts.
+
+## 8. Applications and protocol-design consequences
+
+### 8.1 Confidential mathematical methods
+
+A private theorem-verification service would distinguish a public claim from a hidden derivation. The privacy definition must compare transcripts arising from different valid derivations of the same theorem. Raw line opening generally fails this test because proof lines encode strategy. Masking, commitments, and simulation must ensure that challenge responses reveal no more than a simulator could produce from the theorem alone.
+
+### 8.2 Confidential compliance and audits
+
+The same structure appears when a hidden dataset or computation witnesses compliance with a public rule. Randomly exposing raw records can violate privacy even if most records remain sealed. Robust encodings may improve soundness, but they do not automatically provide privacy; separate randomized response mechanisms are required.
+
+### 8.3 Probabilistically checkable evidence
+
+Local verification becomes powerful when evidence is encoded so that every invalid candidate is far from acceptance. If at least a fraction $\delta$ of locations detect invalidity, then $k$ independent checks have false-acceptance probability at most
+
+$$
+(1-\delta)^k.
+$$
+
+The sparse-error model corresponds to $\delta=1/n$, which vanishes as $n$ grows. The distinction between raw and robustly encoded evidence is therefore quantitative and structural.
+
+### 8.4 Succinctness
+
+Communication polynomial in statement length, independent of witness length, is a separate objective from zero knowledge. A local proof system may reduce the number of queried symbols while still relying on commitments to, or preprocessing of, a long encoded witness. Establishing succinct communication requires an explicit succinct argument construction, assumptions supporting it, and careful accounting of setup, prover computation, and uniformity. It does not follow merely from representing derivations arithmetically.
+
+## 9. Discussion
+
+The analysis exposes three category errors that can occur in informal protocol proposals.
+
+First, **commitment hiding is not opening privacy**. A hiding commitment protects a value before opening. Once the value is opened, privacy depends on whether that value itself is safe to reveal or is transformed through a zero-knowledge subprotocol.
+
+Second, **random selection is not random masking**. Selecting a random coordinate changes which witness-dependent datum appears. Masking changes the distribution of the datum that appears. The Boolean one-time pad succeeds because every transcript has equal probability under either message.
+
+Third, **repetition is not a source of baseline soundness**. It converts $p$ into $p^k$. If $p$ approaches $1$ with witness length, a fixed $k$ cannot provide a uniform guarantee. Robust encoding is the missing bridge between local checking and constant one-round detection.
+
+These distinctions also explain why merely revealing “one random step” is not a simulator-based zero-knowledge argument. A simulator given only the statement may not know the distribution of a genuine proof line, particularly when different valid proofs contain different data. The deterministic privacy criterion developed here is intentionally strong, but the one-bit example remains fatal even under ordinary distributional definitions: the transcript distributions are point masses at different bits.
+
+The Boolean masking construction supplies a positive template but not a complete protocol. Its perfect secrecy relies on fresh uniform randomness. Reusing a mask can reveal relations between messages. Moreover, masking alone is malleable and nonbinding. These limitations reinforce the need for modular definitions.
+
+## 10. Future work
+
+A fuller theory should first replace deterministic views and fiber counts with finite probability distributions and transcript ensembles. Perfect zero knowledge can then be stated as equality of real and simulated transcript distributions; computational zero knowledge can be stated through indistinguishability against efficient distinguishers.
+
+Second, commitments should be modeled through explicit games. Hiding asks whether a receiver can distinguish commitments to different messages. Binding asks whether a sender can open one commitment in two inconsistent ways. Collision resistance alone should not be treated as a synonym for either property.
+
+Third, an interactive protocol for a finite or efficiently decidable relation should define completeness, soundness, and zero knowledge separately. This prevents a proof of one property from being mistaken for another.
+
+Fourth, a robust encoded-proof relation should include a distance-to-acceptance theorem: every false candidate must violate a positive fraction of local constraints. That theorem would justify a constant one-round soundness estimate and permit valid repetition bounds.
+
+Fifth, sequential and parallel repetition should be studied under explicit independence and adaptivity assumptions. Transcript leakage can accumulate across rounds even when soundness improves.
+
+Finally, claims of statement-length succinctness require a separate construction and complexity analysis. The relevant questions include setup assumptions, computational hardness, uniformity, prover time, verifier time, total communication, and how each depends on statement and witness lengths.
+
+## 11. Conclusion
+
+Raw coordinate opening admits exact and restrictive privacy criteria. A fixed coordinate can be opened privately only when all valid witnesses agree there; every coordinate can be opened privately only when the valid witness is unique. The one-bit relation demonstrates the failure at the smallest possible scale.
+
+Sparse-error soundness is equally exact. With one detectable defect among $n$ checks, $k$ independent trials fail with probability $((n-1)/n)^k$. This is $(3/4)^k$, not $2^{-k}$, when $n=4$, and no fixed $k$ gives a witness-size-independent one-half bound. Exponential binary amplification is valid only after establishing one-round error at most $1/2$.
+
+Uniform Boolean masking shows what genuine information-theoretic hiding looks like: every ciphertext has equal probability under either message, while the mask opens correctly. The resulting design principles are concise. Do not confuse an unopened commitment with a harmless opening. Do not confuse random sampling with robust encoding. Do not invoke amplification before proving a baseline bound. Privacy, binding, robustness, and succinctness are separate mathematical obligations; a credible private-verification protocol must satisfy each one explicitly.
