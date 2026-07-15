@@ -1591,20 +1591,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Flatland Catastrophe: When 2D Physics Breaks"
   },
   {
-    "consumed_by_exp_id": "9243b8b5",
-    "description": "Cycle 86e0e034 (Q=0.740) proved 5 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_86e0e034_0664c54a",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "86e0e034",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T10:39:03.033786+00:00",
-    "title": "Close Proofs: The mission asked to interrogate the claim:"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle d954b0de (Q=0.740) proved 21 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every Tur\u00e1n graph T(n, r) with r \u2265 4 and n \u2265 4r, and for every edge e of T(n, r), the Seidel energy strictly increases upon deletion: E_S(T(n, r) \u2212 e) > E_S(T(n, r)). This is Theorem 1.2 of the pa",
     "domains": [
@@ -2888,6 +2874,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T02:11:25.864302+00:00",
     "title": "This cycle proves the local mechanism behind the linear face complexity of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Result\n\n`Catalog/Shared/EdgeProbabilityThreshold.lean` formalizes the elementary consequences of the ratio\n\n\\[\n\\frac{\\binom n2}{m}\n\\]\n\nfor a finite simple graph with `m` edges and no isolated vertices among its `n` vertices.\n\nThe proved chain establishes:\n\n1. the real closed form `2 * C(n,2) = n(n-1)`;\n2. positivity of `C(n,2)` for `n \u2265 2`;\n3. the universal lower bound `1 \u2264 C(n,2)/m` for a nonempty simple graph;\n4. the handshake bound `n \u2264 2m` when every vertex is non-isolated;\n5. the resulting upper bound `C(n,2)/m \u2264 n-1`;\n6. membership of the threshold in `[1,n-1]` for a nonempty graph without isolated vertices;\n7. the contrarian conclusion that every probability `p < 1` automatically satisfies `p < C(n,2)/m`;\n8. the equivalent strict edge-budget inequality `p*m < C(n,2)`.\n\nAll declarations have complete kernel-checked proofs and the file compiles independently.\n\n## Interpretation\n\nThe bare condition `p < C(n,2)/m` is weak when `p` is a genuine probability below one: because a simple graph has at most `C(n,2)` edges, the ratio is always at least one. Thus this inequality alone cannot distinguish sparse from dense simple graphs in the usual probability range. Any stronger future claim needs additional structure beyond this threshold inequality.\n\n## Next steps\n\nA meaningful continuation would add the omitted conclusion of the truncated original claim and test whether it follows from the threshold or requires hypotheses such as connectedness, minimum degree, regularity, or a specified random-graph model. Sharpness examples can then be formalized: complete graphs attain the lower endpoint `1`, while matchings on all vertices attain the upper endpoint `n-1` when `n` is even.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_1340",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9243b8b5",
+    "status": "available",
+    "timestamp": "2026-07-15T02:31:57.352948+00:00",
+    "title": "`Catalog/Shared/EdgeProbabilityThreshold.lean` formalizes the elementary consequ"
   },
   {
     "consumed_by_exp_id": "",
