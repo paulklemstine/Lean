@@ -213,20 +213,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The verified cycle established that the maximal number of good manifolds in an"
   },
   {
-    "consumed_by_exp_id": "c23e4bea",
-    "description": "Building on cycle 12ea9340 (Q=0.820), which proved 27 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_12ea9340_039025ac",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "12ea9340",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T22:36:30.357183+00:00",
-    "title": "Deepening: Constructive, lower-bound half of the co-index theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 167aed7f (Q=0.820), which proved 64 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes an abstract, model-agnostic version of Hamkins'\n**set-theoretic multiverse** and proves a **cross-domain bridge** connecting\nmultiverse quantification to tropical (min-plus) algebra.\n\n## What is proved\n\n**`Basic.lean` \u2014 abstract multiverse.**\nA `Multivers",
     "domains": [
@@ -1049,20 +1035,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-11T19:10:40.793079+00:00",
     "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
-  },
-  {
-    "consumed_by_exp_id": "50098ece",
-    "description": "Cycle 8ceb2563 (Q=0.820) proved 13 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**:",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_8ceb2563_6c68403d",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "8ceb2563",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T22:36:24.306202+00:00",
-    "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponen"
   },
   {
     "consumed_by_exp_id": "",
@@ -2808,6 +2780,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T00:42:06.111354+00:00",
     "title": "This cycle extends the constructive, lower-bound half of the \u2124\u2082-coindex theory e"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Positional Number Systems and Primitive Divisors\n\nThis cycle closed the outstanding gaps in the bridge between the factorial number\nsystem and the general mixed\u2011radix theory, and isolated the precise quantitative\ncore of the Fibonacci primitive\u2011divisor problem. Three conjectures below grow\ndirectly out of those findings.\n\n## 1. A uniform digit\u2011extraction algorithm across all mixed\u2011radix systems\n\n**Conjecture.** For every base sequence `b : \u2115 \u2192 \u2115` with all `b i \u2265 2`, the map\nsending a number below the running product `\u220f_{i<k} b i` to its extracted digit\nstring is a bijection onto the set of valid digit strings, and this bijection is\ncomputed by a single algorithm independent of `b`.\n\nThe key insight is that the entire uniqueness/existence machinery of a positional\nsystem depends only on the *running product of bases*, never on the individual\nbases: the factorial system (`b i = i+1`) and ordinary base\u2011`N` numerals\n(`b i = N`) are two evaluations of one parameterized identity, and the value map\ntransports along the running\u2011product equality with no further hypotheses.\n\n**Why now?** The bridge established this cycle shows the factorial uniqueness\ntheorem is a strict specialization of the general one, so the remaining step \u2014\npackaging extraction as one base\u2011agnostic bijection \u2014 is now purely structural\nrather than system\u2011specific.\n\n## 2. Carmichael's bound as a single growth inequality\n\n**Conjecture.** For every composite `n \u2265 13`, the primitive part `\u03a6(n)` of the\n`n`\u2011th Fibonacci number satisfies `\u03a6(n) > n`, and this single inequality already\nforces the existence of a primitive prime divisor.\n\nThe key insight is that the existence of a primitive divisor is *equivalent* to\nthe primitive part exceeding `1`, and the only obstruction to `\u03a6(n) > 1` is a lone\n\"intrinsic\" prime bounded by the largest prime factor of `n`; hence a growth bound\nof the shape `\u03a6(n) > n` collapses the whole theorem to one estimate.\n\n**Why now?** The reduction is already in place: the remaining obligation has been\npinned down to exactly `1 < primPart n`. What is missing is only the golden\u2011ratio\ngrowth estimate, turning a broad theorem into a focused analytic lemma.\n\n## 3. Lifting\u2011the\u2011exponent for strong divisibility sequences\n\n**Conjecture.** For the Fibonacci sequence, the exponent of a prime `p` in `F(n)`\nequals the exponent of `p` in `F(\u03b1)` plus the exponent of `p` in `n/\u03b1`, where `\u03b1`\nis the entry point of `p`; and the same law holds for every regular Lucas\nsequence.\n\nThe key insight is that the entry point organizes all `p`\u2011divisibility of the\nsequence: once `\u03b1` is known, the `p`\u2011adic valuation grows in lockstep with the\nvaluation of the index, so the multiplicative structure of `F(n)` is governed by\na valuation identity rather than by the numbers themselves.\n\n**Why now?** This law is the one arithmetic ingredient \u2014 beyond the growth bound\nof Conjecture 2 \u2014 needed to control the intrinsic prime power, and the entry\u2011point\nframework required to state it cleanly is already developed alongside the\nprimitive\u2011part construction.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1328",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "50098ece",
+    "status": "available",
+    "timestamp": "2026-07-15T00:42:45.608735+00:00",
+    "title": "This cycle closed the outstanding gaps in the bridge between the factorial numbe"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: the coindex as a complete combinatorial invariant\n\nThis cycle closed the gap between the two halves of the join law for the \u2124\u2082-coindex of free\n\u2124\u2082-sets. The lower half (a constructive, join-of-witnesses argument) was already known; the\nupper half was believed to require an equivariant cohomological obstruction. We showed instead\nthat, in the octahedral combinatorial model, the coindex is a **complete invariant** of a\nfinite free \u2124\u2082-set \u2014 it equals the number of antipodal orbits minus one \u2014 so the sharp join\nlaw `coind(K \u22c6 L) = coind(K) + coind(L) + 1` holds for *all* finite nonempty free \u2124\u2082-sets.\nThe following conjectures push this classification principle further.\n\n## 1. A weight-graded refinement of the join law\n\n**Conjecture.** Assign to each antipodal orbit a positive integer weight and define a weighted\ncoindex by counting weighted orbits. Then the weighted coindex is additive under join with an\nexplicit correction term determined only by the multiset of weights, generalizing the `+1`\nshift to a `+min`-type law.\n\n*The key insight is* that the ordinary join law is the weight-one specialization of an\nadditive law on the free commutative monoid of orbit-weight multisets, so the `+1` is really\nthe size of the smallest new simplex created by joining.\n\n*Why now?* Having established that the coindex is exactly an orbit count, the natural next\nobject is the *graded* orbit count, and the join law's `+1` is now understood structurally\nrather than as an accident of dimension.\n\n## 2. Coindex and chromatic-type lower bounds for equivariant colorings\n\n**Conjecture.** For every finite free \u2124\u2082-set, any equivariant partition of its vertices into\nantipodal-pair-free blocks uses at least `coind + 2` blocks, and this bound is attained. In\nparticular the chromatic number of the associated Kneser-type graph is governed exactly by the\ncoindex.\n\n*The key insight is* that vertex injectivity of equivariant simplicial maps \u2014 the mechanism\nbehind the upper bound proved this cycle \u2014 is precisely what forbids collapsing antipodal\norbits, which is the combinatorial content of a coloring lower bound.\n\n*Why now?* The completeness of the coindex invariant means such colorability statements can be\nreduced to pure orbit arithmetic, removing the topological detour used in classical proofs.\n\n## 3. Functorial rigidity of the coindex on the join-monoid\n\n**Conjecture.** The coindex is the unique monoid homomorphism (up to the shift normalization)\nfrom the join-monoid of finite free \u2124\u2082-sets to `(\u2115, +)` that is monotone under equivariant\nmaps and normalized on the zero-sphere. Any other join-additive, monotone, normalized invariant\ncoincides with it.\n\n*The key insight is* that monotonicity under equivariant maps plus additivity under join pins\ndown a single numerical invariant once its value on the generator `S\u2070` is fixed.\n\n*Why now?* This cycle proved both the monotonicity (functoriality) and the join-additivity;\nthe remaining step is a uniqueness argument, which is now purely algebraic.\n\n## 4. Beyond \u2124\u2082: cyclic and dihedral cross-polytope analogues\n\n**Conjecture.** For a free action of the cyclic group of prime order `p` on the vertices of a\n`p`-fold cross-polytope analogue, an analogous \"coindex = orbit count minus one\" classification\nholds, and the join law becomes `coind(K \u22c6 L) = coind(K) + coind(L) + 1` with the same shift,\nindependent of `p`.\n\n*The key insight is* that the shift-by-one comes from the join adding a single new \"bridging\"\nsimplex, a feature of the join operation itself rather than of the group \u2124\u2082.\n\n*Why now?* The \u2124\u2082 proof isolated exactly the two ingredients \u2014 injectivity of equivariant maps\nand existence of an equivariant fundamental domain \u2014 both of which have direct `\u2124/p` analogues,\nmaking the generalization concrete and testable on small cases.\n\n## 5. Infinite and measured free \u2124\u2082-sets\n\n**Conjecture.** For an infinite free \u2124\u2082-set of \"orbit-density\" `d` in a suitable measured sense,\na density coindex exists and is additive under a measured join, recovering the finite law as the\ncounting-measure special case.\n\n*The key insight is* that the finite classification expresses the coindex as half the vertex\ncount minus one, a quantity that has an immediate measured analogue once \"half\" is replaced by\nthe orbit measure.\n\n*Why now?* With the finite theory now sharp and invariant-theoretic, the passage to a measured\nlimit is the natural frontier, and the orbit-count formula gives a candidate definition to test.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1329",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c23e4bea",
+    "status": "available",
+    "timestamp": "2026-07-15T00:43:05.483629+00:00",
+    "title": "This cycle closed the gap between the two halves of the join law for the \u2124\u2082-coin"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "189556db",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThese conjectures grow out of two threads consolidated in this cycle: the\nidentification of the factorial numeral system as one point in a single\nparameterized family of mixed-rad",
-      "quality_score": 0.72,
-      "sorry_count": 6,
-      "theorem_count": 574,
-      "timestamp": "2026-07-14T06:35:05",
-      "title": "Close Proofs: `MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of"
-    },
-    {
-      "cycle_id": "30ef4e5b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Sharp Sumset Bounds in L₁ Balls\n\nThis cycle established the additive / geometric / analytic scaffolding around the\nsharp exponent `p = n·log(m+1) / log(nm+1)` for sumsets inside",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 32,
-      "timestamp": "2026-07-14T06:35:35",
-      "title": "Close Proofs: Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
-    },
-    {
       "cycle_id": "0abd0edb",
       "domain": "Novelty",
       "key_insight": "# Future directions: AVD‑total chromatic number of central graphs of regular graphs\n\n## What is proved (`Regular.lean`, 0 `sorry`)\n\nWorking with a self‑contained model of total colourings (proper vert",
@@ -499,29 +479,29 @@
       "theorem_count": 41,
       "timestamp": "2026-07-15T00:42:35",
       "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
+    },
+    {
+      "cycle_id": "50098ece",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Positional Number Systems and Primitive Divisors\n\nThis cycle closed the outstanding gaps in the bridge between the factorial number\nsystem and the general mixed‑radix theory, and",
+      "quality_score": 0.84,
+      "sorry_count": 4,
+      "theorem_count": 26,
+      "timestamp": "2026-07-15T00:42:59",
+      "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponen"
+    },
+    {
+      "cycle_id": "c23e4bea",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: the coindex as a complete combinatorial invariant\n\nThis cycle closed the gap between the two halves of the join law for the ℤ₂-coindex of free\nℤ₂-sets. The lower half (a construct",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-15T00:43:23",
+      "title": "Deepening: Constructive, lower-bound half of the co-index theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "077d3a2b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — RB-shaped finite posets\n\n## What is formalized (`RBDomainPosets.lean`)\n\nWe formalize the *combinatorial characterizing condition* of the Jung–Tix\nclassification of finite posets",
-      "quality_score": 0.62,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-12T09:19:09",
-      "title": "Characterization of Finite Posets with RB-Domain Probabilistic Powerdomains"
-    },
-    {
-      "cycle_id": "c3fe1d06",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — The Topology of Arithmetic (continued)\n\nThis cycle deepens `Shared/PrimeBarcodeInvariants.lean` and\n`Novelty/PrimePersistentHomology.lean`, which established that the zero-dimens",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 9,
-      "timestamp": "2026-07-12T09:36:18",
-      "title": "Deepening: That the zero-dimensional persistent homology of the prim"
-    },
     {
       "cycle_id": "6a70bc30",
       "domain": "Applications",
@@ -2501,27 +2481,29 @@
       "theorem_count": 41,
       "timestamp": "2026-07-15T00:42:35",
       "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
+    },
+    {
+      "cycle_id": "50098ece",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Positional Number Systems and Primitive Divisors\n\nThis cycle closed the outstanding gaps in the bridge between the factorial number\nsystem and the general mixed‑radix theory, and",
+      "quality_score": 0.84,
+      "sorry_count": 4,
+      "theorem_count": 26,
+      "timestamp": "2026-07-15T00:42:59",
+      "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponen"
+    },
+    {
+      "cycle_id": "c23e4bea",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: the coindex as a complete combinatorial invariant\n\nThis cycle closed the gap between the two halves of the join law for the ℤ₂-coindex of free\nℤ₂-sets. The lower half (a construct",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-15T00:43:23",
+      "title": "Deepening: Constructive, lower-bound half of the co-index theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "44ee6caf",
-      "domain": "Applications",
-      "name": "lawvere_witness",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "44ee6caf",
-      "domain": "Applications",
-      "name": "strange_loop",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "5b1c1bd3",
-      "domain": "Novelty",
-      "name": "as",
-      "quality": 0.82
-    },
     {
       "cycle_id": "5b1c1bd3",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "coind_octJoin_perm",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "50098ece",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "50098ece",
+      "domain": "Novelty",
+      "name": "on",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "50098ece",
+      "domain": "Novelty",
+      "name": "fib_carmichael_composite",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-07-15T00:42:35",
+  "last_updated": "2026-07-15T00:43:23",
   "open_questions": [
-    {
-      "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "ae9bfe48",
-      "domain": "Applications",
-      "sorry_count": 5,
-      "timestamp": "2026-07-14T01:18:02"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "3903c2d7",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-15T00:42:35"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "50098ece",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T00:42:59"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "85360393",
-        "quality": 0.6,
-        "theorems": 14,
-        "title": "Engel's Interval Packing Theorem"
-      },
-      {
         "cycle_id": "2c734846",
         "quality": 0.78,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.78,
         "theorems": 26,
         "title": "These conjectures are distilled from the current cycle, which closed the bridge"
+      },
+      {
+        "cycle_id": "c23e4bea",
+        "quality": 0.83,
+        "theorems": 18,
+        "title": "Deepening: Constructive, lower-bound half of the co-index theory"
       }
     ],
     "Bridges": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "14656387",
-        "quality": 0.83,
-        "theorems": 14,
-        "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
-      },
-      {
         "cycle_id": "1e9bf31c",
         "quality": 0.83,
         "theorems": 70,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 41,
         "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
+      },
+      {
+        "cycle_id": "50098ece",
+        "quality": 0.84,
+        "theorems": 26,
+        "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exp"
       }
     ],
     "NumberTheory": [
