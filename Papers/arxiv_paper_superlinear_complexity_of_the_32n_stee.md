@@ -1,37 +1,29 @@
-# Computational Evidence: The Three-Halves Steering Word
+# Computational evidence
+
+The file `Catalog/Computation/ThreeHalvesSteering.lean` contains kernel-checked finite calculations for the selected nearest-integer convention
+
+`m_n = (2·3^n + 2^n) / (2·2^n)`.
 
 ## Small cases
 
-Nearest-integer rounding of `(3/2)^n` begins as follows. The tie convention chooses the integer for which the error lies in `[-1/2,1/2)`.
+For `n = 0,…,11`, the rounded values are
 
-| `n` | `(3/2)^n` | `m_n` | `t_n = 2m_{n+1}-3m_n` |
-|---:|---:|---:|---:|
-| 0 | 1 | 1 | 1 |
-| 1 | 3/2 | 2 | -2 |
-| 2 | 9/4 | 2 | 0 |
-| 3 | 27/8 | 3 | 1 |
-| 4 | 81/16 | 5 | 1 |
-| 5 | 243/32 | 8 | -2 |
-| 6 | 729/64 | 11 | 1 |
-| 7 | 2187/128 | 17 | 1 |
+| n | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| m_n | 1 | 2 | 2 | 3 | 5 | 8 | 11 | 17 | 26 | 38 | 58 | 86 |
 
-These terms already show that the alphabet cannot be restricted to `{-1,0,1}`.
+The corresponding corrections `t_n = 2m_{n+1} - 3m_n` for `n = 0,…,10` are
 
-## OEIS and literature search
+`1, -2, 0, 1, 1, -2, 1, 1, -2, 2, -2`.
 
-No OEIS identifier is asserted here. The directly relevant object is the steering word described in the paper named in the research mission; identifying an OEIS entry from a short prefix would be unreliable.
+These calculations are proved by `ThreeHalvesSteeringCore.roundedThreeHalves_first_values` and `ThreeHalvesSteeringCore.steering_first_values`.
+
+## OEIS search
+
+No OEIS identification is asserted. An external OEIS query was not used, so recording an identifier would be unreliable.
 
 ## Counterexample hunt
 
-The finite calculations challenge two overly strong candidate claims:
+The first eleven corrections all lie in `{-2,-1,0,1,2}`, consistent with the general theorem `ThreeHalvesSteeringCore.steering_five_symbol_alphabet`. The appearance of both `-2` and `2` shows that the tempting smaller alphabet `{-1,0,1}` is false for these initial values.
 
-* “Every steering correction has absolute value at most one” fails at `n=1`, where `t_1=-2`.
-* “The word has no zero correction” fails at `n=2`, where `t_2=0`.
-
-They support the guarded five-symbol theorem: every correction belongs to `{-2,-1,0,1,2}`. The table is exploratory evidence only; the general bound is established separately from the rounding-error inequalities.
-
-## Structural checks
-
-For the first three corrections `1,-2,0`, the recursive weighted correction is
-`3(3·1 + 2·(-2)) + 4·0 = -3`. The endpoint identity gives
-`2^3m_3 = 8·3 = 24` and `3^3m_0 + (-3) = 27-3 = 24`, confirming the reconstruction formula in this sample.
+Finite data cannot test the asymptotic superlinearity claim. Accordingly, no asymptotic conclusion is drawn from this table.
