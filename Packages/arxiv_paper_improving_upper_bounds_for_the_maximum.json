@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-15T21:42:34Z",
+  "date": "2026-07-15T21:54:32Z",
   "key_results": [
     "Seed Common-Neighborhood Bound: every clique containing a seed has size at most the seed size plus a valid clique upper bound on its common neighborhood.",
     "Core and Truss Reduction Theorems: certified singleton and two-vertex seeds cannot occur in any clique larger than the incumbent.",

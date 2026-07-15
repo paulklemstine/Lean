@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "32285b55",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — γ-positivity for series–parallel symmetric edge polytopes\n\nThese conjectures are distilled from the present cycle: the algebraic structure of\nthe γ-positive cone (closure under n",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-13T03:02:38",
-      "title": "Gamma-positivity of symmetric edge polytopes for series-parallel graphs with at most four paths"
-    },
-    {
       "cycle_id": "d4192a75",
       "domain": "Applications",
       "key_insight": "# Future Directions: Oddomorphisms and Split-Off Minors\n\nThis project formalizes the algebraic backbone of **oddomorphisms** between finite\ngraphs, defined as functions `φ : V(F) → V(G)` whose `0/1` f",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T21:42:41",
       "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
+    },
+    {
+      "cycle_id": "dae162a9",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nThe formalization now establishes both the general arithmetic-to-symbolic interface and its connection to the concrete nearest-integer orbit. In particular, it proves that the exp",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-15T21:54:30",
+      "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:42:41",
+  "last_updated": "2026-07-15T21:54:30",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "70354b52",
-        "quality": 0.63344,
-        "theorems": 26,
-        "title": "Monotonicity and Jumps of Minimal Absolute Values of Fifth Roots of Unity Sums"
-      },
-      {
         "cycle_id": "048b9775",
         "quality": 0.7059866666666667,
         "theorems": 18,
@@ -3321,6 +3315,12 @@
         "quality": 0.9,
         "theorems": 5,
         "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge."
+      },
+      {
+        "cycle_id": "dae162a9",
+        "quality": 0.63,
+        "theorems": 19,
+        "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
       },
       {
         "cycle_id": "dae162a9",
