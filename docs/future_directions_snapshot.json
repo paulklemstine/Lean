@@ -1012,25 +1012,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c4f680cf",
-    "description": "Building on cycle 9a38651d (Q=0.780), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consistentHistoryEquivFixedPoint` — consistent histories ≃ round-trip fixed points;\n* `novikov_iff_fixedPoint",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_9a38651d_e03ed9d1",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "9a38651d",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T21:58:04.632669+00:00",
-    "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle a71dcffe (Q=0.780), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = resources\", that this\nthreshold is simultaneously order-theoretic, enumerative, and chromatic, and tha",
     "domain_bridges": [],
@@ -2164,7 +2145,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9243b8b5",
     "description": "Cycle 86e0e034 (Q=0.740) proved 5 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
     "domain_bridges": [],
     "domains": [
@@ -2176,7 +2157,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "86e0e034",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T10:39:03.033786+00:00",
     "title": "Close Proofs: The mission asked to interrogate the claim:"
   },
@@ -3834,6 +3815,26 @@
     "status": "available",
     "timestamp": "2026-07-15T00:43:36.361880+00:00",
     "title": "`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` contains a com"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Recurrence and Symmetry in the Logic of Causal Loops\n\nThis cycle deepened the theory of closed timelike curves beyond the bare\nfixed-point (Novikov self-consistency) picture, establishing four independent\nstructural principles for a causal loop presented by its loop map: coordinate\ninvariance, product compositionality, discrete recurrence on finite phase spaces,\nand a parity law for time-reversal loops. The following conjectures push each of\nthese frontiers.\n\n## 1. Uniform recurrence time and the spectrum of return periods\n\n**Conjecture.** For an invertible loop on a finite phase space, the set of return\nperiods of individual world-states is exactly the set of divisors of a single\nuniversal period, and the minimal universal period equals the least common\nmultiple of the individual return times.\n\n*The key insight is* that an invertible loop on a finite world decomposes into\ndisjoint cyclic orbits, so the global return structure is governed entirely by the\narithmetic of orbit lengths — recurrence is a number-theoretic phenomenon, not an\nanalytic one.\n\n*Why now?* The discrete recurrence principle established this cycle shows that a\nsingle universal period exists; the natural next step is to pin down its exact\nvalue and to characterise which states share which periods, turning a qualitative\nrecurrence statement into a quantitative spectral one.\n\n## 2. A signed Lefschetz index for general loops\n\n**Conjecture.** For every invertible loop on a finite phase space there is an\ninteger-valued index, computable from the orbit structure, whose parity coincides\nwith the number of self-consistent states, and which reduces to the phase-space\nsize for time-reversal loops.\n\n*The key insight is* that the mod-2 parity law for involutions is the shadow of a\nfiner integer invariant: counting orbits with sign recovers a Lefschetz-type\nfixed-point index that constrains consistent histories for arbitrary loops, not\nonly self-inverse ones.\n\n*Why now?* This cycle proved the involutive case exactly (fixed-point count equals\nphase-space size mod 2). Generalising from involutions to arbitrary invertible\nloops is the obvious lift, and the orbit decomposition needed is already the\nengine behind the recurrence results.\n\n## 3. Coordinate-free consistency for continuous loops on higher-dimensional\nphase spaces\n\n**Conjecture.** Any continuous loop map of a compact convex phase region into\nitself, in any finite dimension, admits a self-consistent state, and this\nproperty is invariant under continuous change of coordinates.\n\n*The key insight is* that the one-dimensional interval guarantee is a special case\nof a topological fixed-point law, and that the coordinate invariance proved here\nfor bijective relabellings extends to homeomorphisms, making self-consistency a\ngenuinely topological — not merely set-theoretic — invariant of a loop.\n\n*Why now?* Having sharpened the analytic guarantee from the unit interval to an\narbitrary compact interval, and having established coordinate invariance in the\ndiscrete setting, the unifying move is to combine them: a topological fixed-point\ntheorem plus homeomorphism invariance yields consistency for realistic\nmulti-parameter phase spaces.\n\n## 4. Branch cost of paradox resolution\n\n**Conjecture.** A paradoxical loop on a finite phase space requires strictly more\nthan one branch to resolve, and the minimal number of branches needed for a\nconsistent branching history equals the length of the longest orbit of the loop\nminus its number of self-consistent states.\n\n*The key insight is* that recurrence and branching are two faces of the same\nmechanism: a state that returns only after `k` traversals can be threaded through\n`k` branches to close consistently, so the \"cost\" of taming a paradox is measured\nby exactly the orbit data that governs recurrence.\n\n*Why now?* This cycle exhibited the grandfather loop as paradoxical yet\nperiod-two recurrent, quantifying for the first time how iteration alone tames a\nparadox. Converting this observation into a general branch-cost formula connects\nthe single-timeline recurrence results to the multiverse resolution.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_1332",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c4f680cf",
+    "status": "available",
+    "timestamp": "2026-07-15T00:44:19.603412+00:00",
+    "title": "This cycle deepened the theory of closed timelike curves beyond the bare"
   },
   {
     "ambition_level": "extension",

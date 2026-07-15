@@ -2145,7 +2145,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9243b8b5",
     "description": "Cycle 86e0e034 (Q=0.740) proved 5 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
     "domain_bridges": [],
     "domains": [
@@ -2157,7 +2157,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "86e0e034",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T10:39:03.033786+00:00",
     "title": "Close Proofs: The mission asked to interrogate the claim:"
   },

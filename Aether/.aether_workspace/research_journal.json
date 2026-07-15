@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "769cd692",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: from the general dimension law to the excess spectrum\n\nThis cycle detached the \"+1 dimension per suspension\" phenomenon from the\noctahedral base: the suspension tower `Sᵏ(K)` of *",
-      "quality_score": 0.78,
-      "sorry_count": 1,
-      "theorem_count": 51,
-      "timestamp": "2026-07-14T07:30:03",
-      "title": "**suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
-    },
-    {
       "cycle_id": "efa2b99e",
       "domain": "Applications",
       "key_insight": "# Future Directions — Toughness as an order-monotone invariant\n\nThis cycle promoted the component-count toughness toolkit from a collection of\nisolated lemmas into a small order-theoretic package: `1`",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T00:44:03",
       "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
+    },
+    {
+      "cycle_id": "c4f680cf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Recurrence and Symmetry in the Logic of Causal Loops\n\nThis cycle deepened the theory of closed timelike curves beyond the bare\nfixed-point (Novikov self-consistency) picture, esta",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 43,
+      "timestamp": "2026-07-15T00:44:22",
+      "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "53945fe2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle deepens the probabilistic-method development (Erdős Ramsey lower bound, first-moment\nprinciple, and the Lovász Local Lemma chain rule) by formalising a *second* pillar",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-12T10:27:15",
-      "title": "Deepening: Formalizing the Probabilistic Method: Erdos Meets Lean"
-    },
     {
       "cycle_id": "a6691c84",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T00:44:03",
       "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
+    },
+    {
+      "cycle_id": "c4f680cf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Recurrence and Symmetry in the Logic of Causal Loops\n\nThis cycle deepened the theory of closed timelike curves beyond the bare\nfixed-point (Novikov self-consistency) picture, esta",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 43,
+      "timestamp": "2026-07-15T00:44:22",
+      "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5b1c1bd3",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5b1c1bd3",
-      "domain": "Novelty",
-      "name": "signed_count",
-      "quality": 0.82
-    },
     {
       "cycle_id": "07d73c91",
       "domain": "Novelty",
@@ -2803,17 +2791,22 @@
       "domain": "Novelty",
       "name": "fib_carmichael_composite",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "c4f680cf",
+      "domain": "Novelty",
+      "name": "iterate_evolve",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "c4f680cf",
+      "domain": "Novelty",
+      "name": "selfConsistent_conj",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-15T00:44:03",
+  "last_updated": "2026-07-15T00:44:22",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "6af180ae",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T01:53:43"
-    },
     {
       "context": "empty statement about an unreachable complex.  No `sorry` remains.; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k",
       "cycle_id": "cf19c51c",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-15T00:44:03"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "c4f680cf",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T00:44:22"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ef88d58c",
-        "quality": 0.83,
-        "theorems": 41,
-        "title": "Deepening: Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
-      },
-      {
         "cycle_id": "0725f80e",
         "quality": 0.86,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.88,
         "theorems": 0,
         "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematica"
+      },
+      {
+        "cycle_id": "c4f680cf",
+        "quality": 0.83,
+        "theorems": 43,
+        "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes "
       }
     ],
     "NumberTheory": [
