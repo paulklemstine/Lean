@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "385fff12",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Constrained Coset Guesswork\n\nDerived from the exact coset-exponent cycle. Each conjecture is falsifiable.\n\n## 1. Universality of the additive redundancy term\n\n**Conjecture.** For",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-14T10:08:42",
-      "title": "Exact Exponent for Constrained Coset Guesswork"
-    },
-    {
-      "cycle_id": "c4aa235b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: AVD-total colourings of central graphs\n\nThis cycle established that the adjacent-vertex-distinguishing total chromatic\nnumber of the central graph `C(G)` of a non-complete graph `",
-      "quality_score": 0.82,
-      "sorry_count": 7,
-      "theorem_count": 44,
-      "timestamp": "2026-07-14T10:25:32",
-      "title": "Deepening: Exact AVD‑total chromatic number of central graphs of regular graphs"
-    },
-    {
       "cycle_id": "b2384a8a",
       "domain": "Applications",
       "key_insight": "# Future Directions — Descendant limit laws in random recursive DAGs\n\nDerived from the current cycle, whose contributions are: (i) the complete moment\ndescription of the Gamma`(d,1)` limit target, (ii",
@@ -499,29 +479,29 @@
       "theorem_count": 5,
       "timestamp": "2026-07-15T02:32:33",
       "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
+    },
+    {
+      "cycle_id": "4b27af05",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\n- Instantiate `graph_closure_inclusion_iff` with the Ehresmann rank definition of Bruhat order on `Equiv.Perm (Fin n)` and permutation inversion.\n- Connect `principalClosure` to t",
+      "quality_score": 0.88,
+      "sorry_count": 3,
+      "theorem_count": 3,
+      "timestamp": "2026-07-15T02:32:44",
+      "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
+    },
+    {
+      "cycle_id": "6097a507",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe present cycle refines the exact uniform coset exponent to exact finite-length first and second moments and their asymptotic prefactors.  Several natural extensions remain.\n\n1.",
+      "quality_score": 0.91,
+      "sorry_count": 3,
+      "theorem_count": 3,
+      "timestamp": "2026-07-15T02:32:57",
+      "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8cebc683",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis file (`Catalog/Mandelbrot/EscapeRadius.lean`) formalizes the elementary dynamics of\nthe Mandelbrot quadratic recurrence `z_{n+1} = z_n^2 + c` and proves:\n\n- `step_norm_lower`",
-      "quality_score": 0.72,
-      "sorry_count": 7,
-      "theorem_count": 120,
-      "timestamp": "2026-07-12T13:18:12",
-      "title": "Close Proofs: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Pr"
-    },
-    {
-      "cycle_id": "73c84a79",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Tightness of the Isolation Lemma bound\n\nThe exact count established for the singleton hypergraph shows that the global\nlower bound `n · ∑_{j=0}^{d-1} j^{n-1}` on the number of is",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 20,
-      "timestamp": "2026-07-12T13:35:34",
-      "title": "Tightness of the Isolation Lemma bound for arbitrary edge offsets"
-    },
     {
       "cycle_id": "bc831bad",
       "domain": "Applications",
@@ -2501,6 +2481,26 @@
       "theorem_count": 5,
       "timestamp": "2026-07-15T02:32:33",
       "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
+    },
+    {
+      "cycle_id": "4b27af05",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\n- Instantiate `graph_closure_inclusion_iff` with the Ehresmann rank definition of Bruhat order on `Equiv.Perm (Fin n)` and permutation inversion.\n- Connect `principalClosure` to t",
+      "quality_score": 0.88,
+      "sorry_count": 3,
+      "theorem_count": 3,
+      "timestamp": "2026-07-15T02:32:44",
+      "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
+    },
+    {
+      "cycle_id": "6097a507",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe present cycle refines the exact uniform coset exponent to exact finite-length first and second moments and their asymptotic prefactors.  Several natural extensions remain.\n\n1.",
+      "quality_score": 0.91,
+      "sorry_count": 3,
+      "theorem_count": 3,
+      "timestamp": "2026-07-15T02:32:57",
+      "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
     }
   ],
   "key_theorems": [
@@ -2805,22 +2805,8 @@
       "quality": 0.9
     }
   ],
-  "last_updated": "2026-07-15T02:32:33",
+  "last_updated": "2026-07-15T02:32:57",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "11762aec",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T03:41:29"
-    },
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "bec8fe46",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T04:50:27"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "797ab793",
@@ -3016,6 +3002,20 @@
       "domain": "Computation",
       "sorry_count": 3,
       "timestamp": "2026-07-15T02:32:33"
+    },
+    {
+      "context": "",
+      "cycle_id": "4b27af05",
+      "domain": "Tropical",
+      "sorry_count": 3,
+      "timestamp": "2026-07-15T02:32:44"
+    },
+    {
+      "context": "",
+      "cycle_id": "6097a507",
+      "domain": "MachineLearning",
+      "sorry_count": 3,
+      "timestamp": "2026-07-15T02:32:57"
     }
   ],
   "research_threads": {
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "1da6d023",
-        "quality": 0.5940000000000001,
-        "theorems": 20,
-        "title": "Exact 2-adic valuation of coefficients of T(x)^m for m ≡ 1 mod 4"
-      },
-      {
         "cycle_id": "3b621fb7",
         "quality": 0.39727681,
         "theorems": 6,
@@ -3575,6 +3569,12 @@
         "quality": 0.83,
         "theorems": 9,
         "title": "Deepening: That the zero-dimensional persistent homology of the prim"
+      },
+      {
+        "cycle_id": "6097a507",
+        "quality": 0.91,
+        "theorems": 3,
+        "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-expone"
       }
     ],
     "Novelty": [
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "d80d981e",
-        "quality": 0.87056,
-        "theorems": 15,
-        "title": "Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
-      },
-      {
         "cycle_id": "db78fb28",
         "quality": 0.66208,
         "theorems": 6,
@@ -4009,6 +4003,12 @@
         "quality": 0.78,
         "theorems": 47,
         "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
+      },
+      {
+        "cycle_id": "4b27af05",
+        "quality": 0.88,
+        "theorems": 3,
+        "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety"
       }
     ]
   }

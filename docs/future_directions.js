@@ -325,20 +325,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "6097a507",
-    "description": "Building on cycle 8ceb2563 (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Ar\u0131kan\u2013Merhav growth rate and der",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_8ceb2563_44b64662",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "8ceb2563",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T22:36:24.187404+00:00",
-    "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 8e89241b (Q=0.820), which proved 18 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The coefficients V\u2082(n), V\u2083(n), V\u2084(n) of the q-series v\u2082(q), v\u2083(q), v\u2084(q) satisfy an asymptotic alternating sign property: there exists an explicit oscillatory factor such that (-1)^n V_i(n) > 0 for all sufficiently large n outside a density-zero exceptional set. This means the signs strictly alterna",
     "domains": [
@@ -407,20 +393,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-12T07:53:41.275291+00:00",
     "title": "Deepening: Categorifying the quantum binomial product rule via filtrations of plethystic mo"
-  },
-  {
-    "consumed_by_exp_id": "4b27af05",
-    "description": "Building on cycle c81fdc47 (Q=0.820), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the natural bijection \u03c6 from the set of B-orbits on B_n \u00d7 P^(n-1) to its image in W_(n+1) \u00d7 W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O\u2081 \u2286 O\u0305\u2082 iff \u03c6(O\u2081) \u2264 \u03c6(O\u2082) in (W_(n+1), \u2264_Bruhat) \u00d7 (W_(n+1), \u2264_Bruhat).",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_c81fdc47_bd77d4b7",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "c81fdc47",
-    "status": "in_progress",
-    "timestamp": "2026-07-12T16:46:15.392866+00:00",
-    "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
     "consumed_by_exp_id": "",
@@ -1992,7 +1964,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle assembled a reusable toughness toolkit around a single load-bearing"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "22a6ce83",
     "description": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain is squeezed between `2 n^{-3}` and\n`12 n^{-3}`, so it is exactly of order `n^{-3}`. The upper bound comes from a\nsingle slowly-varying position witness; the lower bound is a telescoping\nCauchy\u2013Schwarz Poincar\u00e9 inequality showing that *every* non-constant test\nfunction already has Rayleigh quotient at least `2 n^{-3}`. The following\nconjectures push this mechanism toward the genuine fixed-genus chord-swap chain.\n\n## Conjecture 1 \u2014 Genus-graded cubic gap for chord-swap chains\nFor chord diagrams of `n` chords and any fixed genus `g`, the chord-swap chain\nhas spectral gap `\u0398(n^{-3})`, with the implied constants depending only on `g`.\n\nThe key insight is that a chord diagram carries a monotone integer statistic \u2014\na genus-aware \"displacement\" that changes by exactly one unit under a single\nchord swap \u2014 whose Dirichlet energy grows linearly while its variance grows\nquartically, reproducing the path model's energy-to-variance ratio of `n^{-3}`.\n\nWhy now? The abstract energy/variance bookkeeping is fully established and the\none-dimensional prototype is pinned to the cubic window, so the only missing\ningredient is the construction and quartic-variance estimate for the genus\nstatistic \u2014 a concrete, self-contained combinatorial target rather than an\nanalytic obstacle.\n\n## Conjecture 2 \u2014 Universal cubic law for `\u00b11`-monotone swap chains\nAny reversible swap chain on a finite state space that admits a monotone integer\nstatistic taking `\u0398(n)` distinct values and changing by `\u00b11` per accepted move,\nwith `\u0398(n)` boundary-adjacent transitions, has spectral gap `\u0398(n^{-3})`.\n\nThe key insight is that the exponent `3 = 4 \u2212 1` is forced purely by growth\nrates: the variance of such a statistic is quartic in its range while its\nDirichlet energy is only linear, so the ratio is cubic regardless of the\nunderlying combinatorial model.\n\nWhy now? The lower-bound half proved here is model-agnostic \u2014 it uses only the\ntelescoping structure of a `\u00b11` statistic \u2014 so the universal statement is within\nreach by abstracting the path argument away from its specific adjacency weights.\n\n## Conjecture 3 \u2014 Sharp leading constant\nFor the path swap chain the spectral gap satisfies `\u03b3_n = (c + o(1)) n^{-3}` for\nan explicit constant `c` strictly inside `[2, 12]`, realised by the discrete\nfirst eigenfunction (a shifted cosine profile) rather than the linear position\nwitness.\n\nThe key insight is that the linear witness is energy-optimal only to within a\nconstant factor; replacing it by the discrete cosine mode simultaneously lowers\nthe energy and matches the true bottom of the spectrum, so both bounds should\ncollapse to a single constant.\n\nWhy now? The two-sided window is already established, isolating the remaining\nquestion to a one-parameter optimisation over test-function profiles \u2014 a finite\nvariational problem amenable to the same Rayleigh calculus used here.\n\n## Conjecture 4 \u2014 Higher-dimensional swap complexes\nOn a `d`-dimensional product of swap chains the spectral gap is `\u0398(n^{-3})` as\nwell, independent of `d`, because the slowest mode remains one-dimensional.\n\nThe key insight is that tensorising commuting swap chains adds their Dirichlet\nforms while the extremal test function still varies along a single coordinate,\nso the worst-case Rayleigh quotient is inherited unchanged from the line.\n\nWhy now? With the exact one-dimensional constant window in hand, the product\ncomparison reduces to a clean sub-additivity statement for Dirichlet forms,\nwhich the present energy/variance identities express directly.\n\n\n# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain is squeezed between `2 n^{-3}` and\n`12 n^{-3}`, so it is exactly of order `n^{-3}`. The upper bound comes from a\nsingle slowly-varying position witness; the lower bound is a telescoping\nCauchy\u2013Schwarz Poincar\u00e9 inequality showing that *every* non-constant test\nfunction already has Rayleigh quotient at least `2 n^{-3}`. The following\nconjectures push this mechanism toward the genuine fixed-genus chord-swap chain.\n\n## Conjecture 1 \u2014 Genus-graded cubic gap for chord-swap chains\nFor chord diagrams of `n` chords and any fixed genus `g`, the chord-swap chain\nhas spectral gap `\u0398(n^{-3})`, with the implied constants depending only on `g`.\n\nThe key insight is that a chord diagram carries a monotone integer statistic \u2014\na genus-aware \"displacement\" that changes by exactly one unit under a single\nchord swap \u2014 whose Dirichlet energy grows linearly while its variance grows\nquartically, reproducing the path model's energy-to-variance ratio of `n^{-3}`.\n\nWhy now? The abstract energy/variance bookkeeping is fully established and the\none-dimensional prototype is pinned to the cubic window, so the only missing\ningredient is the construction and quartic-variance estimate for the genus\nstatistic \u2014 a concrete, self-contained combinatorial target rather than an\nanalytic obstacle.\n\n## Conjecture 2 \u2014 Universal cubic law for `\u00b11`-monotone swap chains\nAny reversible swap chain on a finite state space that admits a monotone integer\nstatistic taking `\u0398(n)` distinct values and changing by `\u00b11` per accepted move,\nwith `\u0398(n)` boundary-adjacent transitions, has spectral gap `\u0398(n^{-3})`.\n\nThe key insight is that the exponent `3 = 4 \u2212 1` is forced purely by growth\nrates: the variance of such a statistic is quartic in its range while its\nDirichlet energy is only linear, so the ratio is cubic regardless of the\nunderlying combinatorial model.\n\nWhy now? The lower-bound half proved here is model-agnostic \u2014 it uses only the\ntelescoping structure of a `\u00b11` statistic \u2014 so the universal statement is within\nreach by abstracting the path argument away from its specific adjacency weights.\n\n## Conjecture 3 \u2014 Sharp leading constant\nFor the path swap chain the spectral gap satisfies `\u03b3_n = (c + o(1)) n^{-3}` for\nan explicit constant `c` strictly inside `[2, 12]`, realised by the discrete\nfirst eigenfunction (a shifted cosine profile) rather than the linear position\nwitness.\n\nThe key insight is that the linear witness is energy-optimal only to within a\nconstant factor; replacing it by the discrete cosine mode simultaneously lowers\nthe energy and matches the true bottom of the spectrum, so both bounds should\ncollapse to a single constant.\n\nWhy now? The two-sided window is already established, isolating the remaining\nquestion to a one-parameter optimisation over test-function profiles \u2014 a finite\nvariational problem amenable to the same Rayleigh calculus used here.\n\n## Conjecture 4 \u2014 Higher-dimensional swap complexes\nOn a `d`-dimensional product of swap chains the spectral gap is `\u0398(n^{-3})` as\nwell, independent of `d`, because the slowest mode remains one-dimensional.\n\nThe key insight is that tensorising commuting swap chains adds their Dirichlet\nforms while the extremal test function still varies along a single coordinate,\nso the worst-case Rayleigh quotient is inherited unchanged from the line.\n\nWhy now? With the exact one-dimensional constant window in hand, the product\ncomparison reduces to a clean sub-additivity statement for Dirichlet forms,\nwhich the present energy/variance identities express directly.\n",
     "domains": [
       "Algebra",
@@ -2002,7 +1974,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "bec8fe46",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T04:50:15.932619+00:00",
     "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
   },
@@ -2890,6 +2862,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T02:32:29.643432+00:00",
     "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n- Instantiate `graph_closure_inclusion_iff` with the Ehresmann rank definition of Bruhat order on `Equiv.Perm (Fin n)` and permutation inversion.\n- Connect `principalClosure` to the Zariski closures of actual Borel orbits after introducing the required algebraic-group and flag-variety geometry.\n- Generalize the graph construction to parametrizations with two distinct order-reflecting coordinate maps into different Weyl groups.\n- Show that the lower-set correspondence is an order isomorphism between the lattice of Bruhat lower sets and the lattice of product-order lower subsets supported on the parametrization image.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1343",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4b27af05",
+    "status": "available",
+    "timestamp": "2026-07-15T02:32:40.026233+00:00",
+    "title": "Future directions from cycle 4b27af05"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe present cycle refines the exact uniform coset exponent to exact finite-length first and second moments and their asymptotic prefactors.  Several natural extensions remain.\n\n1. **Arbitrary positive real moment order.** Prove\n   `uniformMoment b k \u03c1 / (b^k)^\u03c1 \u2192 1/(\u03c1+1)` for every `\u03c1 > 0`.  This requires a Riemann-sum or integral comparison theorem for `x^\u03c1` and would subsume the prefactors `1/2` and `1/3` proved here.\n\n2. **Distributional convergence.** The normalized uniform rank `G/N` should converge to the uniform distribution on `[0,1]`.  Moment convergence for all natural orders would be a concrete intermediate statement and would explain all constants `1/(m+1)` simultaneously.\n\n3. **Finite-blocklength corrections.** The exact identities here expose corrections of order `N\u207b\u00b9` and `N\u207b\u00b2`.  One can combine these with a dimension schedule `k_n = \u230aRn\u230b` to derive explicit exponentially small errors around the constants.\n\n4. **Nonuniform sources and genuine random cosets.** The strongest conceptual remaining step is to derive the compression relation from a probabilistic random-linear-code model rather than postulating it, and then identify prefactors (not merely exponents) away from the maximal-entropy source.\n\n5. **Higher cumulants.** Exact third and fourth moments would yield limiting skewness and kurtosis and further quantify fluctuations of constrained uniform guesswork.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1344",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6097a507",
+    "status": "available",
+    "timestamp": "2026-07-15T02:32:55.739339+00:00",
+    "title": "The present cycle refines the exact uniform coset exponent to exact finite-lengt"
   },
   {
     "consumed_by_exp_id": "",
