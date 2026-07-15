@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "82155f74",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Stability of the Sharp Diagonal Spectral Correlation Inequality\n\nThis cycle resolved the *diagonal* case of the correlation-stability problem for\nincreasing Boolean functions with",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-12T21:59:15",
-      "title": "Stability of the sharp diagonal spectral correlation inequality for monotone Boolean functions"
-    },
-    {
       "cycle_id": "0c4e7ae8",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle continues the probabilistic-method thread on **Property B** (Erdős 1963,\ntwo-colourability of sparse hypergraphs). The previous cycle proved the general lower bound\n`2^",
@@ -2501,6 +2491,16 @@
       "theorem_count": 91,
       "timestamp": "2026-07-15T08:58:17",
       "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
+    },
+    {
+      "cycle_id": "fcbd747f",
+      "domain": "Probability",
+      "key_insight": "# Future directions: weak and strong Boolean-cube-free families\n\n## Results established\n\nThe Lean development proves an arbitrary-rank strengthening of the standard rank-window obstruction: a family s",
+      "quality_score": 0.61,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-15T13:42:53",
+      "title": "ArXiv paper: On the maximum size of $B_3$-free families"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T08:58:17",
+  "last_updated": "2026-07-15T13:42:53",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "a7402c18",
-        "quality": 0.6096,
-        "theorems": 9,
-        "title": "Seymour's second neighborhood conjecture for oriented graphs"
-      },
-      {
         "cycle_id": "935491ef",
         "quality": 0.70296,
         "theorems": 14,
@@ -3823,6 +3817,12 @@
         "quality": 0.75,
         "theorems": 16,
         "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
+      },
+      {
+        "cycle_id": "fcbd747f",
+        "quality": 0.61,
+        "theorems": 18,
+        "title": "ArXiv paper: On the maximum size of $B_3$-free families"
       }
     ],
     "Pythagorean": [
