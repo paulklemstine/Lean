@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b2384a8a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Descendant limit laws in random recursive DAGs\n\nDerived from the current cycle, whose contributions are: (i) the complete moment\ndescription of the Gamma`(d,1)` limit target, (ii",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-14T10:25:51",
-      "title": "Limit Distribution of Descendants in Random d-DAGs"
-    },
-    {
       "cycle_id": "ef403dbc",
       "domain": "Applications",
       "key_insight": "# Future Directions — White's Quadratic Exchange Conjecture (Part 3)\n\nThis cycle deepened the quadratic-exchange engine (`Basic.lean`) and its uniform\ninstances (`Uniform.lean`) with genuine structura",
@@ -499,19 +489,19 @@
       "theorem_count": 3,
       "timestamp": "2026-07-15T02:32:57",
       "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
+    },
+    {
+      "cycle_id": "f243395d",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Stable-Core Rank for Tropical Analogies\n\n## 1. A semiring-valued rank functor for adjoint analogies\n\n**Conjecture.** Stable-core cardinality extends from finite posets to a rank f",
+      "quality_score": 0.91,
+      "sorry_count": 4,
+      "theorem_count": 33,
+      "timestamp": "2026-07-15T03:10:55",
+      "title": "This cycle recast analogy-making between two ordered structures as the taking of"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bc831bad",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Neural Coding: from Averages to Concentration\n\nThe present cycle upgraded the neural-coding chain from *first-moment* facts\n(capacity `2^N`, average energy `N/2`, sparse counts `",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 7,
-      "timestamp": "2026-07-12T13:53:38",
-      "title": "Deepening: `NeuralCoding.lean` builds a self-contained chain of neural-coding results:"
-    },
     {
       "cycle_id": "d019c88a",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 3,
       "timestamp": "2026-07-15T02:32:57",
       "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
+    },
+    {
+      "cycle_id": "f243395d",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Stable-Core Rank for Tropical Analogies\n\n## 1. A semiring-valued rank functor for adjoint analogies\n\n**Conjecture.** Stable-core cardinality extends from finite posets to a rank f",
+      "quality_score": 0.91,
+      "sorry_count": 4,
+      "theorem_count": 33,
+      "timestamp": "2026-07-15T03:10:55",
+      "title": "This cycle recast analogy-making between two ordered structures as the taking of"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0725f80e",
-      "domain": "Novelty",
-      "name": "mobius_ratio_strictMono",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "0725f80e",
-      "domain": "Novelty",
-      "name": "mobius_ratio_strictAnti",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "daf8e94d",
-      "domain": "Novelty",
-      "name": "star_pairwise",
-      "quality": 0.82
-    },
     {
       "cycle_id": "daf8e94d",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Computation",
       "name": "shadow_triangles_subset_edges",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "f243395d",
+      "domain": "Tropical",
+      "name": "lives",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "f243395d",
+      "domain": "Tropical",
+      "name": "triangles_sized",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "f243395d",
+      "domain": "Tropical",
+      "name": "shadow_triangles_subset_edges",
+      "quality": 0.91
     }
   ],
-  "last_updated": "2026-07-15T02:32:57",
+  "last_updated": "2026-07-15T03:10:55",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "797ab793",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T06:00:01"
-    },
     {
       "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.; necessary.  All main theorems are `sorry`-free and use genuine arguments; sorry",
       "cycle_id": "189556db",
@@ -3016,6 +3009,13 @@
       "domain": "MachineLearning",
       "sorry_count": 3,
       "timestamp": "2026-07-15T02:32:57"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "f243395d",
+      "domain": "Tropical",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T03:10:55"
     }
   ],
   "research_threads": {
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "db78fb28",
-        "quality": 0.66208,
-        "theorems": 6,
-        "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
-      },
-      {
         "cycle_id": "6d5a2dac",
         "quality": 0.67304,
         "theorems": 10,
@@ -4009,6 +4003,12 @@
         "quality": 0.88,
         "theorems": 3,
         "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety"
+      },
+      {
+        "cycle_id": "f243395d",
+        "quality": 0.91,
+        "theorems": 33,
+        "title": "This cycle recast analogy-making between two ordered structures as the taking of"
       }
     ]
   }
