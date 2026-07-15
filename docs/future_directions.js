@@ -311,7 +311,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "5b14e425",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8ceb2563 (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Ar\u0131kan\u2013Merhav growth rate and der",
     "domains": [
       "Novelty"
@@ -320,7 +320,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "8ceb2563",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-14T22:36:24.187404+00:00",
     "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
   },
@@ -409,7 +409,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b27af05",
     "description": "Building on cycle c81fdc47 (Q=0.820), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the natural bijection \u03c6 from the set of B-orbits on B_n \u00d7 P^(n-1) to its image in W_(n+1) \u00d7 W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O\u2081 \u2286 O\u0305\u2082 iff \u03c6(O\u2081) \u2264 \u03c6(O\u2082) in (W_(n+1), \u2264_Bruhat) \u00d7 (W_(n+1), \u2264_Bruhat).",
     "domains": [
       "Applications"
@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "c81fdc47",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-12T16:46:15.392866+00:00",
     "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
@@ -1458,20 +1458,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Colorful Carath\u00e9odory theorem for spanning k-trees admits a polynomial-size witness"
   },
   {
-    "consumed_by_exp_id": "99a1b43f",
-    "description": "The spectral inequality equivalence for Sidorenko-type inequalities in admissible classes fails for certain bipartite graphs outside the range v(H) \u2264 e(H). Specifically, for the 5-vertex path graph H (a tree with 5 vertices and 4 edges), there exists an admissible class C (e.g., the class of doubly nonnegative graphons) such that the spectral inequality holds for all W \u2208 C, but H is not C-Sidorenko.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0408",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02260v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-05T22:13:32.517589+00:00",
-    "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every connected bipartite {-1,0,1}-diagonalizable graph on n vertices is a complete bipartite graph K_{n/2, n/2}. This strengthens the paper's theorem that every bipartite {-1,0,1}-diagonalizable graph is regular, and if true, would provide a complete structural characterization connecting the {-1,0,1}-diagonalizability property to classical complete bipartite graph structure.",
     "domains": [
@@ -1561,18 +1547,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Decision problem for Hamilton $2$-cycles in $4$-graphs' and formalize its key results. Abstract: A $4$-uniform $2$-cycle in a $4$-uniform hypergraph of length $t$ is a cyclic ordering of $2t$ vertices $v_1v_2\\cdots v_{2t}v_1$ such that $v_{2i+1}v_{2i+2}v_{2i+3}v_{2i+4}$ are edges for $0\\le i\\le t-1$ while the addition is modulo $2t$. For every $\u03b3>0$ and large $n$, we characterize the $n$-vertex $4$-uniform hypergraphs such that every triple of vertices is contained in at least $(1/3+\u03b3)n$ edges and admits a Hamilton $2$-cycle. Up to the error term $\u03b3n$, the assumption on the minimum codegree is best possible and verifies a conjecture of Garbe and Mycroft. As a consequence, this gives a polynomial-time algorithm that decides whether an $n$-vertex $4$-uniform hypergraph with minimum codegree $(1/3+\u03b3)n$ contains a Hamilton $2$-cycle. This stands as a steep contrast to the graph case where such a hardness gap has size $o(n)$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1334",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11872v1",
+    "status": "available",
+    "timestamp": "2026-07-15T01:03:37.444081+00:00",
+    "title": "ArXiv paper: Decision problem for Hamilton $2$-cycles in $4$-graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems' and formalize its key results. Abstract: We study twisted Weyl group multiple Dirichlet series attached to symmetrizable Kac-Moody root systems, using the Chinta-Gunnells method to construct their $p$-parts. Our main result is a decomposition theorem for functions invariant under the twisted Chinta-Gunnells action: under natural analytic hypotheses, such a function has a unique expansion in terms of shifted Chinta-Gunnells averages, indexed by the dominant weights in the highest weight module determined by the twisting parameter. In particular, we show that this decomposition holds for twisted multiple Dirichlet series over rational function fields. For finite root systems, these results were proved by Friedlander. We also show that the relevant Chinta-Gunnells averages admit analytic continuation to the interior of the complexified Tits cone. In the affine $\\widetilde{A}_1$ case, we prove extra functional equations, not arising from the Weyl group, for the untwisted average and for averages twisted by fundamental weights. As",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_1333",
+    "id": "fd_1335",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11834v1",
     "status": "available",
     "timestamp": "2026-07-15T00:46:25.260759+00:00",
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations' and formalize its key results. Abstract: We prove the vanishing of the adjoint Bloch--Kato Selmer group of the Galois representations associated to regular algebraic automorphic representations of general linear groups over CM fields. A key novelty of our work is that we impose conditions only on the $p$-adic Galois representations, and not on their associated residual representations modulo $p$.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1336",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11769v1",
+    "status": "available",
+    "timestamp": "2026-07-15T01:03:40.881725+00:00",
+    "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations"
   },
   {
     "consumed_by_exp_id": "",

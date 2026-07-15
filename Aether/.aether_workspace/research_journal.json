@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "efa2b99e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Toughness as an order-monotone invariant\n\nThis cycle promoted the component-count toughness toolkit from a collection of\nisolated lemmas into a small order-theoretic package: `1`",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-14T08:39:48",
-      "title": "Reusable toughness toolkit centered on the *component"
-    },
-    {
       "cycle_id": "0a1d0253",
       "domain": "Applications",
       "key_insight": "# Future Directions — Supersingular sharp/flat degrees at a general prime\n\nThis cycle established that the sharp/flat characteristic-degree arithmetic of a\nsupersingular elliptic curve, previously und",
@@ -499,19 +489,19 @@
       "theorem_count": 43,
       "timestamp": "2026-07-15T00:44:22",
       "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
+    },
+    {
+      "cycle_id": "99a1b43f",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe proposed `P₅` separation cannot occur with the standard homomorphism-density definition: `SpectralTransferSharpness/P5.lean` proves the stronger statement that every finite sy",
+      "quality_score": 0.93,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-15T01:03:29",
+      "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a6691c84",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThe cycle established that the atomic AllDifferent constraint has a sharp\nsatisfiability threshold at the balance point \"demands = re",
-      "quality_score": 0.82,
-      "sorry_count": 6,
-      "theorem_count": 27,
-      "timestamp": "2026-07-12T10:44:26",
-      "title": "Deepening: The P vs NP of Sudoku: Phase Transitions in Constraint Satisfaction"
-    },
     {
       "cycle_id": "e618ea1a",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 43,
       "timestamp": "2026-07-15T00:44:22",
       "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
+    },
+    {
+      "cycle_id": "99a1b43f",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe proposed `P₅` separation cannot occur with the standard homomorphism-density definition: `SpectralTransferSharpness/P5.lean` proves the stronger statement that every finite sy",
+      "quality_score": 0.93,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-15T01:03:29",
+      "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "07d73c91",
-      "domain": "Novelty",
-      "name": "isOpen_alexandrovForcing_iff",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "07d73c91",
-      "domain": "Novelty",
-      "name": "interior_eq_box",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "07d73c91",
-      "domain": "Novelty",
-      "name": "closure_eq_dia",
-      "quality": 0.82
-    },
     {
       "cycle_id": "14656387",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "selfConsistent_conj",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "99a1b43f",
+      "domain": "Novelty",
+      "name": "sum_twoStep_eq_sum_degree_sq",
+      "quality": 0.93
+    },
+    {
+      "cycle_id": "99a1b43f",
+      "domain": "Novelty",
+      "name": "pathFive_sidorenko",
+      "quality": 0.93
+    },
+    {
+      "cycle_id": "99a1b43f",
+      "domain": "Novelty",
+      "name": "pathFive_density_sidorenko",
+      "quality": 0.93
     }
   ],
-  "last_updated": "2026-07-15T00:44:22",
+  "last_updated": "2026-07-15T01:03:29",
   "open_questions": [
     {
       "context": "empty statement about an unreachable complex.  No `sorry` remains.; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0725f80e",
-        "quality": 0.86,
-        "theorems": 14,
-        "title": "Deepening: This cycle isolated a single scalar invariant — the **Möbius discrimi"
-      },
-      {
         "cycle_id": "daf8e94d",
         "quality": 0.82,
         "theorems": 38,
@@ -3637,6 +3631,12 @@
         "quality": 0.83,
         "theorems": 43,
         "title": "Deepening: The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes "
+      },
+      {
+        "cycle_id": "99a1b43f",
+        "quality": 0.93,
+        "theorems": 11,
+        "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
       }
     ],
     "NumberTheory": [
