@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "28bb3270",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — E₈ / Siegel–Weil theta series\n\n## Context\n\n`SiegelWeilE8Theta.lean` proves that the E₈ vector counts `rE8 n = 240·σ₃(n)`\ncarry the full Hecke-eigenform structure of `E₄` (geometr",
-      "quality_score": 0.83,
-      "sorry_count": 1,
-      "theorem_count": 12,
-      "timestamp": "2026-07-13T00:46:20",
-      "title": "Close Proofs: Siegel-Weil Identity for the E₈ Lattice Theta Series"
-    },
-    {
       "cycle_id": "1abce342",
       "domain": "Applications",
       "key_insight": "# Future Directions — the optimal portion ratio μ₂ = 1 + ρ\n\nThe algebra of the governing constant is now settled: ρ is the unique real root of\nρ² + ρ³ = 1, it lies in the certified window (0.7548, 0.7",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-15T21:17:20",
       "title": "ArXiv paper: Magnitude homology of tope graphs"
+    },
+    {
+      "cycle_id": "1a2ab56f",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Faithful binary-tree layer.** Define finite connected acyclic simple graphs whose\n   leaves are labelled by `Fin N`, internal vertices have degree three, and prove that\n   su",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-15T21:17:27",
+      "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:17:20",
+  "last_updated": "2026-07-15T21:17:27",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a46f1a93",
-        "quality": 0.82,
-        "theorems": 28,
-        "title": "Deepening: Sharp threshold characterization for Seidel energy increase in comple"
-      },
-      {
         "cycle_id": "71637775",
         "quality": 0.83,
         "theorems": 41,
@@ -3637,6 +3631,12 @@
         "quality": 0.7,
         "theorems": 9,
         "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
+      },
+      {
+        "cycle_id": "1a2ab56f",
+        "quality": 0.65,
+        "theorems": 19,
+        "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
       }
     ],
     "NumberTheory": [
