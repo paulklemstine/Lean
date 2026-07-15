@@ -1,196 +1,134 @@
-"""
-Combinatorics of the Universal Library --- numerical demonstrations.
-
-This self-contained script demonstrates the four exact combinatorial facts
-about the universal library L(A, L), the set of all strings of length L over
-an alphabet of size A:
-
-  1. Population count:          |L(A, L)| = A^L
-  2. Meaning-density bound:     P(w) <= (L - m + 1) * A^{-m}
-  3. Self-cataloging limit:     A^L < 2^{A^L}  (no single volume catalogs all)
-  4. Distributed threshold:     minimum complete catalog size = A^L
-  5. Optimal code tour:         de Bruijn length = A^k + k - 1
-
-All functions are inlined and use only the Python standard library.
-"""
+#!/usr/bin/env python3
+"""Numerical demonstrations for universal-library counting and cyclic indexes."""
 
 from __future__ import annotations
 
-from fractions import Fraction
 from itertools import product
-from typing import Dict, List, Tuple
+from math import floor, log10
+from typing import Iterable, Sequence
 
 
-# ---------------------------------------------------------------------------
-# 1. Population count:  |L(A, L)| = A^L
-# ---------------------------------------------------------------------------
-def population(alphabet_size: int, book_length: int) -> int:
-    """Return the exact number of volumes in the universal library L(A, L)."""
-    return alphabet_size ** book_length
+Word = tuple[int, ...]
 
 
-def num_decimal_digits_of_power(alphabet_size: int, book_length: int) -> int:
-    """Return the number of decimal digits of A^L without materializing it,
-    via digits = floor(L * log10(A)) + 1."""
-    from math import log10, floor
-    return floor(book_length * log10(alphabet_size)) + 1
+def library_size(alphabet_size: int, volume_length: int) -> int:
+    """Return the number A**L of length-L words over an A-symbol alphabet."""
+    if alphabet_size < 0 or volume_length < 0:
+        raise ValueError("alphabet_size and volume_length must be nonnegative")
+    return alphabet_size**volume_length
 
 
-# ---------------------------------------------------------------------------
-# 2. Meaning-density bound:  P(w) <= (L - m + 1) * A^{-m}
-# ---------------------------------------------------------------------------
-def meaning_density_bound(
-    alphabet_size: int, book_length: int, passage_length: int
-) -> Fraction:
-    """Exact union-bound fraction (L - m + 1) * A^{-m} of volumes containing
-    a fixed passage of length m. The prefactor is the placement count."""
-    placements = book_length - passage_length + 1
-    return Fraction(placements, alphabet_size ** passage_length)
+def constrained_count(alphabet_size: int, volume_length: int, fixed_positions: int) -> int:
+    """Count volumes after symbols at distinct positions have been prescribed."""
+    if alphabet_size < 0 or not 0 <= fixed_positions <= volume_length:
+        raise ValueError("require A >= 0 and 0 <= fixed_positions <= volume_length")
+    return alphabet_size ** (volume_length - fixed_positions)
 
 
-def exact_meaning_density(
-    alphabet_size: int, book_length: int, passage: Tuple[int, ...]
-) -> Fraction:
-    """Brute-force the TRUE fraction of volumes of length `book_length` over
-    an alphabet {0, ..., A-1} that contain `passage` as a contiguous block.
-    Feasible only for tiny parameters; validates the union bound."""
-    m = len(passage)
-    total = alphabet_size ** book_length
-    count = 0
-    for volume in product(range(alphabet_size), repeat=book_length):
-        for i in range(book_length - m + 1):
-            if volume[i : i + m] == passage:
-                count += 1
-                break
-    return Fraction(count, total)
+def union_probability_bound(alphabet_size: int, volume_length: int, pattern_length: int) -> float:
+    """Return min(1, (L-m+1)/A**m), the passage-occurrence union bound."""
+    if alphabet_size <= 0 or not 0 <= pattern_length <= volume_length:
+        raise ValueError("require A > 0 and 0 <= pattern_length <= volume_length")
+    return min(1.0, (volume_length - pattern_length + 1) / alphabet_size**pattern_length)
 
 
-# ---------------------------------------------------------------------------
-# 3 & 4. Cataloging: A^L < 2^{A^L}; minimum distributed catalog = A^L
-# ---------------------------------------------------------------------------
-def catalog_report(alphabet_size: int, book_length: int) -> Dict[str, int]:
-    """Report population, whether A^L < 2^{A^L} holds, and the minimum
-    complete distributed-catalog size (which equals the population)."""
-    pop = population(alphabet_size, book_length)
-    # The number of catalogs is 2^pop; the strict inequality pop < 2^pop holds
-    # for every pop >= 1 (n < 2^n by induction), so we assert it without ever
-    # materializing the astronomically large 2^pop.
-    return {
-        "population": pop,
-        "num_catalogs_is_larger": pop >= 1,  # equivalent to pop < 2^pop
-        "min_distributed_catalog_size": pop,
-    }
+def contains_pattern(word: Sequence[int], pattern: Sequence[int]) -> bool:
+    """Test whether pattern occurs contiguously in word."""
+    m = len(pattern)
+    return any(tuple(word[i : i + m]) == tuple(pattern) for i in range(len(word) - m + 1))
 
 
-# ---------------------------------------------------------------------------
-# 5. Optimal single-volume code tour: de Bruijn length A^k + k - 1
-# ---------------------------------------------------------------------------
-def de_bruijn_length(alphabet_size: int, order: int) -> int:
-    """Length of the linear expansion of an order-k de Bruijn sequence:
-    the shortest volume exhibiting every length-k code exactly once."""
-    return alphabet_size ** order + order - 1
+def exact_occurrence_count(alphabet_size: int, volume_length: int, pattern: Sequence[int]) -> int:
+    """Enumerate a small library and count volumes containing pattern."""
+    if alphabet_size <= 0 or len(pattern) > volume_length:
+        raise ValueError("require A > 0 and pattern length <= volume length")
+    if any(not 0 <= symbol < alphabet_size for symbol in pattern):
+        raise ValueError("pattern symbol outside alphabet")
+    return sum(
+        contains_pattern(word, pattern)
+        for word in product(range(alphabet_size), repeat=volume_length)
+    )
 
 
-def de_bruijn_sequence(alphabet_size: int, order: int) -> List[int]:
-    """Construct a de Bruijn sequence B(A, k) over the alphabet
-    {0, ..., A-1} via an Eulerian circuit (Hierholzer) on the de Bruijn
-    graph, returned as its length-(A^k + k - 1) linear expansion."""
-    a, k = alphabet_size, order
-    # Edges are k-codes; walk an Eulerian circuit on (k-1)-code vertices.
-    graph: Dict[Tuple[int, ...], List[int]] = {}
-    for vertex in product(range(a), repeat=k - 1):
-        graph[vertex] = list(range(a))  # out-edges labelled by next symbol
-
-    circuit: List[int] = []
-    stack: List[Tuple[int, ...]] = [tuple([0] * (k - 1))]
-    path: List[int] = []
-    while stack:
-        v = stack[-1]
-        if graph[v]:
-            symbol = graph[v].pop()
-            stack.append(v[1:] + (symbol,))
-            path.append(symbol)
-        else:
-            stack.pop()
-            if path:
-                circuit.append(path.pop())
-
-    circuit.reverse()
-    # circuit has length A^k (cyclic); linearize by appending first k-1 symbols.
-    seq = circuit + circuit[: k - 1]
-    return seq
+def exact_occurrence_probability(
+    alphabet_size: int, volume_length: int, pattern: Sequence[int]
+) -> float:
+    """Return the exact probability by exhaustive enumeration for small inputs."""
+    return exact_occurrence_count(alphabet_size, volume_length, pattern) / library_size(
+        alphabet_size, volume_length
+    )
 
 
-def verify_de_bruijn(seq: List[int], alphabet_size: int, order: int) -> bool:
-    """Check that `seq` exhibits every length-`order` code exactly once."""
-    a, k = alphabet_size, order
-    seen = {}
-    for i in range(len(seq) - k + 1):
-        block = tuple(seq[i : i + k])
-        seen[block] = seen.get(block, 0) + 1
-    all_codes = set(product(range(a), repeat=k))
-    return set(seen.keys()) == all_codes and all(v == 1 for v in seen.values())
+def cyclic_windows(cycle: Sequence[int], order: int) -> list[Word]:
+    """Return all cyclic windows of the requested order."""
+    if not cycle or order <= 0:
+        raise ValueError("cycle must be nonempty and order must be positive")
+    n = len(cycle)
+    return [tuple(cycle[(i + j) % n] for j in range(order)) for i in range(n)]
 
 
-# ---------------------------------------------------------------------------
-# Demonstration driver
-# ---------------------------------------------------------------------------
+def verify_complete_cyclic_index(cycle: Sequence[int], alphabet_size: int, order: int) -> bool:
+    """Check that cyclic windows equal all A**k words, each exactly once."""
+    windows = cyclic_windows(cycle, order)
+    expected = set(product(range(alphabet_size), repeat=order))
+    return len(windows) == len(expected) and len(set(windows)) == len(windows) and set(windows) == expected
+
+
+def de_bruijn_sequence(alphabet_size: int, order: int) -> list[int]:
+    """Construct a de Bruijn cycle B(A, order) using the classical FKM recursion."""
+    if alphabet_size <= 0 or order <= 0:
+        raise ValueError("alphabet_size and order must be positive")
+    work = [0] * (alphabet_size * order + 1)
+    sequence: list[int] = []
+
+    def generate(t: int, period: int) -> None:
+        if t > order:
+            if order % period == 0:
+                sequence.extend(work[1 : period + 1])
+            return
+        work[t] = work[t - period]
+        generate(t + 1, period)
+        for symbol in range(work[t - period] + 1, alphabet_size):
+            work[t] = symbol
+            generate(t + 1, t)
+
+    generate(1, 1)
+    return sequence
+
+
+def format_word(word: Iterable[int]) -> str:
+    """Format a short integer word without separators."""
+    return "".join(str(x) for x in word)
+
+
 def main() -> None:
-    print("=" * 70)
-    print("THE LIBRARY OF BABEL --- Combinatorics of the Universal Library")
-    print("=" * 70)
+    print("UNIVERSAL LIBRARY COUNTS")
+    print(f"Four symbols, length 16: 4^16 = {library_size(4, 16):,}")
+    digits = 1 + floor(1_312_000 * log10(25))
+    print(f"Babel-scale count 25^1,312,000 has {digits:,} decimal digits.")
+    print(f"Fixing 5 positions in a 12-symbol four-letter volume leaves {constrained_count(4, 12, 5):,} volumes.")
 
-    # --- Fact 1: population -------------------------------------------------
-    print("\n[1] Population count |L(A, L)| = A^L")
-    A_toy, L_toy = 4, 16
-    print(f"    Toy library (A={A_toy}, L={L_toy}): "
-          f"{population(A_toy, L_toy):,} volumes  (= 2^32)")
-    A_b, L_b = 25, 1_312_000
-    print(f"    Borges library (A={A_b}, L={L_b:,}): "
-          f"a number with {num_decimal_digits_of_power(A_b, L_b):,} "
-          f"decimal digits")
+    print("\nEXACT OCCURRENCE VERSUS UNION BOUND")
+    pattern = (1, 1)
+    exact_count = exact_occurrence_count(2, 3, pattern)
+    exact_probability = exact_count / library_size(2, 3)
+    bound = union_probability_bound(2, 3, len(pattern))
+    print(f"Binary length-3 volumes containing 11: {exact_count}/8 = {exact_probability:.3f}")
+    print(f"Union bound: {bound:.3f}; the gap comes from the overlapping word 111.")
+    for m in (4, 8, 16):
+        babel_bound = union_probability_bound(25, 1_312_000, m)
+        print(f"Babel-scale bound for a fixed passage of length {m:2d}: {babel_bound:.6e}")
 
-    # --- Fact 2: meaning density -------------------------------------------
-    print("\n[2] Meaning-density bound  P(w) <= (L - m + 1) * A^{-m}")
-    # Brute-force validation on a small enumerable sub-library (A=4, L=8).
-    A_enum, L_enum, m = 4, 8, 2
-    bound = meaning_density_bound(A_enum, L_enum, m)
-    passage = (1, 2)
-    true_frac = exact_meaning_density(A_enum, L_enum, passage)
-    print(f"    A={A_enum}, L={L_enum}, passage length m={m} "
-          f"(enumerable sub-library)")
-    print(f"    Union bound        : {bound}  (~{float(bound):.6f})")
-    print(f"    True fraction (enum): {true_frac}  (~{float(true_frac):.6f})")
-    print(f"    Bound holds and is tight up to overlap: "
-          f"{true_frac <= bound}")
-    # Borges-scale illustration for a 50-char sentence.
-    b50 = meaning_density_bound(25, 1_312_000, 50)
-    print(f"    Borges: fixed 50-char sentence appears in <= "
-          f"{float(b50):.3e} of all volumes")
+    print("\nFOUR-SYMBOL CYCLIC INDEX")
+    mini = [0, 0, 1, 0, 2, 0, 3, 1, 1, 2, 1, 3, 2, 2, 3, 3]
+    windows = cyclic_windows(mini, 2)
+    print("Cycle:", format_word(mini))
+    print("Windows:", ", ".join(format_word(window) for window in windows))
+    print("Complete and collision-free:", verify_complete_cyclic_index(mini, 4, 2))
 
-    # --- Facts 3 & 4: cataloging ------------------------------------------
-    print("\n[3,4] Cataloging limits")
-    rep = catalog_report(A_toy, L_toy)
-    print(f"    Toy population A^L = {rep['population']:,}")
-    print(f"    A^L < 2^(A^L) (no self-cataloging volume): "
-          f"{rep['num_catalogs_is_larger']}")
-    print(f"    Minimum complete distributed catalog size = A^L = "
-          f"{rep['min_distributed_catalog_size']:,}")
-
-    # --- Fact 5: de Bruijn tour -------------------------------------------
-    print("\n[5] Optimal code tour  (de Bruijn length A^k + k - 1)")
-    for A, k in [(4, 2), (2, 3), (3, 2)]:
-        seq = de_bruijn_sequence(A, k)
-        ok = verify_de_bruijn(seq, A, k)
-        print(f"    A={A}, k={k}: length {len(seq)} "
-              f"(formula {de_bruijn_length(A, k)}), "
-              f"every {A**k} codes once: {ok}")
-    print("    Example (A=4, k=2):",
-          " ".join(map(str, de_bruijn_sequence(4, 2))))
-
-    print("\n" + "=" * 70)
-    print("All demonstrations completed.")
-    print("=" * 70)
+    generated = de_bruijn_sequence(4, 2)
+    print("An algorithmically generated order-two cycle:", format_word(generated))
+    print("Generated cycle is complete:", verify_complete_cyclic_index(generated, 4, 2))
 
 
 if __name__ == "__main__":
