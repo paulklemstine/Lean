@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "0f633d08",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
       "Algebra",
@@ -13,12 +13,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11863v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T06:52:23.069944+00:00",
     "title": "ArXiv paper: Magnitude homology of tope graphs"
   },
   {
-    "consumed_by_exp_id": "8e285b27",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Decision problem for Hamilton $2$-cycles in $4$-graphs' and formalize its key results. Abstract: A $4$-uniform $2$-cycle in a $4$-uniform hypergraph of length $t$ is a cyclic ordering of $2t$ vertices $v_1v_2\\cdots v_{2t}v_1$ such that $v_{2i+1}v_{2i+2}v_{2i+3}v_{2i+4}$ are edges for $0\\le i\\le t-1$ while the addition is modulo $2t$. For every $\u03b3>0$ and large $n$, we characterize the $n$-vertex $4$-uniform hypergraphs such that every triple of vertices is contained in at least $(1/3+\u03b3)n$ edges and admits a Hamilton $2$-cycle. Up to the error term $\u03b3n$, the assumption on the minimum codegree is best possible and verifies a conjecture of Garbe and Mycroft. As a consequence, this gives a polynomial-time algorithm that decides whether an $n$-vertex $4$-uniform hypergraph with minimum codegree $(1/3+\u03b3)n$ contains a Hamilton $2$-cycle. This stands as a steep contrast to the graph case where such a hardness gap has size $o(n)$.",
     "domains": [
       "Pythagorean",
@@ -28,12 +28,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11872v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:10:18.924942+00:00",
     "title": "ArXiv paper: Decision problem for Hamilton $2$-cycles in $4$-graphs"
   },
   {
-    "consumed_by_exp_id": "8f7970f5",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Local-global compatibility of automorphic Galois representations over CM fields at $p$' and formalize its key results. Abstract: Let $F$ be a CM number field; then, to any cuspidal, regular algebraic automorphic representation of $\\mathrm{GL}_n(\\mathbf{A}_F)$ is associated a compatible system of $p$-adic Galois representations of the absolute Galois group of $F$. We prove that these representations are potentially semi-stable, in the sense of $p$-adic Hodge theory, and satisfy compatibility with the local Langlands correspondence, up to semi-simplification.",
     "domains": [
       "Algebra",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11763v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:19.726500+00:00",
     "title": "ArXiv paper: Local-global compatibility of automorphic Galois representations over CM fields at $p$"
   },
@@ -62,7 +62,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
   {
-    "consumed_by_exp_id": "fde6e875",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'All simplices exhibit canonical Ramsey property' and formalize its key results. Abstract: We prove that all nondegenerate simplices have the canonical Ramsey property, thereby resolving a central open problem in canonical Euclidean Ramsey theory and providing a canonical counterpart to the celebrated simplex Ramsey theorem of Frankl and R\u00f6dl~[JAMS, 1990].",
     "domains": [
       "Algebra"
@@ -71,12 +71,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11782v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T08:04:15.394464+00:00",
     "title": "ArXiv paper: All simplices exhibit canonical Ramsey property"
   },
   {
-    "consumed_by_exp_id": "277b2b6b",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Any Proof of Polynomial Hirsch Must be Completely Incoherent' and formalize its key results. Abstract: In 1992, Billera and Sturmfels introduced coherent monotone paths on polytopes as part of their description of the fiber polytope construction, and later in 1994 showed with Kapranov that these coherent monotone paths capture the topology of the space of all monotone paths, paths from a minimum to a maximum, in the directed graph of a polytope with orientation induced by a linear function. Those results motivate the following analog of the polynomial Hirsch conjecture: Does there always exist a coherent monotone path of polynomial length on a polytope for any choice of orientation induced by a linear function? We show this is not the case by exhibiting a family of polytopes and corresponding linear functions for which every coherent monotone path is exponentially long. As applications, we strengthen longstanding results pertaining to lower bounds for the shadow simplex method, geometric transversals in discrete geometry, and parametric linear optimization.",
     "domains": [
       "Geometry",
@@ -86,12 +86,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11628v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T08:21:50.480180+00:00",
     "title": "ArXiv paper: Any Proof of Polynomial Hirsch Must be Completely Incoherent"
   },
   {
-    "consumed_by_exp_id": "65ba3e1d",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Normal ordering in the $(p,q)$-deformed generalized Weyl algebra. III: The binomial formula' and formalize its key results. Abstract: We study the $(p, q)$-deformed generalized Weyl algebra generated by variables $X, Y$ and $Z_p$ satisfying the $(p, q)$-commutation relations $XY-qYX=h Y^sZ_{p}, XZ_p=pZ_pX$, and $Z_pY=pYZ_p$, with $s\\in \\mathbb{N}_0$. Within this framework, we investigate the noncommutative binomial formula $(X+Y)^n$ and related identities. In particular, we show how the associated normal ordering coefficients can be expressed in terms of $(p,q)$-deformed $s$-rook numbers. We treat several special cases explicitly, recovering known results from literature as well as deriving new ones.",
     "domains": [
       "Algebra"
@@ -100,9 +100,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11693v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T08:40:00.853141+00:00",
     "title": "ArXiv paper: Normal ordering in the $(p,q)$-deformed generalized Weyl algebra. III: The binomial formula"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes' and formalize its key results. Abstract: Character-polynomial codes are constructed by evaluating finite field polynomials and mapping the results to complex roots of unity through additive characters. This paper shows that, over extension fields, the original polynomial family may contain redundancies: distinct polynomials can generate the same codeword. We identify the source of this non-injectivity through the trace map and cyclotomic cosets, determine the exact code cardinality, and construct a refined polynomial family that parametrizes the code without redundancy. These results give corrected parameters for CP codes and clarify their algebraic structure.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0008",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11595v1",
+    "status": "available",
+    "timestamp": "2026-07-15T08:58:24.618652+00:00",
+    "title": "ArXiv paper: Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes"
   },
   {
     "consumed_by_exp_id": "",
@@ -111,7 +125,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0009",
+    "id": "fd_0010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11834v1",
@@ -120,16 +134,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "5dadc373",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations' and formalize its key results. Abstract: We prove the vanishing of the adjoint Bloch--Kato Selmer group of the Galois representations associated to regular algebraic automorphic representations of general linear groups over CM fields. A key novelty of our work is that we impose conditions only on the $p$-adic Galois representations, and not on their associated residual representations modulo $p$.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0010",
+    "id": "fd_0011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11769v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:10:22.328314+00:00",
     "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations"
   },
@@ -139,7 +153,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0011",
+    "id": "fd_0012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
@@ -154,7 +168,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0012",
+    "id": "fd_0013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11800v1",
@@ -169,7 +183,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0013",
+    "id": "fd_0014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11543v1",
@@ -184,7 +198,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0014",
+    "id": "fd_0015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11639v1",
@@ -199,7 +213,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0015",
+    "id": "fd_0016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11648v2",
@@ -209,6 +223,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Ray and end spaces: characterizations and classification up to homeomorphism' and formalize its key results. Abstract: We provide a combinatorial characterization for pairs of order-theoretic trees with homeomorphic ray spaces, answering an open problem proposed by Kurkofka ad Pitz. This solution is inspired by the introduction of a transfinite topological game, which allows us to characterize not only ray spaces through the existence of winning strategies for one of the players, but also their homeomorphic classes. As applications of these results, we obtain a new topological characterization for graph-theoretic end spaces (thus obtaining yet another solution to a recently solved problem of Diestel), as well as for edge-end spaces and completely ultrametrizable spaces. We also introduce a generalization of the class of ray spaces (which is strict, as witnessed by the Sorgenfrey line). Furthermore, we establish that, for subspaces with cardinality less than continuum of end spaces, the scattered property is equivalent to the property of being, itself, an end space. At last, we determine that ray spaces",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0017",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11561v1",
+    "status": "available",
+    "timestamp": "2026-07-15T08:58:28.589423+00:00",
+    "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
+  },
+  {
+    "consumed_by_exp_id": "965ed961",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -217,7 +246,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T05:23:22.329148+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
@@ -227,7 +256,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0008",
+    "id": "fd_0009",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",

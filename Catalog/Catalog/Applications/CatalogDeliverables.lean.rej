@@ -1,0 +1,12 @@
+--- CatalogDeliverables.lean
++++ CatalogDeliverables.lean
+@@ -24,7 +24,7 @@
+ import Catalog.Speculative.AutoResearch.MixedRadixFactorialBridge
+ 
+ -- Cross-domain connector: Fibonacci primitive divisors (Carmichael)
+-import Shared.CarmichaelHelper
+-import Shared.CarmichaelProof
++import Catalog.Shared.CarmichaelHelper
++import Catalog.Shared.CarmichaelProof
+ import Catalog.Speculative.AutoResearch.CarmichaelComposite
+ 
