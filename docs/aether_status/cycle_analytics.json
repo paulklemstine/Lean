@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-15T21:25:27.778608+00:00",
+  "last_updated": "2026-07-15T21:37:16.985122+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -19301,6 +19301,7 @@
       "outcome_quality": 0.65,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -19328,6 +19329,48 @@
       "theorem_novelty_new": 11,
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-15T21:25:27.750943+00:00",
+      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 19,
+      "domain": "Tropical",
+      "duration_seconds": 3113.950407266617,
+      "end_time": 1784151420.0585055,
+      "files_integrated": 0,
+      "job_id": "4dee9bd5",
+      "outcome_quality": 0.65,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v28",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.64,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.72,
+        "composite": 0.49,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.66,
+        "novelty": 0.42,
+        "proof_depth": 0.68,
+        "usefulness": 0.76
+      },
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784148306.1080983,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-15T21:37:16.931843+00:00",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
     }
   ]

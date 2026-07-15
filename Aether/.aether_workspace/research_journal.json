@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7362296f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What was done in this cycle\n\nThe target theorem file `BooleanCubicFormsBurnside.lean` was already `sorry`-free (the\nBurnside ⇄ orbit–stabilizer bridge, the division principle,",
-      "quality_score": 0.8,
-      "sorry_count": 6,
-      "theorem_count": 12,
-      "timestamp": "2026-07-13T02:21:42",
-      "title": "Close Proofs: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-    },
-    {
       "cycle_id": "ffec372c",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## What was established\n\nWorking purely from the four matroid rank axioms (`IsMatroidRank`), on the objective\n`g(A) = r₁(A) + r₂(E \\ A)`:\n\n1. **Rainbow Forest Inequality (weak dua",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-15T21:25:27",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "cycle_id": "4dee9bd5",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\n1. **Lower chromatic bound for 3-stability.** The present development proves the\n   constructive upper bound. The central next target is the paper's lower bound\n   for `s=3`, requ",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-15T21:37:16",
+      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:25:27",
+  "last_updated": "2026-07-15T21:37:16",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "b77ed1ec",
-        "quality": 0.72,
-        "theorems": 24,
-        "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-      },
-      {
         "cycle_id": "c67deafc",
         "quality": 0.6,
         "theorems": 0,
@@ -4003,6 +3997,12 @@
         "quality": 0.69,
         "theorems": 11,
         "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
+      },
+      {
+        "cycle_id": "4dee9bd5",
+        "quality": 0.65,
+        "theorems": 14,
+        "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
       },
       {
         "cycle_id": "4dee9bd5",
