@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "482ba253",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: enumerative rigidity of equivariant maps of free ℤ₂-complexes\n\nThis cycle sharpened the existence theory of the ℤ₂-coindex of combinatorial spheres\ninto an **exact enumeration**:",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 28,
-      "timestamp": "2026-07-14T12:59:51",
-      "title": "Deepening: **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as"
-    },
-    {
       "cycle_id": "0c7f8736",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nBold, falsifiable conjectures growing out of the mixed-radix / factorial bridge\nand the primitive-divisor investigation completed in this cycle.\n\n## 1. Uniqueness holds for every",
@@ -499,19 +489,19 @@
       "theorem_count": 42,
       "timestamp": "2026-07-15T03:46:59",
       "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
+    },
+    {
+      "cycle_id": "42e1a665",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## 1. The unbounded composite-index theorem\n\nFor every composite integer `n ≥ 13`, the Fibonacci number `F(n)` has a prime divisor that divides no earlier positive-index Fibonacci",
+      "quality_score": 0.88,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T04:08:36",
+      "title": "Close Proofs: Bypassed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "edd57dbd",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Divisor-Stratified OAM Spectra of Torus Knots\n\nThis cycle established the general divisor factorization of the `T(2,n)` Alexander\npolynomial: for every odd `n`,\n\n  A_n(X) = ∏_{d",
-      "quality_score": 0.86,
-      "sorry_count": 1,
-      "theorem_count": 9,
-      "timestamp": "2026-07-12T15:02:50",
-      "title": "Deepening: The Lean development `Catalog/MachineLearning/KnottedLightAlexander.lean` formal"
-    },
     {
       "cycle_id": "b35b4ce5",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 42,
       "timestamp": "2026-07-15T03:46:59",
       "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
+    },
+    {
+      "cycle_id": "42e1a665",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## 1. The unbounded composite-index theorem\n\nFor every composite integer `n ≥ 13`, the Fibonacci number `F(n)` has a prime divisor that divides no earlier positive-index Fibonacci",
+      "quality_score": 0.88,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T04:08:36",
+      "title": "Close Proofs: Bypassed"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.91
     }
   ],
-  "last_updated": "2026-07-15T03:46:59",
+  "last_updated": "2026-07-15T04:08:36",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "0abd0edb",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T06:54:01"
-    },
     {
       "context": "injectivity/pigeonhole count.  No `sorry` remains in any result below.",
       "cycle_id": "769cd692",
@@ -3016,6 +3009,13 @@
       "domain": "MachineLearning",
       "sorry_count": 1,
       "timestamp": "2026-07-15T03:46:59"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "42e1a665",
+      "domain": "Shared",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T04:08:36"
     }
   ],
   "research_threads": {
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "0eefe6b1",
-        "quality": 0.65777,
-        "theorems": 6,
-        "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
-      },
-      {
         "cycle_id": "e39940c9",
         "quality": 0.45987362,
         "theorems": 8,
@@ -3947,6 +3941,12 @@
         "quality": 0.9,
         "theorems": 16,
         "title": "This cycle promoted the component-count toughness toolkit from a collection of"
+      },
+      {
+        "cycle_id": "42e1a665",
+        "quality": 0.88,
+        "theorems": 0,
+        "title": "Close Proofs: Bypassed"
       }
     ],
     "Tropical": [
