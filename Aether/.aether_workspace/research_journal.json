@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "45e15555",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capt",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-14T19:51:30",
-      "title": "Colorful Carathéodory theorem for spanning k-trees admits a polynomial-size witness"
-    },
-    {
       "cycle_id": "19e0135d",
       "domain": "Applications",
       "key_insight": "# Future Directions — Universality and genus-dependence of the cubic swap-chain gap\n\nThis cycle turned two of the standing conjectures about fixed-genus chord-swap\nchains into unconditional theorems a",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-15T07:28:14",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+    },
+    {
+      "cycle_id": "cf605784",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Toughness as an order-monotone invariant\n\nThe completed development in `Catalog/Shared/ToughnessOrder.lean` proves that component count after a fixed vertex deletion is antitone",
+      "quality_score": 0.8,
+      "sorry_count": 4,
+      "theorem_count": 127,
+      "timestamp": "2026-07-15T08:21:46",
+      "title": "Close Proofs: This cycle promoted the component-count toughness toolkit from a colle"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d95af58e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Anti-Mathematics\n\nThis cycle deepened the anti-Infinity strand (the Ackermann model of the\nhereditarily finite sets `HF = V_ω`) with three new self-contained files:\n\n- `Ackermann",
-      "quality_score": 0.82,
-      "sorry_count": 7,
-      "theorem_count": 28,
-      "timestamp": "2026-07-12T20:14:26",
-      "title": "Deepening: Anti-Mathematics: What If All Axioms Were Negated?"
-    },
     {
       "cycle_id": "465c6137",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T08:21:38",
       "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+    },
+    {
+      "cycle_id": "cf605784",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Toughness as an order-monotone invariant\n\nThe completed development in `Catalog/Shared/ToughnessOrder.lean` proves that component count after a fixed vertex deletion is antitone",
+      "quality_score": 0.8,
+      "sorry_count": 4,
+      "theorem_count": 127,
+      "timestamp": "2026-07-15T08:21:46",
+      "title": "Close Proofs: This cycle promoted the component-count toughness toolkit from a colle"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-15T08:21:38",
+  "last_updated": "2026-07-15T08:21:46",
   "open_questions": [
-    {
-      "context": "Everything is unconditional and `sorry`-free.",
-      "cycle_id": "6e60d0a1",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-14T10:08:36"
-    },
     {
       "context": "**Critique.** Every main theorem is sorry-free and uses genuine structural; +  sorry; -    sorry",
       "cycle_id": "c4aa235b",
@@ -3016,6 +3009,13 @@
       "domain": "Physics",
       "sorry_count": 4,
       "timestamp": "2026-07-15T05:40:44"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "cf605784",
+      "domain": "NumberTheory",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T08:21:46"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "c1fb9afb",
-        "quality": 0.45366952380952386,
-        "theorems": 4,
-        "title": "Joint descendants of the last k vertices in random d-DAGs"
-      },
-      {
         "cycle_id": "c7c6cf29",
         "quality": 0.43457572380952386,
         "theorems": 4,
@@ -3699,6 +3693,12 @@
         "quality": 0.55,
         "theorems": 0,
         "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+      },
+      {
+        "cycle_id": "cf605784",
+        "quality": 0.8,
+        "theorems": 127,
+        "title": "Close Proofs: This cycle promoted the component-count toughness toolkit from a c"
       }
     ],
     "Physics": [

@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "0f633d08",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
       "Algebra",
@@ -13,12 +13,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11863v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T06:52:23.069944+00:00",
     "title": "ArXiv paper: Magnitude homology of tope graphs"
   },
   {
-    "consumed_by_exp_id": "8e285b27",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Decision problem for Hamilton $2$-cycles in $4$-graphs' and formalize its key results. Abstract: A $4$-uniform $2$-cycle in a $4$-uniform hypergraph of length $t$ is a cyclic ordering of $2t$ vertices $v_1v_2\\cdots v_{2t}v_1$ such that $v_{2i+1}v_{2i+2}v_{2i+3}v_{2i+4}$ are edges for $0\\le i\\le t-1$ while the addition is modulo $2t$. For every $\u03b3>0$ and large $n$, we characterize the $n$-vertex $4$-uniform hypergraphs such that every triple of vertices is contained in at least $(1/3+\u03b3)n$ edges and admits a Hamilton $2$-cycle. Up to the error term $\u03b3n$, the assumption on the minimum codegree is best possible and verifies a conjecture of Garbe and Mycroft. As a consequence, this gives a polynomial-time algorithm that decides whether an $n$-vertex $4$-uniform hypergraph with minimum codegree $(1/3+\u03b3)n$ contains a Hamilton $2$-cycle. This stands as a steep contrast to the graph case where such a hardness gap has size $o(n)$.",
     "domains": [
       "Pythagorean",
@@ -28,12 +28,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11872v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:10:18.924942+00:00",
     "title": "ArXiv paper: Decision problem for Hamilton $2$-cycles in $4$-graphs"
   },
   {
-    "consumed_by_exp_id": "8f7970f5",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Local-global compatibility of automorphic Galois representations over CM fields at $p$' and formalize its key results. Abstract: Let $F$ be a CM number field; then, to any cuspidal, regular algebraic automorphic representation of $\\mathrm{GL}_n(\\mathbf{A}_F)$ is associated a compatible system of $p$-adic Galois representations of the absolute Galois group of $F$. We prove that these representations are potentially semi-stable, in the sense of $p$-adic Hodge theory, and satisfy compatibility with the local Langlands correspondence, up to semi-simplification.",
     "domains": [
       "Algebra",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11763v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:19.726500+00:00",
     "title": "ArXiv paper: Local-global compatibility of automorphic Galois representations over CM fields at $p$"
   },
@@ -62,7 +62,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fde6e875",
     "description": "Investigate the ArXiv paper 'All simplices exhibit canonical Ramsey property' and formalize its key results. Abstract: We prove that all nondegenerate simplices have the canonical Ramsey property, thereby resolving a central open problem in canonical Euclidean Ramsey theory and providing a canonical counterpart to the celebrated simplex Ramsey theorem of Frankl and R\u00f6dl~[JAMS, 1990].",
     "domains": [
       "Algebra"
@@ -71,22 +71,37 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11782v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:04:15.394464+00:00",
     "title": "ArXiv paper: All simplices exhibit canonical Ramsey property"
   },
   {
-    "consumed_by_exp_id": "4368e5ed",
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Any Proof of Polynomial Hirsch Must be Completely Incoherent' and formalize its key results. Abstract: In 1992, Billera and Sturmfels introduced coherent monotone paths on polytopes as part of their description of the fiber polytope construction, and later in 1994 showed with Kapranov that these coherent monotone paths capture the topology of the space of all monotone paths, paths from a minimum to a maximum, in the directed graph of a polytope with orientation induced by a linear function. Those results motivate the following analog of the polynomial Hirsch conjecture: Does there always exist a coherent monotone path of polynomial length on a polytope for any choice of orientation induced by a linear function? We show this is not the case by exhibiting a family of polytopes and corresponding linear functions for which every coherent monotone path is exponentially long. As applications, we strengthen longstanding results pertaining to lower bounds for the shadow simplex method, geometric transversals in discrete geometry, and parametric linear optimization.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0006",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11628v1",
+    "status": "available",
+    "timestamp": "2026-07-15T08:21:50.480180+00:00",
+    "title": "ArXiv paper: Any Proof of Polynomial Hirsch Must be Completely Incoherent"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems' and formalize its key results. Abstract: We study twisted Weyl group multiple Dirichlet series attached to symmetrizable Kac-Moody root systems, using the Chinta-Gunnells method to construct their $p$-parts. Our main result is a decomposition theorem for functions invariant under the twisted Chinta-Gunnells action: under natural analytic hypotheses, such a function has a unique expansion in terms of shifted Chinta-Gunnells averages, indexed by the dominant weights in the highest weight module determined by the twisting parameter. In particular, we show that this decomposition holds for twisted multiple Dirichlet series over rational function fields. For finite root systems, these results were proved by Friedlander. We also show that the relevant Chinta-Gunnells averages admit analytic continuation to the interior of the complexified Tits cone. In the affine $\\widetilde{A}_1$ case, we prove extra functional equations, not arising from the Weyl group, for the untwisted average and for averages twisted by fundamental weights. As",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0007",
+    "id": "fd_0008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11834v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T06:52:29.386046+00:00",
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
@@ -96,7 +111,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0008",
+    "id": "fd_0009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11769v1",
@@ -110,7 +125,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0009",
+    "id": "fd_0010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
@@ -119,17 +134,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
   {
-    "consumed_by_exp_id": "5dadc373",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three' and formalize its key results. Abstract: We give three explicit quantum Latin squares of order $6$ with cardinalities $19$, $21$, and $23$, where vectors differing only by a global phase are counted as identical. The first two examples arise from normalized Schur products of columns of complex Hadamard matrices. For cardinality $19$, a Butson-type matrix over eighth roots of unity has the unique nontrivial coincidence $v_{01}=v_{25}=v_{34}$. For cardinality $21$, an explicit member of Karlsson's three-parameter family has $21$ pairwise inequivalent unordered Schur products. To exceed the symmetric Schur-product bound, we give a third, direct-sum construction based on the decomposition $\\C^6=\\C^4\\oplusC^2$. It uses nineteen distinct rays in the four-dimensional summand and four rays in the two-dimensional summand, arranged so that every row and column is an orthonormal basis, yielding cardinality $23$. Together with our earlier constructions of cardinalities $13$, $15$, and $17$ and previously known order-six examples, these r",
     "domains": [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0010",
+    "id": "fd_0011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11800v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:46:57.950799+00:00",
     "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three"
   },
@@ -140,7 +155,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0011",
+    "id": "fd_0012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11543v1",
@@ -149,7 +164,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Fixed-point-free elements in two-orbit permutation groups"
   },
   {
-    "consumed_by_exp_id": "c5a6c2ed",
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The chain replacement of a poset flow' and formalize its key results. Abstract: We introduce the chain replacement of a poset flow: it is obtained by considering the simplicial nerves of the posets of strictly increasing chains in the given poset, ordered by refinement. It maps finite posets to q-cofibrant flows and inclusions of finite posets to q-cofibrations. Using the combinatorial properties of the chain replacement, we prove that pushouts along the chain replacement of an order-reflecting inclusion of finite posets preserve spaces of execution paths. By introducing the Hurewicz model structure on flows (or H-model structure), we deduce the same property for any q-cofibrant replacement of an order-reflecting inclusion of finite posets.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0013",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11639v1",
+    "status": "available",
+    "timestamp": "2026-07-15T08:21:53.852514+00:00",
+    "title": "ArXiv paper: The chain replacement of a poset flow"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -158,21 +188,21 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T05:23:22.329148+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "277b2b6b",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0006",
+    "id": "fd_0007",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
