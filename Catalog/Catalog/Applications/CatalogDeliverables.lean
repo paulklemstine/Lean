@@ -24,7 +24,7 @@ import Catalog.Computation.FactorialNumberSystem
 import Catalog.Speculative.AutoResearch.MixedRadixFactorialBridge
 
 -- Cross-domain connector: Fibonacci primitive divisors (Carmichael)
-import Catalog.Shared.CarmichaelHelper
-import Catalog.Shared.CarmichaelProof
+import Shared.CarmichaelHelper
+import Shared.CarmichaelProof
 import Catalog.Speculative.AutoResearch.CarmichaelComposite
 import Catalog.Speculative.CarmichaelPrimitiveDivisor

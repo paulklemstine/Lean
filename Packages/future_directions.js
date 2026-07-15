@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Decision problem for Hamilton $2$-cycles in $4$-graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f7970f5",
     "description": "Investigate the ArXiv paper 'Local-global compatibility of automorphic Galois representations over CM fields at $p$' and formalize its key results. Abstract: Let $F$ be a CM number field; then, to any cuspidal, regular algebraic automorphic representation of $\\mathrm{GL}_n(\\mathbf{A}_F)$ is associated a compatible system of $p$-adic Galois representations of the absolute Galois group of $F$. We prove that these representations are potentially semi-stable, in the sense of $p$-adic Hodge theory, and satisfy compatibility with the local Langlands correspondence, up to semi-simplification.",
     "domains": [
       "Algebra",
@@ -43,32 +43,46 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11763v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:28:19.726500+00:00",
     "title": "ArXiv paper: Local-global compatibility of automorphic Galois representations over CM fields at $p$"
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,\u03c9^u)\\)-core, the \\((k,\u03c9^u)\\)-truss, and the more general \\((k,d,\u03c9^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_0004",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11726v1",
+    "status": "available",
+    "timestamp": "2026-07-15T07:46:50.520811+00:00",
+    "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
+  },
+  {
+    "consumed_by_exp_id": "277b2b6b",
     "description": "Investigate the ArXiv paper 'A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems' and formalize its key results. Abstract: We study twisted Weyl group multiple Dirichlet series attached to symmetrizable Kac-Moody root systems, using the Chinta-Gunnells method to construct their $p$-parts. Our main result is a decomposition theorem for functions invariant under the twisted Chinta-Gunnells action: under natural analytic hypotheses, such a function has a unique expansion in terms of shifted Chinta-Gunnells averages, indexed by the dominant weights in the highest weight module determined by the twisting parameter. In particular, we show that this decomposition holds for twisted multiple Dirichlet series over rational function fields. For finite root systems, these results were proved by Friedlander. We also show that the relevant Chinta-Gunnells averages admit analytic continuation to the interior of the complexified Tits cone. In the affine $\\widetilde{A}_1$ case, we prove extra functional equations, not arising from the Weyl group, for the untwisted average and for averages twisted by fundamental weights. As",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0005",
+    "id": "fd_0006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11834v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T06:52:29.386046+00:00",
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "277b2b6b",
+    "consumed_by_exp_id": "4368e5ed",
     "description": "Investigate the ArXiv paper 'Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations' and formalize its key results. Abstract: We prove the vanishing of the adjoint Bloch--Kato Selmer group of the Galois representations associated to regular algebraic automorphic representations of general linear groups over CM fields. A key novelty of our work is that we impose conditions only on the $p$-adic Galois representations, and not on their associated residual representations modulo $p$.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0006",
+    "id": "fd_0007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11769v1",
@@ -77,18 +91,33 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations"
   },
   {
-    "consumed_by_exp_id": "4368e5ed",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0007",
+    "id": "fd_0008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three' and formalize its key results. Abstract: We give three explicit quantum Latin squares of order $6$ with cardinalities $19$, $21$, and $23$, where vectors differing only by a global phase are counted as identical. The first two examples arise from normalized Schur products of columns of complex Hadamard matrices. For cardinality $19$, a Butson-type matrix over eighth roots of unity has the unique nontrivial coincidence $v_{01}=v_{25}=v_{34}$. For cardinality $21$, an explicit member of Karlsson's three-parameter family has $21$ pairwise inequivalent unordered Schur products. To exceed the symmetric Schur-product bound, we give a third, direct-sum construction based on the decomposition $\\C^6=\\C^4\\oplusC^2$. It uses nineteen distinct rays in the four-dimensional summand and four rays in the two-dimensional summand, arranged so that every row and column is an orthonormal basis, yielding cardinality $23$. Together with our earlier constructions of cardinalities $13$, $15$, and $17$ and previously known order-six examples, these r",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0009",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11800v1",
+    "status": "available",
+    "timestamp": "2026-07-15T07:46:57.950799+00:00",
+    "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three"
   },
   {
     "consumed_by_exp_id": "c5a6c2ed",
@@ -110,7 +139,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0004",
+    "id": "fd_0005",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
