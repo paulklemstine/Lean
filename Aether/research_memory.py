@@ -1199,11 +1199,12 @@ class FutureDirectionsManager:
         self.mark_direction_failed(direction_id)
 
     def mark_direction_failed(self, direction_id: str) -> None:
-        """Mark a direction as terminal failed. It will not be retried."""
+        """Mark a direction as failed, but keep it available for future retries."""
         for d in self._directions:
             if d.id == direction_id:
-                d.status = "failed"
+                d.status = "available"  # Reset to available per user request
                 d.consumed_by_exp_id = ""
+                d.attempt_count = 0
                 break
         self._save()
 
