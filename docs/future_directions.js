@@ -18,37 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Magnitude homology of tope graphs"
   },
   {
-    "consumed_by_exp_id": "8e285b27",
-    "description": "Investigate the ArXiv paper 'Decision problem for Hamilton $2$-cycles in $4$-graphs' and formalize its key results. Abstract: A $4$-uniform $2$-cycle in a $4$-uniform hypergraph of length $t$ is a cyclic ordering of $2t$ vertices $v_1v_2\\cdots v_{2t}v_1$ such that $v_{2i+1}v_{2i+2}v_{2i+3}v_{2i+4}$ are edges for $0\\le i\\le t-1$ while the addition is modulo $2t$. For every $\u03b3>0$ and large $n$, we characterize the $n$-vertex $4$-uniform hypergraphs such that every triple of vertices is contained in at least $(1/3+\u03b3)n$ edges and admits a Hamilton $2$-cycle. Up to the error term $\u03b3n$, the assumption on the minimum codegree is best possible and verifies a conjecture of Garbe and Mycroft. As a consequence, this gives a polynomial-time algorithm that decides whether an $n$-vertex $4$-uniform hypergraph with minimum codegree $(1/3+\u03b3)n$ contains a Hamilton $2$-cycle. This stands as a steep contrast to the graph case where such a hardness gap has size $o(n)$.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0002",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11872v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T07:10:18.924942+00:00",
-    "title": "ArXiv paper: Decision problem for Hamilton $2$-cycles in $4$-graphs"
-  },
-  {
-    "consumed_by_exp_id": "8f7970f5",
-    "description": "Investigate the ArXiv paper 'Local-global compatibility of automorphic Galois representations over CM fields at $p$' and formalize its key results. Abstract: Let $F$ be a CM number field; then, to any cuspidal, regular algebraic automorphic representation of $\\mathrm{GL}_n(\\mathbf{A}_F)$ is associated a compatible system of $p$-adic Galois representations of the absolute Galois group of $F$. We prove that these representations are potentially semi-stable, in the sense of $p$-adic Hodge theory, and satisfy compatibility with the local Langlands correspondence, up to semi-simplification.",
-    "domains": [
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "fd_0003",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11763v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T07:28:19.726500+00:00",
-    "title": "ArXiv paper: Local-global compatibility of automorphic Galois representations over CM fields at $p$"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e93835e7",
     "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,\u03c9^u)\\)-core, the \\((k,\u03c9^u)\\)-truss, and the more general \\((k,d,\u03c9^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
     "domains": [
       "Computation"
@@ -57,55 +27,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11726v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:46:50.520811+00:00",
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
   {
-    "consumed_by_exp_id": "fde6e875",
-    "description": "Investigate the ArXiv paper 'All simplices exhibit canonical Ramsey property' and formalize its key results. Abstract: We prove that all nondegenerate simplices have the canonical Ramsey property, thereby resolving a central open problem in canonical Euclidean Ramsey theory and providing a canonical counterpart to the celebrated simplex Ramsey theorem of Frankl and R\u00f6dl~[JAMS, 1990].",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0005",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11782v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T08:04:15.394464+00:00",
-    "title": "ArXiv paper: All simplices exhibit canonical Ramsey property"
-  },
-  {
-    "consumed_by_exp_id": "9c5246ab",
-    "description": "Investigate the ArXiv paper 'Any Proof of Polynomial Hirsch Must be Completely Incoherent' and formalize its key results. Abstract: In 1992, Billera and Sturmfels introduced coherent monotone paths on polytopes as part of their description of the fiber polytope construction, and later in 1994 showed with Kapranov that these coherent monotone paths capture the topology of the space of all monotone paths, paths from a minimum to a maximum, in the directed graph of a polytope with orientation induced by a linear function. Those results motivate the following analog of the polynomial Hirsch conjecture: Does there always exist a coherent monotone path of polynomial length on a polytope for any choice of orientation induced by a linear function? We show this is not the case by exhibiting a family of polytopes and corresponding linear functions for which every coherent monotone path is exponentially long. As applications, we strengthen longstanding results pertaining to lower bounds for the shadow simplex method, geometric transversals in discrete geometry, and parametric linear optimization.",
-    "domains": [
-      "Geometry",
-      "Pythagorean"
-    ],
-    "id": "fd_0006",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11628v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T08:21:50.480180+00:00",
-    "title": "ArXiv paper: Any Proof of Polynomial Hirsch Must be Completely Incoherent"
-  },
-  {
-    "consumed_by_exp_id": "65ba3e1d",
-    "description": "Investigate the ArXiv paper 'Normal ordering in the $(p,q)$-deformed generalized Weyl algebra. III: The binomial formula' and formalize its key results. Abstract: We study the $(p, q)$-deformed generalized Weyl algebra generated by variables $X, Y$ and $Z_p$ satisfying the $(p, q)$-commutation relations $XY-qYX=h Y^sZ_{p}, XZ_p=pZ_pX$, and $Z_pY=pYZ_p$, with $s\\in \\mathbb{N}_0$. Within this framework, we investigate the noncommutative binomial formula $(X+Y)^n$ and related identities. In particular, we show how the associated normal ordering coefficients can be expressed in terms of $(p,q)$-deformed $s$-rook numbers. We treat several special cases explicitly, recovering known results from literature as well as deriving new ones.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0007",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11693v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T08:40:00.853141+00:00",
-    "title": "ArXiv paper: Normal ordering in the $(p,q)$-deformed generalized Weyl algebra. III: The binomial formula"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fcf70b54",
     "description": "Investigate the ArXiv paper 'Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes' and formalize its key results. Abstract: Character-polynomial codes are constructed by evaluating finite field polynomials and mapping the results to complex roots of unity through additive characters. This paper shows that, over extension fields, the original polynomial family may contain redundancies: distinct polynomials can generate the same codeword. We identify the source of this non-injectivity through the trace map and cyclotomic cosets, determine the exact code cardinality, and construct a refined polynomial family that parametrizes the code without redundancy. These results give corrected parameters for CP codes and clarify their algebraic structure.",
     "domains": [
       "Algebra"
@@ -114,12 +41,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11595v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:58:24.618652+00:00",
     "title": "ArXiv paper: Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08212964",
     "description": "Investigate the ArXiv paper 'From roots to paths: graphs simultaneously irregular with respect to rooted and ordinary paths' and formalize its key results. Abstract: Let $P_n$ denote a path on $n$ vertices. A simple finite graph $G$ is called $P_n$-irregular if any two distinct vertices of $G$ belong to a different number of subgraphs of $G$ isomorphic to $P_n$. Alternatively, for a fixed vertex $r$ of $P_n$ (the root), $G$ is called $(P_n)_r$-irregular if any two distinct vertices of $G$ act as the root $r$ in a different number of subgraphs of $G$ isomorphic to $P_n$. This paper proves that for each integer $k \\geq 4$, there exists an infinite family of graphs that are simultaneously $P_n$-irregular and $(P_n)_r$-irregular for every integer $n$ satisfying $4 \\leq n \\leq k$ and every root $r$ of $P_n$. For the path $P_3$, we observe that no nontrivial $(P_3)_r$-irregular graphs exist if $r$ is the central vertex. In contrast, if $r$ is an end-vertex of $P_3$, an infinite collection of graphs is constructed that are both $P_3$-irregular and $(P_3)_r$-irregular. In particular, these results confirm the Strong Conjecture about $F$-irregular graphs fo",
     "domains": [
       "Pythagorean"
@@ -128,7 +55,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11700v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T09:16:25.430793+00:00",
     "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinary paths"
   },
@@ -148,21 +75,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "abe5b819",
-    "description": "Investigate the ArXiv paper 'Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations' and formalize its key results. Abstract: We prove the vanishing of the adjoint Bloch--Kato Selmer group of the Galois representations associated to regular algebraic automorphic representations of general linear groups over CM fields. A key novelty of our work is that we impose conditions only on the $p$-adic Galois representations, and not on their associated residual representations modulo $p$.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0012",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11769v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T07:10:22.328314+00:00",
-    "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fcbd747f",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -171,12 +84,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d2c19f81",
     "description": "Investigate the ArXiv paper 'Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three' and formalize its key results. Abstract: We give three explicit quantum Latin squares of order $6$ with cardinalities $19$, $21$, and $23$, where vectors differing only by a global phase are counted as identical. The first two examples arise from normalized Schur products of columns of complex Hadamard matrices. For cardinality $19$, a Butson-type matrix over eighth roots of unity has the unique nontrivial coincidence $v_{01}=v_{25}=v_{34}$. For cardinality $21$, an explicit member of Karlsson's three-parameter family has $21$ pairwise inequivalent unordered Schur products. To exceed the symmetric Schur-product bound, we give a third, direct-sum construction based on the decomposition $\\C^6=\\C^4\\oplusC^2$. It uses nineteen distinct rays in the four-dimensional summand and four rays in the two-dimensional summand, arranged so that every row and column is an orthonormal basis, yielding cardinality $23$. Together with our earlier constructions of cardinalities $13$, $15$, and $17$ and previously known order-six examples, these r",
     "domains": [
       "Algebra",
@@ -186,24 +99,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11800v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:46:57.950799+00:00",
     "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three"
-  },
-  {
-    "consumed_by_exp_id": "305a89b8",
-    "description": "Investigate the ArXiv paper 'Fixed-point-free elements in two-orbit permutation groups' and formalize its key results. Abstract: Let $G$ be a two-orbit permutation group on $n > 2$ points. We show that $G$ contains either a derangement or an element of prime-power order with a unique fixed point. As a corollary, if the orbits of $G$ have length $n_1$ and $n_2$ and $\\gcd(n_1, n_2-1) = \\gcd(n_1-1, n_2) = 1$, then $G$ contains a derangement. The special case $n_1 = n_2$ was recently conjectured by Ellis and Harper and proved under various restrictive hypotheses. We prove our result by reducing to the case of simple groups and leveraging the classification of normal $2$-coverings of simple groups due to Bubboloni, Spiga, and Weigel.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0015",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11543v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T08:04:19.304210+00:00",
-    "title": "ArXiv paper: Fixed-point-free elements in two-orbit permutation groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -221,7 +119,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The chain replacement of a poset flow"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "772aa8b4",
     "description": "Investigate the ArXiv paper 'Superlinear complexity of the $(3/2)^n$ steering word' and formalize its key results. Abstract: Write $(3/2)^n = m_n + \\eps_n$ with $m_n$ the nearest integer and $\\eps_n\\in[-\\tfrac12,\\tfrac12)$, and let $T=(t_n)$, $t_n=2m_{n+1}-3m_n$, be the resulting \\emph{steering word}: the step-by-step record of the map $x\\mapsto\\tfrac32 x$ on the orbit of $1$, coded by nearest-integer rounding. Using results by Corvaja--Zannier and Nair--Kumar--Rout we prove that the subword complexity $\\pT(k)$ of $T$ is superlinear, $\\pT(k)/k\\to\\infty$. The argument is completely formalized in Lean-4, depending only on the Subspace Theorem.",
     "domains": [
       "Algebra",
@@ -231,12 +129,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11648v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:40:04.207098+00:00",
     "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b9991c9d",
     "description": "Investigate the ArXiv paper 'Ray and end spaces: characterizations and classification up to homeomorphism' and formalize its key results. Abstract: We provide a combinatorial characterization for pairs of order-theoretic trees with homeomorphic ray spaces, answering an open problem proposed by Kurkofka ad Pitz. This solution is inspired by the introduction of a transfinite topological game, which allows us to characterize not only ray spaces through the existence of winning strategies for one of the players, but also their homeomorphic classes. As applications of these results, we obtain a new topological characterization for graph-theoretic end spaces (thus obtaining yet another solution to a recently solved problem of Diestel), as well as for edge-end spaces and completely ultrametrizable spaces. We also introduce a generalization of the class of ray spaces (which is strict, as witnessed by the Sorgenfrey line). Furthermore, we establish that, for subspaces with cardinality less than continuum of end spaces, the scattered property is equivalent to the property of being, itself, an end space. At last, we determine that ray spaces",
     "domains": [
       "Algebra",
@@ -246,7 +144,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11561v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:58:28.589423+00:00",
     "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
   },
@@ -265,18 +163,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Submultiplicative Polynomials in Combinatorics"
   },
   {
-    "consumed_by_exp_id": "965ed961",
-    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "consumed_by_exp_id": "31f39e19",
+    "description": "Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $\u03b7>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+\u03b7)n/2}$ containing all the $n$-element posets as induced subposets. This improves a recent result of Bastide, Groenland and Nenadov. Our proof provides a labeling scheme preserving transitivity, inspired by the Boolean lattice. Among other tools, we use the Szemer\u00e9di Regularity Lemma.",
     "domains": [
-      "Bridges"
+      "Cryptography",
+      "Logic"
     ],
-    "id": "fd_0000",
-    "priority_score": 0.7,
+    "id": "fd_0020",
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "oeis:80035",
+    "source_exp_id": "2607.12980v1",
     "status": "in_progress",
-    "timestamp": "2026-07-15T05:23:22.329148+00:00",
-    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+    "timestamp": "2026-07-15T12:33:21.946611+00:00",
+    "title": "ArXiv paper: Even smaller universal posets"
+  },
+  {
+    "consumed_by_exp_id": "48cec64e",
+    "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0021",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12912v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-15T12:33:25.469761+00:00",
+    "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
   },
   {
     "consumed_by_exp_id": "",
