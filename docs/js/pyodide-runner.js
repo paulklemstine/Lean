@@ -500,23 +500,30 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
-# Override plt.savefig and plt.close during user code so calls like
-# plt.savefig('file.png') don't write to the virtual filesystem and
-# plt.close() doesn't destroy the figure before we can capture it.
+# Override plt.savefig, plt.close, and plt.show during user code so calls like
+# plt.savefig('file.png') don't write to the virtual filesystem,
+# plt.close() doesn't destroy the figure before we can capture it,
+# and plt.show() doesn't clear the figure or raise warnings on Agg.
 _orig_savefig = plt.savefig
 _orig_close = plt.close
+_orig_show = getattr(plt, 'show', None)
 def _viz_savefig(*args, **kwargs):
     pass
 def _viz_close(*args, **kwargs):
     pass
+def _viz_show(*args, **kwargs):
+    pass
 plt.savefig = _viz_savefig
 plt.close = _viz_close
+plt.show = _viz_show
 
 ${processedCode}
 
 # Restore originals and capture the current figure
 plt.savefig = _orig_savefig
 plt.close = _orig_close
+if _orig_show is not None:
+    plt.show = _orig_show
 buf = io.BytesIO()
 plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
 buf.seek(0)
