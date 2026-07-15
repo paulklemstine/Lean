@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Magnitude homology of tope graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e285b27",
     "description": "Investigate the ArXiv paper 'Decision problem for Hamilton $2$-cycles in $4$-graphs' and formalize its key results. Abstract: A $4$-uniform $2$-cycle in a $4$-uniform hypergraph of length $t$ is a cyclic ordering of $2t$ vertices $v_1v_2\\cdots v_{2t}v_1$ such that $v_{2i+1}v_{2i+2}v_{2i+3}v_{2i+4}$ are edges for $0\\le i\\le t-1$ while the addition is modulo $2t$. For every $\u03b3>0$ and large $n$, we characterize the $n$-vertex $4$-uniform hypergraphs such that every triple of vertices is contained in at least $(1/3+\u03b3)n$ edges and admits a Hamilton $2$-cycle. Up to the error term $\u03b3n$, the assumption on the minimum codegree is best possible and verifies a conjecture of Garbe and Mycroft. As a consequence, this gives a polynomial-time algorithm that decides whether an $n$-vertex $4$-uniform hypergraph with minimum codegree $(1/3+\u03b3)n$ contains a Hamilton $2$-cycle. This stands as a steep contrast to the graph case where such a hardness gap has size $o(n)$.",
     "domains": [
       "Pythagorean",
@@ -28,12 +28,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11872v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:10:18.924942+00:00",
     "title": "ArXiv paper: Decision problem for Hamilton $2$-cycles in $4$-graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f7970f5",
     "description": "Investigate the ArXiv paper 'Local-global compatibility of automorphic Galois representations over CM fields at $p$' and formalize its key results. Abstract: Let $F$ be a CM number field; then, to any cuspidal, regular algebraic automorphic representation of $\\mathrm{GL}_n(\\mathbf{A}_F)$ is associated a compatible system of $p$-adic Galois representations of the absolute Galois group of $F$. We prove that these representations are potentially semi-stable, in the sense of $p$-adic Hodge theory, and satisfy compatibility with the local Langlands correspondence, up to semi-simplification.",
     "domains": [
       "Algebra",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11763v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:28:19.726500+00:00",
     "title": "ArXiv paper: Local-global compatibility of automorphic Galois representations over CM fields at $p$"
   },
@@ -62,7 +62,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fde6e875",
     "description": "Investigate the ArXiv paper 'All simplices exhibit canonical Ramsey property' and formalize its key results. Abstract: We prove that all nondegenerate simplices have the canonical Ramsey property, thereby resolving a central open problem in canonical Euclidean Ramsey theory and providing a canonical counterpart to the celebrated simplex Ramsey theorem of Frankl and R\u00f6dl~[JAMS, 1990].",
     "domains": [
       "Algebra"
@@ -71,12 +71,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11782v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:04:15.394464+00:00",
     "title": "ArXiv paper: All simplices exhibit canonical Ramsey property"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c5246ab",
     "description": "Investigate the ArXiv paper 'Any Proof of Polynomial Hirsch Must be Completely Incoherent' and formalize its key results. Abstract: In 1992, Billera and Sturmfels introduced coherent monotone paths on polytopes as part of their description of the fiber polytope construction, and later in 1994 showed with Kapranov that these coherent monotone paths capture the topology of the space of all monotone paths, paths from a minimum to a maximum, in the directed graph of a polytope with orientation induced by a linear function. Those results motivate the following analog of the polynomial Hirsch conjecture: Does there always exist a coherent monotone path of polynomial length on a polytope for any choice of orientation induced by a linear function? We show this is not the case by exhibiting a family of polytopes and corresponding linear functions for which every coherent monotone path is exponentially long. As applications, we strengthen longstanding results pertaining to lower bounds for the shadow simplex method, geometric transversals in discrete geometry, and parametric linear optimization.",
     "domains": [
       "Geometry",
@@ -86,12 +86,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11628v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:21:50.480180+00:00",
     "title": "ArXiv paper: Any Proof of Polynomial Hirsch Must be Completely Incoherent"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65ba3e1d",
     "description": "Investigate the ArXiv paper 'Normal ordering in the $(p,q)$-deformed generalized Weyl algebra. III: The binomial formula' and formalize its key results. Abstract: We study the $(p, q)$-deformed generalized Weyl algebra generated by variables $X, Y$ and $Z_p$ satisfying the $(p, q)$-commutation relations $XY-qYX=h Y^sZ_{p}, XZ_p=pZ_pX$, and $Z_pY=pYZ_p$, with $s\\in \\mathbb{N}_0$. Within this framework, we investigate the noncommutative binomial formula $(X+Y)^n$ and related identities. In particular, we show how the associated normal ordering coefficients can be expressed in terms of $(p,q)$-deformed $s$-rook numbers. We treat several special cases explicitly, recovering known results from literature as well as deriving new ones.",
     "domains": [
       "Algebra"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11693v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:40:00.853141+00:00",
     "title": "ArXiv paper: Normal ordering in the $(p,q)$-deformed generalized Weyl algebra. III: The binomial formula"
   },
@@ -148,7 +148,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abe5b819",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -157,7 +157,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -192,7 +192,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Fixed-point-free elements in two-orbit permutation groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "305a89b8",
     "description": "Investigate the ArXiv paper 'The chain replacement of a poset flow' and formalize its key results. Abstract: We introduce the chain replacement of a poset flow: it is obtained by considering the simplicial nerves of the posets of strictly increasing chains in the given poset, ordered by refinement. It maps finite posets to q-cofibrant flows and inclusions of finite posets to q-cofibrations. Using the combinatorial properties of the chain replacement, we prove that pushouts along the chain replacement of an order-reflecting inclusion of finite posets preserve spaces of execution paths. By introducing the Hurewicz model structure on flows (or H-model structure), we deduce the same property for any q-cofibrant replacement of an order-reflecting inclusion of finite posets.",
     "domains": [
       "Algebra",
@@ -202,7 +202,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11639v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:21:53.852514+00:00",
     "title": "ArXiv paper: The chain replacement of a poset flow"
   },
