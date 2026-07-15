@@ -48,19 +48,22 @@
       "name": "Injective Coordinate Classification with Collision Witness",
       "description": "Scans the positive source-vertex images and records the first source axis using each target coordinate. Distinct coordinates certify simpliciality; the first repeated coordinate gives a two-axis obstruction certificate. The algorithm runs in expected O(m) time and O(m) auxiliary space for m+1 source axes.",
       "pseudocode": "INPUT: signed target image (a(i), σ(i)) for each source axis i, target dimension n.\n1. Initialize an empty dictionary Seen.\n2. For i from 0 through m, reject malformed coordinates or signs.\n3. If a(i) is in Seen, return INVALID and the pair (Seen[a(i)], i).\n4. Otherwise set Seen[a(i)] := i.\n5. Return VALID.",
-      "code": "from __future__ import annotations\n\ndef classify_map(images: list[tuple[int, int]], n: int) -> tuple[bool, tuple[int, int] | None]:\n    seen: dict[int, int] = {}\n    for j, (axis, sign) in enumerate(images):\n        if axis < 0 or axis > n or sign not in (-1, 1):\n            raise ValueError(\"malformed signed target vertex\")\n        if axis in seen:\n            return False, (seen[axis], j)\n        seen[axis] = j\n    return True, None\n"
+      "code": "from __future__ import annotations\n\ndef classify_map(images: list[tuple[int, int]], n: int) -> tuple[bool, tuple[int, int] | None]:\n    seen: dict[int, int] = {}\n    for j, (axis, sign) in enumerate(images):\n        if axis < 0 or axis > n or sign not in (-1, 1):\n            raise ValueError(\"malformed signed target vertex\")\n        if axis in seen:\n            return False, (seen[axis], j)\n        seen[axis] = j\n    return True, None\n",
+      "code_file": "visualizations/close_proofs_the_file_catalognoveltyz2coindexsuspe_injective_coordinate_classification_with.py"
     },
     {
       "name": "Constructive Equatorial Inclusion Algorithm",
       "description": "Decides existence using the exact inequality m ≤ n and, when possible, constructs the standard equatorial inclusion by matching each source axis to the same target axis with positive sign. Decision is constant-time in the unit-cost model; materializing the witness takes O(m) time and space.",
       "pseudocode": "INPUT: dimensions m and n.\n1. If m < 0, n < 0, or m > n, report NONEXISTENT.\n2. For each i from 0 through m, set the positive image to (i,+1).\n3. Extend to negative vertices by antipodality.\n4. Return the map.",
-      "code": "from __future__ import annotations\n\ndef construct_inclusion(m: int, n: int) -> list[tuple[int, int]]:\n    if not (0 <= m <= n):\n        raise ValueError(\"no map exists for these dimensions\")\n    return [(i, 1) for i in range(m + 1)]\n"
+      "code": "from __future__ import annotations\n\ndef construct_inclusion(m: int, n: int) -> list[tuple[int, int]]:\n    if not (0 <= m <= n):\n        raise ValueError(\"no map exists for these dimensions\")\n    return [(i, 1) for i in range(m + 1)]\n",
+      "code_file": "visualizations/close_proofs_the_file_catalognoveltyz2coindexsuspe_constructive_equatorial_inclusion_algori.py"
     },
     {
       "name": "Matched-Axis Suspension Extension",
       "description": "Extends a valid coordinate injection by adjoining one new source axis and the new target axis n+1. Since the new coordinate was unavailable to every old image, injectivity is preserved. Copying an explicit list takes O(m) time and space; an append-capable representation permits amortized constant-time extension.",
       "pseudocode": "INPUT: valid positive-image data for C_m → C_n.\n1. Confirm that old target coordinates are in range and pairwise distinct.\n2. Retain every old positive image.\n3. Append the new positive-pole image (n+1,+1).\n4. Define the negative-pole image antipodally.\n5. Return data for C_(m+1) → C_(n+1).",
-      "code": "from __future__ import annotations\n\ndef suspend(images: list[tuple[int, int]], n: int) -> list[tuple[int, int]]:\n    axes = [axis for axis, _ in images]\n    if len(axes) != len(set(axes)) or any(axis < 0 or axis > n for axis in axes):\n        raise ValueError(\"input coordinate map is not injective\")\n    return images + [(n + 1, 1)]\n"
+      "code": "from __future__ import annotations\n\ndef suspend(images: list[tuple[int, int]], n: int) -> list[tuple[int, int]]:\n    axes = [axis for axis, _ in images]\n    if len(axes) != len(set(axes)) or any(axis < 0 or axis > n for axis in axes):\n        raise ValueError(\"input coordinate map is not injective\")\n    return images + [(n + 1, 1)]\n",
+      "code_file": "visualizations/close_proofs_the_file_catalognoveltyz2coindexsuspe_matched_axis_suspension_extension.py"
     }
   ],
   "visualizations": [
