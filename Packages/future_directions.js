@@ -326,31 +326,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Local statistics and average rank of genus $g$ hyperelliptic curves with a Weierstrass point' and formalize its key results. Abstract: In this paper, we determine the probability that a genus $g$ hyperelliptic curve with a Weierstrass point over a number field has good reduction at a given prime of residue characteristic $>2g+1$. We also obtain analogous probability formulas for several other reduction types, including cases with positive toric or unipotent rank. As an application, assuming the Hasse--Weil conjecture and the generalized Riemann hypothesis, we derive an explicit upper bound for the average analytic rank of genus $g$ hyperelliptic curves with a Weierstrass point.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0031",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12381v1",
+    "status": "available",
+    "timestamp": "2026-07-15T19:54:33.368042+00:00",
+    "title": "ArXiv paper: Local statistics and average rank of genus $g$ hyperelliptic curves with a Weierstrass point"
+  },
+  {
+    "consumed_by_exp_id": "1a2ab56f",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0031",
+    "id": "fd_0032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12912v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T12:33:25.469761+00:00",
     "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
   },
   {
-    "consumed_by_exp_id": "1a2ab56f",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The Balanced Four-Color Theorem' and formalize its key results. Abstract: We show that every planar graph with $n \\geq 3$ vertices admits a 4-coloring in which each color is used on fewer than $n/2$ vertices. This bound is the best possible. Moreover, such a coloring can be found in $O(n \\log n)$ time. We also extend these results to five or more colors and to graphs on general surfaces.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0032",
+    "id": "fd_0033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13025v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T12:51:18.212379+00:00",
     "title": "ArXiv paper: The Balanced Four-Color Theorem"
   },
@@ -360,7 +375,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0033",
+    "id": "fd_0034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12890v1",
@@ -374,7 +389,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0034",
+    "id": "fd_0035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
@@ -388,7 +403,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0035",
+    "id": "fd_0036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
@@ -403,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0036",
+    "id": "fd_0037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12561v1",
@@ -418,7 +433,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0037",
+    "id": "fd_0038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12679v1",
@@ -433,7 +448,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0038",
+    "id": "fd_0039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12449v1",
@@ -447,7 +462,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0039",
+    "id": "fd_0040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12461v1",
@@ -461,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0040",
+    "id": "fd_0041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12457v1",
@@ -476,13 +491,27 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0041",
+    "id": "fd_0042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
     "status": "available",
     "timestamp": "2026-07-15T19:37:25.793116+00:00",
     "title": "ArXiv paper: Recursive Formula for the Equations of Hessenberg Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Hypergraph Turan with bounded matching number' and formalize its key results. Abstract: For a fixed graph $G$, an $r$-uniform hypergraph is said to contain a Berge-$G$ if there exists a bijection $f\\colon E(G)\\to E(\\mathcal{H})$ for some subhypergraph $\\mathcal{H}$ such that $e\\subseteq f(e)$ for every $e\\in E(G)$. Motivated by Alon and Frankl's study of Tur\u00e1n problems under bounded matching constraints, we investigate the maximum number of edges in $r$-uniform Berge-$K_3$-free hypergraphs with matching number at most~$s$. We determine the exact Tur\u00e1n numbers for the cases $r=3$ and $r=4$. For $r=3$ and $n \\geq 3 s$, we prove that every $n$-vertex Berge- $K_3$-free 3-graph with matching number $s$ has at most $s(n-2 s)$ edges, and we characterize the unique extremal hypergraph attaining equality. For $r=4$ and $n \\geq 4 s$, the maximum number of edges is $s\\lfloor(n-2 s) / 2\\rfloor$, except for the exceptional case $s=1$ and $n \\equiv 1(\\bmod 4)$, in which the bound is $(n-1) / 2$. As a corollary, our results recover the classical theorem of Gy\u0151ri on Berge-$K_3$-free hype",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0043",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12300v1",
+    "status": "available",
+    "timestamp": "2026-07-15T19:54:37.533091+00:00",
+    "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
   },
   {
     "consumed_by_exp_id": "",
