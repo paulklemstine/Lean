@@ -177,16 +177,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const scorePct = qs != null ? Math.round(qs * 100) : null;
             const tierEmojis = { gold: '\u{1F947}', silver: '\u{1F948}', bronze: '\u{1F948}', unrated: '' };
             const tierEmoji = tierEmojis[tier] || '';
-            const standout = qs != null && qs >= 0.75;
+            const standout = qs != null && qs >= 0.90;
             if (standout) li.classList.add('standout');
 
             // Score color based on tier
             let scoreColor = '#6b7280'; // unrated gray
             if (qs != null) {
-                if (qs >= 0.75) scoreColor = '#fbbf24';      // gold - standout
-                else if (qs >= 0.65) scoreColor = '#8b5cf6';  // violet - strong
-                else if (qs >= 0.55) scoreColor = '#06b6d4';  // cyan - good
-                else if (qs >= 0.45) scoreColor = '#dc2626';  // red - moderate
+                if (qs >= 0.90) scoreColor = '#fbbf24';      // gold - standout
+                else if (qs >= 0.80) scoreColor = '#8b5cf6';  // violet - strong
+                else if (qs >= 0.70) scoreColor = '#06b6d4';  // cyan - good
+                else if (qs >= 0.60) scoreColor = '#dc2626';  // red - moderate
                 else scoreColor = '#991b1b';                   // dark red - low
             }
 
