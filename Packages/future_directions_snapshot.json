@@ -534,25 +534,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "86efe295",
-    "description": "Building on cycle b97ab468 (Q=0.820), which proved 18 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ninterleaving theory used by approximation algorithms in TDA meet, yielding an *effective*\nexponential",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_b97ab468_8a0da3e4",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "b97ab468",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T07:29:42.613481+00:00",
-    "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle c81fdc47 (Q=0.820), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the natural bijection φ from the set of B-orbits on B_n × P^(n-1) to its image in W_(n+1) × W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O₁ ⊆ O̅₂ iff φ(O₁) ≤ φ(O₂) in (W_(n+1), ≤_Bruhat) × (W_(n+1), ≤_Bruhat).",
     "domain_bridges": [],
@@ -3833,6 +3814,26 @@
     "status": "available",
     "timestamp": "2026-07-15T00:43:28.573545+00:00",
     "title": "**Conjecture.** The set of equivariant simplicial maps from the boundary of the "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Completed proof chain\n\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` contains a complete three-step chain:\n\n1. `value_eq` identifies mixed-radix evaluation at bases `b i = i + 1` with factoradic evaluation.\n2. `valid_iff` identifies the corresponding digit-validity predicates.\n3. `factorial_value_unique_via_mixed` uses both bridge results to derive uniqueness of factoradic representations from the general mixed-radix uniqueness theorem.\n\nAll three declarations compile without proof placeholders.\n\n## Completed Carmichael cleanup\n\nThe sole remaining Lean placeholder was the unproved `n > 10000` branch of the Fibonacci primitive-divisor theorem in `Catalog/Shared/CarmichaelProof.lean`. The project only contains a kernel-checked finite computation through `10000`; it does not contain the quantitative number theory needed to justify the unbounded branch. The theorem has therefore been corrected to state exactly the proved result:\n\n- `fib_carmichael_composite` proves the composite case for `13 ≤ n ≤ 10000`;\n- `fib_carmichael_composite_certified` carries that result into the speculative application;\n- `fib_carmichael` and `fib_primitive_divisor` combine the prime and composite cases on the same certified interval.\n\nThis removes the incomplete branch without retaining a stronger unsupported signature. The affected modules compile end-to-end and the catalog contains no Lean `sorry` placeholders.\n\nA future extension may recover the classical unbounded theorem by formalizing growth estimates for the homogeneous cyclotomic primitive part of Fibonacci numbers (or an equivalent primitive-divisor theorem). Such a result should be proved separately and then used to remove the upper-bound hypothesis.\n\n## Topological quantum-code development\n\n`Catalog/Applications/SurfaceCodeHomology.lean` formalizes a CSS code as a three-term chain complex over `ZMod 2`, proves the rank/dimension identity, characterizes nontrivial first homology, and computes that the minimal genus-`g` surface complex has `2g` logical qubits.\n\nNatural next steps are:\n\n- define chain maps and prove logical-qubit count invariant under chain homotopy equivalence;\n- formalize explicit toric cellulations, not only the minimal CW complex;\n- define code distance as minimum support of a non-boundary cycle and prove distance formulas for finite toric lattices;\n- model a color-code chain complex and relate it to homology of a 2-colex;\n- connect cellular chain complexes arising from algebraic varieties to the abstract CSS construction.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1331",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "dbf870e8",
+    "status": "available",
+    "timestamp": "2026-07-15T00:43:36.361880+00:00",
+    "title": "`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` contains a com"
   },
   {
     "ambition_level": "extension",

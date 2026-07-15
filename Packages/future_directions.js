@@ -967,20 +967,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The file `Catalog/Applications/MatsunoMuExtension.lean` formalises the"
   },
   {
-    "consumed_by_exp_id": "cc9e6854",
-    "description": "Cycle 10dfa4e0 (Q=0.820) proved 26 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp excess of \u2124\u2082-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combin",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_10dfa4e0_f19f75f5",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "10dfa4e0",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T22:54:15.669711+00:00",
-    "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domains": [
@@ -2810,6 +2796,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T00:43:05.483629+00:00",
     "title": "This cycle closed the gap between the two halves of the join law for the \u2124\u2082-coin"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Sharp Excess of \u2124\u2082-Coindex under Suspension\n\n## 1. Classification and enumeration of all equivariant simplicial maps\n\n**Conjecture.** The set of equivariant simplicial maps from the boundary of the `(m+1)`-cross-polytope to the boundary of the `(n+1)`-cross-polytope is naturally in bijection with pairs consisting of an injection of coordinate axes and an independent sign assignment on every source axis. Consequently, for `m \u2264 n`, its cardinality is\n\n`2^(m+1) \u00b7 (n+1)!/(n-m)!`,\n\nand it is empty for `m > n`.\n\nThe key insight is that simpliciality detects only collisions of coordinate axes, while equivariance transports arbitrary signs consistently across antipodal pairs. **Why now?** The exact existence criterion already isolates coordinate injectivity; the remaining step is to upgrade that logical equivalence to a natural bijection and an enumerative formula.\n\n## 2. Faithful suspension and a combinatorial desuspension criterion\n\n**Conjecture.** Suspension induces an injective map on equivariant simplicial maps, and its image consists exactly of maps that carry one antipodal source-axis pair to one antipodal target-axis pair without mixing that pair with the equatorial coordinates.\n\nThe key insight is that a suspended map has a distinguished pole pair whose deletion recovers the original map. **Why now?** Existence is known to be preserved in both directions, but a map-level characterization would explain precisely when an individual morphism, rather than merely an existence witness, can be desuspended.\n\n## 3. Orbit classification under signed permutation symmetries\n\n**Conjecture.** Up to precomposition and postcomposition by automorphisms of the source and target cross-polytopes, every equivariant simplicial map `S\u1d50 \u2192 S\u207f` is equivalent to the standard equatorial inclusion.\n\nThe key insight is that signed permutation groups act transitively on injections of coordinate axes together with sign choices. **Why now?** Coordinate-axis injectivity reduces the classification problem to a finite group action, opening a direct bridge between equivariant topology and the combinatorics of hyperoctahedral groups.\n\n## 4. Join additivity for cross-polytope coindex\n\n**Conjecture.** Under the canonical identification of the join of cross-polytope boundaries with a higher-dimensional cross-polytope boundary, coindex is additive with the dimension shift:\n\n`coind(S\u1d50 * S\u207f) = coind(S\u1d50) + coind(S\u207f) + 1`.\n\nThe key insight is that joins concatenate coordinate-axis systems, while the injectivity obstruction adds their cardinalities. **Why now?** The suspension case is the join with `S\u2070`; its sharp increment suggests that the same axis-counting mechanism should control arbitrary joins.\n\n## 5. Extension to free involutive complexes through Tucker labelings\n\n**Conjecture.** For every finite free involutive simplicial complex, the failure of an equivariant simplicial map to an `n`-dimensional cross-polytope sphere admits a finite certificate expressible as a Tucker-type complementary-edge obstruction, stable under suspension.\n\nThe key insight is that the cross-polytope proof converts equivariant mapping into a forbidden antipodal-pair condition, the local pattern underlying Tucker labelings. **Why now?** The sphere case supplies a complete coordinate model and a sharp suspension law; extending its obstruction certificate would connect the combinatorial classification to general free \u2124\u2082-complexes.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1330",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cc9e6854",
+    "status": "available",
+    "timestamp": "2026-07-15T00:43:28.573545+00:00",
+    "title": "**Conjecture.** The set of equivariant simplicial maps from the boundary of the "
   },
   {
     "consumed_by_exp_id": "",
