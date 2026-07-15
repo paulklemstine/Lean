@@ -19402,11 +19402,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b1453a16",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -19419,7 +19419,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1303",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-15T04:09:29.814790+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -19434,7 +19434,7 @@
       "source": "",
       "source_exp_id": "16f220a2",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/16f220a2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_973a6769",
       "timestamp": "2026-07-14T15:58:20.123905+00:00",
       "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
@@ -22059,7 +22059,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 10dfa4e0 (Q=0.820), which proved 26 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combinatorial\nmodel of free `ℤ₂`-complexes — the boundary complexes of cross-polytopes, i.e. the octahedra",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Applications"
       ],
@@ -26299,7 +26299,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ca1c3afc (Q=0.870), which proved 6 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length `k` should admit a canonical bijection with permutations of `k` elements such that factoradic evalua",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty"
       ],
@@ -29739,7 +29739,7 @@
       "depth_estimate": 3,
       "description": "Cycle ca1c3afc (Q=0.870) proved 6 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty"
       ],
@@ -49534,8 +49534,8 @@
     "abduction_followup",
     "abduction_followup",
     "abduction_followup",
-    "abduction_followup",
     "cross_domain_bridge",
+    "abduction_followup",
     "abduction_followup",
     "abduction_followup",
     "abduction_followup",

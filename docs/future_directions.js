@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "bd321901",
-    "description": "Building on cycle 37f1d216 (Q=0.910), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Colorful Carath\u00e9odory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carath\u00e9odory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial o",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_37f1d216_c260b967",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "37f1d216",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T02:11:45.910783+00:00",
-    "title": "Deepening: Two-parameter picture of *witness complexity* for the"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 7ea29a05 (Q=0.900), which proved 16 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Toughness as an order-monotone invariant\n\nThis cycle promoted the component-count toughness toolkit from a collection of\nisolated lemmas into a small order-theoretic package: `1`-toughness is now known to be\n*monotone under edge additions*, `1`-tough graphs are *`2`-connected*,",
     "domains": [
@@ -2406,7 +2392,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1453a16",
     "description": "# Future Directions \u2014 The Topology of Argumentation (X): the kernel/game bridge\n\nThis cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file that\nconnects three areas usually developed in isolation:\n\n* **Dung argumentation semantics** (stable extensions),\n* **directed graph theory** (kernels: independent + absorbing sets, in the sense\n  of von Neumann\u2013Morgenstern), and\n* **combinatorial game theory** (P-position solutions of a move relation).\n\n## What was proved (all `sorry`-free, standard axioms only)\n\nThe dictionary:\n\n* `stable_iff_kernel` \u2014 a stable extension of the attack relation `R` is exactly a\n  kernel of the transposed digraph `flip R` (this one needs **no axioms at all**).\n* `stable_iff_gameSolution` \u2014 equivalently, a P-position solution of the\n  reversed-attack game.\n* `terminal_mem_of_kernel` \u2014 terminal positions are forced into every kernel: the\n  normal-play \"no move \u21d2 you lose\" convention is a *consequence* of the kernel\n  axioms.\n\nThe odd-cycle obstruction (why *some* hypothesis is unavoidable):\n\n* `no_kernel_cyc3`, `no_stable_cyc3` \u2014 the directed 3-cycle has no kernel, hence\n  the 3-cycle framework has no stable extension. This is the classical reason\n  stable extensions can fail to exist, in sharp contrast to the *maximal\n  (preferred)* extensions of the earlier cycles, which exist unconditionally.\n\nWell-founded existence and uniqueness (Zermelo determinacy):\n\n* `isLoss` / `isLoss_iff` \u2014 the P-position predicate defined by the standard game\n  recursion over the well-founded reverse-move relation.\n* `kernel_isLoss` \u2014 the P-positions form a kernel.\n* `kernel_unique`, `exists_unique_kernel` \u2014 a well-founded digraph has a **unique**\n  kernel.\n* `wf_game_determined` \u2014 every well-founded game has a unique solution.\n* `exists_unique_stable_of_wf` \u2014 a well-founded argumentation framework has a\n  **unique** stable extension: well-foundedness *restores* the existence that\n  failed on the odd cycle, and forces uniqueness.\n\n## Why this is a \"connector\"\n\nThe single identity `Stable R = Kernel (flip R) = GameSolution (flip R)` lets a\nresult proved in one language be read in all three. The odd-cycle non-existence\nis simultaneously (i) a Dung framework with no stable extension, (ii) a digraph\nwith no kernel, and (iii) a game with no consistent win/loss labelling. The\nwell-founded determinacy theorem is simultaneously Zermelo's theorem for\nterminating games, the Richardson-style kernel existence theorem for\nwell-founded digraphs, and the well-founded-AF uniqueness theorem for Dung\nsemantics.\n\n## Open directions\n\n* **Even cycles / kernel-perfect digraphs.** Formalise the positive side: even\n  directed cycles have kernels; more generally, digraphs with no odd directed\n  cycle are kernel-perfect (Richardson's theorem). Only the odd obstruction is\n  formalised here.\n* **Grounded = unique stable, in the well-founded case.** Identify the unique\n  stable extension `exists_unique_stable_of_wf` with the grounded extension\n  (`OrderHom.lfp charF`) from the earlier cycles, closing the loop between the\n  order-theoretic and game-theoretic constructions.\n* **Sprague\u2013Grundy.** Refine `isLoss` to a Grundy-value function and connect\n  disjunctive sums of frameworks to nim-addition.\n",
     "domains": [
       "Algebra",
@@ -2416,7 +2402,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "16f220a2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T15:58:20.123905+00:00",
     "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
   },
@@ -3004,6 +2990,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T04:08:40.138573+00:00",
     "title": "The previously incomplete bridge from the general mixed-radix system to the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Connect the algebraic constant to the actual cutting process.** The present result proves that the candidate cake ratio `1 + \u03c1` is exactly the square of the plastic number and supplies its positive Padovan-matrix eigenvector. The principal remaining theorem is the strategy-independent lower bound `\u03bc\u2082 \u2265 1 + \u03c1`, together with a fully specified infinite strategy attaining the matching upper bound.\n\n2. **Formalize finite circular configurations and cut updates.** Define cyclic slice vectors, adjacent-pair portions, the maximum/minimum portion ratio, and refinement by one radial cut. Prove that these finite-stage definitions are invariant under cyclic rotation and positive rescaling.\n\n3. **Derive the substitution strategy.** Use the three coordinates `(1,p,p\u00b2)` and the Padovan transition matrix to define a self-similar cut schedule. Show that every stage has portion ratio at most `p\u00b2 = 1 + \u03c1`.\n\n4. **Prove a lower-bound obstruction.** Seek a finite-state potential or adversarial invariant whose transition inequalities reduce to `p\u00b3 = p + 1`. Such an invariant would explain why every infinite cutting sequence has some stage with ratio at least `p\u00b2`.\n\n5. **Asymptotic recurrence bridge.** Formalize the Padovan recurrence and prove that ratios of successive positive solutions converge to `p`, using the positive eigenvector established here. This would turn the exact spectral connector into a dynamical convergence theorem.\n\n6. **Spectral strengthening.** Compute the characteristic polynomial of `padovanMatrix`, prove that `p` is its unique positive eigenvalue, and then derive its spectral-radius characterization. This would justify the stronger Perron\u2013Frobenius terminology without assuming it.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1350",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0ee2f71b",
+    "status": "available",
+    "timestamp": "2026-07-15T04:08:44.996382+00:00",
+    "title": "1. **Connect the algebraic constant to the actual cutting process.** The present"
   },
   {
     "consumed_by_exp_id": "",

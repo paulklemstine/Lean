@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bd6ccec1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Argumentation (IX): the meet-semilattice of complete extensions\n\nThis cycle settles **Conjecture 1** of the previous *Future Directions* note and,\nin doing so, re",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-07-14T13:20:07",
-      "title": "This cycle established, with no finiteness or well-foundedness hypothesis on the"
-    },
-    {
       "cycle_id": "d09018a9",
       "domain": "Applications",
       "key_insight": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThe verified cycle established that the maximal number of good manifolds in an\n`n`-nice polytope is, from dimension seven onward, exactly",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-15T04:08:41",
       "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
+    },
+    {
+      "cycle_id": "0ee2f71b",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Connect the algebraic constant to the actual cutting process.** The present result proves that the candidate cake ratio `1 + ρ` is exactly the square of the plastic number an",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-15T04:09:03",
+      "title": "Deepening: The optimal portion ratio μ₂ equals 1 + ρ"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3dfad72d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## Summary of what was proved / disproved\n\nFile: `Catalog/Applications/RBDomainContrarian.lean` (self-contained, no `sorry`,\naxioms: `propext`, `Classical.choice`, `Quot.sound` on",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-07-12T15:03:14",
-      "title": "Characterizing finite posets whose probabilistic powerdomain is an RB-domain"
-    },
     {
       "cycle_id": "919ceb1f",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-15T04:08:41",
       "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
+    },
+    {
+      "cycle_id": "0ee2f71b",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Connect the algebraic constant to the actual cutting process.** The present result proves that the candidate cake ratio `1 + ρ` is exactly the square of the plastic number an",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-15T04:09:03",
+      "title": "Deepening: The optimal portion ratio μ₂ equals 1 + ρ"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a46f1a93",
-      "domain": "Novelty",
-      "name": "_root_",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a46f1a93",
-      "domain": "Novelty",
-      "name": "Sd_herm",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a46f1a93",
-      "domain": "Novelty",
-      "name": "energy_eq_roots",
-      "quality": 0.82
-    },
     {
       "cycle_id": "1207283c",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "no_factorial_four_add_equiv",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "0ee2f71b",
+      "domain": "Novelty",
+      "name": "cakePoly_strictMonoOn",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "0ee2f71b",
+      "domain": "Novelty",
+      "name": "rho_exists_unique",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "0ee2f71b",
+      "domain": "Novelty",
+      "name": "rho_spec",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-07-15T04:08:41",
+  "last_updated": "2026-07-15T04:09:03",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9a38651d",
-        "quality": 0.78,
-        "theorems": 15,
-        "title": "The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
-      },
-      {
         "cycle_id": "8ceb2563",
         "quality": 0.82,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.87,
         "theorems": 6,
         "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
+      },
+      {
+        "cycle_id": "0ee2f71b",
+        "quality": 0.88,
+        "theorems": 16,
+        "title": "Deepening: The optimal portion ratio μ₂ equals 1 + ρ"
       }
     ],
     "NumberTheory": [
