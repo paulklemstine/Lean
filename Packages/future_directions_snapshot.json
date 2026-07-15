@@ -2,6 +2,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 22a6ce83 (Q=0.910), which proved 17 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain is squeezed between `2 n^{-3}` and\n`12 n^{-3}`, so it is exactly of order `n^{-3}`. The upper bound c",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_22a6ce83_563450c0",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "22a6ce83",
+    "status": "available",
+    "timestamp": "2026-07-15T05:02:33.004218+00:00",
+    "title": "Deepening: This cycle closed the two-sided estimate for the one-dimensional swap model: the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "bd321901",
     "description": "Building on cycle 37f1d216 (Q=0.910), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial o",
     "domain_bridges": [],
@@ -17,6 +36,25 @@
     "status": "in_progress",
     "timestamp": "2026-07-15T02:11:45.910783+00:00",
     "title": "Deepening: Two-parameter picture of *witness complexity* for the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 582560af (Q=0.910), which proved 30 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant governed by the\ndimensional sign `d ↦ (-1)^d`, with an explicit stabilization map identifying the\nnegative",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_582560af_35be13b5",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "582560af",
+    "status": "available",
+    "timestamp": "2026-07-15T05:02:38.337160+00:00",
+    "title": "Deepening: The results of this cycle establish that the Euler characteristic extends to"
   },
   {
     "ambition_level": "extension",
@@ -2807,26 +2845,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "22a6ce83",
-    "description": "# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain is squeezed between `2 n^{-3}` and\n`12 n^{-3}`, so it is exactly of order `n^{-3}`. The upper bound comes from a\nsingle slowly-varying position witness; the lower bound is a telescoping\nCauchy–Schwarz Poincaré inequality showing that *every* non-constant test\nfunction already has Rayleigh quotient at least `2 n^{-3}`. The following\nconjectures push this mechanism toward the genuine fixed-genus chord-swap chain.\n\n## Conjecture 1 — Genus-graded cubic gap for chord-swap chains\nFor chord diagrams of `n` chords and any fixed genus `g`, the chord-swap chain\nhas spectral gap `Θ(n^{-3})`, with the implied constants depending only on `g`.\n\nThe key insight is that a chord diagram carries a monotone integer statistic —\na genus-aware \"displacement\" that changes by exactly one unit under a single\nchord swap — whose Dirichlet energy grows linearly while its variance grows\nquartically, reproducing the path model's energy-to-variance ratio of `n^{-3}`.\n\nWhy now? The abstract energy/variance bookkeeping is fully established and the\none-dimensional prototype is pinned to the cubic window, so the only missing\ningredient is the construction and quartic-variance estimate for the genus\nstatistic — a concrete, self-contained combinatorial target rather than an\nanalytic obstacle.\n\n## Conjecture 2 — Universal cubic law for `±1`-monotone swap chains\nAny reversible swap chain on a finite state space that admits a monotone integer\nstatistic taking `Θ(n)` distinct values and changing by `±1` per accepted move,\nwith `Θ(n)` boundary-adjacent transitions, has spectral gap `Θ(n^{-3})`.\n\nThe key insight is that the exponent `3 = 4 − 1` is forced purely by growth\nrates: the variance of such a statistic is quartic in its range while its\nDirichlet energy is only linear, so the ratio is cubic regardless of the\nunderlying combinatorial model.\n\nWhy now? The lower-bound half proved here is model-agnostic — it uses only the\ntelescoping structure of a `±1` statistic — so the universal statement is within\nreach by abstracting the path argument away from its specific adjacency weights.\n\n## Conjecture 3 — Sharp leading constant\nFor the path swap chain the spectral gap satisfies `γ_n = (c + o(1)) n^{-3}` for\nan explicit constant `c` strictly inside `[2, 12]`, realised by the discrete\nfirst eigenfunction (a shifted cosine profile) rather than the linear position\nwitness.\n\nThe key insight is that the linear witness is energy-optimal only to within a\nconstant factor; replacing it by the discrete cosine mode simultaneously lowers\nthe energy and matches the true bottom of the spectrum, so both bounds should\ncollapse to a single constant.\n\nWhy now? The two-sided window is already established, isolating the remaining\nquestion to a one-parameter optimisation over test-function profiles — a finite\nvariational problem amenable to the same Rayleigh calculus used here.\n\n## Conjecture 4 — Higher-dimensional swap complexes\nOn a `d`-dimensional product of swap chains the spectral gap is `Θ(n^{-3})` as\nwell, independent of `d`, because the slowest mode remains one-dimensional.\n\nThe key insight is that tensorising commuting swap chains adds their Dirichlet\nforms while the extremal test function still varies along a single coordinate,\nso the worst-case Rayleigh quotient is inherited unchanged from the line.\n\nWhy now? With the exact one-dimensional constant window in hand, the product\ncomparison reduces to a clean sub-additivity statement for Dirichlet forms,\nwhich the present energy/variance identities express directly.\n\n\n# Future Directions: cubic spectral gaps of swap reconfiguration chains\n\nThis cycle closed the two-sided estimate for the one-dimensional swap model: the\nspectral gap of the weighted path swap chain is squeezed between `2 n^{-3}` and\n`12 n^{-3}`, so it is exactly of order `n^{-3}`. The upper bound comes from a\nsingle slowly-varying position witness; the lower bound is a telescoping\nCauchy–Schwarz Poincaré inequality showing that *every* non-constant test\nfunction already has Rayleigh quotient at least `2 n^{-3}`. The following\nconjectures push this mechanism toward the genuine fixed-genus chord-swap chain.\n\n## Conjecture 1 — Genus-graded cubic gap for chord-swap chains\nFor chord diagrams of `n` chords and any fixed genus `g`, the chord-swap chain\nhas spectral gap `Θ(n^{-3})`, with the implied constants depending only on `g`.\n\nThe key insight is that a chord diagram carries a monotone integer statistic —\na genus-aware \"displacement\" that changes by exactly one unit under a single\nchord swap — whose Dirichlet energy grows linearly while its variance grows\nquartically, reproducing the path model's energy-to-variance ratio of `n^{-3}`.\n\nWhy now? The abstract energy/variance bookkeeping is fully established and the\none-dimensional prototype is pinned to the cubic window, so the only missing\ningredient is the construction and quartic-variance estimate for the genus\nstatistic — a concrete, self-contained combinatorial target rather than an\nanalytic obstacle.\n\n## Conjecture 2 — Universal cubic law for `±1`-monotone swap chains\nAny reversible swap chain on a finite state space that admits a monotone integer\nstatistic taking `Θ(n)` distinct values and changing by `±1` per accepted move,\nwith `Θ(n)` boundary-adjacent transitions, has spectral gap `Θ(n^{-3})`.\n\nThe key insight is that the exponent `3 = 4 − 1` is forced purely by growth\nrates: the variance of such a statistic is quartic in its range while its\nDirichlet energy is only linear, so the ratio is cubic regardless of the\nunderlying combinatorial model.\n\nWhy now? The lower-bound half proved here is model-agnostic — it uses only the\ntelescoping structure of a `±1` statistic — so the universal statement is within\nreach by abstracting the path argument away from its specific adjacency weights.\n\n## Conjecture 3 — Sharp leading constant\nFor the path swap chain the spectral gap satisfies `γ_n = (c + o(1)) n^{-3}` for\nan explicit constant `c` strictly inside `[2, 12]`, realised by the discrete\nfirst eigenfunction (a shifted cosine profile) rather than the linear position\nwitness.\n\nThe key insight is that the linear witness is energy-optimal only to within a\nconstant factor; replacing it by the discrete cosine mode simultaneously lowers\nthe energy and matches the true bottom of the spectrum, so both bounds should\ncollapse to a single constant.\n\nWhy now? The two-sided window is already established, isolating the remaining\nquestion to a one-parameter optimisation over test-function profiles — a finite\nvariational problem amenable to the same Rayleigh calculus used here.\n\n## Conjecture 4 — Higher-dimensional swap complexes\nOn a `d`-dimensional product of swap chains the spectral gap is `Θ(n^{-3})` as\nwell, independent of `d`, because the slowest mode remains one-dimensional.\n\nThe key insight is that tensorising commuting swap chains adds their Dirichlet\nforms while the extremal test function still varies along a single coordinate,\nso the worst-case Rayleigh quotient is inherited unchanged from the line.\n\nWhy now? With the exact one-dimensional constant window in hand, the product\ncomparison reduces to a clean sub-additivity statement for Dirichlet forms,\nwhich the present energy/variance identities express directly.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_1271",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "bec8fe46",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T04:50:15.932619+00:00",
-    "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## What this cycle establishes\n\n`Catalog/Bridges/MatsunoIwasawaMonoidHom.lean` deepens the algebraic model of the\ntwo classical **Iwasawa invariants** `μ` and `λ` (built in `MatsunoIwasawaBridge.lean`)\nby lifting the isolated *additivity* facts to a single **structural cross-domain\nbridge**.\n\nFor `f = Σ aᵢ Xⁱ ∈ ℤ[X]`:\n\n* `μ_p(f) = padicValInt p (content f)` — the least `p`-adic valuation among the\n  coefficients (a `ℤ`-arithmetic / commutative-algebra datum);\n* `λ_p(f) = natTrailingDegree (reduce_p (primPart f))` — the first index at which\n  that minimum is attained (a `𝔽_p[X]` combinatorial datum).\n\n### New results (all `sorry`-free, axioms `propext / Classical.choice / Quot.sound`)\n\n1. **`iwasawaHom` — the central connector.** The pair `f ↦ (μ_p f, λ_p f)` is a\n   `MonoidHom` from the multiplicative monoid `ℤ[X]⁰` (nonzero integer polynomials)\n   to the additive monoid `ℕ × ℕ`, viewed multiplicatively as\n   `Multiplicative (ℕ × ℕ)`. This is the precise statement that the Iwasawa\n   invariants form a **valuation-type object**: an additive invariant of a\n   multiplicative structure. It bridges **number theory** (Iwasawa `μ`, `λ`) with\n   the **algebra of ordered monoids / valuations**.\n\n2. **`lambdaInv_eq_rootMultiplicity`.** The `λ`-invariant *equals* `rootMultiplicity 0`\n   of the reduced primitive part — the **order of vanishing at the origin** of the\n   mod-`p` reduction. This connects Iwasawa `λ` to the local algebro-geometric\n   notion of the multiplicity of a root.\n\n3. **`muInv_le_of_dvd`, `lambdaInv_le_of_dvd`.** Both invariants are **monotone\n   under divisibility**, the hallmark of a valuation — bridging the ring-theoretic\n   divisibility order with the numerical order on invariants.\n\n4. **`muInv_prod`, `lambdaInv_prod`.** Both invariants send a finite product of\n   characteristic elements to the finite sum of their invariants.\n\n5. **`matsuno_iterated_twist`.** Twisting a characteristic element by a finite\n   family of Matsuno twist factors shifts `λ` by the sum of the individual\n   `μ`-proportional contributions.\n\n### Supporting building blocks\n\n`muInv_one`, `lambdaInv_one`, `muInv_C_pow`, `lambdaInv_C_pow`, `muInv_X_pow`,\n`lambdaInv_X_pow`, `muInv_twistFactor`, `lambdaInv_twistFactor`, and the base\nadditivity lemmas `muInv_mul`, `lambdaInv_mul` (restated self-contained).\n\n## Where to go next\n\n* **Group homomorphism on the fraction field.** Extend `iwasawaHom` from `ℤ[X]⁰` to\n  a group homomorphism `Frac(ℤ[X])ˣ →* Multiplicative (ℤ × ℤ)`, realising `(μ, λ)`\n  as an honest `ℤ`-valued valuation pair on rational functions.\n* **Lexicographic valuation.** Equip `ℕ ×ₗ ℕ` with its lex order and prove the\n  ultrametric/valuation inequalities, packaging `(μ, λ)` as an `AddValuation`.\n* **True `ℤ_p[[T]]` model.** Replace the `ℤ[X]` stand-in by the genuine Iwasawa\n  algebra via Weierstrass preparation, recovering `μ`, `λ` from `f = p^μ · U · P`.\n* **Sharp/flat refinement.** Combine with `MatsunoSharpFlatDifference.lean` to make\n  `iwasawaHom` sharp/flat aware, tracking the `±`-invariants of Pollack–Sprung.\n",
     "domain_bridges": [],
@@ -3223,26 +3241,6 @@
     "status": "available",
     "timestamp": "2026-07-14T13:19:36.775460+00:00",
     "title": "This cycle settles **Conjecture 1** of the previous *Future Directions* note and"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "582560af",
-    "description": "# Future Directions — Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant governed by the\ndimensional sign `d ↦ (-1)^d`, with an explicit stabilization map identifying the\nnegative-dimensional world with the zero-dimensional one up to sign. The\nfollowing conjectures are the natural next targets.\n\n## 1. A negative-dimensional Euler–Poincaré duality\n\n**Conjecture.** For a formal space of dimension `-n` there is a canonical pairing\nbetween its `π₀` data and that of its `n`-fold stabilization, under which the\nEuler characteristic is self-dual: reflecting the dimension `d ↦ -d` leaves `χ`\nunchanged up to the parity sign already recorded by `sgn`.\n\nThe key insight is that the invariance `sgn(-d) = sgn(d)` is not an accident of\nthe sign function but the shadow of a duality that swaps a space with its formal\ndesuspension while preserving the count of path components.\n\nWhy now? The stabilization map and the parity-invariance of the sign are both in\nhand, so the duality can be stated as an isomorphism of the underlying component\nmonoids and tested against the product structure that is already proved\nmultiplicative.\n\n## 2. Multiplicativity forces the sign law\n\n**Conjecture.** Any dimension-graded, component-multiplicative integer invariant\nthat is additive under disjoint union and multiplicative under products must\ncoincide with `sgn(dim)·|π₀|`; equivalently, the only monoid homomorphism from\n`(ℤ,+) × (ℕ,·)` to `ℤ` that is `±1` on each sphere is the Euler characteristic.\n\nThe key insight is that additivity and multiplicativity together pin down the\ninvariant on generators (spheres and points), and every formal space is built\nfrom these by the two operations, so the invariant is rigid.\n\nWhy now? The monoid structure on formal spaces and the homomorphism property of\n`χ` are established, reducing the uniqueness question to a statement about\nhomomorphisms out of a finitely generated commutative monoid.\n\n## 3. The pro-spectrum limit of the stabilization tower\n\n**Conjecture.** The tower `… → Σ⁻¹X → X → ΣX → …` of suspensions has a well-defined\nstable Euler characteristic obtained as a limit, and this limit is independent of\nthe starting dimension, depending only on `|π₀|` weighted by the coherent sign.\n\nThe key insight is that although each suspension flips the sign of `χ`, the pair\n`(χ, dim mod 2)` is a genuine invariant of the whole tower, so the limit exists\nonce one records the parity alongside the value.\n\nWhy now? The exact one-step behavior `χ(ΣX) = -χ(X)` and the `n`-step law\n`χ(ΣⁿX) = (-1)^n χ(X)` are proved, giving the precise transition maps whose limit\nthe conjecture concerns.\n\n## 4. Negative-dimensional surfaces and a signed Gauss–Bonnet\n\n**Conjecture.** The identity `χ = 2 - 2g` for the genus-`g` surface admits a\nnegative-dimensional companion in which the roles of the top and bottom Betti\nnumbers are exchanged by desuspension, producing a signed genus formula\n`χ = (-1)^d (2 - 2g)` for the `d`-fold desuspended surface.\n\nThe key insight is that the graded Euler characteristic already treats every\ndegree — positive or negative — on the same footing through the alternating sign,\nso shifting all Betti numbers into negative degrees merely multiplies the\nclassical value by a global sign.\n\nWhy now? The bridge reproducing `2 - 2g` from sign-weighted Betti numbers is\nestablished, and the degree-shift operation is exactly the suspension whose effect\non `χ` is already computed.\n\n## 5. A character theory for the sign group\n\n**Conjecture.** The dimensional sign is the unique nontrivial character of the\nadditive group of dimensions valued in the units of `ℤ`, and the collection of\nnegative-dimensional Euler characteristics assembles into the character table of\na naturally occurring `ℤ/2` grading on the stable homotopy category of formal\nspheres.\n\nThe key insight is that `sgn: (ℤ,+) → {±1}` is precisely the reduction mod 2\ncomposed with the unique isomorphism `ℤ/2 ≅ {±1}`, so its topological meaning is a\n`ℤ/2`-grading that separates even- from odd-dimensional formal spheres.\n\nWhy now? The homomorphism property `sgn(a+b) = sgn(a)·sgn(b)` is proved, which is\nthe defining property of a character; what remains is to interpret it as a grading\nand read off the resulting decomposition.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_1297",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c5cfd9ce",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T14:12:56.708950+00:00",
-    "title": "The results of this cycle establish that the Euler characteristic extends to"
   },
   {
     "ambition_level": "extension",
@@ -4143,6 +4141,46 @@
     "status": "available",
     "timestamp": "2026-07-15T04:08:44.996382+00:00",
     "title": "1. **Connect the algebraic constant to the actual cutting process.** The present"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: from path congestion to chord-swap geometry\n\n## 1. Exact path constant and discrete cosine extremizer\n\nFor the unit path on `n` sites, the variational gap should equal\n\\[\n\\gamma_n=\\frac{2-2\\cos(\\pi/n)}{n},\n\\]\nso that `n³ γ_n → π²`. In particular, the exact asymptotic constant lies strictly\nbetween the present constants `2` and `12`, and the minimizing observable is the\nfirst nonconstant discrete cosine mode.\n\nThe key insight is that the all-observable telescoping estimate can be sharpened\nby diagonalizing the path Laplacian rather than replacing every path length by\n`n`.\n\nWhy now? The cubic exponent is closed from both sides, so the only lost\ninformation is the congestion constant introduced by the coarse Cauchy–Schwarz\nsummation.\n\n## 2. Edge-congestion Poincaré inequality on arbitrary trees\n\nFor every finite tree with `N` vertices, pairwise variation should be bounded by\ntwice the maximum oriented-edge congestion times its Dirichlet energy, where the\ncongestion of an edge is the product of the sizes of the two components created\nby deleting it. This should recover the path estimate and give sharp-order gap\nbounds for tree-like reconfiguration spaces.\n\nThe key insight is that the proof already routes every endpoint pair along a\nunique path; recording how many routes cross each edge avoids the global `N³`\noverestimate.\n\nWhy now? The telescoping proof isolates exactly where geometry enters, making\nedge congestion the natural invariant to replace path length in broader state\nspaces.\n\n## 3. Genus-aware canonical routing for chord diagrams\n\nFor each fixed genus `g`, the chord-swap graph on `n`-chord diagrams should admit\ncanonical routes whose maximum weighted edge congestion is at most `C_g n³`.\nCombined with a quartic-variation displacement statistic, this would establish\na two-sided fixed-genus cubic gap law.\n\nThe key insight is that the lower-bound argument needs no preferred observable:\nit needs a controlled routing of every pair of states, while the upper bound\nneeds only one genus-aware displacement witness.\n\nWhy now? The path calculation supplies both halves in separated form—witness\nvariance for the upper bound and route congestion for the lower—so the remaining\ntarget is purely combinatorial.\n\n## 4. Tensor stability of cubic swap gaps\n\nFor Cartesian products of finitely many identical path-swap systems with the\ncoordinate-update generator normalized independently of dimension, the gap\nshould equal the one-coordinate gap. More generally, the product gap should be\nthe minimum coordinate gap under additive Dirichlet forms.\n\nThe key insight is that conditional-variance decomposition supplies the lower\nbound, while an observable depending on a single coordinate supplies the\nmatching upper bound.\n\nWhy now? The one-dimensional gap is controlled for every observable, which is\nthe precise hypothesis required for tensorizing Poincaré inequalities without\nlosing the cubic scale.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1351",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "22a6ce83",
+    "status": "available",
+    "timestamp": "2026-07-15T05:02:27.027582+00:00",
+    "title": "For the unit path on `n` sites, the variational gap should equal"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Character Theory of Negative Dimensions\n\nThis cycle proves a cross-domain bridge between virtual negative-dimensional cellular topology and finite Fourier analysis.\n\nThe dimensional group is the additive group `ℤ`, while integral signs form the unit group `ℤˣ = {±1}`. The formal development proves that every character\n\n`Multiplicative ℤ →* ℤˣ`\n\nis either trivial or the Euler parity character `d ↦ (-1)^d`. Evaluating virtual cellular data against these two characters gives, respectively, total cell mass and Euler characteristic. The `2 × 2` character table then yields the denominator-free Fourier inversion formulas\n\n- `totalMass X + eulerChi X = 2 * evenMass X`,\n- `totalMass X - eulerChi X = 2 * oddMass X`.\n\nThus the Euler characteristic is one Fourier coefficient of the parity grading, and together with total mass it recovers the even- and odd-dimensional sectors. Integer-degree reflection `d ↦ -d` preserves the Euler coefficient, giving a formal self-duality statement that applies equally to negative degrees.\n\n## Next targets\n\n1. **Ring-homomorphism formulation.** Bundle total mass and Euler characteristic as evaluations of the Laurent-polynomial ring at `+1` and `-1`, then identify their joint kernel.\n2. **Higher cyclic gradings.** Replace parity by `ℤ/n` and coefficients by a cyclotomic integer ring containing the required roots of unity. Prove a full discrete Fourier inversion theorem for dimension residues modulo `n`.\n3. **Integral image characterization.** Prove that `(totalMass X, eulerChi X)` always has matching parity and characterize exactly which pairs of integers occur.\n4. **Convolution and Künneth.** Show that the parity-sector vector transforms under products by convolution, while its two Fourier coordinates multiply componentwise.\n5. **Duality beyond parity.** For higher characters, determine precisely how reflection acts by complex or cyclotomic conjugation and formulate a corresponding Euler–Poincaré duality.\n6. **Homological realization.** Map bounded chain complexes or finite CW complexes into the virtual cellular model and prove compatibility with their ordinary Euler characteristic and degree shifts.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1352",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "582560af",
+    "status": "available",
+    "timestamp": "2026-07-15T05:02:36.849852+00:00",
+    "title": "This cycle proves a cross-domain bridge between virtual negative-dimensional cel"
   },
   {
     "ambition_level": "extension",

@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d09018a9",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThe verified cycle established that the maximal number of good manifolds in an\n`n`-nice polytope is, from dimension seven onward, exactly",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 15,
-      "timestamp": "2026-07-14T13:37:53",
-      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-    },
-    {
-      "cycle_id": "c5cfd9ce",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant govern",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-14T14:13:21",
-      "title": "Deepening: Negative-Dimensional Topology: What Lives in Dimension -1?"
-    },
-    {
       "cycle_id": "656eecef",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Cone Colorful Carathéodory (general dimension)\n\nThis cycle proves the **cone colorful Carathéodory theorem in arbitrary finite\ndimension** (`Catalog/Novelty/ConeColorfulCaratheod",
@@ -499,29 +479,29 @@
       "theorem_count": 16,
       "timestamp": "2026-07-15T04:09:03",
       "title": "Deepening: The optimal portion ratio μ₂ equals 1 + ρ"
+    },
+    {
+      "cycle_id": "22a6ce83",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: from path congestion to chord-swap geometry\n\n## 1. Exact path constant and discrete cosine extremizer\n\nFor the unit path on `n` sites, the variational gap should equal\n\\[\n\\gamma_n",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-15T05:02:32",
+      "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
+    },
+    {
+      "cycle_id": "582560af",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Character Theory of Negative Dimensions\n\nThis cycle proves a cross-domain bridge between virtual negative-dimensional cellular topology and finite Fourier analysis.\n\nThe dimensio",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-07-15T05:02:38",
+      "title": "The results of this cycle establish that the Euler characteristic extends to"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "919ceb1f",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — Isolation-Lemma tightness for arbitrary edge offsets\n\nThis cycle deepened the singleton-hypergraph tightness result of\n`IsolationLemmaTightness.lean`. New Lean file:\n`IsolationLe",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-12T15:20:37",
-      "title": "Deepening: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
-    },
-    {
-      "cycle_id": "494cab2e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nMission: *\"Causal Loops in Category Theory: when composition loops back\"* — a tensor\nproduct whose associativity fails **on the nose** but is rep",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-12T15:37:53",
-      "title": "This project formalises the mission *\"Causal Loops in Category Theory: when comp"
-    },
     {
       "cycle_id": "3cdfbb0e",
       "domain": "Novelty",
@@ -2501,33 +2481,29 @@
       "theorem_count": 16,
       "timestamp": "2026-07-15T04:09:03",
       "title": "Deepening: The optimal portion ratio μ₂ equals 1 + ρ"
+    },
+    {
+      "cycle_id": "22a6ce83",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: from path congestion to chord-swap geometry\n\n## 1. Exact path constant and discrete cosine extremizer\n\nFor the unit path on `n` sites, the variational gap should equal\n\\[\n\\gamma_n",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-15T05:02:32",
+      "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
+    },
+    {
+      "cycle_id": "582560af",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Character Theory of Negative Dimensions\n\nThis cycle proves a cross-domain bridge between virtual negative-dimensional cellular topology and finite Fourier analysis.\n\nThe dimensio",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-07-15T05:02:38",
+      "title": "The results of this cycle establish that the Euler characteristic extends to"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1207283c",
-      "domain": "Applications",
-      "name": "defect_eq_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "1207283c",
-      "domain": "Applications",
-      "name": "a_eq_pow",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "1207283c",
-      "domain": "Applications",
-      "name": "defect_values",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a25c6e48",
-      "domain": "Applications",
-      "name": "continuous",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a25c6e48",
       "domain": "Applications",
@@ -2803,9 +2779,33 @@
       "domain": "Novelty",
       "name": "rho_spec",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "22a6ce83",
+      "domain": "Physics",
+      "name": "pair_sq_le_edgeEnergy",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "582560af",
+      "domain": "NumberTheory",
+      "name": "eulerCharacter_apply",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "582560af",
+      "domain": "NumberTheory",
+      "name": "dimensionCharacter_classification",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "582560af",
+      "domain": "NumberTheory",
+      "name": "eulerCharacter_unique_nontrivial",
+      "quality": 0.91
     }
   ],
-  "last_updated": "2026-07-15T04:09:03",
+  "last_updated": "2026-07-15T05:02:38",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "5e4735e1",
-        "quality": 0.68521,
-        "theorems": 12,
-        "title": "[Reset] Fresh approach in NumberTheory"
-      },
-      {
         "cycle_id": "e3e38cc8",
         "quality": 0.5266726923076923,
         "theorems": 13,
@@ -3699,15 +3693,15 @@
         "quality": 0.82,
         "theorems": 21,
         "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
+      },
+      {
+        "cycle_id": "582560af",
+        "quality": 0.91,
+        "theorems": 30,
+        "title": "The results of this cycle establish that the Euler characteristic extends to"
       }
     ],
     "Physics": [
-      {
-        "cycle_id": "bdfd9dbb",
-        "quality": 0.3683071607142858,
-        "theorems": 7,
-        "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
-      },
       {
         "cycle_id": "fd05632c",
         "quality": 0.40141157142857153,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 14,
         "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+      },
+      {
+        "cycle_id": "22a6ce83",
+        "quality": 0.91,
+        "theorems": 17,
+        "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
       }
     ],
     "Probability": [
