@@ -1401,7 +1401,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e72af703",
     "description": "Cycle ca1c3afc (Q=0.870) proved 6 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length ",
     "domain_bridges": [],
     "domains": [
@@ -1413,7 +1413,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ca1c3afc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T04:08:41.580785+00:00",
     "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `k` s"
   },
