@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const quality = pkg.quality || 'unrated';
             const tier = pkg.quality_tier || 'unrated';
             const scorePct = qs != null ? Math.round(qs * 100) : null;
-            const tierEmojis = { gold: '\u{1F947}', silver: '\u{1F948}', bronze: '\u{1F948}', unrated: '' };
+            const tierEmojis = { gold: '\u{1F947}', silver: '\u{1F948}', bronze: '\u{1F949}', unrated: '' };
             const tierEmoji = tierEmojis[tier] || '';
             const standout = qs != null && qs >= 0.90;
             if (standout) li.classList.add('standout');

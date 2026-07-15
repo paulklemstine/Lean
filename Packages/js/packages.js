@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const pkgMeta = window.PACKAGE_INDEX ? window.PACKAGE_INDEX.find(p => p.filename === filename) : null;
             const tier = pkgMeta ? pkgMeta.quality_tier : null;
             const score = pkgMeta ? pkgMeta.quality_score : null;
-            const tierSymbols = { gold: '\u{1F947}', silver: '\u{1F948}', bronze: '\u{1F948}', unrated: '' };
+            const tierSymbols = { gold: '\u{1F947}', silver: '\u{1F948}', bronze: '\u{1F949}', unrated: '' };
             const tierColors = { gold: '#FFD700', silver: '#C0C0C0', bronze: '#CD7F32', unrated: '#888' };
             if (tier && tier !== 'unrated') {
                 tierEl.innerHTML = `<span style="font-size:1.2em">${tierSymbols[tier] || ''}</span>` +
