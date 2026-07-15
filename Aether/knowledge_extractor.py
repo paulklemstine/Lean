@@ -2441,9 +2441,9 @@ Research mode: {concept.research_mode}
                 _qs = getattr(job, "quality_score", None)
                 if _qs is not None:
                     _pkg["quality_score"] = _qs
-                    if _qs >= 0.7:
+                    if _qs >= 0.9:
                         _pkg["quality_tier"] = "gold"
-                    elif _qs >= 0.4:
+                    elif _qs >= 0.7:
                         _pkg["quality_tier"] = "silver"
                     else:
                         _pkg["quality_tier"] = "bronze"
