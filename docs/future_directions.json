@@ -36,7 +36,7 @@
       "source": "",
       "source_exp_id": "oeis:80035",
       "source_path": "https://oeis.org/",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-15T05:23:22.329148+00:00",
       "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
