@@ -98,7 +98,9 @@ class ResearchJob:
     error_message: Optional[str] = None
     source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
     adversarial_result: Optional[Dict] = None  # Adversarial judging metadata
-    aristotle_self_score: Optional[float] = None  # Aristotle's self-assessed quality score
+    aristotle_self_score: Optional[float] = None  # Aristotle's self-assessed overall score
+    aristotle_self_metrics: Optional[Dict[str, float]] = None  # Detailed evaluation dimensions
+    aristotle_self_rationale: Optional[str] = None  # Rationale for the self-scores
     decomposition_depth: int = 0
     prompt_version: str = "v1"  # Which prompt version was used: v1, v2, v3
     prod_count: int = 0  # How many times Aristotle was explicitly prodded to continue
@@ -1771,11 +1773,28 @@ Research mode: {concept.research_mode}
                         try:
                             import json as _json
                             data = _json.loads(fp.read_text(encoding="utf-8"))
-                            for k in ("self_score", "quality_score", "score"):
-                                if k in data:
-                                    job.aristotle_self_score = float(data[k])
-                                    print(f"[Extract] Found Aristotle self-score: {job.aristotle_self_score:.3f}")
-                                    break
+                            if "metrics" in data and isinstance(data["metrics"], dict):
+                                job.aristotle_self_metrics = data["metrics"]
+                                job.aristotle_self_rationale = data.get("rationale")
+                                # Try to find an overall score in the metrics block
+                                for k in ("overall_score", "score", "self_score"):
+                                    if k in data["metrics"]:
+                                        job.aristotle_self_score = float(data["metrics"][k])
+                                        break
+                                # Fallback: calculate average of metrics if overall_score is missing
+                                if job.aristotle_self_score is None:
+                                    vals = [v for v in data["metrics"].values() if isinstance(v, (int, float))]
+                                    if vals:
+                                        job.aristotle_self_score = sum(vals) / len(vals)
+                                print(f"[Extract] Found rich Aristotle self-metrics. Overall: {job.aristotle_self_score}")
+                            
+                            # Legacy parsing fallback if no metrics dictionary
+                            if job.aristotle_self_score is None:
+                                for k in ("self_score", "quality_score", "score", "overall_score"):
+                                    if k in data:
+                                        job.aristotle_self_score = float(data[k])
+                                        print(f"[Extract] Found legacy Aristotle self-score: {job.aristotle_self_score:.3f}")
+                                        break
                         except Exception as e:
                             print(f"[Extract] Failed to parse Aristotle self-score file {f}: {e}")
                         continue  # Don't treat self-score files as package deliverables
@@ -2070,20 +2089,32 @@ Research mode: {concept.research_mode}
                 "should_retry": has_sorry,
                 "retry_strategy": "Fix remaining sorries." if has_sorry else "N/A",
                 "confidence": 1.0,
-                "analysis": f"Aristotle self-scored this result as {job.quality_score:.3f}."
+                "analysis": getattr(job, "aristotle_self_rationale", None) or f"Aristotle self-scored this result as {job.quality_score:.3f}."
             }
             print(f"[Evaluate] Bypassing evaluation, using Aristotle self-score: {job.quality_score:.3f} (has_sorry={has_sorry})")
             
             from quality_evaluator import QualityScore
-            job.quality_detail = QualityScore(
-                proof_depth=job.quality_score,
-                novelty=job.quality_score,
-                cross_domain=0.5,
-                importance=job.quality_score,
-                usefulness=0.5,
-                applications=0.5,
-                catalog_anchoring=0.5
-            )
+            if getattr(job, "aristotle_self_metrics", None):
+                m = job.aristotle_self_metrics
+                job.quality_detail = QualityScore(
+                    proof_depth=float(m.get("proof_depth", job.quality_score)),
+                    novelty=float(m.get("novelty", job.quality_score)),
+                    cross_domain=float(m.get("cross_domain", 0.5)),
+                    importance=float(m.get("importance", job.quality_score)),
+                    usefulness=float(m.get("usefulness", 0.5)),
+                    applications=float(m.get("applications", 0.5)),
+                    catalog_anchoring=float(m.get("catalog_anchoring", 0.5))
+                )
+            else:
+                job.quality_detail = QualityScore(
+                    proof_depth=job.quality_score,
+                    novelty=job.quality_score,
+                    cross_domain=0.5,
+                    importance=job.quality_score,
+                    usefulness=0.5,
+                    applications=0.5,
+                    catalog_anchoring=0.5
+                )
             if _ec and _ec_key:
                 try:
                     _ec.set(_ec_key, {

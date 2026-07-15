@@ -2713,10 +2713,20 @@ class PiAgentClient:
                 
                 ### MANDATORY PHASE A SELF-EVALUATION
                 Additionally, you MUST write a JSON file named `quality_score.json` in your output directory.
-                This file must contain a single JSON object containing your self-evaluation score (a float between 0.0 and 1.0) based on your compile correctness, proof depth, and mathematical novelty.
+                This file must contain a single JSON object with a brutally honest, rigorous multi-dimensional self-evaluation of your work.
+                Each metric must be a float between 0.0 and 1.0. Do NOT inflate your scores; penalize trivial proofs and sorries heavily.
                 Example format:
                 {
-                  "self_score": 0.85
+                  "metrics": {
+                    "proof_depth": 0.85,
+                    "novelty": 0.90,
+                    "importance": 0.70,
+                    "usefulness": 0.75,
+                    "applications": 0.60,
+                    "catalog_anchoring": 0.80,
+                    "overall_score": 0.82
+                  },
+                  "rationale": "Brutally honest explanation of why the scores were given based on the specific results achieved. Note any shortcomings, trivialities, or missing proofs here."
                 }
                 Do NOT include any extra formatting, markdown code blocks, or text in `quality_score.json`.
             """)
