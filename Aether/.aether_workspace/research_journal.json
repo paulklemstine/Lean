@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "167b800e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Euler–Poincaré theory of decision surfaces\n\n`EulerCharacteristic.lean` deepens the Hodge/Betti theory of piecewise-linear\ndecision surfaces `V(f)` of ReLU networks (`DecisionSurf",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-12T19:56:51",
-      "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision"
-    },
-    {
       "cycle_id": "d95af58e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Anti-Mathematics\n\nThis cycle deepened the anti-Infinity strand (the Ackermann model of the\nhereditarily finite sets `HF = V_ω`) with three new self-contained files:\n\n- `Ackermann",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-15T07:28:14",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+    },
+    {
+      "cycle_id": "192aef6c",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n1. **Recover the geometric definitions.** The prompt gives no formal definition of “good manifold,” “n-nice polytope,” or the indexing convention. A substantive combinatorial-geom",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T08:21:38",
+      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-15T07:28:14",
+  "last_updated": "2026-07-15T08:21:38",
   "open_questions": [
     {
       "context": "Everything is unconditional and `sorry`-free.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "01bea6c3",
-        "quality": 0.573804028436019,
-        "theorems": 16,
-        "title": "Every b‑invariant edge is forcing exactly for near‑bipartite bricks (up to the t"
-      },
-      {
         "cycle_id": "c1fb9afb",
         "quality": 0.45366952380952386,
         "theorems": 4,
@@ -3699,6 +3693,12 @@
         "quality": 0.73,
         "theorems": 8,
         "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+      },
+      {
+        "cycle_id": "192aef6c",
+        "quality": 0.55,
+        "theorems": 0,
+        "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
       }
     ],
     "Physics": [
