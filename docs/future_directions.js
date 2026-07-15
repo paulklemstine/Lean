@@ -62,13 +62,27 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
   {
-    "consumed_by_exp_id": "277b2b6b",
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'All simplices exhibit canonical Ramsey property' and formalize its key results. Abstract: We prove that all nondegenerate simplices have the canonical Ramsey property, thereby resolving a central open problem in canonical Euclidean Ramsey theory and providing a canonical counterpart to the celebrated simplex Ramsey theorem of Frankl and R\u00f6dl~[JAMS, 1990].",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0005",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11782v1",
+    "status": "available",
+    "timestamp": "2026-07-15T08:04:15.394464+00:00",
+    "title": "ArXiv paper: All simplices exhibit canonical Ramsey property"
+  },
+  {
+    "consumed_by_exp_id": "4368e5ed",
     "description": "Investigate the ArXiv paper 'A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems' and formalize its key results. Abstract: We study twisted Weyl group multiple Dirichlet series attached to symmetrizable Kac-Moody root systems, using the Chinta-Gunnells method to construct their $p$-parts. Our main result is a decomposition theorem for functions invariant under the twisted Chinta-Gunnells action: under natural analytic hypotheses, such a function has a unique expansion in terms of shifted Chinta-Gunnells averages, indexed by the dominant weights in the highest weight module determined by the twisting parameter. In particular, we show that this decomposition holds for twisted multiple Dirichlet series over rational function fields. For finite root systems, these results were proved by Friedlander. We also show that the relevant Chinta-Gunnells averages admit analytic continuation to the interior of the complexified Tits cone. In the affine $\\widetilde{A}_1$ case, we prove extra functional equations, not arising from the Weyl group, for the untwisted average and for averages twisted by fundamental weights. As",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0006",
+    "id": "fd_0007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11834v1",
@@ -77,16 +91,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "4368e5ed",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations' and formalize its key results. Abstract: We prove the vanishing of the adjoint Bloch--Kato Selmer group of the Galois representations associated to regular algebraic automorphic representations of general linear groups over CM fields. A key novelty of our work is that we impose conditions only on the $p$-adic Galois representations, and not on their associated residual representations modulo $p$.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0007",
+    "id": "fd_0008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11769v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:10:22.328314+00:00",
     "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations"
   },
@@ -96,7 +110,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0008",
+    "id": "fd_0009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
@@ -105,19 +119,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5dadc373",
     "description": "Investigate the ArXiv paper 'Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three' and formalize its key results. Abstract: We give three explicit quantum Latin squares of order $6$ with cardinalities $19$, $21$, and $23$, where vectors differing only by a global phase are counted as identical. The first two examples arise from normalized Schur products of columns of complex Hadamard matrices. For cardinality $19$, a Butson-type matrix over eighth roots of unity has the unique nontrivial coincidence $v_{01}=v_{25}=v_{34}$. For cardinality $21$, an explicit member of Karlsson's three-parameter family has $21$ pairwise inequivalent unordered Schur products. To exceed the symmetric Schur-product bound, we give a third, direct-sum construction based on the decomposition $\\C^6=\\C^4\\oplusC^2$. It uses nineteen distinct rays in the four-dimensional summand and four rays in the two-dimensional summand, arranged so that every row and column is an orthonormal basis, yielding cardinality $23$. Together with our earlier constructions of cardinalities $13$, $15$, and $17$ and previously known order-six examples, these r",
     "domains": [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0009",
+    "id": "fd_0010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11800v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:46:57.950799+00:00",
     "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Fixed-point-free elements in two-orbit permutation groups' and formalize its key results. Abstract: Let $G$ be a two-orbit permutation group on $n > 2$ points. We show that $G$ contains either a derangement or an element of prime-power order with a unique fixed point. As a corollary, if the orbits of $G$ have length $n_1$ and $n_2$ and $\\gcd(n_1, n_2-1) = \\gcd(n_1-1, n_2) = 1$, then $G$ contains a derangement. The special case $n_1 = n_2$ was recently conjectured by Ellis and Harper and proved under various restrictive hypotheses. We prove our result by reducing to the case of simple groups and leveraging the classification of normal $2$-coverings of simple groups due to Bubboloni, Spiga, and Weigel.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0011",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11543v1",
+    "status": "available",
+    "timestamp": "2026-07-15T08:04:19.304210+00:00",
+    "title": "ArXiv paper: Fixed-point-free elements in two-orbit permutation groups"
   },
   {
     "consumed_by_exp_id": "c5a6c2ed",
@@ -134,16 +163,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "277b2b6b",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0005",
+    "id": "fd_0006",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
