@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0725f80e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Möbius discriminant, deepened\n\nThis cycle isolated the scalar **Möbius discriminant** `Δ = γβ − αδ` of a\nfirst-order multiplicative recurrence `(α n + β)·a(n+1) = (γ n + δ)·a",
-      "quality_score": 0.86,
-      "sorry_count": 3,
-      "theorem_count": 14,
-      "timestamp": "2026-07-14T21:05:18",
-      "title": "Deepening: This cycle isolated a single scalar invariant — the **Möbius discriminant**"
-    },
-    {
       "cycle_id": "daf8e94d",
       "domain": "Novelty",
       "key_insight": "# Future directions: the extremal regime of AVD-total colourings of central graphs\n\nThis cycle characterised the *extremal regime* `|V(G)| = d + 2` for a `d`-regular\nnon-complete graph `G`, showing it",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T21:42:41",
       "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
+    },
+    {
+      "cycle_id": "d68f278c",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n- Formalize the paper's exact `(k, ωᵘ)`-core, `(k, ωᵘ)`-truss, and `(k, d, ωᵘ)`-truss definitions as graph operators and identify them with the generic seed rule proved here.\n- Ex",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T21:54:37",
+      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d4192a75",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Oddomorphisms and Split-Off Minors\n\nThis project formalizes the algebraic backbone of **oddomorphisms** between finite\ngraphs, defined as functions `φ : V(F) → V(G)` whose `0/1` f",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-07-13T03:38:44",
-      "title": "Equivalence of Oddomorphism and Split-Off Minor"
-    },
     {
       "cycle_id": "53d4816b",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-15T21:54:30",
       "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
+    },
+    {
+      "cycle_id": "d68f278c",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n- Formalize the paper's exact `(k, ωᵘ)`-core, `(k, ωᵘ)`-truss, and `(k, d, ωᵘ)`-truss definitions as graph operators and identify them with the generic seed rule proved here.\n- Ex",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T21:54:37",
+      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:54:30",
+  "last_updated": "2026-07-15T21:54:37",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1207283c",
-        "quality": 0.82,
-        "theorems": 22,
-        "title": "The verified cycle established that the maximal number of good manifolds in an"
-      },
-      {
         "cycle_id": "a25c6e48",
         "quality": 0.82,
         "theorems": 17,
@@ -3135,6 +3129,12 @@
         "quality": 0.58,
         "theorems": 15,
         "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+      },
+      {
+        "cycle_id": "d68f278c",
+        "quality": 0.76,
+        "theorems": 0,
+        "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
       },
       {
         "cycle_id": "d68f278c",
