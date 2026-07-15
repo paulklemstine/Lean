@@ -98,6 +98,7 @@ class ResearchJob:
     error_message: Optional[str] = None
     source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
     adversarial_result: Optional[Dict] = None  # Adversarial judging metadata
+    aristotle_self_score: Optional[float] = None  # Aristotle's self-assessed quality score
     decomposition_depth: int = 0
     prompt_version: str = "v1"  # Which prompt version was used: v1, v2, v3
     prod_count: int = 0  # How many times Aristotle was explicitly prodded to continue
