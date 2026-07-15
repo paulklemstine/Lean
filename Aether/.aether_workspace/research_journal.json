@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bce13597",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: from the octahedral count to the general index–coindex gap\n\nThis cycle turned the *existence* dichotomy for antipodal maps of cross-polytope spheres\n(`there is a ℤ₂-map Sᵐ → Sⁿ ⟺",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-14T11:17:06",
-      "title": "The previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-c"
-    },
-    {
       "cycle_id": "482ba253",
       "domain": "Novelty",
       "key_insight": "# Future Directions: enumerative rigidity of equivariant maps of free ℤ₂-complexes\n\nThis cycle sharpened the existence theory of the ℤ₂-coindex of combinatorial spheres\ninto an **exact enumeration**:",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-15T03:46:49",
       "title": "This cycle promoted the component-count toughness toolkit from a collection of"
+    },
+    {
+      "cycle_id": "dc502c2d",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Algebra and Rank in Well-Founded Games\n\n## 1. Transfinite Sprague–Grundy classification\n\n**Conjecture.** Every set-sized well-founded impartial game admits an\nordinal-valued Grun",
+      "quality_score": 0.91,
+      "sorry_count": 1,
+      "theorem_count": 42,
+      "timestamp": "2026-07-15T03:46:59",
+      "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f8254dbf",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Argumentation (V): Stable Extensions\n\nThis cycle deepens the formalization of Dung's abstract argumentation theory and\nthe conflict-free complex `K(AF)` by adding",
-      "quality_score": 0.83,
-      "sorry_count": 7,
-      "theorem_count": 34,
-      "timestamp": "2026-07-12T14:10:49",
-      "title": "Deepening: This project formalizes, from first principles in Lean 4 / Mathlib, the core of"
-    },
     {
       "cycle_id": "edd57dbd",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-15T03:46:49",
       "title": "This cycle promoted the component-count toughness toolkit from a collection of"
+    },
+    {
+      "cycle_id": "dc502c2d",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Algebra and Rank in Well-Founded Games\n\n## 1. Transfinite Sprague–Grundy classification\n\n**Conjecture.** Every set-sized well-founded impartial game admits an\nordinal-valued Grun",
+      "quality_score": 0.91,
+      "sorry_count": 1,
+      "theorem_count": 42,
+      "timestamp": "2026-07-15T03:46:59",
+      "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9a38651d",
-      "domain": "Novelty",
-      "name": "exists_sq_consistent_not_consistent",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "8ceb2563",
-      "domain": "Novelty",
-      "name": "renyiEntropy_uniform",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "8ceb2563",
-      "domain": "Novelty",
-      "name": "amExponentUniform_eq_renyi",
-      "quality": 0.82
-    },
     {
       "cycle_id": "8ceb2563",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Shared",
       "name": "for",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "dc502c2d",
+      "domain": "MachineLearning",
+      "name": "winning_iff",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "dc502c2d",
+      "domain": "MachineLearning",
+      "name": "winning_unique",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "dc502c2d",
+      "domain": "MachineLearning",
+      "name": "sumWf",
+      "quality": 0.91
     }
   ],
-  "last_updated": "2026-07-15T03:46:49",
+  "last_updated": "2026-07-15T03:46:59",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "30ef4e5b",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T06:35:35"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "0abd0edb",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 4,
       "timestamp": "2026-07-15T03:46:49"
+    },
+    {
+      "context": "",
+      "cycle_id": "dc502c2d",
+      "domain": "MachineLearning",
+      "sorry_count": 1,
+      "timestamp": "2026-07-15T03:46:59"
     }
   ],
   "research_threads": {
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "3b621fb7",
-        "quality": 0.39727681,
-        "theorems": 6,
-        "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
-      },
-      {
         "cycle_id": "7976e906",
         "quality": 0.62,
         "theorems": 22,
@@ -3575,6 +3569,12 @@
         "quality": 0.91,
         "theorems": 3,
         "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-expone"
+      },
+      {
+        "cycle_id": "dc502c2d",
+        "quality": 0.91,
+        "theorems": 42,
+        "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
       }
     ],
     "Novelty": [
