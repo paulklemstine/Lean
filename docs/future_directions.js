@@ -1051,7 +1051,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
-    "consumed_by_exp_id": "dbf870e8",
+    "consumed_by_exp_id": "",
     "description": "Cycle 7669ab26 (Q=0.820) proved 24 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that topological quantum error correcting codes can be derived from the homology of algebraic varieties. Formalize: the surface code is H_1 of the torus, the color code is H_1 of a 2-comple",
     "domains": [
       "Applications"
@@ -1060,7 +1060,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "7669ab26",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-11T19:10:40.793079+00:00",
     "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
   },

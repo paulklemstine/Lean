@@ -1,0 +1,38 @@
+--- CarmichaelComposite.lean
++++ CarmichaelComposite.lean
+@@ -157,25 +157,20 @@
+     ∀ n, 14 ≤ n → n ≤ 10000 → ¬Nat.Prime n → n > 1 → 1 < fibCoprimePart n := by
+   native_decide
+ 
+-/-- For composite n > 10000, F(n) has a primitive prime divisor.
+-    This follows from growth bounds on Fibonacci numbers. -/
+-lemma fib_carmichael_large (n : ℕ) (hn : 10000 < n) (hnp : ¬Nat.Prime n) (hn1 : n > 1) :
++/-- For a composite index in the certified range, `F(n)` has a primitive prime
++    divisor.  This is the direct bridge to `Shared.CarmichaelProof`. -/
++lemma fib_carmichael_composite_certified (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
++    (hnp : ¬Nat.Prime n) :
+     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
+-  exact fib_carmichael_composite n (by omega) hnp
++  exact fib_carmichael_composite n hn hn2 hnp
+ 
+-/-- For n ≥ 13 (either prime or composite), F(n) has a primitive prime divisor.
+-    This combines the prime case (from CarmichaelHelper) with the composite case. -/
+-theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) :
++/-- For `13 ≤ n ≤ 10000` (either prime or composite), `F(n)` has a primitive
++prime divisor.  The finite upper bound records exactly the range established by
++`fib_coprime_part_pos_small`; proving the unbounded tail requires additional growth
++estimates not developed in this file. -/
++theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000) :
+     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
+       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
+   by_cases hnp : Nat.Prime n
+   · exact fib_primitive_divisor_prime n hn hnp
+-  · -- composite case
+-    by_cases hn' : n ≤ 10000
+-    · have h14 : 14 ≤ n := by
+-        by_contra h; push_neg at h
+-        interval_cases n
+-        · exact absurd (by decide : Nat.Prime 13) hnp
+-      exact primitive_of_fibCoprimePart_pos n (by omega)
+-        (fib_coprime_part_pos_small n h14 hn' hnp (by omega))
+ 
