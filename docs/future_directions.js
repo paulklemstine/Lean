@@ -311,7 +311,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6097a507",
     "description": "Building on cycle 8ceb2563 (Q=0.820), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`\u03c1(1-R)` **abstractly**: it postulated an unconstrained moment sequence `Gunc(n)` with\nthe Ar\u0131kan\u2013Merhav growth rate and der",
     "domains": [
       "Novelty"
@@ -320,7 +320,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
     "source_exp_id": "8ceb2563",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T22:36:24.187404+00:00",
     "title": "Deepening: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
   },
