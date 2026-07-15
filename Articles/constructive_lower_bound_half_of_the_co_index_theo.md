@@ -1,208 +1,192 @@
-# How to Add Spheres: A Hidden Arithmetic of Symmetry
+# The Arithmetic of Antipodal Composition
 
-## A coffee-cup question
+## When symmetry becomes an extensive quantity
 
-Imagine you are stirring a cup of coffee. At every instant, the surface of the
-liquid is a smooth landscape of tiny hills and valleys. A classical and slightly
-magical fact says that no matter how you stir, there are always two points on the
-surface that are *exactly antipodal* — directly opposite through the center of the
-cup — where the coffee has the same height and the same slope. You cannot get rid
-of that coincidence. It is forced by symmetry alone.
+Physics is full of quantities that become simpler when systems are combined. Put two boxes of gas together and their volumes add. Join two collections of particles and their particle numbers add. Energy, at least when interactions can be neglected, is extensive: the total is the sum of the parts.
 
-This is the flavor of the **Borsuk–Ulam theorem**, one of the most quietly
-powerful results in all of geometry. Its most famous cartoon version: at any
-moment there are two antipodal points on Earth with identical temperature and
-barometric pressure. The theorem is about *antipodal symmetry* — the operation
-that sends every point to its mirror image through the center — and about what
-that symmetry makes impossible.
+Topology rarely looks so obliging. Its invariants are usually sensitive to how pieces are attached, twisted, or punctured. Yet there is a particularly clean world in which a topological measure of antipodal symmetry obeys an exact many-body law. In that world, a system consists of finitely many vertices paired by a fixed-point-free reversal, and composition is performed by the simplicial join. The natural invariant is the $\mathbb Z_2$ co-index. It is not itself additive—but after adding one, it becomes perfectly extensive.
 
-This article is about a number that measures how much antipodal symmetry a shape
-carries, and about a surprisingly clean piece of arithmetic that governs it.
-We will discover that certain highly symmetric shapes can be *added together*,
-and that when you add them, their symmetry numbers add too — plus a mysterious
-extra $+1$. That little $+1$ is the whole story.
+The resulting law is concise. If $K_0,\ldots,K_r$ are finite, nonempty antipodal systems of the kind described below, then
 
-## Shapes that know their own mirror
+$$
+\operatorname{coind}(K_0*\cdots*K_r)
+=\sum_{i=0}^{r}\operatorname{coind}(K_i)+r.
+$$
 
-Let us make the symmetry precise. A **space with antipodal symmetry** is a shape
-$X$ together with a rule $a$ that pairs up its points: each point $v$ has a
-partner $a(v)$, its antipode. We insist on two things.
+Equivalently,
 
-- Applying the rule twice returns you home: $a(a(v)) = v$. The antipode of your
-  antipode is you.
-- No point is its own antipode: $a(v) \ne v$. Nothing sits fixed at the exact
-  center; the symmetry is *free*, never pinning anything down.
+$$
+\operatorname{coind}(K_0*\cdots*K_r)+1
+=\sum_{i=0}^{r}\bigl(\operatorname{coind}(K_i)+1\bigr).
+$$
 
-The cleanest examples are spheres. The circle, the ordinary round sphere, and
-their higher-dimensional cousins all carry the antipodal map "send $x$ to $-x$."
-But for computation it is far more convenient to replace the smooth round sphere
-with a crystalline skeleton that carries exactly the same symmetry: the
-**octahedral sphere**.
+That shifted formula is the heart of the story. It says that $\operatorname{coind}+1$ behaves like a particle count.
 
-Picture the ordinary octahedron — two pyramids glued base to base, with six
-vertices sitting at $\pm e_1, \pm e_2, \pm e_3$ along the three coordinate axes.
-Its surface is a combinatorial sphere, and the antipodal map simply flips the
-sign of a vertex: $+e_i \leftrightarrow -e_i$. Generalizing, the
-**$n$-dimensional octahedral sphere** $S^n$ has $2(n+1)$ vertices — a plus and a
-minus along each of $n+1$ coordinate axes — and its "faces" are exactly the
-collections of vertices that contain no opposite pair. You may pick $+e_i$ or
-$-e_i$ for as many axes as you like, but never both. This is the boundary of the
-cross-polytope, and it is a faithful crystalline model of the round $n$-sphere,
-antipodal symmetry included.
+## A universe made of opposite pairs
 
-## Maps that respect the mirror
+Begin with a finite nonempty set $V$ and an operation $v\mapsto -v$ satisfying two rules:
 
-To compare two symmetric shapes we use maps that *honor* the symmetry. A map
-$f\colon X \to Y$ between spaces with antipodal symmetry is called **equivariant
-and simplicial** if it satisfies two conditions.
+$$
+-(-v)=v,\qquad -v\ne v.
+$$
 
-- **It respects antipodes:** $f(a(v)) = a(f(v))$. Mirror images are sent to
-  mirror images. The map cannot tell a point from its antipode more than the
-  target already does.
-- **It respects faces:** it never manufactures a forbidden opposite pair. If two
-  vertices were *not* antipodal, their images are not antipodal either. Written
-  compactly: whenever $f(p)$ and $f(q)$ land on antipodal vertices, the original
-  $p$ and $q$ were already antipodal.
+Thus every vertex has a distinct antipode, and the vertices split into disjoint two-element orbits $\{v,-v\}$. Suppose there are $q$ such pairs, so $|V|=2q$.
 
-The second condition is the combinatorial ghost of continuity: it guarantees the
-map sends genuine faces to genuine faces, so it really describes a continuous
-antipodal map between spheres and not some torn-up impostor.
+To turn this into a simplicial object, declare a collection of vertices to be a face precisely when it contains no complete antipodal pair. One may choose any number of vertices, but never both $v$ and $-v$. This is the boundary complex of a $q$-dimensional cross-polytope, also called an octahedral sphere. For $q=1$ it is two isolated points; for $q=2$ it is a square; for $q=3$ it is the boundary of an octahedron.
 
-Here is the payoff. There is an equivariant simplicial map
-$S^m \to S^n$ **if and only if** $m \le n$. You can always squeeze a small
-symmetric sphere into a bigger one — just include the first $m+1$ axes into the
-first $m+1$ of the $n+1$ available. But you can *never* map a big symmetric
-sphere down into a smaller one. That impossibility is precisely Borsuk–Ulam in
-combinatorial clothing: a symmetry-respecting map $S^n \to S^{n-1}$ would let you
-comb the coffee cup flat, and you cannot.
+An equivariant simplicial map respects antipodes and faces. It sends $-v$ to the antipode of the image of $v$, and it never collapses a permitted face into a forbidden one. The standard $m$-dimensional octahedral sphere has $m+1$ antipodal pairs. The co-index of $K$ is the largest $m$ for which that sphere admits an equivariant simplicial map into $K$.
 
-## A number for symmetry
+This definition turns a geometric question into a test of how much standard antipodal symmetry fits inside a target. A high co-index means that many independent antipodal directions can be represented simultaneously.
 
-This suggests a way to measure the symmetric complexity of *any* space $X$ with a
-free antipodal map. Ask: what is the largest sphere that fits inside $X$
-symmetrically? Formally, the **symmetry index** (or **co-index**) of $X$ is
+In the present model, the answer is exact.
 
-$$\operatorname{coind}(X) = \max\{\, m : \text{there is an equivariant simplicial map } S^m \to X \,\}.$$
+**Classification Theorem.** If $K$ is a finite nonempty antipodal system with $q$ vertex pairs and with every antipodal-pair-free subset declared to be a face, then
 
-It records the biggest amount of "sphere-like antipodal symmetry" that $X$ can
-host. By the fit-or-fail principle above, the octahedral spheres calibrate the
-scale perfectly:
+$$
+\operatorname{coind}(K)=q-1.
+$$
 
-$$\operatorname{coind}(S^n) = n.$$
+Equivalently,
 
-A sphere's symmetry index is exactly its dimension. The measuring stick measures
-itself correctly — always a reassuring sign.
+$$
+2\bigl(\operatorname{coind}(K)+1\bigr)=|V(K)|.
+$$
 
-## Adding spaces: the join
+Why? Choose one representative from every antipodal pair. This identifies the vertices with $q$ labelled axes, each carrying a positive and a negative endpoint. After relabelling, the system is exactly the standard octahedral sphere with $q$ axes. The largest standard sphere that maps into it therefore has dimension $q-1$. The invariant is not merely estimated by orbit count; in this setting it is orbit count minus one.
 
-Now for the surprising arithmetic. There is a natural way to *combine* two
-symmetric shapes into a bigger one, called the **join**, written $X \star Y$.
+## Composition by join
 
-Combinatorially it could not be simpler: take all the vertices of $X$ and all the
-vertices of $Y$, throw them into one pile, and keep each shape's own antipodal
-rule on its own vertices. Geometrically this is richer than it sounds. The join
-of two shapes is what you get by taking every point of $X$, every point of $Y$,
-and *all the straight segments joining one to the other* — sweeping out a whole
-new, higher-dimensional shape. The join of two points is a segment; the join of a
-segment with a point is a triangle; the join of two circles is the $3$-sphere.
+The simplicial join $K*L$ is formed by keeping the vertices of $K$ and $L$ disjoint and allowing a face from $K$ to coexist with a face from $L$. Antipodes act within each component. Geometrically, join raises dimension and blends two spaces into a larger one: the join of two zero-spheres is a circle, the join of a zero-sphere and a circle is a two-sphere, and in general
 
-The single most important example is joining with $S^0$. The zero-dimensional
-sphere $S^0$ is just two antipodal points. Joining any shape with those two
-points builds two cones over it, glued along their common base — this is exactly
-the classical **suspension**. Suspension is the engine that manufactures the
-whole tower of spheres: suspend a circle and you get the $2$-sphere, suspend that
-and you get the $3$-sphere, and so on. In our arithmetic, $S^0 = S^0$, and
-suspending means joining with it.
+$$
+S^a*S^b\cong S^{a+b+1}.
+$$
 
-## The main theorem: symmetry adds, with a bonus
+In the octahedral model, the mechanism is especially transparent. Joining simply pools the antipodal axes. If $K$ has $q_K$ pairs and $L$ has $q_L$ pairs, then $K*L$ has $q_K+q_L$ pairs. Applying the classification theorem gives
 
-We can now state the heart of the matter. Join two symmetric shapes and their
-symmetry indices combine — and not merely additively, but with an extra unit:
+$$
+\operatorname{coind}(K*L)
+=(q_K+q_L)-1
+=(q_K-1)+(q_L-1)+1.
+$$
 
-> **The Join Law (lower bound).** For any two spaces $K$ and $L$ with free
-> antipodal symmetry,
-> $$\operatorname{coind}(K \star L) \ \ge\ \operatorname{coind}(K) + \operatorname{coind}(L) + 1.$$
+Hence the **Sharp Binary Join Law**:
 
-Why should there be a $+1$? Because the join does more than sit the two shapes
-side by side — it *fuses* them with a full slab of new connecting segments, and
-that connective tissue is itself a fresh dimension of symmetry. Two symmetric
-spheres, joined, yield strictly more symmetry than the sum of their parts.
+$$
+\operatorname{coind}(K*L)
+=\operatorname{coind}(K)+\operatorname{coind}(L)+1.
+$$
 
-The proof is completely constructive, and its mechanism is the prettiest part of
-the theory. Suppose we have a symmetric copy of $S^a$ living inside $K$ and a
-symmetric copy of $S^b$ living inside $L$. We want to exhibit a symmetric copy of
-$S^{a+b+1}$ inside $K \star L$. The trick is a perfect coordinate bookkeeping
-identity for the octahedral spheres:
+The extra $1$ is not an error term. It is the familiar dimension shift in the topology of joins. It also tells us exactly which normalization is natural: define
 
-$$S^m \star S^n \ \cong\ S^{m+n+1}.$$
+$$
+Q(K):=\operatorname{coind}(K)+1.
+$$
 
-This is an *exact isomorphism*, not an approximation. Its recipe is to simply
-concatenate the coordinate axes: the $m+1$ axes of the first sphere followed by
-the $n+1$ axes of the second give $m+n+2$ axes in total — exactly the axis count
-of $S^{m+n+1}$ — with all the plus/minus signs carried along untouched. Line up
-the axes, keep the signs, and the join of two octahedral spheres *is* a single
-larger octahedral sphere on the nose.
+Then
 
-Chaining these facts together gives the theorem. Take the big sphere
-$S^{a+b+1}$, split it into $S^a \star S^b$ by the coordinate identity, push
-$S^a$ into $K$ and $S^b$ into $L$ by the maps we were handed, and land inside
-$K \star L$. Every step honors the antipodal symmetry, so the composite is the
-symmetric $S^{a+b+1}$ we sought. The $+1$ is precisely the seam where the two
-coordinate blocks meet.
+$$
+Q(K*L)=Q(K)+Q(L).
+$$
 
-## Sharpness: an exact addition table
+Moreover, $Q(K)=|V(K)|/2$, so the shifted co-index is literally the number of antipodal orbits.
 
-The lower bound is one-directional — it guarantees *at least* this much symmetry.
-On the octahedral spheres themselves we can pin down the answer exactly, because
-there the coordinate identity is a genuine isomorphism in both directions:
+## From two bodies to many
 
-> **Sharp Join Law.** For all $m, n \ge 0$,
-> $$\operatorname{coind}(S^m \star S^n) = m + n + 1 = \operatorname{coind}(S^m) + \operatorname{coind}(S^n) + 1.$$
+Real composite systems seldom stop at two components. Let $K_0,\ldots,K_r$ be any finite list of nonempty systems, and form their join with any fixed association. Vertex sets combine by disjoint union, so
 
-Here the abstract $+1$ becomes a hard equality. The spheres form a perfect
-**addition table** under the join: the operation "$\star$" behaves like ordinary
-addition shifted by one. Setting $L = S^0$ recovers the classical fact that
-suspension bumps the symmetry index up by exactly one,
-$\operatorname{coind}(K \star S^0) = \operatorname{coind}(K) + 1$ — the single
-step that builds the sphere tower rung by rung.
+$$
+|V(K_0*\cdots*K_r)|=\sum_{i=0}^{r}|V(K_i)|.
+$$
 
-Because ordinary addition is commutative and associative, so is the join on the
-level of symmetry: joining $S^m$ then $S^n$ gives the same index as joining
-$S^n$ then $S^m$, and grouping three spheres either way,
-$(S^m \star S^n) \star S^k$ or $S^m \star (S^n \star S^k)$, yields the same value
-$m + n + k + 2$. The octahedral spheres form a clean, commutative, associative
-**monoid** — an algebraic gadget as tidy as the natural numbers themselves,
-hiding inside the geometry of symmetric shapes.
+Repeatedly applying the binary law—or simply counting antipodal pairs—gives the **Exact Finite Composition Theorem**:
 
-## Why it matters
+$$
+\operatorname{coind}(K_0*\cdots*K_r)
+=\sum_{i=0}^{r}\operatorname{coind}(K_i)+r.
+$$
 
-This little arithmetic is not a curiosity. The symmetry index is a standard tool
-for proving that things *cannot* be done — that a graph cannot be colored with
-too few colors, that a necklace cannot be fairly split among thieves with too few
-cuts, that certain data cannot be embedded without collisions. All these
-applications reduce to producing symmetric maps into or out of spheres and joins.
-Every time you can lower-bound a symmetry index by exhibiting a concrete
-equivariant map, you get an impossibility theorem for free. The Join Law is a
-machine for building those maps: it lets you assemble complicated symmetric
-spaces out of simple sphere pieces and read off their symmetry budget by simple
-addition.
+There are $r$ join operations among $r+1$ factors, and each contributes one unit. Shifting removes that bookkeeping:
 
-There is also something philosophically satisfying here. We began with a
-theorem about coffee cups and the impossibility of combing a sphere flat. We end
-with an addition table. The geometry of symmetric spaces, which seems soft and
-topological, turns out to conceal a rigid piece of counting — join two spheres,
-add their dimensions, remember the extra seam. Symmetry, it turns out, obeys an
-arithmetic all its own.
+$$
+Q(K_0*\cdots*K_r)=\sum_{i=0}^{r}Q(K_i).
+$$
 
-## The road ahead
+A second identity ties the topological and combinatorial descriptions together:
 
-Three questions remain irresistibly open. First, is the Join Law an equality for
-*every* pair of symmetric spaces, not just the spheres? The lower bound holds
-universally; the matching upper bound calls for a subtler obstruction that can
-measure symmetry from above. Second, can we engineer shapes whose symmetry index
-falls *short* of their dimension by a prescribed amount, and watch a single
-suspension close the gap? The join gives us a dial to separate dimension from
-symmetry, exactly the freedom such constructions need. Third, when we suspend a
-shape over and over, its "symmetry deficit" can only shrink and must eventually
-vanish — a saturation phenomenon waiting to be proved. Each of these is a door,
-and the coordinate arithmetic of the join is the key we now hold in hand.
+$$
+2Q(K_0*\cdots*K_r)
+=|V(K_0*\cdots*K_r)|.
+$$
+
+Thus three calculations are really the same calculation: count vertices and divide by two; count antipodal orbits; or compute the co-index and add one.
+
+Consider factors with $2$, $3$, and $5$ antipodal pairs. Their co-indices are $1$, $2$, and $4$. The composite has $10$ pairs, hence $20$ vertices and co-index $9$. The many-body formula agrees:
+
+$$
+1+2+4+2=9.
+$$
+
+The final $2$ records the two joins. In shifted form, the same computation is cleaner:
+
+$$
+(1+1)+(2+1)+(4+1)=2+3+5=10.
+$$
+
+## Why this resembles thermodynamics
+
+The analogy with extensive physical variables is structural, not metaphorical. An extensive quantity is compatible with composition: its value on a noninteracting composite is the sum of its values on the factors. Here the join plays the role of composition, and $Q=\operatorname{coind}+1$ is extensive.
+
+The unshifted co-index resembles a quantity measured relative to a baseline. Joining two systems combines their available antipodal directions, but dimensions are conventionally counted starting at zero. A system with one axis has co-index $0$, not $1$. The shift restores the underlying count.
+
+This matters whenever symmetry sectors are assembled. In models with a binary reversal—spin flip, sign reversal, particle-hole exchange, or an antipodal configuration symmetry—one often wants a number that survives relabelling and composes predictably. In the complete octahedral face model, $Q$ provides precisely that number. It can be computed locally for each factor and summed without constructing the full composite.
+
+The computational gain is immediate. If factor $i$ has $2q_i$ vertices, explicitly constructing the join still creates $2\sum_i q_i$ vertices and potentially a huge family of faces. Yet the co-index of the composite requires only
+
+$$
+\operatorname{coind}(K_0*\cdots*K_r)=\left(\sum_i q_i\right)-1.
+$$
+
+One pass through the list of orbit counts suffices. The running time is linear in the number of factors and independent of the exponentially large face family.
+
+## The boundary of the theorem
+
+The simplicity has a precise source. Every subset avoiding a full antipodal pair is assumed to be a face. This “complete octahedral” condition means that vertex-orbit data determines the entire simplicial object. If selected faces are removed, two systems can have the same paired vertices but different topological obstructions. Orbit count may then cease to determine co-index, and exact additivity may fail.
+
+Nonemptiness is also essential. The formula $q-1$ presupposes at least one antipodal orbit. With no vertices, the natural-number normalization and the existence-based definition of co-index enter a degenerate regime.
+
+These qualifications sharpen rather than weaken the result. They identify a solvable phase of equivariant topology: finite, free binary symmetry with maximal face structure. Within that phase, classification is complete, the join law is exact, and arbitrary finite composition is governed by ordinary addition.
+
+## A practical symmetry ledger
+
+The identities also provide a diagnostic tool. Suppose a database records a purported system with $N$ vertices and co-index $c$. In the complete antipodal model, consistency demands
+
+$$
+N=2(c+1).
+$$
+
+An odd value of $N$ immediately reveals a missing partner or an invalid fixed point. A mismatch for even $N$ signals either incorrect metadata or a complex that does not have the complete octahedral face structure. For a family of components, the same audit can be performed before and after composition:
+
+$$
+2\sum_i(c_i+1)=\sum_iN_i.
+$$
+
+This gives model builders a compact symmetry ledger. Local records determine the global invariant, while the global vertex count independently checks the sum. Because the calculation stores only one integer per component, it scales to systems whose full lists of faces would be impossible to enumerate: $q$ antipodal pairs already generate $3^q$ allowed faces, since each pair contributes the choice of its positive vertex, its negative vertex, or neither.
+
+The compression is exact rather than approximate, but only because the model has no interactions beyond antipodal exclusion. Additional forbidden combinations carry information not visible in $q$. In physical language, the theorem describes an ideal noninteracting symmetry composition law; deleted faces play the role of constraints coupling otherwise independent sectors.
+
+## A small law with a broad lesson
+
+The most useful invariants are not always born additive. Sometimes the correct extensive variable is hidden by a conventional offset. Here co-index measures the dimension of the largest standard antipodal sphere that fits equivariantly into a system. Dimension starts at zero; orbit count starts at one. Adding one reconciles the two.
+
+The final picture is therefore remarkably unified. A finite antipodal system is classified by its number of opposite pairs. Join composition adds those pairs. The shifted co-index counts them. Vertex number is twice that count. For every finite family,
+
+$$
+\boxed{
+\operatorname{coind}(K_0*\cdots*K_r)+1
+=\sum_{i=0}^{r}\bigl(\operatorname{coind}(K_i)+1\bigr)
+=\frac12\sum_{i=0}^{r}|V(K_i)|
+}.
+$$
+
+Topology, symmetry, and extensive bookkeeping meet in one equation. What first appears to be a geometric obstruction becomes, after classification and one well-chosen shift, the arithmetic of composition.
