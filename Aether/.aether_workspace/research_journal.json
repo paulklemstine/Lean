@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "86411247",
-      "domain": "Novelty",
-      "key_insight": "# Multiverse Set Theory — Mathematics Across Branches (Cycle 1)\n\nThis cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the\nmodal logic of forcing in the set-theoretic multiverse.",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 40,
-      "timestamp": "2026-07-14T06:17:10",
-      "title": "This cycle deepened the combinatorial core of the set-theoretic multiverse by"
-    },
-    {
       "cycle_id": "189556db",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThese conjectures grow out of two threads consolidated in this cycle: the\nidentification of the factorial numeral system as one point in a single\nparameterized family of mixed-rad",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-14T23:30:35",
       "title": "These conjectures are distilled from the current cycle, which closed the bridge"
+    },
+    {
+      "cycle_id": "71637775",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The multi-join law for the ℤ₂-coindex\n\nThis cycle extends the constructive, lower-bound half of the ℤ₂-coindex theory established in\n`Catalog/Novelty/Z2CoindexJoin.lean` (the shar",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 41,
+      "timestamp": "2026-07-15T00:42:35",
+      "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e978b5fe",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: White's Quadratic Exchange Conjecture\n\nThis cycle isolated the *element-census invariant* as the exact obstruction that\nquadratic exchange moves preserve, verified that every symm",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 1210,
-      "timestamp": "2026-07-12T09:01:53",
-      "title": "White's Quadratic Exchange Conjecture (Part 3)"
-    },
     {
       "cycle_id": "077d3a2b",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-14T23:30:35",
       "title": "These conjectures are distilled from the current cycle, which closed the bridge"
+    },
+    {
+      "cycle_id": "71637775",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The multi-join law for the ℤ₂-coindex\n\nThis cycle extends the constructive, lower-bound half of the ℤ₂-coindex theory established in\n`Catalog/Novelty/Z2CoindexJoin.lean` (the shar",
+      "quality_score": 0.83,
+      "sorry_count": 4,
+      "theorem_count": 41,
+      "timestamp": "2026-07-15T00:42:35",
+      "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a3c4f06b",
-      "domain": "Novelty",
-      "name": "powSum_pos",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "a3c4f06b",
-      "domain": "Novelty",
-      "name": "powSum_upper",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "44ee6caf",
-      "domain": "Applications",
-      "name": "lawvere",
-      "quality": 0.83
-    },
     {
       "cycle_id": "44ee6caf",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "value_zero",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "71637775",
+      "domain": "Novelty",
+      "name": "IsoOct",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "71637775",
+      "domain": "Novelty",
+      "name": "coind_octJoin_list",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "71637775",
+      "domain": "Novelty",
+      "name": "coind_octJoin_perm",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-07-14T23:30:35",
+  "last_updated": "2026-07-15T00:42:35",
   "open_questions": [
-    {
-      "context": "-    sorry; +      sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
-      "cycle_id": "ea3218f3",
-      "domain": "Novelty",
-      "sorry_count": 5,
-      "timestamp": "2026-07-14T01:17:13"
-    },
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "ae9bfe48",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-07-14T22:54:15"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "71637775",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T00:42:35"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "07d73c91",
-        "quality": 0.82,
-        "theorems": 51,
-        "title": "This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
-      },
-      {
         "cycle_id": "14656387",
         "quality": 0.83,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 28,
         "title": "Deepening: Sharp threshold characterization for Seidel energy increase in comple"
+      },
+      {
+        "cycle_id": "71637775",
+        "quality": 0.83,
+        "theorems": 41,
+        "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
       }
     ],
     "NumberTheory": [
