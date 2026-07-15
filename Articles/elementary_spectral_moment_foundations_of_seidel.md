@@ -1,213 +1,183 @@
-# The Fingerprint an Edge Cannot Hide
+# The Triangle That Remembers a Graph
 
-## When a graph refuses to notice a change
+## How a three-step walk turns local parity into a spectral fingerprint
 
-Imagine you have a network — a social graph, a molecule, a communications
-grid — and you tear out a single connection. Something changes, obviously. But
-what if the most natural "energy" measurement of that network stared straight at
-the missing link and reported: *nothing happened*? And what if a slightly deeper
-measurement immediately caught the change red-handed, with an exact accounting of
-its size and direction?
+A network can be described in two very different languages. One language is local and concrete: vertices are joined by edges, and we can count small patterns such as triangles. The other is global and algebraic: the network becomes a matrix, and the eigenvalues of that matrix summarize its large-scale structure. Much of spectral graph theory is the art of discovering exact translations between these languages.
 
-That tension — one lens that is stubbornly blind and another that is razor
-sharp — is the heart of the story below. It is a story about a particular way of
-turning a graph into a matrix, about the *moments* of that matrix's spectrum, and
-about what those moments can and cannot see.
+For the Seidel matrix, one such translation is especially clean. Its third spectral moment is nothing more—and nothing less—than a signed census of triples of vertices. Every triple votes according to whether it contains an even or odd number of edges. The resulting balance is unchanged by a broad family of transformations called switching. That invariance has a vivid local explanation: signs attached to vertices cancel as one travels around a closed triangle.
 
-## Turning a graph into a matrix of signs
+This triangle identity is elementary enough to verify by hand, but it opens a route toward higher spectral moments, perturbation formulas, and the study of how deleting a single edge changes a graph’s spectrum.
 
-Take any finite simple graph: a collection of vertices, some pairs of which are
-joined by edges. There are many ways to encode such a graph as a matrix. The most
-famous is the adjacency matrix, which puts a $1$ where two vertices are joined and
-a $0$ everywhere else. But there is a more democratic cousin, the **Seidel
-matrix**, which treats "connected" and "not connected" as equal and opposite.
+## Turning adjacency into signs
 
-Given a graph on $n$ vertices, its Seidel matrix $S$ is the $n \times n$ matrix
-with entries
+Let $G$ be a finite simple graph with vertex set $V$, where $|V|=n$. Its **Seidel matrix** $S$ is the $n\times n$ real matrix defined by
 
 $$
-S_{ij} = \begin{cases}
-\;\;0 & \text{if } i = j,\\
--1 & \text{if } i \text{ and } j \text{ are adjacent},\\
-+1 & \text{if } i \neq j \text{ and they are not adjacent}.
+S_{ij}=
+\begin{cases}
+0, & i=j,\\
+-1, & i\ne j\text{ and }\{i,j\}\text{ is an edge},\\
++1, & i\ne j\text{ and }\{i,j\}\text{ is not an edge}.
 \end{cases}
 $$
 
-So the diagonal is all zeros, and every off-diagonal entry is either $+1$ or
-$-1$. It is a matrix built entirely out of signs. Because $S$ is symmetric
-($S_{ij} = S_{ji}$), it has $n$ real eigenvalues $\lambda_1, \dots, \lambda_n$,
-its *Seidel spectrum*. The **Seidel energy** of the graph is the total size of
-that spectrum,
+Thus edges receive negative signs, nonedges receive positive signs, and the diagonal is zero. Because the graph is undirected, $S$ is symmetric, so all of its eigenvalues $\lambda_1,\ldots,\lambda_n$ are real.
+
+The first two spectral moments have immediate forms. Since the diagonal vanishes,
 
 $$
-E_S = |\lambda_1| + |\lambda_2| + \cdots + |\lambda_n|,
+\operatorname{tr}(S)=\sum_{r=1}^n\lambda_r=0.
 $$
 
-the sum of the absolute values of the eigenvalues. Energy is a single number that
-compresses the entire spectrum into one measure of "spectral spread." It is the
-quantity we will interrogate.
-
-## The moments: cheap summaries of an expensive spectrum
-
-Computing all $n$ eigenvalues of a matrix is expensive. But there are cheap
-summaries called **spectral moments**. The $k$-th moment is the sum of the
-$k$-th powers of the eigenvalues, and — beautifully — it equals the trace of the
-$k$-th power of the matrix, no eigenvalue computation required:
+Every off-diagonal entry has square $1$, so
 
 $$
-\sum_i \lambda_i^{\,k} = \operatorname{tr}(S^k).
+\operatorname{tr}(S^2)=\sum_{r=1}^n\lambda_r^2=n(n-1).
 $$
 
-The first three moments already tell a vivid story.
+The second identity is strikingly universal: it does not depend on which edges the graph has. Every graph on $n$ vertices places its Seidel spectrum on the same Euclidean sphere. This explains both the power and the limitation of the second moment. It gives a common scale, but it cannot distinguish an empty graph from a complete graph, or detect that one edge has been deleted.
 
-**First moment.** Since the diagonal of $S$ is all zeros,
-$\operatorname{tr}(S) = 0$. The eigenvalues always balance around zero: whatever
-mass sits on the positive side is matched on the negative side.
+The third moment is where local structure first enters.
 
-**Second moment.** Here is the first surprise. For *any* graph on $n$ vertices,
+## A vote from every ordered triple
 
-$$
-\operatorname{tr}(S^2) = \sum_i \lambda_i^2 = n(n-1).
-$$
+Take an ordered triple $(i,j,k)$ of vertices and inspect the three cyclic pairs $\{i,j\}$, $\{j,k\}$, and $\{k,i\}$. Define its **parity weight** $w(i,j,k)$ as follows:
 
-The reason is elementary: $\operatorname{tr}(S^2)$ is the sum of the squares of
-*all* the entries of $S$, and every one of the $n(n-1)$ off-diagonal entries is
-$\pm 1$, whose square is $1$, no matter which graph you started with. The graph
-has vanished from the answer. Every Seidel spectrum, for every graph on $n$
-vertices, lives on the same sphere $\sum_i \lambda_i^2 = n(n-1)$.
+* if any two of $i,j,k$ coincide, set $w(i,j,k)=0$;
+* if the three vertices are distinct and span an even number of edges, set $w(i,j,k)=+1$;
+* if they span an odd number of edges, set $w(i,j,k)=-1$.
 
-This single fact has a striking consequence. By the Cauchy–Schwarz inequality,
+Why this rule? Each edge contributes a factor of $-1$ to the cyclic Seidel product, while each nonedge contributes $+1$. Therefore, for every ordered triple,
 
 $$
-E_S = \sum_i |\lambda_i| \ge \frac{\big(\sum_i \lambda_i^2\big)^{1/2}}{1}
-\cdot \text{(something)} \quad\Longrightarrow\quad E_S \ge \sqrt{n(n-1)}.
+S_{ij}S_{jk}S_{ki}=w(i,j,k).
 $$
 
-More precisely, Cauchy–Schwarz applied to the vector of eigenvalues and a cleverly
-chosen companion gives a **universal energy floor**: no graph on $n$ vertices can
-have Seidel energy below $\sqrt{n(n-1)}$. Every graph, however sparse or dense,
-sits above this line.
+If a vertex repeats, one factor lies on the zero diagonal. If all vertices are distinct and the triple contains $m$ edges, the product is $(-1)^m$. The parity rule is therefore not an analogy; it is an exact identity.
 
-## The blindness
-
-Now delete a single edge. Say vertices $a$ and $b$ were joined; cut the link.
-What happens to the Seidel matrix? Only two entries move: $S_{ab}$ and $S_{ba}$
-each flip from $-1$ (adjacent) to $+1$ (non-adjacent). Every other entry is
-untouched.
-
-But those two entries were $\pm 1$ before and $\pm 1$ after. Their *squares*
-are unchanged. So $\operatorname{tr}(S^2) = n(n-1)$ before and after: the second
-moment does not so much as twitch. The most natural spectral summary is
-completely **blind to edge deletion**.
-
-This blindness is not a flaw; it is a warning. It explains why questions about how
-Seidel energy responds to adding or removing edges are genuinely delicate. The
-easy invariant — the one that pins the spectrum to a sphere — simply cannot
-resolve the change. If you want to see the edge, you must look at a finer lens.
-
-## The lens that sees: the third moment
-
-That finer lens is the third moment, $\operatorname{tr}(S^3)$. And here is the
-central result of this work, stated for a general symmetric, zero-diagonal
-matrix and any pair of positions.
-
-**The edge-flip formula.** Let $M$ be any real symmetric matrix with zeros on
-the diagonal. Pick two distinct positions $a \neq b$ and a weight $c$, and form
-the *rank-two perturbation* $P$ that adds $c$ to the entries $M_{ab}$ and
-$M_{ba}$ (and nothing else). Then the third moment changes by an exact,
-closed-form amount:
+Now expand the trace of the cube:
 
 $$
-\operatorname{tr}\big((M+P)^3\big) - \operatorname{tr}(M^3)
-\;=\; 6\,c\,(M^2)_{ab}.
+\operatorname{tr}(S^3)
+=\sum_{i\in V}(S^3)_{ii}
+=\sum_{i,j,k\in V}S_{ij}S_{jk}S_{ki}.
 $$
 
-The change depends on nothing but the weight $c$ and a *single entry* of the
-squared matrix, $(M^2)_{ab} = \sum_k M_{ak} M_{kb}$. Everything else cancels. The
-cancellation is not luck: the cubic expansion produces terms
-$\operatorname{tr}(M^3)$, $3\operatorname{tr}(M^2 P)$,
-$3\operatorname{tr}(M P^2)$, and $\operatorname{tr}(P^3)$, and the last two vanish
-*precisely because $M$ has a zero diagonal*. The zero diagonal — the very feature
-that made the diagonal-blind second moment constant — is what makes the third
-moment's response so clean.
+Substituting the local product identity gives the central result.
 
-Now specialize to Seidel matrices. Deleting the edge $\{a,b\}$ moves those two
-entries from $-1$ to $+1$, an additive change of $+2$ each — exactly the flip with
-weight $c = 2$. Plugging in, the third Seidel moment changes by
+**Signed-Triangle Moment Theorem.** For every finite simple graph,
 
 $$
-\operatorname{tr}(S(G-e)^3) - \operatorname{tr}(S(G)^3)
-\;=\; 12\,(S^2)_{ab}.
+\operatorname{tr}(S^3)=\sum_{i,j,k\in V}w(i,j,k).
 $$
 
-The quantity $(S^2)_{ab}$ is a purely combinatorial count — a signed tally of the
-other vertices $k$ and how each relates to $a$ and to $b$. It is generically
-nonzero. So while the second moment shrugs, the third moment reports the edit with
-a precise magnitude and a definite sign.
+In words, the third Seidel moment equals the number of ordered triples spanning an even number of edges minus the number spanning an odd number of edges; repeated-vertex triples contribute nothing.
 
-## A triangle worth a thousand words
-
-The smallest possible example makes the whole phenomenon visible at a glance. Take
-the triangle $K_3$: three vertices, all pairwise joined. Its Seidel matrix has
-every off-diagonal entry equal to $-1$. A direct computation gives
+Because each set of three distinct vertices has six orderings, the same theorem can be written in an unordered form. Let $N_{\mathrm{even}}$ count three-vertex subsets spanning either zero or two edges, and let $N_{\mathrm{odd}}$ count those spanning either one or three edges. Then
 
 $$
-\operatorname{tr}(S^2) = 6, \qquad \operatorname{tr}(S^3) = -6.
+\operatorname{tr}(S^3)=6\bigl(N_{\mathrm{even}}-N_{\mathrm{odd}}\bigr).
 $$
 
-Now delete one edge, turning the triangle into a path on three vertices, $P_3$.
-Two entries flip from $-1$ to $+1$. Recompute:
+This formulation makes the combinatorics transparent. The cubic moment measures a parity imbalance among all three-vertex induced subgraphs.
+
+## Two graphs at opposite extremes
+
+Consider the empty graph on three vertices. Every pair is a nonedge, so every ordering of the three vertices has weight $+1$. There are $3!=6$ such orderings, hence
 
 $$
-\operatorname{tr}(S^2) = 6 \;\;(\text{unchanged!}), \qquad
-\operatorname{tr}(S^3) = +6.
+\operatorname{tr}(S^3)=6.
 $$
 
-The second moment sat perfectly still at $6$. The third moment leapt from $-6$ to
-$+6$ — a jump of exactly $12$. And the formula predicted it: the flipped position
-has $(S^2)_{ab} = 1$, and $12 \times 1 = 12$. One tiny edit; two lenses; one blind,
-one perfectly calibrated.
-
-## An energy that ignores how many edges you have
-
-There is a final twist that overturns a tempting intuition. One might guess that
-denser graphs — more edges — should have more Seidel energy. They do not, and the
-reason is a clean symmetry.
-
-Take a graph and form its **complement**: keep the same vertices, but swap every
-"connected" for "not connected" and vice versa. In the Seidel matrix, this turns
-every $-1$ into $+1$ and every $+1$ into $-1$. In other words, complementation
-simply negates the matrix: $S(\overline{G}) = -S(G)$.
-
-Negating a matrix negates its eigenvalues, and negating a number does not change
-its absolute value. So the Seidel energy of a graph and the energy of its
-complement are *identical*:
+For the complete graph on three vertices, each ordering encounters three edges. Its weight is $(-1)^3=-1$, so
 
 $$
-E_S(\overline{G}) = E_S(G).
+\operatorname{tr}(S^3)=-6.
 $$
 
-A sparse graph and its dense complement — with wildly different edge counts —
-carry exactly the same Seidel energy. Whatever Seidel energy measures, it is
-emphatically **not** a monotone function of the number of edges. The naive
-"more edges, more energy" heuristic is simply false, and the symmetry says so in
-one line.
+These tiny examples reveal what the universal second moment conceals. Both graphs have $\operatorname{tr}(S^2)=6$, but their third moments point in opposite directions.
 
-## Why this matters
+For a larger graph, the cubic moment can vanish even when neither parity class is absent. The condition
 
-The moral is a general one about measurement. When you compress a rich object — a
-spectrum, a distribution, a signal — into a few summary numbers, you inherit both
-their power and their blind spots. The Seidel second moment is a wonderful
-invariant precisely *because* it is constant: it pins every graph to a common
-sphere and hands you a universal energy floor for free. But that same constancy
-means it cannot resolve a local edit. To see the edit you must climb to the next
-moment, where the zero-diagonal structure conspires to give you an exact,
-interpretable formula rather than a mess.
+$$
+\operatorname{tr}(S^3)=0
+$$
 
-Spectral moments of sign matrices sit at a crossroads of combinatorics and linear
-algebra, and they appear wherever people study graphs through their eigenvalues:
-in network science, in the theory of strongly regular graphs and two-graphs, in
-error-correcting codes, and in the design of experiments. The lesson here — know
-which moment sees your change, and exploit the structure that makes it clean — is
-a small but sharp instrument, and the triangle-to-path example shows it working in
-the palm of your hand.
+means precisely that even-edge and odd-edge three-vertex subsets occur equally often. Spectral cancellation becomes an exact counting statement.
+
+## Switching as a change of viewpoint
+
+Seidel matrices admit a transformation known as **switching**. Choose a sign $d_i\in\{-1,+1\}$ for every vertex and form the diagonal matrix $D=\operatorname{diag}(d_i)$. The switched matrix is
+
+$$
+S'=DSD,
+$$
+
+so its entries satisfy $S'_{ij}=d_iS_{ij}d_j$. In graph language, choosing the vertices with sign $-1$ and switching toggles adjacency across the cut between that set and its complement, while leaving pairs on the same side unchanged.
+
+Globally, switching preserves the spectrum because $D^2=I$, making $S'$ similar to $S$. But the cubic moment has an even more revealing local proof. Around a triangle,
+
+$$
+S'_{ij}S'_{jk}S'_{ki}
+=(d_iS_{ij}d_j)(d_jS_{jk}d_k)(d_kS_{ki}d_i).
+$$
+
+Every vertex sign appears exactly twice. Since $d_i^2=d_j^2=d_k^2=1$, all six signs cancel, leaving
+
+$$
+S'_{ij}S'_{jk}S'_{ki}=S_{ij}S_{jk}S_{ki}.
+$$
+
+This product is a discrete **holonomy**: it records the net sign accumulated around a closed loop. Vertex signs behave like a gauge choice. They alter individual edge signs, but a closed cycle forgets the choice because every arrival at a vertex is paired with a departure.
+
+**Triangle-Holonomy Invariance Theorem.** Diagonal sign switching preserves the cyclic product on every ordered triple and consequently preserves $\operatorname{tr}(S^3)$.
+
+This is a local explanation for a global spectral invariant. The matrix argument says “similar matrices have the same eigenvalues.” The triangle argument says “the signs cancel around every closed three-step journey.” Both are correct, but the second exposes the mechanism.
+
+## What happens when one edge disappears?
+
+The identity also clarifies why edge deletion is subtler than the first two moments suggest. Deleting an edge $\{a,b\}$ changes the corresponding Seidel entries from $-1$ to $+1$. Only triples containing both $a$ and $b$ can change parity. For each third vertex $c$, the deletion reverses the sign of the triangle product associated with $\{a,b,c\}$.
+
+Thus a global spectral change is assembled from a local census: among all third vertices $c$, how many give positive triangle products and how many give negative ones? The answer determines the change in the cubic moment.
+
+Algebraically, the update has rank two:
+
+$$
+S'=S+2(e_ae_b^{\mathsf T}+e_be_a^{\mathsf T}),
+$$
+
+where $e_a$ and $e_b$ are coordinate vectors. For a symmetric Seidel matrix in which $\{a,b\}$ was an edge, expansion of the cube yields
+
+$$
+\operatorname{tr}((S')^3)-\operatorname{tr}(S^3)=12(S^2)_{ab}.
+$$
+
+The entry $(S^2)_{ab}$ is itself a sum over third vertices:
+
+$$
+(S^2)_{ab}=\sum_{c\in V}S_{ac}S_{cb}.
+$$
+
+The matrix perturbation and the triangle-parity count are therefore two views of the same local statistic. This bridge is promising for highly structured graphs, including Turán graphs, where one hopes to understand whether deleting an edge systematically changes Seidel energy.
+
+## Beyond triangles
+
+The triangle is only the first closed walk that can carry nontrivial sign information. For a closed walk
+
+$$
+v_0,v_1,\ldots,v_m=v_0,
+$$
+
+the product of switched edge signs contains every vertex sign an even number of times. The same cancellation therefore applies to closed walks of every length. Summing their products leads naturally to
+
+$$
+\operatorname{tr}(S^m),
+$$
+
+the $m$th spectral moment.
+
+This suggests a broad program: interpret every spectral moment as a signed closed-walk count, prove switching invariance through local cancellation, and use the collection of moments to recover characteristic-polynomial information. The second moment supplies a graph-independent sphere, the third detects triangle parity, and higher moments can resolve structures that both miss.
+
+There is also a cautionary lesson. Switching preserves the entire spectrum, so no spectral quantity—Seidel energy included—can strictly increase or decrease within one switching class. And the elementary inequality $\|\lambda\|_1\geq\|\lambda\|_2$ reaches equality only when at most one eigenvalue is nonzero, not when all eigenvalues have equal magnitude. Structural conjectures about energy must respect these basic geometric facts.
+
+The central message is simple: a spectral trace need not be an opaque algebraic statistic. In the Seidel setting, the cube of a matrix listens to every triangle, records only the parity of its edges, and adds the votes. Switching may redraw many edges at once, but each triangular loop remembers exactly the same sign. Local cancellation is what makes the global spectrum endure.

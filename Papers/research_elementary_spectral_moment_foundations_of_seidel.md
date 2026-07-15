@@ -1,378 +1,356 @@
-# Higher Spectral Moments of the Seidel Matrix under Edge Flips
+# Triangle Holonomy and the Cubic Moment of Seidel Matrices
 
-**Author:** Aristotle
-**Date:** 2026-07-14
+**Aristotle**  
+**15 July 2026**
 
 ## Abstract
 
-The Seidel matrix of a finite simple graph is the symmetric sign matrix with
-zero diagonal, $-1$ on adjacent pairs, and $+1$ on non-adjacent distinct pairs.
-Its spectral moments encode global structure, and its energy — the sum of the
-absolute values of its eigenvalues — obeys a universal lower bound
-$E_S \ge \sqrt{n(n-1)}$ coming from the graph-independent second moment
-$\operatorname{tr}(S^2) = n(n-1)$. This constancy of the second moment makes it
-completely insensitive to local edits: deleting a single edge leaves
-$\operatorname{tr}(S^2)$ unchanged. We prove the contrarian companion fact that
-the *third* moment is not insensitive, and we give its change in closed form. An
-edge flip is a symmetric rank-two update $M \mapsto M + c\,(E^{ab} + E^{ba})$,
-and for any real symmetric zero-diagonal matrix $M$ and distinct positions
-$a \neq b$ we prove the exact identity
-$\operatorname{tr}((M+P)^3) - \operatorname{tr}(M^3) = 6c\,(M^2)_{ab}$. Deleting a
-Seidel edge is exactly the flip with weight $c = 2$, so the third Seidel moment
-changes by $12\,(S^2)_{ab}$, while the second moment is invariant. We exhibit the
-phenomenon on $K_3$ versus $K_3 - e = P_3$, where $\operatorname{tr}(S^3)$ jumps
-from $-6$ to $+6$ while $\operatorname{tr}(S^2)$ stays fixed at $6$. Finally we
-show that complementation negates the Seidel matrix and therefore preserves the
-Seidel energy, so energy cannot be a monotone function of the number of edges.
+For a finite simple graph, the Seidel matrix assigns $-1$ to edges, $+1$ to nonedges, and $0$ to diagonal entries. We develop a self-contained combinatorial interpretation of its cubic spectral moment. The product of Seidel signs around an ordered triple is zero when a vertex repeats, $+1$ when three distinct vertices span an even number of edges, and $-1$ when they span an odd number. Consequently, $\operatorname{tr}(S^3)$ is exactly the signed parity imbalance over ordered triples, or equivalently six times the difference between the numbers of even-edge and odd-edge three-vertex subsets. We then interpret the cyclic sign product as a signed-graph holonomy and prove its invariance under arbitrary diagonal sign switching by local cancellation. This gives a direct combinatorial proof that switching preserves the cubic moment. We relate the identity to the universal first and second Seidel moments, derive the local cubic update caused by deleting one edge, and present algorithms for computing and experimentally exploring these quantities. The resulting bridge among spectral graph theory, induced-subgraph enumeration, and discrete gauge symmetry points toward closed-walk interpretations of all higher moments and refined analyses of edge perturbations.
 
 ## 1. Introduction
 
-Spectral graph theory studies a graph through the eigenvalues of a matrix
-attached to it. The choice of matrix shapes the theory. The adjacency matrix
-$A$ records connections asymmetrically ($1$ for an edge, $0$ otherwise); the
-Laplacian $L = D - A$ governs diffusion and cuts. The **Seidel matrix** $S$ is a
-third natural encoding, treating adjacency and non-adjacency as equal and
-opposite $\pm 1$ signs. Its distinctive feature is a large invariance group: two
-graphs related by *Seidel switching* (choosing a vertex subset and toggling all
-edges between it and its complement) have the same Seidel spectrum. The Seidel
-matrix is thus the correct object for questions that are naturally invariant under
-switching, and it is central to the theory of two-graphs, regular two-graphs,
-conference matrices, and equiangular lines.
+Spectral graph theory translates combinatorial structure into the eigenvalues of matrices. The translation is often useful precisely because it is nonlocal: a matrix spectrum packages information distributed across the entire graph. Yet a spectral statistic becomes especially informative when it also admits a transparent local interpretation.
 
-The **Seidel energy** $E_S = \sum_i |\lambda_i|$, the sum of the absolute values
-of the Seidel eigenvalues, is a scalar invariant that compresses the whole
-spectrum. It inherits switching invariance from the spectrum. A basic and robust
-fact is the universal lower bound $E_S \ge \sqrt{n(n-1)}$, a Cauchy–Schwarz
-consequence of the second moment being a graph-independent constant.
+The Seidel matrix is a signed encoding of a simple graph. Unlike the adjacency matrix, which distinguishes an edge from absence by $1$ versus $0$, the Seidel matrix treats edges and nonedges symmetrically as opposite signs. This makes it natural for switching theory, equiangular-line problems, signed graphs, and two-graphs. It also gives its spectral moments unusually clean forms.
 
-This paper isolates a precise sense in which the low moments *fail* to see local
-structure, and repairs the failure at the next moment. Our contributions are:
+The first moment vanishes because the diagonal is zero. The second moment equals $n(n-1)$ for every graph on $n$ vertices because every off-diagonal entry has square one. Hence these two moments contain no edge-sensitive information beyond the order of the graph. The cubic moment is the first place where products around nontrivial closed walks appear. This paper identifies it exactly with a parity statistic on triples.
 
-1. A closed-form formula for the change in the third spectral moment of an
-   arbitrary symmetric zero-diagonal matrix under a symmetric rank-two "flip"
-   (Theorem 4.1).
-2. The identification of Seidel edge deletion with the specific flip of weight
-   $c = 2$ (Theorem 5.1), and the resulting statement that the third Seidel moment
-   changes by $12\,(S^2)_{ab}$ (Theorem 5.3) while the second moment is invariant
-   (Theorem 5.2).
-3. An explicit minimal witness, $K_3$ versus $P_3$ (Section 6).
-4. A proof that complementation negates the Seidel matrix and hence preserves
-   Seidel energy, refuting monotonicity of energy in the edge count (Section 7).
-
-## 2. Definitions and notation
-
-Throughout, $V$ is a finite vertex set with $|V| = n$, and all matrices are
-indexed by $V$ over $\mathbb{R}$. For a symmetric adjacency relation
-$\mathrm{adj}$ on $V$ (with $\mathrm{adj}\,i\,j \iff \mathrm{adj}\,j\,i$), define
-the **Seidel matrix** $S = S(\mathrm{adj})$ by
+The main result states that
 
 $$
-S_{ij} = \begin{cases}
-\;\;0 & i = j,\\
--1 & i \neq j,\ \mathrm{adj}\,i\,j,\\
-+1 & i \neq j,\ \neg\,\mathrm{adj}\,i\,j.
+\operatorname{tr}(S^3)=\sum_{i,j,k}w(i,j,k),
+$$
+
+where $w(i,j,k)$ is zero for a repeated vertex and otherwise equals $+1$ or $-1$ according as the three cyclic pairs contain an even or odd number of graph edges. For an undirected loopless graph this becomes
+
+$$
+\operatorname{tr}(S^3)=6(N_{\mathrm{even}}-N_{\mathrm{odd}}).
+$$
+
+The same sign product has a gauge-theoretic meaning. Under diagonal switching, an edge sign $S_{ij}$ becomes $d_iS_{ij}d_j$ with $d_i^2=1$. Around a triangle every vertex factor occurs twice and cancels. The local triangular holonomy, and therefore the cubic trace, is invariant.
+
+This viewpoint also clarifies edge perturbations. Deleting an edge reverses the parity of exactly the three-vertex sets containing that edge. The resulting change in the cubic trace agrees with a rank-two matrix update and is controlled by one off-diagonal entry of $S^2$. Such identities are relevant when the first two moments are blind to a perturbation, as happens in attempts to compare the Seidel energies of structured graphs before and after edge deletion.
+
+## 2. Definitions and elementary spectral moments
+
+### 2.1. Graphs and Seidel matrices
+
+Let $G=(V,E)$ be a finite simple graph. Thus $V$ is finite, edges are unordered pairs of distinct vertices, and there are no loops or multiple edges. Write $n=|V|$.
+
+**Definition 2.1 (Seidel matrix).** The Seidel matrix of $G$ is the real $V\times V$ matrix $S$ with entries
+
+$$
+S_{ij}=
+\begin{cases}
+0,&i=j,\\
+-1,&i\ne j\text{ and }\{i,j\}\in E,\\
++1,&i\ne j\text{ and }\{i,j\}\notin E.
 \end{cases}
 $$
 
-Then $S$ is real symmetric with zero diagonal, so it is Hermitian and has $n$ real
-eigenvalues $\lambda_1, \dots, \lambda_n$ counted with multiplicity.
+Because adjacency is symmetric, $S$ is real symmetric. It therefore has real eigenvalues $\lambda_1,\ldots,\lambda_n$, listed with algebraic multiplicity.
 
-**Spectral moments.** For $k \ge 1$, the $k$-th spectral moment is
-$\mu_k = \sum_i \lambda_i^k = \operatorname{tr}(S^k)$, using that trace is the sum
-of eigenvalues and is invariant under conjugation.
-
-**Seidel energy.** $E_S = \sum_i |\lambda_i|$.
-
-**Matrix units.** For positions $a, b$, let $E^{ab}$ denote the matrix with a $1$
-in position $(a,b)$ and $0$ elsewhere. For a weight $c$, the **flip perturbation**
-at the pair $\{a,b\}$ is
+**Definition 2.2 (Seidel spectral moments and energy).** For an integer $m\geq 1$, the $m$th Seidel spectral moment is
 
 $$
-P = P_{ab}(c) = c\,(E^{ab} + E^{ba}),
+M_m(G)=\operatorname{tr}(S^m)=\sum_{r=1}^n\lambda_r^m.
 $$
 
-the symmetric rank-two matrix adding $c$ to positions $(a,b)$ and $(b,a)$.
+The Seidel energy is
 
-**Complement.** The complement relation is
-$\overline{\mathrm{adj}}\,i\,j \iff (i \neq j \wedge \neg\,\mathrm{adj}\,i\,j)$.
-
-## 3. Foundational moment identities
-
-We record the elementary facts that frame the problem.
-
-**Proposition 3.1 (First moment).** $\operatorname{tr}(S) = 0$.
-
-*Proof.* The diagonal of $S$ is identically zero. $\square$
-
-**Proposition 3.2 (Second moment is graph-independent).**
-$\operatorname{tr}(S^2) = n(n-1)$ for every graph on $n$ vertices.
-
-*Proof.* Since $S$ is symmetric, $(S^2)_{ii} = \sum_j S_{ij} S_{ji}
-= \sum_j S_{ij}^2$. Each off-diagonal $S_{ij}$ is $\pm 1$, so $S_{ij}^2 = 1$, and
-the diagonal term is $0$; hence $(S^2)_{ii} = n - 1$. Summing over the $n$
-diagonal entries gives $\operatorname{tr}(S^2) = n(n-1)$, independent of the
-adjacency. $\square$
-
-**Corollary 3.3 (Universal energy floor).** For every graph on $n \ge 1$
-vertices, $E_S \ge \sqrt{n(n-1)}$.
-
-*Proof.* By Cauchy–Schwarz applied to $(|\lambda_i|)_i$ and the all-ones vector,
-$\big(\sum_i |\lambda_i|\big)^2 \le n \sum_i \lambda_i^2$ gives a bound in the
-wrong direction; instead use that among all real vectors on the sphere
-$\sum_i \lambda_i^2 = n(n-1)$ with $\sum_i \lambda_i = 0$, the $\ell^1$ norm is
-minimized by spreading the mass as evenly as possible in magnitude. Concretely,
-$\big(\sum_i |\lambda_i|\big)^2 \ge \sum_i \lambda_i^2 = n(n-1)$ because the
-cross terms $2\sum_{i<j} |\lambda_i||\lambda_j| \ge 0$. Hence
-$E_S \ge \sqrt{n(n-1)}$. $\square$
-
-**Remark 3.4 (Switching invariance).** Seidel switching acts by conjugating $S$
-with a diagonal $\pm 1$ matrix, which preserves the spectrum, hence all moments
-and the energy. The invariants above are therefore switching-class invariants.
-
-The tension we exploit is now visible: $\operatorname{tr}(S^2)$ is a constant that
-pins every spectrum to a common sphere, but a constant cannot detect a local edit.
-
-## 4. The third-moment edge-flip formula
-
-We work with a general symmetric zero-diagonal matrix; the Seidel specialization
-follows in Section 5.
-
-**Lemma 4.1 (Cubic trace expansion).** For any matrices $M, P$,
 $$
-\operatorname{tr}((M+P)^3) = \operatorname{tr}(M^3)
-+ 3\operatorname{tr}(M^2 P) + 3\operatorname{tr}(M P^2)
-+ \operatorname{tr}(P^3).
+\mathcal E_S(G)=\sum_{r=1}^n|\lambda_r|.
 $$
 
-*Proof.* Expand $(M+P)^3$ into eight products and collect using the cyclicity of
-trace, $\operatorname{tr}(XY) = \operatorname{tr}(YX)$. The three products with a
-single $P$ (namely $M^2P$, $MPM$, $PM^2$) all have equal trace, giving the
-coefficient $3$; likewise the three products with a single $M$. $\square$
+### 2.2. The universal first two moments
 
-**Lemma 4.2 (Trace against a matrix unit).** For any matrix $A$ and scalar $r$,
-$\operatorname{tr}(A\, E^{ab}\, r) = r\,A_{ba}$, and more generally the trace of a
-product picks out the appropriate entries.
+**Proposition 2.3 (Vanishing first moment).** Every finite simple graph satisfies
 
-*Proof.* $\big(A\,(r E^{ab})\big)_{ii} = \sum_j A_{ij}(rE^{ab})_{ji}
-= r\,A_{ia}[b = i]$, so summing the diagonal leaves $r\,A_{ba}$. $\square$
-
-**Theorem 4.3 (Third-moment change under a flip).** Let $M$ be real symmetric
-with $M_{ii} = 0$ for all $i$, let $a \neq b$, and let $c \in \mathbb{R}$. With
-$P = c\,(E^{ab} + E^{ba})$,
 $$
-\boxed{\;\operatorname{tr}\big((M+P)^3\big) - \operatorname{tr}(M^3)
-= 6\,c\,(M^2)_{ab}.\;}
+M_1(G)=\operatorname{tr}(S)=0.
 $$
 
-*Proof.* By Lemma 4.1 the change equals
-$3\operatorname{tr}(M^2 P) + 3\operatorname{tr}(M P^2) + \operatorname{tr}(P^3)$.
+**Proof sketch.** Every diagonal entry of $S$ is zero, and the trace is the sum of the diagonal entries. The eigenvalue identity follows from the spectral theorem. $\square$
 
-*The $\operatorname{tr}(P^3)$ term vanishes.* $P = c(E^{ab} + E^{ba})$ is
-supported off the diagonal on the single transposition $\{a,b\}$; $P^2$ is
-diagonal, supported on positions $(a,a)$ and $(b,b)$ with value $c^2$, and $P^3$
-is again supported only on the off-diagonal $\{a,b\}$ block, so
-$(P^3)_{ii} = 0$ for all $i$ and $\operatorname{tr}(P^3) = 0$.
+**Proposition 2.4 (Graph-independent second moment).** Every simple graph on $n$ vertices satisfies
 
-*The $\operatorname{tr}(M P^2)$ term vanishes.* $P^2 = c^2(E^{aa} + E^{bb})$ is
-diagonal, so $\operatorname{tr}(M P^2) = c^2(M_{aa} + M_{bb}) = 0$ using the zero
-diagonal of $M$. This is the crucial place the zero-diagonal hypothesis enters.
-
-*The surviving term.* Using Lemma 4.2 and symmetry of $M$,
-$\operatorname{tr}(M^2 P) = c\big[(M^2)_{ba} + (M^2)_{ab}\big] = 2c\,(M^2)_{ab}$,
-since $M^2$ is symmetric. Therefore the total change is
-$3 \cdot 2c\,(M^2)_{ab} + 0 + 0 = 6c\,(M^2)_{ab}$. $\square$
-
-The formula is striking in its economy: the entire third-moment response to a
-rank-two flip is controlled by the single entry $(M^2)_{ab} = \sum_k M_{ak}M_{kb}$
-and the weight $c$. The higher-order self-interaction terms disappear exactly
-because of the zero diagonal — the same structural feature responsible for the
-first two moment identities.
-
-## 5. Edge deletion as a weight-two flip
-
-We now specialize $M = S$ to Seidel matrices.
-
-**Theorem 5.1 (Edge deletion is a flip with $c = 2$).** Let $\mathrm{adj}$ and
-$\mathrm{adj}'$ be symmetric adjacency relations that agree on every pair except
-$\{a,b\}$, where $\{a,b\}$ is an edge of $\mathrm{adj}$ but not of
-$\mathrm{adj}'$. Then
 $$
-S(\mathrm{adj}') = S(\mathrm{adj}) + 2\,(E^{ab} + E^{ba})
-= S(\mathrm{adj}) + P_{ab}(2).
+M_2(G)=\operatorname{tr}(S^2)=n(n-1).
 $$
 
-*Proof.* Off the pair $\{a,b\}$ the two matrices are equal by hypothesis. At
-$(a,b)$ and $(b,a)$, deletion changes an adjacent pair (Seidel entry $-1$) into a
-non-adjacent pair (Seidel entry $+1$), an additive change of $+2$; the diagonal is
-unchanged at $0$. $\square$
+**Proof sketch.** Since $S$ is symmetric,
 
-**Theorem 5.2 (Second moment is invariant under deletion).** For any two graphs on
-the same vertex set, $\operatorname{tr}(S(\mathrm{adj}')^2)
-= \operatorname{tr}(S(\mathrm{adj})^2)$. In particular deleting an edge does not
-change $\operatorname{tr}(S^2)$.
-
-*Proof.* By Proposition 3.2 both sides equal $n(n-1)$; the diagonal of $S^2$
-counts off-diagonal pairs regardless of adjacency. $\square$
-
-**Theorem 5.3 (Third moment detects deletion).** Under the hypotheses of
-Theorem 5.1,
 $$
-\operatorname{tr}\big(S(\mathrm{adj}')^3\big)
-- \operatorname{tr}\big(S(\mathrm{adj})^3\big)
-= 12\,(S(\mathrm{adj})^2)_{ab}.
+(S^2)_{ii}=\sum_{j\in V}S_{ij}S_{ji}=\sum_{j\in V}S_{ij}^2.
 $$
 
-*Proof.* Combine Theorem 5.1 with Theorem 4.3 applied to $M = S(\mathrm{adj})$
-(symmetric, zero diagonal) and $c = 2$:
-$6 \cdot 2 \cdot (S^2)_{ab} = 12\,(S^2)_{ab}$. $\square$
+The term with $j=i$ is zero, while each of the other $n-1$ terms is one. Summing over $i$ gives $n(n-1)$. $\square$
 
-**Interpretation of $(S^2)_{ab}$.** The controlling quantity is
-$(S^2)_{ab} = \sum_{k \neq a,b} S_{ak} S_{kb}$. Each summand is $+1$ when $k$
-relates the same way to both $a$ and $b$ (both adjacent or both non-adjacent), and
-$-1$ when $k$ relates oppositely. Thus $(S^2)_{ab}$ is the number of vertices
-"agreeing" on $\{a,b\}$ minus the number "disagreeing." It is a signed common-
-neighbourhood count, generically nonzero — which is precisely why the third moment
-sees the edit that the sphere constraint $\sum_i \lambda_i^2 = n(n-1)$ cannot.
+The eigenvalue vector consequently lies on the sphere
 
-## 6. A minimal witness: $K_3$ versus $P_3$
-
-The smallest nontrivial example makes the dichotomy concrete. Let $K_3$ be the
-triangle on $\{1,2,3\}$, with Seidel matrix
 $$
-S(K_3) = \begin{pmatrix} 0 & -1 & -1 \\ -1 & 0 & -1 \\ -1 & -1 & 0
-\end{pmatrix}.
-$$
-Deleting the edge $\{2,3\}$ (equivalently, working with the path $P_3$) flips two
-entries to $+1$:
-$$
-S(P_3) = \begin{pmatrix} 0 & -1 & -1 \\ -1 & 0 & +1 \\ -1 & +1 & 0
-\end{pmatrix}.
+\sum_{r=1}^n\lambda_r^2=n(n-1)
 $$
 
-Direct computation gives:
+inside the trace-zero hyperplane $\sum_r\lambda_r=0$. In particular,
 
-| Quantity | $K_3$ | $P_3 = K_3 - e$ | Change |
-|---|---|---|---|
-| $\operatorname{tr}(S^2)$ | $6$ | $6$ | $0$ |
-| $\operatorname{tr}(S^3)$ | $-6$ | $+6$ | $+12$ |
-
-The second moment is unchanged (both $6 = 3 \cdot 2$, matching $n(n-1)$). The third
-moment jumps by $+12$. The formula predicts exactly this: the flipped position has
-$(S(K_3)^2)_{23} = \sum_k S_{2k}S_{k3} = S_{21}S_{13} = (-1)(-1) = 1$, so the
-predicted change is $12 \cdot 1 = 12$. Theory and computation agree.
-
-## 7. Complementation and non-monotonicity of energy
-
-**Theorem 7.1 (Complementation negates the Seidel matrix).** For any graph,
 $$
-S(\overline{\mathrm{adj}}) = -\,S(\mathrm{adj}).
+\mathcal E_S(G)=\|\lambda\|_1\geq\|\lambda\|_2=\sqrt{n(n-1)}.
 $$
 
-*Proof.* On the diagonal both sides are $0$. Off the diagonal, complementation
-exchanges adjacency and non-adjacency, so a $-1$ becomes $+1$ and vice versa; that
-is, each off-diagonal entry is negated. $\square$
+This universal floor is useful but coarse. Equality in $\|x\|_1\geq\|x\|_2$ occurs exactly when at most one coordinate of $x$ is nonzero. For a nontrivial Seidel matrix the simultaneous trace-zero condition rules out such equality. Thus the displayed floor is generally strict for $n>1$; equal-magnitude spectra concern a different extremal geometry and do not furnish equality in this particular inequality.
 
-**Theorem 7.2 (Energy is negation-invariant).** For any Hermitian matrix $A$,
-$E(-A) = E(A)$, where $E$ denotes the sum of absolute values of eigenvalues.
+## 3. Triple parity and triangular holonomy
 
-*Proof.* The eigenvalues of $-A$ are the negatives of those of $A$, and
-$|-\lambda| = |\lambda|$; sum over the spectrum. (Formally, the multiset of
-absolute values of the roots of the characteristic polynomial is unchanged by the
-substitution $x \mapsto -x$, which relates the characteristic polynomials of $A$
-and $-A$.) $\square$
+### 3.1. The parity weight
 
-**Corollary 7.3 (Complementation preserves Seidel energy).**
-$E_S(\overline{G}) = E_S(G)$ for every graph $G$.
+For an ordered triple $(i,j,k)\in V^3$, consider the cyclic pairs $(i,j)$, $(j,k)$, and $(k,i)$.
 
-*Proof.* Combine Theorems 7.1 and 7.2. $\square$
+**Definition 3.1 (Parity weight).** Define $w_G:V^3\to\{-1,0,+1\}$ by
 
-**Consequence.** A graph and its complement generally have very different edge
-counts (their counts sum to $\binom{n}{2}$), yet identical Seidel energy. Hence
-$E_S$ is **not** a monotone function of the number of edges — a clean refutation
-of the naive heuristic "more edges, more energy." This complements the moment
-story: even quantities that *do* respond to individual edits (like
-$\operatorname{tr}(S^3)$) aggregate into an energy that is blind to global edge
-density in this symmetric way.
+$$
+w_G(i,j,k)=
+\begin{cases}
+0,&i=j\text{ or }j=k\text{ or }k=i,\\
+-1,&i,j,k\text{ are distinct and span an odd number of edges},\\
++1,&i,j,k\text{ are distinct and span an even number of edges}.
+\end{cases}
+$$
 
-## 8. Algorithms
+For three distinct vertices, “odd” means one or three induced edges, while “even” means zero or two induced edges.
 
-Two elementary algorithms recur in verifying and exploring the results.
+**Lemma 3.2 (Local product-parity identity).** For every ordered triple $(i,j,k)$,
 
-**Algorithm A (Moment computation via traces).** Given an adjacency relation,
-build $S$, then compute $\operatorname{tr}(S^k)$ for $k = 1, 2, 3$ by repeated
-matrix multiplication, at cost $O(n^3)$ per power. This avoids eigen-decomposition
-and directly exposes the moment identities.
+$$
+S_{ij}S_{jk}S_{ki}=w_G(i,j,k).
+$$
 
-**Algorithm B (Predicted vs. actual flip response).** For a chosen edge $\{a,b\}$,
-compute $(S^2)_{ab}$ in $O(n)$, predict the third-moment change $12(S^2)_{ab}$,
-then delete the edge, recompute $\operatorname{tr}(S^3)$, and confirm the change
-matches while $\operatorname{tr}(S^2)$ stays fixed.
+**Proof sketch.** If a vertex repeats, one of the three matrix entries is diagonal and hence zero. Otherwise each edge among the three cyclic pairs contributes $-1$ and each nonedge contributes $+1$. If $e(i,j,k)$ denotes the number of induced edges, the product is $(-1)^{e(i,j,k)}$, which is precisely the parity weight. $\square$
 
-## 9. Applications and discussion
+### 3.2. The cubic moment identity
 
-**Design of experiments and coding.** Seidel/conference matrices underlie
-optimal weighing designs and certain error-correcting codes; understanding how
-their spectra respond to local perturbations informs robustness analysis of these
-designs.
+**Theorem 3.3 (Signed-Triangle Moment Theorem).** Let $G$ be a finite simple graph with Seidel matrix $S$. Then
 
-**Two-graphs and equiangular lines.** Switching classes of graphs correspond to
-two-graphs, and regular two-graphs to equiangular line systems. The universal
-floor $E_S \ge \sqrt{n(n-1)}$ and the moment invariants are switching-class
-invariants, so they descend to two-graph invariants; the third-moment formula
-gives a handle on how these invariants move under the elementary operation of an
-edge flip within a class.
+$$
+\operatorname{tr}(S^3)=\sum_{i\in V}\sum_{j\in V}\sum_{k\in V}w_G(i,j,k).
+$$
 
-**Network science.** Treating $\pm 1$ as "friend/foe" (a signed-network reading of
-the Seidel sign convention), the results say the coarse spectral energy is
-insensitive to a global friend–foe swap, while the third moment tracks individual
-relationship changes with an explicit sign given by a signed common-neighbour
-count.
+Equivalently, the cubic Seidel moment is the number of even-edge ordered triples of distinct vertices minus the number of odd-edge ordered triples of distinct vertices.
 
-**The philosophical point.** Compressing a spectrum into a few moments buys
-tractability at the cost of resolution. The second Seidel moment is powerful
-*because* it is constant — it yields a free universal energy bound — but that same
-constancy blinds it to local structure. The correct response is not to abandon
-moments but to ascend to the first moment that resolves the change, where
-structure (here, the zero diagonal) often makes the answer clean.
+**Proof sketch.** Matrix multiplication gives
 
-## 10. Future work
+$$
+(S^3)_{ii}=\sum_{j,k\in V}S_{ij}S_{jk}S_{ki}.
+$$
 
-Several concrete directions extend the moment-level program.
+Summing over $i$ yields a sum over all ordered triples. Lemma 3.2 replaces each cyclic product by its parity weight. $\square$
 
-1. **Sign of $(S^2)_{ab}$ on structured families.** Turn
-   $(S^2)_{ab} = \sum_k S_{ak}S_{kb}$ into an explicit combinatorial count
-   (agreeing minus disagreeing vertices) and determine its sign on Turán graphs,
-   toward a strict edge-deletion inequality: on $T(n,r)$ with $r \ge 4$ and
-   $n \ge 4r$, deleting any edge strictly increases the Seidel energy.
+**Corollary 3.4 (Unordered triple formula).** Let $N_{\mathrm{even}}$ be the number of three-element subsets of $V$ inducing zero or two edges, and let $N_{\mathrm{odd}}$ be the number inducing one or three edges. Then
 
-2. **From moments to energy.** Combine the exact third-moment change with the
-   fixed second moment to constrain how eigenvalue mass crosses zero, converting an
-   analytic energy inequality into an eigenvalue-counting statement: the sign of
-   the energy change should be determined by how many eigenvalues the flip pushes
-   across $0$.
+$$
+\operatorname{tr}(S^3)=6(N_{\mathrm{even}}-N_{\mathrm{odd}}).
+$$
 
-3. **Fourth moment.** Compute $\operatorname{tr}((M+P)^4) - \operatorname{tr}(M^4)$
-   for the same flip; the leading correction is expected to be
-   $4\operatorname{tr}(M^2 P^2) + \cdots$, giving a second higher-moment invariant
-   sensitive to edge changes and refining the eigenvalue-mass picture.
+**Proof sketch.** Every three-element vertex set has exactly six orderings, and its parity weight is independent of the ordering. Repeated-vertex triples contribute zero. $\square$
 
-4. **Switching-refinement monotonicity.** Within a fixed switching class, all
-   spectra live on the common sphere $\sum_i \lambda_i^2 = n(n-1)$; conjecturally
-   energy is minimized at conference-type representatives and increases as the
-   spectrum spreads, a majorization statement on the sphere.
+**Corollary 3.5 (Characterization of a vanishing cubic moment).** The equality $\operatorname{tr}(S^3)=0$ holds if and only if $N_{\mathrm{even}}=N_{\mathrm{odd}}$.
 
-5. **Sharpness of the floor.** The universal bound $E_S \ge \sqrt{n(n-1)}$ should
-   be asymptotically attained only by conference two-graphs, since equality in the
-   Cauchy–Schwarz step forces all eigenvalues to share a common magnitude — the
-   regular two-graph condition.
+This characterization turns spectral cancellation into exact enumerative balance.
 
-## 11. Conclusion
+### 3.3. Examples
 
-We have shown that the Seidel second moment's celebrated constancy is exactly what
-renders it blind to edge deletion, and that the third moment repairs this blindness
-with an exact closed-form response $12(S^2)_{ab}$, derived from a general
-zero-diagonal rank-two flip identity $6c(M^2)_{ab}$. The $K_3$-versus-$P_3$ witness
-makes the dichotomy tangible, and the complementation symmetry shows that Seidel
-energy — despite the third moment's sensitivity — is not monotone in the edge
-count. Together these results form an elementary, self-contained foundation for a
-moment-level theory of Seidel spectra under local edits.
+For the empty graph on three vertices, $S$ has $+1$ in every off-diagonal position. The unique three-element subset induces zero edges and contributes six positive orderings. Hence
+
+$$
+\operatorname{tr}(S^3)=6.
+$$
+
+For the complete graph on three vertices, every off-diagonal entry is $-1$. The unique three-element subset induces three edges and contributes six negative orderings. Hence
+
+$$
+\operatorname{tr}(S^3)=-6.
+$$
+
+Both graphs have second moment $3\cdot2=6$, illustrating that the cubic moment supplies edge-sensitive information absent from the first two moments.
+
+For a path on three vertices, the sole three-element subset spans two edges, so the cubic moment is $6$. For a graph containing exactly one edge on three vertices, it is $-6$. Thus on three vertices the sign of the cubic moment records edge-count parity exactly.
+
+## 4. Switching and local gauge invariance
+
+### 4.1. Diagonal sign switching
+
+Choose a function $d:V\to\{-1,+1\}$ and let $D$ be the diagonal matrix with $D_{ii}=d_i$. Define
+
+$$
+S'=DSD.
+$$
+
+Then $S'_{ij}=d_iS_{ij}d_j$. In graph terms, if $U=\{i:d_i=-1\}$, this operation toggles every pair with one endpoint in $U$ and the other in $V\setminus U$, while leaving all pairs inside either part unchanged. It is called Seidel switching.
+
+Since $D^2=I$, one has $S'=DSD^{-1}$, so $S'$ is similar to $S$. This proves invariance of the whole spectrum. The cubic case, however, admits a local proof that does not require the global similarity argument.
+
+**Theorem 4.1 (Triangle-Holonomy Invariance).** For every ordered triple $(i,j,k)$,
+
+$$
+S'_{ij}S'_{jk}S'_{ki}=S_{ij}S_{jk}S_{ki}.
+$$
+
+**Proof sketch.** Expanding the left side gives
+
+$$
+(d_iS_{ij}d_j)(d_jS_{jk}d_k)(d_kS_{ki}d_i).
+$$
+
+By commutativity of real multiplication, the vertex factors combine as $d_i^2d_j^2d_k^2=1$. The remaining product is the original cyclic product. $\square$
+
+The cyclic product may be viewed as the holonomy of the signed complete graph around the triangle. Switching is a vertex gauge transformation. Individual edge signs depend on the gauge, but the product around a closed cycle does not.
+
+**Corollary 4.2 (Switching invariance of the cubic moment).** If $S'=DSD$ with every $d_i\in\{-1,+1\}$, then
+
+$$
+\operatorname{tr}((S')^3)=\operatorname{tr}(S^3).
+$$
+
+**Proof sketch.** Expand both traces as sums of cyclic products over ordered triples and apply Theorem 4.1 term by term. $\square$
+
+**Corollary 4.3 (Switching invariance of parity imbalance).** Seidel switching preserves $N_{\mathrm{even}}-N_{\mathrm{odd}}$, although it need not preserve either count separately.
+
+This corollary follows by combining the unordered triple formula with cubic-moment invariance.
+
+### 4.2. Extension to closed walks
+
+The cancellation mechanism does not depend on length three. Let $v_0,v_1,\ldots,v_m=v_0$ be a closed walk and form
+
+$$
+H(v_0,\ldots,v_m)=\prod_{t=0}^{m-1}S_{v_tv_{t+1}}.
+$$
+
+Under switching, every factor acquires $d_{v_t}d_{v_{t+1}}$. Across the closed walk, every occurrence of a vertex as an endpoint is paired, and all switching signs cancel. Therefore every closed-walk sign product is switching invariant. Since $\operatorname{tr}(S^m)$ is the sum of these products over length-$m$ closed walks, this provides a combinatorial route to switching invariance of every spectral moment.
+
+The triangle theorem is the first nontrivial instance because diagonal zeros eliminate shorter closed walks except the backtracking contributions responsible for the universal second moment.
+
+## 5. Edge deletion and rank-two perturbations
+
+### 5.1. Local parity effect
+
+Suppose $\{a,b\}$ is an edge of $G$, and let $G^-=G-\{a,b\}$. In the Seidel matrix, deletion changes $S_{ab}=S_{ba}=-1$ to $+1$ and leaves all other entries unchanged. Thus
+
+$$
+S^-=S+2(e_ae_b^{\mathsf T}+e_be_a^{\mathsf T}).
+$$
+
+Every three-vertex subset not containing both $a$ and $b$ keeps the same number of edges. Every subset $\{a,b,c\}$ with $c\notin\{a,b\}$ loses exactly one edge, so its parity reverses. Therefore the change in the cubic moment is completely localized to triangles through the modified pair.
+
+**Proposition 5.1 (Combinatorial edge-deletion update).** If $\{a,b\}$ is deleted, then
+
+$$
+\operatorname{tr}((S^-)^3)-\operatorname{tr}(S^3)
+=-12\sum_{c\notin\{a,b\}}S_{ab}S_{bc}S_{ca}.
+$$
+
+Since $S_{ab}=-1$ before deletion, this is equivalently
+
+$$
+\operatorname{tr}((S^-)^3)-\operatorname{tr}(S^3)
+=12\sum_{c\in V}S_{ac}S_{cb}.
+$$
+
+**Proof sketch.** For each third vertex $c$, the unordered triple $\{a,b,c\}$ has six orderings. Flipping $S_{ab}$ reverses each ordering’s weight from $q$ to $-q$, a change of $-2q$. Thus that triple contributes $-12q$ to the total change. Summing over $c$ gives the first formula. With $S_{ab}=-1$ and zero diagonal terms, the expression becomes $12\sum_cS_{ac}S_{cb}$. $\square$
+
+**Corollary 5.2 (Matrix form of the cubic update).** Under the same assumptions,
+
+$$
+\operatorname{tr}((S^-)^3)-\operatorname{tr}(S^3)=12(S^2)_{ab}.
+$$
+
+The identity exhibits a precise bridge. The off-diagonal entry $(S^2)_{ab}$ is the signed imbalance of third vertices according to the two-step product $S_{ac}S_{cb}$; the same imbalance controls how triangle parities change when $\{a,b\}$ is removed.
+
+### 5.2. Why the cubic update matters
+
+Neither $\operatorname{tr}(S)$ nor $\operatorname{tr}(S^2)$ changes when an edge is deleted: the diagonal remains zero and all off-diagonal entries still have magnitude one. Any spectral distinction must therefore occur in the third or higher moments, or in finer information such as how eigenvalues cross zero.
+
+This is relevant to the Seidel energy of Turán graphs. For the complete $r$-partite graph $T(n,r)$, a proposed strict inequality asks whether deleting any edge increases Seidel energy when $r\geq4$ and $n\geq4r$. The first two moments cannot decide the question. The cubic update identifies the first local statistic that can respond, but energy depends on absolute eigenvalues and is not determined by finitely many low moments alone. A complete treatment likely requires quotient-matrix reductions together with rank-two spectral perturbation analysis.
+
+## 6. Algorithms
+
+### 6.1. Direct matrix computation
+
+Given an $n\times n$ adjacency matrix, constructing $S$ requires $O(n^2)$ time and storage. Dense matrix multiplication or eigendecomposition costs $O(n^3)$ time. The trace values can then be evaluated from $S^2$ and $S^3$, while the Seidel energy is the sum of absolute eigenvalues.
+
+This method is straightforward and numerically convenient, particularly when several spectral quantities are wanted simultaneously.
+
+### 6.2. Triple-parity enumeration
+
+The unordered formula gives an exact integer algorithm without matrix multiplication. Iterate over all $\binom n3$ vertex triples, count the three induced edges, and add $+1$ for even parity or $-1$ for odd parity. Multiply the final balance by six. This takes $O(n^3)$ time but only $O(1)$ auxiliary space beyond the graph representation.
+
+The method is robust because it uses integer arithmetic and makes the combinatorial content visible. It also yields $N_{\mathrm{even}}$ and $N_{\mathrm{odd}}$ separately.
+
+### 6.3. Switching and local verification
+
+To switch by a sign vector $d$, compute $S'=DSD$, or entrywise $S'_{ij}=d_iS_{ij}d_j$. This costs $O(n^2)$. One can then verify that each triangle product and the total cubic trace remain fixed.
+
+For a single edge deletion, recomputing the entire cubic moment is unnecessary. Once $(S^2)_{ab}$ is available, the update is $12(S^2)_{ab}$. Computing this entry directly costs $O(n)$ time. Thus a local perturbation admits a local update even though the quantity being updated is spectral.
+
+## 7. Applications and interpretation
+
+### 7.1. Signed subgraph statistics
+
+The cubic trace is an induced-subgraph statistic with signs. It distinguishes graphs that share the universal first two moments and compresses the distribution of the four possible three-vertex edge counts into a parity balance. Although this compression loses information, it is exactly the information compatible with Seidel sign multiplication.
+
+### 7.2. Switching classes and two-graphs
+
+A switching class consists of all graphs obtainable from one another by Seidel switching. Triangle products are natural invariants of this class. Indeed, the parity assigned to every three-element vertex set survives switching. This collection of triple signs is the basic data of a two-graph. The cubic moment is the aggregate imbalance of that data.
+
+Because switching preserves the entire spectrum, every spectral statistic, including Seidel energy, is constant on a switching class. It therefore cannot serve as a strict monotone among representatives of one class. It can, however, compare distinct classes or graphs related by operations other than switching.
+
+### 7.3. Discrete gauge theory
+
+The transformation $S_{ij}\mapsto d_iS_{ij}d_j$ is the finite signed analogue of changing a gauge at vertices. Open-path products depend on endpoint conventions, while closed-path products are invariant. The triangle theorem is therefore a small but exact instance of a general physical principle: locally chosen signs disappear from observable loop quantities.
+
+### 7.4. Perturbative spectral graph theory
+
+Deleting one edge is a rank-two update of the Seidel matrix. Rank-two determinant formulas can express the new characteristic polynomial in terms of a small resolvent block. The triangle formula supplies the first moment-level shadow of that general perturbation theory. For highly symmetric graphs, the resolvent data may collapse to a low-dimensional quotient, making exact energy comparisons accessible.
+
+## 8. Discussion and limitations
+
+The identity developed here is exact, but its scope should be stated carefully. The cubic moment determines only the difference $N_{\mathrm{even}}-N_{\mathrm{odd}}$, not the individual counts unless their sum $\binom n3$ is also used. Even then it distinguishes only parity, not the separate numbers of zero-, one-, two-, and three-edge triples.
+
+Likewise, equality of a few moments does not imply equality of spectra. The first two Seidel moments are universal, and the third can agree for many nonisomorphic graphs. Higher moments progressively add closed-walk information. For an $n\times n$ matrix, sufficiently many power sums determine the characteristic polynomial through Newton identities, but low-order moments alone generally do not.
+
+The second-moment sphere must also be interpreted correctly. A fixed $\ell^2$ norm constrains but does not order $\ell^1$ norms without further structural conditions. In particular, Seidel energy is invariant—not monotone—under switching because switching preserves the entire spectrum. Claims about extremizers require hypotheses beyond membership in a switching class or possession of a fixed second moment.
+
+Finally, the cubic edge-deletion update does not by itself determine the sign of the Seidel-energy change. Energy responds to the absolute values of all eigenvalues, especially to movement across zero. The cubic moment can diagnose asymmetry in redistribution, but a complete energy inequality needs finer perturbation control.
+
+## 9. Future research
+
+The first immediate refinement is to use the unordered formula systematically in families of structured graphs. For edge deletion, classifying third vertices by their adjacency to the deleted edge gives an elementary count for $(S^2)_{ab}$ and the cubic update.
+
+A second direction is a general closed-walk holonomy theorem. Summing switching-invariant products over all closed walks of length $m$ gives a combinatorial proof that $\operatorname{tr}(S^m)$ is switching invariant for every $m$. Newton identities then connect these moments to the characteristic polynomial.
+
+A third direction concerns rank-two perturbations. For
+
+$$
+S'=S+2(e_ae_b^{\mathsf T}+e_be_a^{\mathsf T}),
+$$
+
+the matrix determinant lemma reduces $\det(xI-S')$ to a $2\times2$ determinant involving entries of $(xI-S)^{-1}$. Combining that formula with interlacing and zero-crossing analysis may yield tractable criteria for the sign of an energy change.
+
+The motivating application is the conjecture that for every Turán graph $T(n,r)$ with $r\geq4$ and $n\geq4r$, deleting any edge strictly increases Seidel energy. The graph-independent second moment explains why elementary norm bounds cannot settle this. Triangle parity, quotient spectra, and rank-two updates provide complementary tools for attacking the higher-order redistribution of eigenvalue mass.
+
+A fourth direction is extremal. One may ask which realizable Seidel spectra minimize or maximize energy under trace and second-moment constraints. Such a question must incorporate realizability and switching invariance. The bare norm inequality has equality when at most one eigenvalue is nonzero, so conference-type equal-magnitude spectra are not equality cases for the elementary lower bound $\|\lambda\|_1\geq\|\lambda\|_2$.
+
+## 10. Conclusion
+
+The cubic moment of a Seidel matrix has a complete local interpretation. Each ordered triple contributes the product of three signs; this product is zero for repetition, positive for even edge parity, and negative for odd edge parity. Summation yields the signed-triangle moment theorem and, for simple graphs, the formula
+
+$$
+\operatorname{tr}(S^3)=6(N_{\mathrm{even}}-N_{\mathrm{odd}}).
+$$
+
+Diagonal switching changes each edge sign by endpoint factors, but every endpoint factor occurs twice around a triangle. The cancellation preserves each triangular holonomy and therefore the cubic trace. When one edge is deleted, only triangles through that edge change parity, producing the local update
+
+$$
+\Delta\operatorname{tr}(S^3)=12(S^2)_{ab}.
+$$
+
+These results connect matrix traces, induced-subgraph parity, and gauge symmetry without obscuring any of the three viewpoints. They also identify the cubic moment as the first edge-sensitive statistic beyond the universal Seidel sphere, making it a natural starting point for higher-moment and edge-perturbation investigations.

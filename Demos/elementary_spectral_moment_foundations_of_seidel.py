@@ -1,179 +1,152 @@
-"""
-Numerical demonstrations for:
+#!/usr/bin/env python3
+"""Numerical demonstrations of Seidel moments and triangle holonomy.
 
-    Higher Spectral Moments of the Seidel Matrix under Edge Flips
-
-The Seidel matrix S of a finite simple graph has 0 on the diagonal, -1 on
-adjacent pairs, and +1 on non-adjacent distinct pairs. This script verifies,
-on concrete graphs, the main results of the paper:
-
-  * tr(S)   = 0                              (first moment vanishes)
-  * tr(S^2) = n(n-1)                         (second moment is graph-independent)
-  * E_S >= sqrt(n(n-1))                      (universal energy floor)
-  * deleting an edge {a,b}:
-        - tr(S^2) is UNCHANGED
-        - tr(S^3) changes by exactly 12 * (S^2)_{a,b}
-  * complementing a graph negates S, so the Seidel energy is preserved.
-
-Only the standard library and NumPy are used.
+The script uses only the Python standard library.  It constructs Seidel matrices,
+computes exact traces by integer matrix arithmetic, enumerates triple parities,
+checks switching invariance, and verifies the local cubic update after deleting
+an edge.
 """
 
 from __future__ import annotations
 
 from itertools import combinations
-from typing import Iterable
+from typing import Iterable, Sequence
 
-import numpy as np
-
-
-# ---------------------------------------------------------------------------
-# Core constructions
-# ---------------------------------------------------------------------------
-def seidel_matrix(n: int, edges: Iterable[tuple[int, int]]) -> np.ndarray:
-    """Return the n x n Seidel matrix of the simple graph with given edges.
-
-    Entry (i, j) is 0 if i == j, -1 if {i, j} is an edge, and +1 otherwise.
-    """
-    edge_set = {frozenset(e) for e in edges}
-    S = np.ones((n, n), dtype=float)
-    for i in range(n):
-        S[i, i] = 0.0
-    for i in range(n):
-        for j in range(i + 1, n):
-            if frozenset((i, j)) in edge_set:
-                S[i, j] = S[j, i] = -1.0
-            else:
-                S[i, j] = S[j, i] = 1.0
-    return S
+Matrix = list[list[int]]
+Edge = tuple[int, int]
 
 
-def spectral_moment(S: np.ndarray, k: int) -> float:
-    """Return the k-th spectral moment tr(S^k) = sum of k-th powers of eigenvalues."""
-    return float(np.trace(np.linalg.matrix_power(S, k)))
+def normalize_edges(edges: Iterable[Edge]) -> set[Edge]:
+    """Return undirected edges as sorted endpoint pairs."""
+    return {tuple(sorted((a, b))) for a, b in edges if a != b}
 
 
-def seidel_energy(S: np.ndarray) -> float:
-    """Return the Seidel energy: sum of absolute values of the eigenvalues."""
-    eigenvalues = np.linalg.eigvalsh(S)  # S is real symmetric
-    return float(np.sum(np.abs(eigenvalues)))
+def seidel_matrix(n: int, edges: Iterable[Edge]) -> Matrix:
+    """Construct the n-by-n Seidel matrix of a finite simple graph."""
+    edge_set = normalize_edges(edges)
+    return [
+        [0 if i == j else (-1 if tuple(sorted((i, j))) in edge_set else 1)
+         for j in range(n)]
+        for i in range(n)
+    ]
 
 
-def complement_edges(n: int, edges: Iterable[tuple[int, int]]) -> list[tuple[int, int]]:
-    """Return the edge list of the complement graph on n vertices."""
-    edge_set = {frozenset(e) for e in edges}
-    return [(i, j) for i, j in combinations(range(n), 2)
-            if frozenset((i, j)) not in edge_set]
+def matmul(a: Matrix, b: Matrix) -> Matrix:
+    """Multiply two square integer matrices."""
+    n = len(a)
+    return [[sum(a[i][k] * b[k][j] for k in range(n))
+             for j in range(n)] for i in range(n)]
 
 
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-def demo_moment_identities() -> None:
-    print("=" * 70)
-    print("First & second moment identities (tr S = 0, tr S^2 = n(n-1))")
-    print("=" * 70)
-    graphs = {
-        "K3 (triangle)": (3, [(0, 1), (0, 2), (1, 2)]),
-        "P3 (path)": (3, [(0, 1), (1, 2)]),
-        "C5 (5-cycle)": (5, [(0, 1), (1, 2), (2, 3), (3, 4), (4, 0)]),
-        "K4 (complete)": (4, list(combinations(range(4), 2))),
-        "Empty on 6": (6, []),
+def trace(a: Matrix) -> int:
+    """Return the trace of a square matrix."""
+    return sum(a[i][i] for i in range(len(a)))
+
+
+def spectral_moments(s: Matrix) -> tuple[int, int, int]:
+    """Return the first three exact moments tr(S), tr(S^2), tr(S^3)."""
+    s2 = matmul(s, s)
+    s3 = matmul(s2, s)
+    return trace(s), trace(s2), trace(s3)
+
+
+def triangle_parity_counts(n: int, edges: Iterable[Edge]) -> tuple[int, int]:
+    """Count unordered vertex triples with even and odd induced edge counts."""
+    edge_set = normalize_edges(edges)
+    even = odd = 0
+    for i, j, k in combinations(range(n), 3):
+        count = sum(
+            tuple(sorted(pair)) in edge_set
+            for pair in ((i, j), (j, k), (k, i))
+        )
+        if count % 2 == 0:
+            even += 1
+        else:
+            odd += 1
+    return even, odd
+
+
+def switch_matrix(s: Matrix, signs: Sequence[int]) -> Matrix:
+    """Apply diagonal sign switching S_ij -> d_i S_ij d_j."""
+    if len(s) != len(signs) or any(d not in (-1, 1) for d in signs):
+        raise ValueError("signs must contain one value in {-1,+1} per vertex")
+    return [[signs[i] * s[i][j] * signs[j] for j in range(len(s))]
+            for i in range(len(s))]
+
+
+def delete_edge(edges: Iterable[Edge], edge: Edge) -> set[Edge]:
+    """Delete one undirected edge from an edge set."""
+    result = normalize_edges(edges)
+    target = tuple(sorted(edge))
+    if target not in result:
+        raise ValueError(f"{target} is not an edge")
+    result.remove(target)
+    return result
+
+
+def demonstrate_triangle_identity() -> None:
+    """Compare cubic matrix traces with six times the parity imbalance."""
+    examples = {
+        "empty triangle": (3, set()),
+        "complete triangle": (3, {(0, 1), (1, 2), (0, 2)}),
+        "five-cycle": (5, {(0, 1), (1, 2), (2, 3), (3, 4), (4, 0)}),
     }
-    for name, (n, edges) in graphs.items():
-        S = seidel_matrix(n, edges)
-        m1, m2 = spectral_moment(S, 1), spectral_moment(S, 2)
-        print(f"  {name:16s}: tr(S) = {m1:5.1f}   tr(S^2) = {m2:6.1f}   "
-              f"n(n-1) = {n * (n - 1)}")
-    print()
+    print("1. Cubic trace as signed triple parity")
+    for name, (n, edges) in examples.items():
+        moments = spectral_moments(seidel_matrix(n, edges))
+        even, odd = triangle_parity_counts(n, edges)
+        parity_value = 6 * (even - odd)
+        assert moments[2] == parity_value
+        assert moments[0] == 0 and moments[1] == n * (n - 1)
+        print(f"   {name:18s}: moments={moments}, "
+              f"(N_even,N_odd)=({even},{odd}), 6Δ={parity_value}")
 
 
-def demo_energy_floor() -> None:
-    print("=" * 70)
-    print("Universal energy floor  E_S >= sqrt(n(n-1))")
-    print("=" * 70)
-    graphs = {
-        "K3": (3, [(0, 1), (0, 2), (1, 2)]),
-        "C5": (5, [(0, 1), (1, 2), (2, 3), (3, 4), (4, 0)]),
-        "K5": (5, list(combinations(range(5), 2))),
-        "Petersen": (10, [
-            (0, 1), (1, 2), (2, 3), (3, 4), (4, 0),
-            (5, 7), (7, 9), (9, 6), (6, 8), (8, 5),
-            (0, 5), (1, 6), (2, 7), (3, 8), (4, 9),
-        ]),
-    }
-    for name, (n, edges) in graphs.items():
-        S = seidel_matrix(n, edges)
-        E = seidel_energy(S)
-        floor = np.sqrt(n * (n - 1))
-        print(f"  {name:10s}: E_S = {E:8.4f}   floor = {floor:8.4f}   "
-              f"ratio = {E / floor:6.4f}   ok = {E >= floor - 1e-9}")
-    print()
-
-
-def demo_edge_flip() -> None:
-    print("=" * 70)
-    print("Third-moment edge-flip law:  delta tr(S^3) = 12 * (S^2)_{a,b}")
-    print("=" * 70)
+def demonstrate_switching() -> None:
+    """Show that triangle holonomy and the cubic trace survive switching."""
     n = 6
-    base_edges = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 4), (3, 4), (4, 5), (0, 5)]
-    S = seidel_matrix(n, base_edges)
-    S2 = S @ S
-    m2_before, m3_before = spectral_moment(S, 2), spectral_moment(S, 3)
-    for (a, b) in base_edges:
-        remaining = [e for e in base_edges if frozenset(e) != frozenset((a, b))]
-        S_del = seidel_matrix(n, remaining)
-        m2_after = spectral_moment(S_del, 2)
-        m3_after = spectral_moment(S_del, 3)
-        predicted = 12.0 * S2[a, b]
-        actual = m3_after - m3_before
-        print(f"  delete {(a, b)}: (S^2)_ab = {S2[a, b]:4.0f}  "
-              f"predicted d(tr S^3) = {predicted:6.1f}  actual = {actual:6.1f}  "
-              f"| d(tr S^2) = {m2_after - m2_before:4.1f}  "
-              f"match = {abs(predicted - actual) < 1e-9}")
-    print(f"  (baseline: tr(S^2) = {m2_before}, tr(S^3) = {m3_before})")
-    print()
+    edges = {(0, 1), (0, 2), (1, 3), (2, 4), (3, 4), (4, 5)}
+    signs = (-1, 1, -1, 1, 1, -1)
+    s = seidel_matrix(n, edges)
+    switched = switch_matrix(s, signs)
+    before = spectral_moments(s)
+    after = spectral_moments(switched)
+    for i, j, k in combinations(range(n), 3):
+        lhs = switched[i][j] * switched[j][k] * switched[k][i]
+        rhs = s[i][j] * s[j][k] * s[k][i]
+        assert lhs == rhs
+    assert before == after
+    print("\n2. Switching invariance")
+    print(f"   signs={signs}")
+    print(f"   moments before={before}, after={after}")
+    print("   every unordered triangle product is unchanged")
 
 
-def demo_K3_vs_P3() -> None:
-    print("=" * 70)
-    print("Minimal witness:  K3  vs  K3 - e = P3")
-    print("=" * 70)
-    S_K3 = seidel_matrix(3, [(0, 1), (0, 2), (1, 2)])
-    S_P3 = seidel_matrix(3, [(0, 1), (0, 2)])  # edge (1,2) deleted
-    print(f"  tr(S^2):  K3 = {spectral_moment(S_K3, 2):.0f}   "
-          f"P3 = {spectral_moment(S_P3, 2):.0f}   (unchanged)")
-    print(f"  tr(S^3):  K3 = {spectral_moment(S_K3, 3):.0f}   "
-          f"P3 = {spectral_moment(S_P3, 3):.0f}   (jump of "
-          f"{spectral_moment(S_P3, 3) - spectral_moment(S_K3, 3):.0f})")
-    S2 = S_K3 @ S_K3
-    print(f"  predicted jump = 12 * (S^2)_(1,2) = 12 * {S2[1, 2]:.0f} = "
-          f"{12 * S2[1, 2]:.0f}")
-    print()
+def demonstrate_edge_deletion_update() -> None:
+    """Verify Δ tr(S^3) = 12(S^2)_ab for deletion of an existing edge."""
+    n = 7
+    edges = {(0, 1), (0, 2), (0, 3), (1, 4), (1, 5),
+             (2, 3), (2, 6), (3, 5), (4, 6)}
+    edge = (0, 1)
+    s = seidel_matrix(n, edges)
+    s2 = matmul(s, s)
+    old_cube = spectral_moments(s)[2]
+    reduced = seidel_matrix(n, delete_edge(edges, edge))
+    new_cube = spectral_moments(reduced)[2]
+    predicted = 12 * s2[edge[0]][edge[1]]
+    observed = new_cube - old_cube
+    assert observed == predicted
+    print("\n3. Local cubic update under edge deletion")
+    print(f"   deleted edge={edge}, (S^2)_ab={s2[edge[0]][edge[1]]}")
+    print(f"   old trace={old_cube}, new trace={new_cube}")
+    print(f"   observed change={observed}, predicted change={predicted}")
 
 
-def demo_complement_energy() -> None:
-    print("=" * 70)
-    print("Complementation preserves Seidel energy  E_S(G) = E_S(complement G)")
-    print("=" * 70)
-    graphs = {
-        "P3 (2 edges)": (3, [(0, 1), (1, 2)]),
-        "path P4 (3 edges)": (4, [(0, 1), (1, 2), (2, 3)]),
-        "C5 (5 edges)": (5, [(0, 1), (1, 2), (2, 3), (3, 4), (4, 0)]),
-    }
-    for name, (n, edges) in graphs.items():
-        S = seidel_matrix(n, edges)
-        Sc = seidel_matrix(n, complement_edges(n, edges))
-        ne, nc = len(edges), len(complement_edges(n, edges))
-        print(f"  {name:18s}: edges G = {ne}, edges compl = {nc};  "
-              f"E_S(G) = {seidel_energy(S):8.4f}  "
-              f"E_S(compl) = {seidel_energy(Sc):8.4f}  "
-              f"S(compl) = -S? {np.allclose(Sc, -S)}")
-    print()
+def main() -> None:
+    demonstrate_triangle_identity()
+    demonstrate_switching()
+    demonstrate_edge_deletion_update()
 
 
 if __name__ == "__main__":
-    demo_moment_identities()
-    demo_energy_floor()
-    demo_edge_flip()
-    demo_K3_vs_P3()
-    demo_complement_energy()
+    main()
