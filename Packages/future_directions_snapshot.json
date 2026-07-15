@@ -3215,7 +3215,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98ba1a43",
     "description": "# Future Directions — Tangled Hierarchies: Proof Systems That Reference Their Own Soundness\n\nThe file `TangledSoundness.lean` develops the semantic core of self-referential\nproof systems: a chain from the pure-logic seed `¬(P ↔ ¬P)` up to\n`soundness_predicate_not_internal`, the statement that a soundness predicate cannot\nconsistently live inside the self-referential system it validates.\n\nNatural next steps:\n\n1. **Full syntactic Löb's theorem.** Replace the semantic Gödel fixed point in\n   `ProofSystem` with the Hilbert–Bernays–Löb derivability conditions\n   (`D1: Prov s → Prov (box s)`, `D2` distribution, `D3: Prov (box s) → Prov (box (box s))`)\n   and a syntactic diagonal, then derive `Prov (imp (box s) s) → Prov s`. This is the\n   sharpest form of \"a system cannot safely reference its own soundness\".\n\n2. **Second incompleteness.** From Löb with `s = ⊥`, obtain that a consistent system\n   cannot prove its own consistency sentence `Con := neg (box ⊥)`.\n\n3. **Ordinal-indexed reflection towers.** Iterate the addition of a soundness\n   reflection principle `RFN(P)` and study the transfinite hierarchy\n   `P₀ ⊂ P₁ ⊂ ⋯`, showing each level proves the consistency of the previous — the\n   stratified escape from the tangle.\n\n4. **Kripke/paracomplete semantics.** Weaken `neg_truth` to a three-valued or\n   fixed-point (Kripke) semantics, where the Liar receives a truth-value gap, and\n   measure exactly which theorems survive. This isolates classicality as the\n   ingredient forcing the tangle's inconsistency.\n\n5. **Category-theoretic bridge.** Recast `no_semantic_fixed_points` and Tarski via\n   Lawvere's fixed-point theorem, unifying them with Cantor and the\n   `Type : Type` collapse.\n",
     "domain_bridges": [],
     "domains": [
@@ -3228,7 +3228,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "2c734846",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T15:41:07.242873+00:00",
     "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
   },
@@ -3875,7 +3875,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca1c3afc",
     "description": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length `k` should admit a canonical bijection with permutations of `k` elements such that factoradic evaluation agrees with lexicographic rank and digit extraction agrees with Lehmer inversion counts. The bijection should intertwine adjacent transpositions with an explicit carry-and-borrow operation on factorial codes.\n\nThe key insight is that the local alphabet of the `i`-th factoradic digit has exactly `i+1` elements, matching the successive insertion choices in a permutation.\n\nWhy now? The finite classification isolates precisely the dependent product needed for insertion coding, while exact agreement of extraction algorithms supplies the arithmetic half of the desired compatibility.\n\n## 2. Carry normalization as a terminating confluent rewrite system\n\nAllow unrestricted natural digits at every factorial position and orient the relation `(i+1)·i! = (i+1)!` as a local carry rule. On finitely supported digit sequences, these rules should form a terminating and confluent rewriting system whose unique normal forms are exactly the valid factorial codes. Moreover, normalization should preserve value and compute the extracted factoradic digits.\n\nThe key insight is that factorial place values turn every local excess digit into a carry of exactly one unit at the next position, while the represented value supplies a global termination measure.\n\nWhy now? Existence and uniqueness of bounded representations are established; confluence would strengthen this extensional classification into an algorithm-independent normalization theorem.\n\n## 3. Chinese-remainder coordinates for factorial intervals\n\nDetermine exactly for which `k` the interval `Fin (k!)` can be identified with a product of residue rings in a way compatible with factorial-code truncation. More generally, classify the obstruction to making the factorial-code equivalence multiplicative, and express it through the non-coprime overlap among the radices `1,2,…,k`.\n\nThe key insight is that mixed-radix coordinates resemble residue coordinates but encode nested divisibility rather than pairwise coprimality, so the discrepancy should be measured by a precise extension or filtration invariant.\n\nWhy now? The additive finite classification provides a canonical coordinate set against which any proposed ring-compatible coordinate system can be compared and falsified.\n\n## 4. Infinite factorial expansions and profinite completion\n\nThe inverse system obtained by truncating factorial codes should be canonically homeomorphic to the inverse limit of the finite rings `ℤ/(k!)ℤ`. Under this homeomorphism, finite evaluation should be the residue projection, and the carry-normalized addition of infinite codes should recover the topological ring structure of the profinite integers.\n\nThe key insight is that the divisibility chain `k! ∣ (k+1)!` makes factorial truncation compatible with inverse-limit projections, unlike arbitrary variable-radix systems.\n\nWhy now? The sharp finite equivalence supplies every finite stage and its unique coordinates; the remaining challenge is to prove coherence of these equivalences under truncation and then transport the inverse-limit topology and algebra.\n",
     "domain_bridges": [],
     "domains": [
@@ -3888,7 +3888,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "da85fe77",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T02:32:29.643432+00:00",
     "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
   },
