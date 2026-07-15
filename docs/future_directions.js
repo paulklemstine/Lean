@@ -32,6 +32,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 582560af (Q=0.910), which proved 30 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant governed by the\ndimensional sign `d \u21a6 (-1)^d`, with an explicit stabilization map identifying the\nnegative",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_582560af_35be13b5",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "582560af",
+    "status": "available",
+    "timestamp": "2026-07-15T05:02:38.337160+00:00",
+    "title": "Deepening: The results of this cycle establish that the Euler characteristic extends to"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 7ea29a05 (Q=0.900), which proved 16 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 Toughness as an order-monotone invariant\n\nThis cycle promoted the component-count toughness toolkit from a collection of\nisolated lemmas into a small order-theoretic package: `1`-toughness is now known to be\n*monotone under edge additions*, `1`-tough graphs are *`2`-connected*,",
     "domains": [
       "Shared"
@@ -87,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: This cycle deepens the theory of two-player **well-founded (transfinite) games**"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68b9dc19",
     "description": "Building on cycle f243395d (Q=0.910), which proved 33 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Analogy as an Adjoint Operation\n\nThis cycle recast analogy-making between two ordered structures as the taking of an\n*adjoint pair* `(forward, backward)` bound by the adjunction law\n`forward a \u2264 b \u2194 a \u2264 backward b`. The round-trip `backward \u2218 forward` was shown to be a\nclosure o",
     "domains": [
       "Tropical"
@@ -96,7 +110,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "f243395d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T03:10:55.868411+00:00",
     "title": "Deepening: This cycle recast analogy-making between two ordered structures as the taking of"
   },
@@ -2360,21 +2374,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle settles **Conjecture 1** of the previous *Future Directions* note and"
   },
   {
-    "consumed_by_exp_id": "582560af",
-    "description": "# Future Directions \u2014 Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant governed by the\ndimensional sign `d \u21a6 (-1)^d`, with an explicit stabilization map identifying the\nnegative-dimensional world with the zero-dimensional one up to sign. The\nfollowing conjectures are the natural next targets.\n\n## 1. A negative-dimensional Euler\u2013Poincar\u00e9 duality\n\n**Conjecture.** For a formal space of dimension `-n` there is a canonical pairing\nbetween its `\u03c0\u2080` data and that of its `n`-fold stabilization, under which the\nEuler characteristic is self-dual: reflecting the dimension `d \u21a6 -d` leaves `\u03c7`\nunchanged up to the parity sign already recorded by `sgn`.\n\nThe key insight is that the invariance `sgn(-d) = sgn(d)` is not an accident of\nthe sign function but the shadow of a duality that swaps a space with its formal\ndesuspension while preserving the count of path components.\n\nWhy now? The stabilization map and the parity-invariance of the sign are both in\nhand, so the duality can be stated as an isomorphism of the underlying component\nmonoids and tested against the product structure that is already proved\nmultiplicative.\n\n## 2. Multiplicativity forces the sign law\n\n**Conjecture.** Any dimension-graded, component-multiplicative integer invariant\nthat is additive under disjoint union and multiplicative under products must\ncoincide with `sgn(dim)\u00b7|\u03c0\u2080|`; equivalently, the only monoid homomorphism from\n`(\u2124,+) \u00d7 (\u2115,\u00b7)` to `\u2124` that is `\u00b11` on each sphere is the Euler characteristic.\n\nThe key insight is that additivity and multiplicativity together pin down the\ninvariant on generators (spheres and points), and every formal space is built\nfrom these by the two operations, so the invariant is rigid.\n\nWhy now? The monoid structure on formal spaces and the homomorphism property of\n`\u03c7` are established, reducing the uniqueness question to a statement about\nhomomorphisms out of a finitely generated commutative monoid.\n\n## 3. The pro-spectrum limit of the stabilization tower\n\n**Conjecture.** The tower `\u2026 \u2192 \u03a3\u207b\u00b9X \u2192 X \u2192 \u03a3X \u2192 \u2026` of suspensions has a well-defined\nstable Euler characteristic obtained as a limit, and this limit is independent of\nthe starting dimension, depending only on `|\u03c0\u2080|` weighted by the coherent sign.\n\nThe key insight is that although each suspension flips the sign of `\u03c7`, the pair\n`(\u03c7, dim mod 2)` is a genuine invariant of the whole tower, so the limit exists\nonce one records the parity alongside the value.\n\nWhy now? The exact one-step behavior `\u03c7(\u03a3X) = -\u03c7(X)` and the `n`-step law\n`\u03c7(\u03a3\u207fX) = (-1)^n \u03c7(X)` are proved, giving the precise transition maps whose limit\nthe conjecture concerns.\n\n## 4. Negative-dimensional surfaces and a signed Gauss\u2013Bonnet\n\n**Conjecture.** The identity `\u03c7 = 2 - 2g` for the genus-`g` surface admits a\nnegative-dimensional companion in which the roles of the top and bottom Betti\nnumbers are exchanged by desuspension, producing a signed genus formula\n`\u03c7 = (-1)^d (2 - 2g)` for the `d`-fold desuspended surface.\n\nThe key insight is that the graded Euler characteristic already treats every\ndegree \u2014 positive or negative \u2014 on the same footing through the alternating sign,\nso shifting all Betti numbers into negative degrees merely multiplies the\nclassical value by a global sign.\n\nWhy now? The bridge reproducing `2 - 2g` from sign-weighted Betti numbers is\nestablished, and the degree-shift operation is exactly the suspension whose effect\non `\u03c7` is already computed.\n\n## 5. A character theory for the sign group\n\n**Conjecture.** The dimensional sign is the unique nontrivial character of the\nadditive group of dimensions valued in the units of `\u2124`, and the collection of\nnegative-dimensional Euler characteristics assembles into the character table of\na naturally occurring `\u2124/2` grading on the stable homotopy category of formal\nspheres.\n\nThe key insight is that `sgn: (\u2124,+) \u2192 {\u00b11}` is precisely the reduction mod 2\ncomposed with the unique isomorphism `\u2124/2 \u2245 {\u00b11}`, so its topological meaning is a\n`\u2124/2`-grading that separates even- from odd-dimensional formal spheres.\n\nWhy now? The homomorphism property `sgn(a+b) = sgn(a)\u00b7sgn(b)` is proved, which is\nthe defining property of a character; what remains is to interpret it as a grading\nand read off the resulting decomposition.\n",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_1297",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c5cfd9ce",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T14:12:56.708950+00:00",
-    "title": "The results of this cycle establish that the Euler characteristic extends to"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nBold, testable conjectures arising from the strong-divisibility characterization and the\nFibonacci\u2013Pythagorean bridge.\n\n## 1. A uniform primitive-divisor threshold for injective strong divisibility sequences\n\n**Conjecture.** For every strictly increasing strong divisibility sequence `a` with\n`a 1 = 1`, there is a finite threshold `N` beyond which every term `a n` (with `n > N`)\npossesses a primitive prime divisor \u2014 one dividing no earlier term.\n\nThe key insight is that the index-level equivalence `a m \u2223 a n \u2194 m \u2223 n` reduces\nprimitivity entirely to the arithmetic of the index lattice `(\u2115, \u2223)`, so the existence of\na primitive divisor becomes a statement about how fast the term-size outgrows the product\nof the \"old\" prime contributions coming from proper divisors.\n\nWhy now? The characterization proved in this cycle turns primitivity into a finite divisor\ncheck, and the two canonical instances (Fibonacci and `a^n \u2212 1`) already satisfy such a\nthreshold (`N = 12` and `N = 6` respectively, by the classical Carmichael and Bang\nresults). A single unified proof for all injective strong divisibility sequences now looks\nwithin reach.\n\n## 2. Density of prime indices among Fibonacci primes\n\n**Conjecture.** Apart from the single exception `n = 4`, the set of indices `n` for which\n`F n` is prime has natural density zero inside the primes, yet is infinite.\n\nThe key insight is that the index test `F n prime \u21d2 n = 4 \u2228 n prime` restricts Fibonacci\nprimes to prime indices, so the question of their abundance is exactly a question about a\nthin, multiplicatively structured subset of the primes.\n\nWhy now? The necessary condition (prime index) is now established unconditionally; the\nremaining content is the still-open infinitude, and framing it against the prime indices\nsharpens what a probabilistic heuristic must predict.\n\n## 3. Fibonacci\u2013Pythagorean triples realize every Fibonacci hypotenuse of odd index\n\n**Conjecture.** A Fibonacci number `F k` is the hypotenuse of a Fibonacci\u2013Pythagorean\ntriple of the form `(F n \u00b7 F (n+3), 2 F (n+1) F (n+2), F k)` if and only if `k` is odd and\n`k \u2265 3`; moreover the triple is primitive exactly when `F n` and `F (n+1)` have opposite\nparity in a prescribed pattern.\n\nThe key insight is that the hypotenuse identity `C = F (2n+3)` shows the construction lands\nprecisely on the odd-index Fibonacci numbers, so the \"which Fibonacci numbers are\nhypotenuses\" question is answered by a parity condition on the index.\n\nWhy now? The exact hypotenuse formula proved here pins the image of the construction to\n`{F 3, F 5, F 7, \u2026}`, converting a search problem into a clean parity classification whose\nprimitivity refinement is the natural next target.\n\n## 4. Transfer of the Zsygmondy exception set across strong divisibility sequences\n\n**Conjecture.** The finite set of \"exceptional\" indices where a strong divisibility\nsequence fails to have a primitive divisor is an invariant of the sequence's *growth\nexponent* alone: two injective strong divisibility sequences with the same exponential\ngrowth rate share the same exceptional index set for all but finitely many members.\n\nThe key insight is that, once divisibility is governed purely by the index lattice, the\nonly remaining obstruction to primitivity is a size comparison, and size is controlled by\nthe growth exponent.\n\nWhy now? With the index-level equivalence separated cleanly from the size estimate, the\nexceptional set is exposed as the solution set of an explicit growth inequality, making a\ncross-sequence transfer principle formulatable and testable on Lucas sequences.\n",
     "domains": [
@@ -3063,6 +3062,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T05:02:27.027582+00:00",
     "title": "For the unit path on `n` sites, the variational gap should equal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Character Theory of Negative Dimensions\n\nThis cycle proves a cross-domain bridge between virtual negative-dimensional cellular topology and finite Fourier analysis.\n\nThe dimensional group is the additive group `\u2124`, while integral signs form the unit group `\u2124\u02e3 = {\u00b11}`. The formal development proves that every character\n\n`Multiplicative \u2124 \u2192* \u2124\u02e3`\n\nis either trivial or the Euler parity character `d \u21a6 (-1)^d`. Evaluating virtual cellular data against these two characters gives, respectively, total cell mass and Euler characteristic. The `2 \u00d7 2` character table then yields the denominator-free Fourier inversion formulas\n\n- `totalMass X + eulerChi X = 2 * evenMass X`,\n- `totalMass X - eulerChi X = 2 * oddMass X`.\n\nThus the Euler characteristic is one Fourier coefficient of the parity grading, and together with total mass it recovers the even- and odd-dimensional sectors. Integer-degree reflection `d \u21a6 -d` preserves the Euler coefficient, giving a formal self-duality statement that applies equally to negative degrees.\n\n## Next targets\n\n1. **Ring-homomorphism formulation.** Bundle total mass and Euler characteristic as evaluations of the Laurent-polynomial ring at `+1` and `-1`, then identify their joint kernel.\n2. **Higher cyclic gradings.** Replace parity by `\u2124/n` and coefficients by a cyclotomic integer ring containing the required roots of unity. Prove a full discrete Fourier inversion theorem for dimension residues modulo `n`.\n3. **Integral image characterization.** Prove that `(totalMass X, eulerChi X)` always has matching parity and characterize exactly which pairs of integers occur.\n4. **Convolution and K\u00fcnneth.** Show that the parity-sector vector transforms under products by convolution, while its two Fourier coordinates multiply componentwise.\n5. **Duality beyond parity.** For higher characters, determine precisely how reflection acts by complex or cyclotomic conjugation and formulate a corresponding Euler\u2013Poincar\u00e9 duality.\n6. **Homological realization.** Map bounded chain complexes or finite CW complexes into the virtual cellular model and prove compatibility with their ordinary Euler characteristic and degree shifts.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1352",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "582560af",
+    "status": "available",
+    "timestamp": "2026-07-15T05:02:36.849852+00:00",
+    "title": "This cycle proves a cross-domain bridge between virtual negative-dimensional cel"
   },
   {
     "consumed_by_exp_id": "",
