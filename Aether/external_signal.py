@@ -113,6 +113,11 @@ class ExternalSignalFeed:
             print(f"[ExternalSignal] ArXiv mining parse failed: {e}")
             return None
 
+        if isinstance(data, dict) and data.get("title") in ("Bypassed", "Bypassed Direction"):
+            data["title"] = f"ArXiv paper: {paper.title}"
+            data["description"] = f"Investigate the ArXiv paper '{paper.title}' and formalize its key results. Abstract: {paper.abstract[:2000]}"
+            data["proof_strategy"] = "Analyze the paper's main theorem and construct a formal Lean 4 proof."
+
         if not isinstance(data, dict) or not data.get("title") or not data.get("description"):
             return None
 

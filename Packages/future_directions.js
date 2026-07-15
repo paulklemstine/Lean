@@ -995,20 +995,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
   },
   {
-    "consumed_by_exp_id": "71637775",
-    "description": "Cycle 12ea9340 (Q=0.820) proved 27 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coi",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_12ea9340_398c84dc",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "12ea9340",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T22:36:30.475747+00:00",
-    "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 26d2653d (Q=0.830) proved 2828 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
     "domains": [
@@ -2807,6 +2793,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-14T23:30:26.707629+00:00",
     "title": "This cycle advances the mixed-radix program by settling two of the four standing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The multi-join law for the \u2124\u2082-coindex\n\nThis cycle extends the constructive, lower-bound half of the \u2124\u2082-coindex theory established in\n`Catalog/Novelty/Z2CoindexJoin.lean` (the sharp two-factor join law\n`coind(Oct m \u22c6 Oct n) = m + n + 1` and the constructive lower bound\n`coind(K \u22c6 L) \u2265 coind K + coind L + 1`) from **two factors to arbitrarily many factors**.\n\nThe new development lives in `Catalog/Novelty/Z2CoindexMultiJoin.lean` and is self-contained\n(it imports only `Mathlib` and the existing `Novelty.Z2CoindexJoin`).\n\n## The organising notion: `IsoOct`\n\nThe key structural observation is that **any iterated join of octahedral spheres is again a single\noctahedral sphere**. We package this as a relation `IsoOct K n` \u2014 an antipodally-equivariant vertex\nbijection `K \u2245 Oct n` \u2014 equipped with a small calculus:\n\n* `IsoOct.refl n : IsoOct (Oct n) n` \u2014 the base cases,\n* `IsoOct.join : IsoOct K m \u2192 IsoOct L n \u2192 IsoOct (K \u22c6 L) (m+n+1)` \u2014 closure under joins with the\n  additive-with-a-shift rule (built from the join-monoid isomorphism `octJoinEquiv`),\n* `IsoOct.coind : IsoOct K n \u2192 coind K = n` \u2014 an octahedral witness pins the coindex outright.\n\nFeeding the two base cases through this closure computes the coindex of every finite octahedral join\nwithout ever re-running a Borsuk\u2013Ulam obstruction argument: the hard upper bound is imported once,\nthrough `coind_Oct`, and then propagated purely combinatorially.\n\n## Main results\n\n* **Multi-join law** \u2014 `coind_octJoin_list` :\n  `coind(Oct n \u22c6 Oct l\u2080 \u22c6 Oct l\u2081 \u22c6 \u22ef) = n + l.sum + l.length`.\n  The coindex of a finite octahedral join is the total dimension plus the number of extra factors.\n* **Permutation invariance** \u2014 `coind_octJoin_perm` : the coindex depends only on the *multiset* of\n  factor dimensions.\n* **Suspension tower recovered** \u2014 `coind_octJoin_replicate_zero` :\n  joining `S\u207f` with `k` copies of `S\u2070` gives coindex `n + k`, i.e. the `k`-fold suspension\n  `S\u207f \u21a6 S\u207f\u207a\u1d4f` \u2014 the classical suspension jump, now as a special case of the multi-join law.\n* **Constructive lower bound for iterated self-joins** \u2014 `joinPow_lower_bound` : for an *arbitrary*\n  free \u2124\u2082-set `K`, a witness `Oct a \u2192 K` powers up to a witness\n  `Oct ((r+1)(a+1)-1) \u2192 K^{\u22c6(r+1)}`.\n* **Sharp value on the octahedral tower** \u2014 `coind_joinPow_oct` :\n  the `(r+1)`-fold join of `S\u1d43` has coindex `(r+1)(a+1) - 1`.\n* **Classical `0`-sphere join** \u2014 `coind_joinPow_S0` :\n  the `(r+1)`-fold join of `S\u2070` is `S\u02b3`.\n\n## What this recovers and what it adds\n\nThe formula `coind(S\u1d43 \u22c6 \u22ef \u22c6 S\u1d43) = (r+1)(a+1) - 1` recovers, for `a = 0`, the classical fact that a\n`p`-fold join of `0`-spheres is the `(p-1)`-sphere, and, for `r = 1`, the two-factor law of the\nprevious cycle. The `IsoOct` calculus isolates the reason all these formulas hold at once: joins of\nspheres are spheres, and the coindex is a functor of that structure.\n\n## Completion and verification\n\nThe complete co-index dependency chain\u2014suspension, suspension tower, binary join, finite multi-join,\nand enumeration\u2014compiles end-to-end. All declarations in these files have complete proof terms.\nA project-wide source audit also found and closed three unfinished mixed-radix/factorial bridge\nproofs. A separate unfinished Fibonacci declaration had claimed an unbounded result while proving\nonly the finite computational range; it is now stated faithfully with the required bound\n`n \u2264 10000`, and its downstream statements have been updated accordingly. No executable Lean code\nin `Catalog/` retains a proof placeholder.\n\n## Genuinely open next steps\n\n* The **upper-bound half** of the join law for *arbitrary* free \u2124\u2082-sets\n  (`coind(K \u22c6 L) \u2264 coind K + coind L + 1`) remains a genuine equivariant-cohomological obstruction,\n  outside this combinatorial model. The `IsoOct` packaging suggests attacking it through a\n  \"co-join\" deformation retraction argument.\n* A `Finset`- or multiset-indexed multi-join (rather than `List`-indexed) would make permutation\n  invariance definitional; `coind_octJoin_perm` is the first step toward that quotient.\n* The unbounded Fibonacci primitive-divisor theorem beyond the verified range requires a genuine\n  cyclotomic or analytic growth argument; the finite computation through `10000` alone cannot\n  establish that tail.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1327",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "71637775",
+    "status": "available",
+    "timestamp": "2026-07-15T00:42:06.111354+00:00",
+    "title": "This cycle extends the constructive, lower-bound half of the \u2124\u2082-coindex theory e"
   },
   {
     "consumed_by_exp_id": "",
