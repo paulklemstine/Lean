@@ -46,12 +46,15 @@ open MixedRadix
 mixed-radix value agrees with the factorial-system value. -/
 theorem value_eq (c : Nat → Nat) (k : Nat) :
     MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by
-  exact Finset.sum_congr rfl fun i _ => by rw [MixedRadix.factorial_radixProd]
+  unfold MixedRadix.value FactorialNumberSystem.value
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [MixedRadix.factorial_radixProd]
 
 /-- Mixed-radix validity for `b i = i + 1` coincides with factorial validity. -/
 theorem valid_iff (c : Nat → Nat) (k : Nat) :
     MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by
-  convert MixedRadix.factorial_valid_iff c k
+  exact MixedRadix.factorial_valid_iff c k
 
 /-- **The factorial uniqueness theorem, re-derived from the general one.**
 
