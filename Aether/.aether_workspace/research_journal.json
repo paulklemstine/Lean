@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "202302de",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Möbius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant — the **Möbius discriminant**\n`Δ = γβ − αδ` attached to a first-o",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-14T15:58:15",
-      "title": "This cycle formalized (in `HoggattTotals.lean`) the **sharp `d = 1` vs `d = 2`"
-    },
-    {
       "cycle_id": "16f220a2",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Topology of Argumentation (X): the kernel/game bridge\n\nThis cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file that\nconnects three areas usually develope",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-07-15T05:22:58",
       "title": "Deepening: Two-parameter picture of *witness complexity* for the"
+    },
+    {
+      "cycle_id": "3c80004e",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: Extensive Equivariant Invariants of Composite Systems\n\n## 1. Grothendieck completion of finite free ℤ₂-systems\n\nThe commutative monoid of finite nonempty free ℤ₂-systems under joi",
+      "quality_score": 0.9,
+      "sorry_count": 4,
+      "theorem_count": 46,
+      "timestamp": "2026-07-15T05:40:44",
+      "title": "Constructive, lower-bound half of the co-index theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b6e3f70d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Tightness of the Isolation Lemma under edge offsets\n\nThis cycle established, for the singleton hypergraph with an arbitrary integer\nedge offset, an exact product–sum formula for",
-      "quality_score": 0.83,
-      "sorry_count": 5,
-      "theorem_count": 0,
-      "timestamp": "2026-07-12T16:46:33",
-      "title": "Close Proofs: Tightness of the Isolation Lemma bound for arbitrary edge offsets"
-    },
     {
       "cycle_id": "ddbb821f",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 46,
       "timestamp": "2026-07-15T05:22:58",
       "title": "Deepening: Two-parameter picture of *witness complexity* for the"
+    },
+    {
+      "cycle_id": "3c80004e",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: Extensive Equivariant Invariants of Composite Systems\n\n## 1. Grothendieck completion of finite free ℤ₂-systems\n\nThe commutative monoid of finite nonempty free ℤ₂-systems under joi",
+      "quality_score": 0.9,
+      "sorry_count": 4,
+      "theorem_count": 46,
+      "timestamp": "2026-07-15T05:40:44",
+      "title": "Constructive, lower-bound half of the co-index theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ccd67871",
-      "domain": "Applications",
-      "name": "card_starIdx",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "ccd67871",
-      "domain": "Applications",
-      "name": "star_comp_injective",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "0e4c0a6c",
-      "domain": "Applications",
-      "name": "radixProd_zero",
-      "quality": 0.78
-    },
     {
       "cycle_id": "0e4c0a6c",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Combinatorics",
       "name": "follows",
       "quality": 0.93
+    },
+    {
+      "cycle_id": "3c80004e",
+      "domain": "Physics",
+      "name": "from",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "3c80004e",
+      "domain": "Physics",
+      "name": "card_composeMany",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "3c80004e",
+      "domain": "Physics",
+      "name": "coind_composeMany",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-07-15T05:22:58",
+  "last_updated": "2026-07-15T05:40:44",
   "open_questions": [
-    {
-      "context": "All statements are `sorry`-free.; All statements are `sorry`-free.",
-      "cycle_id": "13e584ca",
-      "domain": "Applications",
-      "sorry_count": 2,
-      "timestamp": "2026-07-14T08:40:07"
-    },
     {
       "context": "Everything is unconditional and `sorry`-free.",
       "cycle_id": "6e60d0a1",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 4,
       "timestamp": "2026-07-15T05:22:58"
+    },
+    {
+      "context": "",
+      "cycle_id": "3c80004e",
+      "domain": "Physics",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T05:40:44"
     }
   ],
   "research_threads": {
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "fd05632c",
-        "quality": 0.40141157142857153,
-        "theorems": 14,
-        "title": "Sums of Three Cubes"
-      },
-      {
         "cycle_id": "562c0234",
         "quality": 0.74152,
         "theorems": 10,
@@ -3761,6 +3755,12 @@
         "quality": 0.91,
         "theorems": 17,
         "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
+      },
+      {
+        "cycle_id": "3c80004e",
+        "quality": 0.9,
+        "theorems": 46,
+        "title": "Constructive, lower-bound half of the co-index theory"
       }
     ],
     "Probability": [

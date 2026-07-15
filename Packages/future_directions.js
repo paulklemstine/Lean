@@ -3,18 +3,121 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "2ed994b6",
-    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 3c80004e (Q=0.900), which proved 46 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct",
     "domains": [
-      "Bridges"
+      "Physics"
     ],
-    "id": "fd_0000",
-    "priority_score": 0.7,
+    "id": "push_3c80004e_d789aea7",
+    "priority_score": 0.95,
     "research_mode": "team",
-    "source_exp_id": "oeis:80035",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T05:23:22.329148+00:00",
-    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+    "source_exp_id": "3c80004e",
+    "status": "available",
+    "timestamp": "2026-07-15T05:40:44.088651+00:00",
+    "title": "Deepening: Constructive, lower-bound half of the co-index theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0005",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T05:40:08.936906+00:00",
+    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0002",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T05:40:08.930934+00:00",
+    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0003",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T05:40:08.934956+00:00",
+    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0004",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T05:40:08.936072+00:00",
+    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 3c80004e (Q=0.900) proved 46 theorems in Physics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coi",
+    "domains": [
+      "Physics"
+    ],
+    "id": "sorry_fill_3c80004e_20198a7d",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "3c80004e",
+    "status": "available",
+    "timestamp": "2026-07-15T05:40:44.098825+00:00",
+    "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
+    "domains": [
+      "Novelty",
+      "Combinatorics"
+    ],
+    "id": "fd_0006",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T05:40:08.938025+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Extensive Equivariant Invariants of Composite Systems\n\n## 1. Grothendieck completion of finite free \u2124\u2082-systems\n\nThe commutative monoid of finite nonempty free \u2124\u2082-systems under join should admit a canonical group completion on which the shifted co-index is the universal additive integer-valued invariant. In particular, every additive invariant that is constant on equivariant isomorphism classes should factor through `coind + 1`.\n\nThe key insight is that classification reduces every finite system to its number of antipodal orbits, while join adds orbit counts. Why now? The finite composition law proves extensivity for arbitrarily many factors, supplying the monoid structure required for a universal characterization.\n\n## 2. Exponential law for equivariant map counts under composition\n\nFor finite free \u2124\u2082-systems `K` and `L`, the number of equivariant simplicial embeddings from an octahedral sphere into `K * L` should admit a closed convolution formula in the corresponding counts for `K` and `L`, with binomial coefficients recording how source axes split between the factors.\n\nThe key insight is that every map is an injection of antipodal orbits together with independent sign choices, and an injection into a disjoint union splits uniquely by its target component. Why now? Exact co-index composition identifies the support of the expected convolution, while the existing sphere enumeration supplies its boundary values.\n\n## 3. Species-level refinement of the many-body law\n\nFinite free \u2124\u2082-systems and equivariant bijections should form a combinatorial species equivalent to nonempty finite sets of signed pairs; under this equivalence, join should correspond to disjoint union and the cycle index should recover the hyperoctahedral symmetry factors of every composite.\n\nThe key insight is that the orbit decomposition is canonical up to permutation and sign reversal, precisely the wreath-product structure underlying hyperoctahedral groups. Why now? The cardinality and shifted co-index laws already agree on all finite composites, suggesting a refinement from numerical invariants to symmetry-sensitive generating series.\n\n## 4. Failure boundary beyond the octahedral free-set model\n\nThere should exist a finite free \u2124\u2082-simplicial complex whose shifted co-index is strictly subadditive with respect to a suitable join decomposition, demonstrating that orbit counting ceases to classify co-index once arbitrary face relations are admitted.\n\nThe key insight is that the present exact law relies on every antipodal-pair-free subset being a face; deleting selected faces preserves the free action but can obstruct sphere maps without changing the vertex orbit count. Why now? The finite classification theorem precisely isolates the assumption responsible for exact additivity, making a minimal counterexample search sharply defined.\n\n## 5. Stable co-index versus equivariant connectivity\n\nFor arbitrary finite free \u2124\u2082-simplicial complexes, the limit of the normalized sequence `(coind(K^{*r}) + 1)/r` should exist and equal a stable equivariant capacity bounded between an obstruction-theoretic index and the number of vertex orbits.\n\nThe key insight is that joins provide superadditive lower bounds, so a Fekete-type argument should produce a stable rate even when exact finite additivity fails. Why now? Exact extensivity in the free-set model gives a completely solved benchmark and identifies the candidate normalization for the general theory.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0007",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3c80004e",
+    "status": "available",
+    "timestamp": "2026-07-15T05:40:39.215322+00:00",
+    "title": "The commutative monoid of finite nonempty free \u2124\u2082-systems under join should admi"
   },
   {
     "consumed_by_exp_id": "",
