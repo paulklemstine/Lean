@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "465c6137",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis file records the enumerative layer of the *\"Recursive decomposition\nisomorphism for general `m`-Tamari intervals and planar `(m+1)`-constellations\"*\nprogram. It complements t",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-12T20:32:01",
-      "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
-    },
-    {
       "cycle_id": "61c22649",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nDerived from the study of the opposite-semicube Helly property on Cartesian\nproducts of partial cubes and its equivalence with harmonic-evenness.\n\n## 1. Harmonic-evenness is a mul",
@@ -2501,6 +2491,16 @@
       "theorem_count": 127,
       "timestamp": "2026-07-15T08:21:46",
       "title": "Close Proofs: This cycle promoted the component-count toughness toolkit from a colle"
+    },
+    {
+      "cycle_id": "5dadc373",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\nThe completed foundation formalizes exact decimal digit-multiset witnesses, the\nmodulo-nine digit-sum bridge, its affine `ZMod 9` curve, the exhaustive six-pair\nresidue sieve, and",
+      "quality_score": 0.68,
+      "sorry_count": 4,
+      "theorem_count": 101,
+      "timestamp": "2026-07-15T08:57:47",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-15T08:21:46",
+  "last_updated": "2026-07-15T08:57:47",
   "open_questions": [
-    {
-      "context": "**Critique.** Every main theorem is sorry-free and uses genuine structural; +  sorry; -    sorry",
-      "cycle_id": "c4aa235b",
-      "domain": "Novelty",
-      "sorry_count": 7,
-      "timestamp": "2026-07-14T10:25:32"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "482ba253",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 4,
       "timestamp": "2026-07-15T08:21:46"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "5dadc373",
+      "domain": "NumberTheory",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T08:57:47"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "c7c6cf29",
-        "quality": 0.43457572380952386,
-        "theorems": 4,
-        "title": "Real-rootedness of the square of the Eulerian triangle"
-      },
-      {
         "cycle_id": "c4017799",
         "quality": 0.5808559999999999,
         "theorems": 21,
@@ -3699,6 +3693,12 @@
         "quality": 0.8,
         "theorems": 127,
         "title": "Close Proofs: This cycle promoted the component-count toughness toolkit from a c"
+      },
+      {
+        "cycle_id": "5dadc373",
+        "quality": 0.68,
+        "theorems": 101,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       }
     ],
     "Physics": [
