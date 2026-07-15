@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "07d73c91",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of the Forcing Multiverse\n\nThis cycle established that the necessity and possibility operators of the forcing\nmultiverse are the interior and closure operators of th",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 51,
-      "timestamp": "2026-07-14T18:39:56",
-      "title": "This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
-    },
-    {
-      "cycle_id": "14656387",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Möbius discriminant, quantitatively\n\nThis cycle (thread `th_c09a34af`, cycle 3) builds on the *sign* trichotomy of the\nprevious cycle (`HoggattTrichotomy.lean`) by upgrading",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-14T19:16:11",
-      "title": "This cycle isolated a single scalar invariant — the **Möbius discriminant**"
-    },
-    {
       "cycle_id": "45e15555",
       "domain": "Applications",
       "key_insight": "# Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capt",
@@ -499,29 +479,29 @@
       "theorem_count": 16,
       "timestamp": "2026-07-15T07:10:15",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "f6b1d920",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Universal Libraries and Catalog Complexity\n\n## 1. Exact autocorrelation law for passage occurrence\n\nFor every alphabet size at least two and every finite pattern, the exact probab",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-15T07:28:11",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "a8d24466",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Arithmetic on Hyperbolic Orbits\n\n## 1. Primitive conjugacy classes as geometric primes\n\nFor the modular group, define a hyperbolic prime to be a primitive hyperbolic conjugacy cla",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-15T07:28:14",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1f9ea620",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Arithmetic of the Discoverable\n\nThe cycle established a clean split between two notions of \"finite\": every\nindividual theorem of an infinitely-proving system is reached at a f",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 119,
-      "timestamp": "2026-07-12T18:49:09",
-      "title": "Deepening: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
-    },
-    {
-      "cycle_id": "44b2d089",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nThis cycle established that the geometry surrounding the Hopf fibration is\norganised by the composition (normed division",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 21,
-      "timestamp": "2026-07-12T19:56:34",
-      "title": "Deepening: The cycle established a compact algebraic core for four-dimensional geometry: a"
-    },
     {
       "cycle_id": "167b800e",
       "domain": "Applications",
@@ -2501,45 +2481,29 @@
       "theorem_count": 16,
       "timestamp": "2026-07-15T07:28:03",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "f6b1d920",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Universal Libraries and Catalog Complexity\n\n## 1. Exact autocorrelation law for passage occurrence\n\nFor every alphabet size at least two and every finite pattern, the exact probab",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-15T07:28:11",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "a8d24466",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Arithmetic on Hyperbolic Orbits\n\n## 1. Primitive conjugacy classes as geometric primes\n\nFor the modular group, define a hyperbolic prime to be a primitive hyperbolic conjugacy cla",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-15T07:28:14",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "86efe295",
-      "domain": "Algebra",
-      "name": "cliqueFamily_top",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "41e1526b",
-      "domain": "Logic",
-      "name": "shadow_cliques_subset",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "41e1526b",
-      "domain": "Logic",
-      "name": "iterated_shadow_mono",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "41e1526b",
-      "domain": "Logic",
-      "name": "iterated_shadow_cliques_subset",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "37f1d216",
-      "domain": "Computation",
-      "name": "insert_apex_injective",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "37f1d216",
-      "domain": "Computation",
-      "name": "card_coneFaces",
-      "quality": 0.91
-    },
     {
       "cycle_id": "37f1d216",
       "domain": "Computation",
@@ -2803,9 +2767,45 @@
       "domain": "Probability",
       "name": "all_openings_private_iff_unique",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "f6b1d920",
+      "domain": "Geometry",
+      "name": "is",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "f6b1d920",
+      "domain": "Geometry",
+      "name": "miniCatalogPair_injective",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "f6b1d920",
+      "domain": "Geometry",
+      "name": "miniCatalogPair_bijective",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "a8d24466",
+      "domain": "NumberTheory",
+      "name": "with",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "a8d24466",
+      "domain": "NumberTheory",
+      "name": "and",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "a8d24466",
+      "domain": "NumberTheory",
+      "name": "pellTraceForm_step",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-15T07:28:03",
+  "last_updated": "2026-07-15T07:28:14",
   "open_questions": [
     {
       "context": "Everything is unconditional and `sorry`-free.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "ab7f1188",
-        "quality": 0.49574803827751207,
-        "theorems": 18,
-        "title": "Duality of Sublevel Set Homotopy Types for RC Functions on Finite‑Dimensional Ba"
-      },
-      {
         "cycle_id": "fb9fd2df",
         "quality": 0.8091999999999999,
         "theorems": 22,
@@ -3451,6 +3445,12 @@
         "quality": 0.82,
         "theorems": 0,
         "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic "
+      },
+      {
+        "cycle_id": "f6b1d920",
+        "quality": 0.76,
+        "theorems": 6,
+        "title": "The Library of Babel: Combinatorics of the Universal Library"
       }
     ],
     "Logic": [
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "e3e38cc8",
-        "quality": 0.5266726923076923,
-        "theorems": 13,
-        "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
-      },
-      {
         "cycle_id": "01bea6c3",
         "quality": 0.573804028436019,
         "theorems": 16,
@@ -3699,6 +3693,12 @@
         "quality": 0.91,
         "theorems": 30,
         "title": "The results of this cycle establish that the Euler characteristic extends to"
+      },
+      {
+        "cycle_id": "a8d24466",
+        "quality": 0.73,
+        "theorems": 8,
+        "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
       }
     ],
     "Physics": [
