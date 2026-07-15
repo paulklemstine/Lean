@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "86966da0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Reflective Tower after Cross-Level Separation\n\nThis cycle sharpened the reflective tower `L(0) = Bool`, `L(n+1) = L(n) → Bool`\nfrom a locally strict chain into a *globally ri",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 11,
-      "timestamp": "2026-07-12T23:52:10",
-      "title": "That a type which fully quantifies over itself —"
-    },
-    {
       "cycle_id": "909a0259",
       "domain": "Novelty",
       "key_insight": "# Future Directions: harmonic-balance and the opposite-semicube Helly property\n\nThis cycle established that the opposite-semicube Helly property of a partial cube\nis governed by a single *harmonic-bal",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-15T20:45:21",
       "title": "ArXiv paper: Even smaller universal posets"
+    },
+    {
+      "cycle_id": "9b262bd9",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## 1. Closed predecessor-free membership criterion\n\n**Conjecture.** For every irrational `α > (3 + √5)/2` and positive iteration\ndepth `n`, membership of `x` in the `n`th iterated",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-15T20:45:28",
+      "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T20:45:21",
+  "last_updated": "2026-07-15T20:45:28",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "236b0246",
-        "quality": 0.4996542252252253,
-        "theorems": 14,
-        "title": "Infinite Log-Concavity of Total d-Hoggatt Numbers"
-      },
-      {
         "cycle_id": "26e5c4d5",
         "quality": 0.63,
         "theorems": 13,
@@ -4003,6 +3997,12 @@
         "quality": 0.65,
         "theorems": 104,
         "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+      },
+      {
+        "cycle_id": "9b262bd9",
+        "quality": 0.69,
+        "theorems": 11,
+        "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
       },
       {
         "cycle_id": "9b262bd9",
