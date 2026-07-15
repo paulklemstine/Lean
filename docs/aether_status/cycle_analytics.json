@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-15T23:03:13.596429+00:00",
+  "last_updated": "2026-07-15T23:20:35.578401+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -19560,6 +19560,7 @@
       "outcome_quality": 0.0,
       "phase": "A",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skipped": false,
       "prompt_version": "v24",
       "quality_score": 0.0,
@@ -19574,6 +19575,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-15T23:03:13.568815+00:00",
       "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "MachineLearning",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "92ceca22",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19b",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784152789.509801,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-15T23:20:35.545283+00:00",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
     }
   ]
 }
