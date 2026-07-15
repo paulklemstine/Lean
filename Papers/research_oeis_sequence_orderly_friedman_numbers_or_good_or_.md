@@ -1,377 +1,505 @@
-# A Formal Theory of Orderly Friedman Numbers
-
-**Author:** Aristotle
-**Date:** 2026-06-23
-**Domain:** Probability / Number Theory (recreational and computational)
+# Composable Certificates and an Infinite Family of Orderly Friedman Numbers
 
 ## Abstract
 
-A *Friedman number* is a positive integer expressible by a nontrivial
-arithmetic formula in its own decimal digits, each digit used once. An *orderly*
-Friedman number (OEIS A080035, also called "nice" or "good") is one admitting
-such a formula in which the digits occur in their natural left-to-right reading
-order. We give a self-contained, machine-checkable formalization of orderly
-Friedman numbers built on an inductive language of digit expressions with the
-operations addition, multiplication, exponentiation, and unary negation. We
-define the value, the left-to-right digit sequence, and the leaf count of an
-expression, and we encode the predicates `IsOrderlyFriedman` and `IsFriedman`.
-We prove five canonical witnesses ($127, 343, 736, 1285, 2592$), the basic
-size law `numLits_eq_length` relating leaf count to digit-sequence length, the
-positivity of the leaf count, a base-case structure theorem `single_leaf`
-classifying one-leaf expressions, and a two-digit reachability calculus
-(`reachable2`, `reachable2_of`, `reachable2_neg`) that mechanizes the analysis
-of the smallest cases. We discuss how these primitives support the standard
-folklore facts (an orderly Friedman number has at least two digits; orderly
-implies Friedman) and outline a research program of conjectures: nonexistence of
-two-digit terms, infinitude via power families, density gaps, and base
-generalizations.
+An orderly Friedman number is a positive integer whose decimal digits, used exactly once and in their original left-to-right order, can be equipped with arithmetic operations to form an expression equal to the integer itself. This paper gives a self-contained expression model incorporating decimal concatenation, specifies the conditions that exclude trivial certificates, and develops an explicit infinite family. The identities $-1+2^7=127$ and $7+3^6=736$ certify the orderly character of $127$ and $736$, with the latter showing that orderly Friedman numbers need not be odd. Starting from the three-digit certificate for $127$, repeated decimal concatenation produces the recurrence
+
+$$
+F_0=127,
+\qquad
+F_{n+1}=1000F_n+127.
+$$
+
+Every $F_n$ is shown to be orderly. The family satisfies the exact division-free closed form
+
+$$
+999F_n=127\left(1000^{n+1}-1\right),
+$$
+
+and is strictly increasing, proving the existence of infinitely many distinct orderly Friedman numbers. We give certificate-validation and family-generation algorithms, discuss their complexity, derive the asymptotic scale $F_n\sim(127/999)1000^{n+1}$, and explain how composable blocks suggest a broader program for counting and searching for orderly Friedman numbers.
 
 ## 1. Introduction
 
-Friedman numbers, introduced by Erich Friedman, are integers that can be written
-using their own digits and elementary operations. The smallest is $25 = 5^2$.
-They are dense among large integers in the sense that the count below $N$ grows
-proportionally to $N$. The *orderly* refinement imposes that the digits be used
-**in order**, i.e. exactly as the number is read. This single change converts a
-permissive combinatorial notion into a rigid one: $25 = 5^2$ fails because $5^2$
-reads its digits as $5, 2$, not $2, 5$.
-
-The orderly sequence begins
-$$127, 343, 736, 1285, 2187, 2502, 2592, 2737, 3125, 3685, 3864, 3972, 4096, 6455, 11264, 11664, 12850, 13825, 14641, \dots$$
-
-Our contribution is a precise, verifiable foundation for this sequence: a small
-expression language, the exact predicates, verified witnesses, and the
-structural lemmas needed to begin proving non-membership and size results. The
-emphasis throughout is on *order*: every definition tracks the left-to-right
-sequence of digit leaves, never merely the multiset.
-
-### 1.1 Worked identities and the meaning of "order"
-
-It is worth dwelling on concrete identities, since they make the orderliness
-constraint vivid and expose the subtle traps that make naive enumeration
-error-prone. Consider the five witnesses that anchor this paper:
-$$127 = -1 + 2^7, \quad 343 = (3+4)^3, \quad 736 = 7 + 3^6, \quad 1285 = (1+2^8)\cdot 5, \quad 2592 = 2^5\cdot 9^2.$$
-In each case, if one strips away the operators and parentheses and reads the
-remaining digits left to right, one recovers the decimal expansion of the number
-itself: $127 \mapsto 1,2,7$; $343 \mapsto 3,4,3$; $736 \mapsto 7,3,6$;
-$1285 \mapsto 1,2,8,5$; $2592 \mapsto 2,5,9,2$. This is the defining property,
-and it is brittle. The identity $25 = 5^2$, often the first example of a
-(non-orderly) Friedman number, fails the orderliness test precisely because
-$5^2$ reads as $5, 2$ — the digits of $25$ in the wrong order. Reordering is the
-entire difference between the two notions, and tracking it correctly is the
-central modelling challenge.
-
-The $1285$ case is a cautionary tale that motivates a fully formal treatment.
-The "obvious" guess $1 \cdot 2^8 + 5 = 256 + 5 = 261$ is a near miss that has the
-right digits in the right order but the wrong value; the correct witness is
-$(1+2^8)\cdot 5 = 257 \cdot 5 = 1285$. Distinguishing these requires exact
-integer evaluation and a precise notion of "the digits, in order" — exactly what
-the formalization provides.
-
-## 2. The expression language
-
-We model arithmetic expressions on digits as finite trees.
-
-**Definition 1 (Operations).** The operation alphabet is the three-element type
-$$\mathrm{FOp} = \{\,\mathrm{add},\ \mathrm{mul},\ \mathrm{pow}\,\}.$$
-
-**Definition 2 (Expressions).** A digit expression is an element of the inductive
-type $\mathrm{FExpr}$ generated by:
-- $\mathrm{lit}\ d$ — a single digit literal $d \in \mathbb{N}$ (a leaf);
-- $\mathrm{neg}\ e$ — unary negation of an expression $e$;
-- $\mathrm{bin}\ \mathrm{op}\ \ell\ r$ — a binary node combining $\ell$ and $r$
-  under operation $\mathrm{op}$.
-
-**Definition 3 (Operation semantics).** For integers $a, b$,
-$$\mathrm{add}(a,b) = a + b,\qquad \mathrm{mul}(a,b) = a\cdot b,\qquad \mathrm{pow}(a,b) = a^{\,b^{+}},$$
-where $b^{+}$ denotes the natural-number truncation of $b$ (i.e. $\max(b,0)$
-interpreted as a natural number). This keeps all values in $\mathbb{Z}$ and
-sidesteps fractional powers.
-
-**Definition 4 (Evaluation).** The value $\mathrm{eval} : \mathrm{FExpr} \to
-\mathbb{Z}$ is defined recursively by
-$$\mathrm{eval}(\mathrm{lit}\ d) = d, \quad \mathrm{eval}(\mathrm{neg}\ e) = -\,\mathrm{eval}(e), \quad \mathrm{eval}(\mathrm{bin}\ \mathrm{op}\ \ell\ r) = \mathrm{op}\big(\mathrm{eval}(\ell), \mathrm{eval}(r)\big).$$
-
-**Definition 5 (Digit sequence).** The left-to-right digit sequence
-$\mathrm{digitSeq} : \mathrm{FExpr} \to \mathrm{List}\ \mathbb{N}$ is
-$$\mathrm{digitSeq}(\mathrm{lit}\ d) = [d], \quad \mathrm{digitSeq}(\mathrm{neg}\ e) = \mathrm{digitSeq}(e), \quad \mathrm{digitSeq}(\mathrm{bin}\ \_\ \ell\ r) = \mathrm{digitSeq}(\ell) \mathbin{+\!\!+} \mathrm{digitSeq}(r).$$
-Negation does not alter the digit sequence; concatenation is order-preserving.
-
-**Definition 6 (Leaf count).** The leaf count $\mathrm{numLits} : \mathrm{FExpr}
-\to \mathbb{N}$ is
-$$\mathrm{numLits}(\mathrm{lit}\ d) = 1, \quad \mathrm{numLits}(\mathrm{neg}\ e) = \mathrm{numLits}(e), \quad \mathrm{numLits}(\mathrm{bin}\ \_\ \ell\ r) = \mathrm{numLits}(\ell) + \mathrm{numLits}(r).$$
-
-## 3. The membership predicates
-
-Throughout, $\mathrm{digits}_{10}(n)$ denotes the base-ten digit list of $n$ in
-**little-endian** order (least significant first), as is standard. Hence the
-reading order (most significant first) is its reverse.
-
-**Definition 7 (Orderly Friedman number).** An integer $n$ is *orderly Friedman*,
-written $\mathrm{IsOrderlyFriedman}(n)$, iff there exists an expression $e$ with
-$$\mathrm{numLits}(e) \ge 2, \qquad \mathrm{digitSeq}(e) = \mathrm{reverse}\big(\mathrm{digits}_{10}(n)\big), \qquad \mathrm{eval}(e) = n.$$
-
-**Definition 8 (Friedman number).** An integer $n$ is *Friedman*, written
-$\mathrm{IsFriedman}(n)$, iff there exists an expression $e$ with
-$$\mathrm{numLits}(e) \ge 2, \qquad \mathrm{digitSeq}(e) \text{ is a permutation of } \mathrm{digits}_{10}(n), \qquad \mathrm{eval}(e) = n.$$
-
-The sole difference is the constraint linking $\mathrm{digitSeq}(e)$ to the
-number's digits: exact reversed equality (orderly) versus permutation (general).
-Since exact order is a particular permutation, the orderly predicate is a
-refinement of the Friedman predicate; this is the formal content of the folklore
-implication "orderly $\Rightarrow$ Friedman."
-
-## 4. Canonical witnesses
-
-**Theorem 9 (Five orderly witnesses).** The following integers are orderly
-Friedman, with the indicated reading-order expressions:
-$$\begin{aligned}
-127 &= -1 + 2^{7} &&(\text{`orderlyFriedman_127`}),\\
-343 &= (3 + 4)^{3} &&(\text{`orderlyFriedman_343`}),\\
-736 &= 7 + 3^{6} &&(\text{`orderlyFriedman_736`}),\\
-1285 &= (1 + 2^{8})\cdot 5 &&(\text{`orderlyFriedman_1285`}),\\
-2592 &= 2^{5}\cdot 9^{2} &&(\text{`orderlyFriedman_2592`}).
-\end{aligned}$$
-
-*Proof sketch.* For each, exhibit the explicit expression tree, observe that its
-digit sequence equals the reading-order digit list of the target, and verify by
-direct integer computation that it evaluates to the target. All three conditions
-(leaf count $\ge 2$, digit-sequence equality, value equality) are decidable for a
-concrete tree, so each witness is closed by evaluation. $\;\square$
-
-*Remark.* The informal description "$1\cdot 2^{8} + 5$" for $1285$ is incorrect:
-$1\cdot 2^{8} + 5 = 261$. The correct reading-order witness is $(1 + 2^{8})\cdot 5
-= 257\cdot 5 = 1285$, which is the one verified.
-
-## 5. Structural results
-
-**Theorem 10 (Size law).** For every expression $e$,
-$$\mathrm{numLits}(e) = \mathrm{length}\big(\mathrm{digitSeq}(e)\big).$$
-
-*Proof sketch.* Structural induction on $e$. The leaf case gives $1 =
-\mathrm{length}([d])$. Negation preserves both sides. For a binary node, leaf
-count is additive and digit sequence is a concatenation whose length is the sum
-of the parts; the induction hypotheses combine to give equality. $\;\square$
-
-This law is the bridge between *counting leaves* and *counting digits*. Combined
-with the orderly definition (whose digit sequence is exactly the number's digit
-list), it yields that the number of digits of an orderly Friedman number equals
-the leaf count of its expression, which is $\ge 2$. Hence:
-
-**Corollary (Two-digit lower bound, program-level).** Every orderly Friedman
-number has at least two decimal digits, so $n \ge 10$. (This is the target
-`orderlyFriedman_ge_ten`, obtained by feeding Theorem 10 and the $\ge 2$ leaf
-constraint into the standard relation between digit-list length and magnitude.)
-
-**Lemma 11 (Leaf positivity).** For every expression $e$, $\mathrm{numLits}(e)
-\ge 1$.
-
-*Proof sketch.* Induction: a leaf has count $1$; negation preserves; a binary
-node sums two positive counts. $\;\square$
-
-**Theorem 12 (Single-leaf classification).** If $\mathrm{numLits}(e) = 1$, then
-there is a digit $d$ with $\mathrm{digitSeq}(e) = [d]$ and $\mathrm{eval}(e) \in
-\{d, -d\}$.
-
-*Proof sketch.* Induction on $e$. A literal $\mathrm{lit}\ d$ gives $d$ directly.
-For a negation, apply the induction hypothesis to the immediate subexpression
-(which also has one leaf) and flip the sign, swapping the two cases. A binary node
-is impossible: by Lemma 11 both children have leaf count $\ge 1$, so their sum is
-$\ge 2 \ne 1$, contradicting the hypothesis. $\;\square$
-
-Theorem 12 is the base case of the induction on leaf count. It says a one-leaf
-expression is, up to sign, a bare digit — which is exactly what one needs to begin
-classifying expressions by size and, in particular, to enumerate what two-leaf
-expressions can compute.
-
-## 6. The two-digit reachability calculus
-
-To analyze the smallest nontrivial expressions — two ordered leaves $a$ then $b$
-— we isolate the set of values such a tree can produce.
-
-**Definition 13 (Reachable values).** For digits $a, b \in \mathbb{N}$ and a value
-$v \in \mathbb{Z}$, say $v$ is *reachable from $(a,b)$*, written
-$\mathrm{reachable2}(a,b,v)$, iff there exist signs $s_0, s_1, s_2 \in \{0,1\}$
-(written as Booleans, with $\sigma(s) = -1$ if $s$ and $+1$ otherwise) such that
-$$v = \sigma(s_0)\cdot\big(\sigma(s_1)a + \sigma(s_2)b\big), \quad\text{or}\quad v = \sigma(s_0)\cdot\big(\sigma(s_1)a \cdot \sigma(s_2)b\big), \quad\text{or}\quad v = \sigma(s_0)\cdot\big(\sigma(s_1)a\big)^{(\sigma(s_2)b)^{+}}.$$
-That is: choose a sign for each of the two leaves and an outer sign, then combine
-with exactly one operation (the exponent is truncated to a natural number as in
-Definition 3).
-
-Reachability is decidable: the witness is a triple of Booleans, a finite search.
-
-**Theorem 14 (Combinations are reachable).** Let $x, y \in \mathbb{Z}$ with
-$x \in \{a, -a\}$ and $y \in \{b, -b\}$, and let $\mathrm{op} \in \mathrm{FOp}$.
-Then $\mathrm{reachable2}\big(a, b, \mathrm{op}(x,y)\big)$ holds.
-
-*Proof sketch.* Encode the sign of $x$ as $s_1$ and of $y$ as $s_2$, with outer
-sign $s_0$ chosen positive. Case-split on $\mathrm{op}$; each of the three cases
-matches one disjunct of Definition 13 after substituting the sign encodings.
-$\;\square$
-
-**Lemma 15 (Closure under negation).** If $\mathrm{reachable2}(a,b,v)$ then
-$\mathrm{reachable2}(a,b,-v)$.
-
-*Proof sketch.* Given a witness $(s_0, s_1, s_2)$, flip the outer sign to
-$\lnot s_0$. Since $\sigma(\lnot s_0) = -\sigma(s_0)$, each of the three defining
-identities is multiplied by $-1$, yielding $-v$ with the same inner data; conclude
-by the ring identity in each case. $\;\square$
-
-Theorems 12, 14, and Lemma 15 together pin down the values a two-leaf expression
-with leaves $a$ then $b$ can take: by Theorem 12 each leaf evaluates to $\pm a$
-and $\pm b$ respectively; by Theorem 14 a single binary node combining them is
-reachable; and by Lemma 15 the optional outer negation stays inside the reachable
-set. Therefore the set of possible values of a two-leaf, order-$(a,b)$ expression
-is exactly $\{\,v : \mathrm{reachable2}(a,b,v)\,\}$, a finite set computable from
-$a$ and $b$.
-
-**Application (program-level): no two-digit orderly Friedman numbers.** For
-$10 \le n \le 99$ with reading-order digits $a, b$, an orderly witness would be a
-two-leaf expression with leaves $a$ then $b$ evaluating to $n$, i.e.
-$\mathrm{reachable2}(a, b, n)$. Enumerating $\mathrm{reachable2}$ over all
-$(a,b) \in \{0,\dots,9\}^2$ and all sign triples is a finite decidable check that
-returns no hit equal to the corresponding $\overline{ab}$. This is the content of
-the target `no_two_digit_orderlyFriedman`; the reachability calculus reduces it to
-a terminating search.
-
-## 6.5 Design rationale
-
-Several modelling choices deserve comment, because they are what make the theory
-both faithful and tractable.
-
-*Trees, not strings.* Representing expressions as finite trees rather than
-character strings makes "reading order" a structural, inductively checkable
-property: the digit sequence is simply the in-order list of leaves, and every
-lemma about order is proved by induction on the tree. A string model would force
-us to re-parse and would entangle precedence with order.
-
-*Integer semantics with truncated exponents.* By interpreting expressions in
-$\mathbb{Z}$ and truncating exponents to natural numbers, every expression has a
-well-defined integer value, evaluation is total, and membership of any concrete
-number is decidable. This avoids the analytic subtleties of real exponentiation
-while retaining all the witnesses that occur in practice (the orderly witnesses
-use only non-negative integer exponents).
-
-*Unary negation as a separate constructor.* Allowing $\mathrm{neg}$ on any
-subexpression — not only on leading digits — keeps the language closed under the
-natural operation of sign flipping and is exactly what makes the reachability
-calculus of Section 6 clean: the set of reachable values is symmetric about zero
-(Lemma 15). The witness $127 = -1 + 2^7$ shows negation is genuinely needed.
-
-*Leaf-count threshold of two.* Requiring $\mathrm{numLits}(e) \ge 2$ rules out
-the degenerate "expression" consisting of a single digit (or its negation),
-which would otherwise make every one-digit number vacuously orderly. This is the
-standard nontriviality condition for Friedman-type numbers.
-
-## 6.6 Complexity of the decision problem
-
-For a $k$-digit number $n$, deciding $\mathrm{IsOrderlyFriedman}(n)$ by
-enumeration ranges over the binary trees on a fixed list of $k$ leaves. The
-number of distinct binary tree shapes on $k$ leaves is the Catalan number
-$C_{k-1} = \frac{1}{k}\binom{2k-2}{k-1}$; each of the $k-1$ internal nodes carries
-one of three operations, contributing a factor $3^{k-1}$; and the optional unary
-negation at each node contributes a further bounded factor. The total search
-space is therefore $O\!\big(C_{k-1}\, 3^{k-1}\, 2^{O(k)}\big)$, which is
-exponential in the number of digits but entirely finite — the key point for
-decidability. For the small $k$ relevant to the published terms of A080035 (three
-and four digits), the search is milliseconds of work, and the formalization's
-`native_decide`-style evaluation of any single concrete witness is immediate.
-
-The two-digit subproblem collapses dramatically: with $k = 2$ there is exactly
-one tree shape, so the reachability calculus reduces the entire question to a
-constant-size set of $2^3 \times 3 = 24$ candidate values per digit pair. This is
-why the no-two-digit-terms statement is within reach of a finite decidable check.
-
-## 6.7 Relationship to the OEIS data
-
-The sequence A080035 begins
-$$127, 343, 736, 1285, 2187, 2502, 2592, 2737, 3125, 3685, 3864, 3972, 4096, 6455, 11264, 11664, 12850, 13825, 14641, \dots$$
-The formalization verifies five of these directly and provides the machinery to
-certify any other term by exhibiting and evaluating its expression tree. A
-striking observation is how many terms are themselves perfect powers when read as
-plain integers: $343 = 7^3$, $2187 = 3^7$, $2592 = 2^5 9^2$, $3125 = 5^5$,
-$4096 = 4^6$, and $14641 = 11^4$. The identity $3125 = 5^5 = (3\cdot 1 + 2)^5$,
-highlighted in the future-directions program below, exhibits the power $5^5$
-rebuilt in digit order and motivates the power-family conjecture C2. We
-emphasize that only the five fully verified identities ($127, 343, 736, 1285,
-2592$) are claimed as theorems here; the perfect-power pattern is observational
-and motivates future work.
-
-## 7. Algorithms
-
-The formal development induces two natural algorithms.
-
-**Decision by bounded enumeration.** To test whether a given $n$ is orderly
-Friedman, enumerate all expression trees whose digit sequence equals the
-reading-order digits of $n$ (these are exactly the parenthesizations and operator
-assignments over the fixed leaf list, with optional negations), evaluate each, and
-check for the value $n$. The leaf list is fixed by $n$, so the search space is
-finite: it is governed by the Catalan number of binary trees on the digits times
-the operator and sign choices.
-
-**Two-digit reachability oracle.** For the smallest cases, the reachability
-predicate of Section 6 gives a constant-size oracle: for each digit pair $(a,b)$,
-compute the finite set of reachable values and compare against $\overline{ab}$.
-
-Both are exact integer computations (no floating point), matching the integer
-semantics of `eval`.
-
-## 8. Applications and discussion
-
-Orderly Friedman numbers are a testbed for **order-sensitive digit puzzles** and
-for the broader theme of *constraint refinement*: the orderly predicate is the
-Friedman predicate with permutation replaced by identity. The formal implication
-orderly $\Rightarrow$ Friedman is immediate from this refinement, and quantifies
-an intuition — order is a cost, never a benefit.
-
-The framework is deliberately minimal yet faithful: trees instead of strings make
-"reading order" a first-class, inductively checkable property; integer semantics
-with truncated exponents keep everything decidable; and the leaf/length law ties
-expression size to numeral size. This minimality is what lets the smallest cases
-be resolved by finite search rather than ad hoc argument.
-
-More broadly, orderly Friedman numbers belong to a rich ecosystem of
-digit-driven integer sequences — narcissistic numbers, Munchausen numbers,
-Kaprekar numbers, and vampire numbers among them — in which an integer is
-characterized by a self-referential arithmetic relation on its own digits. What
-distinguishes the orderly variant is the explicit role of *position*: the digits
-are not merely a multiset to be reused but an ordered word that the expression
-must honour. The tree-based formalization developed here is well suited to this
-entire family, because the digit sequence (the in-order leaf list) and the digit
-multiset (its underlying bag) are both directly available, and one obtains the
-different sequences simply by varying the constraint relating an expression's
-digits to the target's digits — identity for orderly, permutation for Friedman,
-and other relations for neighbouring notions. The present development can thus be
-read as a reusable substrate for mechanizing digit-puzzle number theory, with
-orthogonal choices of operation alphabet, semantics, and digit constraint.
-
-## 9. Future directions
-
-The following conjectures, stated against the present formalization, organize
-follow-up work.
-
-- **C1 — No two-digit terms.** No orderly Friedman number lies in $[10, 99]$.
-  Reduced by Section 6 to a finite decidable check; the smallest term is $127$.
-- **C2 — Infinitude via powers of five.** Infinitely many orderly Friedman
-  numbers are powers of $5$. Evidence: $3125 = 5^5 = (3\cdot 1 + 2)^5$ is orderly.
-- **C3 — Concatenation-prefix closure.** Prepending suitable neutral digit blocks
-  to an orderly Friedman number yields infinitely many further orderly numbers; a
-  "prefix lemma" to be formalized and tested against A080035.
-- **C4 — Order penalty (density gap).** The ratio
-  $\#\{\text{orderly} \le N\} / \#\{\text{Friedman} \le N\} \to 0$. The proven
-  implication gives the trivial $\le$; the vanishing ratio is open.
-- **C5 — Base generalization.** For each base $b \ge 3$ the base-$b$ orderly set
-  is nonempty, and every base-$b$ orderly Friedman number is $\ge b$. The size
-  half follows from the leaf/length law; nonemptiness per base is open.
-
-## 10. Conclusion
-
-We have given a compact, fully specified theory of orderly Friedman numbers: an
-inductive expression language with integer semantics, exact order-tracking digit
-sequences, the two membership predicates, five verified witnesses, the
-size law, the single-leaf classification, and a reachability calculus that
-mechanizes the smallest cases. These primitives are sufficient to derive the
-classical facts (two-digit lower bound; orderly implies Friedman) and to launch a
-program of conjectures on infinitude, density, and base generalization. The
-recurring moral is that *forbidding rearrangement sharpens rather than trivializes*
-the problem, yielding a structured sequence with its own laws and open questions.
+Friedman numbers turn decimal notation into raw material for arithmetic self-description. In the broad version of the problem, the digits of an integer are used to build an expression equal to that integer, often with considerable freedom in their arrangement. The orderly variant imposes a severe syntactic constraint: digits must occur in precisely the order in which they appear in the original numeral. This restriction changes both the search problem and the structure of proofs. A candidate identity must simultaneously satisfy an arithmetic equation and preserve a word in the decimal alphabet.
+
+For example,
+
+$$
+-1+2^7=127
+$$
+
+is an orderly certificate because its visible digits, read left to right, are $1,2,7$. Likewise,
+
+$$
+7+3^6=736
+$$
+
+uses $7,3,6$ in order and evaluates correctly. These identities are more than isolated curiosities. The first is a composable three-digit block: copies of its certificate can be joined by decimal concatenation to produce certificates for $127127$, $127127127$, and so on.
+
+The purpose of this paper is to formulate this composition cleanly and establish four concrete results:
+
+1. $127$ has the orderly certificate $-1+2^7$.
+2. $736$ has the orderly certificate $7+3^6$, disproving the claim that every orderly Friedman number is odd.
+3. Repeating the certified block $127$ gives an orderly Friedman number for every positive number of repetitions.
+4. The resulting sequence has an exact closed form and is strictly increasing, hence supplies infinitely many distinct examples.
+
+The construction is deliberately explicit. It avoids reliance on a database search or an unproved pattern inferred from initial terms. Each member comes with a canonical certificate assembled from copies of one fixed expression.
+
+## 2. Expression model and definitions
+
+### 2.1 Decimal words
+
+A **decimal word** is a finite list of digits $d_1,d_2,\ldots,d_m$, where each $d_i$ belongs to $\{0,1,\ldots,9\}$. Its decimal value is
+
+$$
+\operatorname{Dec}(d_1,\ldots,d_m)
+=
+\sum_{i=1}^{m}d_i10^{m-i}.
+$$
+
+The empty word is assigned value $0$. Leading zeros may occur in a word, although the principal examples below have none.
+
+The fundamental concatenation identity is the following.
+
+### Lemma 2.1: Decimal concatenation
+
+If $u$ and $v$ are decimal words and $|v|$ denotes the length of $v$, then
+
+$$
+\operatorname{Dec}(uv)
+=
+\operatorname{Dec}(u)10^{|v|}+\operatorname{Dec}(v),
+$$
+
+where $uv$ is the word obtained by appending $v$ to $u$.
+
+**Proof sketch.** Expand the defining sum for $\operatorname{Dec}(uv)$. Every digit from $u$ acquires $|v|$ additional positions to its right and therefore contributes its old place value multiplied by $10^{|v|}$. The digits from $v$ retain their original place values. Summing the two portions gives the formula. Equivalently, one may induct on the length of $u$.
+
+### 2.2 Arithmetic expressions and leaves
+
+We consider expressions generated from decimal digits by the following operations:
+
+- a single digit;
+- unary negation;
+- addition;
+- multiplication;
+- exponentiation by a nonnegative integer whose decimal digits are part of the written expression; and
+- decimal concatenation.
+
+Every expression has a **leaf word**, obtained by reading all displayed decimal digits from left to right while ignoring parentheses and operation symbols. Thus the leaf word of $-1+2^7$ is $(1,2,7)$, and that of $7+3^6$ is $(7,3,6)$.
+
+Every expression also has an integer value, defined by the usual arithmetic rules. If expressions $E$ and $G$ are concatenated and the right expression occupies $k$ decimal positions, then
+
+$$
+\operatorname{val}(E\Vert_k G)
+=
+10^k\operatorname{val}(E)+\operatorname{val}(G).
+$$
+
+The notation records the width $k$ because zero-padding is significant in decimal concatenation. A concatenation is **well formed** when $k$ equals the length of the leaf word of its right operand and both subexpressions are themselves well formed. Digits are well formed; negation and exponentiation preserve well-formedness; addition and multiplication are well formed exactly when both operands are.
+
+This model treats the decimal notation of an exponent as part of the digit supply. In the applications here all exponents are single digits, so no ambiguity arises. A richer grammar could allow an arbitrary expression as exponent, but that extension is not needed for the results below.
+
+### 2.3 Genuine arithmetic and orderly certificates
+
+Concatenation alone must not count as arithmetic. Otherwise the displayed numeral, parsed as a concatenation of its own digits, would certify every positive integer. We therefore say that an expression contains **genuine arithmetic** if it uses at least one of negation, addition, multiplication, or exponentiation.
+
+### Definition 2.2: Orderly Friedman certificate
+
+Let $N$ be a positive integer with decimal digit word $w_N$. A well-formed expression $E$ is an **orderly Friedman certificate** for $N$ if:
+
+1. the leaf word of $E$ is exactly $w_N$;
+2. $\operatorname{val}(E)=N$; and
+3. $E$ contains genuine arithmetic.
+
+A positive integer is an **orderly Friedman number** if it has an orderly Friedman certificate.
+
+This definition separates three issues that are easy to conflate: preservation of digit order, correctness of decimal widths, and correctness of arithmetic value. It also excludes the vacuous certificate consisting only of the numeral itself.
+
+## 3. Two elementary certificates
+
+### Theorem 3.1: The number $127$ is orderly
+
+The integer $127$ is an orderly Friedman number.
+
+**Proof.** Consider
+
+$$
+E=-1+2^7.
+$$
+
+Its leaf word is $(1,2,7)$, which is the decimal word of $127$. Its value is
+
+$$
+-1+2^7=-1+128=127.
+$$
+
+The expression uses negation, addition, and exponentiation, so it contains genuine arithmetic. No concatenation occurs, making well-formedness immediate. Hence $E$ is an orderly certificate for $127$.
+
+### Theorem 3.2: The number $736$ is orderly
+
+The integer $736$ is an orderly Friedman number.
+
+**Proof.** Use the expression
+
+$$
+E=7+3^6.
+$$
+
+Its leaf word is $(7,3,6)$ and
+
+$$
+7+3^6=7+729=736.
+$$
+
+Addition and exponentiation supply genuine arithmetic, so the certificate satisfies every requirement.
+
+### Corollary 3.3: Parity is unrestricted
+
+Not every orderly Friedman number is odd.
+
+**Proof.** The orderly Friedman number $736$ is even.
+
+This elementary counterexample is useful methodologically. Patterns suggested by a few small entries should not be elevated to structural laws without checking the full certificate rules.
+
+## 4. Repetition of a certified block
+
+### 4.1 The recurrent family
+
+Define a sequence $(F_n)_{n\ge0}$ by
+
+$$
+F_0=127,
+\qquad
+F_{n+1}=1000F_n+127.
+$$
+
+The first values are
+
+$$
+127,\quad
+127127,\quad
+127127127,\quad
+127127127127.
+$$
+
+Since multiplication by $1000$ shifts a decimal numeral three places left, the recurrence appends one copy of $127$ at each step.
+
+Let $C$ denote the expression $-1+2^7$. Define certificate expressions recursively by
+
+$$
+R_0=C,
+\qquad
+R_{n+1}=R_n\Vert_3 C.
+$$
+
+Thus $R_n$ consists of $n+1$ copies of $C$, joined by width-three concatenations.
+
+### Lemma 4.1: Leaf structure
+
+For every $n\ge0$, the leaf word of $R_n$ is the concatenation of $n+1$ copies of $(1,2,7)$.
+
+**Proof sketch.** The assertion is immediate for $R_0=C$. If it holds for $R_n$, then $R_{n+1}$ appends one copy of $C$, whose leaf word is $(1,2,7)$. Hence the number of blocks rises from $n+1$ to $n+2$. Induction proves the claim.
+
+### Lemma 4.2: Well-formedness
+
+For every $n\ge0$, the expression $R_n$ is well formed.
+
+**Proof sketch.** The base expression $C$ contains no concatenation. At the inductive step, both $R_n$ and $C$ are well formed, and the right operand $C$ has exactly three leaves. Therefore the recorded width $3$ is correct.
+
+### Lemma 4.3: Evaluation
+
+For every $n\ge0$,
+
+$$
+\operatorname{val}(R_n)=F_n.
+$$
+
+**Proof.** For $n=0$, both values are $127$. Assuming the equality at $n$, the definition of width-three concatenation gives
+
+$$
+\operatorname{val}(R_{n+1})
+=1000\operatorname{val}(R_n)+\operatorname{val}(C)
+=1000F_n+127
+=F_{n+1}.
+$$
+
+The result follows by induction.
+
+### Lemma 4.4: Decimal value of the leaf word
+
+For every $n\ge0$, the decimal value of the leaf word of $R_n$ is $F_n$.
+
+**Proof sketch.** At $n=0$, the leaf word $(1,2,7)$ has value $127$. At the next step, three leaves are appended. Lemma 2.1 therefore multiplies the previous decimal value by $10^3=1000$ and adds $127$. This is exactly the recurrence defining $F_{n+1}$.
+
+### Theorem 4.5: Infinite block-family theorem
+
+For every integer $n\ge0$, $F_n$ is an orderly Friedman number.
+
+**Proof.** Use $R_n$ as the certificate. Lemma 4.2 gives well-formedness. Lemma 4.1 identifies its leaves as the decimal digits of $n+1$ consecutive copies of $127$, while Lemma 4.4 says that this word represents $F_n$. Lemma 4.3 gives the same value arithmetically. Finally, every $R_n$ contains the genuine arithmetic operations already present in each copy of $C$. Thus all certificate conditions hold.
+
+The theorem is uniform and constructive: given $n$, the proof prescribes both the integer and a certificate for it.
+
+## 5. Exact formula and growth
+
+### Theorem 5.1: Division-free closed form
+
+For every integer $n\ge0$,
+
+$$
+999F_n=127\left(1000^{n+1}-1\right).
+$$
+
+**Proof.** At $n=0$,
+
+$$
+999F_0=999\cdot127=127(1000-1).
+$$
+
+Suppose the identity holds for $n$. Then
+
+$$
+\begin{aligned}
+999F_{n+1}
+&=999(1000F_n+127)\\
+&=1000(999F_n)+999\cdot127\\
+&=1000\cdot127(1000^{n+1}-1)+999\cdot127\\
+&=127(1000^{n+2}-1000+999)\\
+&=127(1000^{n+2}-1).
+\end{aligned}
+$$
+
+This is the desired statement at $n+1$.
+
+### Corollary 5.2: Geometric-sum form
+
+For every $n\ge0$,
+
+$$
+F_n
+=127\sum_{j=0}^{n}1000^j
+=\frac{127(1000^{n+1}-1)}{999}.
+$$
+
+**Proof sketch.** Iterating the recurrence yields the finite geometric sum. Multiplying that sum by $999=1000-1$ causes all intermediate powers to cancel, recovering Theorem 5.1. Since $1000^{n+1}-1$ is divisible by $999$, the quotient is an integer.
+
+### Theorem 5.3: Strict growth
+
+The sequence $(F_n)_{n\ge0}$ is strictly increasing.
+
+**Proof.** Every $F_n$ is positive, and
+
+$$
+F_{n+1}-F_n
+=999F_n+127>0.
+$$
+
+Hence $F_{n+1}>F_n$ for every $n$.
+
+### Corollary 5.4: Infinitude
+
+There are infinitely many distinct orderly Friedman numbers.
+
+**Proof.** Theorem 4.5 says every $F_n$ is orderly. Theorem 5.3 says no two terms coincide. Since there are infinitely many indices, there are infinitely many distinct orderly Friedman numbers.
+
+### Corollary 5.5: Asymptotic scale
+
+As $n\to\infty$,
+
+$$
+F_n\sim\frac{127}{999}1000^{n+1}.
+$$
+
+More precisely,
+
+$$
+\frac{F_n}{1000^{n+1}}
+=
+\frac{127}{999}\left(1-1000^{-(n+1)}\right)
+\longrightarrow
+\frac{127}{999}.
+$$
+
+The family therefore has exponential growth. Its consecutive ratio also satisfies
+
+$$
+\frac{F_{n+1}}{F_n}=1000+\frac{127}{F_n}\longrightarrow1000.
+$$
+
+The limiting ratio reflects the addition of a fixed three-digit block at each step.
+
+## 6. Algorithms
+
+### 6.1 Certificate validation
+
+A general validator receives a proposed integer $N$ and an expression tree $E$. A postorder traversal computes four pieces of data for each subtree:
+
+1. its leaf word;
+2. its integer value;
+3. whether all concatenations are width-correct; and
+4. whether genuine arithmetic occurs.
+
+At a digit, the leaf word has length one and the value is that digit. Unary and binary arithmetic nodes combine child values according to the chosen operation and concatenate their leaf words in syntactic order. At a concatenation node $A\Vert_k B$, the validator checks $k=|\operatorname{leaves}(B)|$ and computes
+
+$$
+10^k\operatorname{val}(A)+\operatorname{val}(B).
+$$
+
+The final certificate is accepted precisely when it is well formed, its leaf word equals the canonical decimal word of $N$, its value equals $N$, and its arithmetic flag is true.
+
+If the tree has $s$ nodes and values fit in fixed-size machine words, traversal takes $O(s)$ time and $O(h)$ call-stack space, where $h$ is the tree height. With arbitrary-precision integers, arithmetic cost depends on operand length; leaf collection should use a buffer or rope to avoid quadratic copying.
+
+### 6.2 Recurrent generation
+
+The family can be generated without constructing expression trees.
+
+**Input:** a nonnegative integer $m$.
+
+**Output:** $F_0,F_1,\ldots,F_m$.
+
+**Procedure:** initialize $x\leftarrow127$; output $x$; repeat $m$ times: set $x\leftarrow1000x+127$ and output $x$.
+
+There are $m$ recurrence steps. The final integer has $3(m+1)$ decimal digits. Under a digit-cost model, multiplying by $1000$ is a shift and adding $127$ is linear only in the short carry chain, so the overall practical cost is proportional to the total amount of output, $O(m^2)$ digit writes if every prefix is printed and $O(m)$ storage for the largest term. If only $F_m$ is required, direct creation by repeating the string “127” is also linear in the output length.
+
+### 6.3 Closed-form cross-check
+
+For testing, one may compute both
+
+$$
+F_n\quad\text{by recurrence}
+$$
+
+and
+
+$$
+Q_n=\frac{127(1000^{n+1}-1)}{999}
+$$
+
+by integer exponentiation and exact division, then compare them. Binary exponentiation uses $O(\log n)$ large-integer multiplications, though the operands themselves have $O(n)$ digits. This is useful as an independent numerical realization of the same theorem.
+
+## 7. General block principle
+
+The repeated-$127$ family exemplifies a broader mechanism. Let $B$ be a positive $d$-digit integer possessing an orderly certificate $C_B$ whose leaf word is exactly the $d$ digits of $B$. Define
+
+$$
+G_0=B,
+\qquad
+G_{n+1}=10^dG_n+B.
+$$
+
+By joining copies of $C_B$ with width-$d$ concatenation, one obtains the following conditional theorem.
+
+### Theorem 7.1: Repetition principle for certified blocks
+
+Suppose a $d$-digit positive integer $B$ has a well-formed orderly certificate containing genuine arithmetic. Then every number formed by writing $n+1$ copies of the decimal block $B$ consecutively is an orderly Friedman number. These numbers satisfy
+
+$$
+(10^d-1)G_n=B\left(10^{d(n+1)}-1\right)
+$$
+
+and form a strictly increasing sequence.
+
+**Proof sketch.** Repeat the arguments of Sections 4 and 5 with $1000$ replaced by $10^d$ and $127$ replaced by $B$. The leaf word appends one $d$-digit block per step; well-formedness follows from the width $d$; evaluation follows the recurrence; and genuine arithmetic remains inside each copy. The geometric identity follows by induction. Finally,
+
+$$
+G_{n+1}-G_n=(10^d-1)G_n+B>0.
+$$
+
+The theorem explains why a short certificate can have disproportionate consequences. It is not merely one solution but a reusable component. Different certified blocks may yield different infinite subfamilies, potentially overlapping but often distinguishable by decimal structure.
+
+## 8. Counting consequences
+
+Let $A(X)$ denote the number of orderly Friedman numbers not exceeding $X$. The $127$ family gives a direct lower bound. By the closed form, $F_n\le X$ is equivalent to
+
+$$
+1000^{n+1}
+\le
+1+\frac{999X}{127}.
+$$
+
+Thus every integer $n\ge0$ satisfying
+
+$$
+n+1
+\le
+\log_{1000}\left(1+\frac{999X}{127}\right)
+$$
+
+contributes a distinct orderly Friedman number at most $X$. Consequently, for $X\ge127$,
+
+$$
+A(X)
+\ge
+\left\lfloor
+\log_{1000}\left(1+\frac{999X}{127}
+ight)
+\right\rfloor.
+$$
+
+This lower bound is logarithmic. It proves infinitude but not positive density, nor even polynomial growth of the counting function. Several independent block families would improve the constant and might reveal richer combinatorial closure operations. More substantial growth would require certificates that can be combined in branching rather than purely repetitive ways.
+
+## 9. Data quality and falsified conjectures
+
+Three observations clarify what the present results do and do not establish.
+
+First, the parity conjecture “every orderly Friedman number is odd” is false by Theorem 3.2.
+
+Second, an advertised list ending in $14641,155$ is not strictly increasing as written, because $155<14641$. This may signal a truncated or transcribed term rather than a mathematical phenomenon. Any computational study should preserve original data while flagging such defects rather than silently sorting or repairing them.
+
+Third, the claim that orderly Friedman numbers are only sporadic is incompatible with Corollary 5.4. Nevertheless, “infinitely many” is not synonymous with “common.” The repeated-block family is exponentially spaced, so by itself it occupies a zero proportion of the positive integers. Determining the true density or order of growth of $A(X)$ remains open within this framework.
+
+## 10. Applications and broader connections
+
+Although motivated by recreational number theory, the construction illustrates several general ideas.
+
+**Syntax-directed evaluation.** A certificate carries both a word and a value. Validation resembles parsing an arithmetic language while preserving source order, a standard concern in compilers and symbolic algebra.
+
+**Composable witnesses.** A local identity can be packaged so that a structure-preserving operation combines copies into larger witnesses. Similar strategies appear in automata, tilings, coding constructions, and inductively generated combinatorial classes.
+
+**Exact arithmetic testing.** The recurrence and closed form provide two independent algorithms for the same integers. Comparing them is a useful pattern in reliable numerical software: derive one value operationally and another algebraically.
+
+**Self-reference without paradox.** The numeral supplies symbols used to reconstruct its own value, but the process is finite and explicit. This places Friedman phenomena among benign forms of self-description, alongside self-enumerating sentences and digit identities.
+
+**Search-space pruning.** Order preservation sharply reduces expression search. A dynamic program can split a digit interval into consecutive subintervals, compute attainable values for each, and combine them. The interval property follows precisely because leaves may not be permuted.
+
+## 11. Future work
+
+A fuller theory should broaden both grammar and enumeration.
+
+First, one may add factorial, roots, division under exactness conditions, and arbitrary exponent expressions. Each operation requires a precise domain convention. Roots, for example, must specify whether only exact integer roots are allowed; division must avoid undefined denominators and decide whether intermediate rational values are permitted.
+
+Second, a total parser and evaluator can connect printed expressions to the abstract certificate conditions. Such a parser should prove, mathematically, that successful parsing preserves the left-to-right leaf word and that evaluation agrees with the declarative semantics.
+
+Third, bounded certificate search can be organized by intervals of the digit string. For each interval, store attainable values together with witness expressions and arithmetic flags. Combining adjacent intervals respects order automatically. Bounds on exponent size and intermediate magnitude are necessary to make the search finite.
+
+Fourth, suspicious supplied data should be investigated. In particular, a terminal $155$ after $14641$ may be a truncated entry. A reproducible bounded search could determine whether $155$ itself has a certificate under the chosen grammar and compare that finding with plausible longer completions.
+
+Fifth, multiple repetition blocks and mixed-block grammars may strengthen lower bounds for $A(X)$. If two compatible blocks can be chosen independently at each stage while preserving certification, the number of certified words of a given length could grow exponentially in the number of blocks, converting a logarithmic counting lower bound into a power-law bound in $X$.
+
+Finally, asymptotic questions remain. The present exact identity completely describes one family, but not the full set of orderly Friedman numbers. Natural targets include upper and lower bounds for $A(X)$, the distribution of digit lengths, parity frequencies, and the effect of enlarging or restricting the operation set.
+
+## 12. Conclusion
+
+The identity
+
+$$
+-1+2^7=127
+$$
+
+is a compact arithmetic certificate whose digits are already in proper order. Treating it as a repeatable decimal block yields the sequence
+
+$$
+F_0=127,
+\qquad
+F_{n+1}=1000F_n+127.
+$$
+
+Every term is an orderly Friedman number, and
+
+$$
+999F_n=127(1000^{n+1}-1).
+$$
+
+The sequence is strictly increasing, so it establishes infinitely many distinct examples. The companion identity $7+3^6=736$ shows that even values occur. Together, these results replace several tempting empirical impressions with exact statements: orderliness does not force oddness, orderly examples are not merely finite curiosities, and a simple compositional mechanism accounts for an explicit exponentially growing family.
+
+The larger lesson is structural. Once certificate syntax, decimal width, and arithmetic value are separated cleanly, concatenation becomes a theorem-producing operation. A single three-digit self-description can then be amplified without limit.

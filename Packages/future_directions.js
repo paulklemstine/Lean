@@ -75,21 +75,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
-    "consumed_by_exp_id": "a8d24466",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0003",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T05:40:08.934956+00:00",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
@@ -265,6 +250,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T06:16:53.136495+00:00",
     "title": "**Conjecture.** Let a regular algebraic cuspidal automorphic representation of a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: triangle holonomy beyond the second moment\n\n## Result of this cycle\n\n`Shared/SeidelTriangleHolonomy.lean` establishes a cross-domain bridge among\nthree viewpoints:\n\n1. **spectral graph theory:** the cubic Seidel moment `tr(S\u00b3)`;\n2. **enumerative graph theory:** the signed sum of ordered vertex triples,\n   weighted `+1` when the three cyclic pairs contain an even number of edges and\n   `-1` when they contain an odd number (repeated-vertex triples have weight\n   zero);\n3. **signed-graph gauge theory:** the product of edge signs around a triangle is\n   a holonomy, unchanged by multiplying every incident edge sign by a vertex\n   sign.\n\nThe proved identity is\n\n`tr(S\u00b3) = \u2211 i, \u2211 j, \u2211 k, parityWeight adj i j k`.\n\nThe local cancellation theorem then proves invariance of this cubic trace under\narbitrary diagonal sign switching directly, without invoking eigenvalues or\nmatrix similarity. A checked three-vertex witness gives `-6` for the complete\ngraph and `6` for the empty graph in both the trace and parity formulations.\n\n## Immediate next theorem: unordered triple counts\n\nFor a symmetric loopless graph, every unordered three-element vertex set occurs\nin six orders. The next useful refinement is therefore\n\n`tr(S\u00b3) = 6 \u00b7 (N_even - N_odd)`,\n\nwhere `N_even` and `N_odd` count three-vertex subsets spanning respectively an\neven or odd number of edges. Formalizing this through `Finset (Finset V)` would\nturn the present ordered-sum identity into a directly usable graph-counting\nformula. It would also characterize vanishing cubic moment as exact balance of\nthe two parity classes.\n\n## Edge deletion as a local triangle-parity operation\n\nDeleting an edge `{a,b}` toggles the parity of exactly those triples containing\n`a` and `b`. Combining that observation with the unordered count formula should\ngive a combinatorial proof of the existing rank-two cubic update formula. The\nmatrix entry `(S\u00b2) a b` should emerge as the signed imbalance among common\nthird vertices. This would connect the matrix perturbation calculation to a\nlocal count and may expose tractable statistics for Tur\u00e1n graphs.\n\n## Higher-cycle holonomy\n\nFor every closed walk, vertex-switch signs cancel in the product of signed edge\nweights. The triangle result suggests proving a general closed-walk theorem and\nthen deriving switching invariance of `tr(S^m)` for every natural `m` by summing\nwalk holonomies. This gives a combinatorial route from local gauge invariance to\nall spectral moments, and eventually to characteristic-polynomial invariance\nvia Newton identities.\n\n## Corrections to two motivating conjectures\n\nTwo proposed directions need reformulation before further proof work:\n\n* Seidel switching preserves the whole spectrum and hence preserves energy.\n  Therefore energy cannot be a *strict* monotone within one switching class;\n  all representatives in that class have exactly the same energy.\n* From a fixed sum of squares, the general inequality `\u2016\u03bb\u2016\u2081 \u2265 \u2016\u03bb\u2016\u2082` has equality\n  when at most one coordinate is nonzero, not when all coordinates have equal\n  magnitude. Equal magnitudes instead maximize the `\u2113\u00b9` norm at fixed `\u2113\u00b2` and\n  fixed dimension. Consequently, an asymptotic conference characterization\n  cannot follow from the stated equality argument alone.\n\nA sound replacement question is whether additional Seidel constraints (zero\ntrace, integral characteristic polynomial, and off-diagonal signs) force a\nstronger lower bound than the unrestricted `\u2113\u00b9`/`\u2113\u00b2` estimate, and which graph\nfamilies approach that corrected bound.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0017",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "80f7c124",
+    "status": "available",
+    "timestamp": "2026-07-15T06:52:08.639786+00:00",
+    "title": "`Shared/SeidelTriangleHolonomy.lean` establishes a cross-domain bridge among"
   },
   {
     "consumed_by_exp_id": "",

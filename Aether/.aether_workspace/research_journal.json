@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a3c4f06b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`ρ(1-R)` **abstractly**:",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-14T17:13:01",
-      "title": "Deepening: Exact Exponent for Constrained Coset Guesswork"
-    },
-    {
-      "cycle_id": "44ee6caf",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Consciousness as an Emergent Fixed Point\n\nThis cycle formalized, with fully machine-checked proofs (no `sorry`, no extra\naxioms — the core Lawvere theorem depends on *no* axioms a",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 36,
-      "timestamp": "2026-07-14T17:47:35",
-      "title": "Deepening: Consciousness as Emergent Fixed Point"
-    },
-    {
       "cycle_id": "5b1c1bd3",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle deepened the \"Sperner ⇒ Nash\" theme along two fully-formalised chains.\n\n## What was proved\n\n### `SignedSperner.lean` — the 1-D Sperner lemma as an exact signed count\nUp",
@@ -499,29 +479,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T06:16:57",
       "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representatio"
+    },
+    {
+      "cycle_id": "80f7c124",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: triangle holonomy beyond the second moment\n\n## Result of this cycle\n\n`Shared/SeidelTriangleHolonomy.lean` establishes a cross-domain bridge among\nthree viewpoints:\n\n1. **spectral",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-15T06:52:13",
+      "title": "Elementary spectral-moment foundations of Seidel"
+    },
+    {
+      "cycle_id": "2ed994b6",
+      "domain": "Novelty",
+      "key_insight": "# Orderly Friedman numbers: results and future directions\n\n## Formal results obtained\n\n`Catalog/OrderlyFriedman.lean` gives an explicit expression language and a certificate predicate.  A valid certif",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-15T06:52:17",
+      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0bd39924",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Delta-Petrie Divisibility and Positivity\n\nThe Petrie block `𝔭_k = 1 + x + ⋯ + x^{k-1}` divides `xⁿ − 1` exactly when `k ∣ n`.\nThis cyclotomic criterion is the arithmetic skeleton",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-12T17:56:02",
-      "title": "Delta-Petrie Schur Positivity"
-    },
-    {
-      "cycle_id": "867d1ba2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Argumentation (VII): the grounded extension is the least complete extension\n\n## What this cycle adds\n\nPrevious cycles formalized Dung's abstract argumentation sem",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-12T18:13:35",
-      "title": "Deepening: This cycle deepens the formalization of Dung's abstract argumentation theory and"
-    },
     {
       "cycle_id": "0fe20e26",
       "domain": "Novelty",
@@ -2501,45 +2481,29 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T06:16:57",
       "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representatio"
+    },
+    {
+      "cycle_id": "80f7c124",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: triangle holonomy beyond the second moment\n\n## Result of this cycle\n\n`Shared/SeidelTriangleHolonomy.lean` establishes a cross-domain bridge among\nthree viewpoints:\n\n1. **spectral",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-15T06:52:13",
+      "title": "Elementary spectral-moment foundations of Seidel"
+    },
+    {
+      "cycle_id": "2ed994b6",
+      "domain": "Novelty",
+      "key_insight": "# Orderly Friedman numbers: results and future directions\n\n## Formal results obtained\n\n`Catalog/OrderlyFriedman.lean` gives an explicit expression language and a certificate predicate.  A valid certif",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-15T06:52:17",
+      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "50098ece",
-      "domain": "Novelty",
-      "name": "on",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "50098ece",
-      "domain": "Novelty",
-      "name": "fib_carmichael_composite",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "c4f680cf",
-      "domain": "Novelty",
-      "name": "iterate_evolve",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "c4f680cf",
-      "domain": "Novelty",
-      "name": "selfConsistent_conj",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "99a1b43f",
-      "domain": "Novelty",
-      "name": "sum_twoStep_eq_sum_degree_sq",
-      "quality": 0.93
-    },
-    {
-      "cycle_id": "99a1b43f",
-      "domain": "Novelty",
-      "name": "pathFive_sidorenko",
-      "quality": 0.93
-    },
     {
       "cycle_id": "99a1b43f",
       "domain": "Novelty",
@@ -2803,9 +2767,45 @@
       "domain": "Bridges",
       "name": "stable_iff_gameSolution",
       "quality": 0.93
+    },
+    {
+      "cycle_id": "80f7c124",
+      "domain": "Shared",
+      "name": "for",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "80f7c124",
+      "domain": "Shared",
+      "name": "for",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "80f7c124",
+      "domain": "Shared",
+      "name": "follows",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "2ed994b6",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "2ed994b6",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "2ed994b6",
+      "domain": "Novelty",
+      "name": "follows",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T06:16:57",
+  "last_updated": "2026-07-15T06:52:17",
   "open_questions": [
     {
       "context": "Everything is unconditional and `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8ceb2563",
-        "quality": 0.82,
-        "theorems": 13,
-        "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
-      },
-      {
         "cycle_id": "12ea9340",
         "quality": 0.82,
         "theorems": 27,
@@ -3637,6 +3631,12 @@
         "quality": 0.88,
         "theorems": 16,
         "title": "Deepening: The optimal portion ratio μ₂ equals 1 + ρ"
+      },
+      {
+        "cycle_id": "2ed994b6",
+        "quality": 0.7,
+        "theorems": 24,
+        "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers)"
       }
     ],
     "NumberTheory": [
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "e39940c9",
-        "quality": 0.45987362,
-        "theorems": 8,
-        "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
-      },
-      {
         "cycle_id": "6d0ee8e6",
         "quality": 0.6876800000000001,
         "theorems": 7,
@@ -3947,6 +3941,12 @@
         "quality": 0.88,
         "theorems": 0,
         "title": "Close Proofs: Bypassed"
+      },
+      {
+        "cycle_id": "80f7c124",
+        "quality": 0.73,
+        "theorems": 10,
+        "title": "Elementary spectral-moment foundations of Seidel"
       }
     ],
     "Tropical": [

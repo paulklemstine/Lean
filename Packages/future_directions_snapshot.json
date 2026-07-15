@@ -99,26 +99,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a8d24466",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0003",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T05:40:08.934956+00:00",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domain_bridges": [],
@@ -357,6 +337,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: triangle holonomy beyond the second moment\n\n## Result of this cycle\n\n`Shared/SeidelTriangleHolonomy.lean` establishes a cross-domain bridge among\nthree viewpoints:\n\n1. **spectral graph theory:** the cubic Seidel moment `tr(S³)`;\n2. **enumerative graph theory:** the signed sum of ordered vertex triples,\n   weighted `+1` when the three cyclic pairs contain an even number of edges and\n   `-1` when they contain an odd number (repeated-vertex triples have weight\n   zero);\n3. **signed-graph gauge theory:** the product of edge signs around a triangle is\n   a holonomy, unchanged by multiplying every incident edge sign by a vertex\n   sign.\n\nThe proved identity is\n\n`tr(S³) = ∑ i, ∑ j, ∑ k, parityWeight adj i j k`.\n\nThe local cancellation theorem then proves invariance of this cubic trace under\narbitrary diagonal sign switching directly, without invoking eigenvalues or\nmatrix similarity. A checked three-vertex witness gives `-6` for the complete\ngraph and `6` for the empty graph in both the trace and parity formulations.\n\n## Immediate next theorem: unordered triple counts\n\nFor a symmetric loopless graph, every unordered three-element vertex set occurs\nin six orders. The next useful refinement is therefore\n\n`tr(S³) = 6 · (N_even - N_odd)`,\n\nwhere `N_even` and `N_odd` count three-vertex subsets spanning respectively an\neven or odd number of edges. Formalizing this through `Finset (Finset V)` would\nturn the present ordered-sum identity into a directly usable graph-counting\nformula. It would also characterize vanishing cubic moment as exact balance of\nthe two parity classes.\n\n## Edge deletion as a local triangle-parity operation\n\nDeleting an edge `{a,b}` toggles the parity of exactly those triples containing\n`a` and `b`. Combining that observation with the unordered count formula should\ngive a combinatorial proof of the existing rank-two cubic update formula. The\nmatrix entry `(S²) a b` should emerge as the signed imbalance among common\nthird vertices. This would connect the matrix perturbation calculation to a\nlocal count and may expose tractable statistics for Turán graphs.\n\n## Higher-cycle holonomy\n\nFor every closed walk, vertex-switch signs cancel in the product of signed edge\nweights. The triangle result suggests proving a general closed-walk theorem and\nthen deriving switching invariance of `tr(S^m)` for every natural `m` by summing\nwalk holonomies. This gives a combinatorial route from local gauge invariance to\nall spectral moments, and eventually to characteristic-polynomial invariance\nvia Newton identities.\n\n## Corrections to two motivating conjectures\n\nTwo proposed directions need reformulation before further proof work:\n\n* Seidel switching preserves the whole spectrum and hence preserves energy.\n  Therefore energy cannot be a *strict* monotone within one switching class;\n  all representatives in that class have exactly the same energy.\n* From a fixed sum of squares, the general inequality `‖λ‖₁ ≥ ‖λ‖₂` has equality\n  when at most one coordinate is nonzero, not when all coordinates have equal\n  magnitude. Equal magnitudes instead maximize the `ℓ¹` norm at fixed `ℓ²` and\n  fixed dimension. Consequently, an asymptotic conference characterization\n  cannot follow from the stated equality argument alone.\n\nA sound replacement question is whether additional Seidel constraints (zero\ntrace, integral characteristic polynomial, and off-diagonal signs) force a\nstronger lower bound than the unrestricted `ℓ¹`/`ℓ²` estimate, and which graph\nfamilies approach that corrected bound.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0017",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "80f7c124",
+    "status": "available",
+    "timestamp": "2026-07-15T06:52:08.639786+00:00",
+    "title": "`Shared/SeidelTriangleHolonomy.lean` establishes a cross-domain bridge among"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Orderly Friedman numbers: results and future directions\n\n## Formal results obtained\n\n`Catalog/OrderlyFriedman.lean` gives an explicit expression language and a certificate predicate.  A valid certificate:\n\n- preserves the displayed decimal digits from left to right;\n- has well-formed concatenation widths;\n- evaluates to the represented positive integer; and\n- contains a genuine arithmetic operation, so the numeral itself is not a certificate.\n\nThe file proves directly that `127` is orderly via `-1 + 2^7`, and that `736` is orderly via `7 + 3^6`.\n\nThe main constructive result is an infinite family.  Define\n\n- `F 0 = 127`,\n- `F (n+1) = 1000 F(n) + 127`.\n\nThus the first values are `127`, `127127`, `127127127`, and `127127127127`.  Repeating the certified block expression and joining copies by decimal concatenation proves that every `F(n)` is orderly.  The exact closed form proved without division is\n\n`999 F(n) = 127 (1000^(n+1) - 1)`.\n\nThe family is strictly increasing, so these certificates establish infinitely many distinct orderly Friedman numbers.  In asymptotic notation the exact identity immediately describes exponential growth on the scale `1000^(n+1)` with coefficient `127/999`; a separate real-analysis limit theorem was not needed for the constructive result.\n\n## Contrarian conjectures tested\n\n1. **“Every orderly Friedman number is odd.”** Disproved formally: `736` has a valid orderly certificate and is even.\n2. **“The supplied list is strictly increasing.”** Disproved formally: the final supplied entry `155` follows `14641`.  This is likely a truncated or transcribed entry rather than a genuine ordering claim, but the Lean theorem faithfully checks the exact input list.\n3. **“Only sporadic examples exist.”** Refuted constructively by the strictly increasing infinite family above.\n\n## Computational evidence\n\nThe formal reduction checks the small certificates:\n\n| numeral | orderly expression | value |\n|---:|:---|---:|\n| 127 | `-1 + 2^7` | 127 |\n| 736 | `7 + 3^6` | 736 |\n| 127127 | concatenation of two copies of the first certificate | 127127 |\n| 127127127 | concatenation of three copies | 127127127 |\n\nThe mission identifies A036057 as the parent Friedman-number sequence.  External catalog metadata for the orderly subsequence was not available inside this project, so no additional OEIS identifier is asserted here.  The exact supplied terms are retained in Lean and their terminal ordering defect is formally established.\n\n## Next research steps\n\n- Build a total parser/evaluator for the full conventional Friedman grammar, including factorial, roots, and unrestricted exponent expressions, then prove it equivalent to a declarative syntax.\n- Implement a bounded, proof-producing search and certify a longer initial segment, including whether the supplied terminal `155` is a truncated term.\n- Prove lower bounds for the counting function of orderly Friedman numbers from several independent block families.  The present family alone yields a logarithmic lower bound in the cutoff.\n- Search for shorter repeatable seed blocks than `127`, and classify seeds whose certificate remains valid under block concatenation.\n- Investigate density questions.  The construction proves infinitude but neither positive density nor an asymptotic for the complete sequence.\n- Verify the orderly subsequence's own OEIS identifier and compare its exact operation conventions against the formal grammar before claiming catalog-level equivalence.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0018",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2ed994b6",
+    "status": "available",
+    "timestamp": "2026-07-15T06:52:16.407586+00:00",
+    "title": "`Catalog/OrderlyFriedman.lean` gives an explicit expression language and a certi"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domain_bridges": [],
     "domains": [
@@ -372,25 +392,6 @@
     "status": "available",
     "timestamp": "2026-07-15T06:16:18.228361+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2ed994b6",
-    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0000",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "oeis:80035",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T05:23:22.329148+00:00",
-    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
     "ambition_level": "extension",
