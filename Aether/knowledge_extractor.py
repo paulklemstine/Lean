@@ -2272,44 +2272,6 @@ Research mode: {concept.research_mode}
             self.inflight[job.project_id] = job
             self._save_inflight()
 
-        # Optional specialized critics (feature-flagged; default off).
-        if self.config.get("features", {}).get("enable_specialized_critics", False):
-            try:
-                critic = SpecializedCritic(self.pi_agent, timeout=120)
-                scores = critic.evaluate(
-                    lean_source=compact_lean,
-                    concept_title=job.concept.title if job.concept else "",
-                    concept_description=job.concept.concept_description if job.concept else "",
-                    existing_titles=existing_titles,
-                )
-                job.specialized_critic_scores = {
-                    "correctness": scores.correctness,
-                    "novelty": scores.novelty,
-                    "depth": scores.depth,
-                    "presentation": scores.presentation,
-                    "rationale": scores.rationale,
-                    "aggregate": scores.aggregate(),
-                }
-                # Blend with existing heuristic/structural score so the pipeline
-                # still benefits from local signal, but specialized critics dominate.
-                aggregate = scores.aggregate()
-                if aggregate >= 0:
-                    job.quality_score = 0.3 * job.quality_score + 0.7 * aggregate
-
-                # Phase A Inner Self-Reflection Loop: if depth or novelty is low, force a repair loop
-                if job.phase == "A" and (scores.depth < 0.5 or scores.novelty < 0.5) and getattr(job, "retry_count", 0) < getattr(self, "max_retries", 3):
-                    if job.quality_assessment is None:
-                        job.quality_assessment = {}
-                    job.quality_assessment["should_retry"] = True
-                    reason = f"SpecializedCritic rejected Phase A result: depth={scores.depth:.2f}, novelty={scores.novelty:.2f}. "
-                    reason += scores.rationale.get("depth", "") + " " + scores.rationale.get("novelty", "")
-                    job.quality_assessment["analysis"] = reason + "\n" + job.quality_assessment.get("analysis", "")
-                print(f"[SpecializedCritics] correctness={scores.correctness:.2f} novelty={scores.novelty:.2f} "
-                      f"depth={scores.depth:.2f} presentation={scores.presentation:.2f} "
-                      f"aggregate={aggregate:.2f} final_q={job.quality_score:.3f}")
-            except Exception as e:
-                print(f"[SpecializedCritics] Warning: failed to run: {e}")
-
         # Phase 3 (Lever B): store the fully-evaluated result so future cycles
         # with identical content+concept+prompt skip the LLM eval + critic.
         if _ec is not None and _ec_key is not None:
@@ -2797,11 +2759,6 @@ Research mode: {concept.research_mode}
         if not target_path or target_path.upper().startswith("REJECT"):
             return "REJECT"
 
-        # Reject SalvagedBest.lean — this convention is dead. Low-quality output
-        # is no longer salvaged; it's skipped entirely at the integration gate.
-        if Path(target_path).name == "SalvagedBest.lean":
-            print(f"[Integrate] Rejecting SalvagedBest.lean: {target_path}")
-            return "REJECT"
 
         if suffix == ".lean" and part.get("type") == "new":
             content = part.get("content", "")
@@ -3847,12 +3804,6 @@ Research mode: {concept.research_mode}
                     fname = _splits[i].strip()
                     # Clean _aristotle project dir prefixes
                     fname = "/".join(p for p in fname.split("/") if not re.match(r'^[0-9a-f]+_aristotle$', p))
-                    # Replace SalvagedBest.lean with a meaningful name derived from the concept title
-                    if Path(fname).name == "SalvagedBest.lean" and hasattr(job, 'concept') and job.concept:
-                        slug = re.sub(r'[^a-zA-Z0-9]+', '', job.concept.title[:40])
-                        if not slug:
-                            slug = "Proofs"
-                        fname = str(Path(fname).parent / f"{slug}.lean") if Path(fname).parent.name else f"{slug}.lean"
                     code = _splits[i + 1].strip() if i + 1 < len(_splits) else ""
                     basename = fname.split("/")[-1].replace(".lean", "")
                     if basename not in existing_files and code:
@@ -4465,48 +4416,6 @@ Research mode: {concept.research_mode}
 
         # Otherwise the thread stays active; a follow-up direction was already
         # extracted with thread_id in _extract_future_directions.
-        if self.config.get("features", {}).get("enable_abduction_loop", False):
-            self._ensure_thread_followup(thread, job)
-
-    def _ensure_thread_followup(self, thread: ResearchThread, job: ResearchJob) -> None:
-        """If the thread has no pending follow-up direction, generate one from thread context."""
-        try:
-            from research_memory import FutureDirectionsManager, FutureDirection
-            fd_manager = FutureDirectionsManager(self.workspace)
-            has_followup = any(
-                d.thread_id == thread.thread_id and d.status == "available"
-                for d in fd_manager._directions
-            )
-            if has_followup:
-                return
-
-            system = (
-                "You are a mathematical research director. Given a research thread's history, "
-                "propose a single focused next direction. Respond with valid JSON only:\n"
-                "{\"title\": string, \"description\": string, \"proof_strategy\": string}."
-            )
-            context = self._build_thread_context(job)
-            raw = self.pi_agent._call_ollama(system, context, timeout=120)
-            import json as _json
-            data = _json.loads(raw)
-            if not isinstance(data, dict):
-                return
-            fd = FutureDirection(
-                id=fd_manager._next_id(),
-                title=str(data.get("title", "Thread follow-up"))[:200],
-                description=str(data.get("description", ""))[:3000],
-                source_exp_id=job.job_id,
-                source_path=str(job.project_dir) if job.project_dir else "abduction_followup",
-                domains=fd_manager._infer_domains(str(data.get("title", "")) + " " + str(data.get("description", ""))),
-                proof_strategy=str(data.get("proof_strategy", ""))[:1000],
-                depth_estimate=3,
-                priority_score=0.85,
-                thread_id=thread.thread_id,
-            )
-            fd_manager.add_direction(fd)
-            print(f"[Abduction] Generated follow-up direction {fd.id} for thread {thread.thread_id}")
-        except Exception as e:
-            print(f"[Abduction] Warning: could not generate thread follow-up: {e}")
 
     def _is_counterexample_result(self, job: ResearchJob) -> bool:
         """Heuristic: does the job output contain a counterexample or disproof?"""
