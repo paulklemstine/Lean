@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2a098803",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle closed the three transport lemmas that identify the classical\nfactorial (factoradic) number system as a single point in the general\nmixed-radix family, and re-derived f",
-      "quality_score": 0.6,
-      "sorry_count": 6,
-      "theorem_count": 0,
-      "timestamp": "2026-07-13T02:01:11",
-      "title": "Close Proofs: The file `PhaseTransitionCurieWeiss.lean` proves that the Curie–Weiss "
-    },
-    {
       "cycle_id": "48b25c91",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Thermodynamic Horizon of Discovery\n\nThis cycle turns the informal \"heat death of mathematics\" picture into a small\ncollection of fully proved Lean 4 theorems (see `Thermodyna",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-15T21:19:47",
       "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
+    },
+    {
+      "cycle_id": "7a91e930",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThe formal development proves the classical affine construction inside the quantum definition: over every finite field, the nonzero slopes index `|K| - 1` pairwise orthogonal quan",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-15T21:19:55",
+      "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:19:47",
+  "last_updated": "2026-07-15T21:19:55",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "ecf65bf0",
-        "quality": 0.6173599999999999,
-        "theorems": 12,
-        "title": "Explicit Quantitative Lower Bound on Power-Saving for Monic Minkowski Polynomial"
-      },
-      {
         "cycle_id": "a9aa7bbf",
         "quality": 0.8,
         "theorems": 18,
@@ -3451,6 +3445,12 @@
         "quality": 0.67,
         "theorems": 19,
         "title": "ArXiv paper: Magnitude homology of tope graphs"
+      },
+      {
+        "cycle_id": "7a91e930",
+        "quality": 0.68,
+        "theorems": 18,
+        "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
       }
     ],
     "Logic": [
