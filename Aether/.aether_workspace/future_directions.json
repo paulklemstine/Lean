@@ -31527,6 +31527,1606 @@
       "created_at_tick": 0,
       "catalog_references": [],
       "ambition_level": "extension"
+    },
+    {
+      "id": "06e60dbb",
+      "title": "Logic Wild Speculation 7817",
+      "description": "Formalize a multi-valued logic system where the truth values themselves form a non-Abelian group, and prove its soundness. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.9319279370284742,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "02f89aa2",
+      "title": "Logic Wild Speculation 8702",
+      "description": "Formalize a multi-valued logic system where the truth values themselves form a non-Abelian group, and prove its soundness.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.9351705334902579,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "e800cb46",
+      "title": "Logic Wild Speculation 2863",
+      "description": "Formalize a multi-valued logic system where the truth values themselves form a non-Abelian group, and prove its soundness. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.9836170771046209,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "d74920d7",
+      "title": "Logic Wild Speculation 6651",
+      "description": "Formalize a multi-valued logic system where the truth values themselves form a non-Abelian group, and prove its soundness.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.931225227336988,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "cd1696df",
+      "title": "Logic Wild Speculation 6508",
+      "description": "Formalize a multi-valued logic system where the truth values themselves form a non-Abelian group, and prove its soundness. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.9868094652702137,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "f7c72ccd",
+      "title": "Topology Wild Speculation 3995",
+      "description": "Explore the topological properties of spaces with a fractional dimension defined via pathological open sets, such as a topology based on the Cantor set's complement. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.959572140346533,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "b0feea7b",
+      "title": "Topology Wild Speculation 1993",
+      "description": "Explore the topological properties of spaces with a fractional dimension defined via pathological open sets, such as a topology based on the Cantor set's complement.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.9424902435139939,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "34175ed5",
+      "title": "Topology Wild Speculation 7744",
+      "description": "Explore the topological properties of spaces with a fractional dimension defined via pathological open sets, such as a topology based on the Cantor set's complement. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.9245163327700614,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "579439e2",
+      "title": "Topology Wild Speculation 5582",
+      "description": "Explore the topological properties of spaces with a fractional dimension defined via pathological open sets, such as a topology based on the Cantor set's complement.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.9242356602242982,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "498299ba",
+      "title": "Topology Wild Speculation 2666",
+      "description": "Explore the topological properties of spaces with a fractional dimension defined via pathological open sets, such as a topology based on the Cantor set's complement. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.9155321892521042,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "68b11861",
+      "title": "Algebra Wild Speculation 6564",
+      "description": "Construct an algebraic structure where addition and multiplication are non-associative, chaotic operators inspired by strange attractors, and prove its fundamental theorem. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.987014338128248,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "a26139dd",
+      "title": "Algebra Wild Speculation 4794",
+      "description": "Construct an algebraic structure where addition and multiplication are non-associative, chaotic operators inspired by strange attractors, and prove its fundamental theorem.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9465187175093787,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "87746181",
+      "title": "Algebra Wild Speculation 4231",
+      "description": "Construct an algebraic structure where addition and multiplication are non-associative, chaotic operators inspired by strange attractors, and prove its fundamental theorem. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9984441235963475,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "4a2e2361",
+      "title": "Algebra Wild Speculation 9839",
+      "description": "Construct an algebraic structure where addition and multiplication are non-associative, chaotic operators inspired by strange attractors, and prove its fundamental theorem.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9520575128982227,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "3bce31e1",
+      "title": "Algebra Wild Speculation 8993",
+      "description": "Construct an algebraic structure where addition and multiplication are non-associative, chaotic operators inspired by strange attractors, and prove its fundamental theorem. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9293674019784179,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "5ec1d764",
+      "title": "Combinatorics Wild Speculation 7240",
+      "description": "Formalize Ramsey theory on infinite graphs where edge colors are drawn from an uncountable set, exploring bounds on monochromatic subgraphs. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.9974149049942954,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "ab0e0359",
+      "title": "Combinatorics Wild Speculation 7043",
+      "description": "Formalize Ramsey theory on infinite graphs where edge colors are drawn from an uncountable set, exploring bounds on monochromatic subgraphs.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.9406392458399393,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "58dff936",
+      "title": "Combinatorics Wild Speculation 8867",
+      "description": "Formalize Ramsey theory on infinite graphs where edge colors are drawn from an uncountable set, exploring bounds on monochromatic subgraphs. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.9273109129775361,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "9c931fa5",
+      "title": "Combinatorics Wild Speculation 2600",
+      "description": "Formalize Ramsey theory on infinite graphs where edge colors are drawn from an uncountable set, exploring bounds on monochromatic subgraphs.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.9339217853148347,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "71608e90",
+      "title": "Combinatorics Wild Speculation 4103",
+      "description": "Formalize Ramsey theory on infinite graphs where edge colors are drawn from an uncountable set, exploring bounds on monochromatic subgraphs. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.987816945092652,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "63119cea",
+      "title": "NumberTheory Wild Speculation 6634",
+      "description": "Investigate the properties of quantum integers\u2014a semi-ring where prime factorization is superposed, and prove an analogue of the Fundamental Theorem of Arithmetic. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9614744547070635,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "aab0482f",
+      "title": "NumberTheory Wild Speculation 6977",
+      "description": "Investigate the properties of quantum integers\u2014a semi-ring where prime factorization is superposed, and prove an analogue of the Fundamental Theorem of Arithmetic.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9571632691941071,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "2e6eb6c0",
+      "title": "NumberTheory Wild Speculation 5194",
+      "description": "Investigate the properties of quantum integers\u2014a semi-ring where prime factorization is superposed, and prove an analogue of the Fundamental Theorem of Arithmetic. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9761672768059486,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "3218eada",
+      "title": "NumberTheory Wild Speculation 7707",
+      "description": "Investigate the properties of quantum integers\u2014a semi-ring where prime factorization is superposed, and prove an analogue of the Fundamental Theorem of Arithmetic.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9589466257301468,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "1eb57943",
+      "title": "NumberTheory Wild Speculation 1427",
+      "description": "Investigate the properties of quantum integers\u2014a semi-ring where prime factorization is superposed, and prove an analogue of the Fundamental Theorem of Arithmetic. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9063373251192266,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "6ebe393e",
+      "title": "Geometry Wild Speculation 9131",
+      "description": "Formalize properties of hyperbolic geometries where the curvature fluctuates stochastically based on a random variable, proving expected area bounds. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9677871948824638,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "74c33686",
+      "title": "Geometry Wild Speculation 3409",
+      "description": "Formalize properties of hyperbolic geometries where the curvature fluctuates stochastically based on a random variable, proving expected area bounds.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9510684279937662,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "0c8a1d3b",
+      "title": "Geometry Wild Speculation 9078",
+      "description": "Formalize properties of hyperbolic geometries where the curvature fluctuates stochastically based on a random variable, proving expected area bounds. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9784777839257077,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "aa9c4ed5",
+      "title": "Geometry Wild Speculation 2879",
+      "description": "Formalize properties of hyperbolic geometries where the curvature fluctuates stochastically based on a random variable, proving expected area bounds.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9692015607612781,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "55e95c2c",
+      "title": "Geometry Wild Speculation 3754",
+      "description": "Formalize properties of hyperbolic geometries where the curvature fluctuates stochastically based on a random variable, proving expected area bounds. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9608227603952917,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "11bdf1f8",
+      "title": "CategoryTheory Wild Speculation 6814",
+      "description": "Construct an infinite-dimensional category where the morphisms between morphisms are given by the braid group, and prove its coherence conditions. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9825138739748246,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "dfdefe9e",
+      "title": "CategoryTheory Wild Speculation 6498",
+      "description": "Construct an infinite-dimensional category where the morphisms between morphisms are given by the braid group, and prove its coherence conditions.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9667891471808633,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "39132fa7",
+      "title": "CategoryTheory Wild Speculation 5684",
+      "description": "Construct an infinite-dimensional category where the morphisms between morphisms are given by the braid group, and prove its coherence conditions. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9808536211672794,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "dbfcfc48",
+      "title": "CategoryTheory Wild Speculation 3139",
+      "description": "Construct an infinite-dimensional category where the morphisms between morphisms are given by the braid group, and prove its coherence conditions.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9863871913819907,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "3b712405",
+      "title": "CategoryTheory Wild Speculation 9588",
+      "description": "Construct an infinite-dimensional category where the morphisms between morphisms are given by the braid group, and prove its coherence conditions. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9221783759631952,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "7337209a",
+      "title": "GraphTheory Wild Speculation 8598",
+      "description": "Explore graphs where edges exist in a state of quantum superposition, and prove the expected value of the chromatic number under measurement. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.9724899829149553,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "2d847d9e",
+      "title": "GraphTheory Wild Speculation 5530",
+      "description": "Explore graphs where edges exist in a state of quantum superposition, and prove the expected value of the chromatic number under measurement.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.9619719113706342,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "4877d1ff",
+      "title": "GraphTheory Wild Speculation 3045",
+      "description": "Explore graphs where edges exist in a state of quantum superposition, and prove the expected value of the chromatic number under measurement. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.9443017043554136,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "239ffcde",
+      "title": "GraphTheory Wild Speculation 1975",
+      "description": "Explore graphs where edges exist in a state of quantum superposition, and prove the expected value of the chromatic number under measurement.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.9004085136514548,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "bd698067",
+      "title": "GraphTheory Wild Speculation 6072",
+      "description": "Explore graphs where edges exist in a state of quantum superposition, and prove the expected value of the chromatic number under measurement. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.9892228380440254,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "25eed39d",
+      "title": "SetTheory Wild Speculation 9921",
+      "description": "Formalize a version of Set Theory where the Axiom of Choice is replaced by the Axiom of Determinacy, and prove properties of infinite games. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "SetTheory"
+      ],
+      "priority_score": 0.9347338376826468,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "d17b2a06",
+      "title": "SetTheory Wild Speculation 4088",
+      "description": "Formalize a version of Set Theory where the Axiom of Choice is replaced by the Axiom of Determinacy, and prove properties of infinite games.",
+      "domains": [
+        "SetTheory"
+      ],
+      "priority_score": 0.9209505541758205,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "413a6e18",
+      "title": "SetTheory Wild Speculation 8086",
+      "description": "Formalize a version of Set Theory where the Axiom of Choice is replaced by the Axiom of Determinacy, and prove properties of infinite games. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "SetTheory"
+      ],
+      "priority_score": 0.993862686848999,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "1b101684",
+      "title": "SetTheory Wild Speculation 1631",
+      "description": "Formalize a version of Set Theory where the Axiom of Choice is replaced by the Axiom of Determinacy, and prove properties of infinite games.",
+      "domains": [
+        "SetTheory"
+      ],
+      "priority_score": 0.9244994849474636,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "80a2fe6f",
+      "title": "SetTheory Wild Speculation 5168",
+      "description": "Formalize a version of Set Theory where the Axiom of Choice is replaced by the Axiom of Determinacy, and prove properties of infinite games. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "SetTheory"
+      ],
+      "priority_score": 0.9096922866225882,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "b6ca0251",
+      "title": "NumberTheory Wild Speculation 7793",
+      "description": "Prove theorems about alien primes, numbers that are prime in base 10 but composite in a non-integer base like the golden ratio. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9554221654764452,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "0d8046d7",
+      "title": "NumberTheory Wild Speculation 6397",
+      "description": "Prove theorems about alien primes, numbers that are prime in base 10 but composite in a non-integer base like the golden ratio.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9708741684950731,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "1dd824d7",
+      "title": "NumberTheory Wild Speculation 3416",
+      "description": "Prove theorems about alien primes, numbers that are prime in base 10 but composite in a non-integer base like the golden ratio. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9283537353257675,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "43a08c4c",
+      "title": "NumberTheory Wild Speculation 6505",
+      "description": "Prove theorems about alien primes, numbers that are prime in base 10 but composite in a non-integer base like the golden ratio.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9198367323013446,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "03484cb0",
+      "title": "NumberTheory Wild Speculation 4783",
+      "description": "Prove theorems about alien primes, numbers that are prime in base 10 but composite in a non-integer base like the golden ratio. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "NumberTheory"
+      ],
+      "priority_score": 0.9331837095367181,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "da45c675",
+      "title": "Algebra Wild Speculation 9312",
+      "description": "Explore the representation theory of groups acting on fractal spaces, proving irreducible character relations. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9839398207930825,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "6c10061c",
+      "title": "Algebra Wild Speculation 8402",
+      "description": "Explore the representation theory of groups acting on fractal spaces, proving irreducible character relations.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9719975866473318,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "30fe228b",
+      "title": "Algebra Wild Speculation 6579",
+      "description": "Explore the representation theory of groups acting on fractal spaces, proving irreducible character relations. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9194426337661917,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "36936742",
+      "title": "Algebra Wild Speculation 1966",
+      "description": "Explore the representation theory of groups acting on fractal spaces, proving irreducible character relations.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9835253274845415,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "2e6af9f0",
+      "title": "Algebra Wild Speculation 9378",
+      "description": "Explore the representation theory of groups acting on fractal spaces, proving irreducible character relations. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9845784589637849,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "39bfffc3",
+      "title": "Topology Wild Speculation 6907",
+      "description": "Formalize the concept of a M\u00f6bius manifold where local neighborhoods are non-orientable in 4 dimensions. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.9499220810752763,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "8e82a3b7",
+      "title": "Topology Wild Speculation 9084",
+      "description": "Formalize the concept of a M\u00f6bius manifold where local neighborhoods are non-orientable in 4 dimensions.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.9747595106540718,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "e7765d26",
+      "title": "Topology Wild Speculation 6286",
+      "description": "Formalize the concept of a M\u00f6bius manifold where local neighborhoods are non-orientable in 4 dimensions. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.9742866894609066,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "6de826ae",
+      "title": "Topology Wild Speculation 9825",
+      "description": "Formalize the concept of a M\u00f6bius manifold where local neighborhoods are non-orientable in 4 dimensions.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.9212157306545371,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "954fa6c8",
+      "title": "Topology Wild Speculation 4172",
+      "description": "Formalize the concept of a M\u00f6bius manifold where local neighborhoods are non-orientable in 4 dimensions. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Topology"
+      ],
+      "priority_score": 0.900007000437642,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "eef5ad3d",
+      "title": "Logic Wild Speculation 4434",
+      "description": "Develop a formal proof system for paradoxes, exploring consistent theories of inconsistent axioms using paraconsistent logic. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.9537255004393195,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "dba129ff",
+      "title": "Logic Wild Speculation 8949",
+      "description": "Develop a formal proof system for paradoxes, exploring consistent theories of inconsistent axioms using paraconsistent logic.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.9040914040304345,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "7f6e29a5",
+      "title": "Logic Wild Speculation 6177",
+      "description": "Develop a formal proof system for paradoxes, exploring consistent theories of inconsistent axioms using paraconsistent logic. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.9542034388755581,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "bc216b41",
+      "title": "Logic Wild Speculation 9278",
+      "description": "Develop a formal proof system for paradoxes, exploring consistent theories of inconsistent axioms using paraconsistent logic.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.9471924787852517,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "7a978751",
+      "title": "Logic Wild Speculation 2453",
+      "description": "Develop a formal proof system for paradoxes, exploring consistent theories of inconsistent axioms using paraconsistent logic. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Logic"
+      ],
+      "priority_score": 0.9529805241184222,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "d7a1d356",
+      "title": "RealAnalysis Wild Speculation 8391",
+      "description": "Define and prove properties of non-Newtonian calculus where the derivative operator is non-linear and based on geometric means. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "RealAnalysis"
+      ],
+      "priority_score": 0.9958608428889004,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "9fd7f9f2",
+      "title": "RealAnalysis Wild Speculation 2405",
+      "description": "Define and prove properties of non-Newtonian calculus where the derivative operator is non-linear and based on geometric means.",
+      "domains": [
+        "RealAnalysis"
+      ],
+      "priority_score": 0.9488095921951136,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "e852af31",
+      "title": "RealAnalysis Wild Speculation 4396",
+      "description": "Define and prove properties of non-Newtonian calculus where the derivative operator is non-linear and based on geometric means. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "RealAnalysis"
+      ],
+      "priority_score": 0.9915561265875066,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "77ec221d",
+      "title": "RealAnalysis Wild Speculation 1074",
+      "description": "Define and prove properties of non-Newtonian calculus where the derivative operator is non-linear and based on geometric means.",
+      "domains": [
+        "RealAnalysis"
+      ],
+      "priority_score": 0.9342595816084598,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "130efc16",
+      "title": "RealAnalysis Wild Speculation 5296",
+      "description": "Define and prove properties of non-Newtonian calculus where the derivative operator is non-linear and based on geometric means. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "RealAnalysis"
+      ],
+      "priority_score": 0.9592455786261258,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "12f788ba",
+      "title": "ComplexAnalysis Wild Speculation 5621",
+      "description": "Investigate analytic continuation over fractal boundaries that are everywhere non-differentiable. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "ComplexAnalysis"
+      ],
+      "priority_score": 0.9950129439452392,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "54f7df7f",
+      "title": "ComplexAnalysis Wild Speculation 8489",
+      "description": "Investigate analytic continuation over fractal boundaries that are everywhere non-differentiable.",
+      "domains": [
+        "ComplexAnalysis"
+      ],
+      "priority_score": 0.9183599174979379,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "ffaa6570",
+      "title": "ComplexAnalysis Wild Speculation 8368",
+      "description": "Investigate analytic continuation over fractal boundaries that are everywhere non-differentiable. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "ComplexAnalysis"
+      ],
+      "priority_score": 0.9367027682034722,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "dd264e38",
+      "title": "ComplexAnalysis Wild Speculation 6878",
+      "description": "Investigate analytic continuation over fractal boundaries that are everywhere non-differentiable.",
+      "domains": [
+        "ComplexAnalysis"
+      ],
+      "priority_score": 0.9923439206045839,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "da6dd775",
+      "title": "ComplexAnalysis Wild Speculation 3232",
+      "description": "Investigate analytic continuation over fractal boundaries that are everywhere non-differentiable. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "ComplexAnalysis"
+      ],
+      "priority_score": 0.9091980341903165,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "6792a3bc",
+      "title": "GraphTheory Wild Speculation 6197",
+      "description": "Prove the existence of hypergraphs that cannot be embedded in any finite-dimensional Euclidean space but can be embedded in a finite-dimensional p-adic space. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.9974046671117499,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "4d3ee1a8",
+      "title": "GraphTheory Wild Speculation 7203",
+      "description": "Prove the existence of hypergraphs that cannot be embedded in any finite-dimensional Euclidean space but can be embedded in a finite-dimensional p-adic space.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.9548165176927217,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "09873db5",
+      "title": "GraphTheory Wild Speculation 2731",
+      "description": "Prove the existence of hypergraphs that cannot be embedded in any finite-dimensional Euclidean space but can be embedded in a finite-dimensional p-adic space. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.9692569889232671,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "28e553ac",
+      "title": "GraphTheory Wild Speculation 2825",
+      "description": "Prove the existence of hypergraphs that cannot be embedded in any finite-dimensional Euclidean space but can be embedded in a finite-dimensional p-adic space.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.9472978615407243,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "f91979c0",
+      "title": "GraphTheory Wild Speculation 8357",
+      "description": "Prove the existence of hypergraphs that cannot be embedded in any finite-dimensional Euclidean space but can be embedded in a finite-dimensional p-adic space. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "GraphTheory"
+      ],
+      "priority_score": 0.928961338227289,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "35e41bbc",
+      "title": "Algebra Wild Speculation 6077",
+      "description": "Formalize algebraic structures over the surreal numbers and prove a generalized Cayley-Hamilton theorem for them. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9551098603314808,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "7183c0c4",
+      "title": "Algebra Wild Speculation 9040",
+      "description": "Formalize algebraic structures over the surreal numbers and prove a generalized Cayley-Hamilton theorem for them.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9476142417603729,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "6117ecdf",
+      "title": "Algebra Wild Speculation 7550",
+      "description": "Formalize algebraic structures over the surreal numbers and prove a generalized Cayley-Hamilton theorem for them. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9952178121887076,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "f846c24f",
+      "title": "Algebra Wild Speculation 1979",
+      "description": "Formalize algebraic structures over the surreal numbers and prove a generalized Cayley-Hamilton theorem for them.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9331611251380623,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "96d7a9ae",
+      "title": "Algebra Wild Speculation 5358",
+      "description": "Formalize algebraic structures over the surreal numbers and prove a generalized Cayley-Hamilton theorem for them. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Algebra"
+      ],
+      "priority_score": 0.9528203927565344,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "47ec197d",
+      "title": "Geometry Wild Speculation 9556",
+      "description": "Explore non-Euclidean spaces where the triangle inequality is fundamentally reversed. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9817749346368265,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "2fc9905a",
+      "title": "Geometry Wild Speculation 3652",
+      "description": "Explore non-Euclidean spaces where the triangle inequality is fundamentally reversed.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9690892283463485,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "68836d02",
+      "title": "Geometry Wild Speculation 3572",
+      "description": "Explore non-Euclidean spaces where the triangle inequality is fundamentally reversed. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9817607733986673,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "24e49798",
+      "title": "Geometry Wild Speculation 5750",
+      "description": "Explore non-Euclidean spaces where the triangle inequality is fundamentally reversed.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9370998709963638,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "0412d760",
+      "title": "Geometry Wild Speculation 7718",
+      "description": "Explore non-Euclidean spaces where the triangle inequality is fundamentally reversed. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Geometry"
+      ],
+      "priority_score": 0.9338539742515747,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "76dc6df2",
+      "title": "CategoryTheory Wild Speculation 2006",
+      "description": "Formalize the theory of fuzzy categories where morphisms exist with a probability p, and define functors between them. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9644902084417377,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "482c65c8",
+      "title": "CategoryTheory Wild Speculation 7608",
+      "description": "Formalize the theory of fuzzy categories where morphisms exist with a probability p, and define functors between them.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9008029753082648,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "fad24341",
+      "title": "CategoryTheory Wild Speculation 5319",
+      "description": "Formalize the theory of fuzzy categories where morphisms exist with a probability p, and define functors between them. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9291988984951002,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "122e1908",
+      "title": "CategoryTheory Wild Speculation 9753",
+      "description": "Formalize the theory of fuzzy categories where morphisms exist with a probability p, and define functors between them.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9687948509875525,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "2bcb133b",
+      "title": "CategoryTheory Wild Speculation 8680",
+      "description": "Formalize the theory of fuzzy categories where morphisms exist with a probability p, and define functors between them. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "CategoryTheory"
+      ],
+      "priority_score": 0.9125962608852355,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "803e3636",
+      "title": "Combinatorics Wild Speculation 7795",
+      "description": "Investigate combinatorial games played on non-orientable surfaces and prove winning strategies for them. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.9742557607565858,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "c2daf51c",
+      "title": "Combinatorics Wild Speculation 1224",
+      "description": "Investigate combinatorial games played on non-orientable surfaces and prove winning strategies for them.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.9409103157728671,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "f3f66440",
+      "title": "Combinatorics Wild Speculation 2903",
+      "description": "Investigate combinatorial games played on non-orientable surfaces and prove winning strategies for them. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.9538732373955727,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "4801c9b0",
+      "title": "Combinatorics Wild Speculation 1004",
+      "description": "Investigate combinatorial games played on non-orientable surfaces and prove winning strategies for them.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.9156510685918694,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
+    },
+    {
+      "id": "21d14bd7",
+      "title": "Combinatorics Wild Speculation 2961",
+      "description": "Investigate combinatorial games played on non-orientable surfaces and prove winning strategies for them. Also consider the boundary cases where standard intuition completely breaks down.",
+      "domains": [
+        "Combinatorics"
+      ],
+      "priority_score": 0.9716003039889598,
+      "status": "available",
+      "research_mode": "prove",
+      "attempt_count": 0,
+      "consumed_by_exp_id": "",
+      "created_at_tick": 0,
+      "catalog_references": [],
+      "ambition_level": "breakthrough"
     }
   ],
   "pruned": [
