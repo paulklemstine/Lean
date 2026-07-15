@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "61c22649",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the study of the opposite-semicube Helly property on Cartesian\nproducts of partial cubes and its equivalence with harmonic-evenness.\n\n## 1. Harmonic-evenness is a mul",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 29,
-      "timestamp": "2026-07-12T20:49:46",
-      "title": "The opposite-semicube Helly property characterizes harmonic-evenness in Cartesian products of partia"
-    },
-    {
       "cycle_id": "eb025541",
       "domain": "Novelty",
       "key_insight": "# Future Directions — A Second Law for Mathematical Derivations\n\nThis cycle promoted the single-step Landauer theory of proof to a *pipeline* theory: an entire\nderivation, viewed as a sequence of step",
@@ -2501,6 +2491,16 @@
       "theorem_count": 101,
       "timestamp": "2026-07-15T08:57:47",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "0f633d08",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Magnitude Homology of Tope Graphs\n\n## 1. Oriented-matroid extension of the face-flag basis\n\n**Conjecture.** For every finite oriented matroid, the magnitude homology of its tope g",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 107,
+      "timestamp": "2026-07-15T08:57:56",
+      "title": "ArXiv paper: Magnitude homology of tope graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-15T08:57:47",
+  "last_updated": "2026-07-15T08:57:56",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "ce78e135",
-        "quality": 0.48488999999999993,
-        "theorems": 6,
-        "title": "Prove Fermats Little Theorem for p=5"
-      },
-      {
         "cycle_id": "150736b0",
         "quality": 0.6976800000000001,
         "theorems": 11,
@@ -3513,6 +3507,12 @@
         "quality": 0.86,
         "theorems": 5,
         "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
+      },
+      {
+        "cycle_id": "0f633d08",
+        "quality": 0.66,
+        "theorems": 107,
+        "title": "ArXiv paper: Magnitude homology of tope graphs"
       }
     ],
     "MachineLearning": [
