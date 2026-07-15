@@ -1,83 +1,51 @@
-# Computational Evidence — Combinatorics of the Universal Library
+# Computational Evidence
 
-We model the Library of Babel as `Volume A L = Fin L → Fin A`: all strings of
-length `L` over an alphabet of `A` symbols. Borges' parameters are `A = 25`,
-`L = 1312000`, giving `25^1312000` volumes.
+## Small-case calculations
 
-## 1. Library size and constrained-content counts
+For an alphabet of size four and passages of length two, there are `4² = 16` possible passages. The cyclic word
 
-| A | L | volumes `A^L` | fix 1 symbol → `A^(L-1)` |
-|---|---|---------------|--------------------------|
-| 2 | 3 | 8             | 4                        |
-| 4 | 2 | 16            | 4                        |
-| 3 | 3 | 27            | 9                        |
+`0010203112132233`
 
-Fixing `d` positions always divides the population by `A^d`
-(→ `card_matchesOn : A^(L - d)`).
+has the successive cyclic windows
 
-## 2. Probability of finding a fixed passage (union bound)
+| position | window |
+|---:|:---|
+| 0 | 00 |
+| 1 | 01 |
+| 2 | 10 |
+| 3 | 02 |
+| 4 | 20 |
+| 5 | 03 |
+| 6 | 31 |
+| 7 | 11 |
+| 8 | 12 |
+| 9 | 21 |
+| 10 | 13 |
+| 11 | 32 |
+| 12 | 22 |
+| 13 | 23 |
+| 14 | 33 |
+| 15 | 30 |
 
-For a fixed passage `p` of length `m`, a fixed window matches an `A^{-m}`
-fraction of volumes; there are `L - m + 1` windows.
+Thus every ordered pair occurs once. Repeating the initial symbol linearizes the cycle to the length-seventeen word `00102031121322330`.
 
-Enumeration check, `A = 2, L = 3`, pattern `p = 11`:
-strings of length 3 containing `11` as a window = {`110`, `011`, `111`} → 3.
-- Exact probability `3/8 = 0.375`.
-- Union bound `(L-m+1)/A^m = (3-2+1)/2^2 = 2/4 = 0.5`.
-- `0.375 ≤ 0.5` ✓ (bound is genuine because overlapping windows are over-counted).
+For a binary ambient volume of length three and the fixed pattern `11`, the matching volumes are `011`, `110`, and `111`. The exact probability is `3/8`; the placement union bound is `2·2⁻² = 1/2`.
 
-`A = 2, L = 4`, pattern `p = 11`: strings containing `11` = 8 of 16 → `0.5`;
-bound `(4-2+1)/4 = 3/4` ✓.
+## Sequence search
 
-This confirms `prob_containsPattern_le : count / A^L ≤ (L - m + 1) / A^m`.
-
-**Correction to the heuristic.** The mission text estimates the probability as
-`|T| · A^{-k}`, i.e. a leading factor of `|T| = m`. The honest combinatorial
-prefactor is the number of *placements* `L - m + 1 ≈ L` (for `m ≪ L`), not `m`.
-We prove the corrected inequality.
-
-## 3. The diagonal argument (finite Cantor)
-
-Number of possible catalogs (subsets of the Library) is `2^(A^L)`; number of
-volumes is `A^L`. Since `n < 2^n` for all `n`, we get `A^L < 2^(A^L)`.
-
-| A | L | volumes `A^L` | catalogs `2^(A^L)` |
-|---|---|---------------|--------------------|
-| 2 | 1 | 2             | 4                  |
-| 2 | 2 | 4             | 16                 |
-| 2 | 3 | 8             | 256                |
-
-Hence no single volume can be assigned a distinct complete catalog
-(→ `no_complete_self_catalog`).
-
-## 4. Distributed catalog threshold
-
-A distributed catalog `c : Fin N → Volume` is complete iff it is surjective.
-Since each catalog volume identifies exactly one library volume, completeness
-needs `N ≥ A^L` (→ `distributed_catalog_iff`).
-
-Mini-Library `A = 4, L = 16`: `A^L = 4^16 = 4294967296`.
-- Heuristic threshold `A^L / (L·log₂A) = 4^16 / (16·2) = 4^16/32 ≈ 1.34e8`.
-- True threshold `A^L = 4.29e9`.
-- The heuristic underestimates by a factor `L·log₂A = 32`.
-
-## 5. de Bruijn catalog capacity (mini-Library `A = 4`)
-
-A single index volume of length `L` displays at most `A^k` distinct length-`k`
-codes (subword-complexity bound), and once `L ≥ A^k + k` a code must repeat.
-
-| A | k | distinct codes `A^k` | de Bruijn length `A^k + k - 1` |
-|---|---|----------------------|--------------------------------|
-| 4 | 1 | 4                    | 4                              |
-| 4 | 2 | 16                   | 17                             |
-| 4 | 3 | 64                   | 66                             |
-
-`B(4,2)` (cyclic length `16`) contains each of the `16` length-2 codes exactly
-once; its linearisation has length `17 = 4^2 + 2 - 1`, matching the collision
-threshold (→ `catalog_codes_le`, `catalog_forces_collision`).
+The number of words of length `L` over an alphabet of size `A` is `A^L`. For `A = 4`, the initial values are `1, 4, 16, 64, 256, 1024, ...`, the standard powers-of-four sequence (OEIS A000302).
 
 ## Counterexample hunt
 
-No counterexamples were found to the four proved inequalities across all tested
-small cases (`A ≤ 4`, `L ≤ 6`, `m, k ≤ L`). The single refuted claim was the
-mission's heuristic prefactor `|T|`, replaced by the correct `L - |T| + 1`.
+The proposed prefactor “passage length” is not the correct general union-bound prefactor. A length-one target in a length-three binary volume has three possible placements, not one. For the target symbol `1`, seven of eight volumes contain it, whereas the expression `1·2⁻¹ = 1/2` underestimates the probability. The corrected prefactor is the number of windows, `L-m+1`; this gives the valid upper bound `3/2` (loose but correct).
+
+The proposed distributed threshold based only on raw bit capacity also fails under the one-entry-per-catalog-volume model. Listing every member of a library with `A^L` volumes requires at least `A^L` entries. A smaller information-theoretic threshold presupposes a block decoder that extracts multiple addresses from one catalog volume.
+
+## Summary table
+
+| claim tested | outcome |
+|:---|:---|
+| `4²` cyclic windows can list all two-symbol volumes | confirmed by the explicit word above |
+| all windows can be collision-free beyond the de Bruijn length | false by finite cardinality |
+| passage length is the universal probability prefactor | false; placements supply the union-bound prefactor |
+| a one-entry-per-volume catalog can use fewer than `A^L` entries | false |
