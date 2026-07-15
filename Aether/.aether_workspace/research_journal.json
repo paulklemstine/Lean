@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3959b92d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Bayesian Werewolf ↔ Combinatorics bridge\n\nThe file `BayesianWerewolfHypergeometric.lean` establishes that the elementary\nprobabilistic moments of the hypergeometric \"werewolves-i",
-      "quality_score": 0.82,
-      "sorry_count": 1,
-      "theorem_count": 9,
-      "timestamp": "2026-07-13T01:25:17",
-      "title": "Close Proofs: Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-    },
-    {
       "cycle_id": "2a098803",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle closed the three transport lemmas that identify the classical\nfactorial (factoradic) number system as a single point in the general\nmixed-radix family, and re-derived f",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-15T21:19:37",
       "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+    },
+    {
+      "cycle_id": "1a2ab56f",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Faithful binary-tree layer.** Define finite connected acyclic simple graphs whose\n   leaves are labelled by `Fin N`, internal vertices have degree three, and prove that\n   su",
+      "quality_score": 0.65,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-15T21:19:47",
+      "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:19:37",
+  "last_updated": "2026-07-15T21:19:47",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "71637775",
-        "quality": 0.83,
-        "theorems": 41,
-        "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
-      },
-      {
         "cycle_id": "50098ece",
         "quality": 0.84,
         "theorems": 26,
@@ -3631,6 +3625,12 @@
         "quality": 0.7,
         "theorems": 9,
         "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
+      },
+      {
+        "cycle_id": "1a2ab56f",
+        "quality": 0.65,
+        "theorems": 19,
+        "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
       },
       {
         "cycle_id": "1a2ab56f",
