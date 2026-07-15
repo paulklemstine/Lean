@@ -782,25 +782,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "da85fe77",
-    "description": "Building on cycle e0843845 (Q=0.800), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` placeholders. All three are now proved\n`sorry`-free, with dependencies confirmed to use only the standar",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_e0843845_888987c1",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e0843845",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T13:44:00.566539+00:00",
-    "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
     "domain_bridges": [],
@@ -3928,6 +3909,26 @@
     "status": "available",
     "timestamp": "2026-07-15T02:32:09.699638+00:00",
     "title": "**Conjecture.** For smooth non-vanishing closed beam loops, the endpoint defect "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length `k` should admit a canonical bijection with permutations of `k` elements such that factoradic evaluation agrees with lexicographic rank and digit extraction agrees with Lehmer inversion counts. The bijection should intertwine adjacent transpositions with an explicit carry-and-borrow operation on factorial codes.\n\nThe key insight is that the local alphabet of the `i`-th factoradic digit has exactly `i+1` elements, matching the successive insertion choices in a permutation.\n\nWhy now? The finite classification isolates precisely the dependent product needed for insertion coding, while exact agreement of extraction algorithms supplies the arithmetic half of the desired compatibility.\n\n## 2. Carry normalization as a terminating confluent rewrite system\n\nAllow unrestricted natural digits at every factorial position and orient the relation `(i+1)·i! = (i+1)!` as a local carry rule. On finitely supported digit sequences, these rules should form a terminating and confluent rewriting system whose unique normal forms are exactly the valid factorial codes. Moreover, normalization should preserve value and compute the extracted factoradic digits.\n\nThe key insight is that factorial place values turn every local excess digit into a carry of exactly one unit at the next position, while the represented value supplies a global termination measure.\n\nWhy now? Existence and uniqueness of bounded representations are established; confluence would strengthen this extensional classification into an algorithm-independent normalization theorem.\n\n## 3. Chinese-remainder coordinates for factorial intervals\n\nDetermine exactly for which `k` the interval `Fin (k!)` can be identified with a product of residue rings in a way compatible with factorial-code truncation. More generally, classify the obstruction to making the factorial-code equivalence multiplicative, and express it through the non-coprime overlap among the radices `1,2,…,k`.\n\nThe key insight is that mixed-radix coordinates resemble residue coordinates but encode nested divisibility rather than pairwise coprimality, so the discrepancy should be measured by a precise extension or filtration invariant.\n\nWhy now? The additive finite classification provides a canonical coordinate set against which any proposed ring-compatible coordinate system can be compared and falsified.\n\n## 4. Infinite factorial expansions and profinite completion\n\nThe inverse system obtained by truncating factorial codes should be canonically homeomorphic to the inverse limit of the finite rings `ℤ/(k!)ℤ`. Under this homeomorphism, finite evaluation should be the residue projection, and the carry-normalized addition of infinite codes should recover the topological ring structure of the profinite integers.\n\nThe key insight is that the divisibility chain `k! ∣ (k+1)!` makes factorial truncation compatible with inverse-limit projections, unlike arbitrary variable-radix systems.\n\nWhy now? The sharp finite equivalence supplies every finite stage and its unique coordinates; the remaining challenge is to prove coherence of these equivalences under truncation and then transport the inverse-limit topology and algebra.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1342",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "da85fe77",
+    "status": "available",
+    "timestamp": "2026-07-15T02:32:29.643432+00:00",
+    "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
   },
   {
     "ambition_level": "extension",
