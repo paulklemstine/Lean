@@ -16784,7 +16784,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "80f7c124",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16812,7 +16812,7 @@
       "source": "",
       "source_exp_id": "d954b0de",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d954b0de",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_2557b425",
       "timestamp": "2026-07-13T19:07:02.581945+00:00",
       "title": "Elementary spectral-moment foundations of Seidel"
