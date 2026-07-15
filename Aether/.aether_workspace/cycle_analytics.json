@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-15T21:54:37.503699+00:00",
+  "last_updated": "2026-07-15T23:03:13.596429+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -19473,6 +19473,7 @@
       "outcome_quality": 0.63,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -19544,6 +19545,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-15T21:54:37.475646+00:00",
       "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Pythagorean",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "7c9d4e79",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skipped": false,
+      "prompt_version": "v24",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784152458.9827244,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-15T23:03:13.568815+00:00",
+      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
     }
   ]
 }
