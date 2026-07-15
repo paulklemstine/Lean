@@ -179,18 +179,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "48cec64e",
+    "description": "Investigate the ArXiv paper 'Cyclic Projective Orbits on Rational Normal Curves and MDS Codes' and formalize its key results. Abstract: Let \\(A\\) be a cyclic operator on an \\(r\\)-dimensional vector space over a field \\(k\\), and let \\(z\\) be a cyclic vector. Their Krylov code has parity-check matrix \\((z,Az,\\ldots,A^{n-1}z)\\). For \\(r\\ge 3\\) and \\(n\\ge r+3\\), we prove that an MDS orbit segment lies on a rational normal curve precisely when the projective pair \\((A,[z])\\) is conjugate to one arising from the \\((r-1)\\)-st symmetric-power action of \\(\\mathrm{PGL}_2\\). Over finite fields, for companion operators, this gives a complete classification of the generalized Reed--Solomon locus into split semisimple, two nonsplit semisimple, and unipotent families. Over an algebraically closed field \\(k\\), the Zariski closure \\(\\GRSsurf_{r,k}\\) of the semisimple GRS coefficient locus is an irreducible rational surface, generically parameterized two-to-one by a two-dimensional torus of geometric-progression root sets; reversal is the generic ambiguity. The affine quotient of the parameter torus by reversal is the normalization of \\",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0021",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12761v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-15T12:51:13.579274+00:00",
+    "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0021",
+    "id": "fd_0022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12912v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T12:33:25.469761+00:00",
     "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The Balanced Four-Color Theorem' and formalize its key results. Abstract: We show that every planar graph with $n \\geq 3$ vertices admits a 4-coloring in which each color is used on fewer than $n/2$ vertices. This bound is the best possible. Moreover, such a coloring can be found in $O(n \\log n)$ time. We also extend these results to five or more colors and to graphs on general surfaces.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0023",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13025v1",
+    "status": "available",
+    "timestamp": "2026-07-15T12:51:18.212379+00:00",
+    "title": "ArXiv paper: The Balanced Four-Color Theorem"
   },
   {
     "consumed_by_exp_id": "",
