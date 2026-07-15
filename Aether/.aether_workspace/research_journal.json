@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1e9bf31c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n`MultiverseModalForcing.lean` builds the modal-logic layer on top of the\nmultiverse core of `MultiverseSetTheory.lean`: an abstract Kripke semantics with\nthe modal axioms `K, T, 4",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-07-14T20:10:18",
-      "title": "Deepening: This cycle formalizes, in Lean 4 with Mathlib, the *combinatorial core* of the"
-    },
-    {
       "cycle_id": "ef88d58c",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle deepened the μ-extension of Matsuno's formula by building a\n**cross-domain connector**: the file\n`Catalog/Bridges/MatsunoArithmeticPolynomialBridge.lean` shows that the",
@@ -499,19 +489,19 @@
       "theorem_count": 91,
       "timestamp": "2026-07-15T08:58:17",
       "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
+    },
+    {
+      "cycle_id": "772aa8b4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The Three-Halves Steering Word\n\n## 1. Superlinear factor complexity\n\nLet `T` be the nearest-integer steering word of the orbit `(3/2)^n`. Its factor complexity should satisfy\n\\[\n\\",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-15T18:44:42",
+      "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4d87b490",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Kernel Law for the Thermodynamics of Proof\n\nThe kernel law established in this cycle says that a structure-preserving reasoning step\n`f : G → H` dissipates exactly `log₂|ker",
-      "quality_score": 0.83,
-      "sorry_count": 3,
-      "theorem_count": 7,
-      "timestamp": "2026-07-12T23:31:30",
-      "title": "Deepening: `ThermodynamicsOfProof.lean` — the positive theory:"
-    },
     {
       "cycle_id": "00319e93",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-15T14:18:16",
       "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
+    },
+    {
+      "cycle_id": "772aa8b4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The Three-Halves Steering Word\n\n## 1. Superlinear factor complexity\n\nLet `T` be the nearest-integer steering word of the orbit `(3/2)^n`. Its factor complexity should satisfy\n\\[\n\\",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-15T18:44:42",
+      "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "da85fe77",
-      "domain": "Computation",
-      "name": "shadow_triangles_subset_edges",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "f243395d",
-      "domain": "Tropical",
-      "name": "lives",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "f243395d",
-      "domain": "Tropical",
-      "name": "triangles_sized",
-      "quality": 0.91
-    },
     {
       "cycle_id": "f243395d",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "orderly_736",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "772aa8b4",
+      "domain": "Novelty",
+      "name": "endpoint_reconstruction",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "772aa8b4",
+      "domain": "Novelty",
+      "name": "blockWeight_eq_of_blocks",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "772aa8b4",
+      "domain": "Novelty",
+      "name": "repeated_block_rigidity",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T14:18:16",
+  "last_updated": "2026-07-15T18:44:42",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "12ea9340",
-        "quality": 0.82,
-        "theorems": 27,
-        "title": "Constructive, lower-bound half of the co-index theory"
-      },
-      {
         "cycle_id": "a46f1a93",
         "quality": 0.82,
         "theorems": 28,
@@ -3637,6 +3631,12 @@
         "quality": 0.7,
         "theorems": 24,
         "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers)"
+      },
+      {
+        "cycle_id": "772aa8b4",
+        "quality": 0.7,
+        "theorems": 9,
+        "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
       }
     ],
     "NumberTheory": [

@@ -3,6 +3,105 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0037",
+    "lineage_refs": [],
+    "priority_score": 0.89,
+    "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T18:44:30.743320+00:00",
+    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0034",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T18:44:30.735063+00:00",
+    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0035",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T18:44:30.738752+00:00",
+    "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0036",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T18:44:30.741013+00:00",
+    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Combinatorics"
+    ],
+    "id": "fd_0038",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T18:44:30.745886+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domain_bridges": [],
     "domains": [
@@ -79,7 +178,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "01127cb7",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems' and formalize its key results. Abstract: We study twisted Weyl group multiple Dirichlet series attached to symmetrizable Kac-Moody root systems, using the Chinta-Gunnells method to construct their $p$-parts. Our main result is a decomposition theorem for functions invariant under the twisted Chinta-Gunnells action: under natural analytic hypotheses, such a function has a unique expansion in terms of shifted Chinta-Gunnells averages, indexed by the dominant weights in the highest weight module determined by the twisting parameter. In particular, we show that this decomposition holds for twisted multiple Dirichlet series over rational function fields. For finite root systems, these results were proved by Friedlander. We also show that the relevant Chinta-Gunnells averages admit analytic continuation to the interior of the complexified Tits cone. In the affine $\\widetilde{A}_1$ case, we prove extra functional equations, not arising from the Weyl group, for the untwisted average and for averages twisted by fundamental weights. As",
     "domain_bridges": [],
     "domains": [
@@ -92,7 +191,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11834v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T06:52:29.386046+00:00",
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
@@ -178,7 +277,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b9991c9d",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Ray and end spaces: characterizations and classification up to homeomorphism' and formalize its key results. Abstract: We provide a combinatorial characterization for pairs of order-theoretic trees with homeomorphic ray spaces, answering an open problem proposed by Kurkofka ad Pitz. This solution is inspired by the introduction of a transfinite topological game, which allows us to characterize not only ray spaces through the existence of winning strategies for one of the players, but also their homeomorphic classes. As applications of these results, we obtain a new topological characterization for graph-theoretic end spaces (thus obtaining yet another solution to a recently solved problem of Diestel), as well as for edge-end spaces and completely ultrametrizable spaces. We also introduce a generalization of the class of ray spaces (which is strict, as witnessed by the Sorgenfrey line). Furthermore, we establish that, for subspaces with cardinality less than continuum of end spaces, the scattered property is equivalent to the property of being, itself, an end space. At last, we determine that ray spaces",
     "domain_bridges": [],
     "domains": [
@@ -191,7 +290,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11561v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T08:58:28.589423+00:00",
     "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
   },
@@ -217,7 +316,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "31f39e19",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $η>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+η)n/2}$ containing all the $n$-element posets as induced subposets. This improves a recent result of Bastide, Groenland and Nenadov. Our proof provides a labeling scheme preserving transitivity, inspired by the Boolean lattice. Among other tools, we use the Szemerédi Regularity Lemma.",
     "domain_bridges": [],
     "domains": [
@@ -230,14 +329,14 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12980v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T12:33:21.946611+00:00",
     "title": "ArXiv paper: Even smaller universal posets"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9624344e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Cyclic Projective Orbits on Rational Normal Curves and MDS Codes' and formalize its key results. Abstract: Let \\(A\\) be a cyclic operator on an \\(r\\)-dimensional vector space over a field \\(k\\), and let \\(z\\) be a cyclic vector. Their Krylov code has parity-check matrix \\((z,Az,\\ldots,A^{n-1}z)\\). For \\(r\\ge 3\\) and \\(n\\ge r+3\\), we prove that an MDS orbit segment lies on a rational normal curve precisely when the projective pair \\((A,[z])\\) is conjugate to one arising from the \\((r-1)\\)-st symmetric-power action of \\(\\mathrm{PGL}_2\\). Over finite fields, for companion operators, this gives a complete classification of the generalized Reed--Solomon locus into split semisimple, two nonsplit semisimple, and unipotent families. Over an algebraically closed field \\(k\\), the Zariski closure \\(\\GRSsurf_{r,k}\\) of the semisimple GRS coefficient locus is an irreducible rational surface, generically parameterized two-to-one by a two-dimensional torus of geometric-progression root sets; reversal is the generic ambiguity. The affine quotient of the parameter torus by reversal is the normalization of \\",
     "domain_bridges": [],
     "domains": [
@@ -250,7 +349,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12761v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T12:51:13.579274+00:00",
     "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
   },
@@ -297,7 +396,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ae3a7f08",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Note on Iterated Beatty Sequences' and formalize its key results. Abstract: For any irrational number $ α>\\frac{3+\\sqrt{5}}{2}\\approx2.618$ and given a positive $ n\\in\\mathbb{N} $, we use elementary number theory to introduce a necessary and sufficient condition for a natural number $ x $ to be in the $n$th iterate of the Beatty sequence of modulus $α$.",
     "domain_bridges": [],
     "domains": [
@@ -309,7 +408,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12817v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T13:43:17.002908+00:00",
     "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
   },
@@ -376,7 +475,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "54548f7d",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The Balanced Four-Color Theorem' and formalize its key results. Abstract: We show that every planar graph with $n \\geq 3$ vertices admits a 4-coloring in which each color is used on fewer than $n/2$ vertices. This bound is the best possible. Moreover, such a coloring can be found in $O(n \\log n)$ time. We also extend these results to five or more colors and to graphs on general surfaces.",
     "domain_bridges": [],
     "domains": [
@@ -389,7 +488,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.13025v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T12:51:18.212379+00:00",
     "title": "ArXiv paper: The Balanced Four-Color Theorem"
   },
@@ -489,6 +588,45 @@
     "status": "available",
     "timestamp": "2026-07-15T14:18:31.029430+00:00",
     "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Three-Halves Steering Word\n\n## 1. Superlinear factor complexity\n\nLet `T` be the nearest-integer steering word of the orbit `(3/2)^n`. Its factor complexity should satisfy\n\\[\n\\lim_{k\\to\\infty}\\frac{p_T(k)}{k}=+\\infty.\n\\]\nThis is falsifiable by any constant `C` and unbounded sequence of lengths `k` for which `p_T(k) ≤ Ck`. **The key insight is...** repeated factors impose the exact relation `2^k(m_{a+k}-m_{b+k})=3^k(m_a-m_b)`, converting symbolic repetition into a sparse Diophantine equation. **Why now?** The finite-block reconstruction and repetition-rigidity identities isolate the precise arithmetic input needed for a quantitative anti-stammering theorem.\n\n## 2. Quantitative complexity beyond superlinearity\n\nThere should exist an absolute `c>0` and an unbounded range of lengths on which\n\\[\np_T(k)\\ge c k\\log k.\n\\]\nA stronger version asks whether this holds for every sufficiently large `k`. **The key insight is...** many repeated blocks would create many simultaneous power-of-two versus power-of-three scaling relations, and their mutual incompatibility may yield a quantitative count rather than merely excluding bounded linear complexity. **Why now?** The exact endpoint relation makes it possible to measure how each additional repeated factor adds a new Diophantine constraint.\n\n## 3. Uniform anti-stammering for rational multipliers\n\nFor coprime integers `a>b≥1` with `a/b` not an integer, define the analogous nearest-integer steering word by `b m_{n+1}-a m_n`. Except for explicitly classifiable degenerate orbits, its factor complexity should be superlinear. **The key insight is...** endpoint reconstruction persists with coprime weights `a^k` and `b^k`, while bounded rounding errors still force a finite alphabet. **Why now?** The proofs for `3/2` use only recurrence iteration, coprimality, and bounded error until the final Diophantine step, suggesting a genuinely uniform theorem.\n\n## 4. Bounded zero runs\n\nThere should be an explicit absolute bound on the length of a consecutive zero block in the three-halves steering word. **The key insight is...** a zero block of length `k` forces `2^k` to divide its initial rounded value, while that value remains within one half of `(3/2)^n`; combining this with the position of the block should severely constrain `k`. **Why now?** The divisibility obstruction is exact, so the remaining problem is a quantitative comparison between binary valuation and exponential orbit growth.\n\n## 5. Frequency rigidity of extreme symbols\n\nBoth extreme corrections `-2` and `2` should have zero upper density, and it is plausible that at least one never occurs after a finite initial segment. **The key insight is...** an extreme correction requires both neighboring rounding errors to lie near opposite endpoints of the half-open error interval, coupling visits to small target neighborhoods under multiplication by `3/2`. **Why now?** The verified five-symbol bound identifies the only extreme cases and reduces the question to a concrete shrinking-target problem for the fractional parts of `(3/2)^n`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0039",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "772aa8b4",
+    "status": "available",
+    "timestamp": "2026-07-15T18:44:36.921833+00:00",
+    "title": "Let `T` be the nearest-integer steering word of the orbit `(3/2)^n`. Its factor "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n- Specialize `exact_cardinality_pow_finrank` to the finite-field trace and compute the rank contributed by each cyclotomic coset of exponents.\n- Formalize Frobenius-orbit representatives for polynomial exponents and prove that the resulting coefficient family is a kernel transversal.\n- Connect the abstract injective evaluation map to additive characters valued in complex roots of unity, including the nondegeneracy argument on all field evaluation points.\n- Derive closed cardinality formulas for concrete degree sets from the sizes of their cyclotomic cosets.\n- Formalize corrected length, dimension, and distance parameters for specific character-polynomial code families.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0040",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "fcf70b54",
+    "status": "available",
+    "timestamp": "2026-07-15T18:44:44.996787+00:00",
+    "title": "Future directions from cycle fcf70b54"
   },
   {
     "ambition_level": "extension",
