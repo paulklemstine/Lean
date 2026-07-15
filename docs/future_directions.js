@@ -636,7 +636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: These conjectures are distilled from the current cycle, which closed the bridge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ee2f71b",
     "description": "Building on cycle 1abce342 (Q=0.780), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The constant \u03bc\u2082 is defined as the infimum over all infinite sequences of radial cuts of a unit circular cake of the supremum over n of the ratio (maximum portion size)/(minimum portion size) after n cuts, where a portion is an adjacent pair of slices. The paper proves \u03bc\u2082 \u2264 1 + \u03c1 where \u03c1 \u2248 0.75488 is",
     "domains": [
       "Applications"
@@ -645,7 +645,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "1abce342",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-13T01:06:08.832578+00:00",
     "title": "Deepening: The optimal portion ratio \u03bc\u2082 equals 1 + \u03c1"
   },
@@ -2294,7 +2294,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle settles **Conjecture 1** of the previous *Future Directions* note and"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "582560af",
     "description": "# Future Directions \u2014 Negative-Dimensional Topology\n\nThe results of this cycle establish that the Euler characteristic extends to\nnegative formal dimensions as a single multiplicative invariant governed by the\ndimensional sign `d \u21a6 (-1)^d`, with an explicit stabilization map identifying the\nnegative-dimensional world with the zero-dimensional one up to sign. The\nfollowing conjectures are the natural next targets.\n\n## 1. A negative-dimensional Euler\u2013Poincar\u00e9 duality\n\n**Conjecture.** For a formal space of dimension `-n` there is a canonical pairing\nbetween its `\u03c0\u2080` data and that of its `n`-fold stabilization, under which the\nEuler characteristic is self-dual: reflecting the dimension `d \u21a6 -d` leaves `\u03c7`\nunchanged up to the parity sign already recorded by `sgn`.\n\nThe key insight is that the invariance `sgn(-d) = sgn(d)` is not an accident of\nthe sign function but the shadow of a duality that swaps a space with its formal\ndesuspension while preserving the count of path components.\n\nWhy now? The stabilization map and the parity-invariance of the sign are both in\nhand, so the duality can be stated as an isomorphism of the underlying component\nmonoids and tested against the product structure that is already proved\nmultiplicative.\n\n## 2. Multiplicativity forces the sign law\n\n**Conjecture.** Any dimension-graded, component-multiplicative integer invariant\nthat is additive under disjoint union and multiplicative under products must\ncoincide with `sgn(dim)\u00b7|\u03c0\u2080|`; equivalently, the only monoid homomorphism from\n`(\u2124,+) \u00d7 (\u2115,\u00b7)` to `\u2124` that is `\u00b11` on each sphere is the Euler characteristic.\n\nThe key insight is that additivity and multiplicativity together pin down the\ninvariant on generators (spheres and points), and every formal space is built\nfrom these by the two operations, so the invariant is rigid.\n\nWhy now? The monoid structure on formal spaces and the homomorphism property of\n`\u03c7` are established, reducing the uniqueness question to a statement about\nhomomorphisms out of a finitely generated commutative monoid.\n\n## 3. The pro-spectrum limit of the stabilization tower\n\n**Conjecture.** The tower `\u2026 \u2192 \u03a3\u207b\u00b9X \u2192 X \u2192 \u03a3X \u2192 \u2026` of suspensions has a well-defined\nstable Euler characteristic obtained as a limit, and this limit is independent of\nthe starting dimension, depending only on `|\u03c0\u2080|` weighted by the coherent sign.\n\nThe key insight is that although each suspension flips the sign of `\u03c7`, the pair\n`(\u03c7, dim mod 2)` is a genuine invariant of the whole tower, so the limit exists\nonce one records the parity alongside the value.\n\nWhy now? The exact one-step behavior `\u03c7(\u03a3X) = -\u03c7(X)` and the `n`-step law\n`\u03c7(\u03a3\u207fX) = (-1)^n \u03c7(X)` are proved, giving the precise transition maps whose limit\nthe conjecture concerns.\n\n## 4. Negative-dimensional surfaces and a signed Gauss\u2013Bonnet\n\n**Conjecture.** The identity `\u03c7 = 2 - 2g` for the genus-`g` surface admits a\nnegative-dimensional companion in which the roles of the top and bottom Betti\nnumbers are exchanged by desuspension, producing a signed genus formula\n`\u03c7 = (-1)^d (2 - 2g)` for the `d`-fold desuspended surface.\n\nThe key insight is that the graded Euler characteristic already treats every\ndegree \u2014 positive or negative \u2014 on the same footing through the alternating sign,\nso shifting all Betti numbers into negative degrees merely multiplies the\nclassical value by a global sign.\n\nWhy now? The bridge reproducing `2 - 2g` from sign-weighted Betti numbers is\nestablished, and the degree-shift operation is exactly the suspension whose effect\non `\u03c7` is already computed.\n\n## 5. A character theory for the sign group\n\n**Conjecture.** The dimensional sign is the unique nontrivial character of the\nadditive group of dimensions valued in the units of `\u2124`, and the collection of\nnegative-dimensional Euler characteristics assembles into the character table of\na naturally occurring `\u2124/2` grading on the stable homotopy category of formal\nspheres.\n\nThe key insight is that `sgn: (\u2124,+) \u2192 {\u00b11}` is precisely the reduction mod 2\ncomposed with the unique isomorphism `\u2124/2 \u2245 {\u00b11}`, so its topological meaning is a\n`\u2124/2`-grading that separates even- from odd-dimensional formal spheres.\n\nWhy now? The homomorphism property `sgn(a+b) = sgn(a)\u00b7sgn(b)` is proved, which is\nthe defining property of a character; what remains is to interpret it as a grading\nand read off the resulting decomposition.\n",
     "domains": [
       "Geometry",
@@ -2304,7 +2304,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "c5cfd9ce",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T14:12:56.708950+00:00",
     "title": "The results of this cycle establish that the Euler characteristic extends to"
   },
@@ -2354,7 +2354,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file fixes the correct (disjointness) formalization of interval packings in "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98ba1a43",
     "description": "# Future Directions \u2014 Tangled Hierarchies: Proof Systems That Reference Their Own Soundness\n\nThe file `TangledSoundness.lean` develops the semantic core of self-referential\nproof systems: a chain from the pure-logic seed `\u00ac(P \u2194 \u00acP)` up to\n`soundness_predicate_not_internal`, the statement that a soundness predicate cannot\nconsistently live inside the self-referential system it validates.\n\nNatural next steps:\n\n1. **Full syntactic L\u00f6b's theorem.** Replace the semantic G\u00f6del fixed point in\n   `ProofSystem` with the Hilbert\u2013Bernays\u2013L\u00f6b derivability conditions\n   (`D1: Prov s \u2192 Prov (box s)`, `D2` distribution, `D3: Prov (box s) \u2192 Prov (box (box s))`)\n   and a syntactic diagonal, then derive `Prov (imp (box s) s) \u2192 Prov s`. This is the\n   sharpest form of \"a system cannot safely reference its own soundness\".\n\n2. **Second incompleteness.** From L\u00f6b with `s = \u22a5`, obtain that a consistent system\n   cannot prove its own consistency sentence `Con := neg (box \u22a5)`.\n\n3. **Ordinal-indexed reflection towers.** Iterate the addition of a soundness\n   reflection principle `RFN(P)` and study the transfinite hierarchy\n   `P\u2080 \u2282 P\u2081 \u2282 \u22ef`, showing each level proves the consistency of the previous \u2014 the\n   stratified escape from the tangle.\n\n4. **Kripke/paracomplete semantics.** Weaken `neg_truth` to a three-valued or\n   fixed-point (Kripke) semantics, where the Liar receives a truth-value gap, and\n   measure exactly which theorems survive. This isolates classicality as the\n   ingredient forcing the tangle's inconsistency.\n\n5. **Category-theoretic bridge.** Recast `no_semantic_fixed_points` and Tarski via\n   Lawvere's fixed-point theorem, unifying them with Cantor and the\n   `Type : Type` collapse.\n",
     "domains": [
       "Logic",
@@ -2364,7 +2364,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2c734846",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T15:41:07.242873+00:00",
     "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
   },
@@ -2849,7 +2849,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** For smooth non-vanishing closed beam loops, the endpoint defect "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca1c3afc",
     "description": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length `k` should admit a canonical bijection with permutations of `k` elements such that factoradic evaluation agrees with lexicographic rank and digit extraction agrees with Lehmer inversion counts. The bijection should intertwine adjacent transpositions with an explicit carry-and-borrow operation on factorial codes.\n\nThe key insight is that the local alphabet of the `i`-th factoradic digit has exactly `i+1` elements, matching the successive insertion choices in a permutation.\n\nWhy now? The finite classification isolates precisely the dependent product needed for insertion coding, while exact agreement of extraction algorithms supplies the arithmetic half of the desired compatibility.\n\n## 2. Carry normalization as a terminating confluent rewrite system\n\nAllow unrestricted natural digits at every factorial position and orient the relation `(i+1)\u00b7i! = (i+1)!` as a local carry rule. On finitely supported digit sequences, these rules should form a terminating and confluent rewriting system whose unique normal forms are exactly the valid factorial codes. Moreover, normalization should preserve value and compute the extracted factoradic digits.\n\nThe key insight is that factorial place values turn every local excess digit into a carry of exactly one unit at the next position, while the represented value supplies a global termination measure.\n\nWhy now? Existence and uniqueness of bounded representations are established; confluence would strengthen this extensional classification into an algorithm-independent normalization theorem.\n\n## 3. Chinese-remainder coordinates for factorial intervals\n\nDetermine exactly for which `k` the interval `Fin (k!)` can be identified with a product of residue rings in a way compatible with factorial-code truncation. More generally, classify the obstruction to making the factorial-code equivalence multiplicative, and express it through the non-coprime overlap among the radices `1,2,\u2026,k`.\n\nThe key insight is that mixed-radix coordinates resemble residue coordinates but encode nested divisibility rather than pairwise coprimality, so the discrepancy should be measured by a precise extension or filtration invariant.\n\nWhy now? The additive finite classification provides a canonical coordinate set against which any proposed ring-compatible coordinate system can be compared and falsified.\n\n## 4. Infinite factorial expansions and profinite completion\n\nThe inverse system obtained by truncating factorial codes should be canonically homeomorphic to the inverse limit of the finite rings `\u2124/(k!)\u2124`. Under this homeomorphism, finite evaluation should be the residue projection, and the carry-normalized addition of infinite codes should recover the topological ring structure of the profinite integers.\n\nThe key insight is that the divisibility chain `k! \u2223 (k+1)!` makes factorial truncation compatible with inverse-limit projections, unlike arbitrary variable-radix systems.\n\nWhy now? The sharp finite equivalence supplies every finite stage and its unique coordinates; the remaining challenge is to prove coherence of these equivalences under truncation and then transport the inverse-limit topology and algebra.\n",
     "domains": [
       "Algebra",
@@ -2859,7 +2859,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "da85fe77",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T02:32:29.643432+00:00",
     "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
   },
