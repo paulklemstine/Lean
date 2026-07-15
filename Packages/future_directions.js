@@ -32,6 +32,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ca1c3afc (Q=0.870), which proved 6 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length `k` should admit a canonical bijection with permutations of `k` elements such that factoradic evalua",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_ca1c3afc_58cab624",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "ca1c3afc",
+    "status": "available",
+    "timestamp": "2026-07-15T04:08:41.416722+00:00",
+    "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` should admi"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d019c88a (Q=0.880), which proved 30 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hyper",
     "domains": [
       "Applications"
@@ -1038,6 +1052,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle ca1c3afc (Q=0.870) proved 6 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_ca1c3afc_7d0a321f",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "ca1c3afc",
+    "status": "available",
+    "timestamp": "2026-07-15T04:08:41.580785+00:00",
+    "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `k` s"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d019c88a (Q=0.880) proved 30 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logi",
     "domains": [
       "Applications"
@@ -1821,21 +1849,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-13T20:48:13.997205+00:00",
     "title": "The file `Catalog/Applications/UncannyValley.lean` formalizes a concrete cubic"
-  },
-  {
-    "consumed_by_exp_id": "3c80004e",
-    "description": "# Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coind(K * L) \u2265 coind(K) + coind(L) + 1`,\nwith the octahedral spheres forming a join-monoid `Oct m * Oct n \u2245 Oct(m+n+1)`, and\nthe classical suspension jump recovered as the special case `L = S\u2070`. The following\nconjectures push toward the sharp equality and the full maximal-excess phenomenon.\n\n## Conjecture 1 (Sharp join law)\nFor free \u2124\u2082-complexes `K, L`, the co-index is *exactly* additive with a shift:\n`coind(K * L) = coind(K) + coind(L) + 1`.\nThe key insight is that the lower bound is realised by an explicit coordinate-split\nequivariant map, so the entire difficulty concentrates in a single matching upper\nbound `coind(K * L) \u2264 coind(K) + coind(L) + 1`, which should follow from a\n\u2124\u2082-index (equivariant cohomology) obstruction that is itself additive under joins.\nWhy now? The join bifunctor and its explicit connecting map are now in hand, so the\nonly missing ingredient is a purely obstruction-theoretic upper bound \u2014 a\nself-contained, isolable target.\n\n## Conjecture 2 (Maximal excess for all feasible starting co-index)\nFor all integers `d \u2265 2` and `c` with `1 \u2264 c \u2264 d`, there is a finite free\n\u2124\u2082-complex `K` of dimension `d` with `coind(K) = c` and `coind(S K) = d + 1`.\nThe key insight is that the \"excess\" `d + 1 - c` can be manufactured by joining a\nlow-co-index but high-dimensional building block (a complex whose co-index is\npinned below its dimension by a Borsuk\u2013Ulam obstruction) with a sphere that supplies\nthe missing co-index only after one further suspension. Why now? The join\nconstruction gives a flexible dial for dimension independent of co-index, exactly\nthe freedom needed to separate `c` from `d`.\n\n## Conjecture 3 (Borsuk\u2013Ulam upper bound in the octahedral tower)\nAny equivariant simplicial map `Oct n \u2192 Oct k` forces `n \u2264 k`; equivalently\n`coind(Oct k) = k` on the nose.\nThe key insight is that the base case (no equivariant map to `Oct 0` from a\nhigher sphere) already isolates the parity/degree obstruction, and the general case\nshould follow by an inductive \"peel one coordinate\" argument compatible with the\njoin splitting `Oct k \u2245 Oct 0 * Oct(k-1)`. Why now? The join splitting turns the\nglobal obstruction into a one-step induction that reuses the verified base case.\n\n## Conjecture 4 (Excess is monotone but not superadditive under iterated suspension)\nWriting `S^j K` for the `j`-fold suspension, the excess sequence\n`e_j := coind(S^j K) - (dim(S^j K))` is non-increasing in `j` and stabilises at\n`0` after finitely many steps.\nThe key insight is that each suspension can raise the co-index by *at most* one while\nraising the dimension by exactly one, so the gap can only shrink; stabilisation at\n`0` is the assertion that suspension eventually saturates the Borsuk\u2013Ulam bound.\nWhy now? The exact `+1` dimension law and the `\u2265 +1` co-index law are both proved,\nso the monotonicity direction is within reach and only the saturation needs the\nupper bound of Conjecture 1.\n",
-    "domains": [
-      "Geometry",
-      "Pythagorean"
-    ],
-    "id": "fd_1247",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "49ddee39",
-    "status": "in_progress",
-    "timestamp": "2026-07-13T21:24:15.573588+00:00",
-    "title": "Constructive, lower-bound half of the co-index theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -2976,6 +2989,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T04:08:31.241932+00:00",
     "title": "For every composite integer `n \u2265 13`, the Fibonacci number `F(n)` has a prime di"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: factorial coordinates versus residue coordinates\n\n## Completed foundations and result of this cycle\n\nThe previously incomplete bridge from the general mixed-radix system to the\nfactorial number system is now complete.  For bases `b i = i + 1`, the formal\ndevelopment proves:\n\n- mixed-radix evaluation is exactly factoradic evaluation;\n- mixed-radix validity is exactly the factoradic digit bound `c i \u2264 i`; and\n- factoradic uniqueness follows as a corollary of general mixed-radix\n  uniqueness, without invoking the independent factoradic uniqueness theorem.\n\nThese statements are proved in\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`.\n\nThe new CRT inquiry establishes that the naive multiplicative conjecture is\nalready false at length four.  There is\na canonical ring equivalence at length three,\n\n`ZMod (3!) \u2243+* ZMod 2 \u00d7 ZMod 3`,\n\nbut no additive equivalence (hence no ring equivalence)\n\n`ZMod (4!) \u2243+ ZMod 2 \u00d7 ZMod 3 \u00d7 ZMod 4`.\n\nThe obstruction is additive exponent, not merely multiplication.  Every target\nelement is annihilated by `lcm(2,3,4) = 12`, while the source element `1 mod 24`\nis not.  Thus equal cardinality and a mixed-radix set bijection do not imply an\nadditive coordinate decomposition.\n\nThe formal statements and proofs are in\n`Catalog/Speculative/AutoResearch/FactorialCRTObstruction.lean`.\n\n## Bold conjectures to pursue\n\n1. **Exact finite classification.** The direct residue product\n   `ZMod 2 \u00d7 ... \u00d7 ZMod k` is additively equivalent to `ZMod (k!)` exactly for\n   `k \u2264 3`.  A general proof should compare `lcm(1,...,k)` with `k!`; for every\n   `k \u2265 4`, the former should be strictly smaller and hence annihilate the\n   product but not `1` in the source.\n\n2. **Prime-power replacement.** Replacing overlapping radices by the maximal\n   prime-power factors of `k!` should give the canonical multiplicative\n   coordinates.  This is the genuine CRT decomposition; factorial digits should\n   map to it through evaluation followed by residue projection, not coordinate\n   by coordinate.\n\n3. **Filtration rather than product.** Factorial truncation should be modeled by\n   the nested ideals `(k!)`, producing successive cyclic quotients of sizes\n   `k+1`.  The mixed-radix digits are expected to be set-theoretic sections of\n   these extensions, generally not homomorphic splittings.  Classifying which\n   extensions split would precisely locate the carry obstruction.\n\n4. **Infinite correction.** The inverse limit along `ZMod (k!)` can still model\n   the profinite integers, but the digit space must carry normalized addition\n   with cross-coordinate carries.  The stage-four theorem proves that\n   coordinatewise addition on raw radix residues cannot be that operation.\n\n## Next formal step\n\nWith both the finite mixed-radix bridge and the first CRT obstruction now\nproved end-to-end, the next step is to prove the exact `k \u2264 3` classification\nuniformly.  The central arithmetic lemma\nshould show that for `4 \u2264 k`, `lcm (range 1..k)` is a proper divisor of `k!`.\nTransporting this to `nsmul` will generalize the explicit twelve-annihilator\nargument from stage four to all later stages.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1349",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ca1c3afc",
+    "status": "available",
+    "timestamp": "2026-07-15T04:08:40.138573+00:00",
+    "title": "The previously incomplete bridge from the general mixed-radix system to the"
   },
   {
     "consumed_by_exp_id": "",
