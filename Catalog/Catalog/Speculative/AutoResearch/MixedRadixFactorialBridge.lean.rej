@@ -1,13 +1,15 @@
 --- MixedRadixFactorialBridge.lean
 +++ MixedRadixFactorialBridge.lean
-@@ -45,11 +45,14 @@
+@@ -45,11 +45,16 @@
  /-- The mixed-radix place values for `b i = i + 1` are the factorials, so the
  mixed-radix value agrees with the factorial-system value. -/
  theorem value_eq (c : Nat → Nat) (k : Nat) :
 -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry
 +    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by
-+  simp only [MixedRadix.value, FactorialNumberSystem.value,
-+    MixedRadix.factorial_radixProd]
++  unfold MixedRadix.value FactorialNumberSystem.value
++  apply Finset.sum_congr rfl
++  intro i hi
++  rw [MixedRadix.factorial_radixProd]
  
  /-- Mixed-radix validity for `b i = i + 1` coincides with factorial validity. -/
  theorem valid_iff (c : Nat → Nat) (k : Nat) :
@@ -17,7 +19,7 @@
  
  /-- **The factorial uniqueness theorem, re-derived from the general one.**
  
-@@ -58,6 +61,10 @@
+@@ -58,6 +63,143 @@
  theorem factorial_value_unique_via_mixed {c d : Nat → Nat} {k : Nat}
      (hc : FactorialNumberSystem.Valid c k) (hd : FactorialNumberSystem.Valid d k)
      (hv : FactorialNumberSystem.value c k = FactorialNumberSystem.value d k) :
@@ -27,5 +29,138 @@
 +  · exact (valid_iff c k).2 hc
 +  · exact (valid_iff d k).2 hd
 +  · simpa only [value_eq] using hv
++
++/-- The generic mixed-radix extraction algorithm specializes exactly to the
++factoradic extraction algorithm. -/
++theorem digit_eq (n i : Nat) :
++    MixedRadix.digit (fun j => j + 1) n i = FactorialNumberSystem.digit n i := by
++  unfold MixedRadix.digit FactorialNumberSystem.digit
++  rw [MixedRadix.factorial_radixProd]
++
++/-- Factoradic reconstruction is inherited from the generic mixed-radix
++reconstruction theorem, including the sharp `k!` capacity bound. -/
++theorem factorial_value_digit_via_mixed {n k : Nat} (hn : n < k.factorial) :
++    FactorialNumberSystem.value (FactorialNumberSystem.digit n) k = n := by
++  rw [← value_eq]
++  have hm : n < MixedRadix.radixProd (fun i => i + 1) k := by
++    simpa only [MixedRadix.factorial_radixProd] using hn
++  have h := MixedRadix.value_digit hm
++  have hd : MixedRadix.digit (fun i => i + 1) n =
++      FactorialNumberSystem.digit n := by
++    funext i
++    exact digit_eq n i
++  rw [hd] at h
++  exact h
++
++/-! ## Finite factoradic codes
++
++A length-`k` code records exactly the bounded digits, with no irrelevant values
++above the cutoff.  This makes the bridge strong enough to identify the entire
++finite representation space with the interval below `k!`. -/
++
++/-- A length-`k` factoradic code: position `i` contains one of `i+1` digits. -/
++abbrev FactorialCode (k : Nat) := (i : Fin k) → Fin (i.1 + 1)
++
++/-- Extend a finite code by zero above its cutoff. -/
++def codeDigits {k : Nat} (x : FactorialCode k) (i : Nat) : Nat :=
++  if h : i < k then (x ⟨i, h⟩).1 else 0
++
++/-- The numerical value of a finite factoradic code. -/
++def codeValue {k : Nat} (x : FactorialCode k) : Nat :=
++  FactorialNumberSystem.value (codeDigits x) k
++
++/-
++Every finite code satisfies the factoradic digit bounds.
++-/
++theorem codeDigits_valid {k : Nat} (x : FactorialCode k) :
++    FactorialNumberSystem.Valid (codeDigits x) k := by
++      exact fun i hi => by simpa [ codeDigits, hi ] using Nat.lt_succ_of_le ( Fin.is_le _ ) ;
++
++/-
++A code's value lies in the sharp interval below `k!`.
++-/
++theorem codeValue_lt {k : Nat} (x : FactorialCode k) : codeValue x < k.factorial := by
++  exact FactorialNumberSystem.value_lt ( codeDigits_valid x )
++
++/-
++Distinct finite codes have distinct numerical values.
++-/
++theorem codeValue_injective {k : Nat} : Function.Injective (@codeValue k) := by
++  intro x y hxy
++  have h_eq : ∀ i < k, codeDigits x i = codeDigits y i := by
++    apply FactorialNumberSystem.value_unique (codeDigits_valid x) (codeDigits_valid y) hxy;
++  ext i; specialize h_eq i; unfold codeDigits at h_eq; aesop;
++
++/-
++Every number below `k!` is represented by a finite factoradic code.
++-/
++theorem codeValue_surjective {k : Nat} :
++    Function.Surjective (fun x : FactorialCode k => (⟨codeValue x, codeValue_lt x⟩ : Fin k.factorial)) := by
++      intro ⟨ n, hn ⟩;
++      use fun i => ⟨ FactorialNumberSystem.digit n i, by
++        exact Nat.mod_lt _ ( Nat.succ_pos _ ) ⟩
++      generalize_proofs at *;
++      simp +decide [ codeValue ];
++      convert FactorialNumberSystem.value_digit hn using 1;
++      exact Finset.sum_congr rfl fun i hi => by unfold codeDigits; aesop;
++
++/-
++The representation theorem as a canonical bijection between the interval
++`[0,k!)` and the product of the local digit alphabets.
++-/
++noncomputable def factorialCodeEquiv (k : Nat) : Fin k.factorial ≃ FactorialCode k :=
++  Equiv.ofBijective
++    (fun n i => ⟨FactorialNumberSystem.digit n.1 i.1,
++      Nat.lt_succ_iff.mpr (FactorialNumberSystem.digit_valid n.1 k i.1 i.2)⟩)
++    (by
++    constructor;
++    · intro n m hnm;
++      apply Fin.ext; exact (by
++      convert FactorialNumberSystem.value_digit ( show ( n : ℕ ) < k.factorial from n.2 ) |> Eq.symm |> Eq.trans <| ?_;
++      convert FactorialNumberSystem.value_digit ( show ( m : ℕ ) < k.factorial from m.2 ) using 1;
++      exact Finset.sum_congr rfl fun i hi => by have := congr_fun hnm ⟨ i, Finset.mem_range.mp hi ⟩ ; aesop;);
++    · intro x;
++      use ⟨codeValue x, codeValue_lt x⟩;
++      -- By definition of `codeDigits`, we know that `codeDigits x i = x i` for `i < k`.
++      have h_codeDigits_eq : ∀ i : Fin k, FactorialNumberSystem.digit (codeValue x) i.val = (x i).val := by
++        intro i
++        have h_eq : FactorialNumberSystem.value (codeDigits x) k = FactorialNumberSystem.value (fun i => FactorialNumberSystem.digit (codeValue x) i) k := by
++          rw [ FactorialNumberSystem.value_digit ( codeValue_lt x ) ];
++          rfl;
++        have := FactorialNumberSystem.value_unique ( codeDigits_valid x ) ( FactorialNumberSystem.digit_valid _ _ ) h_eq;
++        exact this i i.2 ▸ by unfold codeDigits; aesop;
++      exact funext fun i => Fin.ext <| h_codeDigits_eq i)
++
++/-!
++-- !-- Lab Notes -- !--
++* **Hypothesis (Hypothesizer).**  Six falsifiable conjectures were ranked by
++  structural reach: (1) coherent finite equivalences extend to the profinite
++  inverse limit; (2) finite codes classify permutations through Lehmer rank;
++  (3) unrestricted digits admit confluent carry normalization; (4) bounded codes
++  are equivalent to `Fin (k!)`; (5) generic and factoradic extraction agree
++  exactly; (6) the bridge transports reconstruction as well as uniqueness.
++* **Experiment (Experimenter).**  Conjectures (4)--(6) were attacked first as the
++  finite foundation required by (1)--(3).  Exact extraction agreement was
++  established by rewriting the running product as a factorial.  Finite codes were then embedded
++  into digit functions, shown valid, and proved both injective and surjective by
++  the independent uniqueness and reconstruction theorems.
++* **Analysis (Analyst).**  Conjectures (4)--(6) survive in full.  The first three
++  remain true-looking but hard: (1) needs coherent truncation maps and topology,
++  (2) needs an independently developed permutation rank, and (3) needs a
++  well-founded rewrite relation.  A multiplicative ring equivalence, by contrast,
++  needs a different definition because successive radices are not pairwise
++  coprime.  The surviving structural pattern is stronger than equality of
++  formulas: evaluation and greedy extraction are inverse maps after restricting
++  to bounded digits.
++* **Critique (Critic).**  The zero-length boundary is included: `0! = 1`, while
++  the dependent product over `Fin 0` has one function.  No positivity assumption
++  is hidden, and injectivity is not inferred from cardinality; it follows from
++  digit uniqueness.  Surjectivity uses the sharp hypothesis `n < k!`.
++* **Synthesis (PI).**  The resulting equivalence `factorialCodeEquiv` packages
++  existence, uniqueness, validity, and capacity into one finite classification.
++  The earlier bridge theorems remain independent stepping stones and the final
++  construction introduces no circular dependencies.
++-- !-- End Lab Notes -- !--
++-/
  
  

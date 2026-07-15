@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bcaaf8f2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Seidel higher spectral moments under edge flips\n\n## What this cycle established (all machine-checked in `SeidelHigherMoments.lean`)\n\nThe foundational cycle showed the *second* Se",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-14T08:40:17",
-      "title": "Elementary spectral-moment foundations of Seidel"
-    },
-    {
       "cycle_id": "b78ccbe1",
       "domain": "Novelty",
       "key_insight": "# Future Directions: from the constructive lower bound to the exact ℤ₂-coindex\n\n## What this cycle added\n\nThe previous cycle established the **suspension tower** `Sᵏ(K)` of a free `ℤ₂`-complex in the",
@@ -499,19 +489,19 @@
       "theorem_count": 5,
       "timestamp": "2026-07-15T01:49:38",
       "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
+    },
+    {
+      "cycle_id": "37f1d216",
+      "domain": "Computation",
+      "key_insight": "# Future directions — Boolean-cube increments and witness complexity\n\nThis cycle proves the local mechanism behind the linear face complexity of\nrecursive simplicial `k`-trees.  A fresh vertex attache",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-15T02:11:45",
+      "title": "Two-parameter picture of *witness complexity* for the"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "25c7a40e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What was proved (this cycle)\n\nThree self-contained Lean 4 files formalise a coherent slice of the number theory hiding inside\nthe quadratic recurrence `z_{n+1} = z_n^2 + c` and",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 33,
-      "timestamp": "2026-07-12T11:36:00",
-      "title": "Deepening: The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-    },
     {
       "cycle_id": "812631ed",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 5,
       "timestamp": "2026-07-15T01:49:38",
       "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
+    },
+    {
+      "cycle_id": "37f1d216",
+      "domain": "Computation",
+      "key_insight": "# Future directions — Boolean-cube increments and witness complexity\n\nThis cycle proves the local mechanism behind the linear face complexity of\nrecursive simplicial `k`-trees.  A fresh vertex attache",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-15T02:11:45",
+      "title": "Two-parameter picture of *witness complexity* for the"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1e9bf31c",
-      "domain": "Novelty",
-      "name": "box_mono",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "1e9bf31c",
-      "domain": "Novelty",
-      "name": "box_K",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "1e9bf31c",
-      "domain": "Novelty",
-      "name": "box_T",
-      "quality": 0.83
-    },
     {
       "cycle_id": "ef88d58c",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "iterated_shadow_cliques_subset",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "37f1d216",
+      "domain": "Computation",
+      "name": "insert_apex_injective",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "37f1d216",
+      "domain": "Computation",
+      "name": "card_coneFaces",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "37f1d216",
+      "domain": "Computation",
+      "name": "old_faces_disjoint_cone",
+      "quality": 0.91
     }
   ],
-  "last_updated": "2026-07-15T01:49:38",
+  "last_updated": "2026-07-15T02:11:45",
   "open_questions": [
     {
       "context": "+  sorry; -    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "8875d434",
-        "quality": 0.7476214285714285,
-        "theorems": 14,
-        "title": "Minimum Independence Ratio Constraint"
-      },
-      {
         "cycle_id": "d991c87b",
         "quality": 0.4437857425742574,
         "theorems": 8,
@@ -3327,6 +3321,12 @@
         "quality": 0.83,
         "theorems": 18,
         "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
+      },
+      {
+        "cycle_id": "37f1d216",
+        "quality": 0.91,
+        "theorems": 9,
+        "title": "Two-parameter picture of *witness complexity* for the"
       }
     ],
     "Cryptography": [

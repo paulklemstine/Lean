@@ -3,6 +3,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 37f1d216 (Q=0.910), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial o",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_37f1d216_c260b967",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "37f1d216",
+    "status": "available",
+    "timestamp": "2026-07-15T02:11:45.910783+00:00",
+    "title": "Deepening: Two-parameter picture of *witness complexity* for the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d019c88a (Q=0.880), which proved 30 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Homological Quantum Codes\n\nThis cycle established the exact dictionary \"logical qubits = middle homology\"\nfor the chain-complex model of CSS codes, and used it to compute the logical\ndimension of the hypercube homological code, refuting the folklore \"one qubit\"\nlaw for the hyper",
     "domain_bridges": [],
     "domains": [
@@ -1268,7 +1287,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "42e1a665",
     "description": "Cycle 3903c2d7 (Q=0.820) proved 10 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Bypassed",
     "domain_bridges": [],
     "domains": [
@@ -1280,7 +1299,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3903c2d7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-14T01:53:27.669006+00:00",
     "title": "Close Proofs: Bypassed"
   },
@@ -3452,26 +3471,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "37f1d216",
-    "description": "# Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial of degree `k+1` in\nthe number of vertices, and this collapses to linear when the certifying complex is\na spanning tree (`k = 1`). The captured face itself was produced on the line from\nthe honest convex-hull hypotheses. Below are conjectures that extend these\nfindings.\n\n## 1. Sharp linear witnesses for every fixed width\n**Conjecture.** For every fixed `k`, a spanning `k`-tree on `n` vertices has a\nface count that is *linear* in `n`, namely at most `2^{k} · (n - k) + (2^{k+1} - 1)`,\nstrictly below the degree-`k+1` bound that holds for arbitrary width-`(k+1)`\ncomplexes.\n\nThe key insight is that the generic degree-`k+1` bound is driven by *width alone*,\nwhereas a `k`-tree also carries global acyclicity: each newly attached vertex\ncontributes a bounded number of new cliques, so the total grows additively rather\nthan combinatorially. Why now? The `k = 1` case is already settled here (the exact\n`2n` count for trees), and it isolates acyclicity as the mechanism responsible for\nthe collapse; the general `k` statement is the natural inductive lift of that one\nmechanism.\n\n## 2. Rainbow capture inside a spanning tree of the join\n**Conjecture.** For colour classes on the line whose hulls all contain the origin,\none can pre-select a spanning tree of the join `V₁ * V₂` — of only linearly many\nedges — that is guaranteed to contain a rainbow edge through the origin, so the\nexponential join never needs to be examined.\n\nThe key insight is that the origin-capturing edges are not scattered arbitrarily:\nthey form a \"crossing\" pattern determined by the sign pattern of the two colour\nclasses, and a single monotone matching of nonpositive to nonnegative points meets\nthis pattern. Why now? The existence half is proved here via the sign-extraction\nlemma, which already exhibits *one* crossing edge; upgrading \"one edge exists\" to\n\"a linear pre-committed tree always contains one\" is the decisive next step toward\nalgorithmic witnesses.\n\n## 3. Higher-dimensional sign extraction\n**Conjecture.** In `ℝ^d`, if the origin lies in the convex hull of a finite colour\nclass `V`, then `V` contains an affinely independent sub-family of at most `d+1`\npoints whose hull already captures the origin, and this Carathéodory sub-family can\nbe located by examining only polynomially many `(d+1)`-subsets when the search is\nrestricted to a spanning `d`-tree of `V`.\n\nThe key insight is that the one-dimensional argument — extract a nonpositive and a\nnonnegative element via the extreme points `min'`, `max'` — is the shadow of a\ngeneral extreme-point selection: the origin's barycentric coordinates are supported\non a bounded face, and spanning-tree structure controls how many candidate faces\nmust be probed. Why now? The planar base case is complete and pinpoints extreme\npoints as the extraction device; the machinery for finite-dimensional convex hulls\nneeded to iterate it is exactly the classical Carathéodory support argument.\n\n## 4. Tightness of the degree-`k+1` witness bound\n**Conjecture.** The degree-`k+1` polynomial witness bound is asymptotically tight:\nthere exist width-`(k+1)` complexes (the full `≤(k+1)`-skeleta) whose face count\nmatches `∑_{i≤k+1} C(n,i)` up to a constant factor, so no sub-polynomial witness\nexists in the absence of extra structure such as acyclicity.\n\nThe key insight is that width and acyclicity are genuinely independent resources:\nremoving acyclicity restores the full skeleton, whose exact count `∑_{i≤k+1} C(n,i)`\nis realized. Why now? The exact skeleton count is established in this cycle, so the\nlower bound is already in hand; formalizing \"no structural assumption ⇒ no\nimprovement\" turns the upper bound into a matching characterization.\n\n\n# Future Directions — Colorful Carathéodory with polynomial-size witnesses\n\nThis cycle established a two-parameter picture of *witness complexity* for the\ncolorful Carathéodory phenomenon: a face capturing the target point can always be\ncertified inside a sub-complex whose face count is polynomial of degree `k+1` in\nthe number of vertices, and this collapses to linear when the certifying complex is\na spanning tree (`k = 1`). The captured face itself was produced on the line from\nthe honest convex-hull hypotheses. Below are conjectures that extend these\nfindings.\n\n## 1. Sharp linear witnesses for every fixed width\n**Conjecture.** For every fixed `k`, a spanning `k`-tree on `n` vertices has a\nface count that is *linear* in `n`, namely at most `2^{k} · (n - k) + (2^{k+1} - 1)`,\nstrictly below the degree-`k+1` bound that holds for arbitrary width-`(k+1)`\ncomplexes.\n\nThe key insight is that the generic degree-`k+1` bound is driven by *width alone*,\nwhereas a `k`-tree also carries global acyclicity: each newly attached vertex\ncontributes a bounded number of new cliques, so the total grows additively rather\nthan combinatorially. Why now? The `k = 1` case is already settled here (the exact\n`2n` count for trees), and it isolates acyclicity as the mechanism responsible for\nthe collapse; the general `k` statement is the natural inductive lift of that one\nmechanism.\n\n## 2. Rainbow capture inside a spanning tree of the join\n**Conjecture.** For colour classes on the line whose hulls all contain the origin,\none can pre-select a spanning tree of the join `V₁ * V₂` — of only linearly many\nedges — that is guaranteed to contain a rainbow edge through the origin, so the\nexponential join never needs to be examined.\n\nThe key insight is that the origin-capturing edges are not scattered arbitrarily:\nthey form a \"crossing\" pattern determined by the sign pattern of the two colour\nclasses, and a single monotone matching of nonpositive to nonnegative points meets\nthis pattern. Why now? The existence half is proved here via the sign-extraction\nlemma, which already exhibits *one* crossing edge; upgrading \"one edge exists\" to\n\"a linear pre-committed tree always contains one\" is the decisive next step toward\nalgorithmic witnesses.\n\n## 3. Higher-dimensional sign extraction\n**Conjecture.** In `ℝ^d`, if the origin lies in the convex hull of a finite colour\nclass `V`, then `V` contains an affinely independent sub-family of at most `d+1`\npoints whose hull already captures the origin, and this Carathéodory sub-family can\nbe located by examining only polynomially many `(d+1)`-subsets when the search is\nrestricted to a spanning `d`-tree of `V`.\n\nThe key insight is that the one-dimensional argument — extract a nonpositive and a\nnonnegative element via the extreme points `min'`, `max'` — is the shadow of a\ngeneral extreme-point selection: the origin's barycentric coordinates are supported\non a bounded face, and spanning-tree structure controls how many candidate faces\nmust be probed. Why now? The planar base case is complete and pinpoints extreme\npoints as the extraction device; the machinery for finite-dimensional convex hulls\nneeded to iterate it is exactly the classical Carathéodory support argument.\n\n## 4. Tightness of the degree-`k+1` witness bound\n**Conjecture.** The degree-`k+1` polynomial witness bound is asymptotically tight:\nthere exist width-`(k+1)` complexes (the full `≤(k+1)`-skeleta) whose face count\nmatches `∑_{i≤k+1} C(n,i)` up to a constant factor, so no sub-polynomial witness\nexists in the absence of extra structure such as acyclicity.\n\nThe key insight is that width and acyclicity are genuinely independent resources:\nremoving acyclicity restores the full skeleton, whose exact count `∑_{i≤k+1} C(n,i)`\nis realized. Why now? The exact skeleton count is established in this cycle, so the\nlower bound is already in hand; formalizing \"no structural assumption ⇒ no\nimprovement\" turns the upper bound into a matching characterization.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_1312",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "45e15555",
-    "status": "in_progress",
-    "timestamp": "2026-07-14T19:51:00.052609+00:00",
-    "title": "Two-parameter picture of *witness complexity* for the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — Universality and genus-dependence of the cubic swap-chain gap\n\nThis cycle turned two of the standing conjectures about fixed-genus chord-swap\nchains into unconditional theorems about the one-dimensional model. First, the\ncubic gap exponent was shown to be a consequence of a single growth-rate profile:\nany non-constant statistic on any finite state space whose Dirichlet energy is at\nmost `c_e·n` and whose variation is at least `c_v·n⁴` certifies a gap upper bound\nof order `n^{-3}` with constant `c_e/c_v`. Second, generalising the swap graph to\na conductance-weighted path showed that the conductance enters the Rayleigh\nquotient only as a linear prefactor: the quotient is exactly `12c/(n²(n+1))`, so\nthe exponent `−3` is independent of `c`, while the leading constant is strictly\nincreasing in `c`. Modelling a genus by a strictly decreasing conductance then\nyields a strictly decreasing, strictly positive amplitude in front of the\ninvariant cubic decay. The directions below push these two principles toward the\ngenuine diagram space.\n\n## Conjecture 1 — A genus-aware quartic-variance statistic exists on diagram space\n\nFor every fixed genus `g` there is a monotone integer statistic on genus-`g` chord\ndiagrams that changes by a bounded amount under a single swap, is supported on a\nrange of order `n`, and has variance of order `n⁴`.\n\nThe key insight is that the universality engine reduces the entire cubic upper\nbound to the existence of one such statistic: once its energy is linear and its\nvariance quartic, the energy-to-variance ratio delivers the exponent\nautomatically, exactly as it does for the weighted path.\n\nWhy now? The abstract growth-rate criterion isolated in this cycle is agnostic to\nthe underlying objects, so the chord-swap upper bound is now a purely\ncombinatorial search for a statistic with the linear-energy / quartic-variance\nsignature — a concrete, falsifiable target rather than an open exponent question.\n\n## Conjecture 2 — The effective conductance of a genus is strictly monotone\n\nThe effective edge conductance induced by fixing genus `g` on the chord-swap chain\nis a strictly decreasing, strictly positive function `c(g)`, and the leading\nconstant of the gap satisfies `γ_{n,g} = 12·c(g)·n^{-3}(1+o(1))`.\n\nThe key insight is that the weighted-path computation shows the conductance and\nthe leading constant move together strictly monotonically while the exponent is\nuntouched; transporting this to diagram space predicts that all genus dependence\nis carried by one scalar amplitude.\n\nWhy now? With the exponent proven independent of the weight, the residual\n`g`-dependence is isolated in a single measurable conductance, which can be\nestimated from moderate-size diagrams and tested for the predicted monotonicity.\n\n## Conjecture 3 — The universality criterion is sharp\n\nIf a reversible swap statistic has energy of order `n` but variance of order `n^β`\nwith `β ≠ 4`, then its gap upper bound scales as `n^{1-β}`, not `n^{-3}`; in\nparticular the cubic exponent fails precisely when the quartic-variance hypothesis\nfails.\n\nThe key insight is that the exponent equals the difference of the two growth\nrates, so perturbing the variance exponent perturbs the gap exponent by exactly\nthe same amount — the cubic value is not special beyond the `(1,4)` growth pair.\n\nWhy now? The closed-form quotient makes the exponent an explicit function of the\ntwo growth rates, so the sharpness statement is a direct, checkable corollary\nrather than a heuristic.\n\n## Conjecture 4 — Cross-family universality of the cubic exponent\n\nPerfect matchings under transposition, chord diagrams under swaps, and lattice\npaths under adjacent moves all share the gap exponent `−3`, because each carries a\ndriving statistic with the linear-energy / quartic-variance profile.\n\nThe key insight is that the cubic exponent is a property of the statistic's\ngrowth rates, not of the family being shuffled, so families with the same profile\nmust agree on the exponent regardless of their internal structure.\n\nWhy now? The universality criterion is stated for an arbitrary finite state space,\nso it applies verbatim to each family the moment a statistic with the required\ngrowth signature is exhibited, making cross-family agreement a precise prediction.\n",
     "domain_bridges": [],
@@ -3908,6 +3907,26 @@
     "status": "available",
     "timestamp": "2026-07-15T01:49:36.877125+00:00",
     "title": "For every pair of integers `2 ≤ s < t`, determine the exact lower envelope of th"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions — Boolean-cube increments and witness complexity\n\nThis cycle proves the local mechanism behind the linear face complexity of\nrecursive simplicial `k`-trees.  A fresh vertex attached over a `k`-vertex face\ncreates a family of new faces canonically indexed by the Boolean cube of subsets\nof that face.  Therefore one attachment contributes exactly `2^k` faces, and its\nnew faces are disjoint from all old faces supported on the previous ground set.\nThis bridges simplicial elimination geometry with Boolean-cube enumeration.\n\nThe resulting exact recurrence, starting from the full simplex on `k+1`\nvertices, is\n\n`2^(k+1) + steps * 2^k = 2^k * (steps + 2)`.\n\nIt implies the conjectured linear bound and improves its constant by `2^k - 1`\nwhen the empty face is included.\n\n## 1. Package recursive simplicial k-trees as an inductive structure\n\nDefine an inductive object whose base case is a full `(k+1)`-vertex simplex and\nwhose constructor records a fresh apex and an attaching `k`-face.  Prove that its\nrealized face family is closed under subsets, has the expected vertex set, and\nhas face count `2^k * (n-k+1)`.  The local theorems `card_coneFaces` and\n`card_attach_cone` are designed to be the counting step of this induction.\n\n## 2. Relate recursive k-trees to chordal graph clique complexes\n\nFor graph-theoretic `k`-trees, each newly added vertex has a `k`-clique as its\nolder neighborhood.  Prove that the graph clique complex evolves by exactly the\n`coneFaces` operation.  This would transfer the exact simplicial count to the\nstandard graph definition and connect perfect-elimination orderings with\nsimplicial shellings.\n\n## 3. Track face vectors, not only total face count\n\nA cone attachment over a `k`-face adds `C(k,j-1)` faces of cardinality `j`.\nFormalize the resulting `f`-vector formula and its generating polynomial:\n\n`F_new(x) = F_old(x) + x(1+x)^k`.\n\nThis refines the Boolean-cube bridge from cardinality to graded enumeration and\nshould expose corresponding `h`-vector identities.\n\n## 4. Integrate the count with colorful capture\n\nThe remaining geometric question is constructive: identify hypotheses under\nwhich a recursively chosen spanning `k`-tree of a colorful join contains a\ncapturing rainbow face.  Once such a tree is produced, the exact recurrence here\nimmediately upgrades existence to a sharp linear-size certificate.\n\n## 5. Clarify counting conventions\n\nCompare formulas when the empty face is omitted, when only nonempty cliques are\ncounted, and when the initial object is a `k`-simplex versus a `(k+1)`-clique.\nThe constant discrepancy in the original proposed bound is explained by these\nconventions; a unified theorem parameterized by the base face family would make\nall variants transparent.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_1339",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "37f1d216",
+    "status": "available",
+    "timestamp": "2026-07-15T02:11:25.864302+00:00",
+    "title": "This cycle proves the local mechanism behind the linear face complexity of"
   },
   {
     "ambition_level": "extension",
