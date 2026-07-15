@@ -9,12 +9,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Cryptography"
     ],
-    "id": "fd_0045",
+    "id": "fd_0047",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-15T19:44:47.050732+00:00",
+    "timestamp": "2026-07-15T20:07:23.255498+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
@@ -24,12 +24,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0042",
+    "id": "fd_0044",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-15T19:44:47.036262+00:00",
+    "timestamp": "2026-07-15T20:07:23.243892+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
@@ -39,12 +39,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "NumberTheory"
     ],
-    "id": "fd_0043",
+    "id": "fd_0045",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-15T19:44:47.040955+00:00",
+    "timestamp": "2026-07-15T20:07:23.248653+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
@@ -53,12 +53,12 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0044",
+    "id": "fd_0046",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-15T19:44:47.045805+00:00",
+    "timestamp": "2026-07-15T20:07:23.252315+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
@@ -68,12 +68,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Combinatorics"
     ],
-    "id": "fd_0046",
+    "id": "fd_0048",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-15T19:44:47.055854+00:00",
+    "timestamp": "2026-07-15T20:07:23.259186+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
