@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ffec372c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What was established\n\nWorking purely from the four matroid rank axioms (`IsMatroidRank`), on the objective\n`g(A) = r₁(A) + r₂(E \\ A)`:\n\n1. **Rainbow Forest Inequality (weak dua",
-      "quality_score": 0.8,
-      "sorry_count": 1,
-      "theorem_count": 18,
-      "timestamp": "2026-07-13T02:42:03",
-      "title": "Deepening: Minimalobstructions to total rainbow forests fail the Rainbow Forest Inequality "
-    },
-    {
       "cycle_id": "5b1ced03",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis project formalizes, from scratch and with no `sorry`, the cleanest\nconcrete instance of the \"limit points of largest matching roots below the\ngolden-ratio threshold\" picture:",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-15T21:37:16",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "cycle_id": "dae162a9",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nThe formalization now establishes both the general arithmetic-to-symbolic interface and its connection to the concrete nearest-integer orbit. In particular, it proves that the exp",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-15T21:42:33",
+      "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T21:37:16",
+  "last_updated": "2026-07-15T21:42:33",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "bb3ce4ee",
-        "quality": 0.7902000000000001,
-        "theorems": 15,
-        "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-      },
-      {
         "cycle_id": "70354b52",
         "quality": 0.63344,
         "theorems": 26,
@@ -3327,6 +3321,12 @@
         "quality": 0.9,
         "theorems": 5,
         "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge."
+      },
+      {
+        "cycle_id": "dae162a9",
+        "quality": 0.63,
+        "theorems": 19,
+        "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
       }
     ],
     "Cryptography": [
