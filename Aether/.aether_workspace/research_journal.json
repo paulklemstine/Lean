@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2360ad91",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n`BoundedError.lean` establishes, for surveillance on a finite dynamic network:\n\n1. a combinatorial Fano lower bound on the surveillance rate needed to\n   reconstruct all but `k` c",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 20,
-      "timestamp": "2026-07-14T16:54:56",
-      "title": "Deepening: Surveillance Networks: Information-Theoretic Undetectability"
-    },
-    {
       "cycle_id": "a3c4f06b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Exact Exponent for Constrained Coset Guesswork\n\n## What this cycle added\n\nThe prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*\n`ρ(1-R)` **abstractly**:",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-15T05:59:13",
       "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
+    },
+    {
+      "cycle_id": "d4584015",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Adjoint Selmer Rigidity\n\n## 1. Derived rigidity without residual adequacy\n\n**Conjecture.** Let a regular algebraic cuspidal automorphic representation of a general linear group ov",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T06:16:57",
+      "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representatio"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6fce3466",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nThis project studies *\"causal loops\"* in category theory: structures where composition\n(or a tensor product) fails to be associative **on the nos",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 39,
-      "timestamp": "2026-07-12T17:38:45",
-      "title": "Deepening: This project formalises the mission *\"Causal Loops in Category Theory: when comp"
-    },
     {
       "cycle_id": "0bd39924",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-07-15T05:59:13",
       "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
+    },
+    {
+      "cycle_id": "d4584015",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Adjoint Selmer Rigidity\n\n## 1. Derived rigidity without residual adequacy\n\n**Conjecture.** Let a regular algebraic cuspidal automorphic representation of a general linear group ov",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-15T06:16:57",
+      "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representatio"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.93
     }
   ],
-  "last_updated": "2026-07-15T05:59:13",
+  "last_updated": "2026-07-15T06:16:57",
   "open_questions": [
     {
       "context": "Everything is unconditional and `sorry`-free.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "73a5599a",
-        "quality": 0.69548,
-        "theorems": 17,
-        "title": "Diffusion Models as Stochastic Differential Equations"
-      },
-      {
         "cycle_id": "ab7f1188",
         "quality": 0.49574803827751207,
         "theorems": 18,
@@ -3451,6 +3445,12 @@
         "quality": 0.78,
         "theorems": 14,
         "title": "Rucker: Wetware — Biological Computation and Its Mathematical Limits"
+      },
+      {
+        "cycle_id": "d4584015",
+        "quality": 0.82,
+        "theorems": 0,
+        "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic "
       }
     ],
     "Logic": [

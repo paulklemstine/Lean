@@ -149,6 +149,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0014",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T06:16:18.232072+00:00",
+    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Extensive Equivariant Invariants of Composite Systems\n\n## 1. Grothendieck completion of finite free \u2124\u2082-systems\n\nThe commutative monoid of finite nonempty free \u2124\u2082-systems under join should admit a canonical group completion on which the shifted co-index is the universal additive integer-valued invariant. In particular, every additive invariant that is constant on equivariant isomorphism classes should factor through `coind + 1`.\n\nThe key insight is that classification reduces every finite system to its number of antipodal orbits, while join adds orbit counts. Why now? The finite composition law proves extensivity for arbitrarily many factors, supplying the monoid structure required for a universal characterization.\n\n## 2. Exponential law for equivariant map counts under composition\n\nFor finite free \u2124\u2082-systems `K` and `L`, the number of equivariant simplicial embeddings from an octahedral sphere into `K * L` should admit a closed convolution formula in the corresponding counts for `K` and `L`, with binomial coefficients recording how source axes split between the factors.\n\nThe key insight is that every map is an injection of antipodal orbits together with independent sign choices, and an injection into a disjoint union splits uniquely by its target component. Why now? Exact co-index composition identifies the support of the expected convolution, while the existing sphere enumeration supplies its boundary values.\n\n## 3. Species-level refinement of the many-body law\n\nFinite free \u2124\u2082-systems and equivariant bijections should form a combinatorial species equivalent to nonempty finite sets of signed pairs; under this equivalence, join should correspond to disjoint union and the cycle index should recover the hyperoctahedral symmetry factors of every composite.\n\nThe key insight is that the orbit decomposition is canonical up to permutation and sign reversal, precisely the wreath-product structure underlying hyperoctahedral groups. Why now? The cardinality and shifted co-index laws already agree on all finite composites, suggesting a refinement from numerical invariants to symmetry-sensitive generating series.\n\n## 4. Failure boundary beyond the octahedral free-set model\n\nThere should exist a finite free \u2124\u2082-simplicial complex whose shifted co-index is strictly subadditive with respect to a suitable join decomposition, demonstrating that orbit counting ceases to classify co-index once arbitrary face relations are admitted.\n\nThe key insight is that the present exact law relies on every antipodal-pair-free subset being a face; deleting selected faces preserves the free action but can obstruct sphere maps without changing the vertex orbit count. Why now? The finite classification theorem precisely isolates the assumption responsible for exact additivity, making a minimal counterexample search sharply defined.\n\n## 5. Stable co-index versus equivariant connectivity\n\nFor arbitrary finite free \u2124\u2082-simplicial complexes, the limit of the normalized sequence `(coind(K^{*r}) + 1)/r` should exist and equal a stable equivariant capacity bounded between an obstruction-theoretic index and the number of vertex orbits.\n\nThe key insight is that joins provide superadditive lower bounds, so a Fekete-type argument should produce a stable rate even when exact finite additivity fails. Why now? Exact extensivity in the free-set model gives a completely solved benchmark and identifies the candidate normalization for the general theory.\n",
     "domains": [
       "Algebra",
@@ -178,7 +193,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** Under the recursive factorial-code classification, conjugation b"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5dadc373",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -188,7 +203,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T05:58:21.391551+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
@@ -222,18 +237,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle supplies the bridge among stable extensions, directed kernels, and"
   },
   {
-    "consumed_by_exp_id": "2ed994b6",
-    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Adjoint Selmer Rigidity\n\n## 1. Derived rigidity without residual adequacy\n\n**Conjecture.** Let a regular algebraic cuspidal automorphic representation of a general linear group over a CM field give a characteristic-zero Galois representation satisfying the expected local de Rham regularity and irreducibility conditions. Its derived global deformation ring is concentrated in degree zero and is formally \u00e9tale at the automorphic point, without an adequacy or largeness hypothesis on the residual representation.\n\nThe key insight is that characteristic-zero infinitesimal rigidity should control not only the classical tangent space but the entire cotangent complex, making residual hypotheses unnecessary at every derived order. **Why now?** Adjoint Bloch--Kato vanishing supplies the degree-one input, while derived deformation theory provides a precise sequence of higher obstruction groups against which the stronger claim can be tested.\n\n## 2. Componentwise propagation of adjoint Selmer vanishing\n\n**Conjecture.** On every irreducible characteristic-zero component of an eigenvariety containing a regular noncritical classical point, vanishing of the adjoint Bloch--Kato Selmer group at one Zariski-dense set of classical points forces generic vanishing on the whole component; the exceptional locus is a proper determinantal subvariety cut out by the failure of a global-to-local relation map to have full rank.\n\nThe key insight is that the Selmer group is a kernel in a coherent family, so its jumping locus should be determinantal rather than arbitrary. **Why now?** The full-rank characterization of rigidity isolates the exact geometric condition needed to formulate and measure this jumping phenomenon.\n\n## 3. Contragredient symmetry of rigidity loci\n\n**Conjecture.** The contragredient involution on a regular algebraic eigenvariety preserves the scheme-theoretic adjoint-rigidity locus, including all multiplicities of its non-rigid determinantal strata.\n\nThe key insight is that negate-and-reverse duality on algebraic weights should lift from weight-space symmetry to a perfect duality of Selmer complexes, not merely an equality of tangent-space dimensions. **Why now?** Zero variation is already reflected by contragredient duality at the algebraic-weight level, and the next test is whether this reflection persists for the complete arithmetic deformation complex.\n\n## 4. Coefficient-field invariance for integral Selmer defects\n\n**Conjecture.** After excluding a finite, explicitly characterizable set of primes, extension of coefficient fields preserves not only characteristic-zero adjoint Selmer vanishing but also the Fitting ideal of the integral adjoint Selmer complex up to flat base change.\n\nThe key insight is that flat scalar extension preserves injectivity at the tangent level, suggesting that the finer integral defect should be governed by a base-change-compatible perfect complex. **Why now?** The characteristic-zero preservation theorem identifies the robust linear mechanism; integral Fitting ideals provide a falsifiable refinement sensitive to torsion that the linear statement cannot see.\n\n## 5. Quantitative rigidity from local Hodge data\n\n**Conjecture.** For regular algebraic automorphic Galois representations over CM fields, the codimension of every non-rigid deformation stratum admits a uniform lower bound determined solely by gaps among Hodge--Tate weights and the number of split places imposing crystalline conditions.\n\nThe key insight is that regular Hodge filtrations contribute independent local linear constraints whose transversality should force a predictable rank surplus in the global relation map. **Why now?** Rigidity has a full-rank formulation, allowing local Hodge-theoretic constraints to be translated into concrete determinantal codimension estimates and tested in low-rank families.\n",
     "domains": [
-      "Bridges"
+      "Algebra",
+      "Pythagorean"
     ],
-    "id": "fd_0000",
-    "priority_score": 0.7,
+    "id": "fd_0015",
+    "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "oeis:80035",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T05:23:22.329148+00:00",
-    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+    "source_exp_id": "d4584015",
+    "status": "available",
+    "timestamp": "2026-07-15T06:16:53.136495+00:00",
+    "title": "**Conjecture.** Let a regular algebraic cuspidal automorphic representation of a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0013",
+    "priority_score": 0.73,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T06:16:18.228361+00:00",
+    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
     "consumed_by_exp_id": "",
