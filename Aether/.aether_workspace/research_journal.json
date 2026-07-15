@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2c734846",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Tangled Hierarchies: Proof Systems That Reference Their Own Soundness\n\nThe file `TangledSoundness.lean` develops the semantic core of self-referential\nproof systems: a chain from",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-14T15:41:13",
-      "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-    },
-    {
       "cycle_id": "202302de",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Möbius discriminant and log-behaviour of combinatorial totals\n\nThis cycle isolated a single scalar invariant — the **Möbius discriminant**\n`Δ = γβ − αδ` attached to a first-o",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T05:13:04",
       "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
+    },
+    {
+      "cycle_id": "bd321901",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Intrinsic witness complexity\n\n## Results established\n\nThe development in `Catalog/Computation/WitnessComplexityDeepening.lean` replaces an ambient-vertex polynomial estimate by a",
+      "quality_score": 0.93,
+      "sorry_count": 4,
+      "theorem_count": 46,
+      "timestamp": "2026-07-15T05:22:58",
+      "title": "Deepening: Two-parameter picture of *witness complexity* for the"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c81fdc47",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Bruhat order and closure of orbit strata\n\nThis cycle established the order-theoretic backbone of the statement *\"Bruhat order\npreserves closure relations for orbit strata on a pr",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-12T16:46:15",
-      "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
-    },
     {
       "cycle_id": "b6e3f70d",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T05:13:04",
       "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
+    },
+    {
+      "cycle_id": "bd321901",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Intrinsic witness complexity\n\n## Results established\n\nThe development in `Catalog/Computation/WitnessComplexityDeepening.lean` replaces an ambient-vertex polynomial estimate by a",
+      "quality_score": 0.93,
+      "sorry_count": 4,
+      "theorem_count": 46,
+      "timestamp": "2026-07-15T05:22:58",
+      "title": "Deepening: Two-parameter picture of *witness complexity* for the"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a25c6e48",
-      "domain": "Applications",
-      "name": "deriv_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a25c6e48",
-      "domain": "Applications",
-      "name": "logDeriv_continuous",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ccd67871",
-      "domain": "Applications",
-      "name": "star_pairwise",
-      "quality": 0.83
-    },
     {
       "cycle_id": "ccd67871",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "NumberTheory",
       "name": "eulerCharacter_unique_nontrivial",
       "quality": 0.91
+    },
+    {
+      "cycle_id": "bd321901",
+      "domain": "Combinatorics",
+      "name": "for",
+      "quality": 0.93
+    },
+    {
+      "cycle_id": "bd321901",
+      "domain": "Combinatorics",
+      "name": "for",
+      "quality": 0.93
+    },
+    {
+      "cycle_id": "bd321901",
+      "domain": "Combinatorics",
+      "name": "follows",
+      "quality": 0.93
     }
   ],
-  "last_updated": "2026-07-15T05:13:04",
+  "last_updated": "2026-07-15T05:22:58",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "0a1d0253",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T08:39:55"
-    },
     {
       "context": "All statements are `sorry`-free.; All statements are `sorry`-free.",
       "cycle_id": "13e584ca",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 3,
       "timestamp": "2026-07-15T04:08:41"
+    },
+    {
+      "context": "",
+      "cycle_id": "bd321901",
+      "domain": "Combinatorics",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T05:22:58"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "ee65478f",
-        "quality": 0.44923399999999997,
-        "theorems": 13,
-        "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
-      },
-      {
         "cycle_id": "04b163c8",
         "quality": 0.6772579999999999,
         "theorems": 10,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 43,
         "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
+      },
+      {
+        "cycle_id": "bd321901",
+        "quality": 0.93,
+        "theorems": 46,
+        "title": "Deepening: Two-parameter picture of *witness complexity* for the"
       }
     ],
     "Computation": [
