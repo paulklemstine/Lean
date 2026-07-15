@@ -1,5 +1,5 @@
-import Computation.MixedRadixNumberSystem
-import Computation.FactorialNumberSystem
+import Catalog.Computation.MixedRadixNumberSystem
+import Catalog.Computation.FactorialNumberSystem
 
 /-!
 # Bridge: the factorial number system is a mixed-radix system
@@ -42,28 +42,34 @@ namespace MixedRadixBridge
 
 open MixedRadix
 
-/-- The mixed-radix place values for `b i = i + 1` are the factorials, so the
-mixed-radix value agrees with the factorial-system value. -/
+/-
+The mixed-radix place values for `b i = i + 1` are the factorials, so the
+mixed-radix value agrees with the factorial-system value.
+-/
 theorem value_eq (c : Nat → Nat) (k : Nat) :
     MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by
-  exact Finset.sum_congr rfl fun i _ => by rw [MixedRadix.factorial_radixProd]
+      exact Finset.sum_congr rfl fun i hi => by rw [ factorial_radixProd ] ;
 
-/-- Mixed-radix validity for `b i = i + 1` coincides with factorial validity. -/
+/-
+Mixed-radix validity for `b i = i + 1` coincides with factorial validity.
+-/
 theorem valid_iff (c : Nat → Nat) (k : Nat) :
     MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by
-  convert MixedRadix.factorial_valid_iff c k
+      simp +decide [ Valid, FactorialNumberSystem.Valid ]
 
-/-- **The factorial uniqueness theorem, re-derived from the general one.**
+/-
+**The factorial uniqueness theorem, re-derived from the general one.**
 
 This reproves `FactorialNumberSystem.value_unique` using only
-`MixedRadix.value_unique` and the bridge lemmas `value_eq` / `valid_iff`. -/
+`MixedRadix.value_unique` and the bridge lemmas `value_eq` / `valid_iff`.
+-/
 theorem factorial_value_unique_via_mixed {c d : Nat → Nat} {k : Nat}
     (hc : FactorialNumberSystem.Valid c k) (hd : FactorialNumberSystem.Valid d k)
     (hv : FactorialNumberSystem.value c k = FactorialNumberSystem.value d k) :
     ∀ i < k, c i = d i := by
-  apply MixedRadix.value_unique
-  · exact (valid_iff c k).2 hc
-  · exact (valid_iff d k).2 hd
-  · simpa only [value_eq] using hv
+      -- Apply MixedRadix.value_unique at bases fun i => i+1.
+      have h : MixedRadix.Valid (fun i => i + 1) c k ∧ MixedRadix.Valid (fun i => i + 1) d k ∧ MixedRadix.value (fun i => i + 1) c k = MixedRadix.value (fun i => i + 1) d k := by
+        exact ⟨ by simpa only [ valid_iff ] using hc, by simpa only [ valid_iff ] using hd, by simpa only [ value_eq ] using hv ⟩;
+      exact MixedRadix.value_unique h.1 h.2.1 h.2.2
 
 end MixedRadixBridge

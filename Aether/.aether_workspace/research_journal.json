@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ef403dbc",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — White's Quadratic Exchange Conjecture (Part 3)\n\nThis cycle deepened the quadratic-exchange engine (`Basic.lean`) and its uniform\ninstances (`Uniform.lean`) with genuine structura",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-14T10:59:51",
-      "title": "Deepening: White's Quadratic Exchange Conjecture (Part 3)"
-    },
-    {
       "cycle_id": "bce13597",
       "domain": "Applications",
       "key_insight": "# Future Directions: from the octahedral count to the general index–coindex gap\n\nThis cycle turned the *existence* dichotomy for antipodal maps of cross-polytope spheres\n(`there is a ℤ₂-map Sᵐ → Sⁿ ⟺",
@@ -499,19 +489,19 @@
       "theorem_count": 33,
       "timestamp": "2026-07-15T03:10:55",
       "title": "This cycle recast analogy-making between two ordered structures as the taking of"
+    },
+    {
+      "cycle_id": "7ea29a05",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Thresholds, defects, and toughness\n\n## 1. Stability of complete-host induced containment\n\nFor each finite pattern graph \\(H\\), determine the least edge deficit \\(d(H)\\) such that",
+      "quality_score": 0.9,
+      "sorry_count": 4,
+      "theorem_count": 16,
+      "timestamp": "2026-07-15T03:46:49",
+      "title": "This cycle promoted the component-count toughness toolkit from a collection of"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d019c88a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Homological Quantum Codes — Cycle 1 results\n\nThread `th_c942ee26`, root direction `fd_0859`. The previous cycle established\nthe exact dictionary **\"logical qubits = middle homolog",
-      "quality_score": 0.88,
-      "sorry_count": 1,
-      "theorem_count": 30,
-      "timestamp": "2026-07-12T14:10:41",
-      "title": "Exact dictionary \"logical qubits = middle homology\""
-    },
     {
       "cycle_id": "f8254dbf",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 33,
       "timestamp": "2026-07-15T03:10:55",
       "title": "This cycle recast analogy-making between two ordered structures as the taking of"
+    },
+    {
+      "cycle_id": "7ea29a05",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Thresholds, defects, and toughness\n\n## 1. Stability of complete-host induced containment\n\nFor each finite pattern graph \\(H\\), determine the least edge deficit \\(d(H)\\) such that",
+      "quality_score": 0.9,
+      "sorry_count": 4,
+      "theorem_count": 16,
+      "timestamp": "2026-07-15T03:46:49",
+      "title": "This cycle promoted the component-count toughness toolkit from a collection of"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "daf8e94d",
-      "domain": "Novelty",
-      "name": "card_starIdx",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "9a38651d",
-      "domain": "Novelty",
-      "name": "CausalLoop",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "9a38651d",
-      "domain": "Novelty",
-      "name": "not_bijective_forces_selfConsistent",
-      "quality": 0.78
-    },
     {
       "cycle_id": "9a38651d",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Tropical",
       "name": "shadow_triangles_subset_edges",
       "quality": 0.91
+    },
+    {
+      "cycle_id": "7ea29a05",
+      "domain": "Shared",
+      "name": "value_eq",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "7ea29a05",
+      "domain": "Shared",
+      "name": "valid_iff",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "7ea29a05",
+      "domain": "Shared",
+      "name": "for",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-07-15T03:10:55",
+  "last_updated": "2026-07-15T03:46:49",
   "open_questions": [
-    {
-      "context": "non-vacuous.  No hidden `sorry`; `#print axioms` uses only the standard set.; necessary.  All main theorems are `sorry`-free and use genuine arguments; sorry",
-      "cycle_id": "189556db",
-      "domain": "Applications",
-      "sorry_count": 6,
-      "timestamp": "2026-07-14T06:35:06"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "30ef4e5b",
@@ -3016,6 +3009,13 @@
       "domain": "Tropical",
       "sorry_count": 4,
       "timestamp": "2026-07-15T03:10:55"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "7ea29a05",
+      "domain": "Shared",
+      "sorry_count": 4,
+      "timestamp": "2026-07-15T03:46:49"
     }
   ],
   "research_threads": {
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "c78b961d",
-        "quality": 0.4367097362637363,
-        "theorems": 9,
-        "title": "Extremal Graph Theory: Turán and Szemerédi"
-      },
-      {
         "cycle_id": "0eefe6b1",
         "quality": 0.65777,
         "theorems": 6,
@@ -3947,6 +3941,12 @@
         "quality": 0.92,
         "theorems": 3,
         "title": "Close Proofs: The mission asked to interrogate the claim:"
+      },
+      {
+        "cycle_id": "7ea29a05",
+        "quality": 0.9,
+        "theorems": 16,
+        "title": "This cycle promoted the component-count toughness toolkit from a collection of"
       }
     ],
     "Tropical": [
