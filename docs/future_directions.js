@@ -661,7 +661,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
   },
   {
-    "consumed_by_exp_id": "7c9d4e79",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Tverberg's theorem for unions of convex sets: Sharp bounds and colored extensions' and formalize its key results. Abstract: Let $f_{r}(d,s_{1},\\ldots,s_{r})$ be the least $N$ such that every $N$-point set $P\\subseteq \\mathbb{R}^{d}$ has an $r$-partition $P=P_{1}\\sqcup\\cdots\\sqcup P_{r}$ with the following property: whenever $C_{i}\\supseteq P_{i}$ is a union of at most $s_{i}$ convex sets, one has $\\bigcap_{i=1}^{r}C_{i}\\ne\\emptyset$. A recent breakthrough of Alon and Smorodinsky established the first effective upper bounds $f_{r}(d,s,\\ldots,s)\\le Cdr^{2}s^{r}\\log r\\log(es^{r})$ for this problem. We obtain an asymptotically sharp lower bound by proving $f_r(d,s,\\ldots,s)\\ge c(d-r+2)s^r\\log(s+1)$ for every $d\\ge r+2$, which shows that $f_r(d,s,\\ldots,s)=\u0398_{d,r}(s^r\\log s)$ for every fixed $d\\ge r+2$. We also prove the general lower bound $f_r(d,s,\\ldots,s)>s^{\\min\\{d,r\\}}$. On the other hand, we develop a local counting argument to show that $f_r(d,s,\\ldots,s)\\le C_{d}rs^r\\log(ers^r)$ and $f_r(d,s,\\ldots,s)\\le C_{d}r^{d+2}s^{d+1}\\log(ers)$ whenever $r\\ge d+1$, improving the upper bound of Alon and Smorodinsky",
     "domains": [
       "Algebra",
@@ -671,7 +671,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12449v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T18:44:57.239806+00:00",
     "title": "ArXiv paper: Tverberg's theorem for unions of convex sets: Sharp bounds and colored extensions"
   },
