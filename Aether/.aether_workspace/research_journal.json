@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e6dfc1d4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — μ-extension of Matsuno's formula\n\n## Summary of what was established\n\nThe file `Catalog/Novelty/MatsunoMuExtension.lean` studies, in **contrarian mode**, the\narithmetic model\n`la",
-      "quality_score": 0.78,
-      "sorry_count": 1,
-      "theorem_count": 26,
-      "timestamp": "2026-07-14T16:16:10",
-      "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
-    },
-    {
-      "cycle_id": "3361b315",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Topology of Knotted Light\n\nThis cycle established the topological charge of an orbital-angular-momentum beam\nas an additive invariant governed by a contour-integral **product",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 16,
-      "timestamp": "2026-07-14T16:16:35",
-      "title": "Deepening: The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
-    {
       "cycle_id": "2360ad91",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n`BoundedError.lean` establishes, for surveillance on a finite dynamic network:\n\n1. a combinatorial Fano lower bound on the surveillance rate needed to\n   reconstruct all but `k` c",
@@ -499,29 +479,29 @@
       "theorem_count": 13,
       "timestamp": "2026-07-15T05:41:05",
       "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `k` s"
+    },
+    {
+      "cycle_id": "7385ba7c",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n1. **Computable ranking and unranking.** Replace the finite-cardinality inverse used by `codeRankEquiv` with an executable decoder based on repeated division by factorials, and pr",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 1,
+      "timestamp": "2026-07-15T05:59:05",
+      "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` should admi"
+    },
+    {
+      "cycle_id": "b1453a16",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Argumentation kernels and games\n\nThis cycle supplies the bridge among stable extensions, directed kernels, and\nnormal-play P-position solutions in `Bridges/ArgumentationKernelGam",
+      "quality_score": 0.93,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-15T05:59:13",
+      "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "00880e6f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The Algebraic Core of Four-Dimensional Geometry\n\nThis cycle isolated two identities — the continuous sum-of-squares identity\n`(a+b)² = 4ab + (a−b)²` and the discrete binomial iden",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-12T17:21:08",
-      "title": "The cycle established a compact algebraic core for four-dimensional geometry: a"
-    },
-    {
-      "cycle_id": "766b6e47",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Fractional-slope reductions of crystalline representations\n\nThese conjectures are distilled from the arithmetic/linear-algebra decomposition\nestablished in this cycle: a fraction",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-12T17:21:20",
-      "title": "Irreducibility of mod p reductions of crystalline representations at fractional slope and even weigh"
-    },
     {
       "cycle_id": "6fce3466",
       "domain": "Applications",
@@ -2501,27 +2481,29 @@
       "theorem_count": 13,
       "timestamp": "2026-07-15T05:41:05",
       "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `k` s"
+    },
+    {
+      "cycle_id": "7385ba7c",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n1. **Computable ranking and unranking.** Replace the finite-cardinality inverse used by `codeRankEquiv` with an executable decoder based on repeated division by factorials, and pr",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 1,
+      "timestamp": "2026-07-15T05:59:05",
+      "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` should admi"
+    },
+    {
+      "cycle_id": "b1453a16",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Argumentation kernels and games\n\nThis cycle supplies the bridge among stable extensions, directed kernels, and\nnormal-play P-position solutions in `Bridges/ArgumentationKernelGam",
+      "quality_score": 0.93,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-15T05:59:13",
+      "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "71637775",
-      "domain": "Novelty",
-      "name": "coind_octJoin_list",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "71637775",
-      "domain": "Novelty",
-      "name": "coind_octJoin_perm",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "50098ece",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.84
-    },
     {
       "cycle_id": "50098ece",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "card_factorialCode",
       "quality": 0.91
+    },
+    {
+      "cycle_id": "b1453a16",
+      "domain": "Bridges",
+      "name": "stable_iff_kernel",
+      "quality": 0.93
+    },
+    {
+      "cycle_id": "b1453a16",
+      "domain": "Bridges",
+      "name": "kernel_iff_gameSolution",
+      "quality": 0.93
+    },
+    {
+      "cycle_id": "b1453a16",
+      "domain": "Bridges",
+      "name": "stable_iff_gameSolution",
+      "quality": 0.93
     }
   ],
-  "last_updated": "2026-07-15T05:41:05",
+  "last_updated": "2026-07-15T05:59:13",
   "open_questions": [
     {
       "context": "Everything is unconditional and `sorry`-free.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "f91c88c3",
-        "quality": 0.78952,
-        "theorems": 8,
-        "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-M"
-      },
-      {
         "cycle_id": "ea22db3c",
         "quality": 0.40624133333333334,
         "theorems": 4,
@@ -3203,6 +3197,12 @@
         "quality": 0.92,
         "theorems": 0,
         "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
+      },
+      {
+        "cycle_id": "b1453a16",
+        "quality": 0.93,
+        "theorems": 20,
+        "title": "This cycle adds `ArgumentationKernelGame.lean`, a self-contained bridge file tha"
       }
     ],
     "Combinatorics": [
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "1983a01c",
-        "quality": 0.7400800000000001,
-        "theorems": 22,
-        "title": "Bourgain's Slicing Problem"
-      },
-      {
         "cycle_id": "efa9038a",
         "quality": 0.455,
         "theorems": 5,
@@ -3885,6 +3879,12 @@
         "quality": 0.91,
         "theorems": 3,
         "title": "Topological charge of an orbital-angular-momentum bea"
+      },
+      {
+        "cycle_id": "7385ba7c",
+        "quality": 0.91,
+        "theorems": 1,
+        "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` "
       }
     ],
     "Shared": [

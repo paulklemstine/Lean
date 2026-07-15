@@ -91,6 +91,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0009",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T05:58:21.385836+00:00",
+    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 3c80004e (Q=0.900) proved 46 theorems in Physics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Sharp maximal excess of the \u2124\u2082 co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free \u2124\u2082-complexes satisfies\n`coi",
     "domains": [
       "Physics"
@@ -149,18 +164,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** Under the recursive factorial-code classification, conjugation b"
   },
   {
-    "consumed_by_exp_id": "2ed994b6",
-    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "consumed_by_exp_id": "",
+    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
-      "Bridges"
+      "Novelty",
+      "NumberTheory"
     ],
-    "id": "fd_0000",
-    "priority_score": 0.7,
+    "id": "fd_0010",
+    "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "oeis:80035",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T05:23:22.329148+00:00",
-    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-15T05:58:21.391551+00:00",
+    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Computable ranking and unranking.** Replace the finite-cardinality inverse used by `codeRankEquiv` with an executable decoder based on repeated division by factorials, and prove it extensionally equal to the current equivalence.\n2. **Concrete inversion-vector semantics.** Connect each digit to the number of smaller entries preceding or following the corresponding symbol in the classified permutation. This would identify the present recursive equivalence with the conventional Lehmer code, not merely a canonical factoradic classification.\n3. **Order and parity.** Prove that factoradic rank gives a total enumeration of permutations and derive the sign formula `sign \u03c3 = (-1)^(sum of code digits)`.\n4. **Adjacent ranks.** Characterize how incrementing a factoradic rank transforms the permutation, including carry propagation across digits.\n5. **Arbitrary finite types.** Transport the classification from `Fin k` to any finite linearly ordered type and prove naturality under order equivalences.\n6. **Algorithmic complexity.** Implement rank/unrank and verify time bounds for digit extraction and recursive insertion.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0011",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7385ba7c",
+    "status": "available",
+    "timestamp": "2026-07-15T05:59:00.838880+00:00",
+    "title": "1. **Computable ranking and unranking.** Replace the finite-cardinality inverse "
   },
   {
     "consumed_by_exp_id": "",
