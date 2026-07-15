@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "26646791",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle (Builder mode) established a single connected chain of results around the\nFuss–Catalan numbers `fc m n = C((m+1)·n, n)/(m·n+1)` and their `m = 1` (Catalan)\nspecializati",
-      "quality_score": 0.72,
-      "sorry_count": 1,
-      "theorem_count": 26,
-      "timestamp": "2026-07-12T23:12:48",
-      "title": "Close Proofs: Recursive decomposition of greedy Tamari intervals via Dyck path struc"
-    },
-    {
       "cycle_id": "4d87b490",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Kernel Law for the Thermodynamics of Proof\n\nThe kernel law established in this cycle says that a structure-preserving reasoning step\n`f : G → H` dissipates exactly `log₂|ker",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-07-15T13:43:12",
       "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
+    },
+    {
+      "cycle_id": "d2c19f81",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Quantum Latin Squares of Order Six\n\n## 1. Rigidity at the symmetric ceiling\n\n**Conjecture.** Every order-six quantum Latin square of cardinality twenty-one obtained from normalize",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-15T14:18:16",
+      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T13:43:12",
+  "last_updated": "2026-07-15T14:18:16",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "c4017799",
-        "quality": 0.5808559999999999,
-        "theorems": 21,
-        "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
-      },
-      {
         "cycle_id": "c38e66e4",
         "quality": 0.82,
         "theorems": 14,
@@ -3699,6 +3693,12 @@
         "quality": 0.68,
         "theorems": 101,
         "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+      },
+      {
+        "cycle_id": "d2c19f81",
+        "quality": 0.67,
+        "theorems": 14,
+        "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twe"
       }
     ],
     "Physics": [

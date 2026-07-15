@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-15T13:43:12.645616+00:00",
+  "last_updated": "2026-07-15T14:18:23.575378+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -18626,6 +18626,7 @@
       "outcome_quality": 0.61,
       "phase": "A_only",
       "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v26",
@@ -18668,6 +18669,7 @@
       "outcome_quality": 0.68,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -18710,6 +18712,7 @@
       "outcome_quality": 0.68,
       "phase": "A_only",
       "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v26",
@@ -18738,6 +18741,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-15T13:43:12.625504+00:00",
       "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "NumberTheory",
+      "duration_seconds": 2123.4059269428253,
+      "end_time": 1784125067.554018,
+      "files_integrated": 2,
+      "job_id": "d2c19f81",
+      "outcome_quality": 0.67,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.65,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.82,
+        "composite": 0.5095,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.66,
+        "novelty": 0.61,
+        "proof_depth": 0.58,
+        "usefulness": 0.76
+      },
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784122944.148091,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-15T14:18:23.552823+00:00",
+      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
     }
   ]
 }
