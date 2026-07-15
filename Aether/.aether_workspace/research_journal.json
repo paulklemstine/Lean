@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0242f406",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle closed the three positional-numeral bridge gaps connecting the general\nmixed-radix theory with the factorial number system, and it isolated the single\nremaining obstruc",
-      "quality_score": 0.72,
-      "sorry_count": 1,
-      "theorem_count": 0,
-      "timestamp": "2026-07-12T23:51:57",
-      "title": "Close Proofs: The opposite-semicube Helly property characterizes harmonic-evenness i"
-    },
-    {
       "cycle_id": "86966da0",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Reflective Tower after Cross-Level Separation\n\nThis cycle sharpened the reflective tower `L(0) = Bool`, `L(n+1) = L(n) → Bool`\nfrom a locally strict chain into a *globally ri",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-15T20:42:38",
       "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
+    },
+    {
+      "cycle_id": "2152d45c",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Compressed Universal Posets\n\n## 1. Regularity-guided half-coordinate labeling\n\n**Conjecture.** For every positive real number η, all sufficiently large finite posets on n points a",
+      "quality_score": 0.61,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-15T20:45:21",
+      "title": "ArXiv paper: Even smaller universal posets"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T20:42:38",
+  "last_updated": "2026-07-15T20:45:21",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "c4e68c8d",
-        "quality": 0.6812400000000001,
-        "theorems": 9,
-        "title": "STRD Domatic Number Equals One for Graphs with a Degree-3 Vertex"
-      },
-      {
         "cycle_id": "4055f798",
         "quality": 0.7906799999999999,
         "theorems": 11,
@@ -3383,6 +3377,12 @@
         "quality": 0.83,
         "theorems": 22,
         "title": "Deepening: Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+      },
+      {
+        "cycle_id": "2152d45c",
+        "quality": 0.61,
+        "theorems": 11,
+        "title": "ArXiv paper: Even smaller universal posets"
       },
       {
         "cycle_id": "2152d45c",
