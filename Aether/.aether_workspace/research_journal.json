@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "82394822",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalises the *logical core* of the classification of Boolean cubic forms in\nten variables: the Burnside ⇄ orbit–stabilizer bridge, the division principle that turns",
-      "quality_score": 0.72,
-      "sorry_count": 1,
-      "theorem_count": 15,
-      "timestamp": "2026-07-12T23:32:06",
-      "title": "Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-    },
-    {
       "cycle_id": "0242f406",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle closed the three positional-numeral bridge gaps connecting the general\nmixed-radix theory with the factorial number system, and it isolated the single\nremaining obstruc",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-15T20:42:25",
       "title": "ArXiv paper: Even smaller universal posets"
+    },
+    {
+      "cycle_id": "9b262bd9",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## 1. Closed predecessor-free membership criterion\n\n**Conjecture.** For every irrational `α > (3 + √5)/2` and positive iteration\ndepth `n`, membership of `x` in the `n`th iterated",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-15T20:42:38",
+      "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T20:42:25",
+  "last_updated": "2026-07-15T20:42:38",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "e29ffbac",
-        "quality": 0.3793292235294118,
-        "theorems": 2,
-        "title": "Classification of regular 4‑maniplexes via tetravalent graph censuses"
-      },
-      {
         "cycle_id": "236b0246",
         "quality": 0.4996542252252253,
         "theorems": 14,
@@ -4009,6 +4003,12 @@
         "quality": 0.65,
         "theorems": 104,
         "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+      },
+      {
+        "cycle_id": "9b262bd9",
+        "quality": 0.69,
+        "theorems": 11,
+        "title": "ArXiv paper: A Note on Iterated Beatty Sequences"
       }
     ]
   }
