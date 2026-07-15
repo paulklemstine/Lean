@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f633d08",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
       "Algebra",
@@ -13,12 +13,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11863v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T06:52:23.069944+00:00",
     "title": "ArXiv paper: Magnitude homology of tope graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e285b27",
     "description": "Investigate the ArXiv paper 'Decision problem for Hamilton $2$-cycles in $4$-graphs' and formalize its key results. Abstract: A $4$-uniform $2$-cycle in a $4$-uniform hypergraph of length $t$ is a cyclic ordering of $2t$ vertices $v_1v_2\\cdots v_{2t}v_1$ such that $v_{2i+1}v_{2i+2}v_{2i+3}v_{2i+4}$ are edges for $0\\le i\\le t-1$ while the addition is modulo $2t$. For every $\u03b3>0$ and large $n$, we characterize the $n$-vertex $4$-uniform hypergraphs such that every triple of vertices is contained in at least $(1/3+\u03b3)n$ edges and admits a Hamilton $2$-cycle. Up to the error term $\u03b3n$, the assumption on the minimum codegree is best possible and verifies a conjecture of Garbe and Mycroft. As a consequence, this gives a polynomial-time algorithm that decides whether an $n$-vertex $4$-uniform hypergraph with minimum codegree $(1/3+\u03b3)n$ contains a Hamilton $2$-cycle. This stands as a steep contrast to the graph case where such a hardness gap has size $o(n)$.",
     "domains": [
       "Pythagorean",
@@ -28,7 +28,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11872v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:10:18.924942+00:00",
     "title": "ArXiv paper: Decision problem for Hamilton $2$-cycles in $4$-graphs"
   },
@@ -63,7 +63,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "277b2b6b",
     "description": "Investigate the ArXiv paper 'Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations' and formalize its key results. Abstract: We prove the vanishing of the adjoint Bloch--Kato Selmer group of the Galois representations associated to regular algebraic automorphic representations of general linear groups over CM fields. A key novelty of our work is that we impose conditions only on the $p$-adic Galois representations, and not on their associated residual representations modulo $p$.",
     "domains": [
       "Algebra"
@@ -72,7 +72,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11769v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:10:22.328314+00:00",
     "title": "ArXiv paper: Adjoint Bloch--Kato Selmer groups of regular algebraic automorphic Galois representations"
   },
@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5a6c2ed",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T05:23:22.329148+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
