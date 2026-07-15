@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "208b1ca5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — from the E₈ / Eisenstein Hecke structure\n\nThis cycle established that the vector-count function of the `E₈` lattice,\n`n ↦ 240·σ₃(n)`, carries the full Hecke-eigenform structure o",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 17,
-      "timestamp": "2026-07-12T23:12:33",
-      "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
-    },
-    {
       "cycle_id": "26646791",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle (Builder mode) established a single connected chain of results around the\nFuss–Catalan numbers `fc m n = C((m+1)·n, n)/(m·n+1)` and their `m = 1` (Catalan)\nspecializati",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-15T13:43:01",
       "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
+    },
+    {
+      "cycle_id": "08212964",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\n## Scope completed\n\nThe formal development in `Catalog/Logic/RootedPathIrregularity/Contrarian.lean` isolates the exceptional three-vertex-path case from the paper and proves two",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-15T13:43:12",
+      "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-15T13:43:01",
+  "last_updated": "2026-07-15T13:43:12",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "150736b0",
-        "quality": 0.6976800000000001,
-        "theorems": 11,
-        "title": "Conjecture on Absolute Boundedness of Polynomial Diophantine Tuples"
-      },
-      {
         "cycle_id": "2058237b",
         "quality": 0.49753964866339334,
         "theorems": 10,
@@ -3513,6 +3507,12 @@
         "quality": 0.66,
         "theorems": 107,
         "title": "ArXiv paper: Magnitude homology of tope graphs"
+      },
+      {
+        "cycle_id": "08212964",
+        "quality": 0.68,
+        "theorems": 17,
+        "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
       }
     ],
     "MachineLearning": [
