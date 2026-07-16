@@ -1833,12 +1833,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Excluding paths and bicliques' and formalize its key results. Abstract: Classes of graphs excluding a path and a biclique as induced subgraphs are extensively studied in the literature. One of the key structural results for such graphs is a Ramsey-type result due to Galvin, Rival, and Sands (1982), establishing the existence of a function $f$ bounding the maximum length of a path in terms of clique number $\u03c9$. We improve the best known bound on $f$ to a function that is a singly exponential in $\u03c9^c$, for some constant $c$, which we show is best possible, up to optimizing $c$. Our approach also has consequences for treedepth. In particular, we show that, for graphs excluding a path and a biclique as induced subgraphs, treedepth is bounded by a polynomial function of clique number. In turn, this result implies that every hereditary graph class that admits a function bounding treedepth of graphs in the class in terms of clique number, admits a polynomial such function. This gives a treedepth analogue of a recent result on pathwidth due to Hajebi (2025).",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0141",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13995v1",
+    "status": "available",
+    "timestamp": "2026-07-16T18:36:39.881170+00:00",
+    "title": "ArXiv paper: Excluding paths and bicliques"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$' and formalize its key results. Abstract: For the elliptic curves $E_{p,q}: y^{2}=x^{3}-pqx$ where $p$ and $q$ are distinct odd primes, we establish necessary and sufficient conditions under which rank$\\,E_{p,q}(\\mathbb{Q})$ and $\\dim_{\\mathbb{F}_{2}} \\Sha \\left( E_{p,q}/\\bbQ \\right)[2]$ are both $0$. We do so via a similar characterisation of when the Selmer groups associated with the degree-$2$ isogeny $\u03c6$ and its dual $\\widehat\u03c6$ are both of minimal size, along with results about a cokernel that arises from a related exact sequence.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14033v1",
@@ -1852,7 +1866,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14038v1",
@@ -1867,7 +1881,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13895v1",
@@ -1876,32 +1890,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Feedback vertex sets in oriented graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df23eec4",
     "description": "Investigate the ArXiv paper 'Transformation Semigroup Perspective on the Magma Monoid' and formalize its key results. Abstract: The monoid of all binary operations was first introduced by H. S. Kim and J. Neggers in 2008. Since then, different aspects and applications of this monoid were studied, while several questions about its semigroup-theoretic properties remain unanswered. We employ a transformation semigroup perspective to fully characterize principal left and right ideals, idempotent and regular elements of this monoid, as well as provide precise combinatorial enumerations of them. This approach gives a general framework for most of the existing results on ideals in the magma monoid. We also answer several open questions posed in the 2023 PhD dissertation of A. Rafieipour. Finally, we correct an error regarding the description of the center of the magma monoid from the 2011 paper of H. F. Fayomi.",
     "domains": [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13746v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T17:45:08.868122+00:00",
     "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
   },
   {
-    "consumed_by_exp_id": "df23eec4",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Antipodal paths in covers of spheres' and formalize its key results. Abstract: In this note we show that if the sphere $\\mathbb{S}^n$ is covered by $k$ open sets with $n \\geq 2k-2$, then one of these sets contains a path with antipodal endpoints. This is best possible in the sense that the statement fails for $n < 2k-2$. The result can be seen as a spherical analogue of a well-known conjecture of Norine on edge-colourings of the discrete hypercube.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13964v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T18:02:15.059733+00:00",
     "title": "ArXiv paper: Antipodal paths in covers of spheres"
   },
@@ -1911,13 +1925,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13829v1",
     "status": "available",
     "timestamp": "2026-07-16T18:19:27.949802+00:00",
     "title": "ArXiv paper: The inversion number of a path-reversed tournament: Resolving a conjecture of Belkhechine, Bouaziz, Boudabbous, and Pouzet"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Clique spectral extremal problem on disjoint color-critical graphs' and formalize its key results. Abstract: For a given graph $F$, a graph $G$ is called $F$-free if it does not contain $F$ as a subgraph. A graph is color-critical if deleting one of its edges decreases its chromatic number. Let $F_1, F_2, \\cdots, F_t$ be $t$ disjoint color-critical graphs with chromatic number $r+1$. For $2 \\leq s \\leq r$ and sufficiently large $n$, we determine the unique extremal graph with the maximum $s$-clique spectral radius among all $n$-vertex $\\bigcup_{i=1}^t F_i$-free graphs.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0148",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13861v1",
+    "status": "available",
+    "timestamp": "2026-07-16T18:36:43.198397+00:00",
+    "title": "ArXiv paper: Clique spectral extremal problem on disjoint color-critical graphs"
   },
   {
     "consumed_by_exp_id": "",
