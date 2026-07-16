@@ -62,7 +62,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7cd4ad55",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -72,7 +72,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T23:07:06.558583+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -121,7 +121,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
   {
-    "consumed_by_exp_id": "94e3fc40",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes' and formalize its key results. Abstract: Character-polynomial codes are constructed by evaluating finite field polynomials and mapping the results to complex roots of unity through additive characters. This paper shows that, over extension fields, the original polynomial family may contain redundancies: distinct polynomials can generate the same codeword. We identify the source of this non-injectivity through the trace map and cyclotomic cosets, determine the exact code cardinality, and construct a refined polynomial family that parametrizes the code without redundancy. These results give corrected parameters for CP codes and clarify their algebraic structure.",
     "domains": [
       "Algebra"
@@ -130,7 +130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11595v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T08:58:24.618652+00:00",
     "title": "ArXiv paper: Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes"
   },
@@ -589,7 +589,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The Balanced Four-Color Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e23ed960",
     "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=\u03b1(G)+1$, where $\u03b1(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
     "domains": [
       "Physics"
@@ -598,12 +598,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12890v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T13:08:25.917501+00:00",
     "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
   },
   {
-    "consumed_by_exp_id": "a47254c6",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Record compositions of alternating permutations and noncommutative symmetric functions' and formalize its key results. Abstract: Amdeberhan, Shareshian, and Stanley recently proved that a function $\\varphi$ arising in the theory of partition Eisenstein series counts the alternating permutations of $\\{1,\\dots,2n\\}$ with a given `record' partition, and they asked whether there is a similar theory for record compositions, suggesting a role for noncommutative symmetric functions. Here we solve their open problem by showing that the number of alternating permutations of $\\{1,\\dots,2n\\}$ with record composition $(\u03b1_1,\\dots,\u03b1_\\ell)$ is \\[ \\prod_{j=1}^{\\ell}\\binom{2s_j-1}{2\u03b1_j-1}E_{2\u03b1_j-1}, \\] where $s_j=\u03b1_1+\\dots+\u03b1_j$, $E_k$ is an Euler number, and the record composition of $w=a_1a_2\\dots a_{2n}$ (so $a_1>a_2<a_3>\\dotsb$) lists the factor lengths obtained by cutting $a_1a_3\\dots a_{2n-1}$ before each left-to-right maximum other than the first. These numbers are the coefficients of a natural lift of the degree-$n$ sprout symmetric function with seed $\\sec(\\sqrt{t}\\,)$ to noncommutative symmetric functions, expanded in p",
     "domains": [
       "Algebra"
@@ -612,7 +612,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T13:25:40.671949+00:00",
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
   },
@@ -719,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Recursive Formula for the Equations of Hessenberg Varieties"
   },
   {
-    "consumed_by_exp_id": "67328d87",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Hypergraph Turan with bounded matching number' and formalize its key results. Abstract: For a fixed graph $G$, an $r$-uniform hypergraph is said to contain a Berge-$G$ if there exists a bijection $f\\colon E(G)\\to E(\\mathcal{H})$ for some subhypergraph $\\mathcal{H}$ such that $e\\subseteq f(e)$ for every $e\\in E(G)$. Motivated by Alon and Frankl's study of Tur\u00e1n problems under bounded matching constraints, we investigate the maximum number of edges in $r$-uniform Berge-$K_3$-free hypergraphs with matching number at most~$s$. We determine the exact Tur\u00e1n numbers for the cases $r=3$ and $r=4$. For $r=3$ and $n \\geq 3 s$, we prove that every $n$-vertex Berge- $K_3$-free 3-graph with matching number $s$ has at most $s(n-2 s)$ edges, and we characterize the unique extremal hypergraph attaining equality. For $r=4$ and $n \\geq 4 s$, the maximum number of edges is $s\\lfloor(n-2 s) / 2\\rfloor$, except for the exceptional case $s=1$ and $n \\equiv 1(\\bmod 4)$, in which the bound is $(n-1) / 2$. As a corollary, our results recover the classical theorem of Gy\u0151ri on Berge-$K_3$-free hype",
     "domains": [
       "Algebra"
@@ -728,7 +728,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12300v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T19:54:37.533091+00:00",
     "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
   },
@@ -762,7 +762,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors"
   },
   {
-    "consumed_by_exp_id": "76e6eee9",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Ap\u00e9ry-like numbers. As applications, many new supercongruences are deduced.",
     "domains": [
       "Bridges"
@@ -771,12 +771,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T20:45:36.266548+00:00",
     "title": "ArXiv paper: Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers"
   },
   {
-    "consumed_by_exp_id": "e6582bf4",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Some Remarks on Hessians and Wronskians' and formalize its key results. Abstract: The purpose of this note is to elaborate on the apparent connection between Wronskians and Hessians. More generally, to a given subspace of homogeneous bivariate forms over the complex numbers, we associate two determinantal polynomials called the $W$-polynomial and the $\\hat{W}$-polynomial. We give expansion and factorization formulas for these polynomials, and study their behavior under change of coordinates and duality. As an application, we give another proof of Iarrobino's theorem on the strong Lefschetz property for standard graded Artinian Gorenstein algebras in codimension two.",
     "domains": [
       "Algebra",
@@ -786,7 +786,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T21:02:39.460834+00:00",
     "title": "ArXiv paper: Some Remarks on Hessians and Wronskians"
   },
