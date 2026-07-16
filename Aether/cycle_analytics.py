@@ -42,6 +42,7 @@ class CycleRecord:
     outcome_quality: float = 0.0
     files_integrated: int = 0
     failed: bool = False  # True if cycle produced no output (0 files, 0 theorems)
+    error_message: Optional[str] = None
     prompt_version: str = "v1"  # "v1" (original) | "v2" (master-class) | "v3" (PEGB+structures)
     # Two-phase fields
     phase: str = "A"  # "A" | "B" | "complete" | "A_only"
@@ -138,6 +139,7 @@ class CycleAnalytics:
             phase_a_quality_score=getattr(job, "phase_a_quality_score", 0.0),
             outcome_quality=0.0,
             files_integrated=getattr(job, "files_integrated", 0),
+            error_message=getattr(job, "error_message", None),
             timestamp=datetime.now(timezone.utc).isoformat(),
         )
 
@@ -193,8 +195,8 @@ class CycleAnalytics:
         except Exception:
             pass
 
-        # Mark as failed if cycle produced no output
-        if record.files_integrated == 0 and record.theorem_count == 0:
+        # Mark as failed if job status is failed or cycle produced no output
+        if getattr(job, "status", "") == "failed" or (record.files_integrated == 0 and record.theorem_count == 0):
             record.failed = True
 
         # Tag with current prompt version (or job's version if specified)

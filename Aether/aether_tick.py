@@ -245,7 +245,10 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
             return
 
         # Last 30 records for rolling metrics
-        recent = records[-30:]
+        recent = [r for r in records if not r.get("failed")]
+        if not recent:
+            return
+        recent = recent[-30:]
         by_ver = {}
         for r in recent:
             v = r.get("prompt_version", "unknown")
@@ -1032,54 +1035,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             del extractor.inflight[pid]
         print(f"[Tick] Pruned {len(stale_keys)} completed jobs from inflight")
 
-    # Auto-cleanup: remove dispatched jobs stuck for >2 hours with no progress
-    import time as _time
-    now = _time.time()
-    stuck_keys = []
-    for pid, job in list(extractor.inflight.items()):
-        if job.status == "dispatched":
-            dispatch_ts = getattr(job, 'dispatch_time', None) or job.get('dispatch_time')
-            if dispatch_ts and (now - float(dispatch_ts)) > 7200:
-                stuck_keys.append(pid)
-            elif not dispatch_ts:
-                # No timestamp — assume stale from a previous run
-                stuck_keys.append(pid)
-    if stuck_keys:
-        for pid in stuck_keys:
-            job = extractor.inflight[pid]
-            extractor._release_direction(job)
-            if job.project_dir and Path(job.project_dir).exists():
-                try:
-                    import shutil
-                    print(f"[Cleanup] Removing stuck project workspace: {job.project_dir}")
-                    shutil.rmtree(str(job.project_dir), ignore_errors=True)
-                except Exception as e:
-                    print(f"[Cleanup] Warning: failed to clean up stuck project directory: {e}")
-            del extractor.inflight[pid]
-        print(f"[Tick] Cleaned up {len(stuck_keys)} stuck dispatched jobs (>2h, no progress)")
 
-    # Retry-queued jobs that have been stuck for too long are considered failed.
-    retry_stuck_keys = []
-    for pid, job in list(extractor.inflight.items()):
-        if job.status == "retry_queued":
-            queued_ts = getattr(job, 'retry_queued_time', None)
-            if queued_ts and (now - float(queued_ts)) > 3600:
-                retry_stuck_keys.append(pid)
-    if retry_stuck_keys:
-        for pid in retry_stuck_keys:
-            job = extractor.inflight[pid]
-            job.status = "failed"
-            job.error_message = "Retry-queued for >1h without dispatching"
-            extractor._release_direction(job)
-            if job.project_dir and Path(job.project_dir).exists():
-                try:
-                    import shutil
-                    print(f"[Cleanup] Removing stuck retry project workspace: {job.project_dir}")
-                    shutil.rmtree(str(job.project_dir), ignore_errors=True)
-                except Exception as e:
-                    print(f"[Cleanup] Warning: failed to clean up stuck retry project directory: {e}")
-            del extractor.inflight[pid]
-        print(f"[Tick] Cleaned up {len(retry_stuck_keys)} retry-queued jobs stuck >1h")
 
     # Defensive: remove any stray Catalog/{job_id}_retry{N}_aristotle/ staging
     # dirs left over from retry integration.
