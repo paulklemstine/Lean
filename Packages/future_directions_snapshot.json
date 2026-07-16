@@ -1354,25 +1354,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7d82c497",
-    "description": "Investigate the ArXiv paper 'Fractal uncertainty principle over $\\mathbb{Q}_p$' and formalize its key results. Abstract: We prove a fractal uncertainty principle over $\\mathbb{Q}_p$ for porous sets, resolving a conjecture of Cohen.",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0074",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11534v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T03:18:30.753456+00:00",
-    "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=λ_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
     "domain_bridges": [],
@@ -1606,6 +1587,65 @@
     "status": "available",
     "timestamp": "2026-07-16T05:47:13.678585+00:00",
     "title": "**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser grap"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such that an induced random state with environment dimension `s ∼ λd²` changes, with probability tending to one, from violating to satisfying the level-`m` shifted-Hankel criterion as `λ` crosses `λ_m`.\n\n**The key insight is...** the limiting partial-transpose moments determine a finite Hankel determinant whose sign changes at an algebraic critical point.\n\n**Why now?** The deterministic Gram identity and hierarchy nesting isolate the exact finite polynomial whose random asymptotics must control.\n\n## 2. Strict improvement and convergence of the threshold hierarchy\n\nThe threshold constants are strictly increasing, `λ_m < λ_{m+1}`, and converge to the full positive-partial-transpose threshold as `m → ∞`.\n\n**The key insight is...** every additional polynomial probe detects a genuinely new interval of negative spectral support rather than merely reproducing a lower-degree witness.\n\n**Why now?** Nesting has been established without probabilistic assumptions, reducing the conjecture to strictness and asymptotic completeness for the limiting spectral law.\n\n## 3. Quantitative finite-size transition window\n\nFor fixed `m`, outside a window of width `O(d^{-1})` around `λ_m`, the probability of misclassification decays exponentially in `d²`.\n\n**The key insight is...** determinant stability converts concentration of finitely many moments into concentration of the sign of the moment certificate, provided the limiting determinant is transverse at its zero.\n\n**Why now?** An explicit perturbation budget is available for the first nonlinear certificate and can be generalized to higher principal minors.\n\n## 4. Universality beyond complex Wishart ensembles\n\nThe same constants `λ_m` govern induced-state models whose entries are independent, centered, variance-normalized, and have a finite sufficiently high moment, even when the entries are non-Gaussian.\n\n**The key insight is...** fixed-order partial-transpose moments depend asymptotically only on pairings and permutation topology, while higher cumulants are lower order.\n\n**Why now?** The deterministic certificate separates model-independent moment geometry from the ensemble-specific concentration argument.\n\n## 5. Optimal polynomial witness at fixed experimental budget\n\nAmong all degree-`m-1` polynomial probes normalized in the limiting spectral measure, the eigenvector associated with the least shifted-Hankel eigenvalue maximizes the asymptotic violation margin and minimizes sample complexity.\n\n**The key insight is...** witness selection is a Rayleigh-quotient optimization problem on the moment matrix, linking entanglement detection to orthogonal polynomials and Christoffel functions.\n\n**Why now?** The exact quadratic-form identity identifies polynomial probes and Hankel eigenvectors as two descriptions of the same optimization problem.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0091",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4e53cd7c",
+    "status": "available",
+    "timestamp": "2026-07-16T05:47:23.380881+00:00",
+    "title": "For every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` su"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Graphical Signatures of Finite-Group Symmetry\n\n## 1. Rooted-pattern factorization through group differences\n\n**Conjecture.** For every finite rooted graph pattern with distinguished vertices, the number of adjacency-preserving embeddings into a Cayley graph, with the distinguished vertices fixed, depends only on the simultaneous left-translation orbit of those vertices. Equivalently, after fixing one root at the identity, it is a function only of the resulting tuple of group differences.\n\nThe key insight is that the proved common-neighbour equivalence is the two-root, one-free-vertex case of a much broader transport principle: left multiplication acts diagonally on every finite incidence configuration.\n\n**Why now?** Large Cayley-graph censuses already record many cycle and motif statistics. This conjecture supplies a single exact explanation for an entire family of observed redundancies and yields a principled compression of motif data.\n\n## 2. Square-clustering profiles as autocorrelation invariants\n\n**Conjecture.** For a finite group and an inverse-closed identity-free connection set, every standard local square-clustering numerator can be written as an explicit autocorrelation expression in the indicator function of the connection set; its value at an ordered pair `(a,b)` depends only on `a⁻¹b`.\n\nThe key insight is that common neighbours are intersections of translated connection sets, while edges among common neighbours are preserved by the induced common-neighbour graph equivalence.\n\n**Why now?** Square clustering is singled out by current network analyses of finite-group data. An autocorrelation formula would turn an empirical graph statistic into a tractable group-algebra observable and expose exactly which algebraic features it can detect.\n\n## 3. Spectral reconstruction from induced common-neighbour profiles\n\n**Conjecture.** For connected normal Cayley graphs of finite groups, the multiset of spectra of induced common-neighbour graphs, indexed by conjugacy classes of group differences, determines the fourth spectral moment of the ambient Cayley graph and separates broad families that ordinary degree and triangle counts do not.\n\nThe key insight is that the proved adjacency-preserving difference equivalence promotes pairwise counts to isomorphism classes of induced local graphs, whose spectra retain strictly richer four-cycle information.\n\n**Why now?** Existing datasets jointly expose cycle, distance, and spectral statistics, making this prediction directly falsifiable across many groups without requiring a new census.\n\n## 4. Quantitative stability of the Cayley signature\n\n**Conjecture.** A finite graph in which all but an `ε` fraction of ordered vertex pairs satisfy the pair-difference consistency identities for degree, common-neighbour count, and induced common-neighbour spectrum is within `o_ε(1)` normalized edit distance of a graph admitting a large semiregular automorphism subgroup.\n\nThe key insight is that exact Cayley geometry arises from a sharply transitive action; approximate consistency of the transported local data should force an approximate action that can be corrected to genuine symmetry.\n\n**Why now?** Learned classifiers may exploit near-symmetries rather than exact labels. A stability theorem would connect robust statistical prediction to structural group actions and specify how much noise the graphical signature tolerates.\n\n## 5. Boundary classification beyond Cayley graphs\n\n**Conjecture.** Among finite vertex-transitive graphs, those admitting a globally coherent difference coordinate for all two-root incidence patterns are exactly the Cayley graphs; coherence means that the pair-orbit labels compose associatively and have unique inverses.\n\nThe key insight is that vertex transitivity alone transports rooted data, but a Cayley graph additionally organizes those transports into a regular group action; associativity is the missing global constraint.\n\n**Why now?** This gives a falsifiable converse direction to local invariance results and may identify which collections of graph observables can distinguish Cayley graphs from non-Cayley vertex-transitive graphs.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0092",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "499d98ab",
+    "status": "available",
+    "timestamp": "2026-07-16T05:47:40.221458+00:00",
+    "title": "**Conjecture.** For every finite rooted graph pattern with distinguished vertice"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 4e53cd7c (Q=0.700) proved 16 theorems in Pythagorean but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion ",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "sorry_fill_4e53cd7c_817134e7",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4e53cd7c",
+    "status": "available",
+    "timestamp": "2026-07-16T05:47:36.892142+00:00",
+    "title": "Close Proofs: ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
   {
     "ambition_level": "extension",

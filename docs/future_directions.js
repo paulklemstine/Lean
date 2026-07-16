@@ -1010,20 +1010,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Intrinsic ergodicity for $\\mathfrak{B}$-free integers in number fields"
   },
   {
-    "consumed_by_exp_id": "7d82c497",
-    "description": "Investigate the ArXiv paper 'Fractal uncertainty principle over $\\mathbb{Q}_p$' and formalize its key results. Abstract: We prove a fractal uncertainty principle over $\\mathbb{Q}_p$ for porous sets, resolving a conjecture of Cohen.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0074",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11534v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T03:18:30.753456+00:00",
-    "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=\u03bb_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
     "domains": [
@@ -1199,6 +1185,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T05:47:13.678585+00:00",
     "title": "**Conjecture.** For all integers `s \u2265 3`, `k \u2265 1`, and `n \u2265 sk`, the Kneser grap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m \u2265 2`, there is a unique constant `\u03bb_m > 0` such that an induced random state with environment dimension `s \u223c \u03bbd\u00b2` changes, with probability tending to one, from violating to satisfying the level-`m` shifted-Hankel criterion as `\u03bb` crosses `\u03bb_m`.\n\n**The key insight is...** the limiting partial-transpose moments determine a finite Hankel determinant whose sign changes at an algebraic critical point.\n\n**Why now?** The deterministic Gram identity and hierarchy nesting isolate the exact finite polynomial whose random asymptotics must control.\n\n## 2. Strict improvement and convergence of the threshold hierarchy\n\nThe threshold constants are strictly increasing, `\u03bb_m < \u03bb_{m+1}`, and converge to the full positive-partial-transpose threshold as `m \u2192 \u221e`.\n\n**The key insight is...** every additional polynomial probe detects a genuinely new interval of negative spectral support rather than merely reproducing a lower-degree witness.\n\n**Why now?** Nesting has been established without probabilistic assumptions, reducing the conjecture to strictness and asymptotic completeness for the limiting spectral law.\n\n## 3. Quantitative finite-size transition window\n\nFor fixed `m`, outside a window of width `O(d^{-1})` around `\u03bb_m`, the probability of misclassification decays exponentially in `d\u00b2`.\n\n**The key insight is...** determinant stability converts concentration of finitely many moments into concentration of the sign of the moment certificate, provided the limiting determinant is transverse at its zero.\n\n**Why now?** An explicit perturbation budget is available for the first nonlinear certificate and can be generalized to higher principal minors.\n\n## 4. Universality beyond complex Wishart ensembles\n\nThe same constants `\u03bb_m` govern induced-state models whose entries are independent, centered, variance-normalized, and have a finite sufficiently high moment, even when the entries are non-Gaussian.\n\n**The key insight is...** fixed-order partial-transpose moments depend asymptotically only on pairings and permutation topology, while higher cumulants are lower order.\n\n**Why now?** The deterministic certificate separates model-independent moment geometry from the ensemble-specific concentration argument.\n\n## 5. Optimal polynomial witness at fixed experimental budget\n\nAmong all degree-`m-1` polynomial probes normalized in the limiting spectral measure, the eigenvector associated with the least shifted-Hankel eigenvalue maximizes the asymptotic violation margin and minimizes sample complexity.\n\n**The key insight is...** witness selection is a Rayleigh-quotient optimization problem on the moment matrix, linking entanglement detection to orthogonal polynomials and Christoffel functions.\n\n**Why now?** The exact quadratic-form identity identifies polynomial probes and Hankel eigenvectors as two descriptions of the same optimization problem.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0091",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4e53cd7c",
+    "status": "available",
+    "timestamp": "2026-07-16T05:47:23.380881+00:00",
+    "title": "For every fixed hierarchy level `m \u2265 2`, there is a unique constant `\u03bb_m > 0` su"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 4e53cd7c (Q=0.700) proved 16 theorems in Pythagorean but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion ",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "sorry_fill_4e53cd7c_817134e7",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4e53cd7c",
+    "status": "available",
+    "timestamp": "2026-07-16T05:47:36.892142+00:00",
+    "title": "Close Proofs: ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
   {
     "consumed_by_exp_id": "",

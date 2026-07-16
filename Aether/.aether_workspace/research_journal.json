@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cc9e6854",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Sharp Excess of ℤ₂-Coindex under Suspension\n\n## 1. Classification and enumeration of all equivariant simplicial maps\n\n**Conjecture.** The set of equivariant simplicial maps from t",
-      "quality_score": 0.93,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T00:43:31",
-      "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-co"
-    },
-    {
       "cycle_id": "dbf870e8",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## Completed proof chain\n\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` contains a complete three-step chain:\n\n1. `value_eq` identifies mixed-radix evaluation",
@@ -499,19 +489,19 @@
       "theorem_count": 43,
       "timestamp": "2026-07-16T05:47:17",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
+      "quality_score": 0.7,
+      "sorry_count": 3,
+      "theorem_count": 16,
+      "timestamp": "2026-07-16T05:47:36",
+      "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3f303e8a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
-      "quality_score": 0.72,
-      "sorry_count": 9,
-      "theorem_count": 0,
-      "timestamp": "2026-07-13T10:22:39",
-      "title": "Close Proofs: These conjectures grow out of the cycle's core finding: the collection"
-    },
     {
       "cycle_id": "86e0e034",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 43,
       "timestamp": "2026-07-16T05:47:17",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
+      "quality_score": 0.7,
+      "sorry_count": 3,
+      "theorem_count": 16,
+      "timestamp": "2026-07-16T05:47:36",
+      "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2ed994b6",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "2ed994b6",
-      "domain": "Novelty",
-      "name": "follows",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "d1d26693",
-      "domain": "Probability",
-      "name": "openingView_private_iff",
-      "quality": 0.75
-    },
     {
       "cycle_id": "d1d26693",
       "domain": "Probability",
@@ -2803,17 +2785,28 @@
       "domain": "Pythagorean",
       "name": "card_le_of_forceSequence",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "name": "shiftedHankel_quadratic_identity",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "name": "shiftedHankel_psd_of_nonnegative_spectrum",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "name": "shiftedHankel_hierarchy_nested",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-16T05:47:17",
+  "last_updated": "2026-07-16T05:47:36",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "3361b315",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T16:16:35"
-    },
     {
       "context": "+explicitly-marked `sorry` rather than proved by unsound means.  The statement is; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
       "cycle_id": "2360ad91",
@@ -3016,6 +3009,13 @@
       "domain": "Pythagorean",
       "sorry_count": 4,
       "timestamp": "2026-07-16T05:47:17"
+    },
+    {
+      "context": "",
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "sorry_count": 3,
+      "timestamp": "2026-07-16T05:47:36"
     }
   ],
   "research_threads": {
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "8b6fc6d0",
-        "quality": 0.7859200000000002,
-        "theorems": 12,
-        "title": "unnamed_concept"
-      },
-      {
         "cycle_id": "7f2fc4f9",
         "quality": 0.47561819905213276,
         "theorems": 422,
@@ -3885,6 +3879,12 @@
         "quality": 0.73,
         "theorems": 43,
         "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+      },
+      {
+        "cycle_id": "4e53cd7c",
+        "quality": 0.7,
+        "theorems": 16,
+        "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
       }
     ],
     "Shared": [
