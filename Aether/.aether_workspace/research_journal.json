@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4b27af05",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\n- Instantiate `graph_closure_inclusion_iff` with the Ehresmann rank definition of Bruhat order on `Equiv.Perm (Fin n)` and permutation inversion.\n- Connect `principalClosure` to t",
-      "quality_score": 0.88,
-      "sorry_count": 3,
-      "theorem_count": 3,
-      "timestamp": "2026-07-15T02:32:44",
-      "title": "Deepening: Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
-    },
-    {
       "cycle_id": "6097a507",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nThe present cycle refines the exact uniform coset exponent to exact finite-length first and second moments and their asymptotic prefactors.  Several natural extensions remain.\n\n1.",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-16T08:29:25",
       "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+    },
+    {
+      "cycle_id": "5759ba2d",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## Verified in this development\n\n1. **General packing and upper colouring.** A linearly `s`-stable `k`-set obeys the sharp span bound. This yields the canonical upper colouring wi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-16T10:21:20",
+      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ddc0d02e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Proofs as DAGs\n\nThis cycle deepened the \"Proofs as DAGs\" line by developing the *topological\nstructure* of an abstract proof-dependency relation. Starting from the existing\n`Hands",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-13T17:59:25",
-      "title": "Deepening: Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-    },
     {
       "cycle_id": "d31b8b8b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-16T10:21:12",
       "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
+    },
+    {
+      "cycle_id": "5759ba2d",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## Verified in this development\n\n1. **General packing and upper colouring.** A linearly `s`-stable `k`-set obeys the sharp span bound. This yields the canonical upper colouring wi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-16T10:21:20",
+      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "name": "cardinality_nineteen_of_unique_triple",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "4665f966",
-      "domain": "Combinatorics",
-      "name": "records",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "4665f966",
-      "domain": "Combinatorics",
-      "name": "here",
-      "quality": 0.71
-    },
     {
       "cycle_id": "4665f966",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "forceSequence_antisymm",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "5759ba2d",
+      "domain": "Novelty",
+      "name": "canonicalColor_lt",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "5759ba2d",
+      "domain": "Novelty",
+      "name": "canonicalColor_fiber_intersect",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "5759ba2d",
+      "domain": "Novelty",
+      "name": "canonicalColor_ne_of_disjoint",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T10:21:12",
+  "last_updated": "2026-07-16T10:21:20",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d8f04178",
-        "quality": 0.52,
-        "theorems": 14,
-        "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
-      },
-      {
         "cycle_id": "7d82c497",
         "quality": 0.7,
         "theorems": 11,
@@ -3637,6 +3631,12 @@
         "quality": 0.68,
         "theorems": 4,
         "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
+      },
+      {
+        "cycle_id": "5759ba2d",
+        "quality": 0.72,
+        "theorems": 20,
+        "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
       }
     ],
     "NumberTheory": [
