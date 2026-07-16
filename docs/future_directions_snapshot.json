@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5543d24b",
     "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domain_bridges": [],
     "domains": [
@@ -35,7 +35,7 @@
     "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T01:26:38.243699+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
@@ -1157,25 +1157,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a373adc5",
-    "description": "Investigate the ArXiv paper 'Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence' and formalize its key results. Abstract: An independent set in a graph $G$ is a set of pairwise non-adjacent vertices. A tree decomposition of $G$ is a pair $(T, χ)$ where $T$ is a tree and $χ: V(T) \\rightarrow 2^{V(G)}$ is a function satisfying two axioms: for every edge $uv \\in E(G)$ there is an $x \\in V(T)$ such that $\\{u,v\\} \\subseteq χ(x)$, and for every vertex $u \\in V(G)$ the set $\\{x \\in V(T) | u \\in χ(x)\\}$ induces a non-empty and connected subtree of $T$. The sets $χ(x)$ for $x \\in V(T)$ are called the bags of the tree decomposition. The tree-independence number of $G$ is the minimum taken over all tree decompositions of $G$ of the maximum size of an independent set of the graph induced by a bag of the decomposition. A graph $H$ is an induced minor of a graph $G$ if a graph isomorphic to $H$ can be obtained from $G$ by vertex deletions and edge contractions. We prove that for every $t\\in\\mathbb{N}$ there exists an $ε> 0$ such that every graph $G$ either contains the complete bipartite graph $K_{t,t}$ or the wall $W_",
-    "domain_bridges": [],
-    "domains": [
-      "Logic"
-    ],
-    "id": "fd_0062",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12090v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T22:11:50.907220+00:00",
-    "title": "ArXiv paper: Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
     "domain_bridges": [],
@@ -1216,7 +1197,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4a721b6e",
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
@@ -1229,7 +1210,7 @@
     "proof_strategy": "Define vampire numbers formally: v is a vampire number iff v has 2n digits and there exist x, y each with n digits such that v = x*y and the multiset of digits of v equals the union of digits of x and y. Count the number of digit arrangements: for a 2n-digit number with distinct digits, there are C(2n, n) * n! * n! possible fang pairs, so the expected number of fang pairs is C(2n, n) * (n!)^2 / 10^{2n} = C(2n,n) / 10^n ~ 1/sqrt(n). Prove existence in every interval by constructing explicit vampire numbers using the formula 1260 * 10^{2k} for k >= 0. Test: enumerate up to 10^8.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T01:41:38.282265+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
@@ -1252,6 +1233,26 @@
     "status": "available",
     "timestamp": "2026-07-16T01:42:46.470688+00:00",
     "title": "The formalization proves the invariant spectral splitting that underlies the gen"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal result in `Physics/HyperbolicArithmetic.lean` establishes a precise\nbridge that is available before addressing the broader conjectures in the\nresearch prompt: iteration of a Möbius translation on a Poincaré-disk diameter\nhas integral homogeneous coordinates, and those coordinates satisfy an exact\nexponential Diophantine norm equation.\n\n## Immediate formal extensions\n\n1. **General rational translations.** Replace `1/2` by `p/q`. The homogeneous\n   update matrix\n   \\[\n   \\begin{pmatrix}q&p\\\\p&q\\end{pmatrix}\n   \\]\n   multiplies the Lorentzian form `b²-a²` by `q²-p²`. A useful next theorem\n   would establish the recurrence, disk containment under `|p| < |q|`, and the\n   exact norm identity uniformly in `p` and `q`. Primitivity of the resulting\n   coordinates should be treated separately because common factors can occur.\n\n2. **Rapidity and boundary convergence.** Over the reals, identify the orbit\n   with `tanh (n * artanh (p/q))`. This connects the integral matrix recurrence\n   to the additive geodesic parameter. For `0 < p/q < 1`, it should also yield\n   monotonicity and convergence to the boundary point `1`.\n\n3. **Binary quadratic forms.** Recast the recurrence as an integral orthogonal\n   similitude of `b²-a²`, then generalize to Pell forms `b²-D*a²`. This gives a\n   concrete route from hyperbolic isometries to units in real quadratic orders\n   and makes the number-theoretic side of the bridge structural rather than a\n   single numerical identity.\n\n4. **The full disk action.** Formalize determinant-one real matrices acting by\n   fractional linear transformations on the upper half-plane, transfer that\n   action to the disk through a Cayley transform, and prove that the current\n   one-dimensional construction is the restriction to a geodesic diameter.\n\n## Definitions required by the larger research program\n\n5. **Specify the proposed arithmetic.** An orbit of `ℤ` under an unspecified\n   discrete subgroup does not automatically inherit well-defined addition or\n   multiplication. Before asking for factorization, one must define the carrier\n   and operations and prove closure, associativity, identities, and independence\n   from representatives.\n\n6. **Separate geometric and algebraic primes.** Vertices of a tessellation are\n   not automatically irreducible elements of a ring or monoid. A future model\n   must specify the algebraic structure being factored and state a theorem\n   relating irreducibles to a chosen geometric class of vertices. Only then is\n   a unique-factorization statement well posed.\n\n7. **Choose a precise counting function.** A hyperbolic prime-number theorem\n   needs a locally finite set, a metric radius, a base point, and a proof that\n   the count is finite. The proposed asymptotic should then be checked against\n   hyperbolic area growth; the expression `R²/(2 log R)` depends critically on\n   whether `R` denotes hyperbolic distance, Euclidean disk radius, or another\n   height parameter.\n\n8. **Replace the informal zeta sum by a defined analytic object.** For\n   `PSL(2,ℤ)`, a spectral or Selberg-type zeta function is geometrically natural,\n   but it is not definitionally the orbit sum written in the prompt. A formal\n   development must first prove convergence in an initial half-plane and then\n   state exactly what continuation and functional equation are intended.\n\n9. **Certified zero computations.** A claim about the first 100 zeros requires\n   a precise ordering (typically by imaginary part), multiplicity conventions,\n   and interval or complex-ball certificates with rigorous error bounds.\n   Floating-point output alone would not constitute a proof. No critical-line\n   or 100-zero claim is made by the present project.\n\nThese steps keep the proved Möbius–Diophantine connection as a reusable base\nwhile clearly separating it from the substantial algebraic, geometric, and\nanalytic foundations still needed for the broader conjectures.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0074",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a373adc5",
+    "status": "available",
+    "timestamp": "2026-07-16T02:42:41.519232+00:00",
+    "title": "The formal result in `Physics/HyperbolicArithmetic.lean` establishes a precise"
   },
   {
     "ambition_level": "extension",
