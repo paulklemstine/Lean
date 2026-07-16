@@ -4,6 +4,80 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0122",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T10:21:50.741745+00:00",
+    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0119",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T10:21:50.700522+00:00",
+    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0120",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T10:21:50.716718+00:00",
+    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0121",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T10:21:50.732076+00:00",
+    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
+    "domains": [
+      "Novelty",
+      "Combinatorics"
+    ],
+    "id": "fd_0123",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T10:21:50.750840+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
       "Algebra",
@@ -824,7 +898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The Prime Digit Distribution Conjecture: A Formal Proof of Average Digit Equidistribution in the Prime Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bc0eddc",
     "description": "Investigate the ArXiv paper 'The planar Hopf algebra of noncommutative multi-indices' and formalize its key results. Abstract: We construct the planar Linares--Otto--Tempelmayr Hopf algebra, thereby filling the missing planar noncommutative multi-index corner in the square relating the LOT, Butcher--Connes--Kreimer, and Munthe-Kaas--Wright Hopf algebras. Starting from the free associative algebra on a weighted alphabet $\\mathbb Z_{\\ge -1}\\times A$, we define an insertion-type product yielding a post-Lie structure on the Lie algebra generated by the linear span $V(A)$ of weight $-1$ monomials whose proper left prefixes all have nonnegative weight, and the Guin--Oudom construction then produces the planar LOT Hopf algebra. We introduce a planar tree fertility map from decorated planar rooted trees to monomials in $V(A)$, prove that it is a linear isomorphism, and obtain a natural Hopf algebra isomorphism with the Munthe-Kaas--Wright Hopf algebra. We further derive an explicit coproduct formula in terms of left-admissible cuts, establish the extraction-contraction coproduct, and construct a word symmetrization op",
     "domains": [
       "Algebra"
@@ -833,7 +907,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10696v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T09:00:01.144945+00:00",
     "title": "ArXiv paper: The planar Hopf algebra of noncommutative multi-indices"
   },
@@ -1228,7 +1302,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0dd72c9",
     "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=\u03bb_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
     "domains": [
       "Computation",
@@ -1238,7 +1312,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11369v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:36:01.905252+00:00",
     "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
@@ -1258,7 +1332,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26d242e6",
     "description": "Investigate the ArXiv paper 'Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices' and formalize its key results. Abstract: Inspired by recent advances in notions of spectral approximation of digraphs [Ahm+20], we study spectral algorithms for finding periodic structures in digraphs via the spectrum of a class of rotated Laplacian matrices. This class of Laplacian matrices was previously studied by Lange, Liu, Peyerimhoff, and Post [Lan+15]. We consider a notion of periodicity ratio that generalizes the bipartiteness ratio of Trevisan [Tre09], and show that it is closely related to the spectrum of rotated Laplacian matrices. In particular, if the digraph is strongly connected and represents a Markov chain, this periodicity ratio for a given $p \\in \\mathbb{N}$ is a quantitative measure of how close this Markov chain is to having periodicity $p$. We propose and analyze a periodicity-ratio variant of the spectral algorithm by Louis, Raghavendra, Tetali and Vempala [Lou+12]. We show that the algorithm runs in randomized polynomial time and can find many nearly periodic components (i.e, components with small per",
     "domains": [
       "Computation",
@@ -1268,7 +1342,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11333v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T04:10:18.387855+00:00",
     "title": "ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices"
   },
@@ -1288,7 +1362,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Combinatorial interpretation of the coefficients of the order polynomial of fence posets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "84cd9d36",
     "description": "Investigate the ArXiv paper 'A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$' and formalize its key results. Abstract: Wegner conjectured that every finite family $\\mathcal R$ of axis-parallel rectangles satisfies $\u03c4(\\mathcal R)\\le 2\u03bd(\\mathcal R)-1$, where $\u03bd$ is the packing number and $\u03c4$ is the piercing number. Ajwani, Gajjala, Raman, and Ray recently disproved this by constructing a triangle-free counterexample on $2196\\cdot 8^9$ rectangles and, using a computer-assisted package-and-port recursion, obtained a standard LP gap of $17891/8064$ for Maximum Independent Set of Rectangles. We give a simpler and hand-checkable counterexample with $64$ rectangles. It is built from an eight-rectangle gadget whose independent sets inject into four ordered slots; we then use four horizontal and four vertical copies of this gadget to form a triangle-free family with $\u03bd=16$ and $\u03c4\\ge 32$. We use the same horizontal-vertical step to define recursive families of rectangles $P_r$ with $\u03bd(P_r)=4^{2^r}$. For the standard clique, equivalently point, relaxation we obtain a finite gap $73/32$ at $P_3$, improving the prev",
     "domains": [
       "Pythagorean"
@@ -1297,7 +1371,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11318v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T04:42:57.611296+00:00",
     "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
   },
