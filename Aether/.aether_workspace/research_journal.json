@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c23e4bea",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: the coindex as a complete combinatorial invariant\n\nThis cycle closed the gap between the two halves of the join law for the ℤ₂-coindex of free\nℤ₂-sets. The lower half (a construct",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-15T00:43:23",
-      "title": "Deepening: Constructive, lower-bound half of the co-index theory"
-    },
-    {
       "cycle_id": "cc9e6854",
       "domain": "Applications",
       "key_insight": "# Future Directions: Sharp Excess of ℤ₂-Coindex under Suspension\n\n## 1. Classification and enumeration of all equivariant simplicial maps\n\n**Conjecture.** The set of equivariant simplicial maps from t",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T05:32:08",
       "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
+    },
+    {
+      "cycle_id": "58c6edf0",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions for Stable Kneser Graphs\n\n## 1. Full Meunier equality for odd stability\n\n**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser graph on cyclically `s`-stable",
+      "quality_score": 0.73,
+      "sorry_count": 4,
+      "theorem_count": 43,
+      "timestamp": "2026-07-16T05:47:17",
+      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3e1dd178",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Fourth Dimension as a Mathematical Playground\n\nThis cycle established the elementary algebraic core of four-dimensional geometry:\nthe volume law of the 4-ball, the face combin",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T09:49:47",
-      "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
-    },
     {
       "cycle_id": "3f303e8a",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T05:32:08",
       "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
+    },
+    {
+      "cycle_id": "58c6edf0",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions for Stable Kneser Graphs\n\n## 1. Full Meunier equality for odd stability\n\n**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser graph on cyclically `s`-stable",
+      "quality_score": 0.73,
+      "sorry_count": 4,
+      "theorem_count": 43,
+      "timestamp": "2026-07-16T05:47:17",
+      "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "80f7c124",
-      "domain": "Shared",
-      "name": "for",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "80f7c124",
-      "domain": "Shared",
-      "name": "follows",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "2ed994b6",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.7
-    },
     {
       "cycle_id": "2ed994b6",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "relabel_preserves_ray",
       "quality": 0.71
+    },
+    {
+      "cycle_id": "58c6edf0",
+      "domain": "Pythagorean",
+      "name": "subset_of_forceStep",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "58c6edf0",
+      "domain": "Pythagorean",
+      "name": "subset_of_forceSequence",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "58c6edf0",
+      "domain": "Pythagorean",
+      "name": "card_le_of_forceSequence",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-16T05:32:08",
+  "last_updated": "2026-07-16T05:47:17",
   "open_questions": [
-    {
-      "context": "All statements are proved with no `sorry` and no extra axioms.",
-      "cycle_id": "e6dfc1d4",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-14T16:16:10"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "3361b315",
@@ -3016,6 +3009,13 @@
       "domain": "Algebra",
       "sorry_count": 4,
       "timestamp": "2026-07-16T04:10:46"
+    },
+    {
+      "context": "sorry; depend on the catalog uniqueness proof.  (`#print axioms` shows no `sorryAx`.); MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "58c6edf0",
+      "domain": "Pythagorean",
+      "sorry_count": 4,
+      "timestamp": "2026-07-16T05:47:17"
     }
   ],
   "research_threads": {
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "efa9038a",
-        "quality": 0.455,
-        "theorems": 5,
-        "title": "Homotopy Type Theory as Foundations"
-      },
-      {
         "cycle_id": "8b6fc6d0",
         "quality": 0.7859200000000002,
         "theorems": 12,
@@ -3885,6 +3879,12 @@
         "quality": 0.91,
         "theorems": 1,
         "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` "
+      },
+      {
+        "cycle_id": "58c6edf0",
+        "quality": 0.73,
+        "theorems": 43,
+        "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
       }
     ],
     "Shared": [
