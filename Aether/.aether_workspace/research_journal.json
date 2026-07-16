@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5acf2050",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Composition-Algebra Playground, Deepened\n\nThis cycle extended the Hermitian-inner-product \"witness\" from the first Hopf\nfibration `S³ → S²` to the quaternionic Hopf fibration",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-13T14:51:35",
-      "title": "Deepening: That the geometry surrounding the Hopf fibration is"
-    },
-    {
       "cycle_id": "e3aaa465",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe file `Applications/TransferUniversality.lean` formalizes a universality/transitivity\ntheorem for transfer functions among accumulation points, modeling `Π^k_ℓ` as the dense\nad",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-16T08:29:25",
       "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+    },
+    {
+      "cycle_id": "19cecd78",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Far-Apart Packing and Thickened Transversals\n\n## 1. Multiscale anchor theorem for long cycles\n\n**Conjecture.** For every finite graph and every length threshold ℓ, the family of c",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-16T09:15:56",
+      "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T08:29:25",
+  "last_updated": "2026-07-16T09:15:56",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "cc9e6854",
-        "quality": 0.93,
-        "theorems": 0,
-        "title": "Close Proofs: The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a sel"
-      },
-      {
         "cycle_id": "7704d4fe",
         "quality": 0.66,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.71,
         "theorems": 13,
         "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to home"
+      },
+      {
+        "cycle_id": "19cecd78",
+        "quality": 0.69,
+        "theorems": 12,
+        "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
       }
     ],
     "Bridges": [
