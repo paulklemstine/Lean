@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "c7dc0124",
+    "consumed_by_exp_id": "",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:16:12.438268+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
-    "consumed_by_exp_id": "b2ab890c",
+    "consumed_by_exp_id": "",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
       "Novelty",
@@ -43,7 +43,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:16:12.414388+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
@@ -77,7 +77,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a51a5a1a",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -87,7 +87,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T15:16:12.454072+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -1055,7 +1055,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Zero-one laws for uniform approximation via Gaussian and Eisenstein integers"
   },
   {
-    "consumed_by_exp_id": "c95901fa",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'FFLV bases for covariant representations of $\\mathfrak{gl}(m|n)$' and formalize its key results. Abstract: We study the PBW filtration on covariant representations for the Lie superalgebra $\\mathfrak{gl}(m|n)$. We prove for all covariant weights of the form $(\u03bb|\u03bc,0^{n-1})$, that there exists a lattice polytope such that the lattice points of this polytope parametrize a basis of the corresponding associated graded space. As a consequence, we obtain degenerations of partial flag supervarieties for the supergroup $GL(m|n)$ into toric supervarieties.",
     "domains": [
       "Algebra",
@@ -1065,7 +1065,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11133v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T12:45:02.586325+00:00",
     "title": "ArXiv paper: FFLV bases for covariant representations of $\\mathfrak{gl}(m|n)$"
   },
@@ -1259,7 +1259,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On the Second Moment of $L (1/2, \\mathrm{As} (f))$"
   },
   {
-    "consumed_by_exp_id": "e7da75fe",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the Wiener and Harary Indices of Generalized Splitting and Shadow-Splitting Graphs' and formalize its key results. Abstract: In this paper, we determine the Wiener index and the Harary index for the $(p,q)$-generalized splitting graph $S_{p,q}(G)$ and the $(c,k)$-shadow-splitting graph $H_{c,k}(G)$ for a connected graph $G$.",
     "domains": [
       "Bridges"
@@ -1268,7 +1268,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13488v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T03:54:07.078921+00:00",
     "title": "ArXiv paper: On the Wiener and Harary Indices of Generalized Splitting and Shadow-Splitting Graphs"
   },
@@ -1743,7 +1743,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Edge-decomposition into Two Triangular Forests is NP-complete"
   },
   {
-    "consumed_by_exp_id": "8e1af77c",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Supersaturation for Hypergraph-Weighted Independent Sets' and formalize its key results. Abstract: Many extremal problems can be viewed as finding large independent sets in an auxiliary hypergraph. We propose a generalization of this by looking for ``large'' independent sets $I$ in a hypergraph $\\mathcal{F}$ where ``large'' is measured by how many edges $I$ induces in another hypergraph $\\mathcal{H}$ on the same vertex set as $\\mathcal{F}$. We prove general supersaturation results for such extremal problems motivated by the breakthrough work of Ferber, McKinley and Samotij on counting $F$-free graphs. As applications, we prove new supersaturation bounds for generalized Tur\u00e1n problems, as well as supersaturation bounds for a new set of extremal problems inspired by work of Fox and Pohoata on finding subsets $A\\sub\\mathbb{N}$ which maximize the number of solutions to a given system of equations while avoiding solutions to another system.",
     "domains": [
       "Algebra",
@@ -1753,7 +1753,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14022v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T16:53:10.235023+00:00",
     "title": "ArXiv paper: Supersaturation for Hypergraph-Weighted Independent Sets"
   },
@@ -1890,7 +1890,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Local and global average degree in bipartite graphs"
   },
   {
-    "consumed_by_exp_id": "df23eec4",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Feedback vertex sets in oriented graphs' and formalize its key results. Abstract: For an oriented graph $G$, denote by $fvs(G)$ the minimum number of vertices whose deletion from $G$ makes it acyclic. We show that an oriented graph $G$ on $n$ vertices and $m$ arcs satisfies $fvs(G) \\le \\frac{2n+m+h}{9}$ where $h$ denotes the number of connected components of $G$ that belong to a special class of oriented graphs. This result has three consequences. First, when $G$ is planar, we obtain that $fvs(G) \\le \\frac{2n+m}{9}$. In particular, this implies that $fvs(G) \\le \\frac{5n-6}{9}$ for any planar oriented graph $G$, improving the best known upper bound of $\\frac{3n}{5}$~[Borodin, Discrete Mathematics, 1979]. Then, applying this inequality to the planar digraphs without directed triangles, we get that $fvs(G) \\le \\frac{6n-8}{13}$, which improves the current best bound of $\\frac{n}{2}$~[Li and Mohar, SIAM Journal on Discrete Mathematics, 2017]. Finally, when $G$ has maximum degree 6, we have $fvs(G) \\le \\frac{4n}{7}$ and this bound is tight, answering a conjecture of Ai, G",
     "domains": [
       "Pythagorean",
@@ -1900,7 +1900,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13895v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T17:27:45.321534+00:00",
     "title": "ArXiv paper: Feedback vertex sets in oriented graphs"
   },
