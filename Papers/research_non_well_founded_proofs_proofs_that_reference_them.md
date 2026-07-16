@@ -1,244 +1,453 @@
-# Non-Well-Founded Proofs as Self-Similarity: A Fixed-Point Theory of Safe Self-Reference
+# Infinite Proof Trees, Cyclic Dependencies, and Ordinal Descent
 
-**Domain:** Geometry (self-similar structures, contraction dynamics) with applications to proof theory.
+## A separation theorem for approximation, circular syntax, and derivability
 
----
+**Aristotle**  
+**16 July 2026**
 
 ## Abstract
 
-We develop a unified theory in which *self-reference, when it is valid, is self-similarity*. Classical logic treats self-referential statements with suspicion: the liar sentence and Gödel's diagonal lemma show that uncontrolled self-reference breaks completeness and consistency. We propose a sharp dividing criterion — **contraction** — that separates self-referential definitions which name a unique object from those which name nothing. A self-referential equation $x = f(x)$ has a unique solution exactly when $f$ shrinks distances by a constant factor below one; the same condition governs which self-similar geometric objects are well-defined and which recursive (proof) definitions converge.
-
-We realize this thesis through two formal engines: **contraction fixed points** ($x^\star = f(x^\star)$) and **coinductive data** (infinite streams characterized up to bisimulation). We unify five phenomena under a single principle — *a quantity that is the unique solution of its own equation*: (i) the infinite geometric series $S = a + rS$; (ii) the coinductive geometric stream whose tail is a scaled copy of itself; (iii) the affine attractor $f(x) = cx + b$ with geometric convergence rate; (iv) the metallic ratios $\varphi_m^2 = m\varphi_m + 1$ with their gnomon self-similarity; and (v) the similarity dimension $D = \log k/\log(1/r)$ as the solution of $k r^D = 1$. We then transport the criterion to proof theory: the self-referential proof of $P \Rightarrow P$ is a *valid* non-well-founded proof of finite height, while the liar sentence is *invalid* precisely because its height functional $h \mapsto h+1$ is non-contractive and admits no fixed point. The paradox becomes a boundary case rather than a flaw.
-
-All quantitative claims below are stated as theorems with proof sketches.
-
----
+Self-reference in proofs is often compared with recursion: a finite cyclic description may unfold into an infinite object, suggesting that circular derivations could acquire validity as limits of finite approximations. This paper isolates the mathematical ingredients of that suggestion and shows that they support a more guarded conclusion. We define a minimal implicational calculus, address-labelled potentially infinite trees, finite-depth truncations, an information order on tree observations, and ordinal-ranked dependency graphs. Five results follow. First, the usual derivation of $P\to P$ has height one and is hypothetical rather than circular. Second, a one-node cyclic graph unravels into a legitimate infinite unary tree with nodes at every finite depth. Third, observations ordered by inclusion form a complete lattice; in particular, the union of a countable chain is its least upper bound, and every fixed tree address stabilizes in a sufficiently deep truncation. Fourth, any dependency relation that strictly decreases an ordinal rank on every edge is acyclic: it permits neither self-loops nor finite directed cycles. Thus strict ordinal descent cannot validate genuine circularity; it excludes it. Fifth, exact reflection $Q\leftrightarrow L$ is inconsistent with the liar equation $L\leftrightarrow\neg Q$. These facts distinguish existence of infinite proof-shaped objects from sound derivability and identify guarded, step-indexed semantics and global trace conditions as appropriate directions for cyclic proof theory.
 
 ## 1. Introduction
 
-### 1.1 The problem of self-reference
+A finite graph may describe infinite behavior. A loop in an automaton generates an unbounded run; a recursive equation may define an infinite stream; a finite cyclic term may unravel into an infinite tree. It is therefore natural to ask whether a proof may similarly refer to itself and acquire validity through a fixed-point construction.
 
-Self-reference is the engine behind the deepest negative results of twentieth-century logic. The liar sentence, *"this statement is false,"* has no stable truth value; Gödel's first incompleteness theorem constructs a sentence asserting its own unprovability; Russell's paradox exhibits a set that contains itself iff it does not. The orthodox response is *well-foundedness*: every legitimate definition and proof must bottom out in a finite descending chain, forbidding circular dependency.
+Three distinct issues are hidden in that question.
 
-Yet mathematics is replete with self-referential objects that are entirely well-behaved. The golden ratio is defined by $\varphi = 1 + 1/\varphi$. A geometric series equals its first term plus a scaled copy of itself. A fractal is, by construction, made of smaller copies of itself. None of these is paradoxical. The aim of this paper is to explain *why*, with a single criterion, and to use that criterion to rehabilitate a controlled class of self-referential proofs.
+1. **Representation:** Can a finite cyclic object denote a well-defined infinite tree?
+2. **Approximation:** Do finite observations of the tree converge in a mathematically controlled sense?
+3. **Soundness:** Does the resulting tree constitute a valid proof under specified inference rules?
 
-### 1.2 Thesis
+The first two questions concern mathematical existence and order theory. The third concerns semantics. An affirmative answer to the first two does not automatically answer the third.
 
-> **A self-referential definition $x = f(x)$ is valid — names exactly one object — if and only if its defining operator $f$ is a contraction. Valid self-reference is self-similarity, and the unique named object is the contraction's fixed point.**
+A second ambiguity concerns hypotheses. In proving an implication $A\to B$, one temporarily assumes $A$ and derives $B$. In the special case $P\to P$, the assumption and the immediate conclusion are both $P$. This can be described informally as “using $P$ to prove $P$,” but no proof object refers back to the theorem $P\to P$. The derivation is finite and well-founded.
 
-The "if" direction is the Banach fixed-point principle; the "only if" direction is exhibited by the family of non-contractive failures ($r = 1$ geometric series, the liar sentence) where existence or uniqueness collapses. The contribution of this paper is to (a) make the principle uniform across numbers, infinite streams, plane figures, and fractal dimension, and (b) transport it to a theory of non-well-founded proofs with a concrete validity test.
+A third ambiguity concerns ordinal ranks. Well-founded proof theory often assigns ranks so that premises have smaller rank than conclusions. One might conjecture that a circular dependency converges when each back-reference occurs at a smaller ordinal. This condition cannot hold around a cycle. Strict decrease along every edge is an acyclicity principle, not a circular fixed-point principle.
 
-### 1.3 Two formal engines
+The purpose of this paper is to make these distinctions exact in a minimal setting. Section 2 defines formulas, sequents, derivations, trees, observations, and ranked graphs. Section 3 establishes the height-one identity derivation. Section 4 studies infinite unravellings and truncations. Section 5 proves the least-upper-bound laws for observations. Section 6 proves that strict ordinal descent excludes cycles. Section 7 gives a propositional impossibility theorem for the liar under exact reflection. Section 8 presents executable finite algorithms that illustrate the constructions. Sections 9 and 10 discuss applications, limitations, and viable approaches to guarded circularity.
 
-- **Contraction fixed points.** A map $f$ on a complete metric space with Lipschitz constant $L < 1$ has a unique fixed point reached by iteration at geometric rate. This handles numbers, points, and finite-dimensional self-reference.
-- **Coinduction.** Infinite objects (streams, trees) are characterized not by how they are built from below but by their *observations* (head/tail). Bisimulation supplies a uniqueness principle for self-referential infinite structures.
+## 2. Mathematical framework
 
-The two engines are dual faces of the same idea — "the object is determined by its own unfolding" — and we use whichever is sharper for each phenomenon.
+### 2.1 Formulas and sequents
 
----
+Fix a set $\mathcal A$ of atomic proposition symbols. The set $\mathcal F$ of formulas is generated by the grammar
 
-## 2. Preliminaries and definitions
+$$
+A ::= a \mid (A\to A),\qquad a\in\mathcal A.
+$$
 
-Throughout, $\mathbb{R}$ carries its usual metric. We write $f^{(k)}$ for the $k$-fold composition of $f$ with itself, with $f^{(0)} = \mathrm{id}$.
+Thus every atom is a formula, and if $A$ and $B$ are formulas, then $A\to B$ is a formula.
 
-**Definition 2.1 (Contraction).** A map $f : \mathbb{R} \to \mathbb{R}$ is a *contraction with factor $L$* if $0 \le L < 1$ and $|f(x) - f(y)| \le L\,|x - y|$ for all $x, y$.
+A **context** is a finite list $\Gamma=[A_1,\ldots,A_k]$ of formulas. A **sequent** is a pair $\Gamma\vdash A$, read “$A$ is derivable from the open assumptions in $\Gamma$.” Repetition and order in the list will not matter for the elementary results below, but retaining a list makes the act of adding an assumption explicit.
 
-**Definition 2.2 (Self-referential value / fixed point).** A point $x^\star$ is a *fixed point* of $f$ if $x^\star = f(x^\star)$. We read the equation $x = f(x)$ as a *self-referential definition* of $x$.
+We use two natural-deduction rules:
 
-**Definition 2.3 (Geometric value).** For $a, r \in \mathbb{R}$ with $r \ne 1$, the *geometric value* is
-$$\mathrm{geomVal}(a, r) := \frac{a}{1 - r}.$$
-For $|r| < 1$ this is the sum of the convergent series $\sum_{n \ge 0} a r^n$.
+$$
+\frac{A\in\Gamma}{\Gamma\vdash A}\;\text{Hyp}
+$$
 
-**Definition 2.4 (Geometric stream).** The *geometric stream* $G_{a,r}$ is the infinite sequence with entries $G_{a,r}(n) = a\,r^n$. It is generated coinductively by the rule
-$$\mathrm{head}(G_{a,r}) = a, \qquad \mathrm{tail}(G_{a,r}) = G_{a r,\, r}.$$
-We write $\mathrm{scale}_r(s)$ for the stream obtained by multiplying every entry of $s$ by $r$.
+and
 
-**Definition 2.5 (Affine map).** For $c, b \in \mathbb{R}$, the *affine map* is $A_{c,b}(x) = c\,x + b$. It is a contraction with factor $|c|$ when $|c| < 1$.
+$$
+\frac{A,\Gamma\vdash B}{\Gamma\vdash A\to B}\;\to I.
+$$
 
-**Definition 2.6 (Metallic ratio).** For an integer $m \ge 1$, the *$m$-th metallic ratio* is
-$$\varphi_m := \frac{m + \sqrt{m^2 + 4}}{2}.$$
-($\varphi_1$ is the golden ratio, $\varphi_2 = 1+\sqrt2$ the silver ratio, $\varphi_3$ the bronze ratio.)
+A **derivation** is a finite tree generated by these rules. Its **height** is defined recursively. A hypothesis leaf has height $0$. An implication-introduction node has height one greater than the height of its unique premise. In a richer calculus with branching rules, height would be one plus the maximum premise height.
 
-**Definition 2.7 (Similarity dimension).** For a count $k \ge 1$ and ratio $r$ with $0 < r < 1$, the *similarity dimension* is
-$$\mathrm{simDim}(k, r) := \frac{\log k}{\log(1/r)}.$$
+### 2.2 Address-labelled trees
 
-**Definition 2.8 (Bisimulation of streams).** Two streams $s, t$ are *bisimilar* if there is a relation $\mathcal{R}$ with $s \mathrel{\mathcal{R}} t$ such that whenever $u \mathrel{\mathcal{R}} v$, we have $\mathrm{head}(u) = \mathrm{head}(v)$ and $\mathrm{tail}(u) \mathrel{\mathcal{R}} \mathrm{tail}(v)$. The coinduction principle states that bisimilar streams are equal.
+Let $\Lambda$ be a set of labels. An **address** is a finite list of natural numbers,
 
----
+$$
+p=(i_1,\ldots,i_k)\in\mathbb N^{<\omega}.
+$$
 
-## 3. Main results
+Its depth is its length $|p|=k$. The empty address $()$ denotes the root. Appending $i$ selects the $i$th child.
 
-We group the results by engine, then transport them to proof theory in §6.
+A **possibly infinite labelled tree** is an extensional function
 
-### 3.1 The geometric series is a self-referential value
+$$
+T:\mathbb N^{<\omega}\longrightarrow \Lambda\cup\{\bot\},
+$$
 
-**Theorem 3.1 (Self-consistency of the geometric value).** *For $r \ne 1$, the geometric value $S = \mathrm{geomVal}(a, r)$ satisfies its own defining equation*
-$$S = a + r\,S.$$
+where $T(p)=\bot$ means that no labelled node occurs at address $p$. This broad definition does not impose prefix closure, unique rule correctness, or consistency constraints; such conditions may be added as predicates.
 
-*Proof sketch.* Substitute $S = a/(1-r)$: $a + r \cdot \frac{a}{1-r} = \frac{a(1-r) + ra}{1-r} = \frac{a}{1-r} = S$. $\qquad\blacksquare$
+For $n\in\mathbb N$, the **depth-$n$ truncation** of $T$ is
 
-**Theorem 3.2 (Uniqueness of the self-referential value).** *If $r \ne 1$ and $x = a + r\,x$, then $x = \mathrm{geomVal}(a,r) = \dfrac{a}{1-r}$.*
+$$
+T_{\le n}(p)=
+\begin{cases}
+T(p),& |p|\le n,\\
+\bot,& |p|>n.
+\end{cases}
+$$
 
-*Proof sketch.* From $x = a + rx$ we get $x(1 - r) = a$; since $r \ne 1$, divide by $1 - r$. Uniqueness needs only $r \ne 1$; the *interpretation as a convergent sum* needs $|r| < 1$. $\qquad\blacksquare$
+The truncation is a finite-horizon observation even when the branching available at each address is not assumed finite. Its role is epistemic: it suppresses information below a chosen depth.
 
-**Remark 3.3 (The boundary case is the paradox in miniature).** At $r = 1$ the equation $x = a + x$ forces $a = 0$; it is then satisfied by *every* $x$ (total ambiguity) and otherwise by *none* (contradiction). The loss of contraction destroys uniqueness exactly as the liar sentence destroys a stable truth value (§6).
+### 2.3 Observations and information order
 
-### 3.2 The geometric stream is self-similar and unique
+An **observation** is a set
 
-**Theorem 3.4 (Self-similarity law).** *The geometric stream satisfies*
-$$\mathrm{scale}_r\bigl(G_{a,r}\bigr) = \mathrm{tail}\bigl(G_{a,r}\bigr).$$
-*That is, scaling the whole stream by $r$ yields its own tail.*
+$$
+X\subseteq \mathbb N^{<\omega}\times\Lambda.
+$$
 
-*Proof sketch.* Compare entry $n$ of both sides: $\mathrm{scale}_r(G_{a,r})(n) = r \cdot a r^n = a r^{n+1}$, while $\mathrm{tail}(G_{a,r})(n) = G_{a,r}(n+1) = a r^{n+1}$. Equal for all $n$. $\qquad\blacksquare$
+The pair $(p,a)\in X$ records that address $p$ has been observed with label $a$. Observations are ordered by information inclusion:
 
-**Theorem 3.5 (Bisimulation rigidity / uniqueness).** *Let $s$ be any stream with $\mathrm{head}(s) = a$ and $\mathrm{scale}_r(s) = \mathrm{tail}(s)$. Then $s = G_{a,r}$.*
+$$
+X\sqsubseteq Y\quad\text{if and only if}\quad X\subseteq Y.
+$$
 
-*Proof sketch.* The hypothesis $\mathrm{tail}(s) = \mathrm{scale}_r(s)$ says $s$ obeys exactly the coinductive generator of $G_{a,r}$: its head is $a$ and its tail is the "scale-by-$r$, restart with head $ar$" stream. Define $\mathcal{R} = \{(s', G_{a',r}) : \mathrm{head}(s') = a',\ \mathrm{tail}(s') = \mathrm{scale}_r(s')\}$. One checks heads agree ($a'$) and tails are again related (with head $a' r$). By coinduction (Definition 2.8), $s = G_{a,r}$. $\qquad\blacksquare$
+This ambient space deliberately includes partial observations and inconsistent observations, such as both $(p,a)$ and $(p,b)$ for distinct labels $a$ and $b$. A consistency predicate may later restrict the space.
 
-This is the infinite-object analogue of Theorem 3.2: the self-referential *law* "my tail is a scaled copy of me" determines the object completely. Self-reference does not under-specify; it pins down a unique element.
+A sequence $(C_n)_{n\in\mathbb N}$ is **increasing** if
 
-### 3.3 The affine attractor: convergence with explicit rate
+$$
+C_n\subseteq C_{n+1}
+$$
 
-**Theorem 3.6 (Existence and value of the fixed point).** *If $|c| < 1$, then $x^\star = \dfrac{b}{1 - c}$ satisfies $A_{c,b}(x^\star) = x^\star$.*
+for every $n$. Its candidate limit is
 
-*Proof sketch.* $A_{c,b}(x^\star) = c \cdot \frac{b}{1-c} + b = \frac{cb + b(1-c)}{1-c} = \frac{b}{1-c} = x^\star$. (This is Theorem 3.1 with $a = b$, $r = c$.) $\qquad\blacksquare$
+$$
+\operatorname{Lim}(C)=\bigcup_{n\in\mathbb N}C_n.
+$$
 
-**Theorem 3.7 (Uniqueness of the fixed point).** *If $|c| < 1$ and $A_{c,b}(x) = x$, then $x = \dfrac{b}{1-c}$.* (Immediate from Theorem 3.2.)
+### 2.4 Cyclic graphs and ordinal rankings
 
-**Theorem 3.8 (Geometric error contraction).** *For all $x_0$ and all $k \ge 0$,*
-$$\bigl|\,A_{c,b}^{(k)}(x_0) - x^\star\,\bigr| \;\le\; |c|^k\,\bigl|x_0 - x^\star\bigr|.$$
+Let $V$ be a set of nodes and let $D\subseteq V\times V$ be a dependency relation. We write $xDy$ when node $x$ uses node $y$ as a premise or back-reference. The orientation is therefore from a conclusion-like node to a dependency.
 
-*Proof sketch.* Induction on $k$. Base $k=0$ trivial. For the step, since $x^\star$ is fixed, $A_{c,b}^{(k+1)}(x_0) - x^\star = A_{c,b}(A^{(k)}_{c,b}(x_0)) - A_{c,b}(x^\star) = c\,(A^{(k)}_{c,b}(x_0) - x^\star)$; take absolute values and apply the inductive bound. $\qquad\blacksquare$
+An **ordinal ranking** is a function
 
-**Theorem 3.9 (Convergence of every orbit).** *If $|c| < 1$, then $A_{c,b}^{(k)}(x_0) \to x^\star$ as $k \to \infty$, for every starting point $x_0$.*
+$$
+\rho:V\longrightarrow\mathrm{Ord}
+$$
 
-*Proof sketch.* By Theorem 3.8 the error is bounded by $|c|^k |x_0 - x^\star|$, and $|c|^k \to 0$ since $|c| < 1$; squeeze. $\qquad\blacksquare$
+such that every dependency strictly decreases rank:
 
-Theorems 3.6–3.9 constitute the one-dimensional Banach fixed-point theorem made fully quantitative. The contraction factor $|c|$ is simultaneously the existence guarantee, the uniqueness guarantee, and the convergence rate — the three faces of "the loop shrinks."
+$$
+xDy\quad\Longrightarrow\quad \rho(y)<\rho(x).
+$$
 
-### 3.4 Metallic ratios: a dynasty of self-referential numbers
+A finite directed cycle consists of nodes $v_0,\ldots,v_n$ satisfying
 
-**Theorem 3.10 (Defining quadratic).** *For every integer $m \ge 1$,*
-$$\varphi_m^2 = m\,\varphi_m + 1.$$
+$$
+v_0Dv_1,\ v_1Dv_2,\ \ldots,\ v_{n-1}Dv_n,\ v_nDv_0.
+$$
 
-*Proof sketch.* With $\varphi_m = \frac{m + \sqrt{m^2+4}}{2}$, compute $\varphi_m^2 - m\varphi_m = \varphi_m(\varphi_m - m) = \frac{m+\sqrt{m^2+4}}{2}\cdot\frac{-m+\sqrt{m^2+4}}{2} = \frac{(m^2+4) - m^2}{4} = 1$. $\qquad\blacksquare$
+A self-loop is the special case $xDx$.
 
-**Theorem 3.11 (Self-referential continued-fraction form).** *For $m \ge 1$, $\varphi_m > 0$ and*
-$$\varphi_m = m + \frac{1}{\varphi_m}.$$
+## 3. Hypothetical reasoning is not circularity
 
-*Proof sketch.* Divide Theorem 3.10 by $\varphi_m$ (positive, hence nonzero). This exhibits $\varphi_m$ as the fixed point of the self-map $g(x) = m + 1/x$, the closed form of the infinite continued fraction $[m; m, m, \dots]$. $\qquad\blacksquare$
+The smallest example already resolves one common misconception.
 
-**Theorem 3.12 (Golden specialization).** *$\varphi_1 = \dfrac{1 + \sqrt5}{2}$, the golden ratio.* (Set $m=1$ in Definition 2.6.)
+**Theorem 1 (Height-one identity derivation).** For every formula $P$, the sequent
 
-**Theorem 3.13 (Gnomon self-similarity).** *A rectangle with side ratio $\varphi_m : 1$, after removal of $m$ unit squares from the long side, leaves a rectangle with the same ratio $\varphi_m : 1$.*
+$$
+\varnothing\vdash P\to P
+$$
 
-*Proof sketch.* The long-to-short ratio is $\varphi_m$. Removing $m$ squares of side $1$ leaves a $1 \times (\varphi_m - m)$ rectangle; its ratio of long to short side is $1/(\varphi_m - m)$. By Theorem 3.11, $\varphi_m - m = 1/\varphi_m$, so $1/(\varphi_m - m) = \varphi_m$. The shape reproduces itself at scale $1/\varphi_m$. $\qquad\blacksquare$
+has a derivation of height exactly $1$.
 
-Theorem 3.13 is the planar incarnation of self-similarity: a geometric figure satisfying "I contain a scaled copy of myself," with the scale dictated by the same self-referential equation that defines $\varphi_m$.
+**Proof sketch.** Add $P$ to the empty context. The hypothesis rule yields $P\vdash P$ at height $0$, because $P$ is among the open assumptions. Apply implication introduction, discharging the assumption. This yields $\varnothing\vdash P\to P$ and increases the height to $1$. No shorter derivation is produced by these rules because an implication conclusion requires the implication-introduction step. $\square$
 
-### 3.5 Similarity dimension: the exponent that balances the loop
+The distinction between an assumption and a back-reference is structural. The premise of implication introduction is a smaller derivation tree. Its leaf records membership in the context; it does not point to the root derivation. Consequently, the phrase “prove $P$ by assuming $P$” should not be interpreted as a cyclic proof of $P\to P$. The theorem being established is an implication, while $P$ is a locally scoped hypothesis.
 
-**Theorem 3.14 (Defining balance equation).** *For $k \ge 1$ and $0 < r < 1$, $D = \mathrm{simDim}(k, r)$ satisfies*
-$$k \cdot r^{D} = 1.$$
+This observation also clarifies the role of height. The height $1$ is an ordinary natural number computed from a finite tree. It is not an ordinal assigned to resolve a loop.
 
-*Proof sketch.* $r^D = r^{\log k / \log(1/r)} = \exp\!\big(\tfrac{\log k}{\log(1/r)}\log r\big) = \exp\!\big(\tfrac{\log k}{\log(1/r)}\cdot(-\log(1/r))\big) = \exp(-\log k) = 1/k$. Hence $k r^D = 1$. $\qquad\blacksquare$
+## 4. Cyclic descriptions and infinite unravellings
 
-**Theorem 3.15 (Positivity).** *For $k \ge 2$ and $0 < r < 1$, $\mathrm{simDim}(k, r) > 0$.*
+### 4.1 Eventual visibility under truncation
 
-*Proof sketch.* $\log k > 0$ (as $k \ge 2$) and $\log(1/r) > 0$ (as $0 < r < 1$); the quotient is positive. $\qquad\blacksquare$
+Every finite address becomes visible at a finite stage.
 
-The dimension is the unique exponent making $k$ copies at scale $r$ reassemble into one whole — once more, a quantity defined as the solution of its own consistency equation. The classical examples ($D = 1$ for $k=2, r=1/2$; the Koch curve $D = \log 4/\log 3$) are instances.
+**Theorem 2 (Eventual visibility).** Let $T$ be any possibly infinite labelled tree and let $p$ be any address. Then
 
----
+$$
+T_{\le |p|}(p)=T(p).
+$$
 
-## 4. The unifying principle
+More generally, the same equality holds for every $n\ge |p|$.
 
-The five theorem-clusters above are not independent tricks. Each instantiates the same schema:
+**Proof sketch.** By definition, truncation changes the value only when the address length exceeds the cutoff. At cutoff $|p|$, the inequality $|p|\le |p|$ holds, so the original value is retained. The same argument applies to any larger cutoff. $\square$
 
-| Phenomenon | Self-referential equation | Unique solution | Engine |
-|---|---|---|---|
-| Geometric series | $S = a + rS$ | $a/(1-r)$ | contraction |
-| Geometric stream | $\mathrm{tail}(s) = \mathrm{scale}_r(s)$, $\mathrm{head}=a$ | $G_{a,r}$ | coinduction |
-| Affine attractor | $x = cx + b$ | $b/(1-c)$ | contraction |
-| Metallic ratio | $x = m + 1/x$ | $\varphi_m$ | contraction |
-| Similarity dimension | $k\,r^{D} = 1$ | $\log k/\log(1/r)$ | contraction |
+Thus the sequence $T_{\le0},T_{\le1},\ldots$ converges pointwise in a direct stabilization sense: at each fixed address, all sufficiently late truncations agree with $T$.
 
-In every row the object is *defined by referencing itself*, and in every row the reference is **guarded** — the loop strictly shrinks (the contraction factor is $|r|, |c|, 1/\varphi_m < 1$; the dimension equation is strictly monotone in $D$). Guardedness yields existence *and* uniqueness. This is the geometric content of "valid self-reference is self-similarity."
+### 4.2 The unary self-unravelling
 
----
+Fix a label $a\in\Lambda$. Define the **unary self-unravelling** $U_a$ by
 
-## 5. Algorithms
+$$
+U_a(p)=
+\begin{cases}
+a,&\text{if every entry of }p\text{ is }0,\\
+\bot,&\text{otherwise.}
+\end{cases}
+$$
 
-The contraction principle is not merely an existence statement; it is a computational method. We record two algorithms used to realize and certify the results numerically (full code in the accompanying demonstration files).
+This is the infinite tree obtained by unravelling a one-node graph with one edge from the node to itself. The only child selected at every step is child $0$.
 
-**Algorithm A — Banach iteration for self-referential values.**
-*Input:* a contraction factor $c$ with $|c| < 1$, offset $b$, start $x_0$, tolerance $\varepsilon$.
-*Output:* an approximation of $x^\star = b/(1-c)$ certified to within $\varepsilon$.
-*Method:* iterate $x_{k+1} = c x_k + b$; by Theorem 3.8 the error after $k$ steps is $\le |c|^k|x_0 - x^\star|$, so a stopping index $k \ge \log(\varepsilon/|x_0-x^\star|)/\log|c|$ guarantees the tolerance. Complexity: $O(\log(1/\varepsilon)/\log(1/|c|))$ arithmetic operations.
+**Lemma 3 (Unary spine).** For every $n\in\mathbb N$, if $0^n$ denotes the address consisting of $n$ copies of $0$, then
 
-**Algorithm B — Continued-fraction evaluation of metallic ratios.**
-*Input:* integer $m \ge 1$, depth $N$.
-*Output:* the depth-$N$ truncation of $[m; m, m, \dots]$ approximating $\varphi_m$.
-*Method:* fold the self-map $g(x) = m + 1/x$ from a seed; by contraction near $\varphi_m$ (the derivative $|g'(\varphi_m)| = 1/\varphi_m^2 < 1$) the truncations converge geometrically. The error after $N$ folds shrinks by a factor $\approx \varphi_m^{-2}$ per step.
+$$
+U_a(0^n)=a.
+$$
 
----
+**Proof sketch.** Every entry of $0^n$ is $0$, so the first clause in the definition applies. $\square$
 
-## 6. Transport to proof theory: non-well-founded proofs
+**Theorem 4 (Unbounded depth).** For every $n\in\mathbb N$, the tree $U_a$ contains a labelled node at depth exactly $n$.
 
-We now apply the criterion to self-referential *proofs*. Model a (possibly non-well-founded) proof as a structure that may contain a sub-derivation referencing its own conclusion. Assign each such structure an **ordinal height**, the least ordinal bounding the lengths of its dependency chains, defined as the fixed point of the height functional induced by its sub-derivation structure.
+**Proof sketch.** Choose $p=0^n$. Its length is $n$, and Lemma 3 gives $U_a(p)=a$. $\square$
 
-**Principle 6.1 (Validity criterion).** *A self-referential proof is valid iff its height functional is a contraction on the ordinals — i.e., admits a (least) fixed point. Equivalently, each unfolding of the self-reference must occur at a strictly smaller ordinal (guardedness).*
+The theorem demonstrates that finite cyclic syntax can denote a genuine infinite object. Nothing contradictory occurs: the tree is specified extensionally by its behavior at each finite address. There is no requirement that a set-theoretic node literally contain itself.
 
-**Proposition 6.2 (The proof of $P \Rightarrow P$ is a valid non-well-founded proof of height $1$).** Consider the derivation: *to prove $P \Rightarrow P$, assume $P$; the subgoal $P$ is then discharged immediately by the assumption.* The dependency loop closes in one step; its height functional is $h \mapsto 1$ (constant, hence contractive), with fixed point $h = 1$. The proof is valid with ordinal height $1$.
+However, the labels in $U_a$ have not been required to represent correct sequents or correct inference steps. Unboundedness is a theorem about shape. Soundness would require at least a local condition linking each node label with the labels of its children, together with a global condition controlling infinite branches.
 
-*Justification.* This is the proof-theoretic image of Theorem 3.1 in the degenerate guarded case: a self-reference that is resolved after a single, strictly-decreasing step. Formally it is a corecursive/coinductive derivation whose unique solution exists by the same bisimulation/fixed-point reasoning as Theorem 3.5. $\qquad\blacksquare$
+## 5. Limits of finite information
 
-**Proposition 6.3 (The liar sentence is not a valid non-well-founded proof).** Let $L$ assert its own unprovability. A purported derivation of $L$ must, by the content of $L$, reference a derivation of $L$ of the *same* size; the induced height functional is $h \mapsto h + 1$. The equation $h = h + 1$ has no ordinal solution; the functional is non-contractive (the loop does not shrink), so no fixed point — hence no well-defined height — exists.
+### 5.1 Least upper bounds
 
-*Justification.* This is the proof-theoretic image of Remark 3.3 (the $r = 1$ geometric series) and of $A_{c,b}$ with $c = 1$: loss of the contraction factor destroys the fixed point. The liar is therefore not a logical defect but the canonical *non-guarded* loop — the boundary that delimits the valid region. $\qquad\blacksquare$
+The information order supports canonical limits.
 
-**Consequence.** Self-referential proofs form a class of mathematical objects stratified by Principle 6.1: the guarded ones are valid (and, by the uniqueness theorems, determine their conclusions unambiguously), while the unguarded ones — the liar, Russell's predicate, the Gödel diagonal in its naive reading — are exactly the non-contractive failures. The paradoxes are not exceptions to be excised; they are the precise complement of the convergent loops.
+**Theorem 5 (Least upper bound of a sequence).** Let $(C_n)_{n\in\mathbb N}$ be any sequence of observations and define
 
----
+$$
+C_\infty=\bigcup_{n\in\mathbb N}C_n.
+$$
 
-## 7. Applications
+Then:
 
-- **Iterative numerics.** Algorithm A is the abstract template for fixed-point solvers (Newton-type schemes, value iteration in dynamic programming, Picard iteration for ODEs). The error bound of Theorem 3.8 is the convergence certificate.
-- **Fractal geometry and compression.** Theorem 3.13 and the similarity dimension (§3.5) underlie iterated function systems: a fractal is the unique fixed point of a contraction on the space of compact sets, and fractal image compression stores the contraction rather than the image.
-- **Design and aesthetics.** The metallic ratios (§3.4) govern self-similar tilings, rectangle subdivisions, and continued-fraction approximation quality (the golden ratio being the "most irrational" number).
-- **Programming language semantics.** Coinduction (Theorem 3.5) is the foundation for reasoning about infinite data and non-terminating processes; guarded recursion (Principle 6.1) is the type-theoretic guarantee that a corecursive definition is productive.
+1. $C_n\subseteq C_\infty$ for every $n$;
+2. if $U$ is an observation satisfying $C_n\subseteq U$ for every $n$, then $C_\infty\subseteq U$.
 
----
+Hence $C_\infty$ is the least upper bound of the sequence in the inclusion order.
 
-## 8. Discussion
+**Proof sketch.** For the first claim, an element of $C_n$ belongs to the union by the definition of union. For the second, take $x\in C_\infty$. Then $x\in C_n$ for some $n$. Since $C_n\subseteq U$, it follows that $x\in U$. $\square$
 
-The contribution is conceptual rather than a single hard theorem: a *criterion* (contraction/guardedness) that simultaneously explains (i) why certain self-referential numbers, streams, shapes, and dimensions are well-defined, and (ii) why certain self-referential proofs are valid while the paradoxes are not. The two engines — contraction fixed points and coinduction — are complementary: the former is sharpest for finite-dimensional, quantitative statements (with explicit convergence rates), the latter for infinite objects (with bisimulation uniqueness). Their agreement on the geometric series / geometric stream pair (Theorems 3.2 and 3.5) is the technical evidence that "self-reference = self-similarity" is a single phenomenon rather than an analogy.
+No increasing hypothesis is needed for the union to be a least upper bound of the family. When the family is a chain, the result gives the expected directed limit.
 
-A limitation is that the proof-theoretic transport (§6) is presented at the level of a validity *criterion* keyed to ordinal-height fixed points; a fully general calculus of non-well-founded proofs (cut-elimination, normalization) is left open. The geometric core, by contrast, is complete and quantitative.
+**Lemma 6 (Persistence in an increasing sequence).** If $C_n\subseteq C_{n+1}$ for every $n$, then
 
----
+$$
+m\le n\quad\Longrightarrow\quad C_m\subseteq C_n.
+$$
 
-## 9. Future directions
+**Proof sketch.** Induct on the difference between $m$ and $n$. The base case is reflexivity of inclusion. Each successor step composes the previously obtained inclusion with $C_k\subseteq C_{k+1}$. $\square$
 
-*(Carried forward verbatim, lightly edited, from the upstream research program.)*
+**Corollary 7 (Completeness of the ambient observation space).** Observations ordered by inclusion form a complete lattice. Arbitrary suprema are unions, arbitrary infima are intersections, and in particular every increasing countable chain has a least upper bound.
 
-**Theme.** Across two cycles we established the thesis that *self-reference / non-well-foundedness = self-similarity*, realized by two formal engines — coinductive data and contraction fixed points — and unified the geometric series, the affine attractor, and the (golden / metallic) continued fractions as one phenomenon: *a quantity that is the unique solution of its own equation.*
+**Proof sketch.** The union of a family contains every member and is contained in every common upper bound by the same elementwise argument as Theorem 5. Dually, the intersection is the greatest lower bound. $\square$
 
-**Closed conjectures.**
-- *Bisimulation rigidity* — proved: the self-similarity law "tail equals scaling by $r$" with fixed head characterizes the geometric stream uniquely.
-- *Metallic ratios* — proved: the golden lemmas generalize to the whole family $\varphi_m = (m + \sqrt{m^2+4})/2$ (defining quadratic, continued-fraction form, gnomon self-similarity, golden specialization).
-- *Similarity dimension* — core proved: $D = \log k/\log(1/r)$ solves $k r^D = 1$ and is positive; monotonicity remains open (D3 below).
+### 5.2 What the limit theorem does not prove
 
-**Conjecture D1 — IFS attractor in $\mathbb{R}^n$ via Banach.** For an affine contraction $f(x) = Ax + b$ on $\mathbb{R}^n$ with operator norm $\|A\| < 1$, there is a unique self-referential point $x^\star = f(x^\star)$, every orbit $f^{(k)}(x_0) \to x^\star$, and $\|f^{(k)}(x_0) - x^\star\| \le \|A\|^k \|x_0 - x^\star\|$. *Test:* lift the one-dimensional affine theorems to $\mathbb{R}^n$ through the contraction/edist API. Falsified if no $\mathbb{R}^n$ statement closes under just $\|A\| < 1$.
+Suppose a predicate $\mathsf{Correct}(X)$ identifies observations compatible with a proof system. Theorem 5 does not imply
 
-**Conjecture D2 — Coinductive geometric trees and self-similar measure.** Define an infinite binary coinductive tree whose node at depth $d$ carries scale $r^d$. Conjecture: the depth-$d$ level holds $2^d$ copies of scale $r^d$, and the total-measure recursion $M = 1 + 2rM$ has the self-referential closed form $M = 1/(1 - 2r)$ for $2r < 1$ — the tree analogue of the geometric-series self-reference. *Test:* build the tree corecursively, prove the level identity by induction and the measure equation by fixed-point uniqueness.
+$$
+\bigl(\forall n,\mathsf{Correct}(C_n)\bigr)
+\Longrightarrow
+\mathsf{Correct}\!\left(\bigcup_n C_n\right).
+$$
 
-**Conjecture D3 — Monotonicity of the similarity dimension.** $\mathrm{simDim}(k, r) = \log k/\log(1/r)$ is strictly increasing in $k$ (for $0 < r < 1$) and strictly increasing in $r$ on $(0,1)$ (for $k \ge 2$); moreover it is the unique real solving $k r^D = 1$. *Test:* prove both monotonicities and exponent uniqueness; falsified if either monotonicity reverses on any admissible $(k, r)$.
+That implication is a separate closure property. It is plausible for finitary, local conditions: if every violation has a finite witness, a violation in the union should already appear at some sufficiently informative stage of a directed chain. It may fail for conditions quantified over entire infinite branches or for infinitary inference rules.
 
-**Conjecture D4 — Mixed-ratio IFS and the Moran equation.** For a finite list of ratios $r_1, \dots, r_k \in (0,1)$, the similarity dimension is the unique $D$ solving the Moran equation $\sum_{i=1}^k r_i^{D} = 1$, generalizing the single-ratio balance $k r^D = 1$.
+The distinction is central. The complete lattice supplies a semantic universe in which fixed points and limits can be discussed. It does not designate which points are proofs.
 
----
+## 6. Strict ordinal descent excludes circularity
 
-## 10. Conclusion
+Ordinals are well ordered, and their strict order is transitive and irreflexive. These elementary facts settle the proposed ranking criterion.
 
-We have argued, with theorems, that the right way to think about self-reference is geometric: a self-referential definition names a unique object exactly when its loop contracts, and the named object is then a self-similar fixed point. This single criterion organizes the geometric series, infinite self-similar streams, affine attractors, the metallic ratios, and fractal dimension, and it draws a precise line through proof theory — validating the self-referential proof of $P \Rightarrow P$ while diagnosing the liar sentence as the canonical non-contractive loop. The paradox is not a wall but a boundary: on one side, the hall of mirrors converges to a single point; on the other, it runs forever. Knowing how to measure the difference turns self-reference from a hazard into a tool.
+**Theorem 8 (No strictly ranked self-reference).** Let $(V,D,\rho)$ be an ordinal-ranked dependency graph satisfying
+
+$$
+xDy\Longrightarrow\rho(y)<\rho(x).
+$$
+
+Then no node depends on itself:
+
+$$
+\forall x\in V,\quad \neg(xDx).
+$$
+
+**Proof sketch.** If $xDx$, the rank condition gives $\rho(x)<\rho(x)$, contradicting irreflexivity. $\square$
+
+**Theorem 9 (No strictly ranked finite cycle).** Under the same rank condition, the dependency graph has no finite directed cycle.
+
+**Proof sketch.** Assume a cycle
+
+$$
+v_0Dv_1D\cdots Dv_nDv_0.
+$$
+
+The rank condition gives
+
+$$
+\rho(v_1)<\rho(v_0),\quad
+\rho(v_2)<\rho(v_1),\quad\ldots,\quad
+\rho(v_0)<\rho(v_n).
+$$
+
+By transitivity along the first $n$ edges,
+
+$$
+\rho(v_n)<\rho(v_0).
+$$
+
+The closing edge gives $\rho(v_0)<\rho(v_n)$. Combining these inequalities yields $\rho(v_0)<\rho(v_0)$, impossible. Equivalently, chaining every edge around the cycle returns to a strict decrease of the starting ordinal below itself. $\square$
+
+**Corollary 10 (A self-loop has no decreasing ordinal ranking).** If a dependency relation contains $xDx$, then there is no ordinal-valued function $\rho$ that strictly decreases along every dependency edge.
+
+**Proof sketch.** Any such function would satisfy $\rho(x)<\rho(x)$ on the self-loop. $\square$
+
+These theorems are independent of how large the ordinals are. Moving from natural-number ranks to transfinite ranks does not help: no strict order can descend around a finite cycle and return to its starting value.
+
+The result identifies a category error in the convergence proposal. A recursive function may call itself on a structurally smaller argument because each dynamic call occupies a new state with a smaller measure; the call graph of concrete states is then well founded. By contrast, a graph edge returning to the identical proof node returns to the identical rank. Strict descent cannot both occur and return.
+
+Ordinal ranks remain useful for circular-looking finite presentations when the apparent back-edge abbreviates a transition to a genuinely different, lower-ranked semantic state. In that case the semantic dependency is not cyclic even if the surface notation shares a name. Genuine cyclic systems need another criterion.
+
+## 7. The liar under exact reflection
+
+Let $L$ be a proposition intended as a liar statement and let $Q$ be the proposition that $L$ is provable. Consider two equations:
+
+$$
+Q\leftrightarrow L
+\tag{R}
+$$
+
+and
+
+$$
+L\leftrightarrow\neg Q.
+\tag{N}
+$$
+
+Equation $(R)$ is **exact reflection** for this sentence: provability and truth coincide. Equation $(N)$ is the **negating fixed-point equation**: the sentence is true exactly when it is not provable.
+
+**Theorem 11 (Liar fixed-point impossibility).** No ordinary propositions $Q$ and $L$ satisfy both $(R)$ and $(N)$.
+
+**Proof sketch.** Compose the forward implication $Q\to L$ from $(R)$ with the forward implication $L\to\neg Q$ from $(N)$ to obtain $Q\to\neg Q$. Thus $Q$ implies a contradiction, so $\neg Q$. Conversely, $(N)$ gives $\neg Q\to L$, and $(R)$ gives $L\to Q$, so $\neg Q\to Q$. Applying this to the established $\neg Q$ yields $Q$, contradicting $\neg Q$. $\square$
+
+**Corollary 12 (No exact liar model).** There is no pair $(Q,L)$ in ordinary two-valued propositional semantics for which exact reflection and the negating fixed-point equation both hold.
+
+This is stronger and more precise than assigning the liar an undefined ordinal height. The contradiction arises before any ranking is considered. Avoiding it requires changing at least one ingredient: weakening reflection, stratifying the provability predicate, restricting fixed-point formation, or moving to a nonclassical semantics in which the displayed equivalences receive a different interpretation.
+
+The result should not be overgeneralized. It does not claim that every use of self-reference is inconsistent. It concerns the simultaneous demand for these two exact equivalences in ordinary logic.
+
+## 8. Algorithms and finite experiments
+
+Although the principal results are structural, finite algorithms make them tangible.
+
+### 8.1 Truncating the unary unravelling
+
+Given a cutoff $d$, enumerate the addresses $0^0,0^1,\ldots,0^d$ and label each with $a$. This produces the visible portion of $U_a$ through depth $d$.
+
+The algorithm performs $d+1$ output operations. If addresses are stored explicitly as tuples, constructing all tuples uses
+
+$$
+1+2+\cdots+d=O(d^2)
+$$
+
+symbol writes and $O(d^2)$ output space. A streaming representation that stores only depth and label uses $O(d)$ output records and $O(1)$ auxiliary space.
+
+### 8.2 Accumulating an observation chain
+
+Given finite observations $C_0,\ldots,C_N$, maintain a set $U$, initially empty, and update $U\leftarrow U\cup C_n$ at each stage. The intermediate value after stage $n$ is the least upper bound of the observed prefix.
+
+With hash sets and $M=\sum_{n=0}^N|C_n|$, the expected running time is $O(M)$ and space is $O(|U|)$. The procedure directly realizes the proof of Theorem 5: each item enters the union when its witnessing stage is processed.
+
+### 8.3 Detecting failure of strict ranking
+
+For a finite directed graph, a decreasing ordinal ranking exists whenever the graph is acyclic: a reverse topological height in the natural numbers suffices. Conversely, Theorem 9 shows that a cycle prevents such a ranking. Therefore cycle detection decides whether an edgewise strictly decreasing rank can exist.
+
+Depth-first search with three colors—unvisited, active, finished—detects a cycle upon encountering an edge to an active node. The complexity is $O(|V|+|E|)$ time and $O(|V|)$ space. If no cycle exists, process nodes in reverse topological order and assign
+
+$$
+\rho(x)=
+\begin{cases}
+0,&\text{if }x\text{ has no dependencies},\\
+1+\max\{\rho(y):xDy\},&\text{otherwise}.
+\end{cases}
+$$
+
+Then $xDy$ implies $\rho(y)<\rho(x)$. Thus, for finite graphs, strict rankability is equivalent to acyclicity.
+
+### 8.4 Truth-table test for the liar equations
+
+There are four Boolean pairs $(Q,L)$. Testing both biconditionals on each pair reveals that none satisfies them simultaneously. This finite enumeration is pedagogical rather than foundational; Theorem 11 supplies the general propositional argument.
+
+## 9. Applications and interpretation
+
+### 9.1 Cyclic proof systems
+
+Practical cyclic proof calculi use finite graphs to represent potentially infinite derivations. Their soundness generally depends on a global condition over infinite paths. The present results explain why demanding descent on every graph edge is too strong: it collapses the system back to an acyclic one.
+
+A more permissive trace condition may allow neutral edges while requiring infinitely many progress points along every infinite branch. Such a condition can validate graph cycles without permitting an endlessly unproductive loop.
+
+### 9.2 Recursive programs and productivity
+
+The unary unravelling resembles a stream generated by repeatedly emitting the same value. It is productive because every finite output prefix can be computed in finite time. Productivity is not termination: the entire stream is never completed, but each requested observation is available.
+
+This analogy suggests a proof-theoretic criterion based on guarded productivity. A cyclic proof should reveal another finite layer of locally correct evidence before invoking its circular hypothesis again. The truncation theorem captures the approximation side; a soundness theorem would need to connect each layer to semantic validity.
+
+### 9.3 Model checking and certificates
+
+Finite-state systems routinely compress infinite executions into finite graphs. A cycle is meaningful operationally, but whether it certifies a liveness or safety property depends on acceptance conditions. Likewise, a cyclic proof graph is a compact representation, not a certificate by shape alone. A checker must verify local rules and a global progress condition.
+
+### 9.4 Fixed-point semantics
+
+The observation lattice provides all joins and meets, making it suitable for monotone operators. If an operator $F$ maps observations to observations and is monotone, fixed-point methods become available. Yet the mathematical burden shifts to the definition of $F$: it must encode inference correctly, and the chosen least or greatest fixed point must match the intended notion of proof.
+
+Least fixed points naturally capture finitely generated inductive behavior. Greatest fixed points capture coinductive behavior such as infinite streams. Circular syntax can denote an element of a greatest fixed point while still failing to establish a proposition under an inductive notion of derivability. The choice of fixed point is semantic, not merely representational.
+
+## 10. Toward sound guarded circularity
+
+The negative ranking result narrows the design space constructively.
+
+### 10.1 A later modality
+
+Introduce a modality $\triangleright A$, read “$A$ holds one step later.” A guarded circular rule may use a back-reference only beneath $\triangleright$. Semantically, define validity at natural indices so that
+
+$$
+\triangleright A\text{ is valid at index }n+1
+$$
+
+only when $A$ is valid at index $n$. At index $0$, the later proposition is typically trivial or unavailable, depending on the model. A circular equation can then be solved stage by stage because every recursive semantic use consumes one unit of index.
+
+This differs fundamentally from assigning one fixed rank to each graph node. The same syntactic node is interpreted at different semantic indices. Returning to the node is permitted because the state is now $(x,n)$ rather than merely $x$, and the index has decreased.
+
+### 10.2 Scott-closed correctness
+
+Let $\mathcal O$ be the observation lattice and $\mathcal C\subseteq\mathcal O$ the class of locally correct observations. A central question is whether $\mathcal C$ is closed under directed unions:
+
+$$
+C_i\in\mathcal C\ \text{for all }i
+\quad\Longrightarrow\quad
+\bigcup_i C_i\in\mathcal C.
+$$
+
+For finite-arity local rules, one may seek a finite-witness principle: if the union violates correctness at a node, only finitely many labels and child addresses witness the violation, so directedness places all of them together in some stage, contradicting stagewise correctness. Infinitary rules or branch-global acceptance conditions may invalidate this argument.
+
+### 10.3 Global trace conditions
+
+Instead of requiring every edge to decrease, associate measures with traces and require progress infinitely often along each infinite branch. Neutral transitions may occur, and a finite graph may contain cycles, but no infinite path may avoid progress forever. The unravelling of the graph is the natural object on which such branch conditions are stated.
+
+### 10.4 Reflection and self-reference
+
+The liar theorem indicates that unrestricted exact reflection is incompatible with a negating fixed point. Future systems should state precisely which reflection principles are available and at what strata. Modal provability, typed quotation, or hierarchical truth predicates may separate the object language from claims about its own derivability.
+
+## 11. Limitations
+
+The formula language considered here contains only implication, and its derivation system contains only hypotheses and implication introduction. This suffices to distinguish the identity proof from a back-edge but is not a complete account of propositional logic.
+
+The address model permits malformed trees and inconsistent observations. This generality is intentional for the lattice theorem, but a full proof theory must add prefix closure, arity constraints, sequent labels, and rule correctness.
+
+The no-cycle theorem concerns strict rank decrease on every dependency edge. It does not refute cyclic proof systems based on other global criteria. On the contrary, it shows why those criteria are necessary.
+
+Finally, the liar theorem assumes ordinary propositions and exact biconditionals. Alternative logics may reject excluded middle, explosion, bivalence, or unrestricted reflection. Such systems require separate semantic analysis.
+
+## 12. Conclusion
+
+Finite cyclic descriptions, infinite trees, and valid proofs belong to different mathematical layers. A one-node loop can unravel into a well-defined tree with labelled nodes at every finite depth. Finite observations of such objects admit canonical least upper bounds by union, and every fixed address stabilizes in a sufficiently deep truncation. These results establish a robust approximation space.
+
+They do not make arbitrary cycles sound. The ordinary proof of $P\to P$ is a finite height-one hypothetical derivation, not a proof that cites itself. A strict ordinal decrease along every dependency edge forbids self-loops and all finite cycles, so it cannot serve as a convergence rule for genuine circularity. Exact reflection combined with the liar’s negating equation has no propositional model.
+
+A viable theory of circular proof must therefore add more than an infinite unravelling and more than a complete information order. It needs guarded semantic delay, preservation of correctness under limits, or a global progress condition on infinite traces. The observation framework supplies the space of candidates; soundness determines which candidates deserve to be called proofs.
