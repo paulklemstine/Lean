@@ -1,11 +1,11 @@
 {
   "title": "The Chromatic Number of 3-Stable Kneser Graphs",
-  "domain": "Speculative",
+  "domain": "Pythagorean",
   "description": "Cyclic spacing gives a canonical coloring of stable Kneser graphs with $n-sk+s$ colors. Intersecting-family and stable Hilton–Milner methods establish optimality for 3-stable graphs at large $n$ and for all cyclically 3-stable triple graphs.",
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T05:47:11Z",
+  "date": "2026-07-16T05:48:29Z",
   "key_results": [
     "Least-Element Coloring Theorem: every cyclically $s$-stable Kneser graph with $n\\ge sk$ admits a proper coloring with $n-sk+s$ colors.",
     "Large 3-Stable Chromatic Theorem: for each fixed $k$, the chromatic number is $n-3k+3$ when $n$ is sufficiently large.",
