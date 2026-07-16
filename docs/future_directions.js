@@ -1070,6 +1070,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Far-apart Erd\u0151s--P\u00f3sa property of long cycles"
   },
   {
+    "consumed_by_exp_id": "851ec568",
+    "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the B\u00e1ez-Duarte criterion.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0077",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12084v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-15T21:37:25.493366+00:00",
+    "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions' and formalize its key results. Abstract: The character of a connected $\\mathfrak{sl}_n$-crystal is a Schur polynomial; the crystal can be further decomposed into quasicrystals, whose characters are the Gessel quasisymmetric functions. Crystal skeletons are obtained by contracting quasicrystals within crystal graphs. They generalize dual equivalence graphs, and can be used to prove the Schur expansion of a symmetric function when the quasisymmetric expansion is known. In this paper, we show that the crystal skeleton can be tiled further into components which we call quasicrystal skeletons, whose characters are Young quasisymmetric Schur functions. We characterize which edges in the crystal skeleton move between quasicrystal skeleton components. Contracting the quasicrystal skeleton components yields Bruhat order. We illustrate how these tools can be applied to symmetric functions by analyzing the Stanley symmetric functions.",
     "domains": [
@@ -1363,7 +1377,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "For every fixed integer `k \u2265 4`, there should be a branch-attachment constructio"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1e62d74",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -1372,7 +1386,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
