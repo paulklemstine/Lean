@@ -751,20 +751,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The Balanced Four-Color Theorem"
   },
   {
-    "consumed_by_exp_id": "e2f5c991",
-    "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=\u03b1(G)+1$, where $\u03b1(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "fd_0055",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12890v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T13:08:25.917501+00:00",
-    "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Record compositions of alternating permutations and noncommutative symmetric functions' and formalize its key results. Abstract: Amdeberhan, Shareshian, and Stanley recently proved that a function $\\varphi$ arising in the theory of partition Eisenstein series counts the alternating permutations of $\\{1,\\dots,2n\\}$ with a given `record' partition, and they asked whether there is a similar theory for record compositions, suggesting a role for noncommutative symmetric functions. Here we solve their open problem by showing that the number of alternating permutations of $\\{1,\\dots,2n\\}$ with record composition $(\u03b1_1,\\dots,\u03b1_\\ell)$ is \\[ \\prod_{j=1}^{\\ell}\\binom{2s_j-1}{2\u03b1_j-1}E_{2\u03b1_j-1}, \\] where $s_j=\u03b1_1+\\dots+\u03b1_j$, $E_k$ is an Euler number, and the record composition of $w=a_1a_2\\dots a_{2n}$ (so $a_1>a_2<a_3>\\dotsb$) lists the factor lengths obtained by cutting $a_1a_3\\dots a_{2n-1}$ before each left-to-right maximum other than the first. These numbers are the coefficients of a natural lift of the degree-$n$ sprout symmetric function with seed $\\sec(\\sqrt{t}\\,)$ to noncommutative symmetric functions, expanded in p",
     "domains": [
@@ -1154,6 +1140,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T05:31:17.597085+00:00",
     "title": "ArXiv paper: Unexpected primes of good reduction in quotients of modular and Shimura curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Robust local encodings of arithmetic derivations\n\n**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic derivation into a locally testable object such that any string that is not an encoding of a valid derivation fails a fixed positive fraction of constant-query tests, with encoding length polynomial in the derivation length.\n\nThe key insight is that random checking amplifies efficiently only after inconsistency has been spread across a constant fraction of local views; a raw derivation with one bad line has no such robustness.\n\n**Why now?** The exact single-counterexample bound isolates robustness, rather than repetition, as the missing resource and gives a quantitative benchmark against which candidate encodings can be tested.\n\n## 2. Zero-knowledge local tests with dependency closure\n\n**Conjecture.** Every constant-query locally testable proof relation whose queries have bounded dependency closure admits a perfectly hiding commitment-and-opening protocol in which the joint opened view is simulatable from the truth value of the tested constraint alone.\n\nThe key insight is that masking individual symbols is insufficient when local constraints correlate several openings; simulation must respect the entire dependency-closed view.\n\n**Why now?** Perfect hiding for one additive symbol is exact, so the next falsifiable step is to characterize precisely when this equality of distributions survives correlated multi-symbol openings.\n\n## 3. Communication lower bounds for statement-length-only certification\n\n**Conjecture.** For some family of arithmetical sentences with short statements and arbitrarily large minimal derivations, every statistically sound interactive protocol whose verifier checks only authenticated raw derivation lines requires communication growing with the minimal derivation length.\n\nThe key insight is that a single corrupted location is detected with probability only the reciprocal of the proof length, and authentication does not increase that detection probability.\n\n**Why now?** The geometric error law supplies a sharp finite obstruction to the proposed raw-line protocol and suggests a route to a general lower bound through adversarially sparse defects.\n\n## 4. Perfect zero knowledge for propositional validity under structural restrictions\n\n**Conjecture.** Propositional formulas of bounded treewidth admit perfect zero-knowledge validity protocols with communication polynomial in the formula size and logarithmic in the inverse soundness error.\n\nThe key insight is that bounded treewidth turns global validity into compatible local constraints while finite-group masking can hide the local dynamic-programming states.\n\n**Why now?** Truth-table checking establishes the soundness and simulation primitives separately; bounded-width decompositions offer a concrete setting in which to compose them without an exponential challenge space.\n\n## 5. Geometric gluing of local transcript simulators\n\n**Conjecture.** A family of local transcript distributions indexed by proof constraints admits a global perfect simulator exactly when the distributions agree on every overlap and satisfy a finite acyclicity condition on the constraint hypergraph.\n\nThe key insight is that zero knowledge under many openings is a gluing problem: pairwise perfect hiding does not automatically produce a consistent global distribution.\n\n**Why now?** The additive one-symbol simulator provides the local model, while dependency-closed challenges identify overlaps where compatibility can fail; acyclic hypergraphs are the first nontrivial test class.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0088",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "573ee086",
+    "status": "available",
+    "timestamp": "2026-07-16T05:31:53.608676+00:00",
+    "title": "**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic d"
   },
   {
     "consumed_by_exp_id": "",

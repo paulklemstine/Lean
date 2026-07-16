@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T05:30:44Z",
+  "date": "2026-07-16T05:31:51Z",
   "key_results": [
     "Every non-tautology in $m$ variables has at most $2^m-1$ accepting Boolean valuations.",
     "A non-tautology survives $k$ independent uniform valuation challenges with probability at most $(1-2^{-m})^k$, and this bound is sharp.",

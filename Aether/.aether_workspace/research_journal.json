@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "71637775",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The multi-join law for the ℤ₂-coindex\n\nThis cycle extends the constructive, lower-bound half of the ℤ₂-coindex theory established in\n`Catalog/Novelty/Z2CoindexJoin.lean` (the shar",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 41,
-      "timestamp": "2026-07-15T00:42:35",
-      "title": "Close Proofs: Constructive, lower-bound half of the co-index theory"
-    },
-    {
       "cycle_id": "50098ece",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Positional Number Systems and Primitive Divisors\n\nThis cycle closed the outstanding gaps in the bridge between the factorial number\nsystem and the general mixed‑radix theory, and",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T05:31:09",
       "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## 1. Robust local encodings of arithmetic derivations\n\n**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic derivation into a locally testable object su",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T05:31:57",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9da8e56c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What was proved\n\nThe file `Novelty/HRRMatroidBoolean.lean` gives a fully self-contained, `sorry`-free\nformalization of the `P^K = Hilb` identity of the mission specialised to t",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T09:00:00",
-      "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of Matroids"
-    },
     {
       "cycle_id": "75061bf5",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T05:31:09",
       "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## 1. Robust local encodings of arithmetic derivations\n\n**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic derivation into a locally testable object su",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T05:31:57",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e72af703",
-      "domain": "MachineLearning",
-      "name": "encode_decode",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "e72af703",
-      "domain": "MachineLearning",
-      "name": "card_factorialCode",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "b1453a16",
-      "domain": "Bridges",
-      "name": "stable_iff_kernel",
-      "quality": 0.93
-    },
     {
       "cycle_id": "b1453a16",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "relabel_preserves_ray",
       "quality": 0.71
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "name": "measures",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "name": "certification",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "name": "exists_rejecting_valuation",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-16T05:31:09",
+  "last_updated": "2026-07-16T05:31:57",
   "open_questions": [
     {
       "context": "All statements are proved with no `sorry` and no extra axioms.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "cbe7147b",
-        "quality": 0.5326040000000001,
-        "theorems": 15,
-        "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
-      },
-      {
         "cycle_id": "492f9d48",
         "quality": 0.8151999999999999,
         "theorems": 28,
@@ -3073,6 +3067,12 @@
         "quality": 0.65,
         "theorems": 6,
         "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+      },
+      {
+        "cycle_id": "573ee086",
+        "quality": 0.73,
+        "theorems": 13,
+        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
       },
       {
         "cycle_id": "573ee086",
