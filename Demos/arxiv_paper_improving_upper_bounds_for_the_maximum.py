@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations of upper-bound seed reductions for maximum clique.
+"""Numerical demonstrations of upper-bound-driven maximum-clique reductions.
 
-The program uses only the Python standard library.  Graphs are represented by
-sets of undirected edges, greedy coloring supplies valid clique upper bounds,
-and exhaustive enumeration is used only on small examples to audit results.
+The script uses only the Python standard library.  It constructs small graphs,
+computes exact clique numbers and greedy-coloring upper bounds, applies vertex
+peeling, and checks preservation by exhaustive enumeration.
 """
-
 from __future__ import annotations
 
 from dataclasses import dataclass
 from itertools import combinations
-from typing import Callable, Iterable, Sequence
+from typing import Callable, Iterable, Iterator, Sequence
 
 Vertex = int
-Seed = frozenset[Vertex]
+UpperBound = Callable[[set[Vertex]], int]
 
 
 @dataclass
 class Graph:
-    """A finite simple undirected graph with adjacency sets."""
+    """A finite simple undirected graph represented by adjacency sets."""
 
     adjacency: dict[Vertex, set[Vertex]]
 
     @classmethod
-    def from_edges(cls, vertices: Iterable[Vertex], edges: Iterable[tuple[Vertex, Vertex]]) -> "Graph":
+    def from_edges(cls, vertices: Iterable[Vertex],
+                   edges: Iterable[tuple[Vertex, Vertex]]) -> "Graph":
         adjacency = {v: set() for v in vertices}
         for u, v in edges:
             if u == v:
@@ -40,16 +40,33 @@ class Graph:
         chosen = list(vertices)
         return all(v in self.adjacency[u] for u, v in combinations(chosen, 2))
 
-    def common_neighbors(self, seed: Iterable[Vertex], current: Iterable[Vertex] | None = None) -> set[Vertex]:
-        seed_set = set(seed)
-        candidates = self.vertices if current is None else set(current)
-        return {x for x in candidates if all(d in self.adjacency[x] for d in seed_set)}
+    def common_neighbors(self, pattern: Iterable[Vertex],
+                         active: set[Vertex] | None = None) -> set[Vertex]:
+        pattern_set = set(pattern)
+        region = self.vertices if active is None else set(active)
+        if not pattern_set:
+            return region
+        result = set(region)
+        for v in pattern_set:
+            result &= self.adjacency[v]
+        return result
 
-    def greedy_coloring_bound(self, subset: Iterable[Vertex]) -> int:
-        """Return the number of colors in a proper greedy coloring."""
-        chosen = set(subset)
-        order = sorted(chosen, key=lambda v: (-len(self.adjacency[v] & chosen), v))
+    def cliques(self, active: set[Vertex] | None = None) -> Iterator[set[Vertex]]:
+        region = sorted(self.vertices if active is None else active)
+        for size in range(len(region) + 1):
+            for candidate in combinations(region, size):
+                if self.is_clique(candidate):
+                    yield set(candidate)
+
+    def clique_number(self, active: set[Vertex] | None = None) -> int:
+        return max(map(len, self.cliques(active)), default=0)
+
+    def greedy_coloring_bound(self, active: set[Vertex]) -> int:
+        """Return the color count from a degree-ordered greedy coloring."""
         colors: dict[Vertex, int] = {}
+        order = sorted(active,
+                       key=lambda v: len(self.adjacency[v] & active),
+                       reverse=True)
         for v in order:
             forbidden = {colors[w] for w in self.adjacency[v] if w in colors}
             color = 0
@@ -58,97 +75,102 @@ class Graph:
             colors[v] = color
         return 0 if not colors else 1 + max(colors.values())
 
-    def clique_number(self, subset: Iterable[Vertex] | None = None) -> int:
-        """Compute the exact clique number by enumeration; suitable for small demos."""
-        vertices = sorted(self.vertices if subset is None else set(subset))
-        for size in range(len(vertices), -1, -1):
-            if any(self.is_clique(c) for c in combinations(vertices, size)):
-                return size
-        return 0
+
+def extension_score(graph: Graph, active: set[Vertex], pattern: set[Vertex],
+                    upper_bound: UpperBound) -> int:
+    """Compute |D| + U(S intersect N(D))."""
+    completion_region = graph.common_neighbors(pattern, active)
+    return len(pattern) + upper_bound(completion_region)
 
 
-def seed_certificate(graph: Graph, seed: Seed, incumbent: int, current: set[Vertex] | None = None) -> tuple[bool, int, set[Vertex]]:
-    """Test |D| + U(N_S(D)) <= k using a greedy-coloring upper bound."""
-    state = graph.vertices if current is None else current
-    local = graph.common_neighbors(seed, state)
-    bound = graph.greedy_coloring_bound(local)
-    return len(seed) + bound <= incumbent, bound, local
-
-
-def peel_vertices(graph: Graph, incumbent: int) -> tuple[set[Vertex], list[tuple[Vertex, int, tuple[Vertex, ...]]]]:
-    """Repeatedly remove the first vertex passing the dynamic singleton test."""
-    current = graph.vertices
-    trace: list[tuple[Vertex, int, tuple[Vertex, ...]]] = []
+def core_peel(graph: Graph, active: set[Vertex], target: int,
+              upper_bound: UpperBound) -> tuple[set[Vertex], list[tuple[Vertex, int]]]:
+    """Repeatedly delete a vertex whose extension score is below target."""
+    remaining = set(active)
+    trace: list[tuple[Vertex, int]] = []
     changed = True
     while changed:
         changed = False
-        for v in sorted(current):
-            passed, bound, local = seed_certificate(graph, frozenset({v}), incumbent, current)
-            if passed:
-                trace.append((v, bound, tuple(sorted(local))))
-                current.remove(v)
+        for v in sorted(remaining):
+            score = extension_score(graph, remaining, {v}, upper_bound)
+            if score < target:
+                trace.append((v, score))
+                remaining.remove(v)
                 changed = True
                 break
-    return current, trace
+    return remaining, trace
 
 
-def improving_cliques(graph: Graph, incumbent: int, subset: set[Vertex] | None = None) -> list[frozenset[Vertex]]:
-    """Enumerate all cliques larger than the incumbent in a small graph."""
-    vertices = sorted(graph.vertices if subset is None else subset)
-    answer: list[frozenset[Vertex]] = []
-    for size in range(incumbent + 1, len(vertices) + 1):
-        answer.extend(frozenset(c) for c in combinations(vertices, size) if graph.is_clique(c))
-    return answer
+def verify_extension_bound(graph: Graph, active: set[Vertex],
+                           upper_bound: UpperBound) -> int:
+    """Exhaustively count tested triples (C,D,S) satisfying the bound."""
+    checks = 0
+    for clique in graph.cliques(active):
+        vertices = sorted(clique)
+        for size in range(len(vertices) + 1):
+            for pattern_tuple in combinations(vertices, size):
+                pattern = set(pattern_tuple)
+                assert len(clique) <= extension_score(
+                    graph, active, pattern, upper_bound
+                )
+                checks += 1
+    return checks
 
 
-def vertex_demo() -> None:
-    """Show a vertex certified by coloring although degree counting fails."""
-    neighbors = range(1, 7)
-    edges = [(0, x) for x in neighbors]
-    edges += [(1, 2), (3, 4), (5, 6)]  # a matching: coloring bound two
-    graph = Graph.from_edges(range(7), edges)
-    passed, bound, local = seed_certificate(graph, frozenset({0}), incumbent=3)
-    print("Vertex reduction beyond degree counting")
-    print(f"  neighborhood={sorted(local)}, degree bound={len(local)}, coloring bound={bound}")
-    print(f"  certificate: 1 + {bound} <= 3 is {passed}")
-
-
-def edge_demo() -> None:
-    """Show an edge certified by a bipartite common neighborhood."""
-    common = range(2, 7)
-    edges = [(0, 1)] + [(x, w) for x in (0, 1) for w in common]
-    edges += [(2, 5), (2, 6), (3, 5), (4, 6)]  # bipartite local graph
-    graph = Graph.from_edges(range(7), edges)
-    passed, bound, local = seed_certificate(graph, frozenset({0, 1}), incumbent=4)
-    print("\nEdge reduction from common-neighborhood structure")
-    print(f"  common neighborhood={sorted(local)}, count={len(local)}, coloring bound={bound}")
-    print(f"  certificate: 2 + {bound} <= 4 is {passed}")
-
-
-def peeling_demo() -> None:
-    """Run dynamic peeling and audit preservation of all improving cliques."""
-    vertices = range(9)
-    edges = list(combinations((0, 1, 2, 3), 2))  # protected K4
-    edges += [(4, 0), (4, 1), (5, 1), (5, 2), (6, 2), (6, 3), (7, 0), (8, 3), (7, 8)]
-    graph = Graph.from_edges(vertices, edges)
-    incumbent = 3
-    before = improving_cliques(graph, incumbent)
-    remaining, trace = peel_vertices(graph, incumbent)
-    after = improving_cliques(graph, incumbent, remaining)
-    print("\nDynamic peeling audit")
-    for step, (v, bound, local) in enumerate(trace, 1):
-        print(f"  step {step}: remove {v}; local={list(local)}; 1 + {bound} <= {incumbent}")
-    print(f"  remaining vertices={sorted(remaining)}")
-    print(f"  improving cliques before={list(map(sorted, before))}")
-    print(f"  improving cliques after ={list(map(sorted, after))}")
-    assert set(before) == set(after), "an improving clique was lost"
-    print("  audit passed: every clique larger than the incumbent survived")
+def make_demo_graph() -> Graph:
+    """Build a graph with a preserved 5-clique and misleading dense regions."""
+    main_clique = range(5)
+    edges: list[tuple[int, int]] = list(combinations(main_clique, 2))
+    # Vertex 5 sees many vertices, but its neighborhood around 6..11 is a cycle.
+    edges += [(5, x) for x in range(6, 12)]
+    edges += [(x, 6 + ((x - 6 + 1) % 6)) for x in range(6, 12)]
+    # Attach a triangle so that ordinary degree and structural tests differ.
+    edges += [(12, 13), (13, 14), (12, 14), (5, 12), (5, 13), (5, 14)]
+    return Graph.from_edges(range(15), edges)
 
 
 def main() -> None:
-    vertex_demo()
-    edge_demo()
-    peeling_demo()
+    graph = make_demo_graph()
+    active = graph.vertices
+    exact: UpperBound = lambda region: graph.clique_number(region)
+    coloring: UpperBound = graph.greedy_coloring_bound
+    cardinality: UpperBound = len
+
+    print("Upper-bound-driven maximum-clique reductions")
+    print("=" * 52)
+    print(f"Vertices: {len(active)}")
+    print(f"Exact maximum clique size: {graph.clique_number(active)}")
+
+    checks = verify_extension_bound(graph, active, exact)
+    print(f"Extension inequalities checked exhaustively: {checks}")
+
+    target = 5
+    for name, bound in [("cardinality", cardinality),
+                        ("greedy coloring", coloring),
+                        ("exact local", exact)]:
+        residual, trace = core_peel(graph, active, target, bound)
+        before = graph.clique_number(active)
+        after = graph.clique_number(residual)
+        print(f"\n{name.title()} bound")
+        print(f"  deletion trace (vertex, certified score): {trace}")
+        print(f"  residual vertices: {sorted(residual)}")
+        print(f"  clique number before/after: {before}/{after}")
+        assert before == after == 5
+        assert set(range(5)) <= residual
+
+    # Pair test: six common neighbors inducing a 6-cycle have clique number 2.
+    cycle_edges = [(i, (i + 1) % 6) for i in range(6)]
+    pair_edges = cycle_edges + [(6, i) for i in range(6)] + [(7, i) for i in range(6)] + [(6, 7)]
+    pair_graph = Graph.from_edges(range(8), pair_edges)
+    pair_region = pair_graph.common_neighbors({6, 7}, pair_graph.vertices)
+    pair_score = 2 + pair_graph.clique_number(pair_region)
+    print("\nEdge-pattern example")
+    print(f"  common neighbors of edge (6, 7): {sorted(pair_region)}")
+    print(f"  raw common-neighbor count: {len(pair_region)}")
+    print(f"  exact extension score: {pair_score}")
+    print("  conclusion for target 5: edge excluded" if pair_score < 5 else
+          "  conclusion for target 5: test inconclusive")
+    assert pair_score == 4
 
 
 if __name__ == "__main__":

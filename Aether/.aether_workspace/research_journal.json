@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f243395d",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Stable-Core Rank for Tropical Analogies\n\n## 1. A semiring-valued rank functor for adjoint analogies\n\n**Conjecture.** Stable-core cardinality extends from finite posets to a rank f",
-      "quality_score": 0.91,
-      "sorry_count": 4,
-      "theorem_count": 33,
-      "timestamp": "2026-07-15T03:10:55",
-      "title": "This cycle recast analogy-making between two ordered structures as the taking of"
-    },
-    {
-      "cycle_id": "7ea29a05",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Thresholds, defects, and toughness\n\n## 1. Stability of complete-host induced containment\n\nFor each finite pattern graph \\(H\\), determine the least edge deficit \\(d(H)\\) such that",
-      "quality_score": 0.9,
-      "sorry_count": 4,
-      "theorem_count": 16,
-      "timestamp": "2026-07-15T03:46:49",
-      "title": "This cycle promoted the component-count toughness toolkit from a collection of"
-    },
-    {
       "cycle_id": "dc502c2d",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Algebra and Rank in Well-Founded Games\n\n## 1. Transfinite Sprague–Grundy classification\n\n**Conjecture.** Every set-sized well-founded impartial game admits an\nordinal-valued Grun",
@@ -499,29 +479,29 @@
       "theorem_count": 20,
       "timestamp": "2026-07-16T10:22:17",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-16T10:37:17",
+      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
+    },
+    {
+      "cycle_id": "dd61fafb",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n- Formalize edge-deletion peeling and prove preservation for the paper's `(k, ωᵘ)`-truss.\n- Define radius-`d` edge neighborhoods and establish the generalized `(k, d, ωᵘ)`-truss t",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-16T10:37:21",
+      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ad0affd1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain connector** (v27 \"Connector\" mission): a single\nexplicit construction where metric geometry, extremal/enumerative combinatorics, and the\ni",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-13T19:07:27",
-      "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
-    },
-    {
-      "cycle_id": "c0577eb2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: the logistic map as a Chebyshev polynomial\n\n## What this cycle added\n\nBuilding on the earlier logistic–tent conjugacy (`h(t) = sin²(πt/2)` intertwining\n`f(x)=4x(1-x)` with the ten",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-13T19:24:04",
-      "title": "Deepening: Exact topological conjugacy between the smooth logisti"
-    },
     {
       "cycle_id": "6e7a2b5e",
       "domain": "Applications",
@@ -2501,45 +2481,29 @@
       "theorem_count": 20,
       "timestamp": "2026-07-16T10:22:17",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-16T10:37:17",
+      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
+    },
+    {
+      "cycle_id": "dd61fafb",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n- Formalize edge-deletion peeling and prove preservation for the paper's `(k, ωᵘ)`-truss.\n- Define radius-`d` edge neighborhoods and establish the generalized `(k, d, ωᵘ)`-truss t",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-16T10:37:21",
+      "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4665f966",
-      "domain": "Combinatorics",
-      "name": "consecutive_sum_eq_square_add_two",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "573ee086",
-      "domain": "Algebra",
-      "name": "measures",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "573ee086",
-      "domain": "Algebra",
-      "name": "certification",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "573ee086",
-      "domain": "Algebra",
-      "name": "exists_rejecting_valuation",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "352675e9",
-      "domain": "Applications",
-      "name": "initialSegment_map",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "352675e9",
-      "domain": "Applications",
-      "name": "initialSegment_comp_equiv",
-      "quality": 0.71
-    },
     {
       "cycle_id": "352675e9",
       "domain": "Applications",
@@ -2803,9 +2767,45 @@
       "domain": "Novelty",
       "name": "canonicalColor_ne_of_disjoint",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "name": "triangleFree_transversal_count",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "name": "sixtyFour_requires_thirtyTwo",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "name": "card_le_slots_times_capacity",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "dd61fafb",
+      "domain": "Applications",
+      "name": "upperBound_min",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "dd61fafb",
+      "domain": "Applications",
+      "name": "clique_extension_bound",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "dd61fafb",
+      "domain": "Applications",
+      "name": "failed_extension_test_excludes_pattern",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-16T10:22:17",
+  "last_updated": "2026-07-16T10:37:21",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,18 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e23ed960",
-        "quality": 0.53,
-        "theorems": 0,
-        "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-      },
-      {
-        "cycle_id": "e23ed960",
-        "quality": 0.53,
-        "theorems": 0,
-        "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-      },
-      {
         "cycle_id": "352675e9",
         "quality": 0.71,
         "theorems": 13,
@@ -3141,6 +3129,18 @@
         "quality": 0.69,
         "theorems": 17,
         "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Consta"
+      },
+      {
+        "cycle_id": "d1512647",
+        "quality": 0.71,
+        "theorems": 5,
+        "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up"
+      },
+      {
+        "cycle_id": "dd61fafb",
+        "quality": 0.73,
+        "theorems": 11,
+        "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
       }
     ],
     "Bridges": [

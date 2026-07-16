@@ -1,357 +1,403 @@
-# Upper-Bound Seed Reductions and Dynamic Peeling for the Maximum Clique Problem
-
-**Aristotle**  
-**July 15, 2026**
+# Upper-Bound-Driven Core and Truss Reductions for the Maximum Clique Problem
 
 ## Abstract
 
-We develop a self-contained correctness theory for strengthening maximum-clique reductions with arbitrary valid upper-bound functions. Given a finite simple graph $G$, an incumbent clique size $k$, and a seed set $D$, every clique containing $D$ consists of the seed together with a clique in the common neighborhood of $D$. Consequently, if $U$ bounds clique size on queried vertex sets, then $|D|+U(N(D))\le k$ certifies that no clique larger than $k$ contains $D$. Singleton and two-vertex seeds yield upper-bound core and truss reductions, while general seeds give a unified reduction rule. We prove simultaneous preservation for finite families of successful reductions and a seed-cover criterion that converts local certificates into a global upper bound. We then treat dynamic ordered vertex peeling, allowing the upper-bound function to be recomputed at every step and requiring validity only on the current local neighborhood. Every clique capable of improving the incumbent survives all sound removals; if the final state has clique number at most $k$, then $k$ bounds the original graph. We present algorithms, complexity parameters, examples, implementation guidance, and extensions toward edge peeling, mixed fixed points, and transformation-based bounds.
+We develop a general mathematical framework for strengthening reduction rules for the Maximum Clique Problem by means of clique upper-bound functions. For a simple graph $G=(V,E)$ and a vertex region $S\subseteq V$, an upper-bound function $U(S)$ is required only to dominate the cardinality of every finite clique contained in $S$. Given a proposed pattern $D$, every clique containing $D$ consists of $D$ together with a clique in the common neighborhood of $D$. This yields the extension inequality
+
+$$
+|C|\le |D|+U(S\cap N(D)).
+$$
+
+We prove the associated exclusion criterion: if the right-hand side is below a target $k$, no clique of size at least $k$ in $S$ contains $D$. Singleton and two-vertex instances give upper-bound-enhanced core and truss tests. We then define certified vertex peeling and prove that one step, and hence every finite sequence of steps, preserves every finite clique of size at least $k$. We also show that the pointwise minimum of valid upper bounds remains valid, providing a principled basis for combining bounding procedures. Algorithms, illustrative computations, complexity parameters, and applications to exact clique search are discussed. The framework isolates correctness from the particular bound used and clarifies the relation between classical local-size reductions and stronger structural tests.
 
 ## 1. Introduction
 
-For a finite simple graph $G=(V,E)$, a clique is a set of pairwise adjacent vertices. The **maximum clique problem** asks for the clique number
+Let $G=(V,E)$ be a simple undirected graph. A clique is a vertex set whose distinct members are pairwise adjacent. The Maximum Clique Problem asks for the largest such set. This elementary definition conceals a difficult global optimization problem: local adjacency decisions overlap, and a graph may contain an enormous family of candidate cliques.
 
-$$
-\omega(G)=\max\{|C|:C\subseteq V\text{ is a clique}\}.
-$$
+Exact algorithms commonly reduce the input before or during search. If the algorithm already knows a clique of size $k-1$, for example, only cliques of size at least $k$ can improve the incumbent. Any vertex certified not to belong to such a clique can be deleted. Classical core reduction uses degree: a vertex in a $k$-clique must have at least $k-1$ neighbors. A truss-style argument uses edge support: the endpoints of an edge in a $k$-clique must have at least $k-2$ common neighbors.
 
-The problem is a central model of discrete compatibility. Vertices may represent mutually compatible assignments, correlated biological entities, communication terminals, or jointly feasible choices. Its computational difficulty makes preprocessing and upper bounding essential.
+These cardinality conditions ignore adjacency among the available neighbors. A vertex can have high degree while its neighborhood has small clique number. Likewise, an edge can have many common neighbors that are too fragmented to supply the remainder of a large clique. This motivates replacing raw neighborhood size with any valid upper bound on clique size in the neighborhood.
 
-A typical exact solver maintains an incumbent clique of size $k$, so $k\le\omega(G)$. It then searches only for a clique with more than $k$ vertices. Reduction rules simplify the graph while preserving every such improving clique. Classical vertex-core rules use degree, and edge-truss rules use the number of common neighbors or triangles. These tests can be weak because cardinality ignores adjacency among the candidates. A neighborhood may contain many vertices but have small clique number.
+Our treatment is extensional. We do not require a specific construction of the bound, only its defining correctness property. This accommodates bounds obtained from proper colorings, degeneracy, relaxations, exact subroutines, or combinations thereof. It also permits a clean separation between the mathematical soundness of reduction and the engineering choices that determine speed and strength.
 
-The present framework replaces raw local counts by upper bounds on local clique size. The replacement is abstract: the upper bound may arise from coloring, relaxations, structural decompositions, or exact computation on a small subproblem. Correctness needs only one semantic property—that the returned number bounds every clique in the queried set.
+The principal contributions are:
 
-Our first contribution is a general seed calculus. A seed $D$ may consist of one vertex, the endpoints of an edge, or an arbitrary finite vertex set. If a clique contains $D$, all its remaining vertices lie in the common neighborhood of $D$. This gives a universal counting inequality and a sound reduction test. Our second contribution lifts individual tests to finite families and gives a cover condition under which reductions certify a global upper bound. Our third contribution establishes dynamic peeling correctness when local bounds are recomputed after earlier removals. This state-sensitive form is necessary for iterative algorithms: validity on each current local neighborhood suffices, even if the bound varies from step to step.
+1. a pointwise minimum theorem for combining valid clique upper bounds;
+2. a general clique extension inequality for an arbitrary contained pattern;
+3. a failed-test theorem excluding that pattern from every target-size clique;
+4. upper-bound-enhanced core and truss criteria as singleton and pair specializations;
+5. preservation of every target-size clique under one certified core deletion;
+6. preservation under any finite sequence of certified core-peeling steps.
 
-The scope is correctness rather than a claim about a specific upper-bound routine or empirical speedup. The results identify the exact contracts an implementation must satisfy and isolate the parameters governing computational cost.
+The scope should be stated precisely. The results establish the mathematical certificates behind vertex and edge tests and fully prove finite vertex-peeling correctness. An iterative edge-deletion theorem, radius-based generalized trusses, termination bounds, and implementation-specific running times are natural extensions rather than claims of the present paper.
 
 ## 2. Graph-theoretic setting
 
-### 2.1 Finite simple graphs and cliques
+### 2.1 Simple graphs and cliques
 
-A **finite simple graph** is a pair $G=(V,E)$ where $V$ is finite and $E$ is an irreflexive, symmetric adjacency relation. Thus there are no loops or parallel edges. A finite set $C\subseteq V$ is a **clique** when every two distinct vertices $x,y\in C$ satisfy $xy\in E$.
+A **simple undirected graph** is a pair $G=(V,E)$ in which $V$ is a set and $E$ is a symmetric, irreflexive adjacency relation. We write $x\sim y$ when $x$ and $y$ are adjacent.
 
-For $S\subseteq V$, write $G[S]$ for the subgraph induced by $S$. Its clique number is
+A set $C\subseteq V$ is a **clique** if, for all distinct $x,y\in C$, one has $x\sim y$. We consider finite cliques whenever cardinality is used. The ambient graph itself need not be finite for the structural theorems, although algorithms naturally operate on finite instances.
+
+For a search region $S\subseteq V$, a clique “inside $S$” means a clique $C$ satisfying $C\subseteq S$. Restricting attention to $S$ models a residual subproblem after previous reductions or branching decisions.
+
+### 2.2 Common neighborhoods
+
+For an arbitrary pattern $D\subseteq V$, define its **common neighborhood** by
 
 $$
-\omega(G[S])=\max\{|C|:C\subseteq S\text{ is a clique in }G\}.
+N(D)=\{x\in V:\forall w\in D,\ x\sim w\}.
 $$
 
-An integer $k$ is called the **incumbent size** when a clique of size $k$ is already known. Correctness of the reductions below does not require the witness clique itself; it uses $k$ as the threshold separating improving cliques, whose sizes exceed $k$, from non-improving cliques.
+If $D=\{v\}$, then $N(D)$ is the ordinary open neighborhood of $v$. If $D=\{u,v\}$, it is the set of vertices adjacent to both endpoints. Because the graph has no loops, a member of $D$ cannot belong to $N(D)$ when $D$ is nonempty.
 
-### 2.2 Upper-bound functions
+The common neighborhood is the unique natural extension region for a clique containing $D$: every additional clique vertex must be adjacent to every vertex already in $D$.
 
-**Definition 2.1 (Valid upper-bound function).** A function $U:2^V\to\mathbb N$ is valid for $G$ if, for every $S\subseteq V$ and every clique $C\subseteq S$,
+### 2.3 Clique upper-bound functions
+
+A function $U:2^V\to\mathbb{N}$ is a **clique upper-bound function** if, for every $S\subseteq V$ and every finite clique $C\subseteq S$,
 
 $$
 |C|\le U(S).
 $$
 
-Equivalently, $\omega(G[S])\le U(S)$ for every $S$. We do not require $U$ to be monotone, exact, or polynomial-time computable. This generality is useful because correctness and cost can be analyzed separately.
+No monotonicity assumption is required. In applications, many natural bounds are monotone, but all arguments below use only validity on the set at which the function is evaluated.
 
-A standard example is a proper coloring of $G[S]$. If a coloring uses $q$ colors, every clique in $S$ has at most one vertex of each color, so $U(S)=q$ is valid. The trivial choice $U(S)=|S|$ is also valid and recovers size-based reductions.
+Several examples motivate the definition.
 
-### 2.3 Seeds and common neighborhoods
+- **Cardinality bound:** $U(S)=|S|$ for finite $S$.
+- **Coloring bound:** if a proper coloring of the subgraph induced by $S$ uses $q$ colors, then $U(S)=q$, because a clique contains at most one vertex of each color.
+- **Degeneracy bound:** if the induced subgraph on $S$ has degeneracy $d$, then its clique number is at most $d+1$.
+- **Exact local value:** when affordable, the clique number of the induced subgraph on $S$ is the sharpest possible value.
 
-**Definition 2.2 (Common neighborhood).** For a finite seed $D\subseteq V$, define
+The framework remains correct if different procedures are used on different sets, provided the returned value always satisfies the upper-bound condition.
 
-$$
-N(D)=\{x\in V:\text{ for every }d\in D,\ x\text{ is adjacent to }d\}.
-$$
+## 3. Combining upper bounds
 
-Because the graph has no loops, a seed vertex does not belong to $N(D)$ whenever $D$ is nonempty: it is not adjacent to itself. For a singleton, $N(\{v\})$ is the ordinary open neighborhood of $v$. For two vertices $u,v$, $N(\{u,v\})=N(u)\cap N(v)$.
+### Theorem 3.1 (Minimum Combination Theorem)
 
-**Definition 2.3 (Seed reducibility).** Given an incumbent $k$ and valid upper bound $U$, a seed $D$ is **reducible** if
-
-$$
-|D|+U(N(D))\le k.
-$$
-
-This inequality is meaningful even when $D$ is not a clique. A non-clique seed cannot be contained in any clique and is automatically irrelevant, although the numerical test may or may not detect that fact. For core and truss applications the seeds are, respectively, vertices and edge endpoints.
-
-## 3. The seed counting principle
-
-**Lemma 3.1 (Clique decomposition around a seed).** Let $C$ be a clique and let $D\subseteq C$. Then $C\setminus D$ is a clique contained in $N(D)$.
-
-**Proof sketch.** Any subset of a clique is a clique, so $C\setminus D$ is a clique. If $x\in C\setminus D$ and $d\in D$, then $x$ and $d$ are distinct members of $C$ and hence adjacent. Thus $x$ is adjacent to every vertex of $D$, which places it in $N(D)$. $\square$
-
-**Theorem 3.2 (Seed common-neighborhood bound).** Let $U$ be valid for $G$. If $C$ is a clique containing a finite seed $D$, then
+Let $U_1$ and $U_2$ be clique upper-bound functions. Define
 
 $$
-|C|\le |D|+U(N(D)).
+U(S)=\min\{U_1(S),U_2(S)\}.
 $$
 
-**Proof sketch.** By Lemma 3.1, $C\setminus D$ is a clique in $N(D)$, so validity gives $|C\setminus D|\le U(N(D))$. Since $D\subseteq C$, the disjoint union $C=D\mathbin{\dot\cup}(C\setminus D)$ yields $|C|=|D|+|C\setminus D|$. Combining the two relations proves the inequality. $\square$
+Then $U$ is also a clique upper-bound function.
 
-The theorem is the basic bridge from local upper bounds to global reduction safety. It retains structural information that the weaker estimate $|C|\le |D|+|N(D)|$ discards.
+**Proof sketch.** Let $C\subseteq S$ be a finite clique. Validity of $U_1$ gives $|C|\le U_1(S)$, and validity of $U_2$ gives $|C|\le U_2(S)$. Therefore $|C|$ is at most their minimum. $\square$
 
-**Theorem 3.3 (Seed Reduction Theorem).** Let $U$ be valid, let $k\in\mathbb N$, and let $D$ be reducible. No clique $C$ with $|C|>k$ contains $D$.
+By induction, the same conclusion holds for the minimum of any finite nonempty family of valid upper bounds. This gives a modular design rule: bounds may be developed independently and combined without a new soundness argument. Computationally, one may also short-circuit evaluation. If a cheap bound is already small enough to trigger a reduction, a more expensive bound need not be computed.
 
-**Proof sketch.** If $D\subseteq C$, Theorem 3.2 and reducibility imply
+## 4. The pattern-extension principle
 
-$$
-|C|\le |D|+U(N(D))\le k,
-$$
+The main theorem applies to any subset $D$ of a clique, not only a vertex or an edge.
 
-contradicting $|C|>k$. $\square$
+### Theorem 4.1 (Clique Extension Bound)
 
-This theorem states precisely what deletion may preserve. It does not claim that a reducible seed belongs to no clique; it claims that the seed belongs to no clique capable of improving the incumbent.
+Let $U$ be a clique upper-bound function. Let $S,C,D\subseteq V$ satisfy the following conditions:
 
-## 4. Core, truss, and generalized seed reductions
+1. $C$ is finite;
+2. $C$ is a clique;
+3. $D\subseteq C$;
+4. $C\subseteq S$.
 
-### 4.1 Vertex reduction
-
-**Corollary 4.1 (Upper-bound core reduction).** Let $v\in V$. If
-
-$$
-1+U(N(\{v\}))\le k,
-$$
-
-then no clique of size greater than $k$ contains $v$. Therefore deleting $v$ preserves every clique that can improve the incumbent.
-
-**Proof sketch.** Apply Theorem 3.3 to the singleton seed $D=\{v\}$, whose cardinality is one. $\square$
-
-With the trivial bound $U(S)=|S|$, the test becomes $1+\deg(v)\le k$, or $\deg(v)<k$, the familiar core-style deletion criterion. Any sharper valid $U$ can certify additional vertices.
-
-### 4.2 Edge reduction
-
-**Corollary 4.2 (Upper-bound truss reduction).** Let $u\ne v$. If
+Then
 
 $$
-2+U(N(\{u,v\}))\le k,
+|C|\le |D|+U(S\cap N(D)).
 $$
 
-then no clique of size greater than $k$ contains both $u$ and $v$. In particular, when $uv\in E$, deleting the edge $uv$ preserves every clique larger than $k$.
-
-**Proof sketch.** Apply Theorem 3.3 to $D=\{u,v\}$, which has cardinality two. Any clique using edge $uv$ contains both endpoints and is therefore bounded by the displayed quantity. $\square$
-
-Using $U(S)=|S|$ recovers a common-neighbor count. A structural upper bound can be much smaller than $|N(u)\cap N(v)|$.
-
-### 4.3 Larger seeds
-
-For $|D|=d$, the criterion
+**Proof sketch.** Set $R=C\setminus D$. Since $R\subseteq C$, it is a finite clique. For any $x\in R$, the inclusion $C\subseteq S$ gives $x\in S$. For every $w\in D$, both $x$ and $w$ lie in $C$, and they are distinct because $x\notin D$; hence $x\sim w$. Thus $x\in N(D)$, proving $R\subseteq S\cap N(D)$. The upper-bound property gives
 
 $$
-d+U(N(D))\le k
+|R|\le U(S\cap N(D)).
 $$
 
-exposes a continuum between cheap coarse reductions and expensive refined ones. Larger seeds constrain extensions more strongly because their common neighborhoods tend to shrink, but there are potentially $\binom{|V|}{d}$ seeds to examine. This seed size is an explicit algorithmic trade-off parameter.
+Because $D\subseteq C$, the sets $D$ and $C\setminus D$ are disjoint and their union is $C$. Therefore $|C|=|D|+|R|$, which yields the result. $\square$
 
-## 5. Families of reductions and global certification
+The theorem decomposes a candidate clique into a fixed pattern and a completion. Its force comes from evaluating the bound not on the whole search region but on the much smaller region in which a completion is logically forced to lie.
 
-Algorithms usually discover many reducible seeds in one pass. Their collective effect is governed by the following statement.
+### Corollary 4.2 (Failed Extension Test)
 
-**Theorem 5.1 (Family Preservation Theorem).** Let $\mathcal R$ be a finite family of seeds such that
-
-$$
-|D|+U(N(D))\le k
-$$
-
-for every $D\in\mathcal R$. If $C$ is a clique with $|C|>k$, then no $D\in\mathcal R$ is contained in $C$.
-
-**Proof sketch.** Fix $D\in\mathcal R$. Its assumed inequality makes it reducible, so Theorem 3.3 gives $D\nsubseteq C$. Since $D$ was arbitrary, the conclusion holds for all seeds in the family. $\square$
-
-The theorem permits batched or parallel evaluation against a fixed graph state. Each successful certificate is independently incompatible with every improving clique.
-
-**Definition 5.2 (Large-clique seed cover).** A family $\mathcal R$ is a **large-clique seed cover at threshold $k$** if every clique $C$ with $|C|>k$ contains at least one seed $D\in\mathcal R$.
-
-**Theorem 5.3 (Certified Seed-Cover Upper Bound).** Let $U$ be valid. Suppose every seed in $\mathcal R$ is reducible at threshold $k$, and suppose $\mathcal R$ is a large-clique seed cover. Then
+Let $k\in\mathbb{N}$ and let $D,S\subseteq V$. If
 
 $$
-\omega(G)\le k.
+|D|+U(S\cap N(D))<k,
 $$
 
-**Proof sketch.** Assume a clique $C$ has size greater than $k$. The cover property supplies $D\in\mathcal R$ with $D\subseteq C$. Family preservation says no seed in $\mathcal R$ can be contained in $C$, a contradiction. Hence every clique has size at most $k$. $\square$
+then no finite clique $C\subseteq S$ with $|C|\ge k$ contains $D$.
 
-If a clique of size $k$ is already known, the theorem proves $\omega(G)=k$. This is a general upper-bound improvement framework: local reduction certificates plus a coverage argument become a global certificate.
-
-## 6. Dynamic local validity
-
-Iterative peeling changes the relevant graph. We therefore formulate validity relative to a current set.
-
-**Definition 6.1 (Validity on a current set).** For $S\subseteq V$, a function $U_S:2^V\to\mathbb N$ is **valid on $S$** if every clique $C\subseteq S$ satisfies
+**Proof sketch.** If such a clique contained $D$, Theorem 4.1 would imply
 
 $$
-|C|\le U_S(S).
+k\le |C|\le |D|+U(S\cap N(D))<k,
 $$
 
-More generally, when the function is queried at a particular set $T$, the required contract is that every clique contained in $T$ has size at most $U_S(T)$. No claim is required outside the queried set.
+an impossibility. $\square$
 
-**Definition 6.2 (Current common neighborhood).** For a current vertex set $S$ and seed $D$, define
+This corollary is one-sided, as every safe pruning test must be. Failure certifies exclusion. Passing does not certify that an extension exists, because an upper bound can overestimate the true clique number.
 
-$$
-N_S(D)=S\cap N(D).
-$$
+### Remark 4.3 (Patterns need not initially be cliques)
 
-**Definition 6.3 (Locally peelable vertex).** A vertex $v$ is peelable from $S$ at threshold $k$ under a bound $U$ if $v\in S$ and
+The statement does not assume separately that $D$ is a clique. If $D\subseteq C$ and $C$ is a clique, that fact follows automatically. If $D$ is not a clique, then no clique contains it and the exclusion conclusion is already true. In algorithms, one normally applies the test to patterns known to be cliques, such as vertices and edges.
 
-$$
-1+U(N_S(\{v\}))\le k,
-$$
+## 5. Core and truss specializations
 
-where $U$ is valid for all cliques contained in $N_S(\{v\})$.
+### 5.1 Singleton patterns and enhanced cores
 
-This definition allows bounds to be recomputed after every removal. It also avoids imposing a stronger global condition than correctness needs.
+### Theorem 5.1 (Vertex Core Test)
 
-**Theorem 6.4 (One-Step Dynamic Peeling Soundness).** Let $C\subseteq S$ be a clique with $|C|>k$. If $v$ is locally peelable from $S$ at threshold $k$, then $v\notin C$.
-
-**Proof sketch.** Suppose $v\in C$. Then $C\setminus\{v\}$ is a clique. Every one of its vertices lies in $S$ and is adjacent to $v$, so
+Let $C\subseteq S$ be a finite clique, let $v\in C$, and suppose $|C|\ge k$. Then
 
 $$
-C\setminus\{v\}\subseteq N_S(\{v\}).
+k\le 1+U(S\cap N(\{v\})).
 $$
 
-Local validity yields $|C\setminus\{v\}|\le U(N_S(\{v\}))$. Since $v\in C$,
+**Proof sketch.** Apply Theorem 4.1 with $D=\{v\}$. Since $|D|=1$, one obtains
 
 $$
-|C|=1+|C\setminus\{v\}|\le 1+U(N_S(\{v\}))\le k,
+|C|\le 1+U(S\cap N(\{v\})).
 $$
 
-contrary to $|C|>k$. $\square$
+Combine this with $k\le |C|$. $\square$
 
-## 7. Ordered peeling
-
-Consider states $S_0,S_1,\ldots,S_n$ and removed vertices $v_0,v_1,\ldots,v_{n-1}$ satisfying
+Consequently, a vertex satisfying
 
 $$
-S_{i+1}=S_i\setminus\{v_i\}
+1+U(S\cap N(\{v\}))<k
 $$
 
-for $0\le i<n$. At each step $i$, let $U_i$ be valid on the queried local set $N_{S_i}(\{v_i\})$, and assume
+cannot occur in any clique of size at least $k$ contained in $S$. We call this the **upper-bound-enhanced core deletion criterion**.
+
+If $U(X)=|X|$, the criterion reduces to the classical degree test
 
 $$
-1+U_i(N_{S_i}(\{v_i\}))\le k.
+1+\deg_S(v)<k.
 $$
 
-**Theorem 7.1 (Ordered Peeling Preservation Theorem).** Under these assumptions, every clique $C\subseteq S_0$ with $|C|>k$ remains in every state. In particular,
+A structural bound can be strictly stronger. For example, if $v$ has ten neighbors but the induced neighborhood is properly colorable with three colors, then no clique containing $v$ has more than four vertices, regardless of the raw degree.
+
+### 5.2 Pair patterns and enhanced trusses
+
+### Theorem 5.2 (Edge Truss Test)
+
+Let $C\subseteq S$ be a finite clique. Let $u,v\in C$ with $u\ne v$, and suppose $|C|\ge k$. Then
 
 $$
-C\subseteq S_n.
+k\le 2+U(S\cap N(\{u,v\})).
 $$
 
-**Proof sketch.** Induct on the number of removals. The base case is $C\subseteq S_0$. Suppose $C\subseteq S_i$. By Theorem 6.4, the peelable vertex $v_i$ is not in $C$. Therefore deleting $v_i$ leaves all vertices of $C$ present, so $C\subseteq S_{i+1}$. Repeating this argument through step $n-1$ proves the claim. $\square$
+**Proof sketch.** Apply Theorem 4.1 with $D=\{u,v\}$. Distinctness gives $|D|=2$, yielding the stated inequality. $\square$
 
-The upper-bound function may change with $i$. This flexibility covers algorithms that recolor neighborhoods, change heuristics, or spend different computational budgets as the instance shrinks.
-
-**Theorem 7.2 (Peeling Certification Theorem).** Assume every clique of $G$ is contained in $S_0$. Perform an ordered peeling sequence satisfying the hypotheses of Theorem 7.1. If every clique contained in $S_n$ has cardinality at most $k$, then
+Thus, if
 
 $$
-\omega(G)\le k.
+2+U(S\cap N(\{u,v\}))<k,
 $$
 
-**Proof sketch.** If an original clique $C$ had $|C|>k$, the initial containment assumption would put it in $S_0$. Theorem 7.1 would then force $C\subseteq S_n$. This contradicts the final-state upper-bound condition. $\square$
+then no target-size clique can contain both $u$ and $v$. When $uv\in E$, this is an upper-bound-enhanced truss certificate for removing the edge from consideration.
 
-Usually $S_0=V$, making initial containment automatic. The final condition can come from an exact solution of the reduced graph, a coloring bound, a seed-cover certificate, or any other valid argument.
+The cardinality bound gives the usual support condition: an edge in a $k$-clique must have at least $k-2$ common neighbors. A tighter bound studies the internal compatibility of those common neighbors. For instance, six common neighbors that induce a bipartite graph can contribute at most two vertices to a clique, so the edge belongs to no clique larger than four.
 
-## 8. Algorithms
+### 5.3 A unified hierarchy
 
-### 8.1 Greedy-color upper bound
-
-A proper coloring supplies a practical bound. Process vertices of $G[S]$ in a chosen order and assign each the smallest positive color absent from its already colored neighbors. If $q$ colors are used, return $q$.
-
-The coloring is proper by construction. A clique has pairwise adjacent vertices and therefore cannot repeat a color, proving $\omega(G[S])\le q$. With adjacency sets, a straightforward implementation costs $O(|S|^2)$ time and $O(|S|)$ auxiliary space, excluding graph storage. Better ordering may strengthen the bound without changing validity.
-
-### 8.2 Dynamic vertex peeling algorithm
-
-Given $G$, $k$, and a valid bound routine:
-
-1. Set $S\leftarrow V$.
-2. Search for $v\in S$ satisfying $1+U(N_S(v))\le k$.
-3. If found, replace $S$ by $S\setminus\{v\}$ and restart or update the search.
-4. Stop when no vertex passes.
-
-Correctness follows from Theorem 7.1. If evaluating a local bound on at most $n$ vertices costs $T_U(n)$ and a naive implementation scans at most $n$ vertices after each of at most $n$ removals, the total is
+Theorems 5.1 and 5.2 are not separate phenomena. For any finite pattern $D$, define its extension score in $S$ by
 
 $$
-O(n^2(T_U(n)+n))
+B_S(D)=|D|+U(S\cap N(D)).
 $$
 
-under a simple neighborhood-intersection model. Incremental queues and cached data can substantially reduce this bound, but cached bounds must continue to satisfy the local validity contract.
+Whenever $B_S(D)<k$, the pattern can be excluded from every clique of size at least $k$. Increasing $|D|$ can tighten the completion region but raises the number and cost of tests. Singleton tests are cheap and broadly applicable; pair tests are more numerous but can expose structure invisible at the vertex level; larger patterns continue the trade-off.
 
-### 8.3 Batched seed-cover certification
+## 6. Certified core peeling
 
-Enumerate a candidate family $\mathcal R$, test reducibility for each seed, and retain successful certificates. Then determine whether every putative clique larger than $k$ contains a successful seed. If so, Theorem 5.3 certifies $\omega(G)\le k$.
+A single safe deletion is useful, but practical reductions repeatedly update the current graph. We now formalize this process mathematically.
 
-For all seeds of fixed size $d$, enumeration alone costs $O(n^d)$. If common-neighborhood construction costs $T_N(n,d)$ and upper-bound evaluation costs $T_U(n)$, a direct pass costs
+### Definition 6.1 (Certified core-peeling step)
 
-$$
-O\!\left(n^d\bigl(T_N(n,d)+T_U(n)\bigr)\right).
-$$
-
-This explains why $d$ is a strength-cost control. In practice, one restricts to clique seeds, promising local structures, or seeds generated during search.
-
-## 9. Numerical examples
-
-### 9.1 A vertex beyond degree reduction
-
-Let $k=4$ and let $v$ have six current neighbors. The cardinality bound gives $1+6=7$, so it cannot delete $v$. Suppose the induced graph on those neighbors is properly colorable with three colors. Then $U(N(v))=3$ is valid and
+Fix a target $k$ and upper-bound function $U$. A set $T$ is obtained from $S$ by one **certified core-peeling step** if there exists $v\in S$ such that
 
 $$
-1+U(N(v))=4\le k.
+1+U(S\cap N(\{v\}))<k
 $$
 
-Corollary 4.1 deletes $v$. The gain comes entirely from adjacency structure within the neighborhood.
-
-### 9.2 An edge with a bipartite common neighborhood
-
-Let $uv$ be an edge and again let $k=4$. Suppose $u$ and $v$ have five common neighbors, but the graph induced by them is bipartite. Two colors bound every clique there by $2$. Hence
+and
 
 $$
-2+U(N(\{u,v\}))=2+2=4,
+T=S\setminus\{v\}.
 $$
 
-and Corollary 4.2 permits deletion of $uv$. A raw common-neighbor count would give $2+5=7$ and fail.
+The bound is evaluated in the current set $S$, not necessarily in the original graph. This permits new failures to appear after earlier deletions.
 
-### 9.3 A peeling cascade
+### Theorem 6.2 (One-Step Clique Preservation)
 
-Take an incumbent $k=3$. Suppose a first vertex $a$ has a local neighborhood with coloring bound $2$, so $1+2=3$ and $a$ is removed. Its deletion may reduce a second vertex’s current neighborhood enough that a recomputed coloring now uses only two colors. The second vertex becomes peelable, and so on. Theorem 7.1 certifies the whole cascade even though each bound is computed on a different current set.
+Let $T$ be obtained from $S$ by a certified core-peeling step. If $C\subseteq S$ is a finite clique and $|C|\ge k$, then $C\subseteq T$.
 
-## 10. Applications and implementation considerations
-
-The framework applies wherever maximum clique models compatibility. In coding theory, vertices may represent candidate codewords and edges acceptable pairwise relations. In bioinformatics, cliques can represent mutually interacting entities. In scheduling and resource allocation, vertices can encode choices that are jointly feasible exactly when adjacent. In each setting, domain-specific upper bounds can be inserted without changing the reduction proofs.
-
-Three engineering principles follow from the mathematics.
-
-First, the incumbent matters. Increasing $k$ weakens the search objective but strengthens reduction inequalities, so heuristic discovery of a good clique can trigger extensive peeling.
-
-Second, bound strength must be balanced against cost. The trivial cardinality bound is nearly free. Greedy coloring is stronger and still inexpensive. More elaborate relaxations may be worthwhile only on difficult neighborhoods. A tiered policy can try cheap bounds first and invoke stronger routines selectively.
-
-Third, state management is part of correctness. At step $i$, the bound must apply to $N_{S_i}(v_i)$, not merely to an obsolete neighborhood. Recomputing is the simplest safe strategy. Incremental maintenance is also safe when it preserves the semantic upper-bound property on each queried current set.
-
-For parallel processing, one may evaluate many seeds against a snapshot $S_i$. The Family Preservation Theorem justifies simultaneously applying all certificates derived from that same valid snapshot, provided the concrete deletions match the logical conclusion. Vertex certificates permit deletion of those vertices. Two-endpoint certificates permit deleting the corresponding edges, not necessarily both endpoints.
-
-## 11. Discussion
-
-The seed inequality unifies several reduction styles:
+**Proof sketch.** Let $v$ be the deleted vertex. If $v\in C$, Theorem 5.1 gives
 
 $$
-|D|+U(N(D))\le k.
+k\le 1+U(S\cap N(\{v\})),
 $$
 
-Its proof uses only heredity of cliques under subsets, the common-neighbor property, and cardinality addition. This simplicity is an advantage: stronger upper-bound technology can be substituted without revisiting the safety argument.
+contradicting the strict inequality certifying deletion. Therefore $v\notin C$. Since $C\subseteq S$, every vertex of $C$ remains in $S\setminus\{v\}=T$. $\square$
 
-The framework also clarifies the difference between preservation and certification. A reduction theorem says that improving cliques survive. It does not by itself say no improving clique exists. Global certification requires an additional terminal argument: a seed cover, a final-state upper bound, or an exact solution of the remainder. Keeping these logical roles separate prevents circular reasoning.
+The theorem preserves every qualifying clique, not merely the maximum clique number or one chosen optimum. This distinction supports enumeration and counting applications as well as optimization.
 
-There are limitations. The theory does not determine which upper bound will be effective on a graph class. It does not establish a particular asymptotic running time without a specified data structure and bound routine. Nor does the vertex-peeling sequence alone establish correctness for edge removals or transformations that change the optimum by an offset. Those operations require their own state relations and preservation statements.
+### Theorem 6.3 (Finite Core-Peeling Preservation)
 
-Nevertheless, the results provide a modular foundation. The upper-bound routine promises local validity; the reduction layer converts validity into preservation; and the terminal layer converts preservation plus a final certificate into a global upper bound.
+Let
 
-## 12. Future work
+$$
+S_0,S_1,\ldots,S_t
+$$
 
-Several directions extend the present theory.
+be a finite sequence in which each $S_{i+1}$ is obtained from $S_i$ by a certified core-peeling step. If $C\subseteq S_0$ is a finite clique and $|C|\ge k$, then
 
-1. Define exact parameterized upper-bound core and truss graph operators and identify them with singleton, pair, and size-$d$ seed rules.
-2. Extend ordered correctness to edge-removal sequences and mixed vertex-edge fixed-point iteration.
-3. Specify executable finite-graph implementations and prove that their outputs realize the abstract state transition $S_{i+1}=S_i\setminus\{v_i\}$.
-4. State data-structure assumptions explicitly and derive operation counts and asymptotic running-time bounds.
-5. Model graph transformations that preserve clique number up to a known offset, then integrate repeated transformations with reduction-based upper-bound improvement.
-6. Study adaptive policies that choose seed size and upper-bound strength from local graph features.
-7. Investigate certificate formats for seed covers and final-state bounds that can be checked independently and efficiently.
+$$
+C\subseteq S_i
+$$
 
-## 13. Conclusion
+for every $0\le i\le t$. In particular, $C\subseteq S_t$.
 
-A valid upper bound can do more than estimate the answer to the maximum clique problem. Applied to a seed’s common neighborhood, it certifies that the seed cannot occur in any clique larger than the incumbent. Singleton seeds yield core-style vertex deletion, pair seeds yield truss-style edge deletion, and arbitrary seeds provide a general strength-cost hierarchy. Families of certificates preserve all improving cliques, while a covering family proves a global upper bound.
+**Proof sketch.** Use induction on $i$. The base case is the assumption $C\subseteq S_0$. If $C\subseteq S_i$, Theorem 6.2 applied to the step from $S_i$ to $S_{i+1}$ gives $C\subseteq S_{i+1}$. $\square$
 
-Dynamic peeling retains these guarantees under repeated recomputation. At each step, validity is needed only on the current local neighborhood. One-step soundness then composes by induction: every improving clique survives every removal. If the reduced final state admits no clique above the threshold, neither did the original graph.
+### Corollary 6.4 (Decision equivalence above the target)
 
-The resulting architecture is concise and reusable: derive a local upper bound, turn it into a reduction certificate, compose certificates across a sequence or family, and close the argument with a cover or final-state bound. It transforms upper bounds from passive estimates into active tools for eliminating impossible parts of the search space.
+Under the hypotheses of Theorem 6.3, the original region $S_0$ contains a clique of size at least $k$ if and only if the residual region $S_t$ does.
+
+**Proof sketch.** Every clique in $S_t$ is also in $S_0$ because $S_t\subseteq S_0$. Conversely, every qualifying clique in $S_0$ is preserved by Theorem 6.3. $\square$
+
+### Corollary 6.5 (Preservation of the optimum when relevant)
+
+If the maximum clique size in $S_0$ is at least $k$, then the maximum clique sizes in $S_0$ and $S_t$ are equal.
+
+**Proof sketch.** A maximum clique in $S_0$ has size at least $k$ and survives in $S_t$, so the residual optimum is at least the original optimum. Since $S_t\subseteq S_0$, it cannot be larger. $\square$
+
+## 7. Algorithms
+
+### 7.1 Upper-bound-enhanced core peeling
+
+For a finite graph and a target $k$, the direct algorithm maintains an active set $S$. It repeatedly scans active vertices, computes $U(S\cap N(v))$, and removes a vertex whenever $1+U(S\cap N(v))<k$. It stops when a complete scan makes no deletion.
+
+A simple implementation is:
+
+1. initialize $S\leftarrow V$;
+2. find a vertex $v\in S$ with $1+U(S\cap N(v))<k$;
+3. if none exists, return $S$;
+4. otherwise replace $S$ by $S\setminus\{v\}$ and repeat.
+
+On a graph with $n$ vertices, at most $n$ deletions occur. If a naive scan evaluates every active vertex after each deletion and one bound evaluation costs at most $T_U(n,m)$, a coarse bound is
+
+$$
+O(n^2T_U(n,m)+n^2)
+$$
+
+apart from graph-representation costs. This is not asserted as an optimal running time. Queues, dependency tracking, bitsets, incremental colorings, and batched deletion can substantially improve practice. The preservation theorem is independent of these implementation choices as long as every deletion carries the stated certificate in the current set.
+
+### 7.2 Pattern exclusion
+
+For a family $\mathcal{D}$ of patterns, compute
+
+$$
+B_S(D)=|D|+U(S\cap N(D))
+$$
+
+for each $D\in\mathcal{D}$. Mark every pattern with $B_S(D)<k$ as forbidden in a target-size clique. For singleton patterns this means vertex deletion. For edge patterns it means edge exclusion or branching restrictions. The cost is roughly the number of tested patterns multiplied by common-neighborhood construction and bound-evaluation costs.
+
+### 7.3 Combining bounds adaptively
+
+Suppose $U_1$ is cheap and $U_2$ is stronger but expensive. Since their minimum is valid, an adaptive test may proceed as follows:
+
+1. compute $b_1=U_1(X)$;
+2. if $|D|+b_1<k$, reject $D$ immediately;
+3. otherwise compute $b_2=U_2(X)$;
+4. reject if $|D|+\min\{b_1,b_2\}<k$.
+
+This ordering preserves correctness while avoiding expensive work whenever the cheap bound suffices. More than two bounds can be organized as a cascade.
+
+## 8. Numerical examples
+
+### Example 8.1 (Coloring strengthens degree reduction)
+
+Let $k=5$ and let $v$ have eight active neighbors. The cardinality bound gives
+
+$$
+1+8=9,
+$$
+
+so degree reduction cannot remove $v$. Suppose, however, that the induced neighborhood admits a proper coloring with three colors. The coloring bound gives $U(S\cap N(v))\le 3$, and therefore
+
+$$
+1+U(S\cap N(v))\le 4<5.
+$$
+
+The vertex is safely deleted.
+
+### Example 8.2 (Structure strengthens edge support)
+
+Let $k=5$ and suppose adjacent vertices $u$ and $v$ have six common active neighbors. Raw support gives $2+6=8$, so a cardinality test passes. If the common-neighbor graph is bipartite, its clique number is at most $2$. Hence
+
+$$
+2+U(S\cap N(\{u,v\}))\le 4<5,
+$$
+
+and the edge cannot belong to a $5$-clique.
+
+### Example 8.3 (Iterative effects)
+
+Suppose a first vertex fails because its neighborhood bound is below $k-1$. Removing it shrinks the neighborhoods of other vertices. A second vertex that previously had score $k$ may then have score $k-1$ and become deletable. Theorem 6.3 ensures that this cascade cannot touch a clique of size at least $k$: every member of such a clique passes the test at every stage in which the clique remains active, and the induction guarantees that it always remains active.
+
+## 9. Applications
+
+### 9.1 Exact maximum-clique search
+
+In branch-and-bound, an incumbent clique of size $L$ establishes a lower bound. To improve it, the search needs a clique of size at least $k=L+1$. Certified peeling can reduce each residual subproblem before branching. If the active set becomes smaller than $k$, the branch is immediately impossible. If no deletion is possible, the residual graph still contains every potential improvement.
+
+### 9.2 Clique decision and enumeration
+
+For the decision problem “does a $k$-clique exist?”, Corollary 6.4 gives exact equivalence between the original and peeled regions. For enumeration of all cliques of size at least $k$, Theorem 6.3 guarantees that no qualifying clique loses a vertex. Additional bookkeeping may be needed if edge exclusions are used, but the underlying certificates remain the same.
+
+### 9.3 Network analysis
+
+Large cliques model mutually compatible or mutually connected groups. In collaboration, communication, biological, and market-basket networks, raw degree can be misleading. Upper-bound-enhanced tests distinguish a large but diffuse neighborhood from one capable of supporting a cohesive group. The method can therefore reduce candidate regions before exact analysis without changing any group meeting the chosen size threshold.
+
+### 9.4 Constraint and compatibility systems
+
+Many selection problems produce a graph whose edges encode pairwise compatibility. A feasible all-pairs-compatible selection is a clique. The extension bound says that once a partial selection $D$ is fixed, only objects compatible with every member of $D$ matter, and an upper bound on that residual compatibility graph limits the complete selection. This interpretation makes the pattern theorem useful beyond algorithms explicitly described as graph reductions.
+
+## 10. Discussion
+
+The framework’s main advantage is modularity. Correctness depends on one contract for $U$, while performance depends on how that contract is fulfilled. This allows a solver to mix bounds of different cost and origin. The minimum theorem ensures that adding a new valid bound can never weaken the pointwise estimate.
+
+The extension theorem also clarifies what classical reductions approximate. Degree reduction uses the number of available completion vertices. Truss support uses the number of common completion vertices for an edge. Both replace the clique number of a completion region by its cardinality. The enhanced framework simply permits a better estimate of that clique number.
+
+Strict inequality is essential. A pattern is excluded only when its maximum permitted size is **less than** $k$. Equality leaves open the possibility of a clique of size exactly $k$. Similarly, all tests must be evaluated against the current search region used in the certificate. Using a bound from a larger region remains safe when the bound itself is valid there, but may be weaker; using an unjustifiably smaller region could be unsound.
+
+The preservation theorem makes no termination claim for arbitrary infinite graphs. For finite graphs, a procedure that deletes one vertex per successful step terminates after at most $|V|$ deletions. Establishing precise implementation-level complexity requires fixing graph representations, the upper-bound algorithm, update policies, and data structures.
+
+The edge theorem proves the local certificate needed for truss reduction, but a complete iterative edge-peeling development requires an explicit evolving edge relation and a proof that every deletion preserves target cliques under that evolution. Radius-$d$ neighborhoods and transformations such as structions likewise require additional definitions and preservation arguments.
+
+## 11. Future work
+
+Several directions extend the present foundation.
+
+- Define iterative edge-deletion peeling and prove preservation for upper-bound-enhanced trusses.
+- Introduce radius-$d$ edge neighborhoods and establish generalized truss theorems that expose a strength-versus-cost parameter.
+- Connect the abstract upper-bound contract to concrete greedy-coloring and degeneracy algorithms, including explicit complexity bounds.
+- Prove termination and implementation-level running times for finite peeling procedures.
+- Study combined core/truss fixed points and quantify improvements obtained by taking minima of their resulting bounds.
+- Develop semantics-preserving graph transformations, including repeated structions, and prove their safe interaction with core and truss reductions.
+
+A further algorithmic question is scheduling: given several valid bounds with different costs and expected strengths, in what order should they be evaluated? The minimum theorem guarantees correctness for every order, leaving room for data-driven policies that optimize expected running time without altering mathematical guarantees.
+
+## 12. Conclusion
+
+A clique containing a pattern $D$ can be completed only inside the common neighborhood $N(D)$. Bounding the clique size of that completion region yields the universal inequality
+
+$$
+|C|\le |D|+U(S\cap N(D)).
+$$
+
+This inequality supports a decisive failed-extension test, upper-bound-enhanced core and truss criteria, and a proof that repeated certified vertex peeling preserves every clique at or above the target size. The pointwise minimum theorem makes independent bounding methods composable.
+
+The results provide a compact correctness foundation for stronger maximum-clique reductions. They replace local counts by structural upper bounds while retaining the familiar logic of cores and trusses. In algorithm design, this means that inexpensive impossibility certificates can safely remove large portions of a search space before expensive global exploration begins.
