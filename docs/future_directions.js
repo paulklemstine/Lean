@@ -4,94 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0106",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T08:11:34.378474+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0103",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T08:11:34.347033+00:00",
-    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0104",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T08:11:34.357817+00:00",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0105",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T08:11:34.367705+00:00",
-    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Domain Novelty has declined by 0.182 over recent cycles (recent avg=0.624 vs prior=0.806). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "auto_reset_Novelty_6323451b",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "auto_reset",
-    "status": "available",
-    "timestamp": "2026-07-16T08:12:03.312120+00:00",
-    "title": "[Reset] Fresh approach in Novelty"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
-    "domains": [
-      "Novelty",
-      "Combinatorics"
-    ],
-    "id": "fd_0107",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T08:11:34.387395+00:00",
-    "title": "The Library of Babel: Combinatorics of the Universal Library"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
       "Algebra",
@@ -163,7 +75,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6caf61ae",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -172,7 +84,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -264,6 +176,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T12:33:21.946611+00:00",
     "title": "ArXiv paper: Even smaller universal posets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Cyclic Projective Orbits on Rational Normal Curves and MDS Codes' and formalize its key results. Abstract: Let \\(A\\) be a cyclic operator on an \\(r\\)-dimensional vector space over a field \\(k\\), and let \\(z\\) be a cyclic vector. Their Krylov code has parity-check matrix \\((z,Az,\\ldots,A^{n-1}z)\\). For \\(r\\ge 3\\) and \\(n\\ge r+3\\), we prove that an MDS orbit segment lies on a rational normal curve precisely when the projective pair \\((A,[z])\\) is conjugate to one arising from the \\((r-1)\\)-st symmetric-power action of \\(\\mathrm{PGL}_2\\). Over finite fields, for companion operators, this gives a complete classification of the generalized Reed--Solomon locus into split semisimple, two nonsplit semisimple, and unipotent families. Over an algebraically closed field \\(k\\), the Zariski closure \\(\\GRSsurf_{r,k}\\) of the semisimple GRS coefficient locus is an irreducible rational surface, generically parameterized two-to-one by a two-dimensional torus of geometric-progression root sets; reversal is the generic ambiguity. The affine quotient of the parameter torus by reversal is the normalization of \\",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0021",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12761v1",
+    "status": "available",
+    "timestamp": "2026-07-15T12:51:13.579274+00:00",
+    "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
   },
   {
     "consumed_by_exp_id": "",
@@ -824,6 +751,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Overfull Conjecture for graphs with maximum degree 4' and formalize its key results. Abstract: Let $G$ be a simple graph with maximum degree $\u0394(G)$. The graph $G$ is overfull if $\\left|E(G)\\right|> \u0394(G)\\lfloor |V(G)|/2\\rfloor$. In 1986, Chetwynd and Hilton proposed the Overfull Conjecture: If $G$ is a simple graph with $\u0394(G)>\\frac{|V(G)|}{3}$, then $G$ is a Class $2$ graph if and only if $G$ contains an overfull subgraph $H$ with $\u0394(H)=\u0394(G)$. In this paper, we give a proof of this conjecture for graphs with maximum degree $4$.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0060",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.10947v1",
+    "status": "available",
+    "timestamp": "2026-07-16T07:39:26.296921+00:00",
+    "title": "ArXiv paper: Overfull Conjecture for graphs with maximum degree 4"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Sums of Kloosterman sums formed with modular symbols' and formalize its key results. Abstract: We study sums of Kloosterman sums formed with a modular symbol. Employing Tauberian methods, we first give an estimate for a (Riesz) sum of Ramanujan sums formed with a modular symbol. We further define a zeta function that is analogous to the Selberg zeta function, establish its continuation to $\\Re(s)>1/2$, give estimates for its growth and use this to prove a cancellation statement for sums of these twisted Kloosterman sums. We explain the connection of this construction to the eigenvalue 1/4 problem and formulate an analogue of Linnik's conjecture. Finally, we present numerical evidence that there is cancellation and also that the Kloosterman sums with a modular symbol are not correlated with classical Kloosterman sums.",
     "domains": [
       "Pythagorean"
@@ -853,12 +795,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
+    "description": "Investigate the ArXiv paper 'Kloosterman sign changes with moduli having at most five prime factors' and formalize its key results. Abstract: On square-free moduli $q\\in(X,2X]$ having at most five prime factors, we prove that each sign of the normalized Kloosterman sum $\\operatorname{Kl}(1;q)$ occurs $\\gg X/\\log X$ times. This improves the recent unconditional result of Zhang and Zhong for moduli with at most six prime factors. Building on their analytic estimates and optimized Selberg sieve, we replace their truncated divisor penalty by a geometric half-weight. The new weight retains the $P_5$ exclusion threshold and is a positive linear combination of two standard two-parameter truncated divisor weights, so the Zhang--Zhong transference argument applies without alteration. After transference, the relevant pointwise coefficient is reduced from $5/16$ to $5/32$, which yields a positive final sieve margin.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
     "id": "fd_0063",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.10862v1",
+    "status": "available",
+    "timestamp": "2026-07-16T08:27:50.354092+00:00",
+    "title": "ArXiv paper: Kloosterman sign changes with moduli having at most five prime factors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12912v1",
@@ -873,7 +830,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0064",
+    "id": "fd_0065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13025v1",
@@ -887,7 +844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0065",
+    "id": "fd_0066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12890v1",
@@ -901,7 +858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0066",
+    "id": "fd_0067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
@@ -910,16 +867,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
   },
   {
-    "consumed_by_exp_id": "557a7f03",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On Agreement Subtrees in Multiple Pylogenetic Trees' and formalize its key results. Abstract: Snir and Yuster [Discrete Appl. Math. 347 (2026) 160--171] asked for the least number $h(k)$ such that $k$ unrooted binary phylogenetic trees on the same $h(k)$ leaves always share a common quartet. We give a new upper bound for the $k$-tree version of the Maximum Agreement Subtree problem, namely an upper bound for the number of leaves, on which $k$ unrooted binary phylogenetic trees always share a common induced binary subtree on $n$ leaves, which is a four-times iterated exponential function. For $h(k)$, this implies a four-times iterated exponential upper bound. We also set an exponential lower bound for $h(k)$.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0067",
+    "id": "fd_0068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T13:43:20.804355+00:00",
     "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
   },
@@ -930,7 +887,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12561v1",
@@ -945,7 +902,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12679v1",
@@ -960,7 +917,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0070",
+    "id": "fd_0071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12449v1",
@@ -974,7 +931,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0071",
+    "id": "fd_0072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12461v1",
@@ -988,7 +945,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0072",
+    "id": "fd_0073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12457v1",
@@ -1003,7 +960,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0073",
+    "id": "fd_0074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
@@ -1017,7 +974,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0074",
+    "id": "fd_0075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12300v1",
@@ -1026,17 +983,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
   },
   {
-    "consumed_by_exp_id": "19cecd78",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper '$k$-Convex Polyominoes by Semi-perimeter' and formalize its key results. Abstract: We give the conjectured solution for the generating function of $k$-convex polyominoes, enumerated by semi-perimeter. The solution was obtained from the analysis of enumeration data that we generated.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0075",
+    "id": "fd_0076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12448v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T20:11:38.048996+00:00",
     "title": "ArXiv paper: $k$-Convex Polyominoes by Semi-perimeter"
   },
@@ -1046,7 +1003,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0076",
+    "id": "fd_0077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12367v1",
@@ -1055,16 +1012,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors"
   },
   {
-    "consumed_by_exp_id": "851ec568",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Ap\u00e9ry-like numbers. As applications, many new supercongruences are deduced.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0077",
+    "id": "fd_0078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T20:45:36.266548+00:00",
     "title": "ArXiv paper: Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers"
   },
@@ -1075,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0078",
+    "id": "fd_0079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12162v1",
@@ -1089,7 +1046,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0079",
+    "id": "fd_0080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12136v1",
@@ -1103,7 +1060,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0080",
+    "id": "fd_0081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
@@ -1117,7 +1074,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0081",
+    "id": "fd_0082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12232v1",
@@ -1131,7 +1088,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0082",
+    "id": "fd_0083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12090v1",
@@ -1146,7 +1103,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0083",
+    "id": "fd_0084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11330v1",
@@ -1160,7 +1117,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0084",
+    "id": "fd_0085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11534v1",
@@ -1169,17 +1126,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
   },
   {
-    "consumed_by_exp_id": "d1512647",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=\u03bb_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
     "domains": [
       "Computation",
       "Logic"
     ],
-    "id": "fd_0085",
+    "id": "fd_0086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11369v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T03:36:01.905252+00:00",
     "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
@@ -1190,7 +1147,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11477v1",
@@ -1205,7 +1162,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0087",
+    "id": "fd_0088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11333v1",
@@ -1220,7 +1177,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0088",
+    "id": "fd_0089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11225v1",
@@ -1234,7 +1191,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0089",
+    "id": "fd_0090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11318v2",
@@ -1249,7 +1206,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0090",
+    "id": "fd_0091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11261v1",
@@ -1263,7 +1220,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0091",
+    "id": "fd_0092",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11319v1",
@@ -1278,7 +1235,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0092",
+    "id": "fd_0093",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11248v1",
@@ -1293,7 +1250,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0093",
+    "id": "fd_0094",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10971v1",
@@ -1307,7 +1264,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0094",
+    "id": "fd_0095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11161v1",
@@ -1322,7 +1279,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0095",
+    "id": "fd_0096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11061v1",
@@ -1337,7 +1294,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0096",
+    "id": "fd_0097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11068v1",
@@ -1351,7 +1308,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0097",
+    "id": "fd_0098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11113v1",
@@ -1366,7 +1323,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0098",
+    "id": "fd_0099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10939v1",
@@ -1381,7 +1338,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0099",
+    "id": "fd_0100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10778v1",
@@ -1395,7 +1352,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0100",
+    "id": "fd_0101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10832v1",
@@ -1409,7 +1366,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0101",
+    "id": "fd_0102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10779v1",
@@ -1424,7 +1381,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "MachineLearning"
     ],
-    "id": "fd_0102",
+    "id": "fd_0103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10890v1",
@@ -1434,48 +1391,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## Scope achieved\n\n`Speculative/EulerSystemsSymmetricSquare.lean` formalizes three reusable algebraic layers motivated by the paper:\n\n1. An abstract Euler system as a family of module elements satisfying norm relations, together with preservation of every norm relation under compatible specialization.\n2. Detection of non-triviality of an Euler-system family from one nonzero specialization.\n3. Transport of divisibility through an involutive ring automorphism, including functional equations only defined up to unit multiples.\n4. A contrarian conjecture asserting exact faithfulness of symmetric square is disproved. The corrected result identifies the precise sign ambiguity over an integral domain and proves equality of sign orbits.\n\nThese results are fully proved, but they deliberately do not claim to formalize the paper's deep arithmetic constructions.\n\n## Next formalization layers\n\n1. Define continuous representations of absolute Galois groups over finite-flat Iwasawa algebras and the symmetric-square representation attached to a Hida family.\n2. Introduce continuous Galois cohomology and corestriction maps. Instantiate `NormRelation` with degree-one cohomology classes and the paper's local Euler polynomials.\n3. Formalize arithmetic specialization maps and prove their compatibility with corestriction and Euler factors, allowing `eulerSystem_specializes` to apply directly.\n4. Encode Greenberg local conditions, Selmer structures, Pontryagin duals, pseudo-isomorphism, and characteristic ideals over multivariable Iwasawa algebras.\n5. Upgrade element divisibility to ideal inclusion and characteristic-ideal divisibility. Then instantiate `functional_equation_up_to_units` with the Iwasawa involution.\n6. Formalize the nonzero Loeffler\u2013Zerbes specialization needed to turn `eulerSystem_nontrivial_of_specialization` into non-triviality of the big class.\n7. Formalize the B\u00fcy\u00fckboduk\u2013Ganguly algebraic functional equation and the Euler-system bound to derive the paper's main-conjecture divisibility.\n8. Investigate a representation-theoretic version of the sign-orbit theorem: under suitable irreducibility hypotheses, determine whether isomorphic symmetric squares force two-dimensional representations to differ by a quadratic character. The scalar sign example proves that an unconditional exact-faithfulness statement cannot hold.\n",
+    "description": "Investigate the ArXiv paper 'Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields' and formalize its key results. Abstract: Let $K$ be a global function field of characteristic $p>0$ and $\\ell\\neq p$ be a prime number. We study Selmer groups over a $\\mathbb{Z}_\\ell$-extension $K_\\infty/K$. For a lisse $\\mathbb Z_\\ell$-sheaf we prove that the Pontryagin dual of the associated Selmer group is a finitely generated torsion module over the Iwasawa algebra and has $\u03bc$-invariant equal to zero. This gives a positive-characteristic, prime to $p$, analogue of Greenberg's $\u03bc=0$ conjecture. Our result applies in particular to abelian varieties, fine Selmer groups, and adjoint representations. We also prove an analogue of the weak Leopoldt conjecture in this context over $K_\\infty$, and deduce that the framed deformation ring of a residual representation is a formal power series ring. The same conclusion holds for the unframed deformation ring if the residual representation has no non-scalar endomorphisms.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0108",
-    "priority_score": 0.75,
+    "id": "fd_0104",
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "d8f04178",
+    "source_exp_id": "2607.10728v2",
     "status": "available",
-    "timestamp": "2026-07-16T08:27:09.226591+00:00",
-    "title": "`Speculative/EulerSystemsSymmetricSquare.lean` formalizes three reusable algebra"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\nThe current development establishes the Vandermonde/symmetric-power construction underlying one direction of the paper: a diagonal symmetric-power action produces a rational-normal-curve orbit, and distinct geometric-progression parameters make every full-size minor nonsingular.\n\nNatural next steps are:\n\n1. **Homogeneous rational normal curve.** Replace the affine chart `rncPoint` by the homogeneous Veronese map on the projective line, including the point at infinity, and prove equivariance for the full degree-`r-1` symmetric-power representation of `GL\u2082`.\n2. **Projectivization.** Formulate projective pairs `(A, [z])`, scalar equivalence, and conjugacy. Show that the construction descends from `GL\u2082` to `PGL\u2082` projectively.\n3. **Converse rigidity theorem.** Formalize the theorem that, for `r \u2265 3` and a sufficiently long MDS orbit segment on a rational normal curve, the inducing projective transformation comes from `PGL\u2082`. This will require uniqueness/rigidity results for rational normal curves through sufficiently many points.\n4. **Companion matrices and Krylov bases.** Connect cyclic vectors, Krylov bases, companion matrices, characteristic polynomials, and the parity-check-matrix definition of a linear MDS code.\n5. **Finite-field classification.** Develop the split semisimple, nonsplit semisimple, and unipotent cases by classifying conjugacy in `PGL\u2082` over finite fields, then translate each family to companion-polynomial coefficients.\n6. **Coefficient surface.** Define the geometric-progression root-set parameter map, prove reversal invariance, and study its generic fibers. The eventual algebraic-geometric target is the normalization statement for the reversal quotient and the irreducible rational surface described in the paper.\n7. **Weaker algebraic assumptions.** Several elementary lemmas currently assume fields or commutative semirings for convenience. Their assumptions can be minimized (for example, injectivity of the affine curve requires only enough cancellation to read coordinate one).\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0109",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "cdb5c1e4",
-    "status": "available",
-    "timestamp": "2026-07-16T08:27:19.765082+00:00",
-    "title": "The current development establishes the Vandermonde/symmetric-power construction"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive proportion of descendants in every sufficiently long block of levels. The norm of the normalized Fourier restriction between the two leaf sets is at most $C p^{-\\beta n}$ for constants $C,\\beta>0$ depending only on the porosity parameters, even when the product of their maximal branching numbers is at least $p$.\n\nThe key insight is that the cardinality estimate loses contraction exactly at this threshold, whereas repeated additive-energy improvement can exploit cancellation invisible to support size alone.\n\n**Why now?** The finite kernel estimate and tree-growth theorem isolate the missing ingredient precisely: a scale-local gain that can replace the crude product-cardinality bound.\n\n## 2. Block-porosity and entropy characterization\n\n**Conjecture.** Exponential Fourier restriction decay holds for pairs of residue-tree sets whenever the sum of their upper block entropies is strictly below the ambient entropy, with an exponent depending continuously on the entropy gap.\n\nThe key insight is that pointwise branching bounds are unnecessarily rigid; the proof mechanism only needs multiplicative loss accumulated across scales, which block entropy measures directly.\n\n**Why now?** The established recurrence argument already converts local branching losses into global powers, making an entropy-weighted recurrence the natural next generalization.\n\n## 3. Stability under stochastic deletion\n\n**Conjecture.** For independent level-dependent random deletion models whose expected retained branching numbers satisfy $\\mathbb{E}A_j\\,\\mathbb{E}B_j<p$ uniformly, the restricted Fourier norm decays exponentially with depth with exponentially high probability, and the almost-sure exponent equals a Lyapunov exponent of the branching process.\n\nThe key insight is that the deterministic uncertainty factor is a product of per-level branching ratios, so random porosity should be governed by multiplicative ergodic behavior rather than worst-case branching.\n\n**Why now?** The explicit deterministic factor identifies the random variable whose concentration and Lyapunov theory should control the probabilistic extension.\n\n## 4. A transfer-operator bridge to Frobenius dynamics\n\n**Conjecture.** There is a common prime-power transfer-operator framework in which porous Fourier restriction and additive cellular-automaton renormalization appear respectively as a contracting sector and an exactly self-similar sector of one graded operator algebra.\n\nThe key insight is that both systems are organized by the same $p^k$ filtration: Fourier normalization contributes scale loss, while Frobenius collapses dynamics to rescaled light rays.\n\n**Why now?** Exact prime-power identities and uncertainty estimates have been placed at the same scale, providing concrete algebraic data from which to formulate the shared operator.\n\n## 5. Product-tree Kakeya incidence bound\n\n**Conjecture.** A uniform fractal uncertainty exponent for porous residue trees implies a power-saving incidence estimate for product-structured tubes in a discretized non-Archimedean Kakeya problem.\n\nThe key insight is that tube-direction incidence matrices are oscillatory restriction operators after finite Fourier decomposition, so concentration of incidences should contradict uncertainty.\n\n**Why now?** The normalized-kernel theorem already applies independently of the chosen phase, leaving geometric incidence structure and a suitable porosity-to-support reduction as the principal remaining steps.\n",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0110",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7d82c497",
-    "status": "available",
-    "timestamp": "2026-07-16T08:27:37.494232+00:00",
-    "title": "**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p"
+    "timestamp": "2026-07-16T08:27:54.775733+00:00",
+    "title": "ArXiv paper: Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields"
   },
   {
     "consumed_by_exp_id": "",
