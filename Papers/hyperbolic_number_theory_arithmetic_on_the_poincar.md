@@ -1,48 +1,41 @@
-# Computational Evidence
+# Computational evidence
 
-## Small-case calculations
+## Small cases
 
-For the determinant-one trace recurrence
+Starting from `(a₀,b₀) = (0,1)` and applying
+`(a,b) ↦ (2a+b, a+2b)` gives:
 
-`u₀ = 2`, `u₁ = t`, `uₙ₊₂ = t uₙ₊₁ - uₙ`,
+| n | aₙ | bₙ | aₙ/bₙ | bₙ²-aₙ² | 3ⁿ |
+|---:|---:|---:|:---:|---:|---:|
+| 0 | 0 | 1 | 0 | 1 | 1 |
+| 1 | 1 | 2 | 1/2 | 3 | 3 |
+| 2 | 4 | 5 | 4/5 | 9 | 9 |
+| 3 | 13 | 14 | 13/14 | 27 | 27 |
+| 4 | 40 | 41 | 40/41 | 81 | 81 |
+| 5 | 121 | 122 | 121/122 | 243 | 243 |
 
-the first terms at `t = 3` are:
+The data suggest the exact formulas
+`2aₙ = 3ⁿ-1` and `2bₙ = 3ⁿ+1`. Both formulas, the norm identity, and the
+Möbius recurrence are proved for every natural `n` in
+`Physics/HyperbolicArithmetic.lean`; the table is therefore illustrative rather
+than the basis of the result.
 
-| n | 0 | 1 | 2 | 3 | 4 | 5 |
-|---|---:|---:|---:|---:|---:|---:|
-| uₙ | 2 | 3 | 7 | 18 | 47 | 123 |
+## OEIS
 
-Adjacent pairs give the constant values
+The unsigned sequences beginning `0, 1, 4, 13, 40, 121` and
+`1, 2, 5, 14, 41, 122` are the elementary sequences `(3ⁿ-1)/2` and
+`(3ⁿ+1)/2`. No OEIS identifier is asserted here because no external database
+lookup was used.
 
-| pair `(x,y)` | `x² - 3xy + y²` |
-|---|---:|
-| `(2,3)` | -5 |
-| `(3,7)` | -5 |
-| `(7,18)` | -5 |
-| `(18,47)` | -5 |
-| `(47,123)` | -5 |
+## Counterexample hunt
 
-The accompanying arithmetic development proves symbolically that the constant is
-`4 - t²` for every integer `t` and every index, rather than relying on these samples.
+Direct recurrence evaluation for `n = 0,…,5` found no failure of the proposed
+norm identity or disk bound. More decisively, the Lean theorem is universal in
+`n`, so there can be no natural-number counterexample to the formalized claim.
 
-## OEIS search results
+## Geometric interpretation
 
-The trace-three sample `2, 3, 7, 18, 47, 123, ...` is the Lucas-type recurrence
-`uₙ₊₂ = 3uₙ₊₁ - uₙ`. No external sequence identifier was needed for the proof, and no
-identifier is asserted here without a checked search result.
-
-## Counterexample hunt and boundary cases
-
-* At `t = 2`, the sequence is constant `2`, and the conic invariant is `0`; thus positive
-discriminant and hyperbolic growth require the boundary condition `|t| > 2`.
-* Pure rotations in the disk model can fix the origin, so raw orbit points need not be
-discrete or distinct without hypotheses on the acting subgroup and stabilizer.
-* Counting by true hyperbolic radius should exhibit exponential volume scale. This makes
-a universal `R²/(2 log R)` law implausible when `R` denotes hyperbolic radius.
-* Tessellation vertices alone have no canonical multiplication, so a unique-factorization
-claim requires an additional algebraic structure before it is testable.
-
-## Numerical table versus plots
-
-The table is more informative than a plot at this scale: it exhibits the exact integral
-quadratic invariant and avoids numerical roundoff in disk coordinates.
+Each ratio is in `[0,1)` and approaches the ideal boundary point `1`. One step
+sends `x` to `(x+1/2)/(1+x/2)`, the Möbius translation law on a diameter of the
+Poincaré disk. The preserved-up-to-scale quadratic form is visible in the last
+two columns.
