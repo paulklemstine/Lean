@@ -2476,13 +2476,33 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$' and formalize its key results. Abstract: For the elliptic curves $E_{p,q}: y^{2}=x^{3}-pqx$ where $p$ and $q$ are distinct odd primes, we establish necessary and sufficient conditions under which rank$\\,E_{p,q}(\\mathbb{Q})$ and $\\dim_{\\mathbb{F}_{2}} \\Sha \\left( E_{p,q}/\\bbQ \\right)[2]$ are both $0$. We do so via a similar characterisation of when the Selmer groups associated with the degree-$2$ isogeny $φ$ and its dual $\\widehatφ$ are both of minimal size, along with results about a cokernel that arises from a related exact sequence.",
+    "description": "Investigate the ArXiv paper 'Area correlations related to lattice points in discs' and formalize its key results. Abstract: Motivated by the Lester-Wigman vanishing area correlation conjecture for lattice points near the boundary of circles of growing radius, we investigate the dynamics of circle flows on tori (which are related to the motion of a charged particle in a magnetic field on a torus.) We show that an analogue of the vanishing correlation conjecture holds in this setting, i.e., we have \"mixing for the area observable\" despite the flow being essentially integrable. We also determine the probability density function of the areas, in global as well as local regimes.",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0142",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.13659v1",
+    "status": "available",
+    "timestamp": "2026-07-16T18:54:15.847944+00:00",
+    "title": "ArXiv paper: Area correlations related to lattice points in discs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$' and formalize its key results. Abstract: For the elliptic curves $E_{p,q}: y^{2}=x^{3}-pqx$ where $p$ and $q$ are distinct odd primes, we establish necessary and sufficient conditions under which rank$\\,E_{p,q}(\\mathbb{Q})$ and $\\dim_{\\mathbb{F}_{2}} \\Sha \\left( E_{p,q}/\\bbQ \\right)[2]$ are both $0$. We do so via a similar characterisation of when the Selmer groups associated with the degree-$2$ isogeny $φ$ and its dual $\\widehatφ$ are both of minimal size, along with results about a cokernel that arises from a related exact sequence.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0143",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2501,7 +2521,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2514,40 +2534,40 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df23eec4",
     "description": "Investigate the ArXiv paper 'Feedback vertex sets in oriented graphs' and formalize its key results. Abstract: For an oriented graph $G$, denote by $fvs(G)$ the minimum number of vertices whose deletion from $G$ makes it acyclic. We show that an oriented graph $G$ on $n$ vertices and $m$ arcs satisfies $fvs(G) \\le \\frac{2n+m+h}{9}$ where $h$ denotes the number of connected components of $G$ that belong to a special class of oriented graphs. This result has three consequences. First, when $G$ is planar, we obtain that $fvs(G) \\le \\frac{2n+m}{9}$. In particular, this implies that $fvs(G) \\le \\frac{5n-6}{9}$ for any planar oriented graph $G$, improving the best known upper bound of $\\frac{3n}{5}$~[Borodin, Discrete Mathematics, 1979]. Then, applying this inequality to the planar digraphs without directed triangles, we get that $fvs(G) \\le \\frac{6n-8}{13}$, which improves the current best bound of $\\frac{n}{2}$~[Li and Mohar, SIAM Journal on Discrete Mathematics, 2017]. Finally, when $G$ has maximum degree 6, we have $fvs(G) \\le \\frac{4n}{7}$ and this bound is tight, answering a conjecture of Ai, G",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.13895v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T17:27:45.321534+00:00",
     "title": "ArXiv paper: Feedback vertex sets in oriented graphs"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "df23eec4",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Transformation Semigroup Perspective on the Magma Monoid' and formalize its key results. Abstract: The monoid of all binary operations was first introduced by H. S. Kim and J. Neggers in 2008. Since then, different aspects and applications of this monoid were studied, while several questions about its semigroup-theoretic properties remain unanswered. We employ a transformation semigroup perspective to fully characterize principal left and right ideals, idempotent and regular elements of this monoid, as well as provide precise combinatorial enumerations of them. This approach gives a general framework for most of the existing results on ideals in the magma monoid. We also answer several open questions posed in the 2023 PhD dissertation of A. Rafieipour. Finally, we correct an error regarding the description of the center of the magma monoid from the 2011 paper of H. F. Fayomi.",
     "domain_bridges": [],
     "domains": [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.13746v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T17:45:08.868122+00:00",
     "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
   },
@@ -2561,7 +2581,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2580,7 +2600,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2600,7 +2620,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2609,6 +2629,26 @@
     "status": "available",
     "timestamp": "2026-07-16T18:36:43.198397+00:00",
     "title": "ArXiv paper: Clique spectral extremal problem on disjoint color-critical graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Bernoulli determinants and cuspidal subgroups' and formalize its key results. Abstract: We give an explicit formula for the order of the rational cuspidal class group of the modular curve $X_1(N)$ for an arbitrary integer $N$. The proof relies on results of Streng on the group of modular units on $X_1(N)$, and requires computing a certain determinant involving the second Bernoulli polynomial. We also define a higher weight analogue of the cuspidal class group and speculate that its order is related to a similar determinant defined using a higher degree Bernoulli polynomial.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0150",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.13536v1",
+    "status": "available",
+    "timestamp": "2026-07-16T18:54:19.202450+00:00",
+    "title": "ArXiv paper: Bernoulli determinants and cuspidal subgroups"
   },
   {
     "ambition_level": "extension",
