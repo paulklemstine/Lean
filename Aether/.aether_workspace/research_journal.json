@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "99a1b43f",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe proposed `P₅` separation cannot occur with the standard homomorphism-density definition: `SpectralTransferSharpness/P5.lean` proves the stronger statement that every finite sy",
-      "quality_score": 0.93,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-15T01:03:29",
-      "title": "Spectral Transfer Sharpness for Trees Beyond the Sidorenko Range"
-    },
-    {
       "cycle_id": "86efe295",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\n1. **Exact defect bounds.** Strengthen extremal rigidity quantitatively: if a graph is missing `m` edges, bound the deficit `2 ^ |α| - |cliqueFamily H|` in terms of the missing-ed",
@@ -499,19 +489,19 @@
       "theorem_count": 43,
       "timestamp": "2026-07-16T05:48:35",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
+      "quality_score": 0.7,
+      "sorry_count": 3,
+      "theorem_count": 16,
+      "timestamp": "2026-07-16T05:48:53",
+      "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "02ff061d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Edge-Spectral Supersaturation for Triangles\n\nThe power-trace method yields an unconditional triangle count `t ≥ (λq)/3` in terms\nof the spectral excess `q = λ² − m`, with the endp",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 6,
-      "timestamp": "2026-07-13T10:55:35",
-      "title": "Edge-Spectral Supersaturation for Triangles"
-    },
     {
       "cycle_id": "4cfd5e43",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 43,
       "timestamp": "2026-07-16T05:48:35",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such",
+      "quality_score": 0.7,
+      "sorry_count": 3,
+      "theorem_count": 16,
+      "timestamp": "2026-07-16T05:48:53",
+      "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f6b1d920",
-      "domain": "Geometry",
-      "name": "miniCatalogPair_bijective",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "a8d24466",
-      "domain": "NumberTheory",
-      "name": "with",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "a8d24466",
-      "domain": "NumberTheory",
-      "name": "and",
-      "quality": 0.73
-    },
     {
       "cycle_id": "a8d24466",
       "domain": "NumberTheory",
@@ -2803,17 +2785,28 @@
       "domain": "Pythagorean",
       "name": "card_le_of_forceSequence",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "name": "shiftedHankel_quadratic_identity",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "name": "shiftedHankel_psd_of_nonnegative_spectrum",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "name": "shiftedHankel_hierarchy_nested",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-16T05:48:35",
+  "last_updated": "2026-07-16T05:48:53",
   "open_questions": [
-    {
-      "context": "`sorry`s and no extra axioms.; +  sorry; -    sorry",
-      "cycle_id": "ef88d58c",
-      "domain": "Novelty",
-      "sorry_count": 6,
-      "timestamp": "2026-07-14T20:28:08"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "0725f80e",
@@ -3016,6 +3009,13 @@
       "domain": "Pythagorean",
       "sorry_count": 4,
       "timestamp": "2026-07-16T05:48:35"
+    },
+    {
+      "context": "",
+      "cycle_id": "4e53cd7c",
+      "domain": "Pythagorean",
+      "sorry_count": 3,
+      "timestamp": "2026-07-16T05:48:53"
     }
   ],
   "research_threads": {
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "a5a22996",
-        "quality": 0.5129090000000001,
-        "theorems": 13,
-        "title": "Isomorphism of generating trees for greedy m-Tamari intervals and planar (m+1)-c"
-      },
-      {
         "cycle_id": "d9ca63e8",
         "quality": 0.4666111,
         "theorems": 8,
@@ -3885,6 +3879,12 @@
         "quality": 0.73,
         "theorems": 43,
         "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+      },
+      {
+        "cycle_id": "4e53cd7c",
+        "quality": 0.7,
+        "theorems": 16,
+        "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
       }
     ],
     "Shared": [
