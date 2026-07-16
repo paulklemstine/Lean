@@ -9,12 +9,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Cryptography"
     ],
-    "id": "fd_0116",
+    "id": "fd_0118",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.475560+00:00",
+    "timestamp": "2026-07-16T09:49:29.469183+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
@@ -24,12 +24,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0113",
+    "id": "fd_0115",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.439104+00:00",
+    "timestamp": "2026-07-16T09:49:29.435226+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
@@ -39,12 +39,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "NumberTheory"
     ],
-    "id": "fd_0114",
+    "id": "fd_0116",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.453411+00:00",
+    "timestamp": "2026-07-16T09:49:29.444132+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
@@ -53,12 +53,12 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0115",
+    "id": "fd_0117",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.464130+00:00",
+    "timestamp": "2026-07-16T09:49:29.454070+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
@@ -68,12 +68,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Combinatorics"
     ],
-    "id": "fd_0117",
+    "id": "fd_0119",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.487290+00:00",
+    "timestamp": "2026-07-16T09:49:29.520067+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
@@ -92,7 +92,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Magnitude homology of tope graphs"
   },
   {
-    "consumed_by_exp_id": "dd61fafb",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,\u03c9^u)\\)-core, the \\((k,\u03c9^u)\\)-truss, and the more general \\((k,d,\u03c9^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
     "domains": [
       "Computation"
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11726v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:46:50.520811+00:00",
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "6caf61ae",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -158,7 +158,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -883,7 +883,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Kloosterman sign changes with moduli having at most five prime factors"
   },
   {
-    "consumed_by_exp_id": "5759ba2d",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The Prime Digit Distribution Conjecture: A Formal Proof of Average Digit Equidistribution in the Prime Numbers' and formalize its key results. Abstract: Let $S_n=\\{p\\in\\mathbb{P}:p<10^n\\}$, $N_n$ denote the total number of decimal digits occurring in the primes of $S_n$, $C_n(d)$ be the number of occurrences of a digit $d\\in\\{0,\\ldots,9\\}$ among those digits, and $P_n(d)$ be the probability of occurrence of a digit, $d$ among those digits. We prove that \\[ P_n(d)=\\frac{C_n(d)}{N_n} =\\frac{1}{10} +O\\!\\left(\\frac{\\log n}{n}\\right), \\qquad n\\to\\infty, \\] uniformly for every decimal digit $d$. The argument is entirely unconditional and combines the Prime Number Theorem, the Erd\u0151s--Tur\u00e1n discrepancy inequality, and classical Vaughan--Vinogradov estimates for exponential sums over primes. The principal step establishes quantitative equidistribution for interior digit positions, while the logarithmically many exceptional positions near the ends of the decimal expansion are shown to have asymptotically negligible influence after averaging over all digit positions and prime lengths. Consequently, the decimal digits occurring in primes, when poo",
     "domains": [
       "Pythagorean",
@@ -893,7 +893,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T08:44:03.929775+00:00",
     "title": "ArXiv paper: The Prime Digit Distribution Conjecture: A Formal Proof of Average Digit Equidistribution in the Prime Numbers"
   },
@@ -943,12 +943,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Edge transmission irregular graphs' and formalize its key results. Abstract: The transmission of a vertex $v$ in a connected graph $G$ is the sum of distances from $v$ to all vertices in $G$. A transmission irregular (TI) graph is a connected graph in which any two distinct vertices have different transmissions. We extend the concept of transmission to edges by defining the transmission of an edge as the sum of the transmissions of its two endpoints. A connected graph can now be called edge transmission irregular (ETI) if any two distinct edges have different transmissions. We show that almost all graphs are not ETI and then investigate several related order realizability problems involving chemical ETI graphs. In particular, we prove that for every $n \\ge 15$, there exists a subcubic tree of order $n$ that is both TI and ETI.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0068",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.10739v1",
+    "status": "available",
+    "timestamp": "2026-07-16T09:49:21.348853+00:00",
+    "title": "ArXiv paper: Edge transmission irregular graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12912v1",
@@ -963,7 +977,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13025v1",
@@ -977,7 +991,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0070",
+    "id": "fd_0071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12890v1",
@@ -991,7 +1005,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0071",
+    "id": "fd_0072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
@@ -1005,7 +1019,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0072",
+    "id": "fd_0073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
@@ -1020,7 +1034,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0073",
+    "id": "fd_0074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12561v1",
@@ -1035,7 +1049,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0074",
+    "id": "fd_0075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12679v1",
@@ -1050,7 +1064,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0075",
+    "id": "fd_0076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12449v1",
@@ -1064,7 +1078,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0076",
+    "id": "fd_0077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12461v1",
@@ -1078,7 +1092,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0077",
+    "id": "fd_0078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12457v1",
@@ -1093,7 +1107,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0078",
+    "id": "fd_0079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
@@ -1107,7 +1121,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0079",
+    "id": "fd_0080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12300v1",
@@ -1122,7 +1136,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0080",
+    "id": "fd_0081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12448v1",
@@ -1131,30 +1145,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: $k$-Convex Polyominoes by Semi-perimeter"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6df82b3f",
     "description": "Investigate the ArXiv paper 'Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors' and formalize its key results. Abstract: For a graph $G$, let $\u0394(G)$, $\u03c9(G)$, and $\u03c7(G)$ denote the maximum degree, clique number, and chromatic number of $G$, respectively. Let $P_n$ and $C_n$ denote the chordless path and chordless cycle on $n$ vertices, respectively. In this paper, we prove that every $(P_6,C_4)$-free graph $G$ with $\u0394(G)\\ge 9$ and $\u03c9(G)<\u0394(G)$ is $(\u0394(G)-1)$-colorable.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0081",
+    "id": "fd_0082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12367v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T20:28:28.169396+00:00",
     "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors"
   },
   {
-    "consumed_by_exp_id": "6df82b3f",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Ap\u00e9ry-like numbers. As applications, many new supercongruences are deduced.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0082",
+    "id": "fd_0083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T20:45:36.266548+00:00",
     "title": "ArXiv paper: Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers"
   },
@@ -1165,7 +1179,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0083",
+    "id": "fd_0084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12162v1",
@@ -1179,7 +1193,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0084",
+    "id": "fd_0085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12136v1",
@@ -1188,16 +1202,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Far-apart Erd\u0151s--P\u00f3sa property of long cycles"
   },
   {
-    "consumed_by_exp_id": "d1512647",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the B\u00e1ez-Duarte criterion.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0085",
+    "id": "fd_0086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T21:37:25.493366+00:00",
     "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
   },
@@ -1207,7 +1221,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12232v1",
@@ -1221,7 +1235,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0087",
+    "id": "fd_0088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12090v1",
@@ -1236,7 +1250,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0088",
+    "id": "fd_0089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11330v1",
@@ -1245,31 +1259,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Intrinsic ergodicity for $\\mathfrak{B}$-free integers in number fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08676759",
     "description": "Investigate the ArXiv paper 'Fractal uncertainty principle over $\\mathbb{Q}_p$' and formalize its key results. Abstract: We prove a fractal uncertainty principle over $\\mathbb{Q}_p$ for porous sets, resolving a conjecture of Cohen.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0089",
+    "id": "fd_0090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11534v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:18:30.753456+00:00",
     "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
   },
   {
-    "consumed_by_exp_id": "08676759",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=\u03bb_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
     "domains": [
       "Computation",
       "Logic"
     ],
-    "id": "fd_0090",
+    "id": "fd_0091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11369v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T03:36:01.905252+00:00",
     "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
@@ -1280,7 +1294,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0091",
+    "id": "fd_0092",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11477v1",
@@ -1295,7 +1309,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0092",
+    "id": "fd_0093",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11333v1",
@@ -1310,7 +1324,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0093",
+    "id": "fd_0094",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11225v1",
@@ -1319,60 +1333,60 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Combinatorial interpretation of the coefficients of the order polynomial of fence posets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26d242e6",
     "description": "Investigate the ArXiv paper 'A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$' and formalize its key results. Abstract: Wegner conjectured that every finite family $\\mathcal R$ of axis-parallel rectangles satisfies $\u03c4(\\mathcal R)\\le 2\u03bd(\\mathcal R)-1$, where $\u03bd$ is the packing number and $\u03c4$ is the piercing number. Ajwani, Gajjala, Raman, and Ray recently disproved this by constructing a triangle-free counterexample on $2196\\cdot 8^9$ rectangles and, using a computer-assisted package-and-port recursion, obtained a standard LP gap of $17891/8064$ for Maximum Independent Set of Rectangles. We give a simpler and hand-checkable counterexample with $64$ rectangles. It is built from an eight-rectangle gadget whose independent sets inject into four ordered slots; we then use four horizontal and four vertical copies of this gadget to form a triangle-free family with $\u03bd=16$ and $\u03c4\\ge 32$. We use the same horizontal-vertical step to define recursive families of rectangles $P_r$ with $\u03bd(P_r)=4^{2^r}$. For the standard clique, equivalently point, relaxation we obtain a finite gap $73/32$ at $P_3$, improving the prev",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0094",
+    "id": "fd_0095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11318v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T04:42:57.611296+00:00",
     "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
   },
   {
-    "consumed_by_exp_id": "26d242e6",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'p-adic Properties of Translated Division Polynomials and Somos Sequences' and formalize its key results. Abstract: In this paper we consider the sequences $(\u03a8_{n}(\\mathbf{P}))_{n\\geq 0}$, $(\u03a6_{n}(\\mathbf{P}))_{n\\geq 0}$ and $(\\overline{\u03a9}\\,_{n}(\\mathbf{P}% ))_{n\\geq 0}$ of values of the translated division polynomials of an elliptic curve $E/K$ evaluated at a point $\\mathbf{P}\\in $ $E(K)^{2}$. We prove that these sequences are purely periodic when $K$ is a finite field. Then we use the periodicity properties of these sequences to prove that certain subsequences of these sequences are $% %TCIMACRO{\\U{2124} }% %BeginExpansion \\mathbb{Z} %EndExpansion _{p}$-Cauchy. Finally, we use this result to prove analogous results for Somos $4$ and Somos $5$ sequences.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0095",
+    "id": "fd_0096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11261v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T04:58:47.897559+00:00",
     "title": "ArXiv paper: p-adic Properties of Translated Division Polynomials and Somos Sequences"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "84cd9d36",
     "description": "Investigate the ArXiv paper 'A dual linear programming bound for sphere packing in dimension 36' and formalize its key results. Abstract: We construct an explicit dual-feasible point for the Cohn-Elkies linear program in dimension 36, built from the space of weight-18 modular forms for $\u0393_0(24)$ following the method of Cohn and Triantafillou. The certificate shows that the two-point linear programming bound on the sphere packing density in dimension 36 exceeds the density of the best packing currently known -- the Kschischang-Pasupathy packing, of center density $2^{18}/3^{10}$ -- by a factor of at least 32.91. In particular, no Cohn-Elkies auxiliary function can certify the best known packing in dimension 36 as optimal. To our knowledge this is the first such dual bound in any dimension above 32, extending the table of Cohn-Triantafillou ($d=12,16,20,28,32$), Li ($3 \\le d \\le 13$), and de Courcy-Ireland-Dostert-Viazovska ($d=6$). The certificate is exact: the dual point is a rational vector, coefficient nonnegativity is verified by exact arithmetic up to $n=800$, and eventual positivity of the two relevant $q$-expansion",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0096",
+    "id": "fd_0097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11319v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T05:15:00.370176+00:00",
     "title": "ArXiv paper: A dual linear programming bound for sphere packing in dimension 36"
   },
   {
-    "consumed_by_exp_id": "84cd9d36",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Unexpected primes of good reduction in quotients of modular and Shimura curves' and formalize its key results. Abstract: We find all zero-dimensional spaces of newforms of weight $2$ and squarefree level $N$ with a fixed Atkin--Lehner sign pattern. As an application, we classify unexpected primes of good reduction of Atkin--Lehner quotients of modular and Shimura curves of squarefree levels.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0097",
+    "id": "fd_0098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11248v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T05:31:17.597085+00:00",
     "title": "ArXiv paper: Unexpected primes of good reduction in quotients of modular and Shimura curves"
   },
@@ -1383,7 +1397,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0098",
+    "id": "fd_0099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10971v1",
@@ -1397,7 +1411,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0099",
+    "id": "fd_0100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11161v1",
@@ -1412,7 +1426,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0100",
+    "id": "fd_0101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11061v1",
@@ -1427,7 +1441,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0101",
+    "id": "fd_0102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11068v1",
@@ -1441,7 +1455,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0102",
+    "id": "fd_0103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11113v1",
@@ -1456,7 +1470,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0103",
+    "id": "fd_0104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10939v1",
@@ -1471,7 +1485,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0104",
+    "id": "fd_0105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10778v1",
@@ -1485,7 +1499,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0105",
+    "id": "fd_0106",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10832v1",
@@ -1499,7 +1513,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0106",
+    "id": "fd_0107",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10779v1",
@@ -1514,7 +1528,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "MachineLearning"
     ],
-    "id": "fd_0107",
+    "id": "fd_0108",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10890v1",
@@ -1529,7 +1543,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0108",
+    "id": "fd_0109",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10728v2",
@@ -1544,7 +1558,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0109",
+    "id": "fd_0110",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10751v1",
@@ -1559,7 +1573,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0110",
+    "id": "fd_0111",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10660v1",
@@ -1574,7 +1588,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0111",
+    "id": "fd_0112",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10774v1",
@@ -1588,7 +1602,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0112",
+    "id": "fd_0113",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10773v2",
@@ -1598,18 +1612,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n1. **Normalize to the paper's `Q_k`.** Extend scalars from `\u2124` to `\u211d` and define\n   `Q_k = k\u207b\u00b9 P_k`. The proved cumulative identity immediately yields the exact\n   Ces\u00e0ro formula `Q_k = k\u207b\u00b9 \u2211_{m=1}^k R_m` for positive `k`.\n\n2. **Evaluation and compact convergence.** After polynomial evaluation at\n   `x \u2208 [0,c]`, prove the paper's uniform convergence of `Q_k(x)` to\n   `g(x)=\u2211 \u03bc(n)x^n/n` on each compact interval with `c<1`. This requires a\n   formal treatment of the power series and the elementary geometric majorant.\n\n3. **Riemann-sum bridge.** Formalize Lemmas 2.13\u20132.14, identifying `Q_k` as a\n   Riemann sum for the truncated M\u00f6bius sums `A_x(t)`. This would connect the\n   present exact combinatorial identity to analysis and quantitative uniform\n   approximation.\n\n4. **General arithmetic functions.** The main theorem is already independent\n   of special properties of `\u03bc`. Develop it as an incidence-algebra statement:\n   floor weights count multiples, while divisor transforms are convolution on\n   the divisibility poset. Specializations to Euler's totient, Liouville's\n   function, or Dirichlet characters may yield useful generating-polynomial\n   identities.\n\n5. **Analytic parts of the paper.** Formalize the finite versions of Lemma 1.2\n   (M\u00f6bius inversion of the floor function), the scalar-product identities for\n   the functions `\u03b3_n`, and the exponential correction. The zero-free-region\n   estimates and asymptotics used later in the paper require substantially more\n   analytic number theory than the exact polynomial bridge proved here.\n",
+    "description": "Investigate the ArXiv paper 'Recognizability equals CMSO-definability for graphs of rank-width at most two' and formalize its key results. Abstract: We prove that, on finite graphs of rank-width at most two, VR-recognizability and counting monadic second-order definability coincide. This advances the recognizability-versus-definability problem from bounded linear clique-width to the first nontrivial bounded rank-width level beyond the rank-width-one split-decomposition case. The proof first treats split-prime graphs. The maximal partial-tree theory of Clark and Whittle organizes the non-sequential cut-rank-two separations, while a single strong separation orients all strong equivalence classes and yields a CMSO-definable laminar family of canonical cores. Although the auxiliary partial tree is not itself transduced, it proves that every canonical local piece has a port-contiguous layout of uniformly bounded linear rank-width. The width argument uses partition atoms and the branch-width-three display theorem of Hall, Oxley, Semple, and Whittle and does not assume that graph torsos remain prime. Coherent ordered rank-two frames then ",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0118",
-    "priority_score": 0.75,
+    "id": "fd_0114",
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "851ec568",
+    "source_exp_id": "2607.10594v1",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:29.783000+00:00",
-    "title": "1. **Normalize to the paper's `Q_k`.** Extend scalars from `\u2124` to `\u211d` and define"
+    "timestamp": "2026-07-16T09:49:26.037493+00:00",
+    "title": "ArXiv paper: Recognizability equals CMSO-definability for graphs of rank-width at most two"
   },
   {
     "consumed_by_exp_id": "",

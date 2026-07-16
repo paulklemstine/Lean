@@ -9,14 +9,14 @@
       "Novelty",
       "Cryptography"
     ],
-    "id": "fd_0116",
+    "id": "fd_0118",
     "lineage_refs": [],
     "priority_score": 0.89,
     "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.475560+00:00",
+    "timestamp": "2026-07-16T09:49:29.469183+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
@@ -29,14 +29,14 @@
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0113",
+    "id": "fd_0115",
     "lineage_refs": [],
     "priority_score": 0.88,
     "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.439104+00:00",
+    "timestamp": "2026-07-16T09:49:29.435226+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
@@ -49,14 +49,14 @@
       "Novelty",
       "NumberTheory"
     ],
-    "id": "fd_0114",
+    "id": "fd_0116",
     "lineage_refs": [],
     "priority_score": 0.87,
     "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.453411+00:00",
+    "timestamp": "2026-07-16T09:49:29.444132+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
   },
   {
@@ -68,14 +68,14 @@
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0115",
+    "id": "fd_0117",
     "lineage_refs": [],
     "priority_score": 0.86,
     "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.464130+00:00",
+    "timestamp": "2026-07-16T09:49:29.454070+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
@@ -88,14 +88,14 @@
       "Novelty",
       "Combinatorics"
     ],
-    "id": "fd_0117",
+    "id": "fd_0119",
     "lineage_refs": [],
     "priority_score": 0.82,
     "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:18.487290+00:00",
+    "timestamp": "2026-07-16T09:49:29.520067+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
@@ -121,7 +121,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "dd61fafb",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,ω^u)\\)-core, the \\((k,ω^u)\\)-truss, and the more general \\((k,d,ω^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
     "domain_bridges": [],
     "domains": [
@@ -133,7 +133,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11726v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:46:50.520811+00:00",
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
@@ -198,7 +198,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6caf61ae",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $ι:P\\rightarrow \\mathcal{G}$ with $ι(p)\\subset ι(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $ι(p)\\subset ι(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domain_bridges": [],
     "domains": [
@@ -210,7 +210,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -1182,7 +1182,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5759ba2d",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The Prime Digit Distribution Conjecture: A Formal Proof of Average Digit Equidistribution in the Prime Numbers' and formalize its key results. Abstract: Let $S_n=\\{p\\in\\mathbb{P}:p<10^n\\}$, $N_n$ denote the total number of decimal digits occurring in the primes of $S_n$, $C_n(d)$ be the number of occurrences of a digit $d\\in\\{0,\\ldots,9\\}$ among those digits, and $P_n(d)$ be the probability of occurrence of a digit, $d$ among those digits. We prove that \\[ P_n(d)=\\frac{C_n(d)}{N_n} =\\frac{1}{10} +O\\!\\left(\\frac{\\log n}{n}\\right), \\qquad n\\to\\infty, \\] uniformly for every decimal digit $d$. The argument is entirely unconditional and combines the Prime Number Theorem, the Erdős--Turán discrepancy inequality, and classical Vaughan--Vinogradov estimates for exponential sums over primes. The principal step establishes quantitative equidistribution for interior digit positions, while the logarithmically many exceptional positions near the ends of the decimal expansion are shown to have asymptotically negligible influence after averaging over all digit positions and prime lengths. Consequently, the decimal digits occurring in primes, when poo",
     "domain_bridges": [],
     "domains": [
@@ -1195,7 +1195,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.10654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T08:44:03.929775+00:00",
     "title": "ArXiv paper: The Prime Digit Distribution Conjecture: A Formal Proof of Average Digit Equidistribution in the Prime Numbers"
   },
@@ -1262,13 +1262,32 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Edge transmission irregular graphs' and formalize its key results. Abstract: The transmission of a vertex $v$ in a connected graph $G$ is the sum of distances from $v$ to all vertices in $G$. A transmission irregular (TI) graph is a connected graph in which any two distinct vertices have different transmissions. We extend the concept of transmission to edges by defining the transmission of an edge as the sum of the transmissions of its two endpoints. A connected graph can now be called edge transmission irregular (ETI) if any two distinct edges have different transmissions. We show that almost all graphs are not ETI and then investigate several related order realizability problems involving chemical ETI graphs. In particular, we prove that for every $n \\ge 15$, there exists a subcubic tree of order $n$ that is both TI and ETI.",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0068",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.10739v1",
+    "status": "available",
+    "timestamp": "2026-07-16T09:49:21.348853+00:00",
+    "title": "ArXiv paper: Edge transmission irregular graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $χ\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1288,7 +1307,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1307,7 +1326,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0070",
+    "id": "fd_0071",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1326,7 +1345,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0071",
+    "id": "fd_0072",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1345,7 +1364,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0072",
+    "id": "fd_0073",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1365,7 +1384,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0073",
+    "id": "fd_0074",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1385,7 +1404,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0074",
+    "id": "fd_0075",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1405,7 +1424,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0075",
+    "id": "fd_0076",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1424,7 +1443,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0076",
+    "id": "fd_0077",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1443,7 +1462,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0077",
+    "id": "fd_0078",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1463,7 +1482,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0078",
+    "id": "fd_0079",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1482,7 +1501,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0079",
+    "id": "fd_0080",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1502,7 +1521,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0080",
+    "id": "fd_0081",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1515,38 +1534,38 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6df82b3f",
     "description": "Investigate the ArXiv paper 'Coloring $(P_6,C_4)$-free graphs with $Δ- 1$ colors' and formalize its key results. Abstract: For a graph $G$, let $Δ(G)$, $ω(G)$, and $χ(G)$ denote the maximum degree, clique number, and chromatic number of $G$, respectively. Let $P_n$ and $C_n$ denote the chordless path and chordless cycle on $n$ vertices, respectively. In this paper, we prove that every $(P_6,C_4)$-free graph $G$ with $Δ(G)\\ge 9$ and $ω(G)<Δ(G)$ is $(Δ(G)-1)$-colorable.",
     "domain_bridges": [],
     "domains": [
       "Algebra"
-    ],
-    "id": "fd_0081",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12367v1",
-    "status": "available",
-    "timestamp": "2026-07-15T20:28:28.169396+00:00",
-    "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $Δ- 1$ colors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "6df82b3f",
-    "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Apéry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Apéry-like numbers. As applications, many new supercongruences are deduced.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
     ],
     "id": "fd_0082",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "2607.12330v1",
+    "source_exp_id": "2607.12367v1",
     "status": "in_progress",
+    "timestamp": "2026-07-15T20:28:28.169396+00:00",
+    "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $Δ- 1$ colors"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Apéry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Apéry-like numbers. As applications, many new supercongruences are deduced.",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0083",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.12330v1",
+    "status": "available",
     "timestamp": "2026-07-15T20:45:36.266548+00:00",
     "title": "ArXiv paper: Curious identities involving Legendre polynomials and Apéry-like numbers"
   },
@@ -1560,7 +1579,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0083",
+    "id": "fd_0084",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1579,7 +1598,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0084",
+    "id": "fd_0085",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1592,19 +1611,19 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d1512647",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the Báez-Duarte criterion.",
     "domain_bridges": [],
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0085",
+    "id": "fd_0086",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T21:37:25.493366+00:00",
     "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
   },
@@ -1617,7 +1636,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1636,7 +1655,7 @@
     "domains": [
       "Logic"
     ],
-    "id": "fd_0087",
+    "id": "fd_0088",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1656,7 +1675,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0088",
+    "id": "fd_0089",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1669,39 +1688,39 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08676759",
     "description": "Investigate the ArXiv paper 'Fractal uncertainty principle over $\\mathbb{Q}_p$' and formalize its key results. Abstract: We prove a fractal uncertainty principle over $\\mathbb{Q}_p$ for porous sets, resolving a conjecture of Cohen.",
     "domain_bridges": [],
     "domains": [
       "Pythagorean"
-    ],
-    "id": "fd_0089",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11534v1",
-    "status": "available",
-    "timestamp": "2026-07-16T03:18:30.753456+00:00",
-    "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "08676759",
-    "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=λ_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Logic"
     ],
     "id": "fd_0090",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "2607.11369v1",
+    "source_exp_id": "2607.11534v1",
     "status": "in_progress",
+    "timestamp": "2026-07-16T03:18:30.753456+00:00",
+    "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=λ_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0091",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.11369v1",
+    "status": "available",
     "timestamp": "2026-07-16T03:36:01.905252+00:00",
     "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
@@ -1715,7 +1734,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0091",
+    "id": "fd_0092",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1735,7 +1754,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0092",
+    "id": "fd_0093",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1755,7 +1774,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0093",
+    "id": "fd_0094",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1768,78 +1787,78 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26d242e6",
     "description": "Investigate the ArXiv paper 'A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$' and formalize its key results. Abstract: Wegner conjectured that every finite family $\\mathcal R$ of axis-parallel rectangles satisfies $τ(\\mathcal R)\\le 2ν(\\mathcal R)-1$, where $ν$ is the packing number and $τ$ is the piercing number. Ajwani, Gajjala, Raman, and Ray recently disproved this by constructing a triangle-free counterexample on $2196\\cdot 8^9$ rectangles and, using a computer-assisted package-and-port recursion, obtained a standard LP gap of $17891/8064$ for Maximum Independent Set of Rectangles. We give a simpler and hand-checkable counterexample with $64$ rectangles. It is built from an eight-rectangle gadget whose independent sets inject into four ordered slots; we then use four horizontal and four vertical copies of this gadget to form a triangle-free family with $ν=16$ and $τ\\ge 32$. We use the same horizontal-vertical step to define recursive families of rectangles $P_r$ with $ν(P_r)=4^{2^r}$. For the standard clique, equivalently point, relaxation we obtain a finite gap $73/32$ at $P_3$, improving the prev",
     "domain_bridges": [],
     "domains": [
       "Pythagorean"
-    ],
-    "id": "fd_0094",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11318v2",
-    "status": "available",
-    "timestamp": "2026-07-16T04:42:57.611296+00:00",
-    "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "26d242e6",
-    "description": "Investigate the ArXiv paper 'p-adic Properties of Translated Division Polynomials and Somos Sequences' and formalize its key results. Abstract: In this paper we consider the sequences $(Ψ_{n}(\\mathbf{P}))_{n\\geq 0}$, $(Φ_{n}(\\mathbf{P}))_{n\\geq 0}$ and $(\\overline{Ω}\\,_{n}(\\mathbf{P}% ))_{n\\geq 0}$ of values of the translated division polynomials of an elliptic curve $E/K$ evaluated at a point $\\mathbf{P}\\in $ $E(K)^{2}$. We prove that these sequences are purely periodic when $K$ is a finite field. Then we use the periodicity properties of these sequences to prove that certain subsequences of these sequences are $% %TCIMACRO{\\U{2124} }% %BeginExpansion \\mathbb{Z} %EndExpansion _{p}$-Cauchy. Finally, we use this result to prove analogous results for Somos $4$ and Somos $5$ sequences.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
     ],
     "id": "fd_0095",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "2607.11261v1",
+    "source_exp_id": "2607.11318v2",
     "status": "in_progress",
-    "timestamp": "2026-07-16T04:58:47.897559+00:00",
-    "title": "ArXiv paper: p-adic Properties of Translated Division Polynomials and Somos Sequences"
+    "timestamp": "2026-07-16T04:42:57.611296+00:00",
+    "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'A dual linear programming bound for sphere packing in dimension 36' and formalize its key results. Abstract: We construct an explicit dual-feasible point for the Cohn-Elkies linear program in dimension 36, built from the space of weight-18 modular forms for $Γ_0(24)$ following the method of Cohn and Triantafillou. The certificate shows that the two-point linear programming bound on the sphere packing density in dimension 36 exceeds the density of the best packing currently known -- the Kschischang-Pasupathy packing, of center density $2^{18}/3^{10}$ -- by a factor of at least 32.91. In particular, no Cohn-Elkies auxiliary function can certify the best known packing in dimension 36 as optimal. To our knowledge this is the first such dual bound in any dimension above 32, extending the table of Cohn-Triantafillou ($d=12,16,20,28,32$), Li ($3 \\le d \\le 13$), and de Courcy-Ireland-Dostert-Viazovska ($d=6$). The certificate is exact: the dual point is a rational vector, coefficient nonnegativity is verified by exact arithmetic up to $n=800$, and eventual positivity of the two relevant $q$-expansion",
+    "description": "Investigate the ArXiv paper 'p-adic Properties of Translated Division Polynomials and Somos Sequences' and formalize its key results. Abstract: In this paper we consider the sequences $(Ψ_{n}(\\mathbf{P}))_{n\\geq 0}$, $(Φ_{n}(\\mathbf{P}))_{n\\geq 0}$ and $(\\overline{Ω}\\,_{n}(\\mathbf{P}% ))_{n\\geq 0}$ of values of the translated division polynomials of an elliptic curve $E/K$ evaluated at a point $\\mathbf{P}\\in $ $E(K)^{2}$. We prove that these sequences are purely periodic when $K$ is a finite field. Then we use the periodicity properties of these sequences to prove that certain subsequences of these sequences are $% %TCIMACRO{\\U{2124} }% %BeginExpansion \\mathbb{Z} %EndExpansion _{p}$-Cauchy. Finally, we use this result to prove analogous results for Somos $4$ and Somos $5$ sequences.",
     "domain_bridges": [],
     "domains": [
-      "Pythagorean"
+      "Algebra",
+      "Geometry"
     ],
     "id": "fd_0096",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "2607.11319v1",
+    "source_exp_id": "2607.11261v1",
     "status": "available",
-    "timestamp": "2026-07-16T05:15:00.370176+00:00",
-    "title": "ArXiv paper: A dual linear programming bound for sphere packing in dimension 36"
+    "timestamp": "2026-07-16T04:58:47.897559+00:00",
+    "title": "ArXiv paper: p-adic Properties of Translated Division Polynomials and Somos Sequences"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "84cd9d36",
-    "description": "Investigate the ArXiv paper 'Unexpected primes of good reduction in quotients of modular and Shimura curves' and formalize its key results. Abstract: We find all zero-dimensional spaces of newforms of weight $2$ and squarefree level $N$ with a fixed Atkin--Lehner sign pattern. As an application, we classify unexpected primes of good reduction of Atkin--Lehner quotients of modular and Shimura curves of squarefree levels.",
+    "description": "Investigate the ArXiv paper 'A dual linear programming bound for sphere packing in dimension 36' and formalize its key results. Abstract: We construct an explicit dual-feasible point for the Cohn-Elkies linear program in dimension 36, built from the space of weight-18 modular forms for $Γ_0(24)$ following the method of Cohn and Triantafillou. The certificate shows that the two-point linear programming bound on the sphere packing density in dimension 36 exceeds the density of the best packing currently known -- the Kschischang-Pasupathy packing, of center density $2^{18}/3^{10}$ -- by a factor of at least 32.91. In particular, no Cohn-Elkies auxiliary function can certify the best known packing in dimension 36 as optimal. To our knowledge this is the first such dual bound in any dimension above 32, extending the table of Cohn-Triantafillou ($d=12,16,20,28,32$), Li ($3 \\le d \\le 13$), and de Courcy-Ireland-Dostert-Viazovska ($d=6$). The certificate is exact: the dual point is a rational vector, coefficient nonnegativity is verified by exact arithmetic up to $n=800$, and eventual positivity of the two relevant $q$-expansion",
     "domain_bridges": [],
     "domains": [
-      "Pythagorean",
-      "Geometry"
+      "Pythagorean"
     ],
     "id": "fd_0097",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "2607.11248v1",
+    "source_exp_id": "2607.11319v1",
     "status": "in_progress",
+    "timestamp": "2026-07-16T05:15:00.370176+00:00",
+    "title": "ArXiv paper: A dual linear programming bound for sphere packing in dimension 36"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Unexpected primes of good reduction in quotients of modular and Shimura curves' and formalize its key results. Abstract: We find all zero-dimensional spaces of newforms of weight $2$ and squarefree level $N$ with a fixed Atkin--Lehner sign pattern. As an application, we classify unexpected primes of good reduction of Atkin--Lehner quotients of modular and Shimura curves of squarefree levels.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0098",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.11248v1",
+    "status": "available",
     "timestamp": "2026-07-16T05:31:17.597085+00:00",
     "title": "ArXiv paper: Unexpected primes of good reduction in quotients of modular and Shimura curves"
   },
@@ -1853,7 +1872,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0098",
+    "id": "fd_0099",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1872,7 +1891,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0099",
+    "id": "fd_0100",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1892,7 +1911,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0100",
+    "id": "fd_0101",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1912,7 +1931,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0101",
+    "id": "fd_0102",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1931,7 +1950,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0102",
+    "id": "fd_0103",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1951,7 +1970,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0103",
+    "id": "fd_0104",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1971,7 +1990,7 @@
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0104",
+    "id": "fd_0105",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1990,7 +2009,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0105",
+    "id": "fd_0106",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2009,7 +2028,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0106",
+    "id": "fd_0107",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2029,7 +2048,7 @@
       "Algebra",
       "MachineLearning"
     ],
-    "id": "fd_0107",
+    "id": "fd_0108",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2049,7 +2068,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0108",
+    "id": "fd_0109",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2069,7 +2088,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0109",
+    "id": "fd_0110",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2089,7 +2108,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0110",
+    "id": "fd_0111",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2109,7 +2128,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0111",
+    "id": "fd_0112",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2128,7 +2147,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_0112",
+    "id": "fd_0113",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -2142,21 +2161,21 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n1. **Normalize to the paper's `Q_k`.** Extend scalars from `ℤ` to `ℝ` and define\n   `Q_k = k⁻¹ P_k`. The proved cumulative identity immediately yields the exact\n   Cesàro formula `Q_k = k⁻¹ ∑_{m=1}^k R_m` for positive `k`.\n\n2. **Evaluation and compact convergence.** After polynomial evaluation at\n   `x ∈ [0,c]`, prove the paper's uniform convergence of `Q_k(x)` to\n   `g(x)=∑ μ(n)x^n/n` on each compact interval with `c<1`. This requires a\n   formal treatment of the power series and the elementary geometric majorant.\n\n3. **Riemann-sum bridge.** Formalize Lemmas 2.13–2.14, identifying `Q_k` as a\n   Riemann sum for the truncated Möbius sums `A_x(t)`. This would connect the\n   present exact combinatorial identity to analysis and quantitative uniform\n   approximation.\n\n4. **General arithmetic functions.** The main theorem is already independent\n   of special properties of `μ`. Develop it as an incidence-algebra statement:\n   floor weights count multiples, while divisor transforms are convolution on\n   the divisibility poset. Specializations to Euler's totient, Liouville's\n   function, or Dirichlet characters may yield useful generating-polynomial\n   identities.\n\n5. **Analytic parts of the paper.** Formalize the finite versions of Lemma 1.2\n   (Möbius inversion of the floor function), the scalar-product identities for\n   the functions `γ_n`, and the exponential correction. The zero-free-region\n   estimates and asymptotics used later in the paper require substantially more\n   analytic number theory than the exact polynomial bridge proved here.\n",
+    "description": "Investigate the ArXiv paper 'Recognizability equals CMSO-definability for graphs of rank-width at most two' and formalize its key results. Abstract: We prove that, on finite graphs of rank-width at most two, VR-recognizability and counting monadic second-order definability coincide. This advances the recognizability-versus-definability problem from bounded linear clique-width to the first nontrivial bounded rank-width level beyond the rank-width-one split-decomposition case. The proof first treats split-prime graphs. The maximal partial-tree theory of Clark and Whittle organizes the non-sequential cut-rank-two separations, while a single strong separation orients all strong equivalence classes and yields a CMSO-definable laminar family of canonical cores. Although the auxiliary partial tree is not itself transduced, it proves that every canonical local piece has a port-contiguous layout of uniformly bounded linear rank-width. The width argument uses partition atoms and the branch-width-three display theorem of Hall, Oxley, Semple, and Whittle and does not assume that graph torsos remain prime. Coherent ordered rank-two frames then ",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0118",
+    "id": "fd_0114",
     "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "851ec568",
+    "source_exp_id": "2607.10594v1",
     "status": "available",
-    "timestamp": "2026-07-16T09:33:29.783000+00:00",
-    "title": "1. **Normalize to the paper's `Q_k`.** Extend scalars from `ℤ` to `ℝ` and define"
+    "timestamp": "2026-07-16T09:49:26.037493+00:00",
+    "title": "ArXiv paper: Recognizability equals CMSO-definability for graphs of rank-width at most two"
   },
   {
     "ambition_level": "extension",
