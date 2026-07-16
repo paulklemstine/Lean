@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T05:14:41Z",
+  "date": "2026-07-16T05:15:24Z",
   "key_results": [
     "Every formula $P$ has a non-circular derivation of $P\\to P$ of height exactly one.",
     "A one-node cyclic graph unravels into a unary labelled tree with a node at every finite depth.",
