@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-16T03:53:22.603528+00:00",
+  "last_updated": "2026-07-16T03:53:58.980143+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -20261,6 +20261,49 @@
       "theorem_novelty_new": 0,
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-16T03:53:22.574606+00:00",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 27,
+      "domain": "Combinatorics",
+      "duration_seconds": 3196.7095444202423,
+      "end_time": 1784174027.7360713,
+      "files_integrated": 1,
+      "job_id": "8d2137d3",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.7,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.66,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.91,
+        "composite": 0.52,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.67,
+        "novelty": 0.48,
+        "proof_depth": 0.72,
+        "usefulness": 0.78
+      },
+      "quality_score": 0.7,
+      "sorry_count": 4,
+      "sorry_density": 4.0,
+      "start_time": 1784170831.026527,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-16T03:53:58.949365+00:00",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ]

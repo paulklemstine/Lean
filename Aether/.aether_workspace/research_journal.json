@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "10dfa4e0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: the excess of the ℤ₂-coindex beyond the sphere\n\nThe join of two combinatorial spheres is again a sphere, and the equivariant maps of spheres\nare governed entirely by injections of",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 26,
-      "timestamp": "2026-07-14T22:54:15",
-      "title": "The file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained co"
-    },
-    {
       "cycle_id": "1207283c",
       "domain": "Applications",
       "key_insight": "# Future Directions — Good manifolds in an `n`-nice polytope\n\nThis cycle established the exact two-layer structure of the maximal\ngood-manifold count `a(n)`: a dominant geometric layer `2^n` and a sub",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-16T03:53:22",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "8d2137d3",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n## Completion status\n\nAll Lean declarations delivered for this mission now have complete proof terms: the\nremaining mixed-radix bridge lemmas were proved, and an inherited Fibonac",
+      "quality_score": 0.7,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-16T03:53:58",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "111bebcc",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Congruences for Labeled Partial Orders\n\nThe number `P(n)` of partial orders on `n` labeled points is known to be odd for\nevery `n`, and this parity is explained structurally: orde",
-      "quality_score": 0.72,
-      "sorry_count": 4,
-      "theorem_count": 24,
-      "timestamp": "2026-07-13T07:01:18",
-      "title": "Constant residue of labeled poset counts modulo 4"
-    },
     {
       "cycle_id": "02c1616a",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-16T03:53:22",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "8d2137d3",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n## Completion status\n\nAll Lean declarations delivered for this mission now have complete proof terms: the\nremaining mixed-radix bridge lemmas were proved, and an inherited Fibonac",
+      "quality_score": 0.7,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-16T03:53:58",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-16T03:53:22",
+  "last_updated": "2026-07-16T03:53:58",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "0c7f8736",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-14T13:00:03"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "d09018a9",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 4,
       "timestamp": "2026-07-16T03:53:22"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "8d2137d3",
+      "domain": "Combinatorics",
+      "sorry_count": 4,
+      "timestamp": "2026-07-16T03:53:58"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "813a28d3",
-        "quality": 0.6896399999999999,
-        "theorems": 14,
-        "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-      },
-      {
         "cycle_id": "6044c919",
         "quality": 0.5680000000000001,
         "theorems": 16,
@@ -3259,6 +3253,12 @@
         "quality": 0.93,
         "theorems": 46,
         "title": "Deepening: Two-parameter picture of *witness complexity* for the"
+      },
+      {
+        "cycle_id": "8d2137d3",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "The Library of Babel: Combinatorics of the Universal Library"
       },
       {
         "cycle_id": "8d2137d3",
