@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T04:26:10Z",
+  "date": "2026-07-16T04:27:01Z",
   "key_results": [
     "Closed-form theorem: the nth value is 1 + n(n − 1)/2 and its normalized quadratic limit is 1/2.",
     "Shifted-Square Consecutive-Sum Theorem: two consecutive values sum to n² + 2.",
