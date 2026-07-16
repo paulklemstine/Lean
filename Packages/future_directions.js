@@ -1819,12 +1819,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The exact minimum total degree threshold for the square of a Hamilton cycle in digraphs' and formalize its key results. Abstract: The P\u00f3sa-Seymour conjecture establishes the minimum degree threshold required to guarantee the presence of the $k$th power of a Hamilton cycle in a graph. Following numerous partial results, Koml\u00f3s, S\u00e1rk\u00f6zy, and Szemer\u00e9di confirmed the conjecture holds for all sufficiently large graphs. Treglown later conjectured the analogous minimum semi-degree threshold for forcing the $k$th power of a Hamilton cycle in a digraph. Subsequently, DeBiasio et al. proposed a conjecture on the minimum total degree threshold for the same problem. In this paper we settle the conjecture of DeBiasio et al. for $k=2$. Specifically, we prove that every sufficiently large $n$-vertex digraph with minimum total degree at least $8n/5-c$ contains the square of a Hamilton cycle, where $c=2$ if $n\\equiv2,4\\pmod 5$, and $c=1$ otherwise.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0140",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13831v1",
+    "status": "available",
+    "timestamp": "2026-07-16T18:19:24.603038+00:00",
+    "title": "ArXiv paper: The exact minimum total degree threshold for the square of a Hamilton cycle in digraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$' and formalize its key results. Abstract: For the elliptic curves $E_{p,q}: y^{2}=x^{3}-pqx$ where $p$ and $q$ are distinct odd primes, we establish necessary and sufficient conditions under which rank$\\,E_{p,q}(\\mathbb{Q})$ and $\\dim_{\\mathbb{F}_{2}} \\Sha \\left( E_{p,q}/\\bbQ \\right)[2]$ are both $0$. We do so via a similar characterisation of when the Selmer groups associated with the degree-$2$ isogeny $\u03c6$ and its dual $\\widehat\u03c6$ are both of minimal size, along with results about a cokernel that arises from a related exact sequence.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14033v1",
@@ -1838,7 +1852,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14038v1",
@@ -1853,7 +1867,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13895v1",
@@ -1868,7 +1882,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13746v1",
@@ -1877,19 +1891,33 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df23eec4",
     "description": "Investigate the ArXiv paper 'Antipodal paths in covers of spheres' and formalize its key results. Abstract: In this note we show that if the sphere $\\mathbb{S}^n$ is covered by $k$ open sets with $n \\geq 2k-2$, then one of these sets contains a path with antipodal endpoints. This is best possible in the sense that the statement fails for $n < 2k-2$. The result can be seen as a spherical analogue of a well-known conjecture of Norine on edge-colourings of the discrete hypercube.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13964v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T18:02:15.059733+00:00",
     "title": "ArXiv paper: Antipodal paths in covers of spheres"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The inversion number of a path-reversed tournament: Resolving a conjecture of Belkhechine, Bouaziz, Boudabbous, and Pouzet' and formalize its key results. Abstract: Let $D$ be a tournament and let $X\\subseteq V(D)$. The inversion of $X$ reverses all arcs whose both endpoints lie in $X$ and leaves every other arc unchanged. A family of inversions is a decycling family if applying all of them produces an acyclic, equivalently transitive, tournament. The inversion number $\\inv(D)$ is the minimum size of such a family. Let $Q_n$ be the tournament on $[n]$ obtained from the natural transitive tournament by reversing precisely the consecutive pairs $12,23,\\ldots,(n-1)n$. Belkhechine, Bouaziz, Boudabbous, and Pouzet conjectured in their unpublished manuscript that a natural path-reversed family has inversion number exactly $\\left\\lfloor(n-1)/2\\right\\rfloor$. The same problem was later recorded by Bang-Jensen, da Silva, and Havet and by Alon, Powierski, Savery, Scott, and Wilmer. In this paper we resolve this conjecture.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0146",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13829v1",
+    "status": "available",
+    "timestamp": "2026-07-16T18:19:27.949802+00:00",
+    "title": "ArXiv paper: The inversion number of a path-reversed tournament: Resolving a conjecture of Belkhechine, Bouaziz, Boudabbous, and Pouzet"
   },
   {
     "consumed_by_exp_id": "",
