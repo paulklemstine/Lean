@@ -1,3 +1,3 @@
-# Computational evidence justification
+# Computational Evidence Justification
 
-Computational evidence was skipped because the formalized claims are structural soundness theorems quantified over arbitrary finite graphs, valid upper-bound functions, seeds, and peeling sequences. Their content follows from clique decomposition and induction rather than a numerical conjecture or finite pattern. Small-instance enumeration would neither strengthen nor meaningfully test the universal hypotheses; the Lean kernel checks the complete proofs directly.
+Computational evidence is unnecessary for these results. They are parametric soundness theorems over arbitrary simple graphs and arbitrary clique upper-bound oracles, rather than numerical conjectures or finite-instance claims. Their content is established directly by kernel-checked arguments about clique containment, common neighborhoods, cardinalities, and reflexive-transitive peeling sequences. Small graph enumeration would illustrate the statements but would not materially test their universal proof obligations.
