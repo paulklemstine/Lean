@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ef5b75b5",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Logarithmic Lifts and Optical Charge\n\n## 1. Homotopy classification by logarithmic endpoint defect\n\n**Conjecture.** For smooth non-vanishing closed beam loops, the endpoint defec",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-07-15T02:32:26",
-      "title": "Topological charge of an orbital-angular-momentum bea"
-    },
-    {
-      "cycle_id": "da85fe77",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Lehmer codes as an equivariant factorial-code classification\n\nFor every natural number `k`, the factorial-code space of length",
-      "quality_score": 0.9,
-      "sorry_count": 3,
-      "theorem_count": 5,
-      "timestamp": "2026-07-15T02:32:33",
-      "title": "Deepening: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
-    },
-    {
       "cycle_id": "4b27af05",
       "domain": "Tropical",
       "key_insight": "# Future directions\n\n- Instantiate `graph_closure_inclusion_iff` with the Ehresmann rank definition of Bruhat order on `Equiv.Perm (Fin n)` and permutation inversion.\n- Connect `principalClosure` to t",
@@ -499,29 +479,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-16T08:27:46",
       "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive propo",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-16T08:29:22",
+      "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Weighted maximum-nullity equality on triangle-unit networks\n\n**Conjecture.** For every connected, diamond-free, claw-free cubic graph whose contraction\nmultigraph is a simpl",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-16T08:29:25",
+      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "162989ab",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Siegel–Weil for the E₈ theta series\n\nThis cycle established that the E₈ vector-count sequence `240·σ₃(n)` behaves in\nevery measurable arithmetic respect like the Fourier coeffici",
-      "quality_score": 0.82,
-      "sorry_count": 5,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T14:34:47",
-      "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
-    },
-    {
-      "cycle_id": "477f7787",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes a **cross-domain bridge** between two areas that meet in\nthe study of *balanced* graphs:\n\n* **0/1-matrix combinatorics** — balancedness of the clique matri",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-13T14:51:29",
-      "title": "Conjecture: Balanced graphs coincide with hereditary clique‑Helly graphs"
-    },
     {
       "cycle_id": "5acf2050",
       "domain": "Applications",
@@ -2501,45 +2481,29 @@
       "theorem_count": 11,
       "timestamp": "2026-07-16T08:29:10",
       "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive propo",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-16T08:29:22",
+      "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Weighted maximum-nullity equality on triangle-unit networks\n\n**Conjecture.** For every connected, diamond-free, claw-free cubic graph whose contraction\nmultigraph is a simpl",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-16T08:29:25",
+      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f4980b02",
-      "domain": "MachineLearning",
-      "name": "supportedFiber_eigenvector",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "name": "classical_orderSix_range_card",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "name": "nineteenRepresentatives_card",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "name": "cardinality_nineteen_of_unique_triple",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "name": "classical_orderSix_range_card",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "57481379",
-      "domain": "Physics",
-      "name": "nineteenRepresentatives_card",
-      "quality": 0.75
-    },
     {
       "cycle_id": "57481379",
       "domain": "Physics",
@@ -2803,9 +2767,45 @@
       "domain": "Novelty",
       "name": "forceSequence_antisymm",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "name": "subset_of_forceStep",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "name": "subset_of_forceSequence",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "name": "card_le_of_forceSequence",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "name": "card_forceStep",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "name": "subset_of_forceSequence",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "name": "forceSequence_antisymm",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T08:29:10",
+  "last_updated": "2026-07-16T08:29:25",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,18 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "1a2ab56f",
-        "quality": 0.65,
-        "theorems": 19,
-        "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-      },
-      {
-        "cycle_id": "1a2ab56f",
-        "quality": 0.65,
-        "theorems": 19,
-        "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-      },
-      {
         "cycle_id": "499d98ab",
         "quality": 0.76,
         "theorems": 8,
@@ -3637,6 +3625,18 @@
         "quality": 0.52,
         "theorems": 14,
         "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
+      },
+      {
+        "cycle_id": "7d82c497",
+        "quality": 0.7,
+        "theorems": 11,
+        "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
+      },
+      {
+        "cycle_id": "e2f5c991",
+        "quality": 0.72,
+        "theorems": 15,
+        "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
       }
     ],
     "NumberTheory": [

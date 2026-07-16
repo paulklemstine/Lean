@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T08:27:43Z",
+  "date": "2026-07-16T08:29:22Z",
   "key_results": [
     "Every legal force adds exactly one vertex, and forcing reachability is monotone and antisymmetric.",
     "Triangle and diamond units admit exact one-step and two-step propagation certificates under unique-uncolored-neighbor boundary conditions.",

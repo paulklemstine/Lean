@@ -121,25 +121,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "dd61fafb",
-    "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,ω^u)\\)-core, the \\((k,ω^u)\\)-truss, and the more general \\((k,d,ω^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_0004",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11726v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T07:46:50.520811+00:00",
-    "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes' and formalize its key results. Abstract: Character-polynomial codes are constructed by evaluating finite field polynomials and mapping the results to complex roots of unity through additive characters. This paper shows that, over extension fields, the original polynomial family may contain redundancies: distinct polynomials can generate the same codeword. We identify the source of this non-injectivity through the trace map and cyclotomic cosets, determine the exact code cardinality, and construct a refined polynomial family that parametrizes the code without redundancy. These results give corrected parameters for CP codes and clarify their algebraic structure.",
     "domain_bridges": [],
@@ -194,25 +175,6 @@
     "status": "available",
     "timestamp": "2026-07-15T06:52:29.386046+00:00",
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "6caf61ae",
-    "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $ι:P\\rightarrow \\mathcal{G}$ with $ι(p)\\subset ι(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $ι(p)\\subset ι(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0013",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.11753v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T07:28:27.663774+00:00",
-    "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
   {
     "ambition_level": "extension",
@@ -1182,26 +1144,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5759ba2d",
-    "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $χ\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_0064",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12912v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T12:33:25.469761+00:00",
-    "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The Balanced Four-Color Theorem' and formalize its key results. Abstract: We show that every planar graph with $n \\geq 3$ vertices admits a 4-coloring in which each color is used on fewer than $n/2$ vertices. This bound is the best possible. Moreover, such a coloring can be found in $O(n \\log n)$ time. We also extend these results to five or more colors and to graphs on general surfaces.",
     "domain_bridges": [],
@@ -1979,6 +1921,66 @@
     "status": "available",
     "timestamp": "2026-07-16T08:27:54.775733+00:00",
     "title": "ArXiv paper: Greenberg's $μ=0$ conjecture for lisse sheaves over global function fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope achieved\n\n`Speculative/EulerSystemsSymmetricSquare.lean` formalizes three reusable algebraic layers motivated by the paper:\n\n1. An abstract Euler system as a family of module elements satisfying norm relations, together with preservation of every norm relation under compatible specialization.\n2. Detection of non-triviality of an Euler-system family from one nonzero specialization.\n3. Transport of divisibility through an involutive ring automorphism, including functional equations only defined up to unit multiples.\n4. A contrarian conjecture asserting exact faithfulness of symmetric square is disproved. The corrected result identifies the precise sign ambiguity over an integral domain and proves equality of sign orbits.\n\nThese results are fully proved, but they deliberately do not claim to formalize the paper's deep arithmetic constructions.\n\n## Next formalization layers\n\n1. Define continuous representations of absolute Galois groups over finite-flat Iwasawa algebras and the symmetric-square representation attached to a Hida family.\n2. Introduce continuous Galois cohomology and corestriction maps. Instantiate `NormRelation` with degree-one cohomology classes and the paper's local Euler polynomials.\n3. Formalize arithmetic specialization maps and prove their compatibility with corestriction and Euler factors, allowing `eulerSystem_specializes` to apply directly.\n4. Encode Greenberg local conditions, Selmer structures, Pontryagin duals, pseudo-isomorphism, and characteristic ideals over multivariable Iwasawa algebras.\n5. Upgrade element divisibility to ideal inclusion and characteristic-ideal divisibility. Then instantiate `functional_equation_up_to_units` with the Iwasawa involution.\n6. Formalize the nonzero Loeffler–Zerbes specialization needed to turn `eulerSystem_nontrivial_of_specialization` into non-triviality of the big class.\n7. Formalize the Büyükboduk–Ganguly algebraic functional equation and the Euler-system bound to derive the paper's main-conjecture divisibility.\n8. Investigate a representation-theoretic version of the sign-orbit theorem: under suitable irreducibility hypotheses, determine whether isomorphic symmetric squares force two-dimensional representations to differ by a quadratic character. The scalar sign example proves that an unconditional exact-faithfulness statement cannot hold.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0110",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d8f04178",
+    "status": "available",
+    "timestamp": "2026-07-16T08:28:58.747357+00:00",
+    "title": "`Speculative/EulerSystemsSymmetricSquare.lean` formalizes three reusable algebra"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe current development establishes the Vandermonde/symmetric-power construction underlying one direction of the paper: a diagonal symmetric-power action produces a rational-normal-curve orbit, and distinct geometric-progression parameters make every full-size minor nonsingular.\n\nNatural next steps are:\n\n1. **Homogeneous rational normal curve.** Replace the affine chart `rncPoint` by the homogeneous Veronese map on the projective line, including the point at infinity, and prove equivariance for the full degree-`r-1` symmetric-power representation of `GL₂`.\n2. **Projectivization.** Formulate projective pairs `(A, [z])`, scalar equivalence, and conjugacy. Show that the construction descends from `GL₂` to `PGL₂` projectively.\n3. **Converse rigidity theorem.** Formalize the theorem that, for `r ≥ 3` and a sufficiently long MDS orbit segment on a rational normal curve, the inducing projective transformation comes from `PGL₂`. This will require uniqueness/rigidity results for rational normal curves through sufficiently many points.\n4. **Companion matrices and Krylov bases.** Connect cyclic vectors, Krylov bases, companion matrices, characteristic polynomials, and the parity-check-matrix definition of a linear MDS code.\n5. **Finite-field classification.** Develop the split semisimple, nonsplit semisimple, and unipotent cases by classifying conjugacy in `PGL₂` over finite fields, then translate each family to companion-polynomial coefficients.\n6. **Coefficient surface.** Define the geometric-progression root-set parameter map, prove reversal invariance, and study its generic fibers. The eventual algebraic-geometric target is the normalization statement for the reversal quotient and the irreducible rational surface described in the paper.\n7. **Weaker algebraic assumptions.** Several elementary lemmas currently assume fields or commutative semirings for convenience. Their assumptions can be minimized (for example, injectivity of the affine curve requires only enough cancellation to read coordinate one).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0111",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cdb5c1e4",
+    "status": "available",
+    "timestamp": "2026-07-16T08:29:06.094729+00:00",
+    "title": "The current development establishes the Vandermonde/symmetric-power construction"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive proportion of descendants in every sufficiently long block of levels. The norm of the normalized Fourier restriction between the two leaf sets is at most $C p^{-\\beta n}$ for constants $C,\\beta>0$ depending only on the porosity parameters, even when the product of their maximal branching numbers is at least $p$.\n\nThe key insight is that the cardinality estimate loses contraction exactly at this threshold, whereas repeated additive-energy improvement can exploit cancellation invisible to support size alone.\n\n**Why now?** The finite kernel estimate and tree-growth theorem isolate the missing ingredient precisely: a scale-local gain that can replace the crude product-cardinality bound.\n\n## 2. Block-porosity and entropy characterization\n\n**Conjecture.** Exponential Fourier restriction decay holds for pairs of residue-tree sets whenever the sum of their upper block entropies is strictly below the ambient entropy, with an exponent depending continuously on the entropy gap.\n\nThe key insight is that pointwise branching bounds are unnecessarily rigid; the proof mechanism only needs multiplicative loss accumulated across scales, which block entropy measures directly.\n\n**Why now?** The established recurrence argument already converts local branching losses into global powers, making an entropy-weighted recurrence the natural next generalization.\n\n## 3. Stability under stochastic deletion\n\n**Conjecture.** For independent level-dependent random deletion models whose expected retained branching numbers satisfy $\\mathbb{E}A_j\\,\\mathbb{E}B_j<p$ uniformly, the restricted Fourier norm decays exponentially with depth with exponentially high probability, and the almost-sure exponent equals a Lyapunov exponent of the branching process.\n\nThe key insight is that the deterministic uncertainty factor is a product of per-level branching ratios, so random porosity should be governed by multiplicative ergodic behavior rather than worst-case branching.\n\n**Why now?** The explicit deterministic factor identifies the random variable whose concentration and Lyapunov theory should control the probabilistic extension.\n\n## 4. A transfer-operator bridge to Frobenius dynamics\n\n**Conjecture.** There is a common prime-power transfer-operator framework in which porous Fourier restriction and additive cellular-automaton renormalization appear respectively as a contracting sector and an exactly self-similar sector of one graded operator algebra.\n\nThe key insight is that both systems are organized by the same $p^k$ filtration: Fourier normalization contributes scale loss, while Frobenius collapses dynamics to rescaled light rays.\n\n**Why now?** Exact prime-power identities and uncertainty estimates have been placed at the same scale, providing concrete algebraic data from which to formulate the shared operator.\n\n## 5. Product-tree Kakeya incidence bound\n\n**Conjecture.** A uniform fractal uncertainty exponent for porous residue trees implies a power-saving incidence estimate for product-structured tubes in a discretized non-Archimedean Kakeya problem.\n\nThe key insight is that tube-direction incidence matrices are oscillatory restriction operators after finite Fourier decomposition, so concentration of incidences should contradict uncertainty.\n\n**Why now?** The normalized-kernel theorem already applies independently of the chosen phase, leaving geometric incidence structure and a suitable porosity-to-support reduction as the principal remaining steps.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0112",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7d82c497",
+    "status": "available",
+    "timestamp": "2026-07-16T08:29:17.739195+00:00",
+    "title": "**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p"
   },
   {
     "ambition_level": "extension",

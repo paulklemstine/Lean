@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T08:27:35Z",
+  "date": "2026-07-16T08:29:16Z",
   "key_results": [
     "Restricted Energy Theorem: a normalized kernel restricted to finite sets $X$ and $Y$ transfers at most $|X||Y|/N$ times the input energy.",
     "Porous Tree Cardinality Theorem: branching at most $a$ at every level produces at most $a^n$ leaves at depth $n$.",
