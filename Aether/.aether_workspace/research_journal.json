@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a1dac228",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Edge-Spectral Supersaturation for Triangles\n\nFile: `Catalog/Novelty/EdgeSpectralSupersaturationTriangles.lean`\n\n## What is proved\n\nThe file establishes a **cross-domain bridge**",
-      "quality_score": 0.82,
-      "sorry_count": 1,
-      "theorem_count": 10,
-      "timestamp": "2026-07-13T12:17:35",
-      "title": "Close Proofs: Edge-Spectral Supersaturation for Triangles"
-    },
-    {
       "cycle_id": "290f55e0",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Alexander polynomials as signed lattice-path sums\n\nThis cycle settled the combinatorial status of the \"Alexander polynomial as a\nlattice-path count\" conjecture: the *unsigned* gen",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T07:08:28",
       "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
+    },
+    {
+      "cycle_id": "b71e4678",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Rooted and Ordinary Path Irregularity\n\n## 1. Polynomial-profile separation for bounded path lengths\n\nFor every fixed integer `k ≥ 4`, there should be a branch-attachment construct",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-16T07:23:26",
+      "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T07:08:28",
+  "last_updated": "2026-07-16T07:23:26",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "d9ca63e8",
-        "quality": 0.4666111,
-        "theorems": 8,
-        "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
-      },
-      {
         "cycle_id": "7ca0f553",
         "quality": 0.82,
         "theorems": 61,
@@ -3885,6 +3879,12 @@
         "quality": 0.7,
         "theorems": 16,
         "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
+      },
+      {
+        "cycle_id": "b71e4678",
+        "quality": 0.67,
+        "theorems": 20,
+        "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
       }
     ],
     "Shared": [
