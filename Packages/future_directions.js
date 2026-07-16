@@ -1774,12 +1774,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Matroid correspondence' and formalize its key results. Abstract: Motivated by algebraic correspondences and linear operators associated with volume and Lorentzian polynomials, we introduce matroid correspondences and their polymatroid analogues. A matroid correspondence defines a functor between poset categories of matroids whose morphisms are matroid quotients, and various standard functors, including deletion, contraction, free extension, truncation, intersection, union, and pullback, arise in this way. We show that these correspondences preserve representability and algebraicity under natural hypotheses. In the polymatroid setting, we establish compatibility with multisymmetric lifts. Finally, we relate this construction to the supports of linear operators with Lorentzian symbols.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0137",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13783v1",
+    "status": "available",
+    "timestamp": "2026-07-16T17:27:41.805947+00:00",
+    "title": "ArXiv paper: Matroid correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$' and formalize its key results. Abstract: For the elliptic curves $E_{p,q}: y^{2}=x^{3}-pqx$ where $p$ and $q$ are distinct odd primes, we establish necessary and sufficient conditions under which rank$\\,E_{p,q}(\\mathbb{Q})$ and $\\dim_{\\mathbb{F}_{2}} \\Sha \\left( E_{p,q}/\\bbQ \\right)[2]$ are both $0$. We do so via a similar characterisation of when the Selmer groups associated with the degree-$2$ isogeny $\u03c6$ and its dual $\\widehat\u03c6$ are both of minimal size, along with results about a cokernel that arises from a related exact sequence.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0137",
+    "id": "fd_0138",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14033v1",
@@ -1793,13 +1808,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0138",
+    "id": "fd_0139",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14038v1",
     "status": "available",
     "timestamp": "2026-07-16T17:10:28.704063+00:00",
     "title": "ArXiv paper: Local and global average degree in bipartite graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Feedback vertex sets in oriented graphs' and formalize its key results. Abstract: For an oriented graph $G$, denote by $fvs(G)$ the minimum number of vertices whose deletion from $G$ makes it acyclic. We show that an oriented graph $G$ on $n$ vertices and $m$ arcs satisfies $fvs(G) \\le \\frac{2n+m+h}{9}$ where $h$ denotes the number of connected components of $G$ that belong to a special class of oriented graphs. This result has three consequences. First, when $G$ is planar, we obtain that $fvs(G) \\le \\frac{2n+m}{9}$. In particular, this implies that $fvs(G) \\le \\frac{5n-6}{9}$ for any planar oriented graph $G$, improving the best known upper bound of $\\frac{3n}{5}$~[Borodin, Discrete Mathematics, 1979]. Then, applying this inequality to the planar digraphs without directed triangles, we get that $fvs(G) \\le \\frac{6n-8}{13}$, which improves the current best bound of $\\frac{n}{2}$~[Li and Mohar, SIAM Journal on Discrete Mathematics, 2017]. Finally, when $G$ has maximum degree 6, we have $fvs(G) \\le \\frac{4n}{7}$ and this bound is tight, answering a conjecture of Ai, G",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0140",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13895v1",
+    "status": "available",
+    "timestamp": "2026-07-16T17:27:45.321534+00:00",
+    "title": "ArXiv paper: Feedback vertex sets in oriented graphs"
   },
   {
     "consumed_by_exp_id": "",
