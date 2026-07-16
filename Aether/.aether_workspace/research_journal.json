@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ccd67871",
-      "domain": "Applications",
-      "key_insight": "# Future directions: AVD‑total colourings of central graphs\n\nThis cycle isolated the mechanism behind the lower bound for adjacent‑vertex‑\ndistinguishing (AVD) total colourings of the central graph `C",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-07-14T23:12:12",
-      "title": "Deepening: Working with a self‑contained model of total colourings (proper vertex colouring"
-    },
-    {
       "cycle_id": "0e4c0a6c",
       "domain": "Applications",
       "key_insight": "# Future Directions — Mixed-Radix Number Systems (Cycle 1, thread th_d1eba7ba)\n\nThis cycle advances the mixed-radix program by settling two of the four standing\nconjectures in fully general form (arbi",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-16T04:27:07",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## 1. Robust local encodings of arithmetic derivations\n\n**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic derivation into a locally testable object su",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T05:30:50",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0557da65",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n`Catalog/Bridges/CantorHierarchy.lean` formalizes the classical skeleton of\nCantor's transfinite hierarchy: Cantor's theorem and the absence of a largest\ncardinal, the Hartogs num",
-      "quality_score": 0.82,
-      "sorry_count": 1,
-      "theorem_count": 29,
-      "timestamp": "2026-07-13T08:43:50",
-      "title": "Deepening: Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
-    },
     {
       "cycle_id": "223b6ab0",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-16T05:15:30",
       "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n## 1. Robust local encodings of arithmetic derivations\n\n**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic derivation into a locally testable object su",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T05:30:50",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bd321901",
-      "domain": "Combinatorics",
-      "name": "for",
-      "quality": 0.93
-    },
-    {
-      "cycle_id": "bd321901",
-      "domain": "Combinatorics",
-      "name": "follows",
-      "quality": 0.93
-    },
-    {
-      "cycle_id": "3c80004e",
-      "domain": "Physics",
-      "name": "from",
-      "quality": 0.9
-    },
     {
       "cycle_id": "3c80004e",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "consecutive_sum_eq_square_add_two",
       "quality": 0.71
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "name": "measures",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "name": "certification",
+      "quality": 0.73
+    },
+    {
+      "cycle_id": "573ee086",
+      "domain": "Algebra",
+      "name": "exists_rejecting_valuation",
+      "quality": 0.73
     }
   ],
-  "last_updated": "2026-07-16T05:15:30",
+  "last_updated": "2026-07-16T05:30:50",
   "open_questions": [
     {
       "context": "All statements are proved with no `sorry` and no extra axioms.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "4591bde2",
-        "quality": 0.5155438642611684,
-        "theorems": 8,
-        "title": "Kernel‑cover characterisation of the weighted Davenport constant"
-      },
-      {
         "cycle_id": "cbe7147b",
         "quality": 0.5326040000000001,
         "theorems": 15,
@@ -3079,6 +3073,12 @@
         "quality": 0.65,
         "theorems": 6,
         "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+      },
+      {
+        "cycle_id": "573ee086",
+        "quality": 0.73,
+        "theorems": 13,
+        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
       }
     ],
     "Applications": [

@@ -55,7 +55,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -339,7 +339,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes' and formalize its key results. Abstract: Character-polynomial codes are constructed by evaluating finite field polynomials and mapping the results to complex roots of unity through additive characters. This paper shows that, over extension fields, the original polynomial family may contain redundancies: distinct polynomials can generate the same codeword. We identify the source of this non-injectivity through the trace map and cyclotomic cosets, determine the exact code cardinality, and construct a refined polynomial family that parametrizes the code without redundancy. These results give corrected parameters for CP codes and clarify their algebraic structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -459,7 +459,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems' and formalize its key results. Abstract: We study twisted Weyl group multiple Dirichlet series attached to symmetrizable Kac-Moody root systems, using the Chinta-Gunnells method to construct their $p$-parts. Our main result is a decomposition theorem for functions invariant under the twisted Chinta-Gunnells action: under natural analytic hypotheses, such a function has a unique expansion in terms of shifted Chinta-Gunnells averages, indexed by the dominant weights in the highest weight module determined by the twisting parameter. In particular, we show that this decomposition holds for twisted multiple Dirichlet series over rational function fields. For finite root systems, these results were proved by Friedlander. We also show that the relevant Chinta-Gunnells averages admit analytic continuation to the interior of the complexified Tits cone. In the affine $\\widetilde{A}_1$ case, we prove extra functional equations, not arising from the Weyl group, for the untwisted average and for averages twisted by fundamental weights. As",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -580,7 +580,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three' and formalize its key results. Abstract: We give three explicit quantum Latin squares of order $6$ with cardinalities $19$, $21$, and $23$, where vectors differing only by a global phase are counted as identical. The first two examples arise from normalized Schur products of columns of complex Hadamard matrices. For cardinality $19$, a Butson-type matrix over eighth roots of unity has the unique nontrivial coincidence $v_{01}=v_{25}=v_{34}$. For cardinality $21$, an explicit member of Karlsson's three-parameter family has $21$ pairwise inequivalent unordered Schur products. To exceed the symmetric Schur-product bound, we give a third, direct-sum construction based on the decomposition $\\C^6=\\C^4\\oplusC^2$. It uses nineteen distinct rays in the four-dimensional summand and four rays in the two-dimensional summand, arranged so that every row and column is an orthonormal basis, yielding cardinality $23$. Together with our earlier constructions of cardinalities $13$, $15$, and $17$ and previously known order-six examples, these r",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -662,7 +662,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The chain replacement of a poset flow' and formalize its key results. Abstract: We introduce the chain replacement of a poset flow: it is obtained by considering the simplicial nerves of the posets of strictly increasing chains in the given poset, ordered by refinement. It maps finite posets to q-cofibrant flows and inclusions of finite posets to q-cofibrations. Using the combinatorial properties of the chain replacement, we prove that pushouts along the chain replacement of an order-reflecting inclusion of finite posets preserve spaces of execution paths. By introducing the Hurewicz model structure on flows (or H-model structure), we deduce the same property for any q-cofibrant replacement of an order-reflecting inclusion of finite posets.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -744,7 +744,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Ray and end spaces: characterizations and classification up to homeomorphism' and formalize its key results. Abstract: We provide a combinatorial characterization for pairs of order-theoretic trees with homeomorphic ray spaces, answering an open problem proposed by Kurkofka ad Pitz. This solution is inspired by the introduction of a transfinite topological game, which allows us to characterize not only ray spaces through the existence of winning strategies for one of the players, but also their homeomorphic classes. As applications of these results, we obtain a new topological characterization for graph-theoretic end spaces (thus obtaining yet another solution to a recently solved problem of Diestel), as well as for edge-end spaces and completely ultrametrizable spaces. We also introduce a generalization of the class of ray spaces (which is strict, as witnessed by the Sorgenfrey line). Furthermore, we establish that, for subspaces with cardinality less than continuum of end spaces, the scattered property is equivalent to the property of being, itself, an end space. At last, we determine that ray spaces",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -785,7 +785,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Submultiplicative Polynomials in Combinatorics' and formalize its key results. Abstract: For normalized sequences $\\left(g(n)\\right)_{n\\in\\mathbb{N}}$ we consider recursively defined polynomials $P_n^g(x)$. In this paper we study their submultiplicative property, viewed as a Bessenrodt--Ono type inequality for the partition function, and provide an effective criterion for establishing it.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -866,7 +866,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Cyclic Projective Orbits on Rational Normal Curves and MDS Codes' and formalize its key results. Abstract: Let \\(A\\) be a cyclic operator on an \\(r\\)-dimensional vector space over a field \\(k\\), and let \\(z\\) be a cyclic vector. Their Krylov code has parity-check matrix \\((z,Az,\\ldots,A^{n-1}z)\\). For \\(r\\ge 3\\) and \\(n\\ge r+3\\), we prove that an MDS orbit segment lies on a rational normal curve precisely when the projective pair \\((A,[z])\\) is conjugate to one arising from the \\((r-1)\\)-st symmetric-power action of \\(\\mathrm{PGL}_2\\). Over finite fields, for companion operators, this gives a complete classification of the generalized Reed--Solomon locus into split semisimple, two nonsplit semisimple, and unipotent families. Over an algebraically closed field \\(k\\), the Zariski closure \\(\\GRSsurf_{r,k}\\) of the semisimple GRS coefficient locus is an irreducible rational surface, generically parameterized two-to-one by a two-dimensional torus of geometric-progression root sets; reversal is the generic ambiguity. The affine quotient of the parameter torus by reversal is the normalization of \\",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Algebra"
@@ -948,7 +948,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Ranks of Elliptic Curves Twisted by Quadratic Forms' and formalize its key results. Abstract: Let $E$ be an elliptic curve over $\\mathbb{Q}$ and let $E^d$ be its twist by the quadratic character $χ_d$. We prove there are infinitely many twists $d$ which are sums of two squares such that $E^d$ has rank $1$. This result is achieved using moments of derivatives of modular $L$-functions, and particularly captures the lower derivatives which were left out in the work of Munshi. Such a result, in particular, also gives us information on the elliptic fibration $(1+t^2)y^2=f(x)$, where $f(x)$ is a cubic polynomial.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -1029,7 +1029,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A Proof of Sundaram's Bounded-Interval Higher Lie Positivity Conjecture' and formalize its key results. Abstract: For positive integers $n$ and $M$, Sundaram defined $ F_{n,M}=\\sum_{\\substack{d\\mid n\\\\d\\le M}} Lie_{n/d}[p_d] $ and conjectured that every coefficient in its Schur expansion is a nonnegative integer. We prove the conjecture. The power-sum expansion isolates the contribution of the identity class, and the proof divides Young diagrams at the intrinsic majority threshold. If the first row or first column contains more than half of the boxes, the Bernstein creation formula separates each rectangular-cycle character value into a hook constant and a remainder supported only on short cycles. The restrictions of the trivial and sign characters to the cyclic subgroup evaluate the constants exactly, whereas a uniform binomial contraction controls every distance from the boundary at once. If neither a row nor a column has a majority, Swanson's opposite-hook estimate gives a Catalan-scale lower bound for the dimension. The Fomin--Lulov rectangular-character estimate, together with uniform bounds ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -1070,7 +1070,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A universal leading-residue formula for Witten zeta functions' and formalize its key results. Abstract: Let $Φ$ be an irreducible crystallographic root system of rank $r$, with Coxeter number $h$, Weyl group $W$, Cartan matrix $C_Φ$, and invariant degrees $2=d_1\\leq\\cdots\\leq d_r=h$. We prove that Au's normalized Witten zeta function $ξ_Φ(s)$ has a simple pole at $s=2/h$, with residue $\\mathop{\\rm Res}_{s=2/h}ξ_Φ(s)=\\frac{2(2π)^{r/2}\\sqrt{\\det C_Φ}}{h|W|}\\frac{\\prod_{i=1}^{r-1}Γ(1-d_i/h)}{Γ(1-1/h)^r}$. The proof identifies the leading lattice coefficient with a convergent spherical Coxeter-discriminant integral at the critical exponent and evaluates this integral using the boundary pole of the Macdonald--Mehta--Opdam identity. Proper parabolic strata are shown to be strictly subcritical. This establishes Au's gamma-product-shape conjecture and his prediction in type $A_4$. We also obtain a direct, non-Tauberian asymptotic, with an explicit constant for every simple type, for the number of irreducible representations of dimension at most $X$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -1111,7 +1111,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Möbius functions for pseudo-Levi subgroups in finite general linear and symplectic groups' and formalize its key results. Abstract: In this paper, we compute the Möbius function on the set of pseudo-Levi subgroups containing a fixed maximal torus of two families of finite groups, $GL_n(q)$ and $Sp_{2n}(q)$, for some natural number $n$ and a prime power $q$. The Möbius function for the set of pseudo-Levi subgroups of a finite group $G$ is important for an explicit evaluation of the formula expressing the decomposition of tensor products of characters, as proved in Theorem 2 of the paper ''Multiplicity of characters of finite reductive groups and Drinfeld doubles'' [arXiv:2512.01432].",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -1232,7 +1232,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Solomon zeta functions over arithmetic orders' and formalize its key results. Abstract: We prove an effective version of Solomon's first conjecture for lattices over orders in finite-dimensional semisimple algebras over nonarchimedean local fields. We express the quotient of a partial Solomon zeta function by the corresponding maximal-order zeta function as a finite sum whose terms are determined by finite module-theoretic data and weighted by polynomials defined using the Möbius function of finite submodule posets. The resulting expression is independent of the chosen maximal overorder. Our proof is purely algebraic and is first formulated for the refined Bushnell--Reiner zeta functions. As an application, we obtain explicit formulas for the Solomon zeta functions of all lattices over $\\mathbb{Z}_p[\\mathbb{Z}/p\\mathbb{Z}]$, including non-projective lattices.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -1273,7 +1273,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Local statistics and average rank of genus $g$ hyperelliptic curves with a Weierstrass point' and formalize its key results. Abstract: In this paper, we determine the probability that a genus $g$ hyperelliptic curve with a Weierstrass point over a number field has good reduction at a given prime of residue characteristic $>2g+1$. We also obtain analogous probability formulas for several other reduction types, including cases with positive toric or unipotent rank. As an application, assuming the Hasse--Weil conjecture and the generalized Riemann hypothesis, we derive an explicit upper bound for the average analytic rank of genus $g$ hyperelliptic curves with a Weierstrass point.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -1314,7 +1314,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Stable Limit DAHA of type $(C^{\\vee},C)$ and Stable Limit Koornwinder Polynomials' and formalize its key results. Abstract: We construct two stable limit representations of the double affine Hecke algebra of type $(C^\\vee,C)$ on the space of almost symmetric Laurent polynomials, namely the positive and negative stable limit representations. Starting from the standard polynomial representation of the finite rank DAHA of type $(C_n^\\vee,C_n)$, we study the asymptotic behavior of the Cherednik operators under the two natural rescalings by positive and negative powers of the parameter $t$. We prove that these rescaled Cherednik operators admit well-defined limits on the ring of almost symmetric Laurent polynomials. This yields stable positive and negative actions of a common stable limit DAHA. The action of the limit Cherednik operators is also proven to be triangular on a natural basis of almost symmetric Laurent polynomials labeled by tuple-partition symbols with respect to the induced Bruhat order. We further construct for each of the two stable limit representations a set of simultaneous eigenfunctions of t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -1435,7 +1435,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Kleber's conjecture and complementary products of symmetric functions' and formalize its key results. Abstract: We prove Kleber's rectangular-complement conjecture for Schur functions over an arbitrary commutative ring $R$, showing that, for a fixed rectangle, the products $s_λs_{λ^\\vee}$, indexed by unordered complementary pairs, are linearly independent in $Λ_R$. The proof rests on a general independence theorem for componentwise splittings, which asserts that for every partition $θ$, the products $s_αs_β$ are linearly independent as $\\{α,β\\}$ ranges over unordered pairs of partitions satisfying $α+β=θ$. The independence of the products $s_λs_{λ^\\vee}$ also yields linear independence of the Koike--Terada universal-character products over any field, answering a question of Gao--Orelowitz--Yong. We also prove the analogous result for monomial symmetric functions over fields of characteristic zero, as well as integral linear independence over $\\mathbb{Z}$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -1558,7 +1558,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The Balanced Four-Color Theorem' and formalize its key results. Abstract: We show that every planar graph with $n \\geq 3$ vertices admits a 4-coloring in which each color is used on fewer than $n/2$ vertices. This bound is the best possible. Moreover, such a coloring can be found in $O(n \\log n)$ time. We also extend these results to five or more colors and to graphs on general surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -1639,7 +1639,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Record compositions of alternating permutations and noncommutative symmetric functions' and formalize its key results. Abstract: Amdeberhan, Shareshian, and Stanley recently proved that a function $\\varphi$ arising in the theory of partition Eisenstein series counts the alternating permutations of $\\{1,\\dots,2n\\}$ with a given `record' partition, and they asked whether there is a similar theory for record compositions, suggesting a role for noncommutative symmetric functions. Here we solve their open problem by showing that the number of alternating permutations of $\\{1,\\dots,2n\\}$ with record composition $(α_1,\\dots,α_\\ell)$ is \\[ \\prod_{j=1}^{\\ell}\\binom{2s_j-1}{2α_j-1}E_{2α_j-1}, \\] where $s_j=α_1+\\dots+α_j$, $E_k$ is an Euler number, and the record composition of $w=a_1a_2\\dots a_{2n}$ (so $a_1>a_2<a_3>\\dotsb$) lists the factor lengths obtained by cutting $a_1a_3\\dots a_{2n-1}$ before each left-to-right maximum other than the first. These numbers are the coefficients of a natural lift of the degree-$n$ sprout symmetric function with seed $\\sec(\\sqrt{t}\\,)$ to noncommutative symmetric functions, expanded in p",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -1719,7 +1719,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation' and formalize its key results. Abstract: We prove the Gonality Conjecture in arithmetic dynamics: for any non-isotrivial one-parameter algebraic family of rational maps on $\\mathbb{P}^1$, the gonality of distinct dynatomic curves tends to infinity. More generally, outside the flexible Lattès family, every small sequence of horizontal curves has gonality tending to infinity, and its genus grows superlinearly with its degree over the parameter curve. We also obtain higher-dimensional analogues under natural bifurcation and multiplier-genericity hypotheses. As applications, we prove uniform boundedness results for iterated preimages over number fields and geometric uniform boundedness results for preperiodic points over function fields. The proof combines arithmetic equidistribution, woven currents, and bifurcation theory; the bifurcation mechanism is what forces the growth of genus and gonality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -1760,7 +1760,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Euler systems and the symmetric square of a Hida family' and formalize its key results. Abstract: Let $p\\geq7$ be a prime number. We build a non-trivial Euler system for the symmetric square of a $p$-adic Hida family of modular forms interpolating the Euler system constructed by Loeffler-Zerbes for the symmetric square of a $p$-ordinary newform. As a second contribution, we prove an algebraic functional equation for dual Selmer groups in this setting. Finally, building on recent work by Büyükboduk-Ganguly on functional equations of algebraic (Rankin-Selberg) $p$-adic $L$-functions, we prove a divisibility result towards the Iwasawa main conjecture for the symmetric square of a Hida family.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -1842,7 +1842,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Local flag algebras' and formalize its key results. Abstract: We introduce local flag algebras, a variant of Razborov's flag algebra framework in which densities are normalised by the maximum degree $Δ(G)$ rather than the order $|G|$. The framework supports the same semidefinite-method machinery as the classical version, but is tailored to extremal problems that scale with the maximum degree. As an illustrative first application we bound the number of pentagons in a triangle-free graph $G$ as a function of $|G|$ and $Δ(G)$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -1922,7 +1922,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Recursive Formula for the Equations of Hessenberg Varieties' and formalize its key results. Abstract: Hessenberg varieties are subvarieties of the flag variety, defined by containment conditions on flags with respect to a linear operator. The study of these varieties lies in the intersection of algebraic geometry, combinatorics, and representation theory. In this paper, we develop an algebro-geometric procedure for determining the closed subvariety structure of a Hessenberg variety $\\mathcal{H}(X,h)$ in the flag variety for any linear operator $X$ and Hessenberg function $h$, by imposing a partial order on the Hessenberg functions and analyzing the relation of the corresponding Hessenberg varieties. In particular, we give a concrete recursive formula for determining all equations cutting out a given Hessenberg variety in each Schubert cell. As an application, we provide an alternative geometric proof of Tymoczko's results on the existence of affine pavings of a given Hessenberg variety and on the dimension count of its cells.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Algebra"
@@ -2044,7 +2044,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Coloring $(P_6,C_4)$-free graphs with $Δ- 1$ colors' and formalize its key results. Abstract: For a graph $G$, let $Δ(G)$, $ω(G)$, and $χ(G)$ denote the maximum degree, clique number, and chromatic number of $G$, respectively. Let $P_n$ and $C_n$ denote the chordless path and chordless cycle on $n$ vertices, respectively. In this paper, we prove that every $(P_6,C_4)$-free graph $G$ with $Δ(G)\\ge 9$ and $ω(G)<Δ(G)$ is $(Δ(G)-1)$-colorable.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -2246,7 +2246,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Construction of Generalized Weighing-Hadamard Matrices over Finite Fields' and formalize its key results. Abstract: The existence, several properties, and constructions of Generalized Weighing-Hadamard (GWH) matrices over finite fields are addressed in this work. We study the subset of invertible GWH matrices and show that it forms a group under matrix multiplication. Besides that, we introduce a strong notion of equivalence between such matrices, defined via orthogonal transformations, and further prove that the corresponding quotient group by the subgroup of orthogonal matrices is abelian. Finally, we discuss some applications of these matrices in coding theory",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -2286,7 +2286,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$' and formalize its key results. Abstract: Let $\\mathbf{F} = \\mathbf{Q}(\\sqrt D)$ be a real quadratic field. In this paper, we establish a large sieve inequality for the Asai lifts $ \\mathrm{As} (f) $ with $f$ in a Hecke orthonormal basis of the space of Hilbert modular cusp forms of parallel weight $(k, k)$ over $ \\mathbf{F} $. As an application, for a fixed Hecke--Maass cusp form $φ$ over $\\mathbf{Q}$, we prove a non-trivial bound for the second moment of the convoluted central $L$-values $ L (1/2, \\mathrm{As}(f) \\times φ) $ in the $k$-aspect.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2367,7 +2367,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Study on Morgan-Voyce type polynomials with Euler-Seidel algorithm' and formalize its key results. Abstract: This paper bridges the domains of degenerate special polynomials, the Euler-Seidel matrix method, and Morgan-Voyce polynomials. We introduce two new families of Morgan-Voyce type polynomials and establish their structural properties, including explicit formulas and recurrence relations. Additionally, we define three polynomial variants and prove that three distinct binomial-type sums for Bell polynomials can be expressed as finite sums involving these new families, and derive their exponential generating functions. We then construct Euler-Seidel matrices using the initial sequences associated with Morgan-type polynomials. Our results yield novel algebraic identities and expand the application of matrix methods in combinatorial analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -2408,7 +2408,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Interchange graphs of (0,1)-matrices are maximally Hamiltonian' and formalize its key results. Abstract: For integer vectors R,S let A(R,S) denote the class of (0,1)-matrices with row sum vector R and column sum vector S. Its interchange graph G(R,S) has A(R,S) as its vertex set, two matrices being adjacent when they differ by a single 2 x 2 interchange. Brualdi conjectured that G(R,S) is Hamiltonian for every R,S. We prove the stronger statement that G(R,S) is maximally Hamiltonian: Hamilton-laceable when bipartite, and Hamilton-connected when not. The proof is a structural induction on the number of matrices in the class, organized by the structure theory of interchange graphs. Deleting inactive lines and splitting invariant positions expresses any class as a Cartesian product, reducing the argument to the prime factors. The bipartite classes are products of complete transposition graphs; we settle them together, without induction, by proving they are paired 2-disjoint-path-coverable and hence Hamilton-laceable, using a recent theorem of Coleman, Fischberg, Gong, Harrington and Wong on ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -2490,7 +2490,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The Action of the Lie Algebra $\\mathfrak{sl}_n$ on Colored Graphs and Multicolored Johnson Graphs' and formalize its key results. Abstract: We consider the space of $(n-1)$-colored graphs on a fixed set of $N$ vertices. Each edge position of the complete graph $K_N$ has $n$ possible states: the absence of an edge and $n-1$ colors. This gives a natural identification of the space of such graphs with the tensor power $(\\mathbb C^n)^{\\otimes m}$, where $m=\\binom N2$, and defines on it the diagonal action of the Lie algebra $\\mathfrak{gl}_n$, and, after restriction, the action of $\\mathfrak{sl}_n$. For a fixed profile $α=(α_0,\\dots,α_{n-1})$, we consider the graph $J(m;α)$ whose vertices are colored graphs of this profile and whose adjacency is defined by a single exchange of states in two edge positions. This graph is the transposition graph on the set of words with fixed profile, also known as the \\emph{multislice}. The main result is an expression of the adjacency operator in terms of the root operators of $\\mathfrak{sl}_n$ and a derivation of its spectrum by means of the quadratic Casimir operator of $\\mathfrak{gl}_n$ and ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -2570,7 +2570,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Genestier--Tilouine and Pilloni) in the setting of Siegel modular forms of genus two when the residual representation arises from a stable Yoshida lift, that is, an automorphic induction of a nearly ordinary Hilbert modular eigencuspform over a real quadratic field. As applications of the underlying $R=\\mathbb{T}$ theorem, we establish the freeness of a universal minimal ordinary Galois deformation ring over an Iwasawa algebra in two variables along with the uniqueness of Hida families passing through classical $p$-ordinary Siegel modular eigenforms with very regular weights.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -2611,7 +2611,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Torsion groups of rational elliptic curves over $\\mathbb{Z}_p$-extensions of quadratic fields: the $p\\le 5$ case' and formalize its key results. Abstract: Let $E$ be a rational elliptic curve. We generalize a theorem due to Avcı\\cite{AVCI2026153}, which asserts that for any quadratic field \\(K\\) and prime \\(p>5\\), the equality \\(E(K)_{\\mathrm{tors}} = E(L)_{\\mathrm{tors}}\\) holds for every \\(\\mathbb{Z}_p\\)-extension \\(L/K\\). In this paper, we consider the setting where the \\(\\mathbb{Z}_p\\)-extension \\(L\\) is replaced by the compositum \\(K_{\\infty}\\) of all \\(\\mathbb{Z}_p\\)-extensions of \\(K\\). Under this new setting, we prove the analogous statement for \\(p=5\\), and further provide partial results for the remaining primes \\(p=3\\) and \\(p=2\\).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -2692,7 +2692,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Periodicities in the Riordan arrays of polynomials over finite fields' and formalize its key results. Abstract: We study periodicity properties of the 2-D $\\bigl(p_1(t)/p_2(t),\\, tp_3(t)\\bigr)$ and 3-D $\\bigl(p_1(t)/p_2(t),\\, tp_3(t),\\, p_4(t)\\bigr)$ Riordan arrays over a finite field ${\\mathbb F}_q$, where each $p_i(t)$ is a polynomial with $p_i(0)\\neq 0$. We show that the columns of the 2-D Riordan array are eventually periodic sequences, where a circulant matrix generated by the coefficients of $p_3(t)$ determines the behavior of this periodicity as the column index grows indefinitely. Furthermore, we prove that the preperiodic column partial sums of the 2-D array are periodic, and present a family of the Riordan arrays for which such sequences of partial sums are identically zero. We also show that the layers of the 3-D Riordan array contain periodic orbits related to each other via powers of a circulant matrix generated by the coefficients of $p_4(t)$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -2732,7 +2732,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On the Second Moment of $L (1/2, \\mathrm{As} (f))$' and formalize its key results. Abstract: Let $\\mathbf{F}$ be a real quadratic field. Let $f $ traverse a Hecke orthonormal basis of Hilbert cusp forms over $ \\mathbf{F} $ of full level and parallel weight $(k,k)$. As $k \\rightarrow \\infty$, we prove an asymptotic formula for the second moment of central Asai $L$-values $L (1/2, \\mathrm{As} (f))$: \\begin{equation*} {\\sum}_{f } \\, ω_f L(1/2,\\mathrm{As}(f))^2 = P_3 ( \\log {k } ) k^2 + O_{\\mathbf{F},\\varepsilon} (k^{3/2 + \\varepsilon} ), \\end{equation*} where $ω_f$ are the harmonic weights and $P_3 (X)$ is an explicit polynomial of degree $3$. This refines the mean Lindelöf bound $ O_{\\mathbf{F},\\varepsilon} (k^{2 + \\varepsilon} ) $ proved by Wenzhi Luo.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -2812,7 +2812,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Quantum determinants in polynomial time' and formalize its key results. Abstract: We give an algebraic branching program of polynomial size which computes Cayley determinant of right quantum matrices. This is a rare example of an efficient computation of a noncommutative determinant, and the first such example for quantum groups. We extend the results to the $q$-Cayley determinant of $q$-right quantum matrices, as well as to their multiparameter generalization. The proofs are entirely combinatorial, as we relate Cayley, Moore and Valiant determinants using bijections/involutions on words. We then employ the celebrated determinant construction of Mahajan and Vinay (SODA'97), to obtain the results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -2934,7 +2934,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Beyond Mock Modularity: Elliptic Corrections for Higher Dyson Ranks' and formalize its key results. Abstract: When $m = 1$, the Dyson rank generating function is a classical bridge between partition theory, Ramanujan's mock theta functions, and the theory of harmonic Maass forms and nonholomorphic Jacobi forms. The rank is a statistic on partitions, and the higher Dyson systems, for $m \\geq 2$, are a natural multivariable refinement of it, combining $m$ graded rank contributions. Unlike the classical case, these higher systems are not expected to fit the mock-modular framework, which raises the question of what analytic structure governs them. We show that their root-of-unity specializations carry a hidden elliptic structure. A finite $q$-difference recurrence produces an explicit polynomial obstruction to the expected index $m$ elliptic transformation law, and because the obstruction is finite, its partial fractions canonically determine finitely many Appell--Lerch correction terms that remove it. The corrected functions satisfy a twisted index $m$ elliptic law; a natural translation removes ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
