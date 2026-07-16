@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0e4c0a6c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Mixed-Radix Number Systems (Cycle 1, thread th_d1eba7ba)\n\nThis cycle advances the mixed-radix program by settling two of the four standing\nconjectures in fully general form (arbi",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-14T23:30:35",
-      "title": "These conjectures are distilled from the current cycle, which closed the bridge"
-    },
-    {
       "cycle_id": "71637775",
       "domain": "Novelty",
       "key_insight": "# Future Directions: The multi-join law for the ℤ₂-coindex\n\nThis cycle extends the constructive, lower-bound half of the ℤ₂-coindex theory established in\n`Catalog/Novelty/Z2CoindexJoin.lean` (the shar",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T05:30:50",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Coherent levelwise classification\n\n**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their finite levels admit a coherent family of bijections preserv",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T05:31:09",
+      "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "223b6ab0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Topology and Causal Structure of Closed Universes\n\nBold, testable conjectures growing out of the study of the flat donut universe:\nthe closed torus model, its winding lattice, an",
-      "quality_score": 0.55,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-13T08:59:49",
-      "title": "Close Proofs: Rucker: Spacetime Donuts — Topology of the Universe"
-    },
     {
       "cycle_id": "9da8e56c",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T05:30:50",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Coherent levelwise classification\n\n**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their finite levels admit a coherent family of bijections preserv",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T05:31:09",
+      "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3c80004e",
-      "domain": "Physics",
-      "name": "card_composeMany",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "3c80004e",
-      "domain": "Physics",
-      "name": "coind_composeMany",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "e72af703",
-      "domain": "MachineLearning",
-      "name": "decode_encode",
-      "quality": 0.91
-    },
     {
       "cycle_id": "e72af703",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "exists_rejecting_valuation",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "name": "initialSegment_map",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "name": "initialSegment_comp_equiv",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "name": "relabel_preserves_ray",
+      "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T05:30:50",
+  "last_updated": "2026-07-16T05:31:09",
   "open_questions": [
     {
       "context": "All statements are proved with no `sorry` and no extra axioms.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0e4c0a6c",
-        "quality": 0.78,
-        "theorems": 26,
-        "title": "These conjectures are distilled from the current cycle, which closed the bridge"
-      },
-      {
         "cycle_id": "c23e4bea",
         "quality": 0.83,
         "theorems": 18,
@@ -3141,6 +3135,12 @@
         "quality": 0.53,
         "theorems": 0,
         "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+      },
+      {
+        "cycle_id": "352675e9",
+        "quality": 0.71,
+        "theorems": 13,
+        "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to home"
       }
     ],
     "Bridges": [
