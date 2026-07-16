@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T07:07:04Z",
+  "date": "2026-07-16T07:08:22Z",
   "key_results": [
     "Every pair-star edge has cardinality three, and the construction on parameters s and t has exactly 2s+t vertices and st edges.",
     "The pair-star hypergraph is Berge-triangle-free for all nonnegative parameters.",
