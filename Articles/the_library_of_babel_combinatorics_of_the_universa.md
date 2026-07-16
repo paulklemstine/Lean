@@ -1,153 +1,122 @@
-# The Library of Babel: How to Count Everything That Can Be Written
+# The Library of Babel, Counted
 
-Imagine a library with no unfinished shelves. Every book has exactly the same number of character positions, every position is filled from the same fixed alphabet, and every possible arrangement is present. Somewhere inside are lucid histories, convincing forgeries, correct proofs, almost-correct proofs, translations of books that were never written, and oceans of typographical noise. The library is finite. Yet its scale makes ordinary words such as “large” nearly useless.
+## Every book exists. The hard part is finding one.
 
-This is the mathematical heart of the Library of Babel. It turns a literary vision into a precise information space, and it exposes a distinction that matters far beyond fiction: **existence is not the same as findability**.
+Imagine a library whose shelves contain every possible book of a fixed length. Not every sensible book, not every grammatical book, but every sequence that can be formed from a chosen alphabet. Somewhere there is a flawless history of tomorrow. Nearby are its millions of near-copies, each with one letter changed. There are proofs, refutations, love letters, weather reports, and oceans of punctuation-free noise.
 
-## A library as a space of strings
+This is the mathematical core of Jorge Luis Borges’ Library of Babel. Once stripped of architecture and mythology, it becomes a finite combinatorial universe. Let the alphabet have $q$ symbols, and let every book contain exactly $n$ symbol positions. A book is then a function assigning one of the $q$ symbols to each of the $n$ positions—or, more familiarly, a word of length $n$ over a $q$-letter alphabet.
 
-Let the alphabet contain $A$ symbols and let every volume contain exactly $L$ positions. A volume is simply a string
-
-$$
-s_0s_1\cdots s_{L-1},
-$$
-
-with each $s_i$ chosen from the alphabet. Because there are $A$ independent choices at each of $L$ positions, the number of volumes is
+The first result is simple and decisive: the library contains exactly
 
 $$
-A^L.
+q^n
 $$
 
-For the familiar parameters $A=25$ and $L=1{,}312{,}000$, the library therefore contains exactly
+books. Each position offers $q$ independent choices, and multiplying those choices over $n$ positions gives the total.
+
+For the traditional parameters of a $25$-symbol alphabet and $1{,}312{,}000$ symbol positions, the number of volumes is
 
 $$
-25^{1{,}312{,}000}
+25^{1{,}312{,}000}.
 $$
 
-volumes. This number has $1+\lfloor 1{,}312{,}000\log_{10}25\rfloor=1{,}834{,}098$ decimal digits. Merely printing the count would itself require a substantial book.
+It is finite. It is also so large that writing its decimal expansion would itself require roughly $1.83$ million digits. The Library of Babel is therefore a perfect lesson in the difference between existence and accessibility. Every volume can exist in the mathematical collection while nearly every practical search remains hopeless.
 
-The counting principle is elementary, but it is the engine behind everything that follows. It tells us not only how many books there are, but how the population shrinks when we demand particular content.
+## Giving every book an address
 
-## The price of prescribing text
+A universal library needs more than shelves; it needs addresses. Fortunately, the books themselves suggest a canonical catalog.
 
-Suppose we specify the symbols at $d$ distinct positions of a volume. Those positions no longer offer choices, while the remaining $L-d$ positions remain free. The **Constrained-Content Theorem** says that the number of compatible volumes is exactly
-
-$$
-A^{L-d}.
-$$
-
-The word “distinct” is essential. If the same position is named twice, two prescriptions may be redundant or contradictory. With distinct positions, each prescribed symbol removes one factor of $A$ from the count.
-
-A contiguous passage of length $m$ at a fixed location is a special case. Its $m$ positions are distinct, so exactly
+Number the alphabet symbols $0,1,\ldots,q-1$. If a book has symbols $a_0,a_1,\ldots,a_{n-1}$, read those symbols as the digits of a base-$q$ number:
 
 $$
-A^{L-m}
+A(a_0,a_1,\ldots,a_{n-1})
+= a_0q^{n-1}+a_1q^{n-2}+\cdots+a_{n-1}.
 $$
 
-volumes contain that passage at that location. Under the uniform model, in which every volume is equally likely, the probability of a match at that one location is therefore
+This address always lies between $0$ and $q^n-1$. More importantly, no two books receive the same address, and every address in that range belongs to exactly one book. This is the **Canonical Address Theorem**: length-$n$ words over a $q$-symbol alphabet are in one-to-one correspondence with the integers $0,1,\ldots,q^n-1$.
+
+The proof is the familiar uniqueness of base-$q$ notation. To recover a book from its address, repeatedly divide by $q$ and record the remainders. Each remainder is a symbol. Thus cataloging and retrieval are not mysterious operations: both require only a number of arithmetic steps proportional to the book length, apart from the cost of manipulating very large integers.
+
+This point resolves an apparent paradox. A catalog of every individual book need not be printed as a gigantic table. A short rule can assign every location. A formula is not the same thing as a list.
+
+Consider a miniature but still substantial example: an alphabet of four symbols and books of length sixteen. Its population is
 
 $$
-\frac{A^{L-m}}{A^L}=A^{-m}.
+4^{16}=4{,}294{,}967{,}296.
 $$
 
-This is the first sharp result about finding a passage. Each additional prescribed character multiplies the probability by $1/A$. The exponential rarity comes from syntax alone; no judgment about meaning has entered.
-
-## From one location to an entire book
-
-A passage might begin in more than one place. If $m\leq L$, there are
+Every one of these more than four billion books has a unique base-four address. The book $[3,1,0,2]$, in a four-symbol library of length four, has address
 
 $$
-L-m+1
+3\cdot 4^3+1\cdot 4^2+0\cdot 4+2=210.
 $$
 
-possible starting positions. At each one, the matching probability is $A^{-m}$. Adding those probabilities gives the **Passage Occurrence Bound**:
+Dividing $210$ repeatedly by $4$ recovers the remainders and therefore the original book. The mini-library is universal for its chosen dimensions, yet its cataloging rule fits in a paragraph.
+
+## How rare is a particular meaningful text?
+
+Suppose one book is chosen uniformly at random. What is the chance of drawing a specified text? Since there are $q^n$ books and each is equally likely, the **Uniform Text Theorem** says that the exact probability is
 
 $$
-\Pr(\text{the passage occurs somewhere})
-\leq (L-m+1)A^{-m}.
+\Pr(\text{specified book})=\frac{1}{q^n}.
 $$
 
-Equivalently, the number of volumes containing the passage is at most
+For the full $25$-symbol library, that probability is $25^{-1{,}312{,}000}$. Existence alone offers essentially no practical comfort.
+
+But meaningful targets are often not single texts. A fixed rule may accept many books: perhaps those encoding syntactically valid arguments, perhaps those passing a bounded mathematical checker, or perhaps those containing a chosen phrase. Let $C$ be any yes-or-no test on books, and let $M$ be the number of books it accepts. Then the **Acceptance Probability Theorem** states
 
 $$
-(L-m+1)A^{L-m}.
+\Pr(C\text{ accepts a random book})=\frac{M}{q^n}.
 $$
 
-Why is this an inequality rather than an equality? A single volume may contain the same passage several times. Adding the counts for all starting positions then counts that volume repeatedly. The bound is always valid, but it need not be sharp.
+This is exact, not an approximation. If at least one accepted witness is known, then $M>0$, so the probability is positive. Yet “positive” can still mean fantastically small.
 
-Consider binary strings of length $3$ and the passage $11$. There are two possible starting positions. The union bound gives $2\cdot2^{-2}=1/2$. In fact, the strings containing $11$ are $011$, $110$, and $111$, so the exact probability is $3/8$. The string $111$ creates the overlap: it matches at both positions and is counted twice by the simple sum.
+This formula also clarifies why there is no single universal numerical answer to “What is the probability of finding a valid proof?” The question must first specify the alphabet or byte encoding, the theorem being proved, the grammar, the allowed background assumptions, the checker, and any limits on time or memory. Different rules accept different subsets and therefore produce different values of $M$. Once all those choices are fixed as a finite yes-or-no procedure, the probability is exactly the fraction above.
 
-This corrects a tempting but misleading slogan. One sometimes hears that the chance of finding a target should resemble “target length times alphabet size to a negative complexity.” For a literal fixed passage, the polynomial factor is not its length. It is the number of places where it could begin, $L-m+1$, while the exponential penalty is controlled by the number $m$ of prescribed symbols.
+A useful special case concerns a target pattern of length $k$. At one specified position, the chance of matching it is $q^{-k}$. Across $r$ candidate positions, the expected number of matches is $rq^{-k}$. The probability of at least one occurrence is at most $rq^{-k}$ by the union bound. This explains the common heuristic “number of opportunities times $q^{-k}$,” while also showing its limits: overlaps make the events dependent, so the heuristic need not be an exact probability.
 
-For a book with $A=25$ and $L=1{,}312{,}000$, a fixed passage of length $m$ consequently satisfies
+## The catalog that cannot fit in one book
 
-$$
-\Pr(\text{occurrence})\leq
-\frac{1{,}312{,}001-m}{25^m}.
-$$
+Now comes the deeper distinction. A canonical catalog can have a short description, but what if “catalog” means an arbitrary table assigning an address or destination to every book?
 
-When this expression exceeds $1$, the trivial bound $1$ is better; thus one may write the practical estimate as the minimum of the displayed quantity and $1$.
-
-## Syntax is not meaning
-
-A crucial boundary now appears. The formulas count exact strings. They do not tell us the probability of finding a “meaningful proof,” because meaningfulness is not determined until we choose an encoding, a grammar, a theorem, and a procedure for deciding acceptance. Two encodings can represent the same argument with very different lengths. A checker with one grammar may accept a string rejected by another.
-
-The honest route is to define a finite language of accepted proof strings. Once that language and its resource limits are fixed, semantic-seeming questions become combinatorial ones: how many accepted strings of each length exist, and how densely do they occur inside longer volumes? Without those choices, there is no encoding-independent numerical probability of validity.
-
-This lesson applies equally to DNA motif searches, packet signatures, text indexing, and malware detection. Exact matching is a clean combinatorial event. Interpretation belongs to an additional model.
-
-## A tiny universal index
-
-Can a long cyclic text act as an index by displaying every short word exactly once as a moving window? Yes. The smallest nonbinary example in this story uses four symbols, which we label $0,1,2,3$. Consider the cyclic word
+Let $L=q^n$ be the number of books. A table with one book-valued entry for each of the $L$ books is a function from an $L$-element set to itself. There are
 
 $$
-0010203112132233.
+L^L=(q^n)^{q^n}
 $$
 
-Read each symbol together with its cyclic successor, wrapping from the last symbol back to the first. The resulting sixteen pairs are
+such tables. A single volume, however, has only $L$ possible contents. Whenever $L\ge 2$, we have $L^L>L$. Therefore no injective encoding from all possible catalog tables into individual books can exist.
+
+This is the **Universal Table Impossibility Theorem**: if a library contains at least two books, one book cannot uniquely represent every possible complete book-to-book table.
+
+The argument is pure counting. If more objects must be encoded than there are codewords, collisions are unavoidable. It does not say that the useful base-$q$ catalog is impossible; that catalog is one specially structured function with a concise rule. The theorem says that every possible table cannot be compressed injectively into the same book format.
+
+The difference resembles the gap between describing “sort these names alphabetically” and printing an unrelated destination beside every possible name. Structure can collapse a description. Arbitrary data cannot be expected to do so.
+
+## When a catalog is spread across many volumes
+
+If one volume is insufficient, distribute the information. Suppose there are $T$ distinct records to store, $N$ books available, and each book has room for $c$ records. Exactly when is storage possible?
+
+The **Distributed Capacity Theorem** gives a complete answer:
 
 $$
-00,01,10,02,20,03,31,11,12,21,13,32,22,23,33,30.
+T\le Nc.
 $$
 
-These are precisely all $4^2=16$ ordered pairs over the four-symbol alphabet, each appearing once. This is the **Complete Mini-Library Index Theorem**: every two-symbol volume has a unique location among the cyclic windows of this word.
+Necessity is immediate: $N$ books with $c$ slots each provide only $Nc$ slots. Sufficiency is constructive. Number records $0$ through $T-1$. Put record $i$ in book $\lfloor i/c\rfloor$ and slot $i\bmod c$. The inequality guarantees that the selected book number is below $N$.
 
-The proof can be seen directly in the displayed list. No pair repeats, and there are sixteen pairs in both the list and the complete two-symbol library. An injective map between two finite sets of equal size is automatically bijective, so every possible pair appears exactly once.
+This theorem is elementary, but it captures a central principle of information systems. A distributed index, a sharded database, and a bank of storage drives all obey the same arithmetic. Capacity adds.
 
-The construction reaches a sharp capacity limit. A cyclic word of length $n$ has exactly $n$ starting positions for two-symbol windows, so it cannot list more than $n$ pairs without collision. Since sixteen pairs exist, at least sixteen cyclic positions are required, and the displayed word uses exactly sixteen.
+It also repairs an easy mistake in reasoning about the Library. One may estimate a book’s bit capacity as $n\log_2 q$, but exact storage claims should specify what counts as a record and how symbols encode it. The slot theorem avoids ambiguity: once capacity is measured in fixed records, the criterion is both necessary and sufficient.
 
-There are two important cautions. First, this indexes all two-symbol books, not all length-sixteen books. The latter library has $4^{16}$ members, vastly more than sixteen. Second, if the cyclic word is printed linearly, its final wraparound pair is invisible unless the initial symbol is repeated at the end; the linear presentation then has length seventeen.
+## A guide is not the territory
 
-## Why the circle matters
+The Library of Babel dramatizes a truth now familiar from search engines, scientific databases, and generative systems: abundance is not knowledge. A space can contain every answer while providing no efficient path to the answer one wants.
 
-The miniature index is an order-two de Bruijn cycle. Its hidden geometry is a directed graph. Treat each alphabet symbol as a vertex and each ordered pair $ab$ as an arrow from $a$ to $b$. A cyclic word that exhibits every pair exactly once corresponds to a route that traverses every directed edge exactly once and returns to its starting point.
+The canonical address map proves that every book can be named and recovered. The probability formulas measure how little that helps random search. The table-counting theorem marks the boundary between a concise structured rule and arbitrary information. The distributed-capacity theorem shows how more physical carriers can overcome a fixed local limit.
 
-This viewpoint transforms indexing into navigation. Instead of searching independently through all possible pairs, one arranges them so that consecutive entries overlap. The last symbol of one pair is the first symbol of the next. Shared structure compresses the listing to the theoretical minimum.
+One famous route to a more compact traversal uses a de Bruijn cycle: a cyclic sequence in which every length-$n$ word over a $q$-symbol alphabet appears exactly once as a consecutive cyclic window. Such a cycle has length $q^n$. For the four-symbol, order-sixteen case, its cyclic length would be $4^{16}$. Building and proving the required cycle is a further step beyond the base-four address catalog described here; the two should not be confused. The address catalog enumerates words by arithmetic, while a de Bruijn cycle arranges them as overlapping windows of one cyclic object.
 
-The same principle drives practical objects: cyclic test patterns for communication hardware, compact experimental schedules, genome-assembly graphs, and exhaustive local-state testing. Whenever all short configurations must be visited with maximal overlap, de Bruijn-style cycles are natural guides.
+That future construction would sharpen the Library’s central metaphor. Neighboring books could overlap in all but one symbol, turning exhaustive enumeration into a walk through a graph. Yet even the current results already expose the essential tension. The whole universe of fixed-length texts is finite, countable, addressable, and exactly measurable. Meaning remains sparse because counting what exists is not the same as recognizing what matters.
 
-## The information barrier
-
-Could one ordinary volume contain a complete address for every other volume? Counting warns against the naive idea. The library has $A^L$ members, so a fixed-length address needs about
-
-$$
-\log_2(A^L)=L\log_2 A
-$$
-
-bits. Listing one such address for every volume requires on the order of
-
-$$
-A^L L\log_2 A
-$$
-
-bits, far beyond the capacity of a single $L$-symbol volume, which carries only $L\log_2 A$ bits under a direct fixed-width encoding.
-
-This argument depends on what an “entry” is and how entries are decoded. Clever delimiters, shared prefixes, algorithms, or distributed storage can change the accounting, but they cannot be discussed responsibly without a decoding model. A list of every full address, an algorithm generating addresses, and a de Bruijn cycle listing short windows are different mathematical objects. Confusing them creates apparent miracles.
-
-## Every text exists; guidance remains scarce
-
-The universal library reverses our ordinary intuition. In daily life, creating the desired text is the hard part. In the universal library, the desired text already exists. The hard part is specifying it, locating it, and distinguishing it from near misses.
-
-The mathematics makes that reversal quantitative. There are exactly $A^L$ volumes. Fixing $d$ distinct symbols leaves exactly $A^{L-d}$ possibilities. A specified passage at a specified location occupies the fraction $A^{-m}$ of the library. Allowing all starting positions gives the rigorous upper bound $(L-m+1)A^{-m}$. And a carefully arranged cyclic word can index every two-symbol object over four symbols exactly once, meeting the counting limit without waste.
-
-The deepest message is not that all meaningful writing is present. It is that abundance without structure is almost indistinguishable from absence. A space containing every answer still needs a map—and the map must obey the same laws of counting and information as everything it hopes to describe.
+Borges imagined librarians wandering hexagons in despair. Combinatorics gives them coordinates, probabilities, and capacity bounds. It cannot tell them which sentence is true. That final act still belongs to interpretation—and that is why a library containing everything can feel so much like a library containing nothing.

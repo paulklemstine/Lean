@@ -1,379 +1,370 @@
-# Universal Libraries, Passage Probabilities, and Optimal Cyclic Indexes
+# Universal Finite Libraries: Enumeration, Acceptance Probabilities, Catalog Limits, and Distributed Storage
 
-**Aristotle**
-
-**15 July 2026**
+**Aristotle**  
+**July 16, 2026**
 
 ## Abstract
 
-A universal finite library is the set of all strings of a fixed length $L$ over an alphabet of size $A$. This elementary model isolates three questions often blurred together in discussions of universal information spaces: how many objects exist, how frequently a prescribed passage occurs, and how efficiently shorter objects can be indexed by overlapping windows. We prove that the library contains exactly $A^L$ volumes; prescribing symbols at $d$ distinct positions leaves exactly $A^{L-d}$ compatible volumes; and a fixed passage of length $m$ occurs at a fixed injective family of positions in exactly $A^{L-m}$ volumes. For contiguous occurrence anywhere in a volume, the number of matching volumes is at most $(L-m+1)A^{L-m}$, yielding the probability bound $(L-m+1)A^{-m}$ under uniform sampling. The bound’s prefactor is the number of possible placements, not the target length, and exact probabilities depend on self-overlap. We also exhibit the cyclic word $0010203112132233$, whose sixteen length-two cyclic windows list every ordered pair over a four-symbol alphabet exactly once. This construction attains the window-capacity lower bound and illustrates the de Bruijn graph method. Finally, we separate syntactic occurrence from semantic validity and explain why catalog claims require an explicit coding and decoding model.
+A universal finite library consists of every word of a fixed length $n$ over an alphabet of size $q$. This elementary model separates four notions that are often conflated in discussions of universal information spaces: existence, addressability, recognizability, and storage. We prove that the library has exactly $q^n$ books and construct a canonical bijection between books and the addresses $0,\ldots,q^n-1$ using base-$q$ expansion. Consequently, a uniformly sampled complete text has probability exactly $q^{-n}$. More generally, for any Boolean acceptance rule, the acceptance probability is the number of accepted books divided by $q^n$, and an accepted witness guarantees positive probability. We then count all book-valued tables on the library: there are $(q^n)^{q^n}$, so when at least two books exist, no single book can injectively encode every possible table. This does not preclude concise descriptions of particular structured catalogs, including the canonical address map. Finally, we prove an exact distributed-storage criterion: $T$ distinct records fit into $N$ books of capacity $c$ records each if and only if $T\le Nc$. The alphabet-four, length-sixteen library is treated explicitly; it contains $4^{16}=4{,}294{,}967{,}296$ books. Algorithms and numerical experiments demonstrate encoding, decoding, finite acceptance counting, and distributed placement. We close by distinguishing base-$q$ enumeration from the stronger, still separate construction of de Bruijn cycles.
 
 ## 1. Introduction
 
-The idea of a library containing every possible book is simultaneously finite and disorienting. Once the alphabet and book length are fixed, the collection is a finite Cartesian power. Every possible text occurs, but almost all texts lack any interpretation of interest. The resulting tension—complete existence versus practical unfindability—appears in exhaustive search, information theory, sequence design, software testing, and biological motif detection.
+The Library of Babel can be made mathematically precise without invoking an infinite collection. Fix a finite alphabet and a fixed book length, and include every possible word of that length. The resulting universe is finite, but its size grows exponentially with the number of positions. Its finiteness permits exact counting; its scale makes naive search effectively useless.
 
-This paper develops the finite combinatorics needed to reason precisely about such a library. Let $A$ be the alphabet size and $L$ the common volume length. The principal example has $A=25$ and $L=1{,}312{,}000$, giving $25^{1{,}312{,}000}$ volumes. The scale is immense, but the governing arguments remain transparent.
+This model is relevant well beyond literary combinatorics. Password spaces, bounded program spaces, exhaustive test suites, finite language models, archival identifiers, and brute-force searches all share the same structure. A candidate is a word; an address is a numeral; a recognizer selects a subset; and a storage system assigns selected objects to bounded containers.
 
-There are three layers.
+Several claims require careful separation. First, one particular structured catalog can have a short algorithmic description. Second, the collection of all arbitrary tables on the library is vastly larger than the library itself. There is no contradiction: describing one regular function is different from encoding every function. Likewise, the statement that every finite text exists does not imply that a meaningful text is likely under random sampling.
 
-1. **Global counting.** A volume is a function from $L$ positions to $A$ symbols, so the library has cardinality $A^L$.
-2. **Local constraints and passage occurrence.** Prescribing symbols at distinct positions removes one factor of $A$ per position. This gives exact fixed-location counts and an anywhere-in-the-volume union bound.
-3. **Cyclic indexing.** Overlapping windows can list all shorter words at optimal capacity. An explicit four-symbol cycle lists all sixteen length-two words exactly once.
+The contributions are as follows.
 
-The distinction between syntax and semantics is central. The event that a volume contains a fixed character string is mathematically well-defined. The event that it contains a valid proof is not numerically determined until an encoding, grammar, theorem, acceptance procedure, and resource bound have been specified. The results below therefore make exact claims about prescribed symbols and explain how a semantic model could be added without pretending that meaning has an encoding-independent density.
+1. We define length-$n$ libraries over $q$ symbols and derive their exact cardinality.
+2. We give mutually inverse base-$q$ encoding and decoding algorithms, establishing a canonical catalog.
+3. We derive exact uniform probabilities for fixed texts and arbitrary finite Boolean acceptance rules.
+4. We prove a counting obstruction to encoding all complete book-valued tables in single books.
+5. We establish a necessary-and-sufficient distributed-capacity theorem, together with an explicit placement algorithm.
+6. We specialize the construction to $q=4$ and $n=16$ and discuss what would additionally be required for a de Bruijn catalog.
 
-## 2. Definitions and conventions
+Throughout, $q$ and $n$ are nonnegative integers unless additional restrictions are stated. For addressing by conventional positional notation we assume $q\ge 2$.
 
-### 2.1 Alphabets, volumes, and libraries
+## 2. Finite universal libraries
 
-Let $\Sigma$ be a finite alphabet with cardinality $|\Sigma|=A$, where $A$ is a nonnegative integer. For a nonnegative integer $L$, define a **volume of length $L$** to be a function
+### 2.1 Definitions
 
-$$
-s:\{0,1,\ldots,L-1\}\longrightarrow\Sigma.
-$$
-
-Equivalently, a volume is a string $s_0s_1\cdots s_{L-1}$. The **universal library** $\mathcal L(A,L)$ is the set of all such volumes.
-
-For $A>0$, uniform random sampling from $\mathcal L(A,L)$ means that each volume has probability $A^{-L}$. Equivalently, the symbols at the $L$ positions are independent and uniformly distributed over $\Sigma$.
-
-### 2.2 Prescribed positions
-
-Let $S\subseteq\{0,1,\ldots,L-1\}$ be a set of positions and let $p$ prescribe a symbol $p(i)\in\Sigma$ for each $i\in S$. A volume $s$ **matches $p$ on $S$** if $s(i)=p(i)$ for every $i\in S$.
-
-A more general indexed pattern consists of a map
+**Definition 2.1 (Alphabet).** An alphabet of size $q$ is the set
 
 $$
-\iota:\{0,1,\ldots,m-1\}\longrightarrow\{0,1,\ldots,L-1\}
+\Sigma_q=\{0,1,\ldots,q-1\}.
 $$
 
-and a word $q$ of length $m$. We say that $q$ **occurs along $\iota$ in $s$** if
+The numerical labels carry no semantic content; they merely choose a convenient representation.
+
+**Definition 2.2 (Book and library).** A length-$n$ book over $\Sigma_q$ is a tuple
 
 $$
-s(\iota(j))=q(j)\qquad\text{for every }0\leq j<m.
+b=(b_0,b_1,\ldots,b_{n-1}),\qquad b_i\in\Sigma_q.
 $$
 
-The map $\iota$ must be injective for the clean count below. If an index repeats, two constraints may duplicate one another or demand conflicting symbols at the same location.
-
-### 2.3 Contiguous windows
-
-Assume $m\leq L$. For each starting position $i\in\{0,1,\ldots,L-m\}$, the contiguous length-$m$ window beginning at $i$ is the injective map $j\mapsto i+j$. A pattern $q$ **occurs somewhere** in $s$ if there is at least one such $i$ for which
+The universal finite library is the set
 
 $$
-s(i+j)=q(j)\qquad(0\leq j<m).
+\mathcal L(q,n)=\Sigma_q^n
 $$
 
-There are exactly $L-m+1$ possible starting positions.
+of all such books.
 
-### 2.4 Cyclic windows
+The definition includes edge cases. If $n=0$, there is one empty book. If $q=0$ and $n>0$, there are no books. Most applications concern $q\ge2$ and $n\ge1$.
 
-For a cyclic word $c_0c_1\cdots c_{n-1}$, indices are read modulo $n$. Its length-$k$ cyclic window at $i$ is
+### 2.2 Exact enumeration
 
-$$
-(c_i,c_{i+1},\ldots,c_{i+k-1}),
-$$
-
-where subscripts are reduced modulo $n$. A cyclic word is a **complete order-$k$ index** over $\Sigma$ if its cyclic length-$k$ windows list every member of $\Sigma^k$ exactly once.
-
-This terminology emphasizes the indexing function of a de Bruijn cycle: a starting location is an address for the unique short word visible there.
-
-## 3. Fundamental counting results
-
-### Theorem 1 (Library cardinality)
-
-For all nonnegative integers $A$ and $L$, the universal library satisfies
+**Theorem 2.3 (Library Cardinality Theorem).** For all finite $q$ and $n$,
 
 $$
-|\mathcal L(A,L)|=A^L.
+|\mathcal L(q,n)|=q^n.
 $$
 
-#### Proof sketch
+**Proof sketch.** Each of the $n$ positions can be filled independently in $q$ ways. The product rule gives $q\cdot q\cdots q=q^n$. Equivalently, induction on $n$ starts with one empty word and observes that appending one symbol multiplies the count by $q$. $\square$
 
-At each of the $L$ positions there are $A$ independent symbol choices. The multiplication principle gives a product of $L$ factors equal to $A$, hence $A^L$. Equivalently, the number of functions from an $L$-element set to an $A$-element set is $A^L$. The usual convention $A^0=1$ accounts for the unique empty volume.
-
-For $A=25$ and $L=1{,}312{,}000$, the exact cardinality is
+For the classical numerical parameters $q=25$ and $n=1{,}312{,}000$, this yields $25^{1{,}312{,}000}$ books. Since
 
 $$
-25^{1{,}312{,}000}.
+\log_{10}(25^{1{,}312{,}000})
+=1{,}312{,}000\log_{10}25,
 $$
 
-Its decimal digit count is
+the count has $\lfloor1{,}312{,}000\log_{10}25\rfloor+1$ decimal digits, approximately $1.83$ million.
+
+## 3. A canonical base-$q$ catalog
+
+### 3.1 Address map
+
+**Definition 3.1 (Canonical address).** Assume $q\ge2$. For $b\in\mathcal L(q,n)$, define
 
 $$
-1+\left\lfloor1{,}312{,}000\log_{10}25\right\rfloor=1{,}834{,}098.
+\operatorname{addr}(b)=\sum_{i=0}^{n-1}b_iq^{n-1-i}.
 $$
 
-### Theorem 2 (Constrained-content count)
+This treats the symbols as the digits of an $n$-digit base-$q$ numeral, allowing leading zeros.
 
-Let $S$ be a set of $d$ distinct positions in a length-$L$ volume, and prescribe one alphabet symbol at each position in $S$. Then exactly
-
-$$
-A^{L-d}
-$$
-
-volumes satisfy all prescriptions.
-
-#### Proof sketch
-
-The symbols on $S$ are fixed, while every position in the complement $S^c$ is free. Since $|S^c|=L-d$, restriction to $S^c$ gives a bijection between matching volumes and arbitrary functions $S^c\to\Sigma$. Conversely, any assignment on $S^c$ can be glued to the prescribed assignment on $S$, producing a unique volume. There are $A^{L-d}$ assignments on the complement.
-
-This theorem is the reusable core of the counting theory. The library cardinality is recovered by taking $S$ empty. Fixed-location passage counts arise by taking $S$ to be the image of an injective family of pattern positions.
-
-### Corollary 3 (Exact fixed-position pattern count)
-
-Let $q$ be a pattern of length $m$, and let $\iota$ select $m$ distinct positions in a volume of length $L$. Then the number of volumes in which $q$ occurs along $\iota$ is exactly
+**Lemma 3.2 (Address range).** Every book satisfies
 
 $$
-A^{L-m}.
+0\le \operatorname{addr}(b)<q^n.
 $$
 
-If $A>0$ and the library is sampled uniformly, the corresponding probability is exactly
+**Proof sketch.** Nonnegativity is immediate. Since $b_i\le q-1$,
 
 $$
-A^{-m}.
+\operatorname{addr}(b)
+\le(q-1)\sum_{j=0}^{n-1}q^j
+=(q-1)\frac{q^n-1}{q-1}
+=q^n-1.
 $$
 
-#### Proof sketch
+Thus the address lies in the required half-open interval. $\square$
 
-The injective image of $\iota$ contains exactly $m$ positions. Prescribing $q(j)$ at $\iota(j)$ therefore invokes Theorem 2 with $d=m$. Dividing the resulting count $A^{L-m}$ by the total count $A^L$ gives $A^{-m}$.
+### 3.2 Decoding
 
-### Remark 4 (Why injectivity matters)
+**Algorithm 3.3 (Fixed-length base-$q$ decoding).** Given $a$ with $0\le a<q^n$, set $x=a$. For positions $i=n-1,n-2,\ldots,0$, let $b_i$ be the remainder of $x$ on division by $q$, and replace $x$ by $\lfloor x/q\rfloor$. Return $(b_0,\ldots,b_{n-1})$.
 
-Without injectivity, the conclusion can fail in two ways. If $\iota(j)=\iota(k)$ and $q(j)=q(k)$, the second constraint is redundant, so fewer than $m$ independent positions are fixed. If $q(j)\neq q(k)$, no volume satisfies the constraints. Thus the clean exponent $L-m$ reflects the number of distinct, mutually compatible prescriptions, not merely the number of entries in a list.
+Each remainder belongs to $\Sigma_q$. The bound $a<q^n$ ensures that after $n$ divisions the quotient is zero.
 
-## 4. Passage occurrence anywhere
+**Lemma 3.4 (Decoding inverts encoding).** If $b\in\mathcal L(q,n)$, decoding $\operatorname{addr}(b)$ returns $b$.
 
-For a fixed pattern $q$ of length $m\leq L$, let $E_i$ be the set of volumes in which $q$ begins at position $i$. Corollary 3 gives
+**Proof sketch.** Reduction modulo $q$ extracts the final digit $b_{n-1}$ because all other terms are multiples of $q$. Subtracting that remainder and dividing by $q$ shifts the remaining numeral one place. Repeating extracts all digits from right to left. $\square$
 
-$$
-|E_i|=A^{L-m}
-$$
+**Lemma 3.5 (Encoding inverts decoding).** If $0\le a<q^n$, encoding the fixed-length decoded form of $a$ returns $a$.
 
-for every $0\leq i\leq L-m$. The set of volumes containing $q$ somewhere is $\bigcup_iE_i$.
+**Proof sketch.** At every division step, Euclidean division gives $x=q\lfloor x/q\rfloor+(x\bmod q)$. Repeated substitution reconstructs $a$ as the positional sum of the extracted remainders. $\square$
 
-### Theorem 5 (Occurrence union bound)
-
-Let $q$ be a fixed length-$m$ pattern over an alphabet of size $A$, with $m\leq L$. Then
+**Theorem 3.6 (Canonical Address Theorem).** For $q\ge2$, the address map is a bijection
 
 $$
-\left|\left\{s\in\mathcal L(A,L):q\text{ occurs contiguously in }s\right\}\right|
-\leq (L-m+1)A^{L-m}.
+\mathcal L(q,n)\longleftrightarrow\{0,1,\ldots,q^n-1\}.
 $$
 
-If $A>0$, the uniform occurrence probability satisfies
+**Proof sketch.** Lemmas 3.4 and 3.5 provide a two-sided inverse, which proves both injectivity and surjectivity. $\square$
+
+The theorem supplies a complete catalog without materializing a table of $q^n$ rows. Encoding uses $n$ multiply-add steps, and decoding uses $n$ quotient-remainder steps. In a unit-cost arithmetic model the running time is $O(n)$; bit complexity also depends on the cost of operations on numbers containing up to $n\log_2q$ bits. Storage is $O(n)$ symbols for the returned book and $O(1)$ auxiliary big integers beyond the output.
+
+### 3.3 The four-symbol, length-sixteen library
+
+**Corollary 3.7 (Mini-library Enumeration).** The library $\mathcal L(4,16)$ contains exactly
 
 $$
-\Pr(q\text{ occurs somewhere})
-\leq \frac{L-m+1}{A^m}.
+4^{16}=2^{32}=4{,}294{,}967{,}296
 $$
 
-#### Proof sketch
+books, and the canonical address map bijects it with the unsigned $32$-bit integers from $0$ through $4{,}294{,}967{,}295$.
 
-There are $L-m+1$ starting windows. Each event $E_i$ has cardinality $A^{L-m}$. The cardinality of a finite union is at most the sum of the cardinalities, so
+**Proof sketch.** Substitute $q=4$ and $n=16$ into Theorems 2.3 and 3.6, and use $4^{16}=(2^2)^{16}=2^{32}$. $\square$
 
-$$
-\left|\bigcup_{i=0}^{L-m}E_i\right|
-\leq\sum_{i=0}^{L-m}|E_i|
-=(L-m+1)A^{L-m}.
-$$
+This is a convenient experimental scale: individual addresses and books are easy to manipulate, even though exhaustive traversal of all books remains substantial.
 
-Dividing by $A^L$ yields the probability inequality.
+## 4. Uniform probability and finite recognizers
 
-### Corollary 6 (Babel-scale passage bound)
+### 4.1 Fixed texts
 
-For $A=25$ and $L=1{,}312{,}000$, any fixed pattern of length $m\leq1{,}312{,}000$ satisfies
+Equip $\mathcal L(q,n)$ with the uniform distribution, assigning equal probability to every book.
+
+**Theorem 4.1 (Uniform Text Theorem).** For every fixed $t\in\mathcal L(q,n)$ with $q^n>0$,
 
 $$
-\Pr(q\text{ occurs somewhere})
-\leq\frac{1{,}312{,}001-m}{25^m}.
+\Pr(B=t)=\frac{1}{q^n},
 $$
 
-Since every probability is at most $1$, a numerically sharper presentation is
+where $B$ is uniformly sampled from the library.
+
+**Proof sketch.** A singleton event contains one outcome among $q^n$ equally likely outcomes. $\square$
+
+### 4.2 Arbitrary acceptance rules
+
+**Definition 4.2 (Finite Boolean checker).** A checker is a function
 
 $$
-\Pr(q\text{ occurs somewhere})
-\leq\min\left\{1,\frac{1{,}312{,}001-m}{25^m}\right\}.
+C:\mathcal L(q,n)\to\{0,1\}.
 $$
 
-### 4.1 Why the bound is not generally exact
-
-Events at different windows overlap. For binary strings of length $3$ and the target $11$, the possible windows begin at positions $0$ and $1$. Each event contains $2$ strings, so their summed size is $4$. Their union consists of $011$, $110$, and $111$, hence has size $3$. The word $111$ belongs to both events. Thus the exact probability is $3/8$, while the union bound is $1/2$.
-
-The size of such intersections depends on the target’s self-overlap. A pattern has a **border** of length $r$ if its prefix of length $r$ equals its suffix of length $r$. Overlapping occurrences at displacement $d<m$ are compatible precisely when the overlap of length $m-d$ agrees, which is a border condition. Consequently, exact global occurrence probabilities depend not only on $A$, $L$, and $m$, but on the autocorrelation structure of the particular pattern.
-
-This also identifies the correct polynomial prefactor in a first-order rare-event estimate. For literal occurrence of a fixed length-$m$ string, the number of candidate placements is $L-m+1$, not $m$. When occurrence events are rare and overlaps negligible, one expects a value near
+The accepted set and accepted count are
 
 $$
-(L-m+1)A^{-m},
+A_C=\{b\in\mathcal L(q,n):C(b)=1\},
+\qquad M_C=|A_C|.
 $$
 
-but the theorem established here is the always-valid upper bound.
+The word “checker” is intentionally general. It may test a substring property, syntax, a checksum, a bounded computation, or any other deterministic yes-or-no condition.
 
-## 5. A complete four-symbol cyclic index
-
-Let the alphabet be $\Sigma=\{0,1,2,3\}$. Consider the cyclic word
+**Theorem 4.3 (Exact Acceptance Probability).** Under uniform sampling,
 
 $$
-C=0010203112132233.
+\Pr(C(B)=1)=\frac{M_C}{q^n}.
 $$
 
-Its sixteen cyclic length-two windows, in order, are
+**Proof sketch.** The acceptance event is exactly $A_C$. Uniform probability on a finite set assigns probability $|A_C|/|\mathcal L(q,n)|$, and Theorem 2.3 supplies the denominator. $\square$
+
+**Corollary 4.4 (Witness Positivity).** If there exists a book $w$ such that $C(w)=1$, then $M_C\ge1$ and
 
 $$
-00,01,10,02,20,03,31,11,12,21,13,32,22,23,33,30.
+\Pr(C(B)=1)>0.
 $$
 
-### Theorem 7 (Complete mini-library index)
+**Proof sketch.** The witness belongs to $A_C$, so that set is nonempty. $\square$
 
-The cyclic length-two windows of $C$ are in bijection with $\Sigma^2$. In particular, every two-symbol word over $\Sigma$ occurs at a unique cyclic starting position in $C$.
+The exact probability that a random volume represents a valid proof under a particular proof language is therefore not determined by $q$ and $n$ alone. One must fix the symbol encoding, target proposition, parser, background library, admissible inference rules, resource bounds, and checker version. Once those choices define a finite Boolean checker, Theorem 4.3 gives the exact answer. Computing $M_C$ by exhaustive search requires $q^n$ checker evaluations in the worst case, which is infeasible at the full scale but exact for small instances.
 
-#### Proof sketch
+### 4.3 Fixed patterns and the common heuristic
 
-The displayed list contains sixteen distinct ordered pairs. The complete two-symbol library also contains $|\Sigma^2|=4^2=16$ pairs. Therefore the window map from the sixteen cyclic positions to $\Sigma^2$ is injective between finite sets of equal cardinality and hence bijective. Existence and uniqueness of a location follow immediately.
+Suppose a target pattern $p$ has length $k\le n$. At any one prescribed starting position, exactly $q^{n-k}$ books contain $p$ there, because the other $n-k$ symbols are free. Therefore the matching probability at that position is $q^{-k}$.
 
-### Proposition 8 (Optimality by window capacity)
-
-Any cyclic word whose length-two windows list every word in $\Sigma^2$ must have length at least $16$. The word $C$ attains this lower bound.
-
-#### Proof sketch
-
-A cyclic word of length $n$ has exactly $n$ cyclic starting positions and therefore at most $n$ distinct length-two windows. Listing all $4^2=16$ pairs requires $n\geq16$. Theorem 7 supplies a collision-free example with $n=16$.
-
-### 5.1 Cyclic versus linear presentation
-
-The final pair $30$ uses the last symbol $3$ and the first symbol $0$. If the construction is displayed as an ordinary linear string without wraparound, that pair is absent. A linear string displaying the same sixteen windows must repeat the first symbol at the end:
+There are $r=n-k+1$ ordinary, noncyclic starting positions. Let $X$ count occurrences of $p$. By linearity of expectation,
 
 $$
-00102031121322330.
+\mathbb E[X]=rq^{-k}.
 $$
 
-It then has length $17$ and exactly $16$ consecutive length-two windows.
-
-### 5.2 Graph interpretation
-
-Construct a directed graph with one vertex for each symbol in $\Sigma$. For every ordered pair $ab$, include one directed edge from $a$ to $b$. A cyclic word determines a walk: successive symbols give successive vertices, and every two-symbol window is the edge traversed between them. A complete order-two index is therefore an Eulerian circuit, a closed walk using every directed edge exactly once.
-
-The displayed sequence corresponds to such a circuit in the complete directed graph with loops on four vertices. Every vertex has four incoming and four outgoing edges, and the graph is connected in the relevant directed sense, which explains why an Eulerian tour exists. Hierholzer’s algorithm constructs one in time linear in the number of edges, here $O(A^2)$. For general order $k$, vertices are words of length $k-1$ and edges are words of length $k$, directed from a word’s prefix to its suffix. An Eulerian circuit then yields a cyclic word whose length-$k$ windows list all $A^k$ words.
-
-The explicit theorem above concerns the concrete four-symbol, order-two cycle. The graph discussion gives the structural route to the general construction and clarifies why overlap achieves optimal capacity.
-
-## 6. Algorithms
-
-### 6.1 Enumeration for exact finite experiments
-
-For small $A$ and $L$, an exact occurrence probability can be computed by enumerating all $A^L$ volumes, testing each possible start, and counting successes. The time complexity is $O(A^L(L-m+1)m)$ under direct comparison, and the memory can be $O(L)$ if volumes are streamed. This is exponential in $L$ and serves as a validation method, not a scalable search procedure.
-
-### 6.2 Exact counting by automata
-
-A scalable exact method builds a prefix automaton for the target pattern. A state records the length of the longest suffix of the text seen so far that is also a prefix of the pattern. Appending a symbol updates this state. A dynamic program over positions and states counts strings that have not yet reached the accepting state. If $N_{\mathrm{avoid}}(L)$ is the number avoiding the target, then
+Moreover, the union bound gives
 
 $$
-N_{\mathrm{contain}}(L)=A^L-N_{\mathrm{avoid}}(L).
+\Pr(X\ge1)\le rq^{-k}.
 $$
 
-With a precomputed transition table, the complexity is $O(LmA)$ time and $O(m)$ rolling memory. The automaton automatically captures all self-overlaps, turning the qualitative border discussion into exact arithmetic.
+Thus “number of locations times $q^{-k}$” is an exact expected count and an upper bound for occurrence probability. It is only an approximation to that probability when overlaps are sufficiently negligible. For self-overlapping patterns, the location events are dependent and must not simply be added as though disjoint.
 
-### 6.3 Eulerian construction of cyclic indexes
+## 5. Counting all catalog tables
 
-For alphabet size $A$ and order $k$, form the overlap graph whose $A^{k-1}$ vertices are length-$(k-1)$ words and whose $A^k$ directed edges are length-$k$ words. An edge $x_1\cdots x_k$ runs from $x_1\cdots x_{k-1}$ to $x_2\cdots x_k$. Every vertex has equal indegree and outdegree $A$. An Eulerian circuit gives a cyclic index of length $A^k$.
+A word such as “catalog” can denote either a specific rule or arbitrary tabular data. The distinction is crucial.
 
-Hierholzer’s algorithm traverses each edge once, so its running time and storage are $O(A^k)$, proportional to the unavoidable output size. The order-two mini-index can be checked by this graph model or directly by the sixteen displayed windows.
+Let $L=|\mathcal L(q,n)|=q^n$.
 
-## 7. Catalog capacity and coding assumptions
-
-A universal library contains $A^L$ volumes. A direct fixed-width address identifying one volume requires
+**Definition 5.1 (Complete book-valued table).** A complete table is any function
 
 $$
-\log_2(A^L)=L\log_2 A
+f:\mathcal L(q,n)\to\mathcal L(q,n).
 $$
 
-bits. A literal table containing one full independent address for every volume would therefore require
+Such a table chooses one book-valued entry independently for each input book.
+
+**Theorem 5.2 (Table Count).** The number of complete book-valued tables is
 
 $$
-A^L L\log_2 A
+L^L=(q^n)^{q^n}.
 $$
 
-bits, ignoring delimiters and metadata. By contrast, one length-$L$ volume over the same alphabet carries $L\log_2 A$ bits under the elementary fixed-width encoding. It cannot hold that literal address table.
+**Proof sketch.** There are $L$ choices for the value at each of $L$ inputs. The product rule gives $L$ multiplied by itself $L$ times. $\square$
 
-This is a counting obstruction, not a prohibition on every possible notion of a catalog. A short algorithm may generate addresses; entries may share prefixes; a distributed index may spread data across volumes; and a de Bruijn cycle may encode objects as overlapping windows rather than independent records. Each changes the decoding model. Statements about minimum catalog size are meaningful only after specifying:
+**Theorem 5.3 (Single-Book Universal Table Impossibility).** If $L\ge2$, no injective encoding can assign every complete book-valued table to a single book.
 
-- what constitutes an address;
-- whether entries must be independently accessible;
-- whether an algorithm may generate entries rather than store them;
-- how delimiters are represented;
-- whether cyclic overlap is allowed;
-- and what computational resources the decoder may use.
+**Proof sketch.** The domain of any proposed encoding has $L^L$ elements, while the codomain has $L$ elements. For $L\ge2$, one has $L^L\ge L^2>L$. The pigeonhole principle therefore forces at least two tables to share an encoded book. $\square$
 
-The complete mini-library index catalogs all two-symbol volumes using sixteen cyclic positions. It does **not** catalog the $4^{16}$ possible length-sixteen volumes. This difference is exactly the difference between the order of the indexed windows and the length of the carrier cycle.
+The theorem is not a claim that no catalog can fit in one volume as an algorithmic description. The canonical address map of Section 3 is a particular structured catalog with a short definition. Rather, the theorem says that one cannot uniquely encode *every possible* table as one member of the original library. Arbitrary data and structured procedures have different descriptional behavior.
 
-## 8. Semantic validity as language density
-
-The counting theorems concern prescribed symbols. They do not assign an encoding-independent probability to meaningfulness or proof validity. To pose a precise proof-density problem, fix:
-
-1. a finite character alphabet and encoding;
-2. a decidable grammar of candidate texts;
-3. a theorem or specification to be established;
-4. a deterministic acceptance procedure;
-5. and a resource bound, if termination or finite computation is required.
-
-These choices define a language $P\subseteq\Sigma^*$ of accepted proof strings. One can then ask for the number of length-$m$ members of $P$, or for the probability that a random length-$L$ volume contains some member of $P$ as a substring. If $P_m=P\cap\Sigma^m$, a direct union bound gives
+A bit-counting version reaches the same conclusion. Distinguishing all $L^L$ tables requires at least
 
 $$
-\Pr(\text{some accepted length-}m\text{ string occurs})
-\leq |P_m|(L-m+1)A^{-m}.
+\log_2(L^L)=L\log_2L
 $$
 
-This follows by applying Theorem 5 to each accepted string and then taking another finite union. It may overcount both overlapping placements of one proof and occurrences of different accepted proofs. Nevertheless, it cleanly separates two sources of rarity: the syntactic penalty $A^{-m}$ and the number $|P_m|$ of accepted encodings.
+bits in any fixed-length injective representation, while distinguishing the $L$ books themselves requires only $\log_2L$ bits. The ratio is $L$. This information comparison is exact when interpreted as a lower bound on the number of binary codewords needed; it should not be confused with the symbol capacity of a particular physical volume unless an encoding has been specified.
 
-For a bounded-memory deterministic checker, accepted strings can often be modeled by a finite automaton. Their counts are then entries of powers of a finite transition matrix, and their exponential growth rate is controlled by that matrix’s spectral radius. Thus “proof probability” becomes a language-density question, rather than a property of meaning in isolation.
+## 6. Distributed storage
+
+### 6.1 Exact criterion
+
+Suppose $T$ distinct records must be placed into $N$ books, each with $c$ distinguishable record slots. A placement must assign different records to different slots.
+
+**Theorem 6.1 (Distributed Capacity Theorem).** Such a placement exists if and only if
+
+$$
+T\le Nc.
+$$
+
+**Proof sketch.** For necessity, there are only $Nc$ book-slot pairs, so an injective assignment of $T$ records requires $T\le Nc$ by the pigeonhole principle. For sufficiency, number records $i=0,\ldots,T-1$. If $c>0$, assign record $i$ to
+
+$$
+\left(\left\lfloor\frac{i}{c}\right\rfloor,	hinspace i\bmod c\right).
+$$
+
+The first coordinate is the book and the second is its slot. Euclidean division makes this assignment injective, and $i<T\le Nc$ implies $\lfloor i/c\rfloor<N$. If $c=0$, the inequality forces $T=0$, for which the empty placement suffices. $\square$
+
+**Corollary 6.2 (Minimum Number of Books).** For $c>0$, the least number of capacity-$c$ books capable of storing $T$ records is
+
+$$
+N_{\min}=\left\lceil\frac{T}{c}\right\rceil.
+$$
+
+**Proof sketch.** The least integer $N$ satisfying $T\le Nc$ is the ceiling of $T/c$. $\square$
+
+### 6.2 Algorithmic form
+
+The constructive half of Theorem 6.1 gives an online placement rule. Processing records in increasing order, quotient and remainder identify a unique location. The algorithm runs in $O(T)$ arithmetic operations to materialize all placements and uses $O(T)$ output space; each location can instead be computed on demand in $O(1)$ arithmetic operations.
+
+This theorem is a precise model of sharding. It assumes fixed-size records and fixed slot capacity. Variable-length compression, replication, failures, and update locality require richer models, but the basic capacity inequality remains a necessary foundation.
+
+## 7. Algorithms and numerical demonstrations
+
+### 7.1 Canonical encoding and decoding
+
+Horner’s rule evaluates the address without explicitly computing every power:
+
+$$
+x_0=0,\qquad x_{i+1}=qx_i+b_i.
+$$
+
+After processing all digits, $x_n=\operatorname{addr}(b)$. The reverse algorithm repeatedly applies quotient and remainder. Assertions that decoding follows encoding and vice versa provide direct finite tests of the bijection.
+
+### 7.2 Exact acceptance counting on small libraries
+
+For manageable $q^n$, enumerate addresses $0$ through $q^n-1$, decode each address, evaluate $C$, and count acceptances. The result divided by $q^n$ is Theorem 4.3’s exact probability. The running time is $O(q^n(n+\tau_C))$, where $\tau_C$ is the checker cost, and the traversal can use $O(n)$ working space if books are processed one at a time.
+
+As an example, on binary words of length eight, a checker accepting words with exactly four ones has
+
+$$
+M_C=\binom84=70,
+\qquad
+\Pr(C(B)=1)=\frac{70}{256}.
+$$
+
+Exhaustive enumeration reproduces this value.
+
+### 7.3 Distributed placement
+
+For $T=23$ records and capacity $c=5$, the minimum number of books is
+
+$$
+\left\lceil\frac{23}{5}\right\rceil=5.
+$$
+
+Records $0$ through $4$ occupy book $0$, records $5$ through $9$ occupy book $1$, and so forth; records $20$ through $22$ use the first three slots of book $4$.
+
+## 8. De Bruijn cycles and what remains distinct
+
+**Definition 8.1 (de Bruijn cycle).** A de Bruijn cycle of order $n$ over $\Sigma_q$ is a cyclic word of length $q^n$ in which every member of $\mathcal L(q,n)$ occurs exactly once as a cyclic window of length $n$.
+
+A de Bruijn cycle is not the same artifact as the base-$q$ catalog. The latter assigns a numerical address independently to each word. The former orders all words through maximal overlaps, so consecutive windows share $n-1$ symbols.
+
+For $q=4$ and $n=16$, a de Bruijn cycle would have cyclic length $4^{16}$. A standard construction proceeds through a directed graph whose vertices are words of length $15$. Each word of length $16$ is an edge from its first $15$ symbols to its last $15$ symbols. Every vertex has indegree and outdegree $4$. After proving the relevant connectivity, an Eulerian circuit uses every edge once; reading edge labels produces the desired cycle.
+
+This construction is a natural continuation, but it is not needed for any theorem above and should not be inferred from the existence of the arithmetic enumeration. Establishing it rigorously requires explicit cyclic-window definitions, graph balance and connectivity arguments, an Eulerian-circuit theorem, and a proof of unique window occurrence.
 
 ## 9. Applications
 
-### 9.1 Motif detection
+### 9.1 Exhaustive testing
 
-In genomics, a fixed nucleotide motif of length $m$ over an idealized four-letter alphabet has fixed-location probability $4^{-m}$ under the uniform independent model and anywhere-in-sequence upper bound $(L-m+1)4^{-m}$. Real genomes require nonuniform and dependent models, but the universal-library calculation supplies a baseline and makes overlap corrections explicit.
+A bounded input format with $q$ symbols and length $n$ has exactly $q^n$ test cases. Canonical addresses support deterministic partitioning across workers: assign disjoint address intervals, decode locally, and test each candidate. The acceptance-count formula then turns exhaustive results into exact finite probabilities.
 
-### 9.2 Signature scanning
+### 9.2 Search and security
 
-A fixed byte signature of length $m$ in a uniformly random byte stream has alphabet size $256$ and fixed-position probability $256^{-m}$. The union bound estimates false positives across a buffer. Multiple signatures introduce a second union, while automata provide exact or efficient multi-pattern scanning.
+Key spaces and password spaces are universal finite libraries. Uniform guessing succeeds against one fixed secret with probability $q^{-n}$ per independent attempt. If a policy accepts $M$ secrets, the accepted fraction is $M/q^n$. The formulas do not model nonuniform human choices, but they provide the baseline from which entropy loss is measured.
 
-### 9.3 Exhaustive testing and sequence design
+### 9.3 Content-addressable archives
 
-A de Bruijn cycle of order $k$ supplies every possible length-$k$ local input exactly once cyclically. This minimizes the carrier length and is useful for testing finite-state systems, sensor encoders, and communication channels. The overlap graph explains both construction and optimality.
+The canonical map is reversible positional addressing, not hashing: it has no collisions and offers no compression. It is useful when every object has the same fixed format. The table impossibility theorem warns that arbitrary metadata for every object generally requires much more information than one object-sized carrier.
 
-### 9.4 Information retrieval
+### 9.4 Distributed databases
 
-The universal-library model emphasizes that recall without discrimination is useless. A database containing every string has perfect existential coverage but no intrinsic relevance ranking. Index structure, decoding rules, and semantic filters supply the information absent from mere inclusion.
+The capacity theorem abstracts fixed-size sharding. Quotient chooses a shard and remainder chooses a local slot. The method is balanced up to one record and gives immediate capacity planning through $\lceil T/c\rceil$.
 
 ## 10. Discussion
 
-The principal formulas are simple because the model is intentionally clean. Their value lies in enforcing distinctions that grand claims about universal libraries often erase.
+The model yields exact results because all relevant spaces are finite. It also reveals three recurring conceptual boundaries.
 
-First, exact fixed-position counting is stronger and cleaner than an informal independence heuristic. Prescribing $m$ distinct symbols gives exactly $A^{L-m}$ compatible books.
+First, **existence is not discoverability**. The universal library contains every fixed-length target, but random discovery of a specified target has probability $q^{-n}$. A recognizer helps define success but may itself be computationally expensive.
 
-Second, moving from one position to “somewhere” changes the problem from a product count to a union. The universally valid result is an upper bound. Exactness requires intersection data, and for a single repeated pattern those intersections are governed by borders and autocorrelation.
+Second, **a structured map is not an arbitrary table**. The canonical catalog is concise because positional notation supplies regularity. Counting all tables removes that regularity and produces $L^L$ possibilities, too many for injective single-book representation.
 
-Third, semantic claims require a language model. A literal string has a length; a mathematical proof can have many encodings. Without specifying what is accepted, “the probability of a proof” is not a single mathematical quantity.
+Third, **symbol count is not semantics**. Exact acceptance probabilities depend on a fully specified finite checker. Phrases such as “valid proof” or “meaningful book” do not determine a subset until their syntax and decision procedure are fixed.
 
-Fourth, catalog size depends on the representation of entries. A de Bruijn index uses overlapping windows and achieves one short object per cyclic position. A table of independently decodable full addresses has different capacity requirements. An algorithm that generates addresses is different again.
-
-The four-symbol construction demonstrates the sharp local indexing phenomenon without overclaiming. Its sixteen positions index the sixteen words of length two. It reaches the unavoidable lower bound, and its graph structure points toward arbitrary alphabets and orders.
+The results are elementary in technique—product counting, Euclidean division, uniform finite probability, and the pigeonhole principle—but their combination gives a disciplined account of a universal information space. It replaces vague immensity with exact cardinalities and separates what can be enumerated, what can be recognized, and what can be stored.
 
 ## 11. Future work
 
-Several directions naturally extend this framework.
+The most direct extension is a complete de Bruijn development: define cyclic words and windows, construct the order-$(n-1)$ directed graph, prove balanced degree and connectivity, obtain an Eulerian circuit, and extract a cycle whose length-$n$ windows are unique. The specialization $q=4$, $n=16$ would then complement the arithmetic mini-catalog with an overlap-optimal cyclic traversal.
 
-**Exact autocorrelation laws.** For every alphabet size at least two and every finite pattern, the exact probability of occurrence in a random fixed-length volume should be expressible from the pattern’s border lattice through a finite cluster expansion. Patterns of equal length are expected to have identical occurrence probabilities in every ambient length precisely when their overlap autocorrelation polynomials agree.
+A second direction is to instantiate the checker model with a concrete finite tokenization and a bounded proof-like language. Such a model must specify encoding, target statement, parser, inference environment, and resource limits. Exact acceptance probability would still be $M_C/q^n$, while computational work would focus on calculating or bounding $M_C$.
 
-**Optimal distributed catalogs under block coding.** If each catalog volume decodes into independently addressable entries under a prefix-free delimiter scheme, the minimum number of carrier volumes should be determined by the maximum number of complete addresses per carrier, with delimiter redundancy controlled by Kraft-type inequalities. This would reconcile competing capacity estimates by making the unit of an entry explicit.
-
-**General sharp cyclic index theorem.** For positive $A$ and $k$, one seeks a cyclic word of length $A^k$ whose length-$k$ cyclic windows list every word once, together with the characterization of optimal collision-free indexes as Eulerian circuits in the order-$(k-1)$ overlap graph. The explicit order-two example is the smallest nonbinary illustration of this structure.
-
-**Semantic proof density under certified grammars.** Once an encoding, decidable grammar, resource-bounded checker, and theorem are fixed, accepted proof strings form a precise language. Computable upper and lower density bounds should be derived from its automata or transfer-matrix structure. For bounded-memory deterministic checkers, the exponential rate should be algebraic and computable from a finite matrix.
+Further work may consider nonuniform distributions, automata-based pattern counting, variable-length books, compression, replicated distributed storage, erasure tolerance, and complexity-sensitive notions of catalog description. These refinements would preserve the finite combinatorial foundation while bringing the model closer to realistic information systems.
 
 ## 12. Conclusion
 
-A universal finite library is governed by exact combinatorics. It contains $A^L$ volumes. Prescribing $d$ distinct symbols leaves $A^{L-d}$ possibilities. A specified length-$m$ passage at one location occupies exactly the fraction $A^{-m}$, while occurrence anywhere has probability at most $(L-m+1)A^{-m}$. Exact global probabilities require the pattern’s overlap structure.
+A finite universal library over $q$ symbols and length $n$ contains exactly $q^n$ books. Base-$q$ numeration gives every book a unique address and retrieves every address uniquely. Uniform sampling assigns probability $q^{-n}$ to a specified book and $M_C/q^n$ to any checker accepting $M_C$ books. There are $(q^n)^{q^n}$ complete book-valued tables, which prevents all such tables from being injectively represented by single books whenever at least two books exist. Distributed storage, by contrast, has the exact and constructive criterion $T\le Nc$.
 
-The cyclic word $0010203112132233$ provides a complementary result: its sixteen cyclic pairs list all two-symbol words over four symbols exactly once, attaining the capacity lower bound. Its success comes from overlap organized as an Eulerian circuit.
-
-Together, these results sharpen the central paradox of universal information spaces. Containing every possible text solves existence but not retrieval, interpretation, or compression. Those tasks require additional structure—a pattern model, an index, a decoder, or a semantics—and each such structure is itself constrained by counting.
+Together these results provide a compact mathematics of universal finite information: complete in content, canonical in address, measurable under recognition, limited in arbitrary self-description, and expandable through distribution.

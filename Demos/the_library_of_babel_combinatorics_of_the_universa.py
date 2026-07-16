@@ -1,134 +1,139 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations for universal-library counting and cyclic indexes."""
+"""Numerical demonstrations for universal finite libraries.
+
+The script uses only Python's standard library.  It demonstrates canonical
+base-q addressing, exact finite acceptance probabilities, pattern statistics,
+and the constructive distributed-capacity theorem.
+"""
 
 from __future__ import annotations
 
+from fractions import Fraction
 from itertools import product
-from math import floor, log10
-from typing import Iterable, Sequence
+from math import ceil, comb, log10
+from typing import Callable, Iterable, Iterator, Sequence
+
+Book = tuple[int, ...]
+Checker = Callable[[Book], bool]
 
 
-Word = tuple[int, ...]
+def library_size(q: int, n: int) -> int:
+    """Return the number q**n of length-n words over q symbols."""
+    if q < 0 or n < 0:
+        raise ValueError("q and n must be nonnegative")
+    return q**n
 
 
-def library_size(alphabet_size: int, volume_length: int) -> int:
-    """Return the number A**L of length-L words over an A-symbol alphabet."""
-    if alphabet_size < 0 or volume_length < 0:
-        raise ValueError("alphabet_size and volume_length must be nonnegative")
-    return alphabet_size**volume_length
+def encode_book(book: Sequence[int], q: int) -> int:
+    """Encode a book as a base-q integer using Horner's rule."""
+    if q < 2:
+        raise ValueError("q must be at least 2")
+    address = 0
+    for symbol in book:
+        if not 0 <= symbol < q:
+            raise ValueError(f"symbol {symbol} is outside 0..{q - 1}")
+        address = address * q + symbol
+    return address
 
 
-def constrained_count(alphabet_size: int, volume_length: int, fixed_positions: int) -> int:
-    """Count volumes after symbols at distinct positions have been prescribed."""
-    if alphabet_size < 0 or not 0 <= fixed_positions <= volume_length:
-        raise ValueError("require A >= 0 and 0 <= fixed_positions <= volume_length")
-    return alphabet_size ** (volume_length - fixed_positions)
+def decode_address(address: int, q: int, n: int) -> Book:
+    """Decode 0 <= address < q**n to exactly n base-q symbols."""
+    if q < 2 or n < 0:
+        raise ValueError("q must be at least 2 and n nonnegative")
+    if not 0 <= address < q**n:
+        raise ValueError("address is outside the library")
+    digits = [0] * n
+    value = address
+    for index in range(n - 1, -1, -1):
+        value, digits[index] = divmod(value, q)
+    return tuple(digits)
 
 
-def union_probability_bound(alphabet_size: int, volume_length: int, pattern_length: int) -> float:
-    """Return min(1, (L-m+1)/A**m), the passage-occurrence union bound."""
-    if alphabet_size <= 0 or not 0 <= pattern_length <= volume_length:
-        raise ValueError("require A > 0 and 0 <= pattern_length <= volume_length")
-    return min(1.0, (volume_length - pattern_length + 1) / alphabet_size**pattern_length)
+def enumerate_books(q: int, n: int) -> Iterator[Book]:
+    """Yield every book in canonical address order."""
+    if q < 0 or n < 0:
+        raise ValueError("q and n must be nonnegative")
+    yield from product(range(q), repeat=n)
 
 
-def contains_pattern(word: Sequence[int], pattern: Sequence[int]) -> bool:
-    """Test whether pattern occurs contiguously in word."""
-    m = len(pattern)
-    return any(tuple(word[i : i + m]) == tuple(pattern) for i in range(len(word) - m + 1))
+def exact_acceptance_probability(q: int, n: int, checker: Checker) -> tuple[int, Fraction]:
+    """Count accepted books and return the exact uniform probability."""
+    total = library_size(q, n)
+    if total == 0:
+        raise ValueError("uniform probability requires a nonempty library")
+    accepted = sum(checker(book) for book in enumerate_books(q, n))
+    return accepted, Fraction(accepted, total)
 
 
-def exact_occurrence_count(alphabet_size: int, volume_length: int, pattern: Sequence[int]) -> int:
-    """Enumerate a small library and count volumes containing pattern."""
-    if alphabet_size <= 0 or len(pattern) > volume_length:
-        raise ValueError("require A > 0 and pattern length <= volume length")
-    if any(not 0 <= symbol < alphabet_size for symbol in pattern):
-        raise ValueError("pattern symbol outside alphabet")
-    return sum(
-        contains_pattern(word, pattern)
-        for word in product(range(alphabet_size), repeat=volume_length)
+def count_pattern_occurrences(book: Sequence[int], pattern: Sequence[int]) -> int:
+    """Count ordinary, possibly overlapping occurrences of pattern in book."""
+    k = len(pattern)
+    if k == 0:
+        return len(book) + 1
+    return sum(tuple(book[i : i + k]) == tuple(pattern) for i in range(len(book) - k + 1))
+
+
+def exact_pattern_probability(q: int, n: int, pattern: Sequence[int]) -> Fraction:
+    """Exhaustively compute the probability of at least one pattern occurrence."""
+    _, probability = exact_acceptance_probability(
+        q, n, lambda book: count_pattern_occurrences(book, pattern) > 0
     )
+    return probability
 
 
-def exact_occurrence_probability(
-    alphabet_size: int, volume_length: int, pattern: Sequence[int]
-) -> float:
-    """Return the exact probability by exhaustive enumeration for small inputs."""
-    return exact_occurrence_count(alphabet_size, volume_length, pattern) / library_size(
-        alphabet_size, volume_length
-    )
-
-
-def cyclic_windows(cycle: Sequence[int], order: int) -> list[Word]:
-    """Return all cyclic windows of the requested order."""
-    if not cycle or order <= 0:
-        raise ValueError("cycle must be nonempty and order must be positive")
-    n = len(cycle)
-    return [tuple(cycle[(i + j) % n] for j in range(order)) for i in range(n)]
-
-
-def verify_complete_cyclic_index(cycle: Sequence[int], alphabet_size: int, order: int) -> bool:
-    """Check that cyclic windows equal all A**k words, each exactly once."""
-    windows = cyclic_windows(cycle, order)
-    expected = set(product(range(alphabet_size), repeat=order))
-    return len(windows) == len(expected) and len(set(windows)) == len(windows) and set(windows) == expected
-
-
-def de_bruijn_sequence(alphabet_size: int, order: int) -> list[int]:
-    """Construct a de Bruijn cycle B(A, order) using the classical FKM recursion."""
-    if alphabet_size <= 0 or order <= 0:
-        raise ValueError("alphabet_size and order must be positive")
-    work = [0] * (alphabet_size * order + 1)
-    sequence: list[int] = []
-
-    def generate(t: int, period: int) -> None:
-        if t > order:
-            if order % period == 0:
-                sequence.extend(work[1 : period + 1])
-            return
-        work[t] = work[t - period]
-        generate(t + 1, period)
-        for symbol in range(work[t - period] + 1, alphabet_size):
-            work[t] = symbol
-            generate(t + 1, t)
-
-    generate(1, 1)
-    return sequence
-
-
-def format_word(word: Iterable[int]) -> str:
-    """Format a short integer word without separators."""
-    return "".join(str(x) for x in word)
+def distributed_placement(total: int, books: int, capacity: int) -> list[tuple[int, int]]:
+    """Assign records to (book, slot) pairs exactly when total <= books*capacity."""
+    if min(total, books, capacity) < 0:
+        raise ValueError("all quantities must be nonnegative")
+    if total > books * capacity:
+        raise ValueError("insufficient distributed capacity")
+    if total == 0:
+        return []
+    if capacity == 0:
+        raise ValueError("positive records require positive capacity")
+    return [divmod(record, capacity) for record in range(total)]
 
 
 def main() -> None:
-    print("UNIVERSAL LIBRARY COUNTS")
-    print(f"Four symbols, length 16: 4^16 = {library_size(4, 16):,}")
-    digits = 1 + floor(1_312_000 * log10(25))
-    print(f"Babel-scale count 25^1,312,000 has {digits:,} decimal digits.")
-    print(f"Fixing 5 positions in a 12-symbol four-letter volume leaves {constrained_count(4, 12, 5):,} volumes.")
+    print("UNIVERSAL FINITE LIBRARY — NUMERICAL DEMONSTRATIONS\n")
 
-    print("\nEXACT OCCURRENCE VERSUS UNION BOUND")
-    pattern = (1, 1)
-    exact_count = exact_occurrence_count(2, 3, pattern)
-    exact_probability = exact_count / library_size(2, 3)
-    bound = union_probability_bound(2, 3, len(pattern))
-    print(f"Binary length-3 volumes containing 11: {exact_count}/8 = {exact_probability:.3f}")
-    print(f"Union bound: {bound:.3f}; the gap comes from the overlapping word 111.")
-    for m in (4, 8, 16):
-        babel_bound = union_probability_bound(25, 1_312_000, m)
-        print(f"Babel-scale bound for a fixed passage of length {m:2d}: {babel_bound:.6e}")
+    babel_q, babel_n = 25, 1_312_000
+    decimal_digits = int(babel_n * log10(babel_q)) + 1
+    print(f"Babel-scale count: 25^1,312,000 has {decimal_digits:,} decimal digits.")
 
-    print("\nFOUR-SYMBOL CYCLIC INDEX")
-    mini = [0, 0, 1, 0, 2, 0, 3, 1, 1, 2, 1, 3, 2, 2, 3, 3]
-    windows = cyclic_windows(mini, 2)
-    print("Cycle:", format_word(mini))
-    print("Windows:", ", ".join(format_word(window) for window in windows))
-    print("Complete and collision-free:", verify_complete_cyclic_index(mini, 4, 2))
+    mini_total = library_size(4, 16)
+    print(f"Four-symbol length-16 library: 4^16 = {mini_total:,} books.")
+    samples: list[Book] = [(0,) * 16, tuple(range(4)) * 4, (3,) * 16]
+    for book in samples:
+        address = encode_book(book, 4)
+        recovered = decode_address(address, 4, 16)
+        assert recovered == book
+        print(f"  {book} -> {address:,} -> recovered exactly")
 
-    generated = de_bruijn_sequence(4, 2)
-    print("An algorithmically generated order-two cycle:", format_word(generated))
-    print("Generated cycle is complete:", verify_complete_cyclic_index(generated, 4, 2))
+    checker: Checker = lambda book: sum(book) == 4
+    accepted, probability = exact_acceptance_probability(2, 8, checker)
+    assert accepted == comb(8, 4) == 70
+    print("\nBinary length-8 checker: exactly four 1s")
+    print(f"  accepted = {accepted}; probability = {probability} = {float(probability):.6f}")
+
+    pattern = (0, 1, 0)
+    pattern_probability = exact_pattern_probability(2, 8, pattern)
+    opportunities = 8 - len(pattern) + 1
+    expected_occurrences = Fraction(opportunities, 2 ** len(pattern))
+    union_bound = min(Fraction(1), expected_occurrences)
+    print("\nPattern 010 in a random binary word of length 8")
+    print(f"  exact probability of at least one occurrence = {pattern_probability}")
+    print(f"  expected occurrence count = {expected_occurrences}")
+    print(f"  union-bound upper bound = {union_bound}")
+
+    total, capacity = 23, 5
+    required_books = ceil(total / capacity)
+    placement = distributed_placement(total, required_books, capacity)
+    assert len(set(placement)) == total
+    print("\nDistributed catalog placement")
+    print(f"  {total} records at {capacity} per book require {required_books} books.")
+    print(f"  first locations: {placement[:7]}")
+    print(f"  final locations: {placement[-3:]}")
 
 
 if __name__ == "__main__":
