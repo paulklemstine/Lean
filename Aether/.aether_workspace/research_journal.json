@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9f2f3b13",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nResearch thread `th_9a38994b`, Cycle 1. This cycle turns the five conjectures of\nthe \"Composition-Algebra Playground\" in",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 27,
-      "timestamp": "2026-07-13T13:26:13",
-      "title": "That the geometry surrounding the Hopf fibration is"
-    },
-    {
       "cycle_id": "e0843845",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Mixed-Radix Bijection\n\n## What was done in this cycle\n\nBuilding on the existing mixed-radix theory\n(`Catalog/Computation/MixedRadixNumberSystem.lean`) and the factorial numbe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-16T08:27:16",
       "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
+    },
+    {
+      "cycle_id": "cdb5c1e4",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nThe current development establishes the Vandermonde/symmetric-power construction underlying one direction of the paper: a diagonal symmetric-power action produces a rational-norma",
+      "quality_score": 0.61,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-16T08:27:23",
+      "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T08:27:16",
+  "last_updated": "2026-07-16T08:27:23",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "00f256fb",
-        "quality": 0.63,
-        "theorems": 31,
-        "title": "Godel's Casino: Incomplete but Winnable Games"
-      },
-      {
         "cycle_id": "3d209fc8",
         "quality": 0.82,
         "theorems": 32,
@@ -3947,6 +3941,12 @@
         "quality": 0.71,
         "theorems": 13,
         "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
+      },
+      {
+        "cycle_id": "cdb5c1e4",
+        "quality": 0.61,
+        "theorems": 11,
+        "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
       }
     ],
     "Tropical": [
