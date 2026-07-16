@@ -1759,18 +1759,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Resurgent Lambert series from Feynman and beyond' and formalize its key results. Abstract: Lambert series of the form $\\sum_{n>0}a(n)q^n/(1-q^n)$ are ubiquitous in mathematical physics. In particular, 2-loop sunrise and 3-loop banana Feynman diagrams yield Lambert series with $a(n)$ of the form $\u03c7(n)/n^s$ where $\u03c7(n)$ is a Dirichlet character. Resurgence concerns the singular limit as $|q|$ approaches 1. In the Feynman cases we can control this limit, obtaining rapidly convergent expressions, since the Lambert series are iterated integrals of holomorphic Eisenstein series twisted by a character. We generalize this result, to include modular resurgent structures found in topological-string observables.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0136",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14020v1",
+    "status": "available",
+    "timestamp": "2026-07-16T17:10:25.387656+00:00",
+    "title": "ArXiv paper: Resurgent Lambert series from Feynman and beyond"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$' and formalize its key results. Abstract: For the elliptic curves $E_{p,q}: y^{2}=x^{3}-pqx$ where $p$ and $q$ are distinct odd primes, we establish necessary and sufficient conditions under which rank$\\,E_{p,q}(\\mathbb{Q})$ and $\\dim_{\\mathbb{F}_{2}} \\Sha \\left( E_{p,q}/\\bbQ \\right)[2]$ are both $0$. We do so via a similar characterisation of when the Selmer groups associated with the degree-$2$ isogeny $\u03c6$ and its dual $\\widehat\u03c6$ are both of minimal size, along with results about a cokernel that arises from a related exact sequence.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14033v1",
     "status": "available",
     "timestamp": "2026-07-16T16:53:13.563266+00:00",
     "title": "ArXiv paper: Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Local and global average degree in bipartite graphs' and formalize its key results. Abstract: Let $F_{\\mathrm{bip}}(n)$ denote the maximum, over all $n$-vertex bipartite graphs without isolated vertices, of the ratio of the minimum local average degree to the global average degree. We prove that $F_{\\mathrm{bip}}(n)=\\frac14\\sqrt n+\\frac38+o(1)$. This answers a problem posed by Tuza.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0138",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14038v1",
+    "status": "available",
+    "timestamp": "2026-07-16T17:10:28.704063+00:00",
+    "title": "ArXiv paper: Local and global average degree in bipartite graphs"
   },
   {
     "consumed_by_exp_id": "",
