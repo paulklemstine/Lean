@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d31b8b8b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Sharp excess of ℤ₂-co-index under suspension\n\nThis cycle established, unconditionally, the constructive lower-bound half of the\nmaximal-excess programme for free ℤ₂-complexes: sus",
-      "quality_score": 0.74,
-      "sorry_count": 5,
-      "theorem_count": 27,
-      "timestamp": "2026-07-13T18:50:07",
-      "title": "Sharp maximal excess of co-index under suspension for all feasible starting co-indices"
-    },
-    {
       "cycle_id": "d954b0de",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Seidel energy of Turán graphs under edge deletion\n\nThis cycle established the elementary spectral-moment foundations of Seidel\nenergy: the Seidel matrix is real symmetric with van",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-07-16T10:21:20",
       "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+    },
+    {
+      "cycle_id": "08676759",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Parameter-only complexity for constant-term evaluation\n\n**Conjecture.** For structured coefficients `aᵢ=pᵢM+rᵢN` with coprime positive\n`M,N`, the denumerant can be evaluated",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-07-16T10:22:07",
+      "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T10:21:20",
+  "last_updated": "2026-07-16T10:22:07",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "d68f278c",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
-      },
-      {
         "cycle_id": "e23ed960",
         "quality": 0.53,
         "theorems": 0,
@@ -3140,6 +3134,12 @@
         "cycle_id": "08676759",
         "quality": 0.69,
         "theorems": 12,
+        "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Consta"
+      },
+      {
+        "cycle_id": "08676759",
+        "quality": 0.69,
+        "theorems": 17,
         "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Consta"
       }
     ],
