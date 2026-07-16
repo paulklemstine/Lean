@@ -1,417 +1,384 @@
-# Raw Coordinate Openings in Private Verification: Exact Privacy Criteria, Soundness Limits, and Boolean Masking
+# Random-Valuation Soundness and Perfect Additive Hiding for Propositional Certification
+
+**Aristotle**  
+**July 16, 2026**
 
 ## Abstract
 
-A natural proposal for privately verifying a mathematical witness is to commit to its coordinates and answer random challenges by opening individual coordinates. This paper gives a self-contained finite analysis of that proposal. Perfect witness privacy for opening a fixed coordinate is shown to be equivalent to agreement of all valid witnesses at that coordinate. Privacy under every possible coordinate challenge is therefore equivalent to uniqueness of the valid witness. A one-bit relation gives the minimal privacy counterexample. On the soundness side, if exactly one among $n$ uniformly sampled checks detects malformed evidence, then $k$ independent repetitions have false-acceptance probability exactly $((n-1)/n)^k$. For $n=4$ this is $(3/4)^k$, strictly larger than $2^{-k}$ for every positive $k$; more generally, no fixed repetition count gives a statement-size-independent one-half error bound against a single bad location. Standard binary soundness amplification is recovered once a genuine one-round bound $p\le1/2$ is assumed. As a positive privacy primitive, uniform Boolean one-time-pad masking is analyzed by exact fiber counting: every ciphertext has one preimage mask for either message, so transcript distributions coincide, and opening recovers the message. These results separate commitments, robust encoding, repetition, and masking, and identify the additional ingredients required for a sound zero-knowledge protocol.
+We isolate two finite primitives relevant to private certification of mathematical claims: randomized detection of false propositional formulas and information-theoretic hiding of local values. Formulas in $m$ variables are evaluated at uniformly random Boolean valuations. Every non-tautology has a rejecting valuation, so its accepting set has cardinality at most $2^m-1$. Under $k$ independent challenges, its acceptance probability is therefore at most
+
+$$
+\left(\frac{2^m-1}{2^m}\right)^k.
+$$
+
+This bound is exact for formulas with a unique falsifying valuation and, crucially, is not the commonly suggested bound $2^{-k}$. In parallel, a value $s$ in the finite cyclic group $\mathbb Z/q\mathbb Z$ is hidden as $s+r$, where $r$ is uniform. Translation invariance shows that the resulting distribution is uniform for every $s$; hence any two secrets induce identical verifier views, pointwise and as distributions. These results separate soundness from zero knowledge and identify the obstacle to succinct private theorem certification. Randomly opening raw proof locations cannot yield statement-length-only communication when invalidity may be confined to a vanishing fraction of locations. Efficient amplification requires a robust locally testable encoding, while privacy under multi-location opening requires simulation of the full dependency-closed view. Algorithms, numerical examples, limitations, and research directions are developed explicitly.
 
 ## 1. Introduction
 
-Zero-knowledge verification asks whether one party can demonstrate possession of valid evidence without revealing that evidence. In mathematical applications, the public statement could be a theorem in a specified deductive system and the private witness could be a derivation. In combinatorial applications, the statement might assert that a graph is colorable and the witness might be a coloring. The intended security property is stronger than merely withholding most of the witness: the transcript should disclose no witness-dependent information beyond what follows from the public statement.
+A zero-knowledge protocol seeks to convince a verifier that a statement is true without revealing information beyond that truth. Applied to mathematics, this raises a striking possibility: a prover might certify possession of a valid derivation while keeping its strategic content secret. Such a mechanism could separate trust in a theorem from access to its proof, with potential applications to confidential algorithms, proprietary verification, sealed research contests, and controlled disclosure of security arguments.
 
-A tempting protocol has three steps. The prover first commits separately to every coordinate of a witness. The verifier then selects a random coordinate. Finally, the prover opens the selected commitment and demonstrates that the local data are consistent with the relevant rule. Repeating this experiment is often informally claimed both to hide the proof and to drive soundness error down to $2^{-k}$ after $k$ rounds.
+A tempting protocol is easy to describe. Commit to every line of a derivation, let the verifier request a random line, open it, and repeat. Two intuitions then arise: random checks should make cheating exponentially unlikely, and commitments should conceal unopened lines. Neither intuition is sufficient as stated.
 
-Neither conclusion follows from random opening alone. Commitments may hide unopened coordinates, but an opened coordinate appears in the transcript and can distinguish valid witnesses. Likewise, repetition amplifies the actual one-round detection probability. If only one among many locations exposes a defect, then a random local query is unlikely to find it.
+The first issue is quantitative. If an invalid object has only one bad location among $N$ locations, one uniform query catches it with probability merely $1/N$. After $k$ independent tests, the escape probability is $(1-1/N)^k$, not $2^{-k}$. Exponential decay in $k$ does not imply efficiency when the base approaches one with instance size.
 
-This paper isolates these issues in a finite model. The model intentionally avoids computational assumptions and therefore studies perfect, information-theoretic witness privacy. This permits exact characterizations rather than asymptotic claims. The main results are:
+The second issue is conceptual. Soundness and zero knowledge are distinct properties. A test can be sound while exposing sensitive data, and a hiding mechanism can conceal a value without establishing that the hidden object is valid. Moreover, hiding each coordinate separately does not necessarily hide a correlated collection of coordinates opened to verify a local constraint.
 
-1. opening coordinate $i$ is perfectly witness-private exactly when all valid witnesses agree at $i$;
-2. privacy for every coordinate is equivalent to uniqueness of each valid witness;
-3. a relation accepting both Boolean witnesses violates privacy when the bit is opened;
-4. sparse-error checking has exact false-acceptance probability $((n-1)/n)^k$;
-5. no fixed number of repetitions guarantees a uniform one-half error bound as witness length grows;
-6. the familiar $2^{-k}$ amplification follows conditionally from a one-round error at most $1/2$; and
-7. uniform Boolean masking has message-independent transcript fibers and correct opening.
+This paper studies a fully finite model in which both points can be made exactly. Propositional formulas are sampled through their truth tables, yielding a sharp geometric soundness law. Local proof values are masked in a finite additive group, yielding perfect hiding through translation invariance. The results are elementary enough to admit transparent proofs, yet strong enough to identify the missing ingredient in the proposed theorem-certification architecture: robust local inconsistency.
 
-The conclusions are diagnostic rather than a rejection of zero knowledge. They show why robust encodings, hiding mechanisms, binding mechanisms, and transcript-level privacy definitions must be treated as separate components.
+The contributions are:
 
-## 2. Finite model and definitions
+1. a witness theorem showing that every failure of tautologicity has a concrete rejecting valuation;
+2. an exact upper bound of $2^m-1$ on accepting valuations of a non-tautology in $m$ variables;
+3. a $k$-round soundness bound of $(1-2^{-m})^k$, with a sharpness example;
+4. an exact simulator for additive masking over $\mathbb Z/q\mathbb Z$;
+5. distributional and pointwise perfect-hiding theorems; and
+6. a separation analysis explaining why these primitives do not by themselves imply succinct zero-knowledge certification of arbitrary mathematical derivations.
 
-Let $S$ be a set of public statements, $W$ a set of witnesses, and
+## 2. Propositional formulas and truth-table challenges
 
-$$
-R\subseteq S\times W
-$$
+### 2.1 Syntax
 
-a validity relation. We write $R(s,w)$ when $w$ is a valid witness for statement $s$. Let $V$ be the set of possible verifier views. A deterministic view function is a map
+Fix a natural number $m$. Let the variables be indexed by
 
 $$
-\mathsf{View}:S\times W\to V.
+\{0,1,\ldots,m-1\}.
 $$
 
-### Definition 2.1 (Perfect witness privacy)
+A **formula in $m$ variables** is generated recursively by three constructors:
 
-The view function has **perfect witness privacy** relative to $R$ if, for every $s\in S$ and every pair $w_1,w_2\in W$,
+1. each indexed variable is a formula;
+2. the constant falsity $\bot$ is a formula; and
+3. if $p$ and $q$ are formulas, then $p\to q$ is a formula.
 
-$$
-R(s,w_1)\land R(s,w_2)
-\quad\Longrightarrow\quad
-\mathsf{View}(s,w_1)=\mathsf{View}(s,w_2).
-$$
+Falsity and implication form a complete propositional basis. For example, negation may be defined by $\neg p := p\to\bot$, and the other standard connectives can then be derived. Restricting the syntax therefore loses no propositional expressive power.
 
-Thus the view is constant on the set of valid witnesses for a fixed statement. For randomized protocols, the corresponding requirement is equality of view distributions; the deterministic definition is the appropriate specialization when the challenge is fixed.
+### 2.2 Valuations and evaluation
 
-Fix a positive witness length $n$ and an alphabet $A$. A coordinate witness is a function
+A **Boolean valuation** is a function
 
 $$
-w:\{0,1,\ldots,n-1\}\to A.
+v:\{0,1,\ldots,m-1\}\longrightarrow\{0,1\},
 $$
 
-For a fixed coordinate $i$, define the opening view by
+where $0$ denotes false and $1$ denotes true. Evaluation is recursive:
 
 $$
-\mathsf{Open}_i(s,w)=w_i.
+\llbracket x_i\rrbracket_v=v(i),\qquad
+\llbracket\bot\rrbracket_v=0,
 $$
 
-The public statement is an input but does not alter the returned coordinate.
-
-### Definition 2.2 (All-opening privacy)
-
-A coordinate-witness relation has **all-opening privacy** if $\mathsf{Open}_i$ has perfect witness privacy for every coordinate $i$.
-
-For soundness, consider an object with $n$ equally likely local checks, exactly one of which detects an error. In one round the verifier samples one check uniformly. Independent repetition means that the $k$ sampled indices are independent and uniformly distributed.
-
-### Definition 2.3 (Sparse-error false-acceptance probability)
-
-For positive $n$ and nonnegative integer $k$, define
+and
 
 $$
-F(n,k)=\left(\frac{n-1}{n}\right)^k.
+\llbracket p\to q\rrbracket_v
+=\neg\llbracket p\rrbracket_v\lor\llbracket q\rrbracket_v.
 $$
 
-This quantity is the probability that all $k$ checks miss the unique bad location.
+There are exactly $2^m$ valuations because each of the $m$ variables has two independent choices.
 
-Finally, for Boolean masking let $m\in\{0,1\}$ be a message, $r\in\{0,1\}$ a random mask, and define
-
-$$
-\mathsf{Mask}(m,r)=m\oplus r,
-$$
-
-where $\oplus$ is exclusive OR.
-
-## 3. Exact privacy characterization for coordinate opening
-
-### Theorem 3.1 (Single-Opening Privacy Theorem)
-
-Fix a coordinate $i$. The opening view $\mathsf{Open}_i$ has perfect witness privacy if and only if, for every statement $s$ and all valid witnesses $w_1,w_2$ for $s$,
+A formula $p$ is a **tautology** if
 
 $$
-(w_1)_i=(w_2)_i.
+\llbracket p\rrbracket_v=1
 $$
 
-#### Proof sketch
-
-By definition, the view obtained from witness $w$ is exactly $w_i$. Perfect witness privacy says that the views produced by any two valid witnesses coincide. Substituting the definition of the view gives precisely $(w_1)_i=(w_2)_i$. Both implications are therefore direct instances of the same equality. $\square$
-
-The theorem is elementary, but it rules out a common intuition: revealing only one coordinate is not automatically zero knowledge. Information leakage is not measured by the fraction of the witness disclosed. If a single coordinate varies among valid witnesses, its disclosure distinguishes those witnesses perfectly.
-
-### Corollary 3.2 (Distinguishing witnesses destroy privacy)
-
-Suppose $w_1$ and $w_2$ are valid witnesses for the same statement and $(w_1)_i\ne(w_2)_i$. Then opening coordinate $i$ is not perfectly witness-private.
-
-#### Proof sketch
-
-The two witnesses produce unequal views, contradicting the equality required by perfect witness privacy. Equivalently, this is the contrapositive of the forward direction of Theorem 3.1. $\square$
-
-### Theorem 3.3 (All-Openings Privacy Theorem)
-
-All coordinate openings are perfectly witness-private if and only if every two valid witnesses for the same statement are equal as coordinate functions. Explicitly,
+for every Boolean valuation $v$. Let
 
 $$
-\bigl(\forall i,\ \mathsf{Open}_i\text{ is perfectly witness-private}\bigr)
+A(p)=\{v:\llbracket p\rrbracket_v=1\}
 $$
 
-holds if and only if
+be its accepting set, and write $a(p)=|A(p)|$.
+
+### 2.3 The randomized verifier
+
+The one-round truth-table verifier samples a valuation uniformly from the $2^m$ possibilities and accepts precisely when the formula evaluates to true. Its acceptance probability is
 
 $$
-\forall s,w_1,w_2,
-\quad R(s,w_1)\land R(s,w_2)\Longrightarrow w_1=w_2.
+\Pr[\text{accept }p]=\frac{a(p)}{2^m}.
 $$
 
-#### Proof sketch
+The verifier has perfect completeness: if $p$ is a tautology, every valuation accepts and the probability is $1$. Soundness concerns non-tautologies.
 
-Assume every opening is private. Given two valid witnesses, Theorem 3.1 shows that they agree at every coordinate. Extensional equality of functions then yields $w_1=w_2$. Conversely, if valid witnesses are unique, any two valid witnesses are equal and hence have equal values at every challenged coordinate. Every opening view is therefore private. $\square$
+## 3. Soundness from a rejecting valuation
 
-This result says that randomizing the challenged coordinate does not remove the obstruction. Since the selected index is part of the transcript, conditional privacy for that challenge requires agreement at that index. Supporting every challenge requires coordinatewise agreement everywhere, which is witness uniqueness.
+### Lemma 1 (Rejecting-witness lemma)
 
-### Example 3.4 (One-bit privacy failure)
-
-Let the statement space contain a single public statement and let both Boolean witnesses be valid:
+If a formula $p$ is not a tautology, then there exists a valuation $v_0$ such that
 
 $$
-R(s,0)=R(s,1)=\text{true}.
+\llbracket p\rrbracket_{v_0}=0.
 $$
 
-The witness has one coordinate. Opening it produces view $0$ from one valid witness and view $1$ from the other.
+**Proof sketch.** By definition, tautologicity says that every valuation evaluates to true. Negating this universal statement gives a valuation for which evaluation is not true. Since evaluation is Boolean, the remaining value is false. $\square$
 
-### Proposition 3.5 (Minimal raw-opening leak)
+This logical witness yields the exact finite counting bound.
 
-The one-bit relation of Example 3.4 does not have perfect witness privacy under coordinate opening.
+### Theorem 2 (Accepting-set bound)
 
-#### Proof sketch
-
-Both witnesses are valid and differ at the only coordinate. Corollary 3.2 applies. $\square$
-
-This example separates commitment hiding from opening privacy. Even if an unopened commitment is ideally hiding, an opening discloses the committed value. A commitment mechanism can prevent premature access to coordinates; it cannot make the disclosed coordinate independent of the witness.
-
-## 4. Exact soundness under sparse corruption
-
-Suppose a malformed object has exactly one bad location among $n$ possible checks. A round catches the defect with probability $1/n$ and misses it with probability $(n-1)/n$. Under independent sampling, false acceptance occurs exactly when every round misses.
-
-### Theorem 4.1 (Exact Sparse-Error Formula)
-
-After $k$ independent uniformly random checks, the false-acceptance probability is
+If $p$ is a non-tautology in $m$ variables, then
 
 $$
-F(n,k)=\left(\frac{n-1}{n}\right)^k.
+a(p)\le 2^m-1.
 $$
 
-#### Proof sketch
+**Proof sketch.** Choose a rejecting valuation $v_0$ using Lemma 1. The accepting set $A(p)$ is contained in the set of all valuations with $v_0$ removed. The latter set has cardinality $2^m-1$, proving the claim. $\square$
 
-Each round misses the unique bad location with probability $(n-1)/n$. Independence makes the probability of missing in every round the product of the $k$ identical one-round probabilities. $\square$
+### Corollary 3 (One-round soundness)
 
-### Proposition 4.2 (Four-check failure probability)
-
-With four possible checks and one bad location,
+A non-tautology in $m$ variables is accepted by one uniform truth-table challenge with probability at most
 
 $$
-F(4,k)=\left(\frac34\right)^k.
+\frac{2^m-1}{2^m}=1-2^{-m}.
 $$
 
-#### Proof sketch
+The conclusion follows by dividing the cardinality inequality in Theorem 2 by $2^m$.
 
-Substitute $n=4$ into Theorem 4.1. $\square$
+### 3.1 Independent repetition
 
-### Theorem 4.3 (Failure of automatic binary soundness)
-
-For every positive integer $k$,
+Now choose $k$ valuations independently and accept only if all $k$ evaluations are true. For any fixed $p$, each round succeeds with probability $a(p)/2^m$. Independence gives
 
 $$
-\left(\frac12\right)^k<F(4,k)=\left(\frac34\right)^k.
+\Pr[\text{all }k\text{ rounds accept }p]
+=\prod_{i=1}^{k}\frac{a(p)}{2^m}
+=\left(\frac{a(p)}{2^m}\right)^k.
 $$
 
-#### Proof sketch
+### Theorem 4 (Repeated truth-table soundness)
 
-The base inequality $1/2<3/4$ is strict and both quantities are nonnegative. Raising both sides to a positive integer power preserves strict order. $\square$
-
-Thus $k$ repetitions do not intrinsically imply error $2^{-k}$. That rate is available only if the actual one-round error is no greater than $1/2$.
-
-The dependence on $n$ is more severe than the four-check example suggests.
-
-### Theorem 4.4 (No Fixed-Repetition Half Bound)
-
-For every nonnegative integer $k$, choosing
+Let $p$ be a non-tautology in $m$ variables. Under $k$ independent uniform valuation challenges,
 
 $$
-n=2k+2
+\Pr[\text{all }k\text{ rounds accept }p]
+\le
+\left(\frac{2^m-1}{2^m}\right)^k
+=
+\left(1-2^{-m}\right)^k.
 $$
 
-gives
+**Proof sketch.** The accepting-set bound gives
 
 $$
-\frac12<F(2k+2,k).
+0\le \frac{a(p)}{2^m}\le\frac{2^m-1}{2^m}.
 $$
 
-Consequently, no fixed repetition count ensures false-acceptance probability at most $1/2$ uniformly over all witness lengths when only one location detects the error.
+Taking the product over $k$ identical nonnegative factors preserves the inequality. Independence identifies the left product with the probability of passing all rounds. $\square$
 
-#### Proof sketch
+### Proposition 5 (Sharpness)
 
-For $k=0$, the false-acceptance probability is $1$. For positive $k$, write
-
-$$
-F(2k+2,k)=\left(1-\frac{1}{2k+2}\right)^k.
-$$
-
-Bernoulli’s inequality states that $(1-x)^k\ge1-kx$ for $0\le x\le1$. With $x=1/(2k+2)$,
+For every positive $m$, there exists a formula in $m$ variables whose $k$-round acceptance probability is exactly
 
 $$
-F(2k+2,k)
-\ge 1-\frac{k}{2k+2}
-=\frac{k+2}{2k+2}
->\frac12.
+\left(1-2^{-m}\right)^k.
 $$
 
-The strict final inequality follows because $k+2>k+1$. $\square$
+**Proof sketch.** Consider the disjunction of all $m$ variables, expressed if desired using only implication and falsity. It is false exactly when every variable is false and true on the other $2^m-1$ valuations. Its one-round acceptance probability is therefore $(2^m-1)/2^m$, and independence gives equality after $k$ rounds. $\square$
 
-For a target error $\varepsilon\in(0,1)$, Theorem 4.1 also yields the repetition requirement
+### 3.2 Amplification cost
 
-$$
-k\ge \frac{\log \varepsilon}{\log((n-1)/n)}.
-$$
-
-Since $\log((n-1)/n)\sim-1/n$ for large $n$, sparse-error detection requires on the order of $n\log(1/\varepsilon)$ queries. This asymptotic observation explains why constant-query verification requires a robust encoding: malformed objects must fail a constant fraction of checks, not merely one check.
-
-## 5. Conditional soundness amplification
-
-### Theorem 5.1 (Binary Soundness Amplification)
-
-Let $p$ be the one-round false-acceptance probability, with
+For a desired soundness error $\varepsilon$ with $0<\varepsilon<1$, the worst-case guarantee requires
 
 $$
-0\le p\le\frac12.
+\left(1-2^{-m}\right)^k\le\varepsilon.
 $$
 
-After $k$ independent repetitions in which acceptance requires every round to accept, the false-acceptance probability satisfies
+Since both logarithms are negative, this is equivalent to
 
 $$
-p^k\le\left(\frac12\right)^k=2^{-k}.
+k\ge
+\frac{\log\varepsilon}{\log(1-2^{-m})}.
 $$
 
-#### Proof sketch
-
-Independence gives false acceptance probability $p^k$. Since exponentiation by a nonnegative integer is monotone on nonnegative numbers, $p\le1/2$ implies $p^k\le(1/2)^k$. $\square$
-
-This theorem clarifies the logical order of protocol analysis. One must first prove a one-round soundness estimate. Repetition then amplifies that estimate. In a local-checking protocol, a constant one-round estimate usually comes from a distance property: every false or malformed candidate violates a constant fraction $\delta$ of checks. Uniform sampling then catches the error with probability at least $\delta$, yielding one-round false acceptance at most $1-\delta$. If $\delta\ge1/2$, Theorem 5.1 applies directly. Other positive constants also yield exponential decay, but with base $1-\delta$.
-
-A raw derivation does not generally have such distance. Altering one critical line can produce an invalid object that differs from locally plausible data in only one position. Arithmetically representing a derivation does not by itself spread that error. A probabilistically checkable encoding is valuable precisely because it introduces redundancy and robustness.
-
-## 6. Uniform Boolean masking
-
-Raw opening fails because the view equals a witness-dependent value. A simple random transformation can instead make the view distribution independent of the message.
-
-For $m,r,c\in\{0,1\}$, define $c=m\oplus r$. For fixed $m$ and $c$, consider the fiber
+Thus the smallest sufficient integer is
 
 $$
-\mathcal F_{m,c}=\{r\in\{0,1\}:m\oplus r=c\}.
+k_{\min}
+=
+\left\lceil
+\frac{\log\varepsilon}{\log(1-2^{-m})}
+\right\rceil.
 $$
 
-### Lemma 6.1 (Unique Mask Fiber)
-
-For every message $m$ and ciphertext $c$,
+Using $\log(1-x)=-x+O(x^2)$ as $x\to0$ gives
 
 $$
-|\mathcal F_{m,c}|=1.
+k_{\min}=\Theta\!\left(2^m\log\frac1\varepsilon\right).
 $$
 
-#### Proof sketch
+The repetition count is exponential in the number of variables in the worst case. Consequently, this truth-table protocol is a finite soundness demonstration, not a polynomial-communication protocol for general propositional validity.
 
-The unique solution is $r=m\oplus c$. Equivalently, the four possible pairs $(m,c)$ can be enumerated: equal message and ciphertext require $r=0$, while unequal message and ciphertext require $r=1$. $\square$
+## 4. Additive masking and exact simulation
 
-### Theorem 6.2 (Uniform-Masking Perfect Privacy)
+### 4.1 The masking experiment
 
-Let $r$ be uniform on $\{0,1\}$. For any two messages $m_1,m_2$ and every ciphertext $c$,
-
-$$
-\Pr[m_1\oplus r=c]=\Pr[m_2\oplus r=c]=\frac12.
-$$
-
-Hence the ciphertext distribution is independent of the message.
-
-#### Proof sketch
-
-By Lemma 6.1, exactly one of the two equally likely masks maps each fixed message to $c$. Therefore each probability is $1/2$, and the fiber cardinalities—and thus distributions—agree for all messages. $\square$
-
-### Theorem 6.3 (Mask Opening Correctness)
-
-For every $m,r\in\{0,1\}$,
+Fix an integer $q\ge1$ and let
 
 $$
-(m\oplus r)\oplus r=m.
+G=\mathbb Z/q\mathbb Z
 $$
 
-#### Proof sketch
-
-Exclusive OR is associative, $r\oplus r=0$, and $m\oplus0=m$. $\square$
-
-The privacy theorem and correctness theorem illustrate two distinct obligations. Privacy requires that the public value have a message-independent distribution. Correctness requires that the authorized opening recover the message. Both hold for the Boolean one-time pad.
-
-The mask is not by itself a complete commitment: if the prover reveals only $c$ without fixing or authenticating $r$, the prover may later claim either message by choosing the corresponding mask. Thus hiding and binding remain separate requirements. A complete protocol must define both and state whether each is information-theoretic or computational.
-
-## 7. Algorithms and numerical experiments
-
-### 7.1 Exact sparse-error calculator
-
-Given $n>0$ and $k\ge0$, compute
+with addition modulo $q$. A local secret is $s\in G$. Sample a mask $R$ uniformly from $G$ and expose
 
 $$
-F(n,k)=\left(1-\frac1n\right)^k.
+C_s=s+R.
 $$
 
-The algorithm performs constant-time arithmetic when exponentiation is treated as a primitive, or $O(\log k)$ multiplications by repeated squaring. It can also compute the detection probability $1-F(n,k)$ and compare it with $2^{-k}$.
+The random variable $C_s$ is the verifier’s local view. Perfect hiding means that this view has the same distribution for every possible $s$.
 
-### 7.2 Minimal repetitions for a target error
+### Lemma 6 (Translation bijection)
 
-Given $n>1$ and $0<\varepsilon<1$, find the least $k$ with $F(n,k)\le\varepsilon$. A direct loop starts from $k=0$ and repeatedly multiplies by $(n-1)/n$ until the target is reached. Its running time is $O(k)$ and constant space. A logarithmic formula supplies an initial estimate, but exact iteration avoids rounding errors at the threshold.
-
-### 7.3 Exhaustive Boolean masking audit
-
-Enumerate all $m,r\in\{0,1\}$, compute $c=m\oplus r$, count each fiber, and verify opening by checking $(m\oplus r)\oplus r=m$. The state space has four input pairs, so the computation is constant size. The same counting method generalizes to finite one-time pads over a finite group: translation by a message permutes the randomness space.
-
-Numerically, for $n=4$ and $k=10$,
+For every $s\in G$, the map
 
 $$
-F(4,10)=\left(\frac34\right)^{10}\approx0.0563135,
+\tau_s:G\longrightarrow G,\qquad \tau_s(r)=s+r,
 $$
 
-whereas
+is a bijection.
+
+**Proof sketch.** Its inverse is translation by $-s$: applying $r\mapsto -s+r$ after $\tau_s$ returns $r$, and conversely. $\square$
+
+### Theorem 7 (Uniform-mask theorem)
+
+For every secret $s\in G$, the distribution of $C_s=s+R$ is uniform on $G$.
+
+**Proof sketch.** A bijection maps a uniform distribution on a finite set to the uniform distribution. By Lemma 6, translation by $s$ is a bijection. Equivalently, for each $c\in G$, the equation $s+r=c$ has the unique solution $r=c-s$. Since every mask has probability $1/q$, every observation $c$ has probability $1/q$. $\square$
+
+### Theorem 8 (Perfect hiding)
+
+For any secrets $s,t\in G$, the random variables $C_s$ and $C_t$ have identical distributions:
 
 $$
-2^{-10}\approx0.000976563.
+\mathcal L(C_s)=\mathcal L(C_t).
 $$
 
-For $k=10$ and $n=22=2k+2$,
+**Proof sketch.** By Theorem 7, both distributions are the uniform distribution on $G$. $\square$
+
+### Corollary 9 (Pointwise independence of the secret)
+
+For all $s,t,c\in G$,
 
 $$
-F(22,10)=\left(\frac{21}{22}\right)^{10}\approx0.627,
+\Pr[C_s=c]=\Pr[C_t=c]=\frac1q.
 $$
 
-which exceeds $1/2$ as Theorem 4.4 predicts.
+This pointwise statement is an immediate specialization of equality of distributions. It also provides an explicit simulator: without knowing $s$, sample a uniform element of $G$ and output it. The simulator’s output is distributed exactly like the actual masked view, so the simulation has zero statistical distance.
 
-## 8. Applications and protocol-design consequences
+### 4.2 Scope of the hiding claim
 
-### 8.1 Confidential mathematical methods
+The word “commitment” is sometimes used informally for the displayed value $s+r$. The construction here establishes its hiding property exactly, but additive masking alone is not binding. Given a displayed $c$, for every proposed secret $s'$ there is a mask $r'=c-s'$ satisfying $c=s'+r'$. A full cryptographic commitment must add a mechanism preventing the prover from changing the opening later. The finite theorem concerns privacy of the masked local value and should not be interpreted as a complete commitment construction.
 
-A private theorem-verification service would distinguish a public claim from a hidden derivation. The privacy definition must compare transcripts arising from different valid derivations of the same theorem. Raw line opening generally fails this test because proof lines encode strategy. Masking, commitments, and simulation must ensure that challenge responses reveal no more than a simulator could produce from the theorem alone.
+Nor does marginal hiding automatically imply joint hiding under correlated openings. Suppose a verifier opens several masked values together with relations among their masks. Even if each coordinate is uniform separately, the tuple may reveal an invariant. For example, reusing the same mask in $s_1+r$ and $s_2+r$ reveals their difference. A zero-knowledge protocol must simulate the full joint transcript generated by each dependency-closed query, not merely each coordinate marginal.
 
-### 8.2 Confidential compliance and audits
+## 5. The combined finite guarantee
 
-The same structure appears when a hidden dataset or computation witnesses compliance with a public rule. Randomly exposing raw records can violate privacy even if most records remain sealed. Robust encodings may improve soundness, but they do not automatically provide privacy; separate randomized response mechanisms are required.
+### Theorem 10 (Soundness and local perfect hiding)
 
-### 8.3 Probabilistically checkable evidence
+Let $p$ be a non-tautology in $m$ variables, let $k$ independent uniform valuation challenges be performed, and let local values lie in $G=\mathbb Z/q\mathbb Z$. Then:
 
-Local verification becomes powerful when evidence is encoded so that every invalid candidate is far from acceptance. If at least a fraction $\delta$ of locations detect invalidity, then $k$ independent checks have false-acceptance probability at most
+1. the probability that $p$ passes every challenge is at most
 
 $$
-(1-\delta)^k.
+\left(\frac{2^m-1}{2^m}\right)^k;
 $$
 
-The sparse-error model corresponds to $\delta=1/n$, which vanishes as $n$ grows. The distinction between raw and robustly encoded evidence is therefore quantitative and structural.
+2. for any two local values $s,t\in G$, their independently and uniformly masked views have identical distributions.
 
-### 8.4 Succinctness
+**Proof sketch.** The first clause is Theorem 4. The second is Theorem 8. Their conjunction packages two independent guarantees without deriving one from the other. $\square$
 
-Communication polynomial in statement length, independent of witness length, is a separate objective from zero knowledge. A local proof system may reduce the number of queried symbols while still relying on commitments to, or preprocessing of, a long encoded witness. Establishing succinct communication requires an explicit succinct argument construction, assumptions supporting it, and careful accounting of setup, prover computation, and uniformity. It does not follow merely from representing derivations arithmetically.
+The theorem is deliberately modular. Soundness depends on the density of rejecting valuations and independent sampling. Hiding depends on translation invariance in a finite group. The soundness argument does not use masking, and the masking argument does not use formula validity.
 
-## 9. Discussion
+## 6. Algorithms
 
-The analysis exposes three category errors that can occur in informal protocol proposals.
+### 6.1 Exhaustive acceptance profiling
 
-First, **commitment hiding is not opening privacy**. A hiding commitment protects a value before opening. Once the value is opened, privacy depends on whether that value itself is safe to reveal or is transformed through a zero-knowledge subprotocol.
+Given a formula in $m$ variables, enumerate the integers from $0$ through $2^m-1$, interpret each integer’s binary digits as a valuation, evaluate the formula, and count accepting rows. The algorithm returns $a(p)$, the exact one-round acceptance probability $a(p)/2^m$, and the exact $k$-round probability $(a(p)/2^m)^k$.
 
-Second, **random selection is not random masking**. Selecting a random coordinate changes which witness-dependent datum appears. Masking changes the distribution of the datum that appears. The Boolean one-time pad succeeds because every transcript has equal probability under either message.
+If $n$ is the formula-tree size, one evaluation costs $O(n)$ time. Enumeration costs $O(2^m n)$ time and $O(m+n)$ working space, excluding stored output. This exponential cost is intrinsic to direct truth-table enumeration.
 
-Third, **repetition is not a source of baseline soundness**. It converts $p$ into $p^k$. If $p$ approaches $1$ with witness length, a fixed $k$ cannot provide a uniform guarantee. Robust encoding is the missing bridge between local checking and constant one-round detection.
+### 6.2 Worst-case repetition planning
 
-These distinctions also explain why merely revealing “one random step” is not a simulator-based zero-knowledge argument. A simulator given only the statement may not know the distribution of a genuine proof line, particularly when different valid proofs contain different data. The deterministic privacy criterion developed here is intentionally strong, but the one-bit example remains fatal even under ordinary distributional definitions: the transcript distributions are point masses at different bits.
+Given $m$ and a target error $\varepsilon$, compute the smallest $k$ satisfying $(1-2^{-m})^k\le\varepsilon$. Direct logarithms give the formula above, although a numerically robust implementation can increment or use binary search with exact rational powers. The logarithmic calculation takes constant arithmetic operations, while precision costs depend on the numeric representation.
 
-The Boolean masking construction supplies a positive template but not a complete protocol. Its perfect secrecy relies on fresh uniform randomness. Reusing a mask can reveal relations between messages. Moreover, masking alone is malleable and nonbinding. These limitations reinforce the need for modular definitions.
+### 6.3 Empirical masking audit
 
-## 10. Future work
+For each secret $s\in G$, enumerate all masks $r\in G$ and tabulate $s+r\pmod q$. Every output occurs exactly once in every row. This produces an exact frequency table, not merely a Monte Carlo estimate. Its running time is $O(q^2)$ for all secrets and its output occupies $O(q^2)$ space, or $O(q)$ if rows are streamed.
 
-A fuller theory should first replace deterministic views and fiber counts with finite probability distributions and transcript ensembles. Perfect zero knowledge can then be stated as equality of real and simulated transcript distributions; computational zero knowledge can be stated through indistinguishability against efficient distinguishers.
+## 7. Numerical examples
 
-Second, commitments should be modeled through explicit games. Hiding asks whether a receiver can distinguish commitments to different messages. Binding asks whether a sender can open one commitment in two inconsistent ways. Collision resistance alone should not be treated as a synonym for either property.
+Consider the disjunction of $m$ variables, which is false only on the all-false valuation. For $m=3$, it accepts $7$ of $8$ rows. After $k=10$ independent challenges, its survival probability is
 
-Third, an interactive protocol for a finite or efficiently decidable relation should define completeness, soundness, and zero knowledge separately. This prevents a proof of one property from being mistaken for another.
+$$
+\left(\frac78\right)^{10}\approx0.2631.
+$$
 
-Fourth, a robust encoded-proof relation should include a distance-to-acceptance theorem: every false candidate must violate a positive fraction of local constraints. That theorem would justify a constant one-round soundness estimate and permit valid repetition bounds.
+For $m=10$, a uniquely falsified formula passes one round with probability $1023/1024\approx0.999023$. After $1000$ rounds, it still survives with probability approximately
 
-Fifth, sequential and parallel repetition should be studied under explicit independence and adaptivity assumptions. Transcript leakage can accumulate across rounds even when soundness improves.
+$$
+\left(\frac{1023}{1024}\right)^{1000}\approx0.3764.
+$$
 
-Finally, claims of statement-length succinctness require a separate construction and complexity analysis. The relevant questions include setup assumptions, computational hardness, uniformity, prover time, verifier time, total communication, and how each depends on statement and witness lengths.
+For $m=20$, after $1000$ rounds the survival probability is approximately $0.999047$. These examples show that “geometric decay” can coexist with extremely weak practical detection.
 
-## 11. Conclusion
+For masking, take $q=5$ and secret $s=3$. As the mask ranges through $0,1,2,3,4$, the displayed values are
 
-Raw coordinate opening admits exact and restrictive privacy criteria. A fixed coordinate can be opened privately only when all valid witnesses agree there; every coordinate can be opened privately only when the valid witness is unique. The one-bit relation demonstrates the failure at the smallest possible scale.
+$$
+3,4,0,1,2.
+$$
 
-Sparse-error soundness is equally exact. With one detectable defect among $n$ checks, $k$ independent trials fail with probability $((n-1)/n)^k$. This is $(3/4)^k$, not $2^{-k}$, when $n=4$, and no fixed $k$ gives a witness-size-independent one-half bound. Exponential binary amplification is valid only after establishing one-round error at most $1/2$.
+Each residue appears exactly once. Secret $s=1$ instead produces
 
-Uniform Boolean masking shows what genuine information-theoretic hiding looks like: every ciphertext has equal probability under either message, while the mask opens correctly. The resulting design principles are concise. Do not confuse an unopened commitment with a harmless opening. Do not confuse random sampling with robust encoding. Do not invoke amplification before proving a baseline bound. Privacy, binding, robustness, and succinctness are separate mathematical obligations; a credible private-verification protocol must satisfy each one explicitly.
+$$
+1,2,3,4,0,
+$$
+
+again exactly uniform. The order changes, but the distribution does not.
+
+## 8. Why random raw-line opening is insufficient
+
+The finite model diagnoses three separate failures of the naive protocol for arbitrary derivations.
+
+First, **sparse defects defeat efficient sampling**. If a purported derivation of length $N$ differs from a valid one at one location and a round samples one location uniformly, the catch probability is only $1/N$. Achieving constant soundness then needs $\Theta(N)$ rounds, and reducing error to $\varepsilon$ needs $\Theta(N\log(1/\varepsilon))$ rounds.
+
+Second, **a raw line is not necessarily locally checkable**. Establishing that a line follows from earlier lines may require opening its premises, the premises of those premises, or global side conditions. The relevant query is therefore a dependency-closed neighborhood rather than an isolated symbol.
+
+Third, **opening can disclose strategy**. A randomly selected line may contain a decisive lemma or construction. Commitment hiding protects unopened data; it says nothing about information intentionally revealed when a challenge is answered. Zero knowledge requires a simulator whose transcript has the same distribution using only the permitted public information.
+
+A robust locally testable encoding addresses the first problem by spreading every invalidity across a fixed positive fraction $\delta$ of local tests. Then $k$ independent rounds have error at most $(1-\delta)^k$, and $O(\log(1/\varepsilon))$ rounds suffice when $\delta$ is constant. A dependency-aware zero-knowledge compiler must address the second and third problems by masking correlated local states and simulating their entire joint view.
+
+## 9. Applications
+
+The results apply directly to randomized auditing of finite Boolean specifications. When the full truth table is modest, exhaustive profiling computes exact failure density; when it is large, random testing offers a transparent probabilistic audit whose limitations are explicitly quantified.
+
+Additive hiding is useful wherever a local value must be information-theoretically concealed before controlled opening. Its translation argument underlies secret sharing and one-time-pad constructions. In protocol design, the theorem serves as a primitive: fresh uniform masks erase the marginal distribution of individual finite-group values.
+
+The conceptual separation is also valuable in privacy-preserving computation. Integrity mechanisms answer whether data or computation are valid; privacy mechanisms answer what observations disclose. Treating either as a consequence of the other invites protocol errors. A secure design states completeness, soundness, hiding, binding, and simulation properties separately.
+
+For confidential mathematics, the most realistic near-term applications lie in structured families whose global constraints have small local descriptions: bounded-treewidth formulas, bounded-width dynamic programs, circuit computations, and algebraic constraint systems. These settings permit local checking without pretending that an arbitrary raw derivation is locally robust.
+
+## 10. Discussion and limitations
+
+The soundness theorem is exact but weak in the worst case. It assumes direct evaluation at sampled valuations and does not reduce the exponential challenge universe. It proves neither polynomial communication nor efficient verification for arbitrary propositional tautologies.
+
+The hiding theorem is perfect but local. It assumes a fresh uniform mask in a finite additive group. It does not provide binding, authentication, or secure opening. It does not establish zero knowledge for an interactive protocol whose openings are correlated.
+
+Most importantly, the two theorems do not imply that every theorem with a short statement has a zero-knowledge proof whose communication is polynomial in statement length. The length of the shortest derivation can be enormous compared with the statement, and generic encodings are measured relative to the object being encoded. A succinctness claim needs a precise complexity model and additional machinery.
+
+These limitations are productive. They isolate robustness as the resource missing from random raw-line checking and joint simulation as the resource missing from coordinatewise hiding.
+
+## 11. Future work
+
+A first direction is the construction of robust local encodings of arithmetic derivations. The target is an explicit transformation for which every invalid encoding fails a fixed positive fraction of constant-query tests, with encoding length polynomial in derivation length.
+
+A second direction is simulation under dependency closure. One should characterize when a locally testable relation admits masks and openings whose joint distribution depends only on the tested constraint’s truth value.
+
+A third direction is a communication lower bound for authenticated raw-line protocols. Sparse-defect examples suggest that any such verifier must communicate an amount growing with minimal derivation length for some families of short statements.
+
+A fourth direction concerns formulas of bounded treewidth. Their tree decompositions turn validity into compatibility of local dynamic-programming states. This may permit polynomial communication and logarithmic dependence on inverse soundness error while finite-group masking conceals local states.
+
+Finally, local simulators suggest a gluing theory. Transcript distributions defined on overlapping query neighborhoods must agree on intersections and assemble into a consistent global distribution. A precise local-to-global theorem would provide a principled criterion for composing zero-knowledge views.
+
+## 12. Conclusion
+
+The finite theory establishes two exact facts. A non-tautology in $m$ variables survives $k$ independent uniform valuation challenges with probability at most $(1-2^{-m})^k$, and this rate is sharp. A finite-group value hidden by a fresh uniform additive mask has the uniform distribution, independent of the value, so its local view is perfectly simulatable.
+
+Together these facts clarify rather than complete the program of private theorem certification. Repetition amplifies only the rejection density already present, and privacy requires simulation of everything that is opened. Succinct secret proofs therefore require robust local encodings coupled to dependency-aware hiding. The path from a sealed local value to a sealed mathematical derivation runs through that missing bridge.

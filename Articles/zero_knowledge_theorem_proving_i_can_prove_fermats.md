@@ -1,137 +1,116 @@
-# The Sealed Proof: What It Takes to Reveal That a Theorem Is True Without Revealing Why
+# The Sealed Proof: What Random Challenges Can—and Cannot—Hide
 
-Imagine that a mathematician announces a spectacular theorem but refuses to show the argument. Instead, she offers an unusual bargain: she will convince a skeptical referee that she possesses a valid proof while revealing nothing about the proof itself. The referee may ask carefully controlled questions, but should learn no lemma, trick, intermediate construction, or strategic idea beyond the bare fact that a valid proof exists.
+Imagine a mathematician arriving with a theorem of enormous value: a new optimization method, a security result, perhaps a proof whose strategic insight is itself a trade secret. She wants the world to trust the conclusion, but she does not want to reveal the route by which she reached it. Cryptography suggests a tantalizing bargain: convince a skeptic that a claim is true while disclosing nothing beyond its truth.
 
-This is the mathematical analogue of a sealed-bid auction. A bidder can establish that a bid obeys the rules without exposing its amount. A password system can establish that a user knows a secret without transmitting the secret. Could proof itself be treated in the same way?
+That bargain is called **zero knowledge**. It sounds almost magical when applied to mathematics. Could someone certify a theorem without showing its proof? Could one even certify a theorem as famous as Fermat’s Last Theorem while keeping every proof step sealed?
 
-The idea belongs to **zero-knowledge cryptography**, where truth and explanation are deliberately separated. Yet a tempting protocol—commit to every line and open randomly requested lines—contains two subtle failures. One concerns privacy: an opened line can leak the witness. The other concerns soundness: checking a random location is weak when only a few locations are wrong. Understanding these failures reveals what a genuine zero-knowledge proof of mathematical knowledge must accomplish.
+A finite model reveals both why the dream is plausible and why a popular shortcut fails. The model has two clean ingredients. Random tests can catch false propositional formulas, and additive masks can hide local values perfectly. Yet these ingredients solve different problems. Repeating a weak test does not make it efficient, and hiding a line does not establish that the surrounding argument is valid.
 
-## Statements, witnesses, and views
+## A small logical universe
 
-A public statement is something both parties know, such as “this graph has a three-coloring” or “this formula is satisfiable.” A **witness** is private data establishing the statement, such as a particular coloring or satisfying assignment. For theorem proving, the statement could be the theorem together with a fixed deductive system, and the witness could be a derivation.
+Begin with formulas built from three pieces: variables, falsity, and implication. If $p$ and $q$ are formulas, their implication $p\to q$ is false only when $p$ is true and $q$ is false. This tiny vocabulary is complete: familiar connectives such as negation, conjunction, and disjunction can all be expressed from falsity and implication.
 
-A verifier does not necessarily see the witness. It sees a **view**: the complete transcript available during the interaction, including challenges, answers, and public randomness. In the strongest information-theoretic sense, a protocol has perfect witness privacy if any two valid witnesses for the same statement produce exactly the same verifier view—or, in a randomized protocol, exactly the same distribution of views.
+Suppose a formula uses $m$ Boolean variables. A **valuation** assigns either false or true to each variable, so there are exactly $2^m$ valuations. Evaluating the formula at one valuation produces one Boolean answer. A **tautology** is a formula that evaluates to true under every one of those $2^m$ assignments.
 
-Consider a witness with $n$ coordinates,
+This gives the most direct possible randomized test. Choose a valuation uniformly at random, evaluate the formula, and accept if the answer is true. A genuine tautology always passes. A false claim has at least one rejecting valuation, so it can never pass on more than $2^m-1$ rows of its truth table.
 
-$$
-w=(w_0,w_1,\ldots,w_{n-1}).
-$$
+This elementary observation is the first central result:
 
-Suppose the verifier chooses an index $i$ and receives the raw value $w_i$. The first result is an exact characterization:
-
-**Single-Opening Privacy Theorem.** Opening coordinate $i$ is perfectly witness-private if and only if every two valid witnesses for the same public statement agree at coordinate $i$.
-
-The reason is immediate but decisive. The verifier’s view is precisely the opened value. If valid witnesses $w$ and $w'$ satisfy $w_i\ne w'_i$, their views differ, so the transcript reveals which witness was used. Conversely, if every valid witness has the same value at $i$, the opening cannot distinguish them.
-
-Randomizing the index does not erase this problem, because the verifier knows which index was requested. Requiring privacy for every possible opening gives an even sharper conclusion:
-
-**All-Openings Privacy Theorem.** Every raw coordinate opening is perfectly witness-private if and only if each public statement has at most one valid witness, up to equality of all coordinates.
-
-Indeed, privacy at every coordinate forces two valid witnesses to agree coordinate by coordinate, hence to be identical. The converse is automatic. Thus the naive protocol’s privacy is not a generic consequence of commitments or random challenges. It is essentially a uniqueness condition.
-
-## The one-bit alarm bell
-
-The smallest counterexample is also the clearest. Let the public statement accept either one-bit witness. One valid witness is $0$ and another is $1$. If the protocol opens that bit, the verifier learns it exactly. There is no complicated attack, no need to combine many transcripts, and no computational ingenuity. The message itself is the leak.
-
-A commitment can hide unopened coordinates, but it does not make an opened coordinate harmless. Think of a row of sealed envelopes. Sealing the envelopes protects those that remain closed. It says nothing about the privacy of the letter in an envelope that is opened.
-
-This distinction matters in mathematical practice. Two proofs of the same theorem may differ at almost every line. Opening even one raw line can reveal whether the author used algebraic geometry or analytic number theory, whether a certain auxiliary lemma appears, or whether the proof follows one rival strategy rather than another. Repetition compounds the exposure; it does not repair it.
-
-## Why one bad line is hard to catch
-
-Privacy is only half the story. The verifier must also reject false or malformed evidence with high probability. Suppose there are $n$ equally likely checks and exactly one detects the defect. One round misses the defect with probability
+**Single-challenge soundness theorem.** If a formula in $m$ variables is not a tautology, then the probability that it passes one uniformly random valuation test is at most
 
 $$
-1-\frac{1}{n}=\frac{n-1}{n}.
+\frac{2^m-1}{2^m}=1-2^{-m}.
 $$
 
-After $k$ independent rounds, the verifier accepts falsely precisely when every round misses the bad location. The exact false-acceptance probability is
+The proof is a counting argument. Non-tautologicity supplies a concrete valuation where the formula is false. Remove that row from the full set of $2^m$ rows. Every accepting valuation must lie among the remaining $2^m-1$ rows.
+
+Now repeat the test $k$ times, choosing the valuations independently. If the formula passes on a fraction $a/2^m$ of all valuations, its probability of surviving every test is exactly $(a/2^m)^k$. Since $a\le 2^m-1$, we obtain the second result:
+
+**Repeated-challenge soundness theorem.** A non-tautology in $m$ variables survives $k$ independent random valuation tests with probability at most
 
 $$
-\left(\frac{n-1}{n}\right)^k.
+\left(\frac{2^m-1}{2^m}\right)^k
+=\left(1-2^{-m}\right)^k.
 $$
 
-This formula overturns a common but unjustified claim that $k$ repetitions automatically produce error $2^{-k}$. With four possible checks, the true error is
+The bound is sharp. Consider a formula that fails on exactly one valuation. It accepts on all other rows, so equality holds.
+
+## The arithmetic reality check
+
+This exact bound corrects a seductive but incorrect slogan: “Repeat the test $k$ times and the error becomes $2^{-k}$.” That conclusion would require each round to catch a false claim with probability at least $1/2$. Truth-table sampling guarantees only $2^{-m}$ in the worst case. For a formula with $m=20$ variables, a uniquely falsified formula escapes one round with probability $1-1/1{,}048{,}576$. Even one thousand independent tests leave its chance of escape above $0.999$.
+
+To drive the error below a target $\varepsilon$, one needs
 
 $$
-\left(\frac{3}{4}\right)^k,
+\left(1-2^{-m}\right)^k\le \varepsilon.
 $$
 
-which is strictly larger than
+Equivalently,
 
 $$
-\left(\frac{1}{2}\right)^k
+k\ge \frac{\log \varepsilon}{\log(1-2^{-m})}.
 $$
 
-for every positive $k$. Ten checks give about $5.63\%$ false acceptance under the first formula, compared with less than $0.1\%$ under the second. The difference is not cosmetic.
+For large $m$, the denominator is approximately $-2^{-m}$, so the required number of rounds is approximately $2^m\log(1/\varepsilon)$. Repetition does produce geometric decay, but the geometry starts from a rate perilously close to one. The challenge space is exponentially large, and a single defect is exponentially sparse.
 
-There is a stronger size-dependence obstruction. For any fixed repetition count $k$, choose $n=2k+2$. Then
+This lesson reaches beyond logic. A factory inspector who samples one component cannot efficiently detect a single defective item hidden among a million. Repeating the same sampling method helps, but roughly a million samples are needed for a constant chance of discovery. Authentication can establish that the sampled component is genuine; it cannot make the defect less sparse.
 
-$$
-\left(\frac{n-1}{n}\right)^k
-=
-\left(1-\frac{1}{2k+2}\right)^k
->
-\frac{1}{2}.
-$$
+The missing resource is **robustness**. An efficient local test needs an encoding in which one underlying mistake contaminates a noticeable fraction of local views. Probabilistically checkable encodings aim to spread inconsistency in precisely this way. Raw proof lines do not automatically have that property.
 
-**No-Fixed-Repetition Theorem.** If a malformed witness differs from an acceptable one in only a single detectable location, no fixed number $k$ of random coordinate checks guarantees false-acceptance probability at most $1/2$ independently of witness length.
+## A perfect veil from addition
 
-One way to see the inequality is Bernoulli’s estimate: for $0\le x\le1$,
+Soundness asks whether a false claim can fool the verifier. Zero knowledge asks a different question: what does the verifier learn from the interaction?
+
+A simple finite-group mask gives an exact answer for one local value. Choose a positive integer $q$ and work modulo $q$. A secret is an element $s$ of the cyclic group $\mathbb Z/q\mathbb Z$. Choose a mask $r$ uniformly from the same group and publish
 
 $$
-(1-x)^k\ge 1-kx.
+c=s+r\pmod q.
 $$
 
-Taking $x=1/(2k+2)$ gives a lower bound greater than $1/2$.
+This is an additive one-time pad. For every fixed secret $s$, addition by $s$ permutes the $q$ possible masks. Therefore $c$ is uniform, regardless of $s$.
 
-## Amplification needs something to amplify
+**Uniform-mask theorem.** For every secret $s\in\mathbb Z/q\mathbb Z$, the masked value $s+r$, with $r$ uniform, is itself uniformly distributed on $\mathbb Z/q\mathbb Z$.
 
-Repetition is still powerful—but only after a genuine one-round bound has been established.
-
-**Soundness Amplification Theorem.** If one execution has false-acceptance probability $p$ with $0\le p\le1/2$, then $k$ independent executions all accept falsely with probability $p^k$, and therefore
+**Perfect-hiding theorem.** For any two secrets $s,t\in\mathbb Z/q\mathbb Z$, the distributions of $s+r$ and $t+r$ are identical. More strongly, for every observed value $c$,
 
 $$
-p^k\le\left(\frac12\right)^k=2^{-k}.
+\Pr[s+r=c]=\Pr[t+r=c]=\frac1q.
 $$
 
-The theorem is elementary: raising nonnegative numbers to a natural power preserves their order. Its lesson is methodological. Repetition multiplies an existing error bound; it does not manufacture the bound. If one round has error $1-1/n$, then repetition yields $(1-1/n)^k$, not $2^{-k}$.
+The proof is a bijection: the unique mask producing observation $c$ from secret $s$ is $r=c-s$. Every observation therefore has exactly one equally likely preimage.
 
-Modern probabilistic proof systems solve this by encoding a proof so that false claims are not merely one line away from passing. A robust encoding spreads inconsistency across many locations. If every false object fails a constant fraction of possible checks, then a random query catches cheating with constant probability. That distance property—not random sampling by itself—is the engine of constant soundness.
+This is stronger than saying that recovery is computationally difficult. No amount of computation can distinguish the two secrets from the masked value alone, because their probability distributions are exactly the same. A simulator that knows no secret can simply output a uniform element of $\mathbb Z/q\mathbb Z$, and its output has precisely the verifier’s distribution.
 
-## A bit of privacy done correctly
+## Two guarantees, not one
 
-The negative results do not say that private verification is impossible. They identify missing ingredients. The smallest positive model is the Boolean one-time pad.
+The finite protocol can now be summarized by a paired statement.
 
-Let a secret bit be $m$ and choose an independent uniform random bit $r$. Publish the masked bit
-
-$$
-c=m\oplus r,
-$$
-
-where $\oplus$ denotes exclusive OR. For each fixed message $m$ and each possible ciphertext $c$, exactly one randomness bit satisfies $m\oplus r=c$. Because $r$ is uniform, both ciphertexts occur with probability $1/2$, regardless of $m$.
-
-**Uniform-Masking Privacy Theorem.** For either secret bit and either observed ciphertext, the number of random masks producing that ciphertext is exactly one. Consequently the ciphertext distribution is identical for secret $0$ and secret $1$.
-
-The mask is also correct to open:
+**Combined finite guarantee.** Let a non-tautology use $m$ variables, let the verifier perform $k$ independent valuation tests, and let local values be masked in a nontrivial cyclic group $\mathbb Z/q\mathbb Z$. Then the probability that the formula passes every test is at most
 
 $$
-(m\oplus r)\oplus r=m.
+\left(1-2^{-m}\right)^k,
 $$
 
-This works because $r\oplus r=0$. Randomization has transformed a witness-dependent value into a message-independent transcript distribution while retaining recoverability for someone who knows the mask.
+while the distribution of a masked local value is identical for every possible underlying value.
 
-The example is tiny, but it captures the essential difference between hiding and merely selecting. Choosing a random coordinate determines *which* secret-dependent value is exposed. Masking randomizes *what the verifier sees* so that its distribution no longer depends on the secret.
+The conjunction matters because neither half implies the other. A perfectly hidden message may encode nonsense. A powerful test may reveal everything it examines. Soundness and privacy must be established independently and then composed with care.
 
-## Toward sealed mathematical arguments
+That distinction exposes the flaw in the naive “open one random proof line” story. First, one malformed line among a very long derivation is unlikely to be sampled. Second, seeing one line may reveal a crucial idea. Third, checking that a line follows from earlier lines can require opening its dependencies, which creates correlated disclosures. A one-symbol mask hides one symbol; it does not automatically hide a jointly opened neighborhood subject to logical constraints.
 
-A serious zero-knowledge theorem protocol must coordinate several distinct ideas.
+Commitment also requires binding as well as hiding. The additive mask described here proves perfect hiding of a local value, but by itself it is not a complete commitment scheme: if the mask is unconstrained, the same displayed value can later be explained as different secrets with different masks. A full protocol must prevent such equivocation while preserving privacy. This is usually achieved with additional cryptographic structure.
 
-First, it needs a precise relation between public theorem statements and valid derivations. Second, it needs commitments with separately articulated hiding and binding properties: hiding protects private data, while binding prevents the prover from changing answers after seeing a challenge. Third, the proof should be robustly encoded so that invalid evidence is far from acceptance and random local checks have constant detection probability. Fourth, privacy must be expressed through simulation or equality of transcript distributions, not through the hope that a small glimpse reveals little. Finally, any claim of communication depending only on statement length requires a genuinely succinct argument construction; ordinary proof encoding does not make a long witness disappear.
+## What this says about secret mathematics
 
-There remains a compelling dream here. Mathematicians may someday certify proprietary computations, security-sensitive analyses, or strategically valuable proof methods without publishing their witnesses. Similar techniques could allow a pharmaceutical company to establish that a trial analysis followed a preregistered rule without exposing patient records, or let a safety auditor certify a hidden model against public requirements.
+The grand vision remains compelling, but its honest form is subtler than the slogan. To certify large derivations privately and succinctly, one needs at least three layers.
 
-But cryptography rewards exact bookkeeping. What is hidden? What is opened? How often can cheating escape? Which probability is being amplified? The raw-opening protocol answers these questions incorrectly: privacy collapses whenever valid witnesses differ at an opened coordinate, and soundness deteriorates with witness length when corruption is sparse.
+First comes an **arithmetization or encoding layer**, turning a derivation into a structured object with local constraints. Second comes a **robust testing layer**, ensuring that an invalid object violates a fixed positive fraction of those constraints rather than hiding its error in one location. Third comes a **zero-knowledge layer**, committing to the encoded object and revealing only simulated local views, including all correlations among jointly opened values.
 
-The path to a sealed proof therefore begins with two warnings and one constructive clue. Opening is not hiding. Sampling is not robustness. Proper random masking can make a transcript independent of a secret. Once those lessons are built into the design—from encoded proof to final transcript—the separation of truth from explanation becomes not a paradox, but a precise mathematical possibility.
+If each round catches cheating with a constant probability $\delta>0$, then $k$ rounds leave error at most $(1-\delta)^k$, and only $O(\log(1/\varepsilon))$ rounds are needed to reach error $\varepsilon$. That is the amplification regime people often have in mind. The truth-table model shows exactly why it is unavailable when $\delta=2^{-m}$.
+
+The next promising laboratory is not unrestricted theorem proving but structured propositional formulas. Formulas of bounded treewidth decompose into small overlapping regions. Dynamic programming can test global validity through compatible local states, while finite-group masks may conceal those states. The challenge is to simulate the entire correlated view across overlaps, not merely each coordinate in isolation.
+
+There is also a geometric way to phrase the problem. Each local test sees a patch of a larger proof. Simulators describe what can be seen on individual patches. On overlaps, their distributions must agree, and compatible local views must glue into a global transcript distribution. Making that principle precise could turn privacy composition into a mathematical theory of local-to-global consistency.
+
+The finite results therefore deliver both a construction and a warning. Random valuation tests have an exact, sharp soundness law. Additive one-time pads provide exact, perfect local hiding. But efficient secret theorem certification demands a bridge between them: robust local encodings whose dependency-closed views remain simulatable.
+
+The dream is not “trust me, I checked a random line.” It is more disciplined and more interesting: redesign the proof so that falsehood is everywhere locally visible, then reveal local evidence in a distribution that truth alone can explain. Only then can a sealed proof speak convincingly without giving away its voice.

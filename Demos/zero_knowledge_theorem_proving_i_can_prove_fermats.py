@@ -1,141 +1,145 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations of coordinate-opening privacy and sparse-check soundness."""
+"""Numerical demonstrations of truth-table soundness and additive hiding.
+
+The script uses only the Python standard library. It computes exact acceptance
+counts for a small implication-based formula, evaluates the sharp worst-case
+repetition law, and exhaustively confirms uniform additive masking modulo q.
+"""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction
-from math import ceil, log
+from itertools import product
+from math import ceil, exp, log, log1p
 from typing import Callable, Iterable, Sequence
 
-Bit = int
-Witness = tuple[Bit, ...]
+Valuation = tuple[bool, ...]
+FormulaEvaluator = Callable[[Valuation], bool]
+
+
+def implication(left: bool, right: bool) -> bool:
+    """Return the Boolean implication left -> right."""
+    return (not left) or right
+
+
+def all_valuations(variable_count: int) -> Iterable[Valuation]:
+    """Generate all Boolean valuations in lexicographic order."""
+    if variable_count < 0:
+        raise ValueError("variable_count must be nonnegative")
+    return product((False, True), repeat=variable_count)
 
 
 @dataclass(frozen=True)
-class SoundnessResult:
-    checks: int
-    repetitions: int
-    false_acceptance: Fraction
-    binary_benchmark: Fraction
+class AcceptanceProfile:
+    """Exact acceptance statistics for a propositional formula."""
+
+    variable_count: int
+    accepting_count: int
+    total_count: int
+
+    @property
+    def one_round_probability(self) -> Fraction:
+        return Fraction(self.accepting_count, self.total_count)
+
+    def repeated_probability(self, rounds: int) -> Fraction:
+        if rounds < 0:
+            raise ValueError("rounds must be nonnegative")
+        return self.one_round_probability**rounds
 
 
-def false_acceptance_probability(checks: int, repetitions: int) -> Fraction:
-    """Return ((checks - 1) / checks)^repetitions exactly."""
-    if checks <= 0:
-        raise ValueError("checks must be positive")
-    if repetitions < 0:
-        raise ValueError("repetitions must be nonnegative")
-    return Fraction(checks - 1, checks) ** repetitions
+def profile_formula(variable_count: int, formula: FormulaEvaluator) -> AcceptanceProfile:
+    """Exhaustively count the valuations accepted by formula."""
+    accepting = sum(1 for valuation in all_valuations(variable_count) if formula(valuation))
+    return AcceptanceProfile(variable_count, accepting, 2**variable_count)
 
 
-def soundness_comparison(checks: int, repetitions: int) -> SoundnessResult:
-    """Compare sparse-error false acceptance with the 2^-k benchmark."""
-    return SoundnessResult(
-        checks=checks,
-        repetitions=repetitions,
-        false_acceptance=false_acceptance_probability(checks, repetitions),
-        binary_benchmark=Fraction(1, 2) ** repetitions,
-    )
+def unique_rejection_probability(variable_count: int, rounds: int) -> float:
+    """Return (1 - 2^-m)^k, evaluated stably in floating-point arithmetic."""
+    if variable_count <= 0:
+        raise ValueError("variable_count must be positive")
+    if rounds < 0:
+        raise ValueError("rounds must be nonnegative")
+    rejection_density = 2.0 ** (-variable_count)
+    return exp(rounds * log1p(-rejection_density))
 
 
-def minimum_repetitions(checks: int, target: Fraction) -> int:
-    """Find the least k for which sparse-error false acceptance is at most target."""
-    if checks <= 1:
-        return 1 if target < 1 else 0
-    if not Fraction(0) < target < Fraction(1):
-        raise ValueError("target must lie strictly between zero and one")
-    estimate = max(0, ceil(log(float(target)) / log((checks - 1) / checks)))
-    while estimate > 0 and false_acceptance_probability(checks, estimate - 1) <= target:
-        estimate -= 1
-    while false_acceptance_probability(checks, estimate) > target:
-        estimate += 1
-    return estimate
+def rounds_for_target_error(variable_count: int, target_error: float) -> int:
+    """Find the least k for which (1 - 2^-m)^k <= target_error."""
+    if variable_count <= 0:
+        raise ValueError("variable_count must be positive")
+    if not 0.0 < target_error < 1.0:
+        raise ValueError("target_error must lie strictly between zero and one")
+    base_log = log1p(-(2.0 ** (-variable_count)))
+    candidate = max(0, ceil(log(target_error) / base_log))
+    # Correct any floating-point boundary error.
+    while candidate > 0 and unique_rejection_probability(variable_count, candidate - 1) <= target_error:
+        candidate -= 1
+    while unique_rejection_probability(variable_count, candidate) > target_error:
+        candidate += 1
+    return candidate
 
 
-def coordinate_is_private(valid_witnesses: Sequence[Witness], index: int) -> bool:
-    """Test the exact fixed-coordinate privacy criterion on a finite witness set."""
-    if not valid_witnesses:
-        return True
-    if index < 0 or any(index >= len(witness) for witness in valid_witnesses):
-        raise IndexError("index must be present in every witness")
-    return len({witness[index] for witness in valid_witnesses}) <= 1
+def masking_histogram(modulus: int, secret: int) -> list[int]:
+    """Enumerate the output frequency of secret + mask modulo modulus."""
+    if modulus <= 0:
+        raise ValueError("modulus must be positive")
+    counts = [0] * modulus
+    for mask in range(modulus):
+        counts[(secret + mask) % modulus] += 1
+    return counts
 
 
-def all_openings_are_private(valid_witnesses: Sequence[Witness]) -> bool:
-    """Test privacy of every coordinate; this is equivalent to witness uniqueness."""
-    if not valid_witnesses:
-        return True
-    length = len(valid_witnesses[0])
-    if any(len(witness) != length for witness in valid_witnesses):
-        raise ValueError("all witnesses must have equal length")
-    return all(coordinate_is_private(valid_witnesses, i) for i in range(length))
+def verify_perfect_hiding(modulus: int) -> bool:
+    """Exhaustively check that all secrets induce the same uniform histogram."""
+    if modulus <= 0:
+        raise ValueError("modulus must be positive")
+    expected = [1] * modulus
+    return all(masking_histogram(modulus, secret) == expected for secret in range(modulus))
 
 
-def mask(message: Bit, randomness: Bit) -> Bit:
-    """Apply a Boolean one-time pad."""
-    if message not in (0, 1) or randomness not in (0, 1):
-        raise ValueError("message and randomness must be bits")
-    return message ^ randomness
+def print_truth_table_demo() -> None:
+    """Profile a tautology and a formula with one rejecting valuation."""
+    tautology = lambda v: implication(v[0], v[0])
+    disjunction = lambda v: v[0] or v[1] or v[2]
+    tautology_profile = profile_formula(1, tautology)
+    sparse_profile = profile_formula(3, disjunction)
+
+    print("1. Exact truth-table profiles")
+    print(f"   p -> p accepts {tautology_profile.accepting_count}/{tautology_profile.total_count} valuations.")
+    print(f"   x0 OR x1 OR x2 accepts {sparse_profile.accepting_count}/{sparse_profile.total_count} valuations.")
+    probability = sparse_profile.repeated_probability(10)
+    print(f"   Its exact 10-round survival probability is {probability} = {float(probability):.6f}.")
 
 
-def open_mask(ciphertext: Bit, randomness: Bit) -> Bit:
-    """Recover a Boolean message from its one-time-pad ciphertext."""
-    return mask(ciphertext, randomness)
+def print_amplification_demo() -> None:
+    """Display how the sharp soundness bound scales with m and k."""
+    print("\n2. Sharp repeated-challenge bound for a uniquely falsified formula")
+    print("   variables   rounds   survival probability")
+    for variables, rounds in ((3, 10), (10, 1000), (20, 1000)):
+        survival = unique_rejection_probability(variables, rounds)
+        print(f"   {variables:9d}   {rounds:6d}   {survival:.12f}")
+    variables = 10
+    target = 0.01
+    needed = rounds_for_target_error(variables, target)
+    print(f"   For m={variables}, reaching error at most {target} requires {needed} rounds.")
 
 
-def mask_fiber(message: Bit, ciphertext: Bit) -> tuple[Bit, ...]:
-    """List masks that map a fixed message to a fixed ciphertext."""
-    return tuple(r for r in (0, 1) if mask(message, r) == ciphertext)
-
-
-def audit_boolean_masking() -> bool:
-    """Check unique fibers, message-independent counts, and correct opening."""
-    unique_fibers = all(
-        len(mask_fiber(message, ciphertext)) == 1
-        for message in (0, 1)
-        for ciphertext in (0, 1)
-    )
-    equal_counts = all(
-        len(mask_fiber(0, ciphertext)) == len(mask_fiber(1, ciphertext))
-        for ciphertext in (0, 1)
-    )
-    correct_opening = all(
-        open_mask(mask(message, randomness), randomness) == message
-        for message in (0, 1)
-        for randomness in (0, 1)
-    )
-    return unique_fibers and equal_counts and correct_opening
+def print_hiding_demo() -> None:
+    """Show exact uniformity for every secret modulo a small modulus."""
+    modulus = 7
+    print(f"\n3. Additive masking modulo {modulus}")
+    for secret in range(modulus):
+        observations: Sequence[int] = tuple((secret + mask) % modulus for mask in range(modulus))
+        print(f"   secret {secret}: observations {observations}; histogram {masking_histogram(modulus, secret)}")
+    print(f"   Perfect-hiding audit passed: {verify_perfect_hiding(modulus)}")
 
 
 def main() -> None:
-    print("SPARSE-ERROR SOUNDNESS")
-    for checks, repetitions in ((4, 10), (22, 10), (102, 50)):
-        result = soundness_comparison(checks, repetitions)
-        print(
-            f"n={checks:3d}, k={repetitions:2d}: "
-            f"false acceptance={float(result.false_acceptance):.8f}, "
-            f"2^-k={float(result.binary_benchmark):.8f}"
-        )
-
-    target = Fraction(1, 1000)
-    print("\nREPETITIONS NEEDED FOR ERROR AT MOST 0.001")
-    for checks in (4, 10, 100):
-        print(f"n={checks:3d}: k={minimum_repetitions(checks, target)}")
-
-    print("\nRAW-OPENING PRIVACY")
-    one_bit_witnesses: list[Witness] = [(0,), (1,)]
-    unique_witness: list[Witness] = [(1, 0, 1)]
-    print("both one-bit witnesses valid, coordinate 0 private:",
-          coordinate_is_private(one_bit_witnesses, 0))
-    print("one valid witness, all openings private:",
-          all_openings_are_private(unique_witness))
-
-    print("\nBOOLEAN MASKING")
-    for message in (0, 1):
-        for ciphertext in (0, 1):
-            print(f"message={message}, ciphertext={ciphertext}, masks={mask_fiber(message, ciphertext)}")
-    print("complete masking audit passed:", audit_boolean_masking())
+    print("Random-Valuation Soundness and Perfect Additive Hiding\n")
+    print_truth_table_demo()
+    print_amplification_demo()
+    print_hiding_demo()
 
 
 if __name__ == "__main__":
