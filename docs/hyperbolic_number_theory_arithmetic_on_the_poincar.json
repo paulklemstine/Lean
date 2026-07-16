@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T02:42:39Z",
+  "date": "2026-07-16T02:44:10Z",
   "key_results": [
     "Closed-Form Coordinate Theorem: after n translations, the coordinates are (3^n−1)/2 and (3^n+1)/2.",
     "Exponential Lorentzian Norm Theorem: the integer coordinates satisfy b_n²−a_n²=3^n at every step.",

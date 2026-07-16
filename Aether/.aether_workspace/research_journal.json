@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8e89241b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Asymptotic Alternating Signs of Andrews-type q-Series\n\nThis cycle established an amplitude-domination principle: a coefficient sequence\nof the form `V(n) = (-1)^n A(n) + E(n)`, w",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 18,
-      "timestamp": "2026-07-13T05:18:32",
-      "title": "Asymptotic alternating sign conjecture for Andrews q-series v₂(q), v₃(q), v₄(q)"
-    },
-    {
       "cycle_id": "ca370926",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThis project formalizes the linear-algebraic core of the cyclotomic Gauss-sum\nmatrix factorization `A = W D Wᵀ`, where `A i j = ∑ₐ ηₐ ω^{a(i+j)}` is the\nfinite Fourier transform o",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-16T02:42:45",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+    },
+    {
+      "cycle_id": "a373adc5",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\nThe formal result in `Physics/HyperbolicArithmetic.lean` establishes a precise\nbridge that is available before addressing the broader conjectures in the\nresearch prompt: iteration",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-16T02:44:15",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-16T02:42:45",
+  "last_updated": "2026-07-16T02:44:15",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "7f18348a",
-        "quality": 0.3417571627906977,
-        "theorems": 0,
-        "title": "Prove Fermats Little Theorem for p=5"
-      },
-      {
         "cycle_id": "f7b97a34",
         "quality": 0.460800096969697,
         "theorems": 9,
@@ -3755,6 +3749,12 @@
         "quality": 0.9,
         "theorems": 46,
         "title": "Constructive, lower-bound half of the co-index theory"
+      },
+      {
+        "cycle_id": "a373adc5",
+        "quality": 0.68,
+        "theorems": 11,
+        "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
       },
       {
         "cycle_id": "a373adc5",
