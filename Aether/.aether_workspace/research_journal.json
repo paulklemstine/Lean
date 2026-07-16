@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "adcea684",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ\n\n## What is proved (`Bridges/SumsetL1BallExponent.lean`)\n\nA cross-domain **connector** linking three areas around sumsets in L₁ b",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 21,
-      "timestamp": "2026-07-13T16:51:44",
-      "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ"
-    },
-    {
       "cycle_id": "b222c758",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Universal Mathematics and the Invariant Core of Theories\n\nThis cycle formalized the notion of the *universal core* of a theory — the body\nof theorems shared by every consistent ex",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-16T09:17:28",
       "title": "ArXiv paper: Local flag algebras"
+    },
+    {
+      "cycle_id": "d1e62d74",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Formalize the underlying objects.** Supply precise definitions of an `n`-nice polytope, a “good” manifold, equivalence of manifolds for counting purposes, and the maximum bei",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-16T09:17:35",
+      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T09:17:28",
+  "last_updated": "2026-07-16T09:17:35",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3585,12 +3585,6 @@
         "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymm"
       },
       {
-        "cycle_id": "aa7167bb",
-        "quality": 0.62,
-        "theorems": 10,
-        "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymm"
-      },
-      {
         "cycle_id": "d1e62d74",
         "quality": 0.47,
         "theorems": 0,
@@ -3631,6 +3625,12 @@
         "quality": 0.72,
         "theorems": 15,
         "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+      },
+      {
+        "cycle_id": "d1e62d74",
+        "quality": 0.6,
+        "theorems": 0,
+        "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
       },
       {
         "cycle_id": "d1e62d74",

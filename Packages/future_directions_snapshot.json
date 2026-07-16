@@ -121,7 +121,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd61fafb",
     "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,ω^u)\\)-core, the \\((k,ω^u)\\)-truss, and the more general \\((k,d,ω^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
     "domain_bridges": [],
     "domains": [
@@ -133,7 +133,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11726v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:46:50.520811+00:00",
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
@@ -198,7 +198,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6caf61ae",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $ι:P\\rightarrow \\mathcal{G}$ with $ι(p)\\subset ι(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $ι(p)\\subset ι(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domain_bridges": [],
     "domains": [
@@ -210,7 +210,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -2098,6 +2098,66 @@
     "status": "available",
     "timestamp": "2026-07-16T09:16:35.821717+00:00",
     "title": "ArXiv paper: Minimum distance and decoding of Coxeter codes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Far-Apart Packing and Thickened Transversals\n\n## 1. Multiscale anchor theorem for long cycles\n\n**Conjecture.** For every finite graph and every length threshold ℓ, the family of cycles of length at least ℓ admits a hierarchy of finite anchor sets with at most O(ℓ log k) anchors per selected cycle, such that distance greater than d between anchor sets certifies distance greater than d between the corresponding cycles, while every unselected long cycle enters a controlled neighbourhood of the hierarchy.\n\nThe key insight is that the logarithmic factor in the centre bound should measure the number of scales needed to halve the unresolved packing number, rather than the lengths of the cycles themselves. **Why now?** The finite packing principle isolates bounded anchors as the exact missing interface between abstract packing and the sharp O(ℓ k log k) theorem.\n\n## 2. Linear centres in bounded-expansion classes\n\n**Conjecture.** For every bounded-expansion class of graphs there is a class-dependent constant C such that the far-apart long-cycle alternative holds with at most Cℓk centre vertices and a neighbourhood radius linear in d.\n\nThe key insight is that sparse neighbourhood covers should replace a logarithmic multiscale hierarchy by a bounded-branching decomposition. **Why now?** The abstract cardinality theorem already turns a uniform O(ℓ)-sized certificate per packed object into an O(ℓk) transversal, making bounded expansion a precise setting in which to seek such certificates.\n\n## 3. Stability under coarse-Lipschitz graph maps\n\n**Conjecture.** Suppose a graph G maps to a graph H so that edges of G map to walks of uniformly bounded length and fibres have uniformly bounded diameter. A far-apart cycle packing or thickened-transversal theorem for H then transfers to G with only linear distortion of the separation and neighbourhood radii.\n\nThe key insight is that no-stretching estimates convert local control on edges into global control on graph distance, while bounded fibres control the reverse passage. **Why now?** The packing framework uses only pairwise distance comparisons, and the hypercube example demonstrates that these comparisons can arise from local labeling constraints.\n\n## 4. Homological far-apart Erdős--Pósa principle\n\n**Conjecture.** In every finite filtered two-dimensional cell complex, either there are k one-dimensional homology classes with long-lived representatives whose supports are pairwise farther than d, or O(k log k) cells have a neighbourhood of radius O(d) meeting every representative above the same persistence threshold.\n\nThe key insight is that cycle supports form a metric hypergraph even when cycles are considered modulo boundaries, but bounded anchors must be invariant under changing representatives. **Why now?** The maximal-packing argument is independent of graph adjacency and therefore survives unchanged once a representative-independent anchor theorem is available.\n\n## 5. Sharp necessity of symmetry\n\n**Conjecture.** For directed quasi-metrics, the maximal-packing domination theorem holds exactly when separation is defined using both directed distances; no one-sided definition admits an analogous universal domination statement without an additional bounded-asymmetry hypothesis.\n\nThe key insight is that insertion into a packing requires both orientations between the new object and every old object. **Why now?** The asymmetric version fails at precisely this insertion step, identifying a testable boundary and suggesting bounded asymmetry as the optimal guarded generalization.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0116",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "19cecd78",
+    "status": "available",
+    "timestamp": "2026-07-16T09:17:16.279343+00:00",
+    "title": "**Conjecture.** For every finite graph and every length threshold ℓ, the family "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Local Flag Algebras\n\n## 1. Sharp triangle-free pentagon certificate\n\n**Conjecture.** The optimal upper bound for the number of pentagons in a finite triangle-free graph, expressed on the scale \\(|V(G)|\\Delta(G)^4\\), admits a certificate involving only finitely many rooted radius-four flags and positive-semidefinite quadratic forms. Moreover, equality forces every non-isolated component to belong to a finite list of locally extremal models.\n\nThe key insight is that fixing a root leaves only four free neighbour extensions; the closing edge is a terminal restriction rather than an additional degree-sized choice. A sharp result should therefore arise by redistributing the slack in this rooted \\(\\Delta^4\\) bound among local triangle-free types.\n\n**Why now?** The extension hierarchy and its exact maximum-degree scaling have been isolated, so the remaining problem is a finite local optimisation rather than a question about the correct normalisation.\n\n## 2. Representation of positive local flag functionals\n\n**Conjecture.** Every normalised positive functional on the bounded-degree local flag algebra that satisfies the mass-transport identities is the local weak limit of finite graphs with uniformly bounded maximum degree.\n\nThe key insight is that positivity alone records semidefinite consistency, while mass transport supplies the missing compatibility between alternative choices of root. Together they should characterize precisely the functionals arising from unimodular random rooted graphs.\n\n**Why now?** A representation theorem would turn local flag certificates into statements about graph limits and would explain which abstract feasible points can actually be approximated by finite extremal examples.\n\n## 3. Effective bounded-radius approximation\n\n**Conjecture.** For every finite family of forbidden connected subgraphs, every local subgraph-count objective, and every \\(\\varepsilon>0\\), there is a computable radius \\(r\\) such that an order-\\(r\\) local flag semidefinite relaxation approximates the optimal maximum-degree-normalised density within \\(\\varepsilon\\).\n\nThe key insight is that bounded-degree neighbourhoods form a compact discrete space, while the extension inequalities impose a positive operator structure whose finite-radius truncations should approximate continuous local objectives.\n\n**Why now?** Establishing convergence would elevate individual certificates into a general approximation method and sharply delimit which extremal questions can be solved by finite local data.\n\n## 4. Spectral moment strengthening\n\n**Conjecture.** For triangle-free graphs, combining the local closed-five count with the second and fourth adjacency moments yields a universal upper bound strictly stronger than the bare \\(|V(G)|\\Delta(G)^4\\) estimate whenever the degree variance is positive.\n\nThe key insight is that rooted walk counts are row sums of powers of the adjacency operator; replacing every row sum by the worst-case value \\(\\Delta\\) discards degree-distribution and spectral information that should create quantitative slack away from regularity.\n\n**Why now?** The combinatorial extension count is already in operator-compatible form, making mixed local–spectral inequalities the next natural refinement.\n\n## 5. Stability from simultaneous counting and colouring slack\n\n**Conjecture.** If a triangle-free graph nearly saturates the optimal pentagon bound on the \\(|V(G)|\\Delta(G)^4\\) scale, then every proper \\((\\Delta(G)+1)\\)-colouring has a bounded collection of colour classes whose induced local profiles are close to those of an extremal model.\n\nThe key insight is that pentagon closure and greedy colouring are controlled by the same neighbour fibres. Near-equality in repeated extension bounds should force most fibres to be nearly full, while colouring records how those fibres can overlap without triangles.\n\n**Why now?** The common maximum-degree parameter now appears in one theorem controlling both local closed-walk density and colourability, providing a concrete starting point for a counting–colouring stability theory.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0117",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "557a7f03",
+    "status": "available",
+    "timestamp": "2026-07-16T09:17:23.731850+00:00",
+    "title": "**Conjecture.** The optimal upper bound for the number of pentagons in a finite "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Formalize the underlying objects.** Supply precise definitions of an `n`-nice polytope, a “good” manifold, equivalence of manifolds for counting purposes, and the maximum being taken. The current development intentionally proves only consequences of the numerical candidate because these notions were absent from the prompt.\n\n2. **Connect geometry to the sequence.** Once the definitions exist, define a counting/maximization function and prove that it equals `GoodManifoldSequence.candidate`. This is the missing bridge from the OEIS formula to the title’s combinatorial claim.\n\n3. **Formalize the source argument.** OEIS A212351 points to Amos Altshuler, *Manifolds in stacked 4-polytopes* (1971). A faithful formalization should extract the construction giving the lower bound and the classification or counting argument giving the upper bound, rather than assume the OEIS formula.\n\n4. **Explain the exceptional prefix.** The power law begins at one-based index 7. Deriving `6, 8, 12, 24, 40, 80` from the eventual geometric definitions would make the closed form complete rather than piecewise empirical.\n\n5. **Strengthen asymptotics after the bridge.** `tail_exact_asymptotic` already proves the exact zero-based identity `candidate n = 2 * 2^n` for `n ≥ 6`; after connecting `candidate` to the actual maximum, standard `IsTheta` and growth-rate formulations can be added as corollaries.\n\n6. **Investigate nearby catalog entries.** OEIS cross-references A000079 and A212350. Comparing A212350 may clarify whether a related minimum, alternate polytope class, or companion counting problem admits a shared formal framework.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0118",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d1e62d74",
+    "status": "available",
+    "timestamp": "2026-07-16T09:17:31.598943+00:00",
+    "title": "1. **Formalize the underlying objects.** Supply precise definitions of an `n`-ni"
   },
   {
     "ambition_level": "extension",
