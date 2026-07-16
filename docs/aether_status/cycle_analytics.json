@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-16T07:23:38.533428+00:00",
+  "last_updated": "2026-07-16T07:39:22.468548+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -21109,6 +21109,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-16T07:23:38.502696+00:00",
       "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 39,
+      "domain": "Novelty",
+      "duration_seconds": 4815.31530213356,
+      "end_time": 1784186640.8513236,
+      "files_integrated": 1,
+      "job_id": "d1e62d74",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v25",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.31,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.42,
+        "composite": 0.366,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.38,
+        "novelty": 0.34,
+        "proof_depth": 0.62,
+        "usefulness": 0.63
+      },
+      "quality_score": 0.47,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784181825.5360215,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-16T07:39:22.430415+00:00",
+      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
     }
   ]
 }
