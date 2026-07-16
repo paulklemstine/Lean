@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e3aaa465",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe file `Applications/TransferUniversality.lean` formalizes a universality/transitivity\ntheorem for transfer functions among accumulation points, modeling `Π^k_ℓ` as the dense\nad",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-13T15:24:16",
-      "title": "Universality of Transfer Functions Among Accumulation Points"
-    },
-    {
       "cycle_id": "f347bf96",
       "domain": "Applications",
       "key_insight": "# Future Directions: Extremal Determinants with Bounded Entries\n\nThis cycle established, for `4 × 4` integer matrices with entries in the symmetric\nrange `{-B, …, B}`, that the maximum determinant is",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-16T09:15:56",
       "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
+    },
+    {
+      "cycle_id": "557a7f03",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Local Flag Algebras\n\n## 1. Sharp triangle-free pentagon certificate\n\n**Conjecture.** The optimal upper bound for the number of pentagons in a finite triangle-free graph, expressed",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-16T09:16:04",
+      "title": "ArXiv paper: Local flag algebras"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T09:15:56",
+  "last_updated": "2026-07-16T09:16:04",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "7704d4fe",
-        "quality": 0.66,
-        "theorems": 16,
-        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-      },
-      {
         "cycle_id": "c5a6c2ed",
         "quality": 0.7,
         "theorems": 91,
@@ -3141,6 +3135,12 @@
         "quality": 0.69,
         "theorems": 12,
         "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
+      },
+      {
+        "cycle_id": "557a7f03",
+        "quality": 0.66,
+        "theorems": 10,
+        "title": "ArXiv paper: Local flag algebras"
       }
     ],
     "Bridges": [
