@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "50098ece",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Positional Number Systems and Primitive Divisors\n\nThis cycle closed the outstanding gaps in the bridge between the factorial number\nsystem and the general mixed‑radix theory, and",
-      "quality_score": 0.84,
-      "sorry_count": 4,
-      "theorem_count": 26,
-      "timestamp": "2026-07-15T00:42:59",
-      "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponen"
-    },
-    {
       "cycle_id": "c23e4bea",
       "domain": "Applications",
       "key_insight": "# Future Directions: the coindex as a complete combinatorial invariant\n\nThis cycle closed the gap between the two halves of the join law for the ℤ₂-coindex of free\nℤ₂-sets. The lower half (a construct",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T05:31:57",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Coherent levelwise classification\n\n**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their finite levels admit a coherent family of bijections preserv",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T05:32:08",
+      "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "75061bf5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis cycle completed the bridge showing that the factorial number system is a\nsingle point in the one-parameter family of mixed-radix positional systems:\nplace values, digit value",
-      "quality_score": 0.72,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-13T09:49:29",
-      "title": "Close Proofs: The Topology of Knotted Light: How Laser Beams Get Tangled"
-    },
     {
       "cycle_id": "3e1dd178",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T05:31:57",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Coherent levelwise classification\n\n**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their finite levels admit a coherent family of bijections preserv",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T05:32:08",
+      "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b1453a16",
-      "domain": "Bridges",
-      "name": "kernel_iff_gameSolution",
-      "quality": 0.93
-    },
-    {
-      "cycle_id": "b1453a16",
-      "domain": "Bridges",
-      "name": "stable_iff_gameSolution",
-      "quality": 0.93
-    },
-    {
-      "cycle_id": "80f7c124",
-      "domain": "Shared",
-      "name": "for",
-      "quality": 0.73
-    },
     {
       "cycle_id": "80f7c124",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "exists_rejecting_valuation",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "name": "initialSegment_map",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "name": "initialSegment_comp_equiv",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "352675e9",
+      "domain": "Applications",
+      "name": "relabel_preserves_ray",
+      "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T05:31:57",
+  "last_updated": "2026-07-16T05:32:08",
   "open_questions": [
     {
       "context": "All statements are proved with no `sorry` and no extra axioms.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c23e4bea",
-        "quality": 0.83,
-        "theorems": 18,
-        "title": "Deepening: Constructive, lower-bound half of the co-index theory"
-      },
-      {
         "cycle_id": "cc9e6854",
         "quality": 0.93,
         "theorems": 0,
@@ -3135,6 +3129,12 @@
         "quality": 0.53,
         "theorems": 0,
         "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+      },
+      {
+        "cycle_id": "352675e9",
+        "quality": 0.71,
+        "theorems": 13,
+        "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to home"
       },
       {
         "cycle_id": "352675e9",

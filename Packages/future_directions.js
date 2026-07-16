@@ -751,6 +751,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The Balanced Four-Color Theorem"
   },
   {
+    "consumed_by_exp_id": "e2f5c991",
+    "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=\u03b1(G)+1$, where $\u03b1(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0055",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12890v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-15T13:08:25.917501+00:00",
+    "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Record compositions of alternating permutations and noncommutative symmetric functions' and formalize its key results. Abstract: Amdeberhan, Shareshian, and Stanley recently proved that a function $\\varphi$ arising in the theory of partition Eisenstein series counts the alternating permutations of $\\{1,\\dots,2n\\}$ with a given `record' partition, and they asked whether there is a similar theory for record compositions, suggesting a role for noncommutative symmetric functions. Here we solve their open problem by showing that the number of alternating permutations of $\\{1,\\dots,2n\\}$ with record composition $(\u03b1_1,\\dots,\u03b1_\\ell)$ is \\[ \\prod_{j=1}^{\\ell}\\binom{2s_j-1}{2\u03b1_j-1}E_{2\u03b1_j-1}, \\] where $s_j=\u03b1_1+\\dots+\u03b1_j$, $E_k$ is an Euler number, and the record composition of $w=a_1a_2\\dots a_{2n}$ (so $a_1>a_2<a_3>\\dotsb$) lists the factor lengths obtained by cutting $a_1a_3\\dots a_{2n-1}$ before each left-to-right maximum other than the first. These numbers are the coefficients of a natural lift of the degree-$n$ sprout symmetric function with seed $\\sec(\\sqrt{t}\\,)$ to noncommutative symmetric functions, expanded in p",
     "domains": [
@@ -1158,6 +1172,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Coherent levelwise classification\n\n**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their finite levels admit a coherent family of bijections preserving extension, even if no single alphabet relabelling induces all of them.\n\nThe key insight is that continuity of a map between ray spaces should be encoded by compatibility across finite prefixes rather than by a uniform change of edge labels. **Why now?** The explicit relabelling construction isolates exactly which compatibility identities are used, making it possible to replace one global equivalence by an inverse system of finite equivalences.\n\n## 2. Ultrametric cluster trees as ray presentations\n\n**Conjecture.** Every complete ultrametric space with a countable cofinal family of radii is homeomorphic to the ray space of the rooted tree of its nonempty balls at those radii.\n\nThe key insight is that strong-triangle transitivity makes every point of a ball an interchangeable centre, so refinement by radius produces a genuine laminar tree. **Why now?** The proved centre-independence and threshold antitonicity identify the two local laws needed to construct such a tree; completeness should supply the inverse map from coherent nested balls to points.\n\n## 3. End-space realization of valuation boundaries\n\n**Conjecture.** For every prime `p`, the completion of the rational valuation-cluster hierarchy has a canonical graph whose end space is homeomorphic to the boundary determined by strictly nested `p`-adic clusters.\n\nThe key insight is that arithmetic valuation thresholds already carry the same branching data as rooted graph ends. **Why now?** Cluster transitivity and centre-independence turn the arithmetic balls into combinatorial vertices without arbitrary choices, opening a direct bridge between number-theoretic ultrametrics and end spaces.\n\n## 4. Cofinal pruning invariance\n\n**Conjecture.** If a prefix tree is replaced by a subtree meeting every ray cofinally and preserving all eventual branching classes, then the two ray spaces are homeomorphic.\n\nThe key insight is that a ray topology records eventual finite separation, not the exact depths at which separations occur. **Why now?** Coordinate relabelling handles exact prefix preservation; cofinal pruning is the next falsifiable test of whether the construction extends from rigid tree isomorphisms to the weaker combinatorial equivalences expected in a full classification.\n\n## 5. Sharp boundary beyond laminar clusters\n\n**Conjecture.** A first-countable zero-dimensional space admits a generalized ray presentation precisely when it has a neighbourhood assignment whose overlap relation is locally laminar after passing to a cofinal subsequence.\n\nThe key insight is that generalized ray spaces should retain nested finite information while permitting asymmetric or non-metrizable local bases. **Why now?** Ordinary ultrametric clusters satisfy exact laminarity, whereas examples such as the Sorgenfrey line indicate that relaxing symmetry without abandoning nestedness may locate the strict boundary of the generalized class.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0089",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "352675e9",
+    "status": "available",
+    "timestamp": "2026-07-16T05:32:05.006797+00:00",
+    "title": "**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their f"
+  },
+  {
+    "consumed_by_exp_id": "d1e62d74",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -1166,7 +1195,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
