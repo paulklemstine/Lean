@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-16T00:30:01.491823+00:00",
+  "last_updated": "2026-07-16T01:42:51.268456+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -19860,6 +19860,7 @@
       "outcome_quality": 0.0,
       "phase": "A",
       "phase_a_prompt_version": "v19b",
+      "phase_a_quality_score": 0.0,
       "phase_b_skipped": false,
       "prompt_version": "v19b",
       "quality_score": 0.0,
@@ -19874,6 +19875,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-16T00:30:01.466969+00:00",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 23,
+      "domain": "MachineLearning",
+      "duration_seconds": 3052.8530292510986,
+      "end_time": 1784166160.3101425,
+      "files_integrated": 4,
+      "job_id": "f4980b02",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.74,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.66,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.76,
+        "composite": 0.5615,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.67,
+        "proof_depth": 0.72,
+        "usefulness": 0.82
+      },
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784163107.4571133,
+      "strategy_count": 0,
+      "theorem_count": 18,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 12,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-16T01:42:51.241230+00:00",
+      "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
     }
   ]
 }

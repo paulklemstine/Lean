@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "daf8e94d",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: the extremal regime of AVD-total colourings of central graphs\n\nThis cycle characterised the *extremal regime* `|V(G)| = d + 2` for a `d`-regular\nnon-complete graph `G`, showing it",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 38,
-      "timestamp": "2026-07-14T21:57:46",
-      "title": "Working with a self‑contained model of total colourings (proper vertex colouring"
-    },
-    {
       "cycle_id": "9a38651d",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Contrarian Time-Travel Consistency\n\nThis cycle (thread `th_1434a219`, cycle 1) takes a *contrarian* stance on the Novikov\nself-consistency principle: rather than only proving tha",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T21:54:37",
       "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe formalization proves the invariant spectral splitting that underlies the generalized-join formulas: internal zero-mass modes acquire an external-degree shift, while fiber-cons",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-16T01:42:51",
+      "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "53d4816b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle deepened the \"Cellular Automata as Algebraic Geometry\" line by proving\na sharp **cross-domain equivalence** in\n`Catalog/Novelty/CANilpotencyScheme.lean`:\n\n> The additiv",
-      "quality_score": 0.82,
-      "sorry_count": 7,
-      "theorem_count": 18,
-      "timestamp": "2026-07-13T03:57:23",
-      "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-    },
     {
       "cycle_id": "4bfb0f7c",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-15T21:54:37",
       "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe formalization proves the invariant spectral splitting that underlies the generalized-join formulas: internal zero-mass modes acquire an external-degree shift, while fiber-cons",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-16T01:42:51",
+      "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f243395d",
-      "domain": "Tropical",
-      "name": "shadow_triangles_subset_edges",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "7ea29a05",
-      "domain": "Shared",
-      "name": "value_eq",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "7ea29a05",
-      "domain": "Shared",
-      "name": "valid_iff",
-      "quality": 0.9
-    },
     {
       "cycle_id": "7ea29a05",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "repeated_block_rigidity",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "name": "joinAction_of_zeroMass",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "name": "zeroMass_eigenvector",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "name": "supportedFiber_eigenvector",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-15T21:54:37",
+  "last_updated": "2026-07-16T01:42:51",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "7a9dcf2f",
-        "quality": 0.78,
-        "theorems": 81,
-        "title": "The Topology of Knotted Light: How Laser Beams Get Tangled"
-      },
-      {
         "cycle_id": "6490730e",
         "quality": 0.83,
         "theorems": 8,
@@ -3575,6 +3569,12 @@
         "quality": 0.91,
         "theorems": 13,
         "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `"
+      },
+      {
+        "cycle_id": "f4980b02",
+        "quality": 0.74,
+        "theorems": 18,
+        "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
       }
     ],
     "Novelty": [
