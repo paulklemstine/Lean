@@ -1,11 +1,11 @@
 {
   "title": "Affine Separation and Compensation in Rooted and Ordinary Path Irregularity",
-  "domain": "Applications",
+  "domain": "Pythagorean",
   "description": "Rooted three-vertex path counts reveal a degree-based central obstruction and an exact compensation law for ordinary-irregular graphs. A uniform affine separation theorem gives an explicit route to simultaneous injectivity for finite families of parametrized statistics.",
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T07:23:20Z",
+  "date": "2026-07-16T07:24:06Z",
   "key_results": [
     "Simultaneous Affine Separation Theorem for finite families of count profiles",
     "Central-root obstruction for three-vertex paths in every nontrivial finite simple graph",
