@@ -1328,79 +1328,7 @@ Research mode: {concept.research_mode}
                     completed.append(job)
                     continue
 
-            # Wall-clock hard cap — the authoritative kill signal. Runs FIRST so
-            # a job over the hard cap is quarantined (presumed a bad concept)
-            # rather than soft-released by the no-progress cap below. Covers jobs
-            # with no reasoning checkpoints (the checkpoint branch can't see those).
-            if job.dispatch_time and (now - job.dispatch_time) > max_cycle_seconds:
-                age_min = (now - job.dispatch_time) / 60
-                print(f"[Poll] {pid[:8]} HARD CAP: {age_min:.0f}min wall-clock, "
-                      f"failing ({max_cycle_seconds/3600:.0f}h cap)")
-                job.status = "failed"
-                job.error_message = (f"Cancelled after {age_min:.0f}min "
-                                     f"({max_cycle_seconds/3600:.0f}h wall-clock cap)")
-                self.failed_count += 1
-                self._quarantine_direction_for_job(job, days=7)
-                try:
-                    rlog = ReasoningLog(self.workspace, pid, job.job_id)
-                    rlog.record_completion(
-                        status="TIMEOUT", percent=0, has_files=False,
-                        error=job.error_message,
-                    )
-                except Exception:
-                    pass
-                completed.append(job)
-                continue
 
-            # No-progress zombie cap: a dispatched job that HAD reasoning
-            # checkpoints then went silent for > `no_progress_seconds` has hung
-            # server-side. Aristotle exposes no project-cancel API (POST
-            # /project/{id}/cancel -> 404, DELETE /project/{id} -> 405), so the
-            # dead project lingers remotely — but we free the local slot and
-            # return the direction to available so a fresh dispatch can retry
-            # it, instead of pinning max_inflight on a dead project forever.
-            # Only fires when checkpoints exist (a never-checkpointed job is
-            # left to the hard cap / preparing timeout — it may just be slow to
-            # emit its first checkpoint). Distinct from the hard cap: a
-            # no-progress hang is presumed a server glitch, not a bad concept.
-            if job.status == "dispatched" and job.dispatch_time:
-                _last_progress = None
-                _last_pct = 0
-                try:
-                    _rlog = ReasoningLog(self.workspace, pid, job.job_id)
-                    _cps = _rlog._data.get("checkpoints", [])
-                    if _cps:
-                        _ts = _cps[-1].get("timestamp")
-                        _last_pct = _cps[-1].get("percent_complete", 0)
-                        if _ts:
-                            _dt = datetime.fromisoformat(_ts)
-                            if _dt.tzinfo is None:
-                                _dt = _dt.replace(tzinfo=timezone.utc)
-                            _last_progress = _dt.timestamp()
-                except Exception:
-                    pass
-                
-                # Extended timeout if deeply in progress (Aristotle actively streaming large generation)
-                _active_timeout = 10800 if _last_pct >= 90 else no_progress_seconds
-
-                if _last_progress is not None and (now - _last_progress) > _active_timeout:
-                    _idle_min = (now - _last_progress) / 60
-                    print(f"[Poll] {pid[:8]} NO-PROGRESS ZOMBIE: idle {_idle_min:.0f}min, "
-                          f"releasing direction to available")
-                    job.status = "failed"
-                    job.error_message = (f"No Aristotle progress for {_idle_min:.0f}min "
-                                         f"(no_progress cap)")
-                    self.failed_count += 1
-                    self._release_direction_back_to_available(job)
-                    try:
-                        ReasoningLog(self.workspace, pid, job.job_id).record_completion(
-                            status="ZOMBIE", percent=0, has_files=False,
-                            error=job.error_message,
-                        )
-                    except Exception:
-                        pass
-                    completed.append(job)
-                    continue
 
             # Wall-clock stall warning (independent of checkpoints).
             if job.status == "dispatched" and job.dispatch_time \
