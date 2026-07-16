@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "41e1526b",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Clique-to-Clique Density\n\n## 1. Sharp generalized-inverse lower envelope\n\nFor every pair of integers `2 ≤ s < t`, determine the exact lower envelope of the normalized `t`-clique c",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-15T01:49:38",
-      "title": "Deepening: Asymptotic Clique-to-Clique Density Bound"
-    },
-    {
       "cycle_id": "37f1d216",
       "domain": "Computation",
       "key_insight": "# Future directions — Boolean-cube increments and witness complexity\n\nThis cycle proves the local mechanism behind the linear face complexity of\nrecursive simplicial `k`-trees.  A fresh vertex attache",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T07:07:10",
       "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n## Completed formalization\n\n`Construction.lean` is a self-contained finite-set formalization of the\npair-star 3-uniform hypergraph from the paper. All declarations have complete\np",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T07:08:28",
+      "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "64d4f5fe",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Exponential barriers for Vietoris–Rips approximation\n\nThe results here isolate a sharp threshold: the equidistant configuration on `n` points,\nrealised by the standard basis of E",
-      "quality_score": 0.78,
-      "sorry_count": 5,
-      "theorem_count": 16,
-      "timestamp": "2026-07-13T12:17:27",
-      "title": "Explicit exponential lower bound for Vietoris-Rips approximations below √2 threshold"
-    },
     {
       "cycle_id": "a1dac228",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-16T07:08:21",
       "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley sy"
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n## Completed formalization\n\n`Construction.lean` is a self-contained finite-set formalization of the\npair-star 3-uniform hypergraph from the paper. All declarations have complete\np",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T07:08:28",
+      "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c5a6c2ed",
-      "domain": "Applications",
-      "name": "orderly_736",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "772aa8b4",
-      "domain": "Novelty",
-      "name": "endpoint_reconstruction",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "772aa8b4",
-      "domain": "Novelty",
-      "name": "blockWeight_eq_of_blocks",
-      "quality": 0.7
-    },
     {
       "cycle_id": "772aa8b4",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "fibEntryPt_dvd_of_fib_dvd",
       "quality": 0.71
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "name": "for",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "name": "fib_dvd_gcd_of_dvd",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "name": "fibEntryPt_dvd_of_fib_dvd",
+      "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T07:08:21",
+  "last_updated": "2026-07-16T07:08:28",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "e92fe2c1",
-        "quality": 0.46650342687540775,
-        "theorems": 9,
-        "title": "Formalized Rogers–Ramanujan identities for q-Pochhammer symbols"
-      },
-      {
         "cycle_id": "00f256fb",
         "quality": 0.63,
         "theorems": 31,
@@ -3941,6 +3935,12 @@
         "quality": 0.73,
         "theorems": 10,
         "title": "Elementary spectral-moment foundations of Seidel"
+      },
+      {
+        "cycle_id": "cca295e6",
+        "quality": 0.71,
+        "theorems": 13,
+        "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
       },
       {
         "cycle_id": "cca295e6",
