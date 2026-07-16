@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a46f1a93",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — Seidel energy of `K_{m,n}` under edge deletion\n\n`SeidelEnergyTwoDeletions.lean` computes, in closed form, the Seidel energy of\n`K_{m,n}` after deleting **two independent (vertex-",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 28,
-      "timestamp": "2026-07-14T22:53:58",
-      "title": "Deepening: Sharp threshold characterization for Seidel energy increase in complete bipartit"
-    },
-    {
       "cycle_id": "10dfa4e0",
       "domain": "Applications",
       "key_insight": "# Future Directions: the excess of the ℤ₂-coindex beyond the sphere\n\nThe join of two combinatorial spheres is again a sphere, and the equivariant maps of spheres\nare governed entirely by injections of",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-16T03:36:30",
       "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
+    },
+    {
+      "cycle_id": "8d2137d3",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n## Completion status\n\nAll Lean declarations delivered for this mission now have complete proof terms: the\nremaining mixed-radix bridge lemmas were proved, and an inherited Fibonac",
+      "quality_score": 0.7,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-16T03:53:22",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "05e37ec1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Stone Duality for Neural Networks\n\nThis cycle established that a neural network with `k` threshold neurons carries a\ncanonical **Stone dual**: the preimage homomorphism from the",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 27,
-      "timestamp": "2026-07-13T06:44:59",
-      "title": "Deepening: Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-    },
     {
       "cycle_id": "111bebcc",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-16T03:36:30",
       "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
+    },
+    {
+      "cycle_id": "8d2137d3",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n## Completion status\n\nAll Lean declarations delivered for this mission now have complete proof terms: the\nremaining mixed-radix bridge lemmas were proved, and an inherited Fibonac",
+      "quality_score": 0.7,
+      "sorry_count": 4,
+      "theorem_count": 0,
+      "timestamp": "2026-07-16T03:53:22",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-16T03:36:30",
+  "last_updated": "2026-07-16T03:53:22",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "482ba253",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T12:59:51"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "0c7f8736",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 4,
       "timestamp": "2026-07-15T08:57:47"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "8d2137d3",
+      "domain": "Combinatorics",
+      "sorry_count": 4,
+      "timestamp": "2026-07-16T03:53:22"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "04b163c8",
-        "quality": 0.6772579999999999,
-        "theorems": 10,
-        "title": "Sum of digits of 1/p for half-period length and p ≡ 1 mod 4"
-      },
-      {
         "cycle_id": "813a28d3",
         "quality": 0.6896399999999999,
         "theorems": 14,
@@ -3265,6 +3259,12 @@
         "quality": 0.93,
         "theorems": 46,
         "title": "Deepening: Two-parameter picture of *witness complexity* for the"
+      },
+      {
+        "cycle_id": "8d2137d3",
+        "quality": 0.7,
+        "theorems": 0,
+        "title": "The Library of Babel: Combinatorics of the Universal Library"
       }
     ],
     "Computation": [
