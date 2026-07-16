@@ -52,6 +52,14 @@ jobs:
       - name: Install dependencies
         run: pip install -r Aether/requirements.txt
 
+      - name: Install elan and fetch Lean cache
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd Catalog
+          lake exe cache get
+
       - name: "Check space after pip"
         run: |
           df -h
