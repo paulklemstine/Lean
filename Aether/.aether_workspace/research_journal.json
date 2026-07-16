@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e8b8d594",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Maximal Determinants of Small Bounded-Entry Matrices\n\nEach conjecture below is bold, falsifiable, and grows directly out of the two\nfindings of this cycle: (i) the exact achievab",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 10,
-      "timestamp": "2026-07-13T12:53:44",
-      "title": "Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
-    },
-    {
       "cycle_id": "9f2f3b13",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Fourth Dimension as a Composition-Algebra Playground\n\nResearch thread `th_9a38994b`, Cycle 1. This cycle turns the five conjectures of\nthe \"Composition-Algebra Playground\" in",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-16T07:39:22",
       "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+    },
+    {
+      "cycle_id": "d8f04178",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## Scope achieved\n\n`Speculative/EulerSystemsSymmetricSquare.lean` formalizes three reusable algebraic layers motivated by the paper:\n\n1. An abstract Euler system as a family of mo",
+      "quality_score": 0.52,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-16T08:27:16",
+      "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T07:39:22",
+  "last_updated": "2026-07-16T08:27:16",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ca1c3afc",
-        "quality": 0.87,
-        "theorems": 6,
-        "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
-      },
-      {
         "cycle_id": "0ee2f71b",
         "quality": 0.88,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.47,
         "theorems": 0,
         "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+      },
+      {
+        "cycle_id": "d8f04178",
+        "quality": 0.52,
+        "theorems": 14,
+        "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
       }
     ],
     "NumberTheory": [
