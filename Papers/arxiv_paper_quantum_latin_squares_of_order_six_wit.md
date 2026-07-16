@@ -2,29 +2,35 @@
 
 ## Small-case calculations
 
-For a commutative construction on `n` labels, outputs are indexed by unordered pairs with repetition. The first values of the resulting ceiling are:
+For a symmetric array of order `n`, the number of unordered index pairs is `n(n+1)/2`.
 
-| `n` | ordered inputs `n²` | unordered-pair ceiling `n(n+1)/2` |
-|---:|---:|---:|
-| 1 | 1 | 1 |
-| 2 | 4 | 3 |
-| 3 | 9 | 6 |
-| 4 | 16 | 10 |
-| 5 | 25 | 15 |
-| 6 | 36 | 21 |
+| `n` | unordered pairs |
+|---:|---:|
+| 1 | 1 |
+| 2 | 3 |
+| 3 | 6 |
+| 4 | 10 |
+| 5 | 15 |
+| 6 | 21 |
 
-For the direct-sum count described in the paper, the two disjoint ray populations have sizes nineteen and four, hence their union has size twenty-three.
-
-## Sequence identification
-
-The unordered-pair ceilings form the triangular-number sequence `1, 3, 6, 10, 15, 21, …`, OEIS A000217 with the index shifted to begin at `n = 1`.
+At order six, identifying the three positions `(0,1)`, `(2,5)`, and `(3,4)` as one fiber removes two labels from the twenty-one unordered positions, leaving nineteen. A disjoint direct-sum split with nineteen labels in one summand and four in the other gives twenty-three.
 
 ## Counterexample hunt
 
-The universal symmetric ceiling was checked by exhaustive enumeration of the upper-triangular index set on six labels: it contains exactly twenty-one pairs. Any output map can only identify additional pairs and therefore cannot increase this count. This exhaustive finite count is included in the accompanying mathematical development.
+Exhaustive evaluation of the finite index certificates found no counterexample:
 
-The direct-sum claim was tested at the level of finite sets: without disjointness, additivity fails whenever the two images overlap; with disjointness, union cardinality is exactly additive. Thus the disjoint-support hypothesis is necessary.
+| certificate | computed value |
+|---|---:|
+| upper-triangular pairs in `Fin 6 × Fin 6` | 21 |
+| representatives after erasing `(2,5)` and `(3,4)` | 19 |
+| disjoint tagged union `Fin 19 ⊕ Fin 4` | 23 |
 
-## Collision accounting
+The first two calculations are reflected by closed finite theorems in `SchurBound.lean` and `Cardinalities.lean`. The tagged-union result is proved structurally from disjointness and injectivity of the two tags.
 
-Starting from twenty-one unordered pairs, one fiber containing three pair indices decreases the number of distinct outputs by two and gives nineteen, provided all remaining fibers are singletons. This explains the cardinality effect of the reported coincidence `v₀₁ = v₂₅ = v₃₄`; verification that it is the unique nontrivial collision depends on the explicit matrix entries, which were not included in the supplied abstract.
+## Sequence search
+
+The unordered-pair counts are the triangular numbers `1, 3, 6, 10, 15, 21, …`, OEIS A000217 with the initial zero omitted. This sequence is relevant because commutativity makes a Schur-product label depend only on an unordered pair.
+
+## Scope of the evidence
+
+These calculations test the range-counting mechanism, not the paper's numerical matrix coordinates. The analytic theorem in `SchurBound.lean` separately proves that normalized Schur products of unimodular orthogonal columns form a quantum Latin square under explicit hypotheses.
