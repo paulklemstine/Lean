@@ -1,197 +1,558 @@
-# The Anti-Fibonacci Sequence: Quadratic Growth, Cubic Partial Sums, and a Perfect-Square Spectrum
+# Shifted Triangular Values and Square Spectra in the Displayed Anti-Fibonacci Sequence
+
+**Aristotle**  
+**July 16, 2026**
 
 ## Abstract
 
-The Fibonacci sequence is the archetype of *addition-driven* growth: each term is the sum of its two predecessors, terms grow exponentially, and consecutive ratios converge to the golden ratio $\varphi = \tfrac{1+\sqrt5}{2}$. We study a systematic counterpoint, the **anti-Fibonacci sequence** $A$, defined by the first-order recurrence $A(0)=1$, $A(n+1)=A(n)+n$, whose terms are $1,1,2,4,7,11,16,22,29,37,\dots$. We establish four exact structural results and their asymptotic consequences. First, $A$ has the closed form $A(n)=1+\tfrac{n(n-1)}{2}$, so it grows quadratically with density $A(n)/n^2 \to \tfrac12$, and its consecutive ratio $A(n+1)/A(n)$ converges to $1$ — never to the golden ratio. Second, apart from a single boundary exception at index $5$, the sequence strictly avoids being the sum of its two predecessors: $A(n) < A(n-1)+A(n-2)$ for all $n\ge 6$. Third, its partial sums satisfy the exact cubic identity $6\sum_{k=0}^{n} A(k) = n^3 + 5n + 6$, from which the normalized cumulative sum $\bigl(\sum_{k=0}^n A(k)\bigr)/n^3$ converges to the finite constant $\tfrac16$ — in stark contrast to Fibonacci, where the same ratio diverges. Fourth, the value set of $A$ is exactly the set of integers $m$ for which $8m-7$ is a perfect square (equivalently, $m-1$ is triangular), a Diophantine fingerprint that forces the values to have natural density zero. Together these results portray the anti-Fibonacci sequence as a complete negative image of the Fibonacci sequence: polynomial where Fibonacci is exponential, rational where Fibonacci is irrational, and governed by perfect squares where Fibonacci is governed by Binet's formula.
+We analyze the integer sequence displayed as $1,1,2,4,7,11,16,\ldots$ in a proposed anti-Fibonacci construction. The literal greedy description “choose the smallest positive integer unequal to the sum of the preceding two terms” does not generate these data. We therefore isolate the mathematically coherent object forced by the displayed values: $A(0)=1$ and $A(n+1)=A(n)+n$. We derive the exact formula
 
-**Keywords.** Anti-Fibonacci sequence, quadratic growth, triangular numbers, lazy caterer numbers, cubic partial sums, Cesàro density, perfect-square spectrum, natural density.
+$$
+A(n)=1+\frac{n(n-1)}2,
+$$
 
----
+which implies quadratic growth with leading coefficient $1/2$, not $1/4$. Consecutive values satisfy the exact shifted-square identity
+
+$$
+A(n)+A(n+1)=n^2+2,
+$$
+
+and the individual value spectrum is characterized by
+
+$$
+8A(n)-7=(2n-1)^2.
+$$
+
+We prove that gaps are exactly linear and arbitrarily large, that the error from every quarter-square bounded approximation is unbounded, and that $A(1{,}000{,}000)=499{,}999{,}500{,}001$. We also show that the odd-index Fibonacci sequence strictly dominates $A(n)$ for every $n\ge 6$; hence any combinatorial row-sum model equal to $F_{2n+1}$ has the same domination property. Algorithms for evaluation, membership, spectral testing, and numerical exploration follow directly from the identities. The results replace an inconsistent avoidance narrative with an exact theory of shifted triangular numbers, sparse spectra, and quadratic Diophantine structure.
 
 ## 1. Introduction
 
-The Fibonacci sequence $F(0)=0,\ F(1)=1,\ F(n+1)=F(n)+F(n-1)$ is perhaps the most recognizable integer sequence in mathematics. Its defining operation — summing the two most recent terms — produces exponential growth, a running total that is again exponential ($\sum_{k=0}^n F(k) = F(n+2)-1$), and the celebrated convergence of consecutive ratios to the golden ratio $\varphi$. Every one of these features is a symptom of the same underlying cause: iterated addition.
+The Fibonacci numbers $F_0=0$, $F_1=1$, and
 
-It is natural to ask what a sequence looks like when it is built to *avoid* that operation rather than embrace it. The research brief motivating this work proposes an "anti-Fibonacci" sequence whose successive terms deliberately dodge the sum of their predecessors, and offers the concrete data $1,1,2,4,7,11,16,\dots$. The literal greedy rule "the smallest positive integer not equal to the previous sum" does not reproduce this data; the data is instead generated exactly by the clean first-order recurrence
+$$
+F_{k+2}=F_{k+1}+F_k
+$$
 
-$$A(0) = 1, \qquad A(n+1) = A(n) + n. \tag{1.1}$$
+are the archetype of additive recurrence. Their exponential growth, neighboring-ratio limit, tiling interpretations, and appearances in combinatorial arrays make them a natural target for “anti” constructions. One proposed anti-Fibonacci sequence was presented as
 
-We adopt (1.1) as the definition and take the given data as ground truth. The successive differences are $0,1,2,3,\dots$, so $A$ accumulates the counting numbers.
+$$
+1,1,2,4,7,11,16,\ldots,
+$$
 
-This paper collects the exact structural and asymptotic theory of $A$. Our contributions are:
+with an informal rule asking each term to avoid equality with the sum of its two predecessors. Conjectures attached to that proposal included quarter-square growth, bounded error from $\lfloor n^2/4\rfloor$, nonconvergent neighboring ratios, and density-zero behavior.
 
-1. **A subtraction-free closed form** (Section 3), $2A(n)+n = n^2+2$, equivalently $A(n) = 1+\tfrac{n(n-1)}{2}$, identifying $A$ with the lazy-caterer / central-polygonal numbers.
-2. **Asymptotics** (Section 4): quadratic growth density $A(n)/n^2\to\tfrac12$, neighbor ratio $A(n+1)/A(n)\to 1$, and a proof that this ratio does *not* converge to $\varphi$.
-3. **A sharp avoidance theorem** (Section 5): $A(n)<A(n-1)+A(n-2)$ for $n\ge 6$, with a single exceptional equality at $n=5$.
-4. **An exact cubic partial-sum identity** (Section 6): $6\sum_{k=0}^n A(k)=n^3+5n+6$, hence cubic Cesàro density $\tfrac16$.
-5. **A perfect-square membership spectrum** (Section 7): $m\in\operatorname{range}(A)\iff 8m-7$ is a perfect square, and the consequent density-zero result.
+The first task is logical rather than asymptotic: one must check that the rule generates the data. It does not. If only one positive integer is forbidden at each stage, the smallest admissible positive integer is generally $1$, so the displayed sequence cannot arise from that literal rule. A theorem about the displayed list must therefore begin by defining the list independently of the incompatible prose.
 
-Throughout, the driving methodological principle is that every claim about $A$ reduces, via the closed form (1.1), to elementary polynomial algebra — no transcendental machinery is required, which is itself the sharpest possible contrast with the Fibonacci theory.
+The first differences reveal the intended structure:
 
----
+$$
+A(1)-A(0)=0,
+$$
 
-## 2. Definitions and Notation
+$$
+A(2)-A(1)=1,
+$$
 
-**Definition 2.1 (Anti-Fibonacci sequence).** The *anti-Fibonacci sequence* $A:\mathbb N\to\mathbb N$ is defined by
-$$A(0)=1,\qquad A(n+1)=A(n)+n.$$
-Its first terms are $A(0),A(1),\dots = 1,1,2,4,7,11,16,22,29,37,46,56,\dots$.
+$$
+A(3)-A(2)=2,
+$$
 
-**Definition 2.2 (Triangular numbers).** The $t$-th triangular number is $T_t = \tfrac{t(t+1)}{2} = 0,1,3,6,10,15,\dots$ for $t=0,1,2,\dots$.
+and in general the evident continuation is
 
-**Definition 2.3 (Perfect square).** An integer $s$ is a *perfect square* if $s=k^2$ for some $k\in\mathbb N$.
+$$
+A(n+1)-A(n)=n.
+$$
 
-**Definition 2.4 (Natural density).** A set $S\subseteq\mathbb N$ has *natural density* $d$ if $\tfrac{1}{m}\#\{x\in S : x < m\}\to d$ as $m\to\infty$.
+This recurrence places the sequence among shifted triangular numbers. Its exact tractability allows us to distinguish which conjectures survive correction and which fail. In particular, density-zero behavior survives for the value set, but the proposed leading coefficient and ratio oscillation do not.
 
-We write $\varphi = \tfrac{1+\sqrt5}{2}$ for the golden ratio.
+The central positive discovery is a square-spectrum identity: every consecutive sum is exactly two more than a square, and every shifted square of that form occurs. A second square identity characterizes individual sequence values. Together these facts turn recurrence questions into perfect-square tests and expose a Diophantine structure suitable for further study.
 
----
+Our approach is deliberately elementary and exact. We begin with finite differences, derive a closed form, and use it to settle the asymptotic claims before developing the two spectra. We then extract consequences for gaps and density, compare the sequence with odd-index Fibonacci growth, and translate the identities into practical algorithms. This order keeps each conclusion traceable to a single explicit polynomial formula while preserving the combinatorial interpretation behind it.
 
-## 3. The Closed Form
+## 2. Definitions and preliminary identities
 
-Everything in this paper flows from a single subtraction-free identity.
+### Definition 2.1 (The displayed anti-Fibonacci sequence)
 
-**Theorem 3.1 (Closed form).** For all $n\in\mathbb N$,
-$$2\,A(n) + n = n^2 + 2. \tag{3.1}$$
-Equivalently, over the reals, $A(n) = \dfrac{n^2 - n + 2}{2} = 1 + \dfrac{n(n-1)}{2}$.
+For every nonnegative integer $n$, define $A(n)$ recursively by
 
-*Proof sketch.* Induct on $n$. The base case $n=0$ reads $2\cdot1+0 = 0+2$. For the step, assume $2A(k)+k = k^2+2$. Using $A(k+1)=A(k)+k$,
-$$2A(k+1)+(k+1) = 2A(k)+2k+k+1 = (k^2+2)+2k+1 = (k+1)^2+2,$$
-completing the induction. Dividing (3.1) by $2$ and casting to $\mathbb R$ gives $A(n) = \tfrac{n^2-n+2}{2}$. $\qquad\square$
+$$
+A(0)=1,
+\qquad
+A(n+1)=A(n)+n.
+$$
 
-We keep the identity in the multiplied-through form (3.1) to avoid the pitfalls of truncated natural-number subtraction; every later argument uses this integer form and casts to $\mathbb R$ only at the end.
+The terminology “displayed anti-Fibonacci sequence” refers only to this recurrence. It must not be confused with the distinct greedy process that excludes a single preceding sum.
 
-**Remark 3.2.** The numbers $1+\binom{n}{2}$ are the *central polygonal (lazy caterer) numbers*: the maximum number of regions into which $n$ straight cuts divide a disk. Thus $A$ is a shift of a classical combinatorial sequence, which explains the perfect-square and triangular-number phenomena that follow.
+The first terms are
 
----
+$$
+A(0)=1,
+A(1)=1,
+A(2)=2,
+A(3)=4,
+A(4)=7,
+A(5)=11,
+A(6)=16.
+$$
 
-## 4. Asymptotics: No Golden Ratio
+### Lemma 2.2 (Exact first differences)
 
-The closed form immediately fixes the growth order of $A$.
+For every nonnegative integer $n$,
 
-**Theorem 4.1 (Quadratic density).** $\displaystyle \lim_{n\to\infty}\frac{A(n)}{n^2} = \frac12.$
+$$
+A(n+1)-A(n)=n.
+$$
 
-*Proof sketch.* From Theorem 3.1, for $n\ge1$,
-$$\frac{A(n)}{n^2} = \frac{n^2-n+2}{2n^2} = \frac12 - \frac{1}{2n} + \frac{1}{n^2}.$$
-The last two terms tend to $0$, so the limit is $\tfrac12$ by the algebra of limits. $\qquad\square$
+**Proof sketch.** This is the defining recurrence rearranged. Since $A(n+1)\ge A(n)$, ordinary integer subtraction introduces no truncation issue. The identity records that the gap after the $n$th term is exactly $n$. $\square$
 
-**Theorem 4.2 (Neighbor ratio).** $\displaystyle \lim_{n\to\infty}\frac{A(n+1)}{A(n)} = 1.$
+### Theorem 2.3 (Closed form)
 
-*Proof sketch.* Write both numerator and denominator via the closed form and divide through by $n^2$:
-$$\frac{A(n+1)}{A(n)} = \frac{\,1 + \tfrac1n + \tfrac{2}{n^2}\,}{\,1 - \tfrac1n + \tfrac{2}{n^2}\,}.$$
-Numerator and denominator both tend to $1$, and the denominator is eventually bounded away from $0$, so the quotient tends to $1$. $\qquad\square$
+For every nonnegative integer $n$,
 
-**Theorem 4.3 (Absence of the golden ratio).** The sequence $A(n+1)/A(n)$ does **not** converge to $\varphi$.
+$$
+A(n)=1+\frac{n(n-1)}2.
+$$
 
-*Proof sketch.* By Theorem 4.2 the ratio converges to $1$. A convergent sequence has a unique limit, and $1\ne\varphi$, so it cannot converge to $\varphi$. $\qquad\square$
+Equivalently,
 
-The three theorems together justify the sequence's name at the asymptotic level: the golden ratio is the signature of exponential growth, and $A$ — growing like $n^2/2$ — has no such signature. Its neighbor ratios decay monotonically through $2.0, 1.75, 1.57, 1.45, \dots$ toward $1$.
+$$
+2A(n)+n=n^2+2.
+$$
 
----
+**Proof sketch.** Iterating the recurrence gives
 
-## 5. Sharp Avoidance of the Predecessor Sum
+$$
+A(n)=A(0)+\sum_{k=0}^{n-1}k
+=1+\frac{n(n-1)}2.
+$$
 
-The name "anti-Fibonacci" also promises a structural property: a term should not equal the sum of its two predecessors. This holds — with exactly one exception.
+Alternatively, induction starts at $A(0)=1$. If the formula holds at $n$, then
 
-**Theorem 5.1 (Sharp avoidance).**
-1. (*Boundary*) $A(5) = A(4)+A(3)$; explicitly $11 = 7+4$.
-2. (*Avoidance*) For every $n\ge 6$, $A(n) < A(n-1)+A(n-2)$; in particular $A(n)\ne A(n-1)+A(n-2)$.
+$$
+A(n+1)=1+\frac{n(n-1)}2+n
+=1+\frac{n(n+1)}2,
+$$
 
-*Proof sketch.* Both parts reduce to polynomial inequalities via Theorem 3.1. Writing $A(n)=1+\tfrac{n(n-1)}{2}$, the sum of two predecessors is
-$$A(n-1)+A(n-2) = 2 + \frac{(n-1)(n-2)+(n-2)(n-3)}{2} = (n-2)^2 + 2 + (n-2) \; \text{-type quadratic in } n,$$
-which grows like $n^2$, whereas $A(n)$ grows like $n^2/2$. The difference $\bigl(A(n-1)+A(n-2)\bigr)-A(n)$ is a quadratic in $n$ that is negative only at small indices; direct evaluation shows it vanishes exactly at $n=5$ and is strictly positive for all $n\ge6$. $\qquad\square$
+which is the required formula at $n+1$. Multiplication by $2$ and rearrangement yield the equivalent polynomial identity. $\square$
 
-Thus avoidance is not a fluke of the first few terms but a permanent feature past a sharp threshold: two anti-Fibonacci terms always overshoot a single later one, because $2\cdot\tfrac{n^2}{2} = n^2 > \tfrac{n^2}{2}$.
+This formula identifies $A(n)$ as the triangular number $\binom n2$ shifted by one:
 
----
+$$
+A(n)=1+\binom n2.
+$$
 
-## 6. Cubic Partial Sums and Cesàro Density
+Thus $A(n)$ may be interpreted as the number of unordered pairs in an $n$-element set, together with one distinguished extra object.
 
-We now turn to the running totals $S(n) = \sum_{k=0}^n A(k)$. For Fibonacci, $\sum_{k=0}^n F(k) = F(n+2)-1$ is exponential. For the anti-Fibonacci sequence the partial sums are an exact cubic polynomial.
+### Corollary 2.4 (Asymptotic growth)
 
-**Theorem 6.1 (Cubic partial-sum identity).** For all $n\in\mathbb N$,
-$$6\sum_{k=0}^{n} A(k) = n^3 + 5n + 6. \tag{6.1}$$
-Equivalently $\sum_{k=0}^{n}A(k) = \dfrac{n^3+5n+6}{6}$.
+The sequence has exact expansion
 
-*Proof sketch.* Induct on $n$. The base case $n=0$ reads $6\cdot A(0)=6 = 0+0+6$. For the step, using the induction hypothesis and $A(n+1)=A(n)+n$ together with the closed form (3.1),
-$$6\sum_{k=0}^{n+1}A(k) = (n^3+5n+6) + 6\,A(n+1).$$
-Substituting $6A(n+1) = 3\bigl(2A(n+1)\bigr) = 3\bigl((n+1)^2+2-(n+1)\bigr)$ from (3.1) and simplifying yields $(n+1)^3+5(n+1)+6$, closing the induction. Alternatively, sum the closed form directly: $\sum_{k=0}^n \bigl(1+\tfrac{k(k-1)}{2}\bigr)$ telescopes via the identities $\sum_{k\le n} k = \tfrac{n(n+1)}{2}$ and $\sum_{k\le n} k^2 = \tfrac{n(n+1)(2n+1)}{6}$ to $\tfrac{n^3+5n+6}{6}$. $\qquad\square$
+$$
+A(n)=\frac12n^2-\frac12n+1,
+$$
 
-One can verify (6.1) numerically: the sixfold totals $6,12,24,48,90,156,252,384$ match $n^3+5n+6$ exactly for $n=0,\dots,7$.
+and therefore
 
-**Theorem 6.2 (Cubic Cesàro density).** $\displaystyle \lim_{n\to\infty}\frac{1}{n^3}\sum_{k=0}^{n}A(k) = \frac16.$
+$$
+\lim_{n\to\infty}\frac{A(n)}{n^2}=\frac12.
+$$
 
-*Proof sketch.* By Theorem 6.1, for $n\ge1$,
-$$\frac{1}{n^3}\sum_{k=0}^{n}A(k) = \frac{n^3+5n+6}{6n^3} = \frac16 + \frac{5}{6}\cdot\frac{1}{n^2} + \frac{1}{n^3}.$$
-The two correction terms vanish as $n\to\infty$, giving the limit $\tfrac16$. $\qquad\square$
+**Proof sketch.** Divide the closed form by $n^2$ for $n>0$:
 
-This is precisely the discrete antiderivative phenomenon: since $A(n)\sim \tfrac{n^2}{2}$ and $\int \tfrac{x^2}{2}\,dx = \tfrac{x^3}{6}$, summation promotes the value-level density $\tfrac12$ to the cumulative density $\tfrac16$. The exact identity (6.1) removes all error terms, so no integral comparison is needed.
+$$
+\frac{A(n)}{n^2}=\frac12-\frac{1}{2n}+\frac{1}{n^2}.
+$$
 
-**Remark 6.3 (Contrast with Fibonacci).** For the genuine Fibonacci sequence, $\tfrac{1}{n^3}\sum_{k=0}^n F(k) = \tfrac{F(n+2)-1}{n^3}\to\infty$, since an exponential dominates any power of $n$. The anti-Fibonacci partial sums instead have a *finite, rational* cubic density $\tfrac16$. This is the cleanest quantitative separation between the two sequences.
+The last two terms tend to zero. $\square$
 
----
+### Corollary 2.5 (Neighboring-ratio limit)
 
-## 7. The Perfect-Square Spectrum
+The successive ratios converge to $1$:
 
-Our final result characterizes exactly which integers occur as anti-Fibonacci values, and does so through a single quadratic Diophantine condition.
+$$
+\lim_{n\to\infty}\frac{A(n+1)}{A(n)}=1.
+$$
 
-**Lemma 7.1 (Square identity).** For all $n\in\mathbb N$,
-$$8\,A(n) = (2n-1)^2 + 7. \tag{7.1}$$
+**Proof sketch.** The closed form gives
 
-*Proof sketch.* Multiply Theorem 3.1 by $4$: $8A(n) + 4n = 4n^2 + 8$, so $8A(n) = 4n^2 - 4n + 8 = (2n-1)^2 + 7$. $\qquad\square$
+$$
+\frac{A(n+1)}{A(n)}
+=
+\frac{n^2+n+2}{n^2-n+2}.
+$$
 
-**Theorem 7.2 (Square spectrum).** For every $m\in\mathbb N$,
-$$m \in \operatorname{range}(A) \iff 8m-7 \text{ is a perfect square} \iff \exists k\in\mathbb N,\; k^2+7 = 8m.$$
-Equivalently, $m$ is an anti-Fibonacci value iff $m-1$ is a triangular number.
+Dividing numerator and denominator by $n^2$ gives the limit $1$. In particular, the ratios do not oscillate between $1$ and $2$. $\square$
 
-*Proof sketch.* ($\Rightarrow$) If $m=A(n)$, then by (7.1) $8m-7 = (2n-1)^2$ is a perfect square.
-($\Leftarrow$) Suppose $k^2+7 = 8m$. Reducing modulo $8$, $k^2\equiv 1\pmod 8$, forcing $k$ odd, say $k=2j+1$. Then $8m = (2j+1)^2 + 7 = 4j^2+4j+8$, so $m = \tfrac{j^2+j}{2}+1 = 1 + \binom{j+1}{2} = A(j+1)$. Hence $m\in\operatorname{range}(A)$. The triangular-number reformulation follows since $A(n)-1 = \binom{n}{2} = T_{n-1}$. $\qquad\square$
+## 3. The consecutive-sum square spectrum
 
-We deliberately state the condition subtraction-free as $\exists k,\ k^2+7=8m$, which handles the edge case $m=0$ correctly: no $A(n)$ equals $0$ (all values are positive), and $k^2+7=0$ is impossible, so the equivalence holds vacuously there. No lower bound $m\ge1$ hypothesis is needed.
+### Theorem 3.1 (Shifted-Square Consecutive-Sum Theorem)
 
-**Corollary 7.3 (Density zero).** The value set $\operatorname{range}(A)$ has natural density $0$. Its counting function satisfies
-$$\#\{\,m < M : m\in\operatorname{range}(A)\,\} \sim \sqrt{2M}\quad(M\to\infty).$$
+For every nonnegative integer $n$,
 
-*Proof sketch.* By Theorem 7.2, $m\in\operatorname{range}(A)$ with $m<M$ corresponds to indices $n$ with $A(n)<M$, i.e. $1+\tfrac{n(n-1)}{2} < M$, which holds for $n$ up to about $\sqrt{2M}$. Dividing the count $\sim\sqrt{2M}$ by $M$ gives $\sim\sqrt{2/M}\to0$. $\qquad\square$
+$$
+A(n)+A(n+1)=n^2+2.
+$$
 
-Thus the anti-Fibonacci values are polynomially sparse — a square-root-thin subset of the integers — matching the perfect-square fingerprint of Theorem 7.2.
+**Proof sketch.** Apply Theorem 2.3 at $n$ and $n+1$:
 
----
+$$
+A(n)=1+\frac{n(n-1)}2,
+\qquad
+A(n+1)=1+\frac{n(n+1)}2.
+$$
+
+Adding gives
+
+$$
+A(n)+A(n+1)
+=2+\frac{n(n-1)+n(n+1)}2
+=2+n^2.
+$$
+
+Geometrically, two consecutive triangular arrangements combine into an $n\times n$ square, while the two unit shifts contribute the extra $2$. $\square$
+
+The first values are
+
+$$
+2,3,6,11,18,27,38,\ldots,
+$$
+
+corresponding to $n=0,1,2,3,4,5,6$.
+
+### Theorem 3.2 (Exact consecutive-sum spectrum)
+
+For a nonnegative integer $m$, the following conditions are equivalent:
+
+1. There exists a nonnegative integer $n$ such that $m=A(n)+A(n+1)$.
+2. There exists a nonnegative integer $n$ such that $m=n^2+2$.
+3. The integer $m-2$ is a perfect square.
+
+**Proof sketch.** The equivalence of the first two statements is exactly Theorem 3.1 in both directions: each index produces $n^2+2$, and every number $n^2+2$ is produced at that same index. The third condition is simply a restatement of the second. $\square$
+
+This theorem yields a constant-space membership algorithm. For $m<2$, return false. Otherwise compute $r=\lfloor\sqrt{m-2}\rfloor$ and test whether $r^2=m-2$. With an integer square-root routine, the bit complexity is governed by square-root computation rather than by generating all preceding sequence values.
+
+## 4. The individual-value square spectrum
+
+The same quadratic formula gives a second, independent square relation.
+
+### Theorem 4.1 (Odd-Square Value Criterion)
+
+For every nonnegative integer $n$,
+
+$$
+8A(n)-7=(2n-1)^2.
+$$
+
+Consequently, a positive integer $m$ is a value of the sequence if and only if $8m-7$ is the square of an odd integer. The initial repetition $A(0)=A(1)=1$ means that the value $1$ has two indices; every value $A(n)$ with $n\ge 1$ has a unique positive index.
+
+**Proof sketch.** Substitute the closed form:
+
+$$
+8A(n)-7
+=8\left(1+\frac{n(n-1)}2\right)-7
+=4n^2-4n+1
+=(2n-1)^2.
+$$
+
+Conversely, suppose $8m-7=q^2$ for an odd integer $q$. Since $q$ may be replaced by $|q|$, write $q=2n-1$ with $n\ge 1$. Rearranging the equation gives
+
+$$
+m=1+\frac{n(n-1)}2=A(n).
+$$
+
+The recurrence has strictly positive gaps for $n\ge 1$, so values after the repeated initial $1$ are distinct. $\square$
+
+Theorem 4.1 supplies a second exact membership algorithm: compute $D=8m-7$, take its integer square root, and check whether the result squares back to $D$. Oddness is automatic when $D\equiv1\pmod 8$, but may also be tested explicitly.
+
+The coexistence of the two square spectra is especially useful. Individual values are transformed odd squares, while consecutive sums are squares shifted by $2$. Requiring a number to belong to both classes leads to an affine quadratic equation. After completing squares, such intersections naturally become Pell-type Diophantine problems. A complete classification is not asserted here, but the reduction identifies a concrete direction for further work.
+
+## 5. Gaps, sparsity, and counting
+
+### Theorem 5.1 (Arbitrarily large gaps)
+
+For every nonnegative integer $C$, there exists a nonnegative integer $n$ such that
+
+$$
+A(n+1)-A(n)>C.
+$$
+
+Indeed, every $n>C$ has this property.
+
+**Proof sketch.** By Lemma 2.2, the left side equals $n$. Taking $n=C+1$ gives the result. $\square$
+
+Thus the absolute separation between adjacent terms diverges even though their ratio tends to $1$. There is no contradiction: relative separation is approximately $n/(n^2/2)=2/n$, which tends to zero.
+
+### Theorem 5.2 (Density zero)
+
+Let $N(X)$ denote the number of distinct values of $A(n)$ not exceeding a real threshold $X$. Then the value set $\{A(n):n\ge0\}$ has natural density zero:
+
+$$
+\lim_{X\to\infty}\frac{N(X)}{X}=0.
+$$
+
+**Proof sketch.** The closed form shows that $A(n)$ has quadratic order. More concretely, for $n\ge2$ one has $A(n)\ge n^2/4$. Hence $A(n)\le X$ implies $n\le2\sqrt X$, so at most $2\sqrt X+1$ indices can contribute values below $X$. Therefore
+
+$$
+0\le\frac{N(X)}X\le\frac{2\sqrt X+1}{X},
+$$
+
+and the upper bound tends to zero. The repeated initial value can only decrease the count. Determining the sharp floor formula and its exact correction is a natural refinement discussed below. $\square$
+
+This statement concerns the value set of the recurrence in Definition 2.1. It does not identify that set with all sums of earlier values, nor does it analyze the incompatible greedy process.
+
+## 6. Refutation of quarter-square growth
+
+### Theorem 6.1 (Unbounded quarter-square discrepancy)
+
+For every nonnegative real constant $C$, there exists a nonnegative integer $n$ such that
+
+$$
+A(n)>\frac{n^2}{4}+C.
+$$
+
+For nonnegative integer $C$, the explicit choice $n=4C+4$ suffices.
+
+**Proof sketch.** The exact difference is
+
+$$
+A(n)-\frac{n^2}{4}
+=
+\frac{n^2}{4}-\frac n2+1.
+$$
+
+This quadratic expression tends to positive infinity. For integer $C$, substituting $n=4C+4$ makes the inequality immediate after expansion. Therefore the discrepancy cannot be bounded independently of $n$. $\square$
+
+### Corollary 6.2 (Failure of bounded-error quarter-square approximation)
+
+There is no constant $K$ for which
+
+$$
+\left|A(n)-\left\lfloor\frac{n^2}{4}\right\rfloor\right|\le K
+$$
+
+holds for every nonnegative integer $n$. Equivalently,
+
+$$
+A(n)\ne\left\lfloor\frac{n^2}{4}\right\rfloor+O(1).
+$$
+
+**Proof sketch.** If such a $K$ existed, then $A(n)\le n^2/4+K+1$ for all $n$, contradicting Theorem 6.1 with $C=K+1$. $\square$
+
+### Proposition 6.3 (Millionth-index evaluation)
+
+At index one million,
+
+$$
+A(1{,}000{,}000)=499{,}999{,}500{,}001,
+$$
+
+and
+
+$$
+\frac{A(1{,}000{,}000)}{(1{,}000{,}000)^2}=0.499999500001.
+$$
+
+**Proof sketch.** Substitute $n=1{,}000{,}000$ into Theorem 2.3. The decimal ratio follows by division by $10^{12}$. $\square$
+
+The computation is exact and illustrates the asymptotic coefficient $1/2$. It should not be described as evidence for convergence to $1/4$.
+
+## 7. Comparison with Fibonacci and Riordan growth
+
+Let $F_0=0$, $F_1=1$, and $F_{k+2}=F_{k+1}+F_k$.
+
+### Theorem 7.1 (Odd-index Fibonacci domination)
+
+For every integer $n\ge6$,
+
+$$
+A(n)<F_{2n+1}.
+$$
+
+**Proof sketch.** The base case is direct:
+
+$$
+A(6)=16<233=F_{13}.
+$$
+
+For the induction step, assume $A(k)<F_{2k+1}$ with $k\ge6$. The defining recurrence gives $A(k+1)=A(k)+k$. The Fibonacci addition law gives
+
+$$
+F_{2k+3}=F_{2k+2}+F_{2k+1}.
+$$
+
+Standard induction on the Fibonacci recurrence yields $k\le F_{2k+2}$ for $k\ge6$. Hence
+
+$$
+A(k+1)=A(k)+k
+<F_{2k+1}+F_{2k+2}
+=F_{2k+3}.
+$$
+
+This is the desired inequality at $k+1$. $\square$
+
+### Corollary 7.2 (Domination of an odd-Fibonacci row-sum model)
+
+Suppose a combinatorial triangular array has $n$th row sum equal to $F_{2n+1}$. Then for every $n\ge6$, its $n$th row sum is strictly greater than $A(n)$.
+
+**Proof sketch.** Replace the row sum by its assumed exact value $F_{2n+1}$ and apply Theorem 7.1. $\square$
+
+This statement applies in particular to the standard Pascal–Riordan construction whose row sums realize the odd-index Fibonacci numbers. The comparison creates a clean bridge: shifted triangular accumulation is polynomial, while the array’s row sums inherit exponential Fibonacci growth.
+
+The threshold $6$ is a certified uniform threshold, though the problem of determining the least possible threshold for this and broader quadratic families remains a useful refinement.
 
 ## 8. Algorithms
 
-We record the elementary algorithms underlying the numerical experiments.
+The exact identities eliminate the need for iterative sequence generation in most tasks.
 
-**Algorithm 8.1 (Generation).** Compute $A(0),\dots,A(N)$ in $O(N)$ additions by iterating $A(n+1)=A(n)+n$. Correctness is immediate from Definition 2.1; no multiplication is needed.
+### Algorithm 8.1 (Direct evaluation)
 
-**Algorithm 8.2 (Membership test).** To decide $m\in\operatorname{range}(A)$ in $O(1)$ arithmetic operations (plus one integer square root): return true iff $8m-7\ge0$ and $\lfloor\sqrt{8m-7}\rfloor^2 = 8m-7$. Correctness is Theorem 7.2.
+**Input:** a nonnegative integer $n$.  
+**Output:** $A(n)$.
 
-**Algorithm 8.3 (Closed-form evaluation).** Evaluate $A(n)=1+\tfrac{n(n-1)}{2}$ in $O(1)$, and $\sum_{k=0}^n A(k) = \tfrac{n^3+5n+6}{6}$ in $O(1)$, bypassing iteration entirely. Correctness is Theorems 3.1 and 6.1.
+Compute
 
----
+$$
+1+\frac{n(n-1)}2.
+$$
 
-## 9. Applications and Interpretation
+The division is exact because one of $n$ and $n-1$ is even. The algorithm uses $O(1)$ arithmetic operations and $O(1)$ auxiliary storage. With arbitrary-precision integers, bit complexity depends on multiplication of $O(\log n)$-bit operands.
 
-The anti-Fibonacci sequence is a compact laboratory for the difference between exponential and polynomial recurrences.
+### Algorithm 8.2 (Value-spectrum membership)
 
-- **Combinatorial meaning.** Since $A(n)=1+\binom{n}{2}$, the sequence counts regions cut by $n$ lines in general position in a disk, so its structural facts have direct geometric readings.
-- **Discrete calculus.** The pair (value density $\tfrac12$, cumulative density $\tfrac16$) is a textbook illustration that summation is discrete integration: $\tfrac{x^2}{2}\mapsto\tfrac{x^3}{6}$.
-- **Diophantine detection.** The square-spectrum test is a fast, exact membership oracle, exemplifying how quadratic-growth sequences carry perfect-square fingerprints.
-- **Pedagogical contrast.** Placed beside Fibonacci, $A$ isolates exactly which phenomena (golden ratio, exponential sums, Binet's formula) are consequences of *addition of predecessors* rather than of self-reference in general.
+**Input:** an integer $m$.  
+**Output:** whether $m=A(n)$ for some $n\ge0$, together with a positive index when one exists.
 
----
+If $m<1$, return false. Compute $D=8m-7$ and $r=\lfloor\sqrt D\rfloor$. Return true exactly when $r^2=D$ and $r$ is odd; then an index is
 
-## 10. Discussion and Future Directions
+$$
+n=\frac{r+1}{2}.
+$$
 
-The results above suggest several avenues, driven by the exact identities in hand.
+For $m=1$, both indices $0$ and $1$ are valid. The algorithm uses constant auxiliary space and one integer square root.
 
-**A factorial tower of cumulative densities.** Iterating the summation operator should yield a staircase of constants: the values grow like $n^2/2$, the first cumulative sums like $n^3/6$, the second like $n^4/24$, and in general the $d$-fold cumulative sum should be a polynomial of degree $d+2$ with leading coefficient $1/(d+2)!$. Repeated summation is a discrete antiderivative, so it should promote the value density $\tfrac12$ through the factorials exactly as iterated integration turns $x^2/2$ into $x^{d+2}/(d+2)!$. With the first two rungs now known exactly, the pattern and the inductive step are pinned down.
+### Algorithm 8.3 (Consecutive-sum membership)
 
-**Perfect-square membership as a fingerprint of quadratic growth.** The square-spectrum characterization suggests a general principle: a greedy additive-avoidance sequence has a value set of the form "the $m$ for which a fixed quadratic $Q(m)$ is a perfect square" if and only if the sequence is eventually a quadratic polynomial, in which case $Q$ is forced by the polynomial's discriminant. A perfect-square membership test is the arithmetic signature of quadratic growth, because it makes the counting function grow like a square root, which pins the sequence to degree two.
+**Input:** an integer $m$.  
+**Output:** whether $m=A(n)+A(n+1)$ for some $n\ge0$, together with the index.
 
-**The avoided-sum shadow has density zero.** Each term stays below the sum of its predecessors; the values it "refuses to become" simplify to shifted squares. This shadow set should have natural density zero, contain no long arithmetic progressions beyond an initial segment, and have a counting function asymptotic to $\sqrt{2m}$ — a shadow cast by avoidance inherits the growth order of the sequence and can never be dense.
+If $m<2$, return false. Compute $r=\lfloor\sqrt{m-2}\rfloor$. Return true exactly when $r^2=m-2$; in that event the unique index is $n=r$.
 
----
+## 9. Numerical protocol and diagnostic checks
 
-## 11. Conclusion
+Although the central claims are exact, numerical experiments provide useful diagnostics and reveal incorrect conjectures quickly. A robust experiment should compute $A(n)$ from the closed form rather than from floating-point recurrence, then report four quantities: $A(n)$, $A(n)/n^2$, the quarter-square discrepancy $A(n)-n^2/4$, and the neighboring ratio $A(n+1)/A(n)$.
 
-The anti-Fibonacci sequence $A(n)=1+\tfrac{n(n-1)}{2}$ is a complete structural negative of the Fibonacci sequence. It grows quadratically with density $\tfrac12$; its neighbor ratios converge to $1$ rather than the golden ratio; it avoids the sum of its two predecessors for all $n\ge6$ (with a lone exception at $n=5$); its partial sums are the exact cubic $\tfrac{n^3+5n+6}{6}$ with cumulative density $\tfrac16$; and its value set is precisely $\{m : 8m-7 \text{ is a perfect square}\}$, a density-zero, square-root-thin subset of the integers. Where Fibonacci is exponential, irrational, and golden, the anti-Fibonacci sequence is polynomial, rational, and quadratic — a reminder that the mathematics of *avoidance* can be as rich and exact as the mathematics of addition.
+At indices $n=10,100,1000$, the normalized values are respectively
+
+$$
+0.46,
+\qquad
+0.4951,
+\qquad
+0.499501.
+$$
+
+The trend toward $1/2$ is already clear. In contrast, the quarter-square discrepancy equals
+
+$$
+\frac{n^2}{4}-\frac n2+1,
+$$
+
+so it grows rather than stabilizes. A logarithmic plot of $A(n)$ against $n$ has slope approaching $2$, while a plot of $A(n)/n^2$ approaches a horizontal line at $1/2$. Both views distinguish quadratic behavior from Fibonacci growth.
+
+An independent integrity check evaluates the defining identities on a finite range. For every sampled $n$, verify simultaneously that
+
+$$
+A(n+1)-A(n)=n,
+$$
+
+$$
+A(n)+A(n+1)=n^2+2,
+$$
+
+and
+
+$$
+8A(n)-7=(2n-1)^2.
+$$
+
+These checks are redundant by design: disagreement reveals an indexing or implementation error. Integer arithmetic should be retained throughout evaluation; floating-point conversion is needed only for displayed ratios and plots. At $n=10^6$, all exact integers remain easy to compute, while the normalized value $0.499999500001$ visibly contradicts the proposed quarter-square limit.
+
+## 10. Applications and interpretation
+
+The first application is methodological. A displayed sequence, verbal rule, and asymptotic conjecture form three separate mathematical claims. They should be checked independently. Here a first-difference table immediately detects that the data encode a triangular recurrence rather than a greedy avoidance process.
+
+The second application is computational. Direct formulas replace linear-time generation with constant-operation evaluation. Square criteria provide exact membership certificates. Such transformations are useful whenever recurrence-generated data must be indexed, compressed, or queried at large scales.
+
+The third application is combinatorial. Since $A(n)=1+\binom n2$, the sequence counts edges of a complete graph on $n$ vertices plus one distinguished item. The consecutive-sum identity reflects the classical fact that two consecutive triangular numbers form a square. This supplies geometric intuition for the algebraic spectrum.
+
+The fourth application is Diophantine. The equations
+
+$$
+8A(n)-7=(2n-1)^2
+$$
+
+and
+
+$$
+A(n)+A(n+1)-2=n^2
+$$
+
+place both values and consecutive sums on affine conics. Intersections, modular restrictions, and coincidence problems with other recurrences can therefore be approached through quadratic forms, congruences, and Pell-type equations.
+
+Finally, the Fibonacci comparison illustrates the separation between polynomial and exponential combinatorial mechanisms. Even though $A(n)$ has unbounded increments, those increments are merely linear. Odd-index Fibonacci numbers acquire increments on the scale of their current values and rapidly dominate.
+
+## 11. Discussion and limitations
+
+The results also clarify why several initially plausible observations can coexist. Linear gaps might suggest rapid growth, yet summing those gaps produces a quadratic rather than exponential sequence. Sparse values might suggest an exotic avoidance mechanism, yet every strictly increasing quadratic integer sequence is sparse for the same elementary counting reason. Finally, repeated appearances of squares might look accidental in a short table, but here both square laws are algebraic consequences of consecutive triangular numbers. The closed form unifies all three phenomena.
+
+There is a useful distinction between descriptive and generative patterns. The condition $8m-7$ being an odd square describes exactly which integers occur, while $A(n+1)=A(n)+n$ generates them in index order. Neither description alone should be mistaken for the original exclusion rule. Having both views is computationally valuable: generation is convenient for ordered enumeration, whereas the spectral criterion answers random-access membership queries without constructing smaller terms.
+
+The adjective “anti-Fibonacci” is evocative but potentially misleading. The sequence studied here does not arise from the literal exclusion rule initially proposed, and it does not exhibit the claimed oscillatory ratios. Its structure is simpler: it is a shifted triangular sequence.
+
+This correction changes the asymptotic constant from $1/4$ to $1/2$. More strongly, it shows that the quarter-square approximation fails by an unbounded quadratic discrepancy. At the same time, one qualitative expectation—density zero—does hold for the sequence’s value set, for the ordinary reason that a quadratic sequence contributes only $O(\sqrt X)$ values below $X$.
+
+One must also distinguish three sets: the value set $\{A(n)\}$, the consecutive-sum set $\{A(n)+A(n+1)\}$, and any set of sums of arbitrary earlier terms. Theorems in this paper identify the first two exactly but make no classification claim about the third. Likewise, no result here classifies the unrelated literal greedy process.
+
+## 12. Future work
+
+Several exact problems follow naturally.
+
+First, classify intersections between the value spectrum and the consecutive-sum spectrum. Combining the two square identities reduces the question to an affine conic and plausibly to finitely many Pell-type orbits.
+
+Second, refine the exact counting formula into explicit discrepancy bounds in various normalizations, including uniform estimates for $N(X)-\sqrt{2X}$.
+
+Third, consider generalized recurrences
+
+$$
+B(0)=b,
+\qquad
+B(n+1)=B(n)+an
+$$
+
+with integer parameters $a>0$ and $b$. Their closed forms remain quadratic, so value spectra, consecutive sums, disjointness thresholds, and exceptional Fibonacci coincidences become explicit quadratic equations.
+
+Fourth, determine the optimal domination threshold for $A(n)<F_{2n+1}$ and then for arbitrary quadratics with nonnegative coefficients. A finite initial check combined with recurrence induction should produce effective parameter-dependent bounds.
+
+Fifth, study modular distribution. The criterion that $8m-7$ be an odd square reduces the occurring residue classes modulo $q$ to local quadratic-residue questions. Exact frequencies should be accessible by counting square roots modulo prime powers and applying the Chinese remainder theorem.
+
+## 13. Conclusion
+
+The sequence $1,1,2,4,7,11,16,\ldots$ is governed by the recurrence $A(n+1)=A(n)+n$ and the exact formula
+
+$$
+A(n)=1+\frac{n(n-1)}2.
+$$
+
+Its true leading coefficient is $1/2$, its neighboring ratios tend to $1$, and no bounded-error quarter-square approximation exists. Its gaps equal $n$, its values have density zero, and at index one million it equals $499{,}999{,}500{,}001$. Most notably, consecutive terms satisfy
+
+$$
+A(n)+A(n+1)=n^2+2,
+$$
+
+while individual values satisfy
+
+$$
+8A(n)-7=(2n-1)^2.
+$$
+
+These identities expose an unexpectedly rigid square structure. From index $6$ onward, odd-index Fibonacci numbers dominate the quadratic sequence, sharply separating its polynomial growth from genuine Fibonacci growth. What began as an inconsistent avoidance story therefore resolves into a coherent theory of shifted triangular numbers, exact spectra, sparse counting, and quadratic arithmetic.
