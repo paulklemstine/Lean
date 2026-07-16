@@ -92,7 +92,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Magnitude homology of tope graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd61fafb",
     "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,\u03c9^u)\\)-core, the \\((k,\u03c9^u)\\)-truss, and the more general \\((k,d,\u03c9^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
     "domains": [
       "Computation"
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11726v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:46:50.520811+00:00",
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6caf61ae",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -158,7 +158,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -1595,6 +1595,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T09:33:03.972385+00:00",
     "title": "ArXiv paper: Weak Inhomogeneous Poissonian Pair Correlation and Equidistribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Normalize to the paper's `Q_k`.** Extend scalars from `\u2124` to `\u211d` and define\n   `Q_k = k\u207b\u00b9 P_k`. The proved cumulative identity immediately yields the exact\n   Ces\u00e0ro formula `Q_k = k\u207b\u00b9 \u2211_{m=1}^k R_m` for positive `k`.\n\n2. **Evaluation and compact convergence.** After polynomial evaluation at\n   `x \u2208 [0,c]`, prove the paper's uniform convergence of `Q_k(x)` to\n   `g(x)=\u2211 \u03bc(n)x^n/n` on each compact interval with `c<1`. This requires a\n   formal treatment of the power series and the elementary geometric majorant.\n\n3. **Riemann-sum bridge.** Formalize Lemmas 2.13\u20132.14, identifying `Q_k` as a\n   Riemann sum for the truncated M\u00f6bius sums `A_x(t)`. This would connect the\n   present exact combinatorial identity to analysis and quantitative uniform\n   approximation.\n\n4. **General arithmetic functions.** The main theorem is already independent\n   of special properties of `\u03bc`. Develop it as an incidence-algebra statement:\n   floor weights count multiples, while divisor transforms are convolution on\n   the divisibility poset. Specializations to Euler's totient, Liouville's\n   function, or Dirichlet characters may yield useful generating-polynomial\n   identities.\n\n5. **Analytic parts of the paper.** Formalize the finite versions of Lemma 1.2\n   (M\u00f6bius inversion of the floor function), the scalar-product identities for\n   the functions `\u03b3_n`, and the exponential correction. The zero-free-region\n   estimates and asymptotics used later in the paper require substantially more\n   analytic number theory than the exact polynomial bridge proved here.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0118",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "851ec568",
+    "status": "available",
+    "timestamp": "2026-07-16T09:33:29.783000+00:00",
+    "title": "1. **Normalize to the paper's `Q_k`.** Extend scalars from `\u2124` to `\u211d` and define"
   },
   {
     "consumed_by_exp_id": "",
