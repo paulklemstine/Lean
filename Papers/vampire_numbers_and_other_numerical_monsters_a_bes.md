@@ -1,10 +1,10 @@
-# Computational evidence
+# Computational Evidence
 
 ## Small cases
 
-The Lean theorem `first_seven_vampire_witnesses` checks the following products and exact decimal digit-multiset equalities:
+The existing exact digit witnesses establish the following first seven decimal vampire factorizations:
 
-| vampire | fangs | residues modulo 9 |
+| Product | Fangs | Fang residues modulo 9 |
 |---:|---:|---:|
 | 1260 | 21 × 60 | (3, 6) |
 | 1395 | 15 × 93 | (6, 3) |
@@ -14,22 +14,32 @@ The Lean theorem `first_seven_vampire_witnesses` checks the following products a
 | 2187 | 27 × 81 | (0, 0) |
 | 6880 | 80 × 86 | (8, 5) |
 
-All rows fall in the six residue pairs proved by `vampire_fangs_residue_sieve`.
+Every pair belongs to the six-point unrestricted residue sieve
+`(0,0), (2,2), (3,6), (5,8), (6,3), (8,5)`. None of these seven examples has two prime fangs.
 
-## OEIS
+The classical smallest witness is exact at the digit-multiset level:
+`digits(21) + digits(60)` is a permutation of `digits(1260)`.
 
-The standard vampire-number sequence is OEIS A014575. Its initial terms agree with the seven values certified here: 1260, 1395, 1435, 1530, 1827, 2187, 6880.
+## Counterexample hunt and definitional audit
 
-## Counterexample hunt
+The proposed “zombie” description is inconsistent: it says both fangs are prime, but the supplied factorizations of `125460` use `204 × 615` and `246 × 510`, in each case two composite factors. The prime-fang interpretation was retained because it is the literal definition and leads to a falsifiable arithmetic class.
 
-For the proved modular claim, exhaustive reduction modulo 9 leaves exactly
+The claim that density “approaches `1/√n`” should be read as an asymptotic scale, since `1/√n` itself approaches zero. A precise conjecture needs a counting function, denominator, and leading constant.
 
-`(0,0), (2,2), (3,6), (5,8), (6,3), (8,5)`.
+No exhaustive enumeration up to `10^8` is reported here. Such a table would depend sensitively on resolving the ambiguous werewolf and zombie definitions, and an unchecked external computation would not support the universal theorems proved in this cycle.
 
-This exhaustive finite step is incorporated into the Lean proof, rather than being left as an external computation. No counterexample exists under the formal `VampireWitness` hypotheses.
+## OEIS search
 
-The asymptotic density claim and the claims about werewolf, ghost, and zombie numbers were not tested here: their informal definitions are ambiguous (especially “share exactly one digit” and the contradictory zombie description), and a reliable enumeration up to 10^8 would require fixing those conventions first.
+No OEIS identifier is asserted. The standard vampire-number sequence is widely tabulated, but no external sequence lookup was performed during this cycle, so assigning an identifier would risk an unsupported citation.
 
-## Residue table
+## Structural table for prime fangs
 
-The six valid pairs occupy 6 of the 81 ordered residue pairs modulo 9, so the theorem supplies a factor-pair prefilter rejecting 75 residue pairs before any decimal multiset comparison.
+Intersecting the exact unrestricted residue sieve with primality leaves:
+
+| `x mod 9` | `y mod 9` | `(x·y) mod 9` |
+|---:|---:|---:|
+| 2 | 2 | 4 |
+| 5 | 8 | 4 |
+| 8 | 5 | 4 |
+
+Thus every decimal digit-permutation product with two prime fangs lies in the single residue class `4 mod 9`. This table is proved for all natural-number witnesses in `Catalog/Algebra/VampirePrimeFangSieve.lean`; it is not merely a bounded search observation.
