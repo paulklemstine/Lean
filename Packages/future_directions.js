@@ -4,110 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0071",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T00:50:36.471823+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0064",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-15T22:33:29.183009+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0061",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-15T22:33:29.169597+00:00",
-    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-  },
-  {
-    "consumed_by_exp_id": "a373adc5",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0062",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T22:33:29.174737+00:00",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
-  },
-  {
-    "consumed_by_exp_id": "5f2825a5",
-    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0063",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T22:33:29.178961+00:00",
-    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
-    "consumed_by_exp_id": "7cd4ad55",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0066",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T23:07:06.558583+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "8d2137d3",
-    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
-    "domains": [
-      "Novelty",
-      "Combinatorics"
-    ],
-    "id": "fd_0065",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T22:33:29.187612+00:00",
-    "title": "The Library of Babel: Combinatorics of the Universal Library"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
       "Algebra",
@@ -575,12 +471,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Computing Tools for Translation-Invariant Total Orders' and formalize its key results. Abstract: We introduce TITO_Explore, a software package for representing and computing with Translation-Invariant Total Orders (TITOs). We define a canonical window notation for TITOs and design and implement algorithms for several computational tasks involving them. The package normalizes the window notation of a given TITO into its canonical form, computes its inversion set, compares the weak order between two TITOs, and computes the join of two specified TITOs. Our weak order comparison algorithm operates by partitioning the inversion sets into disjoint subsets, thereby breaking down the comparison problem into evaluations of paired subsets. The join algorithm uses an edge-weighted directed graph to represent inversions and converts the problem of finding the join into a weighted path problem in the graph.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0041",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11709v1",
+    "status": "available",
+    "timestamp": "2026-07-16T01:06:49.185740+00:00",
+    "title": "ArXiv paper: Computing Tools for Translation-Invariant Total Orders"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0041",
+    "id": "fd_0042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12912v1",
@@ -589,31 +500,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e23ed960",
     "description": "Investigate the ArXiv paper 'The Balanced Four-Color Theorem' and formalize its key results. Abstract: We show that every planar graph with $n \\geq 3$ vertices admits a 4-coloring in which each color is used on fewer than $n/2$ vertices. This bound is the best possible. Moreover, such a coloring can be found in $O(n \\log n)$ time. We also extend these results to five or more colors and to graphs on general surfaces.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0042",
+    "id": "fd_0043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13025v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T12:51:18.212379+00:00",
     "title": "ArXiv paper: The Balanced Four-Color Theorem"
   },
   {
-    "consumed_by_exp_id": "e23ed960",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=\u03b1(G)+1$, where $\u03b1(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
     "domains": [
       "Physics"
     ],
-    "id": "fd_0043",
+    "id": "fd_0044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12890v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T13:08:25.917501+00:00",
     "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
   },
@@ -623,7 +534,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0044",
+    "id": "fd_0045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
@@ -637,7 +548,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0045",
+    "id": "fd_0046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
@@ -646,17 +557,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
   },
   {
-    "consumed_by_exp_id": "f4980b02",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation' and formalize its key results. Abstract: We prove the Gonality Conjecture in arithmetic dynamics: for any non-isotrivial one-parameter algebraic family of rational maps on $\\mathbb{P}^1$, the gonality of distinct dynatomic curves tends to infinity. More generally, outside the flexible Latt\u00e8s family, every small sequence of horizontal curves has gonality tending to infinity, and its genus grows superlinearly with its degree over the parameter curve. We also obtain higher-dimensional analogues under natural bifurcation and multiplier-genericity hypotheses. As applications, we prove uniform boundedness results for iterated preimages over number fields and geometric uniform boundedness results for preperiodic points over function fields. The proof combines arithmetic equidistribution, woven currents, and bifurcation theory; the bifurcation mechanism is what forces the growth of genus and gonality.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0046",
+    "id": "fd_0047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12561v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T14:01:10.734967+00:00",
     "title": "ArXiv paper: Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation"
   },
@@ -667,7 +578,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0047",
+    "id": "fd_0048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12679v1",
@@ -682,7 +593,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0048",
+    "id": "fd_0049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12449v1",
@@ -696,7 +607,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0049",
+    "id": "fd_0050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12461v1",
@@ -710,7 +621,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0050",
+    "id": "fd_0051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12457v1",
@@ -725,7 +636,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0051",
+    "id": "fd_0052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
@@ -739,7 +650,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0052",
+    "id": "fd_0053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12300v1",
@@ -754,7 +665,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0053",
+    "id": "fd_0054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12448v1",
@@ -768,7 +679,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0054",
+    "id": "fd_0055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12367v1",
@@ -782,7 +693,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0055",
+    "id": "fd_0056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
@@ -797,7 +708,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0056",
+    "id": "fd_0057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12162v1",
@@ -811,7 +722,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0057",
+    "id": "fd_0058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12136v1",
@@ -825,7 +736,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0058",
+    "id": "fd_0059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
@@ -839,7 +750,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0059",
+    "id": "fd_0060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12232v1",
@@ -853,73 +764,13 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0060",
+    "id": "fd_0061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12090v1",
     "status": "available",
     "timestamp": "2026-07-15T22:11:50.907220+00:00",
     "title": "ArXiv paper: Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence"
-  },
-  {
-    "consumed_by_exp_id": "4a721b6e",
-    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0069",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T23:41:28.939599+00:00",
-    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0070",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T00:47:23.013724+00:00",
-    "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "consumed_by_exp_id": "e2c77d51",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0067",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T23:24:14.669394+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0068",
-    "priority_score": 0.73,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-15T23:41:28.931566+00:00",
-    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
     "consumed_by_exp_id": "",
