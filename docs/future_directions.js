@@ -1744,33 +1744,33 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "8e1af77c",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
+    "description": "Investigate the ArXiv paper 'Supersaturation for Hypergraph-Weighted Independent Sets' and formalize its key results. Abstract: Many extremal problems can be viewed as finding large independent sets in an auxiliary hypergraph. We propose a generalization of this by looking for ``large'' independent sets $I$ in a hypergraph $\\mathcal{F}$ where ``large'' is measured by how many edges $I$ induces in another hypergraph $\\mathcal{H}$ on the same vertex set as $\\mathcal{F}$. We prove general supersaturation results for such extremal problems motivated by the breakthrough work of Ferber, McKinley and Samotij on counting $F$-free graphs. As applications, we prove new supersaturation bounds for generalized Tur\u00e1n problems, as well as supersaturation bounds for a new set of extremal problems inspired by work of Fox and Pohoata on finding subsets $A\\sub\\mathbb{N}$ which maximize the number of solutions to a given system of equations while avoiding solutions to another system.",
     "domains": [
-      "Novelty",
-      "NumberTheory"
+      "Algebra",
+      "MachineLearning"
     ],
     "id": "fd_0135",
-    "priority_score": 0.75,
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "2607.14022v1",
     "status": "in_progress",
-    "timestamp": "2026-07-16T15:59:22.960147+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    "timestamp": "2026-07-16T16:53:10.235023+00:00",
+    "title": "ArXiv paper: Supersaturation for Hypergraph-Weighted Independent Sets"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
+    "description": "Investigate the ArXiv paper 'Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$' and formalize its key results. Abstract: For the elliptic curves $E_{p,q}: y^{2}=x^{3}-pqx$ where $p$ and $q$ are distinct odd primes, we establish necessary and sufficient conditions under which rank$\\,E_{p,q}(\\mathbb{Q})$ and $\\dim_{\\mathbb{F}_{2}} \\Sha \\left( E_{p,q}/\\bbQ \\right)[2]$ are both $0$. We do so via a similar characterisation of when the Selmer groups associated with the degree-$2$ isogeny $\u03c6$ and its dual $\\widehat\u03c6$ are both of minimal size, along with results about a cokernel that arises from a related exact sequence.",
     "domains": [
-      "Novelty",
-      "NumberTheory"
+      "Pythagorean",
+      "Algebra"
     ],
     "id": "fd_0136",
-    "priority_score": 0.73,
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "2607.14033v1",
     "status": "available",
-    "timestamp": "2026-07-16T16:16:58.201815+00:00",
-    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    "timestamp": "2026-07-16T16:53:13.563266+00:00",
+    "title": "ArXiv paper: Exact classification of elliptic curves $y^{2}=x^{3}-pqx$ with rank $0$ and trivial $\\Sha[2]$"
   },
   {
     "consumed_by_exp_id": "",
