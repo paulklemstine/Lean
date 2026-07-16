@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T03:00:34Z",
+  "date": "2026-07-16T03:01:34Z",
   "key_results": [
     "Forcing sequences are monotone under set inclusion and cardinality, and forcing reachability is antisymmetric.",
     "Forcing certificates compose through intermediate colored sets, and the minimum zero forcing number is attained on every finite graph.",
