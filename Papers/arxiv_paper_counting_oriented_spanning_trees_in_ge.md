@@ -1,0 +1,3 @@
+# Why computational evidence was skipped
+
+The formalized results are universal symbolic identities for generalized-join Laplacian operators over arbitrary finite fiber types and arbitrary weights. They are proved directly in Lean, not inferred from finite data. Small numerical instances would therefore provide little evidence beyond the kernel-checked general proofs. Producing arborescence-count tables would additionally require a concrete directed-multigraph and rooted-arborescence implementation, which is outside the operator-level theorem proved here and is listed as the next extension in `FUTURE_DIRECTIONS.md`.
