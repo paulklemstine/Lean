@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "86efe295",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n1. **Exact defect bounds.** Strengthen extremal rigidity quantitatively: if a graph is missing `m` edges, bound the deficit `2 ^ |α| - |cliqueFamily H|` in terms of the missing-ed",
-      "quality_score": 0.91,
-      "sorry_count": 4,
-      "theorem_count": 33,
-      "timestamp": "2026-07-15T01:49:32",
-      "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\" mission): "
-    },
-    {
       "cycle_id": "41e1526b",
       "domain": "Logic",
       "key_insight": "# Future Directions: Clique-to-Clique Density\n\n## 1. Sharp generalized-inverse lower envelope\n\nFor every pair of integers `2 ≤ s < t`, determine the exact lower envelope of the normalized `t`-clique c",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-16T05:48:53",
       "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n## Completed formalization\n\n`Construction.lean` is a self-contained finite-set formalization of the\npair-star 3-uniform hypergraph from the paper. All declarations have complete\np",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T07:07:10",
+      "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "59a15132",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalises a **cross-domain bridge** underlying the conjecture that a\n`λ = 1` pairwise-reflection-symmetric (PRS) Latin square of order `n` exists iff `n` is a\npower",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-13T11:12:22",
-      "title": "Power-of-Two Characterisation of λ=1 Pairwise Reflection Symmetric Latin Rectangles"
-    },
     {
       "cycle_id": "191c7579",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-16T07:07:02",
       "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley sy"
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n## Completed formalization\n\n`Construction.lean` is a self-contained finite-set formalization of the\npair-star 3-uniform hypergraph from the paper. All declarations have complete\np",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-16T07:07:10",
+      "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a8d24466",
-      "domain": "NumberTheory",
-      "name": "pellTraceForm_step",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "c5a6c2ed",
-      "domain": "Applications",
-      "name": "decimalValue_append",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "c5a6c2ed",
-      "domain": "Applications",
-      "name": "orderly_127",
-      "quality": 0.7
-    },
     {
       "cycle_id": "c5a6c2ed",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "shiftedHankel_hierarchy_nested",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "name": "for",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "name": "fib_dvd_gcd_of_dvd",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "cca295e6",
+      "domain": "Shared",
+      "name": "fibEntryPt_dvd_of_fib_dvd",
+      "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T07:07:02",
+  "last_updated": "2026-07-16T07:07:10",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "6d0ee8e6",
-        "quality": 0.6876800000000001,
-        "theorems": 7,
-        "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
-      },
-      {
         "cycle_id": "e92fe2c1",
         "quality": 0.46650342687540775,
         "theorems": 9,
@@ -3947,6 +3941,12 @@
         "quality": 0.73,
         "theorems": 10,
         "title": "Elementary spectral-moment foundations of Seidel"
+      },
+      {
+        "cycle_id": "cca295e6",
+        "quality": 0.71,
+        "theorems": 13,
+        "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
       }
     ],
     "Tropical": [
