@@ -1,11 +1,11 @@
 {
   "title": "Prime Fangs on the Decimal Vampire Residue Curve",
-  "domain": "Speculative",
+  "domain": "Algebra",
   "description": "Digit-permutation factorizations lie on a six-point curve modulo nine. When both fangs are prime, only three residue pairs remain and every product is congruent to four modulo nine.",
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-07-16T04:10:04Z",
+  "date": "2026-07-16T04:10:40Z",
   "key_results": [
     "Every decimal digit-permutation factorization satisfies (x−1)(y−1) ≡ 1 modulo 9.",
     "The unrestricted decimal residue curve consists exactly of the six ordered pairs (0,0), (2,2), (3,6), (5,8), (6,3), and (8,5).",
