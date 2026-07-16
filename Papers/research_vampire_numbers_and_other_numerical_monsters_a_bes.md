@@ -1,196 +1,389 @@
-# A Bestiary of Arithmetic Monsters: Structural Obstructions for Digit-Permutation Factorizations
+# Prime Fangs on the Decimal Vampire Residue Curve
 
-**Author:** Aristotle
-**Date:** 2026-07-04
+**Aristotle**  
+**July 16, 2026**
 
 ## Abstract
 
-A *vampire number* is a composite integer with an even number of decimal digits that factors into two equal-length "fangs" whose digits, taken together, form a permutation of the digits of the product. The smallest is $1260 = 21 \times 60$. Although the definition is elementary, deciding vampirism is entangled with integer factorization. We isolate the combinatorial core of the definition — the *digit-permutation factorization* — and prove three structural obstructions that every such factorization must satisfy: (1) a **casting-out-nines** law, $x \cdot y \equiv x + y \pmod 9$, equivalently $(x-1)(y-1) \equiv 1 \pmod 9$; (2) a sharp **mod-three sieve**, that neither fang can be congruent to $1$ modulo $3$; and (3) a **length-additivity** ("no carry shrinkage") law, $\operatorname{len}(x \cdot y) = \operatorname{len}(x) + \operatorname{len}(y)$. We then build a **base-2 bridge**: writing $s_2$ for the binary digit sum, we prove that $s_2$ is submultiplicative, $s_2(x \cdot y) \le \min(y\, s_2(x),\, x\, s_2(y))$, and specialize it to bound the binary complexity of any vampire number by that of a single fang. We package the classical definition, verify $1260 = 21 \times 60$ as an honest instance, situate the results within a broader "bestiary" of digit-sharing creatures (werewolves, ghosts, zombies), and record the density questions these obstructions open. All results are stated inline with proof sketches.
-
-**Keywords:** vampire numbers, digit-permutation factorization, casting out nines, digit sum, binary complexity, submultiplicativity, recreational number theory.
-
----
+A decimal digit-permutation factorization is an identity $v=xy$ in which the multiset of decimal digits of $v$ equals the combined multiset of digits of $x$ and $y$. Classical vampire numbers add length and trailing-zero conventions, but the permutation condition itself already imposes a strong arithmetic constraint. Preservation of digit sum gives $xy\equiv x+y\pmod 9$, equivalently $(x-1)(y-1)\equiv1\pmod9$. This curve contains exactly six ordered residue pairs: $(0,0)$, $(2,2)$, $(3,6)$, $(5,8)$, $(6,3)$, and $(8,5)$. We study its intersection with primality. If both factors are prime, divisibility by three excludes half of the six points, leaving only $(2,2)$, $(5,8)$, and $(8,5)$. All three have product congruent to $4$ modulo nine. Thus every digit-permutation product with two prime fangs is congruent to $4$ modulo nine and is not divisible by three. We give complete proof sketches, search algorithms based on digit-frequency vectors and residue bucketing, illustrative computations, and a careful account of what the local theorem does—and does not—imply about existence and density. We conclude with precise open problems concerning square-root density, existence in even-length decades, prime-fang infinitude, and vanishing density for balanced ghost factorizations.
 
 ## 1. Introduction
 
-Recreational number theory is full of creatures defined by how a number relates to its own digits: palindromes, Harshad numbers, narcissistic numbers, and — the subject of this paper — **vampire numbers**, introduced by Clifford Pickover. A vampire number appears innocent until factored, whereupon it splits into two smaller numbers, its *fangs*, whose combined digits are exactly a rearrangement of the original.
+The identity
 
-The smallest vampire is
-$$1260 = 21 \times 60,$$
-where the fang digits $\{2,1,6,0\}$ permute the product digits $\{1,2,6,0\}$.
+$$
+1260=21\cdot60
+$$
 
-What makes vampire numbers more than a curiosity is that their definition sits precisely on the boundary between the trivially checkable and the computationally hard. To *verify* a claimed factorization is instant; to *decide* whether a given number is a vampire requires searching its factorizations, a task interwoven with the difficulty of integer factorization itself.
+is remarkable because the digits of the factors, taken together, are exactly the digits of the product. Such identities are traditionally associated with vampire numbers: the product is the vampire, and its factors are its fangs. The terminology is recreational, but the mathematics combines several serious themes. Decimal words are combinatorial objects; multiplication is arithmetic; factorization introduces algorithmic cost; and primality supplies additional local restrictions.
 
-Our aim is to extract, from the folklore definition, a clean combinatorial invariant and to prove exact structural theorems about it. These theorems act as **sieves**: cheap, factoring-free tests that any candidate fang pair must survive. We further connect the base-10 combinatorics to base-2 arithmetic via a submultiplicativity law for the binary digit sum.
+A brute-force treatment regards decimal digits as labels inspected only after multiplication. The central observation of this paper is that the digit condition has an algebraic projection. Decimal digit multisets determine digit sums, and digit sums determine residues modulo nine. Therefore every admissible factorization lies on a fixed affine congruence curve. For unrestricted factors this curve has six points modulo nine. For prime factors it has only three, and the corresponding products concentrate in a single residue class.
 
-### Contributions
+The argument is elementary, universal, and independent of decimal length. It does not prove that prime-fang vampire products exist in abundance, or even infinitely often. Instead, it identifies exact necessary conditions that any such product must satisfy. This distinction between a local obstruction and a global existence theorem organizes both the theoretical discussion and the computational pipeline.
 
-1. A precise separation of the *combinatorial* condition (digit-permutation factorization) from the *classical* vampire definition (Section 2).
-2. Three exact obstructions: casting out nines and its corollary $(x-1)(y-1)\equiv 1 \pmod 9$ (Section 3); the mod-three fang sieve (Section 4); length additivity (Section 5).
-3. A base-2 bridge: submultiplicativity of the binary digit sum and its specialization to vampire numbers (Section 6).
-4. A worked instance ($1260 = 21 \times 60$) and a wider bestiary of digit-sharing numbers (Sections 7–8), with density questions and future directions (Sections 9–10).
+The paper proceeds as follows. Section 2 fixes definitions, including the distinction between classical vampire numbers and the broader digit-permutation relation. Section 3 derives the decimal residue curve. Section 4 enumerates its six points. Section 5 intersects the curve with primality and proves the concentration law. Section 6 presents algorithms and complexity bounds. Section 7 gives examples and rejection certificates. Sections 8 and 9 discuss neighboring numerical “monsters,” applications, limitations, and future questions.
 
----
+## 2. Definitions and conventions
 
-## 2. Definitions
+### 2.1 Decimal digit multisets
 
-Throughout, integers are non-negative and written in base $10$ unless a base is indicated. For $n \in \mathbb{N}$ let $D(n)$ denote the **multiset of decimal digits** of $n$, and let $\operatorname{len}(n) = |D(n)|$ be the number of decimal digits. Let $\sigma(n)$ denote the (decimal) **digit sum**, $\sigma(n) = \sum_{d \in D(n)} d$.
+For a nonnegative integer $n$ and a digit $d\in\{0,1,\ldots,9\}$, let $c_d(n)$ denote the number of occurrences of $d$ in the ordinary decimal expansion of $n$. We use the conventional expansion without leading zeros; the number $0$ has the one-digit expansion $0$.
 
-**Definition 2.1 (Digit-permutation factorization).**
-An ordered pair $(x, y)$ is a *digit-permutation factorization* of $v$ if
-$$v = x \cdot y \qquad \text{and} \qquad D(x) \uplus D(y) = D(v),$$
-where $\uplus$ denotes multiset union. Equivalently, concatenating the digit lists of $x$ and $y$ yields a permutation of the digit list of $v$.
+The **digit-frequency vector** of $n$ is
 
-This is the purely combinatorial heart of the notion. The classical definition adds size and degeneracy conditions.
+$$
+C(n)=(c_0(n),c_1(n),\ldots,c_9(n)).
+$$
 
-**Definition 2.2 (Vampire pair).**
-Let $v$ have $2k$ decimal digits. A pair $(x, y)$ is a *vampire pair* for $v$ if it is a digit-permutation factorization of $v$ with $\operatorname{len}(x) = \operatorname{len}(y) = k$, and $x, y$ are not *both* divisible by $10$ (the "no trailing-zero pair" condition, which excludes degenerate padding).
+This vector records the decimal digit multiset exactly. Two nonnegative integers have the same digit multiset if and only if their digit-frequency vectors agree.
 
-**Definition 2.3 (Vampire number).**
-$v$ is a *vampire number* if it admits at least one vampire pair. Its fangs are the two members of such a pair.
+### 2.2 Digit-permutation factorizations
 
-**Definition 2.4 (Bestiary variants).**
-Fix a factorization $v = x \cdot y$ into two equal-length factors. Say $v$ is:
-- a **werewolf** if $D(x) \uplus D(y)$ shares exactly one digit (with multiplicity) with $D(v)$;
-- a **ghost** if $D(x) \uplus D(y)$ shares no digit with $D(v)$;
-- a **zombie** if $v$ has two distinct such factorizations, at least one of which pairs a prime with a composite in violation of the classical vampire constraints, e.g. $125460 = 204 \times 615 = 246 \times 510$.
+**Definition 2.1 (Decimal digit-permutation factorization).** A triple of positive integers $(v,x,y)$ is a decimal digit-permutation factorization if
 
-The vampire is the perfect-overlap extreme; ghosts are the zero-overlap extreme; werewolves and zombies interpolate. The theorems below concern the vampire/digit-permutation case, which is the richest and the one where exact structure emerges.
+$$
+v=xy
+$$
 
----
+and
 
-## 3. Casting Out Nines for Factorizations
+$$
+C(v)=C(x)+C(y),
+$$
 
-The classical rule of *casting out nines* states that every integer is congruent to its digit sum modulo $9$:
-$$n \equiv \sigma(n) \pmod 9 \qquad \text{for all } n \in \mathbb{N}. \tag{3.1}$$
-This is immediate from $10 \equiv 1 \pmod 9$, so each positional weight $10^i \equiv 1$, and the value collapses to the digit sum modulo $9$.
+where addition of frequency vectors is coordinatewise.
 
-**Theorem 3.1 (Casting out nines for digit-permutation factorizations).**
-If $(x, y)$ is a digit-permutation factorization of $v$, then
-$$x \cdot y \;\equiv\; x + y \pmod 9,$$
-equivalently
-$$(x - 1)(y - 1) \;\equiv\; 1 \pmod 9.$$
+The factors $x$ and $y$ are called **fangs**. The definition is symmetric in the fangs. It captures the exact combinatorial property needed below and deliberately imposes no length convention.
 
-*Proof sketch.* Because $D(x) \uplus D(y) = D(v)$, the digit sums satisfy $\sigma(v) = \sigma(x) + \sigma(y)$ (the digit sum is additive over multiset union). Applying (3.1) three times,
-$$v \equiv \sigma(v) = \sigma(x) + \sigma(y) \equiv x + y \pmod 9.$$
-Since $v = x \cdot y$, this is $x \cdot y \equiv x + y \pmod 9$. Adding $1$ to both sides and factoring,
-$$xy - x - y + 1 \equiv 1 \pmod 9 \iff (x-1)(y-1) \equiv 1 \pmod 9. \qquad \blacksquare$$
+**Definition 2.2 (Classical vampire number).** A positive integer $v$ is a classical vampire number if it has an even number $2n$ of decimal digits and admits a factorization $v=xy$ such that $x$ and $y$ each have $n$ digits, $C(v)=C(x)+C(y)$, and $x$ and $y$ do not both end in zero.
 
-The rearranged form is the more useful of the two: it says $x - 1$ and $y - 1$ are *mutually inverse* modulo $9$. In the units group $(\mathbb{Z}/9\mathbb{Z})^\times$ of order $6$, this confines the pair $(x \bmod 9, y \bmod 9)$ to a small explicit set.
+The final condition prevents artificial examples obtained by appending matching zeros. Every classical vampire factorization is a digit-permutation factorization, so all results proved for Definition 2.1 apply to Definition 2.2.
 
----
+**Definition 2.3 (Prime-fang factorization).** A digit-permutation factorization $v=xy$ is a prime-fang factorization if both $x$ and $y$ are prime.
 
-## 4. The Mod-Three Fang Sieve
+This definition should not be confused with looser terminology in which only one fang is prime. The concentration theorem requires primality of both factors.
 
-Theorem 3.1 has a sharp and immediately useful corollary.
+### 2.3 Digit sums
 
-**Theorem 4.1 (No fang is $\equiv 1 \pmod 3$).**
-If $(x, y)$ is a digit-permutation factorization, then neither $x$ nor $y$ is congruent to $1$ modulo $3$.
+Define the decimal digit sum by
 
-*Proof sketch.* By Theorem 3.1, $(x-1)(y-1) \equiv 1 \pmod 9$, and reducing modulo $3$ gives $(x-1)(y-1) \equiv 1 \pmod 3$. In particular the product $(x-1)(y-1)$ is a unit modulo $3$, hence coprime to $3$, so neither factor is divisible by $3$. But $x \equiv 1 \pmod 3$ would force $3 \mid (x-1)$, a contradiction; likewise for $y$. $\blacksquare$
+$$
+s(n)=\sum_{d=0}^{9}d\,c_d(n).
+$$
 
-**Remark 4.2.** This is a genuine, factoring-free sieve. Among residues modulo $3$, exactly one of the three classes ($1$) is eliminated for each fang, so a full third of candidate factors are rejected before any digit comparison. Combined with the trailing-zero condition, it substantially prunes the search space for vampire hunts.
+If $C(v)=C(x)+C(y)$, then coordinatewise addition immediately yields
 
----
+$$
+s(v)=s(x)+s(y).
+$$
 
-## 5. Length Additivity: No Carry Shrinkage
+The standard decimal congruence is
 
-Multiplying two decimal numbers of lengths $a$ and $b$ yields a product of length either $a + b$ or $a + b - 1$; the shorter case arises when the leading digits produce no carry. For digit-permutation factorizations the shorter case is impossible.
+$$
+n\equiv s(n)\pmod9.
+$$
 
-**Theorem 5.1 (Length additivity).**
-If $(x, y)$ is a digit-permutation factorization of $v = x \cdot y$, then
-$$\operatorname{len}(x \cdot y) = \operatorname{len}(x) + \operatorname{len}(y).$$
+It follows from writing $n=\sum_i a_i10^i$ and using $10^i\equiv1\pmod9$. These two elementary facts create the bridge from digit combinatorics to modular arithmetic.
 
-*Proof sketch.* Counting digits with multiplicity, $|D(v)| = |D(x)| + |D(y)|$ because $D(x) \uplus D(y) = D(v)$ is a multiset identity that preserves cardinality. By definition $\operatorname{len} = |D(\cdot)|$, so $\operatorname{len}(v) = \operatorname{len}(x) + \operatorname{len}(y)$, and $v = x\cdot y$. $\blacksquare$
+## 3. The decimal vampire residue curve
 
-**Interpretation.** The digit-permutation hypothesis secretly encodes a *metric* statement: the product must occupy the maximal number of decimal places consistent with its factors — no leading digit is lost to a collapsing carry. Because length can be read off instantly, Theorem 5.1 is a check that can be applied *before* any digit-multiset comparison, rejecting balanced factorizations that shrink under multiplication.
+**Lemma 3.1 (Digit-sum conservation).** If $v=xy$ is a decimal digit-permutation factorization, then
 
----
+$$
+s(v)=s(x)+s(y).
+$$
 
-## 6. A Base-2 Bridge: Submultiplicativity of the Binary Digit Sum
+**Proof sketch.** For each digit $d$, the defining multiset identity gives $c_d(v)=c_d(x)+c_d(y)$. Multiply by $d$, sum from $0$ to $9$, and distribute the sum. $\square$
 
-The obstructions above live in base $10$. We now connect them to base $2$. For $n \in \mathbb{N}$, let
-$$s_2(n) = \text{(number of $1$'s in the binary expansion of } n),$$
-the binary digit sum (population count). The starting point is the standard subadditivity law, which reflects that binary addition can only merge or cancel ones via carries, never manufacture them:
-$$s_2(a + b) \;\le\; s_2(a) + s_2(b) \qquad \text{for all } a, b \in \mathbb{N}. \tag{6.1}$$
+**Lemma 3.2 (Casting out nines).** Every nonnegative integer $n$ satisfies
 
-**Theorem 6.1 (Submultiplicativity of $s_2$).**
-For all $x, y \in \mathbb{N}$,
-$$s_2(x \cdot y) \;\le\; y \cdot s_2(x).$$
+$$
+n\equiv s(n)\pmod9.
+$$
 
-*Proof sketch.* Induct on $y$. For $y = 0$, $s_2(0) = 0$. For the step, write $x \cdot (y+1) = x \cdot y + x$ and apply (6.1):
-$$s_2(x(y+1)) = s_2(xy + x) \le s_2(xy) + s_2(x) \le y\, s_2(x) + s_2(x) = (y+1) s_2(x),$$
-using the induction hypothesis $s_2(xy) \le y\, s_2(x)$. $\blacksquare$
+**Proof sketch.** Express $n$ in base ten as $n=\sum_i a_i10^i$. Since $10\equiv1\pmod9$, each power $10^i$ is congruent to $1$, giving $n\equiv\sum_i a_i=s(n)\pmod9$. $\square$
 
-By exchanging the roles of $x$ and $y$ we obtain the symmetric sharpening.
+Combining these lemmas with $v=xy$ gives the fundamental congruence.
 
-**Corollary 6.2 (Symmetric bound).** For all $x, y \in \mathbb{N}$,
-$$s_2(x \cdot y) \;\le\; \min\big(y \cdot s_2(x),\; x \cdot s_2(y)\big).$$
+**Theorem 3.3 (Decimal residue-curve theorem).** If $v=xy$ is a decimal digit-permutation factorization, then
 
-Specializing to a vampire pair bounds the binary complexity of the monster by that of a single fang.
+$$
+xy\equiv x+y\pmod9,
+$$
 
-**Theorem 6.3 (Binary complexity bound for vampire numbers).**
-If $(x, y)$ is a vampire pair for $v$ (indeed for any factorization $v = x \cdot y$), then
-$$s_2(v) \;\le\; \min\big(y \cdot s_2(x),\; x \cdot s_2(y)\big).$$
+or equivalently,
 
-*Proof sketch.* Substitute $v = x \cdot y$ into Corollary 6.2. $\blacksquare$
+$$
+(x-1)(y-1)\equiv1\pmod9.
+$$
 
-**Remark 6.4 (The bound is genuine, not an equality).** Multiplication both creates and destroys binary carries, so $s_2(xy)$ is generally far below its bound. For $1260 = 21 \times 60$: $s_2(1260) = 6$ (since $1260 = 10011101100_2$), while $s_2(21) = 3$ and $s_2(60) = 4$, giving $\min(60 \cdot 3, 21 \cdot 4) = \min(180, 84) = 84 \ge 6$. The gap illustrates that Theorem 6.1 is a true inequality, proved by induction rather than by any equality of digit sums.
+**Proof sketch.** By Lemma 3.2 and digit-sum conservation,
 
----
+$$
+v\equiv s(v)=s(x)+s(y)\equiv x+y\pmod9.
+$$
 
-## 7. A Worked Instance: $1260 = 21 \times 60$
+Substitute $v=xy$ and add $1-x-y$ to both sides. $\square$
 
-We verify that $1260$ is a vampire number and that all three obstructions hold.
+The shifted equation explains the geometry of the restriction. In the ring $\mathbb Z/9\mathbb Z$, the residue of $x-1$ must be a unit and $y-1$ must be its inverse. Thus the solutions form a translated graph of inversion on the unit group.
 
-- **Factorization and digits.** $1260 = 21 \times 60$. Fang digits $\{2, 1\} \uplus \{6, 0\} = \{0, 1, 2, 6\}$; product digits $\{1, 2, 6, 0\} = \{0, 1, 2, 6\}$. Multisets agree: it is a digit-permutation factorization. Each fang has $2$ digits, half of the $4$ digits of $1260$, and not both fangs are divisible by $10$ (since $21$ is not). So $(21, 60)$ is a vampire pair.
-- **Casting out nines (Theorem 3.1).** $21 \cdot 60 = 1260 \equiv 0 \pmod 9$; $21 + 60 = 81 \equiv 0 \pmod 9$. Both sides agree. And $(21-1)(60-1) = 20 \cdot 59 = 1180 \equiv 1 \pmod 9$ (since $1180 = 131 \cdot 9 + 1$).
-- **Mod-three sieve (Theorem 4.1).** $21 \equiv 0$ and $60 \equiv 0 \pmod 3$; neither is $\equiv 1$.
-- **Length additivity (Theorem 5.1).** $\operatorname{len}(1260) = 4 = 2 + 2 = \operatorname{len}(21) + \operatorname{len}(60)$.
-- **Binary bridge (Theorem 6.3).** $s_2(1260) = 6 \le \min(84, 180) = 84$.
+This interpretation generalizes. In base $b$, preservation of a base-$b$ digit multiset implies
 
-All conditions and obstructions check out.
+$$
+(x-1)(y-1)\equiv1\pmod{b-1},
+$$
 
----
+because $b\equiv1\pmod{b-1}$. Decimal notation is the case $b=10$.
 
-## 8. The Wider Bestiary
+## 4. Exact enumeration of the unrestricted residue pairs
 
-The vampire is one member of a family indexed by *digit overlap* between a product and its factors (Definition 2.4). Enumerating small cases up to $10^8$ (see the accompanying computational demonstrations) reveals:
+The units modulo nine are
 
-- **Vampires** grow denser as digit length increases; balanced factorizations of long numbers have many chances to permute correctly.
-- **Werewolves** (exactly one shared digit) are common but structurally noisier; the exact-overlap-one constraint admits no clean modular obstruction analogous to Theorem 3.1.
-- **Ghosts** (zero shared digits) become vanishingly rare: as the number of digits grows, avoiding *every* digit of the product across both factors is combinatorially punishing, and their density appears to tend to $0$.
-- **Zombies** are the pathological doubles, such as $125460 = 204 \times 615 = 246 \times 510$, whose multiple factorizations straddle the classical constraints.
+$$
+(\mathbb Z/9\mathbb Z)^\times=\{1,2,4,5,7,8\}.
+$$
 
-The vampire and its casting-out-nines structure are the part of the bestiary where exact theorems are currently within reach; the others are, at present, better understood empirically.
+Their inverses are
 
----
+$$
+1^{-1}=1,\quad2^{-1}=5,\quad4^{-1}=7,
+$$
 
-## 9. Density Questions
+$$
+5^{-1}=2,\quad7^{-1}=4,\quad8^{-1}=8.
+$$
 
-A widely repeated informal claim asserts that vampire numbers have "density approaching $1/\sqrt{n}$" in the interval $[10^{2n}, 10^{2n+1}]$. As literally stated this is **ill-posed**: $1/\sqrt{n} \to 0$, so it would assert *vanishing* density, contradicting the intended reading that vampires become common. We therefore do not adopt it as a theorem and flag it as false-as-stated; the honest empirical picture is that the *count* of vampires grows quickly with digit length while the exact asymptotic density remains open.
+Since $x-1$ and $y-1$ must be inverse units, adding one to each coordinate produces a complete list.
 
-What the obstructions of this paper *do* deliver toward density is a rigorous *upper* bound mechanism. Theorem 4.1 removes a fixed positive fraction ($\tfrac13$) of candidate residues for every fang at every scale, and such a local congruence obstruction multiplies through to a global density ceiling. Making this precise — bounding the number of vampires below $N$ by counting admissible residue pairs — is a purely combinatorial argument requiring no analytic number theory, and is the most immediate open problem (Section 10).
+**Theorem 4.1 (Six-point residue sieve).** Every decimal digit-permutation factorization $v=xy$ satisfies
 
----
+$$
+(x\bmod9,y\bmod9)\in S,
+$$
 
-## 10. Future Directions
+where
 
-**A complete residue sieve for fangs.** Casting out nines is the first member of an infinite family: a number is congruent to its digit sum not only modulo $9$ but modulo $99$, $999$, and every $10^k - 1$ after grouping digits into blocks of length $k$. Each modulus yields an independent multiplicative constraint on the fangs; their intersection should pin the residues $(x, y)$ to a vanishingly small fraction of pairs. Because the base case is proved and the block-digit generalization uses the same multiset-to-sum transfer, the whole tower is within reach and would reduce vampire hunting to solving a small system of congruences.
+$$
+S=\{(0,0),(2,2),(3,6),(5,8),(6,3),(8,5)\}.
+$$
 
-**A density ceiling from the mod-three obstruction.** Because neither fang can be $\equiv 1 \pmod 3$, the number of vampires below $N$ should be at most a constant times $N / \log N$ (bounding fang-pair counts by residue-avoiding pairs), yielding an unconditional upper density tending to $0$. The remaining step is a clean combinatorial count over admissible residue classes.
+Conversely, these are exactly the ordered residue pairs satisfying the residue-curve equation $(x-1)(y-1)\equiv1\pmod9$.
 
-**No carry shrinkage as a characterization.** A composite $v$ with $2k$ digits is conjecturally a vampire *iff* it factors as $v = x \cdot y$ with $\operatorname{len}(x) = \operatorname{len}(y) = k$, $\operatorname{len}(xy) = \operatorname{len}(x) + \operatorname{len}(y)$, and the digit-multiset condition holds. Length additivity being a necessary condition (Theorem 5.1), the question is how much of the digit condition it captures, and whether it alone rejects a positive proportion of balanced factorizations.
+**Proof sketch.** Put $a=x-1$ and $b=y-1$ modulo nine. The equation $ab=1$ forces $a$ to be one of the six units and $b=a^{-1}$. Enumerating the inverse pairs and translating by $(1,1)$ gives
 
----
+$$
+(1,1)\mapsto(2,2),\qquad(2,5)\mapsto(3,6),
+$$
+
+$$
+(4,7)\mapsto(5,8),\qquad(5,2)\mapsto(6,3),
+$$
+
+$$
+(7,4)\mapsto(8,5),\qquad(8,8)\mapsto(0,0).
+$$
+
+No other pairs can occur because no other residue is a unit. Direct substitution verifies that all six listed pairs solve the congruence. $\square$
+
+The converse in Theorem 4.1 concerns only the modular equation. It does not assert that every listed residue pair occurs in an actual digit-permutation factorization. The theorem is an exact local sieve, not a characterization of the global digit condition.
+
+For the example $1260=21\cdot60$, the fang residues are $(3,6)$ modulo nine, one of the six admissible points, while $1260\equiv0\pmod9$. This example also anticipates why primality changes the picture: $21$ and $60$ are both divisible by three.
+
+## 5. Prime fangs
+
+### 5.1 Elementary prime restrictions
+
+**Lemma 5.1 (Prime divisibility by three).** If $p$ is prime and $3\mid p$, then $p=3$.
+
+**Proof sketch.** The only positive divisors of a prime are $1$ and the prime itself. Since $3$ divides $p$ and $3\ne1$, one has $p=3$. $\square$
+
+**Corollary 5.2.** A prime cannot be congruent to $0$ or $6$ modulo nine.
+
+**Proof sketch.** Either residue makes the prime divisible by three. Lemma 5.1 would force the prime to equal $3$, whose residue modulo nine is $3$, a contradiction. $\square$
+
+A prime can be congruent to $3$ modulo nine only in the exceptional case $p=3$. This subtlety must be retained when eliminating the mixed points $(3,6)$ and $(6,3)$.
+
+### 5.2 The three-point intersection
+
+**Theorem 5.3 (Prime-Fang Residue Sieve).** Let $v=xy$ be a decimal digit-permutation factorization. If $x$ and $y$ are prime, then
+
+$$
+(x\bmod9,y\bmod9)\in
+\{(2,2),(5,8),(8,5)\}.
+$$
+
+**Proof sketch.** Theorem 4.1 leaves six possibilities. The pair $(0,0)$ is impossible by Corollary 5.2. In the pair $(3,6)$, the second fang has residue $6$ and therefore cannot be prime. More explicitly, the first fang could only be the exceptional prime $3$, but the second is divisible by three and is not equal to $3$. The pair $(6,3)$ is excluded symmetrically. The remaining possibilities are exactly $(2,2)$, $(5,8)$, and $(8,5)$. $\square$
+
+Thus primality cuts the unrestricted modular search space in half. More strikingly, multiplication maps all three surviving points to the same residue.
+
+**Theorem 5.4 (Prime-Fang Concentration Law).** Let $v=xy$ be a decimal digit-permutation factorization with both $x$ and $y$ prime. Then
+
+$$
+v\equiv4\pmod9.
+$$
+
+**Proof sketch.** By Theorem 5.3, the ordered fang residues are one of $(2,2)$, $(5,8)$, or $(8,5)$. Their products satisfy
+
+$$
+2\cdot2=4,
+$$
+
+$$
+5\cdot8=40\equiv4\pmod9,
+$$
+
+and
+
+$$
+8\cdot5=40\equiv4\pmod9.
+$$
+
+Since $v=xy$, the conclusion follows. $\square$
+
+**Corollary 5.5 (Exclusion of divisibility by three).** Under the hypotheses of Theorem 5.4,
+
+$$
+3\nmid v.
+$$
+
+**Proof sketch.** The congruence $v\equiv4\pmod9$ implies $v\equiv1\pmod3$, so $v$ is not divisible by three. $\square$
+
+The concentration law is independent of fang length, product length, and trailing-zero conventions. It therefore applies to every classical prime-fang vampire factorization, while also covering unbalanced or nonclassical digit-permutation products.
+
+## 6. Algorithms
+
+### 6.1 Exact digit-multiset testing
+
+For a nonnegative integer $n$, its digit-frequency vector can be computed by repeated division by ten. Comparing $C(x)+C(y)$ with $C(xy)$ takes time linear in the number of decimal digits and constant auxiliary space if ten counters are treated as fixed storage.
+
+**Algorithm 6.1 (Frequency-vector witness test).** Given positive integers $x$ and $y$:
+
+1. Compute $v=xy$.
+2. Initialize two vectors of ten zero counters.
+3. Count every decimal digit of $x$ and $y$ into the first vector.
+4. Count every decimal digit of $v$ into the second vector.
+5. Accept exactly when the vectors agree.
+
+If $D$ is the total number of digits processed, the running time is $O(D)$ and the counter storage is $O(1)$. Sorting digit strings gives an alternative $O(D\log D)$ method, but frequency vectors are simpler and asymptotically sharper.
+
+### 6.2 Residue-first enumeration
+
+Suppose one seeks all balanced $n$-digit fang pairs. Let
+
+$$
+L=10^{n-1},\qquad U=10^n-1,
+$$
+
+and $N=U-L+1=9\cdot10^{n-1}$. A naive ordered search examines $N^2$ pairs; symmetry permits restricting to $x\le y$, but the order remains quadratic.
+
+**Algorithm 6.2 (Six-point residue-bucket search).** Partition the interval $[L,U]$ by residue modulo nine. Examine only bucket pairs corresponding to
+
+$$
+(0,0),(2,2),(3,6),(5,8),(6,3),(8,5).
+$$
+
+For each candidate pair, multiply, enforce the desired product length and trailing-zero convention, and then run Algorithm 6.1.
+
+Under approximately uniform residue distribution, the residue sieve retains about $6/81=2/27$ of ordered pairs, a reduction by a factor near $13.5$. This is a heuristic average for workload, not a density theorem for vampire numbers. The worst-case asymptotic pair count remains $O(N^2)$, while each digit check costs $O(n)$.
+
+### 6.3 Prime-fang enumeration
+
+For prime fangs, first enumerate primes in $[L,U]$ with a sieve of Eratosthenes or a segmented sieve. Bucket the primes by residue modulo nine, retaining only classes $2$, $5$, and $8$. Test pairings $(2,2)$, $(5,8)$, and $(8,5)$, with an ordering convention to avoid duplicates.
+
+**Algorithm 6.3 (Prime-fang residue search).** Given a decimal fang length $n$:
+
+1. Generate all $n$-digit primes.
+2. Place each prime into its residue bucket modulo nine.
+3. Form candidate pairs only from buckets $(2,2)$ and $(5,8)$, treating $(8,5)$ as the symmetric orientation when unordered pairs are desired.
+4. Multiply each pair and reject unless the product has the required length.
+5. Reject unless $v\equiv4\pmod9$; this check is redundant after correct bucketing but is useful as an integrity check.
+6. Compare digit-frequency vectors.
+7. Report every surviving factorization.
+
+If $P$ is the number of primes in the fang interval, pair generation remains $O(P^2)$ in the worst case, and each exact digit check costs $O(n)$. The prime number theorem suggests $P$ is on the order of $N/\log(10^n)$, but no asymptotic assumption is needed for correctness. The modular theorem reduces constants and provides auditable rejection certificates.
+
+## 7. Numerical illustrations
+
+### 7.1 A classical witness
+
+For $1260=21\cdot60$, the combined fang digits are $2,1,6,0$, exactly the product digits $1,2,6,0$. Its frequency vectors agree, and
+
+$$
+(21\bmod9,60\bmod9)=(3,6).
+$$
+
+The pair lies on the unrestricted six-point curve. It does not lie on the prime-fang curve because neither fang is prime.
+
+### 7.2 Residue rejection
+
+Consider any proposed prime-fang digit-permutation product $v$ with $v\equiv1\pmod9$. No factorization details are needed: Theorem 5.4 rejects it immediately. Similarly, a proposed pair of prime fangs with residues $(2,5)$ modulo nine is impossible because it does not satisfy the three-point sieve. These are mathematical certificates of nonexistence for the proposed witness, not probabilistic warnings.
+
+### 7.3 Exhausting the local curve
+
+An enumeration of the $81$ ordered pairs $(a,b)$ with $0\le a,b<9$ and $(a-1)(b-1)\equiv1\pmod9$ returns exactly the six pairs in Theorem 4.1. Filtering out residues impossible for primes, while treating residue $3$ with its exceptional prime carefully, leaves the three points in Theorem 5.3. Their products are all $4$ modulo nine. This finite table illustrates the local algebra, while the theorems explain why the same table governs factors of every size.
+
+## 8. Related numerical monsters and applications
+
+Digit-constrained factorization supports many variants, but their definitions must be explicit.
+
+A **balanced ghost factorization** may be defined as a product of two $n$-digit integers whose $2n$-digit product shares no digit value with either factor. This uses set disjointness of digit alphabets rather than multiset equality. If the factors use a set $A\subseteq\{0,\ldots,9\}$ of digit values, every product digit must lie in the complement. As $|A|$ grows, the allowed output alphabet shrinks. This suggests entropy and occupancy methods, complicated by carries and multiplication correlations.
+
+A **werewolf factorization** requires a convention before analysis: “exactly one shared digit” might mean one shared occurrence or one shared digit value. The latter can be stated as requiring the intersection of the product’s digit-value set with the union of the factors’ digit-value sets to have cardinality one. Different conventions are mathematically different problems.
+
+Prime-fang factorizations have sometimes been grouped under “zombie” terminology, but examples involving one prime and one composite factor do not satisfy the literal two-prime definition. Theorems 5.3–5.5 concern exactly two prime fangs.
+
+The algorithms have pedagogical and computational applications. They demonstrate how an invariant turns a global combinatorial test into a local prefilter. The same architecture appears in checksums, database query planning, constraint programming, and cryptanalytic sieving: compute a cheap invariant, reject impossible candidates, and reserve expensive exact comparison for survivors.
+
+The base-$b$ extension also shows that the phenomenon is not intrinsically decimal. In every positional base, digit-multiset conservation projects modulo $b-1$ onto a translated inverse curve. The geometry and prime restrictions then depend on the arithmetic of $b-1$. Bases for which $b-1$ has different unit-group structure produce different local bestiaries.
+
+## 9. Scope and limitations
+
+The residue theorems are necessary conditions. They do not prove that a residue-admissible pair has matching digits, that a product has the correct length, or that the fangs are prime. Many candidates on the modular curve fail all three tests.
+
+No density law follows from the six-point count alone. Treating residues as uniformly random would supply a local factor, but decimal digit occupancy, multiplication carries, factor sizes, and repeated factorizations create dependencies. In particular, the claim that vampire density scales as $1/\sqrt n$ requires a carefully normalized counting model and substantial new analysis.
+
+Likewise, the prime-fang concentration law does not establish the existence of even one prime-fang example under every classical convention, nor does it establish infinitude. It says that if such examples exist, all are confined to a rigid local pattern.
+
+The ghost-density question also requires a balanced formulation. Without fixed fang and product lengths, apparent scarcity can be caused by trivial size effects rather than digit avoidance. A precise asymptotic model should specify whether pairs or products are sampled, how multiplicity is counted, and whether leading zeros are excluded.
+
+## 10. Future directions
+
+### 10.1 Square-root density with precise normalization
+
+Let $V(n)$ be the proportion of $2n$-digit decimal integers that admit a classical vampire factorization with two $n$-digit fangs. Determine whether
+
+$$
+\sqrt n\,V(n)
+$$
+
+converges to a positive finite constant, and identify that constant if it exists. A credible model must combine multinomial digit occupancy with the modular unit-curve constraint $(x-1)(y-1)\equiv1\pmod9$. Stratification by digit-frequency profile may separate occupancy effects from multiplication effects.
+
+### 10.2 Existence in every even-length decade
+
+For every integer $k\ge1$, determine whether
+
+$$
+[10^{2k},10^{2k+2})
+$$
+
+contains a classical vampire number. A uniform constructive family would be stronger than isolated witnesses. Such a construction must preserve product length, leading digits, the entire digit multiset, and the six-point residue condition.
+
+### 10.3 Infinitude of prime-fang products
+
+Determine whether infinitely many decimal digit-permutation factorizations have two prime fangs. Every example must use residues $(2,2)$, $(5,8)$, or $(8,5)$ modulo nine, and its product must be congruent to $4$ modulo nine. The problem resembles the search for primes inside a highly constrained digital family; the local theorem can guide targeted computation and future sieve methods.
+
+### 10.4 Vanishing density of balanced ghost factorizations
+
+Fix $n$-digit factors whose product has $2n$ digits and shares no digit value with either factor. Prove that the proportion of such pairs tends to zero, preferably with an exponential upper bound. Digit-alphabet occupancy gives a plausible entropy mechanism, while carry propagation is the main source of dependence.
 
 ## 11. Conclusion
 
-Behind the playful image of numbers that devour their own digits lies genuine arithmetic structure. The digit-permutation condition, though combinatorial, forces exact congruences (casting out nines and the mod-three sieve), an exact metric law (length additivity), and connects across bases to a submultiplicativity bound on binary complexity. These results are cheap to check, factoring-free, and open a clear path toward density theorems. The bestiary is a serious question asked in a light voice: how much can a number's digits reveal about how it factors? Quite a lot, it turns out — enough to sieve, to bound, and to bridge from base ten to base two.
+Exact preservation of decimal digits forces far more than a visual coincidence. Every digit-permutation factorization lies on the curve
 
----
+$$
+(x-1)(y-1)\equiv1\pmod9,
+$$
 
-## References
+whose decimal solution set consists of six ordered residue pairs. Requiring both fangs to be prime removes the three points involving residues divisible by three, leaving $(2,2)$, $(5,8)$, and $(8,5)$. Multiplication sends all three to $4$ modulo nine. Therefore every prime-fang digit-permutation product is congruent to $4$ modulo nine and is not divisible by three.
 
-- C. A. Pickover, *Keys to Infinity*, Wiley, 1995 (introduction of vampire numbers).
-- Standard facts on casting out nines and the divisibility rule for $9$ (any elementary number theory text).
+This local concentration law supplies a clean theorem, an efficient computational filter, and a foundation for sharper questions. The broader lesson is methodological: a complicated global combinatorial condition may cast a small algebraic shadow, and finding that shadow is often the first step from an entertaining pattern to a systematic theory.
