@@ -1,51 +1,41 @@
-# Computational Evidence
+# Computational evidence
 
-## Small-case calculations
+## Small cases
 
-For an alphabet of size four and passages of length two, there are `4² = 16` possible passages. The cyclic word
+For alphabet size `q` and book length `n`, direct enumeration predicts `q^n` books.
 
-`0010203112132233`
+| `q` | `n` | number of books |
+|---:|---:|---:|
+| 2 | 1 | 2 |
+| 2 | 2 | 4 |
+| 2 | 3 | 8 |
+| 3 | 2 | 9 |
+| 4 | 4 | 256 |
+| 4 | 16 | 4,294,967,296 |
 
-has the successive cyclic windows
+A specified full book is represented once, so its uniform probability is the reciprocal of the table entry. For the mini-library this is `1 / 4,294,967,296`.
 
-| position | window |
-|---:|:---|
-| 0 | 00 |
-| 1 | 01 |
-| 2 | 10 |
-| 3 | 02 |
-| 4 | 20 |
-| 5 | 03 |
-| 6 | 31 |
-| 7 | 11 |
-| 8 | 12 |
-| 9 | 21 |
-| 10 | 13 |
-| 11 | 32 |
-| 12 | 22 |
-| 13 | 23 |
-| 14 | 33 |
-| 15 | 30 |
+For a library of size `L`, the number of functions from books to books is `L^L`. Small cases show the cardinality gap used by the formal obstruction:
 
-Thus every ordered pair occurs once. Repeating the initial symbol linearizes the cycle to the length-seventeen word `00102031121322330`.
+| `L` | catalog tables `L^L` |
+|---:|---:|
+| 2 | 4 |
+| 3 | 27 |
+| 4 | 256 |
+| 5 | 3,125 |
 
-For a binary ambient volume of length three and the fixed pattern `11`, the matching volumes are `011`, `110`, and `111`. The exact probability is `3/8`; the placement union bound is `2·2⁻² = 1/2`.
+## OEIS search
 
-## Sequence search
+The fixed-alphabet counts as book length varies are geometric sequences `q^n`; no specialized OEIS identification is needed for the proof. For `q = 4`, the initial terms are `1, 4, 16, 64, 256, 1024, ...`.
 
-The number of words of length `L` over an alphabet of size `A` is `A^L`. For `A = 4`, the initial values are `1, 4, 16, 64, 256, 1024, ...`, the standard powers-of-four sequence (OEIS A000302).
+## Counterexample hunt and specification checks
 
-## Counterexample hunt
+The informal claim that no single volume can encode “the catalog” is too strong if “the catalog” means one particular computable enumeration: the base-`q` decoder is a short description of a bijection between addresses and books. The sound counting statement is instead that no book-valued injective encoding can represent **all possible catalog tables**, because there are `L^L > L` such tables for `L ≥ 2`.
 
-The proposed prefactor “passage length” is not the correct general union-bound prefactor. A length-one target in a length-three binary volume has three possible placements, not one. For the target symbol `1`, seven of eight volumes contain it, whereas the expression `1·2⁻¹ = 1/2` underestimates the probability. The corrected prefactor is the number of windows, `L-m+1`; this gives the valid upper bound `3/2` (loose but correct).
+Likewise, an exact numerical probability of a “valid Lean 4 proof” cannot be computed from theorem name and alphabet size alone. It depends on a fixed encoding and a fixed decidable acceptance predicate. The formalization exposes that predicate and proves the exact ratio `accepted_count / q^n`.
 
-The proposed distributed threshold based only on raw bit capacity also fails under the one-entry-per-catalog-volume model. Listing every member of a library with `A^L` volumes requires at least `A^L` entries. A smaller information-theoretic threshold presupposes a block decoder that extracts multiple addresses from one catalog volume.
+No counterexample was found to the finite cardinality formulas. Boundary cases were checked conceptually: when `q^n` is 0 or 1, the strict catalog-table gap fails, which is why the theorem assumes `2 ≤ q^n`.
 
-## Summary table
+## De Bruijn comparison
 
-| claim tested | outcome |
-|:---|:---|
-| `4²` cyclic windows can list all two-symbol volumes | confirmed by the explicit word above |
-| all windows can be collision-free beyond the de Bruijn length | false by finite cardinality |
-| passage length is the universal probability prefactor | false; placements supply the union-bound prefactor |
-| a one-entry-per-volume catalog can use fewer than `A^L` entries | false |
+A cyclic de Bruijn sequence of order 16 on four symbols has cyclic length `4^16 = 4,294,967,296`, one starting position for each length-16 word. The formal artifact currently verifies a base-four bijective catalog of exactly that many words; it does not claim to have formalized the cyclic overlap construction.

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ca370926",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes the linear-algebraic core of the cyclotomic Gauss-sum\nmatrix factorization `A = W D Wᵀ`, where `A i j = ∑ₐ ηₐ ω^{a(i+j)}` is the\nfinite Fourier transform o",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-13T05:18:44",
-      "title": "Factorization of Cyclotomic Gauss Sum Matrix"
-    },
-    {
       "cycle_id": "96ae8e1e",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThis project formalizes the **character-free skeleton** of the conjectured\ngeneralized variance formula for the digits of `1/p` in base `b`\n(`Catalog/Novelty/DigitVarianceGeneral.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-16T02:44:15",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+    },
+    {
+      "cycle_id": "e23ed960",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe present development establishes the finite zero-forcing process, monotonicity and antisymmetry of forcing reachability, existence and certificate bounds for the zero forcing n",
+      "quality_score": 0.53,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-16T03:00:40",
+      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-16T02:44:15",
+  "last_updated": "2026-07-16T03:00:40",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a25c6e48",
-        "quality": 0.82,
-        "theorems": 17,
-        "title": "`KnottedLight.lean` formalizes the topological charge of an orbital-angular-mome"
-      },
-      {
         "cycle_id": "ccd67871",
         "quality": 0.83,
         "theorems": 52,
@@ -3141,6 +3135,12 @@
         "quality": 0.76,
         "theorems": 0,
         "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
+      },
+      {
+        "cycle_id": "e23ed960",
+        "quality": 0.53,
+        "theorems": 0,
+        "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
       }
     ],
     "Bridges": [

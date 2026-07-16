@@ -120,6 +120,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Superlinear complexity of the $(3/2)^n$ steering word' and formalize its key results. Abstract: Write $(3/2)^n = m_n + \\eps_n$ with $m_n$ the nearest integer and $\\eps_n\\in[-\\tfrac12,\\tfrac12)$, and let $T=(t_n)$, $t_n=2m_{n+1}-3m_n$, be the resulting \\emph{steering word}: the step-by-step record of the map $x\\mapsto\\tfrac32 x$ on the orbit of $1$, coded by nearest-integer rounding. Using results by Corvaja--Zannier and Nair--Kumar--Rout we prove that the subword complexity $\\pT(k)$ of $T$ is superlinear, $\\pT(k)/k\\to\\infty$. The argument is completely formalized in Lean-4, depending only on the Subspace Theorem.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0017",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11648v2",
+    "status": "available",
+    "timestamp": "2026-07-15T08:40:04.207098+00:00",
+    "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
+  },
+  {
+    "consumed_by_exp_id": "352675e9",
     "description": "Investigate the ArXiv paper 'Ray and end spaces: characterizations and classification up to homeomorphism' and formalize its key results. Abstract: We provide a combinatorial characterization for pairs of order-theoretic trees with homeomorphic ray spaces, answering an open problem proposed by Kurkofka ad Pitz. This solution is inspired by the introduction of a transfinite topological game, which allows us to characterize not only ray spaces through the existence of winning strategies for one of the players, but also their homeomorphic classes. As applications of these results, we obtain a new topological characterization for graph-theoretic end spaces (thus obtaining yet another solution to a recently solved problem of Diestel), as well as for edge-end spaces and completely ultrametrizable spaces. We also introduce a generalization of the class of ray spaces (which is strict, as witnessed by the Sorgenfrey line). Furthermore, we establish that, for subspaces with cardinality less than continuum of end spaces, the scattered property is equivalent to the property of being, itself, an end space. At last, we determine that ray spaces",
     "domains": [
       "Algebra",
@@ -129,7 +144,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11561v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:58:28.589423+00:00",
     "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
   },
@@ -268,6 +283,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Alternating Extremes in Graceful Labelings of Full Binary Trees and Spider Trees' and formalize its key results. Abstract: We study a pinned form of graceful labeling. For full binary trees, we ask whether some deepest root-to-leaf path can carry the alternating extreme pattern $0,n-1,1,n-2,\\dots$. Such a spine uses the extreme labels and largest differences, forcing all off-spine vertices and edges to use the middle labels and smaller differences, respectively. We prove this pinned-spine conjecture for comb full binary trees, verify it computationally for all rooted non-isomorphic full binary trees through order $23$, and give an example showing that a pinned-spine labeling cannot always be chosen as an $\u03b1$-labeling. For spider trees, we prove a packing theorem for self-matched legs: pairwise disjoint legs based at hub label $1$, at least one of which contains label $0$, can be combined into a graceful spider, with unused labels attached as hub leaves. This yields graceful labelings for mixed-length spiders with sufficiently many leaves. We also report computations using a depth-first search ordered by la",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0028",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12597v1",
+    "status": "available",
+    "timestamp": "2026-07-15T19:02:51.335902+00:00",
+    "title": "ArXiv paper: Alternating Extremes in Graceful Labelings of Full Binary Trees and Spider Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On lower bounds for canonical heights of the map $\u03c6(X,Y)=(Y,X+Y^D+b)$' and formalize its key results. Abstract: We give a lower bound for the canonical height associated to H\u00e9non maps $\u03c6(X,Y)=(Y,X+Y^D+B)$ of non-periodic points when $D>2,$ extending previous work for $D=2$ in \\cite{Ingram1}.",
     "domains": [
       "Bridges"
@@ -385,12 +414,114 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Expansions of $\\binom{pn}{p+r}$ in Shifted Binomial Bases and a Modular Symmetry Criterion' and formalize its key results. Abstract: We study the expansion of the polynomial $g_{p,r}(n) = \\binom{pn}{p+r}$ (for integers $p \\ge 2$ and $r \\ge 1$) in the shifted binomial basis $\\bigl\\{\\binom{n+k-1}{p+r}\\bigr\\}$. Using generating functions and finite differences, we obtain a closed-form formula for the expansion coefficients $B_{p,r,k}$. We then characterize when the coefficient sequence is palindromic, showing that it exhibits reflection symmetry on its support if and only if $r \\equiv 1 \\pmod{p}$. The proof combines an analysis of the sequence's support with the root structure of $\\binom{pX}{p+r}$. Under the same congruence condition, we show that $p$ divides every coefficient. For $r=1$, the leading coefficient simplifies to $p C_p$, where $C_p$ is the $p$-th Catalan number. Finally, computations for small values of $p$ and $r$ show that the resulting coefficient sequences coincide with selected rows of $p$-decimated multinomial triangles (OEIS A027907 and A008287).",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_0037",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12173v1",
+    "status": "available",
+    "timestamp": "2026-07-15T21:37:21.472081+00:00",
+    "title": "ArXiv paper: Expansions of $\\binom{pn}{p+r}$ in Shifted Binomial Bases and a Modular Symmetry Criterion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On nontrivial cross-2-intersecting families' and formalize its key results. Abstract: Two families \\(\\mathcal{A}\\subseteq\\binom{[n]}{k}\\) and \\(\\mathcal{B}\\subseteq\\binom{[n]}{\\ell}\\) are said to be nontrivial cross-\\(t\\)-intersecting if \\(|A \\cap B| \\geq t\\) for all \\(A \\in \\mathcal{A}\\) and \\(B \\in \\mathcal{B}\\), and $|\\bigcap_{A\\in \\mathcal{A}\\cup \\mathcal{B}}A|<t$. In this paper, we determine the upper bound on \\(|\\mathcal{A}||\\mathcal{B}|\\) of two nontrivial cross-\\(2\\)-intersecting families \\(\\mathcal{A}\\subseteq\\binom{[n]}{k}\\) and \\(\\mathcal{B}\\subseteq\\binom{[n]}{\\ell}\\) for any positive integers $n,k,\\ell$ with \\(k\\geq \\ell \\geq 3\\) and \\(n \\geq 3(k-1)\\). Moreover, we characterize the extremal families attaining this bound. This settles the last unsolved case of a recent result by He, Li, Wu and Zhang (J. Combin. Theory Ser. A, 217 (2026) 106095).",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0038",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12239v1",
+    "status": "available",
+    "timestamp": "2026-07-15T21:54:41.787078+00:00",
+    "title": "ArXiv paper: On nontrivial cross-2-intersecting families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On strongly regular signed graphs of higher girth' and formalize its key results. Abstract: Strongly regular signed graphs are an extension of strongly regular graphs to the realm of signed graphs, that is, graphs where each edge is positive or negative. Unlike with ordinary strongly regular graphs, most kinds of signed counterparts with girth 4 or higher are describable in terms of known structures. We prove that those with girth 4 that are bipartite are classified by designs of two kinds: weighing matrix designs and symmetric block designs. Those of girth 5 are few and readily described. There are none of higher girth. Those with girth 4 that are not bipartite are unsolved.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0039",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12131v1",
+    "status": "available",
+    "timestamp": "2026-07-15T22:11:46.704328+00:00",
+    "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Learning the Graphical Nature of Symmetries' and formalize its key results. Abstract: Finite groups are rigid algebraic objects, whose Cayley graphs expose a rich network geometry through which group-theoretic structure can be measured, compared, and learned. In this paper, a dataset of $131{,}406$ Cayley graphs is constructed, covering all groups of order at most $767$ except order $512$, recording exact algebraic labels for group properties together with a broad collection of graph, cycle, distance, and spectral statistics. This census aims to provide novel benchmarks for studying how finite-group properties are reflected in Cayley graph observables. It also yields new enumerative contributions: alongside recovering known OEIS sequences for standard group classes, new sequences for monolithic groups and for groups generated by at most three, four, and five elements are contributed to the OEIS. The accompanying network analysis identifies several empirical regularities and formulates testable conjectures, including relationships involving square clustering, Cayley grap",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0040",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12026v1",
+    "status": "available",
+    "timestamp": "2026-07-15T22:29:34.061191+00:00",
+    "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Computing Tools for Translation-Invariant Total Orders' and formalize its key results. Abstract: We introduce TITO_Explore, a software package for representing and computing with Translation-Invariant Total Orders (TITOs). We define a canonical window notation for TITOs and design and implement algorithms for several computational tasks involving them. The package normalizes the window notation of a given TITO into its canonical form, computes its inversion set, compares the weak order between two TITOs, and computes the join of two specified TITOs. Our weak order comparison algorithm operates by partitioning the inversion sets into disjoint subsets, thereby breaking down the comparison problem into evaluations of paired subsets. The join algorithm uses an edge-weighted directed graph to represent inversions and converts the problem of finding the join into a weighted path problem in the graph.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0041",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11709v1",
+    "status": "available",
+    "timestamp": "2026-07-16T01:06:49.185740+00:00",
+    "title": "ArXiv paper: Computing Tools for Translation-Invariant Total Orders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Genestier--Tilouine and Pilloni) in the setting of Siegel modular forms of genus two when the residual representation arises from a stable Yoshida lift, that is, an automorphic induction of a nearly ordinary Hilbert modular eigencuspform over a real quadratic field. As applications of the underlying $R=\\mathbb{T}$ theorem, we establish the freeness of a universal minimal ordinary Galois deformation ring over an Iwasawa algebra in two variables along with the uniqueness of Hida families passing through classical $p$-ordinary Siegel modular eigenforms with very regular weights.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0042",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13100v1",
+    "status": "available",
+    "timestamp": "2026-07-16T01:25:03.463263+00:00",
+    "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Tropical Circuits with Scalar Multiplication Gates' and formalize its key results. Abstract: We study tropical circuits with scalar multiplication gates, that is, algebraic circuits whose gates implement $\\max$, $+$, or multiplication with a positive constant. For such circuits, we prove exponential size lower bounds for computing maximum weight directed spanning trees and maximum weight bipartite perfect matchings. As a corollary, we obtain an exponential size separation between monotone and non-monotone maxout neural networks, which generalize the popularly used ReLU neural networks. One conclusion from this is that neural network models with enforced convexity constraints, such as input-convex neural networks (ICNNs), sometimes need to be exponentially larger than their unrestricted counterparts in order to express the same functions.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0043",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11540v1",
+    "status": "available",
+    "timestamp": "2026-07-16T03:00:45.022108+00:00",
+    "title": "ArXiv paper: Tropical Circuits with Scalar Multiplication Gates"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0037",
+    "id": "fd_0044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12912v1",
@@ -405,7 +536,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0038",
+    "id": "fd_0045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13025v1",
@@ -419,7 +550,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0039",
+    "id": "fd_0046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12890v1",
@@ -433,7 +564,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0040",
+    "id": "fd_0047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
@@ -447,7 +578,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0041",
+    "id": "fd_0048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
@@ -462,7 +593,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0042",
+    "id": "fd_0049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12561v1",
@@ -477,7 +608,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0043",
+    "id": "fd_0050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12679v1",
@@ -487,11 +618,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Tverberg's theorem for unions of convex sets: Sharp bounds and colored extensions' and formalize its key results. Abstract: Let $f_{r}(d,s_{1},\\ldots,s_{r})$ be the least $N$ such that every $N$-point set $P\\subseteq \\mathbb{R}^{d}$ has an $r$-partition $P=P_{1}\\sqcup\\cdots\\sqcup P_{r}$ with the following property: whenever $C_{i}\\supseteq P_{i}$ is a union of at most $s_{i}$ convex sets, one has $\\bigcap_{i=1}^{r}C_{i}\\ne\\emptyset$. A recent breakthrough of Alon and Smorodinsky established the first effective upper bounds $f_{r}(d,s,\\ldots,s)\\le Cdr^{2}s^{r}\\log r\\log(es^{r})$ for this problem. We obtain an asymptotically sharp lower bound by proving $f_r(d,s,\\ldots,s)\\ge c(d-r+2)s^r\\log(s+1)$ for every $d\\ge r+2$, which shows that $f_r(d,s,\\ldots,s)=\u0398_{d,r}(s^r\\log s)$ for every fixed $d\\ge r+2$. We also prove the general lower bound $f_r(d,s,\\ldots,s)>s^{\\min\\{d,r\\}}$. On the other hand, we develop a local counting argument to show that $f_r(d,s,\\ldots,s)\\le C_{d}rs^r\\log(ers^r)$ and $f_r(d,s,\\ldots,s)\\le C_{d}r^{d+2}s^{d+1}\\log(ers)$ whenever $r\\ge d+1$, improving the upper bound of Alon and Smorodinsky",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0051",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12449v1",
+    "status": "available",
+    "timestamp": "2026-07-15T18:44:57.239806+00:00",
+    "title": "ArXiv paper: Tverberg's theorem for unions of convex sets: Sharp bounds and colored extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Local flag algebras' and formalize its key results. Abstract: We introduce local flag algebras, a variant of Razborov's flag algebra framework in which densities are normalised by the maximum degree $\u0394(G)$ rather than the order $|G|$. The framework supports the same semidefinite-method machinery as the classical version, but is tailored to extremal problems that scale with the maximum degree. As an illustrative first application we bound the number of pentagons in a triangle-free graph $G$ as a function of $|G|$ and $\u0394(G)$.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0045",
+    "id": "fd_0052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12461v1",
@@ -501,12 +647,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Counting oriented spanning trees in generalized join digraphs' and formalize its key results. Abstract: Let $G$ be a digraph with vertex set $\\{1,2,...,n\\}$ and $H_{1},H_{2},...,H_{n}$ be $n$ digraphs. The generalized join digraph $\\overrightarrow{G}=G[H_{1},H_{2},...,H_{n}]$ is a digraph obtained from $G$ by replacing each vertex $i$ with $H_{i}$ and for any $u\\in V(H_{i})$ and $v\\in V(H_{j})$, $(u,v)\\in E(\\overrightarrow{G})$ if and only if $(i,j)\\in E(G)$. In this paper we express the number of oriented spanning trees in $\\overrightarrow{G}$ in terms of Laplacian eigenvalues of $H_{1},H_{2},...,H_{n}$ and oriented spanning trees of $G$. Furthermore, we consider the number of oriented spanning trees with a fixed root in $\\overrightarrow{G}$. First, we introduce the biclique-directed star transformation formula for counting oriented spanning trees with a fixed root in digraphs. Using it, we give the formula for the total number of oriented spanning trees with roots in a certain $H_{i}$ $(1\\leq i \\leq n)$ of $\\overrightarrow{G}$ in terms of Laplacian eigenvalues of $H_{1},H_{2},...,H_{n}",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0053",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12457v1",
+    "status": "available",
+    "timestamp": "2026-07-15T19:20:02.896503+00:00",
+    "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Recursive Formula for the Equations of Hessenberg Varieties' and formalize its key results. Abstract: Hessenberg varieties are subvarieties of the flag variety, defined by containment conditions on flags with respect to a linear operator. The study of these varieties lies in the intersection of algebraic geometry, combinatorics, and representation theory. In this paper, we develop an algebro-geometric procedure for determining the closed subvariety structure of a Hessenberg variety $\\mathcal{H}(X,h)$ in the flag variety for any linear operator $X$ and Hessenberg function $h$, by imposing a partial order on the Hessenberg functions and analyzing the relation of the corresponding Hessenberg varieties. In particular, we give a concrete recursive formula for determining all equations cutting out a given Hessenberg variety in each Schubert cell. As an application, we provide an alternative geometric proof of Tymoczko's results on the existence of affine pavings of a given Hessenberg variety and on the dimension count of its cells.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0047",
+    "id": "fd_0054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
@@ -516,12 +676,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Hypergraph Turan with bounded matching number' and formalize its key results. Abstract: For a fixed graph $G$, an $r$-uniform hypergraph is said to contain a Berge-$G$ if there exists a bijection $f\\colon E(G)\\to E(\\mathcal{H})$ for some subhypergraph $\\mathcal{H}$ such that $e\\subseteq f(e)$ for every $e\\in E(G)$. Motivated by Alon and Frankl's study of Tur\u00e1n problems under bounded matching constraints, we investigate the maximum number of edges in $r$-uniform Berge-$K_3$-free hypergraphs with matching number at most~$s$. We determine the exact Tur\u00e1n numbers for the cases $r=3$ and $r=4$. For $r=3$ and $n \\geq 3 s$, we prove that every $n$-vertex Berge- $K_3$-free 3-graph with matching number $s$ has at most $s(n-2 s)$ edges, and we characterize the unique extremal hypergraph attaining equality. For $r=4$ and $n \\geq 4 s$, the maximum number of edges is $s\\lfloor(n-2 s) / 2\\rfloor$, except for the exceptional case $s=1$ and $n \\equiv 1(\\bmod 4)$, in which the bound is $(n-1) / 2$. As a corollary, our results recover the classical theorem of Gy\u0151ri on Berge-$K_3$-free hype",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0055",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12300v1",
+    "status": "available",
+    "timestamp": "2026-07-15T19:54:37.533091+00:00",
+    "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper '$k$-Convex Polyominoes by Semi-perimeter' and formalize its key results. Abstract: We give the conjectured solution for the generating function of $k$-convex polyominoes, enumerated by semi-perimeter. The solution was obtained from the analysis of enumeration data that we generated.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0049",
+    "id": "fd_0056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12448v1",
@@ -535,7 +709,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0050",
+    "id": "fd_0057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12367v1",
@@ -549,7 +723,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0051",
+    "id": "fd_0058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
@@ -559,33 +733,89 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'On Transformer Dynamics' and formalize its key results. Abstract: We develop a geometric framework in which the token dynamics of a transformer are modeled by a system of interacting particles on a Riemannian manifold $\\mathcal M$, the attention mechanism being encoded by a time-independent two-body interaction law, that is, a section of the pullback bundle $\u03c0_2^{*}(T\\mathcal M)$ over $\\mathcal M\\times\\mathcal M$. Within this framework we isolate two features that a family of interaction laws must possess in order to model language: it must realize generic nonlocal and nonreciprocal forces, and it must parametrize vector fields on a high-dimensional manifold efficiently. We show that both features are achieved simultaneously in a transformer model. Our main theorem produces a finitely parametrized family of interaction laws, independent of the manifold and of its dimension, that is universal: it realizes an arbitrary prescribed attention digraph. Moreover, we show that the cost of realizing a given attention digraph is governed not by $\\dim\\mathcal M",
+    "description": "Investigate the ArXiv paper 'Some Remarks on Hessians and Wronskians' and formalize its key results. Abstract: The purpose of this note is to elaborate on the apparent connection between Wronskians and Hessians. More generally, to a given subspace of homogeneous bivariate forms over the complex numbers, we associate two determinantal polynomials called the $W$-polynomial and the $\\hat{W}$-polynomial. We give expansion and factorization formulas for these polynomials, and study their behavior under change of coordinates and duality. As an application, we give another proof of Iarrobino's theorem on the strong Lefschetz property for standard graded Artinian Gorenstein algebras in codimension two.",
     "domains": [
-      "Geometry",
-      "MachineLearning"
+      "Algebra",
+      "Logic"
     ],
-    "id": "fd_0054",
+    "id": "fd_0059",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.13295v1",
+    "source_exp_id": "2607.12162v1",
     "status": "available",
-    "timestamp": "2026-07-16T02:44:23.384751+00:00",
-    "title": "ArXiv paper: On Transformer Dynamics"
+    "timestamp": "2026-07-15T21:02:39.460834+00:00",
+    "title": "ArXiv paper: Some Remarks on Hessians and Wronskians"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Torsion groups of rational elliptic curves over $\\mathbb{Z}_p$-extensions of quadratic fields: the $p\\le 5$ case' and formalize its key results. Abstract: Let $E$ be a rational elliptic curve. We generalize a theorem due to Avc\u0131\\cite{AVCI2026153}, which asserts that for any quadratic field \\(K\\) and prime \\(p>5\\), the equality \\(E(K)_{\\mathrm{tors}} = E(L)_{\\mathrm{tors}}\\) holds for every \\(\\mathbb{Z}_p\\)-extension \\(L/K\\). In this paper, we consider the setting where the \\(\\mathbb{Z}_p\\)-extension \\(L\\) is replaced by the compositum \\(K_{\\infty}\\) of all \\(\\mathbb{Z}_p\\)-extensions of \\(K\\). Under this new setting, we prove the analogous statement for \\(p=5\\), and further provide partial results for the remaining primes \\(p=3\\) and \\(p=2\\).",
+    "description": "Investigate the ArXiv paper 'Far-apart Erd\u0151s--P\u00f3sa property of long cycles' and formalize its key results. Abstract: We prove that there exist functions $f:\\mathbb N^2\\to\\mathbb N$ and $g:\\mathbb N\\to\\mathbb N$ such that for all positive integers $k$, $d$, and $\\ell\\ge3$, every graph $G$ either contains $k$ cycles of length at least $\\ell$ that are pairwise at distance greater than $d$, or admits a subset of vertices $X$ with $|X|\\le f(k,\\ell)$ such that $G-B_G(X,g(d))$ contains no cycle of length at least $\\ell$, where $B_G(X,r)$ denotes the ball of radius $r$ around $X$. This generalizes a theorem of Dujmovi\u0107, Joret, Micek, and Morin (2024), which established the $\\ell=3$ case. Moreover, we prove that the theorem holds with $f(k,\\ell)\\in\\mathcal{O}(\\ell k\\log k)$ and $g(d)\\in\\mathcal{O}(d)$. The linear bound on $g$ is best possible, while the bound on $f$ is optimal as a function of $k$ for every fixed $\\ell$. In particular, for $\\ell=3$ our result improves the previous bound of $\\mathcal{O}(k^{18}\\mathsf{polylog} k)$ by Dujmovi\u0107 et al.",
     "domains": [
-      "Algebra",
-      "Pythagorean"
+      "Bridges"
     ],
-    "id": "fd_0055",
+    "id": "fd_0060",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.13514v1",
+    "source_exp_id": "2607.12136v1",
     "status": "available",
-    "timestamp": "2026-07-16T02:44:27.391016+00:00",
-    "title": "ArXiv paper: Torsion groups of rational elliptic curves over $\\mathbb{Z}_p$-extensions of quadratic fields: the $p\\le 5$ case"
+    "timestamp": "2026-07-15T21:20:02.802185+00:00",
+    "title": "ArXiv paper: Far-apart Erd\u0151s--P\u00f3sa property of long cycles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the B\u00e1ez-Duarte criterion.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0061",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12084v1",
+    "status": "available",
+    "timestamp": "2026-07-15T21:37:25.493366+00:00",
+    "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions' and formalize its key results. Abstract: The character of a connected $\\mathfrak{sl}_n$-crystal is a Schur polynomial; the crystal can be further decomposed into quasicrystals, whose characters are the Gessel quasisymmetric functions. Crystal skeletons are obtained by contracting quasicrystals within crystal graphs. They generalize dual equivalence graphs, and can be used to prove the Schur expansion of a symmetric function when the quasisymmetric expansion is known. In this paper, we show that the crystal skeleton can be tiled further into components which we call quasicrystal skeletons, whose characters are Young quasisymmetric Schur functions. We characterize which edges in the crystal skeleton move between quasicrystal skeleton components. Contracting the quasicrystal skeleton components yields Bruhat order. We illustrate how these tools can be applied to symmetric functions by analyzing the Stanley symmetric functions.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0062",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12232v1",
+    "status": "available",
+    "timestamp": "2026-07-15T21:54:48.409080+00:00",
+    "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence' and formalize its key results. Abstract: An independent set in a graph $G$ is a set of pairwise non-adjacent vertices. A tree decomposition of $G$ is a pair $(T, \u03c7)$ where $T$ is a tree and $\u03c7: V(T) \\rightarrow 2^{V(G)}$ is a function satisfying two axioms: for every edge $uv \\in E(G)$ there is an $x \\in V(T)$ such that $\\{u,v\\} \\subseteq \u03c7(x)$, and for every vertex $u \\in V(G)$ the set $\\{x \\in V(T) | u \\in \u03c7(x)\\}$ induces a non-empty and connected subtree of $T$. The sets $\u03c7(x)$ for $x \\in V(T)$ are called the bags of the tree decomposition. The tree-independence number of $G$ is the minimum taken over all tree decompositions of $G$ of the maximum size of an independent set of the graph induced by a bag of the decomposition. A graph $H$ is an induced minor of a graph $G$ if a graph isomorphic to $H$ can be obtained from $G$ by vertex deletions and edge contractions. We prove that for every $t\\in\\mathbb{N}$ there exists an $\u03b5> 0$ such that every graph $G$ either contains the complete bipartite graph $K_{t,t}$ or the wall $W_",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_0063",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12090v1",
+    "status": "available",
+    "timestamp": "2026-07-15T22:11:50.907220+00:00",
+    "title": "ArXiv paper: Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Intrinsic ergodicity for $\\mathfrak{B}$-free integers in number fields' and formalize its key results. Abstract: Let $K$ be a number field with ring of integers $\\mathscr{O}_K$, and let $\\mathfrak{B}$ be an Erd\u0151s family of ideals in $\\mathscr{O}_K$. We prove that the associated $\\mathfrak{B}$-free subshift $(X_{\\mathfrak{B}},(S_a)_{a\\in\\mathscr{O}_K})$ is intrinsically ergodic: it carries a unique measure of maximal entropy, which we identify explicitly as a relatively independent extension of the Haar rotation on $\\prod_{\\mathfrak{b}\\in\\mathfrak{B}}\\mathscr{O}_K/\\mathfrak{b}$. This is the first proof of intrinsic ergodicity for $\\mathfrak{B}$-free systems beyond dimension one, and relies on the work of Ara\u00fajo--Dymek--Ku\u0142aga-Przymus. Via their reductions, we also settle the $k$-free and $\\mathfrak{B}$-free lattice-point cases and the $k$-free number-field case. We give \\emph{two independent proofs} of the underlying rigidity statement: one through a single-site relative-entropy argument, and one through an exact-tiling realisation of Peckner's induce-and-split scheme.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0064",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11330v1",
+    "status": "available",
+    "timestamp": "2026-07-16T03:00:49.615487+00:00",
+    "title": "ArXiv paper: Intrinsic ergodicity for $\\mathfrak{B}$-free integers in number fields"
   },
   {
     "consumed_by_exp_id": "",
