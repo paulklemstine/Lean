@@ -9,14 +9,14 @@
       "Novelty",
       "Cryptography"
     ],
-    "id": "fd_0104",
+    "id": "fd_0106",
     "lineage_refs": [],
     "priority_score": 0.89,
     "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.319056+00:00",
+    "timestamp": "2026-07-16T08:11:34.378474+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
@@ -29,14 +29,14 @@
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0101",
+    "id": "fd_0103",
     "lineage_refs": [],
     "priority_score": 0.88,
     "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.293235+00:00",
+    "timestamp": "2026-07-16T08:11:34.347033+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
@@ -49,14 +49,14 @@
       "Novelty",
       "NumberTheory"
     ],
-    "id": "fd_0102",
+    "id": "fd_0104",
     "lineage_refs": [],
     "priority_score": 0.87,
     "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.301594+00:00",
+    "timestamp": "2026-07-16T08:11:34.357817+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
   },
   {
@@ -68,34 +68,15 @@
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0103",
+    "id": "fd_0105",
     "lineage_refs": [],
     "priority_score": 0.86,
     "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.310374+00:00",
+    "timestamp": "2026-07-16T08:11:34.367705+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Domain Novelty has declined by 0.182 over recent cycles (recent avg=0.624 vs prior=0.806). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "auto_reset_Novelty_d5f2ed13",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "auto_reset",
-    "status": "available",
-    "timestamp": "2026-07-16T07:56:10.855104+00:00",
-    "title": "[Reset] Fresh approach in Novelty"
   },
   {
     "ambition_level": "extension",
@@ -107,14 +88,14 @@
       "Novelty",
       "Combinatorics"
     ],
-    "id": "fd_0105",
+    "id": "fd_0107",
     "lineage_refs": [],
     "priority_score": 0.82,
     "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.328212+00:00",
+    "timestamp": "2026-07-16T08:11:34.387395+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
@@ -1162,13 +1143,33 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Properties of the Tropical Characteristic Polynomial of Symmetric Matrices' and formalize its key results. Abstract: We investigate the combinatorial structure of the tropical characteristic polynomial of symmetric matrices using the tropical permanents of their principal submatrices. We establish new inequalities for the leading coefficients of the tropical characteristic polynomial, revealing concavity properties of the coefficient sequence and yielding necessary conditions for a sequence to arise as the coefficient sequence of the tropical characteristic polynomial of a symmetric matrix. These results provide a deeper understanding of the structure of tropical characteristic polynomials associated with symmetric matrices.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_0062",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.10922v1",
+    "status": "available",
+    "timestamp": "2026-07-16T08:11:26.724333+00:00",
+    "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric Matrices"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $χ\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0062",
+    "id": "fd_0063",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1188,7 +1189,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0063",
+    "id": "fd_0064",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1207,7 +1208,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_0064",
+    "id": "fd_0065",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1226,7 +1227,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0065",
+    "id": "fd_0066",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1239,39 +1240,39 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "557a7f03",
     "description": "Investigate the ArXiv paper 'On Agreement Subtrees in Multiple Pylogenetic Trees' and formalize its key results. Abstract: Snir and Yuster [Discrete Appl. Math. 347 (2026) 160--171] asked for the least number $h(k)$ such that $k$ unrooted binary phylogenetic trees on the same $h(k)$ leaves always share a common quartet. We give a new upper bound for the $k$-tree version of the Maximum Agreement Subtree problem, namely an upper bound for the number of leaves, on which $k$ unrooted binary phylogenetic trees always share a common induced binary subtree on $n$ leaves, which is a four-times iterated exponential function. For $h(k)$, this implies a four-times iterated exponential upper bound. We also set an exponential lower bound for $h(k)$.",
     "domain_bridges": [],
     "domains": [
       "Bridges"
-    ],
-    "id": "fd_0066",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12778v1",
-    "status": "available",
-    "timestamp": "2026-07-15T13:43:20.804355+00:00",
-    "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "557a7f03",
-    "description": "Investigate the ArXiv paper 'Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation' and formalize its key results. Abstract: We prove the Gonality Conjecture in arithmetic dynamics: for any non-isotrivial one-parameter algebraic family of rational maps on $\\mathbb{P}^1$, the gonality of distinct dynatomic curves tends to infinity. More generally, outside the flexible Lattès family, every small sequence of horizontal curves has gonality tending to infinity, and its genus grows superlinearly with its degree over the parameter curve. We also obtain higher-dimensional analogues under natural bifurcation and multiplier-genericity hypotheses. As applications, we prove uniform boundedness results for iterated preimages over number fields and geometric uniform boundedness results for preperiodic points over function fields. The proof combines arithmetic equidistribution, woven currents, and bifurcation theory; the bifurcation mechanism is what forces the growth of genus and gonality.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
     ],
     "id": "fd_0067",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "2607.12561v1",
+    "source_exp_id": "2607.12778v1",
     "status": "in_progress",
+    "timestamp": "2026-07-15T13:43:20.804355+00:00",
+    "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation' and formalize its key results. Abstract: We prove the Gonality Conjecture in arithmetic dynamics: for any non-isotrivial one-parameter algebraic family of rational maps on $\\mathbb{P}^1$, the gonality of distinct dynatomic curves tends to infinity. More generally, outside the flexible Lattès family, every small sequence of horizontal curves has gonality tending to infinity, and its genus grows superlinearly with its degree over the parameter curve. We also obtain higher-dimensional analogues under natural bifurcation and multiplier-genericity hypotheses. As applications, we prove uniform boundedness results for iterated preimages over number fields and geometric uniform boundedness results for preperiodic points over function fields. The proof combines arithmetic equidistribution, woven currents, and bifurcation theory; the bifurcation mechanism is what forces the growth of genus and gonality.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0068",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.12561v1",
+    "status": "available",
     "timestamp": "2026-07-15T14:01:10.734967+00:00",
     "title": "ArXiv paper: Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation"
   },
@@ -1285,7 +1286,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1305,7 +1306,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1324,7 +1325,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0070",
+    "id": "fd_0071",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1343,7 +1344,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0071",
+    "id": "fd_0072",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1363,7 +1364,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0072",
+    "id": "fd_0073",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1382,7 +1383,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0073",
+    "id": "fd_0074",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1395,78 +1396,78 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19cecd78",
     "description": "Investigate the ArXiv paper '$k$-Convex Polyominoes by Semi-perimeter' and formalize its key results. Abstract: We give the conjectured solution for the generating function of $k$-convex polyominoes, enumerated by semi-perimeter. The solution was obtained from the analysis of enumeration data that we generated.",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0074",
+    "id": "fd_0075",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12448v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T20:11:38.048996+00:00",
     "title": "ArXiv paper: $k$-Convex Polyominoes by Semi-perimeter"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "19cecd78",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Coloring $(P_6,C_4)$-free graphs with $Δ- 1$ colors' and formalize its key results. Abstract: For a graph $G$, let $Δ(G)$, $ω(G)$, and $χ(G)$ denote the maximum degree, clique number, and chromatic number of $G$, respectively. Let $P_n$ and $C_n$ denote the chordless path and chordless cycle on $n$ vertices, respectively. In this paper, we prove that every $(P_6,C_4)$-free graph $G$ with $Δ(G)\\ge 9$ and $ω(G)<Δ(G)$ is $(Δ(G)-1)$-colorable.",
     "domain_bridges": [],
     "domains": [
       "Algebra"
-    ],
-    "id": "fd_0075",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12367v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T20:28:28.169396+00:00",
-    "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $Δ- 1$ colors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Apéry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Apéry-like numbers. As applications, many new supercongruences are deduced.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
     ],
     "id": "fd_0076",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "2607.12330v1",
+    "source_exp_id": "2607.12367v1",
     "status": "available",
-    "timestamp": "2026-07-15T20:45:36.266548+00:00",
-    "title": "ArXiv paper: Curious identities involving Legendre polynomials and Apéry-like numbers"
+    "timestamp": "2026-07-15T20:28:28.169396+00:00",
+    "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $Δ- 1$ colors"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "851ec568",
-    "description": "Investigate the ArXiv paper 'Some Remarks on Hessians and Wronskians' and formalize its key results. Abstract: The purpose of this note is to elaborate on the apparent connection between Wronskians and Hessians. More generally, to a given subspace of homogeneous bivariate forms over the complex numbers, we associate two determinantal polynomials called the $W$-polynomial and the $\\hat{W}$-polynomial. We give expansion and factorization formulas for these polynomials, and study their behavior under change of coordinates and duality. As an application, we give another proof of Iarrobino's theorem on the strong Lefschetz property for standard graded Artinian Gorenstein algebras in codimension two.",
+    "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Apéry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Apéry-like numbers. As applications, many new supercongruences are deduced.",
     "domain_bridges": [],
     "domains": [
-      "Algebra",
-      "Logic"
+      "Bridges"
     ],
     "id": "fd_0077",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "2607.12162v1",
+    "source_exp_id": "2607.12330v1",
     "status": "in_progress",
+    "timestamp": "2026-07-15T20:45:36.266548+00:00",
+    "title": "ArXiv paper: Curious identities involving Legendre polynomials and Apéry-like numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Some Remarks on Hessians and Wronskians' and formalize its key results. Abstract: The purpose of this note is to elaborate on the apparent connection between Wronskians and Hessians. More generally, to a given subspace of homogeneous bivariate forms over the complex numbers, we associate two determinantal polynomials called the $W$-polynomial and the $\\hat{W}$-polynomial. We give expansion and factorization formulas for these polynomials, and study their behavior under change of coordinates and duality. As an application, we give another proof of Iarrobino's theorem on the strong Lefschetz property for standard graded Artinian Gorenstein algebras in codimension two.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0078",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.12162v1",
+    "status": "available",
     "timestamp": "2026-07-15T21:02:39.460834+00:00",
     "title": "ArXiv paper: Some Remarks on Hessians and Wronskians"
   },
@@ -1479,7 +1480,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0078",
+    "id": "fd_0079",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1498,7 +1499,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0079",
+    "id": "fd_0080",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1517,7 +1518,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0080",
+    "id": "fd_0081",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1536,7 +1537,7 @@
     "domains": [
       "Logic"
     ],
-    "id": "fd_0081",
+    "id": "fd_0082",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1556,7 +1557,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0082",
+    "id": "fd_0083",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1575,7 +1576,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0083",
+    "id": "fd_0084",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1588,40 +1589,40 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1512647",
     "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=λ_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
     "domain_bridges": [],
     "domains": [
       "Computation",
       "Logic"
     ],
-    "id": "fd_0084",
+    "id": "fd_0085",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11369v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:36:01.905252+00:00",
     "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d1512647",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method' and formalize its key results. Abstract: Aardal and Lenstra systematically studied hard knapsack problems of the form $a_1x_1+\\cdots+a_nx_n=b$, where $a_i=p_iM+r_iN$, $(M,N)$ is a coprime pair of positive integers, and the integers $|p_i|, |r_i|$ are small relative to $M$ and $N$. We investigate the corresponding challenging denumerant problem (i.e., counting the number of nonnegative integer solutions) and present a polynomial-time algorithm. This eliminates the computational bottlenecks caused by large values of $M$, $N$ and $b$. The proposed algorithm achieves a time complexity of $O(n^4Δ^2\\log n\\logΔ)$, which depends solely on the parameters $n$ and $Δ=\\max_{i,j}|r_i p_j - r_j p_i|$. Moreover, we consider the problem of expressing a general vector $(a_1,\\dots,a_n)$ in the above form using the LLL algorithm.",
     "domain_bridges": [],
     "domains": [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0085",
+    "id": "fd_0086",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11477v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T03:53:30.212279+00:00",
     "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
   },
@@ -1635,7 +1636,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1655,7 +1656,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0087",
+    "id": "fd_0088",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1674,7 +1675,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0088",
+    "id": "fd_0089",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1694,7 +1695,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0089",
+    "id": "fd_0090",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1713,7 +1714,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0090",
+    "id": "fd_0091",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1733,7 +1734,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0091",
+    "id": "fd_0092",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1753,7 +1754,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0092",
+    "id": "fd_0093",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1772,7 +1773,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0093",
+    "id": "fd_0094",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1792,7 +1793,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0094",
+    "id": "fd_0095",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1812,7 +1813,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0095",
+    "id": "fd_0096",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1831,7 +1832,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0096",
+    "id": "fd_0097",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1851,7 +1852,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0097",
+    "id": "fd_0098",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1871,7 +1872,7 @@
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0098",
+    "id": "fd_0099",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1890,7 +1891,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0099",
+    "id": "fd_0100",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1909,7 +1910,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0100",
+    "id": "fd_0101",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1922,7 +1923,27 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d1e62d74",
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Generalizations of nets and Latin squares' and formalize its key results. Abstract: We examine combinatorial structures which generalize $(k,n)$-nets, orthogonal arrays, and mutually orthogonal Latin squares. By a reticulation we mean of a point set and two collections (types) of families of lines such that two lines of different types meet in exactly one point and each family of lines partitions the point set. The number of points incident with any line depends only upon the type of the line, and every point is incident with the same number of lines of a given type. Each choice of one line family of each type leads to an arrangement of the points into a rectangular grid. Recording the line containing a given point in the corresponding position of an array gives to a generalization of sets of mutually orthogonal Latin squares, dubbed a cooperative system. A cooperative system consists of a collection of column-Latin matrices and a collection of row-Latin matrices such that each column-Latin matrix is orthogonal to each row-Latin matrix. Recording lines which contain a",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_0102",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.10890v1",
+    "status": "available",
+    "timestamp": "2026-07-16T08:11:30.566365+00:00",
+    "title": "ArXiv paper: Generalizations of nets and Latin squares"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -1934,7 +1955,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }

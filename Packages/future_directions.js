@@ -9,12 +9,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Cryptography"
     ],
-    "id": "fd_0104",
+    "id": "fd_0106",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.319056+00:00",
+    "timestamp": "2026-07-16T08:11:34.378474+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
@@ -24,12 +24,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0101",
+    "id": "fd_0103",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.293235+00:00",
+    "timestamp": "2026-07-16T08:11:34.347033+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
@@ -39,12 +39,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "NumberTheory"
     ],
-    "id": "fd_0102",
+    "id": "fd_0104",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.301594+00:00",
+    "timestamp": "2026-07-16T08:11:34.357817+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
@@ -53,27 +53,13 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0103",
+    "id": "fd_0105",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.310374+00:00",
+    "timestamp": "2026-07-16T08:11:34.367705+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Domain Novelty has declined by 0.182 over recent cycles (recent avg=0.624 vs prior=0.806). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "auto_reset_Novelty_d5f2ed13",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "auto_reset",
-    "status": "available",
-    "timestamp": "2026-07-16T07:56:10.855104+00:00",
-    "title": "[Reset] Fresh approach in Novelty"
   },
   {
     "consumed_by_exp_id": "",
@@ -82,12 +68,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Combinatorics"
     ],
-    "id": "fd_0105",
+    "id": "fd_0107",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:55:42.328212+00:00",
+    "timestamp": "2026-07-16T08:11:34.387395+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
@@ -868,12 +854,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Properties of the Tropical Characteristic Polynomial of Symmetric Matrices' and formalize its key results. Abstract: We investigate the combinatorial structure of the tropical characteristic polynomial of symmetric matrices using the tropical permanents of their principal submatrices. We establish new inequalities for the leading coefficients of the tropical characteristic polynomial, revealing concavity properties of the coefficient sequence and yielding necessary conditions for a sequence to arise as the coefficient sequence of the tropical characteristic polynomial of a symmetric matrix. These results provide a deeper understanding of the structure of tropical characteristic polynomials associated with symmetric matrices.",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_0062",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.10922v1",
+    "status": "available",
+    "timestamp": "2026-07-16T08:11:26.724333+00:00",
+    "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric Matrices"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0062",
+    "id": "fd_0063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12912v1",
@@ -888,7 +889,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0063",
+    "id": "fd_0064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13025v1",
@@ -902,7 +903,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0064",
+    "id": "fd_0065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12890v1",
@@ -916,7 +917,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0065",
+    "id": "fd_0066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
@@ -925,31 +926,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "557a7f03",
     "description": "Investigate the ArXiv paper 'On Agreement Subtrees in Multiple Pylogenetic Trees' and formalize its key results. Abstract: Snir and Yuster [Discrete Appl. Math. 347 (2026) 160--171] asked for the least number $h(k)$ such that $k$ unrooted binary phylogenetic trees on the same $h(k)$ leaves always share a common quartet. We give a new upper bound for the $k$-tree version of the Maximum Agreement Subtree problem, namely an upper bound for the number of leaves, on which $k$ unrooted binary phylogenetic trees always share a common induced binary subtree on $n$ leaves, which is a four-times iterated exponential function. For $h(k)$, this implies a four-times iterated exponential upper bound. We also set an exponential lower bound for $h(k)$.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0066",
+    "id": "fd_0067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T13:43:20.804355+00:00",
     "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
   },
   {
-    "consumed_by_exp_id": "557a7f03",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation' and formalize its key results. Abstract: We prove the Gonality Conjecture in arithmetic dynamics: for any non-isotrivial one-parameter algebraic family of rational maps on $\\mathbb{P}^1$, the gonality of distinct dynatomic curves tends to infinity. More generally, outside the flexible Latt\u00e8s family, every small sequence of horizontal curves has gonality tending to infinity, and its genus grows superlinearly with its degree over the parameter curve. We also obtain higher-dimensional analogues under natural bifurcation and multiplier-genericity hypotheses. As applications, we prove uniform boundedness results for iterated preimages over number fields and geometric uniform boundedness results for preperiodic points over function fields. The proof combines arithmetic equidistribution, woven currents, and bifurcation theory; the bifurcation mechanism is what forces the growth of genus and gonality.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0067",
+    "id": "fd_0068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12561v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T14:01:10.734967+00:00",
     "title": "ArXiv paper: Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation"
   },
@@ -960,7 +961,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12679v1",
@@ -975,7 +976,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12449v1",
@@ -989,7 +990,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0070",
+    "id": "fd_0071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12461v1",
@@ -1003,7 +1004,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0071",
+    "id": "fd_0072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12457v1",
@@ -1018,7 +1019,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0072",
+    "id": "fd_0073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
@@ -1032,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0073",
+    "id": "fd_0074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12300v1",
@@ -1041,60 +1042,60 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19cecd78",
     "description": "Investigate the ArXiv paper '$k$-Convex Polyominoes by Semi-perimeter' and formalize its key results. Abstract: We give the conjectured solution for the generating function of $k$-convex polyominoes, enumerated by semi-perimeter. The solution was obtained from the analysis of enumeration data that we generated.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0074",
+    "id": "fd_0075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12448v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T20:11:38.048996+00:00",
     "title": "ArXiv paper: $k$-Convex Polyominoes by Semi-perimeter"
   },
   {
-    "consumed_by_exp_id": "19cecd78",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors' and formalize its key results. Abstract: For a graph $G$, let $\u0394(G)$, $\u03c9(G)$, and $\u03c7(G)$ denote the maximum degree, clique number, and chromatic number of $G$, respectively. Let $P_n$ and $C_n$ denote the chordless path and chordless cycle on $n$ vertices, respectively. In this paper, we prove that every $(P_6,C_4)$-free graph $G$ with $\u0394(G)\\ge 9$ and $\u03c9(G)<\u0394(G)$ is $(\u0394(G)-1)$-colorable.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0075",
+    "id": "fd_0076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12367v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T20:28:28.169396+00:00",
     "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "851ec568",
     "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Ap\u00e9ry-like numbers. As applications, many new supercongruences are deduced.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0076",
+    "id": "fd_0077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T20:45:36.266548+00:00",
     "title": "ArXiv paper: Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers"
   },
   {
-    "consumed_by_exp_id": "851ec568",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Some Remarks on Hessians and Wronskians' and formalize its key results. Abstract: The purpose of this note is to elaborate on the apparent connection between Wronskians and Hessians. More generally, to a given subspace of homogeneous bivariate forms over the complex numbers, we associate two determinantal polynomials called the $W$-polynomial and the $\\hat{W}$-polynomial. We give expansion and factorization formulas for these polynomials, and study their behavior under change of coordinates and duality. As an application, we give another proof of Iarrobino's theorem on the strong Lefschetz property for standard graded Artinian Gorenstein algebras in codimension two.",
     "domains": [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0077",
+    "id": "fd_0078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T21:02:39.460834+00:00",
     "title": "ArXiv paper: Some Remarks on Hessians and Wronskians"
   },
@@ -1104,7 +1105,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0078",
+    "id": "fd_0079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12136v1",
@@ -1118,7 +1119,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0079",
+    "id": "fd_0080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
@@ -1132,7 +1133,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0080",
+    "id": "fd_0081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12232v1",
@@ -1146,7 +1147,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0081",
+    "id": "fd_0082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12090v1",
@@ -1161,7 +1162,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0082",
+    "id": "fd_0083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11330v1",
@@ -1175,7 +1176,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0083",
+    "id": "fd_0084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11534v1",
@@ -1184,32 +1185,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1512647",
     "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=\u03bb_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
     "domains": [
       "Computation",
       "Logic"
     ],
-    "id": "fd_0084",
+    "id": "fd_0085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11369v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:36:01.905252+00:00",
     "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
   {
-    "consumed_by_exp_id": "d1512647",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method' and formalize its key results. Abstract: Aardal and Lenstra systematically studied hard knapsack problems of the form $a_1x_1+\\cdots+a_nx_n=b$, where $a_i=p_iM+r_iN$, $(M,N)$ is a coprime pair of positive integers, and the integers $|p_i|, |r_i|$ are small relative to $M$ and $N$. We investigate the corresponding challenging denumerant problem (i.e., counting the number of nonnegative integer solutions) and present a polynomial-time algorithm. This eliminates the computational bottlenecks caused by large values of $M$, $N$ and $b$. The proposed algorithm achieves a time complexity of $O(n^4\u0394^2\\log n\\log\u0394)$, which depends solely on the parameters $n$ and $\u0394=\\max_{i,j}|r_i p_j - r_j p_i|$. Moreover, we consider the problem of expressing a general vector $(a_1,\\dots,a_n)$ in the above form using the LLL algorithm.",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0085",
+    "id": "fd_0086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11477v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T03:53:30.212279+00:00",
     "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
   },
@@ -1220,7 +1221,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11333v1",
@@ -1235,7 +1236,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0087",
+    "id": "fd_0088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11225v1",
@@ -1249,7 +1250,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0088",
+    "id": "fd_0089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11318v2",
@@ -1264,7 +1265,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0089",
+    "id": "fd_0090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11261v1",
@@ -1278,7 +1279,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0090",
+    "id": "fd_0091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11319v1",
@@ -1293,7 +1294,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0091",
+    "id": "fd_0092",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11248v1",
@@ -1308,7 +1309,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0092",
+    "id": "fd_0093",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10971v1",
@@ -1322,7 +1323,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0093",
+    "id": "fd_0094",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11161v1",
@@ -1337,7 +1338,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0094",
+    "id": "fd_0095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11061v1",
@@ -1352,7 +1353,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0095",
+    "id": "fd_0096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11068v1",
@@ -1366,7 +1367,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0096",
+    "id": "fd_0097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11113v1",
@@ -1381,7 +1382,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0097",
+    "id": "fd_0098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10939v1",
@@ -1396,7 +1397,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0098",
+    "id": "fd_0099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10778v1",
@@ -1410,7 +1411,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0099",
+    "id": "fd_0100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10832v1",
@@ -1424,7 +1425,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0100",
+    "id": "fd_0101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10779v1",
@@ -1433,7 +1434,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Counting Odd Cycles in Graphs with Bounded Circumference"
   },
   {
-    "consumed_by_exp_id": "d1e62d74",
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Generalizations of nets and Latin squares' and formalize its key results. Abstract: We examine combinatorial structures which generalize $(k,n)$-nets, orthogonal arrays, and mutually orthogonal Latin squares. By a reticulation we mean of a point set and two collections (types) of families of lines such that two lines of different types meet in exactly one point and each family of lines partitions the point set. The number of points incident with any line depends only upon the type of the line, and every point is incident with the same number of lines of a given type. Each choice of one line family of each type leads to an arrangement of the points into a rectangular grid. Recording the line containing a given point in the corresponding position of an array gives to a generalization of sets of mutually orthogonal Latin squares, dubbed a cooperative system. A cooperative system consists of a collection of column-Latin matrices and a collection of row-Latin matrices such that each column-Latin matrix is orthogonal to each row-Latin matrix. Recording lines which contain a",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_0102",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.10890v1",
+    "status": "available",
+    "timestamp": "2026-07-16T08:11:30.566365+00:00",
+    "title": "ArXiv paper: Generalizations of nets and Latin squares"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -1442,7 +1458,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
