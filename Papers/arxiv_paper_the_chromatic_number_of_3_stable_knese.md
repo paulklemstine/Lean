@@ -1,47 +1,35 @@
-# Computational evidence
+# Computational Evidence
 
-## Small cases
+## Small-case calculations
 
-For the canonical upper coloring, write `n = r + s(k-1)`.  The extremal final
-fiber consists of stable `k`-sets contained in the interval
-`[r-1, r-1+s(k-1)]`. Direct gap counting predicts that this fiber has exactly
-one member:
+The least-element construction predicts `q = n-sk+s` colours. Representative admissible parameters give:
 
-| s | k | interval (with r=3) | forced set |
-|---:|---:|---|---|
-| 2 | 2 | [2,4] | {2,4} |
-| 2 | 3 | [2,6] | {2,4,6} |
-| 3 | 2 | [2,5] | {2,5} |
-| 3 | 3 | [2,8] | {2,5,8} |
-| 4 | 3 | [2,10] | {2,6,10} |
+| `s` | `k` | `n` | `q` |
+|---:|---:|---:|---:|
+| 2 | 2 | 4 | 2 |
+| 3 | 2 | 6 | 3 |
+| 3 | 3 | 9 | 3 |
+| 3 | 3 | 10 | 4 |
+| 4 | 3 | 12 | 4 |
 
-These examples support the rigidity theorem: `k-1` gaps, each at least `s`,
-fit into total span `s(k-1)` only when all gaps equal `s`.
+At the packing boundary `n=sk`, the cyclic arithmetic progression `{0,s,2s,…,(k-1)s}` realizes equality in every gap and the predicted palette has size `s`.
 
-For `s=3, k=3`, the predicted color count is `n-6`.  Thus `n=9,10,11,12`
-give respectively `3,4,5,6` canonical colors.
+## Sequence search
 
-## OEIS search
-
-No OEIS search is relevant: the formal target is a structural packing and
-coloring theorem, not identification of a new integer sequence. The color-count
-sequence for fixed `s,k` is simply affine in `n`.
+For fixed `s` and `k`, the predicted number of colours is the affine sequence `n-sk+s` as `n` varies. No specialized sequence identification is needed beyond this linear form.
 
 ## Counterexample hunt
 
-The equality `n - s*k + s = r` from `n = r+s(k-1)` is sensitive to truncated
-natural-number subtraction.  A counterexample to the equality without an
-additional lower bound is `(n,s,k,r)=(3,3,2,0)`.  The formal theorem therefore
-includes `s ≤ r`, which is enough to prevent truncation and matches the
-large-`n` regime relevant to the paper.
+The proof obligations expose two necessary boundary conditions. Empty sets (`k=0`) have no least element, so the colouring theorem explicitly assumes `k≥1`. A nonzero stability parameter is needed to ensure the palette is inhabited under `n≥sk`; the theorem explicitly assumes `s≥1`. Within these guards, the packing inequality forces every least element below the palette cutoff, leaving no small-case counterexample to the upper-colouring claim.
 
-No counterexample occurs in the displayed extremal intervals: enumerating by
-hand, any increase in one selected point forces either a gap below `s` or the
-last point beyond the interval.
+## Structural table
 
-## Table interpretation
+For a stable set with ordered elements `a₀<⋯<aₖ₋₁`, repeated gap inequalities produce
 
-The table records the final color fiber of the canonical map. Ordinary fibers
-have a common minimum; the final fiber is intersecting because its unique
-possible stable set is the displayed arithmetic progression. This is exactly
-the dichotomy formalized in `canonicalColor_fiber_intersect`.
+`aᵢ ≥ a₀ + si`,
+
+and therefore
+
+`a₀ + s(k-1) < n`.
+
+This is the numerical invariant used throughout the construction. The boundary examples above attain equality up to the strict endpoint inequality, confirming sharpness of the cutoff.

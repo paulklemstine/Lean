@@ -4,6 +4,80 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0075",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T05:13:59.372887+00:00",
+    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0072",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T05:13:59.354132+00:00",
+    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0073",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T05:13:59.361026+00:00",
+    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0074",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T05:13:59.367571+00:00",
+    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
+    "domains": [
+      "Novelty",
+      "Combinatorics"
+    ],
+    "id": "fd_0076",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T05:13:59.379768+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
       "Algebra",
@@ -817,6 +891,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T04:59:11.546572+00:00",
     "title": "ArXiv paper: Beyond Mock Modularity: Elliptic Corrections for Higher Dyson Ranks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Results established\n\nThe formalization distinguishes circular *syntax* from valid derivability.\n\n1. **Finite observations do have limits.** Proof-tree observations are sets of labelled addresses. Their information order is inclusion, and `chainLimit` is union. The theorems `chain_le_limit` and `chainLimit_least` prove the expected least-upper-bound laws. This verifies the order-theoretic core of the proposed Scott-domain picture (the ambient observation space is actually a complete lattice).\n\n2. **A cyclic graph can denote an infinite object.** `selfUnravelling` gives an extensional, non-well-founded unary tree. `selfUnravelling_spine` and `selfUnravelling_unbounded` prove that it has a node at every finite depth. This is a valid mathematical object, but that alone does not make it a sound proof.\n\n3. **`P \u2192 P` has height one without circularity.** `identityDerivation` introduces `P` and closes the goal with the open assumption. `identityDerivation_height` proves its height is one. Calling this self-reference conflates a hypothesis occurrence with a back-edge to the theorem being proved.\n\n4. **The strictly-smaller-ordinal convergence conjecture is disproved for cycles.** `no_self_reference`, `no_ranked_cycle`, and `self_loop_has_no_ranking` prove that a dependency cycle cannot admit an ordinal rank strictly decreasing along every edge. A return to the same node would force its rank to be strictly less than itself. Thus ordinal descent is a soundness condition precisely because it excludes genuine circularity; it does not resolve it.\n\n5. **The liar cannot satisfy both exact reflection and its negating fixed-point equation.** `liar_fixed_point_impossible` and `no_liar_model` prove inconsistency of `Prov \u2194 L` together with `L \u2194 \u00acProv`. This is sharper than saying the liar has an \u201cundefined height\u201d: no propositions realize both equations in ordinary logic.\n\n## Conjectures worth pursuing\n\n### Guarded circularity via a later modality\n\nReplace impossible strict rank decrease around a cycle by a guarded rule in which every back-reference lies beneath a \u201clater\u201d modality. The intended semantics should be step-indexed: validity at index `n + 1` may use the circular hypothesis only at index `n`. A useful target is a soundness theorem into streams of finite approximations.\n\n### Scott-closed local correctness\n\nThe ambient observation lattice includes inconsistent partial trees. Define a local rule-correctness predicate and characterize conditions under which it is closed under directed unions. If all inference rules have finite arity and correctness is witnessed locally, directed-union preservation should follow; infinitary rules may provide counterexamples.\n\n### Cyclic proof systems with a global trace condition\n\nOrdinal descent on every edge is too strong. Established cyclic-proof methodology instead asks for progress infinitely often along each infinite branch. Formalize traces over graph unravellings and compare:\n\n- local strict descent (which forbids every cycle),\n- guarded step-index descent,\n- B\u00fcchi-style infinite progress.\n\nProve soundness for a concrete inductive predicate before attempting general fixed-point logic.\n\n### Separate syntax, semantics, and metatheory\n\nA self-referential graph is finite syntax; its unravelling is a possibly infinite tree; validity is a semantic predicate. Future work should keep these three layers separate. The current results show that existence of a limit object does not imply proof-theoretic soundness.\n\n### Incompleteness and arithmetization\n\nThe present liar theorem is propositional and does not formalize G\u00f6del coding or a derivability predicate. A faithful incompleteness development would need syntax, substitution/diagonalization, a recursively axiomatized theory, and derivability conditions. Such infrastructure is necessary before making claims about G\u00f6del incompleteness itself.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0077",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5543d24b",
+    "status": "available",
+    "timestamp": "2026-07-16T05:14:43.984852+00:00",
+    "title": "The formalization distinguishes circular *syntax* from valid derivability."
   },
   {
     "consumed_by_exp_id": "d1e62d74",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d31b185d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The Diagonal as a Single Organising Principle\n\nThis cycle established, from one structural root, that no type can fully quantify\nover itself: a type `T` equivalent to its own pred",
-      "quality_score": 0.83,
-      "sorry_count": 5,
-      "theorem_count": 16,
-      "timestamp": "2026-07-13T08:26:17",
-      "title": "Deepening: That a type which fully quantifies over itself —"
-    },
-    {
       "cycle_id": "1a598f10",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved the\nroot-number reciprocity law only in *identity form*\n`W(χ)·W(χ⁻¹)·Λ(χ,s) = Λ(χ,s)`, avoiding any",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-16T04:27:07",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "5543d24b",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n## Results established\n\nThe formalization distinguishes circular *syntax* from valid derivability.\n\n1. **Finite observations do have limits.** Proof-tree observations are sets of",
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-16T05:14:48",
+      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T04:27:07",
+  "last_updated": "2026-07-16T05:14:48",
   "open_questions": [
     {
       "context": "All statements are proved with no `sorry` and no extra axioms.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "92285bf9",
-        "quality": 0.57296,
-        "theorems": 15,
-        "title": "Sharp Threshold Constant for Cycle Games"
-      },
-      {
         "cycle_id": "6b4ee47d",
         "quality": 0.63,
         "theorems": 15,
@@ -3265,6 +3259,12 @@
         "quality": 0.71,
         "theorems": 7,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "5543d24b",
+        "quality": 0.64,
+        "theorems": 24,
+        "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
       }
     ],
     "Computation": [
