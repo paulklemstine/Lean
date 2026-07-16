@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2aaaa5f9",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle contributes `Catalog/Novelty/VietorisRipsCliqueBridge.lean`, a self-contained\n**cross-domain bridge** (\"Connector\" mission) linking:\n\n* **metric geometry / topological",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-13T14:34:30",
-      "title": "Deepening: Explicit exponential lower bound for Vietoris-Rips approximations below √2 thres"
-    },
-    {
       "cycle_id": "162989ab",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Siegel–Weil for the E₈ theta series\n\nThis cycle established that the E₈ vector-count sequence `240·σ₃(n)` behaves in\nevery measurable arithmetic respect like the Fourier coeffici",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-16T08:29:02",
       "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
+    },
+    {
+      "cycle_id": "cdb5c1e4",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nThe current development establishes the Vandermonde/symmetric-power construction underlying one direction of the paper: a diagonal symmetric-power action produces a rational-norma",
+      "quality_score": 0.61,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-16T08:29:10",
+      "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T08:29:02",
+  "last_updated": "2026-07-16T08:29:10",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "3d209fc8",
-        "quality": 0.82,
-        "theorems": 32,
-        "title": "That the zero-dimensional persistent homology of the prim"
-      },
-      {
         "cycle_id": "29aa9d96",
         "quality": 0.82,
         "theorems": 11,
@@ -3941,6 +3935,12 @@
         "quality": 0.71,
         "theorems": 13,
         "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
+      },
+      {
+        "cycle_id": "cdb5c1e4",
+        "quality": 0.61,
+        "theorems": 11,
+        "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
       },
       {
         "cycle_id": "cdb5c1e4",
