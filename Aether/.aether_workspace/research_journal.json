@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "12ea9340",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: the join bifunctor and the sharp join law for the ℤ₂-coindex\n\nThis cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-bound half of the\nco-index theory by buil",
-      "quality_score": 0.82,
-      "sorry_count": 3,
-      "theorem_count": 27,
-      "timestamp": "2026-07-14T22:36:30",
-      "title": "Constructive, lower-bound half of the co-index theory"
-    },
-    {
       "cycle_id": "a46f1a93",
       "domain": "Novelty",
       "key_insight": "# Future directions — Seidel energy of `K_{m,n}` under edge deletion\n\n`SeidelEnergyTwoDeletions.lean` computes, in closed form, the Seidel energy of\n`K_{m,n}` after deleting **two independent (vertex-",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-16T03:35:50",
       "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n## 1. A complete phase-invariant certificate for the order-six cardinality-19 matrix\n\nConjecture: the eighth-root Butson matrix underlying the cardinality-19 construction has exac",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-16T03:36:30",
+      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5b802ccf",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Topology of Argumentation (VIII)\n\nThis cycle added `Catalog/Novelty/ArgumentationGroundedUnique.lean`, proving that\na **well-founded** Dung argumentation framework has a **un",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-07-13T06:26:53",
-      "title": "Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
-    },
     {
       "cycle_id": "05e37ec1",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-16T03:35:50",
       "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n## 1. A complete phase-invariant certificate for the order-six cardinality-19 matrix\n\nConjecture: the eighth-root Butson matrix underlying the cardinality-19 construction has exac",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-16T03:36:30",
+      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ca1c3afc",
-      "domain": "Novelty",
-      "name": "no_factorial_four_add_equiv",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "0ee2f71b",
-      "domain": "Novelty",
-      "name": "cakePoly_strictMonoOn",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "0ee2f71b",
-      "domain": "Novelty",
-      "name": "rho_exists_unique",
-      "quality": 0.88
-    },
     {
       "cycle_id": "0ee2f71b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "cardinality_nineteen_of_unique_triple",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "name": "classical_orderSix_range_card",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "name": "nineteenRepresentatives_card",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "name": "cardinality_nineteen_of_unique_triple",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-16T03:35:50",
+  "last_updated": "2026-07-16T03:36:30",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "55b8bae9",
-        "quality": 0.69272,
-        "theorems": 17,
-        "title": "Girão-Kittipassorn-Narayanan Conjecture on Long Nontrivial Cycles"
-      },
-      {
         "cycle_id": "4d9b342d",
         "quality": 0.7,
         "theorems": 10,
@@ -3755,6 +3749,12 @@
         "quality": 0.68,
         "theorems": 11,
         "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+      },
+      {
+        "cycle_id": "57481379",
+        "quality": 0.75,
+        "theorems": 19,
+        "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twe"
       },
       {
         "cycle_id": "57481379",
