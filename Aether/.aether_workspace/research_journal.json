@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "02c1616a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Functional Equations and the Primitivity of Coefficients\n\nThis cycle established, in fully verified form, two complementary faces of a single\nprinciple: the completed `L`-function",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-13T07:01:34",
-      "title": "Functional Equations Enforce Primitivity of Coefficients"
-    },
-    {
       "cycle_id": "6ed40476",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Stability of the Diagonal Correlation Inequality\n\nThis cycle established the base camp for a quantitative stability theory of the\ncorrelation inequality on the discrete cube: the",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-16T03:53:58",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "e2c77d51",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Arithmetic Monsters\n\n## 1. Square-root density with a precise normalization\n\nLet `V(n)` be the proportion of `2n`-digit decimal integers that admit a classical vampire factorizati",
+      "quality_score": 0.65,
+      "sorry_count": 4,
+      "theorem_count": 6,
+      "timestamp": "2026-07-16T04:10:10",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-16T03:53:58",
+  "last_updated": "2026-07-16T04:10:10",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "d09018a9",
-      "domain": "Applications",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T13:37:53"
-    },
     {
       "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "16f220a2",
@@ -3016,16 +3009,17 @@
       "domain": "Combinatorics",
       "sorry_count": 4,
       "timestamp": "2026-07-16T03:53:58"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "e2c77d51",
+      "domain": "Algebra",
+      "sorry_count": 4,
+      "timestamp": "2026-07-16T04:10:10"
     }
   ],
   "research_threads": {
     "Algebra": [
-      {
-        "cycle_id": "c732c146",
-        "quality": 0.6195219999999999,
-        "theorems": 8,
-        "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
-      },
       {
         "cycle_id": "87ba90ae",
         "quality": 0.73448,
@@ -3079,6 +3073,12 @@
         "quality": 0.91,
         "theorems": 33,
         "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\""
+      },
+      {
+        "cycle_id": "e2c77d51",
+        "quality": 0.65,
+        "theorems": 6,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       }
     ],
     "Applications": [
