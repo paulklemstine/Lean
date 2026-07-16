@@ -9,12 +9,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Cryptography"
     ],
-    "id": "fd_0114",
+    "id": "fd_0116",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:17:03.754924+00:00",
+    "timestamp": "2026-07-16T09:33:18.475560+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
@@ -24,12 +24,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0111",
+    "id": "fd_0113",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:17:03.719790+00:00",
+    "timestamp": "2026-07-16T09:33:18.439104+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
@@ -39,12 +39,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "NumberTheory"
     ],
-    "id": "fd_0112",
+    "id": "fd_0114",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:17:03.733401+00:00",
+    "timestamp": "2026-07-16T09:33:18.453411+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
@@ -53,12 +53,12 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0113",
+    "id": "fd_0115",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:17:03.744249+00:00",
+    "timestamp": "2026-07-16T09:33:18.464130+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
@@ -68,12 +68,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Combinatorics"
     ],
-    "id": "fd_0115",
+    "id": "fd_0117",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T09:17:03.765000+00:00",
+    "timestamp": "2026-07-16T09:33:18.487290+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
@@ -92,7 +92,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Magnitude homology of tope graphs"
   },
   {
-    "consumed_by_exp_id": "dd61fafb",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,\u03c9^u)\\)-core, the \\((k,\u03c9^u)\\)-truss, and the more general \\((k,d,\u03c9^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
     "domains": [
       "Computation"
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11726v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:46:50.520811+00:00",
     "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
   },
@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody root systems"
   },
   {
-    "consumed_by_exp_id": "6caf61ae",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
@@ -158,7 +158,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -928,12 +928,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The rank of the modular multiplication matrix' and formalize its key results. Abstract: We prove Bueno et al.'s conjectural formula for the rank of the modular multiplication matrix for every positive integer. The proof first applies the additive Fourier transform to split the row space by exact additive character order, and then applies the multiplicative character decomposition on unit groups to count the nonzero components. The same formula holds after deleting the zero row and zero column.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0067",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.10763v1",
+    "status": "available",
+    "timestamp": "2026-07-16T09:33:00.326769+00:00",
+    "title": "ArXiv paper: The rank of the modular multiplication matrix"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0067",
+    "id": "fd_0068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12912v1",
@@ -948,7 +963,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13025v1",
@@ -962,7 +977,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12890v1",
@@ -976,7 +991,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0070",
+    "id": "fd_0071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
@@ -990,7 +1005,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0071",
+    "id": "fd_0072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
@@ -1005,7 +1020,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0072",
+    "id": "fd_0073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12561v1",
@@ -1020,7 +1035,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0073",
+    "id": "fd_0074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12679v1",
@@ -1035,7 +1050,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0074",
+    "id": "fd_0075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12449v1",
@@ -1049,7 +1064,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0075",
+    "id": "fd_0076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12461v1",
@@ -1063,7 +1078,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0076",
+    "id": "fd_0077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12457v1",
@@ -1072,17 +1087,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
   },
   {
-    "consumed_by_exp_id": "851ec568",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Recursive Formula for the Equations of Hessenberg Varieties' and formalize its key results. Abstract: Hessenberg varieties are subvarieties of the flag variety, defined by containment conditions on flags with respect to a linear operator. The study of these varieties lies in the intersection of algebraic geometry, combinatorics, and representation theory. In this paper, we develop an algebro-geometric procedure for determining the closed subvariety structure of a Hessenberg variety $\\mathcal{H}(X,h)$ in the flag variety for any linear operator $X$ and Hessenberg function $h$, by imposing a partial order on the Hessenberg functions and analyzing the relation of the corresponding Hessenberg varieties. In particular, we give a concrete recursive formula for determining all equations cutting out a given Hessenberg variety in each Schubert cell. As an application, we provide an alternative geometric proof of Tymoczko's results on the existence of affine pavings of a given Hessenberg variety and on the dimension count of its cells.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0077",
+    "id": "fd_0078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T19:37:25.793116+00:00",
     "title": "ArXiv paper: Recursive Formula for the Equations of Hessenberg Varieties"
   },
@@ -1092,7 +1107,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0078",
+    "id": "fd_0079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12300v1",
@@ -1107,7 +1122,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0079",
+    "id": "fd_0080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12448v1",
@@ -1121,7 +1136,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0080",
+    "id": "fd_0081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12367v1",
@@ -1130,31 +1145,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6df82b3f",
     "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Ap\u00e9ry-like numbers. As applications, many new supercongruences are deduced.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0081",
+    "id": "fd_0082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T20:45:36.266548+00:00",
     "title": "ArXiv paper: Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers"
   },
   {
-    "consumed_by_exp_id": "6df82b3f",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Some Remarks on Hessians and Wronskians' and formalize its key results. Abstract: The purpose of this note is to elaborate on the apparent connection between Wronskians and Hessians. More generally, to a given subspace of homogeneous bivariate forms over the complex numbers, we associate two determinantal polynomials called the $W$-polynomial and the $\\hat{W}$-polynomial. We give expansion and factorization formulas for these polynomials, and study their behavior under change of coordinates and duality. As an application, we give another proof of Iarrobino's theorem on the strong Lefschetz property for standard graded Artinian Gorenstein algebras in codimension two.",
     "domains": [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0082",
+    "id": "fd_0083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T21:02:39.460834+00:00",
     "title": "ArXiv paper: Some Remarks on Hessians and Wronskians"
   },
@@ -1164,7 +1179,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0083",
+    "id": "fd_0084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12136v1",
@@ -1173,30 +1188,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Far-apart Erd\u0151s--P\u00f3sa property of long cycles"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the B\u00e1ez-Duarte criterion.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0084",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12084v1",
-    "status": "available",
-    "timestamp": "2026-07-15T21:37:25.493366+00:00",
-    "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
-  },
-  {
     "consumed_by_exp_id": "d1512647",
-    "description": "Investigate the ArXiv paper 'Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions' and formalize its key results. Abstract: The character of a connected $\\mathfrak{sl}_n$-crystal is a Schur polynomial; the crystal can be further decomposed into quasicrystals, whose characters are the Gessel quasisymmetric functions. Crystal skeletons are obtained by contracting quasicrystals within crystal graphs. They generalize dual equivalence graphs, and can be used to prove the Schur expansion of a symmetric function when the quasisymmetric expansion is known. In this paper, we show that the crystal skeleton can be tiled further into components which we call quasicrystal skeletons, whose characters are Young quasisymmetric Schur functions. We characterize which edges in the crystal skeleton move between quasicrystal skeleton components. Contracting the quasicrystal skeleton components yields Bruhat order. We illustrate how these tools can be applied to symmetric functions by analyzing the Stanley symmetric functions.",
+    "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the B\u00e1ez-Duarte criterion.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0085",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.12232v1",
+    "source_exp_id": "2607.12084v1",
     "status": "in_progress",
+    "timestamp": "2026-07-15T21:37:25.493366+00:00",
+    "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions' and formalize its key results. Abstract: The character of a connected $\\mathfrak{sl}_n$-crystal is a Schur polynomial; the crystal can be further decomposed into quasicrystals, whose characters are the Gessel quasisymmetric functions. Crystal skeletons are obtained by contracting quasicrystals within crystal graphs. They generalize dual equivalence graphs, and can be used to prove the Schur expansion of a symmetric function when the quasisymmetric expansion is known. In this paper, we show that the crystal skeleton can be tiled further into components which we call quasicrystal skeletons, whose characters are Young quasisymmetric Schur functions. We characterize which edges in the crystal skeleton move between quasicrystal skeleton components. Contracting the quasicrystal skeleton components yields Bruhat order. We illustrate how these tools can be applied to symmetric functions by analyzing the Stanley symmetric functions.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0086",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.12232v1",
+    "status": "available",
     "timestamp": "2026-07-15T21:54:48.409080+00:00",
     "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions"
   },
@@ -1206,7 +1221,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12090v1",
@@ -1221,7 +1236,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0087",
+    "id": "fd_0088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11330v1",
@@ -1235,7 +1250,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0088",
+    "id": "fd_0089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11534v1",
@@ -1244,32 +1259,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08676759",
     "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=\u03bb_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
     "domains": [
       "Computation",
       "Logic"
     ],
-    "id": "fd_0089",
+    "id": "fd_0090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11369v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:36:01.905252+00:00",
     "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
   {
-    "consumed_by_exp_id": "08676759",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method' and formalize its key results. Abstract: Aardal and Lenstra systematically studied hard knapsack problems of the form $a_1x_1+\\cdots+a_nx_n=b$, where $a_i=p_iM+r_iN$, $(M,N)$ is a coprime pair of positive integers, and the integers $|p_i|, |r_i|$ are small relative to $M$ and $N$. We investigate the corresponding challenging denumerant problem (i.e., counting the number of nonnegative integer solutions) and present a polynomial-time algorithm. This eliminates the computational bottlenecks caused by large values of $M$, $N$ and $b$. The proposed algorithm achieves a time complexity of $O(n^4\u0394^2\\log n\\log\u0394)$, which depends solely on the parameters $n$ and $\u0394=\\max_{i,j}|r_i p_j - r_j p_i|$. Moreover, we consider the problem of expressing a general vector $(a_1,\\dots,a_n)$ in the above form using the LLL algorithm.",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0090",
+    "id": "fd_0091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11477v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T03:53:30.212279+00:00",
     "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
   },
@@ -1280,7 +1295,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0091",
+    "id": "fd_0092",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11333v1",
@@ -1295,7 +1310,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0092",
+    "id": "fd_0093",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11225v1",
@@ -1309,7 +1324,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0093",
+    "id": "fd_0094",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11318v2",
@@ -1318,46 +1333,46 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26d242e6",
     "description": "Investigate the ArXiv paper 'p-adic Properties of Translated Division Polynomials and Somos Sequences' and formalize its key results. Abstract: In this paper we consider the sequences $(\u03a8_{n}(\\mathbf{P}))_{n\\geq 0}$, $(\u03a6_{n}(\\mathbf{P}))_{n\\geq 0}$ and $(\\overline{\u03a9}\\,_{n}(\\mathbf{P}% ))_{n\\geq 0}$ of values of the translated division polynomials of an elliptic curve $E/K$ evaluated at a point $\\mathbf{P}\\in $ $E(K)^{2}$. We prove that these sequences are purely periodic when $K$ is a finite field. Then we use the periodicity properties of these sequences to prove that certain subsequences of these sequences are $% %TCIMACRO{\\U{2124} }% %BeginExpansion \\mathbb{Z} %EndExpansion _{p}$-Cauchy. Finally, we use this result to prove analogous results for Somos $4$ and Somos $5$ sequences.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0094",
+    "id": "fd_0095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11261v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T04:58:47.897559+00:00",
     "title": "ArXiv paper: p-adic Properties of Translated Division Polynomials and Somos Sequences"
   },
   {
-    "consumed_by_exp_id": "26d242e6",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A dual linear programming bound for sphere packing in dimension 36' and formalize its key results. Abstract: We construct an explicit dual-feasible point for the Cohn-Elkies linear program in dimension 36, built from the space of weight-18 modular forms for $\u0393_0(24)$ following the method of Cohn and Triantafillou. The certificate shows that the two-point linear programming bound on the sphere packing density in dimension 36 exceeds the density of the best packing currently known -- the Kschischang-Pasupathy packing, of center density $2^{18}/3^{10}$ -- by a factor of at least 32.91. In particular, no Cohn-Elkies auxiliary function can certify the best known packing in dimension 36 as optimal. To our knowledge this is the first such dual bound in any dimension above 32, extending the table of Cohn-Triantafillou ($d=12,16,20,28,32$), Li ($3 \\le d \\le 13$), and de Courcy-Ireland-Dostert-Viazovska ($d=6$). The certificate is exact: the dual point is a rational vector, coefficient nonnegativity is verified by exact arithmetic up to $n=800$, and eventual positivity of the two relevant $q$-expansion",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0095",
+    "id": "fd_0096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11319v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T05:15:00.370176+00:00",
     "title": "ArXiv paper: A dual linear programming bound for sphere packing in dimension 36"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "84cd9d36",
     "description": "Investigate the ArXiv paper 'Unexpected primes of good reduction in quotients of modular and Shimura curves' and formalize its key results. Abstract: We find all zero-dimensional spaces of newforms of weight $2$ and squarefree level $N$ with a fixed Atkin--Lehner sign pattern. As an application, we classify unexpected primes of good reduction of Atkin--Lehner quotients of modular and Shimura curves of squarefree levels.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0096",
+    "id": "fd_0097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11248v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T05:31:17.597085+00:00",
     "title": "ArXiv paper: Unexpected primes of good reduction in quotients of modular and Shimura curves"
   },
@@ -1368,7 +1383,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0097",
+    "id": "fd_0098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10971v1",
@@ -1382,7 +1397,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0098",
+    "id": "fd_0099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11161v1",
@@ -1397,7 +1412,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0099",
+    "id": "fd_0100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11061v1",
@@ -1412,7 +1427,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0100",
+    "id": "fd_0101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11068v1",
@@ -1426,7 +1441,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0101",
+    "id": "fd_0102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11113v1",
@@ -1441,7 +1456,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0102",
+    "id": "fd_0103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10939v1",
@@ -1456,7 +1471,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0103",
+    "id": "fd_0104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10778v1",
@@ -1470,7 +1485,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0104",
+    "id": "fd_0105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10832v1",
@@ -1484,7 +1499,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0105",
+    "id": "fd_0106",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10779v1",
@@ -1499,7 +1514,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "MachineLearning"
     ],
-    "id": "fd_0106",
+    "id": "fd_0107",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10890v1",
@@ -1514,7 +1529,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0107",
+    "id": "fd_0108",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10728v2",
@@ -1529,7 +1544,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0108",
+    "id": "fd_0109",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10751v1",
@@ -1544,7 +1559,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_0109",
+    "id": "fd_0110",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10660v1",
@@ -1559,7 +1574,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0110",
+    "id": "fd_0111",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10774v1",
@@ -1569,48 +1584,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Far-Apart Packing and Thickened Transversals\n\n## 1. Multiscale anchor theorem for long cycles\n\n**Conjecture.** For every finite graph and every length threshold \u2113, the family of cycles of length at least \u2113 admits a hierarchy of finite anchor sets with at most O(\u2113 log k) anchors per selected cycle, such that distance greater than d between anchor sets certifies distance greater than d between the corresponding cycles, while every unselected long cycle enters a controlled neighbourhood of the hierarchy.\n\nThe key insight is that the logarithmic factor in the centre bound should measure the number of scales needed to halve the unresolved packing number, rather than the lengths of the cycles themselves. **Why now?** The finite packing principle isolates bounded anchors as the exact missing interface between abstract packing and the sharp O(\u2113 k log k) theorem.\n\n## 2. Linear centres in bounded-expansion classes\n\n**Conjecture.** For every bounded-expansion class of graphs there is a class-dependent constant C such that the far-apart long-cycle alternative holds with at most C\u2113k centre vertices and a neighbourhood radius linear in d.\n\nThe key insight is that sparse neighbourhood covers should replace a logarithmic multiscale hierarchy by a bounded-branching decomposition. **Why now?** The abstract cardinality theorem already turns a uniform O(\u2113)-sized certificate per packed object into an O(\u2113k) transversal, making bounded expansion a precise setting in which to seek such certificates.\n\n## 3. Stability under coarse-Lipschitz graph maps\n\n**Conjecture.** Suppose a graph G maps to a graph H so that edges of G map to walks of uniformly bounded length and fibres have uniformly bounded diameter. A far-apart cycle packing or thickened-transversal theorem for H then transfers to G with only linear distortion of the separation and neighbourhood radii.\n\nThe key insight is that no-stretching estimates convert local control on edges into global control on graph distance, while bounded fibres control the reverse passage. **Why now?** The packing framework uses only pairwise distance comparisons, and the hypercube example demonstrates that these comparisons can arise from local labeling constraints.\n\n## 4. Homological far-apart Erd\u0151s--P\u00f3sa principle\n\n**Conjecture.** In every finite filtered two-dimensional cell complex, either there are k one-dimensional homology classes with long-lived representatives whose supports are pairwise farther than d, or O(k log k) cells have a neighbourhood of radius O(d) meeting every representative above the same persistence threshold.\n\nThe key insight is that cycle supports form a metric hypergraph even when cycles are considered modulo boundaries, but bounded anchors must be invariant under changing representatives. **Why now?** The maximal-packing argument is independent of graph adjacency and therefore survives unchanged once a representative-independent anchor theorem is available.\n\n## 5. Sharp necessity of symmetry\n\n**Conjecture.** For directed quasi-metrics, the maximal-packing domination theorem holds exactly when separation is defined using both directed distances; no one-sided definition admits an analogous universal domination statement without an additional bounded-asymmetry hypothesis.\n\nThe key insight is that insertion into a packing requires both orientations between the new object and every old object. **Why now?** The asymmetric version fails at precisely this insertion step, identifying a testable boundary and suggesting bounded asymmetry as the optimal guarded generalization.\n",
+    "description": "Investigate the ArXiv paper 'Weak Inhomogeneous Poissonian Pair Correlation and Equidistribution' and formalize its key results. Abstract: This paper investigates inhomogeneous Poissonian pair correlation (PPC), its weak form, and equidistribution. We establish that weak inhomogeneous PPC does not imply inhomogeneous PPC. Furthermore, we construct a sequence satisfying weak inhomogeneous PPC that fails to be equidistributed, which stands in sharp contrast to the homogeneous case. Finally, we prove that for distinct $\u03b3_1, \u03b3_2 \\in (0, \\frac{1}{2}]$, weak $\u03b3_1$-PPC does not imply weak $\u03b3_2$-PPC, showing that different inhomogeneous parameters give rise to mutually independent notions of weak inhomogeneous PPC.",
     "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0116",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "19cecd78",
-    "status": "available",
-    "timestamp": "2026-07-16T09:17:16.279343+00:00",
-    "title": "**Conjecture.** For every finite graph and every length threshold \u2113, the family "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Local Flag Algebras\n\n## 1. Sharp triangle-free pentagon certificate\n\n**Conjecture.** The optimal upper bound for the number of pentagons in a finite triangle-free graph, expressed on the scale \\(|V(G)|\\Delta(G)^4\\), admits a certificate involving only finitely many rooted radius-four flags and positive-semidefinite quadratic forms. Moreover, equality forces every non-isolated component to belong to a finite list of locally extremal models.\n\nThe key insight is that fixing a root leaves only four free neighbour extensions; the closing edge is a terminal restriction rather than an additional degree-sized choice. A sharp result should therefore arise by redistributing the slack in this rooted \\(\\Delta^4\\) bound among local triangle-free types.\n\n**Why now?** The extension hierarchy and its exact maximum-degree scaling have been isolated, so the remaining problem is a finite local optimisation rather than a question about the correct normalisation.\n\n## 2. Representation of positive local flag functionals\n\n**Conjecture.** Every normalised positive functional on the bounded-degree local flag algebra that satisfies the mass-transport identities is the local weak limit of finite graphs with uniformly bounded maximum degree.\n\nThe key insight is that positivity alone records semidefinite consistency, while mass transport supplies the missing compatibility between alternative choices of root. Together they should characterize precisely the functionals arising from unimodular random rooted graphs.\n\n**Why now?** A representation theorem would turn local flag certificates into statements about graph limits and would explain which abstract feasible points can actually be approximated by finite extremal examples.\n\n## 3. Effective bounded-radius approximation\n\n**Conjecture.** For every finite family of forbidden connected subgraphs, every local subgraph-count objective, and every \\(\\varepsilon>0\\), there is a computable radius \\(r\\) such that an order-\\(r\\) local flag semidefinite relaxation approximates the optimal maximum-degree-normalised density within \\(\\varepsilon\\).\n\nThe key insight is that bounded-degree neighbourhoods form a compact discrete space, while the extension inequalities impose a positive operator structure whose finite-radius truncations should approximate continuous local objectives.\n\n**Why now?** Establishing convergence would elevate individual certificates into a general approximation method and sharply delimit which extremal questions can be solved by finite local data.\n\n## 4. Spectral moment strengthening\n\n**Conjecture.** For triangle-free graphs, combining the local closed-five count with the second and fourth adjacency moments yields a universal upper bound strictly stronger than the bare \\(|V(G)|\\Delta(G)^4\\) estimate whenever the degree variance is positive.\n\nThe key insight is that rooted walk counts are row sums of powers of the adjacency operator; replacing every row sum by the worst-case value \\(\\Delta\\) discards degree-distribution and spectral information that should create quantitative slack away from regularity.\n\n**Why now?** The combinatorial extension count is already in operator-compatible form, making mixed local\u2013spectral inequalities the next natural refinement.\n\n## 5. Stability from simultaneous counting and colouring slack\n\n**Conjecture.** If a triangle-free graph nearly saturates the optimal pentagon bound on the \\(|V(G)|\\Delta(G)^4\\) scale, then every proper \\((\\Delta(G)+1)\\)-colouring has a bounded collection of colour classes whose induced local profiles are close to those of an extremal model.\n\nThe key insight is that pentagon closure and greedy colouring are controlled by the same neighbour fibres. Near-equality in repeated extension bounds should force most fibres to be nearly full, while colouring records how those fibres can overlap without triangles.\n\n**Why now?** The common maximum-degree parameter now appears in one theorem controlling both local closed-walk density and colourability, providing a concrete starting point for a counting\u2013colouring stability theory.\n",
-    "domains": [
-      "Algebra",
       "Computation"
     ],
-    "id": "fd_0117",
-    "priority_score": 0.75,
+    "id": "fd_0112",
+    "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "557a7f03",
+    "source_exp_id": "2607.10773v2",
     "status": "available",
-    "timestamp": "2026-07-16T09:17:23.731850+00:00",
-    "title": "**Conjecture.** The optimal upper bound for the number of pentagons in a finite "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n1. **Formalize the underlying objects.** Supply precise definitions of an `n`-nice polytope, a \u201cgood\u201d manifold, equivalence of manifolds for counting purposes, and the maximum being taken. The current development intentionally proves only consequences of the numerical candidate because these notions were absent from the prompt.\n\n2. **Connect geometry to the sequence.** Once the definitions exist, define a counting/maximization function and prove that it equals `GoodManifoldSequence.candidate`. This is the missing bridge from the OEIS formula to the title\u2019s combinatorial claim.\n\n3. **Formalize the source argument.** OEIS A212351 points to Amos Altshuler, *Manifolds in stacked 4-polytopes* (1971). A faithful formalization should extract the construction giving the lower bound and the classification or counting argument giving the upper bound, rather than assume the OEIS formula.\n\n4. **Explain the exceptional prefix.** The power law begins at one-based index 7. Deriving `6, 8, 12, 24, 40, 80` from the eventual geometric definitions would make the closed form complete rather than piecewise empirical.\n\n5. **Strengthen asymptotics after the bridge.** `tail_exact_asymptotic` already proves the exact zero-based identity `candidate n = 2 * 2^n` for `n \u2265 6`; after connecting `candidate` to the actual maximum, standard `IsTheta` and growth-rate formulations can be added as corollaries.\n\n6. **Investigate nearby catalog entries.** OEIS cross-references A000079 and A212350. Comparing A212350 may clarify whether a related minimum, alternate polytope class, or companion counting problem admits a shared formal framework.\n",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0118",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d1e62d74",
-    "status": "available",
-    "timestamp": "2026-07-16T09:17:31.598943+00:00",
-    "title": "1. **Formalize the underlying objects.** Supply precise definitions of an `n`-ni"
+    "timestamp": "2026-07-16T09:33:03.972385+00:00",
+    "title": "ArXiv paper: Weak Inhomogeneous Poissonian Pair Correlation and Equidistribution"
   },
   {
     "consumed_by_exp_id": "",

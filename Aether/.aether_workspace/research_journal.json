@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b222c758",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Universal Mathematics and the Invariant Core of Theories\n\nThis cycle formalized the notion of the *universal core* of a theory — the body\nof theorems shared by every consistent ex",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 29,
-      "timestamp": "2026-07-13T17:09:34",
-      "title": "Deepening: Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
-    },
-    {
       "cycle_id": "ee7062d3",
       "domain": "Applications",
       "key_insight": "# Future Directions: Local-to-Global Influence on Partite Complexes\n\nThis cycle established that on the complete `n`-partite complex over an alphabet of\nsize `m`, every coordinate influence is the *ex",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-16T09:17:35",
       "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+    },
+    {
+      "cycle_id": "851ec568",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Normalize to the paper's `Q_k`.** Extend scalars from `ℤ` to `ℝ` and define\n   `Q_k = k⁻¹ P_k`. The proved cumulative identity immediately yields the exact\n   Cesàro formula",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-16T09:32:56",
+      "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T09:17:35",
+  "last_updated": "2026-07-16T09:32:56",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "aa7167bb",
-        "quality": 0.62,
-        "theorems": 10,
-        "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymm"
-      },
-      {
         "cycle_id": "d1e62d74",
         "quality": 0.47,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.6,
         "theorems": 0,
         "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+      },
+      {
+        "cycle_id": "851ec568",
+        "quality": 0.68,
+        "theorems": 4,
+        "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
       }
     ],
     "NumberTheory": [
