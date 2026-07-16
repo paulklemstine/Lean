@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "37f1d216",
-      "domain": "Computation",
-      "key_insight": "# Future directions — Boolean-cube increments and witness complexity\n\nThis cycle proves the local mechanism behind the linear face complexity of\nrecursive simplicial `k`-trees.  A fresh vertex attache",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-15T02:11:45",
-      "title": "Two-parameter picture of *witness complexity* for the"
-    },
-    {
-      "cycle_id": "9243b8b5",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## Result\n\n`Catalog/Shared/EdgeProbabilityThreshold.lean` formalizes the elementary consequences of the ratio\n\n\\[\n\\frac{\\binom n2}{m}\n\\]\n\nfor a finite simple graph with `m` edges",
-      "quality_score": 0.92,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-07-15T02:32:03",
-      "title": "Close Proofs: The mission asked to interrogate the claim:"
-    },
-    {
       "cycle_id": "ef5b75b5",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Logarithmic Lifts and Optical Charge\n\n## 1. Homotopy classification by logarithmic endpoint defect\n\n**Conjecture.** For smooth non-vanishing closed beam loops, the endpoint defec",
@@ -499,29 +479,29 @@
       "theorem_count": 13,
       "timestamp": "2026-07-16T07:08:28",
       "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive propo",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-16T08:27:42",
+      "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Weighted maximum-nullity equality on triangle-unit networks\n\n**Conjecture.** For every connected, diamond-free, claw-free cubic graph whose contraction\nmultigraph is a simpl",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-16T08:27:46",
+      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e0843845",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Mixed-Radix Bijection\n\n## What was done in this cycle\n\nBuilding on the existing mixed-radix theory\n(`Catalog/Computation/MixedRadixNumberSystem.lean`) and the factorial numbe",
-      "quality_score": 0.8,
-      "sorry_count": 4,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T13:44:00",
-      "title": "The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`"
-    },
-    {
-      "cycle_id": "a71dcffe",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Phase Transitions in Constraint Satisfaction\n\nThis cycle contributes a fully formalized, self-contained **chain** of results\n(`Catalog/Novelty/AllDifferentThreshold.lean`) pinning",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-13T13:44:35",
-      "title": "The cycle established that the atomic AllDifferent constraint has a sharp"
-    },
     {
       "cycle_id": "0568e201",
       "domain": "Applications",
@@ -2501,45 +2481,29 @@
       "theorem_count": 11,
       "timestamp": "2026-07-16T08:27:23",
       "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive propo",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-16T08:27:42",
+      "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Weighted maximum-nullity equality on triangle-unit networks\n\n**Conjecture.** For every connected, diamond-free, claw-free cubic graph whose contraction\nmultigraph is a simpl",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-16T08:27:46",
+      "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "772aa8b4",
-      "domain": "Novelty",
-      "name": "repeated_block_rigidity",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "f4980b02",
-      "domain": "MachineLearning",
-      "name": "joinAction_of_zeroMass",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "f4980b02",
-      "domain": "MachineLearning",
-      "name": "zeroMass_eigenvector",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "f4980b02",
-      "domain": "MachineLearning",
-      "name": "supportedFiber_eigenvector",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "f4980b02",
-      "domain": "MachineLearning",
-      "name": "joinAction_of_zeroMass",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "f4980b02",
-      "domain": "MachineLearning",
-      "name": "zeroMass_eigenvector",
-      "quality": 0.74
-    },
     {
       "cycle_id": "f4980b02",
       "domain": "MachineLearning",
@@ -2803,9 +2767,45 @@
       "domain": "Shared",
       "name": "fibEntryPt_dvd_of_fib_dvd",
       "quality": 0.71
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "name": "subset_of_forceStep",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "name": "subset_of_forceSequence",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "7d82c497",
+      "domain": "Novelty",
+      "name": "card_le_of_forceSequence",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "name": "card_forceStep",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "name": "subset_of_forceSequence",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "e2f5c991",
+      "domain": "Novelty",
+      "name": "forceSequence_antisymm",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T08:27:23",
+  "last_updated": "2026-07-16T08:27:46",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,18 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0ee2f71b",
-        "quality": 0.88,
-        "theorems": 16,
-        "title": "Deepening: The optimal portion ratio μ₂ equals 1 + ρ"
-      },
-      {
-        "cycle_id": "2ed994b6",
-        "quality": 0.7,
-        "theorems": 24,
-        "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers)"
-      },
-      {
         "cycle_id": "772aa8b4",
         "quality": 0.7,
         "theorems": 9,
@@ -3637,6 +3625,18 @@
         "quality": 0.52,
         "theorems": 14,
         "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
+      },
+      {
+        "cycle_id": "7d82c497",
+        "quality": 0.7,
+        "theorems": 11,
+        "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
+      },
+      {
+        "cycle_id": "e2f5c991",
+        "quality": 0.72,
+        "theorems": 15,
+        "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
       }
     ],
     "NumberTheory": [

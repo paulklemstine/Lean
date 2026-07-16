@@ -1,128 +1,129 @@
-# The One-Way Geometry of Zero Forcing
+# The Domino Effect in Three-Regular Networks
 
-## How a local coloring rule reveals global structure in networks
+## How a local coloring rule becomes a global uniqueness theorem
 
-Imagine a network in which a few activated sites can awaken everything else. The rule is austere. A colored vertex may color one of its neighbors only when that neighbor is its **unique** uncolored neighbor. No vertex may choose among several candidates; a force occurs only when the next move is logically determined.
+Imagine a network whose junctions each meet exactly three links. Some junctions have already been illuminated; the rest are dark. An illuminated junction may switch on a dark neighbor, but only when that neighbor is its **only** dark neighbor. Once switched on, the new junction can trigger another, and a small initial spark may sweep through the entire network.
 
-This is the zero-forcing process, a deceptively simple game played on a finite graph. Its central question is economical: how few vertices must be colored at the start to ensure that, after repeatedly applying the rule, every vertex becomes colored? The answer is the graph’s **zero forcing number**, written $Z(G)$.
+This is the zero forcing process. It looks like a puzzle about colored dots, yet it captures something much broader: when local information determines a global state. The same “only one possibility remains” logic appears in constraint propagation, fault diagnosis, reconstruction of signals, and uniqueness questions for linear systems.
 
-The process belongs to a family of ideas that translate local certainty into global control. In a communication network, it models deterministic propagation when a node can resolve only one remaining unknown neighbor. In the study of sparse matrices, it is connected to how much freedom can remain in a system constrained by a graph. In monitoring and controllability problems, it suggests where sensors or actuators must be placed so that influence can spread without ambiguity.
+The networks of special interest here are finite, simple graphs. A graph consists of vertices joined by edges; “simple” means that there are no loops and no multiple edges. A graph is **cubic** when every vertex has degree $3$. It is **claw-free** when no four vertices induce a three-pronged star: there is no center joined to three pairwise nonadjacent leaves. In a cubic graph, claw-freeness forces a great deal of local clustering. The three neighbors of any vertex cannot all be mutually separated, so triangles and diamond-shaped units naturally emerge.
 
-The foundational results developed here explain why zero forcing has such a clean mathematical geometry. Colored sets grow in one direction, forcing certificates can be joined together, minimum certificates always exist on finite graphs, complete graphs demand almost total initial knowledge, and claw-free cubic graphs possess a local triangular structure that guarantees a universal upper bound.
+A **zero forcing set** is an initial colored set $S$ from which repeated legal forces eventually color every vertex. The least possible size of such a set is the **zero forcing number**, written $Z(G)$. Finding $Z(G)$ is a global optimization problem, but every legal move is radically local. The results below explain why this tension is productive.
 
-## The rule, precisely
+## A clock that never runs backward
 
-A finite simple graph $G$ consists of a finite vertex set $V$ and undirected edges joining distinct vertices, with no loops or repeated edges. Let $S\subseteq V$ be the currently colored set. A **legal force** from $u$ to $w$ may occur when all four conditions hold:
+Suppose the current colored set is $S$. A legal force chooses a colored vertex $u$ with exactly one uncolored neighbor $w$, then replaces $S$ by $S\cup\{w\}$. The first basic theorem is deceptively simple.
 
-1. $u\in S$;
-2. $w\notin S$;
-3. $u$ and $w$ are adjacent;
-4. every uncolored neighbor of $u$ is equal to $w$.
-
-After the force, the new colored set is $S\cup\{w\}$. A **forcing sequence** is any finite succession of legal forces, including the empty sequence. A set $S$ is a **zero forcing set** if some forcing sequence beginning at $S$ ends at $V$. The zero forcing number is
+**Strict Growth Theorem.** Every legal forcing move increases the number of colored vertices by exactly one:
 
 $$
-Z(G)=\min\bigl\{|S|:S\subseteq V\text{ is a zero forcing set}\bigr\}.
+|S\cup\{w\}|=|S|+1.
 $$
 
-This definition emphasizes certificates. To prove $Z(G)\le k$, it is enough to exhibit a set of at most $k$ vertices together with a legal sequence that colors the graph.
+The reason is that legality requires $w\notin S$. This gives the process a built-in clock. If a forcing chain starts with $s$ colored vertices and ends with $t$ colored vertices, then it contains exactly $t-s$ nontrivial moves. On a graph with $n$ vertices, any successful chain from $S$ therefore has exactly $n-|S|$ moves.
 
-## Every move is irreversible progress
+There is also a monotonicity theorem.
 
-The first theorem captures the arithmetic of a single move.
+**Monotonicity Theorem.** If a colored set $T$ can be reached from $S$ by legal forces, then $S\subseteq T$.
 
-**Single-Step Growth Theorem.** If a legal force changes $S$ into $T$, then $T=S\cup\{w\}$ for one vertex $w\notin S$. Consequently,
+Nothing is ever uncolored. Consequently, forcing reachability is antisymmetric: if $T$ is reachable from $S$ and $S$ is reachable from $T$, then $S=T$. Thus the state graph of the process contains no directed cycles except stationary ones. The dynamics are irreversible, finite, and naturally ordered by inclusion.
 
-$$
-|T|=|S|+1
-\qquad\text{and}\qquad
-S\subseteq T.
-$$
+This observation matters computationally. A program that simulates forcing never needs to revisit a smaller state. It can store a colored set, scan for a vertex with exactly one uncolored neighbor, add that neighbor, and continue. At most $n-|S|$ additions occur.
 
-The proof is immediate from the rule: exactly one previously uncolored vertex is inserted and nothing is removed. Yet this tiny fact governs the entire process.
+## Why triangles and diamonds act as relays
 
-By repeating it, one obtains the **Monotonicity Theorem**: if a forcing sequence carries $S$ to $T$, then $S\subseteq T$ and $|S|\le |T|$. The proof follows the sequence one step at a time. Inclusion is preserved transitively, and finite-set cardinality respects inclusion.
+Claw-free cubic graphs are rich in small clustered units. Two propagation patterns are especially useful.
 
-There is a useful rigidity consequence. If $S$ can force $T$ and $|S|=|T|$, then $S=T$. A proper inclusion of finite sets would strictly increase cardinality, so equal size rules out any genuine progress. Even more strikingly, forcing reachability is antisymmetric: if $S$ can force $T$ and $T$ can force $S$, then $S=T$. The process cannot contain a nontrivial directed cycle.
+A **triangle** consists of three pairwise adjacent vertices. Suppose $a$ is colored, $b$ is not, and among all neighbors of $a$, the vertex $b$ is the only uncolored one. Then $a$ forces $b$. The triangular geometry is not magic by itself; what matters is that the remaining neighbors of $a$ have already been colored. The triangle packages that uniqueness condition into a common structural situation.
 
-This makes the family of colored states resemble a landscape with a strict height function, namely cardinality. Every genuine force climbs by one level. A path can pause only by taking no move, and it can never return downhill. That observation is valuable computationally: a search for forcing sequences explores an acyclic state space ordered by set inclusion.
+**Triangle Propagation Rule.** If $a$ is colored, $b$ is adjacent to $a$, $b$ is uncolored, and every uncolored neighbor of $a$ equals $b$, then one legal move colors $b$.
 
-## Certificates can be spliced
+A **diamond** is the graph obtained from the complete graph on four vertices by deleting one edge. Its two degree-$3$ vertices form an internal spine, while its two degree-$2$ vertices are the tips. In a larger cubic network, the tips may carry external links. A forcing front can pass through such a unit in two stages.
 
-Suppose a set $S$ can force an intermediate set $T$, and $T$ can force all of $V$. Then the two forcing sequences can simply be concatenated. This yields the **Certificate Composition Theorem**:
+**Diamond Propagation Rule.** Let $a$ already be colored. If $d$ is the unique uncolored neighbor of $a$, then $a$ forces $d$. If, after that first move, $b$ is the unique uncolored neighbor of $d$, then $d$ forces $b$. Hence the colored set grows from $S$ to $S\cup\{d,b\}$ in two legal steps.
 
-$$
-S\leadsto T\quad\text{and}\quad T\leadsto V
-\quad\Longrightarrow\quad
-S\leadsto V.
-$$
+These rules are certificates: they specify exactly what must be checked, including the status of external neighbors. They do not assume that the shape alone guarantees propagation. This precision is important. Local motifs become reliable relays only when the boundary conditions point the forcing front in the right direction.
 
-Thus $S$ is zero forcing whenever it can reach any already certified zero forcing set. This modularity matters in both proofs and algorithms. One may first establish a local propagation phase, stop at a strategically structured intermediate state, and then invoke a second certificate designed for that state.
+One can now picture a claw-free cubic graph as a network of small transmission units. A global strategy plants seeds in selected units, then uses triangle and diamond relays to move a front across the graph. This is the mechanism behind sharper investigations of $Z(G)$ in structured families, including graphs whose contracted unit network has a Hamiltonian cycle. But local propagation alone does not establish every proposed sharp numerical bound: global conclusions require the corresponding decomposition and contraction hypotheses.
 
-Because the graph is finite, a minimum zero forcing set is not merely an infimum that might never be achieved. There are only finitely many subsets of $V$, the full set $V$ is trivially zero forcing, and therefore at least one zero forcing set has minimum cardinality. Hence the minimum defining $Z(G)$ is attained.
+## The hidden linear equation
 
-The same reasoning gives the **Certificate Upper-Bound Principle**: every explicit zero forcing set $S$ proves
+The most striking result appears when coloring is translated into algebra.
+
+Choose a field $K$, such as the real or complex numbers. Assign a nonzero directed weight $A_{uv}\in K$ to every edge from $u$ to an adjacent vertex $v$. The weights need not be symmetric, positive, or equal. A function $x:V\to K$ is called **weighted harmonic** when, at every vertex $u$,
 
 $$
-Z(G)\le |S|.
+\sum_{v\sim u} A_{uv}x(v)=0.
 $$
 
-This is the bridge from dynamics to extremal graph theory. Constructing a clever propagation certificate immediately becomes a numerical bound.
+This equation says that the weighted sum of the values around each vertex vanishes. It is a homogeneous linear system. Its solutions form a vector space, and the central question is whether values prescribed on a small set determine the solution everywhere.
 
-## A universal bound from one missing vertex
-
-A remarkably broad certificate comes from coloring almost everything. Choose a vertex $w$ that has a neighbor $u$, and initially color every vertex except $w$. Then $u$ has exactly one uncolored neighbor, namely $w$, so it forces $w$ in one step.
-
-**Co-singleton Theorem.** If $w$ has at least one neighbor, then $V\setminus\{w\}$ is a zero forcing set.
-
-It follows that any finite graph without isolated vertices satisfies
+Suppose $x$ vanishes on the currently colored set $S$, and $u\in S$ can force $w$. Every neighbor of $u$ other than $w$ is colored, so all its corresponding $x$-values are zero. The harmonic equation at $u$ collapses to
 
 $$
-Z(G)\le |V|-1.
+A_{uw}x(w)=0.
 $$
 
-The bound is elementary, but it is also sharp. Consider the complete graph $K_n$ with $n\ge 2$. Every pair of distinct vertices is adjacent. If two or more vertices are uncolored, then every colored vertex sees at least two uncolored neighbors and cannot force either one. Therefore a successful initial set must leave at most one vertex uncolored. Conversely, coloring $n-1$ vertices lets any colored vertex force the last one.
+Because the edge weight $A_{uw}$ is nonzero and $K$ is a field, $x(w)=0$. The newly forced vertex must also lie in the zero set.
 
-**Complete-Graph Theorem.** For $n\ge 2$,
+That one-line reduction is the bridge between a coloring game and linear uniqueness.
+
+**One-Step Vanishing Theorem.** For nonzero edge weights, if a weighted harmonic function vanishes on a colored set, then it also vanishes after any legal force.
+
+Applying the theorem repeatedly yields the chain version.
+
+**Propagation of Zeros Theorem.** If $T$ is reachable from $S$ by finitely many legal forces and a weighted harmonic function vanishes on $S$, then it vanishes on all of $T$.
+
+Finally, if $S$ is zero forcing, then $T$ can be the entire vertex set.
+
+**Zero-Forcing Uniqueness Theorem.** On a finite graph with arbitrary nonzero directed edge weights over any field, every weighted harmonic function that vanishes on a zero forcing set is identically zero.
+
+The theorem is robust. It uses neither cubicity nor claw-freeness, and it does not require symmetric weights. Those hypotheses matter for constructing efficient forcing sets in special graph families; once a forcing chain exists, the uniqueness argument is universal.
+
+There is also an immediate dimension intuition. Restricting a harmonic function to a zero forcing set is injective: two harmonic functions agreeing there have a difference that vanishes there, hence vanishes everywhere. Therefore the space of harmonic functions can have dimension no greater than the number of vertices in any zero forcing set. This is why zero forcing is intertwined with matrix nullity.
+
+## Coverage versus propagation
+
+Zero forcing should not be confused with domination. A set $D$ is **dominating** if every vertex outside $D$ has a neighbor in $D$. Domination is a one-step coverage requirement; forcing is a sequential propagation requirement.
+
+In a graph of maximum degree at most $3$, one chosen vertex covers at most itself and three neighbors. Therefore a dominating set obeys the counting bound
 
 $$
-Z(K_n)=n-1.
+|V|\le 4|D|,
 $$
 
-Complete connectivity is therefore not synonymous with easy propagation. Too many uncolored neighbors create ambiguity. Zero forcing rewards a specific kind of constrained connectivity: enough edges to transmit influence, but enough asymmetry to make the next target unique.
+or equivalently $|D|\ge |V|/4$. This does not determine the zero forcing number, but it provides a useful comparison. Domination asks how cheaply the graph can be covered by closed neighborhoods. Zero forcing asks how cheaply a directional cascade can be initiated. On networks made of triangles and diamonds, comparing these local costs suggests a finite-state optimization problem: each unit has a coverage cost, a propagation cost, and boundary states describing how influence enters and exits.
 
-## Cubic graphs without claws
+## Parity from handshaking
 
-The most geometric part of the story concerns graphs that are simultaneously **cubic** and **claw-free**. A graph is cubic if every vertex has exactly three neighbors. A **claw** is an induced copy of the four-vertex star $K_{1,3}$: one central vertex adjacent to three leaves that are pairwise nonadjacent. A graph is claw-free if no vertex has three distinct neighbors that are pairwise nonadjacent.
-
-These two conditions interact immediately. Take any vertex $v$ in a cubic graph. It has exactly three distinct neighbors, say $a$, $b$, and $c$. If none of $a$, $b$, and $c$ were adjacent to one another, then $v$ together with those neighbors would form a claw. Claw-freeness forbids this. At least one pair, perhaps $a$ and $b$, must be adjacent. The edges $va$, $vb$, and $ab$ then form a triangle through $v$.
-
-**Local Triangle Theorem.** Every vertex of a claw-free cubic graph lies in a triangle.
-
-The proof is only a few lines, but the conclusion is structural. A local prohibition against a three-pronged shape forces triangular clustering everywhere. Such graphs cannot look locally like trees. Each vertex belongs to a tightly knit three-cycle, and these cycles become natural units for deeper decompositions into triangles and diamond-shaped blocks.
-
-The theorem also eliminates isolated vertices: a vertex lying in a triangle certainly has neighbors. Applying the co-singleton certificate gives the foundational extremal consequence.
-
-**Claw-Free Cubic Bound.** If $G$ is a finite claw-free cubic graph with vertex set $V$, then
+Cubic graphs also carry a global arithmetic constraint. The handshaking identity says that the sum of all degrees equals twice the number of edges. If every vertex has degree $3$, then
 
 $$
-Z(G)\le |V|-1.
+3|V|=2|E|.
 $$
 
-This bound does not yet exploit the full triangle-rich architecture, but it establishes a reliable baseline. It also illustrates a recurring pattern in combinatorics: a forbidden local configuration produces a positive local structure, which then supplies a global certificate.
+The right-hand side is even, so $|V|$ must be even.
 
-## Seeing the process as an algorithm
+**Cubic Parity Theorem.** Every finite cubic graph has an even number of vertices.
 
-A direct simulation maintains the colored set. At each stage it scans colored vertices, collects their uncolored neighbors, and performs a force whenever exactly one remains. If no force is available before all vertices are colored, the chosen set is not certified by that run. If all vertices become colored, the recorded ordered pairs form a checkable witness.
+Now suppose the vertices are partitioned into $T$ triangle units of size $3$ and $D$ diamond units of size $4$. Then
 
-For a fixed deterministic scanning order, a straightforward implementation takes at most $|V|-|S|$ forces. With adjacency lists, each full scan costs on the order of the total number of incident edges, so the simplest implementation runs in roughly $O(|V||E|)$ time. More sophisticated queue-based updates can avoid rescanning unaffected vertices.
+$$
+|V|=3T+4D.
+$$
 
-To find $Z(G)$ exactly, one may enumerate subsets in increasing size and test each candidate. This is exponential in $|V|$, as one should expect from a minimum-set problem, but monotonicity and certificate composition provide pruning opportunities. The state graph has no nontrivial cycles, and any intermediate state known to be zero forcing certifies every state that can reach it.
+Since $|V|$ and $4D$ are even, $3T$ is even; because $3$ is odd, $T$ is even.
 
-## From local certainty to global design
+**Unit-Parity Theorem.** In any triangle–diamond partition of a finite cubic graph, the number of triangle units is even.
 
-Zero forcing teaches an unusual lesson about influence. More edges do not always make propagation easier. In $K_n$, abundant connectivity creates choice, and choice blocks the rule. In claw-free cubic graphs, by contrast, limited degree and forced triangles organize neighborhoods into predictable local patterns.
+This small theorem has practical force. Any construction or enumeration that proposes an odd number of triangle units cannot represent a cubic graph of this kind. Parity acts as a fast consistency check before deeper forcing analysis begins.
 
-The current theory rests on five pillars: every force adds exactly one vertex; forcing sequences are monotone and antisymmetric; certificates compose; minimum certificates exist and bound $Z(G)$; and claw-free cubic neighborhoods necessarily contain triangles. Together they provide both a mathematical foundation and an algorithmic language for studying how deterministic influence travels through a network.
+## From a puzzle to an inference principle
 
-The next frontier is to turn the local triangles into sharper global information. One expects triangle and diamond blocks, independence constraints, and Hamiltonian structure in suitable contractions to yield substantially improved bounds. The central challenge is beautifully concrete: understand how local clusters can be arranged so that a small initial spark is guaranteed to illuminate the entire graph.
+The narrative now closes where it began: with one colored vertex facing one dark neighbor. Combinatorially, uniqueness of that neighbor makes the next move deterministic. Algebraically, it reduces a many-term equation to one nonzero coefficient times one unknown. The same local condition drives both processes.
+
+That dual role points toward new questions. Can every failure of zero forcing be witnessed by a cleverly weighted nonzero harmonic function? Can triangle and diamond units be assigned finite boundary states so that optimal forcing and domination become tractable dynamic programs? How stable are forcing bounds when a cyclic contraction structure is damaged at a few units? Can edge weights be chosen so that the harmonic solution space is as large as the zero forcing number permits?
+
+Whatever the answers, the established mechanism is clear. A legal force adds exactly one vertex; forcing chains are monotone and acyclic; triangles and diamonds provide explicit local relays; zeros of weighted harmonic functions travel along every forcing chain; zero forcing sets are universal uniqueness sets; cubic graphs satisfy strict parity constraints; and degree-three domination obeys a simple quarter-order lower bound.
+
+A child’s coloring rule has become a theorem about information. Once every step leaves only one possible unknown, local certainty can cross an entire network.

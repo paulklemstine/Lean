@@ -355,26 +355,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cdb5c1e4",
-    "description": "Investigate the ArXiv paper 'Cyclic Projective Orbits on Rational Normal Curves and MDS Codes' and formalize its key results. Abstract: Let \\(A\\) be a cyclic operator on an \\(r\\)-dimensional vector space over a field \\(k\\), and let \\(z\\) be a cyclic vector. Their Krylov code has parity-check matrix \\((z,Az,\\ldots,A^{n-1}z)\\). For \\(r\\ge 3\\) and \\(n\\ge r+3\\), we prove that an MDS orbit segment lies on a rational normal curve precisely when the projective pair \\((A,[z])\\) is conjugate to one arising from the \\((r-1)\\)-st symmetric-power action of \\(\\mathrm{PGL}_2\\). Over finite fields, for companion operators, this gives a complete classification of the generalized Reed--Solomon locus into split semisimple, two nonsplit semisimple, and unipotent families. Over an algebraically closed field \\(k\\), the Zariski closure \\(\\GRSsurf_{r,k}\\) of the semisimple GRS coefficient locus is an irreducible rational surface, generically parameterized two-to-one by a two-dimensional torus of geometric-progression root sets; reversal is the generic ambiguity. The affine quotient of the parameter torus by reversal is the normalization of \\",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0021",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12761v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T12:51:13.579274+00:00",
-    "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Large sets of mutually orthogonal quantum Latin squares' and formalize its key results. Abstract: How large can a set of mutually orthogonal quantum Latin squares (MOQLS) get? We show that a set of n - 2 MOQLS of order n is necessarily classical and construct large non-classical sets of MOQLS of orders that are prime powers, improving both the previously known lower and upper bounds.",
     "domain_bridges": [],
@@ -1118,26 +1098,6 @@
     "status": "available",
     "timestamp": "2026-07-16T07:23:42.365372+00:00",
     "title": "ArXiv paper: Neighborhood Complexity and Radius-1 Merge-Width in Monadically Dependent Graph Classes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d8f04178",
-    "description": "Investigate the ArXiv paper 'Overfull Conjecture for graphs with maximum degree 4' and formalize its key results. Abstract: Let $G$ be a simple graph with maximum degree $Δ(G)$. The graph $G$ is overfull if $\\left|E(G)\\right|> Δ(G)\\lfloor |V(G)|/2\\rfloor$. In 1986, Chetwynd and Hilton proposed the Overfull Conjecture: If $G$ is a simple graph with $Δ(G)>\\frac{|V(G)|}{3}$, then $G$ is a Class $2$ graph if and only if $G$ contains an overfull subgraph $H$ with $Δ(H)=Δ(G)$. In this paper, we give a proof of this conjecture for graphs with maximum degree $4$.",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Logic"
-    ],
-    "id": "fd_0060",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.10947v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T07:39:26.296921+00:00",
-    "title": "ArXiv paper: Overfull Conjecture for graphs with maximum degree 4"
   },
   {
     "ambition_level": "extension",
@@ -1962,7 +1922,67 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d1e62d74",
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope achieved\n\n`Speculative/EulerSystemsSymmetricSquare.lean` formalizes three reusable algebraic layers motivated by the paper:\n\n1. An abstract Euler system as a family of module elements satisfying norm relations, together with preservation of every norm relation under compatible specialization.\n2. Detection of non-triviality of an Euler-system family from one nonzero specialization.\n3. Transport of divisibility through an involutive ring automorphism, including functional equations only defined up to unit multiples.\n4. A contrarian conjecture asserting exact faithfulness of symmetric square is disproved. The corrected result identifies the precise sign ambiguity over an integral domain and proves equality of sign orbits.\n\nThese results are fully proved, but they deliberately do not claim to formalize the paper's deep arithmetic constructions.\n\n## Next formalization layers\n\n1. Define continuous representations of absolute Galois groups over finite-flat Iwasawa algebras and the symmetric-square representation attached to a Hida family.\n2. Introduce continuous Galois cohomology and corestriction maps. Instantiate `NormRelation` with degree-one cohomology classes and the paper's local Euler polynomials.\n3. Formalize arithmetic specialization maps and prove their compatibility with corestriction and Euler factors, allowing `eulerSystem_specializes` to apply directly.\n4. Encode Greenberg local conditions, Selmer structures, Pontryagin duals, pseudo-isomorphism, and characteristic ideals over multivariable Iwasawa algebras.\n5. Upgrade element divisibility to ideal inclusion and characteristic-ideal divisibility. Then instantiate `functional_equation_up_to_units` with the Iwasawa involution.\n6. Formalize the nonzero Loeffler–Zerbes specialization needed to turn `eulerSystem_nontrivial_of_specialization` into non-triviality of the big class.\n7. Formalize the Büyükboduk–Ganguly algebraic functional equation and the Euler-system bound to derive the paper's main-conjecture divisibility.\n8. Investigate a representation-theoretic version of the sign-orbit theorem: under suitable irreducibility hypotheses, determine whether isomorphic symmetric squares force two-dimensional representations to differ by a quadratic character. The scalar sign example proves that an unconditional exact-faithfulness statement cannot hold.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0108",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d8f04178",
+    "status": "available",
+    "timestamp": "2026-07-16T08:27:09.226591+00:00",
+    "title": "`Speculative/EulerSystemsSymmetricSquare.lean` formalizes three reusable algebra"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe current development establishes the Vandermonde/symmetric-power construction underlying one direction of the paper: a diagonal symmetric-power action produces a rational-normal-curve orbit, and distinct geometric-progression parameters make every full-size minor nonsingular.\n\nNatural next steps are:\n\n1. **Homogeneous rational normal curve.** Replace the affine chart `rncPoint` by the homogeneous Veronese map on the projective line, including the point at infinity, and prove equivariance for the full degree-`r-1` symmetric-power representation of `GL₂`.\n2. **Projectivization.** Formulate projective pairs `(A, [z])`, scalar equivalence, and conjugacy. Show that the construction descends from `GL₂` to `PGL₂` projectively.\n3. **Converse rigidity theorem.** Formalize the theorem that, for `r ≥ 3` and a sufficiently long MDS orbit segment on a rational normal curve, the inducing projective transformation comes from `PGL₂`. This will require uniqueness/rigidity results for rational normal curves through sufficiently many points.\n4. **Companion matrices and Krylov bases.** Connect cyclic vectors, Krylov bases, companion matrices, characteristic polynomials, and the parity-check-matrix definition of a linear MDS code.\n5. **Finite-field classification.** Develop the split semisimple, nonsplit semisimple, and unipotent cases by classifying conjugacy in `PGL₂` over finite fields, then translate each family to companion-polynomial coefficients.\n6. **Coefficient surface.** Define the geometric-progression root-set parameter map, prove reversal invariance, and study its generic fibers. The eventual algebraic-geometric target is the normalization statement for the reversal quotient and the irreducible rational surface described in the paper.\n7. **Weaker algebraic assumptions.** Several elementary lemmas currently assume fields or commutative semirings for convenience. Their assumptions can be minimized (for example, injectivity of the affine curve requires only enough cancellation to read coordinate one).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0109",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cdb5c1e4",
+    "status": "available",
+    "timestamp": "2026-07-16T08:27:19.765082+00:00",
+    "title": "The current development establishes the Vandermonde/symmetric-power construction"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Additive-energy amplification beyond the cardinality threshold\n\n**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p$ omit a fixed positive proportion of descendants in every sufficiently long block of levels. The norm of the normalized Fourier restriction between the two leaf sets is at most $C p^{-\\beta n}$ for constants $C,\\beta>0$ depending only on the porosity parameters, even when the product of their maximal branching numbers is at least $p$.\n\nThe key insight is that the cardinality estimate loses contraction exactly at this threshold, whereas repeated additive-energy improvement can exploit cancellation invisible to support size alone.\n\n**Why now?** The finite kernel estimate and tree-growth theorem isolate the missing ingredient precisely: a scale-local gain that can replace the crude product-cardinality bound.\n\n## 2. Block-porosity and entropy characterization\n\n**Conjecture.** Exponential Fourier restriction decay holds for pairs of residue-tree sets whenever the sum of their upper block entropies is strictly below the ambient entropy, with an exponent depending continuously on the entropy gap.\n\nThe key insight is that pointwise branching bounds are unnecessarily rigid; the proof mechanism only needs multiplicative loss accumulated across scales, which block entropy measures directly.\n\n**Why now?** The established recurrence argument already converts local branching losses into global powers, making an entropy-weighted recurrence the natural next generalization.\n\n## 3. Stability under stochastic deletion\n\n**Conjecture.** For independent level-dependent random deletion models whose expected retained branching numbers satisfy $\\mathbb{E}A_j\\,\\mathbb{E}B_j<p$ uniformly, the restricted Fourier norm decays exponentially with depth with exponentially high probability, and the almost-sure exponent equals a Lyapunov exponent of the branching process.\n\nThe key insight is that the deterministic uncertainty factor is a product of per-level branching ratios, so random porosity should be governed by multiplicative ergodic behavior rather than worst-case branching.\n\n**Why now?** The explicit deterministic factor identifies the random variable whose concentration and Lyapunov theory should control the probabilistic extension.\n\n## 4. A transfer-operator bridge to Frobenius dynamics\n\n**Conjecture.** There is a common prime-power transfer-operator framework in which porous Fourier restriction and additive cellular-automaton renormalization appear respectively as a contracting sector and an exactly self-similar sector of one graded operator algebra.\n\nThe key insight is that both systems are organized by the same $p^k$ filtration: Fourier normalization contributes scale loss, while Frobenius collapses dynamics to rescaled light rays.\n\n**Why now?** Exact prime-power identities and uncertainty estimates have been placed at the same scale, providing concrete algebraic data from which to formulate the shared operator.\n\n## 5. Product-tree Kakeya incidence bound\n\n**Conjecture.** A uniform fractal uncertainty exponent for porous residue trees implies a power-saving incidence estimate for product-structured tubes in a discretized non-Archimedean Kakeya problem.\n\nThe key insight is that tube-direction incidence matrices are oscillatory restriction operators after finite Fourier decomposition, so concentration of incidences should contradict uncertainty.\n\n**Why now?** The normalized-kernel theorem already applies independently of the chosen phase, leaving geometric incidence structure and a suitable porosity-to-support reduction as the principal remaining steps.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0110",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7d82c497",
+    "status": "available",
+    "timestamp": "2026-07-16T08:27:37.494232+00:00",
+    "title": "**Conjecture.** Let two subsets of the depth-$n$ residue tree over $\\mathbb{F}_p"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -1974,7 +1994,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
