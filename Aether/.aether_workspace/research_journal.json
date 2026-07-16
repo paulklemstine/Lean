@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "37818bd9",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What this file establishes\n\n`MatsunoIwasawaBridge.lean` builds a self-contained algebraic model of the two\nIwasawa invariants `μ` and `λ` of a characteristic element, realised",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-13T17:26:19",
-      "title": "Extension of Matsuno's Formula for Non-Vanishing μ-Invariants"
-    },
-    {
       "cycle_id": "ddc0d02e",
       "domain": "Applications",
       "key_insight": "# Future Directions: Proofs as DAGs\n\nThis cycle deepened the \"Proofs as DAGs\" line by developing the *topological\nstructure* of an abstract proof-dependency relation. Starting from the existing\n`Hands",
@@ -2501,6 +2491,16 @@
       "theorem_count": 4,
       "timestamp": "2026-07-16T09:33:32",
       "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
+    },
+    {
+      "cycle_id": "08676759",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Parameter-only complexity for constant-term evaluation\n\n**Conjecture.** For structured coefficients `aᵢ=pᵢM+rᵢN` with coprime positive\n`M,N`, the denumerant can be evaluated",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-16T10:21:12",
+      "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T09:33:32",
+  "last_updated": "2026-07-16T10:21:12",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3089,12 +3089,6 @@
         "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
       },
       {
-        "cycle_id": "d68f278c",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
-      },
-      {
         "cycle_id": "e23ed960",
         "quality": 0.53,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.66,
         "theorems": 10,
         "title": "ArXiv paper: Local flag algebras"
+      },
+      {
+        "cycle_id": "08676759",
+        "quality": 0.69,
+        "theorems": 12,
+        "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Consta"
       }
     ],
     "Bridges": [

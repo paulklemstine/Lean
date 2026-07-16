@@ -1,317 +1,454 @@
-# Chromatic Bounds for Cyclically Stable Kneser Graphs: Canonical Colorings, Intersecting Families, and the 3-Stable Case
+# Packing Rigidity and Canonical Colorings of Stable Kneser Graphs
+
+**Aristotle**  
+**July 16, 2026**
 
 ## Abstract
 
-For positive integers $n$, $k$, and $s$, a cyclically $s$-stable $k$-subset of $[n]=\{1,\ldots,n\}$ is a set in which every two elements have cyclic distance at least $s$. The associated stable Kneser graph has these sets as vertices and joins two vertices exactly when the corresponding sets are disjoint. The predicted chromatic number, in the nonempty range $n\ge sk$, is $n-sk+s$. This paper develops the mathematical framework behind that prediction. A canonical least-element coloring proves the upper bound $n-sk+s$ for every admissible parameter triple. The lower-bound problem is translated into the structure of intersecting families, with stable analogues of the Hilton–Milner principle controlling color classes without a common point. This yields equality for $s=3$ when $n$ is sufficiently large relative to $k$, and equality for every $n\ge9$ in the exact case $k=s=3$. We also describe the complementary box-complex approach, give explicit generation and coloring algorithms, and formulate rigidity, stability, and topological directions suggested by the common cyclic-gap structure.
+A cyclically $s$-stable subset of $[n]=\{0,1,\ldots,n-1\}$ is a set whose distinct elements have separation at least $s$ along both arcs of the cyclic order. The associated stable Kneser graph has these sets as vertices and joins two vertices when the corresponding sets are disjoint. This paper develops the elementary packing theory underlying the predicted chromatic number $n-sk+s$. We prove that a linearly $s$-stable set of $k$ integers has span at least $s(k-1)$ and classify the equality case as an arithmetic progression. This rigidity yields an explicit proper coloring with $r$ colors whenever $n=r+s(k-1)$: color a set by its minimum, capped at $r-1$. As cyclic stability implies linear stability, this establishes the general upper bound $\chi\le n-sk+s$. We then determine the exact chromatic number for cyclically $3$-stable triples on nine points. Three residue-class triples form a clique, forcing three colors, while the canonical construction provides three colors. Finally, we exhibit two disjoint linearly $3$-stable pairs that receive the same capped-minimum color when the sharp parameter relation is omitted, demonstrating that the packing threshold is essential. Algorithms for enumerating stable sets, constructing the graph, applying the canonical coloring, and checking the nine-point certificate are presented together with complexity estimates.
 
 ## 1. Introduction
 
-Kneser graphs encode disjointness among uniform set systems. Given a family $\mathcal F$ of subsets, its Kneser graph $\operatorname{KG}(\mathcal F)$ has vertex set $\mathcal F$, with two vertices adjacent precisely when they are disjoint. A proper coloring of this graph is therefore a partition of $\mathcal F$ into intersecting subfamilies.
+Kneser-type graphs encode intersection questions as coloring problems. Fix a ground set and a family of its subsets. Regard every member of the family as a vertex, and join two vertices precisely when the corresponding subsets are disjoint. A proper color class must then be an intersecting family. The chromatic number measures how many intersecting subfamilies are needed to partition the original family.
 
-The stable variant imposes geometric spacing on a cycle. It restricts the vertices to subsets whose elements remain far apart in cyclic order, but keeps disjointness as adjacency. This interaction between local separation and global intersection produces a particularly crisp chromatic prediction.
-
-For $s=2$, the predicted value specializes to $n-2k+2$, the chromatic number of the classical stable Kneser graph. For general $s$, the proposed equality is
+Stable Kneser graphs impose geometric spacing on the allowed subsets. Arrange $n$ labeled points around a circle. A set is admissible when its chosen points remain separated by at least $s$ positions in both cyclic directions. If every admissible set has size $k$, the expected chromatic number in the feasible range $n\ge sk$ is
 
 $$
-\chi\left(\operatorname{KG}(\mathcal S_s(n,k))\right)=n-sk+s,
+n-sk+s.
 $$
 
-where $\mathcal S_s(n,k)$ denotes the family of cyclically $s$-stable $k$-subsets of $[n]$. The equality is meaningful for $n\ge sk$, which is exactly the basic packing threshold.
+The formula is notable because it is linear in $n$, despite the potentially large number of vertices. Its upper-bound half admits a direct construction, but that construction depends on a sharp packing phenomenon that deserves to be isolated.
 
-The upper bound is elementary and uniform: color each stable set by its least element. The spacing requirement ensures that only $n-sk+s$ least elements can occur, and two sets with the same least element intersect. The lower bound is the substantive issue. Every color class is intersecting, so a hypothetical coloring with too few colors would cover all stable sets by too few intersecting families. Stable Hilton–Milner theorems constrain those families, especially when they do not share a common point.
+The first goal of this paper is to develop that phenomenon from first principles. On a line, $k$ points with consecutive spacing at least $s$ occupy span at least $s(k-1)$. When equality holds, every gap is forced to equal $s$, and the set is an arithmetic progression. This equality characterization is then used to prove the correctness of a capped-minimum coloring. Ordinary colors identify sets by their least element. The final color gathers all sets with large minima; the available tail interval has exactly minimum possible span, so rigidity forces all sets in that color to coincide.
 
-The principal conclusions are the following.
+The second goal is to combine this construction with a concrete lower-bound certificate at the tight instance $(n,s,k)=(9,3,3)$. The sets $\{0,3,6\}$, $\{1,4,7\}$, and $\{2,5,8\}$ are cyclically stable and pairwise disjoint. They form a triangle and therefore demand three colors. The upper coloring uses three colors, proving exactness.
 
-1. For all $s\ge2$, $k\ge1$, and $n\ge sk$, the canonical coloring uses $n-sk+s$ colors.
-2. For $s=3$ and each fixed $k$, equality holds once $n$ is sufficiently large relative to $k$.
-3. For $k=s=3$, equality holds for every admissible $n\ge9$; explicitly, the chromatic number is $n-6$.
-4. The same cyclic-gap data underlying the canonical coloring supports a topological lower-bound program through equivariant box-complex invariants.
+The third goal is diagnostic. The capped-minimum rule may look robust enough to survive beyond its original numerical setting. It does not. The disjoint pairs $\{1,4\}$ and $\{2,5\}$ are both linearly $3$-stable but collapse to the same color under a two-color cap. This counterexample identifies the precise source of correctness: not the syntax of the coloring map alone, but the equality case of the packing bound.
 
-The aim here is to present these results and their proof architecture in a self-contained form, while distinguishing the universal elementary argument from the deeper lower-bound mechanisms.
+## 2. Stable sets and disjointness graphs
 
-## 2. Definitions and elementary structure
+### 2.1 Linear stability
 
-### 2.1 Cyclic distance and stable subsets
+Let $A$ be a finite subset of the nonnegative integers, and let $s$ be a nonnegative integer.
 
-Let $[n]=\{1,2,\ldots,n\}$, viewed in cyclic order. For $i,j\in[n]$, define their cyclic distance by
+**Definition 2.1 (Linear stability).** The set $A$ is **linearly $s$-stable** if, for every $x,y\in A$ with $x<y$,
 
 $$
-d_n(i,j)=\min\{|i-j|,\,n-|i-j|\}.
+x+s\le y.
 $$
 
-**Definition 2.1 (Cyclic stability).** A subset $A\subseteq[n]$ is cyclically $s$-stable if
+Equivalently, every pair of distinct elements differs by at least $s$. For an ordered list
 
 $$
-d_n(i,j)\ge s
+a_0<a_1<\cdots<a_{k-1}
 $$
 
-for all distinct $i,j\in A$. Let $\mathcal S_s(n,k)$ be the family of all cyclically $s$-stable subsets of $[n]$ having cardinality $k$.
+of the elements of $A$, it is enough to require $a_{i+1}-a_i\ge s$ for every consecutive pair.
 
-The word “cyclically” is essential. Besides the ordinary gaps between successive elements in increasing order, the wrap-around gap from the largest element back to the smallest must also be at least $s$.
-
-If $A=\{a_1<\cdots<a_k\}$, define its cyclic gaps by
+The **span** of a nonempty finite set $A$ is
 
 $$
-g_r=a_{r+1}-a_r\quad(1\le r<k),\qquad g_k=n+a_1-a_k.
+\operatorname{span}(A)=\max A-\min A.
 $$
 
-Then $A$ is cyclically $s$-stable if and only if $g_r\ge s$ for every $r$, and always
+### 2.2 Cyclic stability
+
+Write
 
 $$
-g_1+\cdots+g_k=n.
+[n]=\{0,1,\ldots,n-1\}
 $$
 
-This immediately gives the packing condition.
+with its natural cyclic order. For $0\le x<y<n$, the two directed arc lengths between $x$ and $y$ are $y-x$ and $n+x-y$.
 
-**Lemma 2.2 (Packing threshold).** If $\mathcal S_s(n,k)$ is nonempty, then $n\ge sk$.
-
-**Proof sketch.** The $k$ cyclic gaps of a stable set are each at least $s$ and sum to $n$, so $n\ge sk$. Conversely, when $n\ge sk$, the set $\{1,1+s,\ldots,1+(k-1)s\}$ is cyclically $s$-stable because its final wrap-around gap is $n-s(k-1)\ge s$. Thus the threshold is exact. $\square$
-
-### 2.2 The stable Kneser graph
-
-**Definition 2.3 (Stable Kneser graph).** The graph $G_s(n,k)$ has vertex set $\mathcal S_s(n,k)$. Two vertices $A$ and $B$ are adjacent if and only if $A\cap B=\varnothing$.
-
-A proper coloring is a function $c:\mathcal S_s(n,k)\to C$ such that $c(A)\ne c(B)$ whenever $A\cap B=\varnothing$. Its least possible number of colors is the chromatic number $\chi(G_s(n,k))$.
-
-**Definition 2.4 (Intersecting family and star).** A family $\mathcal A\subseteq\mathcal S_s(n,k)$ is intersecting if every two members meet. It is a star centered at $x\in[n]$ if every member contains $x$. A family is non-star if its total intersection is empty.
-
-A proper coloring partitions $\mathcal S_s(n,k)$ into intersecting families: every color fiber is intersecting, because two disjoint members of one fiber would be adjacent with equal colors. This elementary observation converts chromatic lower bounds into covering problems for intersecting families.
-
-## 3. The canonical upper bound
-
-The proposed chromatic number has a direct arithmetic explanation.
-
-**Theorem 3.1 (Least-element coloring).** Let $s\ge2$, $k\ge1$, and $n\ge sk$. Define
+**Definition 2.2 (Cyclic stability).** A subset $A\subseteq[n]$ is **cyclically $s$-stable** if, for every $x,y\in A$ with $x<y$,
 
 $$
-q=n-sk+s=n-s(k-1).
+y-x\ge s
+\qquad\text{and}\qquad
+n+x-y\ge s.
 $$
 
-The assignment
+Thus neither of the two arcs joining selected points is shorter than $s$. The definition includes the wrap-around restriction between the largest and smallest selected elements.
+
+**Lemma 2.3 (Cyclic-to-linear implication).** Every cyclically $s$-stable subset of $[n]$ is linearly $s$-stable.
+
+**Proof sketch.** For $x<y$ in a cyclically stable set, the first inequality in Definition 2.2 is $y-x\ge s$, which is exactly the linear stability condition. The second cyclic inequality imposes an additional wrap-around constraint and is not needed for the implication. $\square$
+
+### 2.3 Stable Kneser graphs
+
+**Definition 2.4 (Stable Kneser graph).** For positive integers $n,s,k$, let $G(n,s,k)$ be the graph whose vertices are the cyclically $s$-stable $k$-subsets of $[n]$. Two vertices $A$ and $B$ are adjacent if and only if
 
 $$
-c(A)=\min A
+A\cap B=\varnothing.
 $$
 
-is a proper coloring of $G_s(n,k)$ using colors from $[q]$. Consequently,
+A coloring with $q$ colors is a map
 
 $$
-\chi(G_s(n,k))\le n-sk+s.
+c:V(G(n,s,k))\longrightarrow\{0,1,\ldots,q-1\}.
 $$
 
-**Proof.** Write $A=\{a_1<a_2<\cdots<a_k\}$. The ordinary gaps satisfy $a_{r+1}-a_r\ge s$, hence
+It is **proper** if $c(A)\ne c(B)$ whenever $A$ and $B$ are disjoint. The chromatic number $\chi(G(n,s,k))$ is the least $q$ for which a proper coloring exists.
+
+Equivalently, each color fiber must be an intersecting family: any two sets of the same color must share an element.
+
+## 3. Packing and extremal rigidity
+
+The central elementary fact is a sharp lower bound on the span occupied by stable points.
+
+**Theorem 3.1 (Stable Packing Bound).** Let $A$ be a nonempty linearly $s$-stable finite set with $|A|=k$. Then
 
 $$
-a_k\ge a_1+s(k-1).
+s(k-1)\le \max A-\min A.
 $$
 
-As $a_k\le n$, it follows that
+**Proof sketch.** Enumerate the elements increasingly as
 
 $$
-a_1\le n-s(k-1)=q.
+a_0<a_1<\cdots<a_{k-1}.
 $$
 
-Thus $c(A)\in[q]$. If $c(A)=c(B)=x$, then $x\in A\cap B$, so $A$ and $B$ are not adjacent. Therefore $c$ is proper. $\square$
-
-The proof uses only the linear order to bound the least element; cyclic stability supplies at least as much separation as required. The color fibers are explicitly star-like:
+Linear stability gives $a_{i+1}-a_i\ge s$ for $0\le i<k-1$. Summing these inequalities telescopes:
 
 $$
-c^{-1}(x)=\{A\in\mathcal S_s(n,k):\min A=x\},
+a_{k-1}-a_0
+=\sum_{i=0}^{k-2}(a_{i+1}-a_i)
+\ge\sum_{i=0}^{k-2}s
+=s(k-1).
 $$
 
-and every member contains $x$.
+Since $a_0=\min A$ and $a_{k-1}=\max A$, the conclusion follows. $\square$
 
-### 3.1 Sharpness as a covering statement
+An interval formulation follows immediately.
 
-The equality conjecture is equivalent to the assertion that $\mathcal S_s(n,k)$ cannot be covered by fewer than $q$ intersecting subfamilies. Indeed, the fibers of any proper coloring give such a cover, and any partition into intersecting families gives a proper coloring.
-
-This reformulation reveals why a mere bound on the maximum size of an intersecting family may be inadequate. If $M$ is that maximum, cardinality gives only
+**Corollary 3.2 (Interval Packing Bound).** If a nonempty linearly $s$-stable set $A$ lies in the integer interval $[a,b]$, then
 
 $$
-\chi(G_s(n,k))\ge \left\lceil\frac{|\mathcal S_s(n,k)|}{M}\right\rceil.
+s(|A|-1)\le b-a.
 $$
 
-Overlaps in hypothetical covers and the variety of near-extremal families can make this estimate too weak. Structural information is needed: large fibers should have identifiable centers, while uncentered fibers should suffer a quantitative deficit.
+**Proof sketch.** Theorem 3.1 gives $s(|A|-1)\le\max A-\min A$. Since $a\le\min A\le\max A\le b$, the span is at most $b-a$. $\square$
 
-## 4. Stable Hilton–Milner structure
+The equality case provides the rigidity needed later.
 
-The classical intersection paradigm separates stars from non-stars. In the stable cyclic setting, the spacing condition changes both their sizes and the permitted exceptional configurations, but the conceptual dichotomy survives.
-
-### 4.1 Star and non-star fibers
-
-A star is automatically intersecting. It is natural for a coloring because choosing a center gives a common witness to non-adjacency. The canonical coloring consists of truncated stars indexed by possible least elements.
-
-A non-star intersecting family $\mathcal A$ has
+**Theorem 3.3 (Extremal Rigidity).** Let $s>0$ and $k>0$. If a linearly $s$-stable set $A$ has $k$ elements and is contained in
 
 $$
-\bigcap_{A\in\mathcal A}A=\varnothing,
+[a,a+s(k-1)],
 $$
 
-although $A\cap B\ne\varnothing$ for each pair $A,B\in\mathcal A$. Such a family must distribute its intersections among multiple labels. Stability limits this distribution: labels near a chosen point are unavailable, and cyclic wrap-around couples the first and last positions.
-
-**Stable Hilton–Milner principle.** For fixed $s$ and $k$, and for $n$ sufficiently large relative to these parameters, a non-star intersecting family in $\mathcal S_s(n,k)$ is strictly smaller and more rigid than a largest star. Its members are forced into finitely controlled exceptional intersection patterns.
-
-The exact numerical form depends on the stable regime under analysis. For chromatic applications, the decisive content is the gap between centered and uncentered families and the classification of families near the extremal size.
-
-### 4.2 How the principle yields chromatic lower bounds
-
-Assume for contradiction that $G_3(n,k)$ is colored with fewer than
+then
 
 $$
-q=n-3k+3
+A=\{a,a+s,a+2s,\ldots,a+s(k-1)\}.
 $$
 
-colors. Let $\mathcal A_1,\ldots,\mathcal A_m$ be the color fibers, with $m<q$. Each is intersecting.
-
-The proof architecture proceeds in four stages.
-
-1. **Classify large fibers.** Stable Hilton–Milner bounds imply that a sufficiently large fiber has a common center, unless it belongs to a controlled exceptional class.
-2. **Record centers.** Star-like fibers can be charged to their common labels. Fewer than $q$ fibers provide too few independent centers to cover the stable sets generated across the relevant initial-segment filtration.
-3. **Bound exceptions.** Non-star fibers have a deficit. When $n$ is sufficiently large relative to $k$, the union of all exceptional fibers cannot compensate for the stable sets missed by the centered fibers.
-4. **Construct an uncovered set.** The cyclic spacing room permits selection of a $3$-stable $k$-set avoiding the assigned centers and exceptional patterns, contradicting that the fibers cover the whole vertex set.
-
-This gives the asymptotic $3$-stable theorem.
-
-**Theorem 4.1 (Chromatic number for large 3-stable graphs).** For every fixed integer $k\ge1$, there exists a threshold $N(k)$ such that, for every $n\ge N(k)$,
+**Proof sketch.** Write $A=\{a_0<a_1<\cdots<a_{k-1}\}$. Since $a_0\ge a$ and every consecutive gap is at least $s$, induction gives
 
 $$
-\chi(G_3(n,k))=n-3k+3.
+a_i\ge a+si.
 $$
 
-**Proof sketch.** Theorem 3.1 supplies the upper bound. For the lower bound, suppose fewer than $n-3k+3$ colors are used. Regard each color fiber as an intersecting family. Apply the stable Hilton–Milner dichotomy: large fibers are centered, while non-star fibers obey a strict size and structure restriction. For $n\ge N(k)$, centered fibers indexed by fewer than $n-3k+3$ labels leave enough cyclic room to build stable sets avoiding all centers, and the aggregate exceptional capacity of the non-star fibers cannot cover these remaining sets. Hence some stable set is uncolored, a contradiction. $\square$
+In particular, $a_{k-1}\ge a+s(k-1)$. But containment in the stated interval gives the reverse inequality, so $a_{k-1}=a+s(k-1)$. If $a_0>a$ or any gap exceeded $s$, the sum of the gaps would force $a_{k-1}>a+s(k-1)$, a contradiction. Hence $a_0=a$ and every gap equals $s$, proving the formula. $\square$
 
-The theorem’s threshold reflects the range in which the extremal estimates dominate lower-order exceptional behavior. It does not assert a specific universal threshold in this presentation.
-
-## 5. Exact analysis for cyclically 3-stable triples
-
-The case $k=s=3$ admits a complete statement with no asymptotic qualification.
-
-**Theorem 5.1 (Exact triple theorem).** For every integer $n\ge9$,
+**Corollary 3.4 (Extremal Intersection).** Let $s>0$ and $k>0$. If $A$ and $B$ are linearly $s$-stable $k$-sets contained in the same interval $[a,a+s(k-1)]$, then $A=B$. In particular,
 
 $$
-\chi(G_3(n,3))=n-6.
+A\cap B\ne\varnothing.
 $$
 
-**Upper bound.** Theorem 3.1 gives $n-3\cdot3+3=n-6$ colors. Explicitly, a stable triple $\{a<b<c\}$ receives color $a$. Since $b\ge a+3$ and $c\ge b+3$, one has $a\le n-6$.
+**Proof sketch.** Theorem 3.3 identifies both sets with the same arithmetic progression. $\square$
 
-**Lower-bound proof sketch.** Encode a stable triple by its three cyclic gaps
+The distinction between the inequality and its equality case is important. The span bound says stable sets need room. Rigidity says that when no extra room is available, there is only one possible arrangement.
 
-$$
-(x,y,z)=(b-a,\,c-b,\,n+a-c),
-$$
+## 4. The canonical capped-minimum coloring
 
-where $x,y,z\ge3$ and $x+y+z=n$. Every color fiber is an intersecting family of triples. If it has a common point, it is controlled by a star center. If it has no common point, the stable Hilton–Milner analysis restricts the possible triples through a finite pattern of pairwise intersections. Track these families through the cyclic order and the gap compositions of $n$. With at most $n-7$ fibers, the centered classes leave an admissible initial position uncovered, while the restricted non-star classes cannot cover all gap profiles based at that position. This produces a stable triple disjoint from the covering constraints, contradicting that the fibers form a coloring. Thus at least $n-6$ colors are necessary. $\square$
-
-### 5.1 Boundary example
-
-At $n=9$, every stable triple has all three gaps equal to $3$. The vertices are
+Let $r>0$, and suppose the parameters satisfy
 
 $$
-\{1,4,7\},\qquad \{2,5,8\},\qquad \{3,6,9\}.
+n=r+s(k-1).
 $$
 
-They are pairwise disjoint, so $G_3(9,3)$ is a triangle. Its chromatic number is $3=9-6$.
-
-At larger $n$, gap slack appears. If $x'=x-3$, $y'=y-3$, and $z'=z-3$, then
+For every nonempty subset $A\subseteq[n]$, define
 
 $$
-x',y',z'\ge0,\qquad x'+y'+z'=n-9.
+c_r(A)=\min\{\min A,r-1\}.
 $$
 
-Thus stable triples are organized by weak compositions of $n-9$ into three parts, together with cyclic starting positions. This arithmetic representation is useful both in proofs and in computation.
+The image lies in $\{0,1,\ldots,r-1\}$. The colors below $r-1$ record the exact minimum. The last color merges all sets whose minimum is at least $r-1$.
 
-## 6. A topological lower-bound program
-
-Kneser-type chromatic lower bounds often have topological formulations. For a graph $G$, its box complex packages ordered pairs of nonempty vertex collections $(\mathcal A,\mathcal B)$ such that every vertex in $\mathcal A$ is adjacent to every vertex in $\mathcal B$. Swapping the two coordinates gives a free involution.
-
-A proper coloring of $G$ with $m$ colors induces an equivariant map from the box complex into a standard antipodal complex of dimension related to $m-1$. Therefore, a lower bound on the equivariant coindex of the box complex gives a lower bound on $\chi(G)$.
-
-For $G_s(n,k)$, adjacency means disjointness. A box-complex face consists of two collections of stable sets such that every set in one collection is disjoint from every set in the other. The cyclic order and spacing filtration provide natural candidates for equivariant labels.
-
-**Topological target statement.** An explicit equivariant certificate of coindex $n-sk+s-1$ would imply
+**Theorem 4.1 (Canonical Coloring Theorem for Linear Stability).** Let $s,k,r$ be positive integers and let $n=r+s(k-1)$. If $A,B\subseteq[n]$ are linearly $s$-stable $k$-sets and
 
 $$
-\chi(G_s(n,k))\ge n-sk+s,
+c_r(A)=c_r(B),
 $$
 
-which, together with Theorem 3.1, would establish the full equality.
-
-The arithmetic and topological approaches should not be viewed as competitors. The least-element coloring uses the filtration
+then
 
 $$
-[1]\subset[2]\subset\cdots\subset[n]
+A\cap B\ne\varnothing.
 $$
 
-and the fact that a stable $k$-set cannot begin after $n-s(k-1)$. A topological labeling can potentially record where positive and negative collections first become unavoidable in the same filtration. Both descriptions are controlled by cyclic gaps; one produces an explicit map into colors, while the other seeks to obstruct maps into smaller palettes.
+Consequently, disjoint linearly $s$-stable $k$-sets receive different colors.
 
-Odd $s$ presents a special challenge because simple parity-based antipodal constructions are less naturally aligned with the spacing condition. The $s=3$ intersecting-family results supply a combinatorial substitute and may also indicate the correct equivariant labels.
+**Proof sketch.** There are two principal cases.
 
-## 7. Algorithms and numerical exploration
-
-### 7.1 Generating stable sets
-
-A direct generator enumerates the $\binom nk$ subsets and tests cyclic gaps.
-
-**Algorithm 7.1 (Stable-set generation).** For each increasing tuple $a_1<\cdots<a_k$, compute
+First suppose the common color is less than $r-1$. Capping has not occurred, so
 
 $$
-a_{r+1}-a_r\quad(1\le r<k),\qquad n+a_1-a_k.
+\min A=c_r(A)=c_r(B)=\min B.
 $$
 
-Retain the tuple if every quantity is at least $s$.
+The shared minimum belongs to both sets, proving intersection.
 
-The running time is $O\!\left(k\binom nk\right)$ and the output storage is $O(kV)$, where $V=|\mathcal S_s(n,k)|$. A recursive gap-aware generator can prune partial tuples when a required future gap cannot fit, but the direct method is preferable for transparent small examples.
+Now suppose the common color is $r-1$ and both minima are at least $r-1$. Then both $A$ and $B$ lie in the interval
 
-### 7.2 Building the disjointness graph
+$$
+[r-1,n-1].
+$$
 
-Given $V$ stable sets, compare every unordered pair and insert an edge when their intersection is empty. With hash-set representations, each test costs $O(k)$ in the worst case, giving $O(kV^2)$ time and $O(V+E)$ graph storage.
+Its length is
 
-### 7.3 Canonical coloring and validation
+$$
+(n-1)-(r-1)=n-r=s(k-1).
+$$
 
-Assign $c(A)=\min A$. Validation checks both that $c(A)\le n-sk+s$ and that every disjoint pair receives different colors. The first condition follows mathematically from spacing; the second follows because equal minima give a common element. Computational validation costs $O(kV^2)$ if performed against all edges, though assignment alone costs only $O(V)$ once tuples are sorted.
+By Corollary 3.4, both stable $k$-sets equal the same arithmetic progression, so they intersect. The remaining apparent mixed possibilities—one minimum below the cap and the other at or above it—cannot produce equal capped values except at the boundary, where the same conclusion applies. $\square$
 
-### 7.4 Exact chromatic search
+The circle now enters only through Lemma 2.3.
 
-For small graphs, backtracking decides whether an $m$-coloring exists. Choose an uncolored vertex—preferably one with high saturation degree—try each available color, and backtrack on conflict. Repeating for increasing $m$ determines the chromatic number.
+**Theorem 4.2 (Canonical Coloring Theorem for Cyclic Stability).** Let $s,k,r$ be positive integers and $n=r+s(k-1)$. The map
 
-The worst-case running time is exponential, on the order of $O(m^V)$ before pruning. It is therefore a microscope for small instances, not a replacement for structural proof. Symmetry breaking, such as fixing the first vertex’s color, substantially reduces redundant branches.
+$$
+c_r(A)=\min\{\min A,r-1\}
+$$
 
-### 7.5 Gap-profile enumeration
+is a proper $r$-coloring of $G(n,s,k)$.
 
-For each stable set, compute its cyclic gap tuple. Aggregating equal tuples up to cyclic rotation reveals how the vertex family is distributed among compositions of $n$ with parts at least $s$. In the triple case, subtracting $3$ from each gap reduces the profile space to weak compositions of $n-9$. This visualization makes the boundary $n=9$ and the growth of slack immediately apparent.
+**Proof sketch.** Every vertex is cyclically $s$-stable and therefore linearly $s$-stable by Lemma 2.3. If two disjoint vertices had the same color, Theorem 4.1 would force them to intersect, a contradiction. $\square$
 
-## 8. Applications and broader connections
+**Corollary 4.3 (General Constructive Upper Bound).** Under the hypotheses of Theorem 4.2,
 
-Stable Kneser graphs model incompatibility among separated configurations. In circular scheduling, a vertex can represent $k$ recurring slots separated by mandatory recovery time; adjacent vertices are schedules sharing no slot. A coloring groups schedules guaranteed to overlap. In channel selection, stability models guard bands and colors can classify support patterns so that completely disjoint allocations are separated. In coding theory, stable supports form constrained constant-weight words, and graph coloring partitions them into pairwise-intersecting classes.
+$$
+\chi(G(n,s,k))\le r=n-sk+s.
+$$
 
-The theory also illustrates a general methodological principle. A local constraint—minimum cyclic spacing—can create a global coordinate, the least element, that yields a canonical construction. Optimality, however, is global: it depends on all ways that large intersecting families can organize themselves. The conjunction of an easy construction and a difficult rigidity theorem is common in extremal combinatorics.
+**Proof sketch.** Theorem 4.2 supplies a proper coloring with $r$ colors. Algebraically,
+
+$$
+r=n-s(k-1)=n-sk+s.
+$$
+
+Therefore the chromatic number is at most the predicted quantity. $\square$
+
+The proof explains why the final color is safe. It does not rely on all sets with large minima automatically intersecting. Instead, the numerical relation makes the tail interval exactly as short as possible, and Theorem 3.3 leaves only one stable $k$-set there.
+
+## 5. Exact chromatic number for cyclically stable triples on nine points
+
+We now specialize to
+
+$$
+(n,s,k)=(9,3,3).
+$$
+
+The graph $G(9,3,3)$ has as vertices the cyclically $3$-stable triples in $[9]$. Consider the residue-class triples
+
+$$
+R_0=\{0,3,6\},\qquad
+R_1=\{1,4,7\},\qquad
+R_2=\{2,5,8\}.
+$$
+
+**Lemma 5.1 (Residue Triple Certificate).** Each of $R_0,R_1,R_2$ is cyclically $3$-stable, and the three sets are pairwise disjoint.
+
+**Proof sketch.** Within each $R_i$, the points appear at cyclic gaps $3,3,3$. Thus both arcs between any pair have length at least $3$. Distinct residue classes modulo $3$ share no elements, so the triples are pairwise disjoint. $\square$
+
+**Theorem 5.2 (Three-Color Lower Bound).** The graph $G(9,3,3)$ cannot be properly colored with two colors.
+
+**Proof sketch.** By Lemma 5.1, the vertices $R_0,R_1,R_2$ are pairwise adjacent, so they form a clique of size $3$. In a proper coloring, pairwise adjacent vertices must receive pairwise distinct colors. Two colors cannot color three pairwise adjacent vertices. Hence $\chi(G(9,3,3))\ge3$. $\square$
+
+**Theorem 5.3 (Three-Color Upper Bound).** The graph $G(9,3,3)$ admits a proper coloring with three colors.
+
+**Proof sketch.** The parameter identity is
+
+$$
+9=3+3(3-1).
+$$
+
+Apply Theorem 4.2 with $r=3$. Explicitly, color a stable triple $A$ by
+
+$$
+c_3(A)=\min\{\min A,2\}.
+$$
+
+This is a proper coloring with colors $0,1,2$. $\square$
+
+**Theorem 5.4 (Exact Nine-Point Theorem).** The chromatic number of the cyclic $3$-stable Kneser graph on triples from nine points is
+
+$$
+\chi(G(9,3,3))=3.
+$$
+
+**Proof sketch.** Theorem 5.2 gives the lower bound $3$, and Theorem 5.3 gives the upper bound $3$. $\square$
+
+The result matches the predicted formula:
+
+$$
+9-3\cdot3+3=3.
+$$
+
+It also displays a general boundary pattern. At $n=sk$, residue classes modulo $s$ naturally produce $s$ pairwise disjoint stable $k$-sets. A full boundary classification would need to show that every stable set has this form, not merely that these examples exist.
+
+## 6. Necessity of the sharp threshold
+
+The canonical map can fail when detached from the relation $n=r+s(k-1)$.
+
+**Theorem 6.1 (Threshold Counterexample).** In $[7]=\{0,1,\ldots,6\}$, let
+
+$$
+A=\{1,4\},\qquad B=\{2,5\}.
+$$
+
+Then $A$ and $B$ are disjoint linearly $3$-stable $2$-sets, but the two-color capped-minimum map
+
+$$
+c_2(X)=\min\{\min X,1\}
+$$
+
+satisfies
+
+$$
+c_2(A)=c_2(B)=1.
+$$
+
+Therefore this map is not a proper coloring of the corresponding disjointness graph.
+
+**Proof sketch.** The unique gap in each pair equals $3$, so both are linearly $3$-stable. Their elements are distinct, hence they are disjoint. Their minima are $1$ and $2$, and both cap to $1$. $\square$
+
+For these parameters, $s=3$, $k=2$, and $r=2$, the sharp identity would require
+
+$$
+n=r+s(k-1)=2+3=5,
+$$
+
+not $n=7$. The last-color interval is consequently longer than the minimum span $3$. It can accommodate multiple stable pairs, and rigidity no longer forces intersection.
+
+This counterexample does not say that the capped-minimum map fails for every parameter choice outside the equality. It says that properness cannot be asserted without a condition relating $n$, $s$, $k$, and $r$. Classifying all successful parameter quadruples remains a natural problem.
+
+## 7. Algorithms and complexity
+
+### 7.1 Enumeration of cyclically stable sets
+
+For small and medium instances, stable sets can be generated by scanning all $k$-subsets of $[n]$.
+
+**Algorithm 7.1 (Stable-set enumeration).**
+
+1. Generate each increasing tuple $(a_0,\ldots,a_{k-1})$ from $[n]$.
+2. Compute the cyclic gaps
+   $$
+   a_{i+1}-a_i\quad(0\le i<k-1),
+   $$
+   together with the wrap-around gap
+   $$
+   n+a_0-a_{k-1}.
+   $$
+3. Retain the tuple exactly when every gap is at least $s$.
+
+There are $\binom{n}{k}$ candidates. Testing the $k$ cyclic gaps costs $O(k)$ time, giving total time
+
+$$
+O\!\left(k\binom{n}{k}\right).
+$$
+
+The output space is proportional to the number $v$ of stable sets, with $O(kv)$ integers stored.
+
+Checking consecutive cyclic gaps is sufficient. If every consecutive gap is at least $s$, every arc between nonconsecutive selected points is a sum of one or more such gaps and is therefore also at least $s$.
+
+### 7.2 Construction of the disjointness graph
+
+Given the list of $v$ stable sets, compare every unordered pair and add an edge when their intersection is empty. With hash-set representations, each disjointness test costs expected $O(k)$ time, so direct construction costs
+
+$$
+O(v^2k)
+$$
+
+and uses $O(v+e)$ graph storage, where $e$ is the number of disjoint pairs.
+
+### 7.3 Canonical coloring
+
+Under $n=r+s(k-1)$, assign
+
+$$
+c_r(A)=\min\{\min A,r-1\}.
+$$
+
+If sets are stored as sorted tuples, the minimum is the first entry and coloring costs $O(1)$ per vertex. For an unsorted representation, finding the minimum costs $O(k)$. Coloring all vertices therefore costs $O(v)$ or $O(vk)$, respectively.
+
+The proof of properness is structural, but a numerical demonstration may verify every disjoint pair. Such a check costs $O(v^2k)$ by the direct method.
+
+### 7.4 Boundary certificate
+
+For $(n,s,k)=(9,3,3)$, construct the three residue classes modulo $3$. Stability requires only the three cyclic gap checks per set, and pairwise disjointness requires three comparisons. This provides a constant-size lower-bound certificate. Combined with the canonical coloring, it yields an independently inspectable numerical demonstration of the exact chromatic number.
+
+## 8. Applications and interpretation
+
+### 8.1 Scheduling with exclusion windows
+
+A cyclically stable set models recurring choices on a periodic timetable, such as maintenance windows, communication slots, or rotating inspections. The separation parameter $s$ is a safety buffer. Vertices represent feasible schedules, while edges identify schedules that share no slot. A coloring partitions schedules into intersecting classes, ensuring that schedules with the same label share at least one common event.
+
+The packing theorem quantifies the minimum temporal span required for $k$ events. The rigidity theorem describes saturated schedules: at maximum density, the pattern must be periodic with exact spacing $s$.
+
+### 8.2 Frequency assignment and channel plans
+
+Positions around a circle can represent cyclic frequency bands or phases. Stable subsets enforce guard bands, and disjoint configurations represent nonoverlapping channel plans. The canonical coloring gives a compact classification based only on the first occupied position, with one terminal class controlled by extremal rigidity.
+
+### 8.3 Constant-weight codes with circular separation
+
+A $k$-subset of $[n]$ may be identified with a binary word of length $n$ and weight $k$. Cyclic stability imposes a run-length constraint between ones. Disjointness means the supports have no common coordinate. Packing and rigidity then describe the densest allowable words, while graph coloring organizes the codewords into support-intersecting classes.
+
+These interpretations do not change the mathematics, but they emphasize why explicit colorings matter: they are efficient labels for large families of constrained configurations.
 
 ## 9. Discussion
 
-Three features of the results deserve emphasis.
+The main upper-bound argument has three layers. First, stability creates a packing inequality. Second, equality in that inequality creates uniqueness. Third, the coloring map is designed so that its exceptional fiber lies exactly in the equality regime. This structure is more informative than a direct pairwise verification because it identifies which assumption does the work.
 
-First, the universal upper bound is exact in every proven regime and is likely exact throughout the admissible range. Its formula is not mysterious: after reserving $s$ units for each of the $k-1$ forward gaps, the least element has exactly $n-s(k-1)$ possible values.
+The nine-point theorem adds a lower-bound mechanism of a different kind. A clique immediately forces distinct colors. The residue triples are especially natural because they partition the circle and saturate all cyclic gaps. The exact result arises where an explicit coloring and an explicit obstruction meet.
 
-Second, color fibers—not individual edges—are the right objects for the lower bound. Since fibers are intersecting families, the chromatic problem inherits the star versus non-star dichotomy. Stable Hilton–Milner theory is therefore not auxiliary; it directly controls the possible architecture of a coloring.
+The counterexample is equally informative. It separates the map from its theorem: the formula $c_r(A)=\min\{\min A,r-1\}$ is always definable, but it is not always proper. Once the tail interval exceeds minimum span, multiple disjoint stable sets can occupy it. Any extension of the method must either restore a suitable interval bound or modify the treatment of the final color.
 
-Third, the combinatorial and topological viewpoints share a common substrate. Cyclic gaps govern stable-set existence, the least-element filtration, exceptional intersecting families, and candidate equivariant labels. A unified certificate may ultimately explain the complete formula.
+The broad equality for cyclically $3$-stable Kneser graphs requires lower bounds beyond the boundary example. Such bounds cannot generally come from the canonical construction, which only proves existence of a coloring. They must constrain arbitrary colorings. Since every color fiber is intersecting, structural theorems about large nontrivial intersecting families are a plausible combinatorial route. Topological obstruction methods offer a complementary global route.
 
 ## 10. Future work
 
-The foremost conjecture is the full odd-stability equality: for all $s\ge3$, $k\ge1$, and $n\ge sk$,
+The first objective is the full $3$-stable equality
 
 $$
-\chi(G_s(n,k))=n-sk+s.
+\chi(G(n,3,k))=n-3k+3
 $$
 
-A sharp classification of maximum non-star intersecting families for fixed $s$ and sufficiently large $n$ would strengthen the lower-bound method. It should identify finitely many cyclic Hilton–Milner constructions and quantify the deficit from a star.
+for all $k\ge1$ and $n\ge3k$. The present upper bound applies throughout this range after setting $r=n-3k+3$; the unresolved component is the matching lower bound away from the exact nine-point instance.
 
-A second direction is rigidity of optimal colorings. For $s=3$ and large $n$, one may ask whether every optimal coloring can, after a cyclic relabeling and permutation of colors, be transformed into classes of prescribed initial-segment or Hilton–Milner type.
+A second objective is **boundary rigidity for arbitrary stability**. At $n=sk$, every cyclically $s$-stable $k$-set is expected to be a residue class modulo $s$. Ordering the selected points and summing all $k$ cyclic gaps should force every gap to equal $s$. This would identify the boundary graph with a complete graph on $s$ vertices and prove the exact boundary value uniformly.
 
-A third direction is quantitative stability below the threshold. A coloring with fewer than $n-sk+s$ colors must fail; one can ask for a lower bound on the number or density of monochromatic disjoint pairs. Such a supersaturation theorem would measure how strongly optimality fails.
+A third direction is a stable Hilton–Milner classification: determine the largest intersecting family of cyclically $3$-stable $k$-sets that is not a star, and characterize equality. Since each color fiber is intersecting, such a theorem could prevent too few fibers from covering all vertices.
 
-Finally, an explicit equivariant index certificate derived from the initial-segment filtration could bridge the elementary and topological arguments. The ideal construction would encode the same gap data that makes the least-element coloring work, but in a form that obstructs every smaller palette.
+A fourth direction is to build topological lower-bound certificates, for example through equivariant indices or Tucker-type combinatorial lemmas. The goal would be a finite, inspectable obstruction showing that a proposed small coloring cannot exist.
+
+Finally, the capped-minimum rule itself deserves classification. Determine all quadruples $(n,s,k,r)$ for which
+
+$$
+A\longmapsto\min\{\min A,r-1\}
+$$
+
+is proper on the relevant stable family. Theorem 6.1 proves that a genuine relation among interval length, separation, set size, and color count is necessary.
 
 ## 11. Conclusion
 
-Cyclically stable Kneser graphs turn a spacing problem on a circle into a chromatic problem about disjointness. Their canonical coloring is immediate once the least possible gaps are counted, yielding the universal bound $n-sk+s$. Proving optimality requires understanding the internal structure of intersecting stable families. Stable Hilton–Milner principles provide that structure for the $3$-stable large-$n$ regime and, with a complete gap analysis, for every cyclically $3$-stable triple graph. The resulting exact formula $\chi(G_3(n,3))=n-6$ holds throughout the admissible range. The remaining general conjecture invites a synthesis of extremal set theory, cyclic arithmetic, and equivariant topology.
+Stable Kneser coloring is governed, on its constructive side, by an elementary but sharp packing principle. A linearly $s$-stable $k$-set needs span at least $s(k-1)$; at equality it is the unique arithmetic progression of step $s$ in its interval. This rigidity makes the capped-minimum map a proper coloring whenever $n=r+s(k-1)$ and yields
+
+$$
+\chi(G(n,s,k))\le n-sk+s.
+$$
+
+For cyclically $3$-stable triples on nine points, three residue-class vertices form a clique, while the canonical map supplies three colors. Hence the chromatic number is exactly $3$. The disjoint pairs $\{1,4\}$ and $\{2,5\}$ show that the same map can fail without its sharp threshold. Together, these results isolate a durable principle: optimal coloring constructions often rest not merely on packing inequalities, but on the rigidity of their equality cases.

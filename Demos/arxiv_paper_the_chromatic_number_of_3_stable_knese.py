@@ -1,148 +1,138 @@
 #!/usr/bin/env python3
-"""Numerical experiments for cyclically stable Kneser graphs.
+"""Numerical demonstrations for stable Kneser graphs.
 
-The program uses only the Python standard library. It generates stable sets,
-checks the canonical least-element coloring, computes exact chromatic numbers
-for small instances by DSATUR backtracking, and summarizes cyclic gap profiles.
+Uses only the Python standard library. It enumerates cyclically stable sets,
+checks the canonical coloring theorem in sample instances, certifies the exact
+three-color boundary case on nine points, and displays the threshold
+counterexample.
 """
 
 from __future__ import annotations
 
-from collections import Counter
 from itertools import combinations
-from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
+from typing import Dict, Iterable, List, Sequence, Tuple
 
-Vertex = Tuple[int, ...]
-Adjacency = List[Set[int]]
+StableSet = Tuple[int, ...]
 
 
-def cyclic_gaps(vertex: Sequence[int], n: int) -> Tuple[int, ...]:
-    """Return successive cyclic gaps of a sorted nonempty vertex."""
-    if not vertex:
-        raise ValueError("a stable set must be nonempty")
-    return tuple(vertex[i + 1] - vertex[i] for i in range(len(vertex) - 1)) + (
-        n + vertex[0] - vertex[-1],
+def is_linear_stable(points: Sequence[int], s: int) -> bool:
+    """Return whether every two selected points differ by at least s."""
+    ordered = sorted(points)
+    return all(y - x >= s for x, y in combinations(ordered, 2))
+
+
+def cyclic_gaps(points: Sequence[int], n: int) -> Tuple[int, ...]:
+    """Return consecutive clockwise gaps, including the wrap-around gap."""
+    ordered = tuple(sorted(points))
+    if not ordered:
+        return ()
+    return tuple(ordered[i + 1] - ordered[i] for i in range(len(ordered) - 1)) + (
+        n + ordered[0] - ordered[-1],
     )
 
 
-def is_cyclically_stable(vertex: Sequence[int], n: int, s: int) -> bool:
-    """Test whether every cyclic gap is at least s."""
-    return bool(vertex) and all(gap >= s for gap in cyclic_gaps(vertex, n))
+def is_cyclic_stable(points: Sequence[int], n: int, s: int) -> bool:
+    """Return whether points form a cyclically s-stable subset of [0,n)."""
+    ordered = tuple(sorted(points))
+    return (
+        len(set(ordered)) == len(ordered)
+        and all(0 <= x < n for x in ordered)
+        and all(gap >= s for gap in cyclic_gaps(ordered, n))
+    )
 
 
-def stable_sets(n: int, k: int, s: int) -> List[Vertex]:
-    """Enumerate all cyclically s-stable k-subsets of {1,...,n}."""
-    if min(n, k, s) < 1 or k > n:
-        return []
+def enumerate_cyclic_stable(n: int, s: int, k: int) -> List[StableSet]:
+    """Enumerate all cyclically s-stable k-subsets of [0,n)."""
     return [
         candidate
-        for candidate in combinations(range(1, n + 1), k)
-        if is_cyclically_stable(candidate, n, s)
+        for candidate in combinations(range(n), k)
+        if is_cyclic_stable(candidate, n, s)
     ]
 
 
-def disjointness_graph(vertices: Sequence[Vertex]) -> Adjacency:
-    """Build adjacency sets, joining exactly the disjoint vertex pairs."""
-    adjacency: Adjacency = [set() for _ in vertices]
-    supports = [set(vertex) for vertex in vertices]
-    for i, j in combinations(range(len(vertices)), 2):
-        if supports[i].isdisjoint(supports[j]):
-            adjacency[i].add(j)
-            adjacency[j].add(i)
-    return adjacency
+def canonical_color(points: Sequence[int], r: int) -> int:
+    """Compute min(min(points), r-1) for a nonempty set and positive r."""
+    if not points or r <= 0:
+        raise ValueError("points must be nonempty and r must be positive")
+    return min(min(points), r - 1)
 
 
-def least_element_coloring(vertices: Iterable[Vertex]) -> Dict[Vertex, int]:
-    """Color each stable set by its least element."""
-    return {vertex: vertex[0] for vertex in vertices}
+def disjoint(left: Iterable[int], right: Iterable[int]) -> bool:
+    """Return whether two finite collections have empty intersection."""
+    return set(left).isdisjoint(right)
 
 
-def validate_coloring(
-    vertices: Sequence[Vertex], adjacency: Adjacency, colors: Dict[Vertex, int]
-) -> bool:
-    """Check that every edge has differently colored endpoints."""
-    return all(
-        colors[vertices[i]] != colors[vertices[j]]
-        for i in range(len(vertices))
-        for j in adjacency[i]
-        if i < j
-    )
+def verify_canonical_coloring(n: int, s: int, k: int, r: int) -> bool:
+    """Exhaustively check canonical properness for one finite instance."""
+    if n != r + s * (k - 1):
+        raise ValueError("the theorem requires n = r + s*(k-1)")
+    vertices = enumerate_cyclic_stable(n, s, k)
+    for index, left in enumerate(vertices):
+        for right in vertices[index + 1 :]:
+            if disjoint(left, right):
+                if canonical_color(left, r) == canonical_color(right, r):
+                    return False
+    return True
 
 
-def _dsatur_m_coloring(adjacency: Adjacency, color_count: int) -> Optional[List[int]]:
-    """Find a coloring with color_count colors, or return None."""
-    size = len(adjacency)
-    colors = [-1] * size
-
-    def choose_vertex() -> int:
-        uncolored = [v for v in range(size) if colors[v] < 0]
-        return max(
-            uncolored,
-            key=lambda v: (
-                len({colors[w] for w in adjacency[v] if colors[w] >= 0}),
-                len(adjacency[v]),
-            ),
-        )
-
-    def search(colored: int) -> bool:
-        if colored == size:
-            return True
-        vertex = choose_vertex()
-        forbidden = {colors[w] for w in adjacency[vertex] if colors[w] >= 0}
-        for color in range(color_count):
-            if color not in forbidden:
-                colors[vertex] = color
-                if search(colored + 1):
-                    return True
-                colors[vertex] = -1
-        return False
-
-    return colors if search(0) else None
+def color_histogram(n: int, s: int, k: int, r: int) -> Dict[int, int]:
+    """Count cyclically stable vertices in each canonical color."""
+    counts = {color: 0 for color in range(r)}
+    for vertex in enumerate_cyclic_stable(n, s, k):
+        counts[canonical_color(vertex, r)] += 1
+    return counts
 
 
-def exact_chromatic_number(adjacency: Adjacency, upper_bound: int) -> int:
-    """Determine the exact chromatic number of a small graph by backtracking."""
-    if not adjacency:
-        return 0
-    for color_count in range(1, upper_bound + 1):
-        if _dsatur_m_coloring(adjacency, color_count) is not None:
-            return color_count
-    raise RuntimeError("the supplied upper bound was not a valid bound")
+def boundary_certificate() -> Tuple[StableSet, StableSet, StableSet]:
+    """Return the three pairwise-disjoint stable triples on nine points."""
+    triples = ((0, 3, 6), (1, 4, 7), (2, 5, 8))
+    assert all(is_cyclic_stable(triple, 9, 3) for triple in triples)
+    assert all(disjoint(a, b) for a, b in combinations(triples, 2))
+    return triples
 
 
-def normalized_gap_profile(vertex: Vertex, n: int) -> Tuple[int, ...]:
-    """Canonicalize a cyclic gap tuple up to rotation."""
-    gaps = cyclic_gaps(vertex, n)
-    rotations = [gaps[i:] + gaps[:i] for i in range(len(gaps))]
-    return min(rotations)
-
-
-def run_instance(n: int, k: int, s: int, exact: bool = True) -> None:
-    """Generate one graph and print its principal numerical invariants."""
-    vertices = stable_sets(n, k, s)
-    adjacency = disjointness_graph(vertices)
-    colors = least_element_coloring(vertices)
-    edge_count = sum(map(len, adjacency)) // 2
-    predicted = n - s * k + s
-    proper = validate_coloring(vertices, adjacency, colors)
-    used = len(set(colors.values()))
-    profiles = Counter(normalized_gap_profile(vertex, n) for vertex in vertices)
-
-    print(f"n={n}, k={k}, s={s}")
-    print(f"  vertices={len(vertices)}, edges={edge_count}")
-    print(f"  predicted palette n-sk+s={predicted}")
-    print(f"  least-element colors used={used}, proper={proper}")
-    print(f"  rotational gap profiles={dict(sorted(profiles.items()))}")
-    if exact:
-        chromatic = exact_chromatic_number(adjacency, max(used, 1))
-        print(f"  exact chromatic number={chromatic}")
-    print()
+def threshold_counterexample() -> Tuple[StableSet, StableSet, int, int]:
+    """Return two disjoint stable pairs and their equal capped colors."""
+    left, right, r = (1, 4), (2, 5), 2
+    assert is_linear_stable(left, 3) and is_linear_stable(right, 3)
+    assert disjoint(left, right)
+    left_color = canonical_color(left, r)
+    right_color = canonical_color(right, r)
+    assert left_color == right_color
+    return left, right, left_color, right_color
 
 
 def main() -> None:
-    """Run boundary and nearby examples for cyclically 3-stable triples."""
-    for n in (9, 10, 11):
-        run_instance(n=n, k=3, s=3, exact=True)
+    """Run and print all demonstrations."""
+    n, s, k, r = 9, 3, 3, 3
+    vertices = enumerate_cyclic_stable(n, s, k)
+    print("Stable Kneser numerical demonstration")
+    print("=" * 40)
+    print(f"Parameters: n={n}, s={s}, k={k}, r={r}")
+    print(f"Cyclically stable triples: {len(vertices)}")
+    print(f"Canonical color histogram: {color_histogram(n, s, k, r)}")
+    print(f"Canonical coloring is proper: {verify_canonical_coloring(n, s, k, r)}")
+
+    certificate = boundary_certificate()
+    print("\nThree-clique lower-bound certificate:")
+    for triple in certificate:
+        print(f"  {triple}, cyclic gaps={cyclic_gaps(triple, 9)}")
+    print("These pairwise-disjoint vertices force at least three colors.")
+    print("Together with the proper three-coloring, the chromatic number is 3.")
+
+    left, right, left_color, right_color = threshold_counterexample()
+    print("\nThreshold counterexample:")
+    print(f"  A={left}, B={right}, disjoint={disjoint(left, right)}")
+    print(f"  capped colors: c(A)={left_color}, c(B)={right_color}")
+    print("Thus capped-minimum coloring can fail without the sharp threshold.")
+
+    print("\nAdditional valid instance:")
+    n2, s2, k2, r2 = 8, 2, 3, 4
+    print(
+        f"  (n,s,k,r)=({n2},{s2},{k2},{r2}), "
+        f"vertices={len(enumerate_cyclic_stable(n2, s2, k2))}, "
+        f"proper={verify_canonical_coloring(n2, s2, k2, r2)}"
+    )
 
 
 if __name__ == "__main__":
