@@ -4,6 +4,80 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0078",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T04:26:46.728014+00:00",
+    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0075",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T04:26:46.709421+00:00",
+    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0076",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T04:26:46.716604+00:00",
+    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0077",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T04:26:46.722273+00:00",
+    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
+    "domains": [
+      "Novelty",
+      "Combinatorics"
+    ],
+    "id": "fd_0079",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-16T04:26:46.733961+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
       "Algebra",
@@ -134,7 +208,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "352675e9",
     "description": "Investigate the ArXiv paper 'Ray and end spaces: characterizations and classification up to homeomorphism' and formalize its key results. Abstract: We provide a combinatorial characterization for pairs of order-theoretic trees with homeomorphic ray spaces, answering an open problem proposed by Kurkofka ad Pitz. This solution is inspired by the introduction of a transfinite topological game, which allows us to characterize not only ray spaces through the existence of winning strategies for one of the players, but also their homeomorphic classes. As applications of these results, we obtain a new topological characterization for graph-theoretic end spaces (thus obtaining yet another solution to a recently solved problem of Diestel), as well as for edge-end spaces and completely ultrametrizable spaces. We also introduce a generalization of the class of ray spaces (which is strict, as witnessed by the Sorgenfrey line). Furthermore, we establish that, for subspaces with cardinality less than continuum of end spaces, the scattered property is equivalent to the property of being, itself, an end space. At last, we determine that ray spaces",
     "domains": [
       "Algebra",
@@ -144,7 +218,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11561v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:58:28.589423+00:00",
     "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to homeomorphism"
   },
@@ -455,7 +529,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "499d98ab",
     "description": "Investigate the ArXiv paper 'Learning the Graphical Nature of Symmetries' and formalize its key results. Abstract: Finite groups are rigid algebraic objects, whose Cayley graphs expose a rich network geometry through which group-theoretic structure can be measured, compared, and learned. In this paper, a dataset of $131{,}406$ Cayley graphs is constructed, covering all groups of order at most $767$ except order $512$, recording exact algebraic labels for group properties together with a broad collection of graph, cycle, distance, and spectral statistics. This census aims to provide novel benchmarks for studying how finite-group properties are reflected in Cayley graph observables. It also yields new enumerative contributions: alongside recovering known OEIS sequences for standard group classes, new sequences for monolithic groups and for groups generated by at most three, four, and five elements are contributed to the OEIS. The accompanying network analysis identifies several empirical regularities and formulates testable conjectures, including relationships involving square clustering, Cayley grap",
     "domains": [
       "Algebra",
@@ -465,7 +539,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12026v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T22:29:34.061191+00:00",
     "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
   },
@@ -529,7 +603,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: An asymptotic Sidon basis of order $3-\u03b7$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "58c6edf0",
     "description": "Investigate the ArXiv paper 'The combinatorics of sector renormalization' and formalize its key results. Abstract: The goal of this note is to systematically develop the fundamental arithmetic and combinatorial properties of the sector renormalization operation on rigid rotations. We employ the specific framework of modified continued fractions appropriate for sector renormalization and analyze their properties. By allowing infinite first return times, this framework yields a dynamical compactification characterized by a universal property. We also discuss the corresponding natural extension and introduce the notion of a time (semi-)group. For example, we demonstrate how a bi-infinite tower of sector renormalizations of irrational rotations can be packaged within a single dynamical plane as a cascade of translations. This note will serve as a foundational combinatorial tool for studying the geometric properties of sector renormalizations of holomorphic maps with irrationally indifferent fixed points, particularly neutral quadratic polynomials.",
     "domains": [
       "Algebra",
@@ -539,7 +613,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11408v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:35:58.435178+00:00",
     "title": "ArXiv paper: The combinatorics of sector renormalization"
   },
@@ -748,7 +822,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Recursive Formula for the Equations of Hessenberg Varieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cca295e6",
     "description": "Investigate the ArXiv paper 'Hypergraph Turan with bounded matching number' and formalize its key results. Abstract: For a fixed graph $G$, an $r$-uniform hypergraph is said to contain a Berge-$G$ if there exists a bijection $f\\colon E(G)\\to E(\\mathcal{H})$ for some subhypergraph $\\mathcal{H}$ such that $e\\subseteq f(e)$ for every $e\\in E(G)$. Motivated by Alon and Frankl's study of Tur\u00e1n problems under bounded matching constraints, we investigate the maximum number of edges in $r$-uniform Berge-$K_3$-free hypergraphs with matching number at most~$s$. We determine the exact Tur\u00e1n numbers for the cases $r=3$ and $r=4$. For $r=3$ and $n \\geq 3 s$, we prove that every $n$-vertex Berge- $K_3$-free 3-graph with matching number $s$ has at most $s(n-2 s)$ edges, and we characterize the unique extremal hypergraph attaining equality. For $r=4$ and $n \\geq 4 s$, the maximum number of edges is $s\\lfloor(n-2 s) / 2\\rfloor$, except for the exceptional case $s=1$ and $n \\equiv 1(\\bmod 4)$, in which the bound is $(n-1) / 2$. As a corollary, our results recover the classical theorem of Gy\u0151ri on Berge-$K_3$-free hype",
     "domains": [
       "Algebra"
@@ -757,7 +831,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12300v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T19:54:37.533091+00:00",
     "title": "ArXiv paper: Hypergraph Turan with bounded matching number"
   },
@@ -791,7 +865,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5543d24b",
     "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Ap\u00e9ry-like numbers. As applications, many new supercongruences are deduced.",
     "domains": [
       "Bridges"
@@ -800,7 +874,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T20:45:36.266548+00:00",
     "title": "ArXiv paper: Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers"
   },
@@ -834,7 +908,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Far-apart Erd\u0151s--P\u00f3sa property of long cycles"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "573ee086",
     "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the B\u00e1ez-Duarte criterion.",
     "domains": [
       "Bridges"
@@ -843,7 +917,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T21:37:25.493366+00:00",
     "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
   },
@@ -862,7 +936,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4e53cd7c",
     "description": "Investigate the ArXiv paper 'Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence' and formalize its key results. Abstract: An independent set in a graph $G$ is a set of pairwise non-adjacent vertices. A tree decomposition of $G$ is a pair $(T, \u03c7)$ where $T$ is a tree and $\u03c7: V(T) \\rightarrow 2^{V(G)}$ is a function satisfying two axioms: for every edge $uv \\in E(G)$ there is an $x \\in V(T)$ such that $\\{u,v\\} \\subseteq \u03c7(x)$, and for every vertex $u \\in V(G)$ the set $\\{x \\in V(T) | u \\in \u03c7(x)\\}$ induces a non-empty and connected subtree of $T$. The sets $\u03c7(x)$ for $x \\in V(T)$ are called the bags of the tree decomposition. The tree-independence number of $G$ is the minimum taken over all tree decompositions of $G$ of the maximum size of an independent set of the graph induced by a bag of the decomposition. A graph $H$ is an induced minor of a graph $G$ if a graph isomorphic to $H$ can be obtained from $G$ by vertex deletions and edge contractions. We prove that for every $t\\in\\mathbb{N}$ there exists an $\u03b5> 0$ such that every graph $G$ either contains the complete bipartite graph $K_{t,t}$ or the wall $W_",
     "domains": [
       "Logic"
@@ -871,7 +945,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12090v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T22:11:50.907220+00:00",
     "title": "ArXiv paper: Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence"
   },
@@ -965,7 +1039,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Combinatorial interpretation of the coefficients of the order polynomial of fence posets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1e62d74",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -974,7 +1048,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
