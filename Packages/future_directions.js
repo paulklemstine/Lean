@@ -193,21 +193,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The chain replacement of a poset flow"
   },
   {
-    "consumed_by_exp_id": "5c8ca77d",
-    "description": "Investigate the ArXiv paper 'Superlinear complexity of the $(3/2)^n$ steering word' and formalize its key results. Abstract: Write $(3/2)^n = m_n + \\eps_n$ with $m_n$ the nearest integer and $\\eps_n\\in[-\\tfrac12,\\tfrac12)$, and let $T=(t_n)$, $t_n=2m_{n+1}-3m_n$, be the resulting \\emph{steering word}: the step-by-step record of the map $x\\mapsto\\tfrac32 x$ on the orbit of $1$, coded by nearest-integer rounding. Using results by Corvaja--Zannier and Nair--Kumar--Rout we prove that the subword complexity $\\pT(k)$ of $T$ is superlinear, $\\pT(k)/k\\to\\infty$. The argument is completely formalized in Lean-4, depending only on the Subspace Theorem.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0017",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11648v2",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T08:40:04.207098+00:00",
-    "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Ray and end spaces: characterizations and classification up to homeomorphism' and formalize its key results. Abstract: We provide a combinatorial characterization for pairs of order-theoretic trees with homeomorphic ray spaces, answering an open problem proposed by Kurkofka ad Pitz. This solution is inspired by the introduction of a transfinite topological game, which allows us to characterize not only ray spaces through the existence of winning strategies for one of the players, but also their homeomorphic classes. As applications of these results, we obtain a new topological characterization for graph-theoretic end spaces (thus obtaining yet another solution to a recently solved problem of Diestel), as well as for edge-end spaces and completely ultrametrizable spaces. We also introduce a generalization of the class of ray spaces (which is strict, as witnessed by the Sorgenfrey line). Furthermore, we establish that, for subspaces with cardinality less than continuum of end spaces, the scattered property is equivalent to the property of being, itself, an end space. At last, we determine that ray spaces",
     "domains": [
@@ -1713,6 +1698,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T10:37:29.751195+00:00",
     "title": "ArXiv paper: Combinatorial identities derived from explicit formulas of Gauss hypergeometric functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization of 64 axis-parallel closed rectangles that is triangle-free, has packing number exactly 16, and has piercing number exactly 32; moreover, all four claims admit certificates consisting only of endpoint-order comparisons, sixteen distinguished disjoint rectangles, and a 32-point piercing set.\n\nThe key insight is that the counting theory already reduces the lower piercing bound and upper packing bound to bounded fibers, so the remaining burden can be expressed as a finite order certificate rather than a geometric existence argument. **Why now?** The abstract implications have been separated from coordinates, making a compact independently checkable coordinate layer the next sharply defined task.\n\n## 2. Incidence-matrix duality unifying slots and piercing points\n\n**Conjecture.** Every horizontal\u2013vertical gadget assembled from ordered-slot blocks has a single totally dual integral incidence certificate whose row capacities prove the packing bound and whose column capacities prove the piercing lower bound; for the 64-rectangle construction this certificate has optimum values 16 and 32 on the two integral sides.\n\nThe key insight is that both present arguments count fibers of a map into a finite certificate space, suggesting that they are two projections of one capacitated bipartite incidence structure. **Why now?** The two proofs have identical combinatorial shape but currently use unrelated maps, so identifying their common matrix may expose a reusable composition theorem.\n\n## 3. Exact recursive packing under horizontal\u2013vertical composition\n\n**Conjecture.** For every recursively composed family `P_r`, every maximum disjoint subfamily factors into maximum ordered-slot choices at every node of the composition tree, and consequently the number of maximum packings satisfies an explicit multiplicative recurrence in addition to `\u03bd(P_r)=4^(2^r)`.\n\nThe key insight is that equality in the slot-capacity inequality forces every block-slot cell to be saturated, which should rigidify extremizers recursively. **Why now?** The exact closed form for the optimum is established from the squaring law; classifying equality cases is the natural next structural refinement and is experimentally finite at the first levels.\n\n## 4. Point-relaxation gaps converging to `5/2`\n\n**Conjecture.** The horizontal\u2013vertical recursion admits feasible clique-relaxation weights whose objective-to-packing ratio is strictly increasing from level three onward and converges to `5/2`, while matching dual point-weight certificates prove optimality at every finite level.\n\nThe key insight is that axis-parallel rectangles convert cliques into common-point constraints, while recursive symmetry should collapse the primal and dual linear programs to a bounded-dimensional recurrence. **Why now?** The finite ratio `73/32` and the exact doubly exponential packing scale identify both the first nontrivial checkpoint and the normalization needed for a recurrence-level analysis.\n\n## 5. Stability of near-extremal triangle-free piercing families\n\n**Conjecture.** If a triangle-free family of `2n` sets requires at least `n-o(n)` piercing points, then every near-minimum transversal assigns all but `o(n)` sets in pairs to its points; under an axis-parallel rectangle hypothesis, the corresponding intersection graph is within `o(n)` edge edits of a matching blow-up generated by ordered-slot gadgets.\n\nThe key insight is that near equality in `|R| \u2264 2|T|` leaves little slack in the fiber capacities, forcing almost every piercing point to cover exactly two members. **Why now?** The sharp counting inequality exposes a quantitative defect term, allowing a stability program that bridges finite incidence counting, intersection graphs, and geometry.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0126",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d1512647",
+    "status": "available",
+    "timestamp": "2026-07-16T10:38:04.259616+00:00",
+    "title": "**Conjecture.** There is an integer-coordinate realization of 64 axis-parallel c"
   },
   {
     "consumed_by_exp_id": "",

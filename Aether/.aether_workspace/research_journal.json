@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dc502c2d",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Algebra and Rank in Well-Founded Games\n\n## 1. Transfinite Sprague–Grundy classification\n\n**Conjecture.** Every set-sized well-founded impartial game admits an\nordinal-valued Grun",
-      "quality_score": 0.91,
-      "sorry_count": 1,
-      "theorem_count": 42,
-      "timestamp": "2026-07-15T03:46:59",
-      "title": "This cycle deepens the theory of two-player **well-founded (transfinite) games**"
-    },
-    {
       "cycle_id": "42e1a665",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n## 1. The unbounded composite-index theorem\n\nFor every composite integer `n ≥ 13`, the Fibonacci number `F(n)` has a prime divisor that divides no earlier positive-index Fibonacci",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-16T10:37:21",
       "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-16T10:38:08",
+      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6e7a2b5e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Topology of Argumentation (IX)\n\nThis cycle established, with no finiteness or well-foundedness hypothesis on the\nattack relation, the maximal-extension half of Dung's semanti",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-13T19:24:40",
-      "title": "Deepening: Previous cycles formalized Dung's abstract argumentation semantics: conflict-fre"
-    },
     {
       "cycle_id": "f3fa6ca4",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-16T10:37:21",
       "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules"
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Rectangle Piercing, Packing, and Relaxation Gaps\n\n## 1. A complete coordinate certificate for the 64-rectangle family\n\n**Conjecture.** There is an integer-coordinate realization o",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-16T10:38:08",
+      "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "352675e9",
-      "domain": "Applications",
-      "name": "relabel_preserves_ray",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "573ee086",
-      "domain": "Algebra",
-      "name": "measures",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "573ee086",
-      "domain": "Algebra",
-      "name": "certification",
-      "quality": 0.73
-    },
     {
       "cycle_id": "573ee086",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "failed_extension_test_excludes_pattern",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "name": "triangleFree_transversal_count",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "name": "sixtyFour_requires_thirtyTwo",
+      "quality": 0.71
+    },
+    {
+      "cycle_id": "d1512647",
+      "domain": "Applications",
+      "name": "card_le_slots_times_capacity",
+      "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T10:37:21",
+  "last_updated": "2026-07-16T10:38:08",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3089,12 +3089,6 @@
         "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to home"
       },
       {
-        "cycle_id": "352675e9",
-        "quality": 0.71,
-        "theorems": 13,
-        "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to home"
-      },
-      {
         "cycle_id": "19cecd78",
         "quality": 0.69,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.73,
         "theorems": 11,
         "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
+      },
+      {
+        "cycle_id": "d1512647",
+        "quality": 0.71,
+        "theorems": 5,
+        "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up"
       }
     ],
     "Bridges": [
