@@ -47,19 +47,22 @@
       "name": "Canonical Left-Relative Pair Normalization",
       "description": "Replaces an ordered pair (a,b) by the canonical representative (e,a^{-1}b). It uses one inversion and one multiplication, hence O(1) group operations; transporting k common neighbors costs O(k). This is the normalization step underlying every difference-indexed query.",
       "pseudocode": "INPUT: group elements a,b.\n1. Compute u ← inverse(a).\n2. Compute g ← u·b.\n3. Return g; transport any attached vertex x as u·x.\nOUTPUT: canonical relative coordinate g and transport rule.",
-      "code": "from typing import TypeVar, Callable\nT = TypeVar(\"T\")\ndef normalize_pair(a: T, b: T, multiply: Callable[[T,T],T], inverse: Callable[[T],T]) -> T:\n    \"\"\"Return the canonical relative coordinate a^{-1}b.\"\"\"\n    return multiply(inverse(a), b)\n"
+      "code": "from typing import TypeVar, Callable\nT = TypeVar(\"T\")\ndef normalize_pair(a: T, b: T, multiply: Callable[[T,T],T], inverse: Callable[[T],T]) -> T:\n    \"\"\"Return the canonical relative coordinate a^{-1}b.\"\"\"\n    return multiply(inverse(a), b)\n",
+      "code_file": "visualizations/arxiv_paper_learning_the_graphical_nature_of_symme_canonical_left_relative_pair_normalizati.py"
     },
     {
       "name": "Connection-Set Autocorrelation Profile",
       "description": "Computes κ(g)=|S∩gS| for all g, exactly the common-neighbor count at (e,g). With hashed membership and constant-time group operations it runs in O(|G||S|) time and O(|G|+|S|) storage, replacing an O(|G|²|S|) direct pair table.",
       "pseudocode": "INPUT: finite group G and connection set S.\n1. Store S for constant-time membership.\n2. For each g in G, set κ(g) ← 0.\n3. For each s in S, test whether g^{-1}s belongs to S.\n4. Increment κ(g) for every successful test.\n5. Return all κ(g).",
-      "code": "from typing import Hashable, TypeVar, Callable\nT = TypeVar(\"T\", bound=Hashable)\ndef common_neighbor_profile(elements: tuple[T, ...], connection: set[T], multiply: Callable[[T,T],T], inverse: Callable[[T],T]) -> dict[T,int]:\n    \"\"\"Compute kappa(g)=|S intersect gS| for every group element.\"\"\"\n    return {g: sum(1 for s in connection if multiply(inverse(g), s) in connection) for g in elements}\n"
+      "code": "from typing import Hashable, TypeVar, Callable\nT = TypeVar(\"T\", bound=Hashable)\ndef common_neighbor_profile(elements: tuple[T, ...], connection: set[T], multiply: Callable[[T,T],T], inverse: Callable[[T],T]) -> dict[T,int]:\n    \"\"\"Compute kappa(g)=|S intersect gS| for every group element.\"\"\"\n    return {g: sum(1 for s in connection if multiply(inverse(g), s) in connection) for g in elements}\n",
+      "code_file": "visualizations/arxiv_paper_learning_the_graphical_nature_of_symme_connection_set_autocorrelation_profile.py"
     },
     {
       "name": "Induced Common-Neighborhood Signature Extraction",
       "description": "Builds the graph induced on a common-neighbor set and returns its vertex count, edge count, and degree multiset. Testing all vertex pairs costs O(k²) for k common neighbors and uses O(k²) worst-case edge storage; richer spectral signatures can be appended afterward.",
       "pseudocode": "INPUT: common-neighbor set C and connection set S.\n1. Initialize an empty edge list and zero degrees.\n2. For every unordered pair {x,y} in C, compute x^{-1}y.\n3. If x^{-1}y∈S, add the edge and increment both degrees.\n4. Sort the degree values.\n5. Return (|C|, edge count, degree multiset).",
-      "code": "from typing import Hashable, TypeVar, Callable\nT = TypeVar(\"T\", bound=Hashable)\ndef induced_signature(common: set[T], connection: set[T], multiply: Callable[[T,T],T], inverse: Callable[[T],T]) -> tuple[int,int,tuple[int,...]]:\n    \"\"\"Return vertex count, edge count, and degree multiset of an induced common neighborhood.\"\"\"\n    vertices = tuple(common)\n    edges = [(x,y) for i,x in enumerate(vertices) for y in vertices[i+1:] if multiply(inverse(x),y) in connection]\n    degrees = {x: 0 for x in vertices}\n    for x,y in edges:\n        degrees[x] += 1; degrees[y] += 1\n    return len(vertices), len(edges), tuple(sorted(degrees.values()))\n"
+      "code": "from typing import Hashable, TypeVar, Callable\nT = TypeVar(\"T\", bound=Hashable)\ndef induced_signature(common: set[T], connection: set[T], multiply: Callable[[T,T],T], inverse: Callable[[T],T]) -> tuple[int,int,tuple[int,...]]:\n    \"\"\"Return vertex count, edge count, and degree multiset of an induced common neighborhood.\"\"\"\n    vertices = tuple(common)\n    edges = [(x,y) for i,x in enumerate(vertices) for y in vertices[i+1:] if multiply(inverse(x),y) in connection]\n    degrees = {x: 0 for x in vertices}\n    for x,y in edges:\n        degrees[x] += 1; degrees[y] += 1\n    return len(vertices), len(edges), tuple(sorted(degrees.values()))\n",
+      "code_file": "visualizations/arxiv_paper_learning_the_graphical_nature_of_symme_induced_common_neighborhood_signature_ex.py"
     }
   ],
   "visualizations": [

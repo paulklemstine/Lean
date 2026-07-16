@@ -3,105 +3,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0086",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T05:31:39.972007+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0083",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T05:31:39.951519+00:00",
-    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0084",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T05:31:39.958622+00:00",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0085",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T05:31:39.965010+00:00",
-    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Combinatorics"
-    ],
-    "id": "fd_0087",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-16T05:31:39.979612+00:00",
-    "title": "The Library of Babel: Combinatorics of the Universal Library"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domain_bridges": [],
     "domains": [
@@ -159,7 +60,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b71e4678",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'From roots to paths: graphs simultaneously irregular with respect to rooted and ordinary paths' and formalize its key results. Abstract: Let $P_n$ denote a path on $n$ vertices. A simple finite graph $G$ is called $P_n$-irregular if any two distinct vertices of $G$ belong to a different number of subgraphs of $G$ isomorphic to $P_n$. Alternatively, for a fixed vertex $r$ of $P_n$ (the root), $G$ is called $(P_n)_r$-irregular if any two distinct vertices of $G$ act as the root $r$ in a different number of subgraphs of $G$ isomorphic to $P_n$. This paper proves that for each integer $k \\geq 4$, there exists an infinite family of graphs that are simultaneously $P_n$-irregular and $(P_n)_r$-irregular for every integer $n$ satisfying $4 \\leq n \\leq k$ and every root $r$ of $P_n$. For the path $P_3$, we observe that no nontrivial $(P_3)_r$-irregular graphs exist if $r$ is the central vertex. In contrast, if $r$ is an end-vertex of $P_3$, an infinite collection of graphs is constructed that are both $P_3$-irregular and $(P_3)_r$-irregular. In particular, these results confirm the Strong Conjecture about $F$-irregular graphs fo",
     "domain_bridges": [],
     "domains": [
@@ -171,7 +72,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.11700v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T09:16:25.430793+00:00",
     "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinary paths"
   },
@@ -966,13 +867,33 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Zero-one laws for uniform approximation via Gaussian and Eisenstein integers' and formalize its key results. Abstract: We establish two distinct zero-one laws for the uniform Diophantine approximation of complex numbers by quotients of Gaussian integers and by quotients of Eisenstein integers. Using tools from homogeneous dynamics, we study this problem by reducing to a shrinking target problem on certain homogeneous spaces of $\\mathrm{SL}_2(\\mathbb{C})$. The main novel ingredients include measure estimates on a certain family of neighborhoods of the corresponding critical loci, as well as new disjointness statements to control the short-range mixing contribution. Due to the different nature of the critical loci in the Gaussian and Eisenstein cases, these measure estimates are obtained by rather different arguments.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0053",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.11178v1",
+    "status": "available",
+    "timestamp": "2026-07-16T05:47:47.595754+00:00",
+    "title": "ArXiv paper: Zero-one laws for uniform approximation via Gaussian and Eisenstein integers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $χ\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0053",
+    "id": "fd_0054",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -992,7 +913,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0054",
+    "id": "fd_0055",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1006,12 +927,31 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=α(G)+1$, where $α(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0056",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.12890v1",
+    "status": "available",
+    "timestamp": "2026-07-15T13:08:25.917501+00:00",
+    "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Record compositions of alternating permutations and noncommutative symmetric functions' and formalize its key results. Abstract: Amdeberhan, Shareshian, and Stanley recently proved that a function $\\varphi$ arising in the theory of partition Eisenstein series counts the alternating permutations of $\\{1,\\dots,2n\\}$ with a given `record' partition, and they asked whether there is a similar theory for record compositions, suggesting a role for noncommutative symmetric functions. Here we solve their open problem by showing that the number of alternating permutations of $\\{1,\\dots,2n\\}$ with record composition $(α_1,\\dots,α_\\ell)$ is \\[ \\prod_{j=1}^{\\ell}\\binom{2s_j-1}{2α_j-1}E_{2α_j-1}, \\] where $s_j=α_1+\\dots+α_j$, $E_k$ is an Euler number, and the record composition of $w=a_1a_2\\dots a_{2n}$ (so $a_1>a_2<a_3>\\dotsb$) lists the factor lengths obtained by cutting $a_1a_3\\dots a_{2n-1}$ before each left-to-right maximum other than the first. These numbers are the coefficients of a natural lift of the degree-$n$ sprout symmetric function with seed $\\sec(\\sqrt{t}\\,)$ to noncommutative symmetric functions, expanded in p",
     "domain_bridges": [],
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0056",
+    "id": "fd_0057",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1030,7 +970,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0057",
+    "id": "fd_0058",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1050,7 +990,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0058",
+    "id": "fd_0059",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1063,40 +1003,40 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d8f04178",
     "description": "Investigate the ArXiv paper 'Euler systems and the symmetric square of a Hida family' and formalize its key results. Abstract: Let $p\\geq7$ be a prime number. We build a non-trivial Euler system for the symmetric square of a $p$-adic Hida family of modular forms interpolating the Euler system constructed by Loeffler-Zerbes for the symmetric square of a $p$-ordinary newform. As a second contribution, we prove an algebraic functional equation for dual Selmer groups in this setting. Finally, building on recent work by Büyükboduk-Ganguly on functional equations of algebraic (Rankin-Selberg) $p$-adic $L$-functions, we prove a divisibility result towards the Iwasawa main conjecture for the symmetric square of a Hida family.",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0059",
+    "id": "fd_0060",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12679v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T14:18:31.029430+00:00",
     "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cca295e6",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Tverberg's theorem for unions of convex sets: Sharp bounds and colored extensions' and formalize its key results. Abstract: Let $f_{r}(d,s_{1},\\ldots,s_{r})$ be the least $N$ such that every $N$-point set $P\\subseteq \\mathbb{R}^{d}$ has an $r$-partition $P=P_{1}\\sqcup\\cdots\\sqcup P_{r}$ with the following property: whenever $C_{i}\\supseteq P_{i}$ is a union of at most $s_{i}$ convex sets, one has $\\bigcap_{i=1}^{r}C_{i}\\ne\\emptyset$. A recent breakthrough of Alon and Smorodinsky established the first effective upper bounds $f_{r}(d,s,\\ldots,s)\\le Cdr^{2}s^{r}\\log r\\log(es^{r})$ for this problem. We obtain an asymptotically sharp lower bound by proving $f_r(d,s,\\ldots,s)\\ge c(d-r+2)s^r\\log(s+1)$ for every $d\\ge r+2$, which shows that $f_r(d,s,\\ldots,s)=Θ_{d,r}(s^r\\log s)$ for every fixed $d\\ge r+2$. We also prove the general lower bound $f_r(d,s,\\ldots,s)>s^{\\min\\{d,r\\}}$. On the other hand, we develop a local counting argument to show that $f_r(d,s,\\ldots,s)\\le C_{d}rs^r\\log(ers^r)$ and $f_r(d,s,\\ldots,s)\\le C_{d}r^{d+2}s^{d+1}\\log(ers)$ whenever $r\\ge d+1$, improving the upper bound of Alon and Smorodinsky",
     "domain_bridges": [],
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0060",
+    "id": "fd_0061",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12449v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T18:44:57.239806+00:00",
     "title": "ArXiv paper: Tverberg's theorem for unions of convex sets: Sharp bounds and colored extensions"
   },
@@ -1109,7 +1049,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0061",
+    "id": "fd_0062",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1128,7 +1068,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0062",
+    "id": "fd_0063",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1148,7 +1088,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0063",
+    "id": "fd_0064",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1167,7 +1107,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0064",
+    "id": "fd_0065",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1187,7 +1127,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0065",
+    "id": "fd_0066",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1206,7 +1146,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0066",
+    "id": "fd_0067",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1225,7 +1165,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0067",
+    "id": "fd_0068",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1245,7 +1185,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1264,7 +1204,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1277,19 +1217,19 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "aa7167bb",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the Báez-Duarte criterion.",
     "domain_bridges": [],
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0070",
+    "id": "fd_0071",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T21:37:25.493366+00:00",
     "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
   },
@@ -1302,7 +1242,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0071",
+    "id": "fd_0072",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1321,7 +1261,7 @@
     "domains": [
       "Logic"
     ],
-    "id": "fd_0072",
+    "id": "fd_0073",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1341,7 +1281,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0073",
+    "id": "fd_0074",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1355,13 +1295,32 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Fractal uncertainty principle over $\\mathbb{Q}_p$' and formalize its key results. Abstract: We prove a fractal uncertainty principle over $\\mathbb{Q}_p$ for porous sets, resolving a conjecture of Cohen.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0075",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.11534v1",
+    "status": "available",
+    "timestamp": "2026-07-16T03:18:30.753456+00:00",
+    "title": "ArXiv paper: Fractal uncertainty principle over $\\mathbb{Q}_p$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion have been recently introduced, as a hierarchy of entanglement criteria involving only experimentally accessible quantities of a given bipartite state. The goal of this work is to study their typical detection performance on high-dimensional bipartite systems. Concretely, we investigate whether random bipartite mixed states on $\\mathbb C^d\\otimes\\mathbb C^d$, obtained as the marginal over an environment $\\mathbb C^s$ of a uniformly distributed pure state, generically satisfy or violate them. For each fixed level $m\\in\\mathbb N$ in this hierarchy of moment-based PPT criteria, we are able to identify a threshold environment dimension $s=λ_md^2$ at which the behavior of the associated random state switches from violating to satisfying it, with probability going to $1$ as $d$ grows. The proof combines combinatorics of permutations techniques to estimate the average value of moments of partially transposed random stat",
     "domain_bridges": [],
     "domains": [
       "Computation",
       "Logic"
     ],
-    "id": "fd_0075",
+    "id": "fd_0076",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1381,7 +1340,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0076",
+    "id": "fd_0077",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1401,7 +1360,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0077",
+    "id": "fd_0078",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1421,7 +1380,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0078",
+    "id": "fd_0079",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1440,7 +1399,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0079",
+    "id": "fd_0080",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1460,7 +1419,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0080",
+    "id": "fd_0081",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1479,7 +1438,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0081",
+    "id": "fd_0082",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1499,7 +1458,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0082",
+    "id": "fd_0083",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -1513,119 +1472,21 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Cycle 58c6edf0 (Q=0.730) proved 43 theorems in Pythagorean but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min ",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "sorry_fill_58c6edf0_992a8c4d",
-    "lineage_refs": [],
-    "priority_score": 0.78,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "58c6edf0",
-    "status": "available",
-    "timestamp": "2026-07-16T05:47:17.776925+00:00",
-    "title": "Close Proofs: ArXiv paper: The chromatic number of 3-stable Kneser graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Robust local encodings of arithmetic derivations\n\n**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic derivation into a locally testable object such that any string that is not an encoding of a valid derivation fails a fixed positive fraction of constant-query tests, with encoding length polynomial in the derivation length.\n\nThe key insight is that random checking amplifies efficiently only after inconsistency has been spread across a constant fraction of local views; a raw derivation with one bad line has no such robustness.\n\n**Why now?** The exact single-counterexample bound isolates robustness, rather than repetition, as the missing resource and gives a quantitative benchmark against which candidate encodings can be tested.\n\n## 2. Zero-knowledge local tests with dependency closure\n\n**Conjecture.** Every constant-query locally testable proof relation whose queries have bounded dependency closure admits a perfectly hiding commitment-and-opening protocol in which the joint opened view is simulatable from the truth value of the tested constraint alone.\n\nThe key insight is that masking individual symbols is insufficient when local constraints correlate several openings; simulation must respect the entire dependency-closed view.\n\n**Why now?** Perfect hiding for one additive symbol is exact, so the next falsifiable step is to characterize precisely when this equality of distributions survives correlated multi-symbol openings.\n\n## 3. Communication lower bounds for statement-length-only certification\n\n**Conjecture.** For some family of arithmetical sentences with short statements and arbitrarily large minimal derivations, every statistically sound interactive protocol whose verifier checks only authenticated raw derivation lines requires communication growing with the minimal derivation length.\n\nThe key insight is that a single corrupted location is detected with probability only the reciprocal of the proof length, and authentication does not increase that detection probability.\n\n**Why now?** The geometric error law supplies a sharp finite obstruction to the proposed raw-line protocol and suggests a route to a general lower bound through adversarially sparse defects.\n\n## 4. Perfect zero knowledge for propositional validity under structural restrictions\n\n**Conjecture.** Propositional formulas of bounded treewidth admit perfect zero-knowledge validity protocols with communication polynomial in the formula size and logarithmic in the inverse soundness error.\n\nThe key insight is that bounded treewidth turns global validity into compatible local constraints while finite-group masking can hide the local dynamic-programming states.\n\n**Why now?** Truth-table checking establishes the soundness and simulation primitives separately; bounded-width decompositions offer a concrete setting in which to compose them without an exponential challenge space.\n\n## 5. Geometric gluing of local transcript simulators\n\n**Conjecture.** A family of local transcript distributions indexed by proof constraints admits a global perfect simulator exactly when the distributions agree on every overlap and satisfy a finite acyclicity condition on the constraint hypergraph.\n\nThe key insight is that zero knowledge under many openings is a gluing problem: pairwise perfect hiding does not automatically produce a consistent global distribution.\n\n**Why now?** The additive one-symbol simulator provides the local model, while dependency-closed challenges identify overlaps where compatibility can fail; acyclic hypergraphs are the first nontrivial test class.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_0088",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "573ee086",
-    "status": "available",
-    "timestamp": "2026-07-16T05:31:53.608676+00:00",
-    "title": "**Conjecture.** There is an explicit encoding of every finite Peano-arithmetic d"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Coherent levelwise classification\n\n**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their finite levels admit a coherent family of bijections preserving extension, even if no single alphabet relabelling induces all of them.\n\nThe key insight is that continuity of a map between ray spaces should be encoded by compatibility across finite prefixes rather than by a uniform change of edge labels. **Why now?** The explicit relabelling construction isolates exactly which compatibility identities are used, making it possible to replace one global equivalence by an inverse system of finite equivalences.\n\n## 2. Ultrametric cluster trees as ray presentations\n\n**Conjecture.** Every complete ultrametric space with a countable cofinal family of radii is homeomorphic to the ray space of the rooted tree of its nonempty balls at those radii.\n\nThe key insight is that strong-triangle transitivity makes every point of a ball an interchangeable centre, so refinement by radius produces a genuine laminar tree. **Why now?** The proved centre-independence and threshold antitonicity identify the two local laws needed to construct such a tree; completeness should supply the inverse map from coherent nested balls to points.\n\n## 3. End-space realization of valuation boundaries\n\n**Conjecture.** For every prime `p`, the completion of the rational valuation-cluster hierarchy has a canonical graph whose end space is homeomorphic to the boundary determined by strictly nested `p`-adic clusters.\n\nThe key insight is that arithmetic valuation thresholds already carry the same branching data as rooted graph ends. **Why now?** Cluster transitivity and centre-independence turn the arithmetic balls into combinatorial vertices without arbitrary choices, opening a direct bridge between number-theoretic ultrametrics and end spaces.\n\n## 4. Cofinal pruning invariance\n\n**Conjecture.** If a prefix tree is replaced by a subtree meeting every ray cofinally and preserving all eventual branching classes, then the two ray spaces are homeomorphic.\n\nThe key insight is that a ray topology records eventual finite separation, not the exact depths at which separations occur. **Why now?** Coordinate relabelling handles exact prefix preservation; cofinal pruning is the next falsifiable test of whether the construction extends from rigid tree isomorphisms to the weaker combinatorial equivalences expected in a full classification.\n\n## 5. Sharp boundary beyond laminar clusters\n\n**Conjecture.** A first-countable zero-dimensional space admits a generalized ray presentation precisely when it has a neighbourhood assignment whose overlap relation is locally laminar after passing to a cofinal subsequence.\n\nThe key insight is that generalized ray spaces should retain nested finite information while permitting asymmetric or non-metrizable local bases. **Why now?** Ordinary ultrametric clusters satisfy exact laminarity, whereas examples such as the Sorgenfrey line indicate that relaxing symmetry without abandoning nestedness may locate the strict boundary of the generalized class.\n",
+    "description": "Investigate the ArXiv paper 'Lattice point counting in Cygan--Korányi balls on Heisenberg groups' and formalize its key results. Abstract: Lattice point counting in gauge balls on the Heisenberg group $\\mathbb{H}^q$ is a non-commutative analogue of the Euclidean multidimensional sphere problem, initiated by Garg, Nevo and Taylor \\cite[\\textit{Ann. Inst. Fourier}, 2015]{GNT15}. The case of particular interest is when the gauge is taken as the Cygan--Korányi norm and the error term reads: $$\\mathcal{E}_q(t)=\\#\\left(\\mathbb{Z}^{2 q+1} \\cap \\mathcal{B}_t\\right)-\\operatorname{vol}(\\mathcal{B}_1) \\, t^{2 q+2},$$ with $\\mathcal{B}_t=\\{(v,w)\\in\\mathbb{H}^q: (|v|^4 + w^2)^{1/4} \\le t \\}$, which is closely related to the Gauss circle problem. When $q\\ge3$, Gath \\cite[\\textit{Ann. Sc. Norm. Super. Pisa Cl. Sci.}, 2022]{Gat22} improved upon \\cite[]{GNT15} by showing that $ |\\mathcal{E}_q(t)|\\lesssim t^{2q-1+ 1/3}$ and proposed the conjecture that the optimal order should be $2q-1$. In this paper, through Landau's formula and the $5,6$-th Derivative Tests of van der Corput, we arrive at that $|\\mathcal{E}_q(t)| \\lesssim t^{2 q-1 + 241",
     "domain_bridges": [],
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0089",
+    "id": "fd_0084",
     "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
-    "source_exp_id": "352675e9",
+    "source_exp_id": "2607.10971v1",
     "status": "available",
-    "timestamp": "2026-07-16T05:32:05.006797+00:00",
-    "title": "**Conjecture.** Two coordinate-tree ray spaces are homeomorphic whenever their f"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions for Stable Kneser Graphs\n\n## 1. Full Meunier equality for odd stability\n\n**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser graph on cyclically `s`-stable `k`-subsets of `[n]` has chromatic number exactly `n-sk+s`.\n\nThe key insight is that the least-element colouring already gives the proposed upper bound uniformly; the remaining problem is to find a lower-bound certificate that survives odd cyclic spacing.\n\n**Why now?** The spacing argument isolates the lower bound as the sole obstruction and supplies canonical intersecting colour fibres on which extremal or topological methods can act.\n\n## 2. Cyclic stable Hilton–Milner classification\n\n**Conjecture.** For fixed `s ≥ 3` and all sufficiently large `n` relative to `s` and `k`, every largest non-star intersecting family of cyclically `s`-stable `k`-subsets is isomorphic to one of finitely many explicit Hilton–Milner-type constructions.\n\nThe key insight is that every proper-colouring fibre is an intersecting uniform family, while fibres not controlled by a common least element are precisely the non-star families for which Hilton–Milner structure is relevant.\n\n**Why now?** The colouring-to-fibre bridge makes a sharp stable Hilton–Milner theorem immediately applicable to chromatic lower bounds rather than merely an isolated extremal result.\n\n## 3. Equivariant index certificate for the combinatorial lower bound\n\n**Conjecture.** The box complex of the cyclic `s`-stable Kneser graph admits an explicit equivariant map whose coindex is `n-sk+s-1`, and this certificate can be reconstructed from the same initial-segment filtration used by the least-element colouring.\n\nThe key insight is that the arithmetic spacing filtration and the topological obstruction should be dual descriptions of the same cyclic gap data.\n\n**Why now?** A common certificate would connect the elementary upper colouring with the topological approach and could explain why even and odd stability parameters require different combinatorial arguments but share the same answer.\n\n## 4. Rigidity of optimal colourings for 3-stable graphs\n\n**Conjecture.** For each `k ≥ 3`, once `n` exceeds a linear threshold in `k`, every optimal colouring of the cyclically 3-stable Kneser graph can be transformed by a cyclic relabelling and colour permutation so that every colour class has a prescribed initial-segment or Hilton–Milner form.\n\nThe key insight is that equality in the spacing bound forces near-arithmetic-progressions, while equality in intersecting-family bounds should force star-like or Hilton–Milner-like fibres.\n\n**Why now?** The proven canonical colouring gives a concrete extremizer against which arbitrary optimal colourings can be compared, turning classification into a falsifiable stability problem.\n\n## 5. Quantitative stability below the chromatic threshold\n\n**Conjecture.** Any colouring of cyclically `s`-stable `k`-sets with fewer than `n-sk+s` colours contains a colour class with a positive-density disjoint pair count, with density bounded below by a function of the colour deficit and independent of `n` in the large-`n` regime.\n\nThe key insight is to combine stable-set packing with supersaturation versions of Erdős–Ko–Rado and Hilton–Milner estimates inside colour fibres.\n\n**Why now?** The fibre theorem identifies exactly where disjointness must appear when properness fails, providing the structural starting point for a robust, quantitative strengthening of the chromatic lower bound.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0090",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "58c6edf0",
-    "status": "available",
-    "timestamp": "2026-07-16T05:47:13.678585+00:00",
-    "title": "**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser grap"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Moment Thresholds for Random Bipartite States\n\n## 1. Exact fixed-level induced-state threshold\n\nFor every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` such that an induced random state with environment dimension `s ∼ λd²` changes, with probability tending to one, from violating to satisfying the level-`m` shifted-Hankel criterion as `λ` crosses `λ_m`.\n\n**The key insight is...** the limiting partial-transpose moments determine a finite Hankel determinant whose sign changes at an algebraic critical point.\n\n**Why now?** The deterministic Gram identity and hierarchy nesting isolate the exact finite polynomial whose random asymptotics must control.\n\n## 2. Strict improvement and convergence of the threshold hierarchy\n\nThe threshold constants are strictly increasing, `λ_m < λ_{m+1}`, and converge to the full positive-partial-transpose threshold as `m → ∞`.\n\n**The key insight is...** every additional polynomial probe detects a genuinely new interval of negative spectral support rather than merely reproducing a lower-degree witness.\n\n**Why now?** Nesting has been established without probabilistic assumptions, reducing the conjecture to strictness and asymptotic completeness for the limiting spectral law.\n\n## 3. Quantitative finite-size transition window\n\nFor fixed `m`, outside a window of width `O(d^{-1})` around `λ_m`, the probability of misclassification decays exponentially in `d²`.\n\n**The key insight is...** determinant stability converts concentration of finitely many moments into concentration of the sign of the moment certificate, provided the limiting determinant is transverse at its zero.\n\n**Why now?** An explicit perturbation budget is available for the first nonlinear certificate and can be generalized to higher principal minors.\n\n## 4. Universality beyond complex Wishart ensembles\n\nThe same constants `λ_m` govern induced-state models whose entries are independent, centered, variance-normalized, and have a finite sufficiently high moment, even when the entries are non-Gaussian.\n\n**The key insight is...** fixed-order partial-transpose moments depend asymptotically only on pairings and permutation topology, while higher cumulants are lower order.\n\n**Why now?** The deterministic certificate separates model-independent moment geometry from the ensemble-specific concentration argument.\n\n## 5. Optimal polynomial witness at fixed experimental budget\n\nAmong all degree-`m-1` polynomial probes normalized in the limiting spectral measure, the eigenvector associated with the least shifted-Hankel eigenvalue maximizes the asymptotic violation margin and minimizes sample complexity.\n\n**The key insight is...** witness selection is a Rayleigh-quotient optimization problem on the moment matrix, linking entanglement detection to orthogonal polynomials and Christoffel functions.\n\n**Why now?** The exact quadratic-form identity identifies polynomial probes and Hankel eigenvectors as two descriptions of the same optimization problem.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0091",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "4e53cd7c",
-    "status": "available",
-    "timestamp": "2026-07-16T05:47:23.380881+00:00",
-    "title": "For every fixed hierarchy level `m ≥ 2`, there is a unique constant `λ_m > 0` su"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle 4e53cd7c (Q=0.700) proved 16 theorems in Pythagorean but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Moment-based PPT criteria for random bipartite states' and formalize its key results. Abstract: Moment-based relaxations of the positive partial transpose (PPT) criterion ",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "sorry_fill_4e53cd7c_817134e7",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "4e53cd7c",
-    "status": "available",
-    "timestamp": "2026-07-16T05:47:36.892142+00:00",
-    "title": "Close Proofs: ArXiv paper: Moment-based PPT criteria for random bipartite states"
+    "timestamp": "2026-07-16T05:47:52.883060+00:00",
+    "title": "ArXiv paper: Lattice point counting in Cygan--Korányi balls on Heisenberg groups"
   },
   {
     "ambition_level": "extension",

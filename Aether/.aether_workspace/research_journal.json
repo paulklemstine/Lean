@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dbf870e8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## Completed proof chain\n\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean` contains a complete three-step chain:\n\n1. `value_eq` identifies mixed-radix evaluation",
-      "quality_score": 0.88,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T00:44:03",
-      "title": "Close Proofs: Speculative: Topological Quantum Error Correction from Mathematical St"
-    },
-    {
       "cycle_id": "c4f680cf",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Recurrence and Symmetry in the Logic of Causal Loops\n\nThis cycle deepened the theory of closed timelike curves beyond the bare\nfixed-point (Novikov self-consistency) picture, esta",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-16T05:47:36",
       "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
+    },
+    {
+      "cycle_id": "499d98ab",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Graphical Signatures of Finite-Group Symmetry\n\n## 1. Rooted-pattern factorization through group differences\n\n**Conjecture.** For every finite rooted graph pattern with distinguish",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-16T05:47:43",
+      "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "86e0e034",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Cycle 1 (Connector)\n\n## What this cycle contributes\n\nThread `th_25156375` studies the `Lᵖ` relaxation of the KNRS/Sidorenko lower bound\nfor ρ-locally dense hosts, in the finite s",
-      "quality_score": 0.74,
-      "sorry_count": 1,
-      "theorem_count": 5,
-      "timestamp": "2026-07-13T10:39:02",
-      "title": "The mission asked to interrogate the claim:"
-    },
     {
       "cycle_id": "167aed7f",
       "domain": "Applications",
@@ -2501,15 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-16T05:47:36",
       "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
+    },
+    {
+      "cycle_id": "499d98ab",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Graphical Signatures of Finite-Group Symmetry\n\n## 1. Rooted-pattern factorization through group differences\n\n**Conjecture.** For every finite rooted graph pattern with distinguish",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-16T05:47:43",
+      "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d1d26693",
-      "domain": "Probability",
-      "name": "openingView_not_private",
-      "quality": 0.75
-    },
     {
       "cycle_id": "d1d26693",
       "domain": "Probability",
@@ -2803,9 +2797,15 @@
       "domain": "Pythagorean",
       "name": "shiftedHankel_hierarchy_nested",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "499d98ab",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-16T05:47:36",
+  "last_updated": "2026-07-16T05:47:43",
   "open_questions": [
     {
       "context": "+explicitly-marked `sorry` rather than proved by unsound means.  The statement is; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "50098ece",
-        "quality": 0.84,
-        "theorems": 26,
-        "title": "Close Proofs: The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exp"
-      },
-      {
         "cycle_id": "dbf870e8",
         "quality": 0.88,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.65,
         "theorems": 19,
         "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
+      },
+      {
+        "cycle_id": "499d98ab",
+        "quality": 0.76,
+        "theorems": 8,
+        "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
       }
     ],
     "NumberTheory": [
