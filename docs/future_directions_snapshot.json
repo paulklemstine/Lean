@@ -336,26 +336,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cdb5c1e4",
-    "description": "Investigate the ArXiv paper 'Cyclic Projective Orbits on Rational Normal Curves and MDS Codes' and formalize its key results. Abstract: Let \\(A\\) be a cyclic operator on an \\(r\\)-dimensional vector space over a field \\(k\\), and let \\(z\\) be a cyclic vector. Their Krylov code has parity-check matrix \\((z,Az,\\ldots,A^{n-1}z)\\). For \\(r\\ge 3\\) and \\(n\\ge r+3\\), we prove that an MDS orbit segment lies on a rational normal curve precisely when the projective pair \\((A,[z])\\) is conjugate to one arising from the \\((r-1)\\)-st symmetric-power action of \\(\\mathrm{PGL}_2\\). Over finite fields, for companion operators, this gives a complete classification of the generalized Reed--Solomon locus into split semisimple, two nonsplit semisimple, and unipotent families. Over an algebraically closed field \\(k\\), the Zariski closure \\(\\GRSsurf_{r,k}\\) of the semisimple GRS coefficient locus is an irreducible rational surface, generically parameterized two-to-one by a two-dimensional torus of geometric-progression root sets; reversal is the generic ambiguity. The affine quotient of the parameter torus by reversal is the normalization of \\",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0021",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12761v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T12:51:13.579274+00:00",
-    "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Large sets of mutually orthogonal quantum Latin squares' and formalize its key results. Abstract: How large can a set of mutually orthogonal quantum Latin squares (MOQLS) get? We show that a set of n - 2 MOQLS of order n is necessarily classical and construct large non-classical sets of MOQLS of orders that are prime powers, improving both the previously known lower and upper bounds.",
     "domain_bridges": [],
@@ -1586,6 +1566,45 @@
     "status": "available",
     "timestamp": "2026-07-16T05:47:52.883060+00:00",
     "title": "ArXiv paper: Lattice point counting in Cygan--Korányi balls on Heisenberg groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 58c6edf0 (Q=0.730) proved 43 theorems in Pythagorean but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min ",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "sorry_fill_58c6edf0_b4a90e3c",
+    "lineage_refs": [],
+    "priority_score": 0.78,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "58c6edf0",
+    "status": "available",
+    "timestamp": "2026-07-16T05:48:35.593509+00:00",
+    "title": "Close Proofs: ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions for Stable Kneser Graphs\n\n## 1. Full Meunier equality for odd stability\n\n**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser graph on cyclically `s`-stable `k`-subsets of `[n]` has chromatic number exactly `n-sk+s`.\n\nThe key insight is that the least-element colouring already gives the proposed upper bound uniformly; the remaining problem is to find a lower-bound certificate that survives odd cyclic spacing.\n\n**Why now?** The spacing argument isolates the lower bound as the sole obstruction and supplies canonical intersecting colour fibres on which extremal or topological methods can act.\n\n## 2. Cyclic stable Hilton–Milner classification\n\n**Conjecture.** For fixed `s ≥ 3` and all sufficiently large `n` relative to `s` and `k`, every largest non-star intersecting family of cyclically `s`-stable `k`-subsets is isomorphic to one of finitely many explicit Hilton–Milner-type constructions.\n\nThe key insight is that every proper-colouring fibre is an intersecting uniform family, while fibres not controlled by a common least element are precisely the non-star families for which Hilton–Milner structure is relevant.\n\n**Why now?** The colouring-to-fibre bridge makes a sharp stable Hilton–Milner theorem immediately applicable to chromatic lower bounds rather than merely an isolated extremal result.\n\n## 3. Equivariant index certificate for the combinatorial lower bound\n\n**Conjecture.** The box complex of the cyclic `s`-stable Kneser graph admits an explicit equivariant map whose coindex is `n-sk+s-1`, and this certificate can be reconstructed from the same initial-segment filtration used by the least-element colouring.\n\nThe key insight is that the arithmetic spacing filtration and the topological obstruction should be dual descriptions of the same cyclic gap data.\n\n**Why now?** A common certificate would connect the elementary upper colouring with the topological approach and could explain why even and odd stability parameters require different combinatorial arguments but share the same answer.\n\n## 4. Rigidity of optimal colourings for 3-stable graphs\n\n**Conjecture.** For each `k ≥ 3`, once `n` exceeds a linear threshold in `k`, every optimal colouring of the cyclically 3-stable Kneser graph can be transformed by a cyclic relabelling and colour permutation so that every colour class has a prescribed initial-segment or Hilton–Milner form.\n\nThe key insight is that equality in the spacing bound forces near-arithmetic-progressions, while equality in intersecting-family bounds should force star-like or Hilton–Milner-like fibres.\n\n**Why now?** The proven canonical colouring gives a concrete extremizer against which arbitrary optimal colourings can be compared, turning classification into a falsifiable stability problem.\n\n## 5. Quantitative stability below the chromatic threshold\n\n**Conjecture.** Any colouring of cyclically `s`-stable `k`-sets with fewer than `n-sk+s` colours contains a colour class with a positive-density disjoint pair count, with density bounded below by a function of the colour deficit and independent of `n` in the large-`n` regime.\n\nThe key insight is to combine stable-set packing with supersaturation versions of Erdős–Ko–Rado and Hilton–Milner estimates inside colour fibres.\n\n**Why now?** The fibre theorem identifies exactly where disjointness must appear when properness fails, providing the structural starting point for a robust, quantitative strengthening of the chromatic lower bound.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0090",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "58c6edf0",
+    "status": "available",
+    "timestamp": "2026-07-16T05:48:31.500431+00:00",
+    "title": "**Conjecture.** For all integers `s ≥ 3`, `k ≥ 1`, and `n ≥ sk`, the Kneser grap"
   },
   {
     "ambition_level": "extension",
