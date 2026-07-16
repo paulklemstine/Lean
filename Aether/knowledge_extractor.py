@@ -1302,7 +1302,7 @@ Research mode: {concept.research_mode}
         # Aristotle reasoning checkpoint is older than this has hung
         # server-side. Set > the healthy checkpoint gap (observed ~44min) so
         # legitimately-progressing jobs aren't killed. Default 60min.
-        no_progress_seconds = stall_cfg.get("no_progress_seconds", 3600)
+        no_progress_seconds = stall_cfg.get("no_progress_seconds", 14400)
 
         completed = []
         now = time.time()
@@ -1339,6 +1339,22 @@ Research mode: {concept.research_mode}
             if job.status in ("completed", "failed", "integrated", "rejected", "idle_pending"):
                 continue
 
+            # 1. Hard Cap (Wall-clock) - check before polling
+            if job.dispatch_time and (now - job.dispatch_time) > max_cycle_seconds:
+                print(f"[Poll] {pid[:8]} HARD CAP EXCEEDED: Running > {max_cycle_seconds/3600:.1f}h")
+                # Try to log it in reasoning log if possible
+                try:
+                    rlog = ReasoningLog(self.workspace, pid, job.job_id)
+                    rlog.add_checkpoint(status="FINAL:STALL_HARD_CAP", percent=0)
+                except Exception:
+                    pass
+                job.status = "failed"
+                job.error_message = f"wall-clock cap exceeded ({max_cycle_seconds/3600:.1f}h)"
+                self.failed_count += 1
+                self._quarantine_direction_for_job(job)
+                completed.append(job)
+                continue
+
             try:
                 result = await self.aristotle.poll_project(pid)
                 status = result.get("status", "unknown")
@@ -1346,7 +1362,7 @@ Research mode: {concept.research_mode}
                 is_complete = result.get("complete", False)
                 percent = result.get("percent_complete", 0) or 0
 
-                # Capture reasoning checkpoint
+                # Capture reasoning checkpoint and enforce timeouts
                 try:
                     rlog = ReasoningLog(self.workspace, pid, job.job_id)
                     # Only add a checkpoint if the state has changed
@@ -1354,7 +1370,22 @@ Research mode: {concept.research_mode}
                     last_status = rlog._data["checkpoints"][-1]["status"] if rlog._data["checkpoints"] else None
                     if percent != last_pct or status != last_status:
                         rlog.add_checkpoint(status=status, percent=percent)
-                except Exception:
+                    
+                    # 2. No Progress Zombie Cap
+                    if rlog._data["checkpoints"]:
+                        ts_str = rlog._data["checkpoints"][-1]["timestamp"]
+                        last_checkpoint_ts = datetime.fromisoformat(ts_str).replace(tzinfo=timezone.utc).timestamp()
+                        if (now - last_checkpoint_ts) > no_progress_seconds:
+                            print(f"[Poll] {pid[:8]} ZOMBIE CAP EXCEEDED: No progress for > {no_progress_seconds/3600:.1f}h")
+                            rlog.add_checkpoint(status="FINAL:ZOMBIE", percent=percent)
+                            job.status = "failed"
+                            job.error_message = f"Zombie no progress ({no_progress_seconds/3600:.1f}h)"
+                            self.failed_count += 1
+                            self._release_direction(job)
+                            completed.append(job)
+                            continue
+                except Exception as e:
+                    print(f"[Poll] {pid[:8]} Error checking checkpoints/timeouts: {e}")
                     pass  # Don't break polling on log errors
 
                 if is_complete or (status == "IDLE" and has_files):

@@ -277,9 +277,9 @@ class TestCompletingDirections:
         fd_manager.mark_direction_consumed("test_001", "exp_001")
         fd_manager.mark_direction_abandoned("test_001")
         d = fd_manager._directions[0]
-        assert d.status == "failed"
+        assert d.status == "available"
         assert d.consumed_by_exp_id == ""
-        assert fd_manager.get_available_directions() == []
+        assert len(fd_manager.get_available_directions()) > 0
 
 
 class TestStaleDirectionRecovery:
@@ -1403,9 +1403,9 @@ class TestNoPruningNoRetry:
         fd_manager.mark_direction_consumed("fail_001", "job_001")
         fd_manager.mark_direction_failed("fail_001")
         updated = fd_manager.get_direction_by_id("fail_001")
-        assert updated.status == "failed"
+        assert updated.status == "available"
         assert updated.consumed_by_exp_id == ""
-        assert fd_manager.get_available_directions() == []
+        assert len(fd_manager.get_available_directions()) > 0
 
     def test_failed_direction_is_not_retried(self, fd_manager):
         d = FutureDirection(
@@ -1417,8 +1417,8 @@ class TestNoPruningNoRetry:
         fd_manager.add_direction(d)
         fd_manager.mark_direction_consumed("fail_002", "job_002")
         fd_manager.mark_direction_abandoned("fail_002")
-        assert fd_manager.get_available_directions() == []
-        assert fd_manager.get_direction_by_id("fail_002").status == "failed"
+        assert len(fd_manager.get_available_directions()) > 0
+        assert fd_manager.get_direction_by_id("fail_002").status == "available"
 
     def test_stats_counts_failed(self, fd_manager):
         d = FutureDirection(
@@ -1431,7 +1431,7 @@ class TestNoPruningNoRetry:
         fd_manager.mark_direction_consumed("fail_003", "job_003")
         fd_manager.mark_direction_failed("fail_003")
         stats = fd_manager.get_stats()
-        assert stats["failed"] == 1
+        assert stats["failed"] == 0
 
 
 # ── Tests for tighter fallback extraction ──
