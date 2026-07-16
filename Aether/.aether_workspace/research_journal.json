@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9a38651d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Contrarian Time-Travel Consistency\n\nThis cycle (thread `th_1434a219`, cycle 1) takes a *contrarian* stance on the Novikov\nself-consistency principle: rather than only proving tha",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-14T21:58:04",
-      "title": "The file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loop"
-    },
-    {
       "cycle_id": "8ceb2563",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The `q`-ary Exact Coset-Guesswork Exponent\n\nThe present cycle removed the binary restriction from the exact coset-guesswork exponent:\nfor every alphabet size `q ≥ 2`, the maximal",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-16T01:42:51",
       "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe formalization proves the invariant spectral splitting that underlies the generalized-join formulas: internal zero-mass modes acquire an external-degree shift, while fiber-cons",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-16T01:47:06",
+      "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4bfb0f7c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Geometry of Stellar Energy Collection\n\nThis cycle established the exact optimization theory of energy collection around a\npoint source: capture factors through a single linear fu",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-13T04:13:49",
-      "title": "Deepening: Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
-    },
     {
       "cycle_id": "b659b436",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-16T01:42:51",
       "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe formalization proves the invariant spectral splitting that underlies the generalized-join formulas: internal zero-mass modes acquire an external-degree shift, while fiber-cons",
+      "quality_score": 0.74,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-16T01:47:06",
+      "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7ea29a05",
-      "domain": "Shared",
-      "name": "for",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "dc502c2d",
-      "domain": "MachineLearning",
-      "name": "winning_iff",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "dc502c2d",
-      "domain": "MachineLearning",
-      "name": "winning_unique",
-      "quality": 0.91
-    },
     {
       "cycle_id": "dc502c2d",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "supportedFiber_eigenvector",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "name": "joinAction_of_zeroMass",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "name": "zeroMass_eigenvector",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "f4980b02",
+      "domain": "MachineLearning",
+      "name": "supportedFiber_eigenvector",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-07-16T01:42:51",
+  "last_updated": "2026-07-16T01:47:06",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "6490730e",
-        "quality": 0.83,
-        "theorems": 8,
-        "title": "Generalized Multinomial Convolution Identity for Latin Rectangle Enumeration"
-      },
-      {
         "cycle_id": "d0bff55a",
         "quality": 0.78,
         "theorems": 20,
@@ -3569,6 +3563,12 @@
         "quality": 0.91,
         "theorems": 13,
         "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `"
+      },
+      {
+        "cycle_id": "f4980b02",
+        "quality": 0.74,
+        "theorems": 18,
+        "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
       },
       {
         "cycle_id": "f4980b02",
