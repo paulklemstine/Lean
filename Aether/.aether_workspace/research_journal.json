@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8ceb2563",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The `q`-ary Exact Coset-Guesswork Exponent\n\nThe present cycle removed the binary restriction from the exact coset-guesswork exponent:\nfor every alphabet size `q ≥ 2`, the maximal",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 13,
-      "timestamp": "2026-07-14T22:36:24",
-      "title": "The prior cycle (`CosetGuesswork.lean`) proved the exact coset-exponent *shift*"
-    },
-    {
       "cycle_id": "12ea9340",
       "domain": "Novelty",
       "key_insight": "# Future Directions: the join bifunctor and the sharp join law for the ℤ₂-coindex\n\nThis cycle (thread `th_0a5fcbcc`, cycle 1) advances the constructive, lower-bound half of the\nco-index theory by buil",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-16T01:47:06",
       "title": "ArXiv paper: Counting oriented spanning trees in generalized join digraphs"
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n## 1. A complete phase-invariant certificate for the order-six cardinality-19 matrix\n\nConjecture: the eighth-root Butson matrix underlying the cardinality-19 construction has exac",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-16T03:35:50",
+      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "291fcce1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Orbit enumeration of Boolean cubic forms\n\nThis cycle established a sharp two-sided window for the number of nonzero\n`GL(10,2)`-orbits of Boolean cubic forms in ten variables. The",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-13T05:54:34",
-      "title": "Deepening: Number of GL(10,2)-orbits of Boolean cubic forms in 10 variables"
-    },
     {
       "cycle_id": "5b802ccf",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-16T03:01:43",
       "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n## 1. A complete phase-invariant certificate for the order-six cardinality-19 matrix\n\nConjecture: the eighth-root Butson matrix underlying the cardinality-19 construction has exac",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-16T03:35:50",
+      "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "dc502c2d",
-      "domain": "MachineLearning",
-      "name": "sumWf",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "ca1c3afc",
-      "domain": "Novelty",
-      "name": "factorialThreeCRT_natCast",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "ca1c3afc",
-      "domain": "Novelty",
-      "name": "twelve_smul_factorialResidues4",
-      "quality": 0.87
-    },
     {
       "cycle_id": "ca1c3afc",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "supportedFiber_eigenvector",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "name": "classical_orderSix_range_card",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "name": "nineteenRepresentatives_card",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "57481379",
+      "domain": "Physics",
+      "name": "cardinality_nineteen_of_unique_triple",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-16T03:01:43",
+  "last_updated": "2026-07-16T03:35:50",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "f7b97a34",
-        "quality": 0.460800096969697,
-        "theorems": 9,
-        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-      },
-      {
         "cycle_id": "55b8bae9",
         "quality": 0.69272,
         "theorems": 17,
@@ -3761,6 +3755,12 @@
         "quality": 0.68,
         "theorems": 11,
         "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+      },
+      {
+        "cycle_id": "57481379",
+        "quality": 0.75,
+        "theorems": 19,
+        "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twe"
       }
     ],
     "Probability": [
