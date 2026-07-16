@@ -429,7 +429,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7,
       "parent_direction": "",
       "priority_score": 0.7,
       "proof_strategy": "",
@@ -440,7 +440,7 @@
       "source": "",
       "source_exp_id": "oeis:212351",
       "source_path": "https://oeis.org/",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-15T05:23:22.329230+00:00",
       "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
@@ -3083,11 +3083,68 @@
       "thread_id": "",
       "timestamp": "2026-07-16T03:53:44.956266+00:00",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n## Completion status\n\nAll Lean declarations delivered for this mission now have complete proof terms: the\nremaining mixed-radix bridge lemmas were proved, and an inherited Fibonacci\nprimitive-divisor draft was corrected to state exactly its computationally verified\nrange (`13 ≤ n ≤ 10000`) rather than leaving an unproved large-index branch.  The\nunrestricted Fibonacci tail remains future work and is not asserted as a theorem.\n\n## What is formalized\n\n`Catalog/Main.lean` models a length-`n` book over a `q`-symbol alphabet as `Fin n → Fin q`. It proves a chained collection of results:\n\n1. the library has exactly `q^n` books;\n2. base-`q` addresses give a canonical bijective catalog;\n3. the alphabet-4, length-16 mini-library has exactly `4^16 = 4,294,967,296` books and is bijectively cataloged;\n4. a fixed complete text has uniform probability exactly `1/q^n`;\n5. for any Boolean proof checker, the exact acceptance probability is `accepted_count/q^n`, and an accepted witness makes that count positive;\n6. there are `(q^n)^(q^n)` catalog tables, so, when at least two books exist, no book-valued injective encoding can represent every possible table;\n7. distributed storage of `total` distinct objects in `N` books with `capacity` slots each is possible exactly when `total ≤ N * capacity`.\n\nThe single-book impossibility theorem deliberately concerns encoding **every possible catalog table**. It does not incorrectly claim that one particular canonical catalog cannot have a short algorithmic description—the preceding base-`q` catalog is such a description.\n\n## Important qualifications\n\nThe exact probability that a string is accepted by “Lean 4” is not a well-defined number until the byte/alphabet encoding, target theorem, permitted imports/environment, parser behavior, resource policy, and checker version are fixed. The formal result therefore parameterizes a finite Boolean checker and gives the exact formula. Supplying an executable model of a particular Lean environment would turn this formula into a concrete finite count, although brute-force evaluation at Babel scale is infeasible.\n\nThe requested de Bruijn construction is not yet formalized. The current mini-catalog is a base-four bijective enumeration of all length-16 words, not a cyclic de Bruijn word. A true order-16 de Bruijn cycle over four symbols would have cyclic length `4^16`; proving it should proceed by defining the order-15 de Bruijn directed graph, proving balanced indegree/outdegree and connectivity, obtaining an Eulerian circuit, and proving the resulting cyclic windows occur exactly once.\n\n## Next formal developments\n\n1. Define cyclic words and cyclic length-`n` windows.\n2. Formalize the de Bruijn digraph on `Library q (n-1)` and its shift edges.\n3. Prove existence of an Eulerian circuit for nonempty finite alphabets.\n4. Extract and verify a de Bruijn cycle, then specialize it to alphabet size 4 and order 16.\n5. Define a concrete finite tokenization and bounded Lean-like checker, allowing executable small-case acceptance counts.\n6. Refine distributed storage from abstract slots to bit capacity, with explicit ceiling bounds and prefix-free/self-delimiting encodings.\n7. Study substring occurrence probabilities. For a fixed pattern, the naive `(n-k+1)q^{-k}` is a union bound rather than generally an equality because overlapping occurrences are dependent; exact counts can be obtained with finite automata or inclusion–exclusion.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0076",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "8d2137d3",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8d2137d3",
+      "status": "available",
+      "thread_id": "th_51606648",
+      "timestamp": "2026-07-16T03:53:55.328166+00:00",
+      "title": "All Lean declarations delivered for this mission now have complete proof terms: "
     }
   ],
   "pruned": [],
-  "recent_domain_counts": {},
-  "recent_theme_keywords": {},
+  "recent_domain_counts": {
+    "Geometry": 1
+  },
+  "recent_theme_keywords": {
+    "\"good\"": 1,
+    "6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971": 1,
+    "asymptotic": 1,
+    "closed": 1,
+    "formalize": 1,
+    "investigate": 1,
+    "manifolds": 1,
+    "maximal": 1,
+    "n-nice": 1,
+    "number": 1,
+    "polytope": 1,
+    "recurrence": 1,
+    "sequence": 1
+  },
   "selection_log": [
     "cross_domain_bridge"
   ]
