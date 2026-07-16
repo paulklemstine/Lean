@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6ed40476",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Stability of the Diagonal Correlation Inequality\n\nThis cycle established the base camp for a quantitative stability theory of the\ncorrelation inequality on the discrete cube: the",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 30,
-      "timestamp": "2026-07-13T07:18:16",
-      "title": "Deepening: Stability of the sharp diagonal spectral correlation inequality for monotone Boo"
-    },
-    {
       "cycle_id": "b08004d1",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## Summary of results (contrarian mission)\n\nThe mission asked to interrogate the claim:\n\n> For a graph `F` with `m` edges and `n` non-isolated vertices, if\n> `p < C(n,2)/m`, there",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-16T04:10:10",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "e2c77d51",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Arithmetic Monsters\n\n## 1. Square-root density with a precise normalization\n\nLet `V(n)` be the proportion of `2n`-digit decimal integers that admit a classical vampire factorizati",
+      "quality_score": 0.65,
+      "sorry_count": 4,
+      "theorem_count": 6,
+      "timestamp": "2026-07-16T04:10:46",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-16T04:10:10",
+  "last_updated": "2026-07-16T04:10:46",
   "open_questions": [
-    {
-      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "16f220a2",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T15:58:22"
-    },
     {
       "context": "All statements are proved with no `sorry` and no extra axioms.",
       "cycle_id": "e6dfc1d4",
@@ -3016,16 +3009,17 @@
       "domain": "Algebra",
       "sorry_count": 4,
       "timestamp": "2026-07-16T04:10:10"
+    },
+    {
+      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "e2c77d51",
+      "domain": "Algebra",
+      "sorry_count": 4,
+      "timestamp": "2026-07-16T04:10:46"
     }
   ],
   "research_threads": {
     "Algebra": [
-      {
-        "cycle_id": "87ba90ae",
-        "quality": 0.73448,
-        "theorems": 8,
-        "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
-      },
       {
         "cycle_id": "4591bde2",
         "quality": 0.5155438642611684,
@@ -3073,6 +3067,12 @@
         "quality": 0.91,
         "theorems": 33,
         "title": "Deepening: This project formalizes a **cross-domain connector** (v27 \"Connector\""
+      },
+      {
+        "cycle_id": "e2c77d51",
+        "quality": 0.65,
+        "theorems": 6,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       },
       {
         "cycle_id": "e2c77d51",
