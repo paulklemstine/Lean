@@ -2542,3 +2542,71 @@ body.light-theme #aether-toast .toast-body {
     min-width: 60px;
     text-align: center;
 }
+
+/* Deep Dives & Hints */
+details {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 0;
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+details > summary {
+    background: var(--bg-panel);
+    padding: 12px 16px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--accent-primary);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    border-bottom: 1px solid transparent;
+    transition: var(--transition);
+}
+
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+details > summary::before {
+    content: '\25B6'; /* Right pointing triangle */
+    font-size: 0.8rem;
+    margin-right: 12px;
+    color: var(--text-muted);
+    transition: transform 0.3s ease;
+}
+
+details[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+details[open] > summary {
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-elevated);
+}
+
+details > p, details > div, details > ul, details > ol {
+    padding: 0 16px;
+}
+details > :last-child {
+    margin-bottom: 16px;
+}
+details > :first-of-type:not(summary) {
+    margin-top: 16px;
+}
+
+details a {
+    color: var(--accent-secondary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+details a:hover {
+    color: var(--accent-primary);
+}
