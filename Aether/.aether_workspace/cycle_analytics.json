@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-16T14:39:39.395278+00:00",
+  "last_updated": "2026-07-16T14:58:15.022060+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -22615,6 +22615,7 @@
       "outcome_quality": 0.0,
       "phase": "A",
       "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.0,
       "phase_b_skipped": false,
       "prompt_version": "v26",
       "quality_score": 0.0,
@@ -22644,6 +22645,7 @@
       "outcome_quality": 0.0,
       "phase": "A",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skipped": false,
       "prompt_version": "v28",
       "quality_score": 0.0,
@@ -22658,6 +22660,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-16T14:39:39.350512+00:00",
       "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 85,
+      "domain": "Novelty",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "726fa9e5",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v25",
+      "phase_b_skipped": false,
+      "prompt_version": "v25",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784209824.501022,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-16T14:58:14.981749+00:00",
+      "title": "ArXiv paper: Lattice point counting in Cygan--Kor\u00e1nyi balls on Heisenberg groups"
     }
   ]
 }
