@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f347bf96",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Extremal Determinants with Bounded Entries\n\nThis cycle established, for `4 × 4` integer matrices with entries in the symmetric\nrange `{-B, …, B}`, that the maximum determinant is",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-13T16:16:08",
-      "title": "Deepening: Maximum Determinant Bound for 4×4 Unimodular Matrices with Bounded Entries"
-    },
-    {
       "cycle_id": "24c0b42e",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n`FyodorovHiaryKeating.lean` formalizes the analytic backbone of the\nFyodorov–Hiary–Keating (FHK) conjecture: the standard Gumbel law\n`G(x) = exp(-exp(-x))` as a genuine probabilit",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-16T09:16:04",
       "title": "ArXiv paper: Local flag algebras"
+    },
+    {
+      "cycle_id": "d1e62d74",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Formalize the underlying objects.** Supply precise definitions of an `n`-nice polytope, a “good” manifold, equivalence of manifolds for counting purposes, and the maximum bei",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-16T09:16:13",
+      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T09:16:04",
+  "last_updated": "2026-07-16T09:16:13",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "499d98ab",
-        "quality": 0.76,
-        "theorems": 8,
-        "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
-      },
-      {
         "cycle_id": "aa7167bb",
         "quality": 0.62,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 15,
         "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+      },
+      {
+        "cycle_id": "d1e62d74",
+        "quality": 0.6,
+        "theorems": 0,
+        "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
       }
     ],
     "NumberTheory": [
