@@ -1435,6 +1435,36 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The VC dimension of partial concept classes via Radon's theorem"
   },
   {
+    "consumed_by_exp_id": "6df82b3f",
+    "description": "Investigate the ArXiv paper 'The even-uniform hypergraph Moore bound' and formalize its key results. Abstract: The hypergraph Moore bound conjectured by Feige (2008) controls the size of the smallest even cover in a $k$-uniform hypergraph in terms of the average density of hyperedges. An even cover is a set of hyperedges covering each vertex an even number of times, generalizing the notion of a cycle in a graph, so the size of the smallest non-trivial even cover provides a notion of hypergraph girth. Recent work starting from the breakthrough result of Guruswami, Kothari, and Manohar (2022) proved the conjecture up to polylogarithmic factors, whose exponents were later gradually improved. We give a simple proof of Feige's original hypergraph Moore bound conjecture for all even $k\\ge 4$, with no superfluous polylogarithmic factors. Our proof roughly follows the proof of the graph Moore bound, but works with colored walks in a Kikuchi graph built from a hypergraph and controls their growth using a polynomial interpolation method.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0082",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14068v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-16T08:42:32.915287+00:00",
+    "title": "ArXiv paper: The even-uniform hypergraph Moore bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks' and formalize its key results. Abstract: We prove a cyclic sieving result for the action of promotion on the staircase plane partitions of height two. Our proof has two major algebraic inputs: an interpretation of this promotion action in terms of tensor powers of the spin crystal that was recently studied by Pappe--Pfannerer--Schilling--Simone, and the bush basis of the degree two part of the coordinate ring of the space of electrical networks that was recently introduced by Gao--Lam--Xu. Moreover, we explain how the existence of an electrical canonical basis in all degrees would yield cyclic sieving for promotion of staircase plane partitions of all heights.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0083",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14028v1",
+    "status": "available",
+    "timestamp": "2026-07-16T08:42:36.114109+00:00",
+    "title": "ArXiv paper: Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks"
+  },
+  {
     "consumed_by_exp_id": "d1e62d74",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
