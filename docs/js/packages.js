@@ -847,6 +847,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 wrapper.className = wrapperClass;
                 wrapper.style.cssText = 'width: 100%; position: relative;';
                 wrapper.innerHTML = cleanedHtml;
+                
+                const descText = item.description || item.explanation || '';
+                if (descText) {
+                    const desc = document.createElement('div');
+                    desc.style.cssText = 'margin-bottom: 12px; font-size: 0.95em; color: var(--text-muted);';
+                    if (window.renderMarkdownWithMath) {
+                        desc.innerHTML = window.renderMarkdownWithMath(descText);
+                    } else {
+                        desc.textContent = descText;
+                    }
+                    container.appendChild(desc);
+                }
+                
                 container.appendChild(wrapper);
                 
                 // Execute any inline or external script tags inside the injected HTML in order
@@ -928,6 +941,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 content.appendChild(iframe);
                 card.appendChild(header);
+
+                const descText = item.description || item.explanation || '';
+                if (descText) {
+                    const desc = document.createElement('div');
+                    desc.className = 'demo-description';
+                    desc.style.cssText = 'padding: 12px 16px; font-size: 0.95em; color: var(--text-muted); background: var(--bg-surface-hover); border-bottom: 1px solid var(--border-color);';
+                    if (window.renderMarkdownWithMath) {
+                        desc.innerHTML = window.renderMarkdownWithMath(descText);
+                    } else {
+                        desc.textContent = descText;
+                    }
+                    card.appendChild(desc);
+                }
+
                 card.appendChild(content);
                 container.appendChild(card);
             }
