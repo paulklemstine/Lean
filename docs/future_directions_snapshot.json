@@ -1434,25 +1434,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "851ec568",
-    "description": "Investigate the ArXiv paper 'A few remarks on the Baez-Duarte Criterion' and formalize its key results. Abstract: The goal of this paper is to derive a few very interesting lemmas related to the Báez-Duarte criterion.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0077",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.12084v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T21:37:25.493366+00:00",
-    "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions' and formalize its key results. Abstract: The character of a connected $\\mathfrak{sl}_n$-crystal is a Schur polynomial; the crystal can be further decomposed into quasicrystals, whose characters are the Gessel quasisymmetric functions. Crystal skeletons are obtained by contracting quasicrystals within crystal graphs. They generalize dual equivalence graphs, and can be used to prove the Schur expansion of a symmetric function when the quasisymmetric expansion is known. In this paper, we show that the crystal skeleton can be tiled further into components which we call quasicrystal skeletons, whose characters are Young quasisymmetric Schur functions. We characterize which edges in the crystal skeleton move between quasicrystal skeleton components. Contracting the quasicrystal skeleton components yields Bruhat order. We illustrate how these tools can be applied to symmetric functions by analyzing the Stanley symmetric functions.",
     "domain_bridges": [],
@@ -1822,6 +1803,26 @@
     "status": "available",
     "timestamp": "2026-07-16T07:23:46.108987+00:00",
     "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Rooted and Ordinary Path Irregularity\n\n## 1. Polynomial-profile separation for bounded path lengths\n\nFor every fixed integer `k ≥ 4`, there should be a branch-attachment construction whose rooted and ordinary `P_n` incidence counts, for all `4 ≤ n ≤ k`, are polynomials in one common parameter with vertexwise distinct leading profiles. This would reduce simultaneous irregularity to a uniform polynomial separation theorem rather than separate estimates for each root and path length.\n\nThe key insight is that a path of bounded length can enter only boundedly many attached branches, so its count should have bounded polynomial degree and a locally determined leading coefficient.\n\nWhy now? The affine separation result identifies the exact algebraic mechanism in degree one; the next testable step is to compute and compare the first unequal coefficients in degree two and higher.\n\n## 2. Rooted-tree extension of the path construction\n\nThere should exist an infinite family simultaneously irregular for every rooted tree in any prescribed finite collection, provided no member has a root orbit that forces its count to depend only on vertex degree.\n\nThe key insight is that rooted-tree embeddings admit a recursive decomposition over branches, potentially turning attachment constructions into products and sums of local profiles.\n\nWhy now? The central root of `P₃` supplies a precise symmetry obstruction, while end-rooted paths show that changing the root orbit can remove it; this suggests an orbit-sensitive criterion for general trees.\n\n## 3. Characterization of central-root obstructions\n\nA connected rooted graph `(F,r)` should admit no nontrivial rooted-`F`-irregular host graph whenever the number of rooted copies at a vertex is a fixed function of its degree alone. Conversely, outside this degree-determined class, there should be infinitely many rooted-`F`-irregular host graphs.\n\nThe key insight is that finite simple graphs necessarily have a repeated degree, so every degree-determined rooted statistic necessarily collides.\n\nWhy now? The verified `P₃` center formula is the smallest complete example of this obstruction, and it provides a concrete boundary against which a proposed converse can be tested.\n\n## 4. Degree-collision compensation hierarchy\n\nFor every `n ≥ 3`, ordinary `P_n` irregularity should force a hierarchy of compensating inequalities among rooted-position counts on any pair of vertices that collide on all lower-order local invariants.\n\nThe key insight is that an ordinary incidence count is assembled from rooted-position contributions; equality in some components forces separation in another whenever the total statistic is injective.\n\nWhy now? For `P₃`, equal degrees make the center contributions identical and force the end contributions apart. Longer paths offer a concrete sequence of increasingly informative local invariants on which to test this compensation principle.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0102",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b71e4678",
+    "status": "available",
+    "timestamp": "2026-07-16T07:24:08.374697+00:00",
+    "title": "For every fixed integer `k ≥ 4`, there should be a branch-attachment constructio"
   },
   {
     "ambition_level": "extension",

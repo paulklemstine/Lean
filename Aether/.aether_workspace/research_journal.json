@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "290f55e0",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Alexander polynomials as signed lattice-path sums\n\nThis cycle settled the combinatorial status of the \"Alexander polynomial as a\nlattice-path count\" conjecture: the *unsigned* gen",
-      "quality_score": 0.83,
-      "sorry_count": 4,
-      "theorem_count": 33,
-      "timestamp": "2026-07-13T12:34:55",
-      "title": "Deepening: Knots and Lattices: The Alexander Polynomial as a Lattice Path Count"
-    },
-    {
       "cycle_id": "ad71c64c",
       "domain": "Applications",
       "key_insight": "# Future Directions — Brouwer Laplacian Equality Characterization\n\nThe results established here pin down the exact, unconditional spine of Brouwer's\nequality problem: the total spectral sum is the edg",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-07-16T07:23:26",
       "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
+    },
+    {
+      "cycle_id": "b71e4678",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions: Rooted and Ordinary Path Irregularity\n\n## 1. Polynomial-profile separation for bounded path lengths\n\nFor every fixed integer `k ≥ 4`, there should be a branch-attachment construct",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-07-16T07:24:13",
+      "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T07:23:26",
+  "last_updated": "2026-07-16T07:24:13",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "7ca0f553",
-        "quality": 0.82,
-        "theorems": 61,
-        "title": "Infinite Chess: Checkmate in Omega Moves"
-      },
-      {
         "cycle_id": "cd5a9d7d",
         "quality": 0.82,
         "theorems": 11,
@@ -3879,6 +3873,12 @@
         "quality": 0.7,
         "theorems": 16,
         "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
+      },
+      {
+        "cycle_id": "b71e4678",
+        "quality": 0.67,
+        "theorems": 20,
+        "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
       },
       {
         "cycle_id": "b71e4678",
