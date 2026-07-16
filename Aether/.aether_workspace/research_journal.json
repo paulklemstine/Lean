@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0568e201",
-      "domain": "Applications",
-      "key_insight": "# Future directions — edge-spectral supersaturation for triangles\n\n## What this cycle added\n\nThe file `Novelty/EdgeSpectralSupersaturationGraphBridge.lean` closes the gap left by\n`EdgeSpectralSupersat",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-13T14:02:05",
-      "title": "Deepening: Edge-Spectral Supersaturation for Triangles"
-    },
-    {
       "cycle_id": "2aaaa5f9",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThis cycle contributes `Catalog/Novelty/VietorisRipsCliqueBridge.lean`, a self-contained\n**cross-domain bridge** (\"Connector\" mission) linking:\n\n* **metric geometry / topological",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-16T08:27:46",
       "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+    },
+    {
+      "cycle_id": "d8f04178",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## Scope achieved\n\n`Speculative/EulerSystemsSymmetricSquare.lean` formalizes three reusable algebraic layers motivated by the paper:\n\n1. An abstract Euler system as a family of mo",
+      "quality_score": 0.52,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-16T08:29:02",
+      "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T08:27:46",
+  "last_updated": "2026-07-16T08:29:02",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "772aa8b4",
-        "quality": 0.7,
-        "theorems": 9,
-        "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
-      },
-      {
         "cycle_id": "1a2ab56f",
         "quality": 0.65,
         "theorems": 19,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 15,
         "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
+      },
+      {
+        "cycle_id": "d8f04178",
+        "quality": 0.52,
+        "theorems": 14,
+        "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
       }
     ],
     "NumberTheory": [
