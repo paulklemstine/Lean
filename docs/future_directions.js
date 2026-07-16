@@ -9,12 +9,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Cryptography"
     ],
-    "id": "fd_0102",
+    "id": "fd_0104",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:39:40.726322+00:00",
+    "timestamp": "2026-07-16T07:55:42.319056+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
@@ -24,12 +24,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Logic"
     ],
-    "id": "fd_0099",
+    "id": "fd_0101",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:39:40.703165+00:00",
+    "timestamp": "2026-07-16T07:55:42.293235+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
@@ -39,12 +39,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "NumberTheory"
     ],
-    "id": "fd_0100",
+    "id": "fd_0102",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:39:40.710985+00:00",
+    "timestamp": "2026-07-16T07:55:42.301594+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
@@ -53,27 +53,13 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0101",
+    "id": "fd_0103",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:39:40.718627+00:00",
+    "timestamp": "2026-07-16T07:55:42.310374+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Domain Novelty has declined by 0.182 over recent cycles (recent avg=0.624 vs prior=0.806). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "auto_reset_Novelty_98a1223e",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "auto_reset",
-    "status": "available",
-    "timestamp": "2026-07-16T07:40:03.581866+00:00",
-    "title": "[Reset] Fresh approach in Novelty"
   },
   {
     "consumed_by_exp_id": "",
@@ -82,12 +68,12 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Combinatorics"
     ],
-    "id": "fd_0103",
+    "id": "fd_0105",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-07-16T07:39:40.734398+00:00",
+    "timestamp": "2026-07-16T07:55:42.328212+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
@@ -765,7 +751,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: FFLV bases for covariant representations of $\\mathfrak{gl}(m|n)$"
   },
   {
-    "consumed_by_exp_id": "e2f5c991",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Disproofs of two conjectures concerning nondeficient numbers' and formalize its key results. Abstract: A positive integer $n$ is said to be nondeficient if $\u03c3(n) \\geq 2n$. Letting the positive divisors of a positive integer $n$ be written as $1 = d_0 < d_1 < \\cdots < d_k < d_{k+1} = n$, and letting $\\mathcal{S}$ denote a set of integers, if there exist values $\u03bb_j \\in \\mathcal{S}$ such that $1 + \\sum_{j=1}^{k} \u03bb_j d_j = n$, then $n$ is said to be an $\\mathcal{S}$-perfect number. Ross, in 2024, introduced the study of $\\mathcal{S}$-perfect numbers, and concluded with two conjectures that each concern both $\\{ -1, 1 \\}$-perfect numbers and nondeficient numbers. We disprove both of these conjectures.",
     "domains": [
       "Pythagorean",
@@ -775,7 +761,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11043v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T06:19:32.315042+00:00",
     "title": "ArXiv paper: Disproofs of two conjectures concerning nondeficient numbers"
   },
@@ -854,12 +840,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Sums of Kloosterman sums formed with modular symbols' and formalize its key results. Abstract: We study sums of Kloosterman sums formed with a modular symbol. Employing Tauberian methods, we first give an estimate for a (Riesz) sum of Ramanujan sums formed with a modular symbol. We further define a zeta function that is analogous to the Selberg zeta function, establish its continuation to $\\Re(s)>1/2$, give estimates for its growth and use this to prove a cancellation statement for sums of these twisted Kloosterman sums. We explain the connection of this construction to the eigenvalue 1/4 problem and formulate an analogue of Linnik's conjecture. Finally, we present numerical evidence that there is cancellation and also that the Kloosterman sums with a modular symbol are not correlated with classical Kloosterman sums.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0061",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.10786v1",
+    "status": "available",
+    "timestamp": "2026-07-16T07:55:37.391179+00:00",
+    "title": "ArXiv paper: Sums of Kloosterman sums formed with modular symbols"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The chromatic number of 3-stable Kneser graphs' and formalize its key results. Abstract: For an integer $s \\ge 2$, a subset $S \\subseteq [n]$ is {\\em $s$-stable} if $\\min \\{j - i, n + i - j\\}\\ge s$ for every $i,j \\in S$ with $i<j$. Denote the set of all $s$-stable subsets of size $k$ of $[n]$ by $\\binom{[n]}{k}_{s\\text{-stable}}$. Schrijver proved in 1978 that whenever $n\\ge 2k$, the chromatic number of the Kneser graph $\\mathrm{KG}\\big( \\binom{[n]}{k}_{2\\text{-stable}}\\big)$ is $n - 2k +2$. Generalizing this result, Meunier conjectured in 2011 that $\u03c7\\left( \\mathrm{KG}\\big( \\binom{[n]}{k}_{s\\text{-stable}} \\big) \\right)= n - sk +s$ for all $n\\ge sk$. This conjecture was previously proven for all even $s$, for $s \\ge 4$ and large enough $n$, and for $k=2$. We prove the conjecture in the cases $s=3$ and $n$ large enough, or $k=s=3$. To this end, we prove versions of the Hilton-Milner theorem for $s$-stable sets. We also present a topological approach towards Meunier's conjecture.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0061",
+    "id": "fd_0062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12912v1",
@@ -874,7 +874,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0062",
+    "id": "fd_0063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13025v1",
@@ -888,7 +888,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0063",
+    "id": "fd_0064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12890v1",
@@ -902,7 +902,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0064",
+    "id": "fd_0065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
@@ -916,7 +916,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0065",
+    "id": "fd_0066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12778v1",
@@ -925,32 +925,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "557a7f03",
     "description": "Investigate the ArXiv paper 'Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation' and formalize its key results. Abstract: We prove the Gonality Conjecture in arithmetic dynamics: for any non-isotrivial one-parameter algebraic family of rational maps on $\\mathbb{P}^1$, the gonality of distinct dynatomic curves tends to infinity. More generally, outside the flexible Latt\u00e8s family, every small sequence of horizontal curves has gonality tending to infinity, and its genus grows superlinearly with its degree over the parameter curve. We also obtain higher-dimensional analogues under natural bifurcation and multiplier-genericity hypotheses. As applications, we prove uniform boundedness results for iterated preimages over number fields and geometric uniform boundedness results for preperiodic points over function fields. The proof combines arithmetic equidistribution, woven currents, and bifurcation theory; the bifurcation mechanism is what forces the growth of genus and gonality.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0066",
+    "id": "fd_0067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12561v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T14:01:10.734967+00:00",
     "title": "ArXiv paper: Genus and Gonality of Small Curves, Dynamical Uniform Boundedness, and Bifurcation"
   },
   {
-    "consumed_by_exp_id": "557a7f03",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Euler systems and the symmetric square of a Hida family' and formalize its key results. Abstract: Let $p\\geq7$ be a prime number. We build a non-trivial Euler system for the symmetric square of a $p$-adic Hida family of modular forms interpolating the Euler system constructed by Loeffler-Zerbes for the symmetric square of a $p$-ordinary newform. As a second contribution, we prove an algebraic functional equation for dual Selmer groups in this setting. Finally, building on recent work by B\u00fcy\u00fckboduk-Ganguly on functional equations of algebraic (Rankin-Selberg) $p$-adic $L$-functions, we prove a divisibility result towards the Iwasawa main conjecture for the symmetric square of a Hida family.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0067",
+    "id": "fd_0068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12679v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T14:18:31.029430+00:00",
     "title": "ArXiv paper: Euler systems and the symmetric square of a Hida family"
   },
@@ -961,7 +961,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12449v1",
@@ -975,7 +975,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12461v1",
@@ -989,7 +989,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0070",
+    "id": "fd_0071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12457v1",
@@ -1004,7 +1004,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_0071",
+    "id": "fd_0072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12261v1",
@@ -1018,7 +1018,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0072",
+    "id": "fd_0073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12300v1",
@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0073",
+    "id": "fd_0074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12448v1",
@@ -1042,59 +1042,59 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: $k$-Convex Polyominoes by Semi-perimeter"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19cecd78",
     "description": "Investigate the ArXiv paper 'Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors' and formalize its key results. Abstract: For a graph $G$, let $\u0394(G)$, $\u03c9(G)$, and $\u03c7(G)$ denote the maximum degree, clique number, and chromatic number of $G$, respectively. Let $P_n$ and $C_n$ denote the chordless path and chordless cycle on $n$ vertices, respectively. In this paper, we prove that every $(P_6,C_4)$-free graph $G$ with $\u0394(G)\\ge 9$ and $\u03c9(G)<\u0394(G)$ is $(\u0394(G)-1)$-colorable.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0074",
+    "id": "fd_0075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12367v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T20:28:28.169396+00:00",
     "title": "ArXiv paper: Coloring $(P_6,C_4)$-free graphs with $\u0394- 1$ colors"
   },
   {
-    "consumed_by_exp_id": "19cecd78",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Ap\u00e9ry-like numbers. As applications, many new supercongruences are deduced.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0075",
+    "id": "fd_0076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12330v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T20:45:36.266548+00:00",
     "title": "ArXiv paper: Curious identities involving Legendre polynomials and Ap\u00e9ry-like numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "851ec568",
     "description": "Investigate the ArXiv paper 'Some Remarks on Hessians and Wronskians' and formalize its key results. Abstract: The purpose of this note is to elaborate on the apparent connection between Wronskians and Hessians. More generally, to a given subspace of homogeneous bivariate forms over the complex numbers, we associate two determinantal polynomials called the $W$-polynomial and the $\\hat{W}$-polynomial. We give expansion and factorization formulas for these polynomials, and study their behavior under change of coordinates and duality. As an application, we give another proof of Iarrobino's theorem on the strong Lefschetz property for standard graded Artinian Gorenstein algebras in codimension two.",
     "domains": [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0076",
+    "id": "fd_0077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12162v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T21:02:39.460834+00:00",
     "title": "ArXiv paper: Some Remarks on Hessians and Wronskians"
   },
   {
-    "consumed_by_exp_id": "851ec568",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Far-apart Erd\u0151s--P\u00f3sa property of long cycles' and formalize its key results. Abstract: We prove that there exist functions $f:\\mathbb N^2\\to\\mathbb N$ and $g:\\mathbb N\\to\\mathbb N$ such that for all positive integers $k$, $d$, and $\\ell\\ge3$, every graph $G$ either contains $k$ cycles of length at least $\\ell$ that are pairwise at distance greater than $d$, or admits a subset of vertices $X$ with $|X|\\le f(k,\\ell)$ such that $G-B_G(X,g(d))$ contains no cycle of length at least $\\ell$, where $B_G(X,r)$ denotes the ball of radius $r$ around $X$. This generalizes a theorem of Dujmovi\u0107, Joret, Micek, and Morin (2024), which established the $\\ell=3$ case. Moreover, we prove that the theorem holds with $f(k,\\ell)\\in\\mathcal{O}(\\ell k\\log k)$ and $g(d)\\in\\mathcal{O}(d)$. The linear bound on $g$ is best possible, while the bound on $f$ is optimal as a function of $k$ for every fixed $\\ell$. In particular, for $\\ell=3$ our result improves the previous bound of $\\mathcal{O}(k^{18}\\mathsf{polylog} k)$ by Dujmovi\u0107 et al.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0077",
+    "id": "fd_0078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12136v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T21:20:02.802185+00:00",
     "title": "ArXiv paper: Far-apart Erd\u0151s--P\u00f3sa property of long cycles"
   },
@@ -1104,7 +1104,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0078",
+    "id": "fd_0079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12084v1",
@@ -1118,7 +1118,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0079",
+    "id": "fd_0080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12232v1",
@@ -1132,7 +1132,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_0080",
+    "id": "fd_0081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12090v1",
@@ -1147,7 +1147,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0081",
+    "id": "fd_0082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11330v1",
@@ -1161,7 +1161,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0082",
+    "id": "fd_0083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11534v1",
@@ -1176,7 +1176,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Logic"
     ],
-    "id": "fd_0083",
+    "id": "fd_0084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11369v1",
@@ -1185,32 +1185,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Moment-based PPT criteria for random bipartite states"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1512647",
     "description": "Investigate the ArXiv paper 'Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method' and formalize its key results. Abstract: Aardal and Lenstra systematically studied hard knapsack problems of the form $a_1x_1+\\cdots+a_nx_n=b$, where $a_i=p_iM+r_iN$, $(M,N)$ is a coprime pair of positive integers, and the integers $|p_i|, |r_i|$ are small relative to $M$ and $N$. We investigate the corresponding challenging denumerant problem (i.e., counting the number of nonnegative integer solutions) and present a polynomial-time algorithm. This eliminates the computational bottlenecks caused by large values of $M$, $N$ and $b$. The proposed algorithm achieves a time complexity of $O(n^4\u0394^2\\log n\\log\u0394)$, which depends solely on the parameters $n$ and $\u0394=\\max_{i,j}|r_i p_j - r_j p_i|$. Moreover, we consider the problem of expressing a general vector $(a_1,\\dots,a_n)$ in the above form using the LLL algorithm.",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0084",
+    "id": "fd_0085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11477v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:53:30.212279+00:00",
     "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
   },
   {
-    "consumed_by_exp_id": "d1512647",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices' and formalize its key results. Abstract: Inspired by recent advances in notions of spectral approximation of digraphs [Ahm+20], we study spectral algorithms for finding periodic structures in digraphs via the spectrum of a class of rotated Laplacian matrices. This class of Laplacian matrices was previously studied by Lange, Liu, Peyerimhoff, and Post [Lan+15]. We consider a notion of periodicity ratio that generalizes the bipartiteness ratio of Trevisan [Tre09], and show that it is closely related to the spectrum of rotated Laplacian matrices. In particular, if the digraph is strongly connected and represents a Markov chain, this periodicity ratio for a given $p \\in \\mathbb{N}$ is a quantitative measure of how close this Markov chain is to having periodicity $p$. We propose and analyze a periodicity-ratio variant of the spectral algorithm by Louis, Raghavendra, Tetali and Vempala [Lou+12]. We show that the algorithm runs in randomized polynomial time and can find many nearly periodic components (i.e, components with small per",
     "domains": [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_0085",
+    "id": "fd_0086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11333v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T04:10:18.387855+00:00",
     "title": "ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices"
   },
@@ -1221,7 +1221,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11225v1",
@@ -1235,7 +1235,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0087",
+    "id": "fd_0088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11318v2",
@@ -1250,7 +1250,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0088",
+    "id": "fd_0089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11261v1",
@@ -1264,7 +1264,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0089",
+    "id": "fd_0090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11319v1",
@@ -1279,7 +1279,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0090",
+    "id": "fd_0091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11248v1",
@@ -1294,7 +1294,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0091",
+    "id": "fd_0092",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10971v1",
@@ -1308,7 +1308,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0092",
+    "id": "fd_0093",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11161v1",
@@ -1323,7 +1323,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0093",
+    "id": "fd_0094",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11061v1",
@@ -1338,7 +1338,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0094",
+    "id": "fd_0095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11068v1",
@@ -1352,7 +1352,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0095",
+    "id": "fd_0096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11113v1",
@@ -1367,7 +1367,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0096",
+    "id": "fd_0097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10939v1",
@@ -1382,7 +1382,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Tropical"
     ],
-    "id": "fd_0097",
+    "id": "fd_0098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10778v1",
@@ -1396,7 +1396,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0098",
+    "id": "fd_0099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10832v1",
@@ -1405,7 +1405,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Tur\u00e1n-Type Bounds for Graphs Containing Large $F$-Sparse Sets"
   },
   {
-    "consumed_by_exp_id": "d1e62d74",
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Counting Odd Cycles in Graphs with Bounded Circumference' and formalize its key results. Abstract: For an integer $L\\ge2$, let $a=\\lfloor L/2\\rfloor$. Let $H(n,L)$ be the join of $K_a$ and an independent set of order $n-a$, with one extra edge in the independent set when $L$ is odd. We prove that, for every fixed $s\\ge3$ and $L\\ge2s+2$, and for all sufficiently large $n$, \\[ \\operatorname{ex}(n,C_{2s+1},\\mathcal{C}_{\\ge L+1}) =N(C_{2s+1},H(n,L)). \\] Together with the recent result of even-cycle by Zhao and Wang~[arXiv:2607.04357, 2026], this settles the conjecture of Zhu, Gy\u0151ri, He, Lv, Salia and Xiao~[Bull. Lond. Math. Soc. 55 (2023)] on counting fixed cycles in graphs with bounded circumference. We also determine the corresponding maximum number of copies of odd cycles when a path is forbidden.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0100",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.10779v1",
+    "status": "available",
+    "timestamp": "2026-07-16T07:55:40.862544+00:00",
+    "title": "ArXiv paper: Counting Odd Cycles in Graphs with Bounded Circumference"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -1414,7 +1428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T05:23:22.329230+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }

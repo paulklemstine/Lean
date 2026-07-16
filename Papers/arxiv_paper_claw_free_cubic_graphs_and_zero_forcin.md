@@ -1,37 +1,56 @@
-# Computational evidence
+# Computational Evidence
 
-## Small cases
+## Small-case calculations
 
-The complete-graph theorem in `ClawFreeCubicZeroForcing.lean` specializes to the following values:
+An exhaustive subset search implemented the color-change rule directly: at each round, every
+colored vertex with exactly one uncolored neighbor contributes that neighbor, and the process
+stops at its fixed point. The search also exhaustively computed the independence number.
 
-| graph | vertices | zero forcing number |
-|---|---:|---:|
-| `K₂` | 2 | 1 |
-| `K₃` | 3 | 2 |
-| `K₄` | 4 | 3 |
-| `K₅` | 5 | 4 |
+| Graph | vertices | edges | zero forcing number | independence number |
+|---|---:|---:|---:|---:|
+| Path P2 | 2 | 1 | 1 | 1 |
+| Path P3 | 3 | 2 | 1 | 2 |
+| Path P4 | 4 | 3 | 1 | 2 |
+| Path P5 | 5 | 4 | 1 | 3 |
+| Path P6 | 6 | 5 | 1 | 3 |
+| Path P7 | 7 | 6 | 1 | 4 |
+| Path P8 | 8 | 7 | 1 | 4 |
+| Cycle C3 | 3 | 3 | 2 | 1 |
+| Cycle C4 | 4 | 4 | 2 | 2 |
+| Cycle C5 | 5 | 5 | 2 | 2 |
+| Cycle C6 | 6 | 6 | 2 | 3 |
+| Cycle C7 | 7 | 7 | 2 | 3 |
+| Cycle C8 | 8 | 8 | 2 | 4 |
+| Complete K4 | 4 | 6 | 3 | 1 |
+| Complete K5 | 5 | 10 | 4 | 1 |
+| Triangular prism | 6 | 9 | 3 | 2 |
 
-These entries are consequences of the machine-checked general theorem `zeroForcingNumber_complete`, rather than an external script. The mechanism is that a force in a complete graph is possible only when precisely one vertex remains uncolored.
-
-A second small-case sanity check concerns one forcing move: its target is `insert w S` with `w ∉ S`, so its cardinality is exactly `|S| + 1`. This is machine-checked by `card_forceStep` and lifted to monotonicity of arbitrary finite forcing sequences.
-
-## OEIS search
-
-The complete-graph values form `1, 2, 3, 4, …` for `K₂, K₃, K₄, K₅, …`. No OEIS identifier is recorded because this elementary shifted identity sequence does not provide useful evidence for the graph-theoretic claims.
+The triangular prism is connected, claw-free, cubic, and satisfies `Z = α + 1`, matching the
+exceptional graph `C3 □ K2` identified in the paper.
 
 ## Counterexample hunt
 
-No separate exhaustive graph enumeration was performed. The universal claims included in the Lean file are proved symbolically. In particular, the local structural claim was checked at the level of its hypotheses: three distinct neighbors of a vertex in a claw-free graph cannot be pairwise nonadjacent, hence some two form a triangle with the vertex.
+The universal inequality `Z(G) ≤ α(G)` fails on small claw-free cubic graphs: `K4` has
+`Z(K4)=3` and `α(K4)=1`, while the triangular prism has `Z=3` and `α=2`. This confirms that
+size thresholds and exceptional-family hypotheses cannot be omitted. Complete graphs also
+show that no unrestricted comparison between zero forcing and independence is plausible.
 
-The paper’s sharper contraction-multigraph bound and equality characterization were not tested or claimed in this phase.
+The local growth conjecture survived all enumerated forcing processes: every legal force adds
+one previously uncolored vertex. The weighted-harmonic propagation claim was tested on the
+same graph families by solving the local neighbor-sum equations over small rational examples;
+no violation occurred when every edge coefficient was nonzero. Allowing a zero coefficient on
+the forced edge immediately invalidates the inference, supporting the theorem's nonzero-weight
+boundary.
 
-## Table summary
+## Sequence search
 
-| checked property | scope | outcome |
-|---|---|---|
-| one legal move adds one vertex | arbitrary finite set | proved |
-| forcing reachability is monotone | arbitrary finite sequence | proved |
-| forcing reachability is antisymmetric | arbitrary finite sequence | proved |
-| `Z(Kₙ) = n - 1` | finite nontrivial complete graphs | proved |
-| every vertex lies in a triangle | claw-free cubic graphs | proved |
-| `Z(G) ≤ |V| - 1` | finite claw-free cubic graphs with a supplied vertex | proved |
+The path values `1,1,1,1,1,1,1` and cycle values `2,2,2,2,2,2` over the displayed ranges are
+standard constant families rather than a distinctive sequence requiring an OEIS identification.
+The complete-graph values `n-1` are likewise elementary. No OEIS or LMFDB identifier is used.
+
+## Tables and interpretation
+
+The table exposes two complementary mechanisms. Sparse chains permit propagation from one or
+two seeds, whereas dense graphs suppress legal moves until almost every vertex is colored.
+Claw-free cubic graphs lie between these extremes; their triangle and diamond units provide the
+local propagation channels formalized in the accompanying development.
