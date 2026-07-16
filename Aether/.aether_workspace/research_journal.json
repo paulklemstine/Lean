@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1a598f10",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle **deepened** `FunctionalEquationPrimitivity.lean`.  That file proved the\nroot-number reciprocity law only in *identity form*\n`W(χ)·W(χ⁻¹)·Λ(χ,s) = Λ(χ,s)`, avoiding any",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-13T08:26:56",
-      "title": "Deepening: Functional Equations Enforce Primitivity of Coefficients"
-    },
-    {
       "cycle_id": "0557da65",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n`Catalog/Bridges/CantorHierarchy.lean` formalizes the classical skeleton of\nCantor's transfinite hierarchy: Cantor's theorem and the absence of a largest\ncardinal, the Hartogs num",
@@ -2501,6 +2491,16 @@
       "theorem_count": 24,
       "timestamp": "2026-07-16T05:14:48",
       "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+    },
+    {
+      "cycle_id": "5543d24b",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n## Results established\n\nThe formalization distinguishes circular *syntax* from valid derivability.\n\n1. **Finite observations do have limits.** Proof-tree observations are sets of",
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-16T05:15:30",
+      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71
     }
   ],
-  "last_updated": "2026-07-16T05:14:48",
+  "last_updated": "2026-07-16T05:15:30",
   "open_questions": [
     {
       "context": "All statements are proved with no `sorry` and no extra axioms.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "6b4ee47d",
-        "quality": 0.63,
-        "theorems": 15,
-        "title": "Upper Bound on Generalized Turán Number ex(n, K_{a,b}, K_{3,b+1})"
-      },
-      {
         "cycle_id": "0643b2b3",
         "quality": 0.82,
         "theorems": 11,
@@ -3259,6 +3253,12 @@
         "quality": 0.71,
         "theorems": 7,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "5543d24b",
+        "quality": 0.64,
+        "theorems": 24,
+        "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
       },
       {
         "cycle_id": "5543d24b",
