@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ac37e9f5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Periodic Orbits through the Logistic–Tent Conjugacy\n\nThis cycle transported the periodic-orbit skeleton of the tent map\n`T(t) = 1 - |2t - 1|` onto the smooth logistic map `f(x) =",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-13T16:32:48",
-      "title": "Exact topological conjugacy between the smooth logisti"
-    },
-    {
       "cycle_id": "adcea684",
       "domain": "Applications",
       "key_insight": "# Future Directions — Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ\n\n## What is proved (`Bridges/SumsetL1BallExponent.lean`)\n\nA cross-domain **connector** linking three areas around sumsets in L₁ b",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-16T09:17:20",
       "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
+    },
+    {
+      "cycle_id": "557a7f03",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Local Flag Algebras\n\n## 1. Sharp triangle-free pentagon certificate\n\n**Conjecture.** The optimal upper bound for the number of pentagons in a finite triangle-free graph, expressed",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-16T09:17:28",
+      "title": "ArXiv paper: Local flag algebras"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-16T09:17:20",
+  "last_updated": "2026-07-16T09:17:28",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "7c4372de",
-        "quality": 0.58,
-        "theorems": 15,
-        "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-      },
-      {
         "cycle_id": "d68f278c",
         "quality": 0.76,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.69,
         "theorems": 12,
         "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
+      },
+      {
+        "cycle_id": "557a7f03",
+        "quality": 0.66,
+        "theorems": 10,
+        "title": "ArXiv paper: Local flag algebras"
       }
     ],
     "Bridges": [
