@@ -1,186 +1,115 @@
-# Dark Mathematics: Theorems That Cast Shadows Without Being Seen
+# Dark Mathematics: When Existence Outruns Identification
 
-## A different kind of unknowing
+Mathematics often treats existence as the beginning of a search. Prove that a solution exists, and the natural next question is: which one? For a polynomial, we seek a root. For a graph-coloring problem, we ask for a coloring. For a theorem asserting that some natural number has a property, we expect at least one numeral eventually to emerge.
 
-We are used to two ways a mathematical question can resist us. It can be
-*open*: nobody has found the answer yet, but perhaps someone will. Or it can be
-*undecidable*: a statement that a given set of axioms can neither prove nor
-refute, like the parallel postulate for ordinary geometry, or the continuum
-hypothesis for set theory. Both are famous, both are unsettling, and both have
-been studied for a century.
+But existence and identification are not the same logical achievement. A deductive system may certify the sentence “there is an object with property $P$” while failing to certify $P$ for every object on a fixed list of names. Such a sentence casts a mathematical shadow: the system sees that something is there, yet none of the named candidates becomes visible.
 
-This article is about a third, stranger kind of unknowing. Imagine a statement
-that says *"objects with a certain property exist"* — and imagine that we can
-**prove** this existence claim beyond any doubt, yet we can also prove that we
-will **never be able to point to a single one of those objects**. The existence
-is certain; every individual witness is forever out of reach. The theorem is
-real, but it is *dark*: it casts a shadow — the guarantee that something is
-there — without ever letting us see the thing itself.
+This is the central idea of **dark existence**. It is striking, but it must be handled with care. Once the idea is stated precisely, a tempting hierarchy based on the number of hidden witnesses collapses for a simple reason: one invisible witness can be dressed in arbitrarily many irrelevant finite tags. The tags create distinct objects without creating new mathematical information.
 
-Call such a statement a **dark theorem**. The purpose of this article is to
-convince you that dark theorems are not a philosophical curiosity dressed up in
-mathematical clothing. They can be defined precisely, organized into a
-*hierarchy* according to how much they hide, and studied with the same rigor as
-any other object. And along the way, a tempting slogan — "most true statements
-are dark" — turns out to be false, replaced by something more subtle and, in a
-way, more interesting.
+That observation changes the research question. Instead of asking how many dark witnesses there are, we should ask what remains after inessential recodings have been removed.
 
-## Existence you can trust, witnesses you can never find
+## What “dark” means
 
-The seed of the idea is an old and genuine phenomenon. In the 1970s, logicians
-discovered concrete, natural, obviously-true statements about finite
-combinatorics that the standard axioms of arithmetic cannot prove. The most
-celebrated is a strengthened version of a classic pigeonhole-style result: for
-every recipe you write down, a certain kind of large but finite structure is
-guaranteed to exist. The statement is true. Yet the usual axioms of arithmetic
-are simply not strong enough to establish it. Existence outruns provability.
+Fix three ingredients. First, let $\text{Prov}(A)$ mean that a chosen deductive system proves the proposition $A$. No special assumptions about the system are built into the notation. Second, let $\nu(0),\nu(1),\nu(2),\ldots$ be the objects selected by a naming scheme. Third, let $P(x)$ be a property of those objects.
 
-A dark theorem takes this one step further and makes it structural. Strip away
-the specific combinatorics and keep only the shape of the situation. We have a
-property $T$, and two kinds of claims we might make about it:
+The property $P$ is **dark relative to $\text{Prov}$ and $\nu$** when both of the following hold:
 
-- **Instance statements.** For each natural number $n$, the claim $T(n)$: "*$n$
-  is a witness*," i.e. $n$ is one of the objects the property is about.
-- **Counting statements.** For each natural number $k$, the claim
-  $\exists_{\ge k}$: "*there are at least $k$ witnesses* $x$ *with* $T(x)$."
+1. the system proves
+$$
+\exists x\,P(x),
+$$
+2. for every natural number $n$, the system does not prove
+$$
+P(\nu(n)).
+$$
 
-A deductive system — think of it as a fixed body of accepted reasoning, with its
-record of what it can and cannot establish — is then called **dark** when two
-things hold at once:
+The word “relative” matters. Darkness depends on the proof system, the language, and the naming scheme. It is not merely a synonym for “hard to compute” or “not yet known.” It is a precise mismatch between provable existential information and provable named instances.
 
-1. It **proves** the existential claim $\exists_{\ge 1}$ — "a witness exists."
-2. For **every** specific number $n$, it does **not** prove $T(n)$.
+To count witnesses, say that $P$ has **at least $r$ witnesses** if there is a finite set $S$ of cardinality $r$ such that every $x\in S$ satisfies $P(x)$. A property is **dark at level $r$** when the system proves that $P$ has at least $r$ distinct witnesses but proves no named instance $P(\nu(n))$.
 
-That is the paradox in its purest form: provable existence, with no findable
-example. Not "we haven't found one yet," but "the system that guarantees one
-exists can never single one out."
+At first sight, this suggests a ladder. Perhaps level $2$ darkness is deeper than level $1$, and level $3$ deeper still. The main result shows why that conclusion does not follow from witness count alone.
 
-## Darkness comes in degrees
+## The tag machine
 
-Here is the first real discovery. Darkness is not all-or-nothing. A system might
-prove not merely that *some* witness exists, but that *at least $k$* of them do —
-while still being unable to name even one. This lets us grade the phenomenon.
+Suppose $P$ is dark on a type of objects $X$. Choose a positive integer $r$. Replace each object $x\in X$ by a tagged object
+$$
+(i,x),\qquad i\in\{0,1,\ldots,r-1\}.
+$$
+Define a new property $Q_r$ by ignoring the tag:
+$$
+Q_r(i,x)\quad\text{means exactly}\quad P(x).
+$$
 
-Say a system is **dark of level $k$** when:
+If $x$ is a witness to $P$, then
+$$
+(0,x),(1,x),\ldots,(r-1,x)
+$$
+are $r$ distinct witnesses to $Q_r$. Their distinction lies entirely in the tags. The underlying payload is unchanged.
 
-1. It **proves** the counting statement $\exists_{\ge k}$ — "there are at least
-   $k$ witnesses."
-2. For every specific $n$, it does **not** prove $T(n)$.
+The naming scheme must also be extended. Every natural-number code $c$ can be divided by $r$ with quotient and remainder:
+$$
+c=r\left\lfloor\frac{c}{r}\right\rfloor+(c\bmod r).
+$$
+Use the remainder as a tag and the quotient as the old name index:
+$$
+\nu_r(c)=\left(c\bmod r,\nu\!\left(\left\lfloor\frac{c}{r}\right\rfloor\right)\right).
+$$
+This interleaves all tags over all old names. Indeed, the pair $(i,\nu(n))$ is named by the code $rn+i$.
 
-Level $1$ is ordinary darkness: "something is there, but you can't find it."
-Level $2$ is deeper: "at least two things are there, but you can't find either."
-Level $3$ deeper still. Intuitively, a higher level is a stronger claim about
-the size of the hidden population, coupled with the same total blindness about
-its members.
+Now assume the deductive system supports the elementary transformation that turns a proof of $\exists x\,P(x)$ into a proof that $Q_r$ has at least $r$ tagged witnesses. Ordinary syntactic calculi are expected to support such finite bookkeeping, but the assumption is stated openly because the argument is meant to apply abstractly.
 
-The natural worry is that this ladder might be an illusion — that once you can do
-level $1$ you automatically get all the rest, so the "levels" are just decoration.
-The central result of this work is that **the ladder is real and never
-collapses.**
+The central theorem is then immediate but consequential.
 
-## An explicit machine for manufacturing darkness
+**Finite-Tag Amplification Theorem.** If $P$ is dark and the proof system supports finite tagging, then for every positive integer $r$, the tag-extended property $Q_r(i,x)\equiv P(x)$ is dark at level $r$ under the interleaved naming scheme $\nu_r$.
 
-To prove the ladder is real, it helps to build the rungs by hand. Fix a number
-$k$, and consider a small, completely explicit deductive system — call it
-$B_k$ — designed to prove exactly the counting statements up to $k$ and nothing
-else about witnesses. Concretely, its only pieces of accepted reasoning are $k+1$
-of them, one for each index $j = 0, 1, \dots, k$, and the $j$-th one concludes
-precisely "*there are at least $j$ witnesses.*" Crucially, **none** of its
-reasoning ever concludes an instance statement $T(n)$: no witness is ever named.
+Why does named-instance darkness survive? If the system proved $Q_r(\nu_r(c))$, it would prove
+$$
+P\!\left(\nu\!\left(\left\lfloor\frac{c}{r}\right\rfloor\right)\right),
+$$
+contradicting the original darkness condition. The tag contributes no logical content that could reveal the payload.
 
-From this transparent construction three facts fall out cleanly.
+Thus one dark existential yields explicit level-$1$, level-$2$, and level-$3$ dark predicates—and, uniformly, one at every positive finite level. These are not independent discoveries. They are copies of the same hidden witness placed in differently colored boxes.
 
-- **What $B_k$ proves about counting.** The system $B_k$ proves
-  $\exists_{\ge j}$ *if and only if* $j \le k$. It reaches exactly as high as
-  $k$ and no higher.
-- **What $B_k$ proves about witnesses.** The system $B_k$ proves **no** instance
-  statement $T(n)$ whatsoever. Every witness is invisible to it.
-- **Darkness at every level up to $k$.** Combining the two, $B_k$ is dark of
-  level $j$ for every $j \le k$: it certifies at least $j$ hidden witnesses while
-  naming none.
+## Why the naive hierarchy collapses
 
-And now the punchline. Because $B_k$ proves $\exists_{\ge k}$ but not
-$\exists_{\ge k+1}$, it is dark of level $k$ but **not** dark of level $k+1$.
-So level $k+1$ is a strictly stronger condition than level $k$: there is a system
-that meets the lower bar and provably fails the higher one. **The hierarchy of
-darkness is strict.** In particular we get honest, explicit dark theorems of
-levels $1$, $2$, and $3$ — three deductive systems, each certifying respectively
-one, two, and three hidden witnesses, none of which can ever be exhibited.
+Imagine a locked room known to contain one person. Give that person three badges and describe the occupants as “the person wearing badge zero,” “the person wearing badge one,” and “the person wearing badge two.” There are now three distinct person-badge pairs, but no additional person has been found.
 
-Notice that this strictness is not a trick of bookkeeping. The counting
-statements $\exists_{\ge k}$ are genuinely different assertions for different
-$k$; the level a system reaches is simply the highest counting statement it can
-establish. Darkness, on this view, is a *resource*, measured on a discrete ruler,
-and the ruler has infinitely many distinct marks.
+Finite tags do the same thing mathematically. Cardinality increases in the product space, yet proof-theoretic information does not. Therefore raw witness number is not an invariant measure of logical hardness.
 
-## Combining blindness makes deeper blindness
+This does not say that every possible hierarchy of darkness is meaningless. It says that any serious hierarchy must identify constructions that differ only by irrelevant finite decoration. One might quotient predicates by finite tags, computable bijections, or other harmless changes of representation. Only then can “higher level” plausibly mean “strictly more informative or more difficult.”
 
-The second discovery concerns what happens when you *merge* two bodies of
-reasoning. Given two systems $S$ and $T$, form their **join** $S \vee T$: the
-system that accepts a conclusion exactly when $S$ or $T$ does. This is the
-natural "combine everything both can do" operation, and it is the least system
-that is at least as strong as both.
+There is also a downward principle. Mathematically, if a property has at least $n$ witnesses and $m\le n$, then it has at least $m$ witnesses: select an $m$-element subset. At the proof level, if the deductive system can transform a proof of “at least $n$” into a proof of “at least $m$,” then level-$n$ darkness implies level-$m$ darkness. So the raw levels are monotone downward and cheaply amplifiable upward—another sign that they do not, by themselves, measure depth.
 
-Darkness survives this merger, and — remarkably — it can be *amplified* by it.
-Suppose $S$ is dark of level $a$ and $T$ is dark of level $b$. Then their join
-$S \vee T$ is dark of level $\max(a, b)$:
+## When darkness is impossible
 
-- The join proves $\exists_{\ge \max(a,b)}$, because whichever of $S$, $T$ is the
-  more ambitious counter already proves it, and the join inherits everything both
-  prove.
-- The join still proves **no** instance statement, because neither $S$ nor $T$
-  proves any, and the join proves only what one of them proves.
+The framework also isolates a clean obstruction.
 
-So two theories, each individually blind — neither able to name a single witness —
-can be combined into a theory that provably sees an even larger hidden population
-while remaining exactly as blind. **Combining ignorance can manufacture strictly
-deeper ignorance.** Darkness is not a defect that dilutes when theories mix; it is
-a structured quantity that behaves like a maximum, climbing the ladder as
-theories accumulate.
+**Named Witness-Extraction Theorem.** Suppose a proof system has the following property for $P$: whenever it proves $\exists x\,P(x)$, there is some natural number $n$ for which it proves $P(\nu(n))$. Then $P$ cannot be dark.
 
-## The slogan that turned out to be false
+The reason is direct. Darkness requires provable existence and simultaneously forbids every provable named instance. Witness extraction supplies exactly the instance that darkness excludes.
 
-There is a seductive intuition, voiced often about incompleteness, that
-"pathology is typical" — that if you reach into the space of all true existential
-statements at random, you will almost surely pull out something independent,
-something dark. The original conjecture behind this project put it boldly:
-**dark theorems are dense; most true existential statements are dark.**
+This theorem clarifies what dark existence demands from a deductive setting. A system with a suitable numerical or named-witness property leaves no room for it. Any genuine example must therefore exploit a setting where existential proofs need not yield proofs of named instances, or where the naming map fails to capture the witnesses in the relevant intensional sense.
 
-When you actually *count*, the slogan collapses. Measure darkness the honest,
-uniform way — tally the configurations in each finite family of counting
-behaviours and ask what fraction are dark — and you find that in every finite
-family, essentially a *single* configuration is the dark one. As the families
-grow, that fraction shrinks to zero. Under uniform counting, **darkness has
-vanishing density.** The literal claim "most true statements are dark" is
-therefore *false*.
+## Famous independence results are not automatic examples
 
-This is not a defeat; it is a sharpening. The lesson is that we were using the
-wrong scale. Counting statements one apiece treats a trivially-checkable claim
-and a monstrously-hard-to-certify claim as equals, and by that flat measure the
-hard cases are rare. But a single statement whose lone witness is astronomically
-difficult to pin down should surely *weigh* more than a whole family of
-easily-verified ones. Genericity of darkness, if it exists at all, must be
-measured by *logical complexity*, not by a headcount. The refutation of the naive
-density conjecture is what points us to the right question.
+It is tempting to point immediately to celebrated statements independent of Peano arithmetic, such as the Paris–Harrington principle or the Kirby–Paris hydra theorem. They demonstrate genuine limits of arithmetic proof. Yet their usual forms do not automatically satisfy the definition above.
 
-## Why any of this matters
+The issue is logical shape. Standard independence results often assert a universal termination or finite-combinatorial principle that the theory cannot prove. Dark existence asks for something different: the theory must prove an existential statement while proving none of its named instances. Independence of a universal principle does not supply that pair of facts.
 
-Dark mathematics reframes an old anxiety. Incompleteness told us that some truths
-lie beyond a given system's reach. Undecidability told us that some questions have
-no answer within the rules. Dark theorems tell us something orthogonal to both:
-that a system can be *completely confident that things exist* and *completely
-powerless to display them* — and that this powerlessness comes in strictly
-increasing degrees, stacks up under combination like a maximum, and is rarer than
-folklore suggests when counted fairly.
+An explicit arithmetic example would require a fixed arithmetization of syntax, an exact naming map, and a carefully designed—likely intensional or nonstandard—predicate. For every standard name, one would need a metamathematical argument excluding a proof of that instance, while still exhibiting a proof of the existential. Citing an independence theorem alone does not bridge this gap.
 
-There are real-world echoes of this shape of knowledge. A pigeonhole argument can
-guarantee that two people in a large city share the same number of hairs without
-naming them. A probabilistic argument can prove a good object exists among
-astronomically many candidates without producing it. Cryptography rests on
-problems whose solutions certainly exist but are meant to stay hidden. Dark
-mathematics is the logician's distillation of that everyday tension between
-*knowing that* and *knowing which* — turned into a precise, gradable, and
-surprisingly well-behaved object of study.
+## Why “most statements are dark” is not yet a theorem
 
-The shadows, it turns out, have structure. And the structure is worth the
-looking, even when the objects casting it never step into the light.
+A second tempting claim is that dark statements are dense among true $\Pi_2$ sentences. But density requires a notion of space and size. Formula strings can be padded with harmless symbols or rewritten through equivalent constructions. Such changes may radically alter simple counts while leaving the mathematics untouched.
+
+Before asking whether darkness is common, one must choose a topology, a grammar-based bounded-length density, a probability distribution on programs, or another explicit measure. Then one must show that the conclusion is robust under acceptable changes of coding. Without this work, “most formulas” describes typography more than mathematics.
+
+The tag theorem is a warning in miniature. If irrelevant tags can manufacture arbitrarily high witness levels, irrelevant syntax can also manufacture misleading frequencies. Representation-sensitive statistics must not be mistaken for intrinsic structure.
+
+## From shadows to invariants
+
+Dark existence remains a fertile idea, but its most durable lesson is methodological. Existence, naming, and extraction are separate notions. Counting witnesses before controlling representation can confuse duplicated descriptions with new information. Counting formulas before controlling syntax can confuse padding with prevalence.
+
+A stronger theory should proceed in three stages. First, instantiate provability with a concrete arithmetic proof calculus and verify that finite tagging corresponds to effective transformations of derivations. Second, search for a genuine predicate satisfying provable existence and universal failure of named-instance provability. Third, quotient away finite tags and computable renamings before defining any hierarchy or density.
+
+The result is not the proposed tower of increasingly dark theorems. It is something more foundational: a theorem explaining why that tower, as first imagined, cannot measure what it intends to measure. A single shadow can be split into any finite number of silhouettes by changing the screen. The challenge is to identify the darkness that survives when the screen itself is allowed to move.
