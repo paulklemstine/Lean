@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-17T18:22:10.422347+00:00",
+  "last_updated": "2026-07-17T22:12:51.486330+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -24212,6 +24212,7 @@
       "outcome_quality": 0.67,
       "phase": "A_only",
       "phase_a_prompt_version": "v19a",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19a",
@@ -24240,6 +24241,51 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-17T18:22:10.363538+00:00",
       "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 19,
+      "domain": "Algebra",
+      "duration_seconds": -15.558293342590332,
+      "end_time": 1784310413.5952275,
+      "error_message": "Zombie no progress (4.0h)",
+      "failed": true,
+      "files_integrated": 6,
+      "job_id": "58e34414",
+      "outcome_quality": 0.0,
+      "phase": "B",
+      "phase_a_prompt_version": "v19b",
+      "phase_a_quality_score": 0.61,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.44,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.88,
+        "cross_domain": 0.5,
+        "importance": 0.48,
+        "novelty": 0.62,
+        "pegb_compliance": 0.0,
+        "phase": "B",
+        "proof_depth": 0.58,
+        "usefulness": 0.67
+      },
+      "quality_score": 0.61,
+      "sorry_count": 3,
+      "sorry_density": 0.16666666666666666,
+      "start_time": 1784310429.1535208,
+      "strategy_count": 0,
+      "theorem_count": 18,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 10,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-17T22:12:51.418126+00:00",
+      "title": "Knots That Think: Cognition as Braiding in Category Theory"
     }
   ]
 }
