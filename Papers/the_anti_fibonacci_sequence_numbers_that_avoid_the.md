@@ -2,43 +2,44 @@
 
 ## Small-case calculations
 
-There are two distinct rules in the proposed description.
+Two interpretations were tested separately.
 
-For the literal rule, the first two terms are `1,1`. Their sum is `2`, so the least positive integer unequal to that sum is `1`. The same argument then repeats forever:
+| index `n` | literal least-avoiding rule | displayed increment rule |
+|---:|---:|---:|
+| 0 | 1 | 1 |
+| 1 | 1 | 1 |
+| 2 | 1 | 2 |
+| 3 | 1 | 4 |
+| 4 | 1 | 7 |
+| 5 | 1 | 11 |
+| 6 | 1 | 16 |
+| 7 | 1 | 22 |
+| 8 | 1 | 29 |
 
-| index `n` | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| literal `A(n)` | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+For the literal rule, the forbidden value is a sum of two positive integers and is
+therefore at least two; hence one is always the least admissible value.  For the
+displayed rule, successive increments are `0,1,2,3,...`.
 
-The displayed terms instead follow successive increments `0,1,2,3,…`:
+## Large-index test
 
-| index `n` | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| displayed `D(n)` | 1 | 1 | 2 | 4 | 7 | 11 | 16 | 22 | 29 |
-| `D(n)-D(n-1)` | – | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+The exact displayed-rule identity gives
 
-This yields `D(n)=1+n(n-1)/2`, so its quadratic coefficient is `1/2`.
+`A(1,000,000) = 1 + 1,000,000·999,999/2 = 499,999,500,001`.
 
-## OEIS search results
+Thus `A(n)/n² = 0.499999500001` at one million, approaching one half rather than one
+quarter.  This calculation is backed by the general exact identities proved in
+`Catalog/Pythagorean/AntiFibonacciDiagnosis.lean`.
 
-No external OEIS identification was used. The displayed values are an elementary shift of the triangular numbers; the exact recurrence and closed form suffice to identify their structure without relying on a database match.
+## OEIS search
+
+No external OEIS identification is asserted.  The displayed terms are the elementary
+triangular shift `1 + n(n-1)/2`; an external database lookup was unnecessary for the
+mathematical diagnosis and no unverifiable identifier is reported.
 
 ## Counterexample hunt
 
-The first computed recurrence step already refutes the advertised interpretation: the literal third term is `1`, not `2`. Moreover, the proved even-index identity
-
-`D(2k) = floor((2k)^2/4) + k(k-1) + 1`
-
-shows that the discrepancy from the proposed quarter-square law grows without bound. Thus neither a search to `10^6` nor a numerical convergence plot is needed to decide the stated conjecture.
-
-## Representative comparison table
-
-| `n` | `D(n)` | `floor(n²/4)` | discrepancy |
-|---:|---:|---:|---:|
-| 2 | 2 | 1 | 1 |
-| 4 | 7 | 4 | 3 |
-| 6 | 16 | 9 | 7 |
-| 8 | 29 | 16 | 13 |
-| 10 | 46 | 25 | 21 |
-
-At `n=2k`, the discrepancy is exactly `k(k-1)+1`, explaining the accelerating separation visible in the table.
+The proposed literal sequence already fails at index two: the least positive integer
+different from `1+1=2` is `1`, not `2`.  The proposed quarter-square asymptotic also
+fails: the displayed sequence has exact leading term `n²/2`.  The accompanying theorem
+strengthens this finite observation by proving that its discrepancy from the
+quarter-square model exceeds every prescribed linear error.

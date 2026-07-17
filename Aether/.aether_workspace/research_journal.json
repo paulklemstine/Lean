@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "11762aec",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Toughness, minimal toughness, and forbidden induced subgraphs\n\nThis cycle assembled a reusable toughness toolkit around a single load-bearing\ninvariant, the *component count* `nu",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-14T03:41:29",
-      "title": "Close Proofs: Minimally 1‑tough (K₁ ∪ P₄)-free graphs are Hamiltonian"
-    },
-    {
       "cycle_id": "7acc7a45",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Sharp excess of ℤ₂-coindex under suspension\n\n## What this cycle established (unconditionally)\n\nThe file `Catalog/Novelty/Z2CoindexSuspension.lean` develops a self-contained combin",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T18:04:18",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "5102d77c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Recurrence in Cognitive Dynamics\n\n## 1. Observation-invariant recurrence spectra\n\n**Conjecture.** For compact metric cognitive systems related by a topological conjugacy, the exac",
+      "quality_score": 0.67,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-17T18:22:10",
+      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-17T18:04:18",
+  "last_updated": "2026-07-17T18:22:10",
   "open_questions": [
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
@@ -3085,12 +3085,6 @@
       {
         "cycle_id": "08676759",
         "quality": 0.69,
-        "theorems": 12,
-        "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Consta"
-      },
-      {
-        "cycle_id": "08676759",
-        "quality": 0.69,
         "theorems": 17,
         "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Consta"
       },
@@ -3141,6 +3135,12 @@
         "quality": 0.74,
         "theorems": 0,
         "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
+      },
+      {
+        "cycle_id": "5102d77c",
+        "quality": 0.67,
+        "theorems": 7,
+        "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
       }
     ],
     "Bridges": [
