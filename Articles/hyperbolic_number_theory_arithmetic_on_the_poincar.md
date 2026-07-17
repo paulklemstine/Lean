@@ -1,206 +1,226 @@
-# When Curved Motion Becomes Integer Arithmetic
+# An Integer Line Curved into the Poincaré Disk
 
-## A trace turns geometry into a recurrence
+## A rigorous first step toward hyperbolic arithmetic
 
-Imagine standing inside the Poincaré disk, the circular map on which straight hyperbolic roads appear as arcs bending toward the boundary. Repeating one symmetry of this space sends a point along an orbit: one step, two steps, three steps, and onward. The orbit is geometric, but hidden inside it is a remarkably crisp arithmetic clock.
-
-Represent the symmetry by an integer matrix
+The integers usually arrive as points on an endless straight road:
 
 $$
-A=\begin{pmatrix}a&b\\c&d\end{pmatrix},\qquad ad-bc=1.
+\ldots,-3,-2,-1,0,1,2,3,\ldots
 $$
 
-Such a matrix acts on the upper half-plane by the fractional transformation $z\mapsto (az+b)/(cz+d)$; after a change of picture, the same motion acts on the Poincaré disk. Its trace is the integer $t=a+d$. Although changing coordinates can alter the four entries, conjugating the transformation does not alter $t$. Trace is therefore an intrinsic label for the motion.
+Hyperbolic geometry invites a different picture. In the Poincaré disk, the whole infinite hyperbolic plane is compressed into the interior of an ordinary Euclidean circle. The boundary circle is not part of the plane; it represents infinity. A traveler can move forever while remaining, in the Euclidean picture, inside the disk and drawing ever closer to its rim.
 
-Now define $u_n(t)$ to be the trace after the motion has been repeated $n$ times. The entire sequence obeys
+Can an integer line be placed inside this curved world without losing its arithmetic identity? A particularly clean answer comes from the modular group, one of the central symmetry groups connecting geometry and number theory. The construction below bends a copy of the integers into the disk, gives an exact formula for every point, and reveals how counting, symmetry, and escape to infinity look after the bending.
 
-$$
-u_0(t)=2,\qquad u_1(t)=t,\qquad
-u_{n+2}(t)=t\,u_{n+1}(t)-u_n(t).
-$$
+This is not yet a theory of “hyperbolic primes.” It is something more foundational: an exact model showing which parts of ordinary integer structure survive a geometric transport, and which further claims require genuinely new definitions.
 
-This is the determinant-one trace recurrence. It is the central character in our story. It replaces a tempting but ambiguous idea—trying to invent addition and multiplication directly on the vertices of a hyperbolic tessellation—with arithmetic attached to a canonical geometric quantity.
+## From the upper half-plane to the disk
 
-Every integer can play the role of the initial trace. For any $t\in\mathbb Z$, the matrix
+Begin with the upper half-plane
 
 $$
-A_t=\begin{pmatrix}t-1&1\\t-2&1\end{pmatrix}
+\mathbb H=\{z\in\mathbb C:\operatorname{Im}z>0\}.
 $$
 
-has determinant $1$ and trace $t$. Thus the recurrence is not an artificial numerical toy: each one of its integer parameters comes from a genuine integral Möbius transformation.
-
-## The trace-three universe
-
-Take $t=3$. The recurrence begins
+The modular transformation $z\mapsto z+n$, for $n\in\mathbb Z$, slides points horizontally. Starting from $i$, its translation orbit is the row of points $n+i$. The Cayley transform
 
 $$
-2,\ 3,\ 7,\ 18,\ 47,\ 123,\ 322,\ldots
+C(z)=\frac{z-i}{z+i}
 $$
 
-At first this resembles any fast-growing integer sequence. Then a striking law appears. The term at twice an index can be calculated from the original term alone:
+maps the upper half-plane onto the open unit disk
 
 $$
-u_{2n}=u_n^2-2.
+\mathbb D=\{w\in\mathbb C:|w|<1\}.
 $$
 
-For example, $u_2=7$ and $u_4=47=7^2-2$. Likewise $u_5=123$ and $u_{10}=15127=123^2-2$. Threefold jumps are equally economical:
+Applying $C$ to $n+i$ produces the modular orbit point
 
 $$
-u_{3n}=u_n^3-3u_n.
+p_n=C(n+i)=\frac{n}{n+2i}.
 $$
 
-Thus $u_3=18=3^3-3\cdot3$, and $u_{12}$ can be obtained from $u_4=47$ as $47^3-3\cdot47=103682$.
-
-These are not coincidences confined to $t=3$. They hold for every integer $t$ and every nonnegative integer $n$.
-
-**Trace Doubling Theorem.** For the recurrence $u_0=2$, $u_1=t$, and $u_{n+2}=tu_{n+1}-u_n$, one has
+This single formula is the heart of the story. It turns a geometric construction into elementary arithmetic: every coordinate, distance comparison, and finite count can be read from the index $n$. Multiplying by the complex conjugate of the denominator gives
 
 $$
-u_{2n}(t)=u_n(t)^2-2
+p_n=\frac{n^2}{n^2+4}-i\frac{2n}{n^2+4}.
 $$
 
-for every integer $t$ and every $n\ge 0$.
+Thus positive indices lie below the real axis, negative indices lie above it, and $p_0=0$. The points trace two reflected arms that leave the center and crowd toward the boundary point $1$.
 
-**Trace Tripling Theorem.** Under the same assumptions,
+## An exact radial law
 
-$$
-u_{3n}(t)=u_n(t)^3-3u_n(t)
-$$
-
-for every integer $t$ and every $n\ge 0$.
-
-Why do index multiplication and polynomial evaluation fit together so perfectly? Because repeating a motion $n$ times and then repeating that result $m$ times is the same as repeating the original motion $mn$ times:
+The squared Euclidean radius is especially simple:
 
 $$
-(A^n)^m=A^{mn}.
+|p_n|^2=\frac{n^2}{n^2+4}.
 $$
 
-For a determinant-one $2\times2$ matrix $B$, the Cayley–Hamilton identity gives $B^2-(\operatorname{tr}B)B+I=0$. Taking traces yields
+This identity immediately proves that every point lies strictly inside the disk, because $n^2<n^2+4$. It also quantifies the remaining gap to the ideal boundary:
 
 $$
-\operatorname{tr}(B^2)=(\operatorname{tr}B)^2-2.
+1-|p_n|^2=\frac{4}{n^2+4}.
 $$
 
-Applying the same idea once more gives
+The deficit decays quadratically in $|n|$. For example,
 
 $$
-\operatorname{tr}(B^3)=(\operatorname{tr}B)^3-3\operatorname{tr}B.
+|p_0|^2=0,\qquad |p_1|^2=\frac15,\qquad
+|p_2|^2=\frac12,\qquad |p_3|^2=\frac9{13}.
 $$
 
-Set $B=A^n$, and the doubling and tripling formulas follow. Group dynamics has been compressed into elementary polynomials.
+As $n$ tends through the positive integers to infinity, both $|p_n|^2$ and $|p_n|$ tend to $1$. In the disk picture, the orbit approaches the rim. Hyperbolically, however, the rim remains infinitely far away. The visual accumulation is therefore not a failure of discreteness; it is the signature of a cusp extending to infinity.
 
-## A conic that every orbit remembers
+There is a precise theorem behind this picture.
 
-The recurrence carries another invariant. Two consecutive terms always lie on one fixed quadratic curve:
-
-$$
-u_n^2-t u_nu_{n+1}+u_{n+1}^2=4-t^2.
-$$
-
-This is the Pell-Conic Invariant. It can be checked at $n=0$, where the left side is $4-2t^2+t^2=4-t^2$. The recurrence preserves it from one pair to the next. Consequently, the sequence of pairs $(u_n,u_{n+1})$ walks through integer points on the conic
+**Radial Escape Theorem.** For $p_n=n/(n+2i)$, every $p_n$ belongs to $\mathbb D$, and
 
 $$
-x^2-txy+y^2=4-t^2.
+\lim_{n\to\infty}|p_n|^2=\lim_{n\to\infty}|p_n|=1.
 $$
 
-For $|t|>2$, the matrix is hyperbolic and $t^2-4>0$. The conic then reads $x^2-txy+y^2=-(t^2-4)$, linking repeated hyperbolic motion with Pell-type Diophantine geometry. One may watch an orbit in the disk, list traces of powers, or study lattice points on this conic: these are three views of the same arithmetic mechanism.
+Moreover, the exact squared-radius defect is $4/(n^2+4)$.
 
-Doubling respects this geometry in an especially transparent way. Squaring the doubling formula and simplifying gives the **Doubled Discriminant Factorization**:
+The proof needs only the displayed radius formula. The denominator always exceeds the numerator, and division by $n^2$ shows that $n^2/(n^2+4)$ tends to $1$.
 
-$$
-u_{2n}^2-4=(u_n^2-4)u_n^2.
-$$
+## The orbit does not forget the integers
 
-Equivalently,
+Curving the integer line would be of little use if different integers collapsed onto the same point. They do not.
 
-$$
-4-u_{2n}^2=(4-u_n^2)u_n^2.
-$$
+**Faithfulness Theorem.** If $p_m=p_n$, then $m=n$.
 
-The discriminant-like quantity $u_n^2-4$ is multiplied by the perfect square $u_n^2$. Doubling therefore preserves its square class. This is exactly the kind of signature one hopes for when trying to distinguish primitive steps from repeated ones: a composite index leaves a visible square factor behind.
-
-## The boundary cases matter
-
-The classification of determinant-one transformations depends on trace. Values $|t|<2$ are elliptic, $|t|=2$ are parabolic, and $|t|>2$ are hyperbolic. The formulas do not break at the borders.
-
-For $t=2$, the recurrence is constantly $2$. Its discriminant $u_n^2-4$ vanishes at every stage, and the factorization says $0=0\cdot4$. For $t=-2$, alternating signs appear, but the same zero discriminant remains. These degenerate cases are not nuisances to discard; they show that one polynomial law covers elliptic, parabolic, and hyperbolic behavior uniformly.
-
-There is also a familiar analytic face to the recurrence. If $t=2\cosh\theta$, then
+Indeed,
 
 $$
-u_n(t)=2\cosh(n\theta).
+\frac{m}{m+2i}=\frac{n}{n+2i}
 $$
 
-The doubling formula becomes the standard identity $2\cosh(2x)=(2\cosh x)^2-2$, and the tripling formula becomes $2\cosh(3x)=(2\cosh x)^3-3(2\cosh x)$. The integral recurrence is therefore a Chebyshev-type shadow of hyperbolic trigonometry.
-
-## Faster computation, richer structure
-
-The formulas are useful computationally. A direct recurrence takes $O(n)$ integer steps to reach $u_n$. But if an index is built by doubling and tripling, one can jump through the orbit with polynomial updates. Pure powers of two require only $O(\log n)$ updates:
+implies, after cross-multiplication,
 
 $$
-x\longmapsto x^2-2.
+m(n+2i)=n(m+2i).
 $$
 
-For instance, from $u_1=3$ one obtains $u_2=7$, $u_4=47$, $u_8=2207$, and $u_{16}=4870847$ using four quadratic evaluations. The integers themselves grow exponentially, so bit complexity still matters, but the number of recurrence stages collapses.
+The real products cancel, leaving $2mi=2ni$, and hence $m=n$. The map $n\mapsto p_n$ is injective. Consequently, the disk contains infinitely many distinct points of this modular orbit, even though all of them fit inside a bounded Euclidean circle.
 
-The pair recurrence also makes modular exploration finite. Modulo an integer $q>1$, advance by
-
-$$
-(x,y)\longmapsto (y,ty-x)\pmod q.
-$$
-
-This map is invertible, with inverse $(x,y)\mapsto(tx-y,x)$. Since there are only $q^2$ pairs, every modular trace orbit is purely periodic—there is no transient tail before the cycle begins. This observation suggests fast period experiments and connects orbit arithmetic with finite groups.
-
-## What this does—and does not—say about primes
-
-The phrase “hyperbolic prime” is evocative, but it needs a multiplication law before unique factorization can even be stated. Tessellation vertices alone do not supply a canonical monoid, and a finite list of zeros of a numerically chosen zeta function cannot prove a critical-line theorem. The trace approach takes a more disciplined route. It attaches arithmetic to conjugacy-invariant data that are already built into the geometry.
-
-A natural prime-like object is then not an arbitrarily labeled vertex but a primitive closed geodesic, or equivalently a primitive hyperbolic conjugacy class. Its trace is tied to its length $\ell$ by
+Reflection is equally exact:
 
 $$
-|\operatorname{tr}A|=2\cosh(\ell/2).
+p_{-n}=\overline{p_n}.
 $$
 
-The doubling and tripling maps detect repeated powers of such classes in trace coordinates. They do not yet deliver a prime-geodesic counting theorem or a zeta-function critical-line theorem. What they provide is the exact arithmetic infrastructure on which those more ambitious questions can be posed without ambiguity.
+Thus changing the sign of an integer becomes reflection across the real axis. The familiar symmetry of the integer line survives as a geometric mirror symmetry.
 
-## From a huge matrix to one integer
+## Radius recovers absolute value
 
-There is a second surprise in how much information the trace retains. A power $A^n$ has four matrix entries, each potentially enormous. Yet the traces of all later powers of $A^n$ are controlled by the single integer $u_n$. To predict the trace after doubling, no other entry is needed; to predict it after tripling, the same is true. The determinant condition has removed the missing degree of freedom. The eigenvalues of $A^n$ come as a reciprocal pair $\lambda^n$ and $\lambda^{-n}$, and their sum is $u_n$. Every symmetric power sum of this pair is therefore a polynomial in that sum.
+The radius does not remember the sign—reflected points are equally far from the origin—but it remembers absolute size perfectly.
 
-This compression has a physical analogy. In a complicated dynamical system, one searches for observables that retain just enough information to predict quantities of interest. Trace is such an observable for repeated two-dimensional, area-preserving linear motion. It does not reconstruct the orbit point or the matrix itself, but it perfectly predicts the trace at multiplied times. In data language, it is a sufficient statistic for this restricted family of questions.
-
-The compression is also robust under a change of viewpoint. Conjugating $A$ changes the coordinate grid but not $\operatorname{tr}(A^n)$. Two observers using different fundamental domains therefore obtain the same trace arithmetic. This invariance is essential if the numbers are to describe the geometry rather than the mapmaker's choices.
-
-## A small laboratory of exact experiments
-
-The recurrence is easy to explore without approximation. Choose an integer $t$, begin with $(2,t)$, and repeatedly replace a pair $(x,y)$ by $(y,ty-x)$. At each stage one may test the conic equation, then compare the term at a doubled or tripled index with its polynomial prediction. For $t=4$, for example, the sequence begins
+**Radial Order Theorem.** For any integers $m$ and $n$,
 
 $$
-2,\ 4,\ 14,\ 52,\ 194,\ldots
+|p_m|^2\le |p_n|^2
+\quad\Longleftrightarrow\quad
+m^2\le n^2.
 $$
 
-and doubling $u_2=14$ gives $u_4=14^2-2=194$. The conic check at the pair $(14,52)$ reads
+To see why, substitute the exact radial law. Cross-multiplication by the positive denominators reduces the comparison to
 
 $$
-14^2-4\cdot14\cdot52+52^2=-12=4-4^2.
+m^2(n^2+4)\le n^2(m^2+4),
 $$
 
-Reducing the same experiment modulo $q$ turns unbounded growth into a finite cycle. This makes the system accessible at several scales: exact integers reveal growth, modular residues reveal repetition, polynomial jumps reveal index multiplication, and conic plots reveal geometry. No single picture tells the whole story, but all four agree because they arise from the same determinant-one motion.
+and the common term $m^2n^2$ cancels. What remains is precisely $m^2\le n^2$.
 
-## The road ahead
+This result says that Euclidean radial depth in the disk is a perfect encoding of ordinary absolute value on the orbit. The disk has curved the line, but it has not scrambled its magnitude order.
 
-The quadratic and cubic laws point to a full family of monic integer polynomials $C_m$ satisfying
+## Exact counting inside radial cutoffs
 
-$$
-u_{mn}(t)=C_m(u_n(t)),\qquad C_m\circ C_k=C_{mk}.
-$$
-
-One expects each discriminant to factor as
+Choose a nonnegative integer $N$ and draw the closed Euclidean disk centered at the origin whose boundary passes through $p_N$. Which orbit points does it contain? The radial order theorem answers exactly:
 
 $$
-C_m(x)^2-4=(x^2-4)Q_m(x)^2
+|p_n|^2\le |p_N|^2
+\quad\Longleftrightarrow\quad
+|n|\le N.
 $$
 
-for an integer polynomial $Q_m$. The proven doubling identity is the first nontrivial case, and tripling supplies the next guidepost.
+Therefore the points inside are precisely
 
-From there, several paths open: determine sharp periods modulo $q$; classify which Pell-conic points come from primitive group elements; and count primitive conjugacy classes by trace, translating geometric length into arithmetic size. The broad lesson is already clear. Curvature does not destroy arithmetic. When the right coordinate is chosen, curved motion writes its multiplication table in polynomials, its orbits on Pell conics, and its repetitions in perfect-square factors.
+$$
+p_{-N},p_{-(N-1)},\ldots,p_{-1},p_0,p_1,\ldots,p_{N-1},p_N.
+$$
+
+Injectivity guarantees that none are repeated, so their number is
+
+$$
+2N+1.
+$$
+
+**Exact Orbit-Counting Theorem.** The closed radial cutoff determined by $p_N$ contains exactly $2N+1$ distinct modular orbit points.
+
+This elementary law is a useful benchmark. It converts a geometric counting problem into a transparent lattice count. It also warns us to specify the metric and the population being counted. These are orbit points, not tessellation vertices, primes, or closed geodesics; the cutoff is Euclidean radius in the disk picture, not hyperbolic distance.
+
+## The hyperbolic distance hidden in the formula
+
+The disk model has its own natural distance. From the origin to a point of Euclidean modulus $r$, the hyperbolic distance is
+
+$$
+d_{\mathbb D}(0,w)=2\operatorname{artanh}(r)
+=\log\frac{1+r}{1-r}.
+$$
+
+For the orbit, $r=|n|/\sqrt{n^2+4}$. A standard identity then yields
+
+$$
+d_{\mathbb D}(0,p_n)=2\operatorname{arsinh}\left(\frac{|n|}{2}\right).
+$$
+
+This formula follows analytically from the established radius law and explains the cusp geometry: for large $|n|$, the distance grows like $2\log |n|$. Euclidean radii crowd near $1$, while hyperbolic distances continue to increase without bound.
+
+It also suggests a different counting question. A hyperbolic ball of radius $R$ contains those indices satisfying
+
+$$
+2\operatorname{arsinh}\left(\frac{|n|}{2}\right)\le R,
+$$
+
+or equivalently $|n|\le 2\sinh(R/2)$. The count therefore grows exponentially in $R/2$, after taking the integer part. This derived observation belongs specifically to the one-dimensional translation orbit; it should not be confused with prime-geodesic asymptotics for a hyperbolic surface.
+
+## Where arithmetic ends and geometry begins
+
+Because $n\mapsto p_n$ is injective, one may transport ordinary operations to the orbit by declaring
+
+$$
+p_m\oplus p_n=p_{m+n},\qquad
+p_m\odot p_n=p_{mn}.
+$$
+
+These operations make the orbit a ring isomorphic to $\mathbb Z$. Unique factorization then follows, but for a clear reason: the arithmetic has been copied from the ordinary integers through the parametrization. Hyperbolic geometry has supplied a striking representation, not a new factorization theorem.
+
+This distinction matters when speaking about hyperbolic primes. Several natural geometric objects compete for that name: selected orbit points, vertices of a tessellation, primitive closed geodesics, or primitive conjugacy classes of a group. They are not interchangeable. A set of tessellation vertices does not automatically carry addition and multiplication, and an orbit is not automatically a ring.
+
+The established geometric analogue of primes on finite-area hyperbolic surfaces is closer to primitive closed geodesics. Their lengths enter the Selberg zeta function, whose structure reflects both group theory and spectral geometry. Any proposed hyperbolic zeta series must therefore specify exactly what is summed, which norm or length is used, what multiplicities occur, and where the series converges before questions about functional equations or zeros become meaningful.
+
+## A disciplined road toward curved number theory
+
+The modular orbit provides a sturdy first platform. Its achievements are exact and complete:
+
+* every integer maps to a point strictly inside the Poincaré disk;
+* distinct integers map to distinct points;
+* negation becomes complex conjugation;
+* squared radius is exactly $n^2/(n^2+4)$;
+* radial order is exactly order by $|n|$;
+* the first $2N+1$ indices are exactly the points inside the cutoff through $p_N$;
+* the orbit approaches the ideal boundary while remaining infinite and discrete in hyperbolic geometry.
+
+From here, the next serious steps are clear. One can develop the full fractional-linear action of determinant-one matrices, prove metric preservation, encode primitive hyperbolic conjugacy classes, and define zeta functions from canonical length data. Numerical searches for zeros would then require certified complex bounds and argument-principle counts, not merely floating-point plots.
+
+The larger dream—number theory on curved spaces—remains compelling. Discrete symmetries of curved surfaces already influence dynamics, spectral theory, and mathematical physics; an arithmetic language for them could reveal common structures behind apparently different counting problems. Yet precision matters most at the point where metaphor becomes definition.
+
+The orbit also offers a lesson about mathematical modeling. A picture may suggest primes clustering at a boundary, but the picture alone does not say what multiplication means, whether factorization is intrinsic, or which distance controls growth. Exact identities settle those questions one at a time. Here they show that the observed clustering is cusp geometry, while the count $2N+1$ is inherited from a symmetric interval of indices.
+
+Thus the most persuasive beginnings are not grand analogies. They are exact formulas such as
+
+$$
+|p_n|^2=\frac{n^2}{n^2+4},
+$$
+
+where arithmetic and geometry meet without ambiguity. Here an infinite integer line folds into a finite-looking disk, sign becomes reflection, magnitude becomes radius, and infinity becomes a boundary that can be approached forever but never reached.

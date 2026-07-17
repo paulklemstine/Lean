@@ -1,542 +1,530 @@
-# Trace Multiplication and Pell-Conic Dynamics for Integral Möbius Transformations
+# The Integer-Translation Orbit of the Modular Group in the Poincaré Disk
 
-**Aristotle**  
-**17 July 2026**
+## Exact Radius, Faithfulness, Boundary Escape, and Counting
+
+**Author:** Aristotle  
+**Date:** 2026-07-17
 
 ## Abstract
 
-We develop an arithmetic model for iterated integral Möbius transformations of determinant one. If $A\in\mathrm{SL}_2(\mathbb Z)$ has trace $t$, the traces $u_n=\operatorname{tr}(A^n)$ satisfy the universal recurrence $u_0=2$, $u_1=t$, and $u_{n+2}=tu_{n+1}-u_n$. Conversely, every integer $t$ occurs as the trace of such a transformation, so this recurrence captures all integral trace parameters. We prove that multiplication of orbit indices descends to explicit polynomial maps on traces. In particular,
+We study an elementary but structurally informative arithmetic orbit in hyperbolic geometry. Starting with the integer translates $n+i$ of $i$ in the upper half-plane and applying the Cayley transform, we obtain the disk points
 
 $$
-u_{2n}=u_n^2-2,
-\qquad
-u_{3n}=u_n^3-3u_n.
+p_n=\frac{n}{n+2i},\qquad n\in\mathbb Z.
 $$
 
-The doubled discriminant factors as
-
-$$
-u_{2n}^2-4=(u_n^2-4)u_n^2,
-$$
-
-and equivalently the Pell parameter satisfies $4-u_{2n}^2=(4-u_n^2)u_n^2$. These identities are uniform across elliptic, parabolic, and hyperbolic trace regimes. We relate them to the invariant conic $x^2-txy+y^2=4-t^2$, describe direct and accelerated algorithms for computing traces, establish pure periodicity of the pair recurrence modulo every positive modulus, and explain how trace coordinates provide a canonical foundation for studying primitive geodesics. The results isolate a robust arithmetic structure without imposing noncanonical ring operations on a hyperbolic tessellation.
+We derive the exact squared-radius formula $|p_n|^2=n^2/(n^2+4)$ and use it to prove that all orbit points lie in the open Poincaré disk, that the parametrization is injective, that negation corresponds to reflection across the real axis, and that the orbit converges radially to the ideal boundary. Radial comparison is shown to recover comparison of integer absolute values exactly. Consequently, the closed Euclidean radial cutoff through $p_N$ contains precisely the points indexed by $-N\le n\le N$, hence exactly $2N+1$ distinct points. We also derive the corresponding hyperbolic distance formula and present algorithms for point generation, membership testing, and exact counting. The results isolate a rigorous modular orbit while clarifying why an orbit, tessellation vertices, primitive geodesics, and prime elements must not be conflated in a broader theory of hyperbolic arithmetic.
 
 ## 1. Introduction
 
-Arithmetic on a curved quotient requires a canonical choice of quantities. Points or vertices in a hyperbolic tessellation can be labeled in many ways, but labels alone do not define addition, multiplication, divisibility, or primality. By contrast, the trace of a determinant-one Möbius transformation is invariant under conjugation, determines its dynamical type, and is explicitly related to hyperbolic translation length. Trace is therefore a natural arithmetic coordinate for modular hyperbolic dynamics.
+The classical integers combine three roles: they form a discrete ordered set, they carry ring operations, and they support prime factorization. Hyperbolic geometry supplies discrete group actions, tessellations, cusps, and length spectra that resemble familiar arithmetic structures without automatically reproducing them. A careful program in hyperbolic number theory must therefore begin by specifying its objects and distinguishing geometric analogy from transported algebra.
 
-Let
-
-$$
-A=\begin{pmatrix}a&b\\c&d\end{pmatrix}
-$$
-
-have integral entries and determinant $ad-bc=1$. It acts by $z\mapsto(az+b)/(cz+d)$ on the upper half-plane; the Poincaré disk model is obtained by conjugating this action. Repetition of the transformation corresponds to the powers $A^n$. The sequence of traces $\operatorname{tr}(A^n)$ turns this group-power orbit into an integer recurrence.
-
-The central observation is functorial: taking a power in stages multiplies indices,
+This paper develops one canonical and completely explicit object associated with the modular group. Let
 
 $$
-(A^n)^m=A^{mn},
+\mathbb H=\{z\in\mathbb C:\operatorname{Im}z>0\}
 $$
 
-while the Cayley–Hamilton theorem expresses the trace of a power as a polynomial in the original trace. Consequently, index multiplication is represented by polynomial evaluation. The cases $m=2$ and $m=3$ yield quadratic and cubic laws. The quadratic law further forces a square-factor identity for the trace discriminant.
-
-This paper gives a self-contained account of these statements and their consequences. Section 2 introduces integral Möbius transformations and the universal trace recurrence. Section 3 proves the power interpretation and index-multiplication principle. Section 4 establishes the doubling and tripling laws. Section 5 develops the invariant Pell conic and discriminant factorization. Section 6 treats boundary regimes and spectral coordinates. Sections 7 and 8 present computational algorithms and applications, including modular periodicity and primitive-orbit diagnostics. Section 9 clarifies the scope of the results, and Section 10 lists concrete directions for further study.
-
-## 2. Definitions and basic structure
-
-### 2.1. Integral determinant-one Möbius transformations
-
-An **integral determinant-one Möbius transformation** is represented by a matrix
+be the upper half-plane. Integer translations $T_n(z)=z+n$ belong to the modular group action. The orbit of the base point $i$ under the translation subgroup is $\{n+i:n\in\mathbb Z\}$. The Cayley transform
 
 $$
-A=\begin{pmatrix}a&b\\c&d\end{pmatrix},
-\qquad a,b,c,d\in\mathbb Z,
-\qquad ad-bc=1.
+C(z)=\frac{z-i}{z+i}
 $$
 
-Its trace is $\operatorname{tr}(A)=a+d$. Matrices $A$ and $-A$ induce the same fractional linear map, but retaining a representative in $\mathrm{SL}_2(\mathbb Z)$ is convenient for signed trace identities. Conjugation preserves trace, so every formula below is independent of the coordinates used to represent a conjugacy class.
-
-The identity has trace $2$. Matrix multiplication defines powers by $A^0=I$ and $A^{n+1}=AA^n$.
-
-### 2.2. The determinant-one trace recurrence
-
-For $t\in\mathbb Z$, define the sequence $u_n(t)$ by
+identifies $\mathbb H$ with the open unit disk
 
 $$
-u_0(t)=2,\qquad u_1(t)=t,
+\mathbb D=\{w\in\mathbb C:|w|<1\}.
+$$
+
+The transported orbit has the simple form
+
+$$
+p_n=C(n+i)=\frac{n}{n+2i}.
+$$
+
+Its simplicity permits exact answers to several basic questions. Does every point lie inside the disk? Does the image retain the integer index faithfully? How quickly does it approach the ideal boundary? Does radial order correspond to arithmetic order? How many orbit points lie inside a natural radial cutoff?
+
+The answers are respectively yes, yes, quadratically in Euclidean boundary defect, exactly by absolute value, and $2N+1$ at the cutoff through the $N$th point. These statements provide a baseline against which broader proposals involving hyperbolic primes or zeta functions can be assessed.
+
+Three methodological principles guide the analysis. First, all comparisons are reduced to exact rational identities before numerical approximation is considered. Second, Euclidean quantities in the disk picture are kept distinct from intrinsic hyperbolic quantities. Third, algebra transported from an indexing set is distinguished from algebra determined canonically by geometry. These principles are elementary, but they prevent several common category errors in attempts to interpret geometric populations arithmetically.
+
+The paper is organized as follows. Section 2 fixes the geometric setting. Section 3 proves the exact coordinate and radius formulas. Sections 4 and 5 establish faithfulness, symmetry, escape, and radial ordering. Section 6 gives the exact counting theorem. Section 7 derives the hyperbolic-distance interpretation. Sections 8 and 9 describe transported arithmetic and algorithms. The final sections discuss applications, limitations, and future research.
+
+## 2. Geometric setting and definitions
+
+### 2.1 The two standard models
+
+The upper half-plane $\mathbb H$ carries the hyperbolic metric
+
+$$
+ds_{\mathbb H}^2=\frac{dx^2+dy^2}{y^2},
+$$
+
+where $z=x+iy$ and $y>0$. The Poincaré disk $\mathbb D$ carries
+
+$$
+ds_{\mathbb D}^2=\frac{4(du^2+dv^2)}{(1-u^2-v^2)^2},
+$$
+
+where $w=u+iv$ and $u^2+v^2<1$. The Cayley transform $C(z)=(z-i)/(z+i)$ is an isometry between these models with the stated normalizations.
+
+The Euclidean boundary $|w|=1$ is the ideal boundary of $\mathbb D$ and is not part of the hyperbolic plane. A sequence whose Euclidean modulus tends to $1$ escapes every compact hyperbolic region even though it remains in a bounded Euclidean set.
+
+### 2.2 Modular translations
+
+The modular group consists of fractional-linear transformations
+
+$$
+z\longmapsto\frac{az+b}{cz+d},
+$$
+
+where $a,b,c,d\in\mathbb Z$ and $ad-bc=1$, with a matrix and its negative defining the same transformation. The subgroup relevant here consists of integer translations
+
+$$
+T_n(z)=z+n.
+$$
+
+We use the base point $i$. Its translation orbit is the horizontal discrete set $n+i$.
+
+### 2.3 The disk orbit
+
+**Definition 2.1 (modular translation orbit in the disk).** For each $n\in\mathbb Z$, define
+
+$$
+p_n=C(T_n(i))=C(n+i)=\frac{n}{n+2i}.
+$$
+
+We call $\mathcal O=\{p_n:n\in\mathbb Z\}$ the Cayley-transformed integer-translation orbit.
+
+This definition concerns a single orbit of a subgroup. It does not define all vertices of a modular tessellation, nor the primitive closed geodesics of the modular surface.
+
+**Definition 2.2 (squared radial boundary defect).** For $p_n\in\mathbb D$, define
+
+$$
+\delta_n=1-|p_n|^2.
+$$
+
+This is a Euclidean radial quantity. It is useful for exact algebra, but it is not itself hyperbolic distance.
+
+**Definition 2.3 (endpoint radial cutoff).** For $N\in\mathbb N$, define
+
+$$
+\mathcal O_N=\{p_n\in\mathcal O:|p_n|^2\le |p_N|^2\}.
+$$
+
+Because the orbit is indexed, the same geometric point must not be counted twice. Injectivity, proved below, ensures that index counting and point counting agree.
+
+## 3. Exact coordinates and radius
+
+The basic algebraic identity drives all later results.
+
+**Theorem 3.1 (exact coordinate and squared-radius formulas).** For every integer $n$,
+
+$$
+p_n=\frac{n^2}{n^2+4}-i\frac{2n}{n^2+4}
 $$
 
 and
 
 $$
-u_{n+2}(t)=t\,u_{n+1}(t)-u_n(t)
-\qquad(n\ge0).
+|p_n|^2=\frac{n^2}{n^2+4}.
 $$
 
-We call this the **determinant-one trace recurrence**. Its first terms are
+**Proof sketch.** Multiply $n/(n+2i)$ by $(n-2i)/(n-2i)$. Since $(n+2i)(n-2i)=n^2+4$, the coordinate formula follows. Squaring and adding the real and imaginary parts gives
 
 $$
-2,\quad t,\quad t^2-2,\quad t^3-3t,\quad t^4-4t^2+2.
+\frac{n^4+4n^2}{(n^2+4)^2}=\frac{n^2}{n^2+4}.
 $$
 
-Each $u_n(t)$ is a monic polynomial in $t$ of degree $n$ for $n\ge1$. These are normalized Chebyshev polynomials: $u_n(2x)=2T_n(x)$, where $T_n$ is the Chebyshev polynomial of the first kind.
+Equivalently, use $|n+2i|^2=n^2+4$. $\square$
 
-The recurrence covers every integral parameter through a concrete matrix.
+**Corollary 3.2 (open-disk membership).** Every $p_n$ lies in $\mathbb D$.
 
-**Proposition 2.1 (Universal trace realization).** For every integer $t$, there exists an integral determinant-one matrix with trace $t$. One choice is
-
-$$
-A_t=\begin{pmatrix}t-1&1\\t-2&1\end{pmatrix}.
-$$
-
-**Proof sketch.** Direct calculation gives $\det A_t=(t-1)-(t-2)=1$ and $\operatorname{tr}(A_t)=(t-1)+1=t$. Thus no restriction on $t$ is hidden in the recurrence. $\square$
-
-### 2.3. Dynamical regimes
-
-For a real determinant-one matrix, trace separates the standard regimes:
-
-- $|t|<2$: elliptic;
-- $|t|=2$: parabolic, including degenerate central representatives;
-- $|t|>2$: hyperbolic.
-
-If $|t|>2$, the eigenvalues are real and reciprocal. Writing the eigenvalues as $\lambda$ and $\lambda^{-1}$ gives
+**Proof sketch.** The squared modulus is nonnegative and
 
 $$
-u_n(t)=\lambda^n+\lambda^{-n}.
+\frac{n^2}{n^2+4}<1
 $$
 
-For $t>2$, write $t=2\cosh\theta$ with $\theta>0$; then
+because $4>0$. Therefore $|p_n|<1$. $\square$
+
+**Corollary 3.3 (exact boundary defect).** For every $n\in\mathbb Z$,
 
 $$
-u_n(t)=2\cosh(n\theta).
+\delta_n=\frac{4}{n^2+4}.
 $$
 
-This analytic expression is useful for interpretation, but all principal results below are integral polynomial identities and require no division into cases.
+**Proof sketch.** Subtract the squared-radius formula from $1$ over the common denominator $n^2+4$. $\square$
 
-## 3. Traces of powers and multiplication of indices
-
-The bridge between group dynamics and recurrence arithmetic is Cayley–Hamilton.
-
-**Theorem 3.1 (Trace recurrence for powers).** Let $A$ be an integral $2\times2$ matrix with determinant $1$ and trace $t$. Then, for every $n\ge0$,
+The first values are
 
 $$
-\operatorname{tr}(A^n)=u_n(t).
+|p_0|^2=0,
+\qquad |p_1|^2=\frac15,
+\qquad |p_2|^2=\frac12,
+\qquad |p_3|^2=\frac9{13}.
 $$
 
-**Proof sketch.** Cayley–Hamilton gives
+These values provide immediate numerical checks of the general identity.
+
+## 4. Faithfulness and reflection symmetry
+
+The geometric embedding preserves the index exactly.
+
+**Theorem 4.1 (faithfulness of the orbit parametrization).** The map $n\mapsto p_n$ from $\mathbb Z$ to $\mathbb D$ is injective. Explicitly, if $p_m=p_n$, then $m=n$.
+
+**Proof sketch.** Equality gives
 
 $$
-A^2-tA+I=0.
+\frac{m}{m+2i}=\frac{n}{n+2i}.
 $$
 
-Multiplying by $A^n$ yields $A^{n+2}=tA^{n+1}-A^n$. Taking traces gives the defining recurrence. The initial values are $\operatorname{tr}(I)=2$ and $\operatorname{tr}(A)=t$, so uniqueness of recursively defined sequences proves the claim. $\square$
-
-The group law supplies the index arithmetic.
-
-**Lemma 3.2 (Power-index multiplication).** For every square matrix $A$ and nonnegative integers $m,n$,
+The denominators are nonzero, so cross-multiplication yields
 
 $$
-(A^n)^m=A^{mn}.
+m(n+2i)=n(m+2i).
 $$
 
-**Proof sketch.** Induct on $m$. The case $m=0$ is the identity matrix. If the formula holds for $m$, then $(A^n)^{m+1}=A^n(A^n)^m=A^nA^{mn}=A^{(m+1)n}$. $\square$
+After canceling $mn$, one obtains $2mi=2ni$, hence $m=n$. $\square$
 
-Combining Theorem 3.1 and Lemma 3.2 gives a general principle even before the relevant polynomials are named.
+**Corollary 4.2 (infinitude).** The orbit $\mathcal O$ contains infinitely many distinct points.
 
-**Corollary 3.3 (Index multiplication descends to traces).** For all integers $t$ and all nonnegative integers $m,n$,
+**Proof sketch.** The integers form an infinite set and their image under an injective map is infinite. $\square$
 
-$$
-u_{mn}(t)=u_m(u_n(t)).
-$$
-
-**Proof sketch.** Choose a determinant-one integral matrix $A$ with trace $t$ using Proposition 2.1. Then
+**Theorem 4.3 (reflection symmetry).** For every $n\in\mathbb Z$,
 
 $$
-u_{mn}(t)=\operatorname{tr}(A^{mn})
-=\operatorname{tr}((A^n)^m)
-=u_m(\operatorname{tr}(A^n))
-=u_m(u_n(t)).
+p_{-n}=\overline{p_n}.
 $$
 
-The last two equalities apply Theorem 3.1 first to $A^n$ and then to $A$. $\square$
+**Proof sketch.** The coordinate formula shows that replacing $n$ by $-n$ leaves the real part $n^2/(n^2+4)$ fixed and reverses the sign of the imaginary part. That is precisely complex conjugation. $\square$
 
-This composition law explains why the recurrence polynomials are structurally natural. It also gives $u_m\circ u_n=u_{mn}=u_n\circ u_m$.
+Thus the two signs of a nonzero integer appear as mirror images across the real axis. The origin corresponds to $n=0$ and is fixed by the reflection.
 
-## 4. Explicit doubling and tripling laws
+## 5. Boundary escape and radial order
 
-The first nontrivial recurrence polynomials are
+### 5.1 Convergence to the ideal boundary
+
+**Theorem 5.1 (radial boundary convergence).** Along the positive indices,
 
 $$
-u_2(x)=x^2-2,
+\lim_{n\to\infty}|p_n|^2=1
+\quad\text{and}\quad
+\lim_{n\to\infty}|p_n|=1.
+$$
+
+**Proof sketch.** Rewrite
+
+$$
+|p_n|^2=\frac{1}{1+4/n^2}
+$$
+
+for $n>0$. Since $4/n^2\to0$, the squared modulus tends to $1$. The square-root function is continuous and the moduli are nonnegative, so $|p_n|\to1$. $\square$
+
+The defect formula gives more than convergence:
+
+$$
+1-|p_n|^2=\frac{4}{n^2+4}\sim\frac4{n^2}.
+$$
+
+Hence the squared Euclidean radius approaches the boundary value with quadratic decay in the index.
+
+### 5.2 Exact radial ordering
+
+**Theorem 5.2 (radial order theorem).** For all $m,n\in\mathbb Z$,
+
+$$
+|p_m|^2\le |p_n|^2
+\quad\Longleftrightarrow\quad
+m^2\le n^2.
+$$
+
+Equivalently,
+
+$$
+|p_m|\le |p_n|
+\quad\Longleftrightarrow\quad
+|m|\le |n|.
+$$
+
+**Proof sketch.** Substitute the exact radius formula. Since both denominators are positive,
+
+$$
+\frac{m^2}{m^2+4}\le\frac{n^2}{n^2+4}
+$$
+
+is equivalent to
+
+$$
+m^2(n^2+4)\le n^2(m^2+4).
+$$
+
+Cancel $m^2n^2$ and divide by $4$ to obtain $m^2\le n^2$. The modulus version follows because all quantities are nonnegative. $\square$
+
+This theorem states that radius is a complete statistic for the absolute value of the index. It cannot distinguish $n$ from $-n$, but reflection symmetry supplies that missing sign information.
+
+The monotonicity can also be seen analytically. For $x\ge0$, the function $f(x)=x^2/(x^2+4)$ has derivative
+
+$$
+f'(x)=\frac{8x}{(x^2+4)^2},
+$$
+
+which is nonnegative and strictly positive for $x>0$. The algebraic proof above is stronger for exact computation because it works without calculus and reduces comparisons to integer arithmetic.
+
+## 6. Exact orbit counting
+
+**Theorem 6.1 (cutoff characterization).** Let $N\in\mathbb N$ and $n\in\mathbb Z$. Then
+
+$$
+|p_n|^2\le |p_N|^2
+\quad\Longleftrightarrow\quad
+|n|\le N.
+$$
+
+**Proof sketch.** Apply Theorem 5.2 with the integer $N$. The condition $n^2\le N^2$ is equivalent to $|n|\le N$ because $N$ is nonnegative. $\square$
+
+**Theorem 6.2 (exact finite orbit count).** For every $N\in\mathbb N$, the radial cutoff $\mathcal O_N$ is
+
+$$
+\mathcal O_N=\{p_n:-N\le n\le N\}
+$$
+
+and contains exactly
+
+$$
+|\mathcal O_N|=2N+1
+$$
+
+distinct points.
+
+**Proof sketch.** The cutoff characterization identifies precisely the integer interval $[-N,N]$. This interval contains the $N$ negative integers $-N,\ldots,-1$, the origin, and the $N$ positive integers $1,\ldots,N$, for a total of $2N+1$. Theorem 4.1 ensures that distinct indices yield distinct points. $\square$
+
+**Corollary 6.3 (escape from smaller concentric disks).** Fix $0\le r<1$. Only finitely many orbit points satisfy $|p_n|\le r$.
+
+**Proof sketch.** The inequality
+
+$$
+\frac{n^2}{n^2+4}\le r^2
+$$
+
+rearranges to
+
+$$
+(1-r^2)n^2\le4r^2.
+$$
+
+Because $1-r^2>0$, this bounds $|n|$. Only finitely many integers satisfy the bound. $\square$
+
+The count $2N+1$ is exact but specific. It counts a one-dimensional cusp orbit under an endpoint-defined Euclidean radial cutoff. It is not a prime-counting law and should not be compared directly with two-dimensional lattice growth or the prime geodesic theorem.
+
+For an arbitrary Euclidean radius $0\le r<1$, the same calculation gives a closed formula. The condition $|p_n|\le r$ is equivalent to
+
+$$
+|n|\le \frac{2r}{\sqrt{1-r^2}}.
+$$
+
+Hence the number of orbit points in the Euclidean disk of radius $r$ is
+
+$$
+2\left\lfloor\frac{2r}{\sqrt{1-r^2}}\right\rfloor+1.
+$$
+
+At $r=|p_N|$, the expression inside the floor equals $N$, recovering Theorem 6.2.
+
+## 7. Hyperbolic-distance interpretation
+
+The exact Euclidean radius can be translated into intrinsic hyperbolic distance.
+
+**Definition 7.1 (radial hyperbolic distance).** In the Poincaré disk,
+
+$$
+d_{\mathbb D}(0,w)=2\operatorname{artanh}|w|
+=\log\frac{1+|w|}{1-|w|}.
+$$
+
+**Proposition 7.2 (distance along the modular orbit).** For every $n\in\mathbb Z$,
+
+$$
+d_{\mathbb D}(0,p_n)
+=2\operatorname{arsinh}\left(\frac{|n|}{2}\right).
+$$
+
+**Proof sketch.** Theorem 3.1 gives
+
+$$
+|p_n|=\frac{|n|}{\sqrt{n^2+4}}.
+$$
+
+Set $x=|n|/2$. Then $|p_n|=x/\sqrt{1+x^2}$. The identity
+
+$$
+\operatorname{artanh}\left(\frac{x}{\sqrt{1+x^2}}\right)=\operatorname{arsinh}(x)
+$$
+
+follows by writing both sides logarithmically or by applying the hyperbolic tangent to $\operatorname{arsinh}(x)$. Multiplying by $2$ yields the formula. $\square$
+
+This proposition is also consistent with the upper-half-plane distance formula between $i$ and $n+i$.
+
+**Corollary 7.3 (intrinsic growth).** As $|n|\to\infty$,
+
+$$
+d_{\mathbb D}(0,p_n)=2\log|n|+O(|n|^{-2}).
+$$
+
+**Proof sketch.** Use $\operatorname{arsinh}x=\log(x+\sqrt{x^2+1})$ with $x=|n|/2$. The leading expression is $\log|n|$, and multiplication by $2$ gives the result. $\square$
+
+**Corollary 7.4 (hyperbolic-ball index criterion).** For $R\ge0$,
+
+$$
+d_{\mathbb D}(0,p_n)\le R
+\quad\Longleftrightarrow\quad
+|n|\le2\sinh(R/2).
+$$
+
+Consequently, the number of orbit points in the hyperbolic ball of radius $R$ centered at $0$ is
+
+$$
+2\left\lfloor2\sinh(R/2)\right\rfloor+1.
+$$
+
+**Proof sketch.** The function $\operatorname{arsinh}$ is increasing, so Proposition 7.2 may be inverted. Counting integral indices in the resulting symmetric interval gives the formula. $\square$
+
+This intrinsic count is a mathematical consequence of the radius law and standard disk geometry. It grows like $2e^{R/2}$, reflecting the geometry of this particular horocyclic orbit rather than the full area growth of the hyperbolic plane.
+
+## 8. Transported arithmetic and its interpretation
+
+An injective parametrization permits algebraic transport.
+
+**Definition 8.1 (transported operations).** For orbit points, define
+
+$$
+p_m\oplus p_n=p_{m+n},
 \qquad
-u_3(x)=x^3-3x.
+p_m\odot p_n=p_{mn}.
 $$
 
-Substituting these into Corollary 3.3 produces the main trace-multiplication formulas.
+These definitions are unambiguous because each orbit point has a unique integer index.
 
-**Theorem 4.1 (Trace Doubling Theorem).** For every integer $t$ and every nonnegative integer $n$,
-
-$$
-u_{2n}(t)=u_n(t)^2-2.
-$$
-
-**Proof sketch.** Let $B=A^n$. Cayley–Hamilton for $B$ gives $B^2-(\operatorname{tr}B)B+I=0$. Taking traces and using $\operatorname{tr}(I)=2$ yields $\operatorname{tr}(B^2)=(\operatorname{tr}B)^2-2$. Since $B^2=A^{2n}$ and $\operatorname{tr}(A^k)=u_k(t)$, the formula follows. Equivalently, use Corollary 3.3 with $m=2$. $\square$
-
-**Theorem 4.2 (Trace Tripling Theorem).** For every integer $t$ and every nonnegative integer $n$,
+**Proposition 8.2 (transported integer ring).** The set $\mathcal O$, equipped with $\oplus$ and $\odot$, is a commutative ring, and the map
 
 $$
-u_{3n}(t)=u_n(t)^3-3u_n(t).
+\mathbb Z\longrightarrow\mathcal O,
+\qquad n\longmapsto p_n,
 $$
 
-**Proof sketch.** Multiply $B^2-(\operatorname{tr}B)B+I=0$ by $B$ and take traces. Substitution of $\operatorname{tr}(B^2)=(\operatorname{tr}B)^2-2$ gives $\operatorname{tr}(B^3)=(\operatorname{tr}B)^3-3\operatorname{tr}B$. Set $B=A^n$. Equivalently, apply Corollary 3.3 with $m=3$. $\square$
+is a ring isomorphism.
 
-### 4.1. Numerical example
+**Proof sketch.** Every ring identity on $\mathcal O$ reduces through the definitions to the corresponding identity in $\mathbb Z$. The parametrization is bijective onto $\mathcal O$ by definition of the image and Theorem 4.1. It preserves both operations by construction. $\square$
 
-For $t=3$, the recurrence gives
+**Corollary 8.3 (factorization under transported arithmetic).** Every nonzero nonunit of $\mathcal O$ factors into images of ordinary prime integers, uniquely up to order and multiplication by the images of $1$ and $-1$.
 
-$$
-(u_0,u_1,u_2,u_3,u_4,u_5)=(2,3,7,18,47,123).
-$$
+**Proof sketch.** Transfer the fundamental theorem of arithmetic through the ring isomorphism. $\square$
 
-Doubling at $n=5$ predicts
+The interpretation is essential: this factorization property comes from transported ordinary arithmetic. It does not show that vertices of a hyperbolic tessellation have a canonical multiplication, nor that geometric primitive objects are prime elements of this ring.
 
-$$
-u_{10}=123^2-2=15127.
-$$
+## 9. Algorithms and numerical demonstrations
 
-Tripling at $n=4$ predicts
+All principal quantities can be computed in constant arithmetic time for a fixed index, apart from the bit complexity of large-integer operations.
 
-$$
-u_{12}=47^3-3\cdot47=103682.
-$$
+### 9.1 Orbit-point generation
 
-Direct recurrence computation gives the same values. These examples illustrate that a distant term can be reconstructed from a single intermediate trace.
-
-## 5. Pell-conic geometry and discriminant factorization
-
-### 5.1. The invariant conic
-
-The trace recurrence preserves a binary quadratic expression.
-
-**Theorem 5.1 (Pell-Conic Invariant).** For every integer $t$ and every $n\ge0$,
+Given $n\in\mathbb Z$, compute
 
 $$
-u_n(t)^2-t\,u_n(t)u_{n+1}(t)+u_{n+1}(t)^2=4-t^2.
-$$
-
-Hence every consecutive pair $(u_n(t),u_{n+1}(t))$ is an integral point on
-
-$$
-x^2-txy+y^2=4-t^2.
-$$
-
-**Proof sketch.** Define $F(x,y)=x^2-txy+y^2$. One recurrence step sends $(x,y)$ to $(y,ty-x)$. Expanding shows
-
-$$
-F(y,ty-x)=F(x,y).
-$$
-
-At $(u_0,u_1)=(2,t)$, the value is $4-2t^2+t^2=4-t^2$. Invariance under every step proves the formula. $\square$
-
-For hyperbolic $|t|>2$, set $D=t^2-4>0$. The conic becomes
-
-$$
-x^2-txy+y^2=-D.
-$$
-
-The discriminant of the binary quadratic form is $D$. Thus a group-power orbit gives a distinguished sequence of integral points on a Pell-type conic. The recurrence transition
-
-$$
-\begin{pmatrix}x\\y\end{pmatrix}
-\longmapsto
-\begin{pmatrix}0&1\\-1&t\end{pmatrix}
-\begin{pmatrix}x\\y\end{pmatrix}
-$$
-
-has determinant $1$ and preserves the quadratic form.
-
-### 5.2. Doubling and the trace discriminant
-
-Define the trace discriminant at index $n$ by
-
-$$
-\Delta_n=u_n(t)^2-4.
-$$
-
-The doubling law gives an exact factorization.
-
-**Theorem 5.2 (Doubled Discriminant Factorization).** For every integer $t$ and every $n\ge0$,
-
-$$
-u_{2n}(t)^2-4
-=igl(u_n(t)^2-4\bigr)u_n(t)^2.
-$$
-
-**Proof sketch.** Substitute $u_{2n}=u_n^2-2$ and expand:
-
-$$
-(u_n^2-2)^2-4=u_n^4-4u_n^2=(u_n^2-4)u_n^2.
-$$
-
-No sign or nondegeneracy assumption is required. $\square$
-
-Changing signs gives the corresponding Pell-parameter statement.
-
-**Corollary 5.3 (Doubling morphism for the Pell parameter).** For every integer $t$ and every $n\ge0$,
-
-$$
-4-u_{2n}(t)^2
-=igl(4-u_n(t)^2\bigr)u_n(t)^2.
-$$
-
-Thus doubling multiplies $u_n^2-4$ by a square. In any setting where square classes are meaningful, $\Delta_{2n}$ and $\Delta_n$ represent the same square class, except that a zero value remains zero. This is a concrete algebraic signature of an even power.
-
-### 5.3. Compatibility with the conic
-
-The conic invariant concerns consecutive traces, whereas Theorem 5.2 concerns one trace and its doubled index. Their compatibility follows from the common matrix origin. The point $(u_n,u_{n+1})$ is advanced by an invertible isometry of the binary quadratic form, while index doubling replaces $A^n$ by $(A^n)^2$. The scalar trace coordinate changes by $x\mapsto x^2-2$, and its discriminant changes by multiplication with $x^2$. Thus recurrence dynamics, conic geometry, and polynomial iteration are different projections of one power operation.
-
-## 6. Uniformity across dynamical regimes
-
-The formulas have no exceptional trace parameters.
-
-### 6.1. Parabolic boundaries
-
-For $t=2$, the recurrence gives $u_n=2$ for all $n$. The doubling formula is $2=2^2-2$, and Theorem 5.2 reads $0=0\cdot4$. The discriminant vanishes identically.
-
-For $t=-2$, one obtains $u_n=2(-1)^n$. Again $u_n^2-4=0$ for every $n$, and both multiplication formulas hold. Retaining these cases matters: they show that the factorization correctly records parabolic degeneration rather than requiring division by a vanishing discriminant.
-
-### 6.2. Elliptic traces
-
-When $t=2\cos\theta$, the recurrence has the expression
-
-$$
-u_n(t)=2\cos(n\theta).
-$$
-
-The quadratic and cubic trace laws reduce to the familiar multiple-angle identities for cosine. For integral $t$ with $|t|<2$, only $t=-1,0,1$ occur, and the resulting sequences are periodic.
-
-### 6.3. Hyperbolic traces and lengths
-
-For a hyperbolic transformation, let $\ell$ be its translation length. Up to the sign of the chosen matrix representative,
-
-$$
-|t|=2\cosh(\ell/2).
-$$
-
-Since $A^n$ has translation length $n\ell$, the identity
-
-$$
-|u_n(t)|=2\cosh(n\ell/2)
-$$
-
-is geometrically expected. The trace multiplication formulas are precisely the polynomial versions of multiplying lengths inside the hyperbolic cosine. Unlike the length itself, trace remains integral for integral matrices and is therefore suited to arithmetic analysis.
-
-## 7. Algorithms
-
-### 7.1. Linear recurrence evaluation
-
-The most direct method stores two consecutive values.
-
-**Algorithm 7.1 (Sequential trace recurrence).** Given integers $t$ and $n\ge0$, initialize $(x,y)=(2,t)$. Repeat $(x,y)\leftarrow(y,ty-x)$ exactly $n$ times, then return $x$.
-
-**Correctness.** After $k$ iterations, the pair is $(u_k,u_{k+1})$ by induction on $k$. Therefore the returned value is $u_n$.
-
-**Complexity.** The method performs $O(n)$ integer additions and multiplications. It uses $O(1)$ stored integers, although their bit length grows with $n$ in the hyperbolic regime.
-
-### 7.2. Matrix binary exponentiation
-
-Binary exponentiation computes $A_t^n$ in $O(\log n)$ matrix multiplications and then takes the trace.
-
-**Algorithm 7.2 (Binary matrix trace evaluation).** Set $R=I$, $B=A_t$, and $k=n$. While $k>0$, multiply $R$ by $B$ if $k$ is odd, replace $B$ by $B^2$, and replace $k$ by $\lfloor k/2\rfloor$. Return $\operatorname{tr}(R)$.
-
-**Correctness.** The loop invariant is $RB^k=A_t^n$. When $k=0$, this gives $R=A_t^n$. Theorem 3.1 then identifies its trace with $u_n(t)$.
-
-**Complexity.** There are $O(\log n)$ multiplications of $2\times2$ integer matrices. Bit complexity depends on the growth of the entries; for fixed hyperbolic $t$, their bit length is $O(n)$.
-
-### 7.3. Polynomial index jumps
-
-When an index is repeatedly doubled or tripled, Theorems 4.1 and 4.2 give scalar updates
-
-$$
-D(x)=x^2-2,
+\operatorname{Re}p_n=\frac{n^2}{n^2+4},
 \qquad
-T(x)=x^3-3x.
+\operatorname{Im}p_n=-\frac{2n}{n^2+4}.
 $$
 
-Starting from $u_n$, one may compute $u_{2^a3^b n}$ by composing $D$ and $T$ in any order, because both represent multiplication of the index and hence commute on trace values. This requires $a+b$ scalar polynomial evaluations. For arbitrary indices, matrix exponentiation or a full addition-chain implementation is preferable, since knowing one trace alone does not support an addition formula without additional state.
+Using integer numerator-denominator pairs preserves exactness. With fixed-width floating-point output, the algorithm uses $O(1)$ arithmetic operations. For a $b$-bit index, multiplication and division costs depend on the chosen $b$-bit arithmetic implementation.
 
-### 7.4. Modular orbit detection
+### 9.2 Exact radial membership
 
-For modulus $q>1$, reduce the pair transition modulo $q$:
-
-$$
-F_t(x,y)=(y,ty-x)\pmod q.
-$$
-
-Its inverse is
+To decide whether $p_n$ lies in the cutoff through $p_N$, it is unnecessary to evaluate complex numbers or divisions. Test
 
 $$
-F_t^{-1}(x,y)=(tx-y,x)\pmod q.
+|n|\le N.
 $$
 
-**Proposition 7.3 (Pure modular periodicity).** For every integer $t$ and modulus $q>1$, the sequence $(u_n(t),u_{n+1}(t))\bmod q$ is purely periodic.
+This follows from Theorem 6.1 and avoids rounding near the boundary.
 
-**Proof sketch.** The state space has $q^2$ elements, so repetition is inevitable. Because $F_t$ is a bijection, every state lies on a cycle; an orbit cannot have a nonrepeating prefix feeding into a cycle. In particular, the initial pair $(2,t)$ returns after finitely many steps. $\square$
+### 9.3 Exact count
 
-A dictionary-based implementation finds the exact period in at most $q^2$ transitions and uses $O(q^2)$ states in the worst case. Since the transition matrix belongs to $\mathrm{SL}_2(\mathbb Z/q\mathbb Z)$, the period also divides its group-theoretic order.
+The count is returned directly as $2N+1$. If the points themselves are required, enumerate indices from $-N$ through $N$ and apply the coordinate formula. Returning only the count takes constant arithmetic time; materializing all points takes $O(N)$ point evaluations and $O(N)$ output space.
 
-## 8. Applications and interpretation
+### 9.4 Numerical stability
 
-### 8.1. Primitive versus imprimitive powers
-
-A hyperbolic conjugacy class is **primitive** if it is not a proper positive power of another class. Closed geodesics inherit the same distinction. If $A=B^2$, then
+For large $|n|$, direct floating-point evaluation of $1-|p_n|^2$ can suffer cancellation because $|p_n|^2$ is close to $1$. The exact defect formula
 
 $$
-\operatorname{tr}(A)=\operatorname{tr}(B)^2-2,
+\delta_n=\frac{4}{n^2+4}
 $$
 
-and its discriminant has the special form
+is preferable. Likewise, radial comparisons should use integer absolute values rather than nearly equal floating-point radii.
+
+## 10. Applications
+
+### 10.1 Visualization of cusps
+
+The orbit gives a compact visualization of escape toward a cusp. Although $p_n\to1$ in the Euclidean closure, the intrinsic distance tends to infinity. This makes the construction useful in teaching the distinction between Euclidean compactness of the drawing and noncompactness of the represented hyperbolic surface.
+
+### 10.2 Testing geometric software
+
+The formulas provide exact benchmarks for implementations of Möbius transformations, the Cayley map, and hyperbolic distance. A correct program should reproduce reflection, squared radii, and the count $2N+1$. The defect formula is particularly useful for testing behavior near the boundary.
+
+### 10.3 Arithmetic indexing of geometric data
+
+Because radius recovers $|n|$ and the sign is recovered from the side of the real axis, the geometry encodes the integer index. Except at the origin, one can recover the sign from $\operatorname{Im}p_n$ and magnitude from
 
 $$
-\operatorname{tr}(A)^2-4
-=igl(\operatorname{tr}(B)^2-4\bigr)\operatorname{tr}(B)^2.
+|n|=\frac{2|p_n|}{\sqrt{1-|p_n|^2}}.
 $$
 
-Similarly, a cube has trace $x^3-3x$. These conditions provide computable necessary signatures of imprimitive classes. They are not by themselves complete primitivity tests: different conjugacy classes may share a trace, and solving a polynomial trace equation does not automatically produce an integral group root. Nevertheless, the formulas isolate arithmetic exclusion maps that can be combined with conjugacy and Pell-conic data.
+For exact orbit points, this returns an integer. The construction is therefore a reversible arithmetic encoding inside the disk.
 
-### 8.2. Counting in trace coordinates
+### 10.4 Baseline for spectral and prime-geodesic questions
 
-For hyperbolic $A$, trace and geodesic length satisfy $|\operatorname{tr}A|=2\cosh(\ell/2)$. Hence a trace bound $|\operatorname{tr}A|\le X$ is equivalent to
+More sophisticated hyperbolic counting theories concern conjugacy classes and primitive closed geodesics. The present orbit is a useful control case because its population, metric behavior, and multiplicity are explicit. Any proposed “hyperbolic prime” model should state clearly how its objects differ from these orbit points and why its counting function has a different asymptotic law.
 
-$$
-\ell\le2\operatorname{arcosh}(X/2).
-$$
+## 11. Scope and limitations
 
-This allows questions about primitive closed geodesics to be translated into integral trace coordinates. Such a counting problem is canonical because trace is conjugacy-invariant. It avoids assigning arithmetic meaning to arbitrary tessellation labels.
+The results establish an exact modular translation orbit, not a general system of hyperbolic integers. An orbit is initially only a set with a group action. Ring operations require an explicit transport such as Definition 8.1, and different parametrizations could induce different-looking operations.
 
-### 8.3. Polynomial dynamics
+Tessellation vertices are also distinct from orbit points. The full modular tessellation includes images under transformations beyond translations. Its vertices and edges carry combinatorial and geometric information, but no canonical commutative-ring structure follows merely from being vertices.
 
-The doubling map $D(x)=x^2-2$ is a classical polynomial dynamical system. Here it has a precise group-theoretic interpretation: iterating $D$ on $u_n$ yields
+Primitive closed geodesics provide another distinct population. On a quotient hyperbolic surface, they correspond to primitive hyperbolic conjugacy classes and are the natural analogue underlying the prime geodesic theorem. Their lengths feed the Selberg zeta function. Parabolic translation orbits approaching cusps, such as the one studied here, are not primitive closed geodesics.
 
-$$
-D^{\circ k}(u_n)=u_{2^kn}.
-$$
-
-Likewise, the cubic map $T(x)=x^3-3x$ gives $T^{\circ k}(u_n)=u_{3^kn}$. More generally, the polynomials $u_m(x)$ form a commuting semigroup under composition indexed multiplicatively by positive integers. Integral Möbius dynamics therefore supplies a geometric realization of Chebyshev polynomial iteration.
-
-### 8.4. Finite-ring experiments
-
-Reducing the recurrence modulo $q$ creates an invertible finite dynamical system. The identities survive reduction:
+Finally, a zeta expression of the form
 
 $$
-u_{2n}\equiv u_n^2-2\pmod q,
-\qquad
-u_{3n}\equiv u_n^3-3u_n\pmod q.
+\sum_x |x|^{-2s}
 $$
 
-These constraints can accelerate consistency checks, stratify periods, and expose exceptional behavior at primes dividing $t^2-4$. The discriminant factorization also indicates that doubling preserves an appropriate modular square-class relation whenever that notion is defined.
+is not defined until the set of $x$, the norm $|x|$, multiplicities, and treatment of zero are fixed. Its convergence region must be established before analytic continuation, functional equations, or zero locations can be discussed. Numerical evidence for zeros additionally requires rigorous error control if it is to support exact claims.
 
-### 8.5. Stability under conjugacy and choice of model
+## 12. Future work
 
-If $S$ is an invertible real matrix, then $A$ and $SAS^{-1}$ describe the same transformation in changed coordinates. For every $n$,
+A first extension is to develop the full Möbius action of determinant-one real or integer matrices and show directly that it preserves the relevant hyperbolic metric. This would place the translation calculation inside a general action framework.
 
-$$
-(SAS^{-1})^n=SA^nS^{-1},
-$$
+A second direction is to replace Euclidean radial cutoffs by intrinsic hyperbolic cutoffs throughout. Proposition 7.2 already supplies the expected formula for this orbit; further work could compare cusp-orbit growth with area growth and with counts from other subgroup orbits.
 
-so cyclicity of trace gives $\operatorname{tr}((SAS^{-1})^n)=\operatorname{tr}(A^n)$. The recurrence parameter, every term $u_n$, the doubling and tripling laws, and the discriminant factorization are consequently conjugacy-invariant. Passing between the upper half-plane and disk models therefore changes none of the arithmetic developed here.
+A third direction is algebraic. Transported addition and multiplication can be studied explicitly as rational functions of disk coordinates, while maintaining the distinction between parametrization-dependent operations and geometry intrinsic to the disk.
 
-### 8.6. Growth and numerical representation
+A fourth direction is the finite combinatorial encoding of primitive hyperbolic conjugacy classes of the modular group. Such an encoding would connect symbolic dynamics, continued fractions, closed geodesics, and genuine prime-geodesic counting.
 
-For fixed hyperbolic $t$ with dominant eigenvalue $|\lambda|>1$, one has $|u_n|\asymp|\lambda|^n$. Thus the bit length of $u_n$ is $\Theta(n\log|\lambda|)$. An algorithm using $O(\log n)$ algebraic stages does not have polylogarithmic bit cost, because it must output an integer with linearly many bits in $n$. This distinction is important when comparing sequential recurrence, scalar polynomial jumps, and binary matrix exponentiation. The latter two reduce the number of stages, while fast big-integer arithmetic governs the cost inside each stage.
+A fifth direction is analytic. After selecting a canonical length spectrum and multiplicities, one can define finite Euler products or truncated zeta functions, establish convergence bounds, and only then seek continuation or functional equations. Reliable zero computations would require interval or ball arithmetic and argument-principle counts proving how many zeros lie in each region.
 
-The discriminant identity itself offers a useful exact check for implementations. Given independently computed $u_n$ and $u_{2n}$, the residual
+## 13. Conclusion
 
-$$
-r=u_{2n}^2-4-(u_n^2-4)u_n^2
-$$
-
-must vanish. Together with the Pell-conic residual, this detects many indexing and arithmetic errors without relying on floating-point approximations.
-
-## 9. Scope and limitations
-
-The results establish exact arithmetic for traces of powers. They do not define a ring of tessellation vertices, prove unique factorization for geometric points, establish a prime-geodesic asymptotic, construct a spectral zeta function, or locate its zeros. Those are distinct tasks requiring precise definitions and substantial analytic input.
-
-In particular, a finite numerical check of zeros cannot establish a critical-line theorem, and a series over an unspecified “hyperbolic norm” is not automatically a canonical zeta function. A mathematically stable route is to begin with primitive conjugacy classes, their lengths, and established spectral constructions, then translate into trace coordinates where possible.
-
-The present framework contributes three ingredients to that route. First, it identifies trace as a canonical integral coordinate. Second, it shows exactly how composite power indices appear through trace polynomials. Third, it connects traces to an invariant Pell conic and a square-factor discriminant law. These are algebraic foundations rather than analytic conclusions.
-
-## 10. Future directions
-
-### 10.1. Universal trace multiplication polynomials
-
-For every positive integer $m$, define the monic integral polynomial $C_m(x)=u_m(x)$. Corollary 3.3 suggests systematic study of
+The Cayley-transformed integer-translation orbit
 
 $$
-u_{mn}(t)=C_m(u_n(t)),
-\qquad
-C_m\circ C_n=C_{mn}.
+p_n=\frac{n}{n+2i}
 $$
 
-A central target is the general factorization
+is a faithful, symmetric, infinite copy of the integers inside the Poincaré disk. Its squared radius is exactly $n^2/(n^2+4)$, its boundary defect is $4/(n^2+4)$, and radial order is precisely absolute-value order on the indices. The cutoff through $p_N$ contains exactly the $2N+1$ points with $-N\le n\le N$. In intrinsic terms, the distance from the origin is $2\operatorname{arsinh}(|n|/2)$.
 
-$$
-C_m(x)^2-4=(x^2-4)Q_m(x)^2
-$$
+These formulas show how a discrete arithmetic index can be represented in curved geometry without ambiguity. The example is small enough that every step is explicit, yet rich enough to exhibit the central features of a cusp: Euclidean accumulation, intrinsic escape, reflection symmetry, and exponential counting under an intrinsic radius. It therefore serves simultaneously as a worked model and as a test case for more elaborate constructions.
 
-for an integral polynomial $Q_m$. The doubled discriminant theorem gives $Q_2(x)=x$. Establishing the family uniformly would clarify how every composite index transforms square classes.
-
-### 10.2. Effective finite-ring periods
-
-The pair recurrence is purely periodic modulo every $q>1$. The next problem is to determine effective bounds and characterize maximal periods. Since the transition matrix
-
-$$
-M_t=\begin{pmatrix}0&1\\-1&t\end{pmatrix}
-$$
-
-lies in $\mathrm{SL}_2(\mathbb Z/q\mathbb Z)$, the period of the initial pair divides the order of $M_t$. Sharp formulas should depend on the factorization of $q$ and on the discriminant $t^2-4$.
-
-### 10.3. Primitive Pell points and primitive geodesics
-
-For nonsquare positive $D=t^2-4$, one should characterize which points on
-
-$$
-x^2-txy+y^2=-D
-$$
-
-arise from primitive powers of primitive modular conjugacy classes. Group-theoretic primitivity is subtler than $\gcd(x,y)=1$. Doubling and tripling provide explicit maps whose images mark some imprimitive indices.
-
-### 10.4. Prime-geodesic counting by trace
-
-Let $P(X)$ count primitive hyperbolic conjugacy classes whose absolute trace is at most $X$. An effective asymptotic for $P(X)$ should be obtained by translating geodesic-length estimates through
-
-$$
-|\operatorname{tr}A|=2\cosh(\ell(A)/2).
-$$
-
-The trace/Pell model supplies a precise counting coordinate and may help organize arithmetic refinements of such estimates.
-
-## 11. Conclusion
-
-For integral determinant-one Möbius transformations, the trace sequence of powers is governed by a universal second-order recurrence. Repeating a power multiplies its index, and Cayley–Hamilton turns that multiplication into polynomial evaluation. The first two laws are
-
-$$
-u_{2n}=u_n^2-2,
-\qquad
-u_{3n}=u_n^3-3u_n.
-$$
-
-Doubling also produces the exact factorization
-
-$$
-u_{2n}^2-4=(u_n^2-4)u_n^2,
-$$
-
-while consecutive traces remain on the invariant Pell conic
-
-$$
-x^2-txy+y^2=4-t^2.
-$$
-
-Together these statements form a coherent arithmetic system linking group powers, polynomial dynamics, integral recurrences, quadratic Diophantine geometry, modular periodicity, and hyperbolic length. They show that the arithmetic of curved motion is most naturally sought not in arbitrary vertex labels but in conjugacy-invariant coordinates already encoded by the geometry.
+They also enforce conceptual discipline: transported integer primes, tessellation vertices, cusp-orbit points, and primitive closed geodesics are different objects. A mature hyperbolic number theory must define each population and operation before assigning it arithmetic meaning. The explicit modular orbit offers a reliable starting point for that program.
