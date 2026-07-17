@@ -33,21 +33,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "1003d095",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0126",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:16:12.438268+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
     "consumed_by_exp_id": "0f8a1331",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
@@ -2868,6 +2853,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 1003d095 (Q=0.740) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_1003d095_00485697",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "1003d095",
+    "status": "available",
+    "timestamp": "2026-07-17T18:04:18.998094+00:00",
+    "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
+  },
+  {
     "consumed_by_exp_id": "5102d77c",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
@@ -3000,6 +2999,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T18:03:25.411442+00:00",
     "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal result in `AffineDuality.lean` isolates a precise bridge between finite-group symmetry and cryptographic proof systems: translation gives exact witness-independent transcript distributions, while subtraction extracts a witness from two accepting answers sharing a commitment.\n\n## 1. Move from transcript multisets to probability distributions\n\nThe current theorem represents uniform finite sampling by the multiset obtained from `Finset.univ`. A natural next step is to restate perfect zero knowledge as equality of `PMF` values. This would make composition with randomized verifiers and repeated protocols more direct.\n\n## 2. Sequential and parallel repetition\n\nFormalize `k` independent Boolean challenges. The expected goals are:\n\n- simulated and real transcript vectors have identical distributions;\n- witness independence is preserved by product distributions;\n- if a cheating prover can answer both challenges at any repeated coordinate, subtraction extracts a witness;\n- under a suitable binding or fixed-commitment hypothesis, the soundness error decreases exponentially.\n\nThe last point cannot follow from the present algebraic model alone: it needs an explicit probabilistic adversary model and assumptions preventing challenge-dependent commitments.\n\n## 3. Connect to propositional proof verification\n\nEncode a propositional derivation as a finite list of locally checkable steps. A commitment layer can then hide the list while a verifier asks for selected local consistency checks. The important formal distinction is between:\n\n- local consistency of sampled steps;\n- global soundness of the encoded proof;\n- zero knowledge of the resulting transcript.\n\nA one-step opening protocol by itself does not establish the latter two properties. A rigorous development should use a sound locally testable encoding and a hiding, binding commitment scheme.\n\n## 4. Replace the abstract additive relation by concrete protocols\n\nInstantiate the construction with finite cyclic groups and linear maps, then connect it to Schnorr-style identification. This requires carefully separating additive notation in the exponent from multiplicative notation in the public group.\n\n## 5. Computational and communication complexity\n\nThe present development is information-theoretic and extensional; it does not claim polynomial communication in the statement length. A future complexity-aware formalization should represent algorithms, encodings, security parameters, and bit lengths explicitly. Any PA-wide succinctness claim must account for proof length and use a genuinely succinct argument system rather than infer statement-length communication directly from arithmetization or the PCP theorem.\n\n## 6. Malicious-verifier zero knowledge\n\nThe simulator currently captures the fixed-challenge, honest-verifier view. General zero knowledge requires quantification over verifier strategies and simulation of their complete views. Formalizing rewinding, expected running time, or straight-line simulation would clarify exactly which privacy guarantee survives beyond honest verifiers.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0235",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1003d095",
+    "status": "available",
+    "timestamp": "2026-07-17T18:03:41.102617+00:00",
+    "title": "The formal result in `AffineDuality.lean` isolates a precise bridge between fini"
   },
   {
     "consumed_by_exp_id": "",
