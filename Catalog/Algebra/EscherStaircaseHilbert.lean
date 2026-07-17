@@ -53,8 +53,8 @@ in the finite case and positive (a staircase exists) in the infinite case.
 -- !-- Lab Notes -- !--
 -/
 import Mathlib
-import Algebra.EscherStaircase
-import Algebra.EscherStaircasePolynomial
+import Catalog.Algebra.EscherStaircase
+import Catalog.Algebra.EscherStaircasePolynomial
 
 open MvPolynomial
 

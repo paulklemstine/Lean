@@ -68,7 +68,7 @@ finite-variable Hilbert-basis result (no staircase) in the sibling file to justi
 -- !-- Lab Notes -- !--
 -/
 import Mathlib
-import Algebra.EscherStaircase
+import Catalog.Algebra.EscherStaircase
 
 open MvPolynomial
 
