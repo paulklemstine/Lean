@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e72af703",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Factorial Codes Beyond Finite Reconstruction\n\n## 1. Equivariant insertion statistics\n\n**Conjecture.** Under the recursive factorial-code classification, conjugation by an adjacent",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-15T05:41:05",
-      "title": "Close Proofs: For every natural number `k`, the factorial-code space of length `k` s"
-    },
-    {
       "cycle_id": "7385ba7c",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\n1. **Computable ranking and unranking.** Replace the finite-cardinality inverse used by `codeRankEquiv` with an executable decoder based on repeated division by factorials, and pr",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-17T09:40:03",
       "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+    },
+    {
+      "cycle_id": "408bb225",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## 1. Measure-calibrated recurrence incidence\n\nFix a distribution of logistic parameters, an absolutely continuous distribution of initial states, a finite observation horizon, an",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-17T11:50:06",
+      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dbbebdc4",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThese conjectures are distilled from the current cycle, which closed the bridge\nidentifying the factorial (factoradic) number system as a single point in the\none-parameter family",
-      "quality_score": 0.6,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-14T00:41:38",
-      "title": "Close Proofs: Lower bounds on clique densities using generalized inverses"
-    },
     {
       "cycle_id": "28ee7277",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-07-17T11:32:33",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "408bb225",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## 1. Measure-calibrated recurrence incidence\n\nFix a distribution of logistic parameters, an absolutely continuous distribution of initial states, a finite observation horizon, an",
+      "quality_score": 0.76,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-17T11:50:06",
+      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "name": "shiftedHankel_psd_of_nonnegative_spectrum",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "name": "shiftedHankel_hierarchy_nested",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "cca295e6",
-      "domain": "Shared",
-      "name": "for",
-      "quality": 0.71
-    },
     {
       "cycle_id": "cca295e6",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "prime_mod_nine_ne_six",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "408bb225",
+      "domain": "Tropical",
+      "name": "periodic_return_multiples",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "408bb225",
+      "domain": "Tropical",
+      "name": "periodicState_of_semiconj",
+      "quality": 0.76
+    },
+    {
+      "cycle_id": "408bb225",
+      "domain": "Tropical",
+      "name": "exact_period_three_distinct",
+      "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-17T11:32:33",
+  "last_updated": "2026-07-17T11:50:06",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "c67deafc",
-        "quality": 0.6,
-        "theorems": 0,
-        "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
-      },
-      {
         "cycle_id": "fb4de3e5",
         "quality": 0.78,
         "theorems": 23,
@@ -4009,6 +4003,12 @@
         "quality": 0.65,
         "theorems": 14,
         "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+      },
+      {
+        "cycle_id": "408bb225",
+        "quality": 0.76,
+        "theorems": 12,
+        "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
       }
     ]
   }
