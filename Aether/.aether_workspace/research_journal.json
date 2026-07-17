@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bd321901",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Intrinsic witness complexity\n\n## Results established\n\nThe development in `Catalog/Computation/WitnessComplexityDeepening.lean` replaces an ambient-vertex polynomial estimate by a",
-      "quality_score": 0.93,
-      "sorry_count": 4,
-      "theorem_count": 46,
-      "timestamp": "2026-07-15T05:22:58",
-      "title": "Deepening: Two-parameter picture of *witness complexity* for the"
-    },
-    {
       "cycle_id": "3c80004e",
       "domain": "Physics",
       "key_insight": "# Future Directions: Extensive Equivariant Invariants of Composite Systems\n\n## 1. Grothendieck completion of finite free ℤ₂-systems\n\nThe commutative monoid of finite nonempty free ℤ₂-systems under joi",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-17T08:36:16",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "47f9b94d",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\n## Conclusions established in Lean\n\nThe proposed phenomenon splits into one valid structural statement and several claims that fail as stated.\n\n1. `Escher.EscherStaircase R`, defi",
+      "quality_score": 0.78,
+      "sorry_count": 3,
+      "theorem_count": 4,
+      "timestamp": "2026-07-17T09:24:10",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "664b3442",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Time-Travel Logic / Causal Consistency\n\nThe file `Catalog/Logic/TimeTravelCausalConsistency.lean` formalizes causal loops and\nthe Novikov self-consistency principle:\n\n* `consisten",
-      "quality_score": 0.83,
-      "sorry_count": 5,
-      "theorem_count": 20,
-      "timestamp": "2026-07-13T23:31:45",
-      "title": "Deepening: Moonshot: Time-Travel Logic — Formalizing Causal Consistency"
-    },
     {
       "cycle_id": "17340490",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T09:08:07",
       "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+    },
+    {
+      "cycle_id": "47f9b94d",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\n## Conclusions established in Lean\n\nThe proposed phenomenon splits into one valid structural statement and several claims that fail as stated.\n\n1. `Escher.EscherStaircase R`, defi",
+      "quality_score": 0.78,
+      "sorry_count": 3,
+      "theorem_count": 4,
+      "timestamp": "2026-07-17T09:24:10",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-17T09:08:07",
+  "last_updated": "2026-07-17T09:24:10",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "12ea9340",
-      "domain": "Novelty",
-      "sorry_count": 3,
-      "timestamp": "2026-07-14T22:36:30"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "a46f1a93",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 3,
       "timestamp": "2026-07-17T09:08:07"
+    },
+    {
+      "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
+      "cycle_id": "47f9b94d",
+      "domain": "Computation",
+      "sorry_count": 3,
+      "timestamp": "2026-07-17T09:24:10"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "048b9775",
-        "quality": 0.7059866666666667,
-        "theorems": 18,
-        "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin gro"
-      },
-      {
         "cycle_id": "c2c03fe8",
         "quality": 0.63,
         "theorems": 25,
@@ -3327,6 +3321,12 @@
         "quality": 0.63,
         "theorems": 19,
         "title": "ArXiv paper: Superlinear complexity of the $(3/2)^n$ steering word"
+      },
+      {
+        "cycle_id": "47f9b94d",
+        "quality": 0.78,
+        "theorems": 4,
+        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
       }
     ],
     "Cryptography": [
