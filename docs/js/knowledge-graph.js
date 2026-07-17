@@ -761,8 +761,27 @@
 
                 n.vx *= DAMPING;
                 n.vy *= DAMPING;
-                // Cap velocity to prevent ejections
-                const speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+                
+                // Continuous galactic rotation nudge (flat rotation curve)
+                const distFromCenter = Math.sqrt(n.x * n.x + n.y * n.y) || 1;
+                const tangX = -n.y / distFromCenter;
+                const tangY = n.x / distFromCenter;
+                const targetRotV = 150.0; // Flat rotation curve speed
+                const currentRotV = n.vx * tangX + n.vy * tangY;
+                if (currentRotV < targetRotV) {
+                    const nudge = (targetRotV - currentRotV) * 0.02; // Gently accelerate to target
+                    n.vx += tangX * nudge;
+                    n.vy += tangY * nudge;
+                }
+
+                // Cap velocity to prevent ejections, and enforce minimum velocity
+                let speed = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+                const MIN_VELOCITY = 10.0;
+                if (speed < MIN_VELOCITY && speed > 0.001) {
+                    n.vx = (n.vx / speed) * MIN_VELOCITY;
+                    n.vy = (n.vy / speed) * MIN_VELOCITY;
+                    speed = MIN_VELOCITY;
+                }
                 if (speed > MAX_VELOCITY) {
                     n.vx = (n.vx / speed) * MAX_VELOCITY;
                     n.vy = (n.vy / speed) * MAX_VELOCITY;
