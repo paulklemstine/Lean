@@ -3,6 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0195",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T07:48:05.955458+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
     "consumed_by_exp_id": "322b88bd",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -75,6 +90,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-16T15:16:12.454072+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0196",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T07:48:05.979796+00:00",
+    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -516,7 +546,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
   },
   {
-    "consumed_by_exp_id": "6da0544e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Record compositions of alternating permutations and noncommutative symmetric functions' and formalize its key results. Abstract: Amdeberhan, Shareshian, and Stanley recently proved that a function $\\varphi$ arising in the theory of partition Eisenstein series counts the alternating permutations of $\\{1,\\dots,2n\\}$ with a given `record' partition, and they asked whether there is a similar theory for record compositions, suggesting a role for noncommutative symmetric functions. Here we solve their open problem by showing that the number of alternating permutations of $\\{1,\\dots,2n\\}$ with record composition $(\u03b1_1,\\dots,\u03b1_\\ell)$ is \\[ \\prod_{j=1}^{\\ell}\\binom{2s_j-1}{2\u03b1_j-1}E_{2\u03b1_j-1}, \\] where $s_j=\u03b1_1+\\dots+\u03b1_j$, $E_k$ is an Euler number, and the record composition of $w=a_1a_2\\dots a_{2n}$ (so $a_1>a_2<a_3>\\dotsb$) lists the factor lengths obtained by cutting $a_1a_3\\dots a_{2n-1}$ before each left-to-right maximum other than the first. These numbers are the coefficients of a natural lift of the degree-$n$ sprout symmetric function with seed $\\sec(\\sqrt{t}\\,)$ to noncommutative symmetric functions, expanded in p",
     "domains": [
       "Algebra"
@@ -525,7 +555,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12873v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T13:25:40.671949+00:00",
     "title": "ArXiv paper: Record compositions of alternating permutations and noncommutative symmetric functions"
   },
@@ -1053,21 +1083,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T13:16:54.044719+00:00",
     "title": "ArXiv paper: A tight single-change covering design with block size 6"
-  },
-  {
-    "consumed_by_exp_id": "fe20b520",
-    "description": "Investigate the ArXiv paper 'Limit laws for component-pruned sparse random graphs and percolated tori' and formalize its key results. Abstract: We prove an $\\mathrm{MSO}_2$ zero-one law for a very sparse Erd\u0151s-R\u00e9nyi graph after pruning by component order. Let $p_n=c_n/n$, where $c_n\\to0$, and delete every component of order less than $f(n)$, where $f(n)\\to\\infty$. If \\[ f(n)\\bigl(\\log f(n)+\\log(1/c_n)\\bigr)=o(\\log n), \\] then the resulting graph satisfies a zero-one law for $\\mathrm{MSO}_2$, with quantification over sets of vertices and sets of edges. The proof combines uniform component counts, an MSO Feferman-Vaught decomposition for disjoint unions, and semilinearity of the order spectra of MSO-definable classes of finite trees. We also show that the term $f(n)\\log f(n)$ cannot simply be omitted: star components can occur at first-order-visible Poisson thresholds. We further establish first-order limit laws for bond percolation on the discrete torus $T_L^d$. In the two-sided subpolynomial regime, pruning below a sufficiently slow threshold yields a zero-one law. For the unpruned model in either one-sided polynomial regime, ",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0084",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11033v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T13:34:18.866213+00:00",
-    "title": "ArXiv paper: Limit laws for component-pruned sparse random graphs and percolated tori"
   },
   {
     "consumed_by_exp_id": "",
@@ -2476,6 +2491,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T03:25:44.358073+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0197",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T07:48:05.998805+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What was formalized\n\n`PruningSpectra.lean` develops two deterministic parts of the component-pruning argument.\n\n1. **Order-spectrum arithmetic.** One-dimensional semilinear spectra are represented by eventual periodicity. The file proves closure under complement, intersection, union, finite indexed union, and tail equivalence.\n2. **Feferman\u2013Vaught count saturation.** `CountEquivalent q` identifies exact component counts below `q` and all counts at least `q`. It is proved to be an equivalence relation and a congruence for addition, including coordinatewise component profiles.\n3. **Contrarian disproof.** Arbitrary input-dependent cutoffs do not preserve eventual periodicity. An explicit cutoff transforms the eventually periodic spectrum `{0}` into the powers of two away from zero, and powers of two are formally proved not eventually periodic.\n\nThese are deterministic abstractions of two proof ingredients described in the paper, not a formalization of the full probability spaces, MSO\u2082 syntax/semantics, random-graph component estimates, or torus percolation limit laws.\n\n## Verification status\n\nThe delivered Lean development is complete: every declaration in `PruningSpectra.lean` has a full proof, the file compiles independently, and it contains no `sorry`, `admit`, added axioms, or unfinished tactic suggestions. Axiom inspection of the principal closure, saturation, nonperiodicity, and pruning-counterexample theorems reports only Lean/Mathlib's standard foundational axioms (`propext`, `Classical.choice`, and `Quot.sound`).\n\n## Conjectures to pursue\n\n### 1. Regular-cutoff preservation\n\nThe counterexample uses a cutoff engineered from the target spectrum. A plausible positive replacement is:\n\n> If `S` is eventually periodic and `f` is eventually affine modulo the period of `S`, then `{n | n - f(n) \u2208 S}` is eventually periodic.\n\nFormalizing several useful regularity classes\u2014eventually constant, affine, and periodic differences\u2014would sharply delimit the contrarian obstruction.\n\n### 2. Full finite-state disjoint-union theorem\n\nDefine finite relational structures, MSO\u2082 formulas of bounded quantifier rank, and disjoint union. Prove that for every rank there is a saturation threshold such that the MSO\u2082 type of a disjoint union depends only on the saturated multiplicity of each component type. `countProfile_add` is the arithmetic congruence needed by this result.\n\n### 3. Tree order spectra\n\nFormalize finite trees and the spectrum of an MSO-definable tree class. The target theorem is that this spectrum is semilinear (in one dimension, eventually periodic up to a finite prefix). This will require a tree-automata or composition development rather than merely arithmetic closure.\n\n### 4. Uniform component counts in sparse Erd\u0151s\u2013R\u00e9nyi graphs\n\nBuild the finite probability model `G(n,c\u2099/n)`, define component pruning by order, and establish estimates uniform over tree isomorphism types in the permitted size window. This is the principal probabilistic gap between the present deterministic lemmas and the paper\u2019s zero-one law.\n\n### 5. Star-component threshold obstruction\n\nFormalize the number of isolated `k`-stars in `G(n,c\u2099/n)`, compute its factorial moments near the Poisson threshold, and connect the existence of a star component to a first-order sentence. This would formally justify why the `f(n) log f(n)` term cannot simply be removed.\n\n### 6. Bond percolation on discrete tori\n\nDefine `T_L^d`, independent bond percolation, rooted local types, and component pruning. First target finite-radius locality and translation invariance; then prove the concentration and rare-component estimates needed for the two-sided subpolynomial and one-sided polynomial regimes.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0198",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fe20b520",
+    "status": "available",
+    "timestamp": "2026-07-17T07:48:37.345184+00:00",
+    "title": "`PruningSpectra.lean` develops two deterministic parts of the component-pruning "
   },
   {
     "consumed_by_exp_id": "",

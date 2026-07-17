@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0ee2f71b",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Connect the algebraic constant to the actual cutting process.** The present result proves that the candidate cake ratio `1 + ρ` is exactly the square of the plastic number an",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-15T04:09:03",
-      "title": "Deepening: The optimal portion ratio μ₂ equals 1 + ρ"
-    },
-    {
       "cycle_id": "22a6ce83",
       "domain": "Physics",
       "key_insight": "# Future Directions: from path congestion to chord-swap geometry\n\n## 1. Exact path constant and discrete cosine extremizer\n\nFor the unit path on `n` sites, the variational gap should equal\n\\[\n\\gamma_n",
@@ -499,29 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T06:13:47",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "18617733",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n## What is now proved\n\n`VampireBestiary/VampireUnitCurve.lean` isolates the exact digit-multiset core of a fang factorization and proves, in every base `b ≥ 2`,\n\n\\[\n(x-1)(y-1)=1 \\",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T07:48:46",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "49ddee39",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Sharp maximal excess of the ℤ₂ co-index under joins\n\nThis cycle established the constructive, lower-bound half of the co-index theory:\nthe join of free ℤ₂-complexes satisfies\n`coi",
-      "quality_score": 0.78,
-      "sorry_count": 5,
-      "theorem_count": 28,
-      "timestamp": "2026-07-13T21:24:24",
-      "title": "Close Proofs: Sharp maximal excess of co-index under suspension for all feasible sta"
-    },
-    {
-      "cycle_id": "5fd927d4",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: The Category Theory of Jokes\n\nThis work develops surprise (humor) as a genuine algebraic/categorical invariant of\nsetups. Three complementary threads are now formalized:\n\n* **Univ",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-13T21:24:35",
-      "title": "Close Proofs: The Category Theory of Jokes: Universal Properties of Humor"
-    },
     {
       "cycle_id": "6d984d02",
       "domain": "Novelty",
@@ -2501,6 +2481,26 @@
       "theorem_count": 4,
       "timestamp": "2026-07-17T06:13:55",
       "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley sy"
+    },
+    {
+      "cycle_id": "fe20b520",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## What was formalized\n\n`PruningSpectra.lean` develops two deterministic parts of the component-pruning argument.\n\n1. **Order-spectrum arithmetic.** One-dimensional semilinear spe",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T07:48:42",
+      "title": "ArXiv paper: Limit laws for component-pruned sparse random graphs and percolated tori"
+    },
+    {
+      "cycle_id": "18617733",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n## What is now proved\n\n`VampireBestiary/VampireUnitCurve.lean` isolates the exact digit-multiset core of a fang factorization and proves, in every base `b ≥ 2`,\n\n\\[\n(x-1)(y-1)=1 \\",
+      "quality_score": 0.73,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T07:48:46",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-17T06:13:55",
+  "last_updated": "2026-07-17T07:48:46",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "352675e9",
-        "quality": 0.71,
-        "theorems": 13,
-        "title": "ArXiv paper: Ray and end spaces: characterizations and classification up to home"
-      },
-      {
         "cycle_id": "19cecd78",
         "quality": 0.69,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.71,
         "theorems": 5,
         "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up"
+      },
+      {
+        "cycle_id": "fe20b520",
+        "quality": 0.6,
+        "theorems": 0,
+        "title": "ArXiv paper: Limit laws for component-pruned sparse random graphs and percolated"
       }
     ],
     "Bridges": [
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "4d9b342d",
-        "quality": 0.7,
-        "theorems": 10,
-        "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
-      },
-      {
         "cycle_id": "99c2e84e",
         "quality": 0.8,
         "theorems": 4,
@@ -3761,6 +3755,12 @@
         "quality": 0.75,
         "theorems": 19,
         "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twe"
+      },
+      {
+        "cycle_id": "18617733",
+        "quality": 0.73,
+        "theorems": 0,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       }
     ],
     "Probability": [

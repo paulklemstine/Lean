@@ -1,41 +1,27 @@
-# Computational evidence
+# Computational Evidence
 
-## Small cases
+## Small-case calculations
 
-Starting from `(a₀,b₀) = (0,1)` and applying
-`(a,b) ↦ (2a+b, a+2b)` gives:
+For the recurrence $u_0=2$, $u_1=3$, $u_{n+2}=3u_{n+1}-u_n$, the first terms are
 
-| n | aₙ | bₙ | aₙ/bₙ | bₙ²-aₙ² | 3ⁿ |
-|---:|---:|---:|:---:|---:|---:|
-| 0 | 0 | 1 | 0 | 1 | 1 |
-| 1 | 1 | 2 | 1/2 | 3 | 3 |
-| 2 | 4 | 5 | 4/5 | 9 | 9 |
-| 3 | 13 | 14 | 13/14 | 27 | 27 |
-| 4 | 40 | 41 | 40/41 | 81 | 81 |
-| 5 | 121 | 122 | 121/122 | 243 | 243 |
+| $n$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|---:|---:|---:|---:|---:|---:|---:|
+| $u_n$ | 2 | 3 | 7 | 18 | 47 | 123 |
 
-The data suggest the exact formulas
-`2aₙ = 3ⁿ-1` and `2bₙ = 3ⁿ+1`. Both formulas, the norm identity, and the
-Möbius recurrence are proved for every natural `n` in
-`Physics/HyperbolicArithmetic.lean`; the table is therefore illustrative rather
-than the basis of the result.
+The doubling law predicts $u_2=u_1^2-2=7$, $u_4=u_2^2-2=47$, and $u_{10}=u_5^2-2=15127$. The tripling law predicts $u_3=u_1^3-3u_1=18$ and $u_{12}=u_4^3-3u_4=103682$. These identities are represented by concrete examples in `TraceDoubling.lean` and follow there from general theorems.
 
-## OEIS
+The discriminant calculation at $n=2$ gives
+\[
+ u_4^2-4=47^2-4=2205=(7^2-4)7^2,
+\]
+matching the general square-factor identity.
 
-The unsigned sequences beginning `0, 1, 4, 13, 40, 121` and
-`1, 2, 5, 14, 41, 122` are the elementary sequences `(3ⁿ-1)/2` and
-`(3ⁿ+1)/2`. No OEIS identifier is asserted here because no external database
-lookup was used.
+## OEIS search
 
-## Counterexample hunt
+No OEIS result was supplied in the research prompt, and no external sequence identification was used. The recurrence data are therefore recorded without assigning an OEIS identifier.
 
-Direct recurrence evaluation for `n = 0,…,5` found no failure of the proposed
-norm identity or disk bound. More decisively, the Lean theorem is universal in
-`n`, so there can be no natural-number counterexample to the formalized claim.
+## Counterexample hunt and boundary cases
 
-## Geometric interpretation
+The proposed identities were checked symbolically for arbitrary integral trace parameter, so no counterexample occurs within that scope. The parabolic boundary $t=2$ was tested explicitly: the sequence is constantly $2$, its trace discriminant is zero, and the doubled discriminant identity remains valid. This boundary example is included in `TraceDoubling.lean`.
 
-Each ratio is in `[0,1)` and approaches the ideal boundary point `1`. One step
-sends `x` to `(x+1/2)/(1+x/2)`, the Möbius translation law on a diameter of the
-Poincaré disk. The preserved-up-to-scale quadratic form is visible in the last
-two columns.
+The broader claims about unique factorization of tessellation vertices and a critical-line zero law were not tested numerically because the proposed operations, norm, and zeta function do not yet determine canonical mathematical objects. Finite zero computations would in any case provide evidence rather than a proof of a universal zero-location statement.

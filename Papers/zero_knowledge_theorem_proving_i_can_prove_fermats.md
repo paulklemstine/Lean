@@ -1,3 +1,3 @@
-# Computational Evidence Decision
+# Computational Evidence Justification
 
-Computational evidence was not used because the central results are exact symbolic identities for arbitrary finite parameters rather than empirical asymptotic claims. The accepting-set estimate follows from removing an explicitly witnessed rejecting valuation, independent repetition follows from a finite-product inequality, and perfect hiding follows from a translation bijection of a finite additive group. Small tables would illustrate special cases but would not test the general mechanism more strongly than these exact arguments.
+Computational evidence was skipped because the main claims are symbolic identities valid for arbitrary additive commutative groups, not a numerical conjecture. Small finite examples would only instantiate identities already proved universally. The exact finite distribution claim is itself formalized as equality of transcript multisets in `Protocol.lean`, which is stronger and more directly relevant than sampled data or plots. No integer sequence arises, so an OEIS search is inapplicable.
