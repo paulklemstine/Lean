@@ -3736,6 +3736,62 @@
     "title": "Existence of δ-Dense Sets Avoiding Sumsets of Size ≥ (3+o(1)) log n / log(1/δ)"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.NT",
+      "math.PR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed δ ∈ (0,1), there exists a δ-dense set S ⊂ [n] such that all sumsets A + B with min{|A|, |B|} ≥ (3 log n)/log(1/δ) are not contained in S. Moreover, the constant 3 is optimal: no smaller constant suffices.",
+    "domain_bridges": [
+      "Ramsey Theory",
+      "Probabilistic Methods",
+      "Erdős-type Problems"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0218",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Refine the probabilistic construction to eliminate the o(1) error term, then prove a matching lower bound using structural analysis of sumset containment in dense sets.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T12:54:54.253384+00:00",
+    "title": "Exact Constant in Dense Set Without Large Sumsets"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Jungić, V., Licht, M., Mahdian, M., Nešetřil, J., Radoičić, R. (2007). Avoiding rainbow triangles in edge colored complete graphs. Combinatorica, 27(2), 211-224.",
+      "Conlon, D., Fox, J., Sudakov, B. (2015). Ramsey numbers of graphs with bounded chromatic number. Combinatorica, 35(2), 155-174.",
+      "Balogh, J., Linz, M., Mattos, L. (2015). Bounds on multipartite Ramsey numbers. Electronic Journal of Combinatorics, 22(1), P1.10.",
+      "Bollobás, B. (1986). Combinatorics: Set Systems, Hypergraphs, Posets, and Probabilities. Cambridge University Press."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The exact asymptotic growth of T_k = Θ(k² log k) with computable constants. Specifically, there exist positive constants c₁, c₂ such that lim inf (T_k / (k² log k)) ≥ c₁ and lim sup (T_k / (k² log k)) ≤ c₂, and the optimal values satisfy 0.1 ≤ c₁ ≤ c₂ ≤ 10.",
+    "domain_bridges": [
+      "Erdős-Szekeres type problems in combinatorial geometry",
+      "Van der Waerden's theorem on arithmetic progressions",
+      "Hypergraph Ramsey theory",
+      "Probabilistic method in extremal combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0218",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish tight upper and lower bounds using probabilistic construction for the lower bound and the Lovász Local Lemma for the upper bound, combined with careful entropy compression arguments. The key technical challenge is handling the equinumerous condition while avoiding rainbow structures.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15116v1",
+    "status": "available",
+    "timestamp": "2026-07-17T12:55:09.512961+00:00",
+    "title": "Rainbow Arithmetic Progression Threshold Conjecture"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",

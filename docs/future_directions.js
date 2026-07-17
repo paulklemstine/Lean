@@ -2753,6 +2753,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every fixed \u03b4 \u2208 (0,1), there exists a \u03b4-dense set S \u2282 [n] such that all sumsets A + B with min{|A|, |B|} \u2265 (3 log n)/log(1/\u03b4) are not contained in S. Moreover, the constant 3 is optimal: no smaller constant suffices.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0218",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T12:54:54.253384+00:00",
+    "title": "Exact Constant in Dense Set Without Large Sumsets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact asymptotic growth of T_k = \u0398(k\u00b2 log k) with computable constants. Specifically, there exist positive constants c\u2081, c\u2082 such that lim inf (T_k / (k\u00b2 log k)) \u2265 c\u2081 and lim sup (T_k / (k\u00b2 log k)) \u2264 c\u2082, and the optimal values satisfy 0.1 \u2264 c\u2081 \u2264 c\u2082 \u2264 10.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0218",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15116v1",
+    "status": "available",
+    "timestamp": "2026-07-17T12:55:09.512961+00:00",
+    "title": "Rainbow Arithmetic Progression Threshold Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
