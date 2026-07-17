@@ -2173,18 +2173,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The order of long rainbow arithmetic progressions' and formalize its key results. Abstract: Let $T_k$ be the minimum positive integer $t$ such that, for every positive integer $n$, every equinumerous $t$-coloring of $[tn]$ contains a rainbow $k$-term arithmetic progression. Jungi\u0107, Licht, Mahdian, Ne\u0161et\u0159il and Radoi\u010di\u0107 conjectured that $T_k=\u0398(k^2)$, while Conlon, Fox and Sudakov proved that $T_k=O(k^2\\log k)$. We prove the matching lower bound $T_k=\u03a9(k^2\\log k)$, and hence $T_k=\u0398(k^2\\log k)$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0169",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15116v1",
+    "status": "available",
+    "timestamp": "2026-07-17T03:25:28.901411+00:00",
+    "title": "ArXiv paper: The order of long rainbow arithmetic progressions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Dense sets without large sumsets' and formalize its key results. Abstract: We prove, for all fixed $0 < \u03b4< 1$, and all sufficiently large $n$, that there exists $S \\subset [n]$ with $|S| \\ge \u03b4n$ such that $A + B \\not \\subset S$ for all ${A, B \\subset \\mathbb{N}}$ satisfying $$\\min\\big\\{|A|, |B|\\big\\} \\ge \\big(3 + o(1)\\big) \\frac{\\log n }{ \\log (1 / \u03b4)}.$$ A very recent result of Hern\u00e1ndez and Hetzel shows that our bound is sharp up to a factor of 3, and together our results settle a conjecture of Kra, Moreira, Richter, and Robertson. In fact, we prove that a $\u03b4$-dense random subset of $[n]$ is a valid choice for $S$ with high probability, and that one can take $n^{-\u03b1} \\le \u03b4\\le 1 - c$ where $c > 0$ is fixed and $\u03b1> 0$ depends only on the $o(1)$ error, answering another question of the same authors in a strong form.",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15269v1",
     "status": "available",
     "timestamp": "2026-07-17T03:09:44.217502+00:00",
     "title": "ArXiv paper: Dense sets without large sumsets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The K\u0151vari-S\u00f3s-Tur\u00e1n theorem for $\\operatorname{GF}(q)$-representable matroids' and formalize its key results. Abstract: In this paper, we establish an analogue of the K\u0151vari-S\u00f3s-Tur\u00e1n Theorem for $\\operatorname{GF}(q)$-representable matroids. For $2\\leq s\\leq t$, we show that if $M$ is a rank-$n$ simple $\\operatorname{GF}(q)$-representable matroid having no $M(K_{s,t})$-restriction, then \\[ |E(M)|=O_{q,s,t}\\bigl(q^{(1-1/s)n}\\bigr). \\] In particular, we prove that the maximum number of elements in a simple rank-$n$ binary matroid with no $M(K_{2,t})$-restriction is $\u0398_{t}(2^{n/2})$ where the lower bound is obtained using binary Sidon sets.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0171",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15226v1",
+    "status": "available",
+    "timestamp": "2026-07-17T03:25:32.410212+00:00",
+    "title": "ArXiv paper: The K\u0151vari-S\u00f3s-Tur\u00e1n theorem for $\\operatorname{GF}(q)$-representable matroids"
   },
   {
     "consumed_by_exp_id": "5ac3d516",
