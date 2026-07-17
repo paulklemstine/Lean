@@ -1,449 +1,429 @@
-# Superposition over Non-Archimedean Value Fields: The Standard Part as a Measurement Rule
+# Quantum-Surreal Measurement: Label Invariance, Standard-Part Observation, and the Equal-Amplitude Obstruction
 
 ## Abstract
 
-We study finite superpositions whose amplitudes are drawn from a non-Archimedean
-ordered field — an ordered field extending the real numbers and containing
-nonzero infinitesimals, the setting exemplified by Conway's surreal numbers.
-Assigning to each branch its Born weight $w_i = \alpha_i^2 / \sum_j \alpha_j^2$
-produces a family of weights that sum to $1$ *exactly* in the field, but whose
-individual entries may be infinitesimal. We propose the **standard part** of the
-Born weight, $p_i = \mathrm{st}(w_i)$, as the rule governing what an observer
-records, and we prove that it constitutes a coherent theory of measurement. Under
-the natural hypotheses that all amplitudes are limited and the total weight is
-appreciable, the observed probabilities are nonnegative, sum to $1$, are additive
-over disjoint families of branches, and — decisively — assign probability
-exactly $0$ to any branch of infinitesimal amplitude. Thus a branch may carry a
-strictly positive weight in the exact ledger while being observationally
-invisible. We show the same collapse arises in a purely classical
-lexicographic-probability model, where the standard part reduces to projection
-onto the leading (primary) layer, and we outline a hierarchy of visibility levels
-indexed by infinitesimal order. The framework gives infinitesimal probabilities a
-rigorous, conservative treatment: they are retained exactly in computation and
-resolved only at the moment of observation.
-
-**Keywords:** non-Archimedean field, infinitesimal, standard part, Born rule,
-superposition, surreal numbers, lexicographic probability, quantum measurement,
-finitely additive measure, orders of magnitude.
-
----
+We study finite quantum states whose orthogonal basis vectors are indexed by surreal numbers while their amplitudes lie in a non-Archimedean ordered field equipped with a standard-part map. The central structural distinction is that surreal numbers label outcomes, whereas normalized squared amplitudes determine probability. We define exact Born weights and real observed probabilities and prove an equal-amplitude theorem: two distinct surreal-labelled branches with a common nonzero amplitude each have exact and observed probability $1/2$, independent of whether either label is infinitesimal. Hence an infinitesimal label alone cannot suppress an outcome. We contrast this obstruction with genuine infinitesimal-amplitude collapse, in which a branch of infinitesimal normalized weight has standard-part probability zero while finite normalization is preserved. A finite lexicographic probability model exhibits the same signature: total standard mass is one although every purely infinitesimal atom has standard mass zero. We give algorithms for finite measurement, visibility classification, and numerical approximation, identify essential hypotheses, and explain the boundary at which branchwise standard part may fail to commute with unlimited summation.
 
 ## 1. Introduction
 
-The Born rule assigns to a superposition $|\psi\rangle = \sum_i \alpha_i |s_i\rangle$
-the outcome probabilities $p_i \propto \alpha_i^2$. Classically the amplitudes
-$\alpha_i$ are real (or complex) and the normalization $\sum_i p_i = 1$ is an
-ordinary real identity. This paper asks what happens when the amplitudes are
-allowed to range over a strictly larger ordered field — one containing genuine
-infinitesimals. Such fields arise naturally: Conway's surreal numbers form the
-largest ordered field and contain, alongside every real number, an entire scale
-of infinities and infinitesimals; the hyperreals of nonstandard analysis and the
-Levi-Civita field provide equally serviceable homes for the infinitely small.
+Conway’s surreal numbers form an ordered field containing the real numbers together with infinitesimal and infinite elements. Their breadth makes them natural candidates for labelling an enlarged spectrum of possible outcomes. A finite quantum-surreal state has the schematic form
 
-The motivating puzzle is the status of an *infinitesimally weighted branch*. In
-the exact arithmetic of the field, such a branch has a positive, nonzero weight,
-and the total probability is conserved exactly. Yet no finite experiment can
-distinguish an infinitesimal chance from zero. We resolve the tension with the
-**standard part** map, the canonical ring homomorphism sending each limited field
-element to the unique real number infinitesimally close to it. Applying it to the
-Born weights yields observed probabilities that (i) reproduce ordinary
-probability theory on the visible branches and (ii) annihilate every infinitesimal
-branch, all while the underlying exact normalization is preserved. Infinitesimal
-possibilities are thus *real in the ledger and invisible in the world*.
-
-Our contributions are:
-
-1. A precise definition of a **superposition over a non-Archimedean value field**
-   and of its **observation functional** $p_i = \mathrm{st}(w_i)$ (Section 3).
-2. Three core theorems — **exact normalization**, **standard normalization with
-   nonnegativity**, and **unobservability of infinitesimal branches** (Section 4)
-   — establishing that the observation functional is a legitimate probability
-   assignment that suppresses the infinitely small.
-3. A worked non-Archimedean example exhibiting a branch of positive weight and
-   zero observed probability (Section 5).
-4. A **classical lexicographic-probability model** exhibiting the identical
-   collapse, identifying the standard part with projection onto the primary layer
-   (Section 6).
-5. A program of extensions: the observation functional as a finitely additive
-   measure, observability as a scaling invariant, and a hierarchy of visibility
-   levels indexed by infinitesimal order (Sections 7–8).
-
----
-
-## 2. Non-Archimedean value fields and the standard part
-
-Throughout, $F$ denotes an ordered field with $\mathbb{R} \subseteq F$ as an
-ordered subfield, and $F$ is **non-Archimedean**: there exists $\varepsilon \in F$
-with $0 < \varepsilon < 1/n$ for every positive integer $n$. Any such
-$\varepsilon$ is called an **infinitesimal**. Concretely $F$ may be taken to be
-the field of surreal numbers, a hyperreal field ${}^{\ast}\mathbb{R}$, or the
-Levi-Civita field; only the order and field axioms plus the existence of an
-infinitesimal are used.
-
-**Definition 2.1 (Magnitude classes).** For $x \in F$:
-
-- $x$ is **limited** (finite) if $|x| \le n$ for some positive integer $n$;
-- $x$ is **infinitesimal** if $|x| < 1/n$ for every positive integer $n$
-  (equivalently $|x| \le r$ for every real $r > 0$);
-- $x$ is **appreciable** if $x$ is limited but not infinitesimal.
-
-The limited elements form a subring $L \subseteq F$; the infinitesimals form an
-ideal $I \subseteq L$; the appreciable elements are $L \setminus I$ together with
-their sign data (equivalently, the limited elements whose reciprocal is also
-limited). We record the arithmetic that drives every proof below.
-
-**Lemma 2.2 (Magnitude arithmetic).**
-
-1. A sum or product of limited elements is limited.
-2. A product of an infinitesimal and a limited element is infinitesimal.
-3. If $a$ is infinitesimal and $b$ is appreciable, then $a/b$ is infinitesimal.
-4. The square of an infinitesimal is infinitesimal; the square of an appreciable
-   element is appreciable.
-
-*Proof.* (1)–(2) are immediate from the defining inequalities. For (3), $b$
-appreciable means $1/b$ is limited, so $a/b = a\cdot(1/b)$ is infinitesimal by
-(2). For (4), if $|a| \le r$ for all real $r>0$ then $|a|^2 \le r^2$ for all such
-$r$, so $a^2$ is infinitesimal; if $b$ is appreciable then $|b| \ge c$ for some
-real $c>0$ and $|b|\le n$ for some integer $n$, whence $c^2 \le b^2 \le n^2$. ∎
-
-**Definition 2.3 (Standard part).** The **standard part** is the map
-$\mathrm{st} : L \to \mathbb{R}$ sending a limited $x$ to the unique real number
-$r$ with $x - r$ infinitesimal. (Existence and uniqueness of $r$ hold in every
-non-Archimedean ordered field extension of $\mathbb R$ in which the limited
-elements admit such a real shadow; this is standard for hyperreal and
-Levi-Civita fields and is assumed as the defining property of the value field.)
-
-**Proposition 2.4 (Properties of the standard part).** The map $\mathrm{st}$ is a
-surjective ordered ring homomorphism:
-
-1. $\mathrm{st}(x + y) = \mathrm{st}(x) + \mathrm{st}(y)$ and
-   $\mathrm{st}(xy) = \mathrm{st}(x)\,\mathrm{st}(y)$ for $x, y \in L$;
-2. $\mathrm{st}(r) = r$ for every real $r$; in particular $\mathrm{st}(1) = 1$;
-3. $x \le y \implies \mathrm{st}(x) \le \mathrm{st}(y)$; hence $x \ge 0 \implies
-   \mathrm{st}(x) \ge 0$;
-4. for limited $x$, $\mathrm{st}(x) = 0$ if and only if $x$ is infinitesimal; the
-   kernel of $\mathrm{st}$ is exactly the ideal $I$ of infinitesimals.
-
-*Proof sketch.* Writing $x = \mathrm{st}(x) + \iota_x$ and $y = \mathrm{st}(y) +
-\iota_y$ with $\iota_x, \iota_y$ infinitesimal, the sum and product identities
-follow from Lemma 2.2: the error terms $\iota_x + \iota_y$ and
-$\mathrm{st}(x)\iota_y + \mathrm{st}(y)\iota_x + \iota_x\iota_y$ are infinitesimal,
-so the real parts are as claimed. Order preservation follows because a real
-number strictly below $\mathrm{st}(x)$ stays below $x$. Statement (4) is the
-definition of infinitesimal. ∎
-
-Proposition 2.4 is the engine of the paper: it lets us transport an *exact*
-non-Archimedean identity, term by term, into an ordinary real identity, while
-sending every infinitesimal contribution to zero.
-
----
-
-## 3. Superpositions over a value field
-
-**Definition 3.1 (Superposition / quantum surreal state).** A **superposition
-over $F$** is a finite indexed family
 $$
-|\psi\rangle = \big(\,(\alpha_i, s_i)\,\big)_{i=1}^n,
-$$
-where the **amplitudes** $\alpha_i \in F$ are field elements and the **branch
-labels** $s_i$ are distinct symbols (interpreted as the possible measured values,
-themselves drawn from $F$ or from any label set). We write it suggestively as
-$|\psi\rangle = \sum_{i=1}^n \alpha_i\,|s_i\rangle$.
-
-**Definition 3.2 (Total weight and Born weights).** The **total weight** of
-$|\psi\rangle$ is
-$$
-Z(\psi) = \sum_{i=1}^n \alpha_i^2 \in F .
-$$
-When $Z(\psi) \ne 0$, the **Born weight** of branch $i$ is
-$$
-w_i = \frac{\alpha_i^2}{Z(\psi)} \in F .
+|\psi\rangle=\sum_{i=1}^{m}\alpha_i|s_i\rangle,
 $$
 
-We call $|\psi\rangle$ **admissible** if every amplitude $\alpha_i$ is limited and
-$Z(\psi)$ is appreciable. Admissibility is the exact non-Archimedean analogue of
-"a well-normalizable state with bounded amplitudes."
+where the labels $s_i$ are surreal numbers and the amplitudes $\alpha_i$ belong to a scalar field suitable for non-Archimedean probability.
 
-**Definition 3.3 (Observation functional).** For an admissible superposition, the
-**observed probability** of branch $i$ is
+A basic interpretive issue immediately arises. If $s_i$ is infinitesimal, should the branch $|s_i\rangle$ have infinitesimal probability? The answer depends on whether the infinitesimal occurs as an outcome label or as amplitude mass. In the Born rule, labels select orthogonal coordinates; probabilities are computed from coefficients. Multiplying probability by the numerical magnitude of a label would introduce a different, label-dependent measurement law.
+
+This paper isolates the finite mathematics needed to make that distinction precise. The principal result is an obstruction to label-based suppression. For distinct $s$ and $t$ and nonzero amplitude $a$, the state
+
 $$
-p_i \;=\; \mathrm{st}(w_i) \;=\; \mathrm{st}\!\left(\frac{\alpha_i^2}{Z(\psi)}\right).
-$$
-For a subset $A \subseteq \{1,\dots,n\}$ of branches, the **observation
-functional** is
-$$
-P(A) \;=\; \sum_{i \in A} p_i \;=\; \mathrm{st}\!\left(\sum_{i\in A} w_i\right),
-$$
-the second equality holding by additivity of $\mathrm{st}$.
-
-Note that $w_i$ is limited whenever $|\psi\rangle$ is admissible: $\alpha_i^2$ is
-limited by Lemma 2.2(4) and $1/Z$ is limited because $Z$ is appreciable, so the
-standard part in Definition 3.3 is well defined.
-
----
-
-## 4. Core theorems
-
-Fix an admissible superposition $|\psi\rangle = \sum_{i=1}^n \alpha_i |s_i\rangle$
-with total weight $Z = Z(\psi)$ and Born weights $w_i = \alpha_i^2 / Z$.
-
-**Theorem 4.1 (Exact normalization).** In the field $F$,
-$$
-\sum_{i=1}^n w_i = 1 .
+a|s\rangle+a|t\rangle
 $$
 
-*Proof.* $\sum_i w_i = \sum_i \alpha_i^2 / Z = \big(\sum_i \alpha_i^2\big)/Z =
-Z/Z = 1$, valid since $Z \ne 0$. ∎
+assigns probability $1/2$ to both outcomes. This remains true when $t$ is a nonzero infinitesimal surreal. By contrast, if a branch’s normalized squared amplitude is infinitesimal, its observed probability under standard part is zero.
 
-Exact normalization holds for *any* superposition with $Z \ne 0$, with no
-appreciability hypothesis: probability is conserved perfectly at the level of the
-value field.
+The results are deliberately finite. At finite support, additivity and normalization interact cleanly with standard part. Unlimited collections introduce a different phenomenon: every branch may have zero standard probability while the exact total mass remains one. This potential failure marks the boundary between the established finite theory and an infinite-dimensional extension.
 
-**Theorem 4.2 (Nonnegativity and standard normalization).** The observed
-probabilities satisfy $p_i \ge 0$ for all $i$ and
-$$
-\sum_{i=1}^n p_i = 1 .
-$$
+## 2. Mathematical setting
 
-*Proof.* Each $w_i = \alpha_i^2 / Z \ge 0$: the numerator is a square hence
-nonnegative, and $Z > 0$ since it is an appreciable sum of squares (a sum of
-squares is $\ge 0$, and it is appreciable hence nonzero, so $> 0$). Order
-preservation of $\mathrm{st}$ (Proposition 2.4(3)) gives $p_i = \mathrm{st}(w_i)
-\ge 0$. For the sum, additivity of $\mathrm{st}$ and Theorem 4.1 yield
+### 2.1 Surreal-labelled basis states
+
+Let $S$ be a finite set of distinct surreal numbers. For each $s\in S$, let $|s\rangle$ denote a basis vector, with inner products
+
 $$
-\sum_i p_i = \sum_i \mathrm{st}(w_i) = \mathrm{st}\Big(\sum_i w_i\Big) =
-\mathrm{st}(1) = 1 . \qquad \blacksquare
+\langle s|t\rangle=
+\begin{cases}
+1,&s=t,\\
+0,&s\ne t.
+\end{cases}
 $$
 
-**Theorem 4.3 (Unobservability of infinitesimal branches).** If the amplitude
-$\alpha_k$ is infinitesimal, then $p_k = 0$.
+The arithmetic order or magnitude of a label does not enter this orthogonality rule. A label identifies a coordinate. In particular, $|0\rangle$ and $|\varepsilon\rangle$ are distinct orthogonal vectors whenever $\varepsilon\ne0$, even if $\varepsilon$ is infinitesimal.
 
-*Proof.* By Lemma 2.2(4), $\alpha_k^2$ is infinitesimal. Since $Z$ is
-appreciable, Lemma 2.2(3) gives $w_k = \alpha_k^2 / Z$ infinitesimal. By
-Proposition 2.4(4), $p_k = \mathrm{st}(w_k) = 0$. ∎
+### 2.2 Non-Archimedean amplitudes
 
-**Corollary 4.4 (Coexistence of positive weight and zero observation).** If
-$\alpha_k \ne 0$ is infinitesimal, then $w_k > 0$ in $F$ while $p_k = 0$. The
-branch carries a strictly positive exact weight yet is observationally invisible.
+Let $K$ be an ordered non-Archimedean field containing $\mathbb R$. An element $x\in K$ is **infinitesimal** if
 
-*Proof.* $w_k = \alpha_k^2 / Z$ is a quotient of a positive element by a positive
-element, hence positive; $p_k = 0$ by Theorem 4.3. ∎
-
-**Theorem 4.5 (Finite additivity of the observation functional).** For disjoint
-$A, B \subseteq \{1,\dots,n\}$,
 $$
-P(A \cup B) = P(A) + P(B), \qquad P(\varnothing) = 0, \qquad
-P(\{1,\dots,n\}) = 1 .
-$$
-Consequently $P$ is a nonnegative, normalized, finitely additive set function on
-the branch set — a finitely additive probability measure on the (finite) branch
-$\sigma$-algebra.
-
-*Proof.* Immediate from Definition 3.3 and additivity of finite sums: for
-disjoint $A,B$, $\sum_{i\in A\cup B} p_i = \sum_{i\in A}p_i + \sum_{i\in B}p_i$.
-The empty sum is $0$; the full sum is $1$ by Theorem 4.2; nonnegativity is
-Theorem 4.2. ∎
-
-Theorems 4.1–4.5 together say that the observation functional is a *bona-fide*
-measurement rule: it conserves total probability exactly at the field level,
-descends to an ordinary real probability distribution on the branches, and
-suppresses precisely the infinitesimal branches.
-
----
-
-## 5. A worked example
-
-Let $\varepsilon \in F$ be a positive infinitesimal and consider the three-branch
-superposition
-$$
-|\psi\rangle = \tfrac{1}{\sqrt{2}}\,|0\rangle + \tfrac{1}{\sqrt{2}}\,|1\rangle
-              + \tfrac{1}{\sqrt{2}}\,\varepsilon\,|\varepsilon\rangle .
-$$
-The amplitudes are $\alpha_0 = \alpha_1 = \tfrac{1}{\sqrt2}$ (appreciable) and
-$\alpha_\varepsilon = \tfrac{1}{\sqrt2}\varepsilon$ (infinitesimal), all limited.
-The total weight is
-$$
-Z = \tfrac12 + \tfrac12 + \tfrac12\varepsilon^2 = 1 + \tfrac12\varepsilon^2,
-$$
-which is appreciable (it differs from the real number $1$ by an infinitesimal),
-so $|\psi\rangle$ is admissible. The Born weights are
-$$
-w_0 = w_1 = \frac{1/2}{1 + \tfrac12\varepsilon^2}, \qquad
-w_\varepsilon = \frac{\tfrac12\varepsilon^2}{1 + \tfrac12\varepsilon^2},
-$$
-and they sum to $1$ exactly (Theorem 4.1). Applying the standard part, and using
-$\mathrm{st}(1 + \tfrac12\varepsilon^2) = 1$:
-$$
-p_0 = p_1 = \mathrm{st}\!\left(\frac{1/2}{1+\tfrac12\varepsilon^2}\right) =
-\tfrac12, \qquad
-p_\varepsilon = \mathrm{st}\!\left(\frac{\tfrac12\varepsilon^2}{1+\tfrac12
-\varepsilon^2}\right) = 0 .
-$$
-The observer records outcome $0$ with probability $\tfrac12$, outcome $1$ with
-probability $\tfrac12$, and the infinitesimal branch *never* — consistent with
-Theorem 4.3 — while the observed probabilities sum to $1$ as guaranteed by
-Theorem 4.2. This is the promised phenomenon: a branch present in the state, with
-a strictly positive exact weight $w_\varepsilon > 0$, that is nonetheless
-observationally invisible.
-
----
-
-## 6. The classical mirror: lexicographic probability
-
-The collapse of Section 4 is not special to amplitudes or to squaring; it is a
-structural consequence of ranking possibilities by order of magnitude. We
-exhibit the same phenomenon in a purely classical model.
-
-**Definition 6.1 (Lexicographic probability system).** A **lexicographic
-probability system** of depth $d$ on outcomes $\{1,\dots,n\}$ is an assignment to
-each outcome $i$ of a vector
-$$
-\mathbf{q}_i = (q_i^{(0)}, q_i^{(1)}, \dots, q_i^{(d-1)}) \in \mathbb{R}_{\ge 0}^{d},
-$$
-whose level-$\ell$ marginals $\sum_i q_i^{(\ell)}$ are each equal to $1$ (each
-level is itself a probability distribution). Outcomes are compared
-lexicographically: $i$ is deemed *more likely* than $j$ if $q_i^{(0)} > q_j^{(0)}$,
-or if they tie at level $0$ and $q_i^{(1)} > q_j^{(1)}$, and so on.
-
-Such systems formalize beliefs in which some events are regarded as *infinitely*
-less likely than others but not impossible. Encode a depth-$d$ system in the value
-field via
-$$
-Q_i = q_i^{(0)} + q_i^{(1)}\varepsilon + q_i^{(2)}\varepsilon^2 + \cdots +
-q_i^{(d-1)}\varepsilon^{d-1} \in F .
+|x|<\frac1n
 $$
 
-**Proposition 6.2 (Lexicographic collapse).** With $Q_i$ as above,
-$\sum_i Q_i = 1 + (\text{infinitesimal})$ is appreciable, each $Q_i$ is limited,
-and the observation functional recovers the **primary layer**:
+for every positive integer $n$. It is **finite** if $|x|<n$ for some positive integer $n$, and **appreciable** if it is finite but not infinitesimal in magnitude. For the real-amplitude model used below, the squared magnitude is $|a|^2=a^2$. A complex extension would replace this by $\overline a a$.
+
+Assume every finite $x\in K$ has a real **standard part**, denoted $\operatorname{st}(x)$, characterized by
+
 $$
-\mathrm{st}\!\left(\frac{Q_i}{\sum_j Q_j}\right) = q_i^{(0)} .
+x-\operatorname{st}(x)\text{ is infinitesimal}.
 $$
-In particular an outcome with $q_i^{(0)} = 0$ but $q_i^{(1)} > 0$ — one that is
-possible only at the secondary, infinitely-less-likely level — has observed
-probability $0$.
 
-*Proof.* $\sum_j Q_j = \sum_j q_j^{(0)} + (\sum_j q_j^{(1)})\varepsilon + \cdots =
-1 + (\text{infinitesimal})$ because the level-$0$ marginal is $1$; this is
-appreciable, so $\mathrm{st}(\sum_j Q_j) = 1$. Each $Q_i$ has real part
-$q_i^{(0)}$, so $\mathrm{st}(Q_i) = q_i^{(0)}$. By multiplicativity of
-$\mathrm{st}$ (Proposition 2.4), $\mathrm{st}(Q_i / \sum_j Q_j) =
-\mathrm{st}(Q_i)/\mathrm{st}(\sum_j Q_j) = q_i^{(0)}/1 = q_i^{(0)}$. ∎
+We use the familiar consequences
 
-Thus the standard part is exactly *projection onto the primary layer* of a
-lexicographic system, and the quantum unobservability theorem (Theorem 4.3) and
-the classical lexicographic collapse (Proposition 6.2) are one theorem viewed
-through two windows. The correspondence identifies "infinitesimal amplitude" with
-"vanishing primary probability, positive secondary probability."
+$$
+\operatorname{st}(r)=r\quad(r\in\mathbb R),
+\qquad
+\operatorname{st}(\delta)=0\quad(\delta\text{ infinitesimal}),
+$$
 
----
+and finite additivity whenever all terms involved lie in the domain of standard part.
 
-## 7. Algorithms
+### 2.3 States, norm, and measurement
 
-The framework is fully computable when $F$ is represented by truncated
-$\varepsilon$-expansions (finite Laurent series in $\varepsilon$), as in the
-Levi-Civita field. We record the two central procedures.
+A finite state is a finitely supported function $\psi:S\to K$, represented as
 
-**Algorithm A (Observed probability distribution).**
-*Input:* amplitudes $\alpha_1,\dots,\alpha_n$ as truncated $\varepsilon$-series.
-*Output:* observed probabilities $p_1,\dots,p_n \in \mathbb{R}$.
+$$
+|\psi\rangle=\sum_{s\in S}\psi(s)|s\rangle.
+$$
 
-```
-1.  for i in 1..n:  a_i ← square(alpha_i)          # truncated-series product
-2.  Z ← sum(a_1, ..., a_n)                          # truncated-series sum
-3.  assert Z is appreciable                          # leading (order-0) term ≠ 0
-4.  for i in 1..n:  w_i ← divide(a_i, Z)            # series inverse of Z, then ×
-5.  for i in 1..n:  p_i ← standardPart(w_i)         # order-0 coefficient of w_i
-6.  return (p_1, ..., p_n)
-```
+Its squared norm is
 
-Correctness is Theorems 4.1–4.3; the output sums to $1$ by Theorem 4.2. With
-series truncated at order $d$ and $n$ branches, each product/inverse costs
-$O(d^2)$ and the whole procedure runs in $O(n\,d^2)$ time.
+$$
+\|\psi\|^2=\sum_{s\in S}\psi(s)^2.
+$$
 
-**Algorithm B (Visibility level of a branch).**
-*Input:* amplitude $\alpha_k$ and total weight $Z$ as truncated series; refinement
-depth $m$. *Output:* the smallest $\ell \le m$ at which branch $k$ becomes
-visible, or "hidden beyond depth $m$."
+For a nonzero state, define the **exact Born weight** of outcome $s$ by
 
-```
-1.  w_k ← divide(square(alpha_k), Z)
-2.  v ← valuation(w_k)          # least power of ε with nonzero coefficient
-3.  if v > m: return "hidden beyond depth m"
-4.  return v                     # branch is first seen by the ε^v-refined lens
-```
+$$
+W_\psi(s)=\frac{\psi(s)^2}{\|\psi\|^2}.
+$$
 
-Algorithm B computes the level in the visibility hierarchy of Section 8: a branch
-of weight $\sim \varepsilon^{\,v}$ is invisible to the ordinary standard part
-(which is the $v=0$ lens) whenever $v \ge 1$, and is first resolved by the
-$v$-th-order refined standard part.
+When $W_\psi(s)$ is finite, define the **observed probability** by
 
----
+$$
+P_\psi(s)=\operatorname{st}(W_\psi(s)).
+$$
 
-## 8. Extensions and future directions
+The distinction between $s$ and $\psi(s)$ is fundamental. The first is an index in the outcome space; the second is a scalar coefficient. Only the coefficient enters $W_\psi(s)$.
 
-**8.1 The observation functional as a finitely additive measure (settled in part).**
-Theorem 4.5 already establishes that $P$ is a nonnegative, normalized, finitely
-additive set function on the finite branch algebra. The natural closure is to
-extend this to superpositions with countably many branches and to identify the
-resulting object as a genuine (finitely additive) probability measure on the full
-branch set. The key mechanism is unchanged: because $\mathrm{st}$ is a ring
-homomorphism on the limited elements, it transports the exact non-Archimedean
-normalization identity to a real normalization identity term by term.
+### 2.4 Coincident labels
 
-**8.2 Observability as a scaling invariant.** Say two superpositions are
-*appreciably equivalent* if their amplitude vectors are related by multiplication
-by a single appreciable factor (possibly branch-dependent but bounded above and
-below by appreciable constants). We conjecture that observability is an invariant
-of this equivalence: a branch unobservable in one representative is unobservable
-in every representative. The reason is that observability depends only on the
-*order of magnitude* of an amplitude relative to the total weight, and appreciable
-rescalings do not change orders of magnitude — they multiply $w_i$ by an
-appreciable factor, which cannot move an infinitesimal into the appreciable range
-or vice versa.
+If two written terms use the same label, they are not orthogonal branches. They must first be combined:
 
-**8.3 A hierarchy of visibility levels.** A single standard part resolves only the
-leading real component of a weight. Refining the value field with higher-order
-infinitesimals yields a sequence of successively finer observation functionals
-$\mathrm{st}_0, \mathrm{st}_1, \mathrm{st}_2, \dots$, where $\mathrm{st}_k$ reads
-the coefficient of $\varepsilon^k$. We conjecture that iterating the construction
-produces a *strict* tower of visibility levels: a branch of weight
-$\sim \varepsilon^{k}$ is invisible to $\mathrm{st}_0, \dots, \mathrm{st}_{k-1}$
-but visible to $\mathrm{st}_k$, yielding a filtration of the state space by how
-deeply a branch is hidden. The lexicographic model of Section 6 realizes this
-tower explicitly: level $k$ corresponds to the $k$-th entry of the lexicographic
-vector, and Algorithm B computes a branch's position in the tower.
+$$
+a|s\rangle+b|s\rangle=(a+b)|s\rangle.
+$$
 
----
+The resulting contribution to squared norm is $(a+b)^2$, not $a^2+b^2$. Consequently, distinctness of labels is an essential hypothesis in the two-branch theorems below.
 
-## 9. Discussion
+## 3. Equal amplitudes and label invariance
 
-The proposal is deliberately conservative. Nothing about ordinary quantum
-mechanics or ordinary probability is altered on the visible branches: the
-observed distribution is an honest real probability distribution obeying the Born
-rule. What the enlargement buys is a rigorous vocabulary for possibilities that
-the real line is too coarse to record. An infinitesimal branch is neither
-rounded to zero by fiat (which discards information) nor treated as a small real
-number (which misrepresents an *infinitely* unlikely event as merely a *very*
-unlikely one). Instead it is kept exactly throughout computation and resolved by a
-single principled map at the moment of observation.
+### Lemma 1 (Squared norm of an equal-amplitude pair)
 
-The dual appearance of the collapse — quantum in Section 4, classical
-lexicographic in Section 6 — suggests that the phenomenon is fundamentally about
-*orders of magnitude of belief or weight*, independent of the quantum
-superstructure. This positions the standard-part measurement rule as a general
-bridge between non-Archimedean analysis and the theory of chance.
+Let $s$ and $t$ be distinct surreal numbers and let $a\in K$. For
 
-## 10. Conclusion
+$$
+|\psi\rangle=a|s\rangle+a|t\rangle,
+$$
 
-We have shown that when the amplitudes of a finite superposition are drawn from a
-non-Archimedean ordered field, the standard part of the Born weights is the
-correct measurement rule. It preserves total probability exactly (Theorems 4.1
-and 4.2), respects nonnegativity and finite additivity (Theorems 4.2 and 4.5),
-and renders infinitesimal branches observationally invisible (Theorem 4.3,
-Corollary 4.4) — as illustrated by an explicit three-branch state (Section 5) and
-mirrored by a classical lexicographic model (Section 6). The extensions of
-Section 8 chart a path toward a full non-Archimedean measurement theory, a
-scaling-invariance principle for observability, and a graded hierarchy of hidden
-branches. Infinitesimal probabilities, long treated informally, acquire a precise
-and well-behaved home.
+one has
+
+$$
+\|\psi\|^2=2a^2.
+$$
+
+**Proof sketch.** Expand the inner product of $|\psi\rangle$ with itself. The two diagonal terms each contribute $a^2$. The cross terms contain $\langle s|t\rangle$ and $\langle t|s\rangle$, both of which vanish because $s\ne t$. Their sum is therefore $2a^2$. $\square$
+
+### Theorem 1 (Exact equal-amplitude law)
+
+Let $s\ne t$ be surreal labels and let $a\ne0$. In the state
+
+$$
+|\psi\rangle=a|s\rangle+a|t\rangle,
+$$
+
+the exact Born weights satisfy
+
+$$
+W_\psi(s)=W_\psi(t)=\frac12.
+$$
+
+**Proof sketch.** At either label the squared coefficient is $a^2$. Lemma 1 gives total squared norm $2a^2$. Since $a\ne0$, cancellation is valid:
+
+$$
+W_\psi(s)=\frac{a^2}{2a^2}=\frac12.
+$$
+
+The same calculation applies to $t$. $\square$
+
+The nonzero hypothesis cannot be removed: when $a=0$, the state has zero norm and normalized Born weights are undefined.
+
+### Theorem 2 (Observed equal-amplitude law)
+
+Under the hypotheses of Theorem 1,
+
+$$
+P_\psi(s)=P_\psi(t)=\frac12.
+$$
+
+**Proof sketch.** The exact weight $1/2$ is an embedded real number, so the standard-part map fixes it. Apply standard part to both identities in Theorem 1. $\square$
+
+### Corollary 1 (Equal-amplitude obstruction for an infinitesimal label)
+
+Let $\varepsilon$ be a nonzero infinitesimal surreal label. The state
+
+$$
+|\psi\rangle=\frac1{\sqrt2}|0\rangle+\frac1{\sqrt2}|\varepsilon\rangle
+$$
+
+has
+
+$$
+P_\psi(0)=P_\psi(\varepsilon)=\frac12.
+$$
+
+Thus an infinitesimal label does not make a branch unobservable when that branch carries an appreciable amplitude equal to the other branch’s amplitude.
+
+**Proof sketch.** The labels $0$ and $\varepsilon$ are distinct, and their common amplitude is nonzero. Theorem 2 applies directly. The infinitesimal order of $\varepsilon$ is irrelevant to the cancellation. $\square$
+
+This corollary corrects a plausible but invalid computation in which the second weight is taken to be $\tfrac12\varepsilon^2$. Such a factor would arise only if the coefficient of $|\varepsilon\rangle$ itself contained $\varepsilon$. The label inside a ket is not an amplitude multiplier.
+
+### Corollary 2 (Swap invariance)
+
+For distinct labels $s,t$ and common nonzero amplitude $a$, exchanging $s$ and $t$ preserves the ordered pair of probability values up to the same exchange. In particular, the multiset of observed probabilities remains $\{1/2,1/2\}$.
+
+**Proof sketch.** Both branches satisfy the identical coefficient calculation of Theorem 2. Swapping labels changes neither squared norm nor coefficient magnitudes. $\square$
+
+### Proposition 1 (Common-scale invariance)
+
+Let $c\ne0$ and let $|\phi\rangle=c|\psi\rangle$ for a nonzero finite state. Whenever the relevant quotients are defined,
+
+$$
+W_\phi(s)=W_\psi(s)
+$$
+
+for every label $s$.
+
+**Proof sketch.** Every numerator gains a factor $c^2$, and the squared norm also gains $c^2$. Cancellation yields the original weight. Hence even a common infinitesimal scale does not by itself make all branches observationally vanish after normalization. $\square$
+
+## 4. Genuine infinitesimal-amplitude collapse
+
+The equal-amplitude obstruction does not say that infinitesimal probabilities are impossible. It identifies their correct source.
+
+### Definition 1 (Visibility)
+
+A branch $s$ of a normalized finite state is **observationally visible** if
+
+$$
+P_\psi(s)>0.
+$$
+
+It is **standard-part invisible** if $P_\psi(s)=0$. A nonzero exact branch may be standard-part invisible.
+
+### Theorem 3 (Infinitesimal-weight collapse)
+
+Let $|\psi\rangle$ be a nonzero finite state and suppose the exact Born weight $W_\psi(s)$ is a nonnegative infinitesimal. Then
+
+$$
+P_\psi(s)=0.
+$$
+
+**Proof sketch.** By definition, $P_\psi(s)=\operatorname{st}(W_\psi(s))$. The standard part of every finite infinitesimal is zero. Nonnegativity ensures the result is interpreted as a probability rather than a signed residue. $\square$
+
+### Theorem 4 (Two-branch epsilon test and observed normalization)
+
+Let $\eta$ be a positive infinitesimal and consider a normalized two-branch state whose exact weights are
+
+$$
+W_\psi(0)=1-\eta,
+\qquad
+W_\psi(1)=\eta.
+$$
+
+Then
+
+$$
+P_\psi(0)=1,
+\qquad
+P_\psi(1)=0,
+\qquad
+P_\psi(0)+P_\psi(1)=1.
+$$
+
+**Proof sketch.** Since $\eta$ is infinitesimal, $\operatorname{st}(\eta)=0$. Also $1-\eta$ is infinitely close to $1$, so $\operatorname{st}(1-\eta)=1$. Their sum is therefore one. The exact normalization $(1-\eta)+\eta=1$ is retained after observation. $\square$
+
+A state realizing these weights may be written with amplitudes $\sqrt{1-\eta}$ and $\sqrt\eta$ in a non-Archimedean field where the relevant square roots exist. Here the second amplitude, rather than its label, creates the infinitesimal probability.
+
+### Proposition 2 (Finite observed normalization)
+
+Suppose a normalized state has finitely many nonnegative finite exact weights $W_1,\ldots,W_m$ satisfying
+
+$$
+\sum_{i=1}^{m}W_i=1,
+$$
+
+and standard part is additive on these finite values. Then
+
+$$
+\sum_{i=1}^{m}\operatorname{st}(W_i)=1.
+$$
+
+**Proof sketch.** Finite additivity permits standard part to pass through the finite sum:
+
+$$
+\sum_i\operatorname{st}(W_i)
+=\operatorname{st}\!\left(\sum_iW_i\right)
+=\operatorname{st}(1)=1.
+$$
+
+The finiteness of the index set is essential to this argument. $\square$
+
+## 5. A discrete standard-part model
+
+A second model shows that infinitesimal collapse is not tied to Hilbert-space notation.
+
+### Definition 2 (Lexicographic infinitesimal weight)
+
+A lexicographic weight is a pair $(r,k)$ with ordinary component $r\in\mathbb R$ and infinitesimal component $k$ in an ordered additive system. Addition is componentwise:
+
+$$
+(r,k)+(r',k')=(r+r',k+k').
+$$
+
+Its standard part is
+
+$$
+\operatorname{st}(r,k)=r.
+$$
+
+The pair $(0,1)$ represents a positive purely infinitesimal atom, while $(1,k)$ has standard mass one for every finite infinitesimal component $k$.
+
+Consider a finite sample space consisting of a distinguished residual atom together with finitely many visible infinitesimal atoms. Assign each visible atom a weight of the form $(0,k_i)$ and choose the residual atom so that the whole space has ordinary coordinate one.
+
+### Theorem 5 (Finite discrete collapse)
+
+In the finite lexicographic model just described, the standard part of the mass of the entire sample space is $1$, whereas the standard part of every individual purely infinitesimal atom is $0$.
+
+**Proof sketch.** Componentwise addition makes the ordinary coordinate of the total mass equal to one by construction, so its standard part is one. Every purely infinitesimal atom has ordinary coordinate zero, so its standard part is zero. $\square$
+
+### Corollary 3 (Continuous–discrete collapse bridge)
+
+The two-branch epsilon state of Theorem 4 and the finite lexicographic model of Theorem 5 have the same standard-part signature: total observed mass equals one, while each designated purely infinitesimal component has observed mass zero.
+
+**Proof sketch.** Theorem 4 supplies the signature for normalized amplitude weights; Theorem 5 supplies it for lexicographic atom weights. The scalar representations differ, but standard part retains the ordinary coordinate and erases the infinitesimal coordinate in both cases. $\square$
+
+The bridge is an observational equivalence, not an assertion that the two scalar systems are identical. It identifies the algebraic behavior that a broader standard-part probability theory should preserve.
+
+## 6. Algorithms
+
+### 6.1 Finite quantum-surreal measurement
+
+For a list of labelled amplitudes, the measurement algorithm proceeds as follows.
+
+**Input:** pairs $(s_i,\alpha_i)$ with finitely many labels and scalar amplitudes.
+
+**Output:** exact normalized weights and real observed probabilities.
+
+1. Group equal labels and sum their amplitudes.
+2. Remove labels whose combined amplitude is zero.
+3. Compute $q_s=|\alpha_s|^2$ for each remaining label.
+4. Compute $Z=\sum_sq_s$ and reject the zero state if $Z=0$.
+5. Set $W_s=q_s/Z$.
+6. Verify that each $W_s$ is finite and lies in the domain of standard part.
+7. Return $P_s=\operatorname{st}(W_s)$.
+
+For $m$ branches, grouping costs expected $O(m)$ time with hashing or $O(m\log m)$ with comparison-based sorting. The remaining arithmetic is $O(m)$. The algorithm uses $O(m)$ storage.
+
+The grouping step is mathematically necessary. Treating duplicate labels as orthogonal would replace coherent addition by an incoherent sum and generally produce incorrect probabilities.
+
+### 6.2 Visibility classification
+
+Given already normalized finite exact weights, classify branch $s$ as visible precisely when $\operatorname{st}(W_s)>0$. In numerical work, exact infinitesimals can be represented symbolically as truncated series
+
+$$
+W_s=c_0+c_1\epsilon+\cdots+c_d\epsilon^d,
+$$
+
+where standard part returns $c_0$. The classification then takes $O(d)$ time per branch to inspect or normalize the representation, and $O(1)$ time if coefficients are stored canonically with direct access to $c_0$.
+
+### 6.3 Scale sweep as a numerical diagnostic
+
+Ordinary floating-point arithmetic has no genuine infinitesimals, but a parameter sweep illustrates the limiting standard-part behavior. For weights proportional to $1$ and $\delta^2$, compute
+
+$$
+P_1(\delta)=\frac{1}{1+\delta^2},
+\qquad
+P_2(\delta)=\frac{\delta^2}{1+\delta^2}.
+$$
+
+As $\delta\to0$, these approach $1$ and $0$. In contrast, for equal amplitudes $\delta$ and $\delta$ the normalized weights remain exactly $1/2$ for every nonzero $\delta$. Comparing these sweeps numerically separates relative suppression from a common global scale.
+
+## 7. Applications and interpretation
+
+### 7.1 Outcome labels versus spectral weights
+
+In spectral language, eigenvalues label eigenspaces while projections and state amplitudes determine outcome probabilities. The infinitesimal size of an eigenvalue does not force its spectral projection to have infinitesimal expectation. The equal-amplitude theorem is the two-dimensional instance of this general separation.
+
+This guides the formulation of a future non-Archimedean spectral theorem. Orthogonality, normalization, and projection weights should be governed by the scalar field and inner product. Surreal order on eigenvalue labels describes the spectrum but should not be inserted into the Born weight unless a different observable model explicitly demands it.
+
+### 7.2 Resolution and coarse graining
+
+Standard part acts as an idealized observation map. Exact weights distinguish $1$ from $1-\eta$ and $0$ from $\eta$; real observed probabilities do not. This resembles coarse graining, where sub-resolution structure survives in a microscopic model but is absent from recorded frequencies.
+
+A zero standard probability should therefore not automatically be interpreted as logical impossibility. It can represent a nonzero exact event lying below the Archimedean resolution of the observed measure. The framework distinguishes three statements:
+
+1. the branch is absent, meaning its exact amplitude is zero;
+2. the branch is present with infinitesimal normalized weight;
+3. the branch’s label is an infinitesimal number.
+
+Only the second statement directly implies standard-part invisibility.
+
+### 7.3 Relabelling tests for proposed models
+
+Any proposed measurement rule can be tested by permuting labels while keeping coefficient data fixed. A Born-type rule must transport probabilities with the branches rather than alter them according to label magnitude. The equal-amplitude obstruction gives an especially sharp test: if two equal nonzero coefficients receive unequal probabilities solely because one label is infinitesimal, the rule is not the standard Born normalization defined here.
+
+### 7.4 Finite probabilistic semantics
+
+Proposition 2 and Theorem 5 suggest a general construction. Start with a finite probability measure valued in an ordered non-Archimedean field, require all event masses to be finite, and apply standard part to obtain a real measure. Finite additivity follows from additivity of standard part on finite sums. Determining the most general hypotheses under which this assignment respects maps of finite probability spaces is a natural categorical question.
+
+## 8. Limitations and failure boundaries
+
+The present theory concerns finite support and a standard-part map defined on all weights in use. Several limitations should be explicit.
+
+First, it does not establish a spectral theorem for arbitrary operators. Such a theorem requires a developed non-Archimedean inner-product geometry, conditions ensuring eigenvalue splitting, and an appropriate notion of completeness.
+
+Second, complex amplitudes require an involution and the positive quantity $\overline\alpha\alpha$ in place of $\alpha^2$. The equal-amplitude cancellation should persist, but positivity and standard-part compatibility must be stated for the chosen scalar field.
+
+Third, standard part is generally partial: infinite elements have no finite real shadow. The observed-probability definition therefore requires normalized weights to be finite.
+
+Fourth, finite additivity does not automatically extend to unlimited sums. Consider an internally normalized hyperfinite family $(W_i)$ in which every $W_i$ is infinitesimal but
+
+$$
+\sum_iW_i=1.
+$$
+
+Branchwise standard part gives $\operatorname{st}(W_i)=0$ for each $i$, while standard part of the exact total is one. Thus
+
+$$
+\sum_i\operatorname{st}(W_i)
+e
+\operatorname{st}\!\left(\sum_iW_i\right)
+$$
+
+if the left side is interpreted as an unrestricted termwise operation. A tightness, domination, or uniform summability hypothesis is needed before interchanging standard part with an infinite or hyperfinite sum.
+
+Finally, the results do not claim that surreal numbers themselves provide the amplitude field used here. The established framework uses surreal values as labels and a standard-part-compatible non-Archimedean field for amplitudes. Constructing a unified scalar and spectral geometry remains a separate task.
+
+## 9. Future research
+
+Four directions emerge.
+
+**Finite-dimensional spectral decomposition.** One may seek an orthogonal eigenbasis theorem for self-adjoint endomorphisms over a real-closed, standard-part-compatible non-Archimedean field when the characteristic polynomial splits. The key question is whether appreciable spectral projections pass under standard part to mutually orthogonal real projections.
+
+**A standard-part functor.** For finite probability spaces valued in a non-Archimedean field, one may characterize exactly when standard part produces an ordinary real probability space and respects probability-preserving maps. The hyperreal-amplitude and lexicographic models provide independent test cases.
+
+**A visibility criterion.** The finite results suggest that observed support should consist exactly of branches whose normalized squared amplitudes have positive standard part. One expects invariance under permutations of labels and multiplication of all amplitudes by a common nonzero finite scalar.
+
+**The infinite-dimensional boundary.** Hyperfinite normalized states may carry unit total mass across individually invisible branches. Identifying the precise tightness condition that permits standard part to commute with summation is necessary before an infinite-dimensional measurement theory can be soundly formulated.
+
+## 10. Methodological consequences
+
+The finite results supply two diagnostic questions for any extension. First, does the proposed probability depend only on normalized coefficient mass and orthogonality data, or does it accidentally depend on the numerical spelling of an outcome? Second, does the observation map preserve finite normalization while distinguishing exact presence from real-valued visibility? The equal-amplitude state tests the first question, and the epsilon-weight state tests the second. Together they form a minimal benchmark: a satisfactory model must assign half probability to each equally weighted distinct branch, erase a purely infinitesimal normalized weight under standard part, and preserve total observed mass in finite systems.
+
+## 11. Conclusion
+
+Quantum-surreal measurement requires a disciplined separation between coordinates and coefficients. Surreal labels enlarge the outcome space; amplitudes allocate mass across that space; standard part converts finite non-Archimedean weights into ordinary real observations.
+
+For two distinct labels with equal nonzero amplitude, exact normalization gives $1/2$ on each branch, and standard part preserves those values. An infinitesimal label is therefore not intrinsically unobservable. Genuine disappearance occurs when a branch’s normalized squared amplitude is infinitesimal. In finite systems this collapse is compatible with total observed mass one, and an analogous lexicographic model exhibits the same behavior.
+
+These results replace a label-dependent intuition with an amplitude-based law. They also locate the next mathematical obstacle: not the finite two-branch calculation, but the interaction of standard part with spectral structure and unlimited summation.
