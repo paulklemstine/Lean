@@ -10,7 +10,17 @@
 
         // ─── Data ───
         const graphData = window.PACKAGE_GRAPH || { nodes: [], edges: [], domain_bridges: [] };
-        const graphNodes = (graphData.nodes || []).map(n => ({
+        
+        let rawNodes = graphData.nodes || [];
+        rawNodes.sort((a, b) => {
+            const d1 = a.date ? new Date(a.date).getTime() : 0;
+            const d2 = b.date ? new Date(b.date).getTime() : 0;
+            return d2 - d1;
+        });
+        rawNodes = rawNodes.slice(0, 500);
+        const validNodeIds = new Set(rawNodes.map(n => n.id));
+
+        const graphNodes = rawNodes.map(n => ({
             ...n,
             x: 0, y: 0, vx: 0, vy: 0,
             targetX: 0, targetY: 0,
@@ -23,7 +33,9 @@
             trail: [], radarPulse: null
         }));
         // Only provenance edges (no heuristic edges)
-        let graphEdges = (graphData.edges || []).filter(e => e.type === 'provenance').map(e => ({
+        let graphEdges = (graphData.edges || [])
+            .filter(e => e.type === 'provenance' && validNodeIds.has(e.source) && validNodeIds.has(e.target))
+            .map(e => ({
             ...e,
             edgeType: e.type,
         }));
