@@ -3667,7 +3667,7 @@ Research mode: {concept.research_mode}
         Algebra/foo.lean, Speculative/...) stays under catalog_root.
         """
         first = target_path.split("/", 1)[0]
-        base = self.catalog_root.parent if first in self._TOP_LEVEL_OUTPUT_DIRS else self.catalog_root
+        base = self.catalog_root.parent if (first in self._TOP_LEVEL_OUTPUT_DIRS or first == "Catalog") else self.catalog_root
         return base / target_path
 
     def _verify_catalog_sync(self, job: ResearchJob) -> dict:
