@@ -2679,6 +2679,36 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
   },
   {
+    "consumed_by_exp_id": "0daa61af",
+    "description": "For any family of k-regular connected graphs (k \u2265 5) satisfying a spectral expansion lower bound \u03bb\u2082 \u2265 \u03b5 > 0, the covering radius of the canonical class with respect to the energy quadratic form is O(\u221ag), which guarantees the existence of divisors of degree \u230ag/2\u230b and rank 0 satisfying the Brill-Noether condition \u03c1(g,0,\u230ag/2\u230b) \u2265 0.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0213",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-17T12:34:11.111826+00:00",
+    "title": "Cheeger-type bound for covering radius implies Brill-Noether existence at half-canonical degree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every fixed density\u00a0\u03b4\u2208(0,1) and every integer t\u22652 there is a constant C(t,\u03b4)>0 such that for all sufficiently large n one can find a subset S\u2282[n] of size at least \u03b4n that contains no t\u2011fold sumset A\u2081+\u22ef+A_t with each |A_i|\u2265C(t,\u03b4)\u00b7(log n)/(log(1/\u03b4))^{1/(t\u22121)}.  This conjecture generalises the extremal result of Serra\u2011Szegedy and the recent construction for t=2, and it is compatible with the lower\u2011bound phenomenon proved by Hern\u00e1ndez\u2011and\u2011Hetzel.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0214",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T12:35:07.930478+00:00",
+    "title": "Existence of Dense Sets without Large t\u2011Fold Sumsets"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
