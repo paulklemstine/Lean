@@ -196,7 +196,7 @@
         // ─── Layout constants (space battle / nuclear dynamics) ───
         const CLUSTER_RADIUS = 15000;     // Distance of cluster centroids from center
         const NODE_SPACING = 3000;         // Spacing between nodes within a cluster
-        const WORLD_SIZE = 180000;         // Universe extent — Möbius-Klein bottle
+        const WORLD_SIZE = 1800000000;         // Universe extent — Möbius-Klein bottle
         const WORLD_HALF = WORLD_SIZE / 2;
         const K_SPRING = 0;              // No continuous spring — edges are lazy
         const REST_LENGTH = 9000;          // Rest length for provenance springs
@@ -205,7 +205,8 @@
         const G_CLUSTER_MULT = 2.5;     // Same-cluster pairs attract more strongly
         const G_CORE = 12.0;            // Central galactic attractor pull
         const CORE_MASS = 80.0;         // Mass of the invisible central attractor
-        // No static repulsion — gravity pulls nodes together, rocket thrust on collision pushes apart
+        const COULOMB_REPULSION = 500000.0; // Repulsive charge between nodes
+        // Static repulsion pushes nodes apart, gravity pulls them together, rocket thrust on collision pushes apart
         const SOFTENING = 9000;            // Softening distance (larger = gentler at close range)
         const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
         const DAMPING = 0.997;              // Friction — system stabilizes over ~3s
@@ -646,7 +647,7 @@
                     // Universal gravitation — always attractive, cluster affinity boosts strength
                     const sameCluster = (aDomain === bDomain);
                     const G = sameCluster ? G_UNIVERSAL * G_CLUSTER_MULT : G_UNIVERSAL;
-                    const force = G * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
+                    const force = (G * a.mass * b.mass / (d2 + SOFTENING * SOFTENING)) - (COULOMB_REPULSION / (d2 + SOFTENING * SOFTENING));
                     const fx = (dx / d) * force;
                     const fy = (dy / d) * force;
                     a.vx += fx; a.vy += fy;
