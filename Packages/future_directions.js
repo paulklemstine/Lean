@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "463376b0",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -57,24 +57,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T15:16:12.425510+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
-    "consumed_by_exp_id": "57f0b740",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0134",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:53:09.408726+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
     "consumed_by_exp_id": "a6705a36",
@@ -2316,6 +2301,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Towards realistic large random models of labeled transition systems and their 0-1 laws' and formalize its key results. Abstract: Model checking is the automated verification of properties (specified in some modal logic) in labeled transition systems (LTSs); it is an essential tool in ensuring software systems function as intended. State spaces of software grow exponentially, and heuristics are needed to ensure model checking remains feasible in real-world applications. Heuristics, in turn, require a good understanding on the typical behaviour of LTSs. In this paper, we use random graph theory to create a probabilistic model of large LTSs. From a theoretical analysis of the creation of large LTSs, backed by empirical data from the Model Checking Contest, we endow these models with realistic parameter values. Then, we analyze the asymptotic behaviour of this model under LTL and CTL, two modal logics popular in model checking. We show that, depending on the precise model, as the size grows to infinity we either have a convergence law (for every formula, the probability that it holds converges to a limit) or a 0-1 l",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0181",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15029v1",
+    "status": "available",
+    "timestamp": "2026-07-17T05:57:53.860008+00:00",
+    "title": "ArXiv paper: Towards realistic large random models of labeled transition systems and their 0-1 laws"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Recognition of algebraic matroids is undecidable' and formalize its key results. Abstract: We prove that the recognition problem for algebraic matroids is undecidable. Explicitly, this means that there is no algorithm that takes as input a finite set $S$ and a function $r\\colon\\mathcal{P}(S) \\to \\mathbb{Z}_{\\ge 0}$ (where $\\mathcal{P}(S)$ is the power set) and decides whether there exists a pair of fields $F \\subset K$, and a function $f\\colon S \\to K$, such that for all $A \\subseteq S$: $\\mathrm{tr.deg}_{K/F}(f(A)) = r(A)$. This problem is known to be decidable if the characteristic of the fields involved is constrained to be zero. We prove that it is undecidable if the characteristic is either left unspecified (in which case a realization over any characteristic is accepted) or fixed to be a prime $p$. The proof relies on Hrushovski--Zilber's Group Configuration Theorem and on the work of Evans and Hrushovski on \"Projective Planes in Algebraically Closed Fields\". We relate two different such projective planes, and eventually construct a reduction from the solvability of Di",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0182",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14907v1",
+    "status": "available",
+    "timestamp": "2026-07-17T05:57:57.482712+00:00",
+    "title": "ArXiv paper: Recognition of algebraic matroids is undecidable"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
@@ -2328,21 +2343,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T03:25:44.358073+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "consumed_by_exp_id": "18617733",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0151",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T19:02:37.971343+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
     "consumed_by_exp_id": "",

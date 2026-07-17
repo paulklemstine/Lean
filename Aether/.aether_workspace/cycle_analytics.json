@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-17T05:26:23.778320+00:00",
+  "last_updated": "2026-07-17T05:57:49.193990+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -23089,6 +23089,7 @@
       "outcome_quality": 0.0,
       "phase": "A",
       "phase_a_prompt_version": "v19a",
+      "phase_a_quality_score": 0.0,
       "phase_b_skipped": false,
       "prompt_version": "v19a",
       "quality_score": 0.0,
@@ -23103,6 +23104,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-17T05:26:23.738210+00:00",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 38,
+      "domain": "Logic",
+      "duration_seconds": 10082.706157684326,
+      "end_time": 1784267853.654153,
+      "files_integrated": 4,
+      "job_id": "57f0b740",
+      "outcome_quality": 0.75,
+      "phase": "complete",
+      "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.75,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.72,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.81,
+        "composite": 0.5645,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.76,
+        "novelty": 0.58,
+        "proof_depth": 0.78,
+        "usefulness": 0.84
+      },
+      "quality_score": 0.75,
+      "sorry_count": 1,
+      "sorry_density": 0.0014144271570014145,
+      "start_time": 1784257770.9479954,
+      "strategy_count": 0,
+      "theorem_count": 707,
+      "theorem_novelty_disproof": 18,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 428,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-17T05:57:49.158567+00:00",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ]
 }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "42e1a665",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## 1. The unbounded composite-index theorem\n\nFor every composite integer `n ≥ 13`, the Fibonacci number `F(n)` has a prime divisor that divides no earlier positive-index Fibonacci",
-      "quality_score": 0.88,
-      "sorry_count": 4,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T04:08:36",
-      "title": "Close Proofs: Bypassed"
-    },
-    {
       "cycle_id": "ca1c3afc",
       "domain": "Novelty",
       "key_insight": "# Future directions: factorial coordinates versus residue coordinates\n\n## Completed foundations and result of this cycle\n\nThe previously incomplete bridge from the general mixed-radix system to the\nfa",
@@ -499,19 +489,19 @@
       "theorem_count": 5,
       "timestamp": "2026-07-16T10:38:08",
       "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
+    },
+    {
+      "cycle_id": "57f0b740",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\n## What the formalization establishes\n\nThe literal observer definition does not produce a nontrivial numerical invariant. For every topology `τ`, the `Unit`-indexed family whose o",
+      "quality_score": 0.75,
+      "sorry_count": 1,
+      "theorem_count": 707,
+      "timestamp": "2026-07-17T05:57:49",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f3fa6ca4",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: from the `E₄² = E₈` congruence to sharper Eisenstein arithmetic\n\nThis cycle isolated and proved the arithmetic residue of the identity\n`E₄² = E₈`, namely `σ₇(n) ≡ σ₃(n) (mod 120)`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-13T19:25:09",
-      "title": "Siegel-Weil Identity for the E₈ Lattice Theta Series"
-    },
     {
       "cycle_id": "c81e5afa",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 5,
       "timestamp": "2026-07-16T10:38:08",
       "title": "ArXiv paper: A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$"
+    },
+    {
+      "cycle_id": "57f0b740",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\n## What the formalization establishes\n\nThe literal observer definition does not produce a nontrivial numerical invariant. For every topology `τ`, the `Unit`-indexed family whose o",
+      "quality_score": 0.75,
+      "sorry_count": 1,
+      "theorem_count": 707,
+      "timestamp": "2026-07-17T05:57:49",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "573ee086",
-      "domain": "Algebra",
-      "name": "exists_rejecting_valuation",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "352675e9",
-      "domain": "Applications",
-      "name": "initialSegment_map",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "352675e9",
-      "domain": "Applications",
-      "name": "initialSegment_comp_equiv",
-      "quality": 0.71
-    },
     {
       "cycle_id": "352675e9",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "card_le_slots_times_capacity",
       "quality": 0.71
+    },
+    {
+      "cycle_id": "57f0b740",
+      "domain": "Logic",
+      "name": "isOpen_consensus_iff",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "57f0b740",
+      "domain": "Logic",
+      "name": "observer_le_consensus",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "57f0b740",
+      "domain": "Logic",
+      "name": "consensus_singleton",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-16T10:38:08",
+  "last_updated": "2026-07-17T05:57:49",
   "open_questions": [
-    {
-      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
-      "cycle_id": "0725f80e",
-      "domain": "Novelty",
-      "sorry_count": 3,
-      "timestamp": "2026-07-14T21:05:18"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "8ceb2563",
@@ -3016,6 +3009,13 @@
       "domain": "Pythagorean",
       "sorry_count": 3,
       "timestamp": "2026-07-16T05:48:53"
+    },
+    {
+      "context": "",
+      "cycle_id": "57f0b740",
+      "domain": "Logic",
+      "sorry_count": 1,
+      "timestamp": "2026-07-17T05:57:49"
     }
   ],
   "research_threads": {
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "2058237b",
-        "quality": 0.49753964866339334,
-        "theorems": 10,
-        "title": "Characterization of the Aharoni-Korman Conjecture via Saturated Chains"
-      },
-      {
         "cycle_id": "acc2ac17",
         "quality": 0.72,
         "theorems": 46,
@@ -3513,6 +3507,12 @@
         "quality": 0.68,
         "theorems": 17,
         "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
+      },
+      {
+        "cycle_id": "57f0b740",
+        "quality": 0.75,
+        "theorems": 707,
+        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
       }
     ],
     "MachineLearning": [
