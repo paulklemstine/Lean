@@ -33,21 +33,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
-    "consumed_by_exp_id": "5f139cd0",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0126",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:16:12.438268+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
     "consumed_by_exp_id": "535698fb",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
@@ -75,6 +60,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-16T15:16:12.425510+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 408bb225 (Q=0.760), which proved 12 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynam",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_408bb225_392fd3d5",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "408bb225",
+    "status": "available",
+    "timestamp": "2026-07-17T11:50:06.214262+00:00",
+    "title": "Deepening: The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
   {
     "consumed_by_exp_id": "",
@@ -792,7 +791,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
   },
   {
-    "consumed_by_exp_id": "d1663b23",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Genestier--Tilouine and Pilloni) in the setting of Siegel modular forms of genus two when the residual representation arises from a stable Yoshida lift, that is, an automorphic induction of a nearly ordinary Hilbert modular eigencuspform over a real quadratic field. As applications of the underlying $R=\\mathbb{T}$ theorem, we establish the freeness of a universal minimal ordinary Galois deformation ring over an Iwasawa algebra in two variables along with the uniqueness of Hida families passing through classical $p$-ordinary Siegel modular eigenforms with very regular weights.",
     "domains": [
       "Algebra",
@@ -802,7 +801,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13100v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T05:15:40.425312+00:00",
     "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
   },
@@ -2681,21 +2680,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Universal Asymptotics and Exact Enumeration of Eulerian Maps"
   },
   {
-    "consumed_by_exp_id": "408bb225",
-    "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0174",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T03:25:44.358073+00:00",
-    "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domains": [
@@ -2709,6 +2693,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T11:14:23.323989+00:00",
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 5f139cd0 (Q=0.710) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_5f139cd0_1309dbfc",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "5f139cd0",
+    "status": "available",
+    "timestamp": "2026-07-17T11:50:23.795489+00:00",
+    "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
     "consumed_by_exp_id": "",
@@ -2727,6 +2725,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Measure-calibrated recurrence incidence\n\nFix a distribution of logistic parameters, an absolutely continuous distribution of initial states, a finite observation horizon, and a tolerance for approximate return. Determine whether these quantities can be identified from a 70% lifetime recurrence incidence, and test whether the inferred parameter mass concentrates near periodic windows.\n\nThe key insight is that incidence is a probability over subjects and finite observations, whereas density of periodic points is a topological property of an infinite-time state space.\n\nWhy now? The contraction counterexample and the period-three numerical experiment isolate the missing probabilistic ingredients, making the calibration problem precise and falsifiable.\n\n## 2. Tropical spectral criterion for exact recurrence\n\nClassify min-plus matrices whose projective dynamics contain an exact period-three orbit, and determine whether such an orbit can coexist with strict Hilbert-projective contraction on the same invariant component.\n\nThe key insight is that tropical eigenstates exhibit linear additive drift, so exact recurrence is governed by cancellation of spectral drift together with projective cycling.\n\nWhy now? The established iterate formula converts a dynamical question into explicit spectral and projective constraints that can be tested on finite matrices.\n\n## 3. Guarded density theorem for interval maps\n\nFind the weakest checkable hypotheses\u2014such as topological transitivity, absence of attracting intervals, or a suitable mixing condition\u2014under which periodic points of a continuous interval map are dense, and construct sharp counterexamples when each hypothesis is removed.\n\nThe key insight is that continuity supplies fixed-point tools but not orbit dispersion; density requires an additional mechanism that repeatedly stretches or mixes intervals.\n\nWhy now? A complete contraction counterexample identifies continuity as the exact point of failure and provides a baseline against which stronger hypotheses can be evaluated.\n\n## 4. Quantitative period-three robustness at parameter 3.83\n\nEnclose the attracting period-three orbit for the logistic map at `r=3.83` in three rational intervals and prove that the third iterate maps each interval strictly into itself with derivative magnitude uniformly below one. Then determine the maximal certified parameter interval over which these enclosures persist.\n\nThe key insight is that a period-three window can be established quantitatively through interval trapping and contraction, without conflating it with global Li\u2013Yorke behavior.\n\nWhy now? Stable numerical iterates consistently approach the same three values from several initial states, providing concrete targets for rigorous interval bounds.\n\n## 5. Semiconjugacy-invariant recurrence observables\n\nCharacterize which recurrence statistics are preserved under many-to-one observation maps, and quantify how coarse cognitive observables can create apparent returns that are absent in the underlying state dynamics.\n\nThe key insight is that true periodicity passes forward through semiconjugacy, but an observed periodic orbit need not lift to a periodic microscopic state.\n\nWhy now? The transport theorem proves one direction exactly, leaving a sharply formulated converse problem with direct consequences for interpreting observed recurrence.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0216",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "408bb225",
+    "status": "available",
+    "timestamp": "2026-07-17T11:50:01.394432+00:00",
+    "title": "Fix a distribution of logistic parameters, an absolutely continuous distribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What was established\n\n`AffineDuality.lean` formalizes a finite additive-group identification protocol and proves a cross-domain connection between affine symmetry and cryptographic proof properties:\n\n1. Translation by the challenge-dependent witness is a permutation of random tapes.\n2. Reindexing by that permutation makes real and simulated transcript multisets exactly equal.\n3. Consequently, the verifier's view is independent of which valid witness is used.\n4. Conversely, subtracting accepting responses to opposite challenges at the same commitment extracts a witness.\n\nThe bridge clarifies why privacy and extraction are compatible: one transcript is hidden by translation symmetry, while extraction needs two correlated transcripts sharing a commitment.\n\n## Limits of the mission's proposed protocol\n\nThe broad claim in the prompt is not proved here. In particular, committing to every raw PA-proof step and opening one uniformly random step has catch probability only `1/n` when an `n`-step alleged proof contains one bad step. Repeating only `O(k)` times therefore does not generally yield soundness error `2^{-k}`; direct repetition needs a number of rounds depending on `n`. Moreover, opening a raw proof step can reveal proof information, so \u201cthe verifier sees only one random step\u201d is not by itself a zero-knowledge simulation argument.\n\nA statement-polynomial communication theorem would require a succinct argument system and explicit computational assumptions. It does not follow merely by combining arithmetization with a one-step challenge. For unrestricted PA theorems, the relation between statement length and potentially unbounded proof length must also be treated carefully.\n\n## Concrete extensions\n\n1. **Probability measures rather than multisets.** Lift the exact finite multiset equality to equality of `PMF` distributions and then to statistical distance zero.\n2. **Malicious-verifier zero knowledge.** The current theorem is honest-verifier zero knowledge for a fixed Boolean challenge. Add a simulator for adaptive challenge selection, likely using rewinding or a stronger commitment abstraction.\n3. **Parallel repetition.** Define vectors of transcripts and prove completeness, simulation, and a `2^{-k}` knowledge-soundness bound when each round has a Boolean challenge and special soundness.\n4. **Commitment layer.** Replace the ideal additive transcript with a binding/hiding commitment interface. State exactly whether each guarantee is perfect, statistical, or computational.\n5. **Propositional validity reduction.** Formalize a reduction from propositional tautology validity to an appropriate proof relation. Any polynomial-size claim must confront the standard complexity barrier rather than silently assuming short proofs for all tautologies.\n6. **PCP composition.** Connect a locally testable encoding to the protocol only after proving a robust soundness gap and a simulator for local openings. This is the missing ingredient in the raw-step proposal.\n7. **PA arithmetization.** Define proof syntax, primitive-recursive proof checking, and encoding size. Then state communication bounds against the encoded proof/relation with all security parameters explicit.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0217",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5f139cd0",
+    "status": "available",
+    "timestamp": "2026-07-17T11:50:12.008973+00:00",
+    "title": "`AffineDuality.lean` formalizes a finite additive-group identification protocol "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -2739,6 +2767,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T03:25:44.329567+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0215",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T11:49:41.055962+00:00",
+    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
   {
     "consumed_by_exp_id": "",

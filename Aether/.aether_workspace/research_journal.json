@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7385ba7c",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n1. **Computable ranking and unranking.** Replace the finite-cardinality inverse used by `codeRankEquiv` with an executable decoder based on repeated division by factorials, and pr",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 1,
-      "timestamp": "2026-07-15T05:59:05",
-      "title": "Deepening: For every natural number `k`, the factorial-code space of length `k` should admi"
-    },
-    {
       "cycle_id": "b1453a16",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Argumentation kernels and games\n\nThis cycle supplies the bridge among stable extensions, directed kernels, and\nnormal-play P-position solutions in `Bridges/ArgumentationKernelGam",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-17T11:50:06",
       "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+    },
+    {
+      "cycle_id": "5f139cd0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## What was established\n\n`AffineDuality.lean` formalizes a finite additive-group identification protocol and proves a cross-domain connection between affine symmetry and cryptogra",
+      "quality_score": 0.71,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T11:50:23",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "28ee7277",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Consciousness as Self-Reference (Strange Loop, Parts IV–VI)\n\nThis cycle deepened the \"I Am a Strange Loop\" programme along three axes:\na *quantitative* blind spot (the un-represe",
-      "quality_score": 0.85,
-      "sorry_count": 4,
-      "theorem_count": 39,
-      "timestamp": "2026-07-14T01:00:14",
-      "title": "Deepening: Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
-    },
     {
       "cycle_id": "1bd2f770",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-17T11:50:06",
       "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+    },
+    {
+      "cycle_id": "5f139cd0",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## What was established\n\n`AffineDuality.lean` formalizes a finite additive-group identification protocol and proves a cross-domain connection between affine symmetry and cryptogra",
+      "quality_score": 0.71,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T11:50:23",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-17T11:50:06",
+  "last_updated": "2026-07-17T11:50:23",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "a46f1a93",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-14T22:53:58"
-    },
     {
       "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
       "cycle_id": "10dfa4e0",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 3,
       "timestamp": "2026-07-17T09:24:10"
+    },
+    {
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnUpper⟩); -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i ",
+      "cycle_id": "5f139cd0",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-07-17T11:50:23"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "19cecd78",
-        "quality": 0.69,
-        "theorems": 12,
-        "title": "ArXiv paper: Far-apart Erdős--Pósa property of long cycles"
-      },
-      {
         "cycle_id": "557a7f03",
         "quality": 0.66,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.6,
         "theorems": 0,
         "title": "ArXiv paper: Limit laws for component-pruned sparse random graphs and percolated"
+      },
+      {
+        "cycle_id": "5f139cd0",
+        "quality": 0.71,
+        "theorems": 0,
+        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
       }
     ],
     "Bridges": [
