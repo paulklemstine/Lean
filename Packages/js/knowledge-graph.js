@@ -229,7 +229,7 @@
         // Static repulsion pushes nodes apart, gravity pulls them together, rocket thrust on collision pushes apart
         const SOFTENING = 9000;            // Softening distance (larger = gentler at close range)
         const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
-        const DAMPING = 1.0;              // Friction — system stabilizes over ~3s
+        const DAMPING = 0.992;              // Friction — system stabilizes over ~3s
         const NODE_RADIUS = 22;
         const MAX_VELOCITY = 250.0;        // Gentle cap scaled to large universe
         const BOUNCE = 1.0;              // Elastic — conserves momentum AND kinetic energy
@@ -1234,14 +1234,14 @@
             simulate();
 
             ctx.clearRect(0, 0, W, H);
+            ctx.globalCompositeOperation = 'lighter';
 
-            // Background: dark navy with subtle nebula or light theme background
+            // Background: parallax nebula
             const isLightMode = document.body.classList.contains('light-theme');
-            const bgGrad = ctx.createRadialGradient(W * 0.3, H * 0.4, 0, W * 0.5, H * 0.5, Math.max(W, H) * 0.8);
+            const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
             if (isLightMode) {
-                bgGrad.addColorStop(0, '#ffffff');
-                bgGrad.addColorStop(0.5, '#f4f6f8');
-                bgGrad.addColorStop(1, '#e5e9ec');
+                bgGrad.addColorStop(0, '#f8f9fa');
+                bgGrad.addColorStop(1, '#e9ecef');
             } else {
                 bgGrad.addColorStop(0, '#0d0d2b');
                 bgGrad.addColorStop(0.5, '#0a0a1a');
@@ -1250,8 +1250,10 @@
             ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, W, H);
 
-            // Second nebula glow
-            const neb2 = ctx.createRadialGradient(W * 0.7, H * 0.6, 0, W * 0.7, H * 0.6, Math.max(W, H) * 0.5);
+            // Second nebula glow (Parallax)
+            const prlxX1 = (W * 0.7) - (camera.x * 0.02);
+            const prlxY1 = (H * 0.6) - (camera.y * 0.02);
+            const neb2 = ctx.createRadialGradient(prlxX1, prlxY1, 0, prlxX1, prlxY1, Math.max(W, H) * 0.8);
             if (isLightMode) {
                 neb2.addColorStop(0, 'rgba(100, 150, 255, 0.05)');
                 neb2.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
@@ -1262,8 +1264,10 @@
             ctx.fillStyle = neb2;
             ctx.fillRect(0, 0, W, H);
 
-            // Third nebula cloud
-            const neb3 = ctx.createRadialGradient(W * 0.2, H * 0.8, 0, W * 0.2, H * 0.8, Math.max(W, H) * 0.35);
+            // Third nebula cloud (Parallax)
+            const prlxX2 = (W * 0.2) - (camera.x * 0.04);
+            const prlxY2 = (H * 0.8) - (camera.y * 0.04);
+            const neb3 = ctx.createRadialGradient(prlxX2, prlxY2, 0, prlxX2, prlxY2, Math.max(W, H) * 0.6);
             if (isLightMode) {
                 neb3.addColorStop(0, 'rgba(100, 200, 255, 0.05)');
                 neb3.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
@@ -1521,6 +1525,7 @@
             });
 
             // ─── Comet trails ───
+            ctx.globalCompositeOperation = 'lighter';
             graphNodes.forEach(node => {
                 if (node.trail.length < 2) return;
                 const col = nodeColor(node);
@@ -1601,7 +1606,10 @@
                     flameGrad.addColorStop(0.3, `hsla(25, 100%, 70%, ${0.5 * decay})`);
                     flameGrad.addColorStop(1, `hsla(0, 100%, 50%, 0)`);
                     ctx.fillStyle = flameGrad;
+                    ctx.shadowBlur = 20 * camera.zoom;
+                    ctx.shadowColor = `hsla(30, 100%, 60%, ${decay})`;
                     ctx.fill();
+                    ctx.shadowBlur = 0;
                 }
             });
 
@@ -1686,6 +1694,7 @@
             });
 
             // Nodes
+            ctx.globalCompositeOperation = 'source-over';
             graphNodes.forEach(node => {
                 if (!isInView(node.x, node.y, 60)) return;
 
@@ -1722,7 +1731,9 @@
                     ctx.beginPath();
                     ctx.arc(sp.x, sp.y, glowSize, 0, Math.PI * 2);
                     ctx.fillStyle = outerGlow;
+                    ctx.globalCompositeOperation = 'lighter';
                     ctx.fill();
+                    ctx.globalCompositeOperation = 'source-over';
                 }
 
                 node.rotAngle += node.rotSpeed * 0.016;
@@ -1753,7 +1764,9 @@
                         ctx.beginPath();
                         ctx.arc(sp.x, sp.y, glowR, 0, Math.PI * 2);
                         ctx.fillStyle = standoutGlow;
+                        ctx.globalCompositeOperation = 'lighter';
                         ctx.fill();
+                        ctx.globalCompositeOperation = 'source-over';
                     }
                     ctx.beginPath();
                     ctx.arc(sp.x, sp.y, r + 4 * camera.zoom, 0, Math.PI * 2);
@@ -1790,7 +1803,9 @@
                         ctx.beginPath();
                         ctx.arc(sp.x, sp.y, burstR, 0, Math.PI * 2);
                         ctx.fillStyle = burstGlow;
+                        ctx.globalCompositeOperation = 'lighter';
                         ctx.fill();
+                        ctx.globalCompositeOperation = 'source-over';
                     }
                 }
             });
