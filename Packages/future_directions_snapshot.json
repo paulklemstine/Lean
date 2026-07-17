@@ -3862,6 +3862,60 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "11T06 - Discrete geometry, finite metric spaces",
+      "05C80 - Random graphs",
+      "14H55 - Brill-Noether theory",
+      "11B70 - Combinatorics on words and graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer k ≥ 5, let G be a uniformly random simple, connected, k-regular graph on n vertices. Let d₀ = ⌊g/2⌋ where g = n - k + 1 is the genus of G. Then almost surely (as n → ∞), for every pair of non-negative integers r₀, d₀ satisfying ρ(g,r₀,d₀) ≥ 0, there exists a divisor D on G of degree d₀ and rank at least r₀.",
+    "domain_bridges": [
+      "Graph theory and algebraic geometry via tropicalization",
+      "Probabilistic methods in enumerative combinatorics",
+      "Discrete differential geometry and energy forms"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0231",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the Cheeger-style inequality established in the paper for covering radii with respect to energy quadratic forms, combined with second moment method and concentration inequalities for eigenvalues of random regular graphs to show that the energy-based obstructions to Brill-Noether existence vanish asymptotically with high probability.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T14:08:38.389554+00:00",
+    "title": "Almost Sure Brill-Noether Existence at Half-Canonical Degree for Random Regular Graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Hernandez and Hetzel's recent result on sharp bounds",
+      "Kra, Moreira, Richter, and Robertson's original conjecture"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed δ > 0, there exists a constant C > 0 such that for all sufficiently large n, there is a subset S ⊂ [n] with |S| ≥ δn, and for all A, B ⊂ ℕ with min{|A|, |B|} ≥ C log n, the sumset A + B is not contained in S.",
+    "domain_bridges": [
+      "Ergodic theory results for positive density sets",
+      "Probabilistic combinatorics techniques"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0231",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a random δ-dense set and show via concentration inequalities that it avoids containing large sumsets A + B with prescribed minimum sizes.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T14:09:12.716043+00:00",
+    "title": "Dense Sets Without Large Sumsets"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",

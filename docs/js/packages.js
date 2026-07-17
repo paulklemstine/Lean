@@ -38,9 +38,19 @@ window.renderMarkdownWithMath = function(markdown) {
 
     let html = marked.parse(text);
 
+    // Escape HTML inside math blocks to prevent browser truncation
+    const escapeHtml = (unsafe) => {
+        return unsafe
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+    };
+
     // Restore math blocks
     mathBlocks.forEach(block => {
-        html = html.replace(block.id, () => block.content);
+        html = html.replace(block.id, () => escapeHtml(block.content));
     });
 
     return html;

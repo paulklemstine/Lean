@@ -2826,6 +2826,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every fixed integer k \u2265 5, let G be a uniformly random simple, connected, k-regular graph on n vertices. Let d\u2080 = \u230ag/2\u230b where g = n - k + 1 is the genus of G. Then almost surely (as n \u2192 \u221e), for every pair of non-negative integers r\u2080, d\u2080 satisfying \u03c1(g,r\u2080,d\u2080) \u2265 0, there exists a divisor D on G of degree d\u2080 and rank at least r\u2080.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0231",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T14:08:38.389554+00:00",
+    "title": "Almost Sure Brill-Noether Existence at Half-Canonical Degree for Random Regular Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every fixed \u03b4 > 0, there exists a constant C > 0 such that for all sufficiently large n, there is a subset S \u2282 [n] with |S| \u2265 \u03b4n, and for all A, B \u2282 \u2115 with min{|A|, |B|} \u2265 C log n, the sumset A + B is not contained in S.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0231",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T14:09:12.716043+00:00",
+    "title": "Dense Sets Without Large Sumsets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
       "Tropical"
