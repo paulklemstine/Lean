@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "98ba1a43",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Reflection Towers Beyond the Finite Case\n\n## 1. Transfinite strictness at every successor stage\n\nFor an ordinal-indexed family of theories, define successor stages by adjoining t",
-      "quality_score": 0.92,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-15T05:13:04",
-      "title": "The file `TangledSoundness.lean` develops the semantic core of self-referential"
-    },
-    {
       "cycle_id": "bd321901",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Intrinsic witness complexity\n\n## Results established\n\nThe development in `Catalog/Computation/WitnessComplexityDeepening.lean` replaces an ambient-vertex polynomial estimate by a",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-17T08:35:59",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+    },
+    {
+      "cycle_id": "322b88bd",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n1. Generalize the Boolean challenge space to a finite field and prove the corresponding special-soundness extractor and exact knowledge error.\n2. Replace multiset equality by equa",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-17T08:36:16",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "beca1e55",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Transfinite Game Theory, Deepened\n\nThis cycle deepens the theory of two-player **well-founded (transfinite) games**\nby developing the *disjunctive sum*, the central algebraic ope",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-07-13T23:13:45",
-      "title": "Deepening: Transfinite Game Theory: Games That Last Forever"
-    },
     {
       "cycle_id": "a0f7e73c",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-17T08:35:59",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+    },
+    {
+      "cycle_id": "322b88bd",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n1. Generalize the Boolean challenge space to a finite field and prove the corresponding special-soundness extractor and exact knowledge error.\n2. Replace multiset equality by equa",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-17T08:36:16",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4e53cd7c",
-      "domain": "Pythagorean",
-      "name": "shiftedHankel_hierarchy_nested",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "499d98ab",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "name": "subset_of_forceStep",
-      "quality": 0.73
-    },
     {
       "cycle_id": "58c6edf0",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "trace_pow_eq_traceSeq",
       "quality": 0.73
+    },
+    {
+      "cycle_id": "322b88bd",
+      "domain": "Geometry",
+      "name": "perfect_completeness",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "322b88bd",
+      "domain": "Geometry",
+      "name": "simulator_accepts",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "322b88bd",
+      "domain": "Geometry",
+      "name": "real_eq_simulated_reindexed",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-17T08:35:59",
+  "last_updated": "2026-07-17T08:36:16",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "a9aa7bbf",
-        "quality": 0.8,
-        "theorems": 18,
-        "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
-      },
-      {
         "cycle_id": "2fed8c0e",
         "quality": 0.78,
         "theorems": 12,
@@ -3451,6 +3445,12 @@
         "quality": 0.68,
         "theorems": 18,
         "title": "ArXiv paper: Large sets of mutually orthogonal quantum Latin squares"
+      },
+      {
+        "cycle_id": "322b88bd",
+        "quality": 0.7,
+        "theorems": 15,
+        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
       }
     ],
     "Logic": [
