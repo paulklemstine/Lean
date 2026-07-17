@@ -1,190 +1,147 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations for Escher staircases and separated filtrations.
+"""Finite numerical illustrations of Escher staircases and divisibility chains.
 
-The script uses only the Python standard library.  It demonstrates:
-1. strict descent and separation at finite resolution for powers-of-two ideals;
-2. strict ascent of variable ideals through explicit monomial witnesses;
-3. stabilization of the coordinate chain when only finitely many variables exist.
+The computations model finite windows of the infinite constructions. They display
+explicit strictness witnesses and audit chain orientation; the mathematical
+proofs in the accompanying paper establish the corresponding infinite results.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Mapping, Sequence, Tuple
+from typing import Callable, Iterable, Sequence
+
+Vector = tuple[int, ...]
 
 
-ExponentVector = Mapping[int, int]
-SparsePolynomial = Sequence[ExponentVector]
+def in_initial_support_ideal(vector: Sequence[int], n: int) -> bool:
+    """Return whether a finite vector vanishes at every index k >= n."""
+    if not 0 <= n <= len(vector):
+        raise ValueError("n must lie between 0 and the vector length")
+    return all(value == 0 for value in vector[n:])
 
 
-def divisible_by_power_of_two(value: int, level: int) -> bool:
-    """Return whether 2**level divides value."""
-    if level < 0:
-        raise ValueError("level must be nonnegative")
-    return value % (1 << level) == 0
+def coordinate_witness(n: int, length: int) -> Vector:
+    """Construct e_n, which belongs to rung n+1 but not rung n."""
+    if not 0 <= n < length:
+        raise ValueError("n must be a valid coordinate")
+    return tuple(1 if k == n else 0 for k in range(length))
 
 
-def values_in_divisibility_ideal(values: Iterable[int], level: int) -> bool:
-    """Test membership in D_level on a finite sample of function values."""
-    sample = tuple(values)
-    return all(divisible_by_power_of_two(value, level) for value in sample)
+def in_power_divisibility_ideal(values: Iterable[int], n: int, base: int = 2) -> bool:
+    """Test whether every sampled value is divisible by base**n."""
+    if n < 0 or base < 2:
+        raise ValueError("n must be nonnegative and base must be at least 2")
+    modulus = base**n
+    return all(value % modulus == 0 for value in values)
 
 
-def two_adic_valuation(value: int) -> int | None:
-    """Return v_2(value), or None for zero (which has unbounded valuation)."""
-    if value == 0:
-        return None
-    magnitude = abs(value)
-    valuation = 0
-    while magnitude % 2 == 0:
-        magnitude //= 2
-        valuation += 1
-    return valuation
+def constant_divisibility_witness(n: int, sample_count: int, base: int = 2) -> Vector:
+    """Values of the constant base**n, separating divisibility levels n and n+1."""
+    if n < 0 or sample_count < 1 or base < 2:
+        raise ValueError("invalid exponent, sample count, or base")
+    return (base**n,) * sample_count
 
 
-def deepest_common_level(values: Iterable[int]) -> int | None:
-    """Find the largest n for which all sampled values lie in 2**n Z.
-
-    Return None when every value is zero, representing membership at all levels.
-    """
-    valuations = [two_adic_valuation(value) for value in values if value != 0]
-    return min(valuations) if valuations else None
-
-
-def monomial_in_variable_ideal(monomial: ExponentVector, level: int) -> bool:
-    """Test whether a monomial belongs to V_level = (x_0,...,x_{level-1})."""
-    if level < 0:
-        raise ValueError("level must be nonnegative")
-    return any(index < level and exponent > 0 for index, exponent in monomial.items())
-
-
-def polynomial_in_variable_ideal(polynomial: SparsePolynomial, level: int) -> bool:
-    """Test ideal membership from a sparse list of monomial exponent maps.
-
-    Coefficients are irrelevant here: a polynomial is in the monomial ideal V_level
-    precisely when every nonzero monomial is divisible by one of its generators.
-    """
-    return all(monomial_in_variable_ideal(monomial, level) for monomial in polynomial)
-
-
-def coordinate_ideal_generators(level: int, variable_count: int | None = None) -> Tuple[int, ...]:
-    """Return indices generating the coordinate ideal at a given level.
-
-    If variable_count is finite, the chain stabilizes after all variables appear.
-    """
-    if level < 0:
-        raise ValueError("level must be nonnegative")
-    if variable_count is not None and variable_count < 0:
-        raise ValueError("variable_count must be nonnegative")
-    stop = level if variable_count is None else min(level, variable_count)
-    return tuple(range(stop))
+def variable_prefix_membership(monomial_variables: Iterable[int], n: int) -> bool:
+    """Test monomial membership in (x_0,...,x_{n-1}) by variable occurrence."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    return any(0 <= index < n for index in monomial_variables)
 
 
 @dataclass(frozen=True)
-class StrictnessWitness:
-    """A compact report describing one strict inclusion."""
+class AuditResult:
+    """Orientation summary for a finite sequence of sets."""
 
-    level: int
-    witness: str
-    in_current: bool
-    in_next: bool
+    orientation: str
+    ascending_witnesses: tuple[int | None, ...]
+    descending_witnesses: tuple[int | None, ...]
 
 
-def divisibility_witness(level: int) -> StrictnessWitness:
-    """Use the constant value 2**level to witness D_{level+1} < D_level."""
-    value = 1 << level
-    return StrictnessWitness(
-        level=level,
-        witness=f"constant value {value}",
-        in_current=divisible_by_power_of_two(value, level),
-        in_next=divisible_by_power_of_two(value, level + 1),
+def audit_chain(sets: Sequence[set[int]]) -> AuditResult:
+    """Classify adjacent finite sets and retain strict-difference witnesses."""
+    if len(sets) < 2:
+        raise ValueError("at least two sets are required")
+    ascending = all(left <= right for left, right in zip(sets, sets[1:]))
+    descending = all(right <= left for left, right in zip(sets, sets[1:]))
+    if ascending and not descending:
+        orientation = "ascending"
+    elif descending and not ascending:
+        orientation = "descending"
+    elif ascending and descending:
+        orientation = "constant"
+    else:
+        orientation = "mixed"
+    up = tuple(next(iter(right - left), None) for left, right in zip(sets, sets[1:]))
+    down = tuple(next(iter(left - right), None) for left, right in zip(sets, sets[1:]))
+    return AuditResult(orientation, up, down)
+
+
+def show_initial_support_staircase(length: int = 7) -> None:
+    """Print adjacent witnesses for the finite-window initial-support chain."""
+    print("\n1. Initial-support ideals in an integer-sequence window")
+    for n in range(length):
+        witness = coordinate_witness(n, length)
+        lower = in_initial_support_ideal(witness, n)
+        upper = in_initial_support_ideal(witness, n + 1)
+        print(f"S_{n} < S_{n+1}: e_{n}={witness}, in lower={lower}, in upper={upper}")
+    assert all(
+        not in_initial_support_ideal(coordinate_witness(n, length), n)
+        and in_initial_support_ideal(coordinate_witness(n, length), n + 1)
+        for n in range(length)
     )
 
 
-def variable_witness(level: int) -> StrictnessWitness:
-    """Use x_level to witness V_level < V_{level+1}."""
-    monomial: Dict[int, int] = {level: 1}
-    return StrictnessWitness(
-        level=level,
-        witness=f"x_{level}",
-        in_current=monomial_in_variable_ideal(monomial, level),
-        in_next=monomial_in_variable_ideal(monomial, level + 1),
+def show_divisibility_descent(levels: int = 7, samples: int = 5) -> None:
+    """Print constant witnesses proving that divisibility levels descend."""
+    print("\n2. Pointwise power-of-two divisibility ideals")
+    for n in range(levels):
+        witness = constant_divisibility_witness(n, samples)
+        at_n = in_power_divisibility_ideal(witness, n)
+        at_next = in_power_divisibility_ideal(witness, n + 1)
+        print(f"D_{n+1} < D_{n}: constant 2^{n}={2**n}, in D_{n}={at_n}, in D_{n+1}={at_next}")
+    assert all(
+        in_power_divisibility_ideal(constant_divisibility_witness(n, samples), n)
+        and not in_power_divisibility_ideal(constant_divisibility_witness(n, samples), n + 1)
+        for n in range(levels)
     )
 
 
-def print_divisibility_demo(max_level: int = 7) -> None:
-    """Display strict descent and sampled separation."""
-    print("\n1. POWERS-OF-TWO FILTRATION")
-    print("D_(n+1) is strictly contained in D_n; 2^n is the witness.")
-    for level in range(max_level + 1):
-        report = divisibility_witness(level)
-        print(
-            f"n={level:2d}: {report.witness:18s} "
-            f"in D_n={report.in_current!s:5s}, in D_(n+1)={report.in_next}"
-        )
-
-    samples: Dict[str, List[int]] = {
-        "zero function sample": [0, 0, 0, 0],
-        "mixed even sample": [8, -24, 40, 0],
-        "highly divisible sample": [64, -192, 320, 0],
-    }
-    print("\nFinite samples and their deepest common divisibility level:")
-    for name, values in samples.items():
-        depth = deepest_common_level(values)
-        label = "all levels (all values are zero)" if depth is None else str(depth)
-        pattern = [values_in_divisibility_ideal(values, n) for n in range(max_level + 1)]
-        print(f"  {name:25s}: values={values}, deepest={label}, levels={pattern}")
+def show_polynomial_prefix_witnesses(levels: int = 7) -> None:
+    """Model why x_n enters (x_0,...,x_n) but not (x_0,...,x_{n-1})."""
+    print("\n3. Variable-prefix ideals in a countable polynomial ring")
+    for n in range(levels):
+        monomial = (n,)  # the monomial x_n
+        lower = variable_prefix_membership(monomial, n)
+        upper = variable_prefix_membership(monomial, n + 1)
+        print(f"J_{n} < J_{n+1}: x_{n}, in lower={lower}, in upper={upper}")
+        assert not lower and upper
 
 
-def print_polynomial_staircase_demo(max_level: int = 7) -> None:
-    """Display the fresh-variable witness at each ascending step."""
-    print("\n2. COUNTABLE-VARIABLE POLYNOMIAL STAIRCASE")
-    print("V_n=(x_0,...,x_(n-1)); x_n lies in V_(n+1) but not V_n.")
-    for level in range(max_level + 1):
-        report = variable_witness(level)
-        print(
-            f"n={level:2d}: witness {report.witness:5s} "
-            f"in V_n={report.in_current!s:5s}, in V_(n+1)={report.in_next}"
-        )
-
-    examples: Dict[str, SparsePolynomial] = {
-        "x_0*x_4 + x_1^2": [{0: 1, 4: 1}, {1: 2}],
-        "x_3 + x_0*x_5": [{3: 1}, {0: 1, 5: 1}],
-        "1 + x_0": [{}, {0: 1}],
-    }
-    print("\nSparse polynomial membership examples:")
-    for name, polynomial in examples.items():
-        memberships = [polynomial_in_variable_ideal(polynomial, n) for n in range(6)]
-        print(f"  {name:18s}: membership in V_0,...,V_5 = {memberships}")
-
-
-def print_finite_boundary_demo(variable_count: int = 4, max_level: int = 8) -> None:
-    """Compare finite coordinate-chain stabilization with unbounded ascent."""
-    print("\n3. FINITE VERSUS UNBOUNDED VARIABLE SUPPLY")
-    print(f"With {variable_count} variables, the coordinate chain stabilizes at level {variable_count}.")
-    previous: Tuple[int, ...] | None = None
-    for level in range(max_level + 1):
-        generators = coordinate_ideal_generators(level, variable_count)
-        changed = previous is None or generators != previous
-        labels = "{" + ", ".join(f"x_{i}" for i in generators) + "}"
-        print(f"n={level:2d}: generators={labels:22s} changed={changed}")
-        previous = generators
-
-    print("For an unbounded supply, the first few generator sets keep growing:")
-    for level in range(min(max_level, 6) + 1):
-        generators = coordinate_ideal_generators(level)
-        print(f"  n={level}: {generators}")
-    print("The general finite-variable nonexistence theorem is stronger: every ideal chain stabilizes,")
-    print("not merely this coordinate-generated example.")
+def show_orientation_audit(bound: int = 6) -> None:
+    """Audit finite set models of the ascending and descending families."""
+    print("\n4. Automated orientation audit")
+    support_sets = [set(range(n)) for n in range(bound + 1)]
+    # Multiples of 2^n in a symmetric finite universe.
+    universe = range(-(2**bound), 2**bound + 1)
+    divisibility_sets = [{x for x in universe if x % (2**n) == 0} for n in range(bound + 1)]
+    support_audit = audit_chain(support_sets)
+    divisibility_audit = audit_chain(divisibility_sets)
+    print("Initial-support coordinate sets:", support_audit)
+    print("Power-divisibility value sets:", divisibility_audit)
+    assert support_audit.orientation == "ascending"
+    assert divisibility_audit.orientation == "descending"
 
 
 def main() -> None:
     """Run all demonstrations."""
-    print("ESCHER STAIRCASES AND SEPARATED FILTRATIONS")
-    print("=" * 49)
-    print_divisibility_demo()
-    print_polynomial_staircase_demo()
-    print_finite_boundary_demo()
+    print("ESCHER STAIRCASES: FINITE NUMERICAL DEMONSTRATIONS")
+    show_initial_support_staircase()
+    show_divisibility_descent()
+    show_polynomial_prefix_witnesses()
+    show_orientation_audit()
+    print("\nAll finite witness checks passed.")
 
 
 if __name__ == "__main__":
