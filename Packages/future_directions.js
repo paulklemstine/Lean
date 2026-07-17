@@ -1951,12 +1951,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "b2a1a037",
+    "description": "Investigate the ArXiv paper 'The mean value of the digits of $1/p$' and formalize its key results. Abstract: Let $p\\ge 3$ be a prime and $b\\ge 2$ an integer such that $p$ does not divide $b$. Then $1/p$ has a periodic digit expansion with respect to the basis $b$. The length $l$ of the period is the (multiplicative) order of $b$ mod $p$. If $l$ is even, then the mean value of the digits of a period is just $(b-1)l/2$. The case of an odd length $l$ is more interesting. If $l=(p-1)/2^m$ is odd, the mean value of the digits of a period was given previously. This mean value involves generalized Bernoulli numbers. However, it is not clear how this result can be generalized to an arbitrary odd length $l$. In the present note we settle this case.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0154",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13663v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-17T00:31:39.743542+00:00",
+    "title": "ArXiv paper: The mean value of the digits of $1/p$"
+  },
+  {
+    "consumed_by_exp_id": "04187793",
     "description": "Investigate the ArXiv paper 'Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}' and formalize its key results. Abstract: Let $\\emph{spex}_{\\mathcal{P}}(n,F)$ and $\\emph{spex}_{\\mathcal{OP}}(n,F)$ be the maximum spectral radius among all $n$-vertex $F$-free planar graphs and outerplanar graphs, respectively. Define $C_{k,l}$ as a graph obtained from $C_k \\cup C_l$ such that the two cycles share a common vertex, where $l \\ge k \\ge 3$. In the 1990s, Cvetkovi\u0107 and Rowlinson conjectured $K_1 + P_{n-1}$ maximizes spectral radius in outerplanar graphs on $n$ vertices, while Boots and Royle (independently, Cao and Vince) conjectured $K_2 + P_{n-2} $ does so in planar graphs. Tait and Tobin [J. Combin. Theory Ser. B, 2017] determined the fundamental structure as the key to confirming these two conjectures for sufficiently large $n$. Recently, Yin and Li [Discrete Mathematics, 2026] characterized the extremal graphs for $\\emph{spex}_{\\mathcal{P}}(n,B_{t,l})$ and $\\emph{spex}_{\\mathcal{OP}}(n,B_{t,l})$ in planar and outerplanar graphs on the basis of this key idea, where $B_{t,l}$ denotes the graph obtained by $t$ ",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13538v1",
@@ -1965,19 +1979,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}"
   },
   {
-    "consumed_by_exp_id": "04187793",
+    "consumed_by_exp_id": "a2151d4e",
     "description": "Investigate the ArXiv paper 'Spectral fourth moments of Hecke--Maa\u00df cusp forms' and formalize its key results. Abstract: In this note, we establish essentially optimal bounds for certain spectral moments of automorphic forms for $\\mathrm{GL}(2)$. More precisely, we consider the family of Hecke--Maa\u00df cusp forms with spectral parameter in a dyadic interval and study the fourth moment of these forms evaluated at a Heegner point. We additionally present applications of our main result to the shifted convolution problem involving the sum of two squares function $r(n)$ as well as to pointwise Diophantine exponents.",
     "domains": [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13518v1",
     "status": "in_progress",
     "timestamp": "2026-07-17T00:13:33.272114+00:00",
     "title": "ArXiv paper: Spectral fourth moments of Hecke--Maa\u00df cusp forms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Generalization of Ramanujan's Continued Fractions for Even Order' and formalize its key results. Abstract: In this paper, we derive three generalized continued fractions of any even order $k$ with the aid of a general continued fraction identity of Ramanujan and we establish general theta function identities for these continued fractions. As an application of continued fraction of order seventy-six, we obtain partition theoretic identities and some vanishing coefficient results.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_0157",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.13600v1",
+    "status": "available",
+    "timestamp": "2026-07-17T00:31:43.190969+00:00",
+    "title": "ArXiv paper: Generalization of Ramanujan's Continued Fractions for Even Order"
   },
   {
     "consumed_by_exp_id": "",
