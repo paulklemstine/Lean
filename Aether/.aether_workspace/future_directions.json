@@ -10103,7 +10103,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0243",
+      "id": "fd_0244",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_δ_dense_set_avoiding_sumsets {δ : ℝ} (hδ : 0 < δ) (n : ℕ) (hn : n ≥ 2) : ∃ (S : Finset ℕ), S ⊆ Finset.Icc 1 n ∧ S.card ≥ ⌈δ * n⌉ ∧ ∀ (A B : Finset ℕ), A ⊆ Finset.Icc 1 n → B ⊆ Finset.Icc 1 n → (A.card ≥ (3 - ε) * (Real.log n / Real.log (1 / δ)) ∧ B.card ≥ (3 - ε) * (Real.log n / Real.log (1 / δ))) → (A + B).card > S.card := by sorry",
@@ -10123,6 +10123,99 @@
       "thread_id": "",
       "timestamp": "2026-07-17T23:47:44.115462+00:00",
       "title": "Existence of δ‑dense sets avoiding large sumsets"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Bak08",
+        "BNex_conj"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer k ≥ 5, there exists a genus threshold g₀(k) such that every connected, simple, k-regular graph G of genus g ≥ g₀(k) admits a divisor of degree ⌊(g−1)/2⌋ or ⌈(g−1)/2⌉ with rank at least ρ(g, r, d) for the maximal r satisfying ρ(g, r, d) ≥ 0. This strengthens the paper's 'almost all' result to 'all sufficiently large' graphs, removing the probabilistic exception set.",
+      "domain_bridges": [
+        "math.AG",
+        "math.MG",
+        "math.NT"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0245",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem asymptotic_bn_all_regular {k : ℕ} (hk : k ≥ 5) : ∃ (g₀ : ℕ), ∀ (G : SimpleGraph) (hg : G.IsConnected ∧ G.IsRegular k ∧ G.genus ≥ g₀), ∃ (D : Divisor G), D.degree = (G.genus - 1) / 2 ∨ D.degree = (G.genus) / 2 ∧ D.rank ≥ max {r : ℕ | ρ (G.genus) r D.degree ≥ 0}",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Combine the paper's Cheeger-style inequality for the covering radius of the period lattice in the Jacobian with respect to the energy form, spectral gap estimates for regular graphs (Alon-Boppana, Friedman's theorem), and a deterministic version of the geometry-of-numbers argument that replaces the probabilistic 'almost all' with a uniform bound on the covering radius for all graphs with λ₂ ≥ c > 0. The key step is to show that the constant-factor slack in the degree can be eliminated when the spectral gap is uniformly bounded away from zero, using the periodicity of the theta function and Minkowski's theorem on the energy form.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.15213v1",
+      "source_path": "http://arxiv.org/abs/2607.15213v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-17T23:51:04.159903+00:00",
+      "title": "Asymptotic Brill-Noether Existence for All Large Regular Graphs at Half-Canonical Degree"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2405.12345"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: For any fixed δ∈(0,1) and any ε>0, there exists N such that for all n≥N there exists S⊂[n] with |S|≥δ n such that for all A,B⊂ℕ with min{|A|,|B|}≥(3−ε)⋅log n / log(1/δ) we have A+B⊄S. This would close the gap between the known lower bound (1+o(1)) and upper bound (3+o(1)) from Hernández–Hetzel and the present paper.",
+      "domain_bridges": [
+        "additive combinatorics",
+        "probabilistic method",
+        "Ramsey theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0245",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exists_dense_set_no_large_sumset {δ : ℚ} (hδ : 0 < δ ∧ δ < 1) {ε : ℚ} (hε : 0 < ε) :\n  ∃ (N : ℕ), ∀ (n : ℕ), n ≥ N →\n    (∃ (S : Finset ℕ),\n      S ⊆ Finset.range n ∧\n      (S.card : ℝ) ≥ δ * n ∧\n      ∀ (A B : Finset ℕ),\n        A ⊆ Set.univ → B ⊆ Set.univ →\n        (A.card : ℝ) ≥ ((3 - ε) * Real.log n) / Real.log (1 / δ) →\n        (B.card : ℝ) ≥ ((3 - ε) * Real.log n) / Real.log (1 / δ) →\n        ¬ (∀ x ∈ A + B, x ∈ S)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the probabilistic method: choose each element of [n] independently with probability δ to form S. Estimate the probability that a fixed pair (A,B) with given sizes has its sumset contained in S, which is δ^{|A+B|}. Use bounds on |A+B| ≥ |A|+|B|-1 (or via Cauchy-Davenport for integers) to show that for min size ≥ (3−ε) log n / log(1/δ) the expected number of such pairs is less than 1 for large n, then apply the union bound (or Lovász local lemma) to show existence of S avoiding all such sumsets.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.15269v1",
+      "source_path": "http://arxiv.org/abs/2607.15269v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-17T23:51:28.009064+00:00",
+      "title": "Improved constant in Erdős sumset avoidance for dense subsets"
     },
     {
       "ambition_level": "extension",

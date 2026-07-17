@@ -2919,13 +2919,41 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0243",
+    "id": "fd_0244",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15269v1",
     "status": "available",
     "timestamp": "2026-07-17T23:47:44.115462+00:00",
     "title": "Existence of \u03b4\u2011dense sets avoiding large sumsets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 5, there exists a genus threshold g\u2080(k) such that every connected, simple, k-regular graph G of genus g \u2265 g\u2080(k) admits a divisor of degree \u230a(g\u22121)/2\u230b or \u2308(g\u22121)/2\u2309 with rank at least \u03c1(g, r, d) for the maximal r satisfying \u03c1(g, r, d) \u2265 0. This strengthens the paper's 'almost all' result to 'all sufficiently large' graphs, removing the probabilistic exception set.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0245",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:51:04.159903+00:00",
+    "title": "Asymptotic Brill-Noether Existence for All Large Regular Graphs at Half-Canonical Degree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any fixed \u03b4\u2208(0,1) and any \u03b5>0, there exists N such that for all n\u2265N there exists S\u2282[n] with |S|\u2265\u03b4 n such that for all A,B\u2282\u2115 with min{|A|,|B|}\u2265(3\u2212\u03b5)\u22c5log n / log(1/\u03b4) we have A+B\u2284S. This would close the gap between the known lower bound (1+o(1)) and upper bound (3+o(1)) from Hern\u00e1ndez\u2013Hetzel and the present paper.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0245",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:51:28.009064+00:00",
+    "title": "Improved constant in Erd\u0151s sumset avoidance for dense subsets"
   },
   {
     "consumed_by_exp_id": "",
