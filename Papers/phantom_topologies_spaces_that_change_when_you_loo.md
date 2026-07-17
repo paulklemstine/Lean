@@ -1,3 +1,9 @@
-# Computational Evidence Justification
+# Computational Evidence Skipped
 
-Computational evidence was skipped because the principal result is an equality of topologies on the uncountable space `ℝ`, proved by local interval arguments rather than a finite or numerical conjecture. Small finite samples cannot test Euclidean openness or equality of these topologies in a representative way. The claimed observer lower bounds also fail definitionally: allowing an observer to see the real topology yields a one-observer representation for every space, a fact proved formally in `Speculative/PhantomTopologies.lean`.
+Computational evidence is not the appropriate primary method here. The central issues are definitional and lattice-theoretic, not numerical:
+
+- the literal one-observer construction works uniformly for every topology;
+- the real-line result concerns equality of infinite topologies on an uncountable set;
+- the nonmetrizable counterexample is a complete two-point proof, already exhaustively handled in Lean.
+
+Finite enumeration could illustrate the `Bool` example, but it would add no evidence beyond the kernel-checked proof that classifies the common open sets and proves nonmetrizability. There is no integer sequence to search in OEIS and no meaningful numerical plot associated with these claims.
