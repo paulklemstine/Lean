@@ -1,137 +1,133 @@
-# When a Proof Bites Its Own Tail
+# When a Proof Draws an Arrow Back to Itself
 
-## Infinite objects are not automatically infinite proofs
+## The seduction—and danger—of circular reasoning
 
-A serpent eating its tail is one of humanity’s oldest images of eternity. Mathematics has its own versions: a recursive program calls itself, a fractal contains smaller copies of itself, and a periodic decimal repeats forever. It is tempting to add proofs to this list. Why should a proof not refer back to itself, provided the loop somehow “converges”?
+A proof is usually pictured as a staircase. Each step rests on lower steps, and eventually the staircase reaches the ground: axioms, assumptions, or facts already established. But modern mathematics and computer science are full of objects that do not look like staircases. Recursive programs call themselves. Network protocols revisit earlier states. Definitions of infinite streams refer to the stream still being defined. Why should proofs alone be forbidden from drawing an arrow backward?
 
-That question sounds philosophical, but it becomes precise once we separate three objects that are easy to confuse. The first is an **ordinary hypothetical proof**, in which a proposition is temporarily assumed while proving an implication. The second is an **infinite proof-shaped tree**, which can be understood through all of its finite portions. The third is a **cyclic dependency graph**, in which a purported proof eventually relies on itself. These three may look similar on paper. Mathematically, however, they behave very differently.
+The tempting answer is that they should not be forbidden. Perhaps a proof could be a graph rather than a tree, with a later node pointing to an earlier one. Perhaps the resulting circle could be interpreted as a fixed point, just as a recursive equation can define a meaningful function. This possibility is especially attractive in cryptography, where security arguments often reduce an attack to another attack, and in program verification, where reasoning about loops naturally returns to an invariant.
 
-The central lesson is both constructive and cautionary. Infinite trees can be perfectly legitimate mathematical objects, and increasingly informative finite observations possess canonical limits. Yet a rule requiring proof dependencies to descend strictly through ordinal ranks cannot justify a cycle. It does exactly the opposite: it excludes every cycle. Meanwhile, the familiar statement $P\to P$ needs no circularity at all, and a precise version of the liar cannot coexist with exact reflection between truth and provability.
+Yet one tiny argument exposes the danger:
 
-## The ordinary proof hiding inside $P\to P$
+> Assume the statement $P$ because this very proof establishes $P$; therefore $P$.
 
-Begin with a language containing atomic propositions and implications. A **sequent** consists of a finite list of available assumptions, called its context, together with a conclusion. We need only two rules.
+If that loop counted as evidence, every proposition would be provable. The central problem is therefore not whether circular diagrams may be written. They plainly may. It is which diagrams carry mathematical justification.
 
-1. **Hypothesis rule.** If $A$ occurs in the context, conclude $A$.
-2. **Implication introduction.** If $B$ can be derived while $A$ is added to the context, conclude $A\to B$ after discharging that temporary assumption.
+A clean answer comes from ordinals: numbers generalized far beyond the finite, but still arranged in a well-order. Give every node of a proof graph an ordinal rank, and require rank to decrease strictly whenever one node depends on another. The graph may be drawn with shared subarguments and backward-looking arrows, but its logical dependencies must always move downhill. This simple rule produces a sharp boundary. Every locally correct, decreasing graph unfolds into an ordinary proof. A direct self-loop is impossible. Indeed, every finite dependency cycle is impossible.
 
-Define the height of a derivation as the number of inference edges on its longest branch. A hypothesis leaf has height $0$, and applying implication introduction adds $1$.
+The result is less a celebration of circular proof than a diagnosis of it: non-tree-shaped syntax is harmless, but unsupported self-justification is not.
 
-**Identity Theorem.** For every proposition $P$, there is a derivation of $P\to P$ of height exactly $1$.
+## From proof trees to proof graphs
 
-The proof is almost a sentence: assume $P$, use that assumption to conclude $P$, and discharge it. The hypothesis leaf has height $0$; the implication step raises the height to $1$.
+To make the idea precise, consider a minimal language of propositions. Start with atomic propositions and build implications. If $A$ and $B$ are formulas, then $A\to B$ is a formula.
 
-This matters because “assume $P$ while proving $P\to P$” can sound self-referential. It is not. The temporary assumption is $P$, whereas the theorem being established is $P\to P$. There is no arrow from the proof back to itself. Ordinary hypothetical reasoning already explains the argument completely.
+We use two familiar rules. The **assumption rule** says that if $A$ occurs among the current assumptions $\Gamma$, then $A$ may be concluded. The **implication-introduction rule** says that if $B$ can be derived while temporarily adding $A$ to $\Gamma$, then $A\to B$ can be derived from $\Gamma$.
 
-## Seeing an infinite tree one finite horizon at a time
+An ordinary derivation is a finite tree assembled from those rules. A proof graph is more permissive. Each node carries:
 
-Now consider a genuinely non-well-founded object. Give every possible node an **address**, represented by a finite list of natural numbers. The empty list names the root. Appending a child number moves one step downward. A labelled tree assigns either a label or “no node” to every address.
+1. a context $\Gamma$, listing its assumptions;
+2. a conclusion $C$;
+3. either an assumption instruction or an implication-introduction instruction pointing to a child node.
 
-For a tree $T$ and depth $n$, its **truncation** $T_{\le n}$ keeps exactly the information at addresses of length at most $n$ and hides everything deeper. This simple operation gives an important stabilization law.
+The graph is **locally well typed** when every instruction fits its labels. At an assumption node, the conclusion must occur in the context. At an implication node concluding $A\to B$ from context $\Gamma$, its child must have context $A::\Gamma$ and conclusion $B$.
 
-**Eventual Visibility Theorem.** If an address $p$ has length $|p|$, then truncating at depth $|p|$ already reveals exactly what the full tree says at $p$:
+Local correctness is necessary, but it is not enough. A one-node loop can be decorated so that its arrow points back to itself, yet no independent evidence ever appears. Local inspection cannot distinguish productive recursion from an empty promise.
 
-$$
-T_{\le |p|}(p)=T(p).
-$$
+The missing ingredient is a global progress certificate.
 
-So every fixed node, however deep, becomes visible after finitely many approximation stages.
+## Ordinal ranks as logical fuel
 
-A one-node cyclic graph supplies the cleanest example. Imagine a single node labelled $a$ whose only child points back to itself. Unravelling that graph produces an infinite unary spine. Its nodes have addresses
-
-$$
-(),\quad (0),\quad (0,0),\quad (0,0,0),\quad \ldots
-$$
-
-and every one carries the label $a$.
-
-**Unbounded Unravelling Theorem.** For every natural number $n$, the unravelling contains a node labelled $a$ at depth $n$.
-
-The witness is the address consisting of $n$ copies of $0$. Its length is $n$, and it lies on the unary spine. Thus a finite cyclic description can denote a genuine infinite object. This phenomenon is familiar from recurring decimals and finite-state machines: finite syntax can generate infinite behavior.
-
-But an infinite object is not thereby a valid proof. A wallpaper pattern may repeat forever without establishing a theorem. To talk about proof validity, one must add local inference rules and a global soundness condition.
-
-## The information landscape has limits
-
-The finite-viewpoint idea has an elegant order theory. An **observation** is a set of pairs $(p,a)$ saying that address $p$ has been observed with label $a$. Order observations by inclusion: $X\subseteq Y$ means that $Y$ contains at least as much information as $X$.
-
-Suppose observations arrive in stages $C_0,C_1,C_2,\ldots$. Define their limit by union:
+An ordinal is an element of a well-ordered hierarchy: every nonempty collection of ordinals has a least member, and there can be no infinite sequence
 
 $$
-C_\infty=\bigcup_{n\in\mathbb N} C_n.
+\alpha_0>\alpha_1>\alpha_2>\cdots.
 $$
 
-**Least-Upper-Bound Theorem.** The union $C_\infty$ is an upper bound of every stage, and it is contained in every other common upper bound. Explicitly,
+Assign an ordinal $\rho(n)$ to every node $n$. Call the graph **guarded** when each dependency edge from a node $n$ to its child $m$ satisfies
 
 $$
-C_n\subseteq C_\infty\quad\text{for every }n,
+\rho(m)<\rho(n).
 $$
 
-and if $C_n\subseteq U$ for every $n$, then $C_\infty\subseteq U$.
+The rank acts like fuel. Following a dependency consumes rank, and well-foundedness says that fuel cannot be consumed forever. The crucial theorem follows.
 
-The proof follows element by element. Anything observed at stage $n$ belongs to the union. Conversely, anything in the union came from some stage, so every set containing all stages must contain it.
+**Guarded Graph Soundness Theorem.** *Let a proof graph for implication logic be locally well typed. If its nodes admit ordinal ranks that strictly decrease along every dependency edge, then every node represents an ordinary derivation of its stated conclusion from its stated context.*
 
-If the sequence is increasing, meaning $C_n\subseteq C_{n+1}$ for every $n$, then information never disappears. A short induction yields the further monotonicity fact that $C_m\subseteq C_n$ whenever $m\le n$.
+The proof is conceptually direct. Choose any node. Assume, by well-founded induction on its ordinal rank, that every lower-ranked child already has an ordinary derivation. If the node is an assumption, its conclusion is available immediately. If it introduces an implication $A\to B$, local typing identifies a lower-ranked child deriving $B$ from the enlarged context containing $A$. Apply implication introduction. Every case reduces to strictly smaller rank, so the induction is legitimate.
 
-This gives the ambient space of observations the structure needed for approximation: increasing countable chains have least upper bounds. Indeed, because arbitrary unions and intersections exist, the full observation space is a complete lattice.
+This theorem explains why graph-shaped presentations can be safe. Sharing a subproof, compressing a repeated argument, or drawing an edge that looks backward on the page does not damage soundness. What matters is the semantic direction of dependency, certified by descent.
 
-There is an essential warning. The ambient lattice includes inconsistent observations—for example, two different labels assigned to the same address. The existence of limits therefore solves an information-assembly problem, not a soundness problem. A separate correctness predicate must say which labelled trees obey the intended inference rules and whether correctness survives passage to limits.
+## The smallest positive example
 
-## Why descending ordinals destroy the loop
+The proposition $P\to P$ is sometimes described informally as “assume $P$, then conclude $P$.” Because the same letter appears twice, it can sound self-referential. It is not.
 
-Ordinals extend the natural numbers far beyond the finite while retaining a strict, well-founded order. This makes them powerful progress measures. Assign each proof node $x$ an ordinal rank $\rho(x)$. Suppose every dependency edge from $x$ to a premise $y$ must strictly decrease rank:
+Its proof has exactly two nodes. The root has empty context, conclusion $P\to P$, and applies implication introduction. Its child has context containing $P$, conclusion $P$, and applies the assumption rule. Give the root rank $1$ and the leaf rank $0$. The only dependency satisfies $0<1$.
 
-$$
-x\mathrel{D}y\quad\Longrightarrow\quad \rho(y)<\rho(x).
-$$
+**Height-One Identity Theorem.** *For every proposition $P$, the two-node derivation of $P\to P$ has root rank $1$, assumption-leaf rank $0$, and is a valid derivation from no assumptions.*
 
-At first glance, one might hope this condition makes self-reference safe. It does not.
+The distinction matters. The leaf does not claim $P$ unconditionally; it claims $P$ under the temporary assumption $P$. Implication introduction then discharges that assumption. No node depends on itself, and no circular justification occurs.
 
-**No Self-Reference Theorem.** No node can depend directly on itself under a strictly decreasing ordinal ranking.
+This is a useful lesson in mathematical storytelling. Phrases such as “the proof assumes what it proves” can blur the difference between a hypothetical assumption inside an implication and an illicit global assumption of the desired conclusion. The rank-$1$ derivation makes the difference visible.
 
-A self-loop would require $\rho(x)<\rho(x)$, contradicting irreflexivity of strict order.
+## Why genuine cycles fail
 
-**No Ranked Cycle Theorem.** More generally, a dependency graph whose every edge strictly decreases ordinal rank contains no finite directed cycle.
-
-Suppose a cycle visits $v_0,v_1,\ldots,v_n$ and returns to $v_0$. Following its edges gives
+Now consider a direct self-reference. A node $n$ points to itself as its own required subproof. Guardedness would demand
 
 $$
-\rho(v_1)<\rho(v_0),\quad \rho(v_2)<\rho(v_1),\quad\ldots,\quad
-\rho(v_0)<\rho(v_n).
+\rho(n)<\rho(n),
 $$
 
-Transitivity then yields $\rho(v_0)<\rho(v_0)$, impossible. The argument works for a loop of any finite length.
+which is impossible for every ordinal. Thus we obtain the first obstruction.
 
-This reverses the proposed intuition. “Every reference goes to a smaller ordinal” is not a convergence test for circular proofs. It is an acyclicity certificate. Ordinal descent is useful precisely because it prevents a dependency from returning to where it began.
+**No-Self-Reference Theorem.** *No direct self-dependency can be certified by a strictly decreasing ordinal rank.*
 
-## The liar is an equation with no solution
+The obstruction extends beyond one-node loops.
 
-The liar phenomenon can also be stripped to its mathematical core. Let $L$ be a proposition intended to say “I am not provable,” and let $Q$ stand for “$L$ is provable.” Demand two exact equivalences:
+**Acyclicity Theorem for Ranked Dependencies.** *Suppose every dependency edge $a\to b$ satisfies $\rho(b)<\rho(a)$. Then no nonempty finite path of dependency edges can begin and end at the same node.*
 
-$$
-Q\leftrightarrow L
-$$
-
-for perfect reflection between provability and truth in this instance, and
+Along a path of length $k>0$, repeated transitivity gives
 
 $$
-L\leftrightarrow \neg Q
+\rho(n_k)<\rho(n_{k-1})<\cdots<\rho(n_0).
 $$
 
-for the liar equation itself.
+If $n_k=n_0$, this would imply $\rho(n_0)<\rho(n_0)$, a contradiction. Consequently, edge-by-edge ordinal descent does not merely control cycles; it eliminates them.
 
-**Liar Impossibility Theorem.** No pair of ordinary propositions $Q$ and $L$ satisfies both equivalences.
+This finding corrects a seductive conjecture. One might hope that a circular proof is valid whenever references occur at “smaller ordinal height.” But if every edge in a genuine cycle decreases, returning to the starting point is impossible. Ordinal descent validates compressed well-founded proofs, not genuine circular justification.
 
-To see why, combine them to obtain $Q\leftrightarrow\neg Q$. If $Q$ holds, then it does not hold. If $Q$ does not hold, the reverse implication gives $Q$. Either case is contradictory.
+## The liar at the boundary
 
-The obstacle is therefore sharper than an undefined ordinal height. Under exact reflection and the negating fixed-point equation, there is no model at all. One of the demanded principles must be weakened, stratified, or interpreted in a richer semantics.
+The classic liar sentence says, “This sentence is false.” In arithmetic, the more disciplined Gödelian analogue says, roughly, “This sentence is not provable in the present sound system.” Negative self-reference behaves very differently from the harmless hypothetical reasoning behind $P\to P$.
 
-## A better road to disciplined circularity
+Two obstructions meet here. Structurally, a pure proof loop cannot receive an ordinal height: it would require a rank smaller than itself. Semantically, in a sound diagonal system, the sentence asserting its own unprovability cannot itself be proved. If it were proved, its assertion of unprovability would be false, contradicting soundness.
 
-None of this says that cyclic proof methods are hopeless. It says that the soundness condition must genuinely accommodate delay or progress rather than disguise acyclicity as circularity.
+These are related but distinct facts. The rank argument concerns the shape of dependency graphs. The Gödelian argument concerns truth, provability, and diagonal self-description. Keeping them separate prevents a graph-theoretic observation from being mistaken for a complete account of incompleteness.
 
-One promising idea is a **later modality**. A back-reference may be used at stage $n+1$ only if it was justified at the smaller stage $n$. The graph may be cyclic while semantic evaluation advances through finite indices. Another is a **global trace condition**: not every edge must decrease, but every infinite branch must encounter genuine progress infinitely often.
+## Why cryptographers should care
 
-The observation lattice provides a natural stage on which to develop such ideas. Finite approximations can accumulate by union; locally correct finite evidence may converge to an infinite tree. The unresolved question is exactly when correctness is preserved by that limit.
+Cryptographic proofs routinely chain reductions. To show that protocol $X$ is secure, one may transform an attacker against $X$ into an attacker against primitive $Y$. Composed protocols can produce reduction diagrams with shared nodes, repeated games, and apparent back-references. An ordinal or natural-number progress measure can serve as an audit trail: every reduction step must simplify an attack, shorten a remaining interaction, lower a protocol phase, or decrease another well-founded quantity.
 
-The serpent, then, is not banished. It simply needs rules. An infinite unravelling can be mathematically real. A chain of observations can converge. But repetition alone does not certify truth, and strict ordinal descent cannot close a loop. The productive frontier lies between these facts: finding global conditions under which circular syntax earns a sound, non-circular meaning.
+The guarded soundness theorem says that such a certificate is not decorative. It is what turns a diagram into an eliminable abbreviation for an ordinary argument. Conversely, a reduction that simply returns the same security claim with no decrease has supplied no evidence.
+
+The same principle appears in termination proofs, recursive definitions, model checking, and inductive invariants. Productive recursion must reveal structure before recurring. Loop invariants must be established independently before being reused. Cyclic reasoning about inductive objects needs a progress condition along infinite traces.
+
+## Beyond edge-by-edge descent
+
+If strict descent rules out every finite cycle, can genuinely cyclic proofs ever be valid? Possibly—but they need a subtler criterion.
+
+One direction is a **trace condition**. Instead of demanding a decrease on every edge, permit some nondecreasing motion while requiring that every infinite branch witness infinitely many genuine decreases at designated progress points. This resembles Büchi acceptance in automata theory: recurrence is allowed, but progress must recur as well.
+
+Another direction uses a modal “later” operator. A recursive reference is accepted only beneath a constructor that delays its use. The slogan is that self-reference becomes meaningful after observable proof structure has been produced. This is the proof-theoretic analogue of defining an infinite stream by giving its first element before recurring on the tail.
+
+A third direction studies partial proof trees ordered by information. Finite approximations may form the compact pieces of a domain whose limits include infinite trees. Yet the domain can contain both meaningful and meaningless limits, so a least admissible fixed point or independent productivity condition is still required.
+
+The present results establish the baseline against which these richer systems must be measured. They show exactly what the simplest ordinal proposal can and cannot do.
+
+## The moral of the loop
+
+A picture may be circular while its justification is well founded. That is the durable insight.
+
+Proof graphs are useful representations: they share repeated work, describe recursion, and match the architecture of algorithms and protocols. But shape alone does not confer validity. Local rule checking alone does not confer validity either. A global certificate must explain why following dependencies cannot postpone evidence forever.
+
+Strict ordinal descent gives one exceptionally clear certificate. It proves that every guarded graph unfolds into an ordinary derivation, validates the height-one proof of $P\to P$, rejects direct self-reference, and forbids every finite dependency cycle. The liar is not transformed into a theorem; unsupported circularity is exposed as unsupported.
+
+The boundary is therefore sharper than the original dream of “proofs that reference themselves.” Safe non-tree syntax is real. Genuine self-justification is not. To move beyond that boundary, future theories must replace simple descent with richer notions of recurring progress, delayed productivity, and admissible fixed points—without ever confusing a loop drawn on paper with a reason to believe what it says.

@@ -1,453 +1,353 @@
-# Infinite Proof Trees, Cyclic Dependencies, and Ordinal Descent
-
-## A separation theorem for approximation, circular syntax, and derivability
+# Guarded Circular Proof Graphs: Ordinal Descent, Soundness, and the Limits of Self-Reference
 
 **Aristotle**  
-**16 July 2026**
+**17 July 2026**
 
 ## Abstract
 
-Self-reference in proofs is often compared with recursion: a finite cyclic description may unfold into an infinite object, suggesting that circular derivations could acquire validity as limits of finite approximations. This paper isolates the mathematical ingredients of that suggestion and shows that they support a more guarded conclusion. We define a minimal implicational calculus, address-labelled potentially infinite trees, finite-depth truncations, an information order on tree observations, and ordinal-ranked dependency graphs. Five results follow. First, the usual derivation of $P\to P$ has height one and is hypothetical rather than circular. Second, a one-node cyclic graph unravels into a legitimate infinite unary tree with nodes at every finite depth. Third, observations ordered by inclusion form a complete lattice; in particular, the union of a countable chain is its least upper bound, and every fixed tree address stabilizes in a sufficiently deep truncation. Fourth, any dependency relation that strictly decreases an ordinal rank on every edge is acyclic: it permits neither self-loops nor finite directed cycles. Thus strict ordinal descent cannot validate genuine circularity; it excludes it. Fifth, exact reflection $Q\leftrightarrow L$ is inconsistent with the liar equation $L\leftrightarrow\neg Q$. These facts distinguish existence of infinite proof-shaped objects from sound derivability and identify guarded, step-indexed semantics and global trace conditions as appropriate directions for cyclic proof theory.
+Proofs are conventionally represented by well-founded trees, whereas recursive programs, protocol reductions, and cyclic derivations are naturally represented by graphs. This paper studies a minimal implication calculus in which proof graphs may have arbitrary node types and dependency structure, while validity is controlled by an ordinal-valued progress certificate. A graph is locally well typed when each node satisfies the assumption or implication-introduction rule indicated by its label, and it is guarded when ordinal rank strictly decreases along every dependency edge. The central soundness theorem states that every guarded, locally well-typed proof graph unfolds nodewise into an ordinary natural-deduction derivation. The proof uses well-founded induction on ordinal rank.
+
+Several boundary results sharpen the interpretation of this theorem. The standard proof of $P\to P$ is a height-one, two-node derivation with a rank-$1$ implication node and a rank-$0$ assumption leaf; it is not genuinely circular. No direct self-loop admits a decreasing ordinal rank, and, more generally, strict descent forbids every nonempty finite dependency cycle. Thus edgewise ordinal guarding validates graph compression and apparent back-reference but cannot validate genuinely cyclic justification. A complementary diagonal result explains why, in a sound self-referential system, a Gödel sentence asserting its own unprovability remains unprovable. The structural and semantic obstructions are carefully distinguished. We conclude with certificate-checking algorithms, applications to recursive security arguments, and directions involving Scott domains, trace conditions, and guarded modalities.
 
 ## 1. Introduction
 
-A finite graph may describe infinite behavior. A loop in an automaton generates an unbounded run; a recursive equation may define an infinite stream; a finite cyclic term may unravel into an infinite tree. It is therefore natural to ask whether a proof may similarly refer to itself and acquire validity through a fixed-point construction.
+Self-reference occupies an ambiguous place in logic. Recursion is indispensable in mathematics and computation: functions call themselves on smaller inputs, infinite streams reveal one constructor before continuing, and inductive arguments invoke hypotheses at lower complexity. Yet the inference “$P$ holds because this proof of $P$ says so” is empty. Both productive recursion and vicious circularity contain a backward reference; the difference is progress.
 
-Three distinct issues are hidden in that question.
+This paper isolates that difference in a small setting. The language contains atomic propositions and implication. Ordinary derivations use assumptions and implication introduction. We enlarge the syntax from finite proof trees to proof graphs whose nodes carry local instructions and may, at the representational level, have arbitrary dependencies. We then impose a global ordinal ranking. Every dependency must lead to a node of strictly smaller rank.
 
-1. **Representation:** Can a finite cyclic object denote a well-defined infinite tree?
-2. **Approximation:** Do finite observations of the tree converge in a mathematically controlled sense?
-3. **Soundness:** Does the resulting tree constitute a valid proof under specified inference rules?
+The approach deliberately separates three notions:
 
-The first two questions concern mathematical existence and order theory. The third concerns semantics. An affirmative answer to the first two does not automatically answer the third.
+1. **Graph syntax:** a collection of labelled nodes with dependency pointers;
+2. **Local correctness:** each node's instruction agrees with its context and conclusion;
+3. **Global justification:** dependency traversal is controlled by a well-founded progress measure.
 
-A second ambiguity concerns hypotheses. In proving an implication $A\to B$, one temporarily assumes $A$ and derives $B$. In the special case $P\to P$, the assumption and the immediate conclusion are both $P$. This can be described informally as “using $P$ to prove $P$,” but no proof object refers back to the theorem $P\to P$. The derivation is finite and well-founded.
+This separation prevents two common mistakes. First, local rule compliance does not by itself make a cyclic diagram sound. Second, the familiar proof of $P\to P$ is not circular merely because it temporarily assumes $P$. Its assumption occurs in an enlarged local context and is discharged by implication introduction.
 
-A third ambiguity concerns ordinal ranks. Well-founded proof theory often assigns ranks so that premises have smaller rank than conclusions. One might conjecture that a circular dependency converges when each back-reference occurs at a smaller ordinal. This condition cannot hold around a cycle. Strict decrease along every edge is an acyclicity principle, not a circular fixed-point principle.
+Our principal result is a conservativity theorem: ordinal-guarded graphs yield nothing beyond ordinary derivations. This is a positive result because graph presentations can compactly share structure and express recursive organization. It is also a limitation: if strict rank descent is imposed on every edge, no genuine finite cycle survives. Any future semantics for truly cyclic proofs must weaken edgewise descent while preserving a global progress condition.
 
-The purpose of this paper is to make these distinctions exact in a minimal setting. Section 2 defines formulas, sequents, derivations, trees, observations, and ranked graphs. Section 3 establishes the height-one identity derivation. Section 4 studies infinite unravellings and truncations. Section 5 proves the least-upper-bound laws for observations. Section 6 proves that strict ordinal descent excludes cycles. Section 7 gives a propositional impossibility theorem for the liar under exact reflection. Section 8 presents executable finite algorithms that illustrate the constructions. Sections 9 and 10 discuss applications, limitations, and viable approaches to guarded circularity.
+The cryptographic relevance lies in recursive reductions. Security arguments are often organized as graphs of games and adversary transformations. A reduction that returns to the same claim without lowering any well-founded measure is no argument at all. A rank certificate can make progress explicit and mechanically checkable at the mathematical level: protocol phase, remaining rounds, syntactic complexity, or a lexicographic combination may supply the rank.
 
-## 2. Mathematical framework
+The paper is self-contained. Section 2 defines formulas and ordinary derivability. Section 3 introduces proof graphs, local typing, and guardedness. Section 4 proves soundness. Sections 5 and 6 establish the height-one identity example and the impossibility of ranked cycles. Section 7 distinguishes the structural loop obstruction from diagonal unprovability. Sections 8 and 9 give algorithms and applications. Sections 10 and 11 discuss fixed points, limitations, and future research.
 
-### 2.1 Formulas and sequents
+## 2. Implication logic and ordinary derivations
 
-Fix a set $\mathcal A$ of atomic proposition symbols. The set $\mathcal F$ of formulas is generated by the grammar
+### 2.1 Formulas
 
-$$
-A ::= a \mid (A\to A),\qquad a\in\mathcal A.
-$$
+Fix an arbitrary set $\mathcal A$ of atomic propositions.
 
-Thus every atom is a formula, and if $A$ and $B$ are formulas, then $A\to B$ is a formula.
+**Definition 2.1 (Formulas).** The set $\mathsf{Form}(\mathcal A)$ is generated inductively by:
 
-A **context** is a finite list $\Gamma=[A_1,\ldots,A_k]$ of formulas. A **sequent** is a pair $\Gamma\vdash A$, read “$A$ is derivable from the open assumptions in $\Gamma$.” Repetition and order in the list will not matter for the elementary results below, but retaining a list makes the act of adding an assumption explicit.
+- every $a\in\mathcal A$ determines an atomic formula;
+- if $A,B\in\mathsf{Form}(\mathcal A)$, then $A\to B\in\mathsf{Form}(\mathcal A)$.
 
-We use two natural-deduction rules:
+A **context** $\Gamma$ is a finite list of formulas. Writing $A::\Gamma$ means adjoining $A$ at the front of the list. The order will not matter for the results below, but lists provide a concrete representation.
 
-$$
-\frac{A\in\Gamma}{\Gamma\vdash A}\;\text{Hyp}
-$$
+### 2.2 Natural deduction
 
-and
+**Definition 2.2 (Ordinary derivability).** The judgment $\Gamma\vdash A$ is generated by two rules:
 
 $$
-\frac{A,\Gamma\vdash B}{\Gamma\vdash A\to B}\;\to I.
-$$
-
-A **derivation** is a finite tree generated by these rules. Its **height** is defined recursively. A hypothesis leaf has height $0$. An implication-introduction node has height one greater than the height of its unique premise. In a richer calculus with branching rules, height would be one plus the maximum premise height.
-
-### 2.2 Address-labelled trees
-
-Let $\Lambda$ be a set of labels. An **address** is a finite list of natural numbers,
-
-$$
-p=(i_1,\ldots,i_k)\in\mathbb N^{<\omega}.
-$$
-
-Its depth is its length $|p|=k$. The empty address $()$ denotes the root. Appending $i$ selects the $i$th child.
-
-A **possibly infinite labelled tree** is an extensional function
-
-$$
-T:\mathbb N^{<\omega}\longrightarrow \Lambda\cup\{\bot\},
-$$
-
-where $T(p)=\bot$ means that no labelled node occurs at address $p$. This broad definition does not impose prefix closure, unique rule correctness, or consistency constraints; such conditions may be added as predicates.
-
-For $n\in\mathbb N$, the **depth-$n$ truncation** of $T$ is
-
-$$
-T_{\le n}(p)=
-\begin{cases}
-T(p),& |p|\le n,\\
-\bot,& |p|>n.
-\end{cases}
-$$
-
-The truncation is a finite-horizon observation even when the branching available at each address is not assumed finite. Its role is epistemic: it suppresses information below a chosen depth.
-
-### 2.3 Observations and information order
-
-An **observation** is a set
-
-$$
-X\subseteq \mathbb N^{<\omega}\times\Lambda.
-$$
-
-The pair $(p,a)\in X$ records that address $p$ has been observed with label $a$. Observations are ordered by information inclusion:
-
-$$
-X\sqsubseteq Y\quad\text{if and only if}\quad X\subseteq Y.
-$$
-
-This ambient space deliberately includes partial observations and inconsistent observations, such as both $(p,a)$ and $(p,b)$ for distinct labels $a$ and $b$. A consistency predicate may later restrict the space.
-
-A sequence $(C_n)_{n\in\mathbb N}$ is **increasing** if
-
-$$
-C_n\subseteq C_{n+1}
-$$
-
-for every $n$. Its candidate limit is
-
-$$
-\operatorname{Lim}(C)=\bigcup_{n\in\mathbb N}C_n.
-$$
-
-### 2.4 Cyclic graphs and ordinal rankings
-
-Let $V$ be a set of nodes and let $D\subseteq V\times V$ be a dependency relation. We write $xDy$ when node $x$ uses node $y$ as a premise or back-reference. The orientation is therefore from a conclusion-like node to a dependency.
-
-An **ordinal ranking** is a function
-
-$$
-\rho:V\longrightarrow\mathrm{Ord}
-$$
-
-such that every dependency strictly decreases rank:
-
-$$
-xDy\quad\Longrightarrow\quad \rho(y)<\rho(x).
-$$
-
-A finite directed cycle consists of nodes $v_0,\ldots,v_n$ satisfying
-
-$$
-v_0Dv_1,\ v_1Dv_2,\ \ldots,\ v_{n-1}Dv_n,\ v_nDv_0.
-$$
-
-A self-loop is the special case $xDx$.
-
-## 3. Hypothetical reasoning is not circularity
-
-The smallest example already resolves one common misconception.
-
-**Theorem 1 (Height-one identity derivation).** For every formula $P$, the sequent
-
-$$
-\varnothing\vdash P\to P
-$$
-
-has a derivation of height exactly $1$.
-
-**Proof sketch.** Add $P$ to the empty context. The hypothesis rule yields $P\vdash P$ at height $0$, because $P$ is among the open assumptions. Apply implication introduction, discharging the assumption. This yields $\varnothing\vdash P\to P$ and increases the height to $1$. No shorter derivation is produced by these rules because an implication conclusion requires the implication-introduction step. $\square$
-
-The distinction between an assumption and a back-reference is structural. The premise of implication introduction is a smaller derivation tree. Its leaf records membership in the context; it does not point to the root derivation. Consequently, the phrase “prove $P$ by assuming $P$” should not be interpreted as a cyclic proof of $P\to P$. The theorem being established is an implication, while $P$ is a locally scoped hypothesis.
-
-This observation also clarifies the role of height. The height $1$ is an ordinary natural number computed from a finite tree. It is not an ordinal assigned to resolve a loop.
-
-## 4. Cyclic descriptions and infinite unravellings
-
-### 4.1 Eventual visibility under truncation
-
-Every finite address becomes visible at a finite stage.
-
-**Theorem 2 (Eventual visibility).** Let $T$ be any possibly infinite labelled tree and let $p$ be any address. Then
-
-$$
-T_{\le |p|}(p)=T(p).
-$$
-
-More generally, the same equality holds for every $n\ge |p|$.
-
-**Proof sketch.** By definition, truncation changes the value only when the address length exceeds the cutoff. At cutoff $|p|$, the inequality $|p|\le |p|$ holds, so the original value is retained. The same argument applies to any larger cutoff. $\square$
-
-Thus the sequence $T_{\le0},T_{\le1},\ldots$ converges pointwise in a direct stabilization sense: at each fixed address, all sufficiently late truncations agree with $T$.
-
-### 4.2 The unary self-unravelling
-
-Fix a label $a\in\Lambda$. Define the **unary self-unravelling** $U_a$ by
-
-$$
-U_a(p)=
-\begin{cases}
-a,&\text{if every entry of }p\text{ is }0,\\
-\bot,&\text{otherwise.}
-\end{cases}
-$$
-
-This is the infinite tree obtained by unravelling a one-node graph with one edge from the node to itself. The only child selected at every step is child $0$.
-
-**Lemma 3 (Unary spine).** For every $n\in\mathbb N$, if $0^n$ denotes the address consisting of $n$ copies of $0$, then
-
-$$
-U_a(0^n)=a.
-$$
-
-**Proof sketch.** Every entry of $0^n$ is $0$, so the first clause in the definition applies. $\square$
-
-**Theorem 4 (Unbounded depth).** For every $n\in\mathbb N$, the tree $U_a$ contains a labelled node at depth exactly $n$.
-
-**Proof sketch.** Choose $p=0^n$. Its length is $n$, and Lemma 3 gives $U_a(p)=a$. $\square$
-
-The theorem demonstrates that finite cyclic syntax can denote a genuine infinite object. Nothing contradictory occurs: the tree is specified extensionally by its behavior at each finite address. There is no requirement that a set-theoretic node literally contain itself.
-
-However, the labels in $U_a$ have not been required to represent correct sequents or correct inference steps. Unboundedness is a theorem about shape. Soundness would require at least a local condition linking each node label with the labels of its children, together with a global condition controlling infinite branches.
-
-## 5. Limits of finite information
-
-### 5.1 Least upper bounds
-
-The information order supports canonical limits.
-
-**Theorem 5 (Least upper bound of a sequence).** Let $(C_n)_{n\in\mathbb N}$ be any sequence of observations and define
-
-$$
-C_\infty=\bigcup_{n\in\mathbb N}C_n.
-$$
-
-Then:
-
-1. $C_n\subseteq C_\infty$ for every $n$;
-2. if $U$ is an observation satisfying $C_n\subseteq U$ for every $n$, then $C_\infty\subseteq U$.
-
-Hence $C_\infty$ is the least upper bound of the sequence in the inclusion order.
-
-**Proof sketch.** For the first claim, an element of $C_n$ belongs to the union by the definition of union. For the second, take $x\in C_\infty$. Then $x\in C_n$ for some $n$. Since $C_n\subseteq U$, it follows that $x\in U$. $\square$
-
-No increasing hypothesis is needed for the union to be a least upper bound of the family. When the family is a chain, the result gives the expected directed limit.
-
-**Lemma 6 (Persistence in an increasing sequence).** If $C_n\subseteq C_{n+1}$ for every $n$, then
-
-$$
-m\le n\quad\Longrightarrow\quad C_m\subseteq C_n.
-$$
-
-**Proof sketch.** Induct on the difference between $m$ and $n$. The base case is reflexivity of inclusion. Each successor step composes the previously obtained inclusion with $C_k\subseteq C_{k+1}$. $\square$
-
-**Corollary 7 (Completeness of the ambient observation space).** Observations ordered by inclusion form a complete lattice. Arbitrary suprema are unions, arbitrary infima are intersections, and in particular every increasing countable chain has a least upper bound.
-
-**Proof sketch.** The union of a family contains every member and is contained in every common upper bound by the same elementwise argument as Theorem 5. Dually, the intersection is the greatest lower bound. $\square$
-
-### 5.2 What the limit theorem does not prove
-
-Suppose a predicate $\mathsf{Correct}(X)$ identifies observations compatible with a proof system. Theorem 5 does not imply
-
-$$
-\bigl(\forall n,\mathsf{Correct}(C_n)\bigr)
-\Longrightarrow
-\mathsf{Correct}\!\left(\bigcup_n C_n\right).
-$$
-
-That implication is a separate closure property. It is plausible for finitary, local conditions: if every violation has a finite witness, a violation in the union should already appear at some sufficiently informative stage of a directed chain. It may fail for conditions quantified over entire infinite branches or for infinitary inference rules.
-
-The distinction is central. The complete lattice supplies a semantic universe in which fixed points and limits can be discussed. It does not designate which points are proofs.
-
-## 6. Strict ordinal descent excludes circularity
-
-Ordinals are well ordered, and their strict order is transitive and irreflexive. These elementary facts settle the proposed ranking criterion.
-
-**Theorem 8 (No strictly ranked self-reference).** Let $(V,D,\rho)$ be an ordinal-ranked dependency graph satisfying
-
-$$
-xDy\Longrightarrow\rho(y)<\rho(x).
-$$
-
-Then no node depends on itself:
-
-$$
-\forall x\in V,\quad \neg(xDx).
-$$
-
-**Proof sketch.** If $xDx$, the rank condition gives $\rho(x)<\rho(x)$, contradicting irreflexivity. $\square$
-
-**Theorem 9 (No strictly ranked finite cycle).** Under the same rank condition, the dependency graph has no finite directed cycle.
-
-**Proof sketch.** Assume a cycle
-
-$$
-v_0Dv_1D\cdots Dv_nDv_0.
-$$
-
-The rank condition gives
-
-$$
-\rho(v_1)<\rho(v_0),\quad
-\rho(v_2)<\rho(v_1),\quad\ldots,\quad
-\rho(v_0)<\rho(v_n).
-$$
-
-By transitivity along the first $n$ edges,
-
-$$
-\rho(v_n)<\rho(v_0).
-$$
-
-The closing edge gives $\rho(v_0)<\rho(v_n)$. Combining these inequalities yields $\rho(v_0)<\rho(v_0)$, impossible. Equivalently, chaining every edge around the cycle returns to a strict decrease of the starting ordinal below itself. $\square$
-
-**Corollary 10 (A self-loop has no decreasing ordinal ranking).** If a dependency relation contains $xDx$, then there is no ordinal-valued function $\rho$ that strictly decreases along every dependency edge.
-
-**Proof sketch.** Any such function would satisfy $\rho(x)<\rho(x)$ on the self-loop. $\square$
-
-These theorems are independent of how large the ordinals are. Moving from natural-number ranks to transfinite ranks does not help: no strict order can descend around a finite cycle and return to its starting value.
-
-The result identifies a category error in the convergence proposal. A recursive function may call itself on a structurally smaller argument because each dynamic call occupies a new state with a smaller measure; the call graph of concrete states is then well founded. By contrast, a graph edge returning to the identical proof node returns to the identical rank. Strict descent cannot both occur and return.
-
-Ordinal ranks remain useful for circular-looking finite presentations when the apparent back-edge abbreviates a transition to a genuinely different, lower-ranked semantic state. In that case the semantic dependency is not cyclic even if the surface notation shares a name. Genuine cyclic systems need another criterion.
-
-## 7. The liar under exact reflection
-
-Let $L$ be a proposition intended as a liar statement and let $Q$ be the proposition that $L$ is provable. Consider two equations:
-
-$$
-Q\leftrightarrow L
-\tag{R}
+\frac{A\in\Gamma}{\Gamma\vdash A}
+\quad\text{(assumption)}
 $$
 
 and
 
 $$
-L\leftrightarrow\neg Q.
-\tag{N}
+\frac{A::\Gamma\vdash B}{\Gamma\vdash A\to B}
+\quad\text{(implication introduction).}
 $$
 
-Equation $(R)$ is **exact reflection** for this sentence: provability and truth coincide. Equation $(N)$ is the **negating fixed-point equation**: the sentence is true exactly when it is not provable.
+Derivability is inductively generated, so every ordinary derivation is a finite well-founded tree. We intentionally omit implication elimination because it is unnecessary for the central phenomenon. The method extends to additional finitary rules when every premise is assigned smaller rank than its conclusion node.
 
-**Theorem 11 (Liar fixed-point impossibility).** No ordinary propositions $Q$ and $L$ satisfy both $(R)$ and $(N)$.
+The assumption rule must be read locally: it concludes $A$ only in a context where $A$ is available. It is not an unconditional proof of $A$. This distinction becomes decisive in the identity example.
 
-**Proof sketch.** Compose the forward implication $Q\to L$ from $(R)$ with the forward implication $L\to\neg Q$ from $(N)$ to obtain $Q\to\neg Q$. Thus $Q$ implies a contradiction, so $\neg Q$. Conversely, $(N)$ gives $\neg Q\to L$, and $(R)$ gives $L\to Q$, so $\neg Q\to Q$. Applying this to the established $\neg Q$ yields $Q$, contradicting $\neg Q$. $\square$
+## 3. Proof graphs and progress certificates
 
-**Corollary 12 (No exact liar model).** There is no pair $(Q,L)$ in ordinary two-valued propositional semantics for which exact reflection and the negating fixed-point equation both hold.
+### 3.1 Graph instructions
 
-This is stronger and more precise than assigning the liar an undefined ordinal height. The contradiction arises before any ranking is considered. Avoiding it requires changing at least one ingredient: weakening reflection, stratifying the provability predicate, restricting fixed-point formation, or moving to a nonclassical semantics in which the displayed equivalences receive a different interpretation.
+Let $V$ be any set of nodes. No finiteness, acyclicity, or decidability assumption is imposed on $V$.
 
-The result should not be overgeneralized. It does not claim that every use of self-reference is inconsistent. It concerns the simultaneous demand for these two exact equivalences in ordinary logic.
+**Definition 3.1 (Local instruction).** A node carries one of the following instructions:
 
-## 8. Algorithms and finite experiments
+1. **Assumption:** no child is required.
+2. **Implication introduction:** data $A$, $B$, and a designated child $m\in V$ are supplied.
 
-Although the principal results are structural, finite algorithms make them tangible.
+**Definition 3.2 (Proof graph).** A proof graph $G$ consists of three assignments on $V$:
 
-### 8.1 Truncating the unary unravelling
+- a context $\Gamma_n$ for each node $n$;
+- a conclusion $C_n$ for each node $n$;
+- a local instruction $I_n$ for each node $n$.
 
-Given a cutoff $d$, enumerate the addresses $0^0,0^1,\ldots,0^d$ and label each with $a$. This produces the visible portion of $U_a$ through depth $d$.
+This terminology does not presuppose validity. A proof graph is initially only a candidate derivation diagram.
 
-The algorithm performs $d+1$ output operations. If addresses are stored explicitly as tuples, constructing all tuples uses
+### 3.2 Local typing
 
-$$
-1+2+\cdots+d=O(d^2)
-$$
+**Definition 3.3 (Local well-typedness).** A proof graph is locally well typed when every node obeys the following condition.
 
-symbol writes and $O(d^2)$ output space. A streaming representation that stores only depth and label uses $O(d)$ output records and $O(1)$ auxiliary space.
-
-### 8.2 Accumulating an observation chain
-
-Given finite observations $C_0,\ldots,C_N$, maintain a set $U$, initially empty, and update $U\leftarrow U\cup C_n$ at each stage. The intermediate value after stage $n$ is the least upper bound of the observed prefix.
-
-With hash sets and $M=\sum_{n=0}^N|C_n|$, the expected running time is $O(M)$ and space is $O(|U|)$. The procedure directly realizes the proof of Theorem 5: each item enters the union when its witnessing stage is processed.
-
-### 8.3 Detecting failure of strict ranking
-
-For a finite directed graph, a decreasing ordinal ranking exists whenever the graph is acyclic: a reverse topological height in the natural numbers suffices. Conversely, Theorem 9 shows that a cycle prevents such a ranking. Therefore cycle detection decides whether an edgewise strictly decreasing rank can exist.
-
-Depth-first search with three colors—unvisited, active, finished—detects a cycle upon encountering an edge to an active node. The complexity is $O(|V|+|E|)$ time and $O(|V|)$ space. If no cycle exists, process nodes in reverse topological order and assign
+- If $I_n$ is the assumption instruction, then $C_n\in\Gamma_n$.
+- If $I_n$ is implication introduction with formulas $A,B$ and child $m$, then
 
 $$
-\rho(x)=
-\begin{cases}
-0,&\text{if }x\text{ has no dependencies},\\
-1+\max\{\rho(y):xDy\},&\text{otherwise}.
-\end{cases}
+C_n=A\to B,\qquad \Gamma_m=A::\Gamma_n,\qquad C_m=B.
 $$
 
-Then $xDy$ implies $\rho(y)<\rho(x)$. Thus, for finite graphs, strict rankability is equivalent to acyclicity.
+Local well-typedness verifies that each node looks like a legal rule application. It does not examine unbounded chains of dependencies. In particular, it cannot by itself guarantee that repeatedly following children eventually reaches an assumption.
 
-### 8.4 Truth-table test for the liar equations
+### 3.3 Ordinal guards
 
-There are four Boolean pairs $(Q,L)$. Testing both biconditionals on each pair reveals that none satisfies them simultaneously. This finite enumeration is pedagogical rather than foundational; Theorem 11 supplies the general propositional argument.
+We use only two standard properties of ordinals: strict order is transitive and irreflexive, and it is well founded. The latter means that induction is available for any relation obtained by pulling ordinal order back along a rank function.
 
-## 9. Applications and interpretation
-
-### 9.1 Cyclic proof systems
-
-Practical cyclic proof calculi use finite graphs to represent potentially infinite derivations. Their soundness generally depends on a global condition over infinite paths. The present results explain why demanding descent on every graph edge is too strong: it collapses the system back to an acyclic one.
-
-A more permissive trace condition may allow neutral edges while requiring infinitely many progress points along every infinite branch. Such a condition can validate graph cycles without permitting an endlessly unproductive loop.
-
-### 9.2 Recursive programs and productivity
-
-The unary unravelling resembles a stream generated by repeatedly emitting the same value. It is productive because every finite output prefix can be computed in finite time. Productivity is not termination: the entire stream is never completed, but each requested observation is available.
-
-This analogy suggests a proof-theoretic criterion based on guarded productivity. A cyclic proof should reveal another finite layer of locally correct evidence before invoking its circular hypothesis again. The truncation theorem captures the approximation side; a soundness theorem would need to connect each layer to semantic validity.
-
-### 9.3 Model checking and certificates
-
-Finite-state systems routinely compress infinite executions into finite graphs. A cycle is meaningful operationally, but whether it certifies a liveness or safety property depends on acceptance conditions. Likewise, a cyclic proof graph is a compact representation, not a certificate by shape alone. A checker must verify local rules and a global progress condition.
-
-### 9.4 Fixed-point semantics
-
-The observation lattice provides all joins and meets, making it suitable for monotone operators. If an operator $F$ maps observations to observations and is monotone, fixed-point methods become available. Yet the mathematical burden shifts to the definition of $F$: it must encode inference correctly, and the chosen least or greatest fixed point must match the intended notion of proof.
-
-Least fixed points naturally capture finitely generated inductive behavior. Greatest fixed points capture coinductive behavior such as infinite streams. Circular syntax can denote an element of a greatest fixed point while still failing to establish a proposition under an inductive notion of derivability. The choice of fixed point is semantic, not merely representational.
-
-## 10. Toward sound guarded circularity
-
-The negative ranking result narrows the design space constructively.
-
-### 10.1 A later modality
-
-Introduce a modality $\triangleright A$, read “$A$ holds one step later.” A guarded circular rule may use a back-reference only beneath $\triangleright$. Semantically, define validity at natural indices so that
+**Definition 3.4 (Ordinal ranking and guardedness).** An ordinal ranking is a map
 
 $$
-\triangleright A\text{ is valid at index }n+1
+\rho:V\longrightarrow \mathsf{Ord}.
 $$
 
-only when $A$ is valid at index $n$. At index $0$, the later proposition is typically trivial or unavailable, depending on the model. A circular equation can then be solved stage by stage because every recursive semantic use consumes one unit of index.
-
-This differs fundamentally from assigning one fixed rank to each graph node. The same syntactic node is interpreted at different semantic indices. Returning to the node is permitted because the state is now $(x,n)$ rather than merely $x$, and the index has decreased.
-
-### 10.2 Scott-closed correctness
-
-Let $\mathcal O$ be the observation lattice and $\mathcal C\subseteq\mathcal O$ the class of locally correct observations. A central question is whether $\mathcal C$ is closed under directed unions:
+A proof graph is **guarded by $\rho$** if every implication-introduction node $n$ with child $m$ satisfies
 
 $$
-C_i\in\mathcal C\ \text{for all }i
-\quad\Longrightarrow\quad
-\bigcup_i C_i\in\mathcal C.
+\rho(m)<\rho(n).
 $$
 
-For finite-arity local rules, one may seek a finite-witness principle: if the union violates correctness at a node, only finitely many labels and child addresses witness the violation, so directedness places all of them together in some stage, contradicting stagewise correctness. Infinitary rules or branch-global acceptance conditions may invalidate this argument.
+Assumption nodes have no outgoing dependency and impose no inequality.
 
-### 10.3 Global trace conditions
+The terminology “guarded” expresses a progress discipline. An edge may point anywhere in the concrete representation, including to a node displayed earlier, but it must point downward in rank. Thus textual or graphical back-reference is separated from logical circularity.
 
-Instead of requiring every edge to decrease, associate measures with traces and require progress infinitely often along each infinite branch. Neutral transitions may occur, and a finite graph may contain cycles, but no infinite path may avoid progress forever. The unravelling of the graph is the natural object on which such branch conditions are stated.
+## 4. Soundness by well-founded unfolding
 
-### 10.4 Reflection and self-reference
+We now prove the central theorem.
 
-The liar theorem indicates that unrestricted exact reflection is incompatible with a negating fixed point. Future systems should state precisely which reflection principles are available and at what strata. Modal provability, typed quotation, or hierarchical truth predicates may separate the object language from claims about its own derivability.
+**Theorem 4.1 (Guarded Graph Soundness).** *Let $G$ be a locally well-typed proof graph on a node set $V$, and let $\rho:V\to\mathsf{Ord}$ guard every dependency. Then, for every node $n\in V$, there exists an ordinary derivation*
 
-## 11. Limitations
+$$
+\Gamma_n\vdash C_n.
+$$
 
-The formula language considered here contains only implication, and its derivation system contains only hypotheses and implication introduction. This suffices to distinguish the identity proof from a back-edge but is not a complete account of propositional logic.
+**Proof sketch.** Define a dependency order by $m\prec n$ exactly when $\rho(m)<\rho(n)$. Since strict ordinal order is well founded, so is $\prec$. Apply well-founded induction to an arbitrary node $n$.
 
-The address model permits malformed trees and inconsistent observations. This generality is intentional for the lattice theorem, but a full proof theory must add prefix closure, arity constraints, sequent labels, and rule correctness.
+If $n$ is an assumption node, local well-typedness gives $C_n\in\Gamma_n$, and the ordinary assumption rule yields $\Gamma_n\vdash C_n$.
 
-The no-cycle theorem concerns strict rank decrease on every dependency edge. It does not refute cyclic proof systems based on other global criteria. On the contrary, it shows why those criteria are necessary.
+If $n$ is an implication-introduction node with formulas $A,B$ and child $m$, local well-typedness gives
 
-Finally, the liar theorem assumes ordinary propositions and exact biconditionals. Alternative logics may reject excluded middle, explosion, bivalence, or unrestricted reflection. Such systems require separate semantic analysis.
+$$
+C_n=A\to B,
+\qquad
+\Gamma_m=A::\Gamma_n,
+\qquad
+C_m=B.
+$$
+
+Guardedness gives $\rho(m)<\rho(n)$, so the induction hypothesis applies to $m$ and yields
+
+$$
+A::\Gamma_n\vdash B.
+$$
+
+Implication introduction now gives $\Gamma_n\vdash A\to B$, which is the required judgment after substituting $C_n=A\to B$. These are all possible instructions. $\square$
+
+### 4.1 Interpretation
+
+The theorem is a conservativity statement. A guarded graph cannot derive a proposition unavailable to ordinary natural deduction. Every graph node can be unfolded into a finite derivation, although the entire graph may use an infinite node set and ordinal ranks need not be natural numbers.
+
+The theorem also identifies the load-bearing assumption. Local typing supplies the rule-specific equalities, but well-founded descent licenses recursive use of child derivations. Without descent, the attempted proof would invoke itself without reaching a base case.
+
+### 4.2 Generalization pattern
+
+The same argument applies to any finitary proof system. For a rule with children $m_1,\ldots,m_k$, require $\rho(m_i)<\rho(n)$ for every premise. Local typing must assert that the children carry precisely the rule's premise sequents. Well-founded induction then reconstructs an ordinary derivation. Infinitary rules require additional care because the target ordinary calculus must itself permit the corresponding family of premises.
+
+## 5. The height-one identity derivation
+
+Fix a formula $P$. Consider two nodes, a root $r$ and a leaf $\ell$.
+
+- At $r$, set $\Gamma_r=[]$, $C_r=P\to P$, and use implication introduction with child $\ell$.
+- At $\ell$, set $\Gamma_\ell=[P]$, $C_\ell=P$, and use the assumption instruction.
+- Assign ranks $\rho(r)=1$ and $\rho(\ell)=0$.
+
+The graph is locally well typed: the leaf conclusion occurs in its context, and the child of the root has exactly the context and conclusion demanded by implication introduction. It is guarded because $0<1$.
+
+**Theorem 5.1 (Height-One Identity).** *For every formula $P$, the construction above has root ordinal height $1$, leaf height $0$, and yields an ordinary derivation*
+
+$$
+[]\vdash P\to P.
+$$
+
+**Proof sketch.** The leaf derives $P$ from context $[P]$ by assumption. The root discharges that occurrence of $P$ by implication introduction. Equivalently, Theorem 4.1 applies to the locally typed rank-$1$ graph. $\square$
+
+This theorem directly addresses a misleading description of identity as “proving $P$ by assuming $P$.” The temporary assumption proves $P$ only inside the hypothetical context $[P]$. The final conclusion is the implication $P\to P$, not the unconditional proposition $P$. The construction is an ordinary two-node tree and contains no self-reference.
+
+## 6. Strict descent excludes cycles
+
+### 6.1 Direct self-reference
+
+**Theorem 6.1 (No Guarded Self-Reference).** *For every node $n$ and every ordinal ranking $\rho$, the inequality $\rho(n)<\rho(n)$ is false. Hence a direct self-dependency cannot satisfy edgewise ordinal guardedness.*
+
+**Proof sketch.** Strict ordinal order is irreflexive. $\square$
+
+A pure one-node loop therefore has no ordinal height compatible with strict descent.
+
+**Corollary 6.2 (Pure Loop Obstruction).** *There exists no ordinal ranking of a singleton proof graph whose unique dependency edge begins and ends at its sole node and strictly decreases rank.*
+
+This is the minimal structural model of unsupported circularity. The failure is not that an appropriate large ordinal has yet to be found. No ordinal can be strictly below itself.
+
+### 6.2 Arbitrary finite cycles
+
+The obstruction propagates along paths.
+
+**Theorem 6.3 (Acyclicity of Ranked Dependencies).** *Let $E(a,b)$ mean that node $a$ depends on node $b$. Suppose $\rho(b)<\rho(a)$ whenever $E(a,b)$. For every integer $k>0$ and every path*
+
+$$
+n_0\,E\,n_1\,E\,\cdots\,E\,n_k,
+$$
+
+*one has $n_0\ne n_k$. In particular, the dependency relation has no nonempty finite directed cycle.*
+
+**Proof sketch.** Each path edge yields a strict decrease. By transitivity,
+
+$$
+\rho(n_k)<\rho(n_0).
+$$
+
+If $n_k=n_0$, substitution gives $\rho(n_0)<\rho(n_0)$, contradicting irreflexivity. $\square$
+
+A stronger observation follows from well-foundedness: there is no infinite dependency chain either. Thus edgewise ordinal descent converts any reachable dependency structure into a well-founded one, irrespective of how the graph is drawn.
+
+### 6.3 Consequence for the fixed-point proposal
+
+A proposed semantics might identify a circular proof with the limit of finite unfoldings. Theorems 6.1 and 6.3 show that strict decrease on every dependency edge cannot implement this proposal for genuine cycles. If a back-edge completes a cycle, composing strict inequalities around the cycle is contradictory.
+
+This does not refute all cyclic proof theories. It identifies the necessary change: progress cannot be required at every edge. A valid cyclic system must instead use a global trace criterion, a modal delay, parity acceptance, or another condition that permits recurrence while ruling out unproductive loops.
+
+## 7. Diagonal self-reference and unprovability
+
+Structural circularity and semantic diagonalization should not be conflated.
+
+Consider a sufficiently expressive deductive system equipped with a sentence $G$ that asserts its own unprovability. Assume the system is sound in the relevant semantics: every provable sentence is true. Then $G$ is true but unprovable under the standard diagonal conditions.
+
+**Theorem 7.1 (Diagonal Unprovability).** *In a sound diagonal system, the Gödel sentence asserting “I am not provable in this system” is not provable in that system.*
+
+**Proof sketch.** Suppose $G$ were provable. By soundness, $G$ would be true. But the content of $G$ is that $G$ is not provable, contradicting the supposition. Therefore $G$ is unprovable. Under the usual diagonal specification and soundness assumptions, its assertion is consequently true. $\square$
+
+Theorem 7.1 is semantic: it relies on the intended meaning of the provability predicate, the fixed-point construction of $G$, and soundness. Theorem 6.1 is structural: it uses only irreflexivity of ordinal order. The latter says that a pure self-loop has no decreasing rank; it does not independently establish Gödel's theorem. Conversely, diagonal unprovability does not imply that every graph containing a syntactic back-reference is invalid.
+
+The two results nevertheless illuminate a common boundary. Neither a bare dependency loop nor a negative assertion of its own provability status creates evidence. Self-description is not self-justification.
+
+## 8. Algorithms and certificate checking
+
+For finite graphs and effectively represented ranks, the definitions lead to simple validation procedures.
+
+### 8.1 Local typing and guardedness
+
+Assume a graph has $|V|$ nodes and $|E|$ dependency edges. Each formula and context has an explicit finite representation.
+
+**Algorithm 8.1 (Guarded Proof-Graph Validator).**
+
+1. For each assumption node $n$, test whether $C_n$ occurs in $\Gamma_n$.
+2. For each implication node $n$ labelled by $A,B$ with child $m$:
+   - test $C_n=A\to B$;
+   - test $\Gamma_m=A::\Gamma_n$;
+   - test $C_m=B$;
+   - test $\rho(m)<\rho(n)$.
+3. Accept exactly when every test succeeds.
+
+With hashed or canonical formulas, the graph traversal costs $O(|V|+|E|)$ apart from context comparison and rank comparison. If ranks are natural numbers, rank checks are ordinary integer comparisons. If ordinals below a fixed notation system are represented in canonical form, complexity additionally depends on the notation length.
+
+**Proposition 8.2 (Validator Correctness).** *If Algorithm 8.1 accepts, every node's sequent is ordinarily derivable.*
+
+**Proof sketch.** Acceptance is exactly local well-typedness plus guardedness, so Theorem 4.1 applies. $\square$
+
+### 8.2 Cycle diagnosis
+
+A separate finite procedure can expose an immediate impossibility before rank checking.
+
+**Algorithm 8.3 (Dependency-Cycle Diagnostic).**
+
+1. Run depth-first search while marking unvisited, active, and completed nodes.
+2. If an edge reaches an active node, report the corresponding directed cycle.
+3. Otherwise, output a reverse topological ordering.
+
+The running time is $O(|V|+|E|)$. By Theorem 6.3, finding a directed cycle proves that no edgewise strictly decreasing ordinal ranking exists. For a finite acyclic graph, natural-number ranks suffice: assign each node the maximum remaining dependency-path length. Hence, in the finite case, acyclicity is not merely necessary but sufficient for the existence of a decreasing natural-number rank.
+
+### 8.3 Constructing ranks on finite acyclic graphs
+
+**Proposition 8.4 (Finite Rank Construction).** *Every finite directed acyclic dependency graph admits a ranking $h:V\to\mathbb N$ such that $h(m)<h(n)$ whenever $n$ depends on $m$.*
+
+**Proof sketch.** In reverse topological order, set an assumption or sink node to height $0$. For every other node $n$, set
+
+$$
+h(n)=1+\max\{h(m):n\text{ depends on }m\}.
+$$
+
+Every dependency child then has height at most $h(n)-1$. $\square$
+
+This construction also computes the minimum possible maximum natural rank when height is measured by longest dependency path.
+
+## 9. Applications
+
+### 9.1 Recursive security reductions
+
+A cryptographic reduction transforms an adversary against one claim into an adversary against another. Complex proofs may share subreductions or revisit protocol components. A dependency graph can compress this organization, while a rank can measure remaining rounds, unresolved game hops, oracle nesting, or a tuple ordered lexicographically.
+
+Theorem 4.1 provides a discipline for such recursive arguments: every recursive invocation must lower the measure. A purported reduction of security claim $S$ to exactly $S$ with unchanged parameters is rejected as a self-loop. A reduction from $S(k)$ to $S(k-1)$ is potentially legitimate when $k$ is a natural-number rank and a base case is supplied.
+
+The theorem does not establish cryptographic security by itself. Local nodes must still encode sound reduction steps, and quantitative losses must be tracked separately. Its role is structural: it prevents recursive organization from concealing circular dependence.
+
+### 9.2 Termination and recursive programs
+
+The analogy with recursion is exact at the level of well-founded induction. A recursive function may call itself on an argument of smaller rank. A guarded proof node may invoke a child derivation of smaller rank. In both cases, well-foundedness converts a recursive specification into a finite computation or derivation for each input node.
+
+The analogy also clarifies why a fixed-point slogan is insufficient. The equation $x=x$ has every value as a fixed point and selects none. Likewise, a proof node that merely points to itself provides no constructor and no base evidence. Productive definitions require guarded structure, not only algebraic self-equality.
+
+### 9.3 Proof compression
+
+Directed acyclic graphs can represent repeated subderivations once rather than duplicating them in a tree. Theorem 4.1 justifies unfolding this compressed representation. The unfolded tree may be exponentially larger than the graph, so validation of the graph and rank certificate can be more economical than explicit expansion.
+
+This observation distinguishes intensional size from extensional derivation size. A compact certificate can encode shared work without introducing new logical strength.
+
+### 9.4 Cyclic reasoning about inductive predicates
+
+Established cyclic proof methods often permit cycles but impose an infinite-trace progress condition. The present acyclicity theorem explains why: demanding strict decrease at every local edge would collapse the method to directed acyclic graphs. To gain genuine cyclic compression, some edges must preserve or increase a local measure while every infinite trace repeatedly encounters progress.
+
+Thus edgewise guarding is a baseline semantics, not a complete theory of cyclic proof.
+
+## 10. Domain-theoretic perspective
+
+One may order partial proof trees by information content. An unfinished leaf is below any refinement that replaces it by a rule and further partial subtrees. Directed families of finite approximants can then have infinite trees as least upper bounds. This suggests a Scott-domain semantics for proof objects.
+
+However, completion alone does not separate valid proofs from arbitrary infinite trees. The infinite unfolding of a pure self-loop may exist as a mathematical tree-like object while still containing no assumption leaf and no finite justification. The domain can house syntax more generously than the logic admits proofs.
+
+Two choices arise. A **least-fixed-point semantics** includes only objects generated from finite rule applications and well-founded approximation; unsupported loops are excluded. A **greatest-fixed-point semantics** naturally admits infinite locally correct behavior but needs an independent productivity, fairness, or trace condition to prevent every self-loop from becoming a proof.
+
+The guarded soundness theorem characterizes a robust fragment of the least-fixed-point side. Ordinal rank supplies a transfinite schedule of approximation: a node is justified after all lower-ranked dependencies. Yet because every dependency decreases, each individual path is well founded. The semantics does not validate circularity as a source of truth.
+
+## 11. Limitations and future work
+
+The calculus studied here contains only implication introduction and assumptions. Additional connectives and rules should follow the same induction pattern, but systems with infinitary rules, coinductive predicates, or semantic side conditions require separate analysis.
+
+The results are qualitative. They do not bound the size of the unfolded ordinary derivation relative to a shared graph. Nor do they establish an asymptotic complexity theorem for ordinal notation comparison. They show soundness given a rank certificate, not how to find an optimal certificate in every setting.
+
+Four directions are especially natural.
+
+### 11.1 Algebraic-domain completion of finite approximants
+
+Order finite partial proof trees by information content, placing an unfinished leaf below all its refinements. The conjecture is that ideal completion gives an algebraic Scott domain whose compact elements are exactly finite partial trees. The central problem is to characterize the least admissible fixed point selected by ordinal-guarded approximation. The key distinction must remain explicit: the domain may contain every infinite tree, while only a subset denotes valid derivations.
+
+### 11.2 Trace conditions for genuine cyclic proofs
+
+For cyclic proofs of inductive predicates, validity may correspond to a progress measure into a well-order such that every infinite branch contains infinitely many strict decreases between designated regeneration points. This Büchi-style condition would permit recurrence while requiring recurring progress. Theorem 6.3 pinpoints why such a weakening is necessary: edgewise descent eliminates the very cycles one hopes to study.
+
+### 11.3 Modal productive self-reference
+
+A guarded modal calculus can place recursive occurrences beneath a “later” modality. A recursive equation should have a unique productive solution when every self-reference is delayed by an observable constructor. The height-one identity and the rejected pure loop are elementary boundary tests: the former exposes a rule constructor and reaches an assumption, while the latter reveals nothing before recurring.
+
+### 11.4 Complexity of ordinal certificates
+
+For finite graphs with ranks in Cantor normal form below a fixed ordinal such as $\varepsilon_0$, one may ask whether checking local typing and descent is polynomial in graph size and rank-encoding length. Finding a minimum-rank certificate appears related to longest-path ranking on directed acyclic graphs and may define a harder optimization problem than verification itself.
 
 ## 12. Conclusion
 
-Finite cyclic descriptions, infinite trees, and valid proofs belong to different mathematical layers. A one-node loop can unravel into a well-defined tree with labelled nodes at every finite depth. Finite observations of such objects admit canonical least upper bounds by union, and every fixed address stabilizes in a sufficiently deep truncation. These results establish a robust approximation space.
+Proof graphs allow sharing, recursive organization, and representations that need not look like trees. Their mathematical legitimacy, however, cannot rest on appearance or local syntax alone. An ordinal rank that decreases on every dependency edge supplies a transparent global certificate.
 
-They do not make arbitrary cycles sound. The ordinary proof of $P\to P$ is a finite height-one hypothetical derivation, not a proof that cites itself. A strict ordinal decrease along every dependency edge forbids self-loops and all finite cycles, so it cannot serve as a convergence rule for genuine circularity. Exact reflection combined with the liar’s negating equation has no propositional model.
+The Guarded Graph Soundness Theorem shows that every locally correct guarded graph unfolds into ordinary natural deduction. The standard identity $P\to P$ occupies the smallest positive case: a rank-$1$ root discharges a rank-$0$ assumption leaf. It is hypothetical reasoning, not self-justification. At the negative boundary, no direct loop can have smaller rank than itself, and no nonempty finite dependency cycle can survive transitive descent. A Gödel sentence's unprovability provides a complementary semantic warning, but it must not be conflated with the structural rank obstruction.
 
-A viable theory of circular proof must therefore add more than an infinite unravelling and more than a complete information order. It needs guarded semantic delay, preservation of correctness under limits, or a global progress condition on infinite traces. The observation framework supplies the space of candidates; soundness determines which candidates deserve to be called proofs.
+The resulting message is precise. Non-tree-shaped proof syntax is safe when it abbreviates well-founded justification. Strict ordinal descent certifies exactly such abbreviation and therefore does not create a new class of genuinely circular truths. Richer cyclic systems remain possible, but they must articulate a more global notion of productivity—through traces, modalities, or admissible fixed points—while continuing to reject the empty promise of a proof that cites only itself.

@@ -1,147 +1,265 @@
 #!/usr/bin/env python3
-"""Finite experiments for infinite trees, observation limits, and cyclic ranks."""
+"""Numerical demonstrations of ordinal-guarded proof graphs.
+
+The script models the implication/assumption fragment described in the paper,
+checks local typing and strict natural-number rank descent, detects dependency
+cycles, constructs canonical ranks for acyclic graphs, and unfolds accepted
+nodes into explicit derivation trees.
+"""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Hashable, Iterable, List, Optional, Sequence, Set, Tuple, TypeVar
-
-Label = TypeVar("Label", bound=Hashable)
-Node = TypeVar("Node", bound=Hashable)
-Address = Tuple[int, ...]
-Observation = Set[Tuple[Address, Label]]
-
-
-def self_unravelling_value(address: Address, label: Label) -> Optional[Label]:
-    """Return label exactly on addresses made entirely of zeroes."""
-    return label if all(index == 0 for index in address) else None
-
-
-def unary_truncation(max_depth: int, label: Label) -> Observation[Label]:
-    """Materialize the unary self-unravelling through max_depth."""
-    if max_depth < 0:
-        raise ValueError("max_depth must be nonnegative")
-    return {(tuple(0 for _ in range(depth)), label) for depth in range(max_depth + 1)}
-
-
-def chain_limit(stages: Iterable[Observation[Label]]) -> Observation[Label]:
-    """Compute the union, hence the least upper bound, of finite observations."""
-    limit: Observation[Label] = set()
-    for stage in stages:
-        limit.update(stage)
-    return limit
-
-
-def is_increasing(stages: Sequence[Observation[Label]]) -> bool:
-    """Test whether each observation is included in its successor."""
-    return all(left <= right for left, right in zip(stages, stages[1:]))
+from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple, Union
 
 
 @dataclass(frozen=True)
-class RankingResult:
-    """Acyclicity result and a decreasing natural-number ranking when one exists."""
+class Atom:
+    """An atomic proposition."""
 
-    acyclic: bool
-    rank: Optional[Dict[Node, int]]
-    cycle: Optional[List[Node]]
+    name: str
+
+    def __str__(self) -> str:
+        return self.name
 
 
-def decreasing_rank(graph: Dict[Node, Set[Node]]) -> RankingResult:
-    """Detect a cycle or rank every node above all of its dependencies.
+@dataclass(frozen=True)
+class Imp:
+    """An implication formula."""
 
-    An edge x -> y means that x depends on y.  On an acyclic graph the returned
-    rank satisfies rank[y] < rank[x] on every edge.
+    left: "Formula"
+    right: "Formula"
+
+    def __str__(self) -> str:
+        return f"({self.left} -> {self.right})"
+
+
+Formula = Union[Atom, Imp]
+Context = Tuple[Formula, ...]
+
+
+@dataclass(frozen=True)
+class AssumptionRule:
+    """A leaf justified by membership in its context."""
+
+
+@dataclass(frozen=True)
+class ImpIntroRule:
+    """Implication introduction with one dependency child."""
+
+    antecedent: Formula
+    consequent: Formula
+    child: str
+
+
+Rule = Union[AssumptionRule, ImpIntroRule]
+
+
+@dataclass(frozen=True)
+class Node:
+    """A labelled node in a candidate proof graph."""
+
+    context: Context
+    conclusion: Formula
+    rule: Rule
+    rank: int
+
+
+@dataclass(frozen=True)
+class Derivation:
+    """An explicitly unfolded ordinary derivation tree."""
+
+    context: Context
+    conclusion: Formula
+    rule_name: str
+    children: Tuple["Derivation", ...] = ()
+
+
+def dependencies(node: Node) -> Tuple[str, ...]:
+    """Return all direct dependency identifiers of a node."""
+
+    if isinstance(node.rule, ImpIntroRule):
+        return (node.rule.child,)
+    return ()
+
+
+def validate_graph(graph: Mapping[str, Node]) -> List[str]:
+    """Return all local-typing and rank-descent errors.
+
+    An empty result certifies that every dependency is well typed and strictly
+    lowers the supplied natural-number rank.
     """
-    all_nodes: Set[Node] = set(graph)
-    for dependencies in graph.values():
-        all_nodes.update(dependencies)
-    adjacency = {node: set(graph.get(node, set())) for node in all_nodes}
-    color: Dict[Node, int] = {node: 0 for node in all_nodes}
-    stack: List[Node] = []
-    rank: Dict[Node, int] = {}
 
-    def visit(node: Node) -> Optional[List[Node]]:
-        color[node] = 1
-        stack.append(node)
-        for dependency in adjacency[node]:
-            if color[dependency] == 0:
-                found = visit(dependency)
-                if found is not None:
-                    return found
-            elif color[dependency] == 1:
-                start = stack.index(dependency)
-                return stack[start:] + [dependency]
+    errors: List[str] = []
+    for name, node in graph.items():
+        if node.rank < 0:
+            errors.append(f"{name}: rank must be nonnegative")
+        if isinstance(node.rule, AssumptionRule):
+            if node.conclusion not in node.context:
+                errors.append(f"{name}: assumption is absent from its context")
+            continue
+
+        rule = node.rule
+        if rule.child not in graph:
+            errors.append(f"{name}: missing child {rule.child!r}")
+            continue
+        child = graph[rule.child]
+        expected = Imp(rule.antecedent, rule.consequent)
+        if node.conclusion != expected:
+            errors.append(f"{name}: conclusion is not {expected}")
+        if child.context != (rule.antecedent,) + node.context:
+            errors.append(f"{name}: child context does not add the antecedent")
+        if child.conclusion != rule.consequent:
+            errors.append(f"{name}: child conclusion is not the consequent")
+        if child.rank >= node.rank:
+            errors.append(
+                f"{name}: rank does not decrease ({node.rank} -> {child.rank})"
+            )
+    return errors
+
+
+def find_cycle(graph: Mapping[str, Node]) -> Optional[List[str]]:
+    """Return one directed dependency cycle, or ``None`` if none exists."""
+
+    state: Dict[str, int] = {name: 0 for name in graph}
+    stack: List[str] = []
+    position: Dict[str, int] = {}
+
+    def visit(name: str) -> Optional[List[str]]:
+        state[name] = 1
+        position[name] = len(stack)
+        stack.append(name)
+        for child in dependencies(graph[name]):
+            if child not in graph:
+                continue
+            if state[child] == 0:
+                cycle = visit(child)
+                if cycle is not None:
+                    return cycle
+            elif state[child] == 1:
+                return stack[position[child] :] + [child]
         stack.pop()
-        color[node] = 2
-        rank[node] = 0 if not adjacency[node] else 1 + max(rank[d] for d in adjacency[node])
+        position.pop(name)
+        state[name] = 2
         return None
 
-    for node in all_nodes:
-        if color[node] == 0:
-            cycle = visit(node)
+    for name in graph:
+        if state[name] == 0:
+            cycle = visit(name)
             if cycle is not None:
-                return RankingResult(False, None, cycle)
-    return RankingResult(True, rank, None)
+                return cycle
+    return None
 
 
-def liar_models() -> List[Tuple[bool, bool]]:
-    """Enumerate Boolean pairs satisfying reflection and the liar equation."""
-    return [
-        (provable, liar)
-        for provable in (False, True)
-        for liar in (False, True)
-        if (provable == liar) and (liar == (not provable))
-    ]
+def construct_minimal_ranks(graph: Mapping[str, Node]) -> Dict[str, int]:
+    """Construct longest-path ranks for an acyclic dependency graph.
+
+    Raises ``ValueError`` when a cycle is present. The resulting rank is zero at
+    sinks and one plus the largest child rank elsewhere.
+    """
+
+    cycle = find_cycle(graph)
+    if cycle is not None:
+        raise ValueError("cyclic dependency: " + " -> ".join(cycle))
+    memo: Dict[str, int] = {}
+
+    def height(name: str) -> int:
+        if name in memo:
+            return memo[name]
+        child_names = [c for c in dependencies(graph[name]) if c in graph]
+        memo[name] = 0 if not child_names else 1 + max(height(c) for c in child_names)
+        return memo[name]
+
+    for name in graph:
+        height(name)
+    return memo
 
 
-def run_demo() -> None:
-    """Print representative calculations for all principal results."""
-    print("UNARY SELF-UNRAVELLING")
-    tree = unary_truncation(8, "A")
-    for address, label in sorted(tree, key=lambda item: len(item[0])):
-        print(f"depth={len(address):2d}, address={address!s:26s}, label={label}")
-    assert all(self_unravelling_value((0,) * n, "A") == "A" for n in range(9))
-    assert self_unravelling_value((0, 1), "A") is None
+def unfold(graph: Mapping[str, Node], root: str) -> Derivation:
+    """Unfold a validated guarded graph node into an ordinary derivation."""
 
-    print("\nINCREASING OBSERVATIONS AND THEIR LIMIT")
-    stages = [unary_truncation(depth, "A") for depth in range(6)]
-    limit = chain_limit(stages)
-    print("stage sizes:", [len(stage) for stage in stages])
-    print("increasing:", is_increasing(stages))
-    print("limit size:", len(limit), "equals final stage:", limit == stages[-1])
-    assert is_increasing(stages)
-    assert all(stage <= limit for stage in stages)
+    errors = validate_graph(graph)
+    if errors:
+        raise ValueError("invalid graph:\n  " + "\n  ".join(errors))
+    node = graph[root]
+    if isinstance(node.rule, AssumptionRule):
+        return Derivation(node.context, node.conclusion, "assumption")
+    child = unfold(graph, node.rule.child)
+    return Derivation(node.context, node.conclusion, "implication introduction", (child,))
 
-    print("\nSTRICTLY DECREASING RANKS")
-    dag = {"theorem": {"lemma-1", "lemma-2"}, "lemma-1": {"axiom"},
-           "lemma-2": {"axiom"}, "axiom": set()}
-    dag_result = decreasing_rank(dag)
-    print("acyclic graph ranks:", dag_result.rank)
-    assert dag_result.acyclic and dag_result.rank is not None
-    assert all(dag_result.rank[y] < dag_result.rank[x] for x, ys in dag.items() for y in ys)
 
-    cycle_graph = {"A": {"B"}, "B": {"C"}, "C": {"A"}}
-    cycle_result = decreasing_rank(cycle_graph)
-    print("cyclic graph rankable:", cycle_result.acyclic)
-    print("cycle witness:", cycle_result.cycle)
-    assert not cycle_result.acyclic
+def format_context(context: Context) -> str:
+    """Render a context compactly."""
 
-    self_loop_result = decreasing_rank({"self": {"self"}})
-    print("self-loop rankable:", self_loop_result.acyclic)
-    assert not self_loop_result.acyclic
+    return "[" + ", ".join(map(str, context)) + "]"
 
-    print("\nLIAR EQUATIONS")
-    rows = []
-    for provable in (False, True):
-        for liar in (False, True):
-            reflection = provable == liar
-            negating_fixed_point = liar == (not provable)
-            rows.append((provable, liar, reflection, negating_fixed_point))
-    for row in rows:
-        print("Provable=%-5s Liar=%-5s reflection=%-5s liar-equation=%-5s" % row)
-    print("simultaneous models:", liar_models())
-    assert liar_models() == []
+
+def print_derivation(tree: Derivation, indent: str = "") -> None:
+    """Pretty-print an ordinary derivation tree."""
+
+    print(f"{indent}{format_context(tree.context)} |- {tree.conclusion}  [{tree.rule_name}]")
+    for child in tree.children:
+        print_derivation(child, indent + "  ")
+
+
+def identity_example() -> Dict[str, Node]:
+    """Build the valid height-one derivation of P -> P."""
+
+    p = Atom("P")
+    return {
+        "root": Node((), Imp(p, p), ImpIntroRule(p, p, "leaf"), rank=1),
+        "leaf": Node((p,), p, AssumptionRule(), rank=0),
+    }
+
+
+def pure_loop_example() -> Dict[str, Node]:
+    """Build a direct self-loop that necessarily fails strict descent."""
+
+    p = Atom("P")
+    return {
+        "loop": Node((), Imp(p, p), ImpIntroRule(p, p, "loop"), rank=0),
+    }
+
+
+def shared_dag_example() -> Dict[str, Node]:
+    """Build a small acyclic dependency chain and assign canonical ranks."""
+
+    p, q = Atom("P"), Atom("Q")
+    # This graph is used to demonstrate rank construction independently of
+    # local proof typing; only its dependency shape matters for that algorithm.
+    return {
+        "top": Node((), Imp(p, q), ImpIntroRule(p, q, "middle"), rank=0),
+        "middle": Node((p,), q, ImpIntroRule(q, q, "leaf"), rank=0),
+        "leaf": Node((q, p), q, AssumptionRule(), rank=0),
+    }
+
+
+def main() -> None:
+    """Run three demonstrations and print their mathematical conclusions."""
+
+    print("=== 1. Height-one identity ===")
+    identity = identity_example()
+    print("validation errors:", validate_graph(identity))
+    print("dependency cycle:", find_cycle(identity))
+    print("constructed ranks:", construct_minimal_ranks(identity))
+    print_derivation(unfold(identity, "root"))
+
+    print("\n=== 2. Unsupported self-loop ===")
+    loop = pure_loop_example()
+    print("validation errors:")
+    for error in validate_graph(loop):
+        print(" -", error)
+    print("dependency cycle:", " -> ".join(find_cycle(loop) or []))
+    try:
+        construct_minimal_ranks(loop)
+    except ValueError as error:
+        print("rank construction rejected:", error)
+
+    print("\n=== 3. Canonical ranks on an acyclic graph ===")
+    dag = shared_dag_example()
+    print("dependency cycle:", find_cycle(dag))
+    print("longest-path ranks:", construct_minimal_ranks(dag))
 
 
 if __name__ == "__main__":
-    run_demo()
+    main()
