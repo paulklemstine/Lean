@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "22a6ce83",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: from path congestion to chord-swap geometry\n\n## 1. Exact path constant and discrete cosine extremizer\n\nFor the unit path on `n` sites, the variational gap should equal\n\\[\n\\gamma_n",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-15T05:02:32",
-      "title": "This cycle closed the two-sided estimate for the one-dimensional swap model: the"
-    },
-    {
       "cycle_id": "582560af",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Character Theory of Negative Dimensions\n\nThis cycle proves a cross-domain bridge between virtual negative-dimensional cellular topology and finite Fourier analysis.\n\nThe dimensio",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T07:48:46",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "a6705a36",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: Universal Libraries and Catalog Capacity\n\n## 1. Succinct semantic catalogs\n\nFor a fixed sound proof calculus, characterize theorem families whose accepted volumes admit catalogs a",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-17T08:04:36",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6d984d02",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalizes the **one-dimensional case** of the Infinite Pachner\nTheorem: any two locally finite triangulations of the real line `ℝ` are related\nby a locally finite se",
-      "quality_score": 0.62,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-13T22:16:33",
-      "title": "Infinite Pachner's Theorem for Locally Finite Triangulations"
-    },
     {
       "cycle_id": "5d81b714",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T07:48:46",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "a6705a36",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: Universal Libraries and Catalog Capacity\n\n## 1. Succinct semantic catalogs\n\nFor a fixed sound proof calculus, characterize theorem families whose accepted volumes admit catalogs a",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-17T08:04:36",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "352675e9",
-      "domain": "Applications",
-      "name": "relabel_preserves_ray",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "name": "subset_of_forceStep",
-      "quality": 0.73
-    },
-    {
-      "cycle_id": "58c6edf0",
-      "domain": "Pythagorean",
-      "name": "subset_of_forceSequence",
-      "quality": 0.73
-    },
     {
       "cycle_id": "58c6edf0",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "consensus_singleton",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "a6705a36",
+      "domain": "Bridges",
+      "name": "library_card",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a6705a36",
+      "domain": "Bridges",
+      "name": "borges_library_card",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a6705a36",
+      "domain": "Bridges",
+      "name": "exact_volume_probability",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-07-17T07:48:46",
+  "last_updated": "2026-07-17T08:04:36",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "4aec9d8b",
-        "quality": 0.542,
-        "theorems": 20,
-        "title": "Antipodality Characterization via Opposite-Semicube Helly Property"
-      },
-      {
         "cycle_id": "0c573935",
         "quality": 0.7426819999999998,
         "theorems": 19,
@@ -3203,6 +3197,12 @@
         "quality": 0.68,
         "theorems": 8,
         "title": "ArXiv paper: Improving Upper Bounds for the Maximum Clique Problem using Reducti"
+      },
+      {
+        "cycle_id": "a6705a36",
+        "quality": 0.78,
+        "theorems": 19,
+        "title": "The Library of Babel: Combinatorics of the Universal Library"
       }
     ],
     "Combinatorics": [
