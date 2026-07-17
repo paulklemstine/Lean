@@ -1,0 +1,11 @@
+--- CarmichaelComposite.lean
++++ CarmichaelComposite.lean
+@@ -1,6 +1,6 @@
+ import Mathlib
+-import Catalog.Shared.CarmichaelHelper
+-import Catalog.Shared.CarmichaelProof
++import Shared.CarmichaelHelper
++import Shared.CarmichaelProof
+ 
+ 
+ 

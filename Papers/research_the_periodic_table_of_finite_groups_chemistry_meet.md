@@ -1,231 +1,420 @@
-# The Periodic Table of Finite Groups: A Chemical-Algebraic Framework
+# Limits of Coarse Invariants in a Periodic Classification of Finite Groups
 
 ## Abstract
 
-We develop a systematic framework for organizing finite groups into a "periodic table" inspired by Mendeleev's classification of chemical elements. The framework assigns to each finite group a set of invariants — order (atomic number), derived depth (period), group valence (chemical valence), and nilpotency class (shell structure) — that parallel chemical properties and enable structural predictions. We prove eight main theorems establishing the mathematical foundations of this analogy: the Derived-Central Series Inequality, the Noble Gas Theorem, the Chemical Synthesis Theorem, the Simple Group Valence Theorem, the Information Dimension Additivity, the Halogen Unsolvability Theorem, the Nilpotency Class Spectrum, and the Derived Depth Product Formula. All results are formally verified in Lean 4 with Mathlib.
+A periodic classification of finite groups seeks compact coordinates that organize large families and predict structural behavior. Order and exponent are two natural candidates: the order $|G|$ measures size, while the exponent $\exp(G)$ is the least positive integer annihilating every element. We establish an infinite obstruction to prediction from these coordinates. For every odd integer $n>1$, the cyclic group $C_{2n}$ and the dihedral group $D_{2n}$ have the same order $2n$ and the same exponent $2n$, but the former is cyclic and commutative whereas the latter is neither. Their centers are maximally different: $Z(C_{2n})=C_{2n}$ and $Z(D_{2n})=\{e\}$. The smallest witness occurs at order six, where $C_6$ and the symmetry group of an equilateral triangle share order and exponent but differ in cyclicity, commutativity, and center. We also derive the automorphism count $|\operatorname{Aut}(C_m)|=\varphi(m)$ for cyclic groups, giving $|\operatorname{Aut}(C_6)|=2$. These results show that coarse numerical coordinates cannot determine elementary structural properties. We discuss the distinction between composition factors and extension data, propose a layered structural fingerprint for finite-group classification, and present algorithms for evaluating the counterexample family and testing candidate invariant sets.
 
 ## 1. Introduction
 
-The classification of finite groups is one of the grand projects of twentieth-century mathematics. While the classification of finite simple groups (CFSG) identifies all "atoms" of finite group theory, the problem of understanding how these atoms combine — the "chemistry" of groups — remains a central challenge. We propose an organizational framework inspired by the periodic table of elements.
+The periodic table of chemical elements is valuable not because it lists objects, but because its coordinates organize behavior. This suggests an analogous program for finite groups, the algebraic structures governing finite symmetry. Such a program might use group order as an “atomic number,” group families as chemical series, and composition factors as structural constituents. Its strongest ambition would be predictive: nearby or co-columnar groups should share properties, and unexamined groups should inherit likely behavior from their coordinates.
 
-### 1.1 The Chemical Analogy
+A prerequisite for such prediction is feature adequacy. If two groups agree on every coordinate supplied to a classification system but disagree on the property to be predicted, no rule based only on those coordinates can always succeed. It is therefore important to identify collisions of invariants: pairs or families of nonisomorphic groups that share selected measurements while differing structurally.
 
-| Chemical Concept | Group-Theoretic Analogue |
-|---|---|
-| Atomic number | Group order |
-| Period (row) | Derived depth |
-| Chemical family (column) | Structural class (abelian, nilpotent, solvable, ...) |
-| Electron shell number | Nilpotency class |
-| Valence | Number of minimal normal subgroups |
-| Noble gas | Nilpotent group |
-| Halogen | Symmetric group |
-| Transition metal | Simple non-abelian group |
-| Chemical stability | Solvability |
-| Atomic mass | Information dimension Ω(|G|) |
+This paper studies the pair consisting of group order and group exponent. Both are elementary, isomorphism-invariant, and computationally accessible. The exponent incorporates more information than order alone because it summarizes element orders. Nevertheless, the pair fails dramatically. For every odd $n>1$, a cyclic group and a dihedral group share both coordinates while differing in cyclicity, commutativity, and center.
 
-### 1.2 Catalog Foundation
+The family is useful for three reasons. First, it is infinite, so the phenomenon cannot be dismissed as a sporadic low-order anomaly. Second, the proof is elementary and exposes precisely where the shared numerical data cease to control multiplication. Third, its smallest member, at order six, can be inspected directly and serves as a benchmark for computational classification.
 
-This work builds on the foundational `simple_group_valence_eq_one` theorem from the Catalog (`EML/PeriodicTableGroups.lean`, `FINAL/EML/PeriodicTableGroups.lean`), which established that simple groups have valence 1. We deepen this result by:
-- Proving the full characterization of minimal normal subgroups of simple groups
-- Establishing the Derived-Central Series Inequality as the structural backbone
-- Proving the Chemical Synthesis Theorem (solvable extensions)
-- Developing information dimension theory with additivity under products
-- Proving the Derived Depth Product Formula
+The conclusion is constructive rather than merely negative. A viable periodic organization should use a layered fingerprint. Composition factors describe simple layers, but extension data describes their assembly. Center order, derived length, nilpotency class, exponent, and automorphism-group order add complementary information. In a computational or machine-learning setting, the cyclic–dihedral family is a feature-selection test: any representation collapsing these pairs cannot predict the properties on which they differ.
 
-## 2. Definitions
+## 2. Definitions and notation
 
-### 2.1 Derived Series and Derived Depth
+### 2.1 Finite groups and order
 
-The *derived series* of a group G is defined recursively:
-- D₀(G) = G
-- D_{n+1}(G) = [D_n(G), D_n(G)]
+A **group** is a set $G$ with an associative binary operation, an identity element $e$, and an inverse $g^{-1}$ for every $g\in G$. A group is **finite** if its underlying set has finitely many elements. Its **order**, denoted $|G|$, is that number of elements.
 
-A group is *solvable* if D_n(G) = 1 for some n. The *derived depth* is the minimal such n.
+Two groups are **isomorphic** if there is a bijection between them preserving multiplication. Every quantity considered below is invariant under isomorphism.
 
-### 2.2 Lower Central Series and Nilpotency Class
+### 2.2 Cyclic groups
 
-The *lower central series* is:
-- γ₁(G) = G
-- γ_{n+1}(G) = [γ_n(G), G]
+A group $G$ is **cyclic** if there is an element $g\in G$ such that every element is a power of $g$. We then write
 
-A group is *nilpotent* if γ_c(G) = 1 for some c. The *nilpotency class* is the minimal such c.
+$$
+G=\langle g\rangle=\{g^k:k\in\mathbb Z\}.
+$$
 
-### 2.3 Group Valence
+Up to isomorphism, there is one cyclic group of each positive finite order $m$, denoted $C_m$. If $g$ generates $C_m$, then $g^m=e$ and no smaller positive power of $g$ is the identity.
 
-A normal subgroup N of G is *minimal normal* if N ≠ 1 and there is no normal subgroup strictly between 1 and N. The *group valence* is the number of minimal normal subgroups.
+Every cyclic group is commutative. Indeed, if $x=g^a$ and $y=g^b$, then
 
-### 2.4 Information Dimension
+$$
+xy=g^{a+b}=g^{b+a}=yx.
+$$
 
-The *information dimension* of a finite group G is Ω(|G|), the number of prime factors of |G| counted with multiplicity.
+### 2.3 Dihedral groups
 
-## 3. Main Results
+For $n\ge 1$, the **dihedral group** $D_{2n}$ is the full symmetry group of a regular $n$-gon. It consists of $n$ rotations and $n$ reflections, so
 
-### 3.1 Derived–Central Series Inequality
+$$
+|D_{2n}|=2n.
+$$
 
-**Theorem 1** (`derived_le_lowerCentral`). *For any group G and natural number n, D_n(G) ≤ γ_n(G).*
+It admits the presentation
 
-*Proof sketch.* By induction on n. The base case is trivial. For the inductive step:
-D_{n+1} = [D_n, D_n] ≤ [γ_n, γ_n] ≤ [γ_n, G] = γ_{n+1}
-where the first inequality uses the inductive hypothesis with commutator monotonicity, and the second uses the fact that commuting with a subgroup is "easier" than commuting with the whole group. □
+$$
+D_{2n}=\langle r,s\mid r^n=e,\ s^2=e,\ srs=r^{-1}\rangle.
+$$
 
-**PEGB Analysis:**
-- **P**roof: Complete, non-trivial induction using `Subgroup.commutator_mono`.
-- **E**xample: For S₃, D₁(S₃) = A₃ (order 3), γ₁(S₃) = A₃. D₂(S₃) = 1, γ₂(S₃) = 1. Equality holds.
-- **G**eneralization: The inequality generalizes to the ω-indexed transfinite derived and lower central series for potentially non-Noetherian groups.
-- **B**oundary: The inequality is generally strict. For the free group on 2 generators, D₁ = [F₂, F₂] has infinite index, while γ₁ = [F₂, F₂] as well — but at higher levels, the derived series descends more slowly.
+Here $r$ is rotation by one vertex and $s$ is a reflection. Every element has a unique form $r^k$ or $sr^k$, with $0\le k<n$. Our notation uses the group order in the subscript; some literature denotes the same group by $D_n$.
 
-### 3.2 The Noble Gas Theorem
+### 2.4 Element order and group exponent
 
-**Theorem 2** (`noble_gas_depth_bound`). *If G is nilpotent of class c, then D_c(G) = 1.*
+The **order** of an element $g\in G$, written $\operatorname{ord}(g)$, is the least positive integer $k$ such that $g^k=e$, when such an integer exists. In a finite group it always exists.
 
-This follows immediately from Theorem 1: D_c(G) ≤ γ_c(G) = 1.
+The **exponent** of a finite group $G$ is
 
-**Corollary** (`derivedDepth_le_nilpotencyClass'`). *The derived depth of a nilpotent group is at most its nilpotency class.*
+$$
+\exp(G)=\operatorname{lcm}\{\operatorname{ord}(g):g\in G\}.
+$$
 
-**PEGB Analysis:**
-- **P**roof: Direct consequence of the Derived–Central Series Inequality.
-- **E**xample: The dihedral group D₄ has nilpotency class 2 and derived depth 1 (since D₁(D₄) = Z(D₄) and D₂(D₄) = 1). The bound 1 ≤ 2 holds.
-- **G**eneralization: For p-groups, finer bounds exist: derived depth ≤ ⌊log_p(|G|)⌋.
-- **B**oundary: The bound is tight for certain groups (e.g., iterated wreath products of Z/pZ).
+Equivalently, $\exp(G)$ is the least positive integer $m$ such that $g^m=e$ for all $g\in G$. The exponent divides $|G|$, although groups of the same order may have different exponents.
 
-### 3.3 Chemical Synthesis Theorem
+### 2.5 Commutativity and the center
 
-**Theorem 3** (`solvable_extension'`). *If N ◁ G with both N and G/N solvable, then G is solvable.*
+A group $G$ is **commutative** or **abelian** if $xy=yx$ for all $x,y\in G$. Its **center** is
 
-*Proof sketch.* We use the short exact sequence 1 → N → G → G/N → 1. The kernel of the quotient map G → G/N equals the range of the inclusion N ↪ G, so `solvable_of_ker_le_range` applies. □
+$$
+Z(G)=\{z\in G:zg=gz\text{ for every }g\in G\}.
+$$
 
-**PEGB Analysis:**
-- **P**roof: Uses the exact sequence characterization of solvability.
-- **E**xample: S₃ has normal subgroup A₃ ≅ Z/3Z (solvable) with quotient S₃/A₃ ≅ Z/2Z (solvable), confirming S₃ is solvable.
-- **G**eneralization: The result extends to transfinite solvability (where the derived series is indexed by ordinals).
-- **B**oundary: Fails spectacularly for *non-solvable* extensions: A₅ ◁ S₅ with S₅/A₅ ≅ Z/2Z solvable, but A₅ is not solvable, so S₅ is not solvable despite having a solvable quotient.
+The center is a normal subgroup. A group is abelian exactly when $Z(G)=G$. At the other extreme, a group has **trivial center** when $Z(G)=\{e\}$.
 
-### 3.4 Simple Group Valence Theorem
+### 2.6 Automorphisms and Euler’s totient
 
-**Theorem 4** (`simple_valence_one'`). *A nontrivial simple group has valence exactly 1.*
+An **automorphism** of $G$ is an isomorphism from $G$ to itself. The automorphisms form a group $\operatorname{Aut}(G)$ under composition. The order $|\operatorname{Aut}(G)|$ measures the number of multiplication-preserving relabelings of $G$.
 
-This follows from two sub-results:
-- `simple_top_minimal_normal'`: ⊤ is a minimal normal subgroup of any simple group.
-- `simple_unique_minimal_normal'`: ⊤ is the *only* minimal normal subgroup.
+Euler’s totient function $\varphi(m)$ counts the integers $k$ with $1\le k\le m$ and $\gcd(k,m)=1$.
 
-**PEGB Analysis:**
-- **P**roof: Uses IsSimpleGroup's characterization that normal subgroups are ⊥ or ⊤.
-- **E**xample: A₅ has valence 1 (its only minimal normal subgroup is A₅ itself).
-- **G**eneralization: For *characteristically simple* groups (no nontrivial characteristic subgroups), the valence still equals 1, suggesting a broader "hydrogen atom" phenomenon.
-- **B**oundary: Non-simple groups can have arbitrary valence. The Klein four-group V₄ has three minimal normal subgroups (each of order 2), giving valence 3.
+## 3. Elementary structural lemmas
 
-### 3.5 Information Dimension Additivity
+We first collect the facts that drive the main separation theorem.
 
-**Theorem 5** (`groupInfoDimension_prod`). *Ω(|G × H|) = Ω(|G|) + Ω(|H|).*
+### Lemma 3.1. Order of the comparison groups
 
-*Proof sketch.* Since |G × H| = |G| · |H|, this follows from the multiplicativity of Ω (the prime factorization of a product is the concatenation of the factorizations). □
+For every positive integer $n$,
 
-**PEGB Analysis:**
-- **P**roof: Uses multiset arithmetic on prime factorizations.
-- **E**xample: Ω(|Z/6Z × Z/10Z|) = Ω(60) = 4, and Ω(6) + Ω(10) = 2 + 2 = 4. ✓
-- **G**eneralization: Extends to arbitrary finite direct products: Ω(|∏ᵢ Gᵢ|) = Σᵢ Ω(|Gᵢ|).
-- **B**oundary: Does not extend to semidirect products in general (the order of a semidirect product is still the product of orders, but the structural decomposition differs).
+$$
+|C_{2n}|=|D_{2n}|=2n.
+$$
 
-### 3.6 Halogen Unsolvability
+**Proof sketch.** The first equality is the definition of $C_{2n}$. The dihedral group has one rotation $r^k$ and one reflected symmetry $sr^k$ for each residue $k$ modulo $n$. These two classes are disjoint and each has $n$ elements, giving $2n$ in total. $\square$
 
-**Theorem 6** (`halogen_unsolvable'`). *The symmetric group S₅ is not solvable.*
+### Lemma 3.2. Exponent of a finite cyclic group
 
-This uses the Mathlib result `Equiv.Perm.not_solvable` with the cardinality bound |Fin 5| ≥ 5.
+For every positive integer $m$,
 
-### 3.7 Nilpotency Class Spectrum
+$$
+\exp(C_m)=m.
+$$
 
-**Theorem 7** (`nilpotencyClass_one_iff_comm'`). *A nontrivial nilpotent group has nilpotency class 1 if and only if it is abelian.*
+**Proof sketch.** A generator $g$ has order $m$, so the group exponent is at least $m$. Every element is $g^k$, and $(g^k)^m=(g^m)^k=e$, so $m$ annihilates every element. Hence the least common multiple of all element orders is exactly $m$. $\square$
 
-**PEGB Analysis:**
-- **P**roof: Reduces to showing that nilpotency class 1 is equivalent to the center being the whole group.
-- **E**xample: Z/6Z has class 1 (abelian). The quaternion group Q₈ has class 2 (nilpotent but not abelian).
-- **G**eneralization: Class n corresponds to n "layers" of non-commutativity. The class-n nilpotent groups form a variety in the sense of universal algebra.
-- **B**oundary: Not all groups are nilpotent — S₃ has trivial center but is not nilpotent.
+### Lemma 3.3. Exponent of a dihedral group
 
-### 3.8 Derived Depth Product Formula
+For every positive integer $n$,
 
-**Theorem 8** (`derivedDepth_prod'`). *derivedDepth(G × H) = max(derivedDepth(G), derivedDepth(H)).*
+$$
+\exp(D_{2n})=\operatorname{lcm}(n,2).
+$$
 
-*Proof sketch.* Uses the Derived Series Product Decomposition (`derivedSeries_prod'`): the derived series of a product decomposes component-wise. The derived depth of the product is the first n where both components have reached ⊥, which is the maximum of the individual depths. □
+**Proof sketch.** The rotation $r$ has order $n$, so the exponent is divisible by $n$. Every reflection has order $2$, so the exponent is divisible by $2$. Conversely, every rotation has order dividing $n$, and every reflected element $sr^k$ squares to the identity:
 
-## 4. The Periodic Table Structure
+$$
+(sr^k)^2=sr^ksr^k=r^{-k}r^k=e.
+$$
 
-Groups are organized into families (columns) based on their structural properties:
+Thus every element order divides $\operatorname{lcm}(n,2)$, proving equality. $\square$
 
-| Family | Characterization | Chemical Analogue | Valence Behavior |
-|---|---|---|---|
-| Abelian | Class 1 nilpotent | Noble gas (He, Ne) | Varies |
-| Nilpotent (class > 1) | Non-abelian nilpotent | Noble gas (Ar, Kr) | ≥ 1 |
-| Solvable non-nilpotent | Solvable, not nilpotent | Alkali/alkaline | ≥ 1 |
-| Non-solvable | Not solvable | Transition metal/halogen | ≥ 1 |
-| Simple non-abelian | No normal subgroups | Transition metal (pure) | = 1 |
+### Corollary 3.4. Odd dihedral exponent
 
-The *period* (row) is determined by the derived depth: groups with the same derived depth share a "chemical period."
+If $n$ is odd, then
 
-## 5. Algorithms
+$$
+\exp(D_{2n})=2n.
+$$
 
-### 5.1 Group Classification Algorithm
+**Proof sketch.** Oddness gives $\gcd(n,2)=1$, and therefore $\operatorname{lcm}(n,2)=2n$. Apply Lemma 3.3. $\square$
 
-Given a finite group G (presented by its multiplication table):
-1. Compute |G| and its prime factorization → information dimension
-2. Compute the derived series D₀ ⊇ D₁ ⊇ ... → derived depth (if solvable)
-3. Compute the lower central series → nilpotency class (if nilpotent)
-4. Find all minimal normal subgroups → valence
-5. Assign family: abelian < nilpotent < solvable < general
-6. Place in periodic table: row = derived depth, column = family
+### Lemma 3.5. Cyclic and dihedral commutativity
 
-### 5.2 Composition Factor Extraction
+The group $C_m$ is commutative for every $m$. The group $D_{2n}$ is noncommutative for $n>2$.
 
-Given a finite group G:
-1. Find a maximal normal subgroup N
-2. Record the simple quotient G/N
-3. Recurse on N
-4. Output the multiset of composition factors
+**Proof sketch.** Commutativity of cyclic groups follows by adding exponents. In the dihedral group, $sr=r^{-1}s$. If $sr=rs$, then $r=r^{-1}$ and hence $r^2=e$. But $r$ has order $n>2$, a contradiction. $\square$
 
-By the Jordan-Hölder theorem, this multiset is independent of choices.
+### Lemma 3.6. Noncyclicity of nondegenerate dihedral groups
 
-## 6. Cross-Domain Connections
+For every $n>1$, the group $D_{2n}$ is not cyclic.
 
-### 6.1 Bridge to Lattice Theory
+**Proof sketch.** Every cyclic group is commutative. For $n>2$, Lemma 3.5 immediately proves noncyclicity. When $n=2$, the group has four elements, each nonidentity element has order $2$, so it has no element of order $4$ and cannot be cyclic. The theorem below uses odd $n>1$, hence automatically $n\ge3$. $\square$
 
-The set of normal subgroups of G forms a modular lattice. The group valence is the number of atoms in this lattice. This connects our periodic table to the theory of lattice invariants: the *width* of the normal subgroup lattice bounds the valence from above, while the *height* corresponds to the chief series length.
+## 4. The infinite collision theorem
 
-### 6.2 Bridge to Galois Theory
+### Theorem 4.1. Same order and exponent, different structure
 
-The solvability of a group is directly connected to the solvability of polynomial equations via Galois theory. Our Chemical Synthesis Theorem (solvable extensions are solvable) is the algebraic underpinning of the Galois-theoretic fact that solvable extensions of solvable extensions are solvable — which is why the class of polynomials solvable by radicals is closed under composition.
+Let $n>1$ be odd. Then $C_{2n}$ and $D_{2n}$ satisfy
 
-### 6.3 Bridge to Representation Theory
+$$
+|C_{2n}|=|D_{2n}|=2n
+$$
 
-The derived depth of a group constrains its representation theory: a group of derived depth d has at least d + 1 distinct irreducible representations (one for each quotient in the derived series). The information dimension Ω(|G|) bounds the total number of irreducible representations.
+and
 
-## 7. Discussion
+$$
+\exp(C_{2n})=\exp(D_{2n})=2n.
+$$
 
-### 7.1 Predictive Power
+Nevertheless, $C_{2n}$ is cyclic and commutative, while $D_{2n}$ is neither cyclic nor commutative.
 
-Our periodic table makes predictions analogous to Mendeleev's:
-- A group of order 120 with composition factors {Z/2Z, Z/2Z, Z/2Z, Z/3Z, Z/5Z} must be solvable (all factors are abelian, by the Chemical Synthesis Theorem applied iteratively).
-- A group containing A₅ as a composition factor cannot be solvable (the Halogen Unsolvability Theorem propagates through extensions).
-- The derived depth of any group of order 2ⁿ is at most n (Information Dimension bound).
+**Proof sketch.** Lemma 3.1 gives the common order. Lemma 3.2 gives $\exp(C_{2n})=2n$. Since $n$ is odd, Corollary 3.4 gives $\exp(D_{2n})=2n$. The cyclic group is cyclic by construction and commutative by Lemma 3.5. Since odd $n>1$ implies $n\ge3$, Lemmas 3.5 and 3.6 show that the dihedral group is noncommutative and noncyclic. $\square$
 
-### 7.2 Limitations
+The theorem gives infinitely many pairs because there are infinitely many odd integers greater than one. In particular, collisions occur at every order $2n$ congruent to $2$ modulo $4$, beginning with $6,10,14,18,22$.
 
-The chemical analogy has boundaries:
-- Unlike chemical elements, groups of the same order can belong to different families (Z/6Z is abelian, S₃ is solvable non-nilpotent).
-- The number of groups of order n grows super-exponentially (there are 49,487,365,422 groups of order 1024), making exhaustive classification impractical.
-- Group valence, unlike chemical valence, is not bounded by a small constant.
+### Consequence 4.2. Impossibility of prediction from two coordinates
 
-## 8. Future Work
+There is no function of the pair $(|G|,\exp(G))$ that correctly determines cyclicity for every finite group. Likewise, no function of this pair correctly determines commutativity for every finite group.
 
-1. **Quantitative Periodic Law**: Prove that derivedDepth(G) ≤ Ω(|G|) for all nontrivial finite solvable groups.
-2. **Socle Structure Theorem**: Characterize the socle (join of all minimal normal subgroups) for solvable groups.
-3. **Computational Periodic Table**: Implement the classification algorithm for all groups of order ≤ 100 and verify predictions.
-4. **Profinite Extension**: Extend the periodic table framework to profinite groups, connecting to Galois theory of infinite extensions.
+**Proof sketch.** For each odd $n>1$, Theorem 4.1 supplies two groups with the same input pair $(2n,2n)$ and opposite truth values for cyclicity and commutativity. A function receiving identical inputs cannot return two different correct outputs. $\square$
 
-## References
+This is an information-theoretic obstruction, not a limitation of a particular classifier. Increasing model complexity or training data cannot recover distinctions absent from the input features.
 
-1. Catalog: `EML/PeriodicTableGroups.lean` — foundational periodic table framework
-2. Catalog: `FINAL/EML/PeriodicTableGroups.lean` — verified simple_group_valence_eq_one
-3. Catalog: `Algebra/FutureExploration.lean` — symmetric_group_order
-4. Catalog: `FINAL/Algebra/FutureExploration.lean` — symmetric_group_order (verified)
-5. Robinson, D.J.S., *A Course in the Theory of Groups*, Springer, 1996
-6. Rotman, J.J., *An Introduction to the Theory of Groups*, Springer, 1995
+## 5. Separation by the center
+
+The center gives a stronger measure of the structural gap.
+
+### Theorem 5.1. Center of the cyclic comparison group
+
+For every positive integer $m$,
+
+$$
+Z(C_m)=C_m.
+$$
+
+**Proof sketch.** A cyclic group is commutative, so every element commutes with every other element. Therefore every element satisfies the defining condition for membership in the center. $\square$
+
+### Theorem 5.2. Center of an odd dihedral group
+
+If $n>1$ is odd, then
+
+$$
+Z(D_{2n})=\{e\}.
+$$
+
+**Proof sketch.** Let $r^k$ be a central rotation. It must commute with $s$. Conjugating by $s$ gives
+
+$$
+sr^ks=r^{-k}.
+$$
+
+Centrality requires $r^k=r^{-k}$, so $r^{2k}=e$ and $n$ divides $2k$. Since $n$ is odd, $n$ divides $k$, hence $r^k=e$.
+
+Now consider a reflected element $sr^k$. If it were central, it would commute with $r$. Using the defining relation gives
+
+$$
+(sr^k)r=sr^{k+1},
+$$
+
+whereas
+
+$$
+r(sr^k)=sr^{k-1}.
+$$
+
+Equality would imply $r^{k+1}=r^{k-1}$, hence $r^2=e$, contradicting the odd order $n>1$ of $r$. Thus no reflection is central, and only $e$ remains. $\square$
+
+### Corollary 5.3. Maximal central separation
+
+For every odd $n>1$, the two groups in Theorem 4.1 have center orders
+
+$$
+|Z(C_{2n})|=2n,
+\qquad
+|Z(D_{2n})|=1.
+$$
+
+Thus groups with identical order and exponent can attain opposite extremes of central structure: one is entirely central, and the other has no nontrivial central element.
+
+## 6. The minimal witness at order six
+
+Set $n=3$. The cyclic group $C_6$ and the dihedral group $D_6$, the latter being the symmetry group of an equilateral triangle, both have six elements. Their exponents are
+
+$$
+\exp(C_6)=6
+$$
+
+and
+
+$$
+\exp(D_6)=\operatorname{lcm}(3,2)=6.
+$$
+
+Yet $C_6$ is cyclic and abelian, while $D_6$ is noncyclic and nonabelian. Their centers satisfy
+
+$$
+Z(C_6)=C_6,
+\qquad
+Z(D_6)=\{e\}.
+$$
+
+This is the smallest member of the odd family. It can also be displayed by multiplication rules. Write
+
+$$
+C_6=\{e,g,g^2,g^3,g^4,g^5\},\qquad g^6=e.
+$$
+
+Every product is determined by addition modulo $6$. For the triangle group, write
+
+$$
+D_6=\{e,r,r^2,s,sr,sr^2\},
+$$
+
+with $r^3=s^2=e$ and $sr=r^{-1}s$. Then $sr\ne rs$, explicitly witnessing noncommutativity.
+
+The order-six example also highlights a distinction relevant to composition-based classification. Both groups have prime-order simple layers of sizes $2$ and $3$, but the layers are assembled differently. In $C_6$, the prime components combine commutatively. In $D_6$, a reflection acts nontrivially on the threefold rotation subgroup by inversion. The constituent sizes alone do not encode this action.
+
+## 7. Automorphisms of cyclic groups
+
+### Theorem 7.1. Automorphism count for a finite cyclic group
+
+For every positive integer $m$,
+
+$$
+|\operatorname{Aut}(C_m)|=\varphi(m).
+$$
+
+**Proof sketch.** Choose a generator $g$ of $C_m$. An automorphism is determined by the image of $g$, because every element is a power of $g$. The image must itself generate the group; otherwise the map cannot be surjective. The element $g^k$ is a generator exactly when $\gcd(k,m)=1$. Conversely, each such $k$ defines an automorphism by $g^a\mapsto g^{ka}$. There are $\varphi(m)$ admissible residue classes, proving the count. $\square$
+
+### Corollary 7.2. The cyclic order-six automorphism count
+
+The group $C_6$ has exactly two automorphisms:
+
+$$
+|\operatorname{Aut}(C_6)|=\varphi(6)=2.
+$$
+
+The two generators are $g$ and $g^5=g^{-1}$, so an automorphism sends $g$ either to itself or to its inverse.
+
+Automorphism-group order is a useful candidate feature for a richer classification because it measures internal redundancy of description. It should not, however, be expected to determine a group on its own; like the other invariants, it belongs in a layered fingerprint.
+
+## 8. Algorithms and numerical experiments
+
+The theorem family admits direct computation without constructing full multiplication tables.
+
+### 8.1 Counterexample-family enumeration
+
+Given a bound $B$, enumerate odd integers $n>1$ with $2n\le B$. For each, output the common order $2n$, cyclic exponent $2n$, dihedral exponent $\operatorname{lcm}(n,2)$, cyclicity and commutativity flags, and center sizes $2n$ and $1$.
+
+If $B$ is the order bound, the algorithm performs $O(B)$ iterations and uses $O(1)$ auxiliary space apart from its output. Each row requires a greatest-common-divisor computation for the least common multiple, taking $O(\log n)$ arithmetic steps.
+
+### 8.2 Cyclic automorphism counting
+
+To compute $|\operatorname{Aut}(C_m)|$, count integers $k$ in $1\le k\le m$ satisfying $\gcd(k,m)=1$. Trial counting costs $O(m\log m)$ elementary arithmetic time. A factorization-based totient formula,
+
+$$
+\varphi(m)=m\prod_{p\mid m}\left(1-\frac1p\right),
+$$
+
+is faster when the prime factors are known.
+
+### 8.3 Feature-collision testing
+
+For a finite database of groups, choose a proposed fingerprint $F(G)$ and a target property $P(G)$. Bucket the groups by equal fingerprint. A bucket is **impure** when it contains groups with different values of $P$. Every impure bucket proves that $F$ does not determine $P$ on the database. The cyclic–dihedral theorem supplies infinitely many analytically certified impure buckets for
+
+$$
+F(G)=(|G|,\exp(G))
+$$
+
+and for either target $P=$ cyclicity or $P=$ commutativity.
+
+With $N$ records and hashable fingerprints, bucketing has expected time $O(N)$ and space $O(N)$. This method is appropriate both for exploratory mathematics and for auditing features used by classifiers.
+
+## 9. Composition factors and extension data
+
+A **composition series** for a finite group $G$ is a chain
+
+$$
+\{e\}=G_0\triangleleft G_1\triangleleft\cdots\triangleleft G_k=G
+$$
+
+in which each quotient $G_{i+1}/G_i$ is simple. These quotients are the **composition factors**. Their multiset is independent of the chosen composition series.
+
+Composition factors are therefore natural column labels. Yet a column defined to consist of groups with equal composition factors shares those factors by definition; the substantive question is which additional properties follow. Generally, factors record layers but not gluing. **Extension data** records how a quotient acts on a normal subgroup and whether the resulting assembly splits or twists.
+
+The order-six comparison illustrates the issue. There is a normal subgroup of order $3$ and a quotient of order $2$ in each case. In the cyclic group, the interaction is trivial and the whole group is abelian. In the dihedral group, the order-two symmetry acts on the order-three rotation subgroup by inversion. The same prime-size layers thus support different multiplication laws.
+
+Consequently, one should not expect composition factors alone to determine commutativity, nilpotency, derived length, center, or automorphism-group order. These are precisely the kinds of independence questions that a rigorous periodic classification should display rather than obscure.
+
+## 10. A layered periodic schema
+
+A robust finite-group table may organize each group by a structured fingerprint
+
+$$
+\mathcal F(G)=
+\bigl(
+|G|,
+\text{composition factors},
+\text{extension data},
+\exp(G),
+|Z(G)|,
+\text{derived length},
+\text{nilpotency class},
+|\operatorname{Aut}(G)|
+\bigr).
+$$
+
+The entries play distinct roles.
+
+1. **Order** measures size and restricts possible subgroup indices.
+2. **Composition factors** identify irreducible layers.
+3. **Extension data** describes how those layers interact.
+4. **Exponent** summarizes element orders.
+5. **Center order** measures the globally commuting core.
+6. **Derived length** measures the depth of noncommutativity in solvable groups.
+7. **Nilpotency class** measures central-series complexity.
+8. **Automorphism-group order** measures symmetries of the multiplication structure.
+
+This is not claimed to be a complete invariant. Rather, it is a disciplined schema in which collisions become mathematically informative. A pair sharing early coordinates but separating later ones demonstrates the independence of those later features. In a visual table, users could first group by composition factors and then refine by extension type and secondary invariants.
+
+For machine learning, the schema suggests both supervised and unsupervised tasks. Supervised models could predict expensive invariants from cheaper ones, but collision tests must establish the irreducible uncertainty of the feature set. Unsupervised embeddings could seek families while preserving known structural separations. In either setting, theorem-driven counterexamples should accompany empirical accuracy.
+
+## 11. Applications and implications
+
+### 11.1 Symmetry analysis
+
+Cyclic symmetry models repeated motion in one direction, while dihedral symmetry adds reversal. The theorem shows that size and global reset period do not detect the presence of reversal or the noncommutativity it causes. Applications involving molecular symmetry, mechanical linkages, or image transformations must therefore record operation interactions, not just cycle statistics.
+
+### 11.2 Data representation
+
+In classification, an invariant vector is a lossy encoding. The pair $(|G|,\exp(G))$ maps $C_{2n}$ and $D_{2n}$ to the same vector for odd $n>1$. If labels include abelian versus nonabelian, the encoded dataset contains unavoidable label collisions. This provides a clean benchmark for whether a system reports uncertainty honestly or overstates predictive confidence.
+
+### 11.3 Database design
+
+A census of groups through a finite order should separate certification from enumeration. Multiplication tables can be checked for the group axioms; algorithms can then compute centers, element orders, normal series, and other invariants. Collision reports should be first-class outputs, since they show which proposed coordinates fail to determine which properties.
+
+### 11.4 Mathematical exposition
+
+The chemical analogy remains pedagogically useful if its limits are explicit. Cyclic groups may be portrayed as structurally regular, and symmetric or dihedral groups as interaction-rich, but metaphors must not be mistaken for classification theorems. The order-six pair is a compact corrective: identical “atomic number” and exponent do not imply identical algebraic behavior.
+
+## 12. Discussion
+
+The main result is intentionally elementary, but its methodological force is broad. Classification schemes often begin with invariants that are easy to calculate. Ease of calculation does not imply predictive sufficiency. The right question is not merely whether an invariant correlates with a property, but whether the invariant can determine that property in principle.
+
+The cyclic–dihedral family answers this decisively for order plus exponent. It also demonstrates the value of parametric counterexamples. A lone pair might reflect exceptional arithmetic. An infinite family identifies a mechanism: for odd $n$, the rotation period $n$ and reflection period $2$ combine into exponent $2n$, exactly matching the cyclic order. The exponent sees the least common multiple of local periods but forgets whether the corresponding motions commute.
+
+The center reveals how much is forgotten. In one group every element commutes globally; in the other only the identity does. Thus the shared exponent is compatible not merely with modest structural variation but with maximal variation in centrality.
+
+A periodic table of finite groups should consequently be viewed as an interface to a hierarchy of invariants rather than as a single two-dimensional arrangement. Its success would lie in making refinement visible: coarse coordinates locate a broad region, composition factors specify layers, extension data specifies assembly, and secondary invariants expose behavior.
+
+## 13. Future work
+
+Several concrete directions follow.
+
+First, the order-six witness should be developed fully at the level of composition series, making explicit that $C_6$ and $D_6$ have simple factors of orders $2$ and $3$ while retaining their structural differences. Second, comparing $|\operatorname{Aut}(C_6)|=2$ with the automorphism group of the triangle symmetry group would test whether automorphism order varies within a composition-factor column. Third, one should construct examples with the same abelian simple factors but different derived lengths, and examples with the same composition factors but different nilpotency behavior.
+
+A finite census through order $100$ would provide a useful experimental platform. Rather than relying on unstructured brute force, one may certify supplied multiplication tables, compute normal and composition series, and generate invariant fingerprints. The resulting collision matrix would indicate which coordinates determine which properties within the census and which failures extend to parametric families.
+
+Finally, predictive models should incorporate extension-sensitive representations. Composition factors can serve as a backbone, but actions between layers must be encoded if the targets depend on commutativity, centrality, or nilpotency. The mathematical aim is not to eliminate collisions at any cost, but to understand exactly what information each refinement contributes.
+
+## 14. Conclusion
+
+For every odd integer $n>1$, the cyclic group $C_{2n}$ and the dihedral group $D_{2n}$ share order $2n$ and exponent $2n$, yet differ in cyclicity and commutativity. Their centers are opposite extremes: the whole cyclic group versus the identity subgroup. At order six, this compares a six-step cycle with the six symmetries of an equilateral triangle; the cyclic group additionally has exactly two automorphisms.
+
+These results impose a precise limitation on periodic classification by coarse invariants. Order and exponent are meaningful coordinates, but they do not encode how symmetries interact. Composition factors improve the picture by recording simple layers, while extension data and secondary invariants are needed to describe assembly and behavior. A successful periodic table of finite groups must therefore be layered, collision-aware, and explicit about the information each coordinate forgets.

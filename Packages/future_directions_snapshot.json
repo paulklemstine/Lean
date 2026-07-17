@@ -42,26 +42,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "535698fb",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0124",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:16:12.414388+00:00",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "dcd7a4b2",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domain_bridges": [],
@@ -96,6 +76,46 @@
     "status": "available",
     "timestamp": "2026-07-17T11:50:06.214262+00:00",
     "title": "Deepening: The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Mathematics is full of impossibility theorems — things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle — each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility — every CAN'T is a reflection of a free group action.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0218",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "Define the impossibility correspondence: an impossibility theorem T corresponds to a group G acting freely on a set X. Squaring the circle: G = Gal(Q(pi)/Q) acts freely on Q(pi). Quintic: G = A_5 acts freely on the set of roots. Arrow: G = S_n acts freely on preference profiles. Heisenberg: G = Heisenberg group acts freely on phase space R^{2n}. Prove: if G acts freely on X, then no G-equivariant map X -> X/G exists that is a section of the quotient map (this is the impossibility). Prove the converse: if no such section exists, then some subgroup of G acts freely on X. The key lemma: a section of X -> X/G exists iff the action has a fixed point. Test: verify the correspondence for all seven impossibility theorems.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T12:07:10.998059+00:00",
+    "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology — every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible — every surreal number is connected to every other by a continuous path.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0219",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "Define the interval topology on No: a basis of open sets is {(a,b) : a,b in No, a < b}. Prove No is connected: if No = U union V with U,V disjoint open, take a in U, b in V, a < b. Then (a,b) intersects both U and V, contradicting disjointness. Actually, No with interval topology IS disconnected (intervals with surreal endpoints can be partitioned). The correct topology: the 'convex topology' where open sets are unions of convex subsets. Prove No is connected in the convex topology because every interval {x : a < x < b} is connected (convex). Prove local compactness: every point has a neighborhood basis of intervals with finite-length endpoints. Prove contractibility: H(x,t) = x * t for t in [0,1] (using the Conway normal form). Compute pi_1(No) = 0. Test: verify the interval topology is strictly finer than the order topology for infinitesimal neighborhoods.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T12:07:11.024787+00:00",
+    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
     "ambition_level": "extension",
@@ -1060,7 +1080,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d1663b23",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Genestier--Tilouine and Pilloni) in the setting of Siegel modular forms of genus two when the residual representation arises from a stable Yoshida lift, that is, an automorphic induction of a nearly ordinary Hilbert modular eigencuspform over a real quadratic field. As applications of the underlying $R=\\mathbb{T}$ theorem, we establish the freeness of a universal minimal ordinary Galois deformation ring over an Iwasawa algebra in two variables along with the uniqueness of Hida families passing through classical $p$-ordinary Siegel modular eigenforms with very regular weights.",
     "domain_bridges": [],
     "domains": [
@@ -1073,7 +1093,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.13100v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T05:15:40.425312+00:00",
     "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
   },
@@ -3556,25 +3576,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ad5825e2",
-    "description": "Investigate the ArXiv paper 'The Spine: A Supersingular Highway' and formalize its key results. Abstract: We consider the structure of the spine of the supersingular $\\ell$-isogeny graph for one of the cases which arXiv:2502.03613 was not able to fully describe, $\\ell = 2$ and $p = 71, 119\\pmod{120}$. We find the distance, eccentricity, and diameter functions, of the components of the spine without the non-trivial edge not defined over $\\mathbb{F}_p$. Using these functions, we find the mean diameter of the spine and show how this value distinguishes the different structures of the spine. Thus, allowing us to use explicit computations to provide heuristics on the behavior of the spine's structure as $p$ varies.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0208",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14572v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T09:24:18.119678+00:00",
-    "title": "ArXiv paper: The Spine: A Supersingular Highway"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Universal Asymptotics and Exact Enumeration of Eulerian Maps' and formalize its key results. Abstract: We calculate the asymptotics of the number of connected, labeled, genus $g$ Eulerian maps with an arbitrary degree sequence, in the limit as the total number of vertices tends to infinity. This asymptotic is universal, in the sense that the leading order term depends on only finitely many map characteristics. The constant factor in this formula is related to the Painlevé I equation. Our methods combine the analysis of the recurrence coefficients associated to a particular family of orthogonal polynomials, and the theory of analytic combinatorics of several variables. We also derive an exact formula for the number of connected, labeled, genus $1$ Eulerian maps. These are the first results on this kind of enumeration problem for $g\\geq 1$, non-regular (mixed-valence) maps.",
     "domain_bridges": [],
@@ -3694,6 +3695,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal development isolates a rigorous object naturally attached to the modular group: the integer-translation orbit of `i` in the upper half-plane, transported to the Poincaré disk by the Cayley transform. It proves exact radii, injectivity, symmetry, boundary convergence, radial ordering, and the exact finite count `2N+1`.\n\nThe broader proposal requires substantial clarification before its headline conjectures can be stated faithfully:\n\n1. **Specify the arithmetic object.** An orbit of an action is a set, not automatically a ring. Transporting integer addition and multiplication along an injective orbit parametrization is possible for this translation orbit, but it depends on the parametrization and does not make tessellation vertices into prime elements. A next formalization should define the transported operations and prove the ring is isomorphic to `ℤ`; its unique factorization would then follow from ordinary integer arithmetic rather than hyperbolic geometry.\n\n2. **Separate orbit points, tessellation vertices, and prime geodesics.** These are different geometric objects. For a cofinite Fuchsian group, the established number-theoretic analogue concerns primitive closed geodesics and the Selberg zeta function. A meaningful next target is a finite combinatorial encoding of reduced hyperbolic conjugacy classes for `PSL(2,ℤ)`.\n\n3. **Use hyperbolic rather than Euclidean cutoffs.** The present theorem deliberately gives an exact Euclidean radial cutoff for a cusp orbit. Since these points approach the ideal boundary, hyperbolic distance grows differently. One can next define the disk-model hyperbolic distance from zero and derive an exact formula for this orbit, then count points below hyperbolic radius.\n\n4. **Formalize Möbius actions.** Define real `2×2` determinant-one matrices modulo sign, their fractional-linear action on the upper half-plane, the Cayley equivalence with the disk, and prove preservation of the appropriate metric. This would connect the elementary orbit developed here to the full modular group.\n\n5. **Do not identify the proposed series with the Riemann or Selberg zeta function without a theorem.** The expression in the prompt lacks a specified norm and convergence region. Its functional equation and zero distribution therefore have no well-defined formal statement yet. After choosing a canonical length spectrum and multiplicities, define a finite truncation first, prove convergence in a half-plane, and only then investigate analytic continuation.\n\n6. **Zero computations require certified complex analysis.** A defensible “first 100 zeros” result would need a precise zeta function, interval/ball arithmetic, argument-principle counts, and proofs that each isolating rectangle contains exactly one zero. Floating-point values alone would not prove critical-line membership, and exact membership is generally stronger than numerical evidence can establish.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0220",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "535698fb",
+    "status": "available",
+    "timestamp": "2026-07-17T12:07:34.357747+00:00",
+    "title": "The formal development isolates a rigorous object naturally attached to the modu"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counterexample family to prediction from coarse “periodic-table coordinates.” For every odd `n > 1`, the cyclic group `C_(2n)` and the dihedral group `D_(2n)` have:\n\n- the same finite order, `2n`;\n- the same group exponent, `2n`;\n- different cyclicity;\n- different commutativity.\n\nThe file also proves that the cyclic comparison group's center is the whole group, whereas the odd dihedral comparison group's center is trivial. At order six it verifies the concrete `C₆` versus `D₆` witness, and computes that `C₆` has two automorphisms.\n\nThis does not directly refute the statement that a column *defined by* composition factors shares composition factors; that statement is tautological. It does refute the stronger predictive hope that a few coarse coordinates such as order and exponent force basic structural properties.\n\n## Strong next formal targets\n\n1. **Composition-factor equality for the order-six witness.** Formalize normal/composition series for `C₆` and `D₆ ≅ S₃`, proving that both have factors `C₂` and `C₃` while retaining the structural differences already proved. This would directly test the proposed column invariant.\n\n2. **Different automorphism-group orders in one composition-factor column.** Prove `|Aut(C₆)| = 2` (already done) and `|Aut(S₃)| = 6`, then connect `DihedralGroup 3` to `S₃`. This would formally show that composition factors do not determine automorphism-group order.\n\n3. **Derived length versus composition factors.** Build examples with identical multisets of abelian simple factors but distinct derived lengths. Candidate small groups should first be checked against a finite-group database and then represented intrinsically in Lean.\n\n4. **Nilpotency is not controlled by composition factors.** Compare groups whose composition factors are all cyclic of prime order but where one is nilpotent and another is not. `C₆` versus `S₃` is again a natural minimal example: both are solvable, but only `C₆` is nilpotent.\n\n5. **A faithful table schema.** Rather than a single “column,” use a layered fingerprint: order, composition-factor multiset, extension data, center order, derived length, nilpotency class, and automorphism-group order. Formalize which entries are invariants under isomorphism and exhibit independence results between entries.\n\n6. **Finite census boundary.** A classification through order 100 is best imported from a certified enumeration rather than recreated by brute force in Lean. The useful formal target is a checker: encode multiplication tables, verify the group axioms, compute normal series and invariants, and prove the generated report correct.\n\n## Methodological caution\n\nComposition factors record the simple layers but forget how those layers are assembled. Extension data is therefore indispensable. Any predictive “periodic law” should be evaluated against pairs of nonisomorphic extensions with the same factors, not merely against groups sharing an order.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0221",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ad5825e2",
+    "status": "available",
+    "timestamp": "2026-07-17T12:07:42.915172+00:00",
+    "title": "`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counter"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domain_bridges": [],
     "domains": [
@@ -3729,6 +3770,25 @@
     "status": "in_progress",
     "timestamp": "2026-07-17T11:49:41.055962+00:00",
     "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 535698fb (Q=0.660) proved 14 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_535698fb_730c7946",
+    "lineage_refs": [],
+    "priority_score": 0.7100000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "535698fb",
+    "status": "available",
+    "timestamp": "2026-07-17T12:07:38.921601+00:00",
+    "title": "Close Proofs: Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
   },
   {
     "ambition_level": "extension",
