@@ -42,26 +42,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1003d095",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0126",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:16:12.438268+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "0f8a1331",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domain_bridges": [],
@@ -127,7 +107,7 @@
       "Novelty",
       "Algebra"
     ],
-    "id": "fd_0231",
+    "id": "fd_0233",
     "lineage_refs": [],
     "priority_score": 0.84,
     "proof_strategy": "Define the impossibility correspondence: an impossibility theorem T corresponds to a group G acting freely on a set X. Squaring the circle: G = Gal(Q(pi)/Q) acts freely on Q(pi). Quintic: G = A_5 acts freely on the set of roots. Arrow: G = S_n acts freely on preference profiles. Heisenberg: G = Heisenberg group acts freely on phase space R^{2n}. Prove: if G acts freely on X, then no G-equivariant map X -> X/G exists that is a section of the quotient map (this is the impossibility). Prove the converse: if no such section exists, then some subgroup of G acts freely on X. The key lemma: a section of X -> X/G exists iff the action has a fixed point. Test: verify the correspondence for all seven impossibility theorems.",
@@ -3688,34 +3668,6 @@
     "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO (spectral graph theory)",
-      "math.AG (Brill-Noether theory on graphs)",
-      "math.MG (geometry of numbers)"
-    ],
-    "consumed_by_exp_id": "0daa61af",
-    "description": "For any family of k-regular connected graphs (k ≥ 5) satisfying a spectral expansion lower bound λ₂ ≥ ε > 0, the covering radius of the canonical class with respect to the energy quadratic form is O(√g), which guarantees the existence of divisors of degree ⌊g/2⌋ and rank 0 satisfying the Brill-Noether condition ρ(g,0,⌊g/2⌋) ≥ 0.",
-    "domain_bridges": [
-      "spectral graph theory to tropical geometry via energy quadratic forms",
-      "geometry of numbers to divisor theory on graphs",
-      "expander graph theory to Brill-Noether existence"
-    ],
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0213",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Establish the Cheeger-style inequality relating the spectral gap λ₂ to the covering radius of the canonical class under the energy quadratic form Q(D) = (1/4)⟨D, LD⟩ where L is the graph Laplacian. Use the expansion property to bound the covering radius, then apply Minkowski's theorem on lattice points to show existence of divisors achieving the Brill-Noether bound at half-canonical degree.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15213v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T12:34:11.111826+00:00",
-    "title": "Cheeger-type bound for covering radius implies Brill-Noether existence at half-canonical degree"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "https://arxiv.org/abs/2109.13305",
@@ -3924,7 +3876,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a random δ-dense set and show via concentration inequalities that it avoids containing large sumsets A + B with prescribed minimum sizes.",
@@ -3992,6 +3944,25 @@
     "status": "available",
     "timestamp": "2026-07-17T13:45:24.979737+00:00",
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical"
+    ],
+    "id": "sorry_fill_0daa61af_c80f4ace",
+    "lineage_refs": [],
+    "priority_score": 0.77,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0daa61af",
+    "status": "available",
+    "timestamp": "2026-07-17T18:03:33.034163+00:00",
+    "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
     "ambition_level": "extension",
@@ -4092,6 +4063,46 @@
     "status": "available",
     "timestamp": "2026-07-17T14:02:57.130034+00:00",
     "title": "The formal development proves a general finite-tag amplification theorem. Relati"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Renormalized removal of both cutoffs\n\n**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupation cutoff `N`, and inverse temperature `β > 1` under which the finite bulk occupation partition converges locally uniformly to the Euler product for the Riemann zeta function, with an explicit error split into a prime-tail term and an occupation-tail term.\n\nThe key insight is that the finite holographic factorization separates the two approximation mechanisms: omitted prime modes and truncated geometric series are independent sources of error.\n\n**Why now?** The exact finite identity supplies a stable algebraic core, so the remaining task is purely quantitative and can be attacked with estimates for prime sums and geometric tails.\n\n## 2. Archimedean completion as an additional boundary sector\n\n**Conjecture.** The gamma factor in the completed zeta function can be represented as the partition function of a distinguished archimedean mode, and adjoining this mode to the prime occupation system yields a partition function whose Mellin-duality involution is `s ↦ 1-s`.\n\nThe key insight is that finite and infinite prime Euler factors alone do not produce the completed functional equation; the missing datum is a local factor at infinity rather than another ordinary prime.\n\n**Why now?** The present factorization identifies exactly what the nonarchimedean sectors contribute, making the archimedean correction a sharply isolated construction problem.\n\n## 3. Tropical functional equation with a controlled defect\n\n**Conjecture.** After taking logarithmic free energies and a suitable low-temperature scaling, the completed zeta functional equation tropicalizes to a min-plus reflection law with an explicitly bounded finite-temperature defect.\n\nThe key insight is that exponentials convert additive bulk energies into Euler factors, while logarithmic dequantization converts sums back to extrema; the reflection law should therefore admit a piecewise-linear shadow.\n\n**Why now?** Exact bulk/boundary factorization and the established tropical ground-state interpretation provide both ends of the proposed limiting argument.\n\n## 4. Prime occupation correlations and zero statistics\n\n**Conjecture.** A centered fluctuation field built from finite prime occupation energies has a two-point form factor that converges, after an explicit smoothing and scaling, to the pair-correlation kernel predicted for high zeta zeros.\n\nThe key insight is that the partition identity controls one-point normalization exactly, leaving connected occupation correlations as the first genuinely spectral observable capable of distinguishing independent prime modes from random-matrix behavior.\n\n**Why now?** The finite model supplies a falsifiable ensemble with transparent cutoffs, allowing its correlation statistics to be tested before any geometric interpretation is imposed.\n\n## 5. Stability criterion versus the critical line\n\n**Conjecture.** For an archimedean-completed prime occupation model, positivity of a naturally defined quadratic response form is equivalent to a zero-free half-plane symmetric about `Re(s)=1/2`; in the sharp limit, global positivity is equivalent to all nontrivial zeros lying on the critical line.\n\nThe key insight is that “holographic stability” must be a precise positivity statement whose spectral decomposition detects zero locations, not merely a renaming of the Riemann hypothesis.\n\n**Why now?** The finite theory proves vacuum stability from nonnegative local energies and exposes the exact additional ingredient needed for a meaningful global criterion: a completed spectral response operator.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0234",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0daa61af",
+    "status": "available",
+    "timestamp": "2026-07-17T18:03:25.411442+00:00",
+    "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal result in `AffineDuality.lean` isolates a precise bridge between finite-group symmetry and cryptographic proof systems: translation gives exact witness-independent transcript distributions, while subtraction extracts a witness from two accepting answers sharing a commitment.\n\n## 1. Move from transcript multisets to probability distributions\n\nThe current theorem represents uniform finite sampling by the multiset obtained from `Finset.univ`. A natural next step is to restate perfect zero knowledge as equality of `PMF` values. This would make composition with randomized verifiers and repeated protocols more direct.\n\n## 2. Sequential and parallel repetition\n\nFormalize `k` independent Boolean challenges. The expected goals are:\n\n- simulated and real transcript vectors have identical distributions;\n- witness independence is preserved by product distributions;\n- if a cheating prover can answer both challenges at any repeated coordinate, subtraction extracts a witness;\n- under a suitable binding or fixed-commitment hypothesis, the soundness error decreases exponentially.\n\nThe last point cannot follow from the present algebraic model alone: it needs an explicit probabilistic adversary model and assumptions preventing challenge-dependent commitments.\n\n## 3. Connect to propositional proof verification\n\nEncode a propositional derivation as a finite list of locally checkable steps. A commitment layer can then hide the list while a verifier asks for selected local consistency checks. The important formal distinction is between:\n\n- local consistency of sampled steps;\n- global soundness of the encoded proof;\n- zero knowledge of the resulting transcript.\n\nA one-step opening protocol by itself does not establish the latter two properties. A rigorous development should use a sound locally testable encoding and a hiding, binding commitment scheme.\n\n## 4. Replace the abstract additive relation by concrete protocols\n\nInstantiate the construction with finite cyclic groups and linear maps, then connect it to Schnorr-style identification. This requires carefully separating additive notation in the exponent from multiplicative notation in the public group.\n\n## 5. Computational and communication complexity\n\nThe present development is information-theoretic and extensional; it does not claim polynomial communication in the statement length. A future complexity-aware formalization should represent algorithms, encodings, security parameters, and bit lengths explicitly. Any PA-wide succinctness claim must account for proof length and use a genuinely succinct argument system rather than infer statement-length communication directly from arithmetization or the PCP theorem.\n\n## 6. Malicious-verifier zero knowledge\n\nThe simulator currently captures the fixed-challenge, honest-verifier view. General zero knowledge requires quantification over verifier strategies and simulation of their complete views. Formalizing rewinding, expected running time, or straight-line simulation would clarify exactly which privacy guarantee survives beyond honest verifiers.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0235",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1003d095",
+    "status": "available",
+    "timestamp": "2026-07-17T18:03:41.102617+00:00",
+    "title": "The formal result in `AffineDuality.lean` isolates a precise bridge between fini"
   },
   {
     "ambition_level": "extension",

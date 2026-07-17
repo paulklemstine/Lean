@@ -97,7 +97,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty",
       "Algebra"
     ],
-    "id": "fd_0231",
+    "id": "fd_0233",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -2739,21 +2739,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
   },
   {
-    "consumed_by_exp_id": "0daa61af",
-    "description": "For any family of k-regular connected graphs (k \u2265 5) satisfying a spectral expansion lower bound \u03bb\u2082 \u2265 \u03b5 > 0, the covering radius of the canonical class with respect to the energy quadratic form is O(\u221ag), which guarantees the existence of divisors of degree \u230ag/2\u230b and rank 0 satisfying the Brill-Noether condition \u03c1(g,0,\u230ag/2\u230b) \u2265 0.",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0213",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15213v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T12:34:11.111826+00:00",
-    "title": "Cheeger-type bound for covering radius implies Brill-Noether existence at half-canonical degree"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every fixed density\u00a0\u03b4\u2208(0,1) and every integer t\u22652 there is a constant C(t,\u03b4)>0 such that for all sufficiently large n one can find a subset S\u2282[n] of size at least \u03b4n that contains no t\u2011fold sumset A\u2081+\u22ef+A_t with each |A_i|\u2265C(t,\u03b4)\u00b7(log n)/(log(1/\u03b4))^{1/(t\u22121)}.  This conjecture generalises the extremal result of Serra\u2011Szegedy and the recent construction for t=2, and it is compatible with the lower\u2011bound phenomenon proved by Hern\u00e1ndez\u2011and\u2011Hetzel.",
     "domains": [
@@ -2860,7 +2845,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0231",
+    "id": "fd_0232",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15269v1",
@@ -2911,6 +2896,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:45:24.979737+00:00",
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 0daa61af (Q=0.720) proved 18 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "sorry_fill_0daa61af_c80f4ace",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "0daa61af",
+    "status": "available",
+    "timestamp": "2026-07-17T18:03:33.034163+00:00",
+    "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
   {
     "consumed_by_exp_id": "",
@@ -2986,6 +2985,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T14:02:57.130034+00:00",
     "title": "The formal development proves a general finite-tag amplification theorem. Relati"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Renormalized removal of both cutoffs\n\n**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupation cutoff `N`, and inverse temperature `\u03b2 > 1` under which the finite bulk occupation partition converges locally uniformly to the Euler product for the Riemann zeta function, with an explicit error split into a prime-tail term and an occupation-tail term.\n\nThe key insight is that the finite holographic factorization separates the two approximation mechanisms: omitted prime modes and truncated geometric series are independent sources of error.\n\n**Why now?** The exact finite identity supplies a stable algebraic core, so the remaining task is purely quantitative and can be attacked with estimates for prime sums and geometric tails.\n\n## 2. Archimedean completion as an additional boundary sector\n\n**Conjecture.** The gamma factor in the completed zeta function can be represented as the partition function of a distinguished archimedean mode, and adjoining this mode to the prime occupation system yields a partition function whose Mellin-duality involution is `s \u21a6 1-s`.\n\nThe key insight is that finite and infinite prime Euler factors alone do not produce the completed functional equation; the missing datum is a local factor at infinity rather than another ordinary prime.\n\n**Why now?** The present factorization identifies exactly what the nonarchimedean sectors contribute, making the archimedean correction a sharply isolated construction problem.\n\n## 3. Tropical functional equation with a controlled defect\n\n**Conjecture.** After taking logarithmic free energies and a suitable low-temperature scaling, the completed zeta functional equation tropicalizes to a min-plus reflection law with an explicitly bounded finite-temperature defect.\n\nThe key insight is that exponentials convert additive bulk energies into Euler factors, while logarithmic dequantization converts sums back to extrema; the reflection law should therefore admit a piecewise-linear shadow.\n\n**Why now?** Exact bulk/boundary factorization and the established tropical ground-state interpretation provide both ends of the proposed limiting argument.\n\n## 4. Prime occupation correlations and zero statistics\n\n**Conjecture.** A centered fluctuation field built from finite prime occupation energies has a two-point form factor that converges, after an explicit smoothing and scaling, to the pair-correlation kernel predicted for high zeta zeros.\n\nThe key insight is that the partition identity controls one-point normalization exactly, leaving connected occupation correlations as the first genuinely spectral observable capable of distinguishing independent prime modes from random-matrix behavior.\n\n**Why now?** The finite model supplies a falsifiable ensemble with transparent cutoffs, allowing its correlation statistics to be tested before any geometric interpretation is imposed.\n\n## 5. Stability criterion versus the critical line\n\n**Conjecture.** For an archimedean-completed prime occupation model, positivity of a naturally defined quadratic response form is equivalent to a zero-free half-plane symmetric about `Re(s)=1/2`; in the sharp limit, global positivity is equivalent to all nontrivial zeros lying on the critical line.\n\nThe key insight is that \u201cholographic stability\u201d must be a precise positivity statement whose spectral decomposition detects zero locations, not merely a renaming of the Riemann hypothesis.\n\n**Why now?** The finite theory proves vacuum stability from nonnegative local energies and exposes the exact additional ingredient needed for a meaningful global criterion: a completed spectral response operator.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0234",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0daa61af",
+    "status": "available",
+    "timestamp": "2026-07-17T18:03:25.411442+00:00",
+    "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
   },
   {
     "consumed_by_exp_id": "",

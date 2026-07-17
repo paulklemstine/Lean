@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d1d26693",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n## What was established\n\n`Cryptography/ZeroKnowledge.lean` isolates two decisive issues in the proposed protocol.\n\n1. **Opening a raw proof coordinate is not zero knowledge in gen",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-15T07:10:15",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
       "cycle_id": "f6b1d920",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Universal Libraries and Catalog Complexity\n\n## 1. Exact autocorrelation law for passage occurrence\n\nFor every alphabet size at least two and every finite pattern, the exact probab",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-17T13:45:51",
       "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
+    },
+    {
+      "cycle_id": "0daa61af",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## 1. Renormalized removal of both cutoffs\n\n**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupation cutoff `N`, and inverse temperature `β > 1` under",
+      "quality_score": 0.72,
+      "sorry_count": 3,
+      "theorem_count": 18,
+      "timestamp": "2026-07-17T18:03:33",
+      "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "30210199",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Alien Number Systems\n\n## What this cycle added\n\n`ComplexBaseIMinus1.lean` formalizes arithmetic in the **complex base `β = i − 1`**\nand proves, from first principles, **Penney's",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-14T03:04:59",
-      "title": "Close Proofs: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-    },
     {
       "cycle_id": "c923638c",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T14:03:03",
       "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+    },
+    {
+      "cycle_id": "0daa61af",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n## 1. Renormalized removal of both cutoffs\n\n**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupation cutoff `N`, and inverse temperature `β > 1` under",
+      "quality_score": 0.72,
+      "sorry_count": 3,
+      "theorem_count": 18,
+      "timestamp": "2026-07-17T18:03:33",
+      "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-17T14:03:03",
+  "last_updated": "2026-07-17T18:03:33",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "c4f680cf",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T00:44:22"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "86efe295",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 3,
       "timestamp": "2026-07-17T14:03:03"
+    },
+    {
+      "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
+      "cycle_id": "0daa61af",
+      "domain": "Tropical",
+      "sorry_count": 3,
+      "timestamp": "2026-07-17T18:03:33"
     }
   ],
   "research_threads": {
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "538f30a2",
-        "quality": 0.78,
-        "theorems": 47,
-        "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
-      },
-      {
         "cycle_id": "4b27af05",
         "quality": 0.88,
         "theorems": 3,
@@ -4009,6 +4003,12 @@
         "quality": 0.75,
         "theorems": 0,
         "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+      },
+      {
+        "cycle_id": "0daa61af",
+        "quality": 0.72,
+        "theorems": 18,
+        "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
       }
     ]
   }

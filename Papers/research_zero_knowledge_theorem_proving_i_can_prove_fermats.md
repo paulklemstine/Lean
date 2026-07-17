@@ -1,377 +1,451 @@
-# Affine Privacy–Extraction Duality in Finite-Group Identification Protocols
+# Affine Zero-Knowledge Protocols for Hidden Mathematical Witnesses
+
+**Aristotle**  
+**July 17, 2026**
 
 ## Abstract
 
-We study a three-move identification protocol built from an additive homomorphism $L:G\to H$ between finite commutative groups. The public statement is a target $y\in H$, and a witness is a preimage $w\in G$ satisfying $L(w)=y$. After committing with $a=L(r)$ for uniform $r\in G$, the prover answers a Boolean challenge $c$ with $z=r+cw$; the verifier checks $L(z)=a+cy$. We establish exact honest-verifier perfect zero knowledge by an affine reindexing of random tapes: translation $r\mapsto r+cw$ is a permutation, and it identifies the real transcript multiset with the simulator’s transcript multiset point by point. It follows that all witnesses for one public statement induce identical verifier views and that every transcript has equal real and simulated multiplicity. In the converse direction, two accepting responses to opposite challenges at the same commitment yield a witness $z_1-z_0$. These facts combine into an affine privacy–extraction duality: translation hides a witness in one randomized view, while subtraction extracts a witness from two correlated views. We provide algorithms, finite examples, applications, and a careful account of why this result does not imply that arbitrary long mathematical proofs admit statement-polynomial zero-knowledge certificates through random inspection of raw proof steps.
+We study a three-move protocol for proving knowledge of a preimage under a homomorphism of finite abelian groups. Given finite abelian groups $W$ and $V$, a homomorphism $L:W\to V$, and a public element $y\in V$, the prover claims knowledge of $w\in W$ such that $L(w)=y$. The prover commits with $L(r)$ for a uniform mask $r$, receives a Boolean challenge $e$, and answers with $r+ew$. We prove perfect completeness, exact honest-verifier zero knowledge for each fixed challenge, witness independence of transcript distributions, and special soundness: two accepting responses to opposite challenges with the same commitment reveal a witness by subtraction. We give explicit simulation and extraction algorithms, finite cyclic examples, and computational demonstrations. We also explain precisely why these algebraic results do not by themselves establish a succinct zero-knowledge proof system for arbitrary mathematical theorems. Extending the construction to confidential theorem certification requires a sound locally testable proof encoding, hiding and binding commitments, an explicit adversarial probability model, and complexity accounting that includes proof length and security parameters.
 
 ## 1. Introduction
 
-Zero-knowledge protocols separate conviction from disclosure. A prover seeks to convince a verifier that a public statement has a witness, while revealing no information about that witness beyond its existence. At the same time, a proof of knowledge should make successful behavior meaningful: an entity capable of answering the verifier’s challenges should possess enough information to recover a witness.
+A proof normally serves two purposes at once. It convinces a reader that a statement is true, and it communicates the reason. Cryptographic zero knowledge separates these roles: a prover can demonstrate possession of a witness while revealing no information about the witness beyond what the public statement already implies.
 
-Privacy and extraction may initially appear incompatible. If a transcript reveals nothing about a witness, how can successful transcripts certify knowledge? The resolution is that the two properties concern different data. Privacy concerns the distribution of one ordinary randomized conversation. Extraction concerns multiple correlated conversations that reuse a commitment while receiving distinct challenges.
+This separation suggests an appealing application to mathematics. A derivation in a fixed deductive system is finite data, and its correctness is a decidable relation between a theorem statement and a purported derivation. In principle, therefore, “I know a proof of this theorem” is a proof-of-knowledge statement. The prospect is a confidential certificate: conviction without disclosure of the mathematical method.
 
-This paper isolates that distinction in a finite additive setting. Let $G$ and $H$ be finite commutative groups and $L:G\to H$ an additive homomorphism. The protocol’s witness relation is the preimage equation $L(w)=y$. Its two central mechanisms are elementary:
+Such a prospect must be treated carefully. A one-step opening of a committed derivation does not imply global validity, and arithmetizing a proof does not imply communication complexity independent of proof length. Before addressing those global issues, it is useful to isolate a small protocol in which the central privacy and extraction claims can be stated exactly and proved transparently.
 
-- adding a fixed group element permutes $G$ and therefore preserves its uniform distribution;
-- subtracting two responses with common random origin cancels that origin.
+The protocol considered here is affine. Its public relation is defined by a homomorphism $L:W\to V$ between finite abelian groups. A witness $w$ maps to the public statement $y$. Random translation by a mask $r$ makes either challenged response uniform and hence witness-independent. Conversely, subtracting responses to opposite challenges eliminates the common mask and extracts a witness. The construction is elementary, but it contains the basic “one transcript hides, two transcripts reveal” mechanism underlying a broad class of identification arguments.
 
-Despite their simplicity, these mechanisms give exact statements. The real and simulated transcript distributions are not merely computationally indistinguishable or statistically close; they coincide exactly. Likewise, extraction is not probabilistic once opposite accepting challenges at one commitment are available; subtraction deterministically yields a witness.
+Our contributions are four concrete results.
 
-The main contribution is a unified theorem stating both phenomena. The same affine expression $r+cw$ acts as a measure-preserving reindexing for privacy and as a difference equation for extraction. We call this the affine privacy–extraction duality.
+1. **Perfect completeness.** Every transcript generated from a valid witness is accepted.
+2. **Perfect fixed-challenge simulation.** For either challenge bit, an explicit simulator using only public data produces exactly the real transcript distribution.
+3. **Witness independence.** Any two witnesses for the same public statement induce identical fixed-challenge transcript distributions.
+4. **Special soundness.** Two accepting transcripts sharing a commitment and carrying opposite challenges yield a valid witness by subtraction.
 
-The paper also delineates scope. The protocol is an idealized identification scheme, not a complete construction for certifying arbitrary mathematical theorems. In particular, committing to every step of a raw proof and opening one random step has poor soundness against sparse errors and may leak proof content. General succinct zero-knowledge certification requires additional encoding, commitment, soundness-amplification, and simulation machinery.
+The first three results are information-theoretic. They do not invoke computational limitations. The fourth is an algebraic extraction guarantee. Together they provide a precise base layer for more elaborate cryptographic systems.
 
-## 2. Algebraic setting and protocol
+## 2. Algebraic setting
 
-### 2.1 Public statements and witnesses
+### 2.1 Finite abelian groups and the public relation
 
-Throughout, $G$ and $H$ are finite commutative groups written additively. Their identity elements are denoted by $0$. Let
+Let $W$ and $V$ be finite abelian groups, written additively, and let
 
 $$
-L:G\longrightarrow H
+L:W\longrightarrow V
 $$
 
-be an additive homomorphism, so that $L(x+x')=L(x)+L(x')$ and $L(0)=0$.
+be a group homomorphism. Thus, for all $u,v\in W$,
 
-**Definition 2.1 (Public statement).** A public statement is a pair $(L,y)$ consisting of an additive homomorphism $L:G\to H$ and a target $y\in H$.
+$$
+L(u+v)=L(u)+L(v),\qquad L(0)=0,
+$$
 
-**Definition 2.2 (Witness).** An element $w\in G$ is a witness for $(L,y)$ if
+and consequently $L(-u)=-L(u)$.
+
+A **public statement** is an element $y\in V$. A **witness** for $y$ is an element $w\in W$ satisfying
 
 $$
 L(w)=y.
 $$
 
-The relation asserts that $y$ lies in the image of $L$. There may be one witness or many. If $L$ has a nontrivial kernel, then $w$ and $w+k$ are both witnesses whenever $k\in\ker L$.
+The associated relation is
 
-### 2.2 Three-move interaction
+$$
+R_L=\{(y,w)\in V\times W:L(w)=y\}.
+$$
 
-The protocol proceeds as follows.
+No injectivity assumption is imposed. A statement may have multiple witnesses. No surjectivity assumption is imposed either; some $y\in V$ may have no witness.
 
-1. **Commitment.** The prover samples $r$ uniformly from $G$ and sends
+The finiteness of $W$ supplies a uniform distribution. If $r$ is uniform on $W$ and $a\in W$ is fixed, then $r+a$ is also uniform because translation $r\mapsto r+a$ is a bijection. This elementary fact drives the privacy argument.
+
+### 2.2 Protocol definition
+
+For public input $(W,V,L,y)$ and witness $w$ satisfying $L(w)=y$, define the following three-move protocol.
+
+1. **Commitment.** The prover samples $r\leftarrow W$ uniformly and sends
+
    $$
-   a=L(r).
+   t=L(r).
    $$
-2. **Challenge.** The verifier selects $c\in\{0,1\}$.
+
+2. **Challenge.** The verifier sends $e\in\{0,1\}$.
+
 3. **Response.** The prover sends
+
    $$
-   z=r+cw,
+   z=r+ew,
    $$
-   where $cw=0$ for $c=0$ and $cw=w$ for $c=1$.
 
-**Definition 2.3 (Transcript).** A public transcript is a triple $(a,c,z)\in H\times\{0,1\}\times G$.
+   where $0w=0$ and $1w=w$.
 
-**Definition 2.4 (Acceptance).** The verifier accepts $(a,c,z)$ if and only if
-
-$$
-L(z)=a+cy.
-$$
-
-**Theorem 2.5 (Perfect completeness).** If $w$ is a witness and the prover follows the protocol, the verifier accepts for every random tape $r$ and either challenge $c$.
-
-**Proof sketch.** Since $L(w)=y$ and $L$ is additive,
+The verifier accepts if and only if
 
 $$
-L(z)=L(r+cw)=L(r)+cL(w)=a+cy.
+L(z)=t+ey.
 $$
 
-Thus the acceptance equation holds identically. $\square$
-
-## 3. Exact simulation and perfect privacy
-
-### 3.1 Simulator
-
-A zero-knowledge argument should not rest on the vague claim that a transcript “looks random.” It should provide a simulator that generates the verifier’s view without knowing a witness.
-
-**Definition 3.1 (Fixed-challenge simulator).** Given the public statement $(L,y)$ and a fixed challenge $c$, the simulator samples $z$ uniformly from $G$ and sets
+A transcript is a triple $(t,e,z)\in V\times\{0,1\}\times W$. For a fixed challenge $e$, the real transcript map associated with witness $w$ is
 
 $$
-a=L(z)-cy.
+\operatorname{Real}_{w,e}(r)=\bigl(L(r),e,r+ew\bigr).
 $$
 
-It outputs $(a,c,z)$.
+Sampling $r$ uniformly induces a uniform multiset, equivalently a probability distribution, over transcripts.
 
-**Lemma 3.2 (Simulator support is valid).** Every transcript output by the simulator satisfies the verifier’s acceptance equation.
+### 2.3 Security notions used here
 
-**Proof sketch.** By construction,
+The protocol has **perfect completeness** if every honest transcript formed from a valid witness is accepted.
 
-$$
-a+cy=L(z)-cy+cy=L(z).
-$$
+For fixed $e$, it has **perfect honest-verifier zero knowledge** if there exists a randomized simulator using only $(L,y,e)$ whose output distribution equals the real transcript distribution exactly. “Perfect” means equality of distributions, not merely computational indistinguishability.
 
-Hence the transcript is accepted. $\square$
+It has **special soundness** if any two accepting transcripts $(t,0,z_0)$ and $(t,1,z_1)$ with the same commitment yield an efficiently computable witness for $y$.
 
-Validity alone is insufficient: a simulator that emits only an unusual subset of accepting conversations could still be distinguishable. We therefore compare complete transcript distributions.
+These definitions deliberately concern a fixed-challenge honest-verifier view and a two-transcript extraction experiment. They do not quantify over arbitrary malicious verifier strategies.
 
-### 3.2 Translation as a permutation
+## 3. Completeness and exact simulation
 
-For $c\in\{0,1\}$ and $w\in G$, define
+### Theorem 1 (Perfect Completeness)
 
-$$
-T_{c,w}:G\to G,\qquad T_{c,w}(r)=r+cw.
-$$
-
-**Lemma 3.3 (Translation permutation).** The map $T_{c,w}$ is a bijection with inverse
+Let $w\in W$ satisfy $L(w)=y$. For every $r\in W$ and every $e\in\{0,1\}$, the transcript
 
 $$
-T_{c,w}^{-1}(z)=z-cw.
+\bigl(L(r),e,r+ew\bigr)
 $$
 
-**Proof sketch.** Direct cancellation gives $(r+cw)-cw=r$ and $(z-cw)+cw=z$. Therefore translation permutes the random-tape space. $\square$
+is accepted.
 
-Because $G$ is finite, a bijection preserves the uniform distribution exactly. This elementary symmetry is the entire privacy mechanism.
-
-### 3.3 Pointwise correspondence
-
-**Lemma 3.4 (Affine transcript correspondence).** Let $w$ satisfy $L(w)=y$. For every $r\in G$ and fixed $c\in\{0,1\}$, the real transcript generated from $r$ equals the simulated transcript generated from $z=T_{c,w}(r)$.
-
-**Proof sketch.** In both transcripts the response is $z=r+cw$ and the challenge is $c$. It remains to compare commitments. The simulator’s commitment is
+**Proof sketch.** By homomorphism linearity and the witness equation,
 
 $$
-L(z)-cy=L(r+cw)-cy=L(r)+cL(w)-cy=L(r),
+L(r+ew)=L(r)+eL(w)=L(r)+ey.
 $$
 
-which is the real commitment. $\square$
+The right-hand side is exactly $t+ey$ for $t=L(r)$. Hence the verification equation always holds. $\square$
 
-This is stronger than a counting argument after the fact: it exhibits an explicit bijection pairing every real random tape with a simulated choice.
+Completeness has no error probability: honest execution succeeds for every random mask and either challenge.
 
-### 3.4 Perfect zero knowledge
+### 3.1 The public simulator
 
-For fixed $c$, let $\mathsf{Real}_{w,c}$ denote the random transcript obtained by choosing uniform $r\in G$ and returning
+Fix a challenge bit $e$. Define a simulator as follows:
 
-$$
-(L(r),c,r+cw).
-$$
+1. sample $z\leftarrow W$ uniformly;
+2. set
 
-Let $\mathsf{Sim}_{c}$ denote the transcript obtained by choosing uniform $z\in G$ and returning
+   $$
+   t=L(z)-ey;
+   $$
 
-$$
-(L(z)-cy,c,z).
-$$
+3. output $(t,e,z)$.
 
-**Theorem 3.5 (Exact honest-verifier perfect zero knowledge).** For every valid witness $w$ and every fixed challenge $c$, the distributions $\mathsf{Real}_{w,c}$ and $\mathsf{Sim}_{c}$ are equal.
-
-Equivalently, their transcript multisets coincide, including multiplicities.
-
-**Proof sketch.** Reindex the real experiment by the bijection $z=T_{c,w}(r)$. Lemma 3.4 shows that paired random choices produce identical transcripts. Since a bijection preserves uniform weights, the induced distributions are exactly equal. $\square$
-
-The qualification “fixed challenge” is important. The simulator is given $c$ before constructing $a$. This proves honest-verifier zero knowledge for each challenge branch; it does not by itself provide simulation against a verifier that chooses $c$ adaptively after observing $a$.
-
-**Corollary 3.6 (Transcript multiplicity equality).** For every transcript $t$, valid witness $w$, and fixed challenge $c$, the number of random tapes producing $t$ in the real experiment equals the number of simulator choices producing $t$.
-
-**Proof sketch.** Equal finite multisets assign the same multiplicity to every element. $\square$
-
-**Corollary 3.7 (Witness indistinguishability).** If $w_1$ and $w_2$ are both witnesses for the same public statement, then for each fixed challenge $c$,
+The simulator requires no witness. Its transcript is automatically accepting since
 
 $$
-\mathsf{Real}_{w_1,c}=\mathsf{Real}_{w_2,c}.
+L(z)=\bigl(L(z)-ey\bigr)+ey=t+ey.
 $$
 
-**Proof sketch.** By Theorem 3.5, each real distribution equals the same witness-free simulated distribution $\mathsf{Sim}_{c}$. Transitivity yields the claim. $\square$
+The remaining question is whether the simulator merely creates plausible transcripts or reproduces the real distribution exactly.
 
-This is perfect witness independence. Even an unbounded observer cannot infer which valid witness generated a transcript under the model’s assumptions.
+### Lemma 2 (Translation Preserves Uniformity)
 
-## 4. Extraction and special soundness
+For every fixed $a\in W$, if $r$ is uniform on $W$, then $r+a$ is uniform on $W$.
 
-The same response equation has an opposite use when two conversations share a commitment.
+**Proof sketch.** The translation map $\tau_a(r)=r+a$ has inverse $\tau_{-a}(z)=z-a$. Therefore it is a permutation of the finite set $W$. A permutation preserves the number of preimages of every point and hence preserves the uniform distribution. $\square$
 
-**Theorem 4.1 (Special soundness).** Suppose $(a,0,z_0)$ and $(a,1,z_1)$ are both accepting transcripts for the same public statement $(L,y)$ and the same commitment $a$. Then
+### Theorem 3 (Perfect Fixed-Challenge Simulation)
+
+Let $w\in W$ satisfy $L(w)=y$, and fix $e\in\{0,1\}$. The real transcript
+
+$$
+\bigl(L(r),e,r+ew\bigr),\qquad r\leftarrow W,
+$$
+
+has exactly the same distribution as the simulated transcript
+
+$$
+\bigl(L(z)-ey,e,z\bigr),\qquad z\leftarrow W.
+$$
+
+**Proof sketch.** Set $z=r+ew$. By Lemma 2, $z$ is uniform when $r$ is uniform. Moreover,
+
+$$
+L(r)=L(z-ew)=L(z)-eL(w)=L(z)-ey.
+$$
+
+Thus the real transcript after the bijective change of variables $r\mapsto z$ is pointwise identical to the simulator’s transcript. Because the change of variables is a permutation, transcript multiplicities and probabilities agree exactly. $\square$
+
+This theorem is stronger than saying that the response alone is uniform. It identifies the joint distribution of commitment, challenge, and response. Although $t$ and $z$ are correlated, the simulator reproduces that correlation using the public verification equation.
+
+### Corollary 4 (Witness Independence)
+
+Let $w_0,w_1\in W$ satisfy $L(w_0)=L(w_1)=y$. For either fixed challenge $e$, the transcript distributions generated using $w_0$ and $w_1$ are identical.
+
+**Proof sketch.** By Theorem 3, each real distribution equals the same simulator distribution, which depends only on $L$, $y$, and $e$. Therefore the two real distributions equal one another. $\square$
+
+Witness independence is meaningful when $L$ has a nontrivial kernel. If $w$ is a witness, then every $w+k$ with $k\in\ker L$ is another witness. The transcript cannot reveal which representative of the fiber $L^{-1}(y)$ was used.
+
+### Corollary 5 (Zero Information in the Information-Theoretic Sense)
+
+For a fixed challenge $e$, every statistical test applied to the transcript has the same output distribution whether the transcript is real or simulated. In particular, no unbounded observer can distinguish the two with nonzero advantage.
+
+**Proof sketch.** Applying any deterministic or randomized post-processing operation to identically distributed inputs yields identically distributed outputs. The claim follows directly from Theorem 3. $\square$
+
+## 4. Special soundness and extraction
+
+Simulation explains why one accepting view is harmless. Extraction explains why answering both challenges for one commitment is decisive.
+
+### Theorem 6 (Special Soundness by Affine Subtraction)
+
+Suppose $(t,0,z_0)$ and $(t,1,z_1)$ are accepting transcripts with the same commitment $t$. Then
 
 $$
 w^*=z_1-z_0
 $$
 
-is a witness; that is, $L(w^*)=y$.
-
-**Proof sketch.** Acceptance gives
+is a witness for $y$; that is,
 
 $$
-L(z_0)=a
+L(w^*)=y.
 $$
 
-and
+**Proof sketch.** Acceptance for challenge $0$ gives
 
 $$
-L(z_1)=a+y.
+L(z_0)=t.
 $$
 
-Using additivity and subtracting,
+Acceptance for challenge $1$ gives
 
 $$
-L(z_1-z_0)=L(z_1)-L(z_0)=(a+y)-a=y.
+L(z_1)=t+y.
 $$
 
-Therefore $w^*$ is a valid preimage of $y$. $\square$
-
-Special soundness is a deterministic implication about transcript pairs. It does not assert that a verifier in one ordinary run receives both responses. Instead, it explains why a prover capable of answering both challenges for one commitment embodies witness information.
-
-**Algorithm 4.2 (Witness extraction).** Given two accepting transcripts with common commitment and opposite challenges, return $z_1-z_0$.
-
-The algorithm uses one group subtraction and, if desired, one evaluation of $L$ to verify the result. Under unit-cost group operations its extraction cost is $O(1)$; under bit complexity it is the cost of one group subtraction, plus optional homomorphism evaluation.
-
-## 5. The affine duality theorem
-
-We now combine privacy and extraction.
-
-**Theorem 5.1 (Affine privacy–extraction duality).** Let $G$ and $H$ be finite commutative groups, $L:G\to H$ an additive homomorphism, and $y\in H$. Suppose $w_1,w_2\in G$ satisfy $L(w_1)=L(w_2)=y$. Then:
-
-1. for either fixed Boolean challenge $c$, the transcript distributions generated using $w_1$ and $w_2$ are exactly equal; and
-2. if $(a,0,z_0)$ and $(a,1,z_1)$ are accepting transcripts with the same commitment, then $z_1-z_0$ is a witness for $y$.
-
-**Proof sketch.** The first conclusion is Corollary 3.7, obtained by translating uniform random tapes and identifying both real experiments with the same simulator. The second is Theorem 4.1, obtained by subtracting the two acceptance equations. $\square$
-
-The theorem can be summarized by the affine identity
+Subtracting in $V$ and using the homomorphism property,
 
 $$
-z=r+cw.
+L(z_1-z_0)=L(z_1)-L(z_0)=(t+y)-t=y.
 $$
 
-For a single fixed $c$, the map $r\mapsto z$ is a permutation and hides $w$ within a uniform response. Across $c=0$ and $c=1$ with common $r$, the difference of responses is
+Thus $z_1-z_0$ belongs to the witness fiber $L^{-1}(y)$. $\square$
+
+The extractor is deterministic and requires one subtraction in $W$. It does not assume that either response was generated honestly. It uses only their acceptance and shared commitment.
+
+### Corollary 7 (Honest Responses Recover the Original Witness)
+
+If the common commitment was generated from a mask $r$ and the two honest responses are $z_0=r$ and $z_1=r+w$, then the extractor outputs $w$ exactly.
+
+**Proof sketch.** Directly,
 
 $$
-(r+w)-r=w.
+z_1-z_0=(r+w)-r=w.
 $$
 
-Privacy and extraction therefore differ not in the underlying algebra but in the observer’s access pattern. One view is invariant under translation; two correlated views expose a finite difference.
+$\square$
 
-## 6. Numerical examples and algorithms
+### 4.1 The role of commitment consistency
 
-### 6.1 Cyclic-group example
-
-Let $G=H=\mathbb Z/11\mathbb Z$ and define $L(x)=3x$. Choose target $y=7$. Since
+The shared-commitment condition is essential. If the transcripts use commitments $t_0$ and $t_1$, acceptance gives
 
 $$
-3\cdot6\equiv7\pmod{11},
+L(z_0)=t_0,\qquad L(z_1)=t_1+y,
 $$
 
-$w=6$ is a witness. For random tape $r=4$, the commitment is $a=3r\equiv1$. The two responses are
+so
 
 $$
-z_0=4,\qquad z_1=4+6\equiv10\pmod{11}.
+L(z_1-z_0)=y+(t_1-t_0).
 $$
 
-They verify because
+This equals $y$ only when $t_1=t_0$. Any application to an adversarial prover must therefore ensure that the commitment is fixed before the challenge and cannot be changed afterward.
+
+### 4.2 From local extraction to repetition
+
+Suppose a prover, for a fixed commitment, can answer at most one challenge unless it possesses enough information to yield a witness. If the verifier chooses a uniform challenge bit, a prover prepared for only one branch succeeds with probability at most $1/2$. With $k$ independent repetitions and commitments fixed before challenges, the probability of guessing every challenge is at most
 
 $$
-3z_0\equiv1=a
+2^{-k}.
 $$
 
-and
+This familiar amplification statement is not a consequence of group algebra alone. It additionally requires a probabilistic adversary model, challenge independence, and a binding or fixed-commitment condition. The extraction theorem provides the key structural fact—both answers imply a witness—but a complete soundness theorem must state the operational assumptions.
+
+## 5. Concrete cyclic instantiation
+
+Let $q\ge 2$, take
 
 $$
-3z_1\equiv8\equiv a+y\pmod{11}.
+W=V=\mathbb{Z}/q\mathbb{Z},
 $$
 
-Extraction returns $z_1-z_0\equiv6$, a valid witness.
-
-For challenge $1$, the real transcript associated with $r$ is
+and choose $a\in\mathbb{Z}/q\mathbb{Z}$. Define
 
 $$
-(3r,1,r+6).
+L(x)=ax\pmod q.
 $$
 
-Set $z=r+6$. The simulator emits
+The public statement is $y=aw\pmod q$. The prover samples $r$ uniformly modulo $q$, sends $t=ar\pmod q$, receives $e\in\{0,1\}$, and replies
 
 $$
-(3z-7,1,z).
+z=r+ew\pmod q.
 $$
 
-Since $3(r+6)-7\equiv3r$, these triples agree. As $r$ runs over all residues, so does $z$, proving equality of the enumerated transcript multisets.
-
-### 6.2 Multiple witnesses
-
-Take $G=\mathbb Z/12\mathbb Z$, $H=\mathbb Z/6\mathbb Z$, and $L(x)=x\bmod6$. For target $y=2$, both $w_1=2$ and $w_2=8$ are witnesses. Translation by either witness permutes the twelve random tapes. Thus challenge-$1$ transcript collections are identical even though the witnesses differ by the nonzero kernel element $6$.
-
-This example makes witness indistinguishability concrete. The verifier learns that the target has a preimage but cannot determine which representative of the coset the prover used.
-
-### 6.3 Enumeration algorithm
-
-For cyclic groups, exact privacy can be checked by exhaustive transcript counting.
-
-**Algorithm 6.1 (Exact transcript multiset comparison).** Given moduli, a linear map, target, witness, and challenge, enumerate every random tape $r$, compute the real transcript, enumerate every response $z$, compute the simulated transcript, count both collections, and compare their frequency tables.
-
-If $|G|=N$ and group operations are constant-time, enumeration takes $O(N)$ time and $O(N)$ storage in the worst case. The method is pedagogical rather than necessary for the theorem: the bijection proves equality for every finite group without exhaustive search.
-
-### 6.4 Extraction audit algorithm
-
-**Algorithm 6.2 (Opposite-challenge extraction audit).** Check that two transcripts share a commitment, carry challenges $0$ and $1$, and satisfy their acceptance equations. If so, output $z_1-z_0$ and verify $L(z_1-z_0)=y$.
-
-The audit separates syntactic preconditions from algebraic extraction. Rejecting malformed or nonaccepting pairs prevents an invalid pair from being misrepresented as evidence of knowledge.
-
-## 7. Applications and interpretation
-
-### 7.1 Identification
-
-The protocol models a prover demonstrating knowledge of a preimage. The verifier sees an accepting conversation, while a simulator can reproduce the fixed-challenge view without a witness. Special soundness supplies the structural basis for a knowledge argument: answering both challenge branches at one commitment is enough to recover a preimage.
-
-### 7.2 Witness privacy
-
-When $L$ has many preimages, the theorem guarantees exact independence from the chosen witness. This matters in settings where possession of any credential should be demonstrated without revealing which credential or representative is used.
-
-### 7.3 Symmetry as noninterference
-
-The privacy proof is an instance of a general principle: a secret-dependent transformation that acts as a measure-preserving permutation of randomness can leave the observable distribution unchanged. The secret affects sample labels but not their distribution. This principle appears in one-time masking, randomized encodings, and coupling arguments.
-
-### 7.4 Correlation as recoverability
-
-Extraction illustrates the complementary principle that reuse of randomness changes the information structure. Each value $r$ and $r+w$ is individually uniform when $r$ is uniform, but the pair determines $w$ by subtraction. Thus claims of privacy must specify not only marginal distributions but also whether random coins are reused and which joint observations are exposed.
-
-## 8. Limits of naive theorem-proof certification
-
-One motivating vision is to certify possession of a proof of a theorem without disclosing proof steps. The present protocol clarifies a useful algebraic core but does not establish that broad goal.
-
-Consider a naive proposal: commit separately to every line of an $n$-line purported proof, let the verifier request one random line, and show that the opened line follows from previous lines or axioms. If exactly one line is invalid, a uniform query detects the error with probability only $1/n$. After $k$ independent queries, the probability of missing that error is
+The verifier checks
 
 $$
-\left(1-\frac1n\right)^k,
+az\equiv t+ey\pmod q.
 $$
 
-not generally $2^{-k}$. To make the miss probability small, the number of repetitions must depend on $n$ unless the proof is encoded so that any invalid argument creates a constant fraction of locally detectable inconsistencies.
+For example, take $q=11$, $a=3$, and $y=7$. Both $w=6$ and, modulo $11$, only its congruent representatives satisfy $3w\equiv7$. If instead $a$ is not invertible modulo a composite modulus, multiple incongruent witnesses may exist. With $q=12$, $a=4$, and $y=8$, the witnesses are $2$, $5$, $8$, and $11$. For either challenge, all four witnesses induce the same transcript distribution.
 
-Privacy also does not follow from opening only one line. A proof line may reveal a crucial lemma, construction, or tactic. Zero knowledge requires a simulator capable of reproducing the verifier’s whole view without the hidden proof. Merely limiting disclosure is not the same as proving that the disclosure carries no additional information.
+Consider $q=12$, $a=4$, $w=5$, and $r=7$. Then $y=8$ and $t=4$. The challenge-$0$ response is $z_0=7$, and indeed $4z_0\equiv4=t$. The challenge-$1$ response is $z_1=0$, since $7+5\equiv0$. Verification gives $4z_1\equiv0\equiv4+8=t+y$. Extraction returns
 
-A claim that communication is polynomial only in the theorem statement raises a further issue. The shortest proof may be much longer than the statement, and unrestricted provability does not by itself provide a polynomial bound relating the two. Succinct argument systems can make verification communication small under explicit models and assumptions, but such a theorem requires precise complexity parameters and cannot be inferred solely from arithmetizing proofs.
+$$
+z_1-z_0\equiv0-7\equiv5\pmod{12},
+$$
 
-A complete theorem-certification system would need at least:
+which is the witness.
 
-1. a precise proof relation and encoding;
-2. a binding and hiding commitment mechanism;
-3. a locally testable encoding with robust soundness gap;
-4. a simulator for all permitted verifier behavior;
-5. a knowledge extractor or suitable soundness definition;
-6. explicit computational assumptions and communication parameters.
+The fixed-challenge simulator samples $z$ uniformly modulo $q$ and computes
 
-The affine protocol can serve as one component or conceptual model within such a construction, but it does not replace these layers.
+$$
+t=az-ey\pmod q.
+$$
 
-## 9. Extensions and future work
+Enumerating all $q$ choices shows exact equality with the real transcript multiset. This remains true when $a$ is noninvertible and the public statement has multiple witnesses.
 
-The exact finite result suggests several extensions.
+## 6. Algorithms and complexity
 
-First, transcript multiset equality can be recast as equality of probability mass functions and then as statistical distance zero. This gives a standard probabilistic interface while preserving the exact theorem.
+### 6.1 Real transcript generation
 
-Second, malicious-verifier zero knowledge requires handling challenge selection after commitment. A simulator may need rewinding or a stronger commitment abstraction. The fixed-challenge simulator cannot simply be relabeled as an adaptive simulator because it constructs the commitment using the challenge.
+**Input:** modulus or finite-group representation, homomorphism $L$, public statement $y$, witness $w$, challenge $e$.  
+**Procedure:** sample uniform $r\in W$; compute $t=L(r)$ and $z=r+ew$; return $(t,e,z)$.
 
-Third, parallel repetition can use challenge vectors $\mathbf c\in\{0,1\}^k$. One seeks completeness, joint simulation, and a knowledge-soundness error near $2^{-k}$ under appropriate independence and extraction conditions. Care is needed: special soundness for each coordinate does not automatically settle every concurrent or adaptive composition.
+If a group operation costs $C_W$ and evaluating $L$ costs $C_L$, generation costs $O(C_L+C_W)$ beyond random sampling. For integers modulo $q$, using ordinary arithmetic, the bit complexity is polynomial in $\log q$.
 
-Fourth, an explicit commitment layer should distinguish perfect, statistical, and computational properties. The current commitment $L(r)$ is an algebraic message, not a general cryptographic commitment primitive with independently stated binding and hiding guarantees.
+### 6.2 Public simulation
 
-Fifth, propositional validity may be reduced to a suitable witness relation, but claims of polynomial-size witnesses encounter standard complexity barriers. The reduction and its size bounds must be stated rather than assumed.
+**Input:** $L$, $y$, and fixed challenge $e$.  
+**Procedure:** sample uniform $z\in W$; compute $t=L(z)-ey$; return $(t,e,z)$.
 
-Finally, proof encodings with local tests require a robust soundness gap before random queries become effective. A simulator must also handle local openings without leaking encoded proof information. These requirements identify the missing bridge from the present affine core to private certification of general mathematical proofs.
+Its asymptotic cost matches real generation: one evaluation of $L$ and a constant number of group operations. The simulator does not search for a witness and does not invert $L$.
 
-## 10. Discussion
+### 6.3 Two-transcript extraction
 
-The sharpest feature of the result is its exactness. No asymptotic parameter or hardness assumption is needed for the finite-group privacy statement. Uniformity plus translation symmetry yields literal equality of transcript distributions. This makes the model useful for understanding what a simulation proof must accomplish.
+**Input:** accepting transcripts $(t,0,z_0)$ and $(t,1,z_1)$.  
+**Procedure:** verify the shared commitment and both acceptance equations; return $z_1-z_0$.
 
-The model also demonstrates why marginal privacy can coexist with extraction. Suppose $R$ is uniform on $G$. Then both $R$ and $R+w$ are uniform, independently of $w$ at the level of their separate distributions. But the joint pair $(R,R+w)$ determines $w$. The distinction between a marginal and a coupling is therefore not peripheral; it is the logical boundary between privacy and knowledge recovery.
+After verification, extraction itself uses one group subtraction. The verifier may recompute two images under $L$, giving total cost $O(2C_L+C_W)$. In a cyclic group modulo $q$, this is polynomial in $\log q$.
 
-The Boolean challenge is essential to the simple extraction formula. Challenge $0$ provides the baseline response, while challenge $1$ provides its translated counterpart. More general challenge sets can support analogous linear extraction when challenge differences are invertible in an appropriate scalar structure, but such generalizations require more algebra than an additive group alone.
+### 6.4 Exhaustive distribution comparison
 
-Finiteness is used for the uniform distribution on all of $G$ and for exact multiset counting. The pointwise correspondence itself remains algebraically valid beyond finite groups. Extensions to compact groups could use Haar measure, while discrete infinite groups would require chosen random-tape distributions and a careful analysis of whether translation preserves them.
+For small groups, one can enumerate every mask $r$ and every simulated response $z$, count transcripts, and compare the two frequency maps. For a group of size $N=|W|$, each distribution requires $N$ transcript constructions. Hash-table comparison has expected time $O(N)$ and space $O(N)$; sorting-based comparison takes $O(N\log N)$ time. Enumeration is pedagogical rather than cryptographically scalable, since Theorem 3 already proves equality for all finite sizes.
+
+## 7. Toward confidential theorem certification
+
+### 7.1 Derivations as witnesses
+
+Fix a deductive theory with a finite or decidable collection of inference rules. A derivation of a formula $T$ can be encoded as a finite sequence
+
+$$
+\pi=(\varphi_1,\ldots,\varphi_m),
+$$
+
+where each $\varphi_i$ is either an axiom or follows from designated earlier formulas by an allowed rule, and $\varphi_m=T$. There is then a decidable relation
+
+$$
+R(T,\pi)=1
+$$
+
+meaning that $\pi$ is a valid derivation of $T$.
+
+This makes a hidden proof a cryptographic witness. It does not, however, make the affine protocol directly applicable: general proof verification is not usually a single homomorphic preimage equation. A reduction or encoding is needed.
+
+### 7.2 Why opening one line is insufficient
+
+Suppose a prover commits separately to each line of a purported derivation, and the verifier asks to inspect one randomly selected line together with its cited premises. If exactly one of $m$ lines is invalid, a single uniform query detects the defect with probability only $1/m$. Repeating a constant number of times leaves substantial soundness error.
+
+A locally testable encoding must amplify global invalidity into many local violations. Probabilistically checkable proof constructions are relevant because they redesign the witness so that a verifier can query a few locations. But local testability, hiding, and succinctness are different properties:
+
+- **Local soundness** ensures that false statements or invalid encodings are caught with noticeable probability.
+- **Zero knowledge** ensures that queried views disclose nothing beyond validity.
+- **Binding** prevents answers from being changed after queries are known.
+- **Succinctness** bounds communication and verifier work in the chosen size parameters.
+
+None follows automatically from the others.
+
+### 7.3 Statement length versus proof length
+
+A claim that communication is polynomial only in the theorem statement length is much stronger than a claim polynomial in the hidden proof length or in a security parameter. Encoding an arbitrarily long derivation as an integer does not make the integer’s bit representation short. Likewise, a generic local-checking transformation may have size polynomial in the original witness length.
+
+A rigorous succinctness theorem must specify at least:
+
+1. the encoding of formulas and derivations;
+2. the bit length of the theorem statement;
+3. the bit length of the proof witness;
+4. the security parameter;
+5. prover time, verifier time, randomness, and total communication;
+6. the computational assumptions supporting commitments or arguments.
+
+Without this accounting, no statement-length polynomial bound should be inferred.
+
+### 7.4 Honest and malicious verifiers
+
+The simulator in Theorem 3 handles a prescribed challenge. General zero knowledge quantifies over potentially malicious verifier strategies and asks for a simulator of their complete view, including adaptive messages and internal randomness. Such simulation may require rewinding or a different protocol transformation. Perfect fixed-challenge simulation is a strong local fact, but it is not a full malicious-verifier theorem.
+
+## 8. Applications
+
+The immediate application is privacy-preserving identification for linear relations in finite groups. A party can demonstrate knowledge of a preimage without identifying which preimage it holds. This is especially relevant when $L$ has a nontrivial kernel and witness anonymity is important.
+
+A second application is conceptual modularity in larger protocols. The affine core supplies a sigma-protocol-like component with completeness, simulation, and extraction. A surrounding system can provide commitments, repetition, and compilation against malicious verifiers.
+
+A third application is confidential certification. Engineering designs, optimization solutions, and mathematical derivations can all be regarded as witnesses to public predicates. The present construction does not solve those general relations directly, but it clarifies the exact obligations any solution must meet: simulated views, binding commitments, global soundness, and explicit complexity bounds.
+
+There are also limitations of purpose. A zero-knowledge certificate establishes confidence without explanation. Mathematics as a communicative discipline values proofs because they reveal structure, permit reuse, and generate new ideas. Confidential certification is therefore complementary to exposition, not a substitute for it.
+
+## 9. Discussion
+
+The protocol’s geometry is summarized by two maps. For privacy, the map
+
+$$
+r\longmapsto r+ew
+$$
+
+is a permutation. For extraction, the map
+
+$$
+(z_0,z_1)\longmapsto z_1-z_0
+$$
+
+cancels a shared affine offset. The same structure creates both concealment and accountability.
+
+Perfect simulation is possible because the verifier’s acceptance equation uniquely determines the commitment from $(e,z)$:
+
+$$
+t=L(z)-ey.
+$$
+
+The simulator samples the free coordinate $z$ and reconstructs the constrained coordinate $t$. In a real execution, the response is already uniform after translation. This is why simulation requires neither inversion of $L$ nor knowledge of a preimage.
+
+Special soundness is possible because opposite challenges produce equations whose difference is exactly the public relation. This algebraic cancellation also explains the fragility of the result: if commitments differ, if challenges are not genuinely distinct, or if acceptance tolerates uncontrolled errors, extraction must be reconsidered.
+
+The finite setting avoids measure-theoretic complications. Uniform distributions can be understood as normalized multiplicities over all group elements. The theorem therefore states literal equality of transcript counts. Recasting the result directly in probability-mass-function language would make sequential and parallel composition more convenient, but would not alter the argument.
+
+## 10. Future work
+
+A first extension is to express transcript equality directly as equality of probability mass functions and then prove closure under product distributions. This would support a clean treatment of $k$ independent challenges.
+
+A second direction is a full repetition theorem. It should distinguish extraction from probability amplification and explicitly model adversarial commitment strategies, independence, and binding. Under appropriate assumptions, the target soundness error is exponential in the repetition count.
+
+A third direction is to encode propositional derivations as locally checkable objects. The development must separately prove global soundness of the encoding, privacy of sampled openings, and commitment security. Simply opening random proof lines is insufficient.
+
+A fourth direction is to instantiate the additive construction in concrete cyclic groups and relate it to identification protocols expressed multiplicatively. Care is needed when translating additive witness equations into exponentiation statements.
+
+A fifth direction is complexity-aware confidential theorem certification. Any broad claim about proofs in arithmetic must represent algorithms and bit lengths explicitly and must not confuse arithmetization with compression. Genuinely succinct argument systems, rather than elementary encoding alone, are needed for communication bounds detached from proof length.
+
+Finally, malicious-verifier zero knowledge remains open for this presentation. The fixed-challenge simulator should be replaced or compiled into a simulator that handles arbitrary verifier strategies and their full views, with running time and any rewinding procedure analyzed explicitly.
 
 ## 11. Conclusion
 
-A finite-group identification protocol exposes a concise duality. Given a public additive map $L:G\to H$ and target $y$, a witness $w$ satisfies $L(w)=y$. The response $z=r+cw$ is perfectly private for a fixed challenge because translation by $cw$ permutes uniform random tapes. A simulator chooses $z$ first and sets $a=L(z)-cy$, producing exactly the real transcript distribution. Consequently, transcript multiplicities are equal and the verifier’s view is independent of the chosen valid witness.
+For a homomorphic preimage relation over finite abelian groups, a three-move affine protocol achieves four exact properties: honest transcripts always verify; fixed-challenge views can be simulated perfectly from public data; transcript distributions do not depend on the choice of witness; and two accepting answers to opposite challenges under one commitment reveal a witness by subtraction.
 
-Yet two accepting responses to opposite challenges at one commitment yield $z_1-z_0$, whose image under $L$ is $y$. The shared random component cancels. Translation and subtraction are therefore the privacy and extraction directions of one affine law.
-
-This duality supplies a rigorous conceptual foundation for proving knowledge without disclosing a witness in the stated model. It also marks the boundary of the result: private certification of arbitrary mathematical proofs needs robust encodings, commitments, adaptive simulation, and carefully parameterized succinctness claims. Within its scope, however, the principle is exact and memorable: translation hides; subtraction extracts.
+These results provide a mathematically complete account of a foundational zero-knowledge mechanism. They also identify what remains outside that mechanism. Confidential certification of arbitrary theorems requires globally sound local encodings, hiding and binding commitments, adversarial simulation, repetition analysis, and honest complexity accounting. The affine protocol is therefore neither a proof of universal succinct theorem certification nor merely a toy. It is the precise algebraic core on which such systems can be built: translation hides one answer, and subtraction exposes inconsistency.

@@ -1,165 +1,160 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations of affine privacy and witness extraction.
+"""Numerical demonstrations of an affine zero-knowledge protocol.
 
-The examples use cyclic additive groups.  Run with Python 3.10 or later;
-no third-party packages are required.
+The examples use the homomorphism L(x) = a*x modulo q.  They illustrate
+perfect completeness, exact fixed-challenge simulation, witness independence,
+and extraction from two accepting transcripts with a shared commitment.
 """
 
 from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass
-from typing import Iterable
+import random
+from typing import Iterable, TypeAlias
 
-
-@dataclass(frozen=True, order=True)
-class Transcript:
-    """A transcript (commitment, challenge, response) in cyclic groups."""
-
-    commitment: int
-    challenge: int
-    response: int
+Transcript: TypeAlias = tuple[int, int, int]
 
 
 @dataclass(frozen=True)
-class CyclicStatement:
-    """The homomorphism L(x) = multiplier*x (mod target_modulus)."""
+class CyclicProtocol:
+    """Affine preimage protocol over the additive group of integers modulo q."""
 
-    source_modulus: int
-    target_modulus: int
-    multiplier: int
-    target: int
+    q: int
+    a: int
 
     def __post_init__(self) -> None:
-        if self.source_modulus <= 0 or self.target_modulus <= 0:
-            raise ValueError("Moduli must be positive")
-        # This formula descends from Z/source_modulus to Z/target_modulus
-        # exactly when target_modulus divides multiplier*source_modulus.
-        if (self.multiplier * self.source_modulus) % self.target_modulus != 0:
-            raise ValueError("The multiplier does not define a homomorphism")
+        if self.q < 2:
+            raise ValueError("q must be at least 2")
 
-    def hom(self, x: int) -> int:
-        return (self.multiplier * (x % self.source_modulus)) % self.target_modulus
+    def image(self, x: int) -> int:
+        return (self.a * x) % self.q
 
-    def is_witness(self, witness: int) -> bool:
-        return self.hom(witness) == self.target % self.target_modulus
+    def statement(self, witness: int) -> int:
+        return self.image(witness)
 
+    def transcript(self, witness: int, mask: int, challenge: int) -> Transcript:
+        _require_bit(challenge)
+        y = self.statement(witness)
+        commitment = self.image(mask)
+        response = (mask + challenge * witness) % self.q
+        result = (commitment, challenge, response)
+        assert self.verify(y, result)
+        return result
 
-def real_transcript(statement: CyclicStatement, witness: int, random_tape: int,
-                    challenge: int) -> Transcript:
-    """Construct an honest transcript."""
-    _check_bit(challenge)
-    if not statement.is_witness(witness):
-        raise ValueError("The supplied value is not a witness")
-    r = random_tape % statement.source_modulus
-    response = (r + challenge * witness) % statement.source_modulus
-    return Transcript(statement.hom(r), challenge, response)
+    def simulate(self, y: int, response: int, challenge: int) -> Transcript:
+        _require_bit(challenge)
+        commitment = (self.image(response) - challenge * y) % self.q
+        result = (commitment, challenge, response % self.q)
+        assert self.verify(y, result)
+        return result
 
+    def verify(self, y: int, transcript: Transcript) -> bool:
+        commitment, challenge, response = transcript
+        if challenge not in (0, 1):
+            return False
+        return self.image(response) == (commitment + challenge * y) % self.q
 
-def simulated_transcript(statement: CyclicStatement, response: int,
-                         challenge: int) -> Transcript:
-    """Construct a witness-free accepting transcript."""
-    _check_bit(challenge)
-    z = response % statement.source_modulus
-    commitment = (statement.hom(z) - challenge * statement.target) % statement.target_modulus
-    return Transcript(commitment, challenge, z)
+    def extract(self, first: Transcript, second: Transcript) -> int:
+        t0, e0, z0 = first
+        t1, e1, z1 = second
+        if (e0, e1) != (0, 1):
+            raise ValueError("transcripts must be ordered by challenges 0 and 1")
+        if t0 != t1:
+            raise ValueError("extraction requires a shared commitment")
+        return (z1 - z0) % self.q
 
+    def real_distribution(self, witness: int, challenge: int) -> Counter[Transcript]:
+        return Counter(self.transcript(witness, r, challenge) for r in range(self.q))
 
-def accepts(statement: CyclicStatement, transcript: Transcript) -> bool:
-    """Evaluate L(z) = a + c*y in the target cyclic group."""
-    if transcript.challenge not in (0, 1):
-        return False
-    right = (transcript.commitment + transcript.challenge * statement.target) % statement.target_modulus
-    return statement.hom(transcript.response) == right
+    def simulated_distribution(self, y: int, challenge: int) -> Counter[Transcript]:
+        return Counter(self.simulate(y, z, challenge) for z in range(self.q))
 
-
-def transcript_multiset(statement: CyclicStatement, witness: int,
-                        challenge: int, simulated: bool = False) -> Counter[Transcript]:
-    """Enumerate the exact real or simulated transcript multiset."""
-    values: Iterable[Transcript]
-    if simulated:
-        values = (simulated_transcript(statement, z, challenge)
-                  for z in range(statement.source_modulus))
-    else:
-        values = (real_transcript(statement, witness, r, challenge)
-                  for r in range(statement.source_modulus))
-    return Counter(values)
+    def witnesses(self, y: int) -> list[int]:
+        return [w for w in range(self.q) if self.image(w) == y % self.q]
 
 
-def extract_witness(statement: CyclicStatement, false_transcript: Transcript,
-                    true_transcript: Transcript) -> int:
-    """Extract z_1-z_0 after checking common commitment and acceptance."""
-    if false_transcript.challenge != 0 or true_transcript.challenge != 1:
-        raise ValueError("Transcripts must answer challenges 0 and 1")
-    if false_transcript.commitment != true_transcript.commitment:
-        raise ValueError("Transcripts must have the same commitment")
-    if not accepts(statement, false_transcript) or not accepts(statement, true_transcript):
-        raise ValueError("Both transcripts must be accepting")
-    witness = (true_transcript.response - false_transcript.response) % statement.source_modulus
-    if not statement.is_witness(witness):
-        raise AssertionError("Extraction invariant failed")
-    return witness
-
-
-def _check_bit(challenge: int) -> None:
+def _require_bit(challenge: int) -> None:
     if challenge not in (0, 1):
-        raise ValueError("Challenge must be 0 or 1")
+        raise ValueError("challenge must be 0 or 1")
 
 
-def demonstrate_prime_cycle() -> None:
-    """Show simulation and extraction in Z/11Z with L(x)=3x."""
-    statement = CyclicStatement(11, 11, 3, 7)
-    witness, random_tape = 6, 4
-    t0 = real_transcript(statement, witness, random_tape, 0)
-    t1 = real_transcript(statement, witness, random_tape, 1)
-    print("Example 1: Z/11Z, L(x)=3x, y=7")
-    print(f"  challenge 0 transcript: {t0}; accepts={accepts(statement, t0)}")
-    print(f"  challenge 1 transcript: {t1}; accepts={accepts(statement, t1)}")
-    print(f"  extracted witness: {extract_witness(statement, t0, t1)}")
+def demonstrate_exact_simulation(protocol: CyclicProtocol, witness: int) -> None:
+    """Exhaustively compare real and simulated transcript multiplicities."""
+    y = protocol.statement(witness)
+    print(f"Public statement: y = {y} modulo {protocol.q}")
     for challenge in (0, 1):
-        real = transcript_multiset(statement, witness, challenge)
-        simulated = transcript_multiset(statement, witness, challenge, simulated=True)
-        print(f"  c={challenge}: real multiset equals simulated multiset: {real == simulated}")
+        real = protocol.real_distribution(witness, challenge)
+        simulated = protocol.simulated_distribution(y, challenge)
+        print(
+            f"challenge {challenge}: {len(real)} transcripts; "
+            f"real == simulated is {real == simulated}"
+        )
+        assert real == simulated
 
 
-def demonstrate_witness_independence() -> None:
-    """Compare two witnesses when L: Z/12Z -> Z/6Z is reduction."""
-    statement = CyclicStatement(12, 6, 1, 2)
-    first, second = 2, 8
-    print("\nExample 2: Z/12Z -> Z/6Z, y=2")
-    print(f"  witnesses {first} and {second} are valid: "
-          f"{statement.is_witness(first)} and {statement.is_witness(second)}")
+def demonstrate_witness_independence(protocol: CyclicProtocol, y: int) -> None:
+    """Check that all witnesses in one fiber induce identical distributions."""
+    witnesses = protocol.witnesses(y)
+    if not witnesses:
+        raise ValueError("the selected statement has no witness")
+    print(f"Witnesses for y = {y}: {witnesses}")
     for challenge in (0, 1):
-        view_first = transcript_multiset(statement, first, challenge)
-        view_second = transcript_multiset(statement, second, challenge)
-        print(f"  c={challenge}: witness views exactly equal: {view_first == view_second}")
+        reference = protocol.real_distribution(witnesses[0], challenge)
+        assert all(
+            protocol.real_distribution(witness, challenge) == reference
+            for witness in witnesses
+        )
+        print(f"challenge {challenge}: all witness distributions agree")
 
 
-def demonstrate_all_small_instances() -> None:
-    """Audit all valid witnesses for a small noninjective homomorphism."""
-    statement = CyclicStatement(15, 5, 2, 4)
-    witnesses = [w for w in range(statement.source_modulus) if statement.is_witness(w)]
-    print("\nExample 3: exhaustive audit for L(x)=2x from Z/15Z to Z/5Z")
-    print(f"  witnesses of y=4: {witnesses}")
-    for challenge in (0, 1):
-        views = [transcript_multiset(statement, w, challenge) for w in witnesses]
-        simulator = transcript_multiset(statement, witnesses[0], challenge, simulated=True)
-        assert all(view == simulator for view in views)
-        print(f"  c={challenge}: all {len(witnesses)} witness views equal the simulator")
-    checked = 0
-    for r in range(statement.source_modulus):
-        for w in witnesses:
-            t0 = real_transcript(statement, w, r, 0)
-            t1 = real_transcript(statement, w, r, 1)
-            assert statement.is_witness(extract_witness(statement, t0, t1))
-            checked += 1
-    print(f"  extraction succeeded for all {checked} correlated transcript pairs")
+def demonstrate_extraction(protocol: CyclicProtocol, witness: int, mask: int) -> None:
+    """Generate opposite accepting answers and recover a valid witness."""
+    y = protocol.statement(witness)
+    zero = protocol.transcript(witness, mask, 0)
+    one = protocol.transcript(witness, mask, 1)
+    recovered = protocol.extract(zero, one)
+    print(f"challenge-0 transcript: {zero}")
+    print(f"challenge-1 transcript: {one}")
+    print(f"extracted witness: {recovered}")
+    assert protocol.image(recovered) == y
+
+
+def estimate_challenge_guessing(repetitions: int, trials: int, seed: int = 7) -> float:
+    """Estimate success when a prover preselects one answerable bit per round."""
+    if repetitions < 0 or trials <= 0:
+        raise ValueError("repetitions must be nonnegative and trials positive")
+    rng = random.Random(seed)
+    successes = 0
+    prepared = [0] * repetitions
+    for _ in range(trials):
+        challenges = [rng.randrange(2) for _ in range(repetitions)]
+        successes += int(challenges == prepared)
+    return successes / trials
 
 
 def main() -> None:
-    demonstrate_prime_cycle()
-    demonstrate_witness_independence()
-    demonstrate_all_small_instances()
+    protocol = CyclicProtocol(q=12, a=4)
+    witness = 5
+    y = protocol.statement(witness)
+
+    print("=== Exact fixed-challenge simulation ===")
+    demonstrate_exact_simulation(protocol, witness)
+
+    print("\n=== Witness independence ===")
+    demonstrate_witness_independence(protocol, y)
+
+    print("\n=== Special-soundness extraction ===")
+    demonstrate_extraction(protocol, witness, mask=7)
+
+    print("\n=== Repeated challenge guessing (illustrative model) ===")
+    for repetitions in (1, 2, 4, 8):
+        empirical = estimate_challenge_guessing(repetitions, trials=200_000)
+        theoretical = 2.0 ** (-repetitions)
+        print(
+            f"k={repetitions:2d}: empirical={empirical:.5f}, "
+            f"theoretical={theoretical:.5f}"
+        )
 
 
 if __name__ == "__main__":
