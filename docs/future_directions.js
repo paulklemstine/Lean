@@ -4,6 +4,21 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0227",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T13:45:25.015677+00:00",
+    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
     "domains": [
       "Novelty",
@@ -33,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f8a1331",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
       "Novelty",
@@ -43,7 +58,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T15:16:12.414388+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
@@ -60,6 +75,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-16T15:16:12.425510+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
+    "domains": [
+      "Shared"
+    ],
+    "id": "auto_reset_Shared_98cb9029",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "auto_reset",
+    "status": "available",
+    "timestamp": "2026-07-17T13:45:52.051601+00:00",
+    "title": "[Reset] Fresh approach in Shared"
   },
   {
     "consumed_by_exp_id": "",
@@ -2739,20 +2768,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Dense Sets without Large t\u2011Fold Sumsets"
   },
   {
-    "consumed_by_exp_id": "87b73bf0",
-    "description": "Conjecture: For every integer k \u2265 5 there exists a constant \u03b5(k) > 0 such that every connected k\u2011regular graph G with Cheeger constant h(G) \u2265 \u03b5(k) admits a divisor D of degree exactly \u230ag(G)/2\u230b (where g(G)=|E(G)|\u2212|V(G)|+1 is the graph genus) whose rank is at least 1.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0215",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15213v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T12:37:13.411147+00:00",
-    "title": "Half-Canonical Divisor Existence Conjecture for Expander Graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any fixed \u03b4 \u2208 (0,1) and sufficiently large n, there exists a subset S \u2282 [n] with |S| \u2265 \u03b4n such that no A, B \u2282 \u2115 with min{|A|,|B|} \u2265 (3+o(1)) log n / log(1/\u03b4) satisfy A+B \u2282 S.",
     "domains": [
@@ -2854,6 +2869,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0226",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T13:45:24.979737+00:00",
+    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThis development formalizes the finite coordinate core of Curtin's *Generalizations of nets and Latin squares* (arXiv:2607.10890v1): column- and row-Latin matrices, orthogonality, cooperative pairs and systems, coordinate reticulations, svelte arrays, unique cross-line intersections, the grid-coordinate characterizations of Lemma 7.5, and the `m*n` cardinality consequence of Theorem 3.1.\n\nNatural next steps are:\n\n1. **Partition-level incidence structures.** Connect the coordinate-fibre representation here to a literal structure whose lines are finite sets and whose families are `Set.PairwiseDisjoint` covers. Prove both representations equivalent, including all seven clauses of Theorem 3.1.\n2. **Full inverse correspondence.** Package the maps between ordered reticulations, svelte semi-orthogonal arrays, and normalized cooperative systems as equivalences, proving Theorems 6.2, 6.3, 7.7, and 7.8 at structure level rather than only the forward encodings established here.\n3. **Multiplicity and foundations.** Model multisets of line families, then formalize repetition-free reticulations and Proposition 4.1.\n4. **Parastrophy and isotopy.** Define the permutation actions from Sections 9 and 10 and prove that they preserve the cooperative and reticulation axioms.\n5. **Constructions.** Formalize prolongation, splicing, and direct products from Sections 12\u201314, with formulas for their parameters.\n6. **Classical specializations.** Build translations from nets, mixed orthogonal arrays, mutually orthogonal Latin squares, and bireversible Mealy automata, recovering Propositions 3.6 and 6.6 and Theorem 7.3.\n7. **Finite search.** Add executable enumeration of small repetition-free systems up to isotopy, together with kernel-checked certificates for any reported counts.\n",
     "domains": [
       "Algebra",
@@ -2896,6 +2926,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:29:19.802752+00:00",
     "title": "**Conjecture.** Let an ordered non-Archimedean real-closed field carry a standar"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Certified finite-prefix null tests for \u03c0, e, and \u221a2\n\nFix a prefix length in advance and compare centered decimal-digit autocorrelations at lags 1\u201312 against the exact permutation distribution, with family-wise error controlled across constants and lags. The conjecture is that none of the three advertised preferred lags remains significant after correction at prefix lengths 10\u00b3, 10\u2074, and 10\u2075.\n\nThe key insight is that an exact finite-sample null distribution separates reproducible digit evidence from interpretations based only on irrationality. Why now? The deterministic energy identity identifies the precise statistic to test and exposes every convention that must be fixed before significance has a meaning.\n\n## 2. Temporal-lag and pitch-interval separation\n\nDefine a pitch-interval histogram counting pairs whose digit values differ by a prescribed number of semitones, independently of their temporal separation. Under the stated ten-note chromatic map, the conjecture is that octave counts are identically zero, while any temporal lag-12 effect is unrelated to octave incidence.\n\nThe key insight is that sequence position and pitch distance are orthogonal coordinates and should never share the word \u201clag.\u201d Why now? The present analysis shows that the original octave interpretation is structurally incompatible with a digit alphabet of width ten.\n\n## 3. Fourier-energy characterization of digit-melody repetition\n\nFor centered cyclic digit prefixes, the conjecture is that statistically exceptional autocorrelation peaks are equivalent to concentration of Fourier power on characters whose phases nearly stabilize the corresponding shift, with quantitative two-sided bounds uniform in prefix length.\n\nThe key insight is that Fourier inversion turns temporal repetition into spectral concentration, while polarization turns it into low interval energy. Why now? These two exact descriptions are now available in one framework, making a sharp stability theorem a concrete target.\n\n## 4. Continued fractions versus decimal consonance under controlled ensembles\n\nCompare numbers sampled from bounded-partial-quotient Cantor sets with matched control samples, using a pre-registered consonance functional on decimal prefixes. The conjecture is that, after conditioning on prefix length and digit frequencies, bounded partial quotients do not produce a universal positive consonance bias.\n\nThe key insight is that continued-fraction digits and decimal digits arise from different dynamical codings; any bridge between them must be measured against a controlled ensemble rather than inferred from isolated constants. Why now? The failure of irrationality alone to constrain finite autocorrelation narrows the search to genuinely dynamical mechanisms.\n\n## 5. Prefix-prescription obstruction theorem\n\nFor every finite decimal word and every prescribed finite vector of lag correlations compatible with that word, construct both a transcendental real and a quadratic irrational sharing the word whenever the algebraic class permits the same prefix. The conjecture is that no statistic depending on a fixed finite prefix can distinguish transcendence from algebraicity with certainty.\n\nThe key insight is that finite musical data constrain an interval of real numbers, not the arithmetic nature of an individual tail. Why now? This obstruction would give a rigorous boundary for all attempts to infer deep arithmetic properties from finite sonifications.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0228",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "87b73bf0",
+    "status": "available",
+    "timestamp": "2026-07-17T13:45:46.320270+00:00",
+    "title": "Fix a prefix length in advance and compare centered decimal-digit autocorrelatio"
   },
   {
     "consumed_by_exp_id": "",

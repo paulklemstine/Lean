@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2ed994b6",
-      "domain": "Novelty",
-      "key_insight": "# Orderly Friedman numbers: results and future directions\n\n## Formal results obtained\n\n`Catalog/OrderlyFriedman.lean` gives an explicit expression language and a certificate predicate.  A valid certif",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-15T06:52:17",
-      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
-    },
-    {
       "cycle_id": "d1d26693",
       "domain": "Probability",
       "key_insight": "# Future directions\n\n## What was established\n\n`Cryptography/ZeroKnowledge.lean` isolates two decisive issues in the proposed protocol.\n\n1. **Opening a raw proof coordinate is not zero knowledge in gen",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T13:29:21",
       "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+    },
+    {
+      "cycle_id": "87b73bf0",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## 1. Certified finite-prefix null tests for π, e, and √2\n\nFix a prefix length in advance and compare centered decimal-digit autocorrelations at lags 1–12 against the exact permut",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-17T13:45:51",
+      "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cf19c51c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: the suspension tower and the excess spectrum of free ℤ₂-complexes\n\nThis cycle established the **suspension tower** `Sᵏ(K)` of a free ℤ₂-complex as a\nrigorous object and proved thr",
-      "quality_score": 0.79,
-      "sorry_count": 4,
-      "theorem_count": 36,
-      "timestamp": "2026-07-14T02:10:35",
-      "title": "This cycle established, unconditionally, the constructive lower-bound half of th"
-    },
     {
       "cycle_id": "0782e3ca",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T13:29:21",
       "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+    },
+    {
+      "cycle_id": "87b73bf0",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## 1. Certified finite-prefix null tests for π, e, and √2\n\nFix a prefix length in advance and compare centered decimal-digit autocorrelations at lags 1–12 against the exact permut",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-17T13:45:51",
+      "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cca295e6",
-      "domain": "Shared",
-      "name": "fib_dvd_gcd_of_dvd",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "cca295e6",
-      "domain": "Shared",
-      "name": "fibEntryPt_dvd_of_fib_dvd",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "cca295e6",
-      "domain": "Shared",
-      "name": "for",
-      "quality": 0.71
-    },
     {
       "cycle_id": "cca295e6",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "exact_period_three_distinct",
       "quality": 0.76
+    },
+    {
+      "cycle_id": "87b73bf0",
+      "domain": "Shared",
+      "name": "connects",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "87b73bf0",
+      "domain": "Shared",
+      "name": "signalEnergy_shift",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "87b73bf0",
+      "domain": "Shared",
+      "name": "two_mul_autocorrelation_eq",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-17T13:29:21",
+  "last_updated": "2026-07-17T13:45:51",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "29aa9d96",
-        "quality": 0.82,
-        "theorems": 11,
-        "title": "Deepening: Speculative: Mathematics as a Phase Transition"
-      },
-      {
         "cycle_id": "319bd9f6",
         "quality": 0.78,
         "theorems": 13,
@@ -3947,6 +3941,12 @@
         "quality": 0.61,
         "theorems": 11,
         "title": "ArXiv paper: Cyclic Projective Orbits on Rational Normal Curves and MDS Codes"
+      },
+      {
+        "cycle_id": "87b73bf0",
+        "quality": 0.72,
+        "theorems": 9,
+        "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
       }
     ],
     "Tropical": [
