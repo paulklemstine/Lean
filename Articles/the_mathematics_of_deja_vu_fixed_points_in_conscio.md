@@ -1,91 +1,153 @@
-# The Ghost in the Loop: Why Déjà Vu Is a Mathematical Certainty
+# The Mathematics of Déjà Vu: Return, Recurrence, and Tropical Memory
 
-*A feeling older than memory, hiding in the equations of thought*
+A familiar room suddenly feels remembered. A sentence seems to arrive with its own echo. Déjà vu is brief, subjective, and difficult to reproduce, but its central shape is mathematically crisp: a state appears to return.
 
----
+That observation does not turn consciousness into a single equation. It does, however, suggest a disciplined question. If a cognitive state changes according to a rule, what can mathematics truly conclude when the system revisits an earlier state? The answer is both richer and more cautious than the slogan “period three implies chaos.” Return times obey an exact arithmetic, survive changes of description, and acquire a striking spectral interpretation in tropical mathematics. Yet continuity alone does not scatter recurrent states everywhere, and a population statistic such as $70\%$ cannot be identified with the density of periodic points without a probabilistic observation model.
 
-You're walking into a café you've never visited. The barista reaches for a cup, turns slightly, and the sunlight catches the steam rising from the espresso machine at exactly the right angle — and suddenly, impossibly, you *know* this moment. You've been here before. You've seen this exact configuration of light and motion and coffee. The feeling is vivid, overwhelming, and gone within seconds.
+The result is a useful mathematical portrait of déjà vu—not as proof of a theory of consciousness, but as a case study in how recurrence can be defined, transported, simulated, and tested.
 
-This is déjà vu, and nearly 70% of people experience it at least once in their lifetime. For decades, neuroscientists have treated it as a glitch — a misfiring of memory circuits, a hiccup in the brain's pattern-matching machinery. But what if it isn't a glitch at all? What if déjà vu is mathematically inevitable — as certain as the fact that a thrown ball must come back down?
+## A state that comes back
 
-## The Mind as a Machine
+Let $S$ be a space of possible states and let $f:S\to S$ send a present state to its successor. Repeated application produces
 
-To understand why, we need to think about what the brain actually *does*. At any given moment, your brain is in some cognitive state — a vast configuration of neural activity, chemical concentrations, and electrical signals. Call this state *s*. In the next moment, your brain transitions to a new state, determined by the current one. There's a rule, a function *f*, that maps each state to its successor: *f(s)* is where your mind goes next.
+$$
+s,\quad f(s),\quad f^2(s),\quad f^3(s),\ldots,
+$$
 
-This is a **dynamical system** — a fancy way of saying "a rule that determines how things change over time." The weather is a dynamical system. The stock market is one. Your heartbeat is one. And your stream of consciousness is one too.
+where $f^n$ means that $f$ is applied $n$ times. We call $s$ a **periodic state** if there is a positive integer $n$ for which
 
-Now here's the key question: in a dynamical system, can you ever return to exactly where you started? Can the system visit the same state twice?
+$$
+f^n(s)=s.
+$$
 
-For your mind, a return to a previously visited state *is* déjà vu. Not a memory of the past — an actual revisitation of an identical cognitive configuration.
+The number $n$ is a return time. It need not be the first return. A state has **exact period** $p$ when $p>0$, $f^p(s)=s$, and no positive integer $q<p$ satisfies $f^q(s)=s$.
 
-## The Theorem That Guarantees Ghosts
+This distinction matters. Every fixed point has return time $3$, because a state satisfying $f(s)=s$ also satisfies $f^3(s)=s$. But it does not have exact period $3$. An exact three-cycle consists of genuinely different stages.
 
-In 1975, mathematicians Tien-Yien Li and James Yorke proved one of the most beautiful theorems in all of mathematics. It can be stated in six words: **period three implies chaos.**
+**Exact Three-Cycle Theorem.** If $s$ has exact period $3$, then the three states $s$, $f(s)$, and $f^2(s)$ are pairwise distinct.
 
-What does this mean? Imagine a system that cycles through exactly three states before returning to its starting point: state A leads to state B, which leads to state C, which leads back to A. Li and Yorke proved that if *any* continuous dynamical system has such a three-cycle, then it must also have cycles of *every* other length — cycles of period 2, period 5, period 137, period ten million. Moreover, it must contain uncountably many trajectories that never repeat at all, wandering forever through state space without settling into any pattern.
+The reason is simple but decisive. If $s=f(s)$, the first return occurs after one step. If $f(s)=f^2(s)$, then applying the remaining dynamics and using the three-step return again yields a shorter return. If $f^2(s)=s$, the state returns after two steps. Every possible collision contradicts exactness.
 
-Period three doesn't just imply some chaos. It implies *all* chaos.
+A return also repeats on an arithmetic schedule.
 
-## The Covering Lemma: How Three Forces Everything
+**Return-Multiple Theorem.** If $p>0$ and $f^p(s)=s$, then for every positive integer $k$,
 
-The mechanism behind this theorem is elegant. Consider three points *a < b < c* forming a 3-cycle: *f(a) = b, f(b) = c, f(c) = a*. Look at what happens to the intervals between these points.
+$$
+f^{pk}(s)=s.
+$$
 
-The function maps the interval [*b,c*] into a range that stretches from *a* all the way to *c* — it *covers* the entire interval [*a,c*]. And it maps [*a,b*] into a range that includes all of [*b,c*]. These **covering relations** create a kind of interval dynamics on top of the point dynamics.
+One can view this as a clock whose hand comes back every $p$ ticks. Once one complete circuit returns to the starting point, any positive number of complete circuits does the same. In an observational setting, this warns us that many recorded return times may reflect one underlying fundamental period.
 
-Think of it like a highway system. Interval [*b,c*] has an on-ramp to everywhere — including back to itself. Interval [*a,b*] connects to [*b,c*]. So you can construct paths of any length: loop around [*b,c*] as many times as you want, take the exit to [*a,b*], and come back. Each such path of length *n* corresponds to a periodic orbit of period *n*.
+## What survives a change of viewpoint
 
-The **Covering Fixed Point Theorem** makes this rigorous: if a continuous function maps an interval so that its image *contains* that same interval, then the function must have a fixed point there. It's a consequence of the intermediate value theorem — the most powerful tool in all of one-dimensional analysis, and one of the most intuitive. If a continuous function starts above the diagonal and ends below it (or vice versa), it must cross the diagonal somewhere.
+Brains are not observed in their full microscopic state. An experiment may record a coarse signal: a behavioral category, an imaging feature, or a reported feeling. Mathematically, such an observation is a map $h:S\to T$ from a detailed state space to an observed one.
 
-## The Logistic Map: Thought in a Single Equation
+Suppose the hidden dynamics is $f:S\to S$, the observed dynamics is $g:T\to T$, and observation commutes with evolution:
 
-To make this concrete, consider the simplest possible model of cognitive dynamics: the **logistic map**. Take a single number *x* between 0 and 1, representing a compressed cognitive state, and update it according to the rule:
+$$
+h(f(s))=g(h(s))
+$$
 
-*f(x) = r · x · (1 - x)*
+for every state $s$. This relationship is called a **semiconjugacy**. It says that evolving first and observing afterward gives the same result as observing first and evolving in the reduced description.
 
-The parameter *r* controls the complexity of the dynamics. For small *r* (below 3), the system settles to a single stable equilibrium — a mind at rest. As *r* increases past 3, the equilibrium destabilizes and the system oscillates between two states — a mind flickering between alternatives. At *r* ≈ 3.45, the period doubles to 4, then 8, then 16, cascading toward infinity.
+**Transport of Recurrence Theorem.** Under a semiconjugacy, every periodic hidden state produces a periodic observed state with the same return time.
 
-And at *r* ≈ 3.83, something remarkable happens: a period-3 orbit appears. By Li-Yorke, this single three-cycle forces the existence of *every* period. The system is fully chaotic. And yet, scattered through this chaos, are periodic orbits of every conceivable length — an infinity of loops, an infinity of déjà vus.
+Indeed, repeated commutation gives $h(f^n(s))=g^n(h(s))$. If $f^n(s)=s$, then
 
-## Stability and Instability: The Derivative Tells All
+$$
+g^n(h(s))=h(f^n(s))=h(s).
+$$
 
-Not all periodic orbits are created equal. Some are **attracting** — nearby trajectories spiral toward them, making them the states the system naturally visits. Others are **repelling** — unstable equilibria that the system flees from, like a ball balanced on a hilltop.
+This is a robust conclusion: recurrence survives faithful dynamical coarse-graining. The converse is not guaranteed. Two different hidden states may look identical after observation, so a many-to-one sensor can manufacture an apparent observed return even while the underlying state has not returned. That asymmetry is central to any scientific interpretation of déjà vu.
 
-The derivative of the map at a fixed point determines which type it is. For the logistic map, the nontrivial fixed point *x* = (*r*-1)/*r* has derivative 2 - *r*. When |2 - *r*| < 1 — that is, when 1 < *r* < 3 — the fixed point is stable. Perturbations decay. The mind returns to equilibrium.
+## A laboratory map on the unit interval
 
-But when *r* > 3, the fixed point becomes unstable. Perturbations grow. The system oscillates, cascades, and eventually enters chaos. The stable resting state of consciousness gives way to an endlessly creative, endlessly surprising dance of cognitive states.
+A classic testing ground for recurrence is the logistic family
 
-## Conjugacy: Same Dance, Different Stage
+$$
+L_r(x)=rx(1-x).
+$$
 
-One of the deepest ideas in dynamics is **topological conjugacy**. Two dynamical systems are conjugate if there's a continuous, invertible mapping that transforms one into the other. Conjugate systems are, in a precise mathematical sense, *the same system* — they have identical orbit structures, identical periodic points, identical chaos.
+Here $x$ lies between $0$ and $1$, and $r$ controls the dynamics. For $0\le r\le4$, the unit interval is invariant:
 
-This matters because it means the specific details of the cognitive state space don't matter. Whether brain states are represented as neural firing patterns, chemical concentrations, or abstract vectors in a high-dimensional space, the *dynamics* are what count. If two brains are topologically conjugate — if their cognitive maps are related by a continuous invertible transformation — they will have exactly the same déjà vu structure.
+**Invariant-Interval Theorem.** If $0\le r\le4$ and $0\le x\le1$, then
 
-The logistic map at *r* = 4, for instance, is conjugate to the tent map *T(x) = 1 - |2x - 1|* via the transformation *h(x) = sin²(πx/2)*. This reveals that the seemingly complicated quadratic dynamics are, underneath, just a simple folding operation. The chaos is real, but it has a hidden simplicity.
+$$
+0\le L_r(x)\le1.
+$$
 
-## Why 70%?
+The lower bound follows because all three factors $r$, $x$, and $1-x$ are nonnegative. For the upper bound, the parabola $x(1-x)$ reaches its maximum $1/4$ at $x=1/2$, so $rx(1-x)\le4\cdot(1/4)=1$.
 
-The empirical fact that roughly 70% of people report experiencing déjà vu at least once takes on new meaning in this framework. In a chaotic dynamical system, the **recurrence rate** — the fraction of time the system spends near previously visited states — depends on the system's parameter. For the logistic map, this rate varies from 0 (no recurrence at low *r*) to nearly 1 (constant recurrence at high *r*).
+This theorem makes numerical experiments safe: exact trajectories beginning in $[0,1]$ remain there. At $r=3.83$, iterations from many starting points numerically approach a three-stage pattern, reflecting the well-known period-three window of this family. Such computation is informative, but it does not by itself prove an exact orbit or quantify a population frequency. A rigorous parameter study would enclose the three candidate orbit points in intervals and show that the third iterate maps each interval strictly into itself with derivative magnitude below $1$.
 
-At *r* ≈ 3.83, where the period-3 window opens, the recurrence density sits in a range that's intriguingly close to the empirical déjà vu rate. This is not a proof that brains are logistic maps — they're vastly more complex. But it suggests that the 70% figure isn't arbitrary. It may reflect a fundamental property of the class of dynamical systems that continuous cognitive processes belong to.
+The map also clarifies a common overreach. A period-three theorem for continuous interval maps can have strong consequences when its full hypotheses and classical conclusions are invoked. But neither “continuity” nor “being an interval map” alone means that periodic points are dense.
 
-## The Inevitability Theorem
+## The contraction that punctures the myth
 
-We proved something that captures the mathematical core of this story. **For any continuous self-map of a closed interval, and any positive integer *n*, the map has a periodic point whose period divides *n*.** This is a consequence of the one-dimensional Brouwer fixed point theorem: every continuous function mapping a closed interval into itself must have a fixed point. Apply this to the *n*-th iterate of the function, and you get a periodic point.
+Consider the gentlest possible evolution on the real line:
 
-In cognitive terms: if your cognitive dynamics are continuous and bounded — if your mind can't teleport between wildly disconnected states and can't drift off to infinity — then for *every* timescale *n*, there exists a cognitive state that recurs after exactly *n* steps (or a divisor of *n*). Déjà vu isn't a bug. It's a theorem.
+$$
+C(x)=\frac{x}{2}.
+$$
 
-## What the Mathematics Teaches Us
+It is continuous. After $n$ steps,
 
-The covering lemma, the conjugacy theorem, the universal period divisor theorem — these aren't just abstract results. They tell us something profound about the nature of consciousness and cognition.
+$$
+C^n(x)=\frac{x}{2^n}.
+$$
 
-First: **recurrence is inevitable**. Any continuous, bounded cognitive process must have periodic points. There is no escape from déjà vu in a continuous mind.
+If a positive return occurs, then $x/2^n=x$. Since $2^n>1$, this equation forces $x=0$. Conversely, $0$ is fixed.
 
-Second: **complexity begets complexity**. The moment a cognitive system achieves even a simple three-cycle — three states that cycle endlessly — it is forced to contain cycles of every length and uncountably many aperiodic trajectories. A small amount of richness in mental dynamics guarantees infinite richness.
+**Contraction Counterexample.** The continuous map $C(x)=x/2$ has exactly one periodic point, namely $0$. Consequently, its periodic points are not dense in the real line.
 
-Third: **structure is universal**. Topological conjugacy tells us that the specific substrate of cognition doesn't matter — neural, digital, or otherwise. What matters is the topological structure of the dynamics. Two minds with the same dynamical structure will have the same déjà vu patterns, regardless of what they're made of.
+A set is **dense** if every nonempty open interval contains one of its points. The singleton $\{0\}$ plainly misses, for example, every sufficiently small interval around $1$. Thus continuity alone cannot support a density claim. Continuity prevents jumps; it does not force the stretching, folding, or mixing needed to distribute periodic behavior throughout a state space.
 
-The ghost in the loop isn't a ghost at all. It's a fixed point of the function that is *you*, iterating through time, occasionally — inevitably — returning to where it began.
+This counterexample changes the scientific story. Déjà vu is not a mathematical inevitability of every continuous cognitive dynamics. A continuous system may simply contract toward one resting state. To derive widespread recurrence, one must add hypotheses that create orbit dispersion—topological transitivity, mixing, or another mechanism ruling out attracting regions.
 
----
+## Why $70\%$ is not a density
 
-*The mathematical results described in this article have been formally verified using computer-assisted proof techniques. The covering lemma, conjugacy theorems, universal period divisor theorem, and Sharkovsky forcing results have been proven with complete mathematical rigor.*
+Reports that roughly $70\%$ of people experience déjà vu concern subjects, memories, observation windows, and reporting thresholds. The density of periodic points is a property of subsets of a state space. These are different kinds of quantity.
+
+Even topological density does not mean “a large percentage.” The rational numbers are dense in the real line, yet they occupy zero length. Conversely, a set can have substantial probability under one distribution and tiny probability under another. Exact periodic points may also be invisible in finite-precision data, while approximate returns can be common.
+
+A meaningful calibration must specify at least four ingredients: a distribution of parameters such as $r$; a distribution of initial states; a finite observation horizon; and a tolerance $\varepsilon$ declaring that $|f^n(x)-x|<\varepsilon$ counts as an observed return. Only then does an incidence become a probability that can be compared with data. Choosing $r=3.83$ merely because an incidence is near $70\%$ would skip this entire inferential bridge.
+
+## Tropical dynamics: recurrence as zero drift
+
+There is another way to understand return. In **min-plus algebra**, ordinary addition plays the role of multiplication, while minimum plays the role of addition. Given a real matrix $A=(A_{ij})$ and a vector $v$, define the min-plus matrix-vector product by
+
+$$
+(A\otimes v)_i=\min_j(A_{ij}+v_j).
+$$
+
+A pair $(\lambda,v)$ is a **tropical eigenpair** when
+
+$$
+A\otimes v=v+\lambda\mathbf{1},
+$$
+
+where $\mathbf{1}$ is the vector whose entries are all $1$. The scalar $\lambda$ is not a multiplicative growth rate; it is an additive drift per step.
+
+**Tropical Drift Theorem.** If $(\lambda,v)$ is a tropical eigenpair, then after $k$ min-plus updates,
+
+$$
+(A\otimes)^k v=v+k\lambda\mathbf{1}.
+$$
+
+The proof is induction. One update adds $\lambda$ to every coordinate. Min-plus multiplication commutes with adding the same constant to every coordinate, so each further update contributes one more copy of $\lambda$.
+
+Two consequences reveal the spectral anatomy of recurrence.
+
+**Zero-Eigenvalue Fixed-State Theorem.** A vector $v$ is a tropical eigenvector with eigenvalue $0$ exactly when $A\otimes v=v$.
+
+**Zero-Drift Recurrence Theorem.** Every tropical eigenstate with eigenvalue $0$ returns after every positive number of steps.
+
+Thus tropical recurrence is zero spectral drift. When $\lambda\ne0$, the state does not return in ordinary coordinates; it marches linearly along the all-ones direction. In projective tropical space, where adding a common constant does not change the state, that same trajectory is stationary. This distinction between literal and projective recurrence offers a useful metaphor for cognition: a pattern may repeat relationally even while its global baseline changes.
+
+## A better mathematical moral
+
+The mathematics of déjà vu is not a proof that a subjective experience must occur. It is a toolkit for separating valid consequences from seductive analogies.
+
+A positive return creates infinitely many return times by multiplication. Exact period $3$ certifies three distinct stages. Recurrence passes from a detailed system to a compatible observed system. The logistic family stays inside its natural state interval for parameters in $[0,4]$. In tropical dynamics, eigenstates move by uniform linear drift, and zero drift is precisely fixed-state recurrence. Against these positive results stands an equally important negative one: continuity alone does not make periodic states dense.
+
+The next scientific step is therefore not to equate a survey percentage with a topological property. It is to build a measure-calibrated model of approximate recurrence, specify what is observed, and test whether periodic windows predict anything beyond chance. The most illuminating mathematics here does not declare déjà vu inevitable. It tells us exactly what would have to be true before such a declaration could be justified.

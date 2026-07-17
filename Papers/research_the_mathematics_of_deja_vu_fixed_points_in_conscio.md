@@ -1,246 +1,379 @@
-# Fixed Points in Cognitive Dynamics: A Rigorous Framework for Periodic Recurrence
+# The Mathematics of Déjà Vu: Periodic Recurrence, Interval Dynamics, and Tropical Spectral Drift
+
+**Aristotle**  
+**July 17, 2026**
 
 ## Abstract
 
-We develop a formal mathematical framework for periodic recurrence in continuous dynamical systems, motivated by the phenomenon of déjà vu in cognitive science. We model cognitive state transitions as continuous self-maps of closed intervals and prove three main results: (1) the **Covering Fixed Point Theorem**, which establishes that a continuous map whose image *contains* its domain must have a fixed point — a strengthening of the 1D Brouwer theorem; (2) the **Universal Period Divisor Theorem**, proving that any continuous self-map of [a,b] has periodic points of period dividing n for every n ≥ 1; and (3) a **Period-3 Forcing Theorem** showing that a continuous map with a period-3 orbit forces fixed points of all iterates. We additionally prove that topological conjugacy preserves periodic orbit structure (the **Conjugacy Invariance Theorem**) and establish the covering relations that underlie Sharkovsky's theorem. For the logistic map at r = 4, we prove invariance of [0,1], surjectivity, derivative formulas, and existence of multiple distinct periodic points. All results are machine-verified in Lean 4 with Mathlib.
+We develop a self-contained mathematical framework for interpreting déjà vu as recurrence in a discrete dynamical system. A state is periodic when it returns after a positive number of updates, and has exact period $p$ when no earlier positive return occurs. We prove that every positive multiple of a return time is again a return time, that recurrence is preserved by semiconjugate observation maps, and that exact period $3$ yields three pairwise distinct orbit states. For the logistic family $L_r(x)=rx(1-x)$, we establish invariance of the unit interval for $0\le r\le4$, providing a sound domain for numerical experiments near the period-three window at $r=3.83$. We also prove a sharp cautionary result: the continuous contraction $x\mapsto x/2$ has only the periodic point $0$, so continuity on an interval does not imply density of periodic points. Finally, in min-plus dynamics we show that a tropical eigenstate with eigenvalue $\lambda$ evolves by additive drift $k\lambda$ after $k$ steps; eigenvalue zero is therefore equivalent to a fixed state and implies recurrence at every positive time. These results distinguish topological recurrence, exact periodicity, observed recurrence, and probabilistic incidence. In particular, a reported lifetime incidence cannot be equated with a density of periodic points without a measure, an observation horizon, and a tolerance model.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Déjà vu is naturally described as a return: the present seems to coincide with something already experienced. The psychological phenomenon is complex, but the mathematical structure of return can be isolated without pretending that a scalar map is a complete model of consciousness. Let a state space $S$ represent possible cognitive configurations, and let $f:S\to S$ represent one step of evolution. The orbit of $s\in S$ is
 
-Déjà vu — the subjective experience of having previously encountered a current situation — occurs in approximately 70% of the population. While neuroscientific explanations focus on memory encoding errors or temporal lobe activity, we propose a mathematical framework where déjà vu is modeled as periodic recurrence in a discrete dynamical system.
+$$
+s,\ f(s),\ f^2(s),\ldots.
+$$
 
-If cognitive state at time step *t* is represented by a point *s_t* in a state space *S*, and the cognitive transition function *f: S → S* determines *s_{t+1} = f(s_t)*, then déjà vu corresponds to a **periodic point**: a state *s* such that *f^n(s) = s* for some *n ≥ 1*.
+A recurrence occurs when an iterate equals the starting state. This elementary definition immediately raises several distinct questions. Does one return force further returns? Is recurrence visible after coarse observation? What does “period three” guarantee? Does continuity force recurrent states to be common? How should an empirical incidence over people be compared with a property of points? Can recurrence be read from spectral data in a nonclassical linear system?
 
-### 1.2 Background
+The answers form a coherent but deliberately guarded theory. Some conclusions are universal and require no topology: return times repeat at positive multiples, semiconjugacy transports periodicity, and exact period three creates three distinct states. Other conclusions depend on the setting. The logistic family preserves $[0,1]$ only in an appropriate parameter range. Density of periodic points is not a consequence of continuity; a contraction supplies a complete counterexample. In tropical dynamics, recurrence appears spectrally as cancellation of additive drift.
 
-The study of periodic orbits in one-dimensional dynamics has a rich history, beginning with Sharkovsky's theorem (1964) ordering the natural numbers such that the existence of a period-*p* orbit implies the existence of period-*q* orbits for all *q* following *p* in the ordering. Li and Yorke (1975) popularized the special case "period three implies chaos," establishing that a period-3 orbit forces periodic orbits of every period and uncountably many aperiodic trajectories.
+This framework is relevant beyond a cognitive metaphor. Recurrence is central in control, symbolic dynamics, scheduling, network timing, and finite-state observation. Semiconjugacy formalizes how a reduced model inherits genuine returns. Min-plus algebra models synchronization and shortest-path timing, where eigenvalues encode long-run cycle time. The same mathematical distinctions—exact versus approximate return, hidden versus observed state, topological versus probabilistic prevalence—are indispensable in each setting.
 
-### 1.3 Contributions
+We make no claim that the logistic parameter $r=3.83$ can be inferred from a reported lifetime incidence near $70\%$. Such a calibration is undefined until distributions, observation windows, and return tolerances are specified. Nor do we infer density of periodic points from continuity. Instead, we identify the precise valid core and formulate algorithms that demonstrate it numerically.
 
-We formalize and machine-verify the following results:
+## 2. Discrete recurrence
 
-1. **Covering Fixed Point Theorem** (Theorem 3.1): A continuous map on [a,b] whose image contains [a,b] has a fixed point.
-2. **Interval Covering Relations** (Theorems 3.2-3.3): Period-3 orbits create specific covering patterns between subintervals.
-3. **Two-Step Covering Theorem** (Theorem 3.4): Mutual covering relations between two intervals force a period-2 point of f².
-4. **Conjugacy Invariance** (Theorem 4.1): Topological conjugacy preserves the periodic orbit structure.
-5. **Universal Period Divisor Theorem** (Theorem 5.1): Every continuous self-map of [a,b] has periodic points of period dividing n, for all n.
-6. **Period-3 All-Iterate Theorem** (Theorem 6.1): A period-3 orbit forces f^n to have a fixed point for every n ≥ 1.
-7. **Orbit Cardinality Theorem** (Theorem 6.2): For bijections, an orbit of minimal period p has exactly p distinct elements.
-8. **Periodic Point Invariance** (Theorem 6.3): The set of periodic points of a bijection is forward-invariant.
-9. **Logistic Map Analysis** (Theorems 7.1-7.8): Complete analysis of the logistic map including invariance, surjectivity, derivatives, and periodic point existence.
+### 2.1 State evolution and iterates
 
-### 1.4 Catalog Dependencies
+Let $S$ be a nonempty set and $f:S\to S$ a self-map. Define $f^0$ to be the identity and recursively define $f^{n+1}=f\circ f^n$. Thus $f^n(s)$ is the state reached after $n$ updates.
 
-This work builds on:
-- `period3_implies_fixed_point_ivt` (MachineLearning/DejaVu/CognitiveDynamics.lean) — our Theorem 6.1 generalizes this to all iterates
-- `logistic_map_fixed_point` (Physics/ShadowingLemma.lean) — we extend the logistic analysis significantly
-- `exists_fixed_point_on_orbit_with_bound` (Bridges/HolographicProofRenormalization.lean) — our orbit cardinality theorem provides a sharper structural result
-- `finite_state_orbit_periodic` (Bridges/ModularCFDynamics.lean) — we complement the finite-state pigeonhole with continuous interval results
+**Definition 2.1 (Periodic state).** A state $s\in S$ is periodic if there exists an integer $n>0$ such that
 
-## 2. Definitions
+$$
+f^n(s)=s.
+$$
 
-### 2.1 Covering Relation
+Any such $n$ is a return time. This definition does not require that $n$ be minimal.
 
-**Definition 2.1** (Interval Covering). Let f: ℝ → ℝ be continuous. We say the interval [a,b] **f-covers** [c,d], written Covers(f, a, b, c, d), if f(Icc a b) ⊇ Icc c d.
+**Definition 2.2 (Exact period).** A state $s\in S$ has exact period $p$ if $p>0$, $f^p(s)=s$, and
 
-### 2.2 Topological Conjugacy
+$$
+f^q(s)\ne s\qquad\text{for every integer }q\text{ with }0<q<p.
+$$
 
-**Definition 2.2** (Conjugacy). Maps f, g: α → α are **conjugate** via h: α → α if h is bijective and h ∘ f = g ∘ h.
+The exact period is the first positive return time. A fixed point has exact period $1$, even though every positive integer is also a return time.
 
-### 2.3 Periodic Points
+### 2.2 Arithmetic of return times
 
-We use Mathlib's `IsPeriodicPt f n x`, defined as `f^[n] x = x`.
+**Theorem 2.3 (Positive multiples of a return time).** Let $p>0$ and suppose $f^p(s)=s$. Then, for every integer $k>0$,
 
-### 2.4 Logistic Map
+$$
+f^{pk}(s)=s.
+$$
 
-**Definition 2.3**. The logistic map with parameter r is `logistic r x = r * x * (1 - x)`.
+**Proof sketch.** Induct on $k$. The case $k=1$ is the hypothesis. If $f^{pk}(s)=s$, the iterate addition law gives
 
-## 3. The Covering Theory
+$$
+f^{p(k+1)}(s)=f^p(f^{pk}(s))=f^p(s)=s.
+$$
 
-### 3.1 Covering Fixed Point Theorem
+Therefore all positive multiples of $p$ are return times. $\square$
 
-**Theorem 3.1** (Self-Covering Fixed Point). *Let f: ℝ → ℝ be continuous on [a,b] with a < b. If Covers(f, a, b, a, b), then ∃ x ∈ [a,b], f(x) = x.*
+This theorem is universal: it uses neither topology nor algebraic structure on $S$. It also has an observational implication. A list of observed returns at times $p,2p,3p$ need not represent three independent recurrence mechanisms; all may arise from a single fundamental period.
 
-*Proof sketch.* Since f '' [a,b] ⊇ [a,b], there exist p, q ∈ [a,b] with f(p) = a and f(q) = b. Define g(x) = f(x) - x. Then g(p) = a - p ≤ 0 (since p ≥ a) and g(q) = b - q ≥ 0 (since q ≤ b). By IVT, g has a zero in [a,b]. □
+### 2.3 Exact period three
 
-**Remark.** This strengthens the standard 1D Brouwer fixed point theorem, which requires f to map [a,b] *into* [a,b]. Here we only require the image to *contain* [a,b] — the image may also extend beyond [a,b].
+**Theorem 2.4 (Distinctness of an exact three-cycle).** If $s$ has exact period $3$, then
 
-### 3.2 Period-3 Covering Relations
+$$
+s\ne f(s),\qquad f(s)\ne f^2(s),\qquad f^2(s)\ne s.
+$$
 
-**Theorem 3.2** (I₂ Covers Full Interval). *Under a period-3 orbit a → b → c → a with a < b < c, the interval [b,c] f-covers [a,c].*
+Consequently, the orbit segment $s,f(s),f^2(s)$ consists of three pairwise distinct states and repeats cyclically.
 
-*Proof sketch.* f(b) = c and f(c) = a. Since f is continuous, f '' [b,c] is connected and contains {a, c}. Hence f '' [b,c] ⊇ [a,c]. □
+**Proof sketch.** The equality $s=f(s)$ would give a return at time $1$. The equality $f^2(s)=s$ would give a return at time $2$. Finally, if $f(s)=f^2(s)$, applying $f$ gives $f^2(s)=f^3(s)=s$, again producing a return at time $2$. Each alternative contradicts exactness. $\square$
 
-**Theorem 3.3** (I₁ Covers I₂). *Under the same hypothesis, [a,b] f-covers [b,c].*
+The adjective “exact” cannot be omitted. The equation $f^3(s)=s$ alone allows fixed points and therefore does not certify three distinct stages.
 
-*Proof sketch.* f(a) = b and f(b) = c, so f '' [a,b] is connected containing {b, c}, hence ⊇ [b,c]. □
+## 3. Observation maps and transported recurrence
 
-### 3.3 Two-Step Covering
+A scientific observer rarely has access to a complete state. Let $S$ be a hidden state space, $T$ an observed state space, $f:S\to S$ the hidden dynamics, $g:T\to T$ the observed dynamics, and $h:S\to T$ an observation map.
 
-**Theorem 3.4** (Two-Step Covering Period-2 Point). *If [a₁,b₁] f-covers [a₂,b₂] and [a₂,b₂] f-covers [a₁,b₁], then f ∘ f has a fixed point in [a₁,b₁].*
+**Definition 3.1 (Semiconjugacy).** The map $h$ semiconjugates $f$ to $g$ when
 
-*Proof.* The composition f ∘ f self-covers [a₁,b₁]: for any z ∈ [a₁,b₁], by the second covering there exists y ∈ [a₂,b₂] with f(y) = z, and by the first covering there exists x ∈ [a₁,b₁] with f(x) = y. Then f(f(x)) = z. Apply Theorem 3.1 to f ∘ f. □
+$$
+h\circ f=g\circ h.
+$$
 
-## 4. Conjugacy Theory
+Equivalently, $h(f(s))=g(h(s))$ for all $s\in S$. Unlike a conjugacy, a semiconjugacy need not be invertible. It may merge several hidden states into one observation.
 
-### 4.1 Iterate Commutation
+**Lemma 3.2 (Iterated semiconjugacy).** If $h\circ f=g\circ h$, then for every integer $n\ge0$,
 
-**Theorem 4.1** (Conjugacy Iterate). *If ∀ x, h(f(x)) = g(h(x)), then ∀ n x, h(f^n(x)) = g^n(h(x)).*
+$$
+h\circ f^n=g^n\circ h.
+$$
 
-*Proof.* Induction on n. □
+**Proof sketch.** Induct on $n$. The identity is immediate for $n=0$. For the induction step, commute one additional application of $f$ through $h$ and use the induction hypothesis. $\square$
 
-### 4.2 Periodic Point Preservation
+**Theorem 3.3 (Transport of periodicity).** If $h$ semiconjugates $f$ to $g$ and $s$ is periodic under $f$, then $h(s)$ is periodic under $g$. More precisely, every return time of $s$ is a return time of $h(s)$.
 
-**Theorem 4.2** (Conjugacy Preserves Periodicity). *If f and g are conjugate via bijection h, then IsPeriodicPt f n x ↔ IsPeriodicPt g n (h x).*
+**Proof sketch.** Choose $n>0$ with $f^n(s)=s$. By Lemma 3.2,
 
-*Proof.* f^n(x) = x ⟺ h(f^n(x)) = h(x) (injectivity) ⟺ g^n(h(x)) = h(x) (Theorem 4.1). □
+$$
+g^n(h(s))=h(f^n(s))=h(s).
+$$
 
-**Corollary 4.3** (Conjugacy Preserves Fixed Points). *Under the same hypothesis, IsFixedPt f x ↔ IsFixedPt g (h x).*
+Thus $h(s)$ returns after $n$ observed updates. $\square$
 
-**Discussion.** This is the fundamental invariance theorem of topological dynamics. It implies that the recurrence spectrum — the set of periods for which periodic orbits exist — is a conjugacy invariant. Two dynamical systems that are conjugate have identical déjà vu patterns.
+The theorem is one-directional. If $h$ is many-to-one, the equality $g^n(h(s))=h(s)$ only implies $h(f^n(s))=h(s)$, not $f^n(s)=s$. Coarse observation can therefore preserve a genuine hidden recurrence but can also create an apparent recurrence by identifying distinct hidden states. Any empirical model of déjà vu must state which direction it intends: recurrence of the underlying state, recurrence of an observable, or merely approximate similarity of observations.
 
-## 5. Universal Period Theorem
+## 4. The logistic family as a recurrence laboratory
 
-### 5.1 Iterate Properties
+### 4.1 Definition and invariant domain
 
-**Theorem 5.1** (Iterate Maps To). *If MapsTo f (Icc a b) (Icc a b), then MapsTo f^n (Icc a b) (Icc a b) for all n.*
+For a real parameter $r$, define the logistic map
 
-**Theorem 5.2** (Iterate Continuity). *If ContinuousOn f (Icc a b) and MapsTo f (Icc a b) (Icc a b), then ContinuousOn f^n (Icc a b) for all n.*
+$$
+L_r(x)=rx(1-x).
+$$
 
-### 5.2 The Universal Period Divisor Theorem
+The unit interval is the natural state domain in population-style interpretations and in numerical studies.
 
-**Theorem 5.3** (Universal Period Divisor). *For any continuous f: [a,b] → [a,b] with a < b and any n ≥ 1, there exists x ∈ [a,b] with IsPeriodicPt f n x.*
+**Theorem 4.1 (Invariance of the unit interval).** If $0\le r\le4$ and $x\in[0,1]$, then $L_r(x)\in[0,1]$.
 
-*Proof.* f^n maps [a,b] into itself (Theorem 5.1) and is continuous (Theorem 5.2). By IVT: f^n(a) ≥ a and f^n(b) ≤ b, so g(x) = f^n(x) - x satisfies g(a) ≥ 0 and g(b) ≤ 0. Hence g has a zero. □
+**Proof sketch.** Since $r\ge0$, $x\ge0$, and $1-x\ge0$, we have $L_r(x)\ge0$. Completing the square gives
 
-**PEGB Analysis:**
-- **P**roof: Complete machine-verified proof via IVT on f^n.
-- **E**xample: For logistic map at r = 4, f^3 has fixed points 0, 3/4, and additional period-3 points.
-- **G**eneralization: The result extends to any continuous self-map of a compact convex subset of ℝ. The 2D analog is the Brouwer fixed point theorem for the disk.
-- **B**oundary: Fails for discontinuous maps (e.g., circle rotations by irrational angles on open intervals have no periodic points). Also fails for non-compact domains: f(x) = x + 1 on ℝ has no fixed points.
+$$
+x(1-x)=\frac14-\left(x-\frac12\right)^2\le\frac14.
+$$
 
-## 6. Period-3 Forcing
+Hence
 
-### 6.1 Main Forcing Theorem
+$$
+L_r(x)\le \frac r4\le1.
+$$
 
-**Theorem 6.1** (Period-3 All-Iterate Fixed Points). *If continuous f has period-3 orbit a → b → c → a with a < b < c, then for every n ≥ 1, f^n has a fixed point in [a,c].*
+Both bounds follow. $\square$
 
-*Proof.* The period-3 orbit forces a fixed point of f in [b,c] (since f(b) = c > b and f(c) = a < c, IVT gives x* with f(x*) = x*). A fixed point of f is a fixed point of f^n for all n. □
+The theorem guarantees that exact arithmetic never sends an initial point in $[0,1]$ outside that interval when $r\in[0,4]$. Floating-point implementations should still tolerate tiny roundoff errors.
 
-**Remark.** The full Sharkovsky theorem proves more: not just that f^n has a fixed point, but that f has a periodic point of *exact* period n for every n. Our result is weaker but more easily formalizable, as the full Sharkovsky theorem requires careful tracking of minimal periods through covering chains.
+### 4.2 Numerical exploration at $r=3.83$
 
-### 6.2 Orbit Structure
+The value $r=3.83$ lies in a period-three window of the logistic family. A practical exploration begins with several initial states in $(0,1)$, discards a long transient, and inspects blocks of three consecutive values. If an attracting three-cycle dominates the selected basin, values separated by three updates approach one another.
 
-**Theorem 6.2** (Orbit Cardinality). *For a bijection f with a point x of minimal period p, the orbit {x, f(x), ..., f^{p-1}(x)} has exactly p distinct elements.*
+A useful numerical statistic is the lag-three residual
 
-*Proof.* Suppose f^i(x) = f^j(x) with i < j < p. By injectivity, f^{j-i}(x) = x with 0 < j-i < p, contradicting minimality. □
+$$
+R_3(x;N)=\left|L_r^{N+3}(x)-L_r^N(x)\right|.
+$$
 
-**Theorem 6.3** (Periodic Point Invariance). *For a bijection f, the set {x | f^n(x) = x} is f-invariant.*
+Small residuals after a large burn-in support approximate period-three behavior. They do not establish an exact orbit, and they do not imply that all initial conditions have the same asymptotic behavior. A stronger computer-assisted argument would choose three rational intervals $I_0,I_1,I_2$ and prove
 
-*Proof.* If f^n(x) = x, then f^n(f(x)) = f(f^n(x)) = f(x) by commutativity of f with f^n. □
+$$
+L_r(I_0)\subseteq I_1,\qquad L_r(I_1)\subseteq I_2,\qquad L_r(I_2)\subseteq I_0,
+$$
 
-## 7. Logistic Map Analysis
+as well as a uniform contraction bound for the third iterate on each interval. The present results motivate that program but do not replace it.
 
-### 7.1 Basic Properties
+### 4.3 Period three and chaos: scope of inference
 
-**Theorem 7.1** (Invariance). *For 0 ≤ r ≤ 4 and x ∈ [0,1], logistic r x ∈ [0,1].*
+Classical interval dynamics contains strong theorems linking an exact period-three orbit with a rich hierarchy of periods and Li–Yorke chaos. Those conclusions depend on their full interval-map hypotheses and precise definitions. The results developed here prove only the universal exact-cycle certificate and the invariant interval needed for logistic experiments. They do not derive uncountably many scrambled trajectories, nor do they claim that all continuous maps have dense periodic points.
 
-**Theorem 7.2** (Fixed Points). *logistic r 0 = 0 and logistic r ((r-1)/r) = (r-1)/r for r ≠ 0.*
+This boundary is mathematically substantive. An attracting period-three window can exhibit stable local cycling even while other global claims require separate analysis. Periodic attraction, topological mixing, dense periodic points, and Li–Yorke scrambling are related but inequivalent properties.
 
-**Theorem 7.3** (Maximum). *logistic r (1/2) = r/4.*
+## 5. Continuity does not imply dense periodicity
 
-### 7.2 Derivative Analysis
+### 5.1 Density
 
-**Theorem 7.4** (Derivative). *HasDerivAt (logistic r) (r(1-2x)) x.*
+**Definition 5.1 (Dense subset).** A subset $P\subseteq\mathbb R$ is dense in $\mathbb R$ if every nonempty open interval intersects $P$. Equivalently, every real point is a limit of points from $P$.
 
-**Theorem 7.5** (Stability at Fixed Point). *HasDerivAt (logistic r) (2-r) ((r-1)/r).* The fixed point is stable for 1 < r < 3 and unstable for r > 3.
+Continuity controls nearby outputs of nearby inputs. It does not, by itself, force trajectories to stretch across a space.
 
-**PEGB Analysis:**
-- **P**roof: Direct computation via product rule.
-- **E**xample: At r = 4, derivative at x* = 3/4 is 2-4 = -2, |derivative| = 2 > 1, confirming instability.
-- **G**eneralization: The derivative formula extends to any polynomial map; the stability criterion generalizes to the Jacobian spectral radius in higher dimensions.
-- **B**oundary: The derivative analysis breaks at x = 0 for stability of the trivial fixed point (requires separate treatment since the derivative r at 0 can vary).
+### 5.2 The contraction counterexample
 
-### 7.3 Full Chaos at r = 4
+Define $C:\mathbb R\to\mathbb R$ by
 
-**Theorem 7.6** (Surjectivity). *logistic 4 maps [0,1] onto [0,1].*
+$$
+C(x)=\frac x2.
+$$
 
-*Proof.* Constructive: for y ∈ [0,1], the preimage x = (1 + √(1-y))/2 ∈ [0,1] satisfies 4x(1-x) = y. □
+The map is continuous, and direct induction yields
 
-**Theorem 7.7** (Two Distinct Fixed Points of Iterates). *For all n ≥ 1, (logistic 4)^n has at least two distinct fixed points in [0,1]: namely 0 and 3/4.*
+$$
+C^n(x)=\frac{x}{2^n}.
+$$
 
-## 8. Cross-Domain Bridge: Dynamics ↔ Algebra
+**Theorem 5.2 (Periodic points of the half-map).** A real number $x$ is periodic under $C(x)=x/2$ if and only if $x=0$.
 
-### 8.1 Periodic Points as Group Actions
+**Proof sketch.** If $C^n(x)=x$ for some $n>0$, then $x/2^n=x$, or
 
-The periodic point structure of a bijective map f: S → S is intimately connected to the representation theory of cyclic groups. The map f generates a ℤ-action on S, and the periodic points of period dividing n form the fixed point set of the subgroup nℤ acting on S.
+$$
+(2^n-1)x=0.
+$$
 
-Our **Orbit Cardinality Theorem** (6.2) is the dynamical systems version of the orbit-stabilizer theorem: the orbit of x under the cyclic group ⟨f⟩ has cardinality equal to the index of the stabilizer, which is the minimal period.
+Because $2^n-1>0$, it follows that $x=0$. Conversely, $C(0)=0$, so $0$ is periodic. $\square$
 
-Our **Periodic Point Invariance Theorem** (6.3) shows that the set of period-n points is an f-invariant subset — a dynamical version of the statement that fixed point sets of normal subgroups are invariant under the group action.
+**Corollary 5.3 (Failure of density under continuity).** There exists a continuous self-map of an interval whose periodic points are not dense. In particular, $C$ restricted to any invariant interval containing $0$, such as $[0,1]$, has periodic set $\{0\}$, which is not dense.
 
-### 8.2 Conjugacy as Isomorphism
+**Proof sketch.** The set $\{0\}$ misses every open interval contained in $(0,1]$, for example $(1/2,1)$. $\square$
 
-The conjugacy relation IsConjugate(f, g, h) is precisely the statement that (S, f) and (S, g) are isomorphic as dynamical systems. Our **Conjugacy Preservation Theorem** (4.2) is the dynamical analog of the fundamental theorem of group homomorphisms: structure-preserving maps preserve algebraic invariants.
+The counterexample rejects the proposition that continuity alone makes recurrence ubiquitous. Additional hypotheses must exclude contraction into a small attracting set and enforce sufficient orbit dispersion. Candidate conditions include topological transitivity or mixing, but each proposed theorem must be stated and proved with care.
 
-## 9. Discussion
+## 6. Topological prevalence versus empirical incidence
 
-### 9.1 Implications for Cognitive Science
+A claim that a certain proportion of people report déjà vu is a probability statement over a sampled population and an observation protocol. A claim that periodic points are dense is a topological statement. Neither determines the other.
 
-The Universal Period Divisor Theorem provides a mathematical proof that periodic recurrence is inevitable in any continuous, bounded cognitive process. This reframes déjà vu from a pathological glitch to a structural necessity — it is not a question of *whether* cognitive states recur, but *when* and *how often*.
+First, density has no inherent percentage. The rationals are dense in $\mathbb R$ but have Lebesgue measure zero. Second, a probability depends on a measure. The same set of states can have probability zero, intermediate probability, or one under different distributions. Third, exact recurrence is an infinite-precision equality, while experiments observe finite time series with noise and finite resolution.
 
-### 9.2 The 70% Question
+A measure-calibrated recurrence model should specify:
 
-The empirical observation that ~70% of people experience déjà vu corresponds, in our framework, to the recurrence density of a chaotic map. For the logistic map, this density varies with the parameter r. The period-3 window at r ≈ 3.83 produces recurrence rates in a range consistent with empirical data, though this numerical coincidence should not be overinterpreted.
+1. a probability distribution $\mu$ over initial states;
+2. a distribution $\rho$ over dynamical parameters;
+3. an observation horizon $N$;
+4. a tolerance $\varepsilon>0$;
+5. an observation map $h$ and a metric $d$ on observed states.
 
-### 9.3 Limitations
+One may then define the finite-horizon approximate-recurrence event
 
-Our framework assumes:
-1. **Continuity** of cognitive state transitions — a reasonable approximation but not exactly true at quantum scales.
-2. **One-dimensionality** — real cognitive state spaces are enormously high-dimensional. Many of our results (IVT-based) are specific to interval maps.
-3. **Determinism** — cognitive processes involve stochastic elements not captured by deterministic dynamics.
+$$
+E_{N,\varepsilon}=\left\{(r,x):\exists n\in\{1,\ldots,N\},\ d\bigl(h(L_r^n(x)),h(x)\bigr)<\varepsilon\right\}.
+$$
 
-## 10. Future Work
+Its modeled incidence is
 
-1. Extend the covering theory to prove the full Sharkovsky theorem (all 2^n periods forced before odd periods).
-2. Formalize the semiconjugacy between logistic map at r=4 and the tent map.
-3. Prove density of periodic points for continuous interval maps with positive topological entropy.
-4. Extend conjugacy results to topological spaces beyond intervals.
-5. Formalize Li-Yorke chaos and prove that period-3 implies uncountably many non-periodic trajectories.
+$$
+\mathbb P(E_{N,\varepsilon})
+=\int\!\int \mathbf 1_{E_{N,\varepsilon}}(r,x)\,d\mu(x)\,d\rho(r).
+$$
 
-## References
+Only a quantity of this kind can be compared coherently with a population incidence. Even then, identifiability is a separate issue: many combinations of $\mu$, $\rho$, $N$, $\varepsilon$, and $h$ may yield the same probability. Consequently, the parameter $r=3.83$ cannot be inferred from a $70\%$ statistic without much more structure.
 
-1. Li, T.-Y. & Yorke, J. A. (1975). "Period Three Implies Chaos." *American Mathematical Monthly*, 82(10), 985-992.
-2. Sharkovsky, A. N. (1964). "Co-existence of cycles of a continuous map of a line into itself." *Ukrainian Mathematical Journal*, 16, 61-71.
-3. Devaney, R. L. (2003). *An Introduction to Chaotic Dynamical Systems*. Westview Press.
-4. May, R. M. (1976). "Simple mathematical models with very complicated dynamics." *Nature*, 261, 459-467.
+## 7. Tropical spectral dynamics
 
-## Appendix: Verified Theorem Inventory
+### 7.1 Min-plus matrix action
 
-| Theorem | File | Status |
-|---------|------|--------|
-| Covering Preimage Endpoints | IntervalCovering.lean | ✓ Verified |
-| Self-Covering Fixed Point | IntervalCovering.lean | ✓ Verified |
-| Period-3 BC Covers AC | IntervalCovering.lean | ✓ Verified |
-| Period-3 AB Covers BC | IntervalCovering.lean | ✓ Verified |
-| Two-Step Covering Period-2 | IntervalCovering.lean | ✓ Verified |
-| Conjugacy Iterate | IntervalCovering.lean | ✓ Verified |
-| Conjugacy Preserves Periodic | IntervalCovering.lean | ✓ Verified |
-| Conjugacy Preserves Fixed | IntervalCovering.lean | ✓ Verified |
-| Iterate Maps To | IntervalCovering.lean | ✓ Verified |
-| Iterate Continuity | IntervalCovering.lean | ✓ Verified |
-| Universal Period Divisor | IntervalCovering.lean | ✓ Verified |
-| Period-3 Image Contains Full | SharkovskyForcing.lean | ✓ Verified |
-| Period-3 Image Contains I₂ | SharkovskyForcing.lean | ✓ Verified |
-| Fixed Point in I₂ | SharkovskyForcing.lean | ✓ Verified |
-| f²-Fixed in I₁ | SharkovskyForcing.lean | ✓ Verified |
-| All Iterate Fixed Points | SharkovskyForcing.lean | ✓ Verified |
-| Periodic Point Invariance | SharkovskyForcing.lean | ✓ Verified |
-| Orbit Cardinality | SharkovskyForcing.lean | ✓ Verified |
-| Logistic Invariant | LogisticDynamics.lean | ✓ Verified |
-| Logistic Maps To | LogisticDynamics.lean | ✓ Verified |
-| Logistic Surjective (r=4) | LogisticDynamics.lean | ✓ Verified |
-| Logistic Derivative | LogisticDynamics.lean | ✓ Verified |
-| Logistic Derivative at Fixed | LogisticDynamics.lean | ✓ Verified |
-| Two Fixed Points of Iterate | LogisticDynamics.lean | ✓ Verified |
+Let $A=(A_{ij})$ be an $n\times n$ real matrix, with $n>0$, and let $v\in\mathbb R^n$. The min-plus matrix-vector action is
+
+$$
+(T_Av)_i=\min_{1\le j\le n}(A_{ij}+v_j).
+$$
+
+This operation is nonlinear in ordinary arithmetic but linear over the min-plus semiring. It appears in shortest-path problems, discrete-event systems, scheduling, and synchronization.
+
+A basic symmetry is translation equivariance.
+
+**Lemma 7.1 (Uniform-shift equivariance).** For every scalar $c$,
+
+$$
+T_A(v+c\mathbf 1)=T_A(v)+c\mathbf 1.
+$$
+
+**Proof sketch.** For each coordinate $i$,
+
+$$
+\min_j(A_{ij}+v_j+c)=\min_j(A_{ij}+v_j)+c.
+$$
+
+The same $c$ factors out of every minimum. $\square$
+
+### 7.2 Tropical eigenpairs and drift
+
+**Definition 7.2 (Tropical eigenpair).** A scalar-vector pair $(\lambda,v)$ is a tropical eigenpair of $A$ if
+
+$$
+T_Av=v+\lambda\mathbf 1.
+$$
+
+The eigenvalue $\lambda$ measures additive displacement per update along the all-ones direction.
+
+**Theorem 7.3 (Iterated tropical eigenstate).** If $(\lambda,v)$ is a tropical eigenpair, then for every integer $k\ge0$,
+
+$$
+T_A^k(v)=v+k\lambda\mathbf 1.
+$$
+
+**Proof sketch.** The claim is immediate for $k=0$. Assume it holds at $k$. By Lemma 7.1 and the eigenpair equation,
+
+$$
+T_A^{k+1}(v)=T_A(v+k\lambda\mathbf 1)
+=T_A(v)+k\lambda\mathbf 1
+=v+(k+1)\lambda\mathbf 1.
+$$
+
+Induction completes the proof. $\square$
+
+This formula is exact, not asymptotic. The orbit of an eigenstate is constrained to a line parallel to $\mathbf 1$.
+
+**Theorem 7.4 (Zero eigenvalue and fixed state).** A vector $v$ forms a tropical eigenpair with eigenvalue $0$ if and only if
+
+$$
+T_Av=v.
+$$
+
+**Proof sketch.** Substitute $\lambda=0$ into the defining equation $T_Av=v+\lambda\mathbf 1$. $\square$
+
+**Corollary 7.5 (Zero-drift recurrence).** If $(0,v)$ is a tropical eigenpair, then $v$ is periodic under $T_A$. In fact,
+
+$$
+T_A^k(v)=v
+$$
+
+for every positive integer $k$.
+
+**Proof sketch.** Apply Theorem 7.3 with $\lambda=0$. $\square$
+
+For $\lambda\ne0$, literal recurrence is impossible along this eigen-orbit because $v+k\lambda\mathbf 1\ne v$ for $k>0$. In tropical projective space, however, vectors differing by a uniform shift are identified, so every tropical eigenstate is projectively fixed. This separates absolute recurrence from recurrence of relative coordinate differences.
+
+### 7.3 Example
+
+Consider
+
+$$
+A=\begin{pmatrix}0&2\\1&0\end{pmatrix},
+\qquad
+v=\begin{pmatrix}0\\0\end{pmatrix}.
+$$
+
+Then
+
+$$
+T_Av=
+\begin{pmatrix}
+\min(0,2)\\
+\min(1,0)
+\end{pmatrix}
+=
+\begin{pmatrix}0\\0\end{pmatrix}=v.
+$$
+
+Thus $(0,v)$ is a tropical eigenpair and $v$ returns at every positive time. If instead a matrix and vector satisfy $T_Av=v+2\mathbf 1$, then the exact iterate formula gives $T_A^k(v)=v+2k\mathbf 1$.
+
+## 8. Algorithms and numerical methodology
+
+### 8.1 Orbit and recurrence scan
+
+Given a map $f$, initial state $x_0$, horizon $N$, and tolerance $\varepsilon$, compute $x_{n+1}=f(x_n)$ and search for pairs $i<j$ satisfying $|x_j-x_i|<\varepsilon$. A direct all-pairs scan costs $O(N^2)$ time and $O(N)$ memory. If only return to the initial state is sought, the cost falls to $O(N)$ time and $O(1)$ additional memory. Approximate equality should never be reported as exact periodicity.
+
+### 8.2 Exact-period candidate test
+
+To test a numerical candidate for period $p$, compare $f^p(x)$ with $x$ and separately reject smaller lags $1\le q<p$. The test is tolerance-dependent and can be fooled by transients or rounding. For an attracting orbit, one first burns in the trajectory and then evaluates phase-separated residuals.
+
+### 8.3 Min-plus iteration
+
+A dense min-plus matrix-vector update evaluates $n$ candidate values in each of $n$ rows, requiring $O(n^2)$ time and $O(n)$ output memory. Repeating for $k$ steps costs $O(kn^2)$. For a known eigenpair, Theorem 7.3 reduces evaluation of the $k$th state to adding $k\lambda$ to each coordinate, requiring only $O(n)$ time.
+
+## 9. Applications and interpretation
+
+The recurrence framework applies whenever a system and its observations evolve compatibly. In neuroscience, $h$ may map a high-dimensional neural state to a reported category. In control, $h$ may extract a sensor output. In symbolic dynamics, it may assign labels to regions. The semiconjugacy theorem guarantees that a true hidden return remains a return after compatible observation, while warning that observed return need not lift to the hidden state.
+
+The logistic map serves as a low-dimensional model for testing concepts rather than as a literal neural law. Its invariant interval, parameter-dependent periodic windows, and sensitivity make it a useful laboratory for distinguishing exact cycles, attracting cycles, and chaotic behavior.
+
+Tropical dynamics contributes a complementary perspective. In synchronization networks, uniform additive drift can represent the passage of global time while relative timings remain unchanged. A tropical eigenvector is then projectively recurrent even when its absolute coordinates drift. Zero eigenvalue removes that global drift and produces literal recurrence. This distinction may guide models in which a cognitive pattern repeats up to a changing baseline.
+
+## 10. Discussion
+
+The principal positive results form a compact hierarchy. The return-multiple theorem describes the arithmetic closure of observed return times. The semiconjugacy theorem explains which recurrences survive coarse descriptions. The exact-three-cycle theorem certifies three distinct stages. The logistic invariant-interval theorem ensures a bounded domain for a canonical nonlinear example. The tropical drift theorem turns repeated nonlinear updates of an eigenstate into an explicit linear formula, with zero drift exactly characterizing fixed-state recurrence.
+
+The contraction counterexample is equally central. It demonstrates that continuity is too weak to yield dense periodicity. Any argument for widespread recurrent states must identify an additional dispersive mechanism. This guards against transforming an evocative analogy into a false universal theorem.
+
+There are also important distinctions among notions of “common.” Topological density means every neighborhood contains a point of the set. Measure-theoretic prevalence means the set has large probability or measure. Empirical incidence means a fraction of sampled subjects meet an operational criterion. None of these notions is interchangeable without explicit bridging assumptions.
+
+## 11. Future work
+
+A first direction is measure-calibrated recurrence incidence. One should fix distributions of parameters and initial states, a finite horizon, a tolerance, and an observation map, then study identifiability from population-level recurrence rates.
+
+A second direction is a tropical spectral criterion for exact projective cycles. The iterate theorem suggests separating uniform eigenvalue drift from cycling in the quotient by the all-ones direction.
+
+A third direction is a guarded density theorem for interval maps: determine checkable hypotheses stronger than continuity under which periodic points are dense, and construct counterexamples when each hypothesis is removed.
+
+A fourth direction is quantitative certification at $r=3.83$. Rational interval enclosures for three orbit phases, together with derivative bounds for $L_r^3$, could establish a robust attracting three-cycle over a certified parameter interval.
+
+A fifth direction concerns recurrence observables under many-to-one maps. One should characterize which statistics are preserved, inflated, or erased by coarse observation.
+
+## 12. Conclusion
+
+Modeling déjà vu as recurrence yields exact mathematics only when the relevant notion of return is stated carefully. Periodic states return at all positive multiples of a return time; exact period three entails three distinct states; and semiconjugacy transports recurrence from hidden dynamics to observations. The logistic family provides an invariant interval for $0\le r\le4$, but continuity alone does not imply dense periodicity, as the contraction $x\mapsto x/2$ proves. In min-plus dynamics, tropical eigenstates evolve by uniform additive drift, and zero drift is precisely fixed-state recurrence.
+
+These results replace the claim that déjà vu is inevitable with a more productive conclusion: recurrence has universal structural laws, but its prevalence depends on dynamics, observation, topology, and probability. A scientifically meaningful account must specify all four.
