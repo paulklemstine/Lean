@@ -2449,12 +2449,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Measures and generalizations of dual Littlewood identities' and formalize its key results. Abstract: We introduce three families of vectors $|\\underline\u03bb^{so}\\rangle$, $|\\underline\u03bb^{sp}\\rangle$ and $|\\underline\u03bb^{o}\\rangle$ parametrized by partitions in the Fock space by using products of adjoint vertex operators. We show that the quotient space of the dual vacuum vector is spanned by the partition vectors indexed by a special family of partitions. The partition-indexed vectors also help us to derive the dual Littlewood identities of types B, C, and D in a new manner associated to the special family of partitions. As an application, we obtain a new free fermionic construction to show that the measures related to dual Littlewood identities introduced by Rains \\cite[Section 7]{Rai2000} and Betea \\cite[Section 3]{Be2020} are determinantal with repect to some explicit correlation kernels. Furthermore we establish a number of generalized Littlewood identities summed over certain restricted partitions by computing the inner products with elements indexed by one-column partitions {or genera",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_0197",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14362v1",
+    "status": "available",
+    "timestamp": "2026-07-17T10:58:50.694164+00:00",
+    "title": "ArXiv paper: Measures and generalizations of dual Littlewood identities"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Recognition of algebraic matroids is undecidable' and formalize its key results. Abstract: We prove that the recognition problem for algebraic matroids is undecidable. Explicitly, this means that there is no algorithm that takes as input a finite set $S$ and a function $r\\colon\\mathcal{P}(S) \\to \\mathbb{Z}_{\\ge 0}$ (where $\\mathcal{P}(S)$ is the power set) and decides whether there exists a pair of fields $F \\subset K$, and a function $f\\colon S \\to K$, such that for all $A \\subseteq S$: $\\mathrm{tr.deg}_{K/F}(f(A)) = r(A)$. This problem is known to be decidable if the characteristic of the fields involved is constrained to be zero. We prove that it is undecidable if the characteristic is either left unspecified (in which case a realization over any characteristic is accepted) or fixed to be a prime $p$. The proof relies on Hrushovski--Zilber's Group Configuration Theorem and on the work of Evans and Hrushovski on \"Projective Planes in Algebraically Closed Fields\". We relate two different such projective planes, and eventually construct a reduction from the solvability of Di",
     "domains": [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14907v1",
@@ -2469,7 +2484,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14878v1",
@@ -2483,7 +2498,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15034v1",
@@ -2497,7 +2512,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14872v1",
@@ -2511,7 +2526,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14961v1",
@@ -2526,7 +2541,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14693v1",
@@ -2541,7 +2556,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14732v1",
@@ -2556,7 +2571,7 @@ window.FUTURE_DIRECTIONS = [
       "Physics",
       "Algebra"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14797v1",
@@ -2570,7 +2585,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14774v1",
@@ -2584,7 +2599,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14715v1",
@@ -2593,18 +2608,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad5825e2",
     "description": "Investigate the ArXiv paper 'The Spine: A Supersingular Highway' and formalize its key results. Abstract: We consider the structure of the spine of the supersingular $\\ell$-isogeny graph for one of the cases which arXiv:2502.03613 was not able to fully describe, $\\ell = 2$ and $p = 71, 119\\pmod{120}$. We find the distance, eccentricity, and diameter functions, of the components of the spine without the non-trivial edge not defined over $\\mathbb{F}_p$. Using these functions, we find the mean diameter of the spine and show how this value distinguishes the different structures of the spine. Thus, allowing us to use explicit computations to provide heuristics on the behavior of the spine's structure as $p$ varies.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14572v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T09:24:18.119678+00:00",
     "title": "ArXiv paper: The Spine: A Supersingular Highway"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Universal Asymptotics and Exact Enumeration of Eulerian Maps' and formalize its key results. Abstract: We calculate the asymptotics of the number of connected, labeled, genus $g$ Eulerian maps with an arbitrary degree sequence, in the limit as the total number of vertices tends to infinity. This asymptotic is universal, in the sense that the leading order term depends on only finitely many map characteristics. The constant factor in this formula is related to the Painlev\u00e9 I equation. Our methods combine the analysis of the recurrence coefficients associated to a particular family of orthogonal polynomials, and the theory of analytic combinatorics of several variables. We also derive an exact formula for the number of connected, labeled, genus $1$ Eulerian maps. These are the first results on this kind of enumeration problem for $g\\geq 1$, non-regular (mixed-valence) maps.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0209",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14342v1",
+    "status": "available",
+    "timestamp": "2026-07-17T10:58:54.145618+00:00",
+    "title": "ArXiv paper: Universal Asymptotics and Exact Enumeration of Eulerian Maps"
   },
   {
     "consumed_by_exp_id": "408bb225",
