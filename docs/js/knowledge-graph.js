@@ -56,11 +56,19 @@
             window.PACKAGE_INDEX.forEach(pkg => {
                 const slug = pkg.filename.replace('.json', '');
                 const rng = mulberry32(slug.split('').reduce((a, c) => a + c.charCodeAt(0), 0));
+                
+                // Initialize with slight offset and orbital velocity
+                const angle = (rng() / 4294967296) * Math.PI * 2;
+                const r = 200 + (rng() % 1000);
+                const px = Math.cos(angle) * r;
+                const py = Math.sin(angle) * r;
+                const orbitalV = Math.sqrt(12.0 * 80.0 / Math.max(r, 50)) * 2.0;
+
                 graphNodes.push({
                     id: slug, title: pkg.title || slug, domain: pkg.domain || 'Bridges',
                     primary_domain: 'Bridges', shape: DOMAIN_SHAPES[pkg.domain] || 'icosahedron',
                     date: pkg.date || '', hue: (rng() % 360),
-                    x: 0, y: 0, vx: 0, vy: 0, targetX: 0, targetY: 0, radius: 18,
+                    x: px, y: py, vx: -py / r * orbitalV, vy: px / r * orbitalV, targetX: px, targetY: py, radius: 18,
                     phase: rng() / 4294967296 * Math.PI * 2,
                     rotSpeed: 0.3 + (rng() / 4294967296) * 0.5,
                     rotAngle: rng() / 4294967296 * Math.PI * 2,
@@ -209,7 +217,7 @@
         // Static repulsion pushes nodes apart, gravity pulls them together, rocket thrust on collision pushes apart
         const SOFTENING = 9000;            // Softening distance (larger = gentler at close range)
         const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
-        const DAMPING = 0.997;              // Friction — system stabilizes over ~3s
+        const DAMPING = 1.0;              // Friction — system stabilizes over ~3s
         const NODE_RADIUS = 22;
         const MAX_VELOCITY = 250.0;        // Gentle cap scaled to large universe
         const BOUNCE = 1.0;              // Elastic — conserves momentum AND kinetic energy
@@ -388,7 +396,7 @@
             n.y = n.targetY + (Math.random() - 0.5) * 20;
             // Keplerian orbital velocity: v = sqrt(G*M/r) for circular orbit around galactic core
             const r = Math.sqrt(n.x * n.x + n.y * n.y) || 1;
-            const orbitalV = Math.sqrt(G_CORE * CORE_MASS / Math.max(r, 50));
+            const orbitalV = Math.sqrt(G_CORE * CORE_MASS / Math.max(r, 50)) * 2.0;
             // Tangential (prograde) direction perpendicular to radius
             n.vx = -n.y / r * orbitalV + (Math.random() - 0.5) * 0.05;
             n.vy = n.x / r * orbitalV + (Math.random() - 0.5) * 0.05;
@@ -2176,7 +2184,7 @@
             };
             // Keplerian orbital velocity around galactic core
             const r = Math.sqrt(node.x * node.x + node.y * node.y) || 1;
-            const orbitalV = Math.sqrt(G_CORE * CORE_MASS / Math.max(r, 50));
+            const orbitalV = Math.sqrt(G_CORE * CORE_MASS / Math.max(r, 50)) * 2.0;
             node.vx = -node.y / r * orbitalV + (Math.random() - 0.5) * 0.05;
             node.vy = node.x / r * orbitalV + (Math.random() - 0.5) * 0.05;
             graphNodes.push(node);
