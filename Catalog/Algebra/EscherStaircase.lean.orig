@@ -160,7 +160,7 @@ theorem not_isNoetherianRing_pi_int : ¬ IsNoetherianRing (ℕ → ℤ) :=
 /-! ### The negative instance: the `p`-adic integers -/
 
 /-- **Main theorem (the negative instance).** The `p`-adic integers `ℤ_[p]` — a
-discrete valuation ring, hence a PID, hence Noetherian — admit **no** Escher
+discrete valuation ring, hence a PID, hence Noetherian — have **no** Escher
 staircase: every ascending chain of ideals eventually stabilises. -/
 theorem not_escherStaircase_padicInt (p : ℕ) [Fact p.Prime] :
     ¬ EscherStaircase ℤ_[p] := by
