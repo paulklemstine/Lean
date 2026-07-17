@@ -850,7 +850,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e2a481c0",
     "description": "Investigate the ArXiv paper 'Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions' and formalize its key results. Abstract: The character of a connected $\\mathfrak{sl}_n$-crystal is a Schur polynomial; the crystal can be further decomposed into quasicrystals, whose characters are the Gessel quasisymmetric functions. Crystal skeletons are obtained by contracting quasicrystals within crystal graphs. They generalize dual equivalence graphs, and can be used to prove the Schur expansion of a symmetric function when the quasisymmetric expansion is known. In this paper, we show that the crystal skeleton can be tiled further into components which we call quasicrystal skeletons, whose characters are Young quasisymmetric Schur functions. We characterize which edges in the crystal skeleton move between quasicrystal skeleton components. Contracting the quasicrystal skeleton components yields Bruhat order. We illustrate how these tools can be applied to symmetric functions by analyzing the Stanley symmetric functions.",
     "domains": [
       "Bridges"
@@ -859,7 +859,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12232v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T06:51:53.036349+00:00",
     "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley symmetric functions"
   },
@@ -1084,7 +1084,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A tight single-change covering design with block size 6"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe20b520",
     "description": "Investigate the ArXiv paper 'Limit laws for component-pruned sparse random graphs and percolated tori' and formalize its key results. Abstract: We prove an $\\mathrm{MSO}_2$ zero-one law for a very sparse Erd\u0151s-R\u00e9nyi graph after pruning by component order. Let $p_n=c_n/n$, where $c_n\\to0$, and delete every component of order less than $f(n)$, where $f(n)\\to\\infty$. If \\[ f(n)\\bigl(\\log f(n)+\\log(1/c_n)\\bigr)=o(\\log n), \\] then the resulting graph satisfies a zero-one law for $\\mathrm{MSO}_2$, with quantification over sets of vertices and sets of edges. The proof combines uniform component counts, an MSO Feferman-Vaught decomposition for disjoint unions, and semilinearity of the order spectra of MSO-definable classes of finite trees. We also show that the term $f(n)\\log f(n)$ cannot simply be omitted: star components can occur at first-order-visible Poisson thresholds. We further establish first-order limit laws for bond percolation on the discrete torus $T_L^d$. In the two-sided subpolynomial regime, pruning below a sufficiently slow threshold yields a zero-one law. For the unpruned model in either one-sided polynomial regime, ",
     "domains": [
       "Computation",
@@ -1094,7 +1094,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11033v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T13:34:18.866213+00:00",
     "title": "ArXiv paper: Limit laws for component-pruned sparse random graphs and percolated tori"
   },
@@ -1964,7 +1964,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The mean value of the digits of $1/p$"
   },
   {
-    "consumed_by_exp_id": "04187793",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Trees with exactly three main eigenvalues' and formalize its key results. Abstract: An eigenvalue of a graph is called main if its eigenspace is not orthogonal to the all-ones vector. Introduced by Cvetkovi\u0107 in the early 1970s and systematically studied by Rowlinson and others, graphs with exactly one or two main eigenvalues are now well understood. However, the classification of graphs with precisely three main eigenvalues remains a challenging open problem in spectral graph theory. This paper provides a complete classification of all trees of diameter 5 with exactly three main eigenvalues. Using equitable partitions, the spectral condition reduces to the unique solvability of linear systems over the rationals, leading to Diophantine equations involving branch lengths and pendant counts. We prove that every such tree is isomorphic either to a symmetric tree $T_r(a)$ or to a member of a parametric family $\\mathcal{T}$ determined by arithmetic divisibility conditions. We also construct an infinite family of such trees with unbounded diameter.",
     "domains": [
       "Pythagorean",
@@ -1974,12 +1974,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13577v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T00:50:40.306507+00:00",
     "title": "ArXiv paper: Trees with exactly three main eigenvalues"
   },
   {
-    "consumed_by_exp_id": "a2151d4e",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture' and formalize its key results. Abstract: We prove that \u00e9tale and de Rham cohomology algebras of a smooth proper rigid-analytic space over a finite extension of $\\mathbf{Q}_p$ are formal if the rigid-analytic space satisfies the weight-monodromy conjecture. We give examples of smooth proper rigid-analytic surfaces whose cohomology algebras are not formal.",
     "domains": [
       "Geometry",
@@ -1989,7 +1989,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14517v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T01:25:59.424722+00:00",
     "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
   },
@@ -2025,12 +2025,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Semitotal domination in unit disk graphs' and formalize its key results. Abstract: A set $S \\subseteq V$ is called a {\\em semitotal dominating set} of $G=(V,E)$ if every vertex in $V \\setminus S$ is adjacent to at least one vertex in $S$, and every vertex in $S$ is within distance 2 of another vertex in $S$. The corresponding decision problem is NP-complete even for unit disk graphs. In this paper, we present a 5-factor approximation algorithm for the Minimum Semitotal Domination problem on unit disk graphs in the graph-based input model. The algorithm processes the layers of a Breadth-First-Search tree and constructs a maximal independent set whose vertices satisfy the semitotal condition. For a graph with $n$ vertices and $m$ edges, the algorithm runs in $O(n + m)$ time, and hence in $O(n^2)$ time in the worst case. This improves the previously known 5.75-approximation algorithm with $O(n^3)$ running time.",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_0159",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14467v1",
+    "status": "available",
+    "timestamp": "2026-07-17T02:17:28.732470+00:00",
+    "title": "ArXiv paper: Semitotal domination in unit disk graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}' and formalize its key results. Abstract: Let $\\emph{spex}_{\\mathcal{P}}(n,F)$ and $\\emph{spex}_{\\mathcal{OP}}(n,F)$ be the maximum spectral radius among all $n$-vertex $F$-free planar graphs and outerplanar graphs, respectively. Define $C_{k,l}$ as a graph obtained from $C_k \\cup C_l$ such that the two cycles share a common vertex, where $l \\ge k \\ge 3$. In the 1990s, Cvetkovi\u0107 and Rowlinson conjectured $K_1 + P_{n-1}$ maximizes spectral radius in outerplanar graphs on $n$ vertices, while Boots and Royle (independently, Cao and Vince) conjectured $K_2 + P_{n-2} $ does so in planar graphs. Tait and Tobin [J. Combin. Theory Ser. B, 2017] determined the fundamental structure as the key to confirming these two conjectures for sufficiently large $n$. Recently, Yin and Li [Discrete Mathematics, 2026] characterized the extremal graphs for $\\emph{spex}_{\\mathcal{P}}(n,B_{t,l})$ and $\\emph{spex}_{\\mathcal{OP}}(n,B_{t,l})$ in planar and outerplanar graphs on the basis of this key idea, where $B_{t,l}$ denotes the graph obtained by $t$ ",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13538v1",
@@ -2039,32 +2054,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "16941ff7",
     "description": "Investigate the ArXiv paper 'Spectral fourth moments of Hecke--Maa\u00df cusp forms' and formalize its key results. Abstract: In this note, we establish essentially optimal bounds for certain spectral moments of automorphic forms for $\\mathrm{GL}(2)$. More precisely, we consider the family of Hecke--Maa\u00df cusp forms with spectral parameter in a dyadic interval and study the fourth moment of these forms evaluated at a Heegner point. We additionally present applications of our main result to the shifted convolution problem involving the sum of two squares function $r(n)$ as well as to pointwise Diophantine exponents.",
     "domains": [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13518v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T00:13:33.272114+00:00",
     "title": "ArXiv paper: Spectral fourth moments of Hecke--Maa\u00df cusp forms"
   },
   {
-    "consumed_by_exp_id": "16941ff7",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Generalization of Ramanujan's Continued Fractions for Even Order' and formalize its key results. Abstract: In this paper, we derive three generalized continued fractions of any even order $k$ with the aid of a general continued fraction identity of Ramanujan and we establish general theta function identities for these continued fractions. As an application of continued fraction of order seventy-six, we obtain partition theoretic identities and some vanishing coefficient results.",
     "domains": [
       "Algebra",
       "MachineLearning"
     ],
-    "id": "fd_0161",
+    "id": "fd_0162",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13600v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T00:31:43.190969+00:00",
     "title": "ArXiv paper: Generalization of Ramanujan's Continued Fractions for Even Order"
   },
@@ -2074,7 +2089,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13517v1",
@@ -2089,7 +2104,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14316v1",
@@ -2104,7 +2119,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14312v1",
@@ -2119,13 +2134,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14440v1",
     "status": "available",
     "timestamp": "2026-07-17T02:00:29.717066+00:00",
     "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Corner Rectangle Visibility Graphs' and formalize its key results. Abstract: We introduce corner rectangle visibility graphs (CRVGs), a combination of two geometrically defined classes of graphs: rectangle visibility graphs (RVGs) and rectangle-of-influence graphs (RIGs). A CRVG has vertices represented by axis-parallel rectangles in the plane, and edges represented by axis-parallel rectangles with one corner at a corner of a vertex-rectangle, an opposite corner at the boundary of another vertex-rectangle, and no vertex-rectangles in their interiors. We also consider CRVGs that only see in one or two directions (south CRVGs and southwest CRVGs). We prove that south CRVGs have at most $\\left[\\frac{n^2}{4}\\right]+n-2$ edges, and this bound is tight. This is the same as the tight edge bound for closed RIGs, but they are different graph classes. We also show that southwest CRVGs have at most $\\left[\\frac{n^2}{3}+\\frac{n}{3}\\right]-1$ edges, and this bound is tight. We prove that CRVGs on $n$ vertices have at most $e$ edges, where $\\lfloor \\frac{3n^2}{8} \\rfloor \\le",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0167",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14433v1",
+    "status": "available",
+    "timestamp": "2026-07-17T02:17:33.618891+00:00",
+    "title": "ArXiv paper: Corner Rectangle Visibility Graphs"
   },
   {
     "consumed_by_exp_id": "5ac3d516",

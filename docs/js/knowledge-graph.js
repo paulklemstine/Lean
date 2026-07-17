@@ -616,62 +616,7 @@
                 }
             }
 
-            // ─── QuadTree & Barnes-Hut ───
-            class QuadTree {
-                constructor(x, y, size) {
-                    this.x = x; this.y = y; this.size = size;
-                    this.mass = 0; this.cmX = 0; this.cmY = 0;
-                    this.nodes = [];
-                    this.nw = null; this.ne = null; this.sw = null; this.se = null;
-                    this.isLeaf = true;
-                }
-                insert(node) {
-                    if (this.nodes.length === 0 && this.isLeaf) {
-                        this.nodes.push(node);
-                        this.mass = node.mass;
-                        this.cmX = node.x; this.cmY = node.y;
-                        return;
-                    }
-                    if (this.isLeaf) {
-                        this.isLeaf = false;
-                        const half = this.size / 2;
-                        this.nw = new QuadTree(this.x, this.y, half);
-                        this.ne = new QuadTree(this.x + half, this.y, half);
-                        this.sw = new QuadTree(this.x, this.y + half, half);
-                        this.se = new QuadTree(this.x + half, this.y + half, half);
-                        const oldNode = this.nodes[0];
-                        this.nodes = [];
-                        this._insertToChild(oldNode);
-                    }
-                    this._insertToChild(node);
-                    
-                    const totalMass = this.mass + node.mass;
-                    this.cmX = (this.cmX * this.mass + node.x * node.mass) / totalMass;
-                    this.cmY = (this.cmY * this.mass + node.y * node.mass) / totalMass;
-                    this.mass = totalMass;
-                }
-                _insertToChild(node) {
-                    const half = this.size / 2;
-                    if (node.x < this.x + half) {
-                        if (node.y < this.y + half) this.nw.insert(node);
-                        else this.sw.insert(node);
-                    } else {
-                        if (node.y < this.y + half) this.ne.insert(node);
-                        else this.se.insert(node);
-                    }
-                }
-            }
-
             // ─── N-body: universal gravitation + central attractor + short-range repulsion ───
-            // Build QuadTree for Barnes-Hut
-            const qtSize = WORLD_SIZE * 2;
-            const qt = new QuadTree(-WORLD_SIZE, -WORLD_SIZE, qtSize);
-            for (let i = 0; i < graphNodes.length; i++) {
-                if (graphNodes[i] !== dragNode) qt.insert(graphNodes[i]);
-            }
-
-            const THETA = 0.8; // Barnes-Hut opening angle
-
             for (let i = 0; i < graphNodes.length; i++) {
                 const a = graphNodes[i];
                 if (a === dragNode) continue;
@@ -686,70 +631,92 @@
                 a.vx += (coreDelta.dx / coreR) * coreForce;
                 a.vy += (coreDelta.dy / coreR) * coreForce;
 
-                // Barnes-Hut traversal
-                const stack = [qt];
-                while (stack.length > 0) {
-                    const node = stack.pop();
-                    if (!node || node.mass === 0) continue;
-                    
-                    const mi = minImageDelta(a.x, a.y, node.cmX, node.cmY);
+                for (let j = i + 1; j < graphNodes.length; j++) {
+                    const b = graphNodes[j];
+                    if (b === dragNode) continue;
+                    const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
+                    if (dragCluster && bDomain === dragCluster) continue;
+
+                    // Minimum-image delta: shortest path through Klein bottle topology
+                    const mi = minImageDelta(a.x, a.y, b.x, b.y);
+                    const dx = mi.dx, dy = mi.dy;
                     const d2 = mi.d2;
                     const d = Math.sqrt(d2) || 1;
-                    
-                    if (node.isLeaf) {
-                        const b = node.nodes[0];
-                        if (b === a || b === dragNode) continue;
-                        
-                        const bDomain = b.clusterDomain || b.primary_domain || 'Bridges';
-                        if (dragCluster && bDomain === dragCluster) continue;
 
-                        const sameCluster = (aDomain === bDomain);
-                        const G = sameCluster ? G_UNIVERSAL * G_CLUSTER_MULT : G_UNIVERSAL;
-                        const force = G * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
-                        a.vx += (mi.dx / d) * force;
-                        a.vy += (mi.dy / d) * force;
-                        
-                        if (d < MIN_REPULSION_DIST) {
-                            const nx = mi.dx / d, ny = mi.dy / d;
-                            const relVx = a.vx - b.vx, relVy = a.vy - b.vy;
-                            const relVn = relVx * nx + relVy * ny;
-                            if (relVn > 0) {
-                                const isChain = (a.thrustTime > 0 || b.thrustTime > 0);
-                                const isConnected = areConnected(a.id, b.id);
-                                const bounce = isConnected ? 0.1 : BOUNCE;
-                                const totalMass = a.mass + b.mass;
-                                const impulse = (1 + bounce) * relVn * b.mass / totalMass;
-                                a.vx -= impulse * nx;
-                                a.vy -= impulse * ny;
-                                
-                                a.thrustTime = time;
-                                a.thrustAngle = Math.atan2(-ny, -nx) + (Math.random() - 0.5) * Math.PI * 0.6;
-                                a.thrustStrength = isConnected ? 0.05 : Math.min(1, Math.abs(relVn) * 0.5);
-                                
-                                if (a.id < b.id && !isConnected && explosions.length < MAX_EXPLOSIONS && Math.random() < 0.2) {
-                                    explosions.push({
-                                        x: (a.x + b.x) * 0.5, y: (a.y + b.y) * 0.5, time: time,
-                                        strength: Math.min(1, Math.abs(relVn) * 0.3),
-                                        sparks: [], shockRadius: 0, isChain: isChain
+                    // Universal gravitation — always attractive, cluster affinity boosts strength
+                    const sameCluster = (aDomain === bDomain);
+                    const G = sameCluster ? G_UNIVERSAL * G_CLUSTER_MULT : G_UNIVERSAL;
+                    const force = G * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
+                    const fx = (dx / d) * force;
+                    const fy = (dy / d) * force;
+                    a.vx += fx; a.vy += fy;
+                    b.vx -= fx; b.vy -= fy;
+
+                    // ── Elastic collision: conserves momentum AND kinetic energy ──
+                    if (d < MIN_REPULSION_DIST) {
+                        const nx = dx / d, ny = dy / d;
+                        const relVx = a.vx - b.vx, relVy = a.vy - b.vy;
+                        const relVn = relVx * nx + relVy * ny;
+                        if (relVn > 0) {
+                            // Chain reaction detection: visual effects scale with collision cascade
+                            const isChain = (a.thrustTime > 0 || b.thrustTime > 0);
+                            // Connected nodes get inelastic collisions (absorb energy, no bouncing)
+                            const isConnected = areConnected(a.id, b.id);
+                            const bounce = isConnected ? 0.1 : BOUNCE;  // connected: nearly inelastic
+                            const totalMass = a.mass + b.mass;
+                            // Impulse: (1+e) * relVn * m_other / totalMass
+                            const impulseA = (1 + bounce) * relVn * b.mass / totalMass;
+                            const impulseB = (1 + bounce) * relVn * a.mass / totalMass;
+                            a.vx -= impulseA * nx;
+                            a.vy -= impulseA * ny;
+                            b.vx += impulseB * nx;
+                            b.vy += impulseB * ny;
+
+                            // Visual: activate rocket flame trails on both nodes (subdued for connected)
+                            a.thrustTime = time;
+                            a.thrustAngle = Math.atan2(-ny, -nx) + (Math.random() - 0.5) * Math.PI * 0.6;
+                            a.thrustStrength = isConnected ? 0.05 : Math.min(1, Math.abs(relVn) * 0.5);
+                            b.thrustTime = time;
+                            b.thrustAngle = Math.atan2(ny, nx) + (Math.random() - 0.5) * Math.PI * 0.6;
+                            b.thrustStrength = isConnected ? 0.05 : Math.min(1, Math.abs(relVn) * 0.5);
+
+                            // Spawn explosion at contact point (skip for connected — gentle contact)
+                            if (!isConnected && explosions.length < MAX_EXPLOSIONS) {
+                                const cx = (a.x + b.x) * 0.5;
+                                const cy = (a.y + b.y) * 0.5;
+                                const sparkCount = Math.min(MAX_SPARKS_PER_EXPLOSION, 8 + Math.floor(Math.abs(relVn) * 5));
+                                const sparks = [];
+                                for (let s = 0; s < sparkCount; s++) {
+                                    const angle = Math.random() * Math.PI * 2;
+                                    const speed = 1500 + Math.random() * 6000 * Math.abs(relVn);
+                                    const hue = isChain ? (30 + Math.random() * 30) : (20 + Math.random() * 40);
+                                    sparks.push({
+                                        x: cx, y: cy,
+                                        vx: Math.cos(angle) * speed,
+                                        vy: Math.sin(angle) * speed,
+                                        life: 0.5 + Math.random() * 0.8,
+                                        hue: hue,
+                                        size: 1 + Math.random() * 3
                                     });
                                 }
-                            }
-                            const overlap = MIN_REPULSION_DIST - d;
-                            if (overlap > 0) {
-                                const push = overlap * b.mass / (a.mass + b.mass);
-                                a.x -= nx * push;
-                                a.y -= ny * push;
+                                explosions.push({
+                                    x: cx, y: cy, time: time,
+                                    strength: Math.min(1, Math.abs(relVn) * 0.3),
+                                    sparks: sparks,
+                                    shockRadius: 0,
+                                    isChain: isChain
+                                });
                             }
                         }
-                    } else {
-                        // If cell is far enough, treat as single body
-                        if (node.size / d < THETA) {
-                            const G = G_UNIVERSAL; 
-                            const force = G * a.mass * node.mass / (d2 + SOFTENING * SOFTENING);
-                            a.vx += (mi.dx / d) * force;
-                            a.vy += (mi.dy / d) * force;
-                        } else {
-                            stack.push(node.nw, node.ne, node.sw, node.se);
+                        // Overlap separation: mass-proportional to conserve center of mass
+                        const overlap = MIN_REPULSION_DIST - d;
+                        if (overlap > 0) {
+                            const pushA = overlap * b.mass / (a.mass + b.mass);
+                            const pushB = overlap * a.mass / (a.mass + b.mass);
+                            a.x -= nx * pushA;
+                            a.y -= ny * pushA;
+                            b.x += nx * pushB;
+                            b.y += ny * pushB;
                         }
                     }
                 }
@@ -971,30 +938,7 @@
             });
         }
 
-        const shapeCache = new Map();
         function drawShape(ctx, x, y, r, shape, rot, color, isHovered) {
-            // Quantize rotation to 16 steps
-            const rotStep = Math.floor((rot % (Math.PI * 2)) / (Math.PI * 2 / 16));
-            // Quantize radius slightly (cache mostly base shapes)
-            const rStep = Math.round(r);
-            const key = `${shape}_${rStep}_${rotStep}_${color.h}_${color.s}_${isHovered}`;
-            
-            if (!shapeCache.has(key)) {
-                const padding = r * 1.5;
-                const size = (r + padding) * 2;
-                const osc = document.createElement('canvas');
-                osc.width = size;
-                osc.height = size;
-                const octx = osc.getContext('2d');
-                drawShapeInternal(octx, size/2, size/2, r, shape, rot, color, isHovered);
-                shapeCache.set(key, { canvas: osc, size: size, offset: size/2 });
-            }
-            
-            const cache = shapeCache.get(key);
-            ctx.drawImage(cache.canvas, x - cache.offset, y - cache.offset);
-        }
-
-        function drawShapeInternal(ctx, x, y, r, shape, rot, color, isHovered) {
             ctx.save();
             ctx.translate(x, y);
             const scale = isHovered ? 1.25 : 1.0;
@@ -1737,14 +1681,7 @@
 
                 node.rotAngle += node.rotSpeed * 0.016;
 
-                if (camera.zoom < 0.005) {
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, Math.max(1.5, r * 0.7), 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${adjColor.h}, ${adjColor.s}%, ${adjColor.l}%, 0.9)`;
-                    ctx.fill();
-                } else {
-                    drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, isHovered);
-                }
+                drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, isHovered);
 
                 // Package number centered on node
                 if (node.pkgNum && r > 8) {
@@ -1834,14 +1771,7 @@
                     const sp = worldToScreen(gx, gy);
                     if (sp.x > -60 && sp.x < W + 60 && sp.y > -60 && sp.y < H + 60) {
                         ctx.globalAlpha = ghostAlpha;
-                        if (camera.zoom < 0.005) {
-                            ctx.beginPath();
-                            ctx.arc(sp.x, sp.y, Math.max(1.5, r * 0.7), 0, Math.PI * 2);
-                            ctx.fillStyle = `hsla(${adjColor.h}, ${adjColor.s}%, ${adjColor.l}%, 0.9)`;
-                            ctx.fill();
-                        } else {
-                            drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, false);
-                        }
+                        drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, false);
                         ctx.globalAlpha = 1;
                     }
                 }
@@ -1852,14 +1782,7 @@
                     const sp = worldToScreen(gx, gy);
                     if (sp.x > -60 && sp.x < W + 60 && sp.y > -60 && sp.y < H + 60) {
                         ctx.globalAlpha = ghostAlpha;
-                        if (camera.zoom < 0.005) {
-                            ctx.beginPath();
-                            ctx.arc(sp.x, sp.y, Math.max(1.5, r * 0.7), 0, Math.PI * 2);
-                            ctx.fillStyle = `hsla(${adjColor.h}, ${adjColor.s}%, ${adjColor.l}%, 0.9)`;
-                            ctx.fill();
-                        } else {
-                            drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, false);
-                        }
+                        drawShape(ctx, sp.x, sp.y, r, node.shape, node.rotAngle, adjColor, false);
                         ctx.globalAlpha = 1;
                     }
                 }
