@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0782e3ca",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThis project formalizes the analytic engine behind asymptotic expansions of\nweighted Riesz means, in the model regimes that already exhibit both the\npower-law factor `X^α` and the",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-14T03:03:56",
-      "title": "Asymptotic Expansion of Weighted Riesz Means for Sesquiharmonic Maass Forms"
-    },
-    {
       "cycle_id": "30210199",
       "domain": "Applications",
       "key_insight": "# Future Directions — Alien Number Systems\n\n## What this cycle added\n\n`ComplexBaseIMinus1.lean` formalizes arithmetic in the **complex base `β = i − 1`**\nand proves, from first principles, **Penney's",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-17T13:45:51",
       "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
+    },
+    {
+      "cycle_id": "186c9eac",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n## What was established\n\nThe formal development proves a general finite-tag amplification theorem. Relative to an abstract provability predicate, one dark existential predicate yi",
+      "quality_score": 0.68,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T14:03:03",
+      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-17T13:45:51",
+  "last_updated": "2026-07-17T14:03:03",
   "open_questions": [
-    {
-      "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
-      "cycle_id": "dbf870e8",
-      "domain": "Novelty",
-      "sorry_count": 4,
-      "timestamp": "2026-07-15T00:44:03"
-    },
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
       "cycle_id": "c4f680cf",
@@ -3016,6 +3009,13 @@
       "domain": "Tropical",
       "sorry_count": 3,
       "timestamp": "2026-07-17T13:29:21"
+    },
+    {
+      "context": "",
+      "cycle_id": "186c9eac",
+      "domain": "Shared",
+      "sorry_count": 3,
+      "timestamp": "2026-07-17T14:03:03"
     }
   ],
   "research_threads": {
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "319bd9f6",
-        "quality": 0.78,
-        "theorems": 13,
-        "title": "Rucker: Spacetime Donuts — Topology of the Universe"
-      },
-      {
         "cycle_id": "9243b8b5",
         "quality": 0.92,
         "theorems": 3,
@@ -3947,6 +3941,12 @@
         "quality": 0.72,
         "theorems": 9,
         "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
+      },
+      {
+        "cycle_id": "186c9eac",
+        "quality": 0.68,
+        "theorems": 0,
+        "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
       }
     ],
     "Tropical": [

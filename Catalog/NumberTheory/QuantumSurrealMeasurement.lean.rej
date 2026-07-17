@@ -1,0 +1,10 @@
+--- QuantumSurrealMeasurement.lean
++++ QuantumSurrealMeasurement.lean
+@@ -1,5 +1,5 @@
+-import Geometry.QuantumSurreal.Basic
+-import Geometry.QuantumSurreal.StandardPartMeasure
++import Catalog.Geometry.QuantumSurreal.Basic
++import Catalog.Geometry.QuantumSurreal.StandardPartMeasure
+ 
+ /-!
+ 

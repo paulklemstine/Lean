@@ -1,0 +1,36 @@
+--- Basic.lean
++++ Basic.lean
+@@ -15,7 +15,7 @@
+ `a_i` live in the ordered, non-Archimedean field of *hyperreals* `ℝ*`.  Formally this is the free
+ `ℝ*`-module on the surreal numbers, i.e. a finitely supported map `Surreal →₀ ℝ*`.
+ 
+-The central feature is the **measurement rule**.  Because amplitudes are hyperreal, the Born weight
++The novelty is the **measurement rule**.  Because amplitudes are hyperreal, the Born weight
+ `|a_i|² / ‖ψ‖²` of a branch can be a genuine *infinitesimal*.  The *observed* probability of a
+ branch is defined to be the **standard part** of its Born weight,
+ 
+@@ -38,10 +38,11 @@
+ 
+ ## Relation to the catalog
+ 
+-This is the *quantum / spectral* half of a two-part study.  Its companion revisits a finite
+-infinitesimal probability model and proves that the standard-part functional collapses that
+-measure onto a genuine real Dirac measure — exactly the classical shadow of the quantum collapse
+-proved here.
++This file is the *quantum / spectral* half of a two-file study.  Its companion,
++`Catalog/Geometry/QuantumSurreal/StandardPartMeasure.lean`, revisits the infinitesimal
++probability model of `Catalog/Novelty/InfinitesimalFiniteProbability.lean` and proves that the
++standard-part functional collapses that infinitesimal measure onto a genuine real (Dirac)
++measure — exactly the classical shadow of the quantum collapse proved here.
+ 
+ -- !-- Lab Notes -- !--
+ Hypothesis (Hypothesizer): amplitudes valued in a non-Archimedean field let a superposition
+@@ -51,7 +52,7 @@
+ 
+ Experiment (Experimenter): computed the two-branch state `|0⟩ + ε|1⟩`.  Exact Born weights are
+ `1/(1+ε²)` and `ε²/(1+ε²)`; their standard parts are `1` and `0`.  This validated both the
+-normalization and the collapse before the general proof.
++normalization and the collapse before formalization.
+ 
+ Analysis (Analyst): the original mission "test" was internally inconsistent — it assigned the
+ 

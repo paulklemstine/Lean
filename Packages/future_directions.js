@@ -2172,7 +2172,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The K\u0151vari-S\u00f3s-Tur\u00e1n theorem for $\\operatorname{GF}(q)$-representable matroids"
   },
   {
-    "consumed_by_exp_id": "d53cc4ad",
+    "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -2182,7 +2182,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T03:25:44.344800+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -2695,20 +2695,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The Spine: A Supersingular Highway"
   },
   {
-    "consumed_by_exp_id": "186c9eac",
-    "description": "Investigate the ArXiv paper 'Universal Asymptotics and Exact Enumeration of Eulerian Maps' and formalize its key results. Abstract: We calculate the asymptotics of the number of connected, labeled, genus $g$ Eulerian maps with an arbitrary degree sequence, in the limit as the total number of vertices tends to infinity. This asymptotic is universal, in the sense that the leading order term depends on only finitely many map characteristics. The constant factor in this formula is related to the Painlev\u00e9 I equation. Our methods combine the analysis of the recurrence coefficients associated to a particular family of orthogonal polynomials, and the theory of analytic combinatorics of several variables. We also derive an exact formula for the number of connected, labeled, genus $1$ Eulerian maps. These are the first results on this kind of enumeration problem for $g\\geq 1$, non-regular (mixed-valence) maps.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0210",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14342v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T10:58:54.145618+00:00",
-    "title": "ArXiv paper: Universal Asymptotics and Exact Enumeration of Eulerian Maps"
-  },
-  {
     "consumed_by_exp_id": "58e34414",
     "description": "For every fixed integer k \u2265 5 there exists N\u2080(k) such that for all n \u2265 N\u2080(k) and for every simple connected k\u2011regular graph G on n vertices, there is a divisor D on G of degree (k\u20112)n/2 (the half\u2011canonical degree) with rank at least k\u20111. Equivalently, for all sufficiently large n the Brill\u2011Noether number \u03c1(G, k\u20111, (k\u20112)n/2) is non\u2011negative and the existence part of Baker\u2019s Brill\u2011Noether conjecture holds for the pair (r, d) = (k\u20111, (k\u20112)n/2).",
     "domains": [
@@ -2944,6 +2930,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What was established\n\nThe formal development proves a general finite-tag amplification theorem. Relative to an abstract provability predicate, one dark existential predicate yields dark predicates with 1, 2, 3, and in fact every positive finite number of distinct tagged witnesses. The tagged coding is proved to enumerate every tag over every originally named object. It also proves that any named witness-extraction principle rules darkness out.\n\nThis gives a concrete obstruction to the proposed strict hierarchy: witness count alone is not an invariant measure of proof-theoretic hardness. Irrelevant finite tags amplify the level without adding mathematical information.\n\n## Important correction to the mission framing\n\nParis\u2013Harrington and Kirby\u2013Paris hydra independence do not by themselves instantiate the definition given in the prompt. Their usual statements are universal termination/finite combinatorics claims independent of PA, whereas the proposed definition requires PA to prove an existential while proving no numeral instance. An explicit PA example therefore needs a carefully fixed arithmetization of syntax, a naming map, and a nonstandard or intensional predicate; it cannot be inferred merely by citing those independence theorems.\n\nLikewise, \u201cdense in the space of Pi_2 statements\u201d is undefined until a topology or asymptotic density on formula codes is selected. Raw counting of formulas is coding-dependent: harmless syntactic padding can arbitrarily change frequencies. Any meaningful density theorem should first prove robustness under acceptable changes of G\u00f6del numbering.\n\n## Next formal targets\n\n1. Instantiate `Prov` with a concrete arithmetized first-order proof calculus for PA and prove `SupportsFiniteTagging` by primitive-recursive transformations of proof codes.\n2. Investigate whether a genuine dark predicate exists under the exact external reading of `PA \u22ac T(n)`. Compare this with the numerical existence property and witness properties of fragments such as HA and constructive arithmetic.\n3. Define an equivalence relation identifying predicates that differ only by finite tags or primitive-recursive bijections, then seek a hierarchy on equivalence classes.\n4. Replace raw formula counting by a specified measure (for example, prefix-free program probability or bounded-length density under a fixed grammar) and prove which conclusions survive recoding.\n5. Formalize the distinction between:\n   - PA proving an existential with no PA-provable numeral instance;\n   - a true existential whose instances are undecidable;\n   - a universal Pi_2 principle independent of PA.\n6. Test candidate examples from nonstandard models, Rosser-style constructions, and recursively inseparable sets. Every candidate must include a proof that PA proves the existential and a metatheorem excluding every standard named instance.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0230",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "186c9eac",
+    "status": "available",
+    "timestamp": "2026-07-17T14:02:57.130034+00:00",
+    "title": "The formal development proves a general finite-tag amplification theorem. Relati"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -2955,6 +2956,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:29:16.297936+00:00",
     "title": "Close Proofs: ArXiv paper: A minimal modularity lifting theorem for Siegel modular f"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 186c9eac (Q=0.680) proved 0 theorems in Shared but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such",
+    "domains": [
+      "Shared"
+    ],
+    "id": "sorry_fill_186c9eac_94eac87b",
+    "priority_score": 0.7300000000000001,
+    "research_mode": "team",
+    "source_exp_id": "186c9eac",
+    "status": "available",
+    "timestamp": "2026-07-17T14:03:03.735341+00:00",
+    "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
     "consumed_by_exp_id": "58ca9013",
@@ -2970,6 +2985,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-17T03:25:44.329567+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... \u2014 a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance \u2014 pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls \u2014 their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0229",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T14:02:27.283106+00:00",
+    "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
   {
     "consumed_by_exp_id": "",
