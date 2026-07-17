@@ -202,10 +202,11 @@
         const REST_LENGTH = 9000;          // Rest length for provenance springs
         const EDGE_DRAW_DISTANCE = 18000;  // Max distance to draw/spring edges
         const G_UNIVERSAL = 25.0;       // Universal gravitational constant (all pairs attract)
+        const COULOMB_REPULSION = 1000000.0; // Repulsive charge between nodes
         const G_CLUSTER_MULT = 2.5;     // Same-cluster pairs attract more strongly
         const G_CORE = 12.0;            // Central galactic attractor pull
         const CORE_MASS = 80.0;         // Mass of the invisible central attractor
-        // No static repulsion — gravity pulls nodes together, rocket thrust on collision pushes apart
+        // Added Coulomb repulsion alongside gravity
         const SOFTENING = 9000;            // Softening distance (larger = gentler at close range)
         const MIN_REPULSION_DIST = 2400;    // Bumper collision radius
         const DAMPING = 0.997;              // Friction — system stabilizes over ~3s
@@ -643,10 +644,10 @@
                     const d2 = mi.d2;
                     const d = Math.sqrt(d2) || 1;
 
-                    // Universal gravitation — always attractive, cluster affinity boosts strength
+                    // Universal gravitation + Coulomb repulsion
                     const sameCluster = (aDomain === bDomain);
                     const G = sameCluster ? G_UNIVERSAL * G_CLUSTER_MULT : G_UNIVERSAL;
-                    const force = G * a.mass * b.mass / (d2 + SOFTENING * SOFTENING);
+                    const force = (G * a.mass * b.mass - COULOMB_REPULSION) / (d2 + SOFTENING * SOFTENING);
                     const fx = (dx / d) * force;
                     const fy = (dy / d) * force;
                     a.vx += fx; a.vy += fy;
