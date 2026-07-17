@@ -2870,6 +2870,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For sufficiently large connected k-regular graphs, if the Cheeger constant of a periodic set with respect to the energy quadratic form exceeds a logarithmic threshold, then the asymptotic Brill-Noether conjecture holds at the half-canonical degree up to a constant factor.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0241",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:12:05.059062+00:00",
+    "title": "Cheeger Inequality Implies Asymptotic Brill-Noether Existence at Half-Canonical Degree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The minimum integer t such that every equinumerous t-coloring of [t\u00b7n] contains a rainbow k-term arithmetic progression is bounded above by a quadratic function of k; i.e., there exists a constant C such that for all sufficiently large k, T_k \u2264 C\u00b7k^2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0241",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15116v1",
+    "status": "available",
+    "timestamp": "2026-07-17T23:12:29.709802+00:00",
+    "title": "Conjecture: T_k = O(k^2)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
       "Tropical"
