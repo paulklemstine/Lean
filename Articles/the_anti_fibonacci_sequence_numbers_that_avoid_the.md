@@ -1,221 +1,159 @@
-# The Anti-Fibonacci Mirage: How a Rebellious Sequence Revealed a Hidden Parabola
+# The Anti-Fibonacci Mirage: What Happens When a Recurrence Avoids One Sum?
 
-The Fibonacci sequence is mathematics’ most famous additive snowball. Begin with two ones, repeatedly add the previous two terms, and the list grows
+The Fibonacci sequence is a machine for turning addition into growth. Begin with two ones, add the latest pair, and the familiar procession appears: $1,1,2,3,5,8,\ldots$. Its neighboring ratios drift toward the golden ratio, $\varphi=(1+\sqrt5)/2$. That convergence has made Fibonacci growth a universal metaphor, appearing in accounts of branching plants, population models, algorithms, and spiraling patterns.
 
-$$
-1,1,2,3,5,8,13,\ldots.
-$$
+Now reverse the instruction. Instead of choosing the sum of the previous two terms, choose the *smallest positive integer that is not that sum*. This sounds like a recipe for a rebellious “anti-Fibonacci” sequence: a process that dodges the additive command at every step and perhaps develops a new kind of growth.
 
-Its neighboring ratios settle toward the golden ratio, and its fingerprints appear in branching plants, efficient search procedures, tilings, and population models. So an “anti-Fibonacci” sequence sounds irresistible: what happens if numbers refuse to follow Fibonacci addition?
-
-One proposed answer began
+A proposed example was
 
 $$
-1,1,2,4,7,11,16,\ldots.
+1,1,2,4,7,11,16,22,29,\ldots,
 $$
 
-The list was accompanied by a provocative story. Each new term was said to be the smallest positive integer unequal to the sum of the preceding two. It was expected to grow like one quarter of a square, and its successive ratios were supposed to oscillate rather than settle.
+accompanied by an alluring story: quadratic growth near $n^2/4$, ratios oscillating between $1$ and $2$, and an additive complement of density zero. But the smallest word in the rule—“smallest”—changes everything. The literal process does not produce that list. In fact, it does not grow at all.
 
-There is just one problem: the story and the numbers do not agree.
+This is not merely a technical correction. It is a lesson about greedy definitions, the difference between avoiding one forbidden value and avoiding a growing forbidden set, and the value of checking the first logical consequence of a rule before studying its asymptotics.
 
-That mismatch is not a disappointment. It is the doorway to a cleaner and more surprising piece of mathematics. The displayed sequence is not governed by an evasive greedy rule at all. Its successive jumps are
+## The trap hidden in “smallest”
+
+Suppose the two previous terms are positive integers $x$ and $y$. Their sum satisfies
+
+$$
+x+y\ge 2.
+$$
+
+The number $1$ is therefore positive and is certainly not equal to $x+y$. Since no positive integer is smaller than $1$, the smallest positive integer unequal to $x+y$ must be $1$.
+
+That one-line observation settles the recurrence.
+
+**Least-avoidance lemma.** If $x$ and $y$ are positive integers, then the least positive integer $z$ satisfying $z\ne x+y$ is $z=1$.
+
+The proof is immediate: positivity gives $x+y\ge2$, so $1$ is admissible; minimality then forces $z\le1$, while positivity forces $z\ge1$.
+
+Define a literal anti-Fibonacci trajectory to be a sequence $(A_n)_{n\ge0}$ with $A_0=A_1=1$ such that, for every $n\ge0$, the term $A_{n+2}$ is the least positive integer different from $A_n+A_{n+1}$. The lemma applies at every stage. Starting from positive terms, the next term is $1$, so positivity persists forever.
+
+**Classification theorem.** There is exactly one literal anti-Fibonacci trajectory, namely
+
+$$
+A_n=1\qquad\text{for every }n\ge0.
+$$
+
+An induction proves the statement. The first two terms are $1$. If the relevant predecessors are positive—indeed, if they are both $1$—the least-avoidance lemma makes the next term $1$. Conversely, the constant-one sequence satisfies the rule because $1\ne1+1$ and $1$ is the smallest positive integer.
+
+The proposed ratio oscillation disappears as well. Every consecutive ratio is exactly
+
+$$
+\frac{A_{n+1}}{A_n}=\frac11=1.
+$$
+
+Even the basic number theory becomes degenerate but clean: every consecutive pair is coprime, since
+
+$$
+\gcd(A_{n+1},A_n)=\gcd(1,1)=1.
+$$
+
+The sequence avoids the golden ratio not by staging dramatic oscillations, but by refusing to leave home.
+
+## Where the displayed numbers really come from
+
+The list $1,1,2,4,7,11,16,\ldots$ is not random. Look at its successive increases:
 
 $$
 0,1,2,3,4,5,\ldots.
 $$
 
-Once that simple pattern is recognized, the apparent anti-Fibonacci mystery becomes an exact quadratic theory, complete with shifted squares, widening gaps, sparse values, and a sharp comparison with genuine Fibonacci growth.
-
-## First, repair the definition
-
-Let $A(0)=1$, and define the sequence by
+Thus the displayed list follows a different and perfectly coherent recurrence. Define $(D_n)_{n\ge0}$ by
 
 $$
-A(n+1)=A(n)+n
+D_0=1,\qquad D_{n+1}=D_n+n.
 $$
 
-for every nonnegative integer $n$. This recurrence generates exactly
+This yields $D_1=1$, $D_2=2$, $D_3=4$, $D_4=7$, and so on. Summing the increments gives an exact triangular-number formula.
+
+**Triangular growth theorem.** For every $n\ge0$,
 
 $$
-A(0),A(1),A(2),A(3),A(4),A(5),A(6)=1,1,2,4,7,11,16.
+D_n=1+\frac{n(n-1)}2.
 $$
 
-It is important not to blur this definition with the proposed greedy rule. If one merely asks for the smallest positive integer unequal to one forbidden sum, then $1$ is almost always available; that rule does not produce the displayed list. The mathematics here concerns the sequence actually determined by the data.
+Indeed, the total increase from $D_0$ to $D_n$ is $0+1+\cdots+(n-1)=n(n-1)/2$. Equivalently, one may use induction: adding $n$ to $1+n(n-1)/2$ produces $1+n(n+1)/2$, the formula at index $n+1$.
 
-Adding the increments $0+1+\cdots +(n-1)$ gives the closed form
-
-$$
-A(n)=1+\frac{n(n-1)}{2}.
-$$
-
-These are triangular numbers shifted upward by one. Geometrically, $n(n-1)/2$ counts the pairs chosen from $n$ objects, so $A(n)$ counts all such pairs plus one distinguished extra object. The sequence is therefore connected not to elusive avoidance but to one of combinatorics’ most basic counting patterns.
-
-This formula immediately corrects the proposed scale. Since
+This identity explains every displayed value, including $D_6=16$ and $D_8=29$. It also identifies the true leading behavior:
 
 $$
-A(n)=\frac12n^2-\frac12n+1,
+D_n=\frac12n^2-\frac12n+1.
 $$
 
-we have
+Consequently,
 
 $$
-\frac{A(n)}{n^2}=\frac12-\frac{1}{2n}+\frac{1}{n^2},
+\frac{D_n}{n^2}=\frac12-\frac{1}{2n}+\frac1{n^2}\longrightarrow\frac12
 $$
 
-and hence the ratio tends to $1/2$, not $1/4$. At one million,
+as $n\to\infty$. The coefficient is $1/2$, not $1/4$.
+
+## Why a bounded correction cannot rescue the quarter-square law
+
+Perhaps the proposed estimate $D_n=\lfloor n^2/4\rfloor+O(1)$ could survive despite the wrong-looking coefficient? An exact even-index calculation rules this out decisively.
+
+Let
 
 $$
-A(1{,}000{,}000)=499{,}999{,}500{,}001,
+Q(n)=\left\lfloor\frac{n^2}{4}\right\rfloor.
 $$
 
-so
+At an even index $n=2k$, there is no rounding ambiguity: $Q(2k)=k^2$. The triangular formula gives
 
 $$
-\frac{A(1{,}000{,}000)}{10^{12}}=0.499999500001.
+D_{2k}=1+\frac{(2k)(2k-1)}2=2k^2-k+1.
 $$
 
-The numerical evidence does not merely lean away from one quarter; the exact formula rules it out.
-
-## The shifted-square surprise
-
-The most elegant identity appears when two consecutive terms are added.
-
-**Shifted-Square Theorem.** For every nonnegative integer $n$,
+Therefore
 
 $$
-A(n)+A(n+1)=n^2+2.
+D_{2k}=Q(2k)+k(k-1)+1.
 $$
 
-The proof is a one-line calculation. Substituting the closed form gives
+**Unbounded-discrepancy theorem.** For every nonnegative constant $C$, there exists an index $n$ such that
 
 $$
-\left(1+\frac{n(n-1)}2\right)+
-\left(1+\frac{n(n+1)}2\right)=n^2+2.
+Q(n)+C<D_n.
 $$
 
-Thus the consecutive sums are
+To see this, choose $k$ large enough that $k(k-1)+1>C$ and set $n=2k$. The exact even-index identity gives the desired inequality. Thus no fixed error band can turn the quarter-square model into a valid description of the displayed sequence. The gap itself grows quadratically.
 
-$$
-2,3,6,11,18,27,38,\ldots,
-$$
+This matters because asymptotic notation can sometimes hide substantial local errors, but it cannot hide the wrong leading coefficient. A term of size $n^2/2$ cannot remain within a bounded distance of one of size $n^2/4$.
 
-which are precisely two more than the squares
+## A greedy-algorithm lesson
 
-$$
-0,1,4,9,16,25,36,\ldots.
-$$
+The central distinction is between avoiding a *singleton* and avoiding a *set that grows*. At each stage of the literal rule, exactly one integer is forbidden: the current sum $A_n+A_{n+1}$. But that sum is at least $2$, leaving the smallest candidate, $1$, untouched. The magnitude of the forbidden number is irrelevant. What controls a least-excluded process is whether the forbidden set covers the small candidates.
 
-This is not merely a pattern covering the first few terms. It completely characterizes the spectrum of consecutive sums: a nonnegative integer $m$ occurs as $A(n)+A(n+1)$ for some $n$ if and only if $m=n^2+2$ for some nonnegative integer $n$. Testing membership therefore requires no sequence generation. Subtract $2$ and ask whether the result is a perfect square.
+This principle appears throughout discrete mathematics and computer science. A greedy scheduler chooses the first available time slot; a graph-coloring routine chooses the least color absent from a neighborhood; a memory allocator chooses the first free block. Forcing such an algorithm upward requires blocking an initial segment of its choices. Excluding one distant option usually has no effect at all.
 
-The identity has a pleasing visual explanation. The two triangular parts of $A(n)$ and $A(n+1)$ fit together to make an $n$-by-$n$ square; the two added units remain as the $+2$. Two staircases become one square.
+A genuinely nontrivial anti-additive sequence should therefore forbid many values. One natural redesign is to choose the least positive integer that is not representable as a sum of two distinct earlier selected terms. As the history grows, so does the forbidden sumset. Another version could additionally require new terms to be unused, preventing a constant trajectory. These changes do not merely patch the original rule; they create new mathematical objects whose growth depends on additive structure and the rate at which small integers become forbidden.
 
-There is another square hidden in each individual value:
+The number of forbidden candidates is likely to be more important than their size. If only a bounded number of values are excluded at each step, some small admissible number may repeatedly survive. If a linearly growing family of combinations is excluded, the least admissible value can migrate. That is where questions about density, polynomial growth, and ratio behavior become meaningful.
 
-$$
-8A(n)-7=(2n-1)^2.
-$$
+## Reading a sequence before naming it
 
-So every term yields an odd square after the affine transformation $x\mapsto 8x-7$. Conversely, if $8m-7$ is the square of a positive odd integer, then $m$ belongs to the value set. This square test turns a recurrence-membership question into elementary arithmetic.
+There is a broader art to diagnosing a numerical pattern. A short list rarely determines its own law. The values $1,1,2,4,7,11,16$ can be continued in infinitely many ways, so the name attached to them cannot substitute for a definition. Two quick tests are especially revealing.
 
-## Gaps that keep opening
+First, substitute the initial values into the claimed recurrence. With predecessors $1$ and $1$, the forbidden sum is $2$. The least positive integer other than $2$ is $1$, so the claimed next value $2$ fails immediately. This local check is stronger than calculating a million terms from an unrelated generator: it tests whether the generator and definition agree.
 
-Because the recurrence itself says
+Second, inspect finite differences. The displayed values have first differences $0,1,2,3,4,5$, whose differences are constantly $1$. Constant second differences signal a quadratic polynomial, just as constant first differences signal a linear one. This observation points directly to triangular numbers and the coefficient $1/2$.
 
-$$
-A(n+1)-A(n)=n,
-$$
+These tests serve different purposes. Substitution validates a recurrence; differences identify algebraic structure in data. Together they prevent an attractive narrative from outrunning its mathematical object.
 
-the gaps are exactly linear. Given any desired width $C$, choosing $n>C$ produces a gap larger than $C$. Far along the list, the sequence leaves increasingly large deserts of missing integers between successive values.
+The same discipline matters in applications. A scheduling policy described as “choose the first free slot except one prohibited slot” may repeatedly choose the opening slot, even if simulations were built around steadily increasing times. A security protocol, allocation rule, or biological model can likewise behave very differently when “exclude this value” is confused with “exclude all values generated so far.” Boundary cases are not distractions: they often determine the system.
 
-That observation explains why the value set has density zero. Up to a large threshold $X$, a quadratic sequence contributes only on the order of $\sqrt{X}$ distinct values. Compared with all $X$ positive integers up to the threshold, the occupied proportion is therefore on the order of $1/\sqrt{X}$, which tends to zero.
+## The counterpoint to Fibonacci, correctly understood
 
-This sparsity must be described carefully. It concerns the values of the quadratic sequence defined above. It does not validate claims about a different greedy construction, nor does it say that “numbers representable as sums of earlier terms” form the same set. Precision about the object is part of the result.
+The literal rule was advertised as an opposite of Fibonacci growth. It is an opposite, but not in the anticipated way. Fibonacci repeatedly selects one special sum, and that repeated selection creates exponential structure. The anti-rule rejects only that single sum, but then greedily selects the smallest remaining positive integer. Since $1$ is always available, the process collapses to a fixed point.
 
-## Why the quarter-square prediction cannot be rescued
+Meanwhile, the attractive list $1,1,2,4,7,11,16,\ldots$ has its own identity: it is one plus the sequence of triangular numbers. Its quadratic growth is exact, elementary, and governed by coefficient $1/2$. It neither implements the literal avoidance rule nor shadows $n^2/4$ within bounded error.
 
-Perhaps $n^2/4$ is not exactly right but remains within a fixed error? The closed form shows that even this weaker hope fails.
+The episode offers a productive kind of mathematical failure. A conjecture can be false for a deep reason, or it can be false because its definition quietly says something else. Here the boundary case $1$ exposes the issue immediately. Once that is recognized, two clean theories emerge: a completely classified singleton-avoidance process and an exact triangular increment model.
 
-**Unbounded Quarter-Square Error Theorem.** For every nonnegative constant $C$, there is a nonnegative integer $n$ such that
+The next challenge is not to force the original predictions onto either one. It is to formulate an avoidance rule rich enough to support them. Such a redesign could connect greedy algorithms with additive combinatorics: how quickly do earlier pair-sums cover the small integers, how sparse can the selected values become, and what growth laws survive changes in the starting data? Those are genuine open directions because the forbidden landscape expands with the history.
 
-$$
-A(n)>\frac{n^2}{4}+C.
-$$
-
-Indeed,
-
-$$
-A(n)-\frac{n^2}{4}=\frac{n^2}{4}-\frac n2+1,
-$$
-
-which grows without bound. Thus no statement of the form
-
-$$
-A(n)=\left\lfloor\frac{n^2}{4}\right\rfloor+O(1)
-$$
-
-can hold. The discrepancy is not a small correction; it has quadratic order.
-
-The neighboring ratios are equally decisive. For positive $n$,
-
-$$
-\frac{A(n+1)}{A(n)}=
-\frac{n^2+n+2}{n^2-n+2},
-$$
-
-which tends to $1$. There is no oscillation between $1$ and $2$. Polynomial growth makes consecutive terms relatively closer and closer, even while their absolute difference grows larger and larger. This contrast—relative closeness alongside absolute separation—is a characteristic feature of quadratic sequences.
-
-## A race against Fibonacci growth
-
-The corrected sequence still earns an illuminating comparison with Fibonacci numbers. Let $F_0=0$, $F_1=1$, and $F_{k+2}=F_{k+1}+F_k$. Then for every $n\ge 6$,
-
-$$
-A(n)<F_{2n+1}.
-$$
-
-At $n=6$, the comparison is $16<233$. After that, the quadratic adds only $n$ at each step, while the odd-index Fibonacci subsequence has an addition law strong enough to preserve and enlarge the lead. The inequality can be proved by induction using the Fibonacci recurrence and the elementary bound that sufficiently advanced Fibonacci numbers dominate their indices.
-
-The same odd-index Fibonacci numbers also arise as row sums of a Pascal–Riordan combinatorial array. Consequently, from row $6$ onward, those row sums exceed $A(n)$. This gives a bridge between two counting worlds: one built from triangular accumulation, the other from a structured array whose totals grow exponentially.
-
-The comparison is a lesson in growth rates. A parabola can look formidable at first, but exponential growth eventually leaves every fixed-degree polynomial behind. Here the victory is not merely eventual in an unspecified sense; it is guaranteed from the explicit index $6$.
-
-## Three fast experiments anyone can perform
-
-The structure is visible even without advanced tools. A first experiment is a difference table. Write two rows:
-
-$$
-\begin{array}{c|rrrrrrr}
-n&0&1&2&3&4&5&6\\ \hline
-A(n)&1&1&2&4&7&11&16\\
-A(n+1)-A(n)&0&1&2&3&4&5&
-\end{array}
-$$
-
-The bottom row identifies the recurrence immediately. Difference tables play for discrete data the role that derivatives play for curves: constant first differences suggest a line, while constant second differences suggest a parabola. Here the first differences themselves rise linearly, so the values must be quadratic.
-
-A second experiment checks the square spectrum. Add adjacent entries, subtract $2$, and take square roots:
-
-$$
-(1+1)-2=0^2,
-\quad
-(1+2)-2=1^2,
-\quad
-(2+4)-2=2^2,
-\quad
-(4+7)-2=3^2.
-$$
-
-The square roots recover the indices in order. This is an unusually transparent encoding: the location of a consecutive sum can be read directly from the number itself.
-
-A third experiment compares scales. For $n=10$, $100$, and $1000$, the normalized values $A(n)/n^2$ are $0.46$, $0.4951$, and $0.499501$. Each extra decimal range pushes the ratio toward $0.5$. Meanwhile, the neighboring ratio moves toward $1$, and the raw gap moves upward without bound. Watching all three quantities together prevents a common intuition trap: a growing gap does not imply a growing ratio.
-
-## What the failed story teaches
-
-The original “anti-Fibonacci” narrative promised a sequence that dodged addition and the golden ratio. The data told a different story. Reading the differences exposed triangular accumulation; triangular accumulation yielded a quadratic formula; pairing neighboring triangles produced shifted squares; and the exact formula settled every asymptotic question.
-
-This chain of discoveries illustrates a central mathematical habit: when a definition, a list of examples, and a conjecture pull in different directions, do not average them together. Test them against one another. A contradiction at the level of the first few terms can prevent pages of argument about the wrong object.
-
-The corrected sequence remains worthy of study. Its transformed values lie on odd squares, its consecutive sums lie two above squares, and intersections between those two spectra lead naturally to quadratic Diophantine equations of Pell type. Its modular behavior asks which residue classes can contain transformed squares. Its counting function invites sharp formulas. Families with recurrence $B(n+1)=B(n)+an$ offer a wider laboratory in which quadratic value sets compete with Fibonacci coincidences.
-
-So the deepest result is not that an anti-Fibonacci sequence defeats the golden ratio. It is that the displayed numbers refuse the mythology imposed on them. They are not chaotic rebels. They are a parabola in disguise—and once the disguise is removed, squares appear everywhere.
-
-That transformation from a misleading label to an exact structure is itself a model of discovery: compute carefully, define honestly, and let the integers tell their own story.
+The moral is simple enough to carry beyond this example. Before asking how fast a recursively defined object grows, determine what its rule actually permits at the smallest scale. To make a greedy sequence climb, one must obstruct more than a single rung.

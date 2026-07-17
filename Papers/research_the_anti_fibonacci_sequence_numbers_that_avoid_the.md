@@ -1,558 +1,421 @@
-# Shifted Triangular Values and Square Spectra in the Displayed Anti-Fibonacci Sequence
-
-**Aristotle**  
-**July 16, 2026**
+# Singleton Sum Avoidance and the Triangular Increment Model
 
 ## Abstract
 
-We analyze the integer sequence displayed as $1,1,2,4,7,11,16,\ldots$ in a proposed anti-Fibonacci construction. The literal greedy description “choose the smallest positive integer unequal to the sum of the preceding two terms” does not generate these data. We therefore isolate the mathematically coherent object forced by the displayed values: $A(0)=1$ and $A(n+1)=A(n)+n$. We derive the exact formula
-
-$$
-A(n)=1+\frac{n(n-1)}2,
-$$
-
-which implies quadratic growth with leading coefficient $1/2$, not $1/4$. Consecutive values satisfy the exact shifted-square identity
-
-$$
-A(n)+A(n+1)=n^2+2,
-$$
-
-and the individual value spectrum is characterized by
-
-$$
-8A(n)-7=(2n-1)^2.
-$$
-
-We prove that gaps are exactly linear and arbitrarily large, that the error from every quarter-square bounded approximation is unbounded, and that $A(1{,}000{,}000)=499{,}999{,}500{,}001$. We also show that the odd-index Fibonacci sequence strictly dominates $A(n)$ for every $n\ge 6$; hence any combinatorial row-sum model equal to $F_{2n+1}$ has the same domination property. Algorithms for evaluation, membership, spectral testing, and numerical exploration follow directly from the identities. The results replace an inconsistent avoidance narrative with an exact theory of shifted triangular numbers, sparse spectra, and quadratic Diophantine structure.
+We analyze a proposed “anti-Fibonacci” recurrence in which each new term is the smallest positive integer unequal to the sum of the preceding two terms. The least-excluded wording makes the recurrence rigid: for positive predecessors their sum is at least $2$, so $1$ is always the least admissible value. With initial values $1,1$, the unique trajectory is therefore constant. Every consecutive ratio equals $1$, and every consecutive pair has greatest common divisor $1$. We separately analyze the frequently associated list $1,1,2,4,7,11,16,\ldots$. That list obeys the increment recurrence $D_{n+1}=D_n+n$, not the singleton sum-avoidance recurrence, and has the exact closed form $D_n=1+n(n-1)/2$. Hence $D_n/n^2\to1/2$. On even indices it differs from $\lfloor n^2/4\rfloor$ by exactly $k(k-1)+1$ at index $2k$, proving that the discrepancy from the proposed quarter-square law is unbounded. These results isolate the structural weakness of singleton avoidance and motivate recurrences with growing forbidden sets.
 
 ## 1. Introduction
 
-The Fibonacci numbers $F_0=0$, $F_1=1$, and
+The Fibonacci recurrence
 
 $$
-F_{k+2}=F_{k+1}+F_k
+F_{n+2}=F_{n+1}+F_n
 $$
 
-are the archetype of additive recurrence. Their exponential growth, neighboring-ratio limit, tiling interpretations, and appearances in combinatorial arrays make them a natural target for “anti” constructions. One proposed anti-Fibonacci sequence was presented as
+turns a local additive instruction into exponential growth. For positive initial data, consecutive ratios approach the golden ratio $\varphi=(1+\sqrt5)/2$. It is natural to ask whether an “anti-Fibonacci” instruction—one that avoids the same local sum—produces contrasting asymptotic behavior.
+
+Consider the literal rule: begin with $A_0=A_1=1$, and let $A_{n+2}$ be the smallest positive integer that is not equal to $A_n+A_{n+1}$. This rule has been associated with the displayed list
 
 $$
-1,1,2,4,7,11,16,\ldots,
+1,1,2,4,7,11,16,22,29,\ldots,
 $$
 
-with an informal rule asking each term to avoid equality with the sum of its two predecessors. Conjectures attached to that proposal included quarter-square growth, bounded error from $\lfloor n^2/4\rfloor$, nonconvergent neighboring ratios, and density-zero behavior.
+and with conjectures of quarter-square growth, nonconvergent consecutive ratios, and sparse additive complements. The purpose of this paper is to resolve the definitions before addressing asymptotics.
 
-The first task is logical rather than asymptotic: one must check that the rule generates the data. It does not. If only one positive integer is forbidden at each stage, the smallest admissible positive integer is generally $1$, so the displayed sequence cannot arise from that literal rule. A theorem about the displayed list must therefore begin by defining the list independently of the incompatible prose.
+The decisive observation is elementary. If $x$ and $y$ are positive, then $x+y\ge2$. Therefore $1$ is unequal to $x+y$, and it is already the smallest positive integer. The literal rule consequently selects $1$ at every stage. The resulting trajectory is unique and constant.
 
-The first differences reveal the intended structure:
+The displayed list nevertheless has a transparent mathematical origin. Its successive increments are $0,1,2,3,\ldots$, so it follows the recurrence $D_{n+1}=D_n+n$. It is exactly one plus a triangular number and grows with leading coefficient $1/2$, not $1/4$. Thus two distinct models have been conflated: a singleton-avoidance model that collapses and an increment model that grows quadratically.
 
-$$
-A(1)-A(0)=0,
-$$
+This distinction illustrates a general principle for greedy least-excluded constructions. Their behavior is controlled not merely by the magnitude of forbidden values but by coverage of the smallest candidates. Forbidding a single value at least $2$ cannot dislodge the candidate $1$. Nontrivial growth requires additional restrictions, such as nonrepetition or a forbidden set of many earlier sums.
 
-$$
-A(2)-A(1)=1,
-$$
+The paper is organized as follows. Section 2 defines the literal least-avoidance relation and the displayed increment model. Section 3 classifies all literal trajectories with initial values $1,1$. Section 4 derives the exact closed form of the displayed sequence. Section 5 disproves the quarter-square bounded-error conjecture and records the corrected asymptotics. Section 6 gives algorithms and complexity bounds. Section 7 discusses applications to greedy constructions and additive combinatorics, and Section 8 proposes extensions with genuinely growing forbidden sets.
 
-$$
-A(3)-A(2)=2,
-$$
+## 2. Definitions and preliminary observations
 
-and in general the evident continuation is
+Throughout, $\mathbb N=\{0,1,2,\ldots\}$, while “positive integer” means an element of $\{1,2,3,\ldots\}$.
 
-$$
-A(n+1)-A(n)=n.
-$$
+### 2.1. Least avoidance of a single sum
 
-This recurrence places the sequence among shifted triangular numbers. Its exact tractability allows us to distinguish which conjectures survive correction and which fail. In particular, density-zero behavior survives for the value set, but the proposed leading coefficient and ratio oscillation do not.
+**Definition 2.1 (least positive integer avoiding a sum).** Given $x,y,z\in\mathbb N$, we say that $z$ is the least positive integer avoiding the sum $x+y$ if:
 
-The central positive discovery is a square-spectrum identity: every consecutive sum is exactly two more than a square, and every shifted square of that form occurs. A second square identity characterizes individual sequence values. Together these facts turn recurrence questions into perfect-square tests and expose a Diophantine structure suitable for further study.
+1. $z>0$;
+2. $z\ne x+y$; and
+3. for every positive integer $k$ with $k\ne x+y$, one has $z\le k$.
 
-Our approach is deliberately elementary and exact. We begin with finite differences, derive a closed form, and use it to settle the asymptotic claims before developing the two spectra. We then extract consequences for gaps and density, compare the sequence with odd-index Fibonacci growth, and translate the identities into practical algorithms. This order keeps each conclusion traceable to a single explicit polynomial formula while preserving the combinatorial interpretation behind it.
+The third condition supplies the essential minimality. Merely asking for some positive integer different from $x+y$ would leave infinitely many choices and would not define a recurrence.
 
-## 2. Definitions and preliminary identities
+**Definition 2.2 (literal anti-Fibonacci trajectory).** A sequence $(A_n)_{n\ge0}$ of natural numbers is a literal anti-Fibonacci trajectory if $A_0=A_1=1$ and, for every $n\ge0$, the term $A_{n+2}$ is the least positive integer avoiding $A_n+A_{n+1}$ in the sense of Definition 2.1.
 
-### Definition 2.1 (The displayed anti-Fibonacci sequence)
+The positivity requirement is crucial. If arbitrary integer predecessors were permitted, their sum could equal $1$, and the least admissible positive integer would then be $2$. Under Definition 2.2, however, positivity starts at the initial terms and is preserved by the rule itself.
 
-For every nonnegative integer $n$, define $A(n)$ recursively by
+### 2.2. The displayed increment sequence
+
+**Definition 2.3 (displayed increment model).** Define $(D_n)_{n\ge0}$ by
 
 $$
-A(0)=1,
+D_0=1,
 \qquad
-A(n+1)=A(n)+n.
+D_{n+1}=D_n+n
+\quad(n\ge0).
 $$
-
-The terminology “displayed anti-Fibonacci sequence” refers only to this recurrence. It must not be confused with the distinct greedy process that excludes a single preceding sum.
-
-The first terms are
-
-$$
-A(0)=1,
-A(1)=1,
-A(2)=2,
-A(3)=4,
-A(4)=7,
-A(5)=11,
-A(6)=16.
-$$
-
-### Lemma 2.2 (Exact first differences)
-
-For every nonnegative integer $n$,
-
-$$
-A(n+1)-A(n)=n.
-$$
-
-**Proof sketch.** This is the defining recurrence rearranged. Since $A(n+1)\ge A(n)$, ordinary integer subtraction introduces no truncation issue. The identity records that the gap after the $n$th term is exactly $n$. $\square$
-
-### Theorem 2.3 (Closed form)
-
-For every nonnegative integer $n$,
-
-$$
-A(n)=1+\frac{n(n-1)}2.
-$$
-
-Equivalently,
-
-$$
-2A(n)+n=n^2+2.
-$$
-
-**Proof sketch.** Iterating the recurrence gives
-
-$$
-A(n)=A(0)+\sum_{k=0}^{n-1}k
-=1+\frac{n(n-1)}2.
-$$
-
-Alternatively, induction starts at $A(0)=1$. If the formula holds at $n$, then
-
-$$
-A(n+1)=1+\frac{n(n-1)}2+n
-=1+\frac{n(n+1)}2,
-$$
-
-which is the required formula at $n+1$. Multiplication by $2$ and rearrangement yield the equivalent polynomial identity. $\square$
-
-This formula identifies $A(n)$ as the triangular number $\binom n2$ shifted by one:
-
-$$
-A(n)=1+\binom n2.
-$$
-
-Thus $A(n)$ may be interpreted as the number of unordered pairs in an $n$-element set, together with one distinguished extra object.
-
-### Corollary 2.4 (Asymptotic growth)
-
-The sequence has exact expansion
-
-$$
-A(n)=\frac12n^2-\frac12n+1,
-$$
-
-and therefore
-
-$$
-\lim_{n\to\infty}\frac{A(n)}{n^2}=\frac12.
-$$
-
-**Proof sketch.** Divide the closed form by $n^2$ for $n>0$:
-
-$$
-\frac{A(n)}{n^2}=\frac12-\frac{1}{2n}+\frac{1}{n^2}.
-$$
-
-The last two terms tend to zero. $\square$
-
-### Corollary 2.5 (Neighboring-ratio limit)
-
-The successive ratios converge to $1$:
-
-$$
-\lim_{n\to\infty}\frac{A(n+1)}{A(n)}=1.
-$$
-
-**Proof sketch.** The closed form gives
-
-$$
-\frac{A(n+1)}{A(n)}
-=
-\frac{n^2+n+2}{n^2-n+2}.
-$$
-
-Dividing numerator and denominator by $n^2$ gives the limit $1$. In particular, the ratios do not oscillate between $1$ and $2$. $\square$
-
-## 3. The consecutive-sum square spectrum
-
-### Theorem 3.1 (Shifted-Square Consecutive-Sum Theorem)
-
-For every nonnegative integer $n$,
-
-$$
-A(n)+A(n+1)=n^2+2.
-$$
-
-**Proof sketch.** Apply Theorem 2.3 at $n$ and $n+1$:
-
-$$
-A(n)=1+\frac{n(n-1)}2,
-\qquad
-A(n+1)=1+\frac{n(n+1)}2.
-$$
-
-Adding gives
-
-$$
-A(n)+A(n+1)
-=2+\frac{n(n-1)+n(n+1)}2
-=2+n^2.
-$$
-
-Geometrically, two consecutive triangular arrangements combine into an $n\times n$ square, while the two unit shifts contribute the extra $2$. $\square$
 
 The first values are
 
 $$
-2,3,6,11,18,27,38,\ldots,
+D_0=1,
+\ D_1=1,
+\ D_2=2,
+\ D_3=4,
+\ D_4=7,
+\ D_5=11,
+\ D_6=16.
 $$
 
-corresponding to $n=0,1,2,3,4,5,6$.
+This definition captures the displayed data exactly. It is not an avoidance condition: it specifies a deterministic additive increment.
 
-### Theorem 3.2 (Exact consecutive-sum spectrum)
-
-For a nonnegative integer $m$, the following conditions are equivalent:
-
-1. There exists a nonnegative integer $n$ such that $m=A(n)+A(n+1)$.
-2. There exists a nonnegative integer $n$ such that $m=n^2+2$.
-3. The integer $m-2$ is a perfect square.
-
-**Proof sketch.** The equivalence of the first two statements is exactly Theorem 3.1 in both directions: each index produces $n^2+2$, and every number $n^2+2$ is produced at that same index. The third condition is simply a restatement of the second. $\square$
-
-This theorem yields a constant-space membership algorithm. For $m<2$, return false. Otherwise compute $r=\lfloor\sqrt{m-2}\rfloor$ and test whether $r^2=m-2$. With an integer square-root routine, the bit complexity is governed by square-root computation rather than by generating all preceding sequence values.
-
-## 4. The individual-value square spectrum
-
-The same quadratic formula gives a second, independent square relation.
-
-### Theorem 4.1 (Odd-Square Value Criterion)
-
-For every nonnegative integer $n$,
+**Definition 2.4 (quarter-square comparison).** For $n\ge0$, let
 
 $$
-8A(n)-7=(2n-1)^2.
+Q(n)=\left\lfloor\frac{n^2}{4}\right\rfloor.
 $$
 
-Consequently, a positive integer $m$ is a value of the sequence if and only if $8m-7$ is the square of an odd integer. The initial repetition $A(0)=A(1)=1$ means that the value $1$ has two indices; every value $A(n)$ with $n\ge 1$ has a unique positive index.
+We will compare $D_n$ with $Q(n)$. A statement of the form $D_n=Q(n)+O(1)$ means that there is a constant $C\ge0$ such that $|D_n-Q(n)|\le C$ for all sufficiently large $n$. We prove a stronger negation: for every $C\ge0$, some $n$ satisfies $D_n>Q(n)+C$.
 
-**Proof sketch.** Substitute the closed form:
+## 3. Complete classification of the literal rule
 
-$$
-8A(n)-7
-=8\left(1+\frac{n(n-1)}2\right)-7
-=4n^2-4n+1
-=(2n-1)^2.
-$$
+The classification rests on a local lemma.
 
-Conversely, suppose $8m-7=q^2$ for an odd integer $q$. Since $q$ may be replaced by $|q|$, write $q=2n-1$ with $n\ge 1$. Rearranging the equation gives
+**Lemma 3.1 (least-avoidance lemma).** Let $x$ and $y$ be positive integers. If $z$ is the least positive integer unequal to $x+y$, then $z=1$.
 
-$$
-m=1+\frac{n(n-1)}2=A(n).
-$$
+**Proof sketch.** Since $x,y\ge1$, we have $x+y\ge2$, and hence $1\ne x+y$. Thus $1$ is an admissible positive candidate. By minimality, $z\le1$. Since $z$ is positive, $z\ge1$. Therefore $z=1$. $\square$
 
-The recurrence has strictly positive gaps for $n\ge 1$, so values after the repeated initial $1$ are distinct. $\square$
+The lemma shows that no detailed information about $x$ and $y$ is needed beyond positivity. In particular, the size of their sum has no influence on the output.
 
-Theorem 4.1 supplies a second exact membership algorithm: compute $D=8m-7$, take its integer square root, and check whether the result squares back to $D$. Oddness is automatic when $D\equiv1\pmod 8$, but may also be tested explicitly.
-
-The coexistence of the two square spectra is especially useful. Individual values are transformed odd squares, while consecutive sums are squares shifted by $2$. Requiring a number to belong to both classes leads to an affine quadratic equation. After completing squares, such intersections naturally become Pell-type Diophantine problems. A complete classification is not asserted here, but the reduction identifies a concrete direction for further work.
-
-## 5. Gaps, sparsity, and counting
-
-### Theorem 5.1 (Arbitrarily large gaps)
-
-For every nonnegative integer $C$, there exists a nonnegative integer $n$ such that
+**Theorem 3.2 (uniqueness of the literal trajectory).** If $(A_n)_{n\ge0}$ is a literal anti-Fibonacci trajectory, then
 
 $$
-A(n+1)-A(n)>C.
+A_n=1
 $$
 
-Indeed, every $n>C$ has this property.
+for every $n\ge0$.
 
-**Proof sketch.** By Lemma 2.2, the left side equals $n$. Taking $n=C+1$ gives the result. $\square$
+**Proof sketch.** The initial conditions give $A_0=A_1=1$. Proceed by strong induction on $n$. The cases $n=0,1$ are given. For $n\ge2$, write $n=m+2$. The earlier values $A_m$ and $A_{m+1}$ are $1$ by induction, hence positive. Lemma 3.1 applied to the defining step yields $A_{m+2}=1$. $\square$
 
-Thus the absolute separation between adjacent terms diverges even though their ratio tends to $1$. There is no contradiction: relative separation is approximately $n/(n^2/2)=2/n$, which tends to zero.
+Existence must be checked as well as uniqueness.
 
-### Theorem 5.2 (Density zero)
+**Theorem 3.3 (existence of the constant trajectory).** The constant sequence $A_n=1$ for all $n\ge0$ is a literal anti-Fibonacci trajectory.
 
-Let $N(X)$ denote the number of distinct values of $A(n)$ not exceeding a real threshold $X$. Then the value set $\{A(n):n\ge0\}$ has natural density zero:
+**Proof sketch.** The initial conditions are immediate. At every step the forbidden sum is $1+1=2$. The value $1$ is positive, differs from $2$, and is the least positive integer. Hence every step satisfies the rule. $\square$
 
-$$
-\lim_{X\to\infty}\frac{N(X)}{X}=0.
-$$
+Together, Theorems 3.2 and 3.3 give a complete classification: the literal model has exactly one trajectory.
 
-**Proof sketch.** The closed form shows that $A(n)$ has quadratic order. More concretely, for $n\ge2$ one has $A(n)\ge n^2/4$. Hence $A(n)\le X$ implies $n\le2\sqrt X$, so at most $2\sqrt X+1$ indices can contribute values below $X$. Therefore
+Two immediate consequences address the proposed ratio behavior and a basic arithmetic property.
 
-$$
-0\le\frac{N(X)}X\le\frac{2\sqrt X+1}{X},
-$$
-
-and the upper bound tends to zero. The repeated initial value can only decrease the count. Determining the sharp floor formula and its exact correction is a natural refinement discussed below. $\square$
-
-This statement concerns the value set of the recurrence in Definition 2.1. It does not identify that set with all sums of earlier values, nor does it analyze the incompatible greedy process.
-
-## 6. Refutation of quarter-square growth
-
-### Theorem 6.1 (Unbounded quarter-square discrepancy)
-
-For every nonnegative real constant $C$, there exists a nonnegative integer $n$ such that
+**Corollary 3.4 (constant consecutive ratio).** For every literal anti-Fibonacci trajectory and every $n\ge0$,
 
 $$
-A(n)>\frac{n^2}{4}+C.
+\frac{A_{n+1}}{A_n}=1.
 $$
 
-For nonnegative integer $C$, the explicit choice $n=4C+4$ suffices.
+**Proof sketch.** By Theorem 3.2, both numerator and denominator equal $1$. $\square$
 
-**Proof sketch.** The exact difference is
+Thus the ratios do converge, and indeed they are identically $1$. There is no oscillation between $1$ and $2$.
 
-$$
-A(n)-\frac{n^2}{4}
-=
-\frac{n^2}{4}-\frac n2+1.
-$$
-
-This quadratic expression tends to positive infinity. For integer $C$, substituting $n=4C+4$ makes the inequality immediate after expansion. Therefore the discrepancy cannot be bounded independently of $n$. $\square$
-
-### Corollary 6.2 (Failure of bounded-error quarter-square approximation)
-
-There is no constant $K$ for which
+**Corollary 3.5 (consecutive coprimality).** For every literal anti-Fibonacci trajectory and every $n\ge0$,
 
 $$
-\left|A(n)-\left\lfloor\frac{n^2}{4}\right\rfloor\right|\le K
+\gcd(A_{n+1},A_n)=1.
 $$
 
-holds for every nonnegative integer $n$. Equivalently,
+**Proof sketch.** Again, Theorem 3.2 reduces the claim to $\gcd(1,1)=1$. $\square$
+
+The coprimality conclusion is valid but should not be mistaken for evidence of a complicated number-theoretic pattern. It is a direct consequence of complete collapse.
+
+## 4. Exact analysis of the displayed increment model
+
+The displayed sequence has a different recurrence and a nonconstant trajectory. Its formula follows by summing arithmetic increments.
+
+**Theorem 4.1 (division-free triangular identity).** For every $n\ge0$,
 
 $$
-A(n)\ne\left\lfloor\frac{n^2}{4}\right\rfloor+O(1).
+2D_n=n(n-1)+2.
 $$
 
-**Proof sketch.** If such a $K$ existed, then $A(n)\le n^2/4+K+1$ for all $n$, contradicting Theorem 6.1 with $C=K+1$. $\square$
-
-### Proposition 6.3 (Millionth-index evaluation)
-
-At index one million,
+**Proof sketch.** At $n=0$, both sides equal $2$. Suppose the formula holds at $n$. Using $D_{n+1}=D_n+n$,
 
 $$
-A(1{,}000{,}000)=499{,}999{,}500{,}001,
+2D_{n+1}=2D_n+2n
+=n(n-1)+2+2n
+=n(n+1)+2,
+$$
+
+which is the required formula at $n+1$. $\square$
+
+This division-free statement is convenient over the natural numbers. Since $n(n-1)$ is always even, it yields the ordinary closed form.
+
+**Theorem 4.2 (closed form).** For every $n\ge0$,
+
+$$
+D_n=1+\frac{n(n-1)}2.
+$$
+
+**Proof sketch.** Divide the identity of Theorem 4.1 by $2$. Alternatively, telescope the recurrence:
+
+$$
+D_n=D_0+\sum_{j=0}^{n-1}j
+=1+\frac{n(n-1)}2.
+$$
+
+$\square$
+
+The closed form provides direct evaluations. For example,
+
+$$
+D_6=1+\frac{6\cdot5}{2}=16,
+\qquad
+D_8=1+\frac{8\cdot7}{2}=29.
+$$
+
+It also gives first and second differences:
+
+$$
+D_{n+1}-D_n=n,
 $$
 
 and
 
 $$
-\frac{A(1{,}000{,}000)}{(1{,}000{,}000)^2}=0.499999500001.
+(D_{n+2}-D_{n+1})-(D_{n+1}-D_n)=1.
 $$
 
-**Proof sketch.** Substitute $n=1{,}000{,}000$ into Theorem 2.3. The decimal ratio follows by division by $10^{12}$. $\square$
+Thus the displayed sequence is a discrete quadratic with constant second difference $1$.
 
-The computation is exact and illustrates the asymptotic coefficient $1/2$. It should not be described as evidence for convergence to $1/4$.
-
-## 7. Comparison with Fibonacci and Riordan growth
-
-Let $F_0=0$, $F_1=1$, and $F_{k+2}=F_{k+1}+F_k$.
-
-### Theorem 7.1 (Odd-index Fibonacci domination)
-
-For every integer $n\ge6$,
+**Corollary 4.3 (normalized limit).** The displayed increment sequence satisfies
 
 $$
-A(n)<F_{2n+1}.
+\lim_{n\to\infty}\frac{D_n}{n^2}=\frac12.
 $$
 
-**Proof sketch.** The base case is direct:
+**Proof sketch.** For $n>0$, Theorem 4.2 gives
 
 $$
-A(6)=16<233=F_{13}.
+\frac{D_n}{n^2}
+=\frac1{n^2}+\frac{n(n-1)}{2n^2}
+=\frac12-\frac1{2n}+\frac1{n^2}.
 $$
 
-For the induction step, assume $A(k)<F_{2k+1}$ with $k\ge6$. The defining recurrence gives $A(k+1)=A(k)+k$. The Fibonacci addition law gives
+The last two terms tend to $0$. $\square$
+
+**Corollary 4.4 (consecutive-ratio limit for the displayed model).** The displayed sequence satisfies
 
 $$
-F_{2k+3}=F_{2k+2}+F_{2k+1}.
+\lim_{n\to\infty}\frac{D_{n+1}}{D_n}=1.
 $$
 
-Standard induction on the Fibonacci recurrence yields $k\le F_{2k+2}$ for $k\ge6$. Hence
+**Proof sketch.** Using the closed form, both $D_{n+1}$ and $D_n$ have leading term $n^2/2$. More explicitly,
 
 $$
-A(k+1)=A(k)+k
-<F_{2k+1}+F_{2k+2}
-=F_{2k+3}.
+\frac{D_{n+1}}{D_n}
+=1+\frac{n}{D_n},
 $$
 
-This is the desired inequality at $k+1$. $\square$
+and $n/D_n\to0$ because $D_n$ is quadratic. $\square$
 
-### Corollary 7.2 (Domination of an odd-Fibonacci row-sum model)
+Hence neither interpretation produces persistent oscillation between ratios near $1$ and $2$: the literal model has ratio exactly $1$, while the displayed model approaches $1$.
 
-Suppose a combinatorial triangular array has $n$th row sum equal to $F_{2n+1}$. Then for every $n\ge6$, its $n$th row sum is strictly greater than $A(n)$.
+## 5. Failure of the quarter-square model
 
-**Proof sketch.** Replace the row sum by its assumed exact value $F_{2n+1}$ and apply Theorem 7.1. $\square$
+The normalized limit already conflicts with a leading coefficient of $1/4$. An exact decomposition on even indices gives a stronger, integer-valued result.
 
-This statement applies in particular to the standard Pascal–Riordan construction whose row sums realize the odd-index Fibonacci numbers. The comparison creates a clean bridge: shifted triangular accumulation is polynomial, while the array’s row sums inherit exponential Fibonacci growth.
-
-The threshold $6$ is a certified uniform threshold, though the problem of determining the least possible threshold for this and broader quadratic families remains a useful refinement.
-
-## 8. Algorithms
-
-The exact identities eliminate the need for iterative sequence generation in most tasks.
-
-### Algorithm 8.1 (Direct evaluation)
-
-**Input:** a nonnegative integer $n$.  
-**Output:** $A(n)$.
-
-Compute
+**Theorem 5.1 (even-index decomposition).** For every $k\ge0$,
 
 $$
-1+\frac{n(n-1)}2.
+D_{2k}=Q(2k)+k(k-1)+1.
 $$
 
-The division is exact because one of $n$ and $n-1$ is even. The algorithm uses $O(1)$ arithmetic operations and $O(1)$ auxiliary storage. With arbitrary-precision integers, bit complexity depends on multiplication of $O(\log n)$-bit operands.
-
-### Algorithm 8.2 (Value-spectrum membership)
-
-**Input:** an integer $m$.  
-**Output:** whether $m=A(n)$ for some $n\ge0$, together with a positive index when one exists.
-
-If $m<1$, return false. Compute $D=8m-7$ and $r=\lfloor\sqrt D\rfloor$. Return true exactly when $r^2=D$ and $r$ is odd; then an index is
+**Proof sketch.** Since $(2k)^2/4=k^2$, one has $Q(2k)=k^2$. Theorem 4.2 gives
 
 $$
-n=\frac{r+1}{2}.
+D_{2k}
+=1+\frac{(2k)(2k-1)}2
+=1+k(2k-1)
+=2k^2-k+1.
 $$
 
-For $m=1$, both indices $0$ and $1$ are valid. The algorithm uses constant auxiliary space and one integer square root.
+Subtracting $k^2$ leaves $k^2-k+1=k(k-1)+1$. $\square$
 
-### Algorithm 8.3 (Consecutive-sum membership)
+The discrepancy is not merely nonzero; it grows like $k^2$.
 
-**Input:** an integer $m$.  
-**Output:** whether $m=A(n)+A(n+1)$ for some $n\ge0$, together with the index.
-
-If $m<2$, return false. Compute $r=\lfloor\sqrt{m-2}\rfloor$. Return true exactly when $r^2=m-2$; in that event the unique index is $n=r$.
-
-## 9. Numerical protocol and diagnostic checks
-
-Although the central claims are exact, numerical experiments provide useful diagnostics and reveal incorrect conjectures quickly. A robust experiment should compute $A(n)$ from the closed form rather than from floating-point recurrence, then report four quantities: $A(n)$, $A(n)/n^2$, the quarter-square discrepancy $A(n)-n^2/4$, and the neighboring ratio $A(n+1)/A(n)$.
-
-At indices $n=10,100,1000$, the normalized values are respectively
+**Theorem 5.2 (unbounded discrepancy from the quarter-square law).** For every nonnegative integer $C$, there exists $n\ge0$ such that
 
 $$
-0.46,
-\qquad
-0.4951,
-\qquad
-0.499501.
+Q(n)+C<D_n.
 $$
 
-The trend toward $1/2$ is already clear. In contrast, the quarter-square discrepancy equals
+Consequently, no estimate of the form
 
 $$
-\frac{n^2}{4}-\frac n2+1,
+D_n=\left\lfloor\frac{n^2}{4}\right\rfloor+O(1)
 $$
 
-so it grows rather than stabilizes. A logarithmic plot of $A(n)$ against $n$ has slope approaching $2$, while a plot of $A(n)/n^2$ approaches a horizontal line at $1/2$. Both views distinguish quadratic behavior from Fibonacci growth.
+is valid.
 
-An independent integrity check evaluates the defining identities on a finite range. For every sampled $n$, verify simultaneously that
-
-$$
-A(n+1)-A(n)=n,
-$$
+**Proof sketch.** Choose an integer $k$ such that $k(k-1)+1>C$; for example, $k=C+2$ suffices. Set $n=2k$. By Theorem 5.1,
 
 $$
-A(n)+A(n+1)=n^2+2,
+D_n-Q(n)=k(k-1)+1>C.
 $$
 
-and
+Since this can be done for every $C$, the discrepancy is unbounded. $\square$
+
+The theorem is stronger than comparing limits. It explicitly constructs a violating index for every proposed error bound. With $k=C+2$, one may take
 
 $$
-8A(n)-7=(2n-1)^2.
+n=2(C+2).
 $$
 
-These checks are redundant by design: disagreement reveals an indexing or implementation error. Integer arithmetic should be retained throughout evaluation; floating-point conversion is needed only for displayed ratios and plots. At $n=10^6$, all exact integers remain easy to compute, while the normalized value $0.499999500001$ visibly contradicts the proposed quarter-square limit.
-
-## 10. Applications and interpretation
-
-The first application is methodological. A displayed sequence, verbal rule, and asymptotic conjecture form three separate mathematical claims. They should be checked independently. Here a first-difference table immediately detects that the data encode a triangular recurrence rather than a greedy avoidance process.
-
-The second application is computational. Direct formulas replace linear-time generation with constant-operation evaluation. Square criteria provide exact membership certificates. Such transformations are useful whenever recurrence-generated data must be indexed, compressed, or queried at large scales.
-
-The third application is combinatorial. Since $A(n)=1+\binom n2$, the sequence counts edges of a complete graph on $n$ vertices plus one distinguished item. The consecutive-sum identity reflects the classical fact that two consecutive triangular numbers form a square. This supplies geometric intuition for the algebraic spectrum.
-
-The fourth application is Diophantine. The equations
+At this index the discrepancy equals
 
 $$
-8A(n)-7=(2n-1)^2
+(C+2)(C+1)+1,
 $$
 
-and
+which is greater than $C$.
+
+## 6. Algorithms and numerical demonstrations
+
+The preceding results yield simple algorithms with sharply different purposes.
+
+### 6.1. Simulating the literal recurrence
+
+Given positive predecessors $x$ and $y$, a general least-avoidance routine could test positive candidates in ascending order until it finds one unequal to $x+y$. For the present domain this search is unnecessary: Lemma 3.1 proves that the answer is always $1$. Thus an optimized generator writes $1$ at every position.
+
+For a requested prefix of length $N$, the running time is $O(N)$ because $N$ outputs must be produced, and the auxiliary working space is $O(1)$ apart from the output array. If values are streamed rather than stored, total auxiliary space remains $O(1)$.
+
+### 6.2. Generating the displayed sequence
+
+The recurrence algorithm starts with $D=1$ and, at stage $n$, outputs $D$ and then replaces it by $D+n$. It uses one addition per term, runs in $O(N)$ arithmetic operations for $N$ outputs, and uses $O(1)$ auxiliary space aside from storage.
+
+For random access, Theorem 4.2 provides
 
 $$
-A(n)+A(n+1)-2=n^2
+D_n=1+\frac{n(n-1)}2.
 $$
 
-place both values and consecutive sums on affine conics. Intersections, modular restrictions, and coincidence problems with other recurrences can therefore be approached through quadratic forms, congruences, and Pell-type equations.
+This requires a constant number of arithmetic operations. In a bit-complexity model, the cost depends on multiplication of integers with $O(\log n)$ bits; under unit-cost arithmetic it is $O(1)$.
 
-Finally, the Fibonacci comparison illustrates the separation between polynomial and exponential combinatorial mechanisms. Even though $A(n)$ has unbounded increments, those increments are merely linear. Odd-index Fibonacci numbers acquire increments on the scale of their current values and rapidly dominate.
+### 6.3. Certifying failure of any proposed bound
 
-## 11. Discussion and limitations
-
-The results also clarify why several initially plausible observations can coexist. Linear gaps might suggest rapid growth, yet summing those gaps produces a quadratic rather than exponential sequence. Sparse values might suggest an exotic avoidance mechanism, yet every strictly increasing quadratic integer sequence is sparse for the same elementary counting reason. Finally, repeated appearances of squares might look accidental in a short table, but here both square laws are algebraic consequences of consecutive triangular numbers. The closed form unifies all three phenomena.
-
-There is a useful distinction between descriptive and generative patterns. The condition $8m-7$ being an odd square describes exactly which integers occur, while $A(n+1)=A(n)+n$ generates them in index order. Neither description alone should be mistaken for the original exclusion rule. Having both views is computationally valuable: generation is convenient for ordered enumeration, whereas the spectral criterion answers random-access membership queries without constructing smaller terms.
-
-The adjective “anti-Fibonacci” is evocative but potentially misleading. The sequence studied here does not arise from the literal exclusion rule initially proposed, and it does not exhibit the claimed oscillatory ratios. Its structure is simpler: it is a shifted triangular sequence.
-
-This correction changes the asymptotic constant from $1/4$ to $1/2$. More strongly, it shows that the quarter-square approximation fails by an unbounded quadratic discrepancy. At the same time, one qualitative expectation—density zero—does hold for the sequence’s value set, for the ordinary reason that a quadratic sequence contributes only $O(\sqrt X)$ values below $X$.
-
-One must also distinguish three sets: the value set $\{A(n)\}$, the consecutive-sum set $\{A(n)+A(n+1)\}$, and any set of sums of arbitrary earlier terms. Theorems in this paper identify the first two exactly but make no classification claim about the third. Likewise, no result here classifies the unrelated literal greedy process.
-
-## 12. Future work
-
-Several exact problems follow naturally.
-
-First, classify intersections between the value spectrum and the consecutive-sum spectrum. Combining the two square identities reduces the question to an affine conic and plausibly to finitely many Pell-type orbits.
-
-Second, refine the exact counting formula into explicit discrepancy bounds in various normalizations, including uniform estimates for $N(X)-\sqrt{2X}$.
-
-Third, consider generalized recurrences
+Given $C\ge0$, choose $k=C+2$ and $n=2k$. Compute $D_n$ from the closed form and $Q(n)=\lfloor n^2/4\rfloor$. Theorem 5.1 ensures
 
 $$
-B(0)=b,
-\qquad
-B(n+1)=B(n)+an
+D_n-Q(n)=k(k-1)+1>C.
 $$
 
-with integer parameters $a>0$ and $b$. Their closed forms remain quadratic, so value spectra, consecutive sums, disjointness thresholds, and exceptional Fibonacci coincidences become explicit quadratic equations.
+The construction is deterministic and requires constant many arithmetic operations. It is a certificate-producing algorithm: the output index $n$ witnesses failure of the proposed bound $C$.
 
-Fourth, determine the optimal domination threshold for $A(n)<F_{2n+1}$ and then for arbitrary quadratics with nonnegative coefficients. A finite initial check combined with recurrence induction should produce effective parameter-dependent bounds.
+### 6.4. Large-scale normalized checks
 
-Fifth, study modular distribution. The criterion that $8m-7$ be an odd square reduces the occurring residue classes modulo $q$ to local quadratic-residue questions. Exact frequencies should be accessible by counting square roots modulo prime powers and applying the Chinese remainder theorem.
-
-## 13. Conclusion
-
-The sequence $1,1,2,4,7,11,16,\ldots$ is governed by the recurrence $A(n+1)=A(n)+n$ and the exact formula
+For a large index such as $n=10^6$, the closed form gives
 
 $$
-A(n)=1+\frac{n(n-1)}2.
+\frac{D_n}{n^2}
+=\frac12-\frac{1}{2\cdot10^6}+\frac{1}{10^{12}},
 $$
 
-Its true leading coefficient is $1/2$, its neighboring ratios tend to $1$, and no bounded-error quarter-square approximation exists. Its gaps equal $n$, its values have density zero, and at index one million it equals $499{,}999{,}500{,}001$. Most notably, consecutive terms satisfy
+which is close to $1/2$, not $1/4$. Such computations illustrate the theorem but are not substitutes for it. The exact identity proves the behavior for every index and the limit follows symbolically.
+
+## 7. Structural interpretation and applications
+
+### 7.1. Least-excluded dynamics
+
+The smallest excluded-value principle, often called a minimum-excluded or greedy admissibility rule, responds primarily to the low end of the candidate set. If a rule forbids only a value $s\ge2$, then $1$ remains admissible, regardless of how large or arithmetically complicated $s$ is. To force the selected value above $m$, every candidate $1,2,\ldots,m$ must be forbidden or independently disallowed.
+
+This viewpoint is useful in greedy graph coloring, scheduling, resource allocation, and combinatorial game theory. A large forbidden label may have no effect on a least-choice algorithm; a dense block of small forbidden labels controls the output. The literal anti-Fibonacci recurrence is an extreme example in which the same smallest candidate survives forever.
+
+### 7.2. Recurrences versus fitted data
+
+A finite list can suggest many incompatible rules. The displayed values visibly encode increasing differences, making the triangular recurrence natural. But they do not satisfy the stated singleton-avoidance rule: after $A_0=A_1=1$, the forbidden sum is $2$, so the least allowed value is $1$, not $2$.
+
+This emphasizes a methodological point. Before extrapolating asymptotics from data, one should verify that the data satisfy the proposed local definition. Difference tables are useful for recognizing polynomial sequences; direct substitution is indispensable for checking recurrence claims.
+
+### 7.3. Additive-combinatorial redesign
+
+A richer avoidance process can be formed by forbidding the set of sums of two earlier selected terms. If $S_n=\{a_0,\ldots,a_n\}$, one might forbid
 
 $$
-A(n)+A(n+1)=n^2+2,
+S_n\mathbin{\widehat{+}}S_n
+=\{a_i+a_j:0\le i<j\le n\},
 $$
 
-while individual values satisfy
+and choose the least positive integer outside this restricted sumset, perhaps also requiring the new term not to have appeared before. Unlike a singleton, this forbidden set grows with $n$ and may cover many small candidates.
+
+Such a model creates legitimate questions about the density of selected values, the density of representable sums, polynomial growth exponents, and stability under changes of initial conditions. None of those questions is meaningful for the literal constant trajectory in the intended sense, because the process never explores larger integers.
+
+### 7.4. Ratio behavior
+
+The Fibonacci ratio tends to a constant greater than $1$ because Fibonacci growth is exponential. Polynomially growing positive sequences generally have consecutive ratios tending to $1$. The displayed model confirms this: $D_n\sim n^2/2$ implies $D_{n+1}/D_n\to1$. Persistent oscillation between values bounded away from $1$ would require repeated multiplicative jumps, a phenomenon not generated by either singleton avoidance or smooth quadratic increments.
+
+This suggests a phase-transition question for broader greedy recurrences. Bounded forbidden-set size may be insufficient to create repeated multiplicative gaps, whereas unbounded forbidden sets can potentially do so by covering long initial intervals of candidates.
+
+### 7.5. Boundary conditions and alternative domains
+
+The least-avoidance lemma depends exactly on the positivity of both predecessors. This dependence is worth isolating because it explains why superficially similar variants can behave differently. For arbitrary integers $x$ and $y$, the least positive integer unequal to $x+y$ is $2$ when $x+y=1$, and $1$ otherwise. Thus a recurrence over all integers can react only to the exceptional event that the preceding sum equals $1$. With the prescribed initial values $1,1$, that event never occurs, so broadening the ambient domain alone does not alter the classified trajectory.
+
+Changing “positive integer” to “nonnegative integer” has an even more dramatic effect. The least nonnegative candidate would usually be $0$, and a rule initialized at $1,1$ would immediately fall to $0$ whenever the forbidden sum were nonzero. This shows that the candidate domain is part of the dynamics, not harmless notation.
+
+A nonrepetition convention would also change the model substantially. If previously selected values were prohibited, then after selecting $1$ the process could no longer return to it. The rule would cease to be singleton avoidance because the set of forbidden values would include the entire history in addition to the latest sum. Such a model may grow, but its behavior cannot be inferred from the theorems above without fresh analysis.
+
+### 7.6. Logical status of the original asymptotic claims
+
+It is useful to distinguish rejection from correction. For the literal trajectory, a claim such as $A_n\sim n^2/4$ is false because $A_n=1$. Its normalized values satisfy
 
 $$
-8A(n)-7=(2n-1)^2.
+\frac{A_n}{n^2}=\frac1{n^2}\longrightarrow0
 $$
 
-These identities expose an unexpectedly rigid square structure. From index $6$ onward, odd-index Fibonacci numbers dominate the quadratic sequence, sharply separating its polynomial growth from genuine Fibonacci growth. What began as an inconsistent avoidance story therefore resolves into a coherent theory of shifted triangular numbers, exact spectra, sparse counting, and quadratic arithmetic.
+for positive $n$. The ratio claim is also false in the proposed form because $A_{n+1}/A_n=1$ identically. Any claim about the density of a complement must first specify precisely which set of integers and which representation rule are intended; the constant trajectory does not realize the advertised additive structure.
+
+For the displayed increment sequence, the quarter-square asymptotic is not repaired by changing only a bounded error term. The correct statement is the exact identity
+
+$$
+D_n=\frac12n^2-\frac12n+1,
+$$
+
+which gives $D_n=n^2/2+O(n)$. The lower-order term is linear and explicit. Therefore the correct asymptotic hierarchy is stronger than a leading-term limit but different from the proposed bounded-error formula.
+
+These distinctions prevent results from one interpretation being transferred to another. The constant model answers the literal recurrence; the triangular model answers the displayed data. A future growing-forbidden-set model would constitute a third object and would require its own definitions and theorems.
+
+## 8. Future directions
+
+The classification identifies exactly what must change to obtain a nontrivial theory.
+
+First, one may study growing forbidden-sum sets: at each stage choose the least unused positive integer outside all sums of two distinct earlier terms. The central problems are existence of stable growth exponents and sensitivity to finite changes in initial conditions.
+
+Second, recurrences may be classified by forbidden-set cardinality. If at stage $n$ at most $r(n)$ candidates are forbidden, how quickly can the least admissible value grow? The singleton model supplies the cardinality-one endpoint. A sharp distinction may occur between bounded and linearly growing $r(n)$.
+
+Third, the displayed increment model admits exact higher-order asymptotic analysis. Since
+
+$$
+D_n=\frac12n^2-\frac12n+1,
+$$
+
+all shifted rational normalizations can be expanded explicitly, and integer-valued affine perturbations with the same leading term can be classified.
+
+Fourth, ratio-limit behavior should be studied under structural assumptions such as monotonicity and unboundedness. It is natural to ask whether bounded forbidden-set size forces consecutive ratios toward $1$, and whether oscillation bounded away from $1$ requires forbidden sets of unbounded size.
+
+Finally, increasing greedy sequences that exclude every earlier pair-sum lead directly to additive-combinatorial density questions. Their selected sets and sumsets may exhibit complementary sparsity laws unavailable in the singleton model.
+
+## 9. Conclusion
+
+The literal anti-Fibonacci recurrence is completely rigid. Because the sum of two positive predecessors is at least $2$, the least positive integer unequal to that sum is always $1$. Starting from $1,1$, the unique trajectory is constant; all consecutive ratios equal $1$, and consecutive terms are coprime.
+
+The displayed list $1,1,2,4,7,11,16,\ldots$ belongs to a separate increment model. It satisfies $D_{n+1}=D_n+n$ and has exact form
+
+$$
+D_n=1+\frac{n(n-1)}2.
+$$
+
+Its normalized values tend to $1/2$. At even index $2k$, its discrepancy from $\lfloor n^2/4\rfloor$ is exactly $k(k-1)+1$, so no bounded-error quarter-square estimate is possible.
+
+The broader lesson is structural: avoiding one sum is too weak to drive a least-positive selection process upward. Nontrivial anti-additive growth requires a forbidden set capable of occupying the smallest available values. That observation turns a failed conjecture into a precise design principle for future avoidance sequences.
