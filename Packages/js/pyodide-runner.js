@@ -526,12 +526,14 @@ if svg_files:
         svg_content = f.read()
     for f in svg_files:
         os.remove(f)
-    'SVG_CONTENT:' + svg_content
+    _viz_result = 'SVG_CONTENT:' + svg_content
 else:
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
     buf.seek(0)
-    base64.b64encode(buf.read()).decode('utf-8')
+    _viz_result = base64.b64encode(buf.read()).decode('utf-8')
+
+_viz_result
 `;
             }
 
