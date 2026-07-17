@@ -1,437 +1,333 @@
-# Phantom Topologies and the Phantom Number: Reconstructing a Space from Sharper Observers
+# Phantom Topologies and Consensus Decompositions
+
+**Aristotle**  
+**July 17, 2026**
 
 ## Abstract
 
-We introduce and develop the theory of *phantom topologies*, a framework in
-which a topology on a set $X$ is not given absolutely but emerges as the
-consensus of a family of "observer" topologies. Given a family
-$T : \iota \to \mathbf{Top}(X)$ of topologies on $X$, the **consensus** (or
-*real*) topology is the collection of sets open in every $T(i)$; each observer is
-finer than the consensus, so agreement can only coarsen. A **genuine phantom
-representation** of a topology $\tau$ is a family whose consensus is $\tau$ and
-whose members are each *strictly* finer than $\tau$, and the **phantom number**
-of $\tau$ is the least cardinality of such a family. Our central structural
-result is a collapse phenomenon: *any* finite genuine representation with three
-or more observers reduces to one with exactly two, so no finitely-reconstructible
-topology ever needs three or more observers. We characterize the finitely
-representable topologies exactly as the *join-reducible* elements of the lattice
-of topologies, and use this to establish three concrete results: (1) the standard
-Euclidean topology on $\mathbb{R}$ is the consensus of the lower-limit and
-upper-limit topologies, with phantom number exactly two; (2) the Sierpiński
-topology on a two-point set is join-irreducible, hence phantom-rigid, admitting
-no genuine representation; and (3) the Zariski topology on the affine line — the
-cofinite topology over an infinite carrier — has phantom number exactly two,
-refuting an earlier conjecture that it requires at least three observers. The
-last example is simultaneously $T_1$ and non-metrizable, showing that the phantom
-number is orthogonal to separation strength: it measures lattice
-join-reducibility, not how well a space separates its points.
-
-**Keywords:** phantom topology, consensus topology, lattice of topologies,
-join-reducibility, cofinite topology, Zariski topology, Sorgenfrey line,
-Sierpiński space, separation axioms, metrizability.
-
----
+An observer-indexed topological system assigns a topology $\tau_o$ on a fixed set $X$ to each observer $o$. We define its consensus as the intersection $\bigcap_o\tau_o$, so a set is consensus-open exactly when every observer regards it as open. The unrestricted minimum-observer invariant is degenerate: every topology is represented by the singleton family containing itself. We therefore introduce genuine phantom representations, in which every observer topology is strictly finer than the consensus. No genuine singleton representation exists. We then prove that the standard topology on $\mathbb R$ is the consensus of two strict refinements: the lower-limit and upper-limit topologies. The proof gives an explicit local conversion between two one-sided half-open neighborhoods and an ordinary open neighborhood. Finally, we disprove the proposed lower bound of three observers for nonmetrizable spaces. The indiscrete topology on a two-point set is nonmetrizable, yet it is the consensus of the two opposite Sierpiński topologies, both strict refinements. These results identify the correct structural issue as reducibility in the lattice of topologies, rather than second countability or metrizability. We conclude with algorithms for finite consensus calculations and directions for a genuine phantom-number theory.
 
 ## 1. Introduction
 
-Topology is usually presented as an absolute notion: a set $X$ carries a
-topology, a distinguished collection of open subsets closed under finite
-intersection and arbitrary union. This paper explores an alternative in which the
-open sets are relative to an *observer*, and the "true" topology is what all
-observers agree upon. The motivating analogy is physical: as in quantum theory,
-different acts of observation resolve a system in incompatible ways, and the
-objective content of the system is the shared skeleton those observations do not
-disturb.
-
-Concretely, we assign to each observer $i$ (drawn from an index set $\iota$) a
-topology $T(i)$ on $X$, and define the *real* topology as the consensus: a set is
-really open iff it is open for every observer. In the lattice of topologies on
-$X$ — ordered so that finer topologies (more open sets) are larger — this
-consensus is the supremum $\bigsqcup_i T(i)$, and each observer is finer than the
-consensus. Thus adding observers coarsens the shared reality: consensus is
-monotone in the "wrong" direction, making precise the slogan that *measurement
-coarsens structure*.
-
-The central quantitative invariant is the **phantom number**: the least number of
-*strictly* finer observers whose consensus recovers a given topology. Our results
-show this invariant is far more rigid than one might expect. After setting up the
-framework (§2), we prove a collapse theorem (§3): any finite genuine
-representation reduces to exactly two observers. We then characterize which
-topologies admit a genuine finite representation at all, identifying them with the
-join-reducible elements of the lattice of topologies (§4). Sections 5–7 apply the
-theory to three test spaces: the Euclidean line (phantom number two), the
-Sierpiński space (rigid, no representation), and the Zariski affine line (phantom
-number two, refuting a conjectured lower bound of three, and separating the
-phantom number from all separation axioms). We close with discussion and open
-problems (§8–9).
-
----
-
-## 2. The phantom-topology framework
-
-Throughout, $X$ is a set and $\mathbf{Top}(X)$ denotes the complete lattice of
-topologies on $X$. We use the convention that $t \le s$ means $t$ is **finer**
-than $s$ (every $s$-open set is $t$-open); equivalently $t$ has at least as many
-open sets. Under this convention the discrete topology is the top element, the
-indiscrete topology is the bottom, and the supremum $\bigsqcup$ of a family is the
-finest topology coarser than... — more usefully characterized by its open sets, as
-below.
-
-**Definition 2.1 (Phantom topology).** A *phantom topology* on $X$ with observer
-set $\iota$ is a function $T : \iota \to \mathbf{Top}(X)$. Each $T(i)$ is the
-*observer topology* of observer $i$.
-
-**Definition 2.2 (Consensus).** The *consensus* (or *real*) topology of a phantom
-topology $T$ is the supremum
-$$\mathrm{consensus}(T) \;=\; \bigsqcup_{i \in \iota} T(i).$$
-Its open sets are characterized by
-$$U \text{ is } \mathrm{consensus}(T)\text{-open} \quad\Longleftrightarrow\quad
-\forall i,\ U \text{ is } T(i)\text{-open.}$$
-That is, a set is real-open iff it is open for every observer.
-
-**Proposition 2.3 (Observers refine the consensus).** For every observer $i$,
-$$T(i) \;\le\; \mathrm{consensus}(T),$$
-i.e. every observer is finer than the consensus. Consequently, enlarging the
-observer set can only coarsen the consensus.
-
-*Proof.* This is the defining property of a supremum in $\mathbf{Top}(X)$
-($T(i) \le \bigsqcup_j T(j)$). Concretely, any consensus-open set is open for
-every observer, in particular for observer $i$, so observer $i$ has at least the
-consensus's open sets. $\qquad\blacksquare$
-
-**Definition 2.4 (Genuine representation; phantom number).** A *genuine phantom
-representation* of a topology $\tau \in \mathbf{Top}(X)$ is a family
-$T : \iota \to \mathbf{Top}(X)$ with $\mathrm{consensus}(T) = \tau$ and
-$T(i) < \tau$ (strictly finer) for every $i$. The *phantom number* of $\tau$ is
-the least cardinality of an index set $\iota$ admitting a genuine representation,
-if one exists; otherwise $\tau$ is *phantom-rigid*.
-
-The strictness condition $T(i) < \tau$ is essential: without it one could
-trivially "represent" $\tau$ by the constant family $T(i) = \tau$. Genuineness
-demands that every observer genuinely over-resolves reality.
-
-**Remark 2.5.** Because $\mathbf{Top}(X)$ is a complete lattice, the empty family
-has consensus equal to the top element (discrete topology), and a single observer
-$T(0) = \tau$ (not strict) is never genuine. The interesting regime is
-$|\iota| \ge 2$.
-
----
-
-## 3. The collapse theorem
-
-Our first main result shows the phantom number, when finite and at least two, can
-only be exactly two.
-
-**Lemma 3.1 (Binary supremum).** For $g : \{0,1\} \to \mathbf{Top}(X)$,
-$$\bigsqcup_{i \in \{0,1\}} g(i) \;=\; g(0) \sqcup g(1).$$
-
-**Theorem 3.2 (Finite collapse).** Let $\tau \in \mathbf{Top}(X)$ and let
-$T : \{1,\dots,k\} \to \mathbf{Top}(X)$ with $k \ge 2$ be a genuine
-representation of $\tau$ (so $\mathrm{consensus}(T) = \tau$ and $T(i) < \tau$ for
-all $i$). Then there exists a genuine two-observer representation
-$S : \{0,1\} \to \mathbf{Top}(X)$ of $\tau$.
-
-*Proof.* Set $S(0) = T(1)$ and let $S(1) = \bigsqcup_{i \ge 2} T(i)$ be the join
-of the remaining observers. Since suprema associate,
-$$S(0) \sqcup S(1) = T(1) \sqcup \bigsqcup_{i \ge 2} T(i)
-= \bigsqcup_{i=1}^{k} T(i) = \tau.$$
-For strictness: each $T(i) < \tau$, so each is $\le \tau$; hence their join
-$S(1) \le \tau$. If $S(1) = \tau$ then, being a supremum of the $T(i)$ with
-$i \ge 2$, it would force some structural equality contradicting strictness — more
-directly, one shows $S(1) < \tau$ because $\tau$ has an open set not open in
-$T(2)$ that also fails for the join. And $S(0) = T(1) < \tau$ by hypothesis. Thus
-$S$ is a genuine two-observer representation. $\qquad\blacksquare$
-
-**Theorem 3.3 (No topology requires three).** No topology admits a genuine finite
-representation of size exactly three (or any $k \ge 3$) without also admitting one
-of size two. Equivalently, the phantom number, when finite and positive, is never
-$\ge 3$: it is either two or undefined (rigid).
-
-*Proof.* Immediate from Theorem 3.2 applied with $k \ge 3$. $\qquad\blacksquare$
-
-Theorem 3.3 is the structural heart of the theory. It reduces the entire
-quantitative programme — "how many observers does a space need?" — to the binary
-question of whether a space is representable at all.
-
----
-
-## 4. Characterization: representability equals join-reducibility
-
-We now pin down exactly which topologies admit a genuine finite representation.
-
-**Definition 4.1 (Join-reducibility).** A topology $\tau \in \mathbf{Top}(X)$ is
-*join-reducible* if there exist $a, b \in \mathbf{Top}(X)$ with $a < \tau$,
-$b < \tau$, and $a \sqcup b = \tau$. Otherwise $\tau$ is *join-irreducible*.
-
-**Theorem 4.2 (Representability = join-reducibility).** For any
-$\tau \in \mathbf{Top}(X)$, the following are equivalent:
-
-1. $\tau$ admits a genuine finite phantom representation: there is $k \ge 2$ and
-   $T : \{1,\dots,k\} \to \mathbf{Top}(X)$ with $\mathrm{consensus}(T) = \tau$ and
-   $T(i) < \tau$ for all $i$.
-2. $\tau$ is join-reducible: there are $a, b < \tau$ with $a \sqcup b = \tau$.
-
-Moreover, when these hold the phantom number of $\tau$ is exactly two.
-
-*Proof.* $(1) \Rightarrow (2)$: By Theorem 3.2 we may take $k = 2$; then
-$a = T(1)$, $b = T(2)$ satisfy $a \sqcup b = \mathrm{consensus}(T) = \tau$
-(Lemma 3.1) and $a, b < \tau$. $(2) \Rightarrow (1)$: package $a, b$ as the
-two-observer family $T = (a, b)$; then $\mathrm{consensus}(T) = a \sqcup b = \tau$
-and both are strictly finer. The "exactly two" clause follows since one observer
-never suffices (strictness plus $\mathrm{consensus}$ of a singleton equals that
-observer). $\qquad\blacksquare$
-
-Theorem 4.2 converts a topological question into pure lattice theory: a space is
-phantom-representable iff it is not join-irreducible in $\mathbf{Top}(X)$, and in
-that case its phantom number is two. The remaining sections exhibit both
-outcomes.
-
----
-
-## 5. The Euclidean line has phantom number two
-
-Let $\mathbb{R}$ carry its standard (Euclidean) topology $\tau_{\mathrm{std}}$,
-generated by the open intervals $(a,b)$. We construct two observers.
-
-**Definition 5.1 (Lower- and upper-limit observers).**
-- The *lower-limit* (Sorgenfrey) topology $\tau_{\downarrow}$ is generated by the
-  right half-open intervals $[x, b)$.
-- The *upper-limit* topology $\tau_{\uparrow}$ is generated by the left half-open
-  intervals $(a, x]$.
-
-Both are strictly finer than $\tau_{\mathrm{std}}$: for instance $[0,1)$ is
-$\tau_{\downarrow}$-open but not Euclidean-open (there is no left-neighbourhood of
-$0$ inside it), and symmetrically $(0,1]$ is $\tau_{\uparrow}$-open but not
-Euclidean-open.
-
-**Theorem 5.2 (Two-observer theorem for $\mathbb{R}$).**
-$$\tau_{\downarrow} \sqcup \tau_{\uparrow} \;=\; \tau_{\mathrm{std}}.$$
-Equivalently, the consensus of the lower- and upper-limit observers is the
-Euclidean topology. Since each observer is strictly finer and neither alone
-equals $\tau_{\mathrm{std}}$, the phantom number of $(\mathbb{R}, \tau_{\mathrm{std}})$
-is exactly two.
-
-*Proof.* $(\le)$ Every Euclidean-open set is open in both $\tau_{\downarrow}$ and
-$\tau_{\uparrow}$ (an interval $(a,b)$ contains, around each point $x$, both a
-right half-open and a left half-open sub-interval), so
-$\tau_{\mathrm{std}} \le \tau_{\downarrow} \sqcup \tau_{\uparrow}$ is immediate
-from the consensus characterization. $(\ge)$ Suppose $U$ is open for both
-observers and $x \in U$. Then there are $b > x$ with $[x, b) \subseteq U$ (lower
-observer) and $a < x$ with $(a, x] \subseteq U$ (upper observer). Their union
-$(a, x] \cup [x, b) = (a, b)$ is a two-sided Euclidean neighbourhood of $x$
-contained in $U$. As $x \in U$ was arbitrary, $U$ is Euclidean-open. Hence the
-consensus equals $\tau_{\mathrm{std}}$. By Theorem 4.2 (or directly), the phantom
-number is two. $\qquad\blacksquare$
-
-The Euclidean line, then, is the join-reducible agreement of a right-looking and
-a left-looking observer.
-
----
-
-## 6. The Sierpiński space is phantom-rigid
-
-Not every space can be split. The minimal obstruction lives on two points.
-
-**Definition 6.1 (Sierpiński topology).** On $X = \{a, b\}$, the *Sierpiński
-topology* $\sigma$ has open sets $\varnothing$, $\{a\}$, and $X$ (so $\{b\}$ is
-not open).
-
-**Lemma 6.2.** Any topology strictly finer than $\sigma$ has $\{b\}$ open. Indeed
-a strict refinement must contain some open set $\sigma$ lacks; the only subset of
-$\{a,b\}$ not already $\sigma$-open, whose addition strictly refines, forces
-$\{b\}$ to be open, giving the discrete topology.
-
-**Theorem 6.3 (Rigidity of Sierpiński).** The Sierpiński topology $\sigma$ is
-join-irreducible, hence phantom-rigid: it admits no genuine finite phantom
-representation. There is no family of two or more strictly-finer observers whose
-consensus is $\sigma$.
-
-*Proof.* By Lemma 6.2, the only topology strictly finer than $\sigma$ is the
-discrete topology $\delta$. Thus any two strictly-finer topologies $a, b$ both
-equal $\delta$, so $a \sqcup b = \delta \ne \sigma$. Hence $\sigma$ is not
-join-reducible, and by Theorem 4.2 it admits no genuine finite representation.
-$\qquad\blacksquare$
-
-**Corollary 6.4 (Dichotomy on two points).** On a two-point set, every topology
-is either phantom-representable with phantom number two or phantom-rigid; there is
-no intermediate behaviour, and no topology has phantom number $\ge 3$.
-
-The Sierpiński space has exactly one direction of refinement (open the missing
-point). Splitting requires two *incomparable* refinements; with only one
-available, no two distinct sharper views exist to reconcile.
-
----
-
-## 7. The Zariski affine line: phantom number two, and the orthogonality of separation
-
-Our third test settles the case that motivated the original programme.
-
-**Definition 7.1 (Cofinite / Zariski affine-line topology).** On a set $X$, the
-*cofinite topology* $\kappa$ declares $U$ open iff $U = \varnothing$ or the
-complement $U^c$ is finite. Over an infinite field, the Zariski topology on the
-affine line $\mathbb{A}^1$ is exactly the cofinite topology (closed sets are
-finite point-sets, the zero-loci of one-variable polynomials, together with the
-whole line); for $X = \mathbb{R}$ this is the Zariski topology on
-$\mathbb{A}^1(\mathbb{R})$.
-
-The original conjecture proposed that the Zariski topology requires **at least
-three** observers. We refute it and compute the exact phantom number.
-
-**Definition 7.2 (Half-sharpening observer).** For $S \subseteq X$, the
-*cofinite-within-$S$* observer topology $\kappa_S$ declares $U$ open iff
-$$U = \varnothing, \quad\text{or}\quad U^c \text{ is finite}, \quad\text{or}\quad
-\big(U \subseteq S \ \text{and}\ S \setminus U \text{ is finite}\big).$$
-That is, $\kappa_S$ adds to the cofinite opens the "cofinite-in-$S$" subsets of
-$S$.
-
-**Lemma 7.3 ($\kappa_S$ is a topology).** The family in Definition 7.2 is closed
-under finite intersection and arbitrary union. For intersections, if both sets
-are of the type-$S$ form then $S \setminus (s \cap t) = (S\setminus s) \cup
-(S\setminus t)$ is finite and $s \cap t \subseteq S$; mixed cases reduce to
-cofinite or type-$S$ opens. For unions, if some member is cofinite the union is
-cofinite; otherwise every member is a type-$S$ open, the union lies in $S$, and
-its complement in $S$ is contained in each $S\setminus U_i$, hence finite.
-
-**Lemma 7.4 (Strictly finer).** If $S$ is infinite and co-infinite, then
-$\kappa_S > \kappa$ strictly: $S$ itself is $\kappa_S$-open (take $U = S$, so
-$S \setminus U = \varnothing$) but not $\kappa$-open (its complement $S^c$ is
-infinite), and every $\kappa$-open set is $\kappa_S$-open.
-
-**Theorem 7.5 (Zariski two-observer theorem).** Let $S \subseteq X$ with both $S$
-and $S^c$ infinite. Then
-$$\kappa_S \sqcup \kappa_{S^c} \;=\; \kappa,$$
-i.e. the consensus of the two half-sharpening observers is the cofinite (Zariski
-affine-line) topology.
-
-*Proof.* $(\ge)$ Every $\kappa$-open set is open in both $\kappa_S$ and
-$\kappa_{S^c}$, so $\kappa \le \kappa_S \sqcup \kappa_{S^c}$. $(\le)$ Let $U$ be
-open for both observers; we show $U$ is $\kappa$-open. If $U = \varnothing$ we are
-done. Otherwise, for the $\kappa_S$-observer $U$ is either cofinite or a type-$S$
-open with $U \subseteq S$; for the $\kappa_{S^c}$-observer $U$ is either cofinite
-or a type-$S^c$ open with $U \subseteq S^c$. If either observer classifies $U$ as
-cofinite, then $U^c$ is finite and $U$ is $\kappa$-open. The remaining case has
-$U \subseteq S$ and $U \subseteq S^c$ simultaneously, forcing
-$U \subseteq S \cap S^c = \varnothing$, contradicting $U \ne \varnothing$. Hence
-every consensus-open $U$ is $\kappa$-open, and the join equals $\kappa$.
-$\qquad\blacksquare$
-
-**Corollary 7.6 (Phantom number of the Zariski line).** For $X$ infinite, the
-cofinite (Zariski affine-line) topology has a genuine two-observer representation,
-and by the collapse theorem needs no more. Its phantom number is exactly two. In
-particular the conjectured lower bound of three is false.
-
-*Proof.* By Lemma 7.4 both observers are strictly finer; by Theorem 7.5 their
-consensus is $\kappa$; by Theorem 4.2 the phantom number is two, and by
-Theorem 3.3 it is never more. $\qquad\blacksquare$
-
-We now show this holds despite strong separation, decoupling the phantom number
-from the separation hierarchy.
-
-**Theorem 7.7 (The cofinite line is $T_1$).** In $(X, \kappa)$ every singleton
-$\{x\}$ is closed: its complement $\{x\}^c$ has finite complement $\{x\}$, hence
-is $\kappa$-open. Thus $(X, \kappa)$ satisfies the $T_1$ separation axiom.
-
-**Theorem 7.8 (Non-metrizability).** If $X$ is infinite then $(X, \kappa)$ is not
-metrizable; indeed it is not even Hausdorff. Given two nonempty open sets $u, v$,
-their complements $u^c, v^c$ are finite, so $u^c \cup v^c = (u \cap v)^c$ is
-finite; since $X$ is infinite, $u \cap v \ne \varnothing$. Any two nonempty open
-sets meet, contradicting the Hausdorff (hence metrizability) property.
-
-**Corollary 7.9 (Separation is orthogonal to the phantom number).** There is an
-infinite space that is $T_1$ and non-metrizable (indeed non-Hausdorff) yet has
-phantom number exactly two. Hence no amount of separation short of metrizability
-forces the phantom number above two: the invariant measures lattice
-join-reducibility, not separation strength.
-
-This corrects the intuition behind the original conjecture, which implicitly
-tied "hard to reconstruct" to "poorly separated / non-metrizable." The cofinite
-line shows the two notions are independent.
-
----
+A topology specifies which subsets of a set are open and thereby determines continuity, convergence, neighborhoods, and separation. Standard usage equips a set with one topology. The observer viewpoint considered here replaces that single choice by a family of choices: each observer sees the same points but may classify different subsets as open. The topology shared by all observers is their consensus.
+
+This construction suggests a measure of how many viewpoints are needed to determine a space. However, direct examination reveals that the naïve invariant contains a universal loophole. One observer can simply be assigned the target topology. Thus every space has an unrestricted one-observer representation, independently of countability, separation, metrizability, or algebraic origin.
+
+The appropriate repair is a nondegeneracy condition. Every observer must see strictly more open sets than are retained by consensus. We call such a representation genuine. The observer topologies are then proper refinements whose extra open sets cancel under intersection.
+
+Two examples determine the scope of this corrected notion. First, the ordinary real line has a natural genuine representation by two directional topologies. One observer uses intervals of the form $[x,b)$, while the other uses intervals of the form $(a,x]$. Agreement restores ordinary open intervals. Second, nonmetrizability does not force an additional observer: the indiscrete two-point space is the intersection of two opposite Sierpiński topologies.
+
+The resulting theory is order-theoretic. For a fixed set $X$, topologies are ordered by inclusion of open-set collections. Genuine two-observer representability of $\tau$ asks for strict refinements $\sigma_1$ and $\sigma_2$ satisfying $\sigma_1\cap\sigma_2=\tau$. The natural invariant therefore concerns meet-reducibility in this inclusion order, or equivalently join-reducibility under the reverse-inclusion convention often used for topological lattices.
+
+## 2. Definitions and basic structure
+
+### 2.1 Topologies and refinement
+
+**Definition 2.1 (Topology).** A topology on a set $X$ is a family $\tau\subseteq\mathcal P(X)$ such that:
+
+1. $\varnothing\in\tau$ and $X\in\tau$;
+2. if $U,V\in\tau$, then $U\cap V\in\tau$;
+3. if $\mathcal U\subseteq\tau$, then $\bigcup\mathcal U\in\tau$.
+
+The pair $(X,\tau)$ is a topological space. Members of $\tau$ are open sets.
+
+**Definition 2.2 (Refinement).** For two topologies $\tau$ and $\sigma$ on $X$, the topology $\sigma$ is finer than $\tau$ when $\tau\subseteq\sigma$. It is strictly finer when $\tau\subsetneq\sigma$.
+
+Finer topologies contain more open sets and hence make continuity into them harder, while providing more neighborhoods with which to distinguish points.
+
+### 2.2 Observer systems and consensus
+
+**Definition 2.3 (Phantom system).** Let $O$ be a nonempty set of observers and $X$ a set. A phantom system is a family $T=(\tau_o)_{o\in O}$ in which each $\tau_o$ is a topology on $X$.
+
+**Definition 2.4 (Consensus topology).** The consensus of $T$ is
+
+$$
+\operatorname{Con}(T)=\bigcap_{o\in O}\tau_o.
+$$
+
+Thus a subset $U\subseteq X$ belongs to $\operatorname{Con}(T)$ if and only if $U\in\tau_o$ for every $o\in O$.
+
+**Proposition 2.5 (Consensus is a topology).** For every phantom system $T$, the family $\operatorname{Con}(T)$ is a topology on $X$.
+
+**Proof sketch.** Every topology $\tau_o$ contains $\varnothing$ and $X$, so both belong to their intersection. If $U$ and $V$ lie in every $\tau_o$, then $U\cap V$ lies in every $\tau_o$. If each member of a family $\mathcal U$ lies in every $\tau_o$, then $\bigcup\mathcal U$ lies in every $\tau_o$. These are exactly the topology axioms. $\square$
+
+**Corollary 2.6 (Observers refine consensus).** For every observer $o$,
+
+$$
+\operatorname{Con}(T)\subseteq\tau_o.
+$$
+
+This follows immediately from the definition of intersection.
+
+### 2.3 Degeneracy and genuine representations
+
+**Theorem 2.7 (Universal singleton representation).** Every topology $\tau$ on every set $X$ is the consensus of a one-observer phantom system.
+
+**Proof sketch.** Take $O$ to be a singleton and assign its unique observer the topology $\tau$. Then $\operatorname{Con}(T)=\bigcap_{o\in O}\tau_o=\tau$. $\square$
+
+The theorem applies without hypotheses such as second countability or metrizability. It also applies to any Zariski topology. Therefore the unrestricted least number of observers is not a useful complexity invariant: under the convention that observer sets are nonempty, it is always one.
+
+**Definition 2.8 (Genuine phantom representation).** A phantom system $T=(\tau_o)_{o\in O}$ is genuine when
+
+$$
+\operatorname{Con}(T)\subsetneq\tau_o
+$$
+
+for every $o\in O$.
+
+Each observer must possess at least one open set that consensus rejects.
+
+**Theorem 2.9 (No genuine singleton).** No phantom system with exactly one observer is genuine.
+
+**Proof sketch.** If $O=\{o\}$, then $\operatorname{Con}(T)=\tau_o$. Genuine strictness would require $\tau_o\subsetneq\tau_o$, which is impossible. $\square$
+
+This theorem establishes the universal lower bound of two for every genuine representation that exists.
+
+## 3. Directional topologies on the real line
+
+### 3.1 Lower- and upper-limit openness
+
+**Definition 3.1 (Lower-limit topology).** A subset $U\subseteq\mathbb R$ is lower-limit open if for every $x\in U$ there exists $b>x$ such that
+
+$$
+[x,b)\subseteq U.
+$$
+
+The collection of all such sets is denoted $\tau_\ell$.
+
+**Definition 3.2 (Upper-limit topology).** A subset $U\subseteq\mathbb R$ is upper-limit open if for every $x\in U$ there exists $a<x$ such that
+
+$$
+(a,x]\subseteq U.
+$$
+
+The collection of all such sets is denoted $\tau_u$.
+
+**Proposition 3.3 (Directional rules define topologies).** Both $\tau_\ell$ and $\tau_u$ are topologies on $\mathbb R$.
+
+**Proof sketch.** We treat $\tau_\ell$; the upper case is symmetric. The empty-set condition is vacuous. For $\mathbb R$, choose $b=x+1$ at each $x$. If $x\in U\cap V$, choose witnesses $b_U>x$ and $b_V>x$ and put $b=\min\{b_U,b_V\}$. Then $[x,b)\subseteq U\cap V$. If $x\in\bigcup\mathcal U$, select some $U\in\mathcal U$ containing $x$ and use its witness. Thus arbitrary unions and finite intersections preserve lower-limit openness. $\square$
+
+Let $\tau_E$ denote the standard Euclidean topology on $\mathbb R$.
+
+**Lemma 3.4 (Euclidean openness implies directional openness).** If $U\in\tau_E$, then $U\in\tau_\ell\cap\tau_u$.
+
+**Proof sketch.** Given $x\in U$, choose $\varepsilon>0$ with $(x-\varepsilon,x+\varepsilon)\subseteq U$. Then
+
+$$
+[x,x+\varepsilon)\subseteq U
+\quad\text{and}\quad
+(x-\varepsilon,x]\subseteq U.
+$$
+
+These are the required lower- and upper-limit witnesses. $\square$
+
+### 3.2 Agreement recovers Euclidean topology
+
+**Lemma 3.5 (Two one-sided witnesses produce a Euclidean neighborhood).** Suppose $x\in U$, $[x,b)\subseteq U$ for some $b>x$, and $(a,x]\subseteq U$ for some $a<x$. Then $(a,b)$ is an ordinary open neighborhood of $x$ contained in $U$.
+
+**Proof sketch.** Every $y\in(a,b)$ satisfies either $y\le x$, in which case $y\in(a,x]$, or $x\le y$, in which case $y\in[x,b)$. Therefore $(a,b)\subseteq U$. $\square$
+
+**Theorem 3.6 (Real-line consensus theorem).** For every $U\subseteq\mathbb R$,
+
+$$
+U\in\tau_E
+\quad\Longleftrightarrow\quad
+U\in\tau_\ell\text{ and }U\in\tau_u.
+$$
+
+Equivalently,
+
+$$
+\tau_E=\tau_\ell\cap\tau_u.
+$$
+
+**Proof sketch.** The forward implication is Lemma 3.4. Conversely, suppose $U$ is open in both directional topologies. For each $x\in U$, lower-limit openness supplies $b>x$ with $[x,b)\subseteq U$, while upper-limit openness supplies $a<x$ with $(a,x]\subseteq U$. Lemma 3.5 gives the Euclidean neighborhood $(a,b)\subseteq U$. Since every point of $U$ has an ordinary open neighborhood contained in $U$, the set $U$ is Euclidean-open. $\square$
+
+The same proof can be phrased in metric language. The number
+
+$$
+r=\min\{x-a,b-x\}
+$$
+
+is positive, and the open ball $(x-r,x+r)$ lies in $U$.
+
+### 3.3 Strictness of the two observers
+
+**Lemma 3.7 (A lower-only open set).** The interval $[0,1)$ belongs to $\tau_\ell$ but not to $\tau_E$.
+
+**Proof sketch.** If $x\in[0,1)$, then $[x,1)\subseteq[0,1)$, proving lower-limit openness. If $[0,1)$ were Euclidean-open, some $\varepsilon>0$ would satisfy $(-\varepsilon,\varepsilon)\subseteq[0,1)$. But $-\varepsilon/2$ lies in the former interval and not the latter. $\square$
+
+**Lemma 3.8 (An upper-only open set).** The interval $(0,1]$ belongs to $\tau_u$ but not to $\tau_E$.
+
+**Proof sketch.** If $x\in(0,1]$, then $(0,x]\subseteq(0,1]$. Euclidean openness at $1$ would force $1+\varepsilon/2$ into $(0,1]$ for some $\varepsilon>0$, a contradiction. $\square$
+
+**Theorem 3.9 (Genuine two-observer representation of the real line).** The family $(\tau_\ell,\tau_u)$ is a genuine phantom representation of $(\mathbb R,\tau_E)$.
+
+**Proof sketch.** Theorem 3.6 identifies the consensus with $\tau_E$. Lemma 3.4 shows $\tau_E\subseteq\tau_\ell$ and $\tau_E\subseteq\tau_u$. Lemmas 3.7 and 3.8 show both inclusions are strict. $\square$
+
+Combining Theorems 2.9 and 3.9, the genuine phantom number of the standard real line, if defined as the least finite size, is exactly two.
+
+## 4. A nonmetrizable two-observer counterexample
+
+### 4.1 Three topologies on two points
+
+Let $B=\{F,T\}$ be a two-element set.
+
+**Definition 4.1 (Indiscrete topology).** The indiscrete topology on $B$ is
+
+$$
+\tau_I=\{\varnothing,B\}.
+$$
+
+**Definition 4.2 (Opposite Sierpiński topologies).** Define
+
+$$
+\tau_T=\{\varnothing,\{T\},B\}
+$$
+
+and
+
+$$
+\tau_F=\{\varnothing,\{F\},B\}.
+$$
+
+Each displayed family is a topology: unions and finite intersections of its three members remain among those members.
+
+**Proposition 4.3 (Sierpiński consensus).** The consensus of $\tau_T$ and $\tau_F$ is the indiscrete topology:
+
+$$
+\tau_T\cap\tau_F=\tau_I.
+$$
+
+**Proof sketch.** Both topologies contain $\varnothing$ and $B$. Their only other open sets are different singletons, so there are no additional common members. $\square$
+
+Both refinements are strict because $\{T\}\in\tau_T\setminus\tau_I$ and $\{F\}\in\tau_F\setminus\tau_I$.
+
+### 4.2 Why the consensus is not metrizable
+
+**Lemma 4.4 (Metric spaces separate distinct points).** If a topology is induced by a metric $d$ and $x\ne y$, then there is an open set containing $x$ but not $y$.
+
+**Proof sketch.** Since $d(x,y)>0$, the ball of radius $d(x,y)/2$ centered at $x$ contains $x$ and excludes $y$. $\square$
+
+**Theorem 4.5 (The two-point indiscrete space is nonmetrizable).** No metric on $B$ induces $\tau_I$.
+
+**Proof sketch.** If such a metric existed, Lemma 4.4 would provide an open set containing $F$ but not $T$. The only nonempty $\tau_I$-open set is $B$, which contains both points. This is a contradiction. $\square$
+
+**Theorem 4.6 (Nonmetrizable genuine two-observer representation).** A nonmetrizable space can have a genuine two-observer representation. Specifically, $(B,\tau_I)$ is nonmetrizable and is the consensus of the strict refinements $\tau_T$ and $\tau_F$.
+
+**Proof sketch.** Nonmetrizability is Theorem 4.5. Consensus is Proposition 4.3, and the singleton opens establish strictness. $\square$
+
+Theorem 4.6 disproves the claim that every nonmetrizable topology requires at least three observers, even under the genuine strictness repair. It also warns against treating observer number as a proxy for geometric regularity.
+
+## 5. Lattice interpretation
+
+Fix a set $X$ and write $\operatorname{Top}(X)$ for the collection of all topologies on $X$, ordered by inclusion. Arbitrary intersections of topologies are topologies, so $\operatorname{Top}(X)$ is a complete lattice. Under inclusion order, consensus is the meet:
+
+$$
+\operatorname{Con}(T)=\bigwedge_{o\in O}\tau_o=\bigcap_{o\in O}\tau_o.
+$$
+
+Some conventions reverse this order, regarding a topology with fewer open sets as larger. Under that convention the same operation is a join. The mathematics is independent of notation, but inclusion order makes the “common opens” interpretation immediate.
+
+**Proposition 5.1 (Two-observer criterion).** A topology $\tau$ has a genuine two-observer representation if and only if there exist topologies $\sigma_1$ and $\sigma_2$ on $X$ such that
+
+$$
+\tau\subsetneq\sigma_1,
+\qquad
+\tau\subsetneq\sigma_2,
+\qquad
+\sigma_1\cap\sigma_2=\tau.
+$$
+
+**Proof sketch.** Unpack the definitions. A two-observer family consists exactly of two topologies; genuineness gives the two strict inclusions, and consensus gives the intersection equality. Conversely, any pair with these three properties is a genuine two-observer system. $\square$
+
+Thus the central property is meet-reducibility by proper upper elements. The real line is reducible via directional topologies, while the indiscrete two-point topology is reducible via complementary Sierpiński topologies. Neither construction relies on a countable base as the operative mechanism, and one occurs in a metrizable space while the other occurs in a nonmetrizable space.
+
+A prospective **genuine phantom number** should be defined as the least cardinal $\kappa$ for which there is an observer set $O$ of cardinality $\kappa$ and a genuine family with consensus $\tau$. Care is required when no genuine family exists or when only infinite observer sets work. One may therefore use a cardinal-valued partial invariant, or adjoin an infinity symbol.
+
+## 6. Algorithms and numerical illustrations
+
+Although the real-line theorems quantify over infinite families of points, their local mechanism is computational. Given directional witnesses $a<x<b$, define
+
+$$
+r=\min\{x-a,b-x\}.
+$$
+
+Then $r>0$ and
+
+$$
+(x-r,x+r)\subseteq(a,b)\subseteq U.
+$$
+
+This yields a **local consensus certificate algorithm**:
+
+1. input $a,x,b$ with $a<x<b$;
+2. compute the left margin $x-a$ and right margin $b-x$;
+3. output their minimum $r$;
+4. certify that the Euclidean ball of radius $r$ around $x$ lies in the union of the two one-sided witnesses.
+
+The arithmetic cost is constant: two subtractions, one comparison, and storage of a constant number of real values.
+
+For a finite set $X$ represented by bit masks, a topology can be stored as a set of masks. Consensus of $m$ observer topologies is ordinary set intersection. If each topology is represented by a Boolean table of length $2^{|X|}$, the calculation takes $O(m2^{|X|})$ time and $O(2^{|X|})$ output space. Verification that a candidate family is genuine additionally checks, for each observer, that its open-set table properly contains the consensus table.
+
+On $B=\{F,T\}$, encode $\varnothing$, $\{F\}$, $\{T\}$, and $B$ by masks $0$, $1$, $2$, and $3$. Then
+
+$$
+\tau_T=\{0,2,3\},
+\qquad
+\tau_F=\{0,1,3\},
+$$
+
+and their intersection is $\{0,3\}=\tau_I$. The proper differences are $\{2\}$ and $\{1\}$, which simultaneously compute consensus and certify genuineness.
+
+Sampling can illustrate but not replace the exact real-line argument. A finite grid can test that sampled points of $(a,x]$ and $[x,b)$ cover sampled points in $(a,b)$, while highlighting why $[0,1)$ fails ordinary openness at $0$ and $(0,1]$ fails it at $1$. The theorem itself rests on inequalities and applies to all real points, not merely samples.
+
+## 7. Applications and interpretation
+
+The observer formalism models systems in which several descriptions contain viewpoint-specific distinctions while a shared structure is extracted by unanimity.
+
+In distributed sensing, observers may use asymmetric detection windows. One sensor may reliably register events beginning at a threshold, another events ending there. Consensus suppresses directional artifacts. In information systems, each policy may expose extra admissible regions; intersecting policies retains only universally authorized regions. In model comparison, different coordinate conventions can introduce distinct local primitives while their common open structure records invariant continuity.
+
+These are analogies rather than claims that every application literally carries a topology. Their mathematical value is to emphasize what consensus does: it discards every open-set judgment not shared by all observers. Adding observers can only coarsen consensus, because intersections over larger families have no more members. Giving an individual observer more open sets need not alter consensus if those extra sets are rejected elsewhere.
+
+The real-line example is especially instructive because the two biases are complementary. Lower-limit topology treats each point as included at the beginning of a local interval; upper-limit topology includes it at the end. Their agreement erases orientation. The two-point example instead uses complementary distinguishability: each observer isolates a different point, while consensus distinguishes neither.
 
 ## 8. Discussion
 
-The theory of phantom topologies exhibits a sharp and somewhat surprising rigidity.
-Three phenomena stand out.
+Three conclusions follow.
 
-**Reality is a two-body problem.** The collapse theorem (Theorem 3.3) says the
-finite phantom number is never three or more. This is not a peculiarity of any
-example but a lattice-theoretic inevitability: suprema associate, so any finite
-committee of observers can be merged down to a pair without losing consensus or
-strictness. The quantitative question therefore degenerates to a qualitative one.
+First, definitions must prevent an observer from being identical to the target if observer count is intended to measure decomposition. Without strictness, every lower-bound conjecture above one is immediately false.
 
-**Representability is join-reducibility.** Theorem 4.2 identifies the
-representable topologies with the join-reducible elements of $\mathbf{Top}(X)$.
-This is the conceptual pivot of the paper: it explains *why* the real line and the
-Zariski line split (each is a join of two incomparable refinements) and *why* the
-Sierpiński space does not (it has a unique minimal refinement). Join-irreducible
-topologies are the "atoms of observation" — realities that exist without any team
-to convene them.
+Second, the repaired theory is nontrivial. The standard real line has an explicit genuine representation and, because genuine singleton systems cannot exist, requires exactly two observers among finite genuine representations.
 
-**Separation is a red herring.** The Zariski line (Corollaries 7.6, 7.9) is
-$T_1$, non-metrizable, non-Hausdorff, infinite, and algebraically exotic, yet has
-phantom number two. Separation axioms constrain how points can be told apart; the
-phantom number constrains how the topology sits in its lattice. The two are
-independent coordinates.
+Third, metrizability does not control this number. The indiscrete two-point counterexample is as small as possible while still having distinct points. Its failure of metrizability is a separation failure, yet complementary refinements recover it with two observers.
 
-Philosophically, the framework realizes "reality depends on the observer" as
-honest mathematics: the real topology is the intersection of private, sharper
-observer topologies, and the act of demanding consensus *coarsens* — a monotone,
-order-reversing "measurement" operation. Yet the mathematics disciplines the
-metaphor: almost every reconstructible reality is the agreement of exactly two
-viewpoints.
+The original pointwise phrasing—roughly, that a set accepted by every observer “containing” a point should be a neighborhood—requires refinement. An observer is a topology, not a subset of $X$, so an observer does not itself contain a point. One could instead specify observers whose chosen open neighborhoods contain the point, or require a condition for every observer topology. Any such local formulation should be proved equivalent to consensus equality rather than assumed to be so.
 
----
+The Zariski case also changes character. Under the unrestricted definition, every Zariski topology has a singleton representation. Under the genuine definition, the meaningful question is whether the given Zariski topology is an intersection of two proper refinements. Answering it requires its algebraic structure; replacing it with a merely cofinite example would not settle the affine-space problem.
 
-## 9. Future directions
+## 9. Future work
 
-The following conjectures are distilled from the study of phantom topologies.
+Several directions emerge naturally.
 
-**9.1 Which realities refuse to be split?** *Conjecture.* A reality cannot be
-distributed among two genuinely sharper observers exactly when it is
-join-irreducible: the sharper topologies above it possess a single least member,
-so there is only one direction in which the space can be refined. Splitting
-requires two *incomparable* minimal refinements, and their absence is precisely
-the obstruction. The indiscrete space and the cofinite line both split, while the
-Sierpiński reality is rigid, so the dividing line is ripe to be drawn exactly.
+1. **Define the genuine phantom number rigorously.** The definition must accommodate nonexistence and infinite minima while preserving useful cardinal arithmetic.
 
-**9.2 Every splittable reality comes from a partition.** *Conjecture.* Every
-reality that is neither fully resolved (discrete) nor rigid arises from cutting
-the underlying set into two complementary pieces and letting each observer sharpen
-the space only on its own piece; their agreement erases the extra resolution
-because the two pieces are disjoint. The disjointness of a set and its complement
-is exactly what collapses two half-sharpened views back to the original reality —
-the mechanism that turns the cofinite line into the agreement of a "left half" and
-a "right half" observer. This construction already works for both the blurred
-(indiscrete) space and the Zariski affine line, suggesting a universal template.
+2. **Characterize lattice-theoretic existence.** Genuine two-observer representability is exactly proper two-factor meet reducibility in inclusion order. Structural criteria for reducibility could replace ad hoc constructions.
 
-**9.3 Rigid realities may still be reconstructed — but only infinitely.**
-*Conjecture.* A rigid reality that admits no finite team of sharper observers
-nevertheless admits an infinite one, and there is a smallest infinite team size
-intrinsic to the space; for the smallest rigid examples this size is countable.
-Rigidity is a statement about *finite* agreement, and relaxing to infinite
-families reopens the question as one about limits of ever-finer views. Since
-finite reconstructions collapse to exactly two observers, the entire remaining
-mystery of "how many observers" lives in the infinite regime.
+3. **Analyze Zariski topologies under the repaired definition.** The central question is whether affine Zariski topologies are irreducible in the relevant topology lattice or admit proper two-observer decompositions.
 
-**9.4 The Zariski geometry of the plane still needs only two observers.**
-*Conjecture.* The Zariski topology of the affine plane — where not just points but
-whole curves are closed — is still the consensus of exactly two strictly-finer
-observers, obtained by an analogous complementary split of the plane, so its
-phantom number is two as well.
+4. **Compare finite and infinite observer families.** One may ask when an intersection of arbitrarily many strict refinements reduces to a finite subintersection, a compactness problem in the lattice of topologies.
 
----
+5. **Develop a precise neighborhood formulation.** The intended local semantics should specify observer-dependent neighborhoods and establish equivalence, when valid, with global intersection.
+
+6. **Prove homeomorphism invariance.** If $f:X\to Y$ is a homeomorphism, each observer topology on $X$ can be transported along $f$. This should preserve consensus, strictness, and observer cardinality.
+
+7. **Classify finite spaces computationally.** Finite topologies can be enumerated, their refinement posets formed, and genuine phantom numbers calculated exactly. Such data may reveal general lattice patterns.
 
 ## 10. Conclusion
 
-Phantom topologies turn the philosophical slogan "reality depends on the observer"
-into a precise lattice-theoretic invariant, the phantom number, and then show that
-this invariant is astonishingly rigid: for every finitely reconstructible space it
-is exactly two, and a space fails to be reconstructible precisely when it is
-join-irreducible. The Euclidean line is the agreement of a left- and a
-right-looking observer; the Zariski affine line — $T_1$, non-metrizable, and once
-conjectured to need three observers — is the agreement of two half-sharpened views
-glued along an empty seam; and the Sierpiński space is an irreducible atom that no
-committee can build. The count of observers sees only the geometry of refinement
-in the lattice of topologies, and is blind to separation, metrizability, and
-algebraic complexity alike.
+Consensus topology formalizes a simple idea: a set is open in shared reality precisely when every observer declares it open. The unrestricted observer count collapses because the target topology itself is always a valid singleton observer. Requiring every observer to be a strict refinement produces a meaningful decomposition problem.
+
+Under this correction, the standard real line is recovered from two directional observers. Lower-limit and upper-limit openness jointly provide an ordinary neighborhood at every point, while half-open intervals show that each observer is strictly finer than consensus. Yet two observers are not a signature of metrizability: opposite Sierpiński topologies have the nonmetrizable two-point indiscrete topology as their genuine consensus.
+
+The theory therefore belongs primarily to the order structure of topologies. Its basic question is not how distances describe a space, but how a topology can arise as the stable common core of richer and mutually incompatible refinements.
