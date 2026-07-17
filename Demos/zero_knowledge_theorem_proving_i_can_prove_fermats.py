@@ -1,145 +1,251 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations of truth-table soundness and additive hiding.
+"""Numerical demonstrations of a three-move homomorphism protocol.
 
-The script uses only the Python standard library. It computes exact acceptance
-counts for a small implication-based formula, evaluates the sharp worst-case
-repetition law, and exhaustively confirms uniform additive masking modulo q.
+The examples use additive cyclic groups Z/nZ and homomorphisms phi(x)=k*x mod n.
+No third-party packages are required.
 """
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
-from fractions import Fraction
 from itertools import product
-from math import ceil, exp, log, log1p
-from typing import Callable, Iterable, Sequence
-
-Valuation = tuple[bool, ...]
-FormulaEvaluator = Callable[[Valuation], bool]
+from random import Random
+from typing import Dict, Iterable, List, Optional, Tuple
 
 
-def implication(left: bool, right: bool) -> bool:
-    """Return the Boolean implication left -> right."""
-    return (not left) or right
+@dataclass(frozen=True, order=True)
+class Transcript:
+    """A commitment, Boolean challenge, and response modulo n."""
+
+    commitment: int
+    challenge: bool
+    response: int
 
 
-def all_valuations(variable_count: int) -> Iterable[Valuation]:
-    """Generate all Boolean valuations in lexicographic order."""
-    if variable_count < 0:
-        raise ValueError("variable_count must be nonnegative")
-    return product((False, True), repeat=variable_count)
+def phi(x: int, multiplier: int, modulus: int) -> int:
+    """Evaluate the homomorphism x -> multiplier*x in Z/modulus Z."""
+    if modulus <= 1:
+        raise ValueError("modulus must be greater than one")
+    return (multiplier * x) % modulus
 
 
-@dataclass(frozen=True)
-class AcceptanceProfile:
-    """Exact acceptance statistics for a propositional formula."""
-
-    variable_count: int
-    accepting_count: int
-    total_count: int
-
-    @property
-    def one_round_probability(self) -> Fraction:
-        return Fraction(self.accepting_count, self.total_count)
-
-    def repeated_probability(self, rounds: int) -> Fraction:
-        if rounds < 0:
-            raise ValueError("rounds must be nonnegative")
-        return self.one_round_probability**rounds
+def challenge_term(challenge: bool, value: int, modulus: int) -> int:
+    """Return value for challenge one and zero for challenge zero."""
+    return value % modulus if challenge else 0
 
 
-def profile_formula(variable_count: int, formula: FormulaEvaluator) -> AcceptanceProfile:
-    """Exhaustively count the valuations accepted by formula."""
-    accepting = sum(1 for valuation in all_valuations(variable_count) if formula(valuation))
-    return AcceptanceProfile(variable_count, accepting, 2**variable_count)
+def target_from_witness(witness: int, multiplier: int, modulus: int) -> int:
+    """Construct the public target phi(witness)."""
+    return phi(witness, multiplier, modulus)
 
 
-def unique_rejection_probability(variable_count: int, rounds: int) -> float:
-    """Return (1 - 2^-m)^k, evaluated stably in floating-point arithmetic."""
-    if variable_count <= 0:
-        raise ValueError("variable_count must be positive")
-    if rounds < 0:
-        raise ValueError("rounds must be nonnegative")
-    rejection_density = 2.0 ** (-variable_count)
-    return exp(rounds * log1p(-rejection_density))
+def real_transcript(
+    witness: int,
+    random_tape: int,
+    challenge: bool,
+    multiplier: int,
+    modulus: int,
+) -> Transcript:
+    """Generate an honest transcript."""
+    commitment = phi(random_tape, multiplier, modulus)
+    response = (
+        random_tape + challenge_term(challenge, witness, modulus)
+    ) % modulus
+    return Transcript(commitment, challenge, response)
 
 
-def rounds_for_target_error(variable_count: int, target_error: float) -> int:
-    """Find the least k for which (1 - 2^-m)^k <= target_error."""
-    if variable_count <= 0:
-        raise ValueError("variable_count must be positive")
-    if not 0.0 < target_error < 1.0:
-        raise ValueError("target_error must lie strictly between zero and one")
-    base_log = log1p(-(2.0 ** (-variable_count)))
-    candidate = max(0, ceil(log(target_error) / base_log))
-    # Correct any floating-point boundary error.
-    while candidate > 0 and unique_rejection_probability(variable_count, candidate - 1) <= target_error:
-        candidate -= 1
-    while unique_rejection_probability(variable_count, candidate) > target_error:
-        candidate += 1
-    return candidate
+def simulated_transcript(
+    target: int,
+    response: int,
+    challenge: bool,
+    multiplier: int,
+    modulus: int,
+) -> Transcript:
+    """Generate a transcript from public data and a freely chosen response."""
+    commitment = (
+        phi(response, multiplier, modulus)
+        - challenge_term(challenge, target, modulus)
+    ) % modulus
+    return Transcript(commitment, challenge, response % modulus)
 
 
-def masking_histogram(modulus: int, secret: int) -> list[int]:
-    """Enumerate the output frequency of secret + mask modulo modulus."""
-    if modulus <= 0:
-        raise ValueError("modulus must be positive")
-    counts = [0] * modulus
-    for mask in range(modulus):
-        counts[(secret + mask) % modulus] += 1
-    return counts
+def accepts(
+    transcript: Transcript,
+    target: int,
+    multiplier: int,
+    modulus: int,
+) -> bool:
+    """Evaluate the verifier equation phi(z)=a+[c]y."""
+    left = phi(transcript.response, multiplier, modulus)
+    right = (
+        transcript.commitment
+        + challenge_term(transcript.challenge, target, modulus)
+    ) % modulus
+    return left == right
 
 
-def verify_perfect_hiding(modulus: int) -> bool:
-    """Exhaustively check that all secrets induce the same uniform histogram."""
-    if modulus <= 0:
-        raise ValueError("modulus must be positive")
-    expected = [1] * modulus
-    return all(masking_histogram(modulus, secret) == expected for secret in range(modulus))
+def extract_witness(
+    false_transcript: Transcript,
+    true_transcript: Transcript,
+    target: int,
+    multiplier: int,
+    modulus: int,
+) -> int:
+    """Extract z_1-z_0 after validating a special-soundness transcript pair."""
+    if false_transcript.challenge or not true_transcript.challenge:
+        raise ValueError("transcripts must have challenges zero and one")
+    if false_transcript.commitment != true_transcript.commitment:
+        raise ValueError("transcripts must share a commitment")
+    if not accepts(false_transcript, target, multiplier, modulus):
+        raise ValueError("challenge-zero transcript is not accepted")
+    if not accepts(true_transcript, target, multiplier, modulus):
+        raise ValueError("challenge-one transcript is not accepted")
+    witness = (true_transcript.response - false_transcript.response) % modulus
+    if phi(witness, multiplier, modulus) != target % modulus:
+        raise AssertionError("extraction identity failed")
+    return witness
 
 
-def print_truth_table_demo() -> None:
-    """Profile a tautology and a formula with one rejecting valuation."""
-    tautology = lambda v: implication(v[0], v[0])
-    disjunction = lambda v: v[0] or v[1] or v[2]
-    tautology_profile = profile_formula(1, tautology)
-    sparse_profile = profile_formula(3, disjunction)
-
-    print("1. Exact truth-table profiles")
-    print(f"   p -> p accepts {tautology_profile.accepting_count}/{tautology_profile.total_count} valuations.")
-    print(f"   x0 OR x1 OR x2 accepts {sparse_profile.accepting_count}/{sparse_profile.total_count} valuations.")
-    probability = sparse_profile.repeated_probability(10)
-    print(f"   Its exact 10-round survival probability is {probability} = {float(probability):.6f}.")
-
-
-def print_amplification_demo() -> None:
-    """Display how the sharp soundness bound scales with m and k."""
-    print("\n2. Sharp repeated-challenge bound for a uniquely falsified formula")
-    print("   variables   rounds   survival probability")
-    for variables, rounds in ((3, 10), (10, 1000), (20, 1000)):
-        survival = unique_rejection_probability(variables, rounds)
-        print(f"   {variables:9d}   {rounds:6d}   {survival:.12f}")
-    variables = 10
-    target = 0.01
-    needed = rounds_for_target_error(variables, target)
-    print(f"   For m={variables}, reaching error at most {target} requires {needed} rounds.")
+def transcript_distribution(
+    *,
+    simulated: bool,
+    witness: int,
+    target: int,
+    challenge: bool,
+    multiplier: int,
+    modulus: int,
+) -> Counter[Transcript]:
+    """Enumerate the exact transcript multiset for real or simulated sampling."""
+    if simulated:
+        return Counter(
+            simulated_transcript(target, z, challenge, multiplier, modulus)
+            for z in range(modulus)
+        )
+    return Counter(
+        real_transcript(witness, r, challenge, multiplier, modulus)
+        for r in range(modulus)
+    )
 
 
-def print_hiding_demo() -> None:
-    """Show exact uniformity for every secret modulo a small modulus."""
-    modulus = 7
-    print(f"\n3. Additive masking modulo {modulus}")
-    for secret in range(modulus):
-        observations: Sequence[int] = tuple((secret + mask) % modulus for mask in range(modulus))
-        print(f"   secret {secret}: observations {observations}; histogram {masking_histogram(modulus, secret)}")
-    print(f"   Perfect-hiding audit passed: {verify_perfect_hiding(modulus)}")
+def find_witness(target: int, multiplier: int, modulus: int) -> Optional[int]:
+    """Find a preimage by exhaustive search, for small educational examples."""
+    return next(
+        (w for w in range(modulus) if phi(w, multiplier, modulus) == target % modulus),
+        None,
+    )
+
+
+def accepted_responses(
+    commitment: int,
+    challenge: bool,
+    target: int,
+    multiplier: int,
+    modulus: int,
+) -> List[int]:
+    """List all accepted responses for a fixed commitment and challenge."""
+    return [
+        z
+        for z in range(modulus)
+        if accepts(Transcript(commitment, challenge, z), target, multiplier, modulus)
+    ]
+
+
+def demonstrate_completeness_and_extraction() -> None:
+    """Show perfect completeness and extract a witness modulo 11."""
+    modulus, multiplier, witness, random_tape = 11, 3, 4, 7
+    target = target_from_witness(witness, multiplier, modulus)
+    t0 = real_transcript(witness, random_tape, False, multiplier, modulus)
+    t1 = real_transcript(witness, random_tape, True, multiplier, modulus)
+    assert accepts(t0, target, multiplier, modulus)
+    assert accepts(t1, target, multiplier, modulus)
+    recovered = extract_witness(t0, t1, target, multiplier, modulus)
+    print("Demo 1 — completeness and extraction in Z/11Z")
+    print(f"  public map: phi(x)={multiplier}x mod {modulus}; target y={target}")
+    print(f"  challenge 0: {t0}")
+    print(f"  challenge 1: {t1}")
+    print(f"  extracted witness: {recovered}\n")
+
+
+def demonstrate_exact_zero_knowledge() -> None:
+    """Enumerate real and simulated multisets and confirm exact equality."""
+    modulus, multiplier, witness = 12, 4, 5
+    target = target_from_witness(witness, multiplier, modulus)
+    print("Demo 2 — exact real/simulated distribution equality in Z/12Z")
+    for challenge in (False, True):
+        real = transcript_distribution(
+            simulated=False,
+            witness=witness,
+            target=target,
+            challenge=challenge,
+            multiplier=multiplier,
+            modulus=modulus,
+        )
+        simulated = transcript_distribution(
+            simulated=True,
+            witness=witness,
+            target=target,
+            challenge=challenge,
+            multiplier=multiplier,
+            modulus=modulus,
+        )
+        assert real == simulated
+        assert all(
+            accepts(t, target, multiplier, modulus) for t in simulated.elements()
+        )
+        print(
+            f"  challenge {int(challenge)}: {sum(real.values())} samples, "
+            f"{len(real)} distinct transcripts, exact multisets equal"
+        )
+    print()
+
+
+def demonstrate_false_statement_exclusivity() -> None:
+    """Show that a target outside the image cannot answer both challenges."""
+    modulus, multiplier, target = 8, 2, 1
+    assert find_witness(target, multiplier, modulus) is None
+    print("Demo 3 — challenge exclusivity for a false statement in Z/8Z")
+    print("  map phi(x)=2x mod 8 has no preimage of target 1")
+    for commitment in range(modulus):
+        answers0 = accepted_responses(
+            commitment, False, target, multiplier, modulus
+        )
+        answers1 = accepted_responses(
+            commitment, True, target, multiplier, modulus
+        )
+        assert not (answers0 and answers1)
+        covered = [c for c, answers in ((0, answers0), (1, answers1)) if answers]
+        print(f"  commitment {commitment}: answerable challenges {covered}")
+    print("  every commitment covers at most one challenge\n")
+
+
+def demonstrate_empirical_honest_runs(seed: int = 20260717) -> None:
+    """Sample honest executions as a supplementary randomized check."""
+    rng = Random(seed)
+    modulus, multiplier, witness = 101, 7, 19
+    target = target_from_witness(witness, multiplier, modulus)
+    trials = 1_000
+    accepted = 0
+    for _ in range(trials):
+        r = rng.randrange(modulus)
+        c = bool(rng.randrange(2))
+        accepted += accepts(
+            real_transcript(witness, r, c, multiplier, modulus),
+            target,
+            multiplier,
+            modulus,
+        )
+    assert accepted == trials
+    print("Supplement — sampled honest executions in Z/101Z")
+    print(f"  accepted {accepted}/{trials} deterministic verifier checks")
 
 
 def main() -> None:
-    print("Random-Valuation Soundness and Perfect Additive Hiding\n")
-    print_truth_table_demo()
-    print_amplification_demo()
-    print_hiding_demo()
+    """Run all numerical demonstrations."""
+    demonstrate_completeness_and_extraction()
+    demonstrate_exact_zero_knowledge()
+    demonstrate_false_statement_exclusivity()
+    demonstrate_empirical_honest_runs()
 
 
 if __name__ == "__main__":

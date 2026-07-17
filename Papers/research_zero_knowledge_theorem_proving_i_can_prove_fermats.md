@@ -1,384 +1,467 @@
-# Random-Valuation Soundness and Perfect Additive Hiding for Propositional Certification
+# Exact Zero Knowledge and Special Soundness for a Three-Move Homomorphism Protocol
 
 **Aristotle**  
-**July 16, 2026**
+**17 July 2026**
 
 ## Abstract
 
-We isolate two finite primitives relevant to private certification of mathematical claims: randomized detection of false propositional formulas and information-theoretic hiding of local values. Formulas in $m$ variables are evaluated at uniformly random Boolean valuations. Every non-tautology has a rejecting valuation, so its accepting set has cardinality at most $2^m-1$. Under $k$ independent challenges, its acceptance probability is therefore at most
-
-$$
-\left(\frac{2^m-1}{2^m}\right)^k.
-$$
-
-This bound is exact for formulas with a unique falsifying valuation and, crucially, is not the commonly suggested bound $2^{-k}$. In parallel, a value $s$ in the finite cyclic group $\mathbb Z/q\mathbb Z$ is hidden as $s+r$, where $r$ is uniform. Translation invariance shows that the resulting distribution is uniform for every $s$; hence any two secrets induce identical verifier views, pointwise and as distributions. These results separate soundness from zero knowledge and identify the obstacle to succinct private theorem certification. Randomly opening raw proof locations cannot yield statement-length-only communication when invalidity may be confined to a vanishing fraction of locations. Efficient amplification requires a robust locally testable encoding, while privacy under multi-location opening requires simulation of the full dependency-closed view. Algorithms, numerical examples, limitations, and research directions are developed explicitly.
+We study a three-move identification protocol for a public homomorphism $\varphi:G\to H$ between additive commutative groups. The public statement is an element $y\in H$, and a witness is a preimage $w\in G$ satisfying $\varphi(w)=y$. An honest prover commits with $\varphi(r)$ for random $r\in G$, receives a Boolean challenge $c$, and responds with $r+[c]w$. We establish perfect completeness, unconditional acceptance of simulated transcripts, exact perfect honest-verifier zero knowledge over finite $G$, and special soundness. The zero-knowledge argument is distributional rather than heuristic: translation by the challenge-dependent witness term gives an explicit bijection between real and simulated random tapes, proving equality of transcript multisets. The soundness argument is extractive: accepted responses to both challenges for one commitment yield the witness $z_1-z_0$. Consequently, when no witness exists, a fixed commitment cannot answer both challenges. We give executable finite cyclic-group algorithms, numerical examples, and a careful account of the boundary between this result and broader claims about zero-knowledge certification of arbitrary mathematical proofs.
 
 ## 1. Introduction
 
-A zero-knowledge protocol seeks to convince a verifier that a statement is true without revealing information beyond that truth. Applied to mathematics, this raises a striking possibility: a prover might certify possession of a valid derivation while keeping its strategic content secret. Such a mechanism could separate trust in a theorem from access to its proof, with potential applications to confidential algorithms, proprietary verification, sealed research contests, and controlled disclosure of security arguments.
+A proof ordinarily persuades by disclosure: the verifier inspects the argument. A zero-knowledge protocol separates persuasion from disclosure. It allows a prover to demonstrate possession of a witness while ensuring that the verifier's view contains no information beyond what can be generated without that witness.
 
-A tempting protocol is easy to describe. Commit to every line of a derivation, let the verifier request a random line, open it, and repeat. Two intuitions then arise: random checks should make cheating exponentially unlikely, and commitments should conceal unopened lines. Neither intuition is sufficient as stated.
+The phrase “contains no information” requires a mathematical definition. It is not enough that the transcript omits the witness, nor that extracting the witness appears difficult. The standard simulation paradigm asks for an algorithm that produces the verifier's view without access to the witness. In the strongest finite setting, the simulated and real distributions agree exactly. Such *perfect* zero knowledge rules out every statistical distinguisher, without any restriction on computational power.
 
-The first issue is quantitative. If an invalid object has only one bad location among $N$ locations, one uniform query catches it with probability merely $1/N$. After $k$ independent tests, the escape probability is $(1-1/N)^k$, not $2^{-k}$. Exponential decay in $k$ does not imply efficiency when the base approaches one with instance size.
+This paper presents an elementary protocol in which completeness, privacy, and knowledge extraction all reduce to transparent group identities. Let $G$ and $H$ be additive commutative groups and let $\varphi:G\to H$ be a homomorphism. The public target is $y\in H$; the prover's witness is a preimage $w\in G$ with $\varphi(w)=y$. The prover masks $w$ with a random group element. A Boolean challenge asks the prover to reveal either the mask or the mask shifted by the witness.
 
-The second issue is conceptual. Soundness and zero knowledge are distinct properties. A test can be sound while exposing sensitive data, and a hiding mechanism can conceal a value without establishing that the hidden object is valid. Moreover, hiding each coordinate separately does not necessarily hide a correlated collection of coordinates opened to verify a local constraint.
+The protocol supports four exact results.
 
-This paper studies a fully finite model in which both points can be made exactly. Propositional formulas are sampled through their truth tables, yielding a sharp geometric soundness law. Local proof values are masked in a finite additive group, yielding perfect hiding through translation invariance. The results are elementary enough to admit transparent proofs, yet strong enough to identify the missing ingredient in the proposed theorem-certification architecture: robust local inconsistency.
+1. **Perfect completeness:** every honest execution with a valid witness is accepted.
+2. **Simulator acceptance:** a simulator can generate an accepted transcript for either challenge without a witness.
+3. **Perfect honest-verifier zero knowledge:** when $G$ is finite and randomness is uniform, the real and simulated transcript distributions are exactly equal.
+4. **Special soundness:** two accepted responses to opposite challenges for the same commitment reveal a witness by subtraction.
 
-The contributions are:
+These properties illuminate the central balance of a sigma protocol. A single transcript reveals no witness information because it can be simulated. Two compatible transcripts demonstrate knowledge because they enable extraction.
 
-1. a witness theorem showing that every failure of tautologicity has a concrete rejecting valuation;
-2. an exact upper bound of $2^m-1$ on accepting valuations of a non-tautology in $m$ variables;
-3. a $k$-round soundness bound of $(1-2^{-m})^k$, with a sharpness example;
-4. an exact simulator for additive masking over $\mathbb Z/q\mathbb Z$;
-5. distributional and pointwise perfect-hiding theorems; and
-6. a separation analysis explaining why these primitives do not by themselves imply succinct zero-knowledge certification of arbitrary mathematical derivations.
+The result should be interpreted precisely. It is an information-theoretic analysis of a homomorphic preimage identification protocol. It does not, by itself, establish a succinct zero-knowledge protocol for arbitrary formal theorems. That broader objective requires encodings, commitments, general zero-knowledge transformations, complexity bounds, and protection against malicious verifiers. We return to these distinctions in the discussion.
 
-## 2. Propositional formulas and truth-table challenges
+## 2. Algebraic setting and definitions
 
-### 2.1 Syntax
+### 2.1 Public statements and witnesses
 
-Fix a natural number $m$. Let the variables be indexed by
+Let $(G,+,0,-)$ and $(H,+,0,-)$ be commutative groups. Let
 
 $$
-\{0,1,\ldots,m-1\}.
+\varphi:G\longrightarrow H
 $$
 
-A **formula in $m$ variables** is generated recursively by three constructors:
-
-1. each indexed variable is a formula;
-2. the constant falsity $\bot$ is a formula; and
-3. if $p$ and $q$ are formulas, then $p\to q$ is a formula.
-
-Falsity and implication form a complete propositional basis. For example, negation may be defined by $\neg p := p\to\bot$, and the other standard connectives can then be derived. Restricting the syntax therefore loses no propositional expressive power.
-
-### 2.2 Valuations and evaluation
-
-A **Boolean valuation** is a function
+be a group homomorphism, so that for all $x,x'\in G$,
 
 $$
-v:\{0,1,\ldots,m-1\}\longrightarrow\{0,1\},
+\varphi(x+x')=\varphi(x)+\varphi(x').
 $$
 
-where $0$ denotes false and $1$ denotes true. Evaluation is recursive:
+It follows that $\varphi(0)=0$ and $\varphi(x-x')=\varphi(x)-\varphi(x')$.
+
+**Definition 2.1 (Public statement).** A public statement is a pair $(\varphi,y)$ consisting of a homomorphism $\varphi:G\to H$ and a target $y\in H$.
+
+**Definition 2.2 (Witness).** An element $w\in G$ is a witness for $(\varphi,y)$ if
 
 $$
-\llbracket x_i\rrbracket_v=v(i),\qquad
-\llbracket\bot\rrbracket_v=0,
+\varphi(w)=y.
+$$
+
+The associated language is the image of $\varphi$: a statement is true precisely when $y\in\operatorname{im}(\varphi)$.
+
+### 2.2 Boolean challenge terms
+
+For a Boolean challenge $c\in\{0,1\}$ and any element $x$ of an additive group, define
+
+$$
+[c]x=\begin{cases}
+0,&c=0,\\
+x,&c=1.
+\end{cases}
+$$
+
+This notation obeys $\varphi([c]x)=[c]\varphi(x)$, since the assertion is immediate in each of the two cases.
+
+### 2.3 Transcripts and acceptance
+
+**Definition 2.3 (Transcript).** A transcript is a triple
+
+$$
+t=(a,c,z)\in H\times\{0,1\}\times G,
+$$
+
+where $a$ is the commitment, $c$ is the challenge, and $z$ is the response.
+
+**Definition 2.4 (Acceptance).** The verifier accepts a transcript $(a,c,z)$ exactly when
+
+$$
+\varphi(z)=a+[c]y.
+$$
+
+The definition is public and deterministic. All randomness belongs to transcript generation.
+
+## 3. The three-move protocol
+
+Given a statement $(\varphi,y)$ and witness $w$, the protocol is:
+
+1. The prover samples $r\in G$ uniformly and sends the commitment
+
+$$
+a=\varphi(r).
+$$
+
+2. The verifier samples $c\in\{0,1\}$ uniformly and sends $c$.
+
+3. The prover sends
+
+$$
+z=r+[c]w.
+$$
+
+4. The verifier accepts if and only if
+
+$$
+\varphi(z)=a+[c]y.
+$$
+
+For fixed $w,r,c$, call
+
+$$
+T_{\mathrm{real}}(w,r,c)
+=\bigl(\varphi(r),c,r+[c]w\bigr)
+$$
+
+the real transcript.
+
+The order of messages matters. The commitment is fixed before the challenge is known. If a prover could choose $a$ after seeing $c$, accepted transcripts would be trivial to construct and would provide no evidence of prior commitment.
+
+## 4. Completeness
+
+**Theorem 4.1 (Perfect Completeness).** Let $(\varphi,y)$ be a public statement and let $w\in G$ satisfy $\varphi(w)=y$. For every $r\in G$ and every $c\in\{0,1\}$, the real transcript $T_{\mathrm{real}}(w,r,c)$ is accepted.
+
+**Proof sketch.** The response is $z=r+[c]w$. By homomorphicity,
+
+$$
+\varphi(z)=\varphi(r)+\varphi([c]w)
+=\varphi(r)+[c]\varphi(w)
+=\varphi(r)+[c]y.
+$$
+
+Since the commitment is $a=\varphi(r)$, this is exactly the acceptance equation $\varphi(z)=a+[c]y$. Equivalently, one may inspect the two cases: challenge $0$ checks $\varphi(r)=\varphi(r)$, while challenge $1$ checks $\varphi(r+w)=\varphi(r)+y$. $\square$
+
+Completeness is perfect because it holds for every random tape and challenge, not merely with high probability.
+
+## 5. Simulation
+
+### 5.1 Backward transcript generation
+
+A simulator must generate the verifier's view without a witness. For a fixed challenge $c$, it chooses the response first and derives a compatible commitment.
+
+**Definition 5.1 (Simulated transcript).** For $z\in G$ and $c\in\{0,1\}$, define
+
+$$
+T_{\mathrm{sim}}(z,c)
+=\bigl(\varphi(z)-[c]y,c,z\bigr).
+$$
+
+This construction uses only public information.
+
+**Theorem 5.2 (Universal Simulator Acceptance).** Every simulated transcript is accepted. More precisely, for every public statement $(\varphi,y)$, every $z\in G$, and either challenge $c$, the transcript $T_{\mathrm{sim}}(z,c)$ satisfies the verifier's acceptance equation.
+
+**Proof sketch.** Its commitment is $a=\varphi(z)-[c]y$. Therefore
+
+$$
+a+[c]y=\varphi(z)-[c]y+[c]y=\varphi(z),
+$$
+
+which is the required equation. No witness-existence assumption is used. $\square$
+
+The fact that a simulator always creates an accepted transcript does not threaten soundness. Simulation chooses the transcript after fixing the challenge. A real prover must commit before learning the challenge.
+
+### 5.2 Reindexing random tapes
+
+Acceptance alone does not establish zero knowledge. We must compare distributions. Let a valid witness $w$ and challenge $c$ be fixed. Define the translation
+
+$$
+\tau_{c,w}:G\longrightarrow G,
+\qquad
+\tau_{c,w}(r)=r+[c]w.
+$$
+
+**Lemma 5.3 (Translation Bijection).** The map $\tau_{c,w}$ is a bijection with inverse
+
+$$
+\tau_{c,w}^{-1}(z)=z-[c]w.
+$$
+
+**Proof sketch.** For all $r,z\in G$,
+
+$$
+(r+[c]w)-[c]w=r
 $$
 
 and
 
 $$
-\llbracket p\to q\rrbracket_v
-=\neg\llbracket p\rrbracket_v\lor\llbracket q\rrbracket_v.
+(z-[c]w)+[c]w=z.
 $$
 
-There are exactly $2^m$ valuations because each of the $m$ variables has two independent choices.
+Hence the two maps are mutual inverses. $\square$
 
-A formula $p$ is a **tautology** if
+This elementary bijection is the measure-preserving change of variables behind perfect zero knowledge.
 
-$$
-\llbracket p\rrbracket_v=1
-$$
-
-for every Boolean valuation $v$. Let
+**Lemma 5.4 (Pointwise Transcript Identity).** If $\varphi(w)=y$, then for every $r\in G$ and $c\in\{0,1\}$,
 
 $$
-A(p)=\{v:\llbracket p\rrbracket_v=1\}
-$$
-
-be its accepting set, and write $a(p)=|A(p)|$.
-
-### 2.3 The randomized verifier
-
-The one-round truth-table verifier samples a valuation uniformly from the $2^m$ possibilities and accepts precisely when the formula evaluates to true. Its acceptance probability is
-
-$$
-\Pr[\text{accept }p]=\frac{a(p)}{2^m}.
-$$
-
-The verifier has perfect completeness: if $p$ is a tautology, every valuation accepts and the probability is $1$. Soundness concerns non-tautologies.
-
-## 3. Soundness from a rejecting valuation
-
-### Lemma 1 (Rejecting-witness lemma)
-
-If a formula $p$ is not a tautology, then there exists a valuation $v_0$ such that
-
-$$
-\llbracket p\rrbracket_{v_0}=0.
-$$
-
-**Proof sketch.** By definition, tautologicity says that every valuation evaluates to true. Negating this universal statement gives a valuation for which evaluation is not true. Since evaluation is Boolean, the remaining value is false. $\square$
-
-This logical witness yields the exact finite counting bound.
-
-### Theorem 2 (Accepting-set bound)
-
-If $p$ is a non-tautology in $m$ variables, then
-
-$$
-a(p)\le 2^m-1.
-$$
-
-**Proof sketch.** Choose a rejecting valuation $v_0$ using Lemma 1. The accepting set $A(p)$ is contained in the set of all valuations with $v_0$ removed. The latter set has cardinality $2^m-1$, proving the claim. $\square$
-
-### Corollary 3 (One-round soundness)
-
-A non-tautology in $m$ variables is accepted by one uniform truth-table challenge with probability at most
-
-$$
-\frac{2^m-1}{2^m}=1-2^{-m}.
-$$
-
-The conclusion follows by dividing the cardinality inequality in Theorem 2 by $2^m$.
-
-### 3.1 Independent repetition
-
-Now choose $k$ valuations independently and accept only if all $k$ evaluations are true. For any fixed $p$, each round succeeds with probability $a(p)/2^m$. Independence gives
-
-$$
-\Pr[\text{all }k\text{ rounds accept }p]
-=\prod_{i=1}^{k}\frac{a(p)}{2^m}
-=\left(\frac{a(p)}{2^m}\right)^k.
-$$
-
-### Theorem 4 (Repeated truth-table soundness)
-
-Let $p$ be a non-tautology in $m$ variables. Under $k$ independent uniform valuation challenges,
-
-$$
-\Pr[\text{all }k\text{ rounds accept }p]
-\le
-\left(\frac{2^m-1}{2^m}\right)^k
+T_{\mathrm{real}}(w,r,c)
 =
-\left(1-2^{-m}\right)^k.
+T_{\mathrm{sim}}\bigl(\tau_{c,w}(r),c\bigr).
 $$
 
-**Proof sketch.** The accepting-set bound gives
+**Proof sketch.** Put $z=r+[c]w$. The challenge and response coordinates are immediately equal. For the commitment coordinate,
 
 $$
-0\le \frac{a(p)}{2^m}\le\frac{2^m-1}{2^m}.
+\begin{aligned}
+\varphi(z)-[c]y
+&=\varphi(r+[c]w)-[c]y\\
+&=\varphi(r)+[c]\varphi(w)-[c]y\\
+&=\varphi(r).
+\end{aligned}
 $$
 
-Taking the product over $k$ identical nonnegative factors preserves the inequality. Independence identifies the left product with the probability of passing all rounds. $\square$
+Thus all three transcript coordinates coincide. $\square$
 
-### Proposition 5 (Sharpness)
+### 5.3 Exact distributional equality
 
-For every positive $m$, there exists a formula in $m$ variables whose $k$-round acceptance probability is exactly
+Assume now that $G$ is finite. Uniform sampling means that every element of $G$ has probability $1/|G|$. A transcript may have multiple random tapes as preimages, so the clean finite statement compares multisets, preserving multiplicity.
 
-$$
-\left(1-2^{-m}\right)^k.
-$$
-
-**Proof sketch.** Consider the disjunction of all $m$ variables, expressed if desired using only implication and falsity. It is false exactly when every variable is false and true on the other $2^m-1$ valuations. Its one-round acceptance probability is therefore $(2^m-1)/2^m$, and independence gives equality after $k$ rounds. $\square$
-
-### 3.2 Amplification cost
-
-For a desired soundness error $\varepsilon$ with $0<\varepsilon<1$, the worst-case guarantee requires
+**Theorem 5.5 (Perfect Honest-Verifier Zero Knowledge).** Let $G$ be finite, let $(\varphi,y)$ be a public statement, and let $w$ be a witness. For either fixed challenge $c$, the multiset
 
 $$
-\left(1-2^{-m}\right)^k\le\varepsilon.
+\left\{\!\left\{
+T_{\mathrm{real}}(w,r,c):r\in G
+\right\}\!\right\}
 $$
 
-Since both logarithms are negative, this is equivalent to
+is exactly equal to the multiset
 
 $$
-k\ge
-\frac{\log\varepsilon}{\log(1-2^{-m})}.
+\left\{\!\left\{
+T_{\mathrm{sim}}(z,c):z\in G
+\right\}\!\right\}.
 $$
 
-Thus the smallest sufficient integer is
+Consequently, when $r$ and $z$ are sampled uniformly, the real and simulated transcript probability mass functions are identical.
+
+**Proof sketch.** By Lemma 5.3, $r\mapsto\tau_{c,w}(r)$ permutes $G$. Reindexing a multiset by a permutation leaves it unchanged. By Lemma 5.4, each real transcript indexed by $r$ equals the simulated transcript indexed by $\tau_{c,w}(r)$. Therefore the transcript multisets agree with exact multiplicities. Dividing each multiplicity by $|G|$ yields equality of probability mass functions. $\square$
+
+**Corollary 5.6 (Zero Distinguishing Advantage).** Under the hypotheses of Theorem 5.5, for every predicate $D$ on transcripts,
 
 $$
-k_{\min}
+\Pr[D(T_{\mathrm{real}})=1]
 =
-\left\lceil
-\frac{\log\varepsilon}{\log(1-2^{-m})}
-\right\rceil.
+\Pr[D(T_{\mathrm{sim}})=1].
 $$
 
-Using $\log(1-x)=-x+O(x^2)$ as $x\to0$ gives
+Thus even an unbounded observer has distinguishing advantage $0$.
+
+**Proof sketch.** Equal probability mass functions assign equal probability to every event, including the set of transcripts on which $D$ returns $1$. $\square$
+
+The qualifier *honest-verifier* is essential. The theorem fixes a challenge and simulates the corresponding view. A malicious verifier may choose challenges as a function of the commitment, maintain auxiliary state, or deviate from the prescribed distribution. Handling such behavior generally requires rewinding arguments, stronger protocol transformations, or additional assumptions.
+
+## 6. Special soundness and extraction
+
+Zero knowledge concerns one transcript. Knowledge extraction concerns a pair of transcripts sharing a commitment but carrying opposite challenges.
+
+**Theorem 6.1 (Special Soundness).** Let $a\in H$ and $z_0,z_1\in G$. Suppose both transcripts $(a,0,z_0)$ and $(a,1,z_1)$ are accepted. Then
 
 $$
-k_{\min}=\Theta\!\left(2^m\log\frac1\varepsilon\right).
+w'=z_1-z_0
 $$
 
-The repetition count is exponential in the number of variables in the worst case. Consequently, this truth-table protocol is a finite soundness demonstration, not a polynomial-communication protocol for general propositional validity.
+is a witness; that is, $\varphi(w')=y$.
 
-## 4. Additive masking and exact simulation
-
-### 4.1 The masking experiment
-
-Fix an integer $q\ge1$ and let
+**Proof sketch.** Acceptance gives
 
 $$
-G=\mathbb Z/q\mathbb Z
+\varphi(z_0)=a
 $$
 
-with addition modulo $q$. A local secret is $s\in G$. Sample a mask $R$ uniformly from $G$ and expose
+and
 
 $$
-C_s=s+R.
+\varphi(z_1)=a+y.
 $$
 
-The random variable $C_s$ is the verifier’s local view. Perfect hiding means that this view has the same distribution for every possible $s$.
-
-### Lemma 6 (Translation bijection)
-
-For every $s\in G$, the map
+Using preservation of subtraction,
 
 $$
-\tau_s:G\longrightarrow G,\qquad \tau_s(r)=s+r,
+\begin{aligned}
+\varphi(z_1-z_0)
+&=\varphi(z_1)-\varphi(z_0)\\
+&=(a+y)-a\\
+&=y.
+\end{aligned}
 $$
 
-is a bijection.
+Hence $z_1-z_0$ is a preimage of $y$. $\square$
 
-**Proof sketch.** Its inverse is translation by $-s$: applying $r\mapsto -s+r$ after $\tau_s$ returns $r$, and conversely. $\square$
+**Corollary 6.2 (Two-Challenge Knowledge).** Suppose there is a commitment $a$ and a response rule $A:\{0,1\}\to G$ such that $(a,c,A(c))$ is accepted for both challenge values. Then the public statement has a witness.
 
-### Theorem 7 (Uniform-mask theorem)
+**Proof sketch.** Apply Theorem 6.1 to $z_0=A(0)$ and $z_1=A(1)$; the extracted witness is $A(1)-A(0)$. $\square$
 
-For every secret $s\in G$, the distribution of $C_s=s+R$ is uniform on $G$.
+**Corollary 6.3 (Challenge Exclusivity Without a Witness).** If no $w\in G$ satisfies $\varphi(w)=y$, then for every commitment $a$ and responses $z_0,z_1$, it is impossible for both $(a,0,z_0)$ and $(a,1,z_1)$ to be accepted.
 
-**Proof sketch.** A bijection maps a uniform distribution on a finite set to the uniform distribution. By Lemma 6, translation by $s$ is a bijection. Equivalently, for each $c\in G$, the equation $s+r=c$ has the unique solution $r=c-s$. Since every mask has probability $1/q$, every observation $c$ has probability $1/q$. $\square$
+**Proof sketch.** If both were accepted, Theorem 6.1 would construct the forbidden witness $z_1-z_0$. $\square$
 
-### Theorem 8 (Perfect hiding)
+**Corollary 6.4 (Single-Round Knowledge Error).** Assume the statement has no witness. Consider any prover that fixes a commitment and its available response behavior before receiving a uniformly random Boolean challenge. It can be accepted for at most one challenge and therefore succeeds with probability at most $1/2$.
 
-For any secrets $s,t\in G$, the random variables $C_s$ and $C_t$ have identical distributions:
+**Proof sketch.** Challenge exclusivity permits acceptance on at most one element of the two-element challenge space. A uniform challenge selects that element with probability at most $1/2$. $\square$
 
-$$
-\mathcal L(C_s)=\mathcal L(C_t).
-$$
+This is an information-theoretic statement about false instances. It does not assert that finding a witness for a true instance is computationally hard; that property depends on the chosen group and homomorphism.
 
-**Proof sketch.** By Theorem 7, both distributions are the uniform distribution on $G$. $\square$
+## 7. Algorithms
 
-### Corollary 9 (Pointwise independence of the secret)
+### 7.1 Honest transcript generation
 
-For all $s,t,c\in G$,
+**Input:** a modulus or finite group implementation, a homomorphism $\varphi$, target $y$, witness $w$, random tape $r$, and challenge $c$.  
+**Output:** $(a,c,z)$.
 
-$$
-\Pr[C_s=c]=\Pr[C_t=c]=\frac1q.
-$$
+Compute $a=\varphi(r)$ and $z=r+[c]w$. In a cyclic group $\mathbb{Z}/n\mathbb{Z}$ with $\varphi(x)=kx\bmod n$, this requires a constant number of modular arithmetic operations. Under the standard bit model, modular addition is $O(\log n)$ and schoolbook modular multiplication is $O((\log n)^2)$.
 
-This pointwise statement is an immediate specialization of equality of distributions. It also provides an explicit simulator: without knowing $s$, sample a uniform element of $G$ and output it. The simulator’s output is distributed exactly like the actual masked view, so the simulation has zero statistical distance.
+### 7.2 Transcript simulation
 
-### 4.2 Scope of the hiding claim
+Given public data and fixed $c$, sample $z$ uniformly and compute $a=\varphi(z)-[c]y$. The algorithm has the same asymptotic arithmetic cost as honest generation and does not access $w$.
 
-The word “commitment” is sometimes used informally for the displayed value $s+r$. The construction here establishes its hiding property exactly, but additive masking alone is not binding. Given a displayed $c$, for every proposed secret $s'$ there is a mask $r'=c-s'$ satisfying $c=s'+r'$. A full cryptographic commitment must add a mechanism preventing the prover from changing the opening later. The finite theorem concerns privacy of the masked local value and should not be interpreted as a complete commitment construction.
+### 7.3 Verification
 
-Nor does marginal hiding automatically imply joint hiding under correlated openings. Suppose a verifier opens several masked values together with relations among their masks. Even if each coordinate is uniform separately, the tuple may reveal an invariant. For example, reusing the same mask in $s_1+r$ and $s_2+r$ reveals their difference. A zero-knowledge protocol must simulate the full joint transcript generated by each dependency-closed query, not merely each coordinate marginal.
+Compute $\varphi(z)$ and $a+[c]y$, reduce to canonical group representatives, and compare. This is deterministic. For multiplication homomorphisms modulo $n$, verification uses one modular multiplication, one modular addition, and one equality test.
 
-## 5. The combined finite guarantee
+### 7.4 Special-soundness extraction
 
-### Theorem 10 (Soundness and local perfect hiding)
-
-Let $p$ be a non-tautology in $m$ variables, let $k$ independent uniform valuation challenges be performed, and let local values lie in $G=\mathbb Z/q\mathbb Z$. Then:
-
-1. the probability that $p$ passes every challenge is at most
+Given accepted $(a,0,z_0)$ and $(a,1,z_1)$ with the same $a$, output
 
 $$
-\left(\frac{2^m-1}{2^m}\right)^k;
+w'=z_1-z_0.
 $$
 
-2. for any two local values $s,t\in G$, their independently and uniformly masked views have identical distributions.
+The extractor should first check equal commitments, opposite challenges, and acceptance of both transcripts. Its algebraic core is one group subtraction. In $\mathbb{Z}/n\mathbb{Z}$, the arithmetic cost is $O(\log n)$.
 
-**Proof sketch.** The first clause is Theorem 4. The second is Theorem 8. Their conjunction packages two independent guarantees without deriving one from the other. $\square$
+### 7.5 Exact finite-distribution comparison
 
-The theorem is deliberately modular. Soundness depends on the density of rejecting valuations and independent sampling. Hiding depends on translation invariance in a finite group. The soundness argument does not use masking, and the masking argument does not use formula validity.
+For a finite group of size $N$, enumerate all $N$ real random tapes and all $N$ simulator responses, tally the resulting transcripts, and compare the two frequency maps. This direct diagnostic requires $O(N)$ transcript generations and $O(N)$ storage in the worst case. It illustrates Theorem 5.5 but is unnecessary for cryptographically large groups, where the bijection proves equality symbolically.
 
-## 6. Algorithms
+## 8. Numerical examples
 
-### 6.1 Exhaustive acceptance profiling
+### 8.1 A true statement modulo $11$
 
-Given a formula in $m$ variables, enumerate the integers from $0$ through $2^m-1$, interpret each integer’s binary digits as a valuation, evaluate the formula, and count accepting rows. The algorithm returns $a(p)$, the exact one-round acceptance probability $a(p)/2^m$, and the exact $k$-round probability $(a(p)/2^m)^k$.
-
-If $n$ is the formula-tree size, one evaluation costs $O(n)$ time. Enumeration costs $O(2^m n)$ time and $O(m+n)$ working space, excluding stored output. This exponential cost is intrinsic to direct truth-table enumeration.
-
-### 6.2 Worst-case repetition planning
-
-Given $m$ and a target error $\varepsilon$, compute the smallest $k$ satisfying $(1-2^{-m})^k\le\varepsilon$. Direct logarithms give the formula above, although a numerically robust implementation can increment or use binary search with exact rational powers. The logarithmic calculation takes constant arithmetic operations, while precision costs depend on the numeric representation.
-
-### 6.3 Empirical masking audit
-
-For each secret $s\in G$, enumerate all masks $r\in G$ and tabulate $s+r\pmod q$. Every output occurs exactly once in every row. This produces an exact frequency table, not merely a Monte Carlo estimate. Its running time is $O(q^2)$ for all secrets and its output occupies $O(q^2)$ space, or $O(q)$ if rows are streamed.
-
-## 7. Numerical examples
-
-Consider the disjunction of $m$ variables, which is false only on the all-false valuation. For $m=3$, it accepts $7$ of $8$ rows. After $k=10$ independent challenges, its survival probability is
+Let
 
 $$
-\left(\frac78\right)^{10}\approx0.2631.
+G=H=\mathbb{Z}/11\mathbb{Z},
+\qquad
+\varphi(x)=3x\pmod{11}.
 $$
 
-For $m=10$, a uniquely falsified formula passes one round with probability $1023/1024\approx0.999023$. After $1000$ rounds, it still survives with probability approximately
+Choose $w=4$. Then $y=3\cdot4\equiv1\pmod{11}$. With random tape $r=7$, the commitment is $a=3\cdot7\equiv10\pmod{11}$.
+
+For $c=0$, the response is $z_0=7$, and verification checks
 
 $$
-\left(\frac{1023}{1024}\right)^{1000}\approx0.3764.
+3z_0\equiv10=a\pmod{11}.
 $$
 
-For $m=20$, after $1000$ rounds the survival probability is approximately $0.999047$. These examples show that “geometric decay” can coexist with extremely weak practical detection.
-
-For masking, take $q=5$ and secret $s=3$. As the mask ranges through $0,1,2,3,4$, the displayed values are
+For $c=1$, the response is $z_1=7+4\equiv0\pmod{11}$, and verification checks
 
 $$
-3,4,0,1,2.
+3z_1\equiv0\equiv10+1=a+y\pmod{11}.
 $$
 
-Each residue appears exactly once. Secret $s=1$ instead produces
+Given both responses, extraction returns
 
 $$
-1,2,3,4,0,
+z_1-z_0\equiv0-7\equiv4\pmod{11},
 $$
 
-again exactly uniform. The order changes, but the distribution does not.
+which is the original witness.
 
-## 8. Why random raw-line opening is insufficient
+For simulation at challenge $1$, choose $z=5$. Then
 
-The finite model diagnoses three separate failures of the naive protocol for arbitrary derivations.
+$$
+a=3z-y\equiv15-1\equiv3\pmod{11}.
+$$
 
-First, **sparse defects defeat efficient sampling**. If a purported derivation of length $N$ differs from a valid one at one location and a round samples one location uniformly, the catch probability is only $1/N$. Achieving constant soundness then needs $\Theta(N)$ rounds, and reducing error to $\varepsilon$ needs $\Theta(N\log(1/\varepsilon))$ rounds.
+The verifier checks $3z\equiv4$ and $a+y\equiv4$ modulo $11$.
 
-Second, **a raw line is not necessarily locally checkable**. Establishing that a line follows from earlier lines may require opening its premises, the premises of those premises, or global side conditions. The relevant query is therefore a dependency-closed neighborhood rather than an isolated symbol.
+### 8.2 A false statement modulo $8$
 
-Third, **opening can disclose strategy**. A randomly selected line may contain a decisive lemma or construction. Commitment hiding protects unopened data; it says nothing about information intentionally revealed when a challenge is answered. Zero knowledge requires a simulator whose transcript has the same distribution using only the permitted public information.
+Let $G=H=\mathbb{Z}/8\mathbb{Z}$ and $\varphi(x)=2x\pmod8$. The image consists of the even residues. Choose target $y=1$, which has no witness.
 
-A robust locally testable encoding addresses the first problem by spreading every invalidity across a fixed positive fraction $\delta$ of local tests. Then $k$ independent rounds have error at most $(1-\delta)^k$, and $O(\log(1/\varepsilon))$ rounds suffice when $\delta$ is constant. A dependency-aware zero-knowledge compiler must address the second and third problems by masking correlated local states and simulating their entire joint view.
+For any fixed commitment $a$, a challenge-$0$ response would require $2z_0\equiv a\pmod8$, while a challenge-$1$ response would require $2z_1\equiv a+1\pmod8$. The left sides are both even, whereas $a$ and $a+1$ have opposite parity. Thus at most one equation can be solvable. This concrete parity obstruction is Corollary 6.3 in action.
 
-## 9. Applications
+Note that the simulator can still generate an accepted transcript after fixing either challenge: choose $z$ and define the appropriate $a$. This does not create a single commitment answerable both ways.
 
-The results apply directly to randomized auditing of finite Boolean specifications. When the full truth table is modest, exhaustive profiling computes exact failure density; when it is large, random testing offers a transparent probabilistic audit whose limitations are explicitly quantified.
+## 9. Applications and interpretation
 
-Additive hiding is useful wherever a local value must be information-theoretically concealed before controlled opening. Its translation argument underlies secret sharing and one-time-pad constructions. In protocol design, the theorem serves as a primitive: fresh uniform masks erase the marginal distribution of individual finite-group values.
+### 9.1 Identification
 
-The conceptual separation is also valuable in privacy-preserving computation. Integrity mechanisms answer whether data or computation are valid; privacy mechanisms answer what observations disclose. Treating either as a consequence of the other invites protocol errors. A secure design states completeness, soundness, hiding, binding, and simulation properties separately.
+The protocol models challenge-response identification. A public key specifies $(\varphi,y)$; the private credential is $w$. The user demonstrates responsiveness to a fresh random challenge without directly transmitting $w$. For practical security, one chooses algebraic settings in which recovering a preimage is computationally difficult and addresses active attacks, composition, and implementation leakage.
 
-For confidential mathematics, the most realistic near-term applications lie in structured families whose global constraints have small local descriptions: bounded-treewidth formulas, bounded-width dynamic programs, circuit computations, and algebraic constraint systems. These settings permit local checking without pretending that an arbitrary raw derivation is locally robust.
+### 9.2 Privacy-preserving credentials
 
-## 10. Discussion and limitations
+The simulator theorem explains why an honest verifier's transcript cannot later serve as unique evidence that the prover participated: the verifier could have generated an identically distributed transcript alone. This deniability-like feature is useful conceptually, though real credential systems require richer statements and adversarial models.
 
-The soundness theorem is exact but weak in the worst case. It assumes direct evaluation at sampled valuations and does not reduce the exponential challenge universe. It proves neither polynomial communication nor efficient verification for arbitrary propositional tautologies.
+### 9.3 Confidential computation and ledgers
 
-The hiding theorem is perfect but local. It assumes a fresh uniform mask in a finite additive group. It does not provide binding, authentication, or secure opening. It does not establish zero knowledge for an interactive protocol whose openings are correlated.
+Homomorphic witness relations are building blocks for proving consistency of hidden values. A participant may need to show that secret data satisfy a public algebraic relation. The present protocol isolates one linear relation; practical systems combine many such constraints and use commitments to bind hidden values across checks.
 
-Most importantly, the two theorems do not imply that every theorem with a short statement has a zero-knowledge proof whose communication is polynomial in statement length. The length of the shortest derivation can be enormous compared with the statement, and generic encodings are measured relative to the object being encoded. A succinctness claim needs a precise complexity model and additional machinery.
+### 9.4 Hidden mathematical proofs
 
-These limitations are productive. They isolate robustness as the resource missing from random raw-line checking and joint simulation as the resource missing from coordinatewise hiding.
+A mathematical proof can be treated abstractly as a witness for an efficiently checkable relation: the public input is a theorem statement, and the witness is a derivation accepted by a proof checker. General zero-knowledge results can then, under appropriate conditions and assumptions, hide the witness while certifying the relation.
 
-## 11. Future work
+However, the current homomorphism protocol cannot be identified directly with “opening a random proof step.” Revealing a randomly selected line may leak content, and checking one local line does not by itself guarantee global validity. A rigorous construction needs a commitment scheme, a local or encoded proof system with quantified soundness, and a zero-knowledge transformation that masks every opened view. Furthermore, communication polynomial only in statement length is a succinctness requirement; it does not follow solely from arithmetization or the existence of probabilistically checkable proofs. The hidden proof may be enormously longer than the statement, and suppressing that dependence requires additional machinery and assumptions.
 
-A first direction is the construction of robust local encodings of arithmetic derivations. The target is an explicit transformation for which every invalid encoding fails a fixed positive fraction of constant-query tests, with encoding length polynomial in derivation length.
+## 10. Discussion
 
-A second direction is simulation under dependency closure. One should characterize when a locally testable relation admits masks and openings whose joint distribution depends only on the tested constraint’s truth value.
+Three equations organize the entire protocol:
 
-A third direction is a communication lower bound for authenticated raw-line protocols. Sparse-defect examples suggest that any such verifier must communicate an amount growing with minimal derivation length for some families of short statements.
+$$
+z=r+[c]w,
+$$
 
-A fourth direction concerns formulas of bounded treewidth. Their tree decompositions turn validity into compatibility of local dynamic-programming states. This may permit polynomial communication and logarithmic dependence on inverse soundness error while finite-group masking conceals local states.
+$$
+a=\varphi(z)-[c]y,
+$$
 
-Finally, local simulators suggest a gluing theory. Transcript distributions defined on overlapping query neighborhoods must agree on intersections and assemble into a consistent global distribution. A precise local-to-global theorem would provide a principled criterion for composing zero-knowledge views.
+and
 
-## 12. Conclusion
+$$
+w'=z_1-z_0.
+$$
 
-The finite theory establishes two exact facts. A non-tautology in $m$ variables survives $k$ independent uniform valuation challenges with probability at most $(1-2^{-m})^k$, and this rate is sharp. A finite-group value hidden by a fresh uniform additive mask has the uniform distribution, independent of the value, so its local view is perfectly simulatable.
+The first produces honest responses, the second produces simulated commitments, and the third extracts knowledge. Their compatibility is not accidental. Translation masks the witness in one view, while subtraction cancels the common mask across two views.
 
-Together these facts clarify rather than complete the program of private theorem certification. Repetition amplifies only the rejection density already present, and privacy requires simulation of everything that is opened. Succinct secret proofs therefore require robust local encodings coupled to dependency-aware hiding. The path from a sealed local value to a sealed mathematical derivation runs through that missing bridge.
+Perfect zero knowledge and special soundness therefore coexist without contradiction. The simulator controls the challenge before constructing its commitment. The extractor receives two accepted transcripts tied to one commitment. These are different informational situations. A single branch can be fabricated from public data; the ability to span both branches forces a witness.
+
+The finite-group assumption enters only in the exact uniform-distribution statement. The pointwise identity and translation bijection hold for arbitrary additive commutative groups. For infinite groups, one would need a specified probability measure and a proof that translation preserves it. Finite uniform sampling avoids measure-theoretic complications and gives literal equality of transcript multisets.
+
+The commutativity assumption provides a simple additive presentation. Closely related protocols exist in noncommutative or multiplicative settings, but equation order must then be tracked carefully. Generalizing the challenge from a bit to a larger finite field can improve the one-round knowledge error and leads toward linear-response sigma protocols.
+
+## 11. Limitations
+
+The theorem package has deliberately narrow scope.
+
+First, zero knowledge is proved for the honest verifier and a fixed challenge. It does not cover arbitrary challenge-selection strategies or auxiliary-input attacks.
+
+Second, the protocol is interactive. Turning it into a noninteractive argument by deriving challenges from hashes requires a separate model and security analysis.
+
+Third, no computational hardness claim is made. If $\varphi$ is easy to invert, the protocol remains complete and perfectly simulatable, but the witness is not cryptographically protected by the public statement.
+
+Fourth, single-round soundness error is only bounded by $1/2$. Independent repetition is expected to reduce this to $2^{-k}$, but a complete theorem must define the repeated transcript, adversarial strategy, and probability space.
+
+Fifth, arbitrary proof certification is not obtained merely by treating proof lines as commitments. General proof relations and succinct communication introduce substantial additional requirements.
+
+## 12. Future work
+
+A first extension is to replace the Boolean challenge by a finite field. Responses of the form $z=r+cw$ permit extraction from distinct challenges by dividing their difference, provided the scalar action and invertibility conditions are explicit. This should yield an exact knowledge error reciprocal to the challenge-space size.
+
+A second direction is probability-theoretic: express transcript equality directly as equality of probability mass functions, define sequential and parallel repetition, and prove that independent repetition reduces false-instance success from $1/2$ to $2^{-k}$.
+
+Third, concrete instantiations in finite cyclic groups can connect the abstract witness relation to discrete logarithms and make computational assumptions explicit.
+
+Fourth, malicious-verifier zero knowledge should be developed. The simulator must handle challenges that depend on commitments and auxiliary state rather than merely reindex a fixed-challenge random tape.
+
+Fifth, commitment schemes should be specified through explicit hiding and binding games. Such infrastructure is necessary before any commit-and-open proof-certificate protocol can claim zero knowledge.
+
+Finally, one can formalize propositional syntax, proof certificates, and polynomial-time verification, then connect this relation to a general zero-knowledge proof for nondeterministic polynomial time. Extending the vision to arithmetic theories requires exact encodings and careful complexity parameters. Achieving communication polynomial only in the statement length demands succinct-proof machinery beyond arithmetization and local checking alone.
+
+## 13. Conclusion
+
+The three-move homomorphism protocol provides a complete miniature of zero-knowledge reasoning. Honest responses always verify. Simulated responses also verify. Over finite uniform randomness, a translation of random tapes pairs every genuine transcript with an identical simulated transcript, yielding perfect honest-verifier zero knowledge. Conversely, two accepted responses to opposite challenges under one commitment expose a witness by subtraction. If no witness exists, no commitment can cover both challenges, giving single-round soundness error at most $1/2$.
+
+The mathematical mechanism is exact and economical: homomorphic addition proves completeness, translation proves privacy, and subtraction proves knowledge. These results provide a rigorous foundation for studying richer challenge spaces, repetition, concrete hard groups, malicious verifiers, commitments, and eventually privacy-preserving certification of general computational and mathematical claims.

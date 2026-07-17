@@ -3499,6 +3499,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. Generalize the Boolean challenge space to a finite field and prove the corresponding special-soundness extractor and exact knowledge error.\n2. Replace multiset equality by equality of probability mass functions and formalize sequential repetition, proving that independent repetition reduces soundness error from `1/2` to `2⁻ᵏ`.\n3. Instantiate the abstract homomorphism protocol with concrete finite cyclic groups and connect the witness relation to discrete logarithms.\n4. Formalize malicious-verifier zero knowledge. The present result is perfect honest-verifier zero knowledge: the challenge is fixed while the random tape is reindexed.\n5. Develop commitments and prove hiding and binding as explicit games rather than assuming that opening one randomly chosen proof line is zero knowledge. In general, revealing a random proof line can leak information, so the proposed commit-and-open argument requires an actual zero-knowledge compiler.\n6. Formalize propositional syntax, proof certificates, and a polynomial-time verifier, then connect them to a zero-knowledge proof for NP. Extending this to PA requires precise encodings and complexity parameters; communication polynomial only in statement length does not follow merely from arithmetization and PCP without further succinct-proof machinery and assumptions.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0206",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "322b88bd",
+    "status": "available",
+    "timestamp": "2026-07-17T08:36:02.794566+00:00",
+    "title": "1. Generalize the Boolean challenge space to a finite field and prove the corres"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "f0c4ce45",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domain_bridges": [],
