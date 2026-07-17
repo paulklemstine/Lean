@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ae9bfe48",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Generalized Spectral Characterization of Cographs\n\nThis cycle established the structural backbone: the class of cographs\n(graphs with no induced `P₄`) is closed under complementat",
-      "quality_score": 0.7,
-      "sorry_count": 5,
-      "theorem_count": 13,
-      "timestamp": "2026-07-14T01:18:02",
-      "title": "Cographs are generalized spectrally closed"
-    },
-    {
       "cycle_id": "3903c2d7",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the Fibonacci Pythagorean triple family\n`a = F n·F(n+3)`, `b = 2·F(n+1)·F(n+2)`, `c = F(n+1)²+F(n+2)² = F(2n+3)`.\n\n## 1. Primitivity dic",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-17T12:07:43",
       "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    },
+    {
+      "cycle_id": "8b90ccda",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThis development formalizes the finite coordinate core of Curtin's *Generalizations of nets and Latin squares* (arXiv:2607.10890v1): column- and row-Latin matrices, orthogonality,",
+      "quality_score": 0.69,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-07-17T13:12:16",
+      "title": "ArXiv paper: Generalizations of nets and Latin squares"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76
     }
   ],
-  "last_updated": "2026-07-17T12:07:43",
+  "last_updated": "2026-07-17T13:12:16",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "dac5bc28",
-        "quality": 0.82,
-        "theorems": 26,
-        "title": "Close Proofs: Reflective Type Theory: Proving Things About Proving Things"
-      },
-      {
         "cycle_id": "e2c082ff",
         "quality": 0.82,
         "theorems": 9,
@@ -3575,6 +3569,12 @@
         "quality": 0.71,
         "theorems": 0,
         "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+      },
+      {
+        "cycle_id": "8b90ccda",
+        "quality": 0.69,
+        "theorems": 25,
+        "title": "ArXiv paper: Generalizations of nets and Latin squares"
       }
     ],
     "Novelty": [
