@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-17T06:13:55.706386+00:00",
+  "last_updated": "2026-07-17T06:29:48.696016+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -23233,6 +23233,36 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-17T06:13:55.646106+00:00",
       "title": "ArXiv paper: Contractions and applications of crystal skeletons: Young quasisymmetric and Stanley sy"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 33,
+      "domain": "Algebra",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "error_message": "Zombie no progress (4.0h)",
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "b2a1a037",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v27",
+      "phase_b_skipped": false,
+      "prompt_version": "v27",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1784253595.5967402,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-17T06:29:48.657579+00:00",
+      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
     }
   ]
 }

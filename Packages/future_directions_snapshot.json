@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "322b88bd",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T15:16:12.438268+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -2575,25 +2575,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b2a1a037",
-    "description": "Investigate the ArXiv paper 'The mean value of the digits of $1/p$' and formalize its key results. Abstract: Let $p\\ge 3$ be a prime and $b\\ge 2$ an integer such that $p$ does not divide $b$. Then $1/p$ has a periodic digit expansion with respect to the basis $b$. The length $l$ of the period is the (multiplicative) order of $b$ mod $p$. If $l$ is even, then the mean value of the digits of a period is just $(b-1)l/2$. The case of an odd length $l$ is more interesting. If $l=(p-1)/2^m$ is odd, the mean value of the digits of a period was given previously. This mean value involves generalized Bernoulli numbers. However, it is not clear how this result can be generalized to an arbitrary odd length $l$. In the present note we settle this case.",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0154",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.13663v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T00:31:39.743542+00:00",
-    "title": "ArXiv paper: The mean value of the digits of $1/p$"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Trees with exactly three main eigenvalues' and formalize its key results. Abstract: An eigenvalue of a graph is called main if its eigenspace is not orthogonal to the all-ones vector. Introduced by Cvetković in the early 1970s and systematically studied by Rowlinson and others, graphs with exactly one or two main eigenvalues are now well understood. However, the classification of graphs with precisely three main eigenvalues remains a challenging open problem in spectral graph theory. This paper provides a complete classification of all trees of diameter 5 with exactly three main eigenvalues. Using equitable partitions, the spectral condition reduces to the unique solvability of linear systems over the rationals, leading to Diophantine equations involving branch lengths and pendant counts. We prove that every such tree is isomorphic either to a symmetric tree $T_r(a)$ or to a member of a parametric family $\\mathcal{T}$ determined by arithmetic divisibility conditions. We also construct an infinite family of such trees with unbounded diameter.",
     "domain_bridges": [],
@@ -3086,13 +3067,33 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Efficient Hamilton covers and linear arboricity of random graphs' and formalize its key results. Abstract: A Hamilton cover of a graph is a collection of Hamilton cycles whose union contains all edges. Since each Hamilton cycle covers two edges at every vertex, every Hamilton cover has size at least $\\lceil Δ(G)/2\\rceil$. We prove that this lower bound is tight for binomial random graphs $G(n,p)$ throughout the widest possible range of edge probabilities: if $ω(n)\\to\\infty$ and \\[ \\frac{\\log n+\\log\\log n+ω(n)}{n} \\le p=p(n) \\le 1-\\frac{ω(n)}{n^{2}}, \\] then $G\\sim G(n,p)$ with high probability has a Hamilton cover of size $\\left\\lceil \\frac{Δ(G)}{2}\\right\\rceil. $ The main new contribution is the sparse regime near the Hamiltonicity threshold, where we prove a conjecture of Draganić, Glock, Munhá Correia and Sudakov. Our proof develops constructive tools for decomposing such graphs into controlled forest systems and extending them, using reserved pseudorandom structure, into Hamilton cycles. We also prove the corresponding hitting-time result for the random graph process, answering a questi",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0183",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.14881v1",
+    "status": "available",
+    "timestamp": "2026-07-17T06:29:52.184186+00:00",
+    "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Recognition of algebraic matroids is undecidable' and formalize its key results. Abstract: We prove that the recognition problem for algebraic matroids is undecidable. Explicitly, this means that there is no algorithm that takes as input a finite set $S$ and a function $r\\colon\\mathcal{P}(S) \\to \\mathbb{Z}_{\\ge 0}$ (where $\\mathcal{P}(S)$ is the power set) and decides whether there exists a pair of fields $F \\subset K$, and a function $f\\colon S \\to K$, such that for all $A \\subseteq S$: $\\mathrm{tr.deg}_{K/F}(f(A)) = r(A)$. This problem is known to be decidable if the characteristic of the fields involved is constrained to be zero. We prove that it is undecidable if the characteristic is either left unspecified (in which case a realization over any characteristic is accepted) or fixed to be a prime $p$. The proof relies on Hrushovski--Zilber's Group Configuration Theorem and on the work of Evans and Hrushovski on \"Projective Planes in Algebraically Closed Fields\". We relate two different such projective planes, and eventually construct a reduction from the solvability of Di",
     "domain_bridges": [],
     "domains": [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -3112,7 +3113,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -3121,6 +3122,25 @@
     "status": "available",
     "timestamp": "2026-07-17T06:14:02.691626+00:00",
     "title": "ArXiv paper: Second-order rigidity of coned polytope frameworks and the stress-flex conjecture from a vector-valued Schläfli formula"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Shifted S-templates and improved lower bounds for Schur numbers' and formalize its key results. Abstract: We present an extension of the template-based approach for Schur numbers developed by Rowley. This new form of template construction, which we call shifted S-templates, was discovered during a conversation with ChatGPT 5.5 Pro, then refined, verified, and extended to multiple shifted S-templates. These new templates generalize the first ones by giving more flexibility in the coloring. Using this added flexibility with the new way to color the special label cells of the template, we exhibit a template which yields the recurrence $S(k+2) \\geq 10S(k)+2$, improving on the classical Abbott-Hanson recurrence $S(k+2) \\geq 9S(k)+4$ for the same step. Combined with the known bounds $S(6) \\geq 536$ and $S(11) \\geq 203\\,828$, this implies $S(8) \\geq 5\\,362$ and $S(13) \\geq 2\\,038\\,282$, improving the previously listed lower bounds $5\\,286$ and $2\\,011\\,290$.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0186",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15034v1",
+    "status": "available",
+    "timestamp": "2026-07-17T06:29:55.509259+00:00",
+    "title": "ArXiv paper: Shifted S-templates and improved lower bounds for Schur numbers"
   },
   {
     "ambition_level": "extension",
