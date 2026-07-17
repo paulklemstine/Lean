@@ -1,6 +1,6 @@
 import Mathlib
-import Shared.CarmichaelHelper
-import Shared.CarmichaelProof
+import Catalog.Shared.CarmichaelHelper
+import Catalog.Shared.CarmichaelProof
 
 /-! # Carmichael's theorem for Fibonacci numbers: assembling the two cases
 
