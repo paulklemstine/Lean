@@ -4,6 +4,21 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0183",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-17T06:13:24.812455+00:00",
+    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -2039,21 +2054,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}"
   },
   {
-    "consumed_by_exp_id": "16941ff7",
-    "description": "Investigate the ArXiv paper 'Spectral fourth moments of Hecke--Maa\u00df cusp forms' and formalize its key results. Abstract: In this note, we establish essentially optimal bounds for certain spectral moments of automorphic forms for $\\mathrm{GL}(2)$. More precisely, we consider the family of Hecke--Maa\u00df cusp forms with spectral parameter in a dyadic interval and study the fourth moment of these forms evaluated at a Heegner point. We additionally present applications of our main result to the shifted convolution problem involving the sum of two squares function $r(n)$ as well as to pointwise Diophantine exponents.",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_0161",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13518v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T00:13:33.272114+00:00",
-    "title": "ArXiv paper: Spectral fourth moments of Hecke--Maa\u00df cusp forms"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Generalization of Ramanujan's Continued Fractions for Even Order' and formalize its key results. Abstract: In this paper, we derive three generalized continued fractions of any even order $k$ with the aid of a general continued fraction identity of Ramanujan and we establish general theta function identities for these continued fractions. As an application of continued fraction of order seventy-six, we obtain partition theoretic identities and some vanishing coefficient results.",
     "domains": [
@@ -2358,6 +2358,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-16T19:02:37.971343+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Separated Filtrations and Chain Geometry\n\n## 1. Integer-valued polynomial filtration\n\nLet \\(\\operatorname{Int}(\\mathbb Z)\\) be the ring of rational polynomials taking integer values on every integer, and let\n\\[\nD_n=\\{f: f(\\mathbb Z)\\subseteq 2^n\\mathbb Z\\}.\n\\]\nConjecture: \\(D_{n+1}\\subsetneq D_n\\) for every \\(n\\), and \\(\\bigcap_nD_n=0\\). In addition, determine the associated graded ring \\(\\bigoplus_nD_n/D_{n+1}\\) explicitly in terms of binomial polynomials.\n\nThe key insight is that the genuine phenomenon is a separated descending filtration, whose successive quotients may retain arithmetic information lost by the intersection alone.\n\nWhy now? The pointwise function-ring model proves separation and strictness cleanly, isolating the remaining issue as the arithmetic structure imposed by polynomiality.\n\n## 2. Ordinal staircase spectra\n\nFor a ring \\(R\\), let its staircase spectrum consist of the ordinals that occur as order types of strictly ascending well-ordered chains of ideals. Conjecture: for an infinite cardinal \\(\\kappa\\), the spectrum of the polynomial ring \\(k[x_i\\mid i<\\kappa]\\) below \\(\\kappa^+\\) is controlled by the cofinalities of subsets of \\(\\kappa\\), while genuinely longer chains\u2014if they occur\u2014must involve ideals not generated by coordinate variables. Determine the exact spectrum and its dependence on \\(|k|\\).\n\nThe key insight is that the countable variable chain proves only the first infinite rung of a much richer ordinal invariant; coordinate-generated chains reduce one part of the problem to set-theoretic cofinality, leaving non-coordinate ideals as the decisive algebraic obstruction.\n\nWhy now? The equivalence between countable strict ascent and failure of Noetherianity is settled, and the explicit variable-ideal construction supplies a canonical lower bound from which transfinite refinements can be tested.\n\n## 3. Filtration depth versus Krull dimension\n\nConjecture: for a Noetherian local domain \\((R,\\mathfrak m)\\), the asymptotic growth degree of the finite lengths \\(\\ell(R/\\mathfrak m^n)\\), rather than the ordinal length of arbitrary ideal chains, recovers \\(\\dim R\\).\n\nThe key insight is that Krull dimension is naturally connected to the quantitative geometry of a descending adic filtration, not to an impossible infinite strict ascending chain in a Noetherian ring.\n\nWhy now? Correcting the containment direction points directly toward Hilbert\u2013Samuel growth as the dimension-sensitive replacement for the proposed height.\n\n## 4. Valuation filtrations on algebraic integers\n\nConjecture: for the ring of all algebraic integers, fixing a rational prime \\(p\\) and intersecting valuation thresholds over primes above \\(p\\) yields a separated descending filtration whose associated graded pieces detect ramification indices across finite extensions.\n\nThe key insight is that the ambient ring is assembled from rings of integers of number fields, so filtration data should be studied through compatible valuations rather than through a single global Noetherian invariant.\n\nWhy now? The corrected filtration viewpoint supplies a precise, falsifiable object while avoiding an unsupported numerical \u201cEscher height.\u201d\n\n## 5. Topological characterization of separation\n\nConjecture: for broad classes of domains and a proper finitely generated ideal \\(I\\), the equality \\(\\bigcap_n I^n=0\\) is equivalent to Hausdorffness of the \\(I\\)-adic topology, and failures of separation admit a valuation-theoretic classification.\n\nThe key insight is that a vanishing infinite intersection is fundamentally a topological separation statement.\n\nWhy now? The powers-of-two example already realizes this equivalence concretely, opening a direct bridge from ideal theory to linear topology and completion.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0184",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "16941ff7",
+    "status": "available",
+    "timestamp": "2026-07-17T06:13:42.755034+00:00",
+    "title": "Let \\(\\operatorname{Int}(\\mathbb Z)\\) be the ring of rational polynomials taking"
   },
   {
     "consumed_by_exp_id": "",

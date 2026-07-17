@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ca1c3afc",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: factorial coordinates versus residue coordinates\n\n## Completed foundations and result of this cycle\n\nThe previously incomplete bridge from the general mixed-radix system to the\nfa",
-      "quality_score": 0.87,
-      "sorry_count": 3,
-      "theorem_count": 6,
-      "timestamp": "2026-07-15T04:08:41",
-      "title": "For every natural number `k`, the factorial-code space of length `k` should admi"
-    },
-    {
       "cycle_id": "0ee2f71b",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Connect the algebraic constant to the actual cutting process.** The present result proves that the candidate cake ratio `1 + ρ` is exactly the square of the plastic number an",
@@ -499,19 +489,19 @@
       "theorem_count": 707,
       "timestamp": "2026-07-17T05:57:49",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "16941ff7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Separated Filtrations and Chain Geometry\n\n## 1. Integer-valued polynomial filtration\n\nLet \\(\\operatorname{Int}(\\mathbb Z)\\) be the ring of rational polynomials taking integer valu",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T06:13:47",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c81e5afa",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Closing the Factorial ↔ Mixed-Radix Bridge\n\n## What was closed\n\nThe file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.lean`\npreviously contained three `sorry` plac",
-      "quality_score": 0.72,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-07-13T20:14:39",
-      "title": "Close Proofs: The file `Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge.l"
-    },
     {
       "cycle_id": "ce15dd8e",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 707,
       "timestamp": "2026-07-17T05:57:49",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "16941ff7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Separated Filtrations and Chain Geometry\n\n## 1. Integer-valued polynomial filtration\n\nLet \\(\\operatorname{Int}(\\mathbb Z)\\) be the ring of rational polynomials taking integer valu",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-17T06:13:47",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-17T05:57:49",
+  "last_updated": "2026-07-17T06:13:47",
   "open_questions": [
     {
       "context": "-    sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "e2f5c991",
-        "quality": 0.72,
-        "theorems": 15,
-        "title": "ArXiv paper: Claw-free cubic graphs and zero forcing"
-      },
-      {
         "cycle_id": "d8f04178",
         "quality": 0.52,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 20,
         "title": "ArXiv paper: The chromatic number of 3-stable Kneser graphs"
+      },
+      {
+        "cycle_id": "16941ff7",
+        "quality": 0.75,
+        "theorems": 0,
+        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
       }
     ],
     "NumberTheory": [
