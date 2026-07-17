@@ -1,94 +1,159 @@
-# The Silent Music of Numbers
+# The Sound of Pi: What Digit Melodies Really Reveal
 
-## How Mathematicians Turned Pi into a Melody — and What Its Song Reveals
+## A melody hidden in a number
 
-*Every number has a voice. The question is whether any of them can carry a tune.*
+Write down the decimal digits of a famous constant, assign each digit a pitch, and press play. The idea is irresistible. The digits of $\pi$ begin $3,1,4,1,5,9,2,6,5,\ldots$; if each digit is mapped to a note, those symbols become a melody. The same recipe turns $e$, $\sqrt 2$, a telephone number, or yesterday’s temperature record into sound.
 
----
+Such experiments occupy a fertile borderland between mathematics, music, and data art. They make abstract constants tangible. They also tempt us to hear more than the calculation establishes. Is a repeated gesture in the melody evidence that $\pi$ “prefers” an octave? Does a peak in a correlation graph reveal a hidden arithmetic harmony? Could continued fractions determine consonance?
 
-Take the number pi — 3.14159265358979... — and imagine each digit as a note on a piano. The digit 0 plays the lowest A on the keyboard. The digit 1 plays the next key up, A-sharp. The digit 2 plays B. And so on, climbing the chromatic scale one semitone at a time: 3 becomes middle C, 4 becomes C-sharp, 5 becomes D.
+There is a clean mathematical answer to the first layer of these questions. It applies not only to decimal digits, and not only to famous constants, but to every finite sequence of real numbers. The answer is an exact energy law: a melody correlates strongly with a shifted copy of itself precisely when changing from each sample to the corresponding shifted sample costs little squared energy.
 
-Now play the digits of pi in sequence. What do you hear?
+That statement is both simpler and more powerful than a story about a special constant. It tells us exactly what a correlation peak means—and exactly what it does not mean.
 
-The answer is: noise. Beautiful, structured, infinite noise — the kind of noise that has captivated mathematicians for centuries precisely because of what it *doesn't* contain.
+## Turning symbols into a signal
 
-## A Melody Without a Tune
+Suppose a melody has $n$ samples, written
 
-The idea of turning mathematical constants into music is irresistible. Pi's digits seem to dance between values, sometimes clustering, sometimes leaping. Surely there must be hidden patterns — perhaps the digits of pi favor certain intervals, like octaves or perfect fifths, more than others. Perhaps the "melody" of pi resonates at some deep frequency that reflects its transcendental nature.
+$$
+s(0),s(1),\ldots,s(n-1).
+$$
 
-This was our starting hypothesis. We defined what we called the *consonance spectrum* of a number: a measurement of how strongly its digit sequence correlates with shifted copies of itself at each of the 13 fundamental musical intervals, from unison (no shift) through the octave (a shift of 12 semitones). If pi's digits secretly favored octave-related pairs, the consonance spectrum would spike at lag 12. If the digits preferred perfect fifths, we'd see a peak at lag 7.
+Each sample is a real number. It might be a decimal digit, a pitch number, a frequency, or a centered value obtained by subtracting the sample mean. To avoid awkward boundary conventions, imagine the samples arranged on a circle. After $n-1$ comes $0$ again.
 
-We computed the consonance spectrum for pi, Euler's number *e*, and the square root of 2, using tens of thousands of digits for each.
+For a temporal lag $k$, define the cyclic shift by
 
-The result was unambiguous: **nothing**. No spikes. No preferred intervals. No hidden harmonies. The autocorrelation at every musical lag was indistinguishable from zero — well within the bounds expected from pure randomness.
+$$
+(T_k s)(i)=s(i+k \bmod n).
+$$
 
-## The Theorem That Explains the Silence
+The unnormalized cyclic autocorrelation at lag $k$ is
 
-At first, this seems like a disappointing result. But it is actually one of the most profound things about these numbers.
+$$
+C_s(k)=\sum_{i=0}^{n-1}s(i)s(i+k \bmod n).
+$$
 
-We proved a mathematical theorem — a rigorous, airtight logical argument — that explains *why* the silence is inevitable. The theorem has two parts.
+This measures alignment between the signal and its shifted copy. Large positive products push the sum upward; opposite signs push it downward. The total signal energy is
 
-**Part One: The Cauchy-Schwarz Bound.** For any sequence of digits, the autocorrelation at any lag can never exceed the autocorrelation at lag zero (the "energy" of the sequence). This is a consequence of the Cauchy-Schwarz inequality, one of the most powerful tools in all of mathematics. It says that no matter how cleverly you arrange digits, correlations can never explode — they are always bounded by the total energy of the signal.
+$$
+E(s)=\sum_{i=0}^{n-1}s(i)^2.
+$$
 
-Mathematically: |R(k)|² ≤ R(0)², where R(k) measures the correlation at lag k. This elegant bound constrains the entire consonance spectrum with a single inequality.
+Finally, define the interval energy, or squared shift cost,
 
-**Part Two: Periodicity Transfer.** We proved that if a digit sequence repeats with some period — say, every 7 digits are the same — then its autocorrelation function *also* repeats with that same period. The autocorrelation inherits the periodicity of the sequence.
+$$
+D_s(k)=\sum_{i=0}^{n-1}\bigl(s(i)-s(i+k \bmod n)\bigr)^2.
+$$
 
-The contrapositive is the key insight: **if the autocorrelation is not periodic, then neither is the digit sequence.** This gives us a spectral test for irrationality. Since irrational numbers have non-repeating digit expansions, and since the autocorrelation reflects the periodicity structure of the sequence, the autocorrelation of an irrational number's digits must itself be non-periodic.
+This last quantity asks a direct question: how much does the melody change when moved by $k$ time steps? It is always nonnegative, and it vanishes only when every sample agrees with its shifted partner.
 
-But non-periodic is not the same as structured. For numbers like pi, which are believed to be *normal* — meaning their digits are as uniformly distributed as possible — the autocorrelation doesn't just fail to repeat; it converges to zero. The stronger the equidistribution of digits, the weaker the correlations at every lag.
+## The central identity
 
-## What Randomness Sounds Like
+The key theorem is the Autocorrelation–Interval Energy Identity:
 
-This is the deep paradox at the heart of our investigation. The digits of pi are completely determined — there is no randomness whatsoever in the sequence 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, ... Every digit is fixed by the geometry of a circle, as inevitable as the laws of physics. Yet these digits *behave* as if they were random. They pass every statistical test for randomness that we can devise. Their autocorrelation vanishes. Their frequency distribution is flat.
+**For every finite real signal $s$ and every cyclic lag $k$,**
 
-The melody of pi sounds like static because pi's digits contain *maximum information*. A repeating melody — da-da-da-DUM, da-da-da-DUM — carries very little information precisely because you can predict what comes next. Pi's "melody" carries maximum information precisely because you *cannot* predict the next note.
+$$
+2C_s(k)=2E(s)-D_s(k),
+$$
 
-In information theory, the most information-dense signal is indistinguishable from noise. The silence of pi's consonance spectrum is not an absence of structure — it is the presence of *every* structure simultaneously, in perfect balance, canceling each other out.
+**or equivalently,**
 
-## The Octave Connection
+$$
+C_s(k)=E(s)-\frac12D_s(k).
+$$
 
-There is one genuinely beautiful mathematical result hiding in this framework. We proved that the chromatic frequency mapping — the rule that converts digits to musical frequencies — preserves octave structure perfectly:
+The proof is a one-line idea with a global twist. Expand each square:
 
-> *Shifting any digit by 12 exactly doubles its frequency.*
+$$
+\bigl(s(i)-s(i+k)\bigr)^2=s(i)^2+s(i+k)^2-2s(i)s(i+k).
+$$
 
-This is the defining property of the equal-tempered chromatic scale, the tuning system that underlies virtually all Western music. When you play an A at 220 Hz and then play the A an octave higher at 440 Hz, the frequency has exactly doubled. Our digit-to-frequency mapping inherits this octave structure: digit 0 maps to 220 Hz, digit 12 would map to 440 Hz, and the ratio is always exactly 2:1.
+Now sum over all $i$. Because cyclic shifting merely permutes the sample positions,
 
-This means that the *musical framework* we imposed on the digits is mathematically coherent — it's the digits themselves that refuse to cooperate.
+$$
+\sum_i s(i+k)^2=\sum_i s(i)^2=E(s).
+$$
 
-## The Window Decomposition
+The remaining cross term is $2C_s(k)$, yielding the identity.
 
-One of our more technical results has practical implications for how we listen to the music of numbers. We proved that the autocorrelation over a large window can be decomposed additively into autocorrelations over smaller windows:
+This equation changes how a correlation plot should be read. A high value of $C_s(k)$ is not an independent, mysterious sign of affinity. It is exactly the other face of a low squared change $D_s(k)$. A peak says that the signal approximately repeats after $k$ time steps, measured in Euclidean squared distance.
 
-> R over [0, N+M) = R over [0, N) + R over [N, N+M)
+## The sharp ceiling and perfect repetition
 
-This *streaming decomposition* means you can compute the consonance spectrum of pi incrementally, processing one chunk of digits at a time, without ever needing to hold the entire sequence in memory. For a number with infinitely many digits, this is not merely convenient — it is essential.
+Since $D_s(k)\ge 0$, the identity immediately gives the Sharp Autocorrelation Bound:
 
-The decomposition also reveals something subtle: the autocorrelation of the first million digits of pi is essentially the sum of a million tiny, independent-looking contributions. Each chunk adds a small, random-seeming perturbation. The law of large numbers then guarantees that these perturbations cancel out, driving the overall autocorrelation to zero.
+**For every finite real signal and every cyclic lag,**
 
-## The Deeper Question
+$$
+C_s(k)\le E(s).
+$$
 
-Our falsifiable conjecture — which we state precisely and leave open for future investigation — is that for any normal number, the normalized autocorrelation at every nonzero lag converges to zero as we use more digits. This would mean that normality (equidistribution of digits) implies the complete absence of musical structure, in a precise, quantitative sense.
+At lag $0$, the signal is compared with itself, so $C_s(0)=E(s)$. No other lag can exceed that zero-lag value.
 
-This conjecture connects three seemingly unrelated domains:
-- **Number theory** (normality of decimal expansions)
-- **Signal processing** (autocorrelation and spectral analysis)
-- **Music theory** (consonance, intervals, and tonal structure)
+More importantly, equality has an exact meaning. The Shift-Invariance Criterion states:
 
-If the conjecture is true — and all computational evidence supports it — then the "melody" of any normal number is acoustically indistinguishable from white noise. The digits of pi, despite encoding the deepest truths of circular geometry, produce a song with no discernible tune.
+**For a lag $k$, the equality $C_s(k)=E(s)$ holds if and only if**
 
-## The Beautiful Impossibility
+$$
+s(i+k \bmod n)=s(i)
+$$
 
-Perhaps the most striking finding is what the mathematics *rules out*. Our Cauchy-Schwarz bound and periodicity transfer theorem together constrain the space of possible musical structures in digit sequences. They tell us that:
+**for every index $i$.**
 
-1. No digit sequence can have a consonance spectrum that grows without bound.
-2. Any periodic digit sequence (hence any rational number) has a periodic consonance spectrum.
-3. Any number with a completely flat consonance spectrum (like a normal number) has digits that are musically unstructured.
+Indeed, equality occurs exactly when $D_s(k)=0$. A sum of squares can vanish only if every squared difference vanishes. Thus a maximal nonzero-lag peak means genuine cyclic periodicity at that lag. A nearly maximal peak means approximate repetition in squared distance, though turning “nearly” into a statistical claim requires a separately chosen null model.
 
-The boundary between music and noise, it turns out, is the boundary between the rational and the irrational — between numbers whose stories repeat and numbers whose stories are always new.
+Consider the cyclic signal $s=(1,2,1,2)$. Shifting by $2$ returns the same signal, so $C_s(2)=E(s)$. In contrast, for $s=(1,2,3,4)$, no nonzero shift fixes every entry, so every nonzero-lag correlation lies strictly below the energy.
 
-Pi doesn't sing. But its silence is the most eloquent statement a number can make.
+## A lag is not an octave
 
----
+The word “lag” can hide a category error. A temporal lag and a pitch interval are different coordinates.
 
-*The research described in this article was conducted using rigorous mathematical proof, computational analysis of digit sequences, and spectral methods from signal processing. The consonance spectrum is a novel analytical tool introduced in this work.*
+A temporal lag of $12$ compares the sample at position $i$ with the sample $12$ time steps later. An octave compares two pitches separated by $12$ semitones. The first concerns *when* notes occur; the second concerns *how high* they are. Calling lag $12$ an “octave” does not make it one.
+
+This matters especially when decimal digits $0$ through $9$ are mapped to consecutive semitone numbers. Two such values differ by at most $9$ semitones, so no pair is separated by a full $12$-semitone octave at all. A temporal correlation peak at lag $12$ could still occur, but it would describe twelve-step repetition, not octave incidence.
+
+The distinction suggests two separate analyses. Temporal autocorrelation studies $s(i)$ against $s(i+k)$. A pitch-interval histogram counts pairs according to the value difference $|s(i)-s(j)|$. Neither statistic can substitute for the other.
+
+## Irrationality does less than the ear imagines
+
+The decimal expansion of an irrational number is not eventually periodic. That familiar theorem is global and infinite: no finite block can repeat forever from some point onward. It says nothing about the sign of a finite-prefix autocorrelation, nothing about which lag has the largest accidental peak, and nothing about statistical significance.
+
+Any finite word can occur as the beginning of both rational and irrational numbers. Consequently, a finite digit melody cannot inherit a special autocorrelation law merely from the irrationality of the number that continues beyond it. Claims about $\pi$, $e$, or $\sqrt2$ require an explicitly selected digit prefix, an explicit encoding, centering and normalization conventions, and a null distribution fixed before inspecting the results.
+
+This does not drain digit music of interest. It makes the experiment scientifically sharper. The melody is real; the finite correlation is real; the energy identity is exact. What must be resisted is the leap from a finite pattern to an unsupported claim about transcendence, normality, or continued fractions.
+
+## Hearing the spectrum
+
+There is another way to describe a cyclic melody: decompose it into Fourier modes. A discrete Fourier transform records how strongly the signal contains each cyclic frequency. Under the standard assumptions that make Fourier inversion valid—namely, a field containing a primitive $n$th root of unity and in which $n$ is nonzero—the complete set of Fourier coefficients uniquely determines every sample of the signal.
+
+This yields the Fourier Determination Theorem for Autocorrelation:
+
+**If two length-$n$ signals have identical discrete Fourier transforms under an invertible Fourier system, then the signals are identical and therefore have identical cyclic autocorrelations at every lag.**
+
+The logic is direct. Fourier inversion reconstructs each signal from its coefficients. Equal coefficients give equal reconstructed signals. Substituting equal samples into the autocorrelation sum gives equal correlation functions.
+
+The spectral viewpoint explains why repetition leaves a frequency signature. A shift multiplies each Fourier mode by a phase. Modes whose phases change little under a chosen shift contribute to approximate stability at that lag. The time-domain quantity $D_s(k)$ and the frequency-domain concentration are complementary descriptions of the same geometry.
+
+## A better experiment with famous constants
+
+A responsible digit-melody study can still be beautiful. Choose in advance a prefix length $n$, perhaps $10^3$, $10^4$, or $10^5$. Map digits to numerical pitch labels, and center them by subtracting their mean. State whether the sequence is treated cyclically or with endpoints discarded. Compute $C_s(k)$ and $D_s(k)$ for the preregistered lags. The identity
+
+$$
+C_s(k)=E(s)-\frac12D_s(k)
+$$
+
+then serves as both interpretation and numerical consistency check.
+
+To discuss surprise, compare the observed values with an exact permutation distribution or another clearly justified null model. If many constants and many lags are tested, correct for multiple comparisons. To discuss musical intervals, compute a separate histogram of pitch differences. To discuss tonal centers, inspect digit frequencies or pitch-class frequencies rather than temporal lag alone.
+
+This framework does not promise that $\pi$ favors octaves, that $e$ favors fifths, or that $\sqrt2$ favors minor thirds. It provides something more durable: a way to distinguish an evocative metaphor from a mathematical conclusion.
+
+## The honest music of numbers
+
+Numbers can be sonified in endlessly creative ways. Different encodings produce different melodies, and that freedom is part of the art. Mathematics enters when we ask what survives the choice of story.
+
+For every finite cyclic melody, autocorrelation and interval energy are locked together. Correlation never rises above total energy. It reaches that ceiling exactly at shifts that leave the entire melody unchanged. Fourier data, when invertible, determines the melody and all of its lag statistics. None of these facts depends on whether the samples came from $\pi$, rain measurements, a drum loop, or random digits.
+
+So what does the sound of $\pi$ reveal? First, it reveals the encoding we chose. Then it reveals the finite patterns present in the chosen prefix. With careful statistics, it may reveal whether those patterns are unusual under a stated model. What it does not reveal automatically is a secret preference of a transcendental number for an octave.
+
+That restraint is not an enemy of wonder. It is what lets wonder mature into inquiry. The music remains—but now we know how to listen.

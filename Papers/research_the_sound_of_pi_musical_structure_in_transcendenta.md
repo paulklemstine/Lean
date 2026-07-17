@@ -1,304 +1,433 @@
-# The Sound of Pi: Musical Structure in Transcendental Constants
+# Cyclic Autocorrelation, Interval Energy, and Fourier Reconstruction in Finite Digit Melodies
 
 ## Abstract
 
-We introduce the *consonance spectrum*, a novel analytical tool that measures the autocorrelation of a real number's digit sequence at each of the 13 fundamental musical intervals (unison through octave) under the equal-tempered chromatic mapping. We develop a rigorous mathematical framework for studying musical structure in digit sequences, proving three principal results: (1) the Cauchy-Schwarz bound for digit autocorrelation, constraining the magnitude of all musical correlations; (2) the periodicity transfer theorem, showing that periodic digit sequences yield periodic autocorrelation functions; and (3) the spectral irrationality test, a contrapositive result providing a necessary condition for aperiodic digit expansions. We compute the consonance spectrum for π, e, and √2 using high-precision digit expansions, finding no statistically significant autocorrelation at any musical interval — consistent with the conjecture that these constants are normal in base 10. We formalize all results in the Lean 4 theorem prover with machine-verified proofs.
+Mapping the digits of a real number to pitches produces a finite numerical signal whose apparent musical structure can be studied by standard methods of cyclic signal analysis. This paper establishes a model-independent foundation for such studies. For a real signal $s$ on a cyclic index set of size $n$, we define its lag-$k$ autocorrelation $C_s(k)$, total energy $E(s)$, and squared interval energy $D_s(k)$. The main identity is
 
-**Keywords:** digit autocorrelation, consonance spectrum, normal numbers, transcendental constants, equal temperament, Cauchy-Schwarz inequality, spectral analysis
+$$
+2C_s(k)=2E(s)-D_s(k).
+$$
 
----
+Consequently, autocorrelation is bounded above by zero-lag energy, and equality holds precisely when the signal is invariant under the corresponding cyclic shift. Thus a large finite-sample correlation is exactly a small squared shift cost; by itself it is not evidence for a privileged musical interval or an arithmetic property of the number supplying the digits. We also show that, whenever the discrete Fourier transform is invertible, Fourier coordinates determine the signal and hence its complete cyclic autocorrelation function. We distinguish temporal lag from pitch interval, explain why irrationality imposes no sign condition on finite-prefix correlations, and give reproducible algorithms for autocorrelation, interval energy, equality testing, Fourier reconstruction checks, and controlled empirical studies of decimal expansions.
 
 ## 1. Introduction
 
-The decimal expansion of a real number defines a canonical sequence of digits d₀, d₁, d₂, ... ∈ {0, 1, ..., 9}. By mapping each digit to a frequency on the chromatic scale via f(d) = 220 · 2^{d/12} Hz, we obtain a "melody" — an infinite sequence of musical tones. This digit-to-frequency mapping assigns A3 (220 Hz) to digit 0, A#3 to digit 1, and so on through the chromatic scale.
+A decimal expansion can be turned into sound by assigning a pitch or frequency to each digit. For example, one may map the digits $0,1,\ldots,9$ to ten consecutive chromatic pitches or to frequencies of the form
 
-The central question of this paper is: **do the digit sequences of transcendental constants exhibit statistically significant autocorrelation at musically meaningful lags?** In particular, we ask whether π "favors" octaves (lag 12), whether e "favors" perfect fifths (lag 7), or whether √2 "favors" minor thirds (lag 3).
+$$
+f_d=220\cdot 2^{d/12}\ \text{Hz}.
+$$
 
-Our answer is negative, but the mathematics underlying this negative result is rich and instructive.
+The initial digits of $\pi$, $e$, or $\sqrt2$ then become a melody. This construction is mathematically legitimate and artistically flexible, but interpretations of the resulting patterns require care. Three notions are often conflated:
 
-### 1.1 Related Work
+1. a **temporal lag**, the displacement between positions in a sequence;
+2. a **pitch interval**, the difference between pitch values;
+3. an **arithmetic property**, such as irrationality, transcendence, or restrictions on continued fractions.
 
-The study of digit distributions of mathematical constants has a long history. Borel (1909) introduced the concept of normal numbers — those whose digits are equidistributed in every base. The normality of π remains unproven, though extensive computational evidence supports it (Bailey and Crandall, 2001). The musical interpretation of digit sequences has been explored informally in popular science, but to our knowledge, no rigorous analysis of digit autocorrelation at musical intervals has been undertaken.
+A peak at temporal lag $12$ compares notes twelve time steps apart. It does not count octave intervals, which require a pitch difference of twelve semitones. Likewise, the irrationality of a number excludes eventual periodicity of its infinite decimal expansion but supplies no predetermined sign or significance level for a statistic computed from a finite prefix.
 
-### 1.2 Contributions
+The purpose of this paper is to isolate the exact deterministic content of finite cyclic autocorrelation. The central result is a polarization identity equating autocorrelation with total energy minus half the squared discrepancy from a shift. It gives a sharp bound, a complete equality condition, and an immediate geometric interpretation. The result applies to arbitrary finite real signals; decimal digits are one possible source of data, not an additional hypothesis.
 
-1. **The consonance spectrum** (Definition 3.1): A novel mathematical object that bridges number theory, signal processing, and music theory.
-2. **Cauchy-Schwarz autocorrelation bound** (Theorem 5.4): A tight upper bound on digit autocorrelation at any lag.
-3. **Periodicity transfer theorem** (Theorem 5.3): Periodic sequences yield periodic autocorrelation.
-4. **Spectral irrationality test** (Theorem 5.10): A necessary condition for non-periodic digit expansions.
-5. **Chromatic octave theorem** (Theorem 5.5): The equal-tempered mapping preserves octave structure exactly.
-6. **Streaming decomposition** (Theorem 5.9): Additive window splitting for incremental computation.
-7. **Computational analysis** of π, e, and √2 consonance spectra.
-8. **Machine-verified proofs** of all theoretical results in Lean 4.
+A second result connects this time-domain description with Fourier reconstruction. In any algebraic setting where the length-$n$ discrete Fourier transform has a valid inverse, the Fourier coefficients determine the signal, and therefore determine every cyclic autocorrelation. This establishes a structural bridge between lag statistics and spectral coordinates without asserting that any particular constant possesses an exceptional spectrum.
 
----
+The paper is organized as follows. Section 2 defines digit melodies and cyclic statistics. Section 3 proves translation invariance of energy and the main identity. Section 4 derives the sharp upper bound and equality criterion. Section 5 develops the Fourier determination result. Section 6 separates temporal and pitch statistics. Section 7 discusses finite-prefix inference, and Section 8 presents algorithms and examples. Sections 9–11 cover applications, limitations, and future directions.
 
-## 2. Preliminaries
+## 2. Signals, shifts, and digit melodies
 
-### 2.1 Notation
+### 2.1 Finite cyclic signals
 
-- **ℕ, ℤ, ℝ**: natural numbers, integers, reals
-- **d : ℕ → ℤ**: a digit sequence (integer-valued for algebraic convenience)
-- **R(k) = Σᵢ d(i) · d(i+k)**: unnormalized autocorrelation at lag k
-- **R̃(k)**: centered autocorrelation (mean-subtracted)
+Fix a positive integer $n$. Let $\mathbb Z/n\mathbb Z$ denote the cyclic set of indices, represented by $0,1,\ldots,n-1$ with addition modulo $n$.
 
-### 2.2 Equal Temperament
+**Definition 2.1 (finite cyclic signal).** A finite cyclic real signal of length $n$ is a function
 
-The equal-tempered chromatic scale divides the octave into 12 equal semitones. The frequency ratio between consecutive semitones is 2^{1/12} ≈ 1.05946. Starting from A3 = 220 Hz:
+$$
+s:\mathbb Z/n\mathbb Z\to\mathbb R.
+$$
 
-| Digit | Note | Frequency (Hz) |
-|-------|------|-----------------|
-| 0     | A3   | 220.00          |
-| 1     | A#3  | 233.08          |
-| 2     | B3   | 246.94          |
-| 3     | C4   | 261.63          |
-| 4     | C#4  | 277.18          |
-| 5     | D4   | 293.66          |
-| 6     | D#4  | 311.13          |
-| 7     | E4   | 329.63          |
-| 8     | F4   | 349.23          |
-| 9     | F#4  | 369.99          |
+We write its values as $s(0),\ldots,s(n-1)$. The cyclic model makes every lag comparable over exactly $n$ ordered pairs. If an application should not connect the last sample back to the first, a noncyclic statistic must instead be used; the theorems below concern the cyclic convention.
 
-### 2.3 Musical Intervals as Lags
+**Definition 2.2 (cyclic shift).** For $k\in\mathbb Z/n\mathbb Z$, the lag-$k$ shift $T_k s$ is
 
-Each lag k ∈ {0, 1, ..., 12} corresponds to a musical interval:
+$$
+(T_k s)(i)=s(i+k).
+$$
 
-| Lag | Interval        | Frequency Ratio |
-|-----|----------------|-----------------|
-| 0   | Unison         | 1:1             |
-| 3   | Minor Third    | ~6:5            |
-| 4   | Major Third    | ~5:4            |
-| 5   | Perfect Fourth | ~4:3            |
-| 7   | Perfect Fifth  | ~3:2            |
-| 12  | Octave         | 2:1             |
+The addition in the argument is modulo $n$. The family of shifts satisfies $T_0s=s$ and $T_j(T_ks)=T_{j+k}s$.
 
----
+### 2.2 Encodings of decimal digits
 
-## 3. Definitions
+Let $d_0,\ldots,d_{n-1}\in\{0,\ldots,9\}$ be a decimal prefix. An encoding is a map $g:\{0,\ldots,9\}\to\mathbb R$, producing the signal $s(i)=g(d_i)$.
 
-### Definition 3.1 (Digit Autocorrelation)
+Several encodings answer different questions. The direct digit encoding uses $g(d)=d$. A semitone encoding may also use $g(d)=d$, interpreted as pitch displacement rather than raw magnitude. A frequency encoding uses $g(d)=220\cdot 2^{d/12}$. A centered signal subtracts the empirical mean
 
-For a sequence d : ℕ → ℤ, window size N, and lag k:
+$$
+\bar s=\frac1n\sum_{i=0}^{n-1}s(i),\qquad s_c(i)=s(i)-\bar s.
+$$
 
-$$R_N(k) = \sum_{i=0}^{N-1} d(i) \cdot d(i+k)$$
+Centering is important when correlation is intended to measure fluctuation rather than a positive baseline. All deterministic results below hold equally for raw, centered, pitch-number, or frequency-valued signals.
 
-### Definition 3.2 (Centered Autocorrelation)
+### 2.3 Three energy quantities
 
-With centering value μ ∈ ℤ:
+**Definition 2.3 (cyclic autocorrelation).** The unnormalized cyclic autocorrelation of $s$ at lag $k$ is
 
-$$\tilde{R}_N(k) = \sum_{i=0}^{N-1} (d(i) - \mu)(d(i+k) - \mu)$$
+$$
+C_s(k)=\sum_{i=0}^{n-1}s(i)(T_ks)(i)
+      =\sum_{i=0}^{n-1}s(i)s(i+k).
+$$
 
-For digits uniformly distributed on {0,...,9}, the natural center is μ ≈ 4.5. We use μ = 4 or μ = 5 for integer arithmetic.
+**Definition 2.4 (signal energy).** The total squared amplitude is
 
-### Definition 3.3 (Sequence Energy)
+$$
+E(s)=\sum_{i=0}^{n-1}s(i)^2.
+$$
 
-$$E_N(d) = \sum_{i=0}^{N-1} d(i)^2 = R_N(0)$$
+In particular, $C_s(0)=E(s)$.
 
-### Definition 3.4 (Consonance Spectrum) [NOVEL]
+**Definition 2.5 (interval energy).** The squared cost of displacement by lag $k$ is
 
-The **consonance spectrum** of a digit sequence d with window N and center μ is the function:
+$$
+D_s(k)=\sum_{i=0}^{n-1}\bigl(s(i)-(T_ks)(i)\bigr)^2
+      =\sum_{i=0}^{n-1}\bigl(s(i)-s(i+k)\bigr)^2.
+$$
 
-$$\mathcal{C}_{N,\mu}(d) : \text{Fin}_{13} \to \mathbb{Z}, \quad \mathcal{C}_{N,\mu}(d)(k) = \tilde{R}_N(k)$$
+The term “interval energy” here denotes a temporal shift cost. It is not a histogram of musical pitch intervals.
 
-This captures the autocorrelation profile at all 13 fundamental musical intervals (lags 0 through 12). For a sequence with no musical structure, the consonance spectrum is approximately flat at zero (for nonzero lags).
+## 3. The energy identity
 
-### Definition 3.5 (Consonant Structure)
+The main argument rests on the fact that cyclic translation permutes the index set.
 
-A sequence has **consonant structure** at lag k with threshold τ if |R̃_N(k)| ≥ τ.
+**Lemma 3.1 (shift invariance of signal energy).** For every finite cyclic real signal $s$ and every lag $k$,
 
-### Definition 3.6 (Periodic Sequence)
+$$
+E(T_ks)=E(s).
+$$
 
-d is periodic with period p > 0 if d(i + p) = d(i) for all i ∈ ℕ.
+**Proof sketch.** By definition,
 
-### Definition 3.7 (Eventually Periodic Sequence)
+$$
+E(T_ks)=\sum_{i=0}^{n-1}s(i+k)^2.
+$$
 
-d is eventually periodic if there exist p > 0 and N₀ such that d(i + p) = d(i) for all i ≥ N₀.
+The map $i\mapsto i+k$ is a bijection of $\mathbb Z/n\mathbb Z$. Reindexing the finite sum therefore yields $\sum_i s(i)^2=E(s)$. $\square$
 
----
+**Theorem 3.2 (Autocorrelation–Interval Energy Identity).** For every finite cyclic real signal $s$ and every lag $k$,
 
-## 4. The Chromatic Frequency Mapping
+$$
+2C_s(k)=2E(s)-D_s(k).
+$$
 
-### Definition 4.1
+Equivalently,
 
-$$f : \mathbb{N} \to \mathbb{R}, \quad f(d) = 220 \cdot 2^{d/12}$$
+$$
+C_s(k)=E(s)-\frac12D_s(k).
+$$
 
-### Properties
+**Proof sketch.** Expand the square at each index:
 
-**Theorem 4.2 (Octave Doubling).**  
-$f(d + 12) = 2 \cdot f(d)$ for all $d \in \mathbb{N}$.
+$$
+\bigl(s(i)-s(i+k)\bigr)^2
+=s(i)^2+s(i+k)^2-2s(i)s(i+k).
+$$
 
-*Proof.* $f(d+12) = 220 \cdot 2^{(d+12)/12} = 220 \cdot 2^{d/12 + 1} = 2 \cdot 220 \cdot 2^{d/12} = 2 \cdot f(d)$. □
+Summing gives
 
-**Theorem 4.3 (Positivity).**  
-$f(d) > 0$ for all $d \in \mathbb{N}$.
+$$
+D_s(k)=E(s)+E(T_ks)-2C_s(k).
+$$
 
-*Proof.* Both 220 and $2^{d/12}$ are positive. □
+Lemma 3.1 identifies the two energy terms, giving $D_s(k)=2E(s)-2C_s(k)$. Rearrangement proves both displayed forms. $\square$
 
----
+The theorem is a finite-dimensional polarization identity. If signals are viewed as vectors in $\mathbb R^n$ with inner product $\langle x,y\rangle=\sum_i x(i)y(i)$, then
 
-## 5. Main Results
+$$
+C_s(k)=\langle s,T_ks\rangle,
+\qquad
+D_s(k)=\|s-T_ks\|_2^2.
+$$
 
-### Theorem 5.1 (Energy Identity)
+Because $T_k$ is norm-preserving, the usual relation
 
-$R_N(0) = E_N(d)$ — the autocorrelation at lag 0 equals the sum of squares.
+$$
+\|x-y\|_2^2=\|x\|_2^2+\|y\|_2^2-2\langle x,y\rangle
+$$
 
-*Proof.* Direct computation: $R_N(0) = \sum d(i) \cdot d(i+0) = \sum d(i)^2 = E_N(d)$. □
+reduces exactly to Theorem 3.2.
 
-### Theorem 5.2 (Energy Non-negativity)
+### 3.1 Interpretation
 
-$R_N(0) \geq 0$ for all d, N.
+For fixed $s$, the quantity $E(s)$ does not depend on $k$. Therefore ranking lags by descending autocorrelation is identical to ranking them by ascending interval energy. A correlation peak at $k$ is precisely a low-cost approximate repetition after $k$ time steps. No further arithmetic conclusion is contained in the identity.
 
-*Proof.* Sum of squares is non-negative. □
+The identity also supplies an implementation check. Independently computed arrays should satisfy
 
-### Theorem 5.3 (Periodicity Transfer)
+$$
+2C_s(k)+D_s(k)=2E(s)
+$$
 
-If d(i + p) = d(i) for all i, then $R_N(k + p) = R_N(k)$ for all N, k.
+up to numerical roundoff for every lag.
 
-*Proof sketch.* Each term in the sum for R_N(k+p) has the form d(i) · d(i+k+p). By the periodicity hypothesis applied to i+k, we have d(i+k+p) = d(i+k). Thus each term equals d(i) · d(i+k), and the sums agree. □
+## 4. Sharp bounds and equality
 
-**Remark.** The contrapositive — Theorem 5.10 below — is the spectral irrationality test.
+**Theorem 4.1 (Sharp Autocorrelation Bound).** For every finite cyclic real signal $s$ and every lag $k$,
 
-### Theorem 5.4 (Cauchy-Schwarz Autocorrelation Bound)
+$$
+C_s(k)\le E(s).
+$$
 
-$$R_N(k)^2 \leq \left(\sum_{i=0}^{N-1} d(i)^2\right) \cdot \left(\sum_{i=0}^{N-1} d(i+k)^2\right)$$
+**Proof sketch.** Every summand defining $D_s(k)$ is a square, so $D_s(k)\ge0$. Theorem 3.2 gives
 
-*Proof sketch.* This is the Cauchy-Schwarz inequality applied to the vectors $(d(0), d(1), \ldots, d(N-1))$ and $(d(k), d(k+1), \ldots, d(N-1+k))$. The inner product of these vectors is exactly $R_N(k)$, and their squared norms are the two sums on the right. □
+$$
+C_s(k)=E(s)-\frac12D_s(k)\le E(s).
+$$
 
-**Corollary 5.5.** For any sequence with values in {0,...,9}, we have $|R_N(k)| \leq 81N$ for all k.
+The bound is sharp because equality always holds at lag $0$. $\square$
 
-### Theorem 5.6 (Center Zero Reduction)
+This upper bound is one-sided. Autocorrelation may be negative. A complementary estimate $|C_s(k)|\le E(s)$ follows from Cauchy–Schwarz and shift invariance, but the exact identity is stronger for the upper boundary because it characterizes the defect $E(s)-C_s(k)$ as a sum of squares.
 
-$\tilde{R}_N(k; \mu=0) = R_N(k)$ — centering at zero recovers the uncentered autocorrelation.
+**Theorem 4.2 (Shift-Invariance Equality Criterion).** For every finite cyclic real signal $s$ and every lag $k$, the following conditions are equivalent:
 
-### Theorem 5.7 (Unison Energy)
+1. $C_s(k)=E(s)$;
+2. $D_s(k)=0$;
+3. $T_ks=s$, meaning $s(i+k)=s(i)$ for every $i$.
 
-The consonance spectrum at lag 0 with center 0 equals the energy: $\mathcal{C}_{N,0}(d)(0) = E_N(d)$.
+**Proof sketch.** Theorem 3.2 shows that the first condition is equivalent to $D_s(k)=0$. Since $D_s(k)$ is a finite sum of nonnegative squares, it vanishes exactly when every difference $s(i)-s(i+k)$ is zero. This is precisely $T_ks=s$. $\square$
 
-### Theorem 5.8 (Streaming Decomposition)
+The equality condition can be described by cycle structure. Let $g=\gcd(n,k)$. The shift $i\mapsto i+k$ partitions the indices into $g$ cycles. A signal is fixed by this shift exactly when it is constant on each cycle. Thus maximal correlation at a nonzero lag need not force a globally constant signal, but it forces a cyclic repetition compatible with $k$.
 
-$$R_{N+M}(k) = R_N(k) + \sum_{i=0}^{M-1} d(N+i) \cdot d(N+i+k)$$
+**Corollary 4.3 (strict inequality without shift symmetry).** If there exists an index $i$ such that $s(i+k)\ne s(i)$, then
 
-*Proof sketch.* Split the range [0, N+M) into [0, N) and [N, N+M). The first part gives $R_N(k)$. For the second part, re-index by setting j = i - N. □
+$$
+C_s(k)<E(s).
+$$
 
-**Application.** This decomposition enables streaming computation of the consonance spectrum. As new digits of π are computed, the consonance spectrum can be updated incrementally in O(1) time per digit per lag.
+**Proof sketch.** At least one summand in $D_s(k)$ is then strictly positive, while all others are nonnegative. Hence $D_s(k)>0$, and Theorem 3.2 gives strict inequality. $\square$
 
-### Theorem 5.9 (Spectral Irrationality Test)
+**Corollary 4.4 (quantitative stability).** If
 
-If there exist N and k such that $R_N(k+p) \neq R_N(k)$, then d is not periodic with period p.
+$$
+C_s(k)\ge E(s)-\varepsilon
+$$
 
-*Proof.* Contrapositive of Theorem 5.3. If d were periodic with period p, then $R_N(k+p) = R_N(k)$ for all N, k — contradicting the hypothesis. □
+for some $\varepsilon\ge0$, then
 
----
+$$
+\|s-T_ks\|_2^2=D_s(k)\le2\varepsilon.
+$$
 
-## 6. Computational Results
+Conversely, $D_s(k)\le2\varepsilon$ implies $C_s(k)\ge E(s)-\varepsilon$.
 
-### 6.1 Methodology
+**Proof sketch.** Both implications are immediate rearrangements of Theorem 3.2. $\square$
 
-We computed the consonance spectrum for the first 10,000 digits of π, e, and √2 using high-precision arithmetic (mpmath with 10,050 decimal places). The centering value was μ = 4.5 (the mean of the uniform distribution on {0,...,9}).
+This stability statement is deterministic: closeness to the upper ceiling is equivalent to closeness to shift invariance in squared Euclidean distance. It does not by itself define statistical significance.
 
-### 6.2 Results
+## 5. Fourier determination of autocorrelation
 
-For all three constants, the normalized autocorrelation |R̃(k)/N| at every nonzero lag k ∈ {1,...,12} was below the 95% significance threshold of 2/√N ≈ 0.02. No musical interval showed statistically significant autocorrelation.
+### 5.1 Algebraic Fourier coordinates
 
-### 6.3 Interpretation
+Let $F$ be a field, let $n$ be positive, and let $\omega\in F$ be a primitive $n$th root of unity. Assume that the field element represented by $n$ is nonzero, so division by $n$ is permitted. For a signal $v:\mathbb Z/n\mathbb Z\to F$, define its discrete Fourier transform by a conventional choice such as
 
-The absence of significant autocorrelation is consistent with the conjecture that π, e, and √2 are normal in base 10. If a number is normal, its digit pairs (dᵢ, dᵢ₊ₖ) are asymptotically equidistributed over {0,...,9}², which implies the centered autocorrelation converges to zero at every lag.
+$$
+\widehat v(r)=\sum_{j=0}^{n-1}v(j)\omega^{-rj}.
+$$
 
----
+The corresponding inverse is
 
-## 7. Conjecture: Autocorrelation Nullity for Normal Numbers
+$$
+v(j)=\frac1n\sum_{r=0}^{n-1}\widehat v(r)\omega^{rj}.
+$$
 
-**Conjecture 7.1.** Let d be the digit sequence (in base 10) of a normal number. Then for all k ≥ 1 and all centering values μ:
+The signs may be reversed by convention without affecting the determination result.
 
-$$\lim_{N \to \infty} \frac{1}{N} \sum_{i=0}^{N-1} (d(i) - \mu)(d(i+k) - \mu) = 0$$
+**Theorem 5.1 (Fourier Determination of Cyclic Autocorrelation).** Let $v,w:\mathbb Z/n\mathbb Z\to F$ be two signals. Suppose $F$ contains a primitive $n$th root of unity and $n$ is nonzero in $F$, so that Fourier inversion holds. If
 
-**Testable prediction.** For the first 10⁶ digits of π:
-- The normalized autocorrelation |R̃(k)/N| < 0.002 for all k ∈ {1,...,12}.
-- The chi-squared statistic for digit uniformity satisfies χ² < 16.92 (df = 9, α = 0.05).
+$$
+\widehat v(r)=\widehat w(r)
+$$
 
-If either test fails, the conjecture is refuted for π at the given sample size, and would constitute evidence against the normality of π.
+for every frequency $r$, then for every lag $k$,
 
-**Relation to normality.** Conjecture 7.1 is strictly weaker than base-10 normality. Normality requires equidistribution of all finite digit blocks; our conjecture requires only pairwise digit independence at each lag. A proof of normality for π would immediately imply Conjecture 7.1, but the converse is false.
+$$
+\sum_{i=0}^{n-1}v(i)v(i+k)
+=
+\sum_{i=0}^{n-1}w(i)w(i+k).
+$$
 
----
+**Proof sketch.** Apply the inverse Fourier formula to the common coefficient vector. It reconstructs $v(j)$ and $w(j)$ by the same expression for every $j$, hence $v=w$. Substitution into the two autocorrelation sums gives equality at every lag. $\square$
 
-## 8. Discussion
+The theorem asserts determination, not a claim that autocorrelation uniquely determines the signal. In general, phase ambiguities can cause distinct signals to share related correlation information. Complete Fourier coordinates retain sufficient information because inversion reconstructs the entire signal.
 
-### 8.1 The Silence Is the Signal
+### 5.2 Spectral interpretation of shifts
 
-Our most important finding is negative: transcendental constants do not have hidden musical structure in their digit sequences. The consonance spectrum is flat. But this flatness itself is deeply meaningful — it reflects the maximal information content of normal digit sequences.
+For complex-valued Fourier analysis, shifting multiplies the $r$th Fourier coefficient by a unit phase:
 
-### 8.2 The Periodicity-Irrationality Bridge
+$$
+\widehat{T_ks}(r)=\omega^{rk}\widehat s(r)
+$$
 
-The periodicity transfer theorem (5.3) and its contrapositive (5.9) create a precise bridge between temporal structure (periodicity) in digit sequences and algebraic structure (rationality) of the underlying number. This bridge operates through the autocorrelation function, which serves as a "spectral lens" for examining digit patterns.
+up to the sign convention. Therefore $T_ks\approx s$ when the signal’s Fourier energy is concentrated on frequencies for which $\omega^{rk}\approx1$. Combined with Theorem 3.2, this links three descriptions:
 
-### 8.3 The Role of Cauchy-Schwarz
+- high autocorrelation $C_s(k)$;
+- low interval energy $D_s(k)$;
+- spectral concentration on modes nearly stabilized by the lag-$k$ phase.
 
-The Cauchy-Schwarz bound (Theorem 5.4) is not merely a technical tool — it is a fundamental constraint on the possible musical structures in any digit sequence. It tells us that no lag can produce correlations exceeding the energy, and for sequences with bounded digit values, this constrains the absolute autocorrelation to grow at most linearly with N. For normal numbers, the actual growth is o(N), making the normalized autocorrelation vanish.
+A quantitative two-sided spectral stability theorem is a natural extension, but the basic determination statement already guarantees that complete Fourier data fixes all lag statistics.
 
-### 8.4 Connections to Existing Work
+## 6. Temporal lag versus musical interval
 
-Our chromatic frequency mapping connects to the Pythagorean music theory formalized in `Pythagorean/HarmonicMusicTheory.lean`, where frequency ratios from Pythagorean triples are classified by consonance. The present work shifts from rational frequency ratios (Pythagorean tuning) to equal-tempered frequencies (chromatic scale), reflecting the historical transition from just intonation to equal temperament.
+Suppose decimal digits are interpreted as semitone labels $0$ through $9$. A temporal lag $k$ concerns the pair of sequence positions $(i,i+k)$. A pitch interval concerns a difference in values, for example
 
----
+$$
+\Delta(i,j)=|s(i)-s(j)|.
+$$
 
-## 9. Algorithms
+An octave in twelve-tone equal temperament is a pitch separation of $12$ semitones. Under the ten-label map $s(i)\in\{0,\ldots,9\}$,
 
-### Algorithm 1: Consonance Spectrum Computation
+$$
+|s(i)-s(j)|\le9,
+$$
 
-```
-Input: digit sequence d[0..N-1], center μ, max_lag L
-Output: consonance spectrum C[0..L]
+so octave pairs are impossible. Nevertheless, temporal lag $12$ is well-defined whenever the sequence is long enough. Its autocorrelation measures twelve-step alignment, not octave frequency.
 
-for k = 0 to L:
-    C[k] = 0
-    for i = 0 to N-k-1:
-        C[k] += (d[i] - μ) * (d[i+k] - μ)
-    C[k] /= (N - k)
-return C
-```
+**Proposition 6.1 (absence of octave intervals under a ten-semitone digit map).** If each digit is assigned its numerical value in semitones, then no two encoded digits differ by $12$ semitones.
 
-Time complexity: O(N · L). Space: O(L).
+**Proof sketch.** Both values lie between $0$ and $9$, so their absolute difference is at most $9<12$. $\square$
 
-### Algorithm 2: Streaming Autocorrelation Update
+A pitch-interval histogram should therefore be defined independently. For an integer interval $q\ge0$, one possible all-pairs count is
 
-```
-Input: current R_N(k), new digits d[N..N+M-1], lag k
-Output: updated R_{N+M}(k)
+$$
+H_s(q)=\#\{(i,j):0\le i<j<n,\ |s(i)-s(j)|=q\}.
+$$
 
-delta = 0
-for i = 0 to M-1:
-    delta += d[N+i] * d[N+i+k]
-return R_N(k) + delta
-```
+A local version may restrict $j-i$ to selected temporal separations. In either case, the temporal and pitch coordinates remain explicit.
 
-This exploits Theorem 5.8 for incremental updates.
+## 7. What irrationality does and does not imply
 
----
+A real number has an eventually periodic decimal expansion if and only if it is rational. Hence an irrational number such as $\pi$, $e$, or $\sqrt2$ cannot have a decimal tail that repeats forever. This fact is sometimes overextended.
 
-## 10. Future Work
+A statistic of the first $n$ digits depends only on that finite word. Irrationality is a property of the infinite continuation. For any finite decimal word, there exist rational numbers and irrational numbers beginning with that word. Therefore irrationality alone cannot determine the sign of a finite-prefix autocorrelation or identify a preferred finite lag.
 
-1. **Prove Conjecture 7.1** for specific classes of normal numbers (e.g., Champernowne's constant, which is known to be normal in base 10).
-2. **Extend to block autocorrelation**: study correlations between digit blocks (bigrams, trigrams) at musical lags.
-3. **Cross-base analysis**: compare the consonance spectrum of π in bases 10, 12, and 7 (the last matching the diatonic scale).
-4. **Connections to continued fractions**: investigate whether the continued fraction expansion of a number influences the structure of its digit autocorrelation.
+The same caution applies to transcendence. Transcendence is stronger than irrationality, but it does not by itself provide a finite-sample null distribution for decimal digits. Likewise, continued-fraction coefficients and decimal digits are generated by different symbolic dynamical systems. Any proposed relationship between bounded partial quotients and decimal “consonance” requires a controlled ensemble and a predeclared consonance statistic.
 
----
+Finite evidence can still be meaningful when the inferential protocol is explicit. A study should specify:
 
-## References
+1. the constants and prefix lengths before inspection;
+2. the digit-to-signal encoding;
+3. whether and how the signal is centered or normalized;
+4. cyclic or noncyclic boundary treatment;
+5. the lags and pitch intervals tested;
+6. a null distribution, such as exact permutation conditional on observed digit counts;
+7. correction for multiple testing across lags and constants.
 
-1. Borel, E. (1909). Les probabilités dénombrables et leurs applications arithmétiques. *Rendiconti del Circolo Matematico di Palermo*, 27, 247–271.
-2. Bailey, D. H., & Crandall, R. E. (2001). On the random character of fundamental constant expansions. *Experimental Mathematics*, 10(2), 175–190.
-3. Hardy, G. H., & Wright, E. M. (2008). *An Introduction to the Theory of Numbers* (6th ed.). Oxford University Press.
+The deterministic theorems then identify exactly what each observed autocorrelation means, while the statistical layer assesses whether the observation is unusual under the chosen null.
 
----
+## 8. Algorithms and numerical examples
 
-## Appendix A: Formalization Details
+### 8.1 Direct cyclic analysis
 
-All theorems in this paper have been formally verified in Lean 4 using the Mathlib library. The formalization is contained in `Geometry/DigitMelody.lean`. Key aspects:
+Given a length-$n$ vector and a set of $m$ lags, direct computation takes $O(mn)$ arithmetic operations and $O(m)$ output memory. For all $n$ lags, the cost is $O(n^2)$. The procedure is:
 
-- Autocorrelation is defined over ℤ-valued sequences to avoid subtraction issues with ℕ.
-- The Cauchy-Schwarz bound uses Mathlib's `sum_mul_sq_le_sq_mul_sq` lemma.
-- The chromatic frequency uses `Real.rpow` for non-integer exponents.
-- The consonance spectrum is typed as `Fin 13 → ℤ` for the 13 musical intervals.
-- The periodicity transfer theorem is proved by congruence under the Finset sum.
+1. compute $E=\sum_i s(i)^2$;
+2. for each lag $k$, compute $C(k)=\sum_i s(i)s(i+k)$;
+3. compute $D(k)=\sum_i(s(i)-s(i+k))^2$;
+4. verify $2C(k)=2E-D(k)$ within a floating-point tolerance.
+
+For long signals, all correlations can be accelerated by fast Fourier transforms to $O(n\log n)$, provided the correlation convention and conjugation are handled consistently.
+
+### 8.2 Exact periodic example
+
+Let
+
+$$
+s=(1,2,1,2).
+$$
+
+Its energy is
+
+$$
+E(s)=1^2+2^2+1^2+2^2=10.
+$$
+
+At lag $2$, the shifted signal equals $s$, so $D_s(2)=0$ and $C_s(2)=10$. At lag $1$, the shift is $(2,1,2,1)$, giving
+
+$$
+C_s(1)=1\cdot2+2\cdot1+1\cdot2+2\cdot1=8.
+$$
+
+The interval energy is
+
+$$
+D_s(1)=(-1)^2+1^2+(-1)^2+1^2=4,
+$$
+
+and indeed $C_s(1)=10-4/2=8$.
+
+### 8.3 Nonperiodic finite example
+
+Let
+
+$$
+t=(3,1,4,1,5,9,2,6),
+$$
+
+an initial digit block of $\pi$. Its energy is
+
+$$
+E(t)=3^2+1^2+4^2+1^2+5^2+9^2+2^2+6^2=173.
+$$
+
+For any selected cyclic lag, the two independently computed quantities $C_t(k)$ and $D_t(k)$ satisfy the exact identity. This is a deterministic statement about the eight-number vector. It does not establish a population-level preference of $\pi$.
+
+### 8.4 Pitch-interval counting
+
+For semitone labels $0$ through $9$, a histogram over absolute differences has bins only from $0$ through $9$. The count in bin $12$ is identically zero. If frequencies $220\cdot2^{d/12}$ are used instead, octave equivalence still corresponds to digit differences of $12$, which remain unavailable within a single ten-digit alphabet unless the encoding is extended or octave registers are assigned separately.
+
+## 9. Applications
+
+The theory applies wherever a finite cyclic signal is compared with its translates.
+
+**Digit sonification.** It provides an exact interpretation of correlation peaks in melodies derived from decimal or other radix expansions.
+
+**Rhythm and loop detection.** A near-maximal lag correlation is equivalent to low squared discrepancy from repeating the loop at that lag. The equality theorem detects exact cyclic repetition.
+
+**Texture and image analysis.** Rows, contours, or cyclic boundary samples can be analyzed through the same shift-energy identity.
+
+**Quality assurance.** Computing both sides of the identity catches indexing, wrapping, or normalization mistakes in numerical code.
+
+**Spectral pipelines.** If a signal is stored or transmitted through complete invertible Fourier coordinates, all cyclic autocorrelations are determined without ambiguity because the signal itself can be reconstructed.
+
+These applications share the same mathematical core. None requires the signal values to be digits or pitches.
+
+## 10. Discussion and limitations
+
+The principal strength of the framework is its universality. The main identity assumes only a finite real signal and cyclic indexing. Its equality criterion is exact, and its defect term is directly interpretable as squared distance from shift invariance.
+
+That universality also marks the limit of what the result can say. Because it holds for every signal, it cannot by itself distinguish $\pi$ from a random sequence or from a designed musical loop. Such distinctions require data and a statistical model. Positive uncentered autocorrelation may be dominated by a positive mean; centering changes the question and should be declared. Cyclic wrapping introduces pairs across the endpoint that a noncyclic analysis would omit. Frequency encodings distort equal digit steps multiplicatively, while pitch-number encodings preserve semitone differences linearly.
+
+The phrase “statistically significant” is incomplete without a null hypothesis and a correction policy. Testing thirteen lags for each of several constants creates multiple opportunities for a chance peak. Exact permutation tests conditional on observed symbol counts provide one transparent finite-prefix baseline. Other models may be appropriate, but they must be stated independently of the observed peak.
+
+Finally, musical consonance is not identical to numerical autocorrelation. Consonance depends on pitch ratios, tuning, register, simultaneity, timbre, cultural context, and perceptual organization. A scalar lag statistic may support an aspect of musical analysis, but it does not exhaust it.
+
+## 11. Future research
+
+Several concrete programs follow from the present framework.
+
+First, fixed prefixes of $\pi$, $e$, and $\sqrt2$ can be subjected to exact permutation tests for centered autocorrelations at lags $1$ through $12$, with family-wise error controlled across all tests. This would determine whether advertised peaks survive a predeclared finite-sample analysis.
+
+Second, temporal-lag statistics should be paired with an independent pitch-interval histogram. Under a ten-semitone digit map, octave counts are structurally zero, making the separation especially clear.
+
+Third, the time-domain identity and Fourier shift law invite a quantitative theorem characterizing exceptional autocorrelation through concentration of spectral power on nearly shift-invariant phases, uniformly in signal length.
+
+Fourth, proposed links between continued fractions and decimal consonance can be tested on controlled ensembles. Numbers drawn from bounded-partial-quotient sets should be compared with matched controls after conditioning on prefix length and digit frequencies.
+
+Fifth, finite-prefix obstruction results can clarify the logical limits of inference: prescribed finite decimal behavior can be shared by numbers of very different arithmetic types, so no finite statistic alone can certify transcendence or a universal arithmetic law.
+
+## 12. Conclusion
+
+For a finite cyclic melody, autocorrelation and squared shift cost are complementary quantities:
+
+$$
+C_s(k)=E(s)-\frac12D_s(k).
+$$
+
+This identity yields the sharp bound $C_s(k)\le E(s)$ and shows that equality occurs exactly at shifts fixing the signal. Under invertible Fourier analysis, the complete spectrum determines the signal and all its cyclic correlations. Together, these results give a rigorous language for repetition in digit melodies.
+
+The framework supports creative sonification while enforcing conceptual separation. Temporal lag is not pitch interval; finite-prefix behavior is not a consequence of irrationality; and deterministic correlation is not statistical significance. Once these distinctions are observed, experiments with the digits of mathematical constants can be both imaginative and mathematically precise.
