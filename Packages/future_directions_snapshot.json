@@ -4080,7 +4080,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9f14a31b",
     "description": "Every real number defines a musical scale: map the digits 0-9 to frequencies f_n = 220 * 2^{n/12} (the A minor pentatonic scale extended). The number pi = 3.14159265... produces the sequence E4, C5, C#5, D5, D#5, F5, E5, A4, G5, C5... — a melody. Conjecture: The melody of pi is not periodic (because pi is irrational) but has musical structure: the autocorrelation of the digit sequence at lag 12 (one octave) is positive and statistically significant. This means pi has more octave-related notes than expected by chance — pi 'favors' notes separated by octaves. Similarly, e 'favors' perfect fifths (lag 7) and sqrt(2) 'favors' minor thirds (lag 3). The musical structure of transcendental numbers reflects their continued fraction properties: numbers with bounded partial quotients have more consonant melodies. Test: compute the digit autocorrelation of pi, e, and sqrt(2) at lags 0-12 (representing unison through octave). Perform a chi-squared test comparing to the uniform distribution. Generate the 'music' of each constant and analyze for tonal centers. Impact: transcendental numbers have musical souls — their digit sequences contain hidden harmonies that reflect their deepest arithmetic properties.",
     "domain_bridges": [],
     "domains": [
@@ -4093,7 +4093,7 @@
     "proof_strategy": "Map digits 0-9 to frequencies f_n = 220 * 2^{n/12} Hz (chromatic scale starting at A3). Define the melody M(x) for a real number x as the sequence of frequencies corresponding to its decimal digits. Compute the autocorrelation R(k) = sum_{i} (d_i - 4.5)(d_{i+k} - 4.5) / N for lags k = 0,1,...,12. Under the null hypothesis (digits are uniformly random), R(k) ~ Normal(0, 1/N). Test: compute R(k) for pi (first 10^6 digits), e (first 10^6 digits), sqrt(2) (first 10^6 digits). If R(k) > 2/sqrt(N) for some k, that lag is statistically significant. Verify: pi has R(12) > threshold (octave preference), e has R(7) > threshold (fifth preference), sqrt(2) has R(3) > threshold (minor third preference). Connect to continued fractions: bounded partial quotients imply more structure in digit autocorrelations.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T14:02:27.283106+00:00",
     "title": "The Sound of Pi: Musical Structure in Transcendental Constants"
   },
