@@ -785,7 +785,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Submultiplicative Polynomials in Combinatorics' and formalize its key results. Abstract: For normalized sequences $\\left(g(n)\\right)_{n\\in\\mathbb{N}}$ we consider recursively defined polynomials $P_n^g(x)$. In this paper we study their submultiplicative property, viewed as a Bessenrodt--Ono type inequality for the partition function, and provide an effective criterion for establishing it.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -2934,7 +2934,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The combinatorics of sector renormalization' and formalize its key results. Abstract: The goal of this note is to systematically develop the fundamental arithmetic and combinatorial properties of the sector renormalization operation on rigid rotations. We employ the specific framework of modified continued fractions appropriate for sector renormalization and analyze their properties. By allowing infinite first return times, this framework yields a dynamical compactification characterized by a universal property. We also discuss the corresponding natural extension and introduce the notion of a time (semi-)group. For example, we demonstrate how a bi-infinite tower of sector renormalizations of irrational rotations can be packaged within a single dynamical plane as a cascade of translations. This note will serve as a foundational combinatorial tool for studying the geometric properties of sector renormalizations of holomorphic maps with irrationally indifferent fixed points, particularly neutral quadratic polynomials.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -8331,6 +8331,47 @@
       "thread_id": "th_e03fef0c",
       "timestamp": "2026-07-17T08:35:52.139053+00:00",
       "title": "The formalization in `Catalog/Novelty/RecordCompositionsAlternating.lean` establ"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions: Arithmetic of Modular Hyperbolic Orbits\n\n## 1. Universal trace multiplication polynomials\n\nFor every positive integer $m$, there should be a unique monic integral polynomial $C_m$ such that\n\\[\n  u_{mn}(t)=C_m(u_n(t))\n\\]\nfor every determinant-one trace recurrence $u_0=2$, $u_1=t$, and every $n\\geq 0$. The family should satisfy $C_m\\circ C_n=C_{mn}$ and $C_m(x)^2-4=(x^2-4)Q_m(x)^2$ for an integral polynomial $Q_m$.\n\nThe key insight is that multiplication of group-power indices descends to composition of trace polynomials, while the doubled discriminant factorization is the first nontrivial case of a general norm identity.\n\nWhy now? The exact doubling and tripling laws, together with the square-factor discriminant identity, isolate the algebraic pattern and supply concrete base cases for an inductive construction.\n\n## 2. Finite-ring periodicity with effective period bounds\n\nFor every modulus $q>1$ and integral trace parameter $t$, the reduced pair sequence\n\\[\n  (u_n(t),u_{n+1}(t))\\pmod q\n\\]\nshould be purely periodic, with period dividing the order of the companion matrix $\\left(\\begin{smallmatrix}0&1\\\\-1&t\\end{smallmatrix}\\right)$ in $\\mathrm{SL}_2(\\mathbb Z/q\\mathbb Z)$. Determine when this period attains the largest value permitted by the group order.\n\nThe key insight is that retaining two consecutive traces converts the recurrence into an invertible finite-state dynamical system; no preperiod is needed because the transition has determinant one.\n\nWhy now? The trace recurrence and its power interpretation already identify the transition matrix, while the new index-multiplication laws provide strong constraints on possible periods.\n\n## 3. Primitive Pell points and primitive geodesics\n\nFor each nonsquare positive discriminant $D=t^2-4$, characterize exactly which integral points on\n\\[\n  x^2-txy+y^2=-D\n\\]\narise from primitive powers of primitive conjugacy classes in the modular group. The predicted characterization should distinguish group-theoretic primitivity from mere indivisibility of $(x,y)$.\n\nThe key insight is that every power orbit lies on a fixed Pell conic, but the doubling and tripling morphisms reveal explicit algebraic signatures of imprimitive indices.\n\nWhy now? The Pell invariant and trace multiplication formulas jointly provide both the ambient Diophantine curve and computable exclusion maps for composite powers.\n\n## 4. Prime-geodesic counting in trace coordinates\n\nLet $P(X)$ count primitive hyperbolic conjugacy classes in the modular group whose absolute trace is at most $X$. Determine an effective asymptotic for $P(X)$, including an explicit error term translated from geodesic length by $|\\operatorname{tr}(g)|=2\\cosh(\\ell(g)/2)$.\n\nThe key insight is that trace, unlike a tessellation vertex label, is conjugacy-invariant and canonically links integral arithmetic to hyperbolic length.\n\nWhy now? The established trace/Pell model supplies a precise counting variable and removes the ambiguity in the proposed notion of a “hyperbolic prime.”\n\n## 5. Spectral zeta versus orbit Dirichlet series\n\nDefine separately the Selberg zeta function of the modular surface and the Dirichlet series formed from primitive trace classes, then determine an explicit transform relating their logarithmic derivatives in their common domain of convergence.\n\nThe key insight is that primitive closed geodesics, rather than arbitrary orbit points, are the canonical Euler factors; trace coordinates can re-index these factors without inventing a noncanonical norm.\n\nWhy now? The arithmetic orbit model now distinguishes conjugacy-invariant trace data from vertex-based labels, making a falsifiable comparison of the two analytic objects possible.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0205",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "3c755fa4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3c755fa4",
+      "status": "available",
+      "thread_id": "th_5780c9bc",
+      "timestamp": "2026-07-17T08:35:58.981893+00:00",
+      "title": "For every positive integer $m$, there should be a unique monic integral polynomi"
     }
   ],
   "pruned": [],

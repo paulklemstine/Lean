@@ -1,689 +1,542 @@
-# The Möbius–Diophantine Bridge: Integral Coordinates for Hyperbolic Translation on the Poincaré Diameter
+# Trace Multiplication and Pell-Conic Dynamics for Integral Möbius Transformations
 
 **Aristotle**  
-**16 July 2026**
+**17 July 2026**
 
 ## Abstract
 
-We study repeated Möbius translation by the rational point $1/2$ on a diameter of the Poincaré disk. Möbius addition on the diameter is the binary operation
+We develop an arithmetic model for iterated integral Möbius transformations of determinant one. If $A\in\mathrm{SL}_2(\mathbb Z)$ has trace $t$, the traces $u_n=\operatorname{tr}(A^n)$ satisfy the universal recurrence $u_0=2$, $u_1=t$, and $u_{n+2}=tu_{n+1}-u_n$. Conversely, every integer $t$ occurs as the trace of such a transformation, so this recurrence captures all integral trace parameters. We prove that multiplication of orbit indices descends to explicit polynomial maps on traces. In particular,
 
 $$
-x\boxplus y=\frac{x+y}{1+xy}.
+u_{2n}=u_n^2-2,
+\qquad
+u_{3n}=u_n^3-3u_n.
 $$
 
-Starting at $x_0=0$ and setting $x_{n+1}=x_n\boxplus 1/2$, we lift the rational orbit to integer homogeneous coordinates $(a_n,b_n)$ satisfying
+The doubled discriminant factors as
 
 $$
-(a_0,b_0)=(0,1),\qquad
-(a_{n+1},b_{n+1})=(2a_n+b_n,a_n+2b_n).
+u_{2n}^2-4=(u_n^2-4)u_n^2,
 $$
 
-We prove the exact formulas
-
-$$
-2a_n=3^n-1,\qquad 2b_n=3^n+1,
-$$
-
-the exponential Lorentzian norm identity
-
-$$
-b_n^2-a_n^2=3^n,
-$$
-
-and strict disk containment $|a_n/b_n|<1$. Consequently,
-
-$$
-x_n=\frac{3^n-1}{3^n+1}
-=\tanh\left(\frac{n\log 3}{2}\right).
-$$
-
-The construction gives an explicit bridge among fractional-linear dynamics, integral matrix recurrences, Lorentzian quadratic forms, exponential Diophantine equations, and rapidity. We present direct, matrix, and fast-powering algorithms, discuss exact computational demonstrations, and outline extensions to arbitrary rational translations, Pell-type forms, and full two-dimensional disk actions. We also clarify why broader claims about primes or unique factorization on hyperbolic orbits require additional algebraic definitions not supplied by geometry alone.
+and equivalently the Pell parameter satisfies $4-u_{2n}^2=(4-u_n^2)u_n^2$. These identities are uniform across elliptic, parabolic, and hyperbolic trace regimes. We relate them to the invariant conic $x^2-txy+y^2=4-t^2$, describe direct and accelerated algorithms for computing traces, establish pure periodicity of the pair recurrence modulo every positive modulus, and explain how trace coordinates provide a canonical foundation for studying primitive geodesics. The results isolate a robust arithmetic structure without imposing noncanonical ring operations on a hyperbolic tessellation.
 
 ## 1. Introduction
 
-The open unit disk
-
-$$
-\mathbb D=\{z\in\mathbb C:|z|<1\}
-$$
-
-supports the Poincaré model of hyperbolic geometry. Its Euclidean boundary represents points at infinite hyperbolic distance. Although the full disk is two-dimensional, every diameter through the origin is a geodesic. The real diameter
-
-$$
-I=(-1,1)
-$$
-
-therefore provides the simplest setting in which to compare ordinary arithmetic with hyperbolic displacement.
-
-The natural composition law for directed displacements on $I$ is Möbius addition,
-
-$$
-x\boxplus y=\frac{x+y}{1+xy}.
-$$
-
-It is also the one-dimensional Einstein velocity-addition law in units where the limiting speed is $1$. The rapidity transformation $x\mapsto\operatorname{artanh}(x)$ converts this nonlinear law into ordinary addition. Thus $I$, equipped with $\boxplus$, is a concrete model of the additive real line written in bounded coordinates.
-
-Our purpose is to develop one exact arithmetic orbit under this law. We choose the rational translation parameter $1/2$, initialize at $0$, and iterate. Rationality guarantees that every orbit point is rational, but more is true: a natural choice of integer homogeneous coordinates follows a symmetric linear recurrence, admits a closed form, and solves an exponential norm equation at every time. The construction can be summarized by
-
-$$
-\text{Möbius translation}
-\longleftrightarrow
-\text{integer matrix iteration}
-\longleftrightarrow
-\text{Lorentzian norm scaling}.
-$$
-
-The resulting theorem is deliberately narrower than proposals for a complete “hyperbolic number theory.” A discrete geometric orbit does not automatically possess well-defined addition, multiplication, irreducibility, or unique factorization. The present work instead establishes the precise algebraic-geometric bridge that is available without making those further choices.
-
-## 2. Möbius addition and the rational orbit
-
-### 2.1 Definition of the operation
-
-**Definition 2.1 (Möbius addition).** For $x,y\in\mathbb R$ with $1+xy\ne0$, define
-
-$$
-x\boxplus y=\frac{x+y}{1+xy}.
-$$
-
-For $x,y\in(-1,1)$, the denominator is positive. Moreover,
-
-$$
-1-(x\boxplus y)^2
-=\frac{(1-x^2)(1-y^2)}{(1+xy)^2}>0,
-$$
-
-so $x\boxplus y\in(-1,1)$. Thus the operation is closed on the Poincaré diameter.
-
-**Lemma 2.2 (Rapidity linearization).** For all $x,y\in(-1,1)$,
-
-$$
-\operatorname{artanh}(x\boxplus y)
-=\operatorname{artanh}(x)+\operatorname{artanh}(y).
-$$
-
-**Proof sketch.** Write $x=\tanh u$ and $y=\tanh v$. The hyperbolic tangent addition formula gives
-
-$$
-\tanh(u+v)=\frac{\tanh u+\tanh v}{1+\tanh u\tanh v}=x\boxplus y.
-$$
-
-Applying $\operatorname{artanh}$ yields the result. Equivalently, substitute the logarithmic formula for $\operatorname{artanh}$ and simplify. $\square$
-
-### 2.2 Translation by one half
-
-**Definition 2.3 (The orbit).** Define a sequence $(x_n)_{n\ge0}$ by
-
-$$
-x_0=0,\qquad x_{n+1}=x_n\boxplus\frac12.
-$$
-
-The first values are
-
-$$
-x_0=0,\quad x_1=\frac12,\quad x_2=\frac45,
-\quad x_3=\frac{13}{14},\quad x_4=\frac{40}{41}.
-$$
-
-The fractions suggest powers of $3$, but deriving their exact form through homogeneous coordinates exposes more structure than direct scalar iteration.
-
-## 3. Integral homogeneous coordinates
-
-**Definition 3.1 (Coordinate recurrence).** Define integer sequences $(a_n)$ and $(b_n)$ by
-
-$$
-(a_0,b_0)=(0,1)
-$$
-
-and
-
-$$
-a_{n+1}=2a_n+b_n,\qquad
-b_{n+1}=a_n+2b_n.
-$$
-
-Equivalently,
-
-$$
-\begin{pmatrix}a_{n+1}\\b_{n+1}\end{pmatrix}
-=
-M\begin{pmatrix}a_n\\b_n\end{pmatrix},
-\qquad
-M=\begin{pmatrix}2&1\\1&2\end{pmatrix}.
-$$
-
-The adjective “homogeneous” reflects the fact that a ratio $a/b$ is unchanged when both coordinates are multiplied by the same nonzero scalar. The recurrence selects a canonical, though not always reduced in more general settings, integral lift of the rational orbit.
-
-**Lemma 3.2 (Sign properties).** For every $n\ge0$,
-
-$$
-a_n\ge0\qquad\text{and}\qquad b_n>0.
-$$
-
-**Proof sketch.** The claim holds at $n=0$. If $a_n\ge0$ and $b_n>0$, then
-
-$$
-a_{n+1}=2a_n+b_n>0,
-$$
-
-and
-
-$$
-b_{n+1}=a_n+2b_n>0.
-$$
-
-Induction proves the assertion. $\square$
-
-**Lemma 3.3 (Coordinate realization of translation).** If $x_n=a_n/b_n$, then
-
-$$
-\frac{a_{n+1}}{b_{n+1}}
-=\frac{a_n}{b_n}\boxplus\frac12.
-$$
-
-**Proof.** Since $b_n>0$ and $a_n+2b_n>0$, all displayed denominators are nonzero. Direct calculation gives
-
-$$
-\begin{aligned}
-\frac{a_n}{b_n}\boxplus\frac12
-&=\frac{a_n/b_n+1/2}{1+(a_n/b_n)(1/2)}\\
-&=\frac{2a_n+b_n}{a_n+2b_n}\\
-&=\frac{a_{n+1}}{b_{n+1}}.
-\end{aligned}
-$$
-
-$\square$
-
-Thus the nonlinear scalar recurrence is exactly the projectivization of a linear integral recurrence.
-
-## 4. Closed forms
-
-There are two complementary derivations of the coordinate formulas.
-
-### 4.1 Sum-and-difference derivation
-
-Define
-
-$$
-u_n=a_n+b_n,
-\qquad
-v_n=b_n-a_n.
-$$
-
-The recurrence gives
-
-$$
-\begin{aligned}
-u_{n+1}
-&=(2a_n+b_n)+(a_n+2b_n)
-=3(a_n+b_n)=3u_n,\\
-v_{n+1}
-&=(a_n+2b_n)-(2a_n+b_n)
-=b_n-a_n=v_n.
-\end{aligned}
-$$
-
-Since $u_0=1$ and $v_0=1$, it follows that
-
-$$
-u_n=3^n,
-\qquad
-v_n=1.
-$$
-
-Solving $a_n+b_n=3^n$ and $b_n-a_n=1$ yields the closed form.
-
-**Theorem 4.1 (Closed-Form Coordinate Theorem).** For every nonnegative integer $n$,
-
-$$
-2a_n=3^n-1,
-\qquad
-2b_n=3^n+1.
-$$
-
-Equivalently,
-
-$$
-a_n=\frac{3^n-1}{2},
-\qquad
-b_n=\frac{3^n+1}{2}.
-$$
-
-**Proof sketch.** The sum $a_n+b_n$ is multiplied by $3$ at each step, while the difference $b_n-a_n$ is invariant. Their initial values are both $1$. Solving the resulting pair of linear equations gives the formulas. Because $3^n$ is odd, the halves are integers. $\square$
-
-### 4.2 Spectral derivation
-
-The matrix $M$ has eigenvectors $(1,1)^T$ and $(-1,1)^T$ with eigenvalues $3$ and $1$, respectively. Since
-
-$$
-\begin{pmatrix}0\\1\end{pmatrix}
-=\frac12\begin{pmatrix}1\\1\end{pmatrix}
-+\frac12\begin{pmatrix}-1\\1\end{pmatrix},
-$$
-
-we have
-
-$$
-M^n\begin{pmatrix}0\\1\end{pmatrix}
-=\frac{3^n}{2}\begin{pmatrix}1\\1\end{pmatrix}
-+\frac12\begin{pmatrix}-1\\1\end{pmatrix}
-=
-\begin{pmatrix}(3^n-1)/2\\(3^n+1)/2\end{pmatrix}.
-$$
-
-This derivation explains why the base $3$ appears: it is the expanding eigenvalue of the integer update matrix.
-
-**Corollary 4.2 (Closed form of the orbit).** For every $n\ge0$,
-
-$$
-x_n=\frac{a_n}{b_n}=\frac{3^n-1}{3^n+1}.
-$$
-
-**Proof sketch.** Substitute the formulas of Theorem 4.1 and cancel the common factor $1/2$. $\square$
-
-## 5. Lorentzian norm and the Diophantine identity
+Arithmetic on a curved quotient requires a canonical choice of quantities. Points or vertices in a hyperbolic tessellation can be labeled in many ways, but labels alone do not define addition, multiplication, divisibility, or primality. By contrast, the trace of a determinant-one Möbius transformation is invariant under conjugation, determines its dynamical type, and is explicitly related to hyperbolic translation length. Trace is therefore a natural arithmetic coordinate for modular hyperbolic dynamics.
 
 Let
 
 $$
-Q(a,b)=b^2-a^2.
+A=\begin{pmatrix}a&b\\c&d\end{pmatrix}
 $$
 
-This indefinite quadratic form is the two-dimensional Lorentzian norm. It factors as
+have integral entries and determinant $ad-bc=1$. It acts by $z\mapsto(az+b)/(cz+d)$ on the upper half-plane; the Poincaré disk model is obtained by conjugating this action. Repetition of the transformation corresponds to the powers $A^n$. The sequence of traces $\operatorname{tr}(A^n)$ turns this group-power orbit into an integer recurrence.
+
+The central observation is functorial: taking a power in stages multiplies indices,
 
 $$
-Q(a,b)=(b-a)(b+a).
+(A^n)^m=A^{mn},
 $$
 
-**Lemma 5.1 (One-step norm scaling).** If
+while the Cayley–Hamilton theorem expresses the trace of a power as a polynomial in the original trace. Consequently, index multiplication is represented by polynomial evaluation. The cases $m=2$ and $m=3$ yield quadratic and cubic laws. The quadratic law further forces a square-factor identity for the trace discriminant.
+
+This paper gives a self-contained account of these statements and their consequences. Section 2 introduces integral Möbius transformations and the universal trace recurrence. Section 3 proves the power interpretation and index-multiplication principle. Section 4 establishes the doubling and tripling laws. Section 5 develops the invariant Pell conic and discriminant factorization. Section 6 treats boundary regimes and spectral coordinates. Sections 7 and 8 present computational algorithms and applications, including modular periodicity and primitive-orbit diagnostics. Section 9 clarifies the scope of the results, and Section 10 lists concrete directions for further study.
+
+## 2. Definitions and basic structure
+
+### 2.1. Integral determinant-one Möbius transformations
+
+An **integral determinant-one Möbius transformation** is represented by a matrix
 
 $$
-(a',b')=(2a+b,a+2b),
+A=\begin{pmatrix}a&b\\c&d\end{pmatrix},
+\qquad a,b,c,d\in\mathbb Z,
+\qquad ad-bc=1.
 $$
 
-then
+Its trace is $\operatorname{tr}(A)=a+d$. Matrices $A$ and $-A$ induce the same fractional linear map, but retaining a representative in $\mathrm{SL}_2(\mathbb Z)$ is convenient for signed trace identities. Conjugation preserves trace, so every formula below is independent of the coordinates used to represent a conjugacy class.
+
+The identity has trace $2$. Matrix multiplication defines powers by $A^0=I$ and $A^{n+1}=AA^n$.
+
+### 2.2. The determinant-one trace recurrence
+
+For $t\in\mathbb Z$, define the sequence $u_n(t)$ by
 
 $$
-Q(a',b')=3Q(a,b).
+u_0(t)=2,\qquad u_1(t)=t,
 $$
 
-**Proof.** Expansion gives
+and
 
 $$
-\begin{aligned}
-Q(a',b')
-&=(a+2b)^2-(2a+b)^2\\
-&=(a^2+4ab+4b^2)-(4a^2+4ab+b^2)\\
-&=3(b^2-a^2)=3Q(a,b).
-\end{aligned}
+u_{n+2}(t)=t\,u_{n+1}(t)-u_n(t)
+\qquad(n\ge0).
 $$
 
-$\square$
-
-**Theorem 5.2 (Exponential Lorentzian Norm Theorem).** For every $n\ge0$,
+We call this the **determinant-one trace recurrence**. Its first terms are
 
 $$
-b_n^2-a_n^2=3^n.
+2,\quad t,\quad t^2-2,\quad t^3-3t,\quad t^4-4t^2+2.
 $$
 
-**Proof sketch.** The initial norm is $Q(a_0,b_0)=1$. Lemma 5.1 multiplies the norm by $3$ at every step, so induction gives $Q(a_n,b_n)=3^n$. Alternatively, Theorem 4.1 gives $b_n-a_n=1$ and $b_n+a_n=3^n$, whose product is $3^n$. $\square$
+Each $u_n(t)$ is a monic polynomial in $t$ of degree $n$ for $n\ge1$. These are normalized Chebyshev polynomials: $u_n(2x)=2T_n(x)$, where $T_n$ is the Chebyshev polynomial of the first kind.
 
-This identity places every coordinate pair on the integer conic
+The recurrence covers every integral parameter through a concrete matrix.
 
-$$
-b^2-a^2=3^n.
-$$
-
-It is stronger than mere rationality of the orbit. The dynamic time $n$ is recorded exactly as the exponent in a Diophantine norm equation.
-
-The matrix identity behind the calculation is
+**Proposition 2.1 (Universal trace realization).** For every integer $t$, there exists an integral determinant-one matrix with trace $t$. One choice is
 
 $$
-M^TJM=3J,
+A_t=\begin{pmatrix}t-1&1\\t-2&1\end{pmatrix}.
+$$
+
+**Proof sketch.** Direct calculation gives $\det A_t=(t-1)-(t-2)=1$ and $\operatorname{tr}(A_t)=(t-1)+1=t$. Thus no restriction on $t$ is hidden in the recurrence. $\square$
+
+### 2.3. Dynamical regimes
+
+For a real determinant-one matrix, trace separates the standard regimes:
+
+- $|t|<2$: elliptic;
+- $|t|=2$: parabolic, including degenerate central representatives;
+- $|t|>2$: hyperbolic.
+
+If $|t|>2$, the eigenvalues are real and reciprocal. Writing the eigenvalues as $\lambda$ and $\lambda^{-1}$ gives
+
+$$
+u_n(t)=\lambda^n+\lambda^{-n}.
+$$
+
+For $t>2$, write $t=2\cosh\theta$ with $\theta>0$; then
+
+$$
+u_n(t)=2\cosh(n\theta).
+$$
+
+This analytic expression is useful for interpretation, but all principal results below are integral polynomial identities and require no division into cases.
+
+## 3. Traces of powers and multiplication of indices
+
+The bridge between group dynamics and recurrence arithmetic is Cayley–Hamilton.
+
+**Theorem 3.1 (Trace recurrence for powers).** Let $A$ be an integral $2\times2$ matrix with determinant $1$ and trace $t$. Then, for every $n\ge0$,
+
+$$
+\operatorname{tr}(A^n)=u_n(t).
+$$
+
+**Proof sketch.** Cayley–Hamilton gives
+
+$$
+A^2-tA+I=0.
+$$
+
+Multiplying by $A^n$ yields $A^{n+2}=tA^{n+1}-A^n$. Taking traces gives the defining recurrence. The initial values are $\operatorname{tr}(I)=2$ and $\operatorname{tr}(A)=t$, so uniqueness of recursively defined sequences proves the claim. $\square$
+
+The group law supplies the index arithmetic.
+
+**Lemma 3.2 (Power-index multiplication).** For every square matrix $A$ and nonnegative integers $m,n$,
+
+$$
+(A^n)^m=A^{mn}.
+$$
+
+**Proof sketch.** Induct on $m$. The case $m=0$ is the identity matrix. If the formula holds for $m$, then $(A^n)^{m+1}=A^n(A^n)^m=A^nA^{mn}=A^{(m+1)n}$. $\square$
+
+Combining Theorem 3.1 and Lemma 3.2 gives a general principle even before the relevant polynomials are named.
+
+**Corollary 3.3 (Index multiplication descends to traces).** For all integers $t$ and all nonnegative integers $m,n$,
+
+$$
+u_{mn}(t)=u_m(u_n(t)).
+$$
+
+**Proof sketch.** Choose a determinant-one integral matrix $A$ with trace $t$ using Proposition 2.1. Then
+
+$$
+u_{mn}(t)=\operatorname{tr}(A^{mn})
+=\operatorname{tr}((A^n)^m)
+=u_m(\operatorname{tr}(A^n))
+=u_m(u_n(t)).
+$$
+
+The last two equalities apply Theorem 3.1 first to $A^n$ and then to $A$. $\square$
+
+This composition law explains why the recurrence polynomials are structurally natural. It also gives $u_m\circ u_n=u_{mn}=u_n\circ u_m$.
+
+## 4. Explicit doubling and tripling laws
+
+The first nontrivial recurrence polynomials are
+
+$$
+u_2(x)=x^2-2,
 \qquad
-J=\begin{pmatrix}-1&0\\0&1\end{pmatrix}.
+u_3(x)=x^3-3x.
 $$
 
-Thus $M$ is an integral Lorentzian similitude with multiplier $3$. The normalized matrix $M/\sqrt3$ preserves $J$ exactly and represents a Lorentz boost.
+Substituting these into Corollary 3.3 produces the main trace-multiplication formulas.
 
-## 6. Disk containment and convergence
-
-**Theorem 6.1 (Strict Disk Containment).** For every $n\ge0$,
+**Theorem 4.1 (Trace Doubling Theorem).** For every integer $t$ and every nonnegative integer $n$,
 
 $$
-\left|\frac{a_n}{b_n}\right|<1.
+u_{2n}(t)=u_n(t)^2-2.
 $$
 
-**Proof sketch.** Lemma 3.2 gives $b_n>0$ and $a_n\ge0$. Theorem 5.2 gives
+**Proof sketch.** Let $B=A^n$. Cayley–Hamilton for $B$ gives $B^2-(\operatorname{tr}B)B+I=0$. Taking traces and using $\operatorname{tr}(I)=2$ yields $\operatorname{tr}(B^2)=(\operatorname{tr}B)^2-2$. Since $B^2=A^{2n}$ and $\operatorname{tr}(A^k)=u_k(t)$, the formula follows. Equivalently, use Corollary 3.3 with $m=2$. $\square$
+
+**Theorem 4.2 (Trace Tripling Theorem).** For every integer $t$ and every nonnegative integer $n$,
 
 $$
-b_n^2-a_n^2=3^n>0.
+u_{3n}(t)=u_n(t)^3-3u_n(t).
 $$
 
-Hence $b_n^2>a_n^2$. Positivity implies $b_n>a_n\ge0$, and division by $b_n$ yields $0\le a_n/b_n<1$. $\square$
+**Proof sketch.** Multiply $B^2-(\operatorname{tr}B)B+I=0$ by $B$ and take traces. Substitution of $\operatorname{tr}(B^2)=(\operatorname{tr}B)^2-2$ gives $\operatorname{tr}(B^3)=(\operatorname{tr}B)^3-3\operatorname{tr}B$. Set $B=A^n$. Equivalently, apply Corollary 3.3 with $m=3$. $\square$
 
-This proof is notable because disk containment is deduced from an integer norm equation. No approximation or limiting argument is needed.
+### 4.1. Numerical example
 
-**Corollary 6.2 (Monotonicity and boundary convergence).** The sequence $(x_n)$ is strictly increasing and converges to $1$. Its Euclidean boundary gap is
-
-$$
-1-x_n=\frac{2}{3^n+1}.
-$$
-
-**Proof sketch.** The closed form immediately gives the boundary-gap identity, which tends to zero. Strict increase follows because $3^{n+1}>3^n$ and the function $t\mapsto(t-1)/(t+1)$ is strictly increasing for $t>0$. $\square$
-
-### 6.1 Rapidity interpretation
-
-Because
+For $t=3$, the recurrence gives
 
 $$
-\operatorname{artanh}\left(\frac12\right)
-=\frac12\log\frac{1+1/2}{1-1/2}
-=\frac12\log 3,
+(u_0,u_1,u_2,u_3,u_4,u_5)=(2,3,7,18,47,123).
 $$
 
-Lemma 2.2 implies
+Doubling at $n=5$ predicts
 
 $$
-\operatorname{artanh}(x_n)=\frac{n\log3}{2}.
+u_{10}=123^2-2=15127.
 $$
 
-**Corollary 6.3 (Equal hyperbolic spacing).** For every $n\ge0$,
+Tripling at $n=4$ predicts
 
 $$
-x_n=\tanh\left(\frac{n\log3}{2}\right).
+u_{12}=47^3-3\cdot47=103682.
 $$
 
-Hence consecutive orbit points are equally spaced in rapidity, even though their Euclidean gaps shrink exponentially.
+Direct recurrence computation gives the same values. These examples illustrate that a distant term can be reconstructed from a single intermediate trace.
 
-**Proof sketch.** Iterating rapidity addition from $x_0=0$ gives $n$ times the rapidity of $1/2$. Applying $\tanh$ yields the statement. The identity agrees with Corollary 4.2 because $\tanh(t/2)=(e^t-1)/(e^t+1)$. $\square$
+## 5. Pell-conic geometry and discriminant factorization
 
-## 7. Main synthesis
+### 5.1. The invariant conic
 
-**Theorem 7.1 (Möbius–Diophantine Bridge Theorem).** Let $(a_n,b_n)$ be the integer sequence defined by
+The trace recurrence preserves a binary quadratic expression.
+
+**Theorem 5.1 (Pell-Conic Invariant).** For every integer $t$ and every $n\ge0$,
 
 $$
-(a_0,b_0)=(0,1),
+u_n(t)^2-t\,u_n(t)u_{n+1}(t)+u_{n+1}(t)^2=4-t^2.
+$$
+
+Hence every consecutive pair $(u_n(t),u_{n+1}(t))$ is an integral point on
+
+$$
+x^2-txy+y^2=4-t^2.
+$$
+
+**Proof sketch.** Define $F(x,y)=x^2-txy+y^2$. One recurrence step sends $(x,y)$ to $(y,ty-x)$. Expanding shows
+
+$$
+F(y,ty-x)=F(x,y).
+$$
+
+At $(u_0,u_1)=(2,t)$, the value is $4-2t^2+t^2=4-t^2$. Invariance under every step proves the formula. $\square$
+
+For hyperbolic $|t|>2$, set $D=t^2-4>0$. The conic becomes
+
+$$
+x^2-txy+y^2=-D.
+$$
+
+The discriminant of the binary quadratic form is $D$. Thus a group-power orbit gives a distinguished sequence of integral points on a Pell-type conic. The recurrence transition
+
+$$
+\begin{pmatrix}x\\y\end{pmatrix}
+\longmapsto
+\begin{pmatrix}0&1\\-1&t\end{pmatrix}
+\begin{pmatrix}x\\y\end{pmatrix}
+$$
+
+has determinant $1$ and preserves the quadratic form.
+
+### 5.2. Doubling and the trace discriminant
+
+Define the trace discriminant at index $n$ by
+
+$$
+\Delta_n=u_n(t)^2-4.
+$$
+
+The doubling law gives an exact factorization.
+
+**Theorem 5.2 (Doubled Discriminant Factorization).** For every integer $t$ and every $n\ge0$,
+
+$$
+u_{2n}(t)^2-4
+=igl(u_n(t)^2-4\bigr)u_n(t)^2.
+$$
+
+**Proof sketch.** Substitute $u_{2n}=u_n^2-2$ and expand:
+
+$$
+(u_n^2-2)^2-4=u_n^4-4u_n^2=(u_n^2-4)u_n^2.
+$$
+
+No sign or nondegeneracy assumption is required. $\square$
+
+Changing signs gives the corresponding Pell-parameter statement.
+
+**Corollary 5.3 (Doubling morphism for the Pell parameter).** For every integer $t$ and every $n\ge0$,
+
+$$
+4-u_{2n}(t)^2
+=igl(4-u_n(t)^2\bigr)u_n(t)^2.
+$$
+
+Thus doubling multiplies $u_n^2-4$ by a square. In any setting where square classes are meaningful, $\Delta_{2n}$ and $\Delta_n$ represent the same square class, except that a zero value remains zero. This is a concrete algebraic signature of an even power.
+
+### 5.3. Compatibility with the conic
+
+The conic invariant concerns consecutive traces, whereas Theorem 5.2 concerns one trace and its doubled index. Their compatibility follows from the common matrix origin. The point $(u_n,u_{n+1})$ is advanced by an invertible isometry of the binary quadratic form, while index doubling replaces $A^n$ by $(A^n)^2$. The scalar trace coordinate changes by $x\mapsto x^2-2$, and its discriminant changes by multiplication with $x^2$. Thus recurrence dynamics, conic geometry, and polynomial iteration are different projections of one power operation.
+
+## 6. Uniformity across dynamical regimes
+
+The formulas have no exceptional trace parameters.
+
+### 6.1. Parabolic boundaries
+
+For $t=2$, the recurrence gives $u_n=2$ for all $n$. The doubling formula is $2=2^2-2$, and Theorem 5.2 reads $0=0\cdot4$. The discriminant vanishes identically.
+
+For $t=-2$, one obtains $u_n=2(-1)^n$. Again $u_n^2-4=0$ for every $n$, and both multiplication formulas hold. Retaining these cases matters: they show that the factorization correctly records parabolic degeneration rather than requiring division by a vanishing discriminant.
+
+### 6.2. Elliptic traces
+
+When $t=2\cos\theta$, the recurrence has the expression
+
+$$
+u_n(t)=2\cos(n\theta).
+$$
+
+The quadratic and cubic trace laws reduce to the familiar multiple-angle identities for cosine. For integral $t$ with $|t|<2$, only $t=-1,0,1$ occur, and the resulting sequences are periodic.
+
+### 6.3. Hyperbolic traces and lengths
+
+For a hyperbolic transformation, let $\ell$ be its translation length. Up to the sign of the chosen matrix representative,
+
+$$
+|t|=2\cosh(\ell/2).
+$$
+
+Since $A^n$ has translation length $n\ell$, the identity
+
+$$
+|u_n(t)|=2\cosh(n\ell/2)
+$$
+
+is geometrically expected. The trace multiplication formulas are precisely the polynomial versions of multiplying lengths inside the hyperbolic cosine. Unlike the length itself, trace remains integral for integral matrices and is therefore suited to arithmetic analysis.
+
+## 7. Algorithms
+
+### 7.1. Linear recurrence evaluation
+
+The most direct method stores two consecutive values.
+
+**Algorithm 7.1 (Sequential trace recurrence).** Given integers $t$ and $n\ge0$, initialize $(x,y)=(2,t)$. Repeat $(x,y)\leftarrow(y,ty-x)$ exactly $n$ times, then return $x$.
+
+**Correctness.** After $k$ iterations, the pair is $(u_k,u_{k+1})$ by induction on $k$. Therefore the returned value is $u_n$.
+
+**Complexity.** The method performs $O(n)$ integer additions and multiplications. It uses $O(1)$ stored integers, although their bit length grows with $n$ in the hyperbolic regime.
+
+### 7.2. Matrix binary exponentiation
+
+Binary exponentiation computes $A_t^n$ in $O(\log n)$ matrix multiplications and then takes the trace.
+
+**Algorithm 7.2 (Binary matrix trace evaluation).** Set $R=I$, $B=A_t$, and $k=n$. While $k>0$, multiply $R$ by $B$ if $k$ is odd, replace $B$ by $B^2$, and replace $k$ by $\lfloor k/2\rfloor$. Return $\operatorname{tr}(R)$.
+
+**Correctness.** The loop invariant is $RB^k=A_t^n$. When $k=0$, this gives $R=A_t^n$. Theorem 3.1 then identifies its trace with $u_n(t)$.
+
+**Complexity.** There are $O(\log n)$ multiplications of $2\times2$ integer matrices. Bit complexity depends on the growth of the entries; for fixed hyperbolic $t$, their bit length is $O(n)$.
+
+### 7.3. Polynomial index jumps
+
+When an index is repeatedly doubled or tripled, Theorems 4.1 and 4.2 give scalar updates
+
+$$
+D(x)=x^2-2,
 \qquad
-(a_{n+1},b_{n+1})=(2a_n+b_n,a_n+2b_n).
+T(x)=x^3-3x.
 $$
 
-Define $x_n=a_n/b_n$ and define Möbius addition by
+Starting from $u_n$, one may compute $u_{2^a3^b n}$ by composing $D$ and $T$ in any order, because both represent multiplication of the index and hence commute on trace values. This requires $a+b$ scalar polynomial evaluations. For arbitrary indices, matrix exponentiation or a full addition-chain implementation is preferable, since knowing one trace alone does not support an addition formula without additional state.
+
+### 7.4. Modular orbit detection
+
+For modulus $q>1$, reduce the pair transition modulo $q$:
 
 $$
-x\boxplus y=\frac{x+y}{1+xy}.
+F_t(x,y)=(y,ty-x)\pmod q.
 $$
 
-Then, for every nonnegative integer $n$, all of the following hold:
-
-1. $|x_n|<1$, so $x_n$ lies strictly inside the Poincaré diameter;
-2. $x_{n+1}=x_n\boxplus 1/2$;
-3. $b_n^2-a_n^2=3^n$;
-4. $2a_n=3^n-1$;
-5. $2b_n=3^n+1$.
-
-**Proof sketch.** The sign properties follow inductively from the recurrence. Lemma 3.3 proves that projectivizing the integer update yields Möbius translation by $1/2$. The sum and difference of the coordinates evolve as $a_n+b_n=3^n$ and $b_n-a_n=1$, proving the closed forms. Their product gives the Lorentzian norm identity. Finally, positivity of that norm and of $b_n$ implies $|a_n/b_n|<1$. $\square$
-
-The theorem gives three equivalent descriptions of the same orbit:
+Its inverse is
 
 $$
-\boxed{
-\frac{a_n}{b_n}
-=rac{3^n-1}{3^n+1}
-=	anh\left(\frac{n\log3}{2}\right)
-}
+F_t^{-1}(x,y)=(tx-y,x)\pmod q.
 $$
 
-with
+**Proposition 7.3 (Pure modular periodicity).** For every integer $t$ and modulus $q>1$, the sequence $(u_n(t),u_{n+1}(t))\bmod q$ is purely periodic.
+
+**Proof sketch.** The state space has $q^2$ elements, so repetition is inevitable. Because $F_t$ is a bijection, every state lies on a cycle; an orbit cannot have a nonrepeating prefix feeding into a cycle. In particular, the initial pair $(2,t)$ returns after finitely many steps. $\square$
+
+A dictionary-based implementation finds the exact period in at most $q^2$ transitions and uses $O(q^2)$ states in the worst case. Since the transition matrix belongs to $\mathrm{SL}_2(\mathbb Z/q\mathbb Z)$, the period also divides its group-theoretic order.
+
+## 8. Applications and interpretation
+
+### 8.1. Primitive versus imprimitive powers
+
+A hyperbolic conjugacy class is **primitive** if it is not a proper positive power of another class. Closed geodesics inherit the same distinction. If $A=B^2$, then
 
 $$
-\boxed{b_n^2-a_n^2=3^n.}
+\operatorname{tr}(A)=\operatorname{tr}(B)^2-2,
 $$
 
-## 8. Algorithms
-
-### 8.1 Iterative homogeneous-coordinate algorithm
-
-The most direct exact algorithm stores $(a,b)$ and repeatedly applies
+and its discriminant has the special form
 
 $$
-(a,b)\leftarrow(2a+b,a+2b).
+\operatorname{tr}(A)^2-4
+=igl(\operatorname{tr}(B)^2-4\bigr)\operatorname{tr}(B)^2.
 $$
 
-After $n$ updates it returns $(a_n,b_n)$. It uses $O(n)$ integer-update steps and constant auxiliary storage. Since the output has $\Theta(n)$ bits, the bit cost depends on the integer-arithmetic model; with schoolbook addition, each update costs linear time in the current bit length, giving $O(n^2)$ aggregate bit operations up to constants.
+Similarly, a cube has trace $x^3-3x$. These conditions provide computable necessary signatures of imprimitive classes. They are not by themselves complete primitivity tests: different conjugacy classes may share a trace, and solving a polynomial trace equation does not automatically produce an integral group root. Nevertheless, the formulas isolate arithmetic exclusion maps that can be combined with conjugacy and Pell-conic data.
 
-An implementation should compute both new values from the old pair before assignment. In-place sequential replacement would corrupt the recurrence.
+### 8.2. Counting in trace coordinates
 
-### 8.2 Closed-form exponentiation algorithm
-
-Compute $u=3^n$ by exponentiation by squaring, then return
+For hyperbolic $A$, trace and geodesic length satisfy $|\operatorname{tr}A|=2\cosh(\ell/2)$. Hence a trace bound $|\operatorname{tr}A|\le X$ is equivalent to
 
 $$
-a=(u-1)/2,\qquad b=(u+1)/2.
+\ell\le2\operatorname{arcosh}(X/2).
 $$
 
-This uses $O(\log n)$ integer multiplications. The integers still contain $\Theta(n)$ bits, so output size remains unavoidable. This method is ideal for the specific step $1/2$ because the spectral decomposition is explicit.
+This allows questions about primitive closed geodesics to be translated into integral trace coordinates. Such a counting problem is canonical because trace is conjugacy-invariant. It avoids assigning arithmetic meaning to arbitrary tessellation labels.
 
-### 8.3 Matrix-powering algorithm
+### 8.3. Polynomial dynamics
 
-For extensibility, compute
-
-$$
-M^n\begin{pmatrix}0\\1\end{pmatrix}
-$$
-
-by binary exponentiation. This takes $O(\log n)$ two-by-two matrix multiplications and constant matrix storage. It is less specialized than the closed form and generalizes immediately to rational translations represented by other symmetric integer matrices.
-
-### 8.4 Exact validation protocol
-
-For each selected $n$, compute $(a_n,b_n)$ and test the identities
+The doubling map $D(x)=x^2-2$ is a classical polynomial dynamical system. Here it has a precise group-theoretic interpretation: iterating $D$ on $u_n$ yields
 
 $$
-2a_n=3^n-1,
+D^{\circ k}(u_n)=u_{2^kn}.
+$$
+
+Likewise, the cubic map $T(x)=x^3-3x$ gives $T^{\circ k}(u_n)=u_{3^kn}$. More generally, the polynomials $u_m(x)$ form a commuting semigroup under composition indexed multiplicatively by positive integers. Integral Möbius dynamics therefore supplies a geometric realization of Chebyshev polynomial iteration.
+
+### 8.4. Finite-ring experiments
+
+Reducing the recurrence modulo $q$ creates an invertible finite dynamical system. The identities survive reduction:
+
+$$
+u_{2n}\equiv u_n^2-2\pmod q,
 \qquad
-2b_n=3^n+1,
+u_{3n}\equiv u_n^3-3u_n\pmod q.
+$$
+
+These constraints can accelerate consistency checks, stratify periods, and expose exceptional behavior at primes dividing $t^2-4$. The discriminant factorization also indicates that doubling preserves an appropriate modular square-class relation whenever that notion is defined.
+
+### 8.5. Stability under conjugacy and choice of model
+
+If $S$ is an invertible real matrix, then $A$ and $SAS^{-1}$ describe the same transformation in changed coordinates. For every $n$,
+
+$$
+(SAS^{-1})^n=SA^nS^{-1},
+$$
+
+so cyclicity of trace gives $\operatorname{tr}((SAS^{-1})^n)=\operatorname{tr}(A^n)$. The recurrence parameter, every term $u_n$, the doubling and tripling laws, and the discriminant factorization are consequently conjugacy-invariant. Passing between the upper half-plane and disk models therefore changes none of the arithmetic developed here.
+
+### 8.6. Growth and numerical representation
+
+For fixed hyperbolic $t$ with dominant eigenvalue $|\lambda|>1$, one has $|u_n|\asymp|\lambda|^n$. Thus the bit length of $u_n$ is $\Theta(n\log|\lambda|)$. An algorithm using $O(\log n)$ algebraic stages does not have polylogarithmic bit cost, because it must output an integer with linearly many bits in $n$. This distinction is important when comparing sequential recurrence, scalar polynomial jumps, and binary matrix exponentiation. The latter two reduce the number of stages, while fast big-integer arithmetic governs the cost inside each stage.
+
+The discriminant identity itself offers a useful exact check for implementations. Given independently computed $u_n$ and $u_{2n}$, the residual
+
+$$
+r=u_{2n}^2-4-(u_n^2-4)u_n^2
+$$
+
+must vanish. Together with the Pell-conic residual, this detects many indexing and arithmetic errors without relying on floating-point approximations.
+
+## 9. Scope and limitations
+
+The results establish exact arithmetic for traces of powers. They do not define a ring of tessellation vertices, prove unique factorization for geometric points, establish a prime-geodesic asymptotic, construct a spectral zeta function, or locate its zeros. Those are distinct tasks requiring precise definitions and substantial analytic input.
+
+In particular, a finite numerical check of zeros cannot establish a critical-line theorem, and a series over an unspecified “hyperbolic norm” is not automatically a canonical zeta function. A mathematically stable route is to begin with primitive conjugacy classes, their lengths, and established spectral constructions, then translate into trace coordinates where possible.
+
+The present framework contributes three ingredients to that route. First, it identifies trace as a canonical integral coordinate. Second, it shows exactly how composite power indices appear through trace polynomials. Third, it connects traces to an invariant Pell conic and a square-factor discriminant law. These are algebraic foundations rather than analytic conclusions.
+
+## 10. Future directions
+
+### 10.1. Universal trace multiplication polynomials
+
+For every positive integer $m$, define the monic integral polynomial $C_m(x)=u_m(x)$. Corollary 3.3 suggests systematic study of
+
+$$
+u_{mn}(t)=C_m(u_n(t)),
 \qquad
-b_n^2-a_n^2=3^n.
+C_m\circ C_n=C_{mn}.
 $$
 
-Then compare the exact rational orbit value $a_n/b_n$ with the Möbius update from the previous term using cross multiplication, avoiding floating-point error. Floating-point values are appropriate only for visualization.
-
-## 9. Numerical examples
-
-The first eight coordinate pairs are
-
-| $n$ | $a_n$ | $b_n$ | $x_n=a_n/b_n$ | $b_n^2-a_n^2$ |
-|---:|---:|---:|---:|---:|
-| $0$ | $0$ | $1$ | $0$ | $1$ |
-| $1$ | $1$ | $2$ | $0.5$ | $3$ |
-| $2$ | $4$ | $5$ | $0.8$ | $9$ |
-| $3$ | $13$ | $14$ | $0.928571\ldots$ | $27$ |
-| $4$ | $40$ | $41$ | $0.975609\ldots$ | $81$ |
-| $5$ | $121$ | $122$ | $0.991803\ldots$ | $243$ |
-| $6$ | $364$ | $365$ | $0.997260\ldots$ | $729$ |
-| $7$ | $1093$ | $1094$ | $0.999085\ldots$ | $2187$ |
-
-Two patterns are visible. First, $b_n-a_n=1$, so the coordinate fractions are already reduced. Second, the Euclidean ratios crowd near $1$, while their rapidities form the arithmetic progression
+A central target is the general factorization
 
 $$
-0,\ \frac{
-\log3}{2},\ \log3,\ \frac{3\log3}{2},\ldots.
+C_m(x)^2-4=(x^2-4)Q_m(x)^2
 $$
 
-## 10. Applications and interpretation
+for an integral polynomial $Q_m$. The doubled discriminant theorem gives $Q_2(x)=x$. Establishing the family uniformly would clarify how every composite index transforms square classes.
 
-### 10.1 Hyperbolic dynamics
+### 10.2. Effective finite-ring periods
 
-The orbit is a discrete geodesic translation. Its bounded coordinate approaches the disk boundary, while its intrinsic displacement grows linearly. This makes it a simple exact model for comparing Euclidean display coordinates with hyperbolic distance.
-
-### 10.2 Special relativity
-
-Interpreting $x_n$ as a velocity in units of the limiting speed, the operation $\boxplus$ is Einstein velocity addition. Repeatedly composing velocity $1/2$ produces $x_n$. Rapidity is additive, and the matrix $M/\sqrt3$ is a Lorentz transformation. The integral lift supplies exact rational velocities for all finite $n$.
-
-### 10.3 Diophantine arithmetic
-
-Every time step gives an integer solution to
+The pair recurrence is purely periodic modulo every $q>1$. The next problem is to determine effective bounds and characterize maximal periods. Since the transition matrix
 
 $$
-b^2-a^2=3^n.
+M_t=\begin{pmatrix}0&1\\-1&t\end{pmatrix}
 $$
 
-Here the solutions are particularly rigid because $b-a=1$ and $b+a=3^n$. The recurrence demonstrates how an orbit under fractional-linear dynamics can generate a structured family of exponential Diophantine solutions.
+lies in $\mathrm{SL}_2(\mathbb Z/q\mathbb Z)$, the period of the initial pair divides the order of $M_t$. Sharp formulas should depend on the factorization of $q$ and on the discriminant $t^2-4$.
 
-### 10.4 Exact computation and testing
+### 10.3. Primitive Pell points and primitive geodesics
 
-The identities provide mutual checks for implementations of Möbius dynamics. Recurrence, closed form, matrix power, and rapidity all compute the same orbit through mathematically distinct routes. Agreement among them is useful for testing exact-arithmetic and visualization software.
-
-## 11. General rational translations
-
-Let $p,q\in\mathbb Z$ with $q\ne0$, and consider the rational step $p/q$. If $x=a/b$, then
+For nonsquare positive $D=t^2-4$, one should characterize which points on
 
 $$
-x\boxplus\frac pq
-=\frac{qa+pb}{pa+qb}.
+x^2-txy+y^2=-D
 $$
 
-This motivates the homogeneous update
+arise from primitive powers of primitive modular conjugacy classes. Group-theoretic primitivity is subtler than $\gcd(x,y)=1$. Doubling and tripling provide explicit maps whose images mark some imprimitive indices.
+
+### 10.4. Prime-geodesic counting by trace
+
+Let $P(X)$ count primitive hyperbolic conjugacy classes whose absolute trace is at most $X$. An effective asymptotic for $P(X)$ should be obtained by translating geodesic-length estimates through
 
 $$
-\begin{pmatrix}a'\\b'\end{pmatrix}
-=
-\begin{pmatrix}q&p\\p&q\end{pmatrix}
-\begin{pmatrix}a\\b\end{pmatrix}.
+|\operatorname{tr}A|=2\cosh(\ell(A)/2).
 $$
 
-A direct expansion yields
+The trace/Pell model supplies a precise counting coordinate and may help organize arithmetic refinements of such estimates.
+
+## 11. Conclusion
+
+For integral determinant-one Möbius transformations, the trace sequence of powers is governed by a universal second-order recurrence. Repeating a power multiplies its index, and Cayley–Hamilton turns that multiplication into polynomial evaluation. The first two laws are
 
 $$
-b'^2-a'^2=(q^2-p^2)(b^2-a^2).
-$$
-
-Thus the multiplier $3$ in the present work is the special value $2^2-1^2$. When $|p|<|q|$, this multiplier is positive and the step $p/q$ lies inside the diameter. The eigenvalues are $q+p$ and $q-p$, suggesting closed forms
-
-$$
-a_n=\frac{(q+p)^n-(q-p)^n}{2},
+u_{2n}=u_n^2-2,
 \qquad
-b_n=\frac{(q+p)^n+(q-p)^n}{2}
+u_{3n}=u_n^3-3u_n.
 $$
 
-for the orbit initialized at $(0,1)$, subject to the expected parity and normalization considerations. Common factors may appear, so homogeneous coordinates and reduced rational coordinates must be distinguished.
-
-This family points toward quadratic forms $b^2-Da^2$. Matrices preserving or scaling such forms connect hyperbolic transformations with Pell equations and units in real quadratic orders.
-
-## 12. Scope and limitations
-
-The established results concern one geodesic diameter and one translation. They do not by themselves define a ring of “hyperbolic integers.” If a set is described as an orbit under a discrete group, ordinary addition and multiplication need not descend to that orbit. A complete arithmetic theory would need:
-
-1. a precisely specified carrier set;
-2. well-defined addition and multiplication;
-3. closure, associativity, identities, and distributivity;
-4. independence from choices of representatives;
-5. a definition of units and irreducibles;
-6. a theorem connecting any geometric notion of prime to algebraic irreducibility.
-
-Likewise, vertices of a hyperbolic tessellation are geometric objects, not automatically prime elements. Statements about unique factorization are meaningful only after the ambient algebraic structure is fixed.
-
-Prime-counting proposals also require care. A counting function must specify a locally finite set, a base point, a metric or height, and a radius convention. Hyperbolic area grows exponentially in hyperbolic distance, whereas Euclidean area in a displayed disk behaves differently. An expression involving $R^2/\log R$ can have entirely different meaning depending on whether $R$ denotes hyperbolic distance, Euclidean radius, matrix norm, or arithmetic height.
-
-Finally, no zeta functional equation or critical-line theorem follows from the present one-dimensional recurrence. Such assertions require a separately defined spectrum or Dirichlet series, an analytic continuation, and substantial analytic theory.
-
-## 13. Future work
-
-The immediate next step is to establish the rational-$p/q$ construction uniformly, including disk containment for $|p|<|q|$, exact Lorentzian norm scaling, and a careful account of coordinate primitivity. A second direction is to derive the rapidity formula
+Doubling also produces the exact factorization
 
 $$
-x_n=\tanh\left(n\operatorname{artanh}(p/q)\right)
+u_{2n}^2-4=(u_n^2-4)u_n^2,
 $$
 
-and use it to prove monotonicity and boundary convergence whenever $0<p/q<1$.
-
-A third direction replaces $b^2-a^2$ by $b^2-Da^2$. This should expose the relation between hyperbolic matrix actions and units of real quadratic orders. A fourth develops determinant-one real matrices acting on the upper half-plane, transports the action to the disk by a Cayley transformation, and identifies the current construction as a geodesic restriction.
-
-Only after these foundations are in place should one attempt a broader arithmetic of discrete hyperbolic orbits. The operations, primes, factorization laws, counting parameters, and analytic generating functions must be specified independently and then related to the geometry by theorems.
-
-## 14. Conclusion
-
-Repeated Möbius translation by $1/2$ on the Poincaré diameter admits an exact integral lift. The coordinate matrix
+while consecutive traces remain on the invariant Pell conic
 
 $$
-\begin{pmatrix}2&1\\1&2\end{pmatrix}
+x^2-txy+y^2=4-t^2.
 $$
 
-has expanding and fixed eigenvalues $3$ and $1$, producing the coordinate formulas
-
-$$
-(a_n,b_n)=\left(\frac{3^n-1}{2},\frac{3^n+1}{2}\right).
-$$
-
-The same matrix scales the Lorentzian form $b^2-a^2$ by $3$, giving
-
-$$
-b_n^2-a_n^2=3^n.
-$$
-
-This positivity keeps every ratio $a_n/b_n$ strictly inside the disk. Meanwhile, rapidity reveals that the orbit consists of equally spaced hyperbolic points:
-
-$$
-\frac{a_n}{b_n}
-=\frac{3^n-1}{3^n+1}
-=\tanh\left(\frac{n\log3}{2}\right).
-$$
-
-The result is a self-contained instance in which curved geometry, integer recurrence, Lorentzian structure, and Diophantine arithmetic coincide exactly. It supplies a precise foundation for broader investigations of arithmetic generated by hyperbolic dynamics while making clear which additional definitions those investigations require.
-
-## Appendix A. Additional structural consequences
-
-The closed forms yield several elementary consequences that help characterize the orbit.
-
-**Proposition A.1 (Consecutive-coordinate property).** For every $n\ge0$,
-
-$$
-b_n-a_n=1.
-$$
-
-Consequently, $\gcd(a_n,b_n)=1$, so the homogeneous representation $a_n/b_n$ is reduced.
-
-**Proof sketch.** Subtract the two recurrence equations to obtain
-
-$$
-b_{n+1}-a_{n+1}=b_n-a_n.
-$$
-
-The difference is therefore constant and equals its initial value $1$. Any common divisor of two integers divides their difference, so a common divisor of $a_n$ and $b_n$ must divide $1$. $\square$
-
-**Proposition A.2 (Exact Euclidean increment).** For every $n\ge0$,
-
-$$
-x_{n+1}-x_n=\frac{4\cdot 3^n}{(3^{n+1}+1)(3^n+1)}.
-$$
-
-In particular, every increment is positive and the increments decay asymptotically like $4/3^{n+1}$.
-
-**Proof sketch.** Substitute $x_n=(3^n-1)/(3^n+1)$ and combine the two fractions. The numerator simplifies to $4\cdot3^n$. Positivity is immediate, and division of numerator and denominator by $3^{2n+1}$ gives the asymptotic behavior. $\square$
-
-**Proposition A.3 (Semigroup law for orbit indices).** For all nonnegative integers $m$ and $n$,
-
-$$
-x_m\boxplus x_n=x_{m+n}.
-$$
-
-**Proof sketch.** By Corollary 6.3, $x_k=\tanh(k\log3/2)$. The hyperbolic tangent addition formula therefore gives
-
-$$
-x_m\boxplus x_n
-=\tanh\left(\frac{m\log3}{2}+\frac{n\log3}{2}\right)
-=x_{m+n}.
-$$
-
-This identifies the nonnegative orbit with an additive semigroup under Möbius addition. $\square$
-
-The last proposition is an arithmetic law intrinsic to this particular orbit: adding indices corresponds exactly to Möbius-adding orbit points. It should not be confused with a full ring structure, since no compatible multiplication has been specified.
-
-## Appendix B. Reproducible computational protocol
-
-A numerical experiment should preserve the distinction between exact arithmetic and visualization. First generate $(a_n,b_n)$ using arbitrary-precision integers. Second verify the recurrence and the three integer identities by equality tests. Third form rational values only when displaying fractions; a rational type represented by numerator and denominator avoids rounding. Finally convert to floating point solely for plotting $x_n$, the boundary gap $1-x_n$, or rapidity.
-
-A robust experiment compares independent computational paths. The iterative recurrence and the closed formula should produce identical integer pairs. Matrix exponentiation supplies a third path. The Möbius-step identity can be checked without division by cross-multiplying the rational numerators and denominators. For rapidity plots, finite floating-point precision eventually rounds $x_n$ to $1$, so the stable expression $n\log3/2$ should be used instead of numerically evaluating $\operatorname{artanh}(x_n)$ at large $n$.
-
-### Computational scale
-
-The recurrence remains exact at scales where decimal coordinates become visually uninformative. At iteration $n$, both $a_n$ and $b_n$ have approximately $n\log_2 3$ binary digits, while the ratio differs from $1$ by about $2\cdot3^{-n}$. Standard floating-point arithmetic therefore rounds the ratio to $1$ after relatively few iterations even though the integer pair continues to encode a point strictly inside the disk. This contrast is not a defect of the mathematics; it is a reminder that bounded geometric coordinates can lose visible resolution near an ideal boundary. Exact integers, rational fractions, logarithmic gaps, and rapidity each preserve a different aspect of the orbit. A reproducible computation should select the representation appropriate to the question rather than treating one decimal approximation as the entire state.
+Together these statements form a coherent arithmetic system linking group powers, polynomial dynamics, integral recurrences, quadratic Diophantine geometry, modular periodicity, and hyperbolic length. They show that the arithmetic of curved motion is most naturally sought not in arbitrary vertex labels but in conjugacy-invariant coordinates already encoded by the geometry.

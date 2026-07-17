@@ -1,225 +1,206 @@
-# Arithmetic Along a Curved Line
+# When Curved Motion Becomes Integer Arithmetic
 
-## How a simple hyperbolic step turns into an exact Diophantine equation
+## A trace turns geometry into a recurrence
 
-Ordinary arithmetic feels inseparable from a straight line. Start at zero, take equal steps, and the integers appear in order. Addition means combining displacements. Multiplication means repeating them. Yet the geometry of the world need not be flat, and on a curved space even the meaning of an “equal step” changes.
+Imagine standing inside the Poincaré disk, the circular map on which straight hyperbolic roads appear as arcs bending toward the boundary. Repeating one symmetry of this space sends a point along an orbit: one step, two steps, three steps, and onward. The orbit is geometric, but hidden inside it is a remarkably crisp arithmetic clock.
 
-The Poincaré disk is one of the most vivid models of hyperbolic geometry. It looks like an ordinary open unit disk, but distance is distorted: points near the circular edge are much farther away than they appear. The boundary can be approached forever but never reached in finite hyperbolic distance. A geodesic through the center is an ordinary Euclidean diameter, so one can investigate curved arithmetic without leaving a line segment. Write its points as rational or real numbers $x$ with $-1<x<1$.
-
-On this diameter, the natural rule for composing directed hyperbolic displacements is not ordinary addition. It is Möbius addition,
+Represent the symmetry by an integer matrix
 
 $$
-x\boxplus y=\frac{x+y}{1+xy}.
+A=\begin{pmatrix}a&b\\c&d\end{pmatrix},\qquad ad-bc=1.
 $$
 
-This same expression appears in Einstein’s rule for adding velocities when the speed of light is normalized to $1$. If two subluminal velocities satisfy $|x|<1$ and $|y|<1$, their relativistic combination remains subluminal. Hyperbolic geometry and special relativity are speaking the same algebraic language.
+Such a matrix acts on the upper half-plane by the fractional transformation $z\mapsto (az+b)/(cz+d)$; after a change of picture, the same motion acts on the Poincaré disk. Its trace is the integer $t=a+d$. Although changing coordinates can alter the four entries, conjugating the transformation does not alter $t$. Trace is therefore an intrinsic label for the motion.
 
-Now choose one concrete step: $1/2$. Begin at $x_0=0$ and repeatedly translate by that amount:
-
-$$
-x_{n+1}=x_n\boxplus \frac12.
-$$
-
-The first few points are
+Now define $u_n(t)$ to be the trace after the motion has been repeated $n$ times. The entire sequence obeys
 
 $$
-0,\quad \frac12,\quad \frac45,\quad \frac{13}{14},\quad \frac{40}{41},\quad \frac{121}{122},\ldots
+u_0(t)=2,\qquad u_1(t)=t,\qquad
+u_{n+2}(t)=t\,u_{n+1}(t)-u_n(t).
 $$
 
-The orbit races toward $1$ in its displayed Euclidean coordinate, but it never leaves the disk. More unexpectedly, its numerators and denominators obey an exact equation that looks as though it belongs to classical number theory.
+This is the determinant-one trace recurrence. It is the central character in our story. It replaces a tempting but ambiguous idea—trying to invent addition and multiplication directly on the vertices of a hyperbolic tessellation—with arithmetic attached to a canonical geometric quantity.
 
-## Integer coordinates hidden inside a fractional transformation
-
-Write $x_n=a_n/b_n$ using the particular homogeneous integer coordinates defined by
+Every integer can play the role of the initial trace. For any $t\in\mathbb Z$, the matrix
 
 $$
-(a_0,b_0)=(0,1)
+A_t=\begin{pmatrix}t-1&1\\t-2&1\end{pmatrix}
 $$
 
-and
+has determinant $1$ and trace $t$. Thus the recurrence is not an artificial numerical toy: each one of its integer parameters comes from a genuine integral Möbius transformation.
+
+## The trace-three universe
+
+Take $t=3$. The recurrence begins
 
 $$
-a_{n+1}=2a_n+b_n,\qquad b_{n+1}=a_n+2b_n.
+2,\ 3,\ 7,\ 18,\ 47,\ 123,\ 322,\ldots
 $$
 
-These equations are not a numerical trick. Substitution gives
+At first this resembles any fast-growing integer sequence. Then a striking law appears. The term at twice an index can be calculated from the original term alone:
 
 $$
-\frac{a_{n+1}}{b_{n+1}}
-=\frac{2a_n+b_n}{a_n+2b_n}
-=\frac{a_n/b_n+1/2}{1+(a_n/b_n)(1/2)}
-=\frac{a_n}{b_n}\boxplus \frac12.
+u_{2n}=u_n^2-2.
 $$
 
-Thus an iteration of a curved-space translation becomes multiplication by the integer matrix
+For example, $u_2=7$ and $u_4=47=7^2-2$. Likewise $u_5=123$ and $u_{10}=15127=123^2-2$. Threefold jumps are equally economical:
 
 $$
-M=\begin{pmatrix}2&1\\1&2\end{pmatrix}.
+u_{3n}=u_n^3-3u_n.
 $$
 
-This is the first bridge: rational Möbius dynamics can be lifted to linear dynamics on integer pairs.
+Thus $u_3=18=3^3-3\cdot3$, and $u_{12}$ can be obtained from $u_4=47$ as $47^3-3\cdot47=103682$.
 
-The matrix has two especially simple directions. Along $(1,1)$ it stretches by a factor of $3$, while along $(-1,1)$ it acts by a factor of $1$. Decomposing the initial vector $(0,1)$ into these directions immediately reveals the exact formulas
+These are not coincidences confined to $t=3$. They hold for every integer $t$ and every nonnegative integer $n$.
 
-$$
-2a_n=3^n-1,\qquad 2b_n=3^n+1.
-$$
-
-So the apparent pattern in the first few fractions is exact:
+**Trace Doubling Theorem.** For the recurrence $u_0=2$, $u_1=t$, and $u_{n+2}=tu_{n+1}-u_n$, one has
 
 $$
-x_n=\frac{3^n-1}{3^n+1}.
+u_{2n}(t)=u_n(t)^2-2
 $$
 
-This is the Closed-Form Coordinate Theorem: after $n$ hyperbolic translations by $1/2$, the homogeneous numerator and denominator are precisely $(3^n-1)/2$ and $(3^n+1)/2$.
+for every integer $t$ and every $n\ge 0$.
 
-## A conserved shape with an expanding scale
-
-The same recurrence preserves a quadratic shape while changing its scale. Compute
+**Trace Tripling Theorem.** Under the same assumptions,
 
 $$
-\begin{aligned}
-b_{n+1}^2-a_{n+1}^2
-&=(a_n+2b_n)^2-(2a_n+b_n)^2\\
-&=3(b_n^2-a_n^2).
-\end{aligned}
+u_{3n}(t)=u_n(t)^3-3u_n(t)
 $$
 
-Since $b_0^2-a_0^2=1$, induction yields the Lorentzian Norm Theorem:
+for every integer $t$ and every $n\ge 0$.
+
+Why do index multiplication and polynomial evaluation fit together so perfectly? Because repeating a motion $n$ times and then repeating that result $m$ times is the same as repeating the original motion $mn$ times:
 
 $$
-b_n^2-a_n^2=3^n
+(A^n)^m=A^{mn}.
 $$
 
-for every nonnegative integer $n$.
-
-This is a Diophantine identity: it gives an infinite sequence of integer solutions to an exponential difference-of-squares equation. In fact, the closed forms make the reason transparent:
+For a determinant-one $2\times2$ matrix $B$, the Cayley–Hamilton identity gives $B^2-(\operatorname{tr}B)B+I=0$. Taking traces yields
 
 $$
-\left(\frac{3^n+1}{2}\right)^2-
-\left(\frac{3^n-1}{2}\right)^2=3^n.
+\operatorname{tr}(B^2)=(\operatorname{tr}B)^2-2.
 $$
 
-The quantity $b^2-a^2$ is a Lorentzian quadratic form, the two-dimensional relative of the spacetime interval in special relativity. The matrix $M$ does not preserve this form exactly; it multiplies it by $3$. After dividing $M$ by $\sqrt3$, one obtains a genuine Lorentz transformation. Integer arithmetic, hyperbolic motion, and relativistic geometry meet in the same two-by-two matrix.
-
-## Why the orbit never crosses the horizon
-
-The disk-containment statement can now be read directly from the number theory. For every $n$, the denominator $b_n$ is positive and the numerator $a_n$ is nonnegative. Moreover,
+Applying the same idea once more gives
 
 $$
-b_n^2-a_n^2=3^n>0.
+\operatorname{tr}(B^3)=(\operatorname{tr}B)^3-3\operatorname{tr}B.
 $$
 
-Therefore $b_n>a_n\ge 0$, and hence
+Set $B=A^n$, and the doubling and tripling formulas follow. Group dynamics has been compressed into elementary polynomials.
+
+## A conic that every orbit remembers
+
+The recurrence carries another invariant. Two consecutive terms always lie on one fixed quadratic curve:
 
 $$
-\left|\frac{a_n}{b_n}\right|<1.
+u_n^2-t u_nu_{n+1}+u_{n+1}^2=4-t^2.
 $$
 
-This is the Disk Containment Theorem: every point generated by the recurrence lies strictly inside the Poincaré diameter. The geometry is protected by an integer identity. A statement about never reaching a curved boundary is certified by positivity of a difference of squares.
-
-The orbit nevertheless converges to the boundary. From the closed form,
+This is the Pell-Conic Invariant. It can be checked at $n=0$, where the left side is $4-2t^2+t^2=4-t^2$. The recurrence preserves it from one pair to the next. Consequently, the sequence of pairs $(u_n,u_{n+1})$ walks through integer points on the conic
 
 $$
-1-x_n=\frac{2}{3^n+1},
+x^2-txy+y^2=4-t^2.
 $$
 
-so the Euclidean gap decays exponentially. Hyperbolic distance tells a different story. Introduce the rapidity coordinate
+For $|t|>2$, the matrix is hyperbolic and $t^2-4>0$. The conic then reads $x^2-txy+y^2=-(t^2-4)$, linking repeated hyperbolic motion with Pell-type Diophantine geometry. One may watch an orbit in the disk, list traces of powers, or study lattice points on this conic: these are three views of the same arithmetic mechanism.
+
+Doubling respects this geometry in an especially transparent way. Squaring the doubling formula and simplifying gives the **Doubled Discriminant Factorization**:
 
 $$
-r=\operatorname{artanh}(x)=\frac12\log\frac{1+x}{1-x}.
+u_{2n}^2-4=(u_n^2-4)u_n^2.
 $$
 
-Möbius addition becomes ordinary addition of rapidities. Since
+Equivalently,
 
 $$
-\operatorname{artanh}\left(\frac12\right)=\frac12\log 3,
+4-u_{2n}^2=(4-u_n^2)u_n^2.
 $$
 
-we obtain
+The discriminant-like quantity $u_n^2-4$ is multiplied by the perfect square $u_n^2$. Doubling therefore preserves its square class. This is exactly the kind of signature one hopes for when trying to distinguish primitive steps from repeated ones: a composite index leaves a visible square factor behind.
+
+## The boundary cases matter
+
+The classification of determinant-one transformations depends on trace. Values $|t|<2$ are elliptic, $|t|=2$ are parabolic, and $|t|>2$ are hyperbolic. The formulas do not break at the borders.
+
+For $t=2$, the recurrence is constantly $2$. Its discriminant $u_n^2-4$ vanishes at every stage, and the factorization says $0=0\cdot4$. For $t=-2$, alternating signs appear, but the same zero discriminant remains. These degenerate cases are not nuisances to discard; they show that one polynomial law covers elliptic, parabolic, and hyperbolic behavior uniformly.
+
+There is also a familiar analytic face to the recurrence. If $t=2\cosh\theta$, then
 
 $$
-x_n=\tanh\left(\frac{n\log 3}{2}\right).
+u_n(t)=2\cosh(n\theta).
 $$
 
-Each move is therefore an equal hyperbolic step even though the Euclidean gaps visibly shrink. The crowding near the rim is not slowing motion; it is the drawing compressing an infinite metric distance into a finite picture.
+The doubling formula becomes the standard identity $2\cosh(2x)=(2\cosh x)^2-2$, and the tripling formula becomes $2\cosh(3x)=(2\cosh x)^3-3(2\cosh x)$. The integral recurrence is therefore a Chebyshev-type shadow of hyperbolic trigonometry.
 
-## The Möbius–Diophantine Bridge
+## Faster computation, richer structure
 
-The preceding facts combine into one central result.
-
-**Möbius–Diophantine Bridge Theorem.** Let $(a_0,b_0)=(0,1)$ and define
+The formulas are useful computationally. A direct recurrence takes $O(n)$ integer steps to reach $u_n$. But if an index is built by doubling and tripling, one can jump through the orbit with polynomial updates. Pure powers of two require only $O(\log n)$ updates:
 
 $$
-(a_{n+1},b_{n+1})=(2a_n+b_n,a_n+2b_n).
+x\longmapsto x^2-2.
 $$
 
-Then, for every nonnegative integer $n$:
+For instance, from $u_1=3$ one obtains $u_2=7$, $u_4=47$, $u_8=2207$, and $u_{16}=4870847$ using four quadratic evaluations. The integers themselves grow exponentially, so bit complexity still matters, but the number of recurrence stages collapses.
 
-1. the point $x_n=a_n/b_n$ satisfies $|x_n|<1$;
-2. the next point is the Möbius translate $x_{n+1}=x_n\boxplus 1/2$;
-3. the Lorentzian norm satisfies $b_n^2-a_n^2=3^n$;
-4. the coordinates satisfy $2a_n=3^n-1$ and $2b_n=3^n+1$.
-
-The proof has three ingredients. First, direct substitution turns the integer recurrence into the Möbius update. Second, diagonalizing the recurrence matrix gives the closed forms. Third, either expanding one recurrence step or substituting those forms gives the norm identity. Positivity of that norm, together with positivity of $b_n$, places the ratio strictly inside the disk.
-
-This theorem is modest in scope but unusually complete. It does not claim an entire new arithmetic of primes on a curved plane. Instead, it isolates a rigorous seed from which such a theory might grow: one hyperbolic translation, one integral recurrence, one exact norm law, and one completely described orbit.
-
-## A small algorithm with exact answers
-
-The result is computationally friendly. Starting from $(0,1)$, one can update the pair using only integer addition and multiplication by $2$. After each update, three checks agree:
+The pair recurrence also makes modular exploration finite. Modulo an integer $q>1$, advance by
 
 $$
-x_n=\frac{a_n}{b_n},\qquad
-b_n^2-a_n^2=3^n,\qquad
-x_n=\frac{3^n-1}{3^n+1}.
+(x,y)\longmapsto (y,ty-x)\pmod q.
 $$
 
-Because the integers involved have about $n\log_2 3$ bits, exact computation remains practical for hundreds or thousands of steps. Fast exponentiation can jump directly to the closed form, while matrix powering provides a general method that survives when no simple diagonal formula is available.
+This map is invertible, with inverse $(x,y)\mapsto(tx-y,x)$. Since there are only $q^2$ pairs, every modular trace orbit is purely periodic—there is no transient tail before the cycle begins. This observation suggests fast period experiments and connects orbit arithmetic with finite groups.
 
-The recurrence also offers a clean visualization. Plot the points $x_n$ along the horizontal diameter of a unit disk. They bunch rapidly near $1$. Plot them instead against rapidity, and they become evenly spaced. A single data set thus shows how coordinate choice can hide or reveal geometric uniformity.
+## What this does—and does not—say about primes
 
-## Beyond the step $1/2$
+The phrase “hyperbolic prime” is evocative, but it needs a multiplication law before unique factorization can even be stated. Tessellation vertices alone do not supply a canonical monoid, and a finite list of zeros of a numerically chosen zeta function cannot prove a critical-line theorem. The trace approach takes a more disciplined route. It attaches arithmetic to conjugacy-invariant data that are already built into the geometry.
 
-The mechanism is not tied to one fraction. For a rational step $p/q$, homogeneous coordinates naturally evolve by
-
-$$
-\begin{pmatrix}a'\\b'\end{pmatrix}
-=
-\begin{pmatrix}q&p\\p&q\end{pmatrix}
-\begin{pmatrix}a\\b\end{pmatrix}.
-$$
-
-A direct calculation suggests the general scaling law
+A natural prime-like object is then not an arbitrarily labeled vertex but a primitive closed geodesic, or equivalently a primitive hyperbolic conjugacy class. Its trace is tied to its length $\ell$ by
 
 $$
-b'^2-a'^2=(q^2-p^2)(b^2-a^2).
+|\operatorname{tr}A|=2\cosh(\ell/2).
 $$
 
-When $|p|<|q|$, the multiplier is positive, matching the requirement that $p/q$ lie inside the disk. Questions about common factors, primitive coordinates, and more general forms such as $b^2-Da^2$ then lead toward Pell equations and units in real quadratic number systems.
+The doubling and tripling maps detect repeated powers of such classes in trace coordinates. They do not yet deliver a prime-geodesic counting theorem or a zeta-function critical-line theorem. What they provide is the exact arithmetic infrastructure on which those more ambitious questions can be posed without ambiguity.
 
-There is also a larger ambition: to define arithmetic on genuinely two-dimensional hyperbolic orbits, identify a sound notion of prime, and count geometric or algebraic prime objects. But geometry alone does not automatically supply ring operations or unique factorization. Any such program must first specify its carrier set and operations, prove that they are well defined, and distinguish vertices in a tessellation from irreducible algebraic elements. Counting theorems must likewise specify which radius or height is being measured, because hyperbolic and Euclidean growth differ dramatically.
+## From a huge matrix to one integer
 
-The lesson of this diameter orbit is therefore both inspiring and cautionary. Curvature can produce exact arithmetic, but only after the geometry is translated into precise algebra. Here that translation is exceptionally beautiful: equal hyperbolic steps become powers of an integer matrix; the orbit points become neighboring halves of powers of $3$; and staying inside the disk becomes the exponential Diophantine equation
+There is a second surprise in how much information the trace retains. A power $A^n$ has four matrix entries, each potentially enormous. Yet the traces of all later powers of $A^n$ are controlled by the single integer $u_n$. To predict the trace after doubling, no other entry is needed; to predict it after tripling, the same is true. The determinant condition has removed the missing degree of freedom. The eigenvalues of $A^n$ come as a reciprocal pair $\lambda^n$ and $\lambda^{-n}$, and their sum is $u_n$. Every symmetric power sum of this pair is therefore a polynomial in that sum.
 
-$$
-b_n^2-a_n^2=3^n.
-$$
+This compression has a physical analogy. In a complicated dynamical system, one searches for observables that retain just enough information to predict quantities of interest. Trace is such an observable for repeated two-dimensional, area-preserving linear motion. It does not reconstruct the orbit point or the matrix itself, but it perfectly predicts the trace at multiplied times. In data language, it is a sufficient statistic for this restricted family of questions.
 
-A curved line has not destroyed arithmetic. It has reshaped it into a form where dynamics, number theory, and spacetime geometry are different views of the same calculation.
+The compression is also robust under a change of viewpoint. Conjugating $A$ changes the coordinate grid but not $\operatorname{tr}(A^n)$. Two observers using different fundamental domains therefore obtain the same trace arithmetic. This invariance is essential if the numbers are to describe the geometry rather than the mapmaker's choices.
 
-## What the example teaches
+## A small laboratory of exact experiments
 
-Several broader principles are compressed into this small construction. The first is that nonlinear motion may become linear after adding one coordinate. The ratio $a/b$ evolves by a fractional transformation, but the pair $(a,b)$ evolves by matrix multiplication. Projective geometry routinely uses this strategy: apparent division in the visible coordinate is the shadow of linear motion in a larger space.
-
-The second principle is that the right invariant can do more than check an answer. Here the Lorentzian norm does not remain constant, but its change is perfectly controlled. Knowing that it is multiplied by $3$ at every step simultaneously explains the power $3^n$, proves that the denominator dominates the numerator, and prevents the orbit from escaping the disk. One algebraic quantity organizes dynamics, geometry, and arithmetic at once.
-
-The third principle concerns exactness. A floating-point simulation can show points approaching $1$, but it cannot by itself establish that every iterate stays inside the disk or that the norm is precisely a power of $3$. Integer coordinates remove ambiguity. Even for enormous $n$, the statement
+The recurrence is easy to explore without approximation. Choose an integer $t$, begin with $(2,t)$, and repeatedly replace a pair $(x,y)$ by $(y,ty-x)$. At each stage one may test the conic equation, then compare the term at a doubled or tripled index with its polynomial prediction. For $t=4$, for example, the sequence begins
 
 $$
-b_n^2-a_n^2=3^n
+2,\ 4,\ 14,\ 52,\ 194,\ldots
 $$
 
-is an exact equality, not an approximation. The visual limit and the arithmetic law reinforce one another.
+and doubling $u_2=14$ gives $u_4=14^2-2=194$. The conic check at the pair $(14,52)$ reads
 
-Finally, the example shows why curved arithmetic should begin with carefully chosen operations rather than analogies alone. Möbius addition is geometrically motivated, closed on the diameter, linearized by rapidity, and compatible with homogeneous coordinates. Those properties make it productive. They turn the question “what is addition on a curved line?” into a sequence of precise answers that can be calculated, proved, generalized, and compared with physical ideas.
+$$
+14^2-4\cdot14\cdot52+52^2=-12=4-4^2.
+$$
+
+Reducing the same experiment modulo $q$ turns unbounded growth into a finite cycle. This makes the system accessible at several scales: exact integers reveal growth, modular residues reveal repetition, polynomial jumps reveal index multiplication, and conic plots reveal geometry. No single picture tells the whole story, but all four agree because they arise from the same determinant-one motion.
+
+## The road ahead
+
+The quadratic and cubic laws point to a full family of monic integer polynomials $C_m$ satisfying
+
+$$
+u_{mn}(t)=C_m(u_n(t)),\qquad C_m\circ C_k=C_{mk}.
+$$
+
+One expects each discriminant to factor as
+
+$$
+C_m(x)^2-4=(x^2-4)Q_m(x)^2
+$$
+
+for an integer polynomial $Q_m$. The proven doubling identity is the first nontrivial case, and tripling supplies the next guidepost.
+
+From there, several paths open: determine sharp periods modulo $q$; classify which Pell-conic points come from primitive group elements; and count primitive conjugacy classes by trace, translating geometric length into arithmetic size. The broad lesson is already clear. Curvature does not destroy arithmetic. When the right coordinate is chosen, curved motion writes its multiplication table in polynomials, its orbits on Pell conics, and its repetitions in perfect-square factors.

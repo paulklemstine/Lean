@@ -1,124 +1,141 @@
 #!/usr/bin/env python3
-"""Exact demonstrations of Möbius translation on the Poincaré diameter."""
+"""Exact numerical experiments for determinant-one trace recurrences."""
 
 from __future__ import annotations
 
-from fractions import Fraction
-from math import log, tanh
-from typing import Iterator
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
 
-Pair = tuple[int, int]
-Matrix = tuple[tuple[int, int], tuple[int, int]]
-
-
-def mobius_add(x: Fraction, y: Fraction) -> Fraction:
-    """Return (x+y)/(1+xy) exactly."""
-    denominator = 1 + x * y
-    if denominator == 0:
-        raise ZeroDivisionError("Möbius sum is undefined when 1 + xy = 0")
-    return (x + y) / denominator
+Matrix = Tuple[Tuple[int, int], Tuple[int, int]]
+Pair = Tuple[int, int]
 
 
-def coordinates_iterative(n: int) -> Pair:
-    """Compute (a_n,b_n) by n integral recurrence steps."""
+def trace_sequence(t: int, count: int) -> List[int]:
+    """Return u_0 through u_count for u_0=2, u_1=t."""
+    if count < 0:
+        raise ValueError("count must be nonnegative")
+    values = [2]
+    if count == 0:
+        return values
+    values.append(t)
+    for _ in range(count - 1):
+        values.append(t * values[-1] - values[-2])
+    return values
+
+
+def trace_at(t: int, n: int) -> int:
+    """Evaluate u_n using the sequential pair recurrence."""
     if n < 0:
         raise ValueError("n must be nonnegative")
-    a, b = 0, 1
+    x, y = 2, t
     for _ in range(n):
-        a, b = 2 * a + b, a + 2 * b
-    return a, b
+        x, y = y, t * y - x
+    return x
 
 
-def coordinates_closed(n: int) -> Pair:
-    """Compute (a_n,b_n)=((3^n-1)/2,(3^n+1)/2)."""
-    if n < 0:
-        raise ValueError("n must be nonnegative")
-    power = pow(3, n)
-    return (power - 1) // 2, (power + 1) // 2
-
-
-def matmul(left: Matrix, right: Matrix) -> Matrix:
+def mat_mul(a: Matrix, b: Matrix) -> Matrix:
     """Multiply two 2-by-2 integer matrices."""
     return (
-        (
-            left[0][0] * right[0][0] + left[0][1] * right[1][0],
-            left[0][0] * right[0][1] + left[0][1] * right[1][1],
-        ),
-        (
-            left[1][0] * right[0][0] + left[1][1] * right[1][0],
-            left[1][0] * right[0][1] + left[1][1] * right[1][1],
-        ),
+        (a[0][0] * b[0][0] + a[0][1] * b[1][0],
+         a[0][0] * b[0][1] + a[0][1] * b[1][1]),
+        (a[1][0] * b[0][0] + a[1][1] * b[1][0],
+         a[1][0] * b[0][1] + a[1][1] * b[1][1]),
     )
 
 
-def matrix_power(matrix: Matrix, exponent: int) -> Matrix:
+def mat_pow(base: Matrix, exponent: int) -> Matrix:
     """Raise a 2-by-2 integer matrix to a nonnegative power."""
     if exponent < 0:
         raise ValueError("exponent must be nonnegative")
     result: Matrix = ((1, 0), (0, 1))
-    base = matrix
-    k = exponent
-    while k:
-        if k & 1:
-            result = matmul(result, base)
-        base = matmul(base, base)
-        k >>= 1
+    while exponent:
+        if exponent & 1:
+            result = mat_mul(result, base)
+        base = mat_mul(base, base)
+        exponent //= 2
     return result
 
 
-def coordinates_matrix(n: int) -> Pair:
-    """Compute coordinates by binary powering of [[2,1],[1,2]]."""
-    power = matrix_power(((2, 1), (1, 2)), n)
-    return power[0][1], power[1][1]
+def witness_matrix(t: int) -> Matrix:
+    """Return a determinant-one integer matrix of trace t."""
+    return ((t - 1, 1), (t - 2, 1))
 
 
-def orbit(rows: int) -> Iterator[tuple[int, int, int, Fraction, int, float]]:
-    """Yield index, coordinates, ratio, norm, and rapidity."""
-    if rows < 0:
-        raise ValueError("rows must be nonnegative")
-    for n in range(rows):
-        a, b = coordinates_iterative(n)
-        yield n, a, b, Fraction(a, b), b * b - a * a, n * log(3) / 2
+def trace_by_matrix(t: int, n: int) -> int:
+    """Evaluate u_n as the trace of the nth witness-matrix power."""
+    power = mat_pow(witness_matrix(t), n)
+    return power[0][0] + power[1][1]
 
 
-def verify_through(limit: int) -> None:
-    """Check all exact identities for 0 <= n <= limit."""
-    if limit < 0:
-        raise ValueError("limit must be nonnegative")
-    previous = Fraction(0, 1)
-    for n in range(limit + 1):
-        iterative = coordinates_iterative(n)
-        assert iterative == coordinates_closed(n) == coordinates_matrix(n)
-        a, b = iterative
-        assert 2 * a == pow(3, n) - 1
-        assert 2 * b == pow(3, n) + 1
-        assert b * b - a * a == pow(3, n)
-        x = Fraction(a, b)
-        assert abs(x) < 1
-        assert b - a == 1
-        if n > 0:
-            assert x == mobius_add(previous, Fraction(1, 2))
-        previous = x
+def pell_residual(t: int, x: int, y: int) -> int:
+    """Return the residual in x^2-txy+y^2=4-t^2."""
+    return x * x - t * x * y + y * y - (4 - t * t)
+
+
+def modular_period(t: int, modulus: int) -> Tuple[int, List[Pair]]:
+    """Return the pure period and states of the pair recurrence modulo q."""
+    if modulus <= 1:
+        raise ValueError("modulus must exceed one")
+    start = (2 % modulus, t % modulus)
+    state = start
+    states: List[Pair] = []
+    seen: Dict[Pair, int] = {}
+    while state not in seen:
+        seen[state] = len(states)
+        states.append(state)
+        x, y = state
+        state = (y, (t * y - x) % modulus)
+    if state != start:
+        raise AssertionError("invertibility requires a purely periodic orbit")
+    return len(states), states
+
+
+@dataclass(frozen=True)
+class IdentityCheck:
+    t: int
+    n: int
+    value: int
+    doubled: int
+    tripled: int
+
+
+def check_identities(t: int, n: int) -> IdentityCheck:
+    """Compute and assert the doubling, tripling, conic, and matrix laws."""
+    u_n = trace_at(t, n)
+    u_2n = trace_at(t, 2 * n)
+    u_3n = trace_at(t, 3 * n)
+    assert u_2n == u_n * u_n - 2
+    assert u_3n == u_n**3 - 3 * u_n
+    assert u_2n**2 - 4 == (u_n**2 - 4) * u_n**2
+    assert trace_by_matrix(t, n) == u_n
+    assert pell_residual(t, u_n, trace_at(t, n + 1)) == 0
+    return IdentityCheck(t, n, u_n, u_2n, u_3n)
 
 
 def main() -> None:
-    """Print a table and run independent exact checks."""
-    verify_through(100)
-    print("Möbius translation by 1/2: exact orbit")
-    print(" n |       a |       b |          a/b |   b^2-a^2 | rapidity")
-    print("---+---------+---------+--------------+-----------+----------")
-    for n, a, b, x, norm, rapidity in orbit(10):
+    """Print representative exact experiments."""
+    print("Trace-three sequence u_0,...,u_12:")
+    print(trace_sequence(3, 12))
+    print()
+
+    for t, n in [(3, 5), (3, 4), (4, 6), (-2, 7)]:
+        result = check_identities(t, n)
         print(
-            f"{n:2d} | {a:7d} | {b:7d} | {str(x):>12} | "
-            f"{norm:9d} | {rapidity:8.5f}"
+            f"t={t:2d}, n={n:2d}: u_n={result.value}, "
+            f"u_{{2n}}={result.doubled}, u_{{3n}}={result.tripled}"
         )
-    n = 20
-    a, b = coordinates_closed(n)
-    x_float = a / b
-    expected = tanh(n * log(3) / 2)
-    print(f"\nAt n={n}, x_n={x_float:.16f}")
-    print(f"Rapidity formula gives {expected:.16f}")
-    print("All exact identities verified for 0 <= n <= 100.")
+
+    print("\nPower-of-two jumps from u_1(3)=3:")
+    x, index = 3, 1
+    for _ in range(5):
+        print(f"u_{index}(3) = {x}")
+        x, index = x * x - 2, 2 * index
+
+    print("\nPure modular periods for t=3:")
+    for q in [5, 7, 11, 16]:
+        period, states = modular_period(3, q)
+        preview = states[: min(6, len(states))]
+        print(f"mod {q:2d}: period {period:2d}, first states {preview}")
 
 
 if __name__ == "__main__":
