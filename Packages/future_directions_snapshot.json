@@ -3781,7 +3781,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish tight upper and lower bounds using probabilistic construction for the lower bound and the Lovász Local Lemma for the upper bound, combined with careful entropy compression arguments. The key technical challenge is handling the equinumerous condition while avoiding rainbow structures.",
@@ -3790,6 +3790,61 @@
     "status": "available",
     "timestamp": "2026-07-17T12:55:09.512961+00:00",
     "title": "Rainbow Arithmetic Progression Threshold Conjecture"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2406.XXXXX (this paper)",
+      "Hernández-Hetzel (2026) on growth of sumsets in dense sets"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer t ≥ 2 and any fixed δ ∈ (0,1), there exists a constant C = C(t,δ) > 0 such that for all sufficiently large n, there exists a subset S ⊆ [n] with |S| ≥ δn such that for all A₁, …, A_t ⊆ ℕ satisfying min_i |A_i| ≥ C (log n / log(1/δ))^{1/(t-1)}, the t-fold sumset A₁ + ⋯ + A_t is not contained in S. This generalizes the main result of the paper (which proves the t=2 case with C ≈ 3) to higher-order sumsets.",
+    "domain_bridges": [
+      "additive_combinatorics",
+      "probabilistic_method",
+      "ramsey_theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0220",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the probabilistic method: show that a random δ-dense subset of [n] avoids all large t-fold sumsets with positive probability. Requires estimating the probability that a fixed t-fold sumset of size m is contained in a random set, then union bounding over all choices of A₁,…,A_t. The Lovász Local Lemma or an alteration argument may be needed to handle dependencies. The exponent 1/(t-1) arises from the counting of t-fold sumsets.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T13:03:31.081362+00:00",
+    "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Kővári–Sós–Turán theorem (KST)",
+      "Bose–Burton theorem",
+      "Erdős–Stone theorem for matroids",
+      "Sidon sets in vector spaces"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all integers s,t with 2 ≤ s ≤ t and prime power q, any simple rank-n GF(q)-representable matroid with no M(K_{s,t})-restriction satisfies |E(M)| ≤ (c_{q,s,t} + o(1))·q^{(1-1/s)n} for a constant c_{q,s,t}, and this bound is tight. In particular, for binary matroids (q=2) with no M(K_{2,t})-restriction, the maximum number of elements is exactly Θ_t(2^{n/2}).",
+    "domain_bridges": [
+      "extremal graph theory ↔ extremal matroid theory",
+      "forbidden substructure problems in graphs ↔ forbidden restrictions in matroids",
+      "asymptotic extremal functions with geometric constraints"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0220",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The paper establishes the O-q,s,t bound. The conjecture adds: (1) matching lower bounds via explicit constructions (generalizing binary Sidon sets to arbitrary GF(q)), (2) precise asymptotic equivalence rather than big-O notation. Approach combines Fourier-analytic counting over finite fields, spectral methods on representable matroids, and extremal combinatorics of partial geometries.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15226v1",
+    "status": "available",
+    "timestamp": "2026-07-17T13:04:27.023831+00:00",
+    "title": "The Kővari-Sós-Turán Conjecture for GF(q)-representable Matroids: Sharp Asymptotic Bound"
   },
   {
     "ambition_level": "extension",

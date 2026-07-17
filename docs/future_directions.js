@@ -2771,13 +2771,42 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0218",
+    "id": "fd_0219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15116v1",
     "status": "available",
     "timestamp": "2026-07-17T12:55:09.512961+00:00",
     "title": "Rainbow Arithmetic Progression Threshold Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer t \u2265 2 and any fixed \u03b4 \u2208 (0,1), there exists a constant C = C(t,\u03b4) > 0 such that for all sufficiently large n, there exists a subset S \u2286 [n] with |S| \u2265 \u03b4n such that for all A\u2081, \u2026, A_t \u2286 \u2115 satisfying min_i |A_i| \u2265 C (log n / log(1/\u03b4))^{1/(t-1)}, the t-fold sumset A\u2081 + \u22ef + A_t is not contained in S. This generalizes the main result of the paper (which proves the t=2 case with C \u2248 3) to higher-order sumsets.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0220",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T13:03:31.081362+00:00",
+    "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers s,t with 2 \u2264 s \u2264 t and prime power q, any simple rank-n GF(q)-representable matroid with no M(K_{s,t})-restriction satisfies |E(M)| \u2264 (c_{q,s,t} + o(1))\u00b7q^{(1-1/s)n} for a constant c_{q,s,t}, and this bound is tight. In particular, for binary matroids (q=2) with no M(K_{2,t})-restriction, the maximum number of elements is exactly \u0398_t(2^{n/2}).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0220",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15226v1",
+    "status": "available",
+    "timestamp": "2026-07-17T13:04:27.023831+00:00",
+    "title": "The K\u0151vari-S\u00f3s-Tur\u00e1n Conjecture for GF(q)-representable Matroids: Sharp Asymptotic Bound"
   },
   {
     "consumed_by_exp_id": "",
