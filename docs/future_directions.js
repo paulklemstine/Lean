@@ -4,21 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0195",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-17T07:48:05.955458+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "322b88bd",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -28,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:16:12.438268+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -48,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
-    "consumed_by_exp_id": "3c755fa4",
+    "consumed_by_exp_id": "",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
       "Novelty",
@@ -58,12 +43,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:16:12.414388+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "463376b0",
+    "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -72,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:16:12.425510+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -90,21 +75,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-16T15:16:12.454072+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0196",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-17T07:48:05.979796+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -1083,6 +1053,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T13:16:54.044719+00:00",
     "title": "ArXiv paper: A tight single-change covering design with block size 6"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Limit laws for component-pruned sparse random graphs and percolated tori' and formalize its key results. Abstract: We prove an $\\mathrm{MSO}_2$ zero-one law for a very sparse Erd\u0151s-R\u00e9nyi graph after pruning by component order. Let $p_n=c_n/n$, where $c_n\\to0$, and delete every component of order less than $f(n)$, where $f(n)\\to\\infty$. If \\[ f(n)\\bigl(\\log f(n)+\\log(1/c_n)\\bigr)=o(\\log n), \\] then the resulting graph satisfies a zero-one law for $\\mathrm{MSO}_2$, with quantification over sets of vertices and sets of edges. The proof combines uniform component counts, an MSO Feferman-Vaught decomposition for disjoint unions, and semilinearity of the order spectra of MSO-definable classes of finite trees. We also show that the term $f(n)\\log f(n)$ cannot simply be omitted: star components can occur at first-order-visible Poisson thresholds. We further establish first-order limit laws for bond percolation on the discrete torus $T_L^d$. In the two-sided subpolynomial regime, pruning below a sufficiently slow threshold yields a zero-one law. For the unpruned model in either one-sided polynomial regime, ",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0084",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.11033v1",
+    "status": "available",
+    "timestamp": "2026-07-16T13:34:18.866213+00:00",
+    "title": "ArXiv paper: Limit laws for component-pruned sparse random graphs and percolated tori"
   },
   {
     "consumed_by_exp_id": "",
@@ -2173,7 +2158,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The K\u0151vari-S\u00f3s-Tur\u00e1n theorem for $\\operatorname{GF}(q)$-representable matroids"
   },
   {
-    "consumed_by_exp_id": "47f9b94d",
+    "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -2183,7 +2168,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T03:25:44.344800+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -2377,12 +2362,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On Matrix Product Factorization in Association Schemes' and formalize its key results. Abstract: We study matrix product factorizations (MPFs) in symmetric association schemes: identities $A_SA_T=A_U$ where $A_S,A_T,A_U$ are loopless unions of basic relations and the ordinary matrix product is again a $0$-$1$ adjacency matrix. We give equivalent structural and spectral criteria for MPFs, derive valency and rank restrictions, and analyze several standard families. For $2$-class schemes, the only nontrivial loopless MPF comes from the scheme of the $5$-cycle. For $P$-polynomial schemes, the distance-regular recurrence gives strong restrictions on products $A_1A_i$. We also prove a universal pentagon theorem for the case $A_SA_T=J-I$, and show that extremal rank forces all non-zero eigenvalues of $A_U$ to be $\\pm k(U)$, hence gives bipartiteness. Finally, in Hamming schemes we obtain rank obstructions and classify MPFs of the form $A_1A_T=A_U$: in $H(d,2)$, for $d\\ge2$, the only non-zero loopless example is $A_1A_d=A_{d-1}$, which is trivial since $A_d$ has valency $1$; for $q>2$, no",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0188",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14848v1",
+    "status": "available",
+    "timestamp": "2026-07-17T07:48:50.380995+00:00",
+    "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Recognition of algebraic matroids is undecidable' and formalize its key results. Abstract: We prove that the recognition problem for algebraic matroids is undecidable. Explicitly, this means that there is no algorithm that takes as input a finite set $S$ and a function $r\\colon\\mathcal{P}(S) \\to \\mathbb{Z}_{\\ge 0}$ (where $\\mathcal{P}(S)$ is the power set) and decides whether there exists a pair of fields $F \\subset K$, and a function $f\\colon S \\to K$, such that for all $A \\subseteq S$: $\\mathrm{tr.deg}_{K/F}(f(A)) = r(A)$. This problem is known to be decidable if the characteristic of the fields involved is constrained to be zero. We prove that it is undecidable if the characteristic is either left unspecified (in which case a realization over any characteristic is accepted) or fixed to be a prime $p$. The proof relies on Hrushovski--Zilber's Group Configuration Theorem and on the work of Evans and Hrushovski on \"Projective Planes in Algebraically Closed Fields\". We relate two different such projective planes, and eventually construct a reduction from the solvability of Di",
     "domains": [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14907v1",
@@ -2397,7 +2397,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14878v1",
@@ -2411,7 +2411,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15034v1",
@@ -2425,7 +2425,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14872v1",
@@ -2439,7 +2439,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14961v1",
@@ -2454,7 +2454,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14693v1",
@@ -2469,13 +2469,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14732v1",
     "status": "available",
     "timestamp": "2026-07-17T07:32:53.951032+00:00",
     "title": "ArXiv paper: HJ numbers revisited"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Robustness of periodicity in Grover walks under a magnetic vector potential' and formalize its key results. Abstract: We study the effect of magnetic vector potentials on periodic Grover walks on finite graphs. The magnetic vector potential is introduced through the framework of quantum graphs, which induces the Grover walk as a special case. We regard the vector potential as a perturbation of a periodic Grover walk and investigate the robustness of its periodicity. Our analysis reveals that the response to such perturbations depends on the spectral structure of the underlying graph. In particular, when the graph possesses at least one non-simple eigenvalue, we derive a Hermitian matrix that characterizes the robustness of its periodicity. As a consequence, we show that the perturbed dynamics is asymptotically described by a continuous-time quantum walk generated by this Hermitian matrix.",
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_0196",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.14797v1",
+    "status": "available",
+    "timestamp": "2026-07-17T07:48:54.239145+00:00",
+    "title": "ArXiv paper: Robustness of periodicity in Grover walks under a magnetic vector potential"
   },
   {
     "consumed_by_exp_id": "",
@@ -2491,36 +2506,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T03:25:44.358073+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0197",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-17T07:48:05.998805+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## What was formalized\n\n`PruningSpectra.lean` develops two deterministic parts of the component-pruning argument.\n\n1. **Order-spectrum arithmetic.** One-dimensional semilinear spectra are represented by eventual periodicity. The file proves closure under complement, intersection, union, finite indexed union, and tail equivalence.\n2. **Feferman\u2013Vaught count saturation.** `CountEquivalent q` identifies exact component counts below `q` and all counts at least `q`. It is proved to be an equivalence relation and a congruence for addition, including coordinatewise component profiles.\n3. **Contrarian disproof.** Arbitrary input-dependent cutoffs do not preserve eventual periodicity. An explicit cutoff transforms the eventually periodic spectrum `{0}` into the powers of two away from zero, and powers of two are formally proved not eventually periodic.\n\nThese are deterministic abstractions of two proof ingredients described in the paper, not a formalization of the full probability spaces, MSO\u2082 syntax/semantics, random-graph component estimates, or torus percolation limit laws.\n\n## Verification status\n\nThe delivered Lean development is complete: every declaration in `PruningSpectra.lean` has a full proof, the file compiles independently, and it contains no `sorry`, `admit`, added axioms, or unfinished tactic suggestions. Axiom inspection of the principal closure, saturation, nonperiodicity, and pruning-counterexample theorems reports only Lean/Mathlib's standard foundational axioms (`propext`, `Classical.choice`, and `Quot.sound`).\n\n## Conjectures to pursue\n\n### 1. Regular-cutoff preservation\n\nThe counterexample uses a cutoff engineered from the target spectrum. A plausible positive replacement is:\n\n> If `S` is eventually periodic and `f` is eventually affine modulo the period of `S`, then `{n | n - f(n) \u2208 S}` is eventually periodic.\n\nFormalizing several useful regularity classes\u2014eventually constant, affine, and periodic differences\u2014would sharply delimit the contrarian obstruction.\n\n### 2. Full finite-state disjoint-union theorem\n\nDefine finite relational structures, MSO\u2082 formulas of bounded quantifier rank, and disjoint union. Prove that for every rank there is a saturation threshold such that the MSO\u2082 type of a disjoint union depends only on the saturated multiplicity of each component type. `countProfile_add` is the arithmetic congruence needed by this result.\n\n### 3. Tree order spectra\n\nFormalize finite trees and the spectrum of an MSO-definable tree class. The target theorem is that this spectrum is semilinear (in one dimension, eventually periodic up to a finite prefix). This will require a tree-automata or composition development rather than merely arithmetic closure.\n\n### 4. Uniform component counts in sparse Erd\u0151s\u2013R\u00e9nyi graphs\n\nBuild the finite probability model `G(n,c\u2099/n)`, define component pruning by order, and establish estimates uniform over tree isomorphism types in the permitted size window. This is the principal probabilistic gap between the present deterministic lemmas and the paper\u2019s zero-one law.\n\n### 5. Star-component threshold obstruction\n\nFormalize the number of isolated `k`-stars in `G(n,c\u2099/n)`, compute its factorial moments near the Poisson threshold, and connect the existence of a star component to a first-order sentence. This would formally justify why the `f(n) log f(n)` term cannot simply be removed.\n\n### 6. Bond percolation on discrete tori\n\nDefine `T_L^d`, independent bond percolation, rooted local types, and component pruning. First target finite-radius locality and translation invariance; then prove the concentration and rare-component estimates needed for the two-sided subpolynomial and one-sided polynomial regimes.\n",
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_0198",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "fe20b520",
-    "status": "available",
-    "timestamp": "2026-07-17T07:48:37.345184+00:00",
-    "title": "`PruningSpectra.lean` develops two deterministic parts of the component-pruning "
   },
   {
     "consumed_by_exp_id": "",
