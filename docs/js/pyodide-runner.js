@@ -499,6 +499,7 @@ matplotlib.use('AGG')
 import matplotlib.pyplot as plt
 import io
 import base64
+import os
 
 # Override plt.savefig and plt.close during user code so calls like
 # plt.savefig('file.png') don't write to the virtual filesystem and
@@ -517,10 +518,20 @@ ${processedCode}
 # Restore originals and capture the current figure
 plt.savefig = _orig_savefig
 plt.close = _orig_close
-buf = io.BytesIO()
-plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
-buf.seek(0)
-base64.b64encode(buf.read()).decode('utf-8')
+
+# Check if the user code generated any SVG files
+svg_files = [f for f in os.listdir('.') if f.endswith('.svg')]
+if svg_files:
+    with open(svg_files[0], 'r', encoding='utf-8') as f:
+        svg_content = f.read()
+    for f in svg_files:
+        os.remove(f)
+    'SVG_CONTENT:' + svg_content
+else:
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
+    buf.seek(0)
+    base64.b64encode(buf.read()).decode('utf-8')
 `;
             }
 
@@ -566,6 +577,13 @@ base64.b64encode(buf.read()).decode('utf-8')
                 const plotlyStart = htmlData.indexOf('<div');
                 const cleanHtml = plotlyStart >= 0 ? htmlData.substring(plotlyStart) : htmlData;
                 outputContainer.innerHTML = cleanHtml;
+            } else if (result && typeof result === 'string' && result.startsWith('SVG_CONTENT:')) {
+                const svgData = result.substring('SVG_CONTENT:'.length);
+                outputContainer.innerHTML = svgData;
+                const svgEl = outputContainer.querySelector('svg');
+                if (svgEl) {
+                    svgEl.style.cssText = 'max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 8px;';
+                }
             } else {
                 const imgData = String(result || '');
                 const img = document.createElement('img');

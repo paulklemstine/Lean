@@ -3552,6 +3552,62 @@
     "title": "ArXiv paper: Universal Asymptotics and Exact Enumeration of Eulerian Maps"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Bak08",
+      "ArbCorGriHar85",
+      "JenRan21",
+      "Vog26"
+    ],
+    "consumed_by_exp_id": "58e34414",
+    "description": "For every fixed integer k ≥ 5 there exists N₀(k) such that for all n ≥ N₀(k) and for every simple connected k‑regular graph G on n vertices, there is a divisor D on G of degree (k‑2)n/2 (the half‑canonical degree) with rank at least k‑1. Equivalently, for all sufficiently large n the Brill‑Noether number ρ(G, k‑1, (k‑2)n/2) is non‑negative and the existence part of Baker’s Brill‑Noether conjecture holds for the pair (r, d) = (k‑1, (k‑2)n/2).",
+    "domain_bridges": [
+      "geometry of numbers",
+      "spectral graph theory",
+      "energy quadratic forms"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0211",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish a Cheeger‑type inequality for the covering radius of periodic sets with respect to the graph energy quadratic form, combine it with spectral gap bounds for k‑regular graphs (k ≥ 5) and probabilistic arguments for random regular graphs to show the existence of the required divisor for all large n.",
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-17T12:28:45.661463+00:00",
+    "title": "Half‑canonical Brill‑Noether existence for k‑regular graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Erdős sumset conjecture",
+      "Szemerédi's theorem",
+      "Probabilistic method in combinatorics"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the constant 3 appearing in the threshold (3+o(1))(log n)/(log(1/δ)) for sumset avoidance in δ-dense subsets of [n] is optimal. Specifically, for any fixed δ ∈ (0,1) and any ε > 0, there should exist arbitrarily large n such that every subset S ⊆ [n] with |S| ≥ δn necessarily contains some sumset A+B where A,B ⊆ ℕ satisfy min{|A|,|B|} ≥ (3-ε)(log n)/(log(1/δ)). This would establish that the random construction used in the paper cannot be improved asymptotically.",
+    "domain_bridges": [
+      "Discrete probability theory",
+      "Extremal set theory",
+      "Asymptotic combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0212",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture would likely require a constructive approach or refined probabilistic analysis. One strategy would be to explicitly construct, for each ε > 0, a family of sets S (perhaps deterministic or using altered probability distributions) where every sumset A+B with min{|A|,|B|} ≥ (3-ε)(log n)/(log(1/δ)) must intersect the complement of S. A second approach would use the second moment method or concentration inequalities to show that random sets with density δ cannot avoid all such large sumsets when the threshold drops below 3(log n)/(log(1/δ)).",
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T12:29:49.501452+00:00",
+    "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",

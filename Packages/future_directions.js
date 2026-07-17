@@ -2650,6 +2650,35 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Universal Asymptotics and Exact Enumeration of Eulerian Maps"
   },
   {
+    "consumed_by_exp_id": "58e34414",
+    "description": "For every fixed integer k \u2265 5 there exists N\u2080(k) such that for all n \u2265 N\u2080(k) and for every simple connected k\u2011regular graph G on n vertices, there is a divisor D on G of degree (k\u20112)n/2 (the half\u2011canonical degree) with rank at least k\u20111. Equivalently, for all sufficiently large n the Brill\u2011Noether number \u03c1(G, k\u20111, (k\u20112)n/2) is non\u2011negative and the existence part of Baker\u2019s Brill\u2011Noether conjecture holds for the pair (r, d) = (k\u20111, (k\u20112)n/2).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0211",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15213v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-17T12:28:45.661463+00:00",
+    "title": "Half\u2011canonical Brill\u2011Noether existence for k\u2011regular graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the constant 3 appearing in the threshold (3+o(1))(log n)/(log(1/\u03b4)) for sumset avoidance in \u03b4-dense subsets of [n] is optimal. Specifically, for any fixed \u03b4 \u2208 (0,1) and any \u03b5 > 0, there should exist arbitrarily large n such that every subset S \u2286 [n] with |S| \u2265 \u03b4n necessarily contains some sumset A+B where A,B \u2286 \u2115 satisfy min{|A|,|B|} \u2265 (3-\u03b5)(log n)/(log(1/\u03b4)). This would establish that the random construction used in the paper cannot be improved asymptotically.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0212",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.15269v1",
+    "status": "available",
+    "timestamp": "2026-07-17T12:29:49.501452+00:00",
+    "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
