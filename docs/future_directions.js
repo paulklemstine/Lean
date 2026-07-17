@@ -2667,20 +2667,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
   },
   {
-    "consumed_by_exp_id": "ad5825e2",
-    "description": "Investigate the ArXiv paper 'The Spine: A Supersingular Highway' and formalize its key results. Abstract: We consider the structure of the spine of the supersingular $\\ell$-isogeny graph for one of the cases which arXiv:2502.03613 was not able to fully describe, $\\ell = 2$ and $p = 71, 119\\pmod{120}$. We find the distance, eccentricity, and diameter functions, of the components of the spine without the non-trivial edge not defined over $\\mathbb{F}_p$. Using these functions, we find the mean diameter of the spine and show how this value distinguishes the different structures of the spine. Thus, allowing us to use explicit computations to provide heuristics on the behavior of the spine's structure as $p$ varies.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0208",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14572v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T09:24:18.119678+00:00",
-    "title": "ArXiv paper: The Spine: A Supersingular Highway"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Universal Asymptotics and Exact Enumeration of Eulerian Maps' and formalize its key results. Abstract: We calculate the asymptotics of the number of connected, labeled, genus $g$ Eulerian maps with an arbitrary degree sequence, in the limit as the total number of vertices tends to infinity. This asymptotic is universal, in the sense that the leading order term depends on only finitely many map characteristics. The constant factor in this formula is related to the Painlev\u00e9 I equation. Our methods combine the analysis of the recurrence coefficients associated to a particular family of orthogonal polynomials, and the theory of analytic combinatorics of several variables. We also derive an exact formula for the number of connected, labeled, genus $1$ Eulerian maps. These are the first results on this kind of enumeration problem for $g\\geq 1$, non-regular (mixed-valence) maps.",
     "domains": [
@@ -2782,6 +2768,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T12:07:34.357747+00:00",
     "title": "The formal development isolates a rigorous object naturally attached to the modu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What the formal result establishes\n\n`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counterexample family to prediction from coarse \u201cperiodic-table coordinates.\u201d For every odd `n > 1`, the cyclic group `C_(2n)` and the dihedral group `D_(2n)` have:\n\n- the same finite order, `2n`;\n- the same group exponent, `2n`;\n- different cyclicity;\n- different commutativity.\n\nThe file also proves that the cyclic comparison group's center is the whole group, whereas the odd dihedral comparison group's center is trivial. At order six it verifies the concrete `C\u2086` versus `D\u2086` witness, and computes that `C\u2086` has two automorphisms.\n\nThis does not directly refute the statement that a column *defined by* composition factors shares composition factors; that statement is tautological. It does refute the stronger predictive hope that a few coarse coordinates such as order and exponent force basic structural properties.\n\n## Strong next formal targets\n\n1. **Composition-factor equality for the order-six witness.** Formalize normal/composition series for `C\u2086` and `D\u2086 \u2245 S\u2083`, proving that both have factors `C\u2082` and `C\u2083` while retaining the structural differences already proved. This would directly test the proposed column invariant.\n\n2. **Different automorphism-group orders in one composition-factor column.** Prove `|Aut(C\u2086)| = 2` (already done) and `|Aut(S\u2083)| = 6`, then connect `DihedralGroup 3` to `S\u2083`. This would formally show that composition factors do not determine automorphism-group order.\n\n3. **Derived length versus composition factors.** Build examples with identical multisets of abelian simple factors but distinct derived lengths. Candidate small groups should first be checked against a finite-group database and then represented intrinsically in Lean.\n\n4. **Nilpotency is not controlled by composition factors.** Compare groups whose composition factors are all cyclic of prime order but where one is nilpotent and another is not. `C\u2086` versus `S\u2083` is again a natural minimal example: both are solvable, but only `C\u2086` is nilpotent.\n\n5. **A faithful table schema.** Rather than a single \u201ccolumn,\u201d use a layered fingerprint: order, composition-factor multiset, extension data, center order, derived length, nilpotency class, and automorphism-group order. Formalize which entries are invariants under isomorphism and exhibit independence results between entries.\n\n6. **Finite census boundary.** A classification through order 100 is best imported from a certified enumeration rather than recreated by brute force in Lean. The useful formal target is a checker: encode multiplication tables, verify the group axioms, compute normal series and invariants, and prove the generated report correct.\n\n## Methodological caution\n\nComposition factors record the simple layers but forget how those layers are assembled. Extension data is therefore indispensable. Any predictive \u201cperiodic law\u201d should be evaluated against pairs of nonisomorphic extensions with the same factors, not merely against groups sharing an order.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0221",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ad5825e2",
+    "status": "available",
+    "timestamp": "2026-07-17T12:07:42.915172+00:00",
+    "title": "`Catalog/MachineLearning/FiniteGroupPeriodicLaw.lean` proves an infinite counter"
   },
   {
     "consumed_by_exp_id": "",
